@@ -194,6 +194,9 @@ trimester_context = ""
 jalons = []
 all_jalon_titles = {} # map jalon id string to filename
 
+# Pre-compile regex for jalons
+jalon_pattern = re.compile(r'(Jalon[s]? [\d à]+) : (.+)')
+
 # First pass: collect all jalons
 for line in lines:
     line = line.strip()
@@ -204,7 +207,7 @@ for line in lines:
         trimester_context = ""
     elif line.startswith("Jalon ") or line.startswith("Jalons "):
         # Parse jalon number and title
-        match = re.match(r'(Jalon[s]? [\d à]+) : (.+)', line)
+        match = jalon_pattern.match(line)
         if match:
             j_id = match.group(1)
             desc = match.group(2)
