@@ -1,8 +1,8 @@
-﻿# Tableau de Bord : Mathematiques pour l'IA
+# Tableau de Bord : Mathématiques pour l'IA
 
 Bienvenue dans votre plan de formation global. Cochez les jalons au fur et a mesure de votre progression !
 
-## AnnÃ©e 1 : le socle des fondations et l'analyse rÃ©elle
+## AnnÃ©e 1 : le socle des fondations et l'analyse réelle
 ### Trimestre 1 : logique, ensembles et algÃ¨bre linÃ©aire de base
 - [ ] [[Jalon 1 (Logique formelle)]] : Logique formelle, connecteurs, tables de vÃ©ritÃ© et calcul des propositions.
 - [ ] [[Jalon 2 (MÃ©thodes de raisonnement)]] : MÃ©thodes de raisonnement (implication, contraposÃ©e, l'absurde, analyse-synthÃ¨se).
