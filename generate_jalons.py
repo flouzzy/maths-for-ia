@@ -212,8 +212,6 @@ for line in lines:
             short_title = extract_short_title(desc)
             if "Livrable IA" in short_title:
                 short_title = "Livrable IA"
-            elif short_title.startswith("Livrable"):
-                short_title = short_title
                 
             filename = f"{j_id} ({short_title}).md"
             jalons.append({
