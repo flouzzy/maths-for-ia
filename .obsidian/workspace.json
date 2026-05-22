@@ -201,6 +201,8 @@
   },
   "active": "23dc64f7c61cdf75",
   "lastOpenFiles": [
+    "Tableau de bord.md",
+    "generate_index.ps1",
     "Jalon 1 (Logique formelle).md",
     "Jalon 11 (Formes linéaires).md",
     "Jalon 4 (Théorie des ensembles).md",
@@ -227,7 +229,6 @@
     "Jalon 72 (Livrable IA).md",
     "Jalon 10 (Changements de base).md",
     "Jalon 64 (Construction pas Ã  pas de la mesure de Lebesgue sur $-mathbb{R}$ via la mesure extÃ©rieure.).md",
-    "Jalon 109 (Topologie des sous-variÃ©tÃ©s de $-mathbb{R}^n$).md",
     "generate_jalons.ps1",
     "generate_jalons.py",
     "desktop.ini"
