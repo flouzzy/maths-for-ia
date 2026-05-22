@@ -192,7 +192,6 @@ current_trimester = ""
 trimester_context = ""
 
 jalons = []
-all_jalon_titles = {} # map jalon id string to filename
 
 # First pass: collect all jalons
 for line in lines:
@@ -225,8 +224,6 @@ for line in lines:
                 'context': trimester_context,
                 'filename': filename
             })
-            
-            all_jalon_titles[j_id] = filename
     elif line:
         if current_trimester and not line.startswith("Jalon"):
             trimester_context += line + " "
