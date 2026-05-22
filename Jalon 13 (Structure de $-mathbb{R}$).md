@@ -1,6 +1,6 @@
 # Jalon 13
 
-**AnnÃ©e 1 : le socle des fondations et l'analyse réelle** > **Trimestre 2 : analyse réelle, suites et sÃ©ries de fonctions**
+**AnnÃ©e 1 : le socle des fondations et l'analyse réelle** > **Trimestre 2 : analyse réelle, suites et séries de fonctions**
 
 > *Ce bloc demande du temps pour maÃ®triser la rigueur des limites et des approximations.*
 
