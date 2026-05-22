@@ -216,6 +216,7 @@ for line in lines:
                 short_title = short_title
                 
             filename = f"{j_id} ({short_title}).md"
+            filename = re.sub(r'[\\/*?:"<>|]', '-', filename)
             jalons.append({
                 'id': j_id,
                 'desc': desc,
