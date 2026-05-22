@@ -177,11 +177,13 @@ Jalons 145 à 152 : Rédaction d'un article de recherche théorique de synthèse
 Jalons 153 à 156 : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 """
 
+TITLE_SPLIT_PATTERN = re.compile(r'[,(:]')
+
 def extract_short_title(text):
     # Take part before first comma, parentheses, colon (if inside), or end
     # "Logique formelle, connecteurs" -> "Logique formelle"
     # "Quantification (\\forall, \\exists)" -> "Quantification"
-    match = re.split(r'[,(:]', text, 1)
+    match = TITLE_SPLIT_PATTERN.split(text, 1)
     title = match[0].strip()
     return title
 
