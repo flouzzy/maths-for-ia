@@ -194,44 +194,46 @@ def parse_jalons(text_content):
     current_trimester = ""
     trimester_context = ""
 
-jalons = []
+    jalons = []
 
-# Pre-compile regex for jalons
-jalon_pattern = re.compile(r'(Jalon[s]? [\d à]+) : (.+)')
+    # Pre-compile regex for jalons
+    jalon_pattern = re.compile(r'(Jalon[s]? [\d à]+) : (.+)')
 
-# First pass: collect all jalons
-for line in lines:
-    line = line.strip()
-    if line.startswith("Année"):
-        current_year = line
-    elif line.startswith("Trimestre"):
-        current_trimester = line
-        trimester_context = ""
-    elif line.startswith("Jalon ") or line.startswith("Jalons "):
-        # Parse jalon number and title
-        match = jalon_pattern.match(line)
-        if match:
-            j_id = match.group(1)
-            desc = match.group(2)
-            
-            short_title = extract_short_title(desc)
-            if "Livrable IA" in short_title:
-                short_title = "Livrable IA"
+    # First pass: collect all jalons
+    for line in lines:
+        line = line.strip()
+        if line.startswith("Année"):
+            current_year = line
+        elif line.startswith("Trimestre"):
+            current_trimester = line
+            trimester_context = ""
+        elif line.startswith("Jalon ") or line.startswith("Jalons "):
+            # Parse jalon number and title
+            match = jalon_pattern.match(line)
+            if match:
+                j_id = match.group(1)
+                desc = match.group(2)
                 
-            filename = f"{j_id} ({short_title}).md"
-            filename = re.sub(r'[\\/*?:"<>|]', '-', filename)
-            jalons.append({
-                'id': j_id,
-                'desc': desc,
-                'full_line': line,
-                'year': current_year,
-                'trimester': current_trimester,
-                'context': trimester_context,
-                'filename': filename
-            })
-    elif line:
-        if current_trimester and not line.startswith("Jalon"):
-            trimester_context += line + " "
+                short_title = extract_short_title(desc)
+                if "Livrable IA" in short_title:
+                    short_title = "Livrable IA"
+
+                filename = f"{j_id} ({short_title}).md"
+                filename = re.sub(r'[\\/*?:"<>|]', '-', filename)
+                jalons.append({
+                    'id': j_id,
+                    'desc': desc,
+                    'full_line': line,
+                    'year': current_year,
+                    'trimester': current_trimester,
+                    'context': trimester_context,
+                    'filename': filename
+                })
+        elif line:
+            if current_trimester and not line.startswith("Jalon"):
+                trimester_context += line + " "
+
+    return jalons, None
 
 def generate_links(jalon, jalons_list, index):
     links = []

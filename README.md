@@ -1,0 +1,36 @@
+# Jalons de Mathématiques pour l'Intelligence Artificielle
+
+Ce dépôt contient un script permettant de générer automatiquement un ensemble de fiches de notes (au format Markdown) destinées à être utilisées comme coffre (*vault*) dans [Obsidian](https://obsidian.md/). Ce projet modélise un programme de mathématiques sur 3 ans, spécifiquement orienté vers les fondements théoriques de l'intelligence artificielle.
+
+## Objectif du Projet
+
+Le projet génère des "Jalons" d'apprentissage répartis sur trois années de cursus :
+- **Année 1 : Le socle des fondations et l'analyse réelle** (Logique, algèbre linéaire, analyse réelle, réduction d'endomorphismes, etc.)
+- **Année 2 : L'abstraction topologique et la théorie de la mesure** (Topologie générale, théorie de la mesure, intégration de Lebesgue, espaces $L^p$, probabilités axiomatiques, etc.)
+- **Année 3 : Le niveau master (analyse fonctionnelle, géométrie et apprentissage)** (Analyse fonctionnelle, géométrie différentielle, optimisation convexe avancée, théorie de l'apprentissage statistique, etc.)
+
+Ces notes sont structurées et interconnectées. Elles incluent des liens de navigation vers les jalons précédents et suivants, ainsi que des liens sémantiques automatiques entre les concepts mathématiques transversaux.
+
+## Fichiers Principaux
+
+- **`generate_jalons.py`** : C'est le script principal du projet, écrit en Python. Il contient le texte source du programme complet, le découpe par années et trimestres, et génère individuellement chaque fichier Markdown (par exemple : `Jalon 1 (Logique formelle).md`). Il s'occupe également de générer le contenu de la note, d'injecter des métadonnées contextuelles et de créer les liens inter-notes automatiques (par ex. pour les notions associées à Hilbert, aux mesures, à la topologie, etc.).
+- **`test_generate_jalons.py`** : Contient la suite de tests unitaires du projet, permettant de vérifier la logique de création de liens inter-concepts (`generate_concept_links`) définie dans le script principal.
+- **`generate_jalons.ps1`, `generate_index.ps1`, `git-sync.ps1`** : Scripts utilitaires PowerShell prévus pour une utilisation sous environnement Windows ou via `pwsh` pour générer des index ou automatiser certaines tâches Git.
+
+## Comment Générer les Notes
+
+Assurez-vous d'avoir Python 3 installé. Pour générer ou mettre à jour l'ensemble des notes Markdown, il vous suffit d'exécuter le script Python depuis la racine du dépôt :
+
+```bash
+python3 generate_jalons.py
+```
+
+Une fois la commande exécutée, le script créera de nombreux fichiers `.md` correspondant au cursus. Vous pouvez ensuite ouvrir le répertoire racine du projet directement dans Obsidian pour consulter et lier vos notes.
+
+## Comment Lancer les Tests
+
+Le projet utilise le framework standard `unittest` de Python. Pour lancer les tests et s'assurer que le script de liens conceptuels fonctionne correctement sans introduire de régression, exécutez la commande suivante :
+
+```bash
+python3 -m unittest test_generate_jalons.py
+```
