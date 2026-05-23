@@ -1,11 +1,11 @@
-﻿# Jalon 122
+# Jalon 122
 
-**AnnÃ©e 3 : le niveau master (analyse fonctionnelle, gÃ©omÃ©trie et apprentissage)** > **Trimestre 11 : optimisation convexe avancÃ©e et mÃ©thodes Ã  noyaux**
+**Année 3 : le niveau master (analyse fonctionnelle, géométrie et apprentissage)** > **Trimestre 11 : optimisation convexe avancée et méthodes à noyaux**
 
-> *Vous dÃ©montez ici les mÃ©canismes physiques fine-tunant les grands modÃ¨les.*
+> *Vous démontez ici les mécanismes physiques fine-tunant les grands modèles.*
 
 ## Description
-Notion de sous-gradient, sous-diffÃ©rentiel $\partial f(x)$ et optimisation de fonctions non lisses.
+Notion de sous-gradient, sous-différentiel $\partial f(x)$ et optimisation de fonctions non lisses.
 
 ---
-**PrÃ©cÃ©dent** : [[Jalon 121 (Ensembles convexes)]] | **Suivant** : [[Jalon 123 (ProblÃ¨mes d'optimisation sous contraintes)]]
+**Précédent** : [[Jalon 121 (Ensembles convexes)]] | **Suivant** : [[Jalon 123 (Problèmes d'optimisation sous contraintes)]]

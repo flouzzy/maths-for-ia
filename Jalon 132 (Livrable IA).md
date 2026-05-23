@@ -1,11 +1,11 @@
-﻿# Jalon 132
+# Jalon 132
 
-**AnnÃ©e 3 : le niveau master (analyse fonctionnelle, gÃ©omÃ©trie et apprentissage)** > **Trimestre 11 : optimisation convexe avancÃ©e et mÃ©thodes Ã  noyaux**
+**Année 3 : le niveau master (analyse fonctionnelle, géométrie et apprentissage)** > **Trimestre 11 : optimisation convexe avancée et méthodes à noyaux**
 
-> *Vous dÃ©montez ici les mÃ©canismes physiques fine-tunant les grands modÃ¨les.*
+> *Vous démontez ici les mécanismes physiques fine-tunant les grands modèles.*
 
 ## Description
-Livrable IA T11 : Codage complet en Python pur d'un solveur de point proximal sous contraintes KKT strictes pour l'Ã©lagage thÃ©orique (pruning) de rÃ©seaux profonds.
+Livrable IA T11 : Codage complet en Python pur d'un solveur de point proximal sous contraintes KKT strictes pour l'élagage théorique (pruning) de réseaux profonds.
 
 ---
-**PrÃ©cÃ©dent** : [[Jalon 131 (Algorithmes d'optimisation de second ordre en grande dimension)]] | **Suivant** : [[Jalon 133 (ModÃ¨le PAC)]]
+**Précédent** : [[Jalon 131 (Algorithmes d'optimisation de second ordre en grande dimension)]] | **Suivant** : [[Jalon 133 (Modèle PAC)]]

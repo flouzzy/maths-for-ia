@@ -1,11 +1,11 @@
-﻿# Jalon 112
+# Jalon 112
 
-**AnnÃ©e 3 : le niveau master (analyse fonctionnelle, gÃ©omÃ©trie et apprentissage)** > **Trimestre 10 : gÃ©omÃ©trie diffÃ©rentielle et calcul des variations**
+**Année 3 : le niveau master (analyse fonctionnelle, géométrie et apprentissage)** > **Trimestre 10 : géométrie différentielle et calcul des variations**
 
-> *L'Ã©tude des espaces courbes, base mathÃ©matique des architectures de rÃ©seaux sur graphes.*
+> *L'étude des espaces courbes, base mathématique des architectures de réseaux sur graphes.*
 
 ## Description
-Champs de vecteurs, flots locaux, courbes intÃ©grales et crochet de Lie.
+Champs de vecteurs, flots locaux, courbes intégrales et crochet de Lie.
 
 ---
-**PrÃ©cÃ©dent** : [[Jalon 111 (Applications diffÃ©rentiables entre variÃ©tÃ©s)]] | **Suivant** : [[Jalon 113 (Tenseurs)]]
+**Précédent** : [[Jalon 111 (Applications différentiables entre variétés)]] | **Suivant** : [[Jalon 113 (Tenseurs)]]

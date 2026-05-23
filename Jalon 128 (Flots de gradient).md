@@ -1,11 +1,11 @@
-﻿# Jalon 128
+# Jalon 128
 
-**AnnÃ©e 3 : le niveau master (analyse fonctionnelle, gÃ©omÃ©trie et apprentissage)** > **Trimestre 11 : optimisation convexe avancÃ©e et mÃ©thodes Ã  noyaux**
+**Année 3 : le niveau master (analyse fonctionnelle, géométrie et apprentissage)** > **Trimestre 11 : optimisation convexe avancée et méthodes à noyaux**
 
-> *Vous dÃ©montez ici les mÃ©canismes physiques fine-tunant les grands modÃ¨les.*
+> *Vous démontez ici les mécanismes physiques fine-tunant les grands modèles.*
 
 ## Description
-Flots de gradient (Gradient Flows) : interprÃ©tation continue de la descente de gradient comme courbe de plus grande pente dans l'espace des mesures.
+Flots de gradient (Gradient Flows) : interprétation continue de la descente de gradient comme courbe de plus grande pente dans l'espace des mesures.
 
----
-**PrÃ©cÃ©dent** : [[Jalon 127 (DÃ©monstration du thÃ©orÃ¨me du reprÃ©sentant dans les RKHS)]] | **Suivant** : [[Jalon 129 (Optimisation stochastique)]]
+\n**Concepts liés** : [[Jalon 63 (Définition axiomatique d'une mesure)]]\n---
+**Précédent** : [[Jalon 127 (Démonstration du théorème du représentant dans les RKHS)]] | **Suivant** : [[Jalon 129 (Optimisation stochastique)]]

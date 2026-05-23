@@ -1,11 +1,11 @@
-﻿# Jalon 9
+# Jalon 9
 
-**AnnÃ©e 1 : le socle des fondations et l'analyse rÃ©elle** > **Trimestre 1 : logique, ensembles et algÃ¨bre linÃ©aire de base**
+**Année 1 : le socle des fondations et l'analyse réelle** > **Trimestre 1 : logique, ensembles et algèbre linéaire de base**
 
-> *L'objectif est de rÃ©apprendre la langue mathÃ©matique et de passer des tableaux de nombres Ã  l'abstraction vectorielle.*
+> *L'objectif est de réapprendre la langue mathématique et de passer des tableaux de nombres à l'abstraction vectorielle.*
 
 ## Description
-Calcul matriciel, opÃ©rations, inversibilitÃ© et reprÃ©sentations des applications linÃ©aires.
+Calcul matriciel, opérations, inversibilité et représentations des applications linéaires.
 
 ---
-**PrÃ©cÃ©dent** : [[Jalon 8 (Applications linÃ©aires)]] | **Suivant** : [[Jalon 10 (Changements de base)]]
+**Précédent** : [[Jalon 8 (Applications linéaires)]] | **Suivant** : [[Jalon 10 (Changements de base)]]

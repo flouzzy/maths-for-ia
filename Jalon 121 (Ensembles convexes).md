@@ -1,11 +1,11 @@
-﻿# Jalon 121
+# Jalon 121
 
-**AnnÃ©e 3 : le niveau master (analyse fonctionnelle, gÃ©omÃ©trie et apprentissage)** > **Trimestre 11 : optimisation convexe avancÃ©e et mÃ©thodes Ã  noyaux**
+**Année 3 : le niveau master (analyse fonctionnelle, géométrie et apprentissage)** > **Trimestre 11 : optimisation convexe avancée et méthodes à noyaux**
 
-> *Vous dÃ©montez ici les mÃ©canismes physiques fine-tunant les grands modÃ¨les.*
+> *Vous démontez ici les mécanismes physiques fine-tunant les grands modèles.*
 
 ## Description
-Ensembles convexes, fonctions convexes, Ã©pigraphe et propriÃ©tÃ©s de continuitÃ© des fonctions convexes.
+Ensembles convexes, fonctions convexes, épigraphe et propriétés de continuité des fonctions convexes.
 
 ---
-**PrÃ©cÃ©dent** : [[Jalon 120 (Livrable IA)]] | **Suivant** : [[Jalon 122 (Notion de sous-gradient)]]
+**Précédent** : [[Jalon 120 (Livrable IA)]] | **Suivant** : [[Jalon 122 (Notion de sous-gradient)]]

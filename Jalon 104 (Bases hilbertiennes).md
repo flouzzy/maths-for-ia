@@ -1,11 +1,11 @@
-﻿# Jalon 104
+# Jalon 104
 
-**AnnÃ©e 3 : le niveau master (analyse fonctionnelle, gÃ©omÃ©trie et apprentissage)** > **Trimestre 9 : analyse fonctionnelle et thÃ©orie spectrale**
+**Année 3 : le niveau master (analyse fonctionnelle, géométrie et apprentissage)** > **Trimestre 9 : analyse fonctionnelle et théorie spectrale**
 
-> *Vous Ã©tudiez ici les espaces de dimension infinie oÃ¹ les fonctions deviennent de simples points.*
+> *Vous étudiez ici les espaces de dimension infinie où les fonctions deviennent de simples points.*
 
 ## Description
-Bases hilbertiennes (systÃ¨mes orthonormÃ©s complets) et sÃ©parabilitÃ© des espaces de Hilbert.
+Bases hilbertiennes (systèmes orthonormés complets) et séparabilité des espaces de Hilbert.
 
----
-**PrÃ©cÃ©dent** : [[Jalon 103 (Espaces de Hilbert gÃ©nÃ©raux)]] | **Suivant** : [[Jalon 105 (OpÃ©rateurs adjoints)]]
+\n**Concepts liés** : [[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L^2)]]\n---
+**Précédent** : [[Jalon 103 (Espaces de Hilbert généraux)]] | **Suivant** : [[Jalon 105 (Opérateurs adjoints)]]

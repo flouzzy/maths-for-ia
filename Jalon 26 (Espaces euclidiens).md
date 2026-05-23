@@ -1,11 +1,11 @@
-﻿# Jalon 26
+# Jalon 26
 
-**AnnÃ©e 1 : le socle des fondations et l'analyse rÃ©elle** > **Trimestre 3 : rÃ©duction des endomorphismes et espaces prÃ©hilbertiens**
+**Année 1 : le socle des fondations et l'analyse réelle** > **Trimestre 3 : réduction des endomorphismes et espaces préhilbertiens**
 
-> *Ici, vous posez les bases gÃ©omÃ©triques nÃ©cessaires pour comprendre la structure des donnÃ©es.*
+> *Ici, vous posez les bases géométriques nécessaires pour comprendre la structure des données.*
 
 ## Description
-Espaces euclidiens, orthogonalitÃ©, thÃ©orÃ¨me de la projection orthogonale et algorithme de Gram-Schmidt.
+Espaces euclidiens, orthogonalité, théorème de la projection orthogonale et algorithme de Gram-Schmidt.
 
 ---
-**PrÃ©cÃ©dent** : [[Jalon 25 (Formes bilinÃ©aires)]] | **Suivant** : [[Jalon 27 (Endomorphismes symÃ©triques)]]
+**Précédent** : [[Jalon 25 (Formes bilinéaires)]] | **Suivant** : [[Jalon 27 (Endomorphismes symétriques)]]

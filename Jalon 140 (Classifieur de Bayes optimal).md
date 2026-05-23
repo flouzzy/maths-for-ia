@@ -1,11 +1,11 @@
-﻿# Jalon 140
+# Jalon 140
 
-**AnnÃ©e 3 : le niveau master (analyse fonctionnelle, gÃ©omÃ©trie et apprentissage)** > **Trimestre 12 : thÃ©orie de l'apprentissage statistique**
+**Année 3 : le niveau master (analyse fonctionnelle, géométrie et apprentissage)** > **Trimestre 12 : théorie de l'apprentissage statistique**
 
-> *Le sommet du cursus : prouver mathÃ©matiquement qu'une machine est capable de gÃ©nÃ©raliser.*
+> *Le sommet du cursus : prouver mathématiquement qu'une machine est capable de généraliser.*
 
 ## Description
 Classifieur de Bayes optimal, fonctions de perte de substitution (Surrogate losses) et consistance de la minimisation du risque empirique.
 
 ---
-**PrÃ©cÃ©dent** : [[Jalon 139 (Notion de stabilitÃ© algorithmique)]] | **Suivant** : [[Jalon 141 (ThÃ©orÃ¨mes de Glivenko-Cantelli gÃ©nÃ©ralisÃ©s pour les classes de fonctions VC.)]]
+**Précédent** : [[Jalon 139 (Notion de stabilité algorithmique)]] | **Suivant** : [[Jalon 141 (Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC.)]]

@@ -1,11 +1,11 @@
-﻿# Jalon 36
+# Jalon 36
 
-**AnnÃ©e 1 : le socle des fondations et l'analyse rÃ©elle** > **Trimestre 3 : rÃ©duction des endomorphismes et espaces prÃ©hilbertiens**
+**Année 1 : le socle des fondations et l'analyse réelle** > **Trimestre 3 : réduction des endomorphismes et espaces préhilbertiens**
 
-> *Ici, vous posez les bases gÃ©omÃ©triques nÃ©cessaires pour comprendre la structure des donnÃ©es.*
+> *Ici, vous posez les bases géométriques nécessaires pour comprendre la structure des données.*
 
 ## Description
-Livrable IA T3 : Ã‰criture des Ã©quations de la dÃ©composition en valeurs singuliÃ¨res (SVD) et application mathÃ©matique Ã  la compression d'une matrice de pixels d'image.
+Livrable IA T3 : Écriture des équations de la décomposition en valeurs singulières (SVD) et application mathématique à la compression d'une matrice de pixels d'image.
 
 ---
-**PrÃ©cÃ©dent** : [[Jalon 35 (CaractÃ©risation sÃ©quentielle des ouverts)]] | **Suivant** : [[Jalon 37 (IntÃ©grale de Riemann sur un segment)]]
+**Précédent** : [[Jalon 35 (Caractérisation séquentielle des ouverts)]] | **Suivant** : [[Jalon 37 (Intégrale de Riemann sur un segment)]]

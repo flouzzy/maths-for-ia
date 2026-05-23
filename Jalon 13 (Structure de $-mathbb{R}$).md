@@ -1,11 +1,11 @@
 # Jalon 13
 
-**AnnÃ©e 1 : le socle des fondations et l'analyse réelle** > **Trimestre 2 : analyse réelle, suites et séries de fonctions**
+**Année 1 : le socle des fondations et l'analyse réelle** > **Trimestre 2 : analyse réelle, suites et séries de fonctions**
 
-> *Ce bloc demande du temps pour maÃ®triser la rigueur des limites et des approximations.*
+> *Ce bloc demande du temps pour maîtriser la rigueur des limites et des approximations.*
 
 ## Description
-Structure de $\mathbb{R}$, axiome de la borne supÃ©rieure et propriÃ©tÃ© d'ArchimÃ¨de.
+Structure de $\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède.
 
 ---
-**PrÃ©cÃ©dent** : [[Jalon 12 (Livrable IA)]] | **Suivant** : [[Jalon 14 (Suites rÃ©elles et complexes)]]
+**Précédent** : [[Jalon 12 (Livrable IA)]] | **Suivant** : [[Jalon 14 (Suites réelles et complexes)]]

@@ -1,11 +1,11 @@
-﻿# Jalon 44
+# Jalon 44
 
-**AnnÃ©e 1 : le socle des fondations et l'analyse rÃ©elle** > **Trimestre 4 : calcul diffÃ©rentiel et intÃ©gration de Riemann**
+**Année 1 : le socle des fondations et l'analyse réelle** > **Trimestre 4 : calcul différentiel et intégration de Riemann**
 
-> *Ce bloc reconstruit le calcul Ã  plusieurs variables, moteur de l'apprentissage profond.*
+> *Ce bloc reconstruit le calcul à plusieurs variables, moteur de l'apprentissage profond.*
 
 ## Description
-Fonctions de plusieurs variables, limites, continuitÃ© et topologie de $\mathbb{R}^n$.
+Fonctions de plusieurs variables, limites, continuité et topologie de $\mathbb{R}^n$.
 
----
-**PrÃ©cÃ©dent** : [[Jalon 43 (SystÃ¨mes diffÃ©rentiels linÃ©aires d'ordre 1 et calcul de l'exponentielle de matrice.)]] | **Suivant** : [[Jalon 45 (DiffÃ©rentiabilitÃ©)]]
+\n**Concepts liés** : [[Jalon 49 (Espaces topologiques généraux)]]\n---
+**Précédent** : [[Jalon 43 (Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.)]] | **Suivant** : [[Jalon 45 (Différentiabilité)]]

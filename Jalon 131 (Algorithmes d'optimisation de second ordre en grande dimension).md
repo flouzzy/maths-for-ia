@@ -1,11 +1,11 @@
-﻿# Jalon 131
+# Jalon 131
 
-**AnnÃ©e 3 : le niveau master (analyse fonctionnelle, gÃ©omÃ©trie et apprentissage)** > **Trimestre 11 : optimisation convexe avancÃ©e et mÃ©thodes Ã  noyaux**
+**Année 3 : le niveau master (analyse fonctionnelle, géométrie et apprentissage)** > **Trimestre 11 : optimisation convexe avancée et méthodes à noyaux**
 
-> *Vous dÃ©montez ici les mÃ©canismes physiques fine-tunant les grands modÃ¨les.*
+> *Vous démontez ici les mécanismes physiques fine-tunant les grands modèles.*
 
 ## Description
 Algorithmes d'optimisation de second ordre en grande dimension (quasi-Newton, L-BFGS).
 
 ---
-**PrÃ©cÃ©dent** : [[Jalon 130 (RÃ©gularisation implicite de la descente de gradient dans les modÃ¨les sur-paramÃ©trÃ©s.)]] | **Suivant** : [[Jalon 132 (Livrable IA)]]
+**Précédent** : [[Jalon 130 (Régularisation implicite de la descente de gradient dans les modèles sur-paramétrés.)]] | **Suivant** : [[Jalon 132 (Livrable IA)]]

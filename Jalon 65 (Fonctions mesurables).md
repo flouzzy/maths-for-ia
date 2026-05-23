@@ -1,11 +1,11 @@
-﻿# Jalon 65
+# Jalon 65
 
-**AnnÃ©e 2 : l'abstraction topologique et la thÃ©orie de la mesure** > **Trimestre 6 : thÃ©orie de la mesure et intÃ©gration de Lebesgue**
+**Année 2 : l'abstraction topologique et la théorie de la mesure** > **Trimestre 6 : théorie de la mesure et intégration de Lebesgue**
 
-> *Vous apprenez ici Ã  mesurer des espaces de donnÃ©es complexes oÃ¹ l'intÃ©gration classique Ã©choue.*
+> *Vous apprenez ici à mesurer des espaces de données complexes où l'intégration classique échoue.*
 
 ## Description
-Fonctions mesurables, opÃ©rations Ã©lÃ©mentaires et approximation par des fonctions Ã©tagÃ©es.
+Fonctions mesurables, opérations élémentaires et approximation par des fonctions étagées.
 
 ---
-**PrÃ©cÃ©dent** : [[Jalon 64 (Construction pas Ã  pas de la mesure de Lebesgue sur $-mathbb{R}$ via la mesure extÃ©rieure.)]] | **Suivant** : [[Jalon 66 (Construction de l'intÃ©grale de Lebesgue pour les fonctions mesurables positives.)]]
+**Précédent** : [[Jalon 64 (Construction pas à pas de la mesure de Lebesgue sur $-mathbb{R}$ via la mesure extérieure.)]] | **Suivant** : [[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.)]]

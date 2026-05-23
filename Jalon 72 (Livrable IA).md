@@ -1,11 +1,11 @@
-﻿# Jalon 72
+# Jalon 72
 
-**AnnÃ©e 2 : l'abstraction topologique et la thÃ©orie de la mesure** > **Trimestre 6 : thÃ©orie de la mesure et intÃ©gration de Lebesgue**
+**Année 2 : l'abstraction topologique et la théorie de la mesure** > **Trimestre 6 : théorie de la mesure et intégration de Lebesgue**
 
-> *Vous apprenez ici Ã  mesurer des espaces de donnÃ©es complexes oÃ¹ l'intÃ©gration classique Ã©choue.*
+> *Vous apprenez ici à mesurer des espaces de données complexes où l'intégration classique échoue.*
 
 ## Description
-Livrable IA T6 : Formalisation de la divergence de Kullback-Leibler entre deux distributions de probabilitÃ©s continues complexes.
+Livrable IA T6 : Formalisation de la divergence de Kullback-Leibler entre deux distributions de probabilités continues complexes.
 
 ---
-**PrÃ©cÃ©dent** : [[Jalon 71 (ThÃ©orÃ¨mes de Fubini-Tonelli)]] | **Suivant** : [[Jalon 73 (DÃ©finition des espaces $-mathcal{L}^p$ et passage Ã  l'espace quotient $L^p$)]]
+**Précédent** : [[Jalon 71 (Théorèmes de Fubini-Tonelli)]] | **Suivant** : [[Jalon 73 (Définition des espaces $-mathcal{L}^p$ et passage à l'espace quotient $L^p$)]]

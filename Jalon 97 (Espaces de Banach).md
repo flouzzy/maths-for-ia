@@ -1,11 +1,11 @@
-﻿# Jalon 97
+# Jalon 97
 
-**AnnÃ©e 3 : le niveau master (analyse fonctionnelle, gÃ©omÃ©trie et apprentissage)** > **Trimestre 9 : analyse fonctionnelle et thÃ©orie spectrale**
+**Année 3 : le niveau master (analyse fonctionnelle, géométrie et apprentissage)** > **Trimestre 9 : analyse fonctionnelle et théorie spectrale**
 
-> *Vous Ã©tudiez ici les espaces de dimension infinie oÃ¹ les fonctions deviennent de simples points.*
+> *Vous étudiez ici les espaces de dimension infinie où les fonctions deviennent de simples points.*
 
 ## Description
-Espaces de Banach, opÃ©rateurs linÃ©aires continus entre Banach et topologie induite par la norme d'opÃ©rateur.
+Espaces de Banach, opérateurs linéaires continus entre Banach et topologie induite par la norme d'opérateur.
 
----
-**PrÃ©cÃ©dent** : [[Jalon 96 (Livrable IA)]] | **Suivant** : [[Jalon 98 (ThÃ©orÃ¨me de Hahn-Banach)]]
+\n**Concepts liés** : [[Jalon 49 (Espaces topologiques généraux)]]\n---
+**Précédent** : [[Jalon 96 (Livrable IA)]] | **Suivant** : [[Jalon 98 (Théorème de Hahn-Banach)]]

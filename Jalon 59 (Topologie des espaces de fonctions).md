@@ -1,11 +1,11 @@
-﻿# Jalon 59
+# Jalon 59
 
-**AnnÃ©e 2 : l'abstraction topologique et la thÃ©orie de la mesure** > **Trimestre 5 : topologie gÃ©nÃ©rale et espaces mÃ©triques**
+**Année 2 : l'abstraction topologique et la théorie de la mesure** > **Trimestre 5 : topologie générale et espaces métriques**
 
-> *Le premier grand saut dans l'abstraction pure. Prenez le temps de digÃ©rer chaque jalon.*
+> *Le premier grand saut dans l'abstraction pure. Prenez le temps de digérer chaque jalon.*
 
 ## Description
-Topologie des espaces de fonctions, convergence compacte et thÃ©orÃ¨me d'ArzelÃ -Ascoli.
+Topologie des espaces de fonctions, convergence compacte et théorème d'Arzelà-Ascoli.
 
----
-**PrÃ©cÃ©dent** : [[Jalon 58 (ThÃ©orÃ¨me de Baire)]] | **Suivant** : [[Jalon 60 (Livrable IA)]]
+\n**Concepts liés** : [[Jalon 49 (Espaces topologiques généraux)]]\n---
+**Précédent** : [[Jalon 58 (Théorème de Baire)]] | **Suivant** : [[Jalon 60 (Livrable IA)]]

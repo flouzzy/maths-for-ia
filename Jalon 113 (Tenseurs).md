@@ -1,11 +1,11 @@
-﻿# Jalon 113
+# Jalon 113
 
-**AnnÃ©e 3 : le niveau master (analyse fonctionnelle, gÃ©omÃ©trie et apprentissage)** > **Trimestre 10 : gÃ©omÃ©trie diffÃ©rentielle et calcul des variations**
+**Année 3 : le niveau master (analyse fonctionnelle, géométrie et apprentissage)** > **Trimestre 10 : géométrie différentielle et calcul des variations**
 
-> *L'Ã©tude des espaces courbes, base mathÃ©matique des architectures de rÃ©seaux sur graphes.*
+> *L'étude des espaces courbes, base mathématique des architectures de réseaux sur graphes.*
 
 ## Description
-Tenseurs, formes diffÃ©rentielles, produit extÃ©rieur $\wedge$ et calcul de la dÃ©rivÃ©e extÃ©rieure $d$.
+Tenseurs, formes différentielles, produit extérieur $\wedge$ et calcul de la dérivée extérieure $d$.
 
 ---
-**PrÃ©cÃ©dent** : [[Jalon 112 (Champs de vecteurs)]] | **Suivant** : [[Jalon 114 (Orientation des variÃ©tÃ©s et intÃ©gration des formes diffÃ©rentielles Ã  support compact.)]]
+**Précédent** : [[Jalon 112 (Champs de vecteurs)]] | **Suivant** : [[Jalon 114 (Orientation des variétés et intégration des formes différentielles à support compact.)]]
