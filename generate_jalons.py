@@ -197,20 +197,24 @@ def parse_jalons(text_content):
     jalons = []
     all_jalon_titles = {} # map jalon id string to filename
 
-    # First pass: collect all jalons
-    for line in lines:
-        line = line.strip()
-        if line.startswith("Année"):
-            current_year = line
-        elif line.startswith("Trimestre"):
-            current_trimester = line
-            trimester_context = ""
-        elif line.startswith("Jalon ") or line.startswith("Jalons "):
-            # Parse jalon number and title
-            match = re.match(r'(Jalon[s]? [\d à]+) : (.+)', line)
-            if match:
-                j_id = match.group(1)
-                desc = match.group(2)
+# First pass: collect all jalons
+for line in lines:
+    line = line.strip()
+    if line.startswith("Année"):
+        current_year = line
+    elif line.startswith("Trimestre"):
+        current_trimester = line
+        trimester_context = ""
+    elif line.startswith("Jalon ") or line.startswith("Jalons "):
+        # Parse jalon number and title
+        match = re.match(r'(Jalon[s]? [\d à]+) : (.+)', line)
+        if match:
+            j_id = match.group(1)
+            desc = match.group(2)
+            
+            short_title = extract_short_title(desc)
+            if "Livrable IA" in short_title:
+                short_title = "Livrable IA"
                 
                 short_title = extract_short_title(desc)
                 if "Livrable IA" in short_title:
