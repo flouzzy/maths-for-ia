@@ -219,6 +219,7 @@ for line in lines:
                 short_title = "Livrable IA"
                 
             filename = f"{j_id} ({short_title}).md"
+            filename = re.sub(r'[\\/*?:"<>|]', '-', filename)
             jalons.append({
                 'id': j_id,
                 'desc': desc,
