@@ -177,22 +177,24 @@ Jalons 145 à 152 : Rédaction d'un article de recherche théorique de synthèse
 Jalons 153 à 156 : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 """
 
+TITLE_SPLIT_PATTERN = re.compile(r'[,(:]')
+
 def extract_short_title(text):
     # Take part before first comma, parentheses, colon (if inside), or end
     # "Logique formelle, connecteurs" -> "Logique formelle"
     # "Quantification (\\forall, \\exists)" -> "Quantification"
-    match = re.split(r'[,(:]', text, 1)
+    match = TITLE_SPLIT_PATTERN.split(text, 1)
     title = match[0].strip()
     return title
 
-lines = text.strip().split('\\n')
+def parse_jalons(text_content):
+    lines = text_content.strip().split('\n')
 
-current_year = ""
-current_trimester = ""
-trimester_context = ""
+    current_year = ""
+    current_trimester = ""
+    trimester_context = ""
 
 jalons = []
-all_jalon_titles = {} # map jalon id string to filename
 
 # First pass: collect all jalons
 for line in lines:
@@ -212,8 +214,6 @@ for line in lines:
             short_title = extract_short_title(desc)
             if "Livrable IA" in short_title:
                 short_title = "Livrable IA"
-            elif short_title.startswith("Livrable"):
-                short_title = short_title
                 
             filename = f"{j_id} ({short_title}).md"
             jalons.append({
@@ -225,8 +225,6 @@ for line in lines:
                 'context': trimester_context,
                 'filename': filename
             })
-            
-            all_jalon_titles[j_id] = filename
     elif line:
         if current_trimester and not line.startswith("Jalon"):
             trimester_context += line + " "
@@ -265,31 +263,34 @@ def generate_concept_links(desc):
         return "\\n**Concepts liés** : " + ", ".join(links) + "\\n"
     return ""
 
-os.makedirs("Jalons", exist_ok=True)
+if __name__ == '__main__':
+    jalons, all_jalon_titles = parse_jalons(text)
 
-for i, jalon in enumerate(jalons):
-    filepath = os.path.join(os.getcwd(), jalon['filename'])
-    
-    content = f"# {jalon['id']}\\n\\n"
-    content += f"**{jalon['year']}** > **{jalon['trimester']}**\\n\\n"
-    
-    if jalon['context'].strip():
-        content += f"> *{jalon['context'].strip()}*\\n\\n"
-        
-    content += f"## Description\\n{jalon['desc']}\\n\\n"
-    
-    # Custom links (Jalon 108 etc)
-    custom_content = get_custom_content(jalon['id'])
-    if custom_content:
-        content += custom_content + "\\n\\n"
-        
-    # Automatic concept links
-    content += generate_concept_links(jalon['desc'])
-    
-    content += "---\\n"
-    content += generate_links(jalon, jalons, i) + "\\n"
-    
-    with open(filepath, 'w', encoding='utf-8') as f:
-        f.write(content)
+    os.makedirs("Jalons", exist_ok=True)
 
-print(f"Created {len(jalons)} notes in {os.getcwd()}")
+    for i, jalon in enumerate(jalons):
+        filepath = os.path.join(os.getcwd(), jalon['filename'])
+        
+        content = f"# {jalon['id']}\n\n"
+        content += f"**{jalon['year']}** > **{jalon['trimester']}**\n\n"
+        
+        if jalon['context'].strip():
+            content += f"> *{jalon['context'].strip()}*\n\n"
+
+        content += f"## Description\n{jalon['desc']}\n\n"
+
+        # Custom links (Jalon 108 etc)
+        custom_content = get_custom_content(jalon['id'])
+        if custom_content:
+            content += custom_content + "\n\n"
+
+        # Automatic concept links
+        content += generate_concept_links(jalon['desc'])
+
+        content += "---\n"
+        content += generate_links(jalon, jalons, i) + "\n"
+
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(content)
+
+    print(f"Created {len(jalons)} notes in {os.getcwd()}")
