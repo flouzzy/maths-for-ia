@@ -1,4 +1,4 @@
-$vaultDir = "c:\Users\Charles\Documents\MathsIA\MathsIA"
+$vaultDir = $PSScriptRoot
 Set-Location -Path $vaultDir
 
 # Vérifier s'il y a des changements
