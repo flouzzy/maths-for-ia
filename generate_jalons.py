@@ -274,8 +274,9 @@ if __name__ == '__main__':
 
     os.makedirs("Jalons", exist_ok=True)
 
+    cwd = os.getcwd()
     for i, jalon in enumerate(jalons):
-        filepath = os.path.join(os.getcwd(), jalon['filename'])
+        filepath = os.path.join(cwd, jalon['filename'])
         
         content = f"# {jalon['id']}\n\n"
         content += f"**{jalon['year']}** > **{jalon['trimester']}**\n\n"
@@ -299,4 +300,4 @@ if __name__ == '__main__':
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
 
-    print(f"Created {len(jalons)} notes in {os.getcwd()}")
+    print(f"Created {len(jalons)} notes in {cwd}")
