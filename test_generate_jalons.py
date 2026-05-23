@@ -1,12 +1,25 @@
 import pytest
-from generate_jalons import get_custom_content
+from generate_jalons import generate_links
 
-def test_get_custom_content_with_108():
-    expected = "Notions liées : [[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L^2)]] et [[Jalon 105 (Opérateurs adjoints)]]."
-    assert get_custom_content("108") == expected
-    assert get_custom_content("Jalon 108") == expected
+def test_generate_links():
+    jalons_list = [
+        {'filename': 'Jalon 1 (Logique formelle).md'},
+        {'filename': 'Jalon 2 (Méthodes de raisonnement).md'},
+        {'filename': 'Jalon 3 (Quantification).md'}
+    ]
 
-def test_get_custom_content_without_108():
-    assert get_custom_content("107") == ""
-    assert get_custom_content("Jalon 1") == ""
-    assert get_custom_content("10") == ""
+    # Test first element (index=0)
+    result_first = generate_links(None, jalons_list, 0)
+    assert result_first == "**Suivant** : [[Jalon 2 (Méthodes de raisonnement)]]"
+
+    # Test middle element (index=1)
+    result_middle = generate_links(None, jalons_list, 1)
+    assert result_middle == "**Précédent** : [[Jalon 1 (Logique formelle)]] | **Suivant** : [[Jalon 3 (Quantification)]]"
+
+    # Test last element (index=2)
+    result_last = generate_links(None, jalons_list, 2)
+    assert result_last == "**Précédent** : [[Jalon 2 (Méthodes de raisonnement)]]"
+
+    # Test empty/single element
+    result_single = generate_links(None, [{'filename': 'Jalon 1.md'}], 0)
+    assert result_single == ""
