@@ -194,8 +194,7 @@ def parse_jalons(text_content):
     current_trimester = ""
     trimester_context = ""
 
-    jalons = []
-    all_jalon_titles = {} # map jalon id string to filename
+jalons = []
 
 # First pass: collect all jalons
 for line in lines:
@@ -216,29 +215,19 @@ for line in lines:
             if "Livrable IA" in short_title:
                 short_title = "Livrable IA"
                 
-                short_title = extract_short_title(desc)
-                if "Livrable IA" in short_title:
-                    short_title = "Livrable IA"
-                elif short_title.startswith("Livrable"):
-                    short_title = short_title
-
-                filename = f"{j_id} ({short_title}).md"
-                jalons.append({
-                    'id': j_id,
-                    'desc': desc,
-                    'full_line': line,
-                    'year': current_year,
-                    'trimester': current_trimester,
-                    'context': trimester_context,
-                    'filename': filename
-                })
-
-                all_jalon_titles[j_id] = filename
-        elif line:
-            if current_trimester and not line.startswith("Jalon"):
-                trimester_context += line + " "
-
-    return jalons, all_jalon_titles
+            filename = f"{j_id} ({short_title}).md"
+            jalons.append({
+                'id': j_id,
+                'desc': desc,
+                'full_line': line,
+                'year': current_year,
+                'trimester': current_trimester,
+                'context': trimester_context,
+                'filename': filename
+            })
+    elif line:
+        if current_trimester and not line.startswith("Jalon"):
+            trimester_context += line + " "
 
 def generate_links(jalon, jalons_list, index):
     links = []
