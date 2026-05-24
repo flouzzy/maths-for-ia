@@ -128,6 +128,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 105** : Opérateurs adjoints. (Enrichi le 2026-05-24)
 - **Jalon 106** : Théorème spectral pour les opérateurs compacts autoadjoints. (Enrichi le 2026-05-24)
 - **Jalon 107** : Introduction à la théorie des opérateurs non bornés et résolvante. (Enrichi le 2026-05-24)
+- **Jalon 108** : Livrable IA T9 : Modélisation de l'opérateur d'Attention de la structure Transformer sous forme d'opérateur intégral borné sur un espace hilbertien. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
