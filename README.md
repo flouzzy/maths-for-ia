@@ -54,6 +54,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 31** : Introduction à la réduction de Jordan et structure des nilpotents. (Enrichi le 2026-05-24)
 - **Jalon 32** : Preuve complète du théorème spectral pour les endomorphismes symétriques. (Enrichi le 2026-05-24)
 - **Jalon 33** : Formes quadratiques, réduction de Gauss, base orthogonale et loi d'inertie de Sylvester. (Enrichi le 2026-05-24)
+- **Jalon 34** : Topologie élémentaire des espaces vectoriels normés (normes, équivalence des normes en dimension finie). (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
