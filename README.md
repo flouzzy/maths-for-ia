@@ -102,6 +102,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 79** : Convergence en moyenne quadratique des séries de Fourier et identité de Parseval. (Enrichi le 2026-05-24)
 - **Jalon 80** : Transformée de Fourier dans $L^1$, propriétés et théorème d'inversion. (Enrichi le 2026-05-24)
 - **Jalon 81** : Transformée de Fourier dans $L^2$, isométrie de Plancherel. (Enrichi le 2026-05-24)
+- **Jalon 82** : Introduction à la théorie des distributions de Schwartz. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
