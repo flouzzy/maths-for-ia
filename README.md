@@ -95,6 +95,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 72** : Livrable IA T6 : Formalisation de la divergence de Kullback-Leibler entre deux distributions de probabilités continues complexes. (Enrichi le 2026-05-24)
 - **Jalon 73** : Définition des espaces $\mathcal{L}^p$ et passage à l'espace quotient $L^p$. (Enrichi le 2026-05-24)
 - **Jalon 74** : Inégalités fondamentales de l'analyse fonctionnelle : Hölder, Minkowski et Jensen. (Enrichi le 2026-05-24)
+- **Jalon 75** : Preuve de la complétude des espaces $L^p$ (Théorème de Riesz-Fischer). (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
