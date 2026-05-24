@@ -117,6 +117,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 94** : Démonstration du théorème central limite. (Enrichi le 2026-05-24)
 - **Jalon 95** : Vecteurs gaussiens, matrice de covariance et caractérisation par les combinaisons linéaires. (Enrichi le 2026-05-24)
 - **Jalon 96** : Livrable IA T8 : Démonstration rigoureuse de la convergence de la fonction de perte Cross-Entropy vers l'information théorique de Shannon lors de l'entraînement des modèles de langage. (Enrichi le 2026-05-24)
+- **Jalon 97** : Espaces de Banach, normes d'opérateurs et espace dual. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
