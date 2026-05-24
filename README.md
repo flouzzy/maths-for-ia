@@ -83,6 +83,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 60** : Livrable IA T5 : Preuve du théorème d'approximation universelle des réseaux de neurones (utilisation de la topologie de la convergence uniforme sur les compacts). (Enrichi le 2026-05-24)
 - **Jalon 61** : Insuffisances de l'intégrale de Riemann et motivation pour la mesure de Lebesgue. (Enrichi le 2026-05-24)
 - **Jalon 62** : Algèbres, tribus (sigma-algèbres) et classes monotones. (Enrichi le 2026-05-24)
+- **Jalon 63** : Définition axiomatique d'une mesure, mesures de probabilité et propriétés de continuité monotone. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
