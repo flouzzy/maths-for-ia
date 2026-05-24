@@ -100,6 +100,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 77** : Densité des fonctions simples et des fonctions continues dans $L^p$. (Enrichi le 2026-05-24)
 - **Jalon 78** : Séries de Fourier : coefficients de Fourier et convergence dans $L^2$. (Enrichi le 2026-05-24)
 - **Jalon 79** : Convergence en moyenne quadratique des séries de Fourier et identité de Parseval. (Enrichi le 2026-05-24)
+- **Jalon 80** : Transformée de Fourier dans $L^1$, propriétés et théorème d'inversion. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
