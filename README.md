@@ -124,6 +124,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 101** : Théorème de l'application ouverte et théorème du graphe fermé. (Enrichi le 2026-05-24)
 - **Jalon 102** : Topologies faibles et faibles-*. (Enrichi le 2026-05-24)
 - **Jalon 103** : Espaces de Hilbert généraux et théorème de représentation de Riesz. (Enrichi le 2026-05-24)
+- **Jalon 104** : Bases hilbertiennes et décomposition orthogonale. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
