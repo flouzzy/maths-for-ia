@@ -126,6 +126,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 103** : Espaces de Hilbert généraux et théorème de représentation de Riesz. (Enrichi le 2026-05-24)
 - **Jalon 104** : Bases hilbertiennes et décomposition orthogonale. (Enrichi le 2026-05-24)
 - **Jalon 105** : Opérateurs adjoints. (Enrichi le 2026-05-24)
+- **Jalon 106** : Théorème spectral pour les opérateurs compacts autoadjoints. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
