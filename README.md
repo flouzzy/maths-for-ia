@@ -37,6 +37,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 14** : Suites réelles et complexes, définitions rigoureuses des limites ($\epsilon, N$) et critères de convergence. (Enrichi le 2026-05-24)
 - **Jalon 15** : Sous-suites, valeurs d'adhérence et preuve par séparation du théorème de Bolzano-Weierstrass. (Enrichi le 2026-05-24)
 - **Jalon 16** : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy. (Enrichi le 2026-05-24)
+- **Jalon 17** : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
