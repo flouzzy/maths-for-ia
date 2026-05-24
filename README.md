@@ -46,6 +46,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 23** : Séries entières, calcul du rayon de convergence (règle de d'Alembert-Cauchy) et propriétés de la somme. (Enrichi le 2026-05-24)
 - **Jalon 24** : Livrable IA T2 : Analyse mathématique des critères de convergence d'une régression polynomiale et résolution d'un problème d'analyse de l'ENS sur les interversions de limites. (Enrichi le 2026-05-24)
 - **Jalon 25** : Formes bilinéaires, formes sesquilinieaires, produit scalaire et inégalité de Cauchy-Schwarz. (Enrichi le 2026-05-24)
+- **Jalon 26** : Espaces euclidiens, orthogonalité, théorème de la projection orthogonale et algorithme de Gram-Schmidt. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
