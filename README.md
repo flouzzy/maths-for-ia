@@ -13,7 +13,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 
 ## Fichiers Principaux
 
-- **`generate_jalons.py`** : C'est le script principal du projet, écrit en Python. Il contient le texte source du programme complet, le découpe par années et trimestres, et génère individuellement chaque fichier Markdown (par exemple : `Jalon 1 (Logique formelle).md`). Il s'occupe également de générer le contenu de la note, d'injecter des métadonnées contextuelles et de créer les liens inter-notes automatiques (par ex. pour les notions associées à Hilbert, aux mesures, à la topologie, etc.).
+- **`generate_jalons.py`** : C'est le script principal du projet, écrit en Python. Il contient le texte source du programme complet, le découpe par années et trimestres, et génère pour chaque jalon un dossier dédié contenant la fiche principale (par exemple : `Jalon 1 (Logique formelle)/Jalon 1 (Logique formelle).md`). Cette structure permet d'organiser proprement chaque jalon en y ajoutant des ressources complémentaires (exercices, schémas, notes personnelles) sans encombrer la racine du dépôt.
 - **`test_generate_jalons.py`** : Contient la suite de tests unitaires du projet, permettant de vérifier la logique de création de liens inter-concepts (`generate_concept_links`) définie dans le script principal.
 - **`generate_jalons.ps1`, `generate_index.ps1`, `git-sync.ps1`** : Scripts utilitaires PowerShell prévus pour une utilisation sous environnement Windows ou via `pwsh` pour générer des index ou automatiser certaines tâches Git.
 
@@ -25,7 +25,7 @@ Assurez-vous d'avoir Python 3 installé. Pour générer ou mettre à jour l'ense
 python3 generate_jalons.py
 ```
 
-Une fois la commande exécutée, le script créera de nombreux fichiers `.md` correspondant au cursus. Vous pouvez ensuite ouvrir le répertoire racine du projet directement dans Obsidian pour consulter et lier vos notes.
+Une fois la commande exécutée, le script créera de nombreux dossiers correspondant au cursus. Vous pouvez ensuite ouvrir le répertoire racine du projet directement dans Obsidian pour consulter et lier vos notes. Obsidian détectera automatiquement les fichiers Markdown à l'intérieur des dossiers.
 
 ## Comment Lancer les Tests
 

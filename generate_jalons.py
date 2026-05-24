@@ -219,7 +219,8 @@ def parse_jalons(text_content):
                     short_title = "Livrable IA"
 
                 filename = f"{j_id} ({short_title}).md"
-                filename = re.sub(r'[\\/*?:"<>|]', '-', filename)
+                filename = re.sub(r'[\\/*?:"<>|$]', '-', filename) # added $ to sanitize
+                filename = filename.replace('--', '-') # avoid double dashes
                 jalons.append({
                     'id': j_id,
                     'desc': desc,
@@ -233,7 +234,8 @@ def parse_jalons(text_content):
             if current_trimester and not line.startswith("Jalon"):
                 trimester_context += line + " "
 
-    return jalons, None
+    all_jalon_titles = [j['filename'] for j in jalons]
+    return jalons, all_jalon_titles
 
 def generate_links(jalon, jalons_list, index):
     links = []
@@ -272,11 +274,14 @@ def generate_concept_links(desc):
 if __name__ == '__main__':
     jalons, all_jalon_titles = parse_jalons(text)
 
-    os.makedirs("Jalons", exist_ok=True)
-
     cwd = os.getcwd()
     for i, jalon in enumerate(jalons):
-        filepath = os.path.join(cwd, jalon['filename'])
+        # Create a folder for the jalon
+        folder_name = jalon['filename'].replace('.md', '')
+        folder_path = os.path.join(cwd, folder_name)
+        os.makedirs(folder_path, exist_ok=True)
+        
+        filepath = os.path.join(folder_path, jalon['filename'])
         
         content = f"# {jalon['id']}\n\n"
         content += f"**{jalon['year']}** > **{jalon['trimester']}**\n\n"
@@ -300,4 +305,4 @@ if __name__ == '__main__':
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
 
-    print(f"Created {len(jalons)} notes in {cwd}")
+    print(f"Created {len(jalons)} notes in their respective folders in {cwd}")
