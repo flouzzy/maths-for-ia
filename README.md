@@ -123,6 +123,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 100** : Démonstration du théorème de Banach-Steinhaus (principe de la borne uniforme). (Enrichi le 2026-05-24)
 - **Jalon 101** : Théorème de l'application ouverte et théorème du graphe fermé. (Enrichi le 2026-05-24)
 - **Jalon 102** : Topologies faibles et faibles-*. (Enrichi le 2026-05-24)
+- **Jalon 103** : Espaces de Hilbert généraux et théorème de représentation de Riesz. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
