@@ -50,6 +50,9 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 27** : Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales. (Enrichi le 2026-05-24)
 - **Jalon 28** : Polynômes d'endomorphismes, idéaux annulateurs et théorème de Cayley-Hamilton. (Enrichi le 2026-05-24)
 - **Jalon 29** : Éléments propres, polynôme caractéristique, sous-espaces propres et critères de diagonalisabilité. (Enrichi le 2026-05-24)
+- **Jalon 30** : Trigonalisation d'endomorphismes et décomposition de Dunford. (Enrichi le 2026-05-24)
+- **Jalon 31** : Introduction à la réduction de Jordan et structure des nilpotents. (Enrichi le 2026-05-24)
+- **Jalon 32** : Preuve complète du théorème spectral pour les endomorphismes symétriques. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
