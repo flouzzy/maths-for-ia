@@ -132,6 +132,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 109** : Topologie des sous-variétés de $\mathbb{R}^n$. (Enrichi le 2026-05-24)
 - **Jalon 110** : Variétés différentielles abstraites, atlas, cartes et fonctions de transition. (Enrichi le 2026-05-24)
 - **Jalon 111** : Applications différentiables entre variétés et application linéaire tangente. (Enrichi le 2026-05-24)
+- **Jalon 112** : Champs de vecteurs sur une variété et crochet de Lie. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
