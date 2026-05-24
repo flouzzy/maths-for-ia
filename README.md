@@ -131,6 +131,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 108** : Livrable IA T9 : Modélisation de l'opérateur d'Attention de la structure Transformer sous forme d'opérateur intégral borné sur un espace hilbertien. (Enrichi le 2026-05-24)
 - **Jalon 109** : Topologie des sous-variétés de $\mathbb{R}^n$. (Enrichi le 2026-05-24)
 - **Jalon 110** : Variétés différentielles abstraites, atlas, cartes et fonctions de transition. (Enrichi le 2026-05-24)
+- **Jalon 111** : Applications différentiables entre variétés et application linéaire tangente. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
