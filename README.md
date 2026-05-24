@@ -47,6 +47,9 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 24** : Livrable IA T2 : Analyse mathématique des critères de convergence d'une régression polynomiale et résolution d'un problème d'analyse de l'ENS sur les interversions de limites. (Enrichi le 2026-05-24)
 - **Jalon 25** : Formes bilinéaires, formes sesquilinieaires, produit scalaire et inégalité de Cauchy-Schwarz. (Enrichi le 2026-05-24)
 - **Jalon 26** : Espaces euclidiens, orthogonalité, théorème de la projection orthogonale et algorithme de Gram-Schmidt. (Enrichi le 2026-05-24)
+- **Jalon 27** : Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales. (Enrichi le 2026-05-24)
+- **Jalon 28** : Polynômes d'endomorphismes, idéaux annulateurs et théorème de Cayley-Hamilton. (Enrichi le 2026-05-24)
+- **Jalon 29** : Éléments propres, polynôme caractéristique, sous-espaces propres et critères de diagonalisabilité. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
