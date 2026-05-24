@@ -68,6 +68,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 45** : Différentiabilité, différentielle totale, dérivées partielles et gradient. (Enrichi le 2026-05-24)
 - **Jalon 46** : Matrice jacobienne, théorème de dérivation des fonctions composées (Chain Rule généralisée). (Enrichi le 2026-05-24)
 - **Jalon 47** : Dérivées partielles d'ordre deux, matrice hessienne et lemme de Schwarz. (Enrichi le 2026-05-24)
+- **Jalon 48** : Livrable IA T4 : Formalisation mathématique complète de la rétropropagation (Backpropagation) d'un réseau de neurones profond sous forme de produits de matrices jacobiennes. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
