@@ -19,6 +19,14 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **`test_generate_jalons.py`** : Contient la suite de tests unitaires du projet, permettant de vérifier la logique de création de liens inter-concepts (`generate_concept_links`) définie dans le script principal.
 - **`generate_jalons.ps1`, `generate_index.ps1`, `git-sync.ps1`** : Scripts utilitaires PowerShell prévus pour une utilisation sous environnement Windows ou via `pwsh` pour générer des index ou automatiser certaines tâches Git.
 
+## Historique d'enrichissement IA
+
+- **Jalon 1** : Logique formelle, connecteurs, tables de vérité et calcul des propositions. (Enrichi le 2026-05-24)
+- **Jalon 2** : Méthodes de raisonnement (implication, contraposée, l'absurde, analyse-synthèse). (Enrichi le 2026-05-24)
+- **Jalon 3** : Quantification ($\forall, \exists$), ordre des quantificateurs et négation de propositions complexes. (Enrichi le 2026-05-24)
+- **Jalon 4** : Théorie des ensembles (ZFC), opérations sur les ensembles, ensembles des parties $\mathcal{P}(E)$. (Enrichi le 2026-05-24)
+- **Jalon 5** : Applications, injections, surjections, bijections et composition de fonctions. (Enrichi le 2026-05-24)
+
 ## Comment Générer les Notes
 
 Assurez-vous d'avoir Python 3 installé. Pour générer ou mettre à jour l'ensemble des notes Markdown, il vous suffit d'exécuter le script Python depuis la racine du dépôt :
