@@ -63,6 +63,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 40** : Intégrales dépendant d'un paramètre, théorèmes de continuité et de dérivation sous le signe $\int$. (Enrichi le 2026-05-24)
 - **Jalon 41** : Équations différentielles linéaires du premier ordre et méthode de variation de la constante. (Enrichi le 2026-05-24)
 - **Jalon 42** : Équations différentielles linéaires du second ordre à coefficients constants. (Enrichi le 2026-05-24)
+- **Jalon 43** : Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
