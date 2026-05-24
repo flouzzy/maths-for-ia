@@ -113,6 +113,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 90** : Les modes de convergence : presque sûre, en probabilité, dans $L^p$ et en loi. (Enrichi le 2026-05-24)
 - **Jalon 91** : Inégalités de concentration : Markov, Tchebychev et Chernoff. (Enrichi le 2026-05-24)
 - **Jalon 92** : Démonstration rigoureuse de la loi forte des grands nombres. (Enrichi le 2026-05-24)
+- **Jalon 93** : Fonctions caractéristiques : définition, propriétés et injectivité. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
