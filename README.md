@@ -32,6 +32,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 9** : Calcul matriciel, opérations, inversibilité et représentations des applications linéaires. (Enrichi le 2026-05-24)
 - **Jalon 10** : Changements de base, matrices de passage et matrices par blocs. (Enrichi le 2026-05-24)
 - **Jalon 11** : Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie. (Enrichi le 2026-05-24)
+- **Jalon 12** : Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
