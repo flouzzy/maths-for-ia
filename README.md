@@ -120,6 +120,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 97** : Espaces de Banach, normes d'opérateurs et espace dual. (Enrichi le 2026-05-24)
 - **Jalon 98** : Théorème de Hahn-Banach (forme analytique) et prolongement des formes linéaires. (Enrichi le 2026-05-24)
 - **Jalon 99** : Théorème de Hahn-Banach (forme géométrique) : théorèmes de séparation des convexes. (Enrichi le 2026-05-24)
+- **Jalon 100** : Démonstration du théorème de Banach-Steinhaus (principe de la borne uniforme). (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
