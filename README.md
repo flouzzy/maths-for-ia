@@ -39,6 +39,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 16** : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy. (Enrichi le 2026-05-24)
 - **Jalon 17** : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries. (Enrichi le 2026-05-24)
 - **Jalon 18** : Continuité des fonctions d'une variable réelle, théorème des valeurs intermédiaires et compacité locale. (Enrichi le 2026-05-24)
+- **Jalon 19** : Dérivabilité, théorème de Rolle, théorème des accroissements finis et prolongement de la dérivée. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
