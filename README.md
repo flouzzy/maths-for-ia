@@ -138,6 +138,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 115** : Démonstration du théorème de Stokes généralisé. (Enrichi le 2026-05-24)
 - **Jalon 116** : Variétés riemanniennes, métrique de Riemann, géodésiques et courbure. (Enrichi le 2026-05-24)
 - **Jalon 117** : Calcul des variations, équations d'Euler-Lagrange. (Enrichi le 2026-05-24)
+- **Jalon 118** : Conditions d'optimalité du second ordre pour les fonctionnelles et introduction aux multiplicateurs de Lagrange de dimension infinie. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
