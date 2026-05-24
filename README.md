@@ -27,6 +27,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 4** : Théorie des ensembles (ZFC), opérations sur les ensembles, ensembles des parties $\mathcal{P}(E)$. (Enrichi le 2026-05-24)
 - **Jalon 5** : Applications, injections, surjections, bijections et composition de fonctions. (Enrichi le 2026-05-24)
 - **Jalon 6** : Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps). (Enrichi le 2026-05-24)
+- **Jalon 7** : Espaces vectoriels abstraits, familles libres, familles génératrices et bases en dimension finie. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
