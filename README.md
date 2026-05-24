@@ -71,6 +71,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 48** : Livrable IA T4 : Formalisation mathématique complète de la rétropropagation (Backpropagation) d'un réseau de neurones profond sous forme de produits de matrices jacobiennes. (Enrichi le 2026-05-24)
 - **Jalon 49** : Espaces topologiques généraux, définition par les ouverts, les fermés et les voisinages. (Enrichi le 2026-05-24)
 - **Jalon 50** : Opérateurs topologiques : intérieur, adhérence, frontière et ensembles denses. (Enrichi le 2026-05-24)
+- **Jalon 51** : Espaces métriques, topologie induite par une distance et distances équivalentes. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
