@@ -96,6 +96,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 73** : Définition des espaces $\mathcal{L}^p$ et passage à l'espace quotient $L^p$. (Enrichi le 2026-05-24)
 - **Jalon 74** : Inégalités fondamentales de l'analyse fonctionnelle : Hölder, Minkowski et Jensen. (Enrichi le 2026-05-24)
 - **Jalon 75** : Preuve de la complétude des espaces $L^p$ (Théorème de Riesz-Fischer). (Enrichi le 2026-05-24)
+- **Jalon 76** : Propriétés géométriques de l'espace de Hilbert $L^2$. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
