@@ -133,6 +133,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 110** : Variétés différentielles abstraites, atlas, cartes et fonctions de transition. (Enrichi le 2026-05-24)
 - **Jalon 111** : Applications différentiables entre variétés et application linéaire tangente. (Enrichi le 2026-05-24)
 - **Jalon 112** : Champs de vecteurs sur une variété et crochet de Lie. (Enrichi le 2026-05-24)
+- **Jalon 113** : Introduction aux tenseurs sur une variété différentielle. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
