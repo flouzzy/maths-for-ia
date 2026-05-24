@@ -31,6 +31,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 8** : Applications linéaires, noyau (ker), image (Im) et démonstration du théorème du rang. (Enrichi le 2026-05-24)
 - **Jalon 9** : Calcul matriciel, opérations, inversibilité et représentations des applications linéaires. (Enrichi le 2026-05-24)
 - **Jalon 10** : Changements de base, matrices de passage et matrices par blocs. (Enrichi le 2026-05-24)
+- **Jalon 11** : Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
