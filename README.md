@@ -87,6 +87,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 64** : Construction pas à pas de la mesure de Lebesgue sur $\mathbb{R}$ via la mesure extérieure. (Enrichi le 2026-05-24)
 - **Jalon 65** : Fonctions mesurables, opérations sur les fonctions mesurables et fonctions simples. (Enrichi le 2026-05-24)
 - **Jalon 66** : Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives. (Enrichi le 2026-05-24)
+- **Jalon 67** : Démonstration du théorème de convergence monotone (Beppo Levi). (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
