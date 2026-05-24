@@ -92,6 +92,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 69** : Démonstration complète du théorème de convergence dominée de Lebesgue. (Enrichi le 2026-05-24)
 - **Jalon 70** : Espaces mesurés produits et construction de la mesure produit. (Enrichi le 2026-05-24)
 - **Jalon 71** : Théorèmes de Fubini-Tonelli pour l'interversion des intégrales. (Enrichi le 2026-05-24)
+- **Jalon 72** : Livrable IA T6 : Formalisation de la divergence de Kullback-Leibler entre deux distributions de probabilités continues complexes. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
