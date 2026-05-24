@@ -143,6 +143,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 120** : Livrable IA T10 : Formalisation mathématique des contraintes d'invariance par translation et rotation dans le cadre du Geometric Deep Learning (Graph Neural Networks). (Enrichi le 2026-05-24)
 - **Jalon 121** : Ensembles convexes, fonctions convexes et épigraphes. (Enrichi le 2026-05-24)
 - **Jalon 122** : Notion de sous-gradient et sous-différentiel d'une fonction convexe. (Enrichi le 2026-05-24)
+- **Jalon 123** : Problèmes d'optimisation sous contraintes : ensembles admissibles et multiplicateurs. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
