@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "7436c5be1b3079da",
+        "id": "a398bb77c5940683",
         "type": "tabs",
         "children": [
           {
-            "id": "a492fc4612bd28df",
+            "id": "604975679d4f51cb",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Bienvenue.md",
-                "mode": "source",
+                "file": "Jalon 99 (Théorème de Hahn-Banach)/Jalon 99 (Théorème de Hahn-Banach).md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Bienvenue"
+              "title": "Jalon 99 (Théorème de Hahn-Banach)"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:math/fondations",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Jalon 13 (Structure de $-mathbb{R}$).md",
+                "file": "README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Rétrolien pour Jalon 13 (Structure de $-mathbb{R}$)"
+              "title": "Rétrolien pour README"
             }
           },
           {
@@ -183,36 +183,39 @@
       "bases:Créer une nouvelle base": false
     }
   },
-  "active": "a492fc4612bd28df",
+  "active": "753729c1afd42e33",
   "lastOpenFiles": [
-    "Jalon 1 (Logique formelle).md",
-    "Jalon 13 (Structure de $-mathbb{R}$).md",
-    "Jalon 14 (Suites rÃ©elles et complexes).md",
-    "Tableau de bord.md",
-    "Jalon 2 (Méthodes de raisonnement).md",
+    "Jalon 99 (Théorème de Hahn-Banach)/Jalon 99 (Théorème de Hahn-Banach).md",
+    "Jalon 4 (Théorie des ensembles)/Jalon 4 (Théorie des ensembles).md",
+    "Jalon 5 (Applications)/Jalon 5 (Applications).md",
+    "Jalon 6 (Relations d'équivalence)/Jalon 6 (Relations d'équivalence).md",
+    "Jalon 3 (Quantification)/Jalon 3 (Quantification).md",
+    "Jalon 2 (Méthodes de raisonnement)/Jalon 2 (Méthodes de raisonnement).md",
+    "Jalon 1 (Logique formelle)/Jalon 1 (Logique formelle).md",
+    "README.md",
     "Bienvenue.md",
-    "Jalon 6 (Relations d'équivalence).md",
-    "generate_index.ps1",
-    "Jalon 11 (Formes linéaires).md",
-    "Jalon 4 (Théorie des ensembles).md",
-    "Jalon 5 (Applications).md",
+    "Jalon 1 (Logique formelle).md",
+    "Jalon 141 (Theoremes de Glivenko-Cantelli generalises pour les classes de fonctions VC.).md",
+    "Jalon 98 (Theoreme de Hahn-Banach).md",
+    "Jalon 99 (ThÃ©orÃ¨me de Hahn-Banach).md",
+    "Jalon 100 (Demonstration du theoreme de Banach-Steinhaus).md",
+    "Jalon 24 (Livrable IA).md",
+    "Jalon 21 (Suites de fonctions).md",
+    "Jalon 20 (Derivees successives).md",
+    "Jalon 10 (Changements de base).md",
     "Jalon 3 (Quantification).md",
+    "Jalon 2 (Méthodes de raisonnement).md",
+    "test_generate_jalons.py",
+    "rename_files.py",
+    "enrich_jalons_gemini.py",
+    "Jalons 153 e  156 (Synthese finale).md",
+    "Jalons 145 e  152 (Redaction d'un article de recherche theorique de synthese analysant les garanties de generalisation PAC d'une couche d'attention multi-tetes.).md",
+    "Jalon 99 (Theoreme de Hahn-Banach).md",
+    "Jalon 94 (Demonstration du theoreme central limite).md",
+    "Jalon 93 (Fonctions caracteristiques).md",
+    "Jalon 92 (Demonstration rigoureuse de la loi forte des grands nombres.).md",
+    "generate_index.ps1",
     "git-sync.ps1",
-    "Jalon 107 (Introduction Ã  la thÃ©orie des opÃ©rateurs non bornÃ©s et rÃ©solvante.).md",
-    "Jalon 23 (SÃ©ries entiÃ¨res).md",
-    "Jalon 92 (DÃ©monstration rigoureuse de la loi forte des grands nombres.).md",
-    "Jalon 98 (ThÃ©orÃ¨me de Hahn-Banach).md",
-    "Jalon 57 (ThÃ©orÃ¨me du point fixe de Banach).md",
-    "Jalon 122 (Notion de sous-gradient).md",
-    "Jalon 132 (Livrable IA).md",
-    "Jalon 70 (Espaces mesurÃ©s produits).md",
-    "Jalon 22 (SÃ©ries de fonctions).md",
-    "Jalon 59 (Topologie des espaces de fonctions).md",
-    "Jalon 63 (DÃ©finition axiomatique d'une mesure).md",
-    "Jalon 31 (Introduction Ã  la rÃ©duction de Jordan et structure des nilpotents.).md",
-    "Jalon 51 (Espaces mÃ©triques).md",
-    "Jalon 110 (VariÃ©tÃ©s diffÃ©rentielles abstraites).md",
-    "Jalon 101 (ThÃ©orÃ¨me de l'application ouverte et thÃ©orÃ¨me du graphe fermÃ©.).md",
     "generate_jalons.ps1",
     "generate_jalons.py",
     "desktop.ini"
