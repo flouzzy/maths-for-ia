@@ -13,8 +13,10 @@ client = genai.Client(api_key=os.environ.get("GOOGLE_API_KEY"))
 MODEL_ID = 'gemini-2.5-flash'
 
 def get_jalon_files():
-    # Trouve tous les fichiers de Jalons
-    files = glob.glob("Jalon *.md") + glob.glob("Jalons *.md")
+    # Trouve tous les fichiers de Jalons dans les sous-dossiers
+    files = glob.glob("Jalon*/**/*.md", recursive=True)
+    # Filter to ensure we only get the main jalon files if needed, 
+    # but based on the move, they are the only ones for now.
     return sorted(files)
 
 def parse_file(filepath):
