@@ -42,6 +42,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 19** : Dérivabilité, théorème de Rolle, théorème des accroissements finis et prolongement de la dérivée. (Enrichi le 2026-05-24)
 - **Jalon 20** : Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités. (Enrichi le 2026-05-24)
 - **Jalon 21** : Suites de fonctions, étude de la convergence simple et de la convergence uniforme. (Enrichi le 2026-05-24)
+- **Jalon 22** : Séries de fonctions, convergence normale, théorèmes d'interversion limite-intégrale et limite-dérivée. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
