@@ -127,6 +127,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 104** : Bases hilbertiennes et décomposition orthogonale. (Enrichi le 2026-05-24)
 - **Jalon 105** : Opérateurs adjoints. (Enrichi le 2026-05-24)
 - **Jalon 106** : Théorème spectral pour les opérateurs compacts autoadjoints. (Enrichi le 2026-05-24)
+- **Jalon 107** : Introduction à la théorie des opérateurs non bornés et résolvante. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
