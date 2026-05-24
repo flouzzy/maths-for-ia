@@ -141,6 +141,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 118** : Conditions d'optimalité du second ordre pour les fonctionnelles et introduction aux multiplicateurs de Lagrange de dimension infinie. (Enrichi le 2026-05-24)
 - **Jalon 119** : Connexions avec les groupes de Lie. (Enrichi le 2026-05-24)
 - **Jalon 120** : Livrable IA T10 : Formalisation mathématique des contraintes d'invariance par translation et rotation dans le cadre du Geometric Deep Learning (Graph Neural Networks). (Enrichi le 2026-05-24)
+- **Jalon 121** : Ensembles convexes, fonctions convexes et épigraphes. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
