@@ -1,165 +1,165 @@
 # Tableau de Bord : Mathématiques pour l'IA
 
-Bienvenue dans votre plan de formation global. Cochez les jalons au fur et a mesure de votre progression !
+Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à mesure de votre progression !
 
-## AnnÃ©e 1 : le socle des fondations et l'analyse réelle
-### Trimestre 1 : logique, ensembles et algÃ¨bre linÃ©aire de base
-- [ ] [[Jalon 1 (Logique formelle)]] : Logique formelle, connecteurs, tables de vÃ©ritÃ© et calcul des propositions.
-- [ ] [[Jalon 2 (MÃ©thodes de raisonnement)]] : MÃ©thodes de raisonnement (implication, contraposÃ©e, l'absurde, analyse-synthÃ¨se).
-- [ ] [[Jalon 3 (Quantification)]] : Quantification ($\forall, \exists$), ordre des quantificateurs et nÃ©gation de propositions complexes.
-- [ ] [[Jalon 4 (ThÃ©orie des ensembles)]] : ThÃ©orie des ensembles (ZFC), opÃ©rations sur les ensembles, ensembles des parties $\mathcal{P}(E)$.
-- [ ] [[Jalon 5 (Applications)]] : Applications, injections, surjections, bijections et composition de fonctions.
-- [ ] [[Jalon 6 (Relations d'Ã©quivalence)]] : Relations d'Ã©quivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps).
-- [ ] [[Jalon 7 (Espaces vectoriels abstraits)]] : Espaces vectoriels abstraits, familles libres, familles gÃ©nÃ©ratrices et bases en dimension finie.
-- [ ] [[Jalon 8 (Applications linÃ©aires)]] : Applications linÃ©aires, noyau ($\ker$), image ($\text{Im}$) et dÃ©monstration du thÃ©orÃ¨me du rang.
-- [ ] [[Jalon 9 (Calcul matriciel)]] : Calcul matriciel, opÃ©rations, inversibilitÃ© et reprÃ©sentations des applications linÃ©aires.
-- [ ] [[Jalon 10 (Changements de base)]] : Changements de base, matrices de passage et matrices par blocs.
-- [ ] [[Jalon 11 (Formes linÃ©aires)]] : Formes linÃ©aires, hyperplans, espace dual et orthogonalitÃ© en dimension finie.
-- [ ] [[Jalon 12 (Livrable IA)]] : Livrable IA T1 : Conception thÃ©orique d'un moteur de recherche sÃ©mantique par similaritÃ© cosinus (dualitÃ© et gÃ©omÃ©trie des espaces de plongement) et rÃ©solution d'un problÃ¨me d'algÃ¨bre de l'X.
-### Trimestre 2 : analyse rÃ©elle, suites et sÃ©ries de fonctions
-- [ ] [[Jalon 13 (Structure de $-mathbb{R}$)]] : Structure de $\mathbb{R}$, axiome de la borne supÃ©rieure et propriÃ©tÃ© d'ArchimÃ¨de.
-- [ ] [[Jalon 14 (Suites rÃ©elles et complexes)]] : Suites rÃ©elles et complexes, dÃ©finitions rigoureuses des limites ($\epsilon, N$) et critÃ¨res de convergence.
-- [ ] [[Jalon 15 (Sous-suites)]] : Sous-suites, valeurs d'adhÃ©rence et preuve par sÃ©paration du thÃ©orÃ¨me de Bolzano-Weierstrass.
-- [ ] [[Jalon 16 (SÃ©ries numÃ©riques Ã  termes positifs)]] : SÃ©ries numÃ©riques Ã  termes positifs, critÃ¨res de comparaison, de d'Alembert et de Cauchy.
-- [ ] [[Jalon 17 (SÃ©ries absolument convergentes)]] : SÃ©ries absolument convergentes, semi-convergentes et produit de Cauchy de deux sÃ©ries.
-- [ ] [[Jalon 18 (ContinuitÃ© des fonctions d'une variable rÃ©elle)]] : ContinuitÃ© des fonctions d'une variable rÃ©elle, thÃ©orÃ¨me des valeurs intermÃ©diaires et compacitÃ© locale.
-- [ ] [[Jalon 19 (DÃ©rivabilitÃ©)]] : DÃ©rivabilitÃ©, thÃ©orÃ¨me de Rolle, thÃ©orÃ¨me des accroissements finis et prolongement de la dÃ©rivÃ©e.
-- [ ] [[Jalon 20 (DÃ©rivÃ©es successives)]] : DÃ©rivÃ©es successives, formules de Taylor-Lagrange, Taylor-Young et dÃ©veloppements limitÃ©s.
-- [ ] [[Jalon 21 (Suites de fonctions)]] : Suites de fonctions, Ã©tude de la convergence simple et de la convergence uniforme.
-- [ ] [[Jalon 22 (SÃ©ries de fonctions)]] : SÃ©ries de fonctions, convergence normale, thÃ©orÃ¨mes d'interversion limite-intÃ©grale et limite-dÃ©rivÃ©e.
-- [ ] [[Jalon 23 (SÃ©ries entiÃ¨res)]] : SÃ©ries entiÃ¨res, calcul du rayon de convergence (rÃ¨gle de d'Alembert-Cauchy) et propriÃ©tÃ©s de la somme.
-- [ ] [[Jalon 24 (Livrable IA)]] : Livrable IA T2 : Analyse mathÃ©matique des critÃ¨res de convergence d'une rÃ©gression polynomiale et rÃ©solution d'un problÃ¨me d'analyse de l'ENS sur les interversions de limites.
-### Trimestre 3 : rÃ©duction des endomorphismes et espaces prÃ©hilbertiens
-- [ ] [[Jalon 25 (Formes bilinÃ©aires)]] : Formes bilinÃ©aires, formes sesquilinieaires, produit scalaire et inÃ©galitÃ© de Cauchy-Schwarz.
-- [ ] [[Jalon 26 (Espaces euclidiens)]] : Espaces euclidiens, orthogonalitÃ©, thÃ©orÃ¨me de la projection orthogonale et algorithme de Gram-Schmidt.
-- [ ] [[Jalon 27 (Endomorphismes symÃ©triques)]] : Endomorphismes symÃ©triques, adjoint d'un opÃ©rateur et matrices orthogonales.
-- [ ] [[Jalon 28 (PolynÃ´mes d'endomorphismes)]] : PolynÃ´mes d'endomorphismes, idÃ©aux annulateurs et dÃ©monstration du thÃ©orÃ¨me de Cayley-Hamilton.
-- [ ] [[Jalon 29 (Ã‰lÃ©ments propres)]] : Ã‰lÃ©ments propres, polynÃ´me caractÃ©ristique, sous-espaces propres et critÃ¨res de diagonalisabilitÃ©.
-- [ ] [[Jalon 30 (Trigonalisation d'endomorphismes et dÃ©composition de Dunford.)]] : Trigonalisation d'endomorphismes et dÃ©composition de Dunford.
-- [ ] [[Jalon 31 (Introduction Ã  la rÃ©duction de Jordan et structure des nilpotents.)]] : Introduction Ã  la rÃ©duction de Jordan et structure des nilpotents.
-- [ ] [[Jalon 32 (Preuve complÃ¨te du thÃ©orÃ¨me spectral pour les endomorphismes symÃ©triques.)]] : Preuve complÃ¨te du thÃ©orÃ¨me spectral pour les endomorphismes symÃ©triques.
-- [ ] [[Jalon 33 (Formes quadratiques)]] : Formes quadratiques, rÃ©duction de Gauss, base orthogonale et loi d'inertie de Sylvester.
-- [ ] [[Jalon 34 (Topologie Ã©lÃ©mentaire des espaces vectoriels normÃ©s)]] : Topologie Ã©lÃ©mentaire des espaces vectoriels normÃ©s (normes, Ã©quivalence des normes en dimension finie).
-- [ ] [[Jalon 35 (CaractÃ©risation sÃ©quentielle des ouverts)]] : CaractÃ©risation sÃ©quentielle des ouverts, des fermÃ©s et des compacts (Heine-Borel).
-- [ ] [[Jalon 36 (Livrable IA)]] : Livrable IA T3 : Ã‰criture des Ã©quations de la dÃ©composition en valeurs singuliÃ¨res (SVD) et application mathÃ©matique Ã  la compression d'une matrice de pixels d'image.
-### Trimestre 4 : calcul diffÃ©rentiel et intÃ©gration de Riemann
-- [ ] [[Jalon 37 (IntÃ©grale de Riemann sur un segment)]] : IntÃ©grale de Riemann sur un segment, fonctions en escalier et propriÃ©tÃ©s de l'intÃ©grale.
-- [ ] [[Jalon 38 (ThÃ©orÃ¨me fondamental de l'analyse)]] : ThÃ©orÃ¨me fondamental de l'analyse, primitives et techniques d'intÃ©gration (IPP, changement de variable).
-- [ ] [[Jalon 39 (IntÃ©grales gÃ©nÃ©ralisÃ©es sur un intervalle quelconque et critÃ¨res de convergence.)]] : IntÃ©grales gÃ©nÃ©ralisÃ©es sur un intervalle quelconque et critÃ¨res de convergence.
-- [ ] [[Jalon 40 (IntÃ©grales dÃ©pendant d'un paramÃ¨tre)]] : IntÃ©grales dÃ©pendant d'un paramÃ¨tre, thÃ©orÃ¨mes de continuitÃ© et de dÃ©rivation sous le signe $\int$.
-- [ ] [[Jalon 41 (Ã‰quations diffÃ©rentielles linÃ©aires du premier ordre et mÃ©thode de variation de la constante.)]] : Ã‰quations diffÃ©rentielles linÃ©aires du premier ordre et mÃ©thode de variation de la constante.
-- [ ] [[Jalon 42 (Ã‰quations diffÃ©rentielles linÃ©aires du second ordre Ã  coefficients constants.)]] : Ã‰quations diffÃ©rentielles linÃ©aires du second ordre Ã  coefficients constants.
-- [ ] [[Jalon 43 (SystÃ¨mes diffÃ©rentiels linÃ©aires d'ordre 1 et calcul de l'exponentielle de matrice.)]] : SystÃ¨mes diffÃ©rentiels linÃ©aires d'ordre 1 et calcul de l'exponentielle de matrice.
-- [ ] [[Jalon 44 (Fonctions de plusieurs variables)]] : Fonctions de plusieurs variables, limites, continuitÃ© et topologie de $\mathbb{R}^n$.
-- [ ] [[Jalon 45 (DiffÃ©rentiabilitÃ©)]] : DiffÃ©rentiabilitÃ©, diffÃ©rentielle totale, dÃ©rivÃ©es partielles et gradient.
-- [ ] [[Jalon 46 (Matrice jacobienne)]] : Matrice jacobienne, thÃ©orÃ¨me de dÃ©rivation des fonctions composÃ©es (Chain Rule gÃ©nÃ©ralisÃ©e).
-- [ ] [[Jalon 47 (DÃ©rivÃ©es partielles d'ordre deux)]] : DÃ©rivÃ©es partielles d'ordre deux, matrice hessienne et lemme de Schwarz.
-- [ ] [[Jalon 48 (Livrable IA)]] : Livrable IA T4 : Formalisation mathÃ©matique complÃ¨te de la rÃ©tropropagation (Backpropagation) d'un rÃ©seau de neurones profond sous forme de produits de matrices jacobiennes.
-## AnnÃ©e 2 : l'abstraction topologique et la thÃ©orie de la mesure
-### Trimestre 5 : topologie gÃ©nÃ©rale et espaces mÃ©triques
-- [ ] [[Jalon 49 (Espaces topologiques gÃ©nÃ©raux)]] : Espaces topologiques gÃ©nÃ©raux, dÃ©finition par les ouverts, les fermÃ©s et les voisinages.
-- [ ] [[Jalon 50 (OpÃ©rateurs topologiques)]] : OpÃ©rateurs topologiques : intÃ©rieur, adhÃ©rence, frontiÃ¨re et ensembles denses.
-- [ ] [[Jalon 51 (Espaces mÃ©triques)]] : Espaces mÃ©triques, topologie induite par une distance et distances Ã©quivalentes.
-- [ ] [[Jalon 52 (Applications continues entre espaces topologiques et dÃ©finition fine des homÃ©omorphismes.)]] : Applications continues entre espaces topologiques et dÃ©finition fine des homÃ©omorphismes.
-- [ ] [[Jalon 53 (Axiomes de sÃ©paration)]] : Axiomes de sÃ©paration (notamment les espaces de Hausdorff).
-- [ ] [[Jalon 54 (CompacitÃ© gÃ©nÃ©rale)]] : CompacitÃ© gÃ©nÃ©rale (propriÃ©tÃ© de Borel-Lebesgue) et dÃ©monstration du thÃ©orÃ¨me de Tychonoff pour les produits finis.
-- [ ] [[Jalon 55 (ConnexitÃ©)]] : ConnexitÃ©, connexitÃ© par arcs et Ã©tude des composantes connexes.
-- [ ] [[Jalon 56 (Espaces mÃ©triques complets)]] : Espaces mÃ©triques complets, suites de Cauchy et thÃ©orÃ¨me de prolongement des applications continues.
-- [ ] [[Jalon 57 (ThÃ©orÃ¨me du point fixe de Banach)]] : ThÃ©orÃ¨me du point fixe de Banach (contractions) et application Ã  l'existence locale des solutions d'EDP.
-- [ ] [[Jalon 58 (ThÃ©orÃ¨me de Baire)]] : ThÃ©orÃ¨me de Baire (les espaces de l'impossible) et applications aux fonctions continues nulle part dÃ©rivables.
-- [ ] [[Jalon 59 (Topologie des espaces de fonctions)]] : Topologie des espaces de fonctions, convergence compacte et thÃ©orÃ¨me d'ArzelÃ -Ascoli.
-- [ ] [[Jalon 60 (Livrable IA)]] : Livrable IA T5 : Preuve du thÃ©orÃ¨me d'approximation universelle des rÃ©seaux de neurones (utilisation de la topologie de la convergence uniforme sur les compacts).
-### Trimestre 6 : thÃ©orie de la mesure et intÃ©gration de Lebesgue
-- [ ] [[Jalon 61 (Insuffisances de l'intÃ©grale de Riemann)]] : Insuffisances de l'intÃ©grale de Riemann, paradoxe de la fonction de Dirichlet.
-- [ ] [[Jalon 62 (AlgÃ¨bres)]] : AlgÃ¨bres, $\sigma$-algÃ¨bres (tribus), tribus engendrÃ©es et tribu de Borel sur $\mathbb{R}$.
-- [ ] [[Jalon 63 (DÃ©finition axiomatique d'une mesure)]] : DÃ©finition axiomatique d'une mesure, mesures finies, $\sigma$-finies et propriÃ©tÃ©s de continuitÃ© monotone.
-- [ ] [[Jalon 64 (Construction pas Ã  pas de la mesure de Lebesgue sur $-mathbb{R}$ via la mesure extÃ©rieure.)]] : Construction pas Ã  pas de la mesure de Lebesgue sur $\mathbb{R}$ via la mesure extÃ©rieure.
-- [ ] [[Jalon 65 (Fonctions mesurables)]] : Fonctions mesurables, opÃ©rations Ã©lÃ©mentaires et approximation par des fonctions Ã©tagÃ©es.
-- [ ] [[Jalon 66 (Construction de l'intÃ©grale de Lebesgue pour les fonctions mesurables positives.)]] : Construction de l'intÃ©grale de Lebesgue pour les fonctions mesurables positives.
-- [ ] [[Jalon 67 (DÃ©monstration du thÃ©orÃ¨me de convergence monotone)]] : DÃ©monstration du thÃ©orÃ¨me de convergence monotone (Beppo-Levi).
-- [ ] [[Jalon 68 (Lemme de Fatou et dÃ©finition de l'intÃ©grale pour les fonctions de signe quelconque)]] : Lemme de Fatou et dÃ©finition de l'intÃ©grale pour les fonctions de signe quelconque (fonctions intÃ©grables).
-- [ ] [[Jalon 69 (DÃ©monstration complÃ¨te du thÃ©orÃ¨me de convergence dominÃ©e de Lebesgue.)]] : DÃ©monstration complÃ¨te du thÃ©orÃ¨me de convergence dominÃ©e de Lebesgue.
-- [ ] [[Jalon 70 (Espaces mesurÃ©s produits)]] : Espaces mesurÃ©s produits, tribu produit et construction de la mesure produit.
-- [ ] [[Jalon 71 (ThÃ©orÃ¨mes de Fubini-Tonelli)]] : ThÃ©orÃ¨mes de Fubini-Tonelli (fonctions positives) et de Fubini (fonctions intÃ©grables).
-- [ ] [[Jalon 72 (Livrable IA)]] : Livrable IA T6 : Formalisation de la divergence de Kullback-Leibler entre deux distributions de probabilitÃ©s continues complexes.
+## Année 1 : le socle des fondations et l'analyse réelle
+### Trimestre 1 : logique, ensembles et algèbre linéaire de base
+- [ ] [[Jalon 1 (Logique formelle)/Jalon 1 (Logique formelle).md|Jalon 1 : Logique formelle]] : Logique formelle, connecteurs, tables de vérité et calcul des propositions.
+- [ ] [[Jalon 2 (Méthodes de raisonnement)/Jalon 2 (Méthodes de raisonnement).md|Jalon 2 : Méthodes de raisonnement]] : Méthodes de raisonnement (implication, contraposée, l'absurde, analyse-synthèse).
+- [ ] [[Jalon 3 (Quantification)/Jalon 3 (Quantification).md|Jalon 3 : Quantification]] : Quantification ($\\forall, \\exists$), ordre des quantificateurs et négation de propositions complexes.
+- [ ] [[Jalon 4 (Théorie des ensembles)/Jalon 4 (Théorie des ensembles).md|Jalon 4 : Théorie des ensembles]] : Théorie des ensembles (ZFC), opérations sur les ensembles, ensembles des parties $\\mathcal{P}(E)$.
+- [ ] [[Jalon 5 (Applications)/Jalon 5 (Applications).md|Jalon 5 : Applications]] : Applications, injections, surjections, bijections et composition de fonctions.
+- [ ] [[Jalon 6 (Relations d'équivalence)/Jalon 6 (Relations d'équivalence).md|Jalon 6 : Relations d'équivalence]] : Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps).
+- [ ] [[Jalon 7 (Espaces vectoriels abstraits)/Jalon 7 (Espaces vectoriels abstraits).md|Jalon 7 : Espaces vectoriels abstraits]] : Espaces vectoriels abstraits, familles libres, familles génératrices et bases en dimension finie.
+- [ ] [[Jalon 8 (Applications linéaires)/Jalon 8 (Applications linéaires).md|Jalon 8 : Applications linéaires]] : Applications linéaires, noyau ($\\ker$), image ($\\text{Im}$) et démonstration du théorème du rang.
+- [ ] [[Jalon 9 (Calcul matriciel)/Jalon 9 (Calcul matriciel).md|Jalon 9 : Calcul matriciel]] : Calcul matriciel, opérations, inversibilité et représentations des applications linéaires.
+- [ ] [[Jalon 10 (Changements de base)/Jalon 10 (Changements de base).md|Jalon 10 : Changements de base]] : Changements de base, matrices de passage et matrices par blocs.
+- [ ] [[Jalon 11 (Formes linéaires)/Jalon 11 (Formes linéaires).md|Jalon 11 : Formes linéaires]] : Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie.
+- [ ] [[Jalon 12 (Livrable IA)/Jalon 12 (Livrable IA).md|Jalon 12 : Livrable IA]] : Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X.
+### Trimestre 2 : analyse réelle, suites et séries de fonctions
+- [ ] [[Jalon 13 (Structure de --mathbb{R}-)/Jalon 13 (Structure de --mathbb{R}-).md|Jalon 13 : Structure de $\\mathbb{R}$]] : Structure de $\\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède.
+- [ ] [[Jalon 14 (Suites réelles et complexes)/Jalon 14 (Suites réelles et complexes).md|Jalon 14 : Suites réelles et complexes]] : Suites réelles et complexes, définitions rigoureuses des limites ($\\epsilon, N$) et critères de convergence.
+- [ ] [[Jalon 15 (Sous-suites)/Jalon 15 (Sous-suites).md|Jalon 15 : Sous-suites]] : Sous-suites, valeurs d'adhérence et preuve par séparation du théorème de Bolzano-Weierstrass.
+- [ ] [[Jalon 16 (Séries numériques à termes positifs)/Jalon 16 (Séries numériques à termes positifs).md|Jalon 16 : Séries numériques à termes positifs]] : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy.
+- [ ] [[Jalon 17 (Séries absolument convergentes)/Jalon 17 (Séries absolument convergentes).md|Jalon 17 : Séries absolument convergentes]] : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries.
+- [ ] [[Jalon 18 (Continuité des fonctions d'une variable réelle)/Jalon 18 (Continuité des fonctions d'une variable réelle).md|Jalon 18 : Continuité des fonctions d'une variable réelle]] : Continuité des fonctions d'une variable réelle, théorème des valeurs intermédiaires et compacité locale.
+- [ ] [[Jalon 19 (Dérivabilité)/Jalon 19 (Dérivabilité).md|Jalon 19 : Dérivabilité]] : Dérivabilité, théorème de Rolle, théorème des accroissements finis et prolongement de la dérivée.
+- [ ] [[Jalon 20 (Dérivées successives)/Jalon 20 (Dérivées successives).md|Jalon 20 : Dérivées successives]] : Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités.
+- [ ] [[Jalon 21 (Suites de fonctions)/Jalon 21 (Suites de fonctions).md|Jalon 21 : Suites de fonctions]] : Suites de fonctions, étude de la convergence simple et de la convergence uniforme.
+- [ ] [[Jalon 22 (Séries de fonctions)/Jalon 22 (Séries de fonctions).md|Jalon 22 : Séries de fonctions]] : Séries de fonctions, convergence normale, théorèmes d'interversion limite-intégrale et limite-dérivée.
+- [ ] [[Jalon 23 (Séries entières)/Jalon 23 (Séries entières).md|Jalon 23 : Séries entières]] : Séries entières, calcul du rayon de convergence (règle de d'Alembert-Cauchy) et propriétés de la somme.
+- [ ] [[Jalon 24 (Livrable IA)/Jalon 24 (Livrable IA).md|Jalon 24 : Livrable IA]] : Livrable IA T2 : Analyse mathématique des critères de convergence d'une régression polynomiale et résolution d'un problème d'analyse de l'ENS sur les interversions de limites.
+### Trimestre 3 : réduction des endomorphismes et espaces préhilbertiens
+- [ ] [[Jalon 25 (Formes bilinéaires)/Jalon 25 (Formes bilinéaires).md|Jalon 25 : Formes bilinéaires]] : Formes bilinéaires, formes sesquilinieaires, produit scalaire et inégalité de Cauchy-Schwarz.
+- [ ] [[Jalon 26 (Espaces euclidiens)/Jalon 26 (Espaces euclidiens).md|Jalon 26 : Espaces euclidiens]] : Espaces euclidiens, orthogonalité, théorème de la projection orthogonale et algorithme de Gram-Schmidt.
+- [ ] [[Jalon 27 (Endomorphismes symétriques)/Jalon 27 (Endomorphismes symétriques).md|Jalon 27 : Endomorphismes symétriques]] : Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales.
+- [ ] [[Jalon 28 (Polynômes d'endomorphismes)/Jalon 28 (Polynômes d'endomorphismes).md|Jalon 28 : Polynômes d'endomorphismes]] : Polynômes d'endomorphismes, idéaux annulateurs et démonstration du théorème de Cayley-Hamilton.
+- [ ] [[Jalon 29 (Éléments propres)/Jalon 29 (Éléments propres).md|Jalon 29 : Éléments propres]] : Éléments propres, polynôme caractéristique, sous-espaces propres et critères de diagonalisabilité.
+- [ ] [[Jalon 30 (Trigonalisation d'endomorphismes et décomposition de Dunford.)/Jalon 30 (Trigonalisation d'endomorphismes et décomposition de Dunford.).md|Jalon 30 : Trigonalisation d'endomorphismes et décomposition de Dunford.]] : Trigonalisation d'endomorphismes et décomposition de Dunford.
+- [ ] [[Jalon 31 (Introduction à la réduction de Jordan et structure des nilpotents.)/Jalon 31 (Introduction à la réduction de Jordan et structure des nilpotents.).md|Jalon 31 : Introduction à la réduction de Jordan et structure des nilpotents.]] : Introduction à la réduction de Jordan et structure des nilpotents.
+- [ ] [[Jalon 32 (Preuve complète du théorème spectral pour les endomorphismes symétriques.)/Jalon 32 (Preuve complète du théorème spectral pour les endomorphismes symétriques.).md|Jalon 32 : Preuve complète du théorème spectral pour les endomorphismes symétriques.]] : Preuve complète du théorème spectral pour les endomorphismes symétriques.
+- [ ] [[Jalon 33 (Formes quadratiques)/Jalon 33 (Formes quadratiques).md|Jalon 33 : Formes quadratiques]] : Formes quadratiques, réduction de Gauss, base orthogonale et loi d'inertie de Sylvester.
+- [ ] [[Jalon 34 (Topologie élémentaire des espaces vectoriels normés)/Jalon 34 (Topologie élémentaire des espaces vectoriels normés).md|Jalon 34 : Topologie élémentaire des espaces vectoriels normés]] : Topologie élémentaire des espaces vectoriels normés (normes, équivalence des normes en dimension finie).
+- [ ] [[Jalon 35 (Caractérisation séquentielle des ouverts)/Jalon 35 (Caractérisation séquentielle des ouverts).md|Jalon 35 : Caractérisation séquentielle des ouverts]] : Caractérisation séquentielle des ouverts, des fermés et des compacts (Heine-Borel).
+- [ ] [[Jalon 36 (Livrable IA)/Jalon 36 (Livrable IA).md|Jalon 36 : Livrable IA]] : Livrable IA T3 : Écriture des équations de la décomposition en valeurs singulières (SVD) et application mathématique à la compression d'une matrice de pixels d'image.
+### Trimestre 4 : calcul différentiel et intégration de Riemann
+- [ ] [[Jalon 37 (Intégrale de Riemann sur un segment)/Jalon 37 (Intégrale de Riemann sur un segment).md|Jalon 37 : Intégrale de Riemann sur un segment]] : Intégrale de Riemann sur un segment, fonctions en escalier et propriétés de l'intégrale.
+- [ ] [[Jalon 38 (Théorème fondamental de l'analyse)/Jalon 38 (Théorème fondamental de l'analyse).md|Jalon 38 : Théorème fondamental de l'analyse]] : Théorème fondamental de l'analyse, primitives et techniques d'intégration (IPP, changement de variable).
+- [ ] [[Jalon 39 (Intégrales généralisées sur un intervalle quelconque et critères de convergence.)/Jalon 39 (Intégrales généralisées sur un intervalle quelconque et critères de convergence.).md|Jalon 39 : Intégrales généralisées sur un intervalle quelconque et critères de convergence.]] : Intégrales généralisées sur un intervalle quelconque et critères de convergence.
+- [ ] [[Jalon 40 (Intégrales dépendant d'un paramètre)/Jalon 40 (Intégrales dépendant d'un paramètre).md|Jalon 40 : Intégrales dépendant d'un paramètre]] : Intégrales dépendant d'un paramètre, théorèmes de continuité et de dérivation sous le signe $\\int$.
+- [ ] [[Jalon 41 (Équations différentielles linéaires du premier ordre et méthode de variation de la constante.)/Jalon 41 (Équations différentielles linéaires du premier ordre et méthode de variation de la constante.).md|Jalon 41 : Équations différentielles linéaires du premier ordre et méthode de variation de la constante.]] : Équations différentielles linéaires du premier ordre et méthode de variation de la constante.
+- [ ] [[Jalon 42 (Équations différentielles linéaires du second ordre à coefficients constants.)/Jalon 42 (Équations différentielles linéaires du second ordre à coefficients constants.).md|Jalon 42 : Équations différentielles linéaires du second ordre à coefficients constants.]] : Équations différentielles linéaires du second ordre à coefficients constants.
+- [ ] [[Jalon 43 (Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.)/Jalon 43 (Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.).md|Jalon 43 : Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.]] : Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.
+- [ ] [[Jalon 44 (Fonctions de plusieurs variables)/Jalon 44 (Fonctions de plusieurs variables).md|Jalon 44 : Fonctions de plusieurs variables]] : Fonctions de plusieurs variables, limites, continuité et topologie de $\\mathbb{R}^n$.
+- [ ] [[Jalon 45 (Différentiabilité)/Jalon 45 (Différentiabilité).md|Jalon 45 : Différentiabilité]] : Différentiabilité, différentielle totale, dérivées partielles et gradient.
+- [ ] [[Jalon 46 (Matrice jacobienne)/Jalon 46 (Matrice jacobienne).md|Jalon 46 : Matrice jacobienne]] : Matrice jacobienne, théorème de dérivation des fonctions composées (Chain Rule généralisée).
+- [ ] [[Jalon 47 (Dérivées partielles d'ordre deux)/Jalon 47 (Dérivées partielles d'ordre deux).md|Jalon 47 : Dérivées partielles d'ordre deux]] : Dérivées partielles d'ordre deux, matrice hessienne et lemme de Schwarz.
+- [ ] [[Jalon 48 (Livrable IA)/Jalon 48 (Livrable IA).md|Jalon 48 : Livrable IA]] : Livrable IA T4 : Formalisation mathématique complète de la rétropropagation (Backpropagation) d'un réseau de neurones profond sous forme de produits de matrices jacobiennes.
+## Année 2 : l'abstraction topologique et la théorie de la mesure
+### Trimestre 5 : topologie générale et espaces métriques
+- [ ] [[Jalon 49 (Espaces topologiques généraux)/Jalon 49 (Espaces topologiques généraux).md|Jalon 49 : Espaces topologiques généraux]] : Espaces topologiques généraux, définition par les ouverts, les fermés et les voisinages.
+- [ ] [[Jalon 50 (Opérateurs topologiques)/Jalon 50 (Opérateurs topologiques).md|Jalon 50 : Opérateurs topologiques]] : Opérateurs topologiques : intérieur, adhérence, frontière et ensembles denses.
+- [ ] [[Jalon 51 (Espaces métriques)/Jalon 51 (Espaces métriques).md|Jalon 51 : Espaces métriques]] : Espaces métriques, topologie induite par une distance et distances équivalentes.
+- [ ] [[Jalon 52 (Applications continues entre espaces topologiques et définition fine des homéomorphismes.)/Jalon 52 (Applications continues entre espaces topologiques et définition fine des homéomorphismes.).md|Jalon 52 : Applications continues entre espaces topologiques et définition fine des homéomorphismes.]] : Applications continues entre espaces topologiques et définition fine des homéomorphismes.
+- [ ] [[Jalon 53 (Axiomes de séparation)/Jalon 53 (Axiomes de séparation).md|Jalon 53 : Axiomes de séparation]] : Axiomes de séparation (notamment les espaces de Hausdorff).
+- [ ] [[Jalon 54 (Compacité générale)/Jalon 54 (Compacité générale).md|Jalon 54 : Compacité générale]] : Compacité générale (propriété de Borel-Lebesgue) et démonstration du théorème de Tychonoff pour les produits finis.
+- [ ] [[Jalon 55 (Connexité)/Jalon 55 (Connexité).md|Jalon 55 : Connexité]] : Connexité, connexité par arcs et étude des composantes connexes.
+- [ ] [[Jalon 56 (Espaces métriques complets)/Jalon 56 (Espaces métriques complets).md|Jalon 56 : Espaces métriques complets]] : Espaces métriques complets, suites de Cauchy et théorème de prolongement des applications continues.
+- [ ] [[Jalon 57 (Théorème du point fixe de Banach)/Jalon 57 (Théorème du point fixe de Banach).md|Jalon 57 : Théorème du point fixe de Banach]] : Théorème du point fixe de Banach (contractions) et application à l'existence locale des solutions d'EDP.
+- [ ] [[Jalon 58 (Théorème de Baire)/Jalon 58 (Théorème de Baire).md|Jalon 58 : Théorème de Baire]] : Théorème de Baire (les espaces de l'impossible) et applications aux fonctions continues nulle part dérivables.
+- [ ] [[Jalon 59 (Topologie des espaces de fonctions)/Jalon 59 (Topologie des espaces de fonctions).md|Jalon 59 : Topologie des espaces de fonctions]] : Topologie des espaces de fonctions, convergence compacte et théorème d'Arzelà-Ascoli.
+- [ ] [[Jalon 60 (Livrable IA)/Jalon 60 (Livrable IA).md|Jalon 60 : Livrable IA]] : Livrable IA T5 : Preuve du théorème d'approximation universelle des réseaux de neurones (utilisation de la topologie de la convergence uniforme sur les compacts).
+### Trimestre 6 : théorie de la mesure et intégration de Lebesgue
+- [ ] [[Jalon 61 (Insuffisances de l'intégrale de Riemann)/Jalon 61 (Insuffisances de l'intégrale de Riemann).md|Jalon 61 : Insuffisances de l'intégrale de Riemann]] : Insuffisances de l'intégrale de Riemann, paradoxe de la fonction de Dirichlet.
+- [ ] [[Jalon 62 (Algèbres)/Jalon 62 (Algèbres).md|Jalon 62 : Algèbres]] : Algèbres, $\\sigma$-algèbres (tribus), tribus engendrées et tribu de Borel sur $\\mathbb{R}$.
+- [ ] [[Jalon 63 (Définition axiomatique d'une mesure)/Jalon 63 (Définition axiomatique d'une mesure).md|Jalon 63 : Définition axiomatique d'une mesure]] : Définition axiomatique d'une mesure, mesures finies, $\\sigma$-finies et propriétés de continuité monotone.
+- [ ] [[Jalon 64 (Construction pas à pas de la mesure de Lebesgue sur --mathbb{R}- via la mesure extérieure.)/Jalon 64 (Construction pas à pas de la mesure de Lebesgue sur --mathbb{R}- via la mesure extérieure.).md|Jalon 64 : Construction pas à pas de la mesure de Lebesgue sur $\\mathbb{R}$ via la mesure extérieure.]] : Construction pas à pas de la mesure de Lebesgue sur $\\mathbb{R}$ via la mesure extérieure.
+- [ ] [[Jalon 65 (Fonctions mesurables)/Jalon 65 (Fonctions mesurables).md|Jalon 65 : Fonctions mesurables]] : Fonctions mesurables, opérations élémentaires et approximation par des fonctions étagées.
+- [ ] [[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.)/Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.).md|Jalon 66 : Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.]] : Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.
+- [ ] [[Jalon 67 (Démonstration du théorème de convergence monotone)/Jalon 67 (Démonstration du théorème de convergence monotone).md|Jalon 67 : Démonstration du théorème de convergence monotone]] : Démonstration du théorème de convergence monotone (Beppo-Levi).
+- [ ] [[Jalon 68 (Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque)/Jalon 68 (Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque).md|Jalon 68 : Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque]] : Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque (fonctions intégrables).
+- [ ] [[Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.)/Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md|Jalon 69 : Démonstration complète du théorème de convergence dominée de Lebesgue.]] : Démonstration complète du théorème de convergence dominée de Lebesgue.
+- [ ] [[Jalon 70 (Espaces mesurés produits)/Jalon 70 (Espaces mesurés produits).md|Jalon 70 : Espaces mesurés produits]] : Espaces mesurés produits, tribu produit et construction de la mesure produit.
+- [ ] [[Jalon 71 (Théorèmes de Fubini-Tonelli)/Jalon 71 (Théorèmes de Fubini-Tonelli).md|Jalon 71 : Théorèmes de Fubini-Tonelli]] : Théorèmes de Fubini-Tonelli (fonctions positives) et de Fubini (fonctions intégrables).
+- [ ] [[Jalon 72 (Livrable IA)/Jalon 72 (Livrable IA).md|Jalon 72 : Livrable IA]] : Livrable IA T6 : Formalisation de la divergence de Kullback-Leibler entre deux distributions de probabilités continues complexes.
 ### Trimestre 7 : espaces $L^p$ et analyse de Fourier
-- [ ] [[Jalon 73 (DÃ©finition des espaces $-mathcal{L}^p$ et passage Ã  l'espace quotient $L^p$)]] : DÃ©finition des espaces $\mathcal{L}^p$ et passage Ã  l'espace quotient $L^p$ (Ã©galitÃ© presque partout).
-- [ ] [[Jalon 74 (InÃ©galitÃ©s fondamentales de l'analyse fonctionnelle)]] : InÃ©galitÃ©s fondamentales de l'analyse fonctionnelle : HÃ¶lder et Minkowski.
-- [ ] [[Jalon 75 (Preuve de la complÃ©tude des espaces $L^p$)]] : Preuve de la complÃ©tude des espaces $L^p$ (ThÃ©orÃ¨me de Riesz-Fischer) : structure de Banach.
-- [ ] [[Jalon 76 (PropriÃ©tÃ©s gÃ©omÃ©triques de l'espace de Hilbert $L^2$)]] : PropriÃ©tÃ©s gÃ©omÃ©triques de l'espace de Hilbert $L^2$, produit scalaire et identitÃ© du parallÃ©logramme.
-- [ ] [[Jalon 77 (DensitÃ© des fonctions simples)]] : DensitÃ© des fonctions simples, des fonctions continues Ã  support compact et des fonctions lisses dans $L^p$.
-- [ ] [[Jalon 78 (SÃ©ries de Fourier)]] : SÃ©ries de Fourier, calcul des coefficients, convergence ponctuelle (thÃ©orÃ¨me de Dirichlet).
-- [ ] [[Jalon 79 (Convergence en moyenne quadratique des sÃ©ries de Fourier et identitÃ© de Parseval.)]] : Convergence en moyenne quadratique des sÃ©ries de Fourier et identitÃ© de Parseval.
-- [ ] [[Jalon 80 (TransformÃ©e de Fourier dans $L^1$)]] : TransformÃ©e de Fourier dans $L^1$, propriÃ©tÃ©s algÃ©briques, Riemann-Lebesgue et produit de convolution.
-- [ ] [[Jalon 81 (TransformÃ©e de Fourier dans $L^2$)]] : TransformÃ©e de Fourier dans $L^2$, prolongement par densitÃ© et thÃ©orÃ¨me d'isomÃ©trie de Plancherel.
-- [ ] [[Jalon 82 (Introduction Ã  la thÃ©orie des distributions de Schwartz)]] : Introduction Ã  la thÃ©orie des distributions de Schwartz, espace des fonctions tests $\mathcal{D}(\mathbb{R})$.
-- [ ] [[Jalon 83 (DÃ©rivation au sens des distributions)]] : DÃ©rivation au sens des distributions, distribution de Dirac et introduction aux espaces de Sobolev $H^1(\mathbb{R})$.
-- [ ] [[Jalon 84 (Livrable IA)]] : Livrable IA T7 : CrÃ©ation d'un module d'analyse spectrale pour l'extraction de caractÃ©ristiques audio Ã  partir de la transformÃ©e de Fourier dans $L^2$.
-### Trimestre 8 : probabilitÃ©s axiomatiques et statistiques fondamentales
-- [ ] [[Jalon 85 (Axiomes de Kolmogorov)]] : Axiomes de Kolmogorov, espace de probabilitÃ© $(\Omega, \mathcal{F}, \mathbb{P})$ comme un espace mesurÃ© de masse 1.
-- [ ] [[Jalon 86 (Variables alÃ©atoires vues comme des applications mesurables)]] : Variables alÃ©atoires vues comme des applications mesurables, loi d'une variable et mesure de probabilitÃ© image.
-- [ ] [[Jalon 87 (IntÃ©gration des variables alÃ©atoires)]] : IntÃ©gration des variables alÃ©atoires, espÃ©rance, variance et moments d'ordre supÃ©rieur.
-- [ ] [[Jalon 88 (IndÃ©pendance d'Ã©vÃ©nements)]] : IndÃ©pendance d'Ã©vÃ©nements, de tribus et de variables alÃ©atoires.
-- [ ] [[Jalon 89 (Lemmes de Borel-Cantelli)]] : Lemmes de Borel-Cantelli (lois du tout ou rien) et applications aux comportements asymptotiques.
-- [ ] [[Jalon 90 (Les modes de convergence)]] : Les modes de convergence : presque sÃ»re, en probabilitÃ©, dans $L^p$ et en loi (convergence Ã©troite des mesures).
-- [ ] [[Jalon 91 (InÃ©galitÃ©s de concentration)]] : InÃ©galitÃ©s de concentration : Markov, Chebyshev, BienaymÃ©, Chernoff et lemme de Hoeffding.
-- [ ] [[Jalon 92 (DÃ©monstration rigoureuse de la loi forte des grands nombres.)]] : DÃ©monstration rigoureuse de la loi forte des grands nombres.
-- [ ] [[Jalon 93 (Fonctions caractÃ©ristiques)]] : Fonctions caractÃ©ristiques (transformÃ©e de Fourier de la loi) et thÃ©orÃ¨me de continuitÃ© de LÃ©vy.
-- [ ] [[Jalon 94 (DÃ©monstration du thÃ©orÃ¨me central limite)]] : DÃ©monstration du thÃ©orÃ¨me central limite (TCL) via les dÃ©veloppements limitÃ©s des fonctions caractÃ©ristiques.
-- [ ] [[Jalon 95 (Vecteurs gaussiens)]] : Vecteurs gaussiens, loi normale multidimensionnelle, matrice de covariance et conditionnement gaussien.
-- [ ] [[Jalon 96 (Livrable IA)]] : Livrable IA T8 : DÃ©monstration rigoureuse de la convergence de la fonction de perte Cross-Entropy vers l'information thÃ©orique de Shannon lors de l'entraÃ®nement des modÃ¨les de langage.
-## AnnÃ©e 3 : le niveau master (analyse fonctionnelle, gÃ©omÃ©trie et apprentissage)
-### Trimestre 9 : analyse fonctionnelle et thÃ©orie spectrale
-- [ ] [[Jalon 97 (Espaces de Banach)]] : Espaces de Banach, opÃ©rateurs linÃ©aires continus entre Banach et topologie induite par la norme d'opÃ©rateur.
-- [ ] [[Jalon 98 (ThÃ©orÃ¨me de Hahn-Banach)]] : ThÃ©orÃ¨me de Hahn-Banach (forme analytique), prolongement des formes linÃ©aires sous-linÃ©aires.
-- [ ] [[Jalon 99 (ThÃ©orÃ¨me de Hahn-Banach)]] : ThÃ©orÃ¨me de Hahn-Banach (formes gÃ©omÃ©triques), sÃ©paration des ensembles convexes par des hyperplans.
-- [ ] [[Jalon 100 (DÃ©monstration du thÃ©orÃ¨me de Banach-Steinhaus)]] : DÃ©monstration du thÃ©orÃ¨me de Banach-Steinhaus (principe de la borne uniforme).
-- [ ] [[Jalon 101 (ThÃ©orÃ¨me de l'application ouverte et thÃ©orÃ¨me du graphe fermÃ©.)]] : ThÃ©orÃ¨me de l'application ouverte et thÃ©orÃ¨me du graphe fermÃ©.
-- [ ] [[Jalon 102 (Topologies faibles et faibles--)]] : Topologies faibles et faibles-*, compacitÃ© de la boule unitÃ© duale (ThÃ©orÃ¨me de Banach-Alaoglu).
-- [ ] [[Jalon 103 (Espaces de Hilbert gÃ©nÃ©raux)]] : Espaces de Hilbert gÃ©nÃ©raux, thÃ©orÃ¨me de projection sur un convexe fermÃ© et dualitÃ© de Riesz.
-- [ ] [[Jalon 104 (Bases hilbertiennes)]] : Bases hilbertiennes (systÃ¨mes orthonormÃ©s complets) et sÃ©parabilitÃ© des espaces de Hilbert.
-- [ ] [[Jalon 105 (OpÃ©rateurs adjoints)]] : OpÃ©rateurs adjoints, opÃ©rateurs compacts et propriÃ©tÃ©s de rÃ©gularisation.
-- [ ] [[Jalon 106 (ThÃ©orÃ¨me spectral pour les opÃ©rateurs compacts autoadjoints)]] : ThÃ©orÃ¨me spectral pour les opÃ©rateurs compacts autoadjoints (dÃ©composition en base hilbertienne d'Ã©lÃ©ments propres).
-- [ ] [[Jalon 107 (Introduction Ã  la thÃ©orie des opÃ©rateurs non bornÃ©s et rÃ©solvante.)]] : Introduction Ã  la thÃ©orie des opÃ©rateurs non bornÃ©s et rÃ©solvante.
-- [ ] [[Jalon 108 (Livrable IA)]] : Livrable IA T9 : ModÃ©lisation de l'opÃ©rateur d'Attention de la structure Transformer sous forme d'opÃ©rateur intÃ©gral bornÃ© sur un espace hilbertien.
-### Trimestre 10 : gÃ©omÃ©trie diffÃ©rentielle et calcul des variations
-- [ ] [[Jalon 109 (Topologie des sous-variÃ©tÃ©s de $-mathbb{R}^n$)]] : Topologie des sous-variÃ©tÃ©s de $\mathbb{R}^n$, dÃ©finition par des cartes locales, des paramÃ©trages ou des Ã©quations.
-- [ ] [[Jalon 110 (VariÃ©tÃ©s diffÃ©rentielles abstraites)]] : VariÃ©tÃ©s diffÃ©rentielles abstraites, atlas, fonctions de transition (structures lisses).
-- [ ] [[Jalon 111 (Applications diffÃ©rentiables entre variÃ©tÃ©s)]] : Applications diffÃ©rentiables entre variÃ©tÃ©s, espace tangent en un point (dÃ©rivations) et fibrÃ© tangent $TM$.
-- [ ] [[Jalon 112 (Champs de vecteurs)]] : Champs de vecteurs, flots locaux, courbes intÃ©grales et crochet de Lie.
-- [ ] [[Jalon 113 (Tenseurs)]] : Tenseurs, formes diffÃ©rentielles, produit extÃ©rieur $\wedge$ et calcul de la dÃ©rivÃ©e extÃ©rieure $d$.
-- [ ] [[Jalon 114 (Orientation des variÃ©tÃ©s et intÃ©gration des formes diffÃ©rentielles Ã  support compact.)]] : Orientation des variÃ©tÃ©s et intÃ©gration des formes diffÃ©rentielles Ã  support compact.
-- [ ] [[Jalon 115 (DÃ©monstration du thÃ©orÃ¨me de Stokes gÃ©nÃ©ralisÃ©)]] : DÃ©monstration du thÃ©orÃ¨me de Stokes gÃ©nÃ©ralisÃ© ($\int_{\partial M} \omega = \int_M d\omega$).
-- [ ] [[Jalon 116 (VariÃ©tÃ©s riemanniennes)]] : VariÃ©tÃ©s riemanniennes, tenseur mÃ©trique, longueur des courbes et Ã©quations des gÃ©odÃ©siques.
-- [ ] [[Jalon 117 (Calcul des variations)]] : Calcul des variations, fonctionnelles, dÃ©rivation au sens de GÃ¢teaux et Ã©quations d'Euler-Lagrange.
-- [ ] [[Jalon 118 (Conditions d'optimalitÃ© du second ordre pour les fonctionnelles et introduction aux multiplicateurs de Lagrange de dimension infinie.)]] : Conditions d'optimalitÃ© du second ordre pour les fonctionnelles et introduction aux multiplicateurs de Lagrange de dimension infinie.
-- [ ] [[Jalon 119 (Connexions avec les groupes de Lie)]] : Connexions avec les groupes de Lie, algÃ¨bres de Lie et symÃ©tries spatiales.
-- [ ] [[Jalon 120 (Livrable IA)]] : Livrable IA T10 : Formalisation mathÃ©matique des contraintes d'invariance par translation et rotation dans le cadre du Geometric Deep Learning (Graph Neural Networks).
-### Trimestre 11 : optimisation convexe avancÃ©e et mÃ©thodes Ã  noyaux
-- [ ] [[Jalon 121 (Ensembles convexes)]] : Ensembles convexes, fonctions convexes, Ã©pigraphe et propriÃ©tÃ©s de continuitÃ© des fonctions convexes.
-- [ ] [[Jalon 122 (Notion de sous-gradient)]] : Notion de sous-gradient, sous-diffÃ©rentiel $\partial f(x)$ et optimisation de fonctions non lisses.
-- [ ] [[Jalon 123 (ProblÃ¨mes d'optimisation sous contraintes)]] : ProblÃ¨mes d'optimisation sous contraintes, lagrangien et dualitÃ© de Lagrange (problÃ¨me dual).
-- [ ] [[Jalon 124 (Conditions de Karush-Kuhn-Tucker)]] : Conditions de Karush-Kuhn-Tucker (KKT) pour l'optimalitÃ© globale sous contraintes de qualification (Slater).
-- [ ] [[Jalon 125 (OpÃ©rateurs proximaux)]] : OpÃ©rateurs proximaux, thÃ©orÃ¨me de Moreau-Yosida et algorithmes de descente de gradient proximale (ISTA/FISTA).
-- [ ] [[Jalon 126 (Noyaux dÃ©finis positifs)]] : Noyaux dÃ©finis positifs, thÃ©orÃ¨me de Mercer et construction des espaces de Hilbert Ã  noyau reproduisant (RKHS).
-- [ ] [[Jalon 127 (DÃ©monstration du thÃ©orÃ¨me du reprÃ©sentant dans les RKHS)]] : DÃ©monstration du thÃ©orÃ¨me du reprÃ©sentant dans les RKHS (rÃ©duction d'un problÃ¨me d'optimisation infini Ã  la dimension finie).
-- [ ] [[Jalon 128 (Flots de gradient)]] : Flots de gradient (Gradient Flows) : interprÃ©tation continue de la descente de gradient comme courbe de plus grande pente dans l'espace des mesures.
-- [ ] [[Jalon 129 (Optimisation stochastique)]] : Optimisation stochastique, algorithme de Robbins-Monro et critÃ¨res de convergence presque sÃ»re de la descente de gradient stochastique (SGD).
-- [ ] [[Jalon 130 (RÃ©gularisation implicite de la descente de gradient dans les modÃ¨les sur-paramÃ©trÃ©s.)]] : RÃ©gularisation implicite de la descente de gradient dans les modÃ¨les sur-paramÃ©trÃ©s.
-- [ ] [[Jalon 131 (Algorithmes d'optimisation de second ordre en grande dimension)]] : Algorithmes d'optimisation de second ordre en grande dimension (quasi-Newton, L-BFGS).
-- [ ] [[Jalon 132 (Livrable IA)]] : Livrable IA T11 : Codage complet en Python pur d'un solveur de point proximal sous contraintes KKT strictes pour l'Ã©lagage thÃ©orique (pruning) de rÃ©seaux profonds.
-### Trimestre 12 : thÃ©orie de l'apprentissage statistique
-- [ ] [[Jalon 133 (ModÃ¨le PAC)]] : ModÃ¨le PAC (Probably Approximately Correct), risque empirique vs risque rÃ©el.
-- [ ] [[Jalon 134 (ComplexitÃ© des classes de fonctions)]] : ComplexitÃ© des classes de fonctions, processus empiriques et inÃ©galitÃ©s de concentration maximales.
-- [ ] [[Jalon 135 (ComplexitÃ© de Rademacher)]] : ComplexitÃ© de Rademacher, symÃ©trisation et bornes de gÃ©nÃ©ralisation basÃ©es sur Rademacher.
-- [ ] [[Jalon 136 (ThÃ©orie de Vapnik-Chervonenkis)]] : ThÃ©orie de Vapnik-Chervonenkis, fonction de croissance, dimension VC d'un espace d'hypothÃ¨ses et lemme de Sauer.
-- [ ] [[Jalon 137 (Preuve des bornes de gÃ©nÃ©ralisation universelles de Vapnik via la dimension VC.)]] : Preuve des bornes de gÃ©nÃ©ralisation universelles de Vapnik via la dimension VC.
-- [ ] [[Jalon 138 (InÃ©galitÃ©s de concentration avancÃ©es)]] : InÃ©galitÃ©s de concentration avancÃ©es, inÃ©galitÃ© de McDiarmid (diffÃ©rences bornÃ©es) et entropie de concentration.
-- [ ] [[Jalon 139 (Notion de stabilitÃ© algorithmique)]] : Notion de stabilitÃ© algorithmique (Bousquet-Elisseeff) et son lien direct avec la capacitÃ© de gÃ©nÃ©ralisation.
-- [ ] [[Jalon 140 (Classifieur de Bayes optimal)]] : Classifieur de Bayes optimal, fonctions de perte de substitution (Surrogate losses) et consistance de la minimisation du risque empirique.
-- [ ] [[Jalon 141 (ThÃ©orÃ¨mes de Glivenko-Cantelli gÃ©nÃ©ralisÃ©s pour les classes de fonctions VC.)]] : ThÃ©orÃ¨mes de Glivenko-Cantelli gÃ©nÃ©ralisÃ©s pour les classes de fonctions VC.
-- [ ] [[Jalon 142 (Processus de dÃ©cision de Markov)]] : Processus de dÃ©cision de Markov (MDP) sur des espaces d'Ã©tats continus, opÃ©rateurs de contraction de Bellman.
-- [ ] [[Jalon 143 (ThÃ©orie spectrale des graphes)]] : ThÃ©orie spectrale des graphes, laplacien combinatoire, laplacien normalisÃ© et Ã©tude des coupures optimales (Min-Cut).
-- [ ] [[Jalon 144 (Le phÃ©nomÃ¨ne de double descente)]] : Le phÃ©nomÃ¨ne de double descente : analyse de la rupture de la thÃ©orie statistique classique (compromis biais-variance) dans le rÃ©gime sur-paramÃ©trÃ©.
-- [ ] [[Jalons 145 Ã  152 (RÃ©daction d'un article de recherche thÃ©orique de synthÃ¨se analysant les garanties de gÃ©nÃ©ralisation PAC d'une couche d'attention multi-tÃªtes.)]] : RÃ©daction d'un article de recherche thÃ©orique de synthÃ¨se analysant les garanties de gÃ©nÃ©ralisation PAC d'une couche d'attention multi-tÃªtes.
-- [ ] [[Jalons 153 Ã  156 (SynthÃ¨se finale)]] : SynthÃ¨se finale, structuration de vos notes Obsidian en un graphe de connaissances unifiÃ©, et tournage de la sÃ©rie de vidÃ©os YouTube clÃ´turant le cycle d'Ã©tudes.
+- [ ] [[Jalon 73 (Définition des espaces --mathcal{L}^p- et passage à l'espace quotient -L^p-)/Jalon 73 (Définition des espaces --mathcal{L}^p- et passage à l'espace quotient -L^p-).md|Jalon 73 : Définition des espaces $\\mathcal{L}^p$ et passage à l'espace quotient $L^p$]] : Définition des espaces $\\mathcal{L}^p$ et passage à l'espace quotient $L^p$ (égalité presque partout).
+- [ ] [[Jalon 74 (Inégalités fondamentales de l'analyse fonctionnelle)/Jalon 74 (Inégalités fondamentales de l'analyse fonctionnelle).md|Jalon 74 : Inégalités fondamentales de l'analyse fonctionnelle]] : Inégalités fondamentales de l'analyse fonctionnelle : Hölder et Minkowski.
+- [ ] [[Jalon 75 (Preuve de la complétude des espaces -L^p-)/Jalon 75 (Preuve de la complétude des espaces -L^p-).md|Jalon 75 : Preuve de la complétude des espaces $L^p$]] : Preuve de la complétude des espaces $L^p$ (Théorème de Riesz-Fischer) : structure de Banach.
+- [ ] [[Jalon 76 (Propriétés géométriques de l'espace de Hilbert -L^2-)/Jalon 76 (Propriétés géométriques de l'espace de Hilbert -L^2-).md|Jalon 76 : Propriétés géométriques de l'espace de Hilbert $L^2$]] : Propriétés géométriques de l'espace de Hilbert $L^2$, produit scalaire et identité du parallélogramme.
+- [ ] [[Jalon 77 (Densité des fonctions simples)/Jalon 77 (Densité des fonctions simples).md|Jalon 77 : Densité des fonctions simples]] : Densité des fonctions simples, des fonctions continues à support compact et des fonctions lisses dans $L^p$.
+- [ ] [[Jalon 78 (Séries de Fourier)/Jalon 78 (Séries de Fourier).md|Jalon 78 : Séries de Fourier]] : Séries de Fourier, calcul des coefficients, convergence ponctuelle (théorème de Dirichlet).
+- [ ] [[Jalon 79 (Convergence en moyenne quadratique des séries de Fourier et identité de Parseval.)/Jalon 79 (Convergence en moyenne quadratique des séries de Fourier et identité de Parseval.).md|Jalon 79 : Convergence en moyenne quadratique des séries de Fourier et identité de Parseval.]] : Convergence en moyenne quadratique des séries de Fourier et identité de Parseval.
+- [ ] [[Jalon 80 (Transformée de Fourier dans -L^1-)/Jalon 80 (Transformée de Fourier dans -L^1-).md|Jalon 80 : Transformée de Fourier dans $L^1$]] : Transformée de Fourier dans $L^1$, propriétés algébriques, Riemann-Lebesgue et produit de convolution.
+- [ ] [[Jalon 81 (Transformée de Fourier dans -L^2-)/Jalon 81 (Transformée de Fourier dans -L^2-).md|Jalon 81 : Transformée de Fourier dans $L^2$]] : Transformée de Fourier dans $L^2$, prolongement par densité et théorème d'isométrie de Plancherel.
+- [ ] [[Jalon 82 (Introduction à la théorie des distributions de Schwartz)/Jalon 82 (Introduction à la théorie des distributions de Schwartz).md|Jalon 82 : Introduction à la théorie des distributions de Schwartz]] : Introduction à la théorie des distributions de Schwartz, espace des fonctions tests $\\mathcal{D}(\\mathbb{R})$.
+- [ ] [[Jalon 83 (Dérivation au sens des distributions)/Jalon 83 (Dérivation au sens des distributions).md|Jalon 83 : Dérivation au sens des distributions]] : Dérivation au sens des distributions, distribution de Dirac et introduction aux espaces de Sobolev $H^1(\\mathbb{R})$.
+- [ ] [[Jalon 84 (Livrable IA)/Jalon 84 (Livrable IA).md|Jalon 84 : Livrable IA]] : Livrable IA T7 : Création d'un module d'analyse spectrale pour l'extraction de caractéristiques audio à partir de la transformée de Fourier dans $L^2$.
+### Trimestre 8 : probabilités axiomatiques et statistiques fondamentales
+- [ ] [[Jalon 85 (Axiomes de Kolmogorov)/Jalon 85 (Axiomes de Kolmogorov).md|Jalon 85 : Axiomes de Kolmogorov]] : Axiomes de Kolmogorov, espace de probabilité $(\\Omega, \\mathcal{F}, \\mathbb{P})$ comme un espace mesuré de masse 1.
+- [ ] [[Jalon 86 (Variables aléatoires vues comme des applications mesurables)/Jalon 86 (Variables aléatoires vues comme des applications mesurables).md|Jalon 86 : Variables aléatoires vues comme des applications mesurables]] : Variables aléatoires vues comme des applications mesurables, loi d'une variable et mesure de probabilité image.
+- [ ] [[Jalon 87 (Intégration des variables aléatoires)/Jalon 87 (Intégration des variables aléatoires).md|Jalon 87 : Intégration des variables aléatoires]] : Intégration des variables aléatoires, espérance, variance et moments d'ordre supérieur.
+- [ ] [[Jalon 88 (Indépendance d'événements)/Jalon 88 (Indépendance d'événements).md|Jalon 88 : Indépendance d'événements]] : Indépendance d'événements, de tribus et de variables aléatoires.
+- [ ] [[Jalon 89 (Lemmes de Borel-Cantelli)/Jalon 89 (Lemmes de Borel-Cantelli).md|Jalon 89 : Lemmes de Borel-Cantelli]] : Lemmes de Borel-Cantelli (lois du tout ou rien) et applications aux comportements asymptotiques.
+- [ ] [[Jalon 90 (Les modes de convergence)/Jalon 90 (Les modes de convergence).md|Jalon 90 : Les modes de convergence]] : Les modes de convergence : presque sûre, en probabilité, dans $L^p$ et en loi (convergence étroite des mesures).
+- [ ] [[Jalon 91 (Inégalités de concentration)/Jalon 91 (Inégalités de concentration).md|Jalon 91 : Inégalités de concentration]] : Inégalités de concentration : Markov, Chebyshev, Bienaymé, Chernoff et lemme de Hoeffding.
+- [ ] [[Jalon 92 (Démonstration rigoureuse de la loi forte des grands nombres.)/Jalon 92 (Démonstration rigoureuse de la loi forte des grands nombres.).md|Jalon 92 : Démonstration rigoureuse de la loi forte des grands nombres.]] : Démonstration rigoureuse de la loi forte des grands nombres.
+- [ ] [[Jalon 93 (Fonctions caractéristiques)/Jalon 93 (Fonctions caractéristiques).md|Jalon 93 : Fonctions caractéristiques]] : Fonctions caractéristiques (transformée de Fourier de la loi) et théorème de continuité de Lévy.
+- [ ] [[Jalon 94 (Démonstration du théorème central limite)/Jalon 94 (Démonstration du théorème central limite).md|Jalon 94 : Démonstration du théorème central limite]] : Démonstration du théorème central limite (TCL) via les développements limités des fonctions caractéristiques.
+- [ ] [[Jalon 95 (Vecteurs gaussiens)/Jalon 95 (Vecteurs gaussiens).md|Jalon 95 : Vecteurs gaussiens]] : Vecteurs gaussiens, loi normale multidimensionnelle, matrice de covariance et conditionnement gaussien.
+- [ ] [[Jalon 96 (Livrable IA)/Jalon 96 (Livrable IA).md|Jalon 96 : Livrable IA]] : Livrable IA T8 : Démonstration rigoureuse de la convergence de la fonction de perte Cross-Entropy vers l'information théorique de Shannon lors de l'entraînement des modèles de langage.
+## Année 3 : le niveau master (analyse fonctionnelle, géométrie et apprentissage)
+### Trimestre 9 : analyse fonctionnelle et théorie spectrale
+- [ ] [[Jalon 97 (Espaces de Banach)/Jalon 97 (Espaces de Banach).md|Jalon 97 : Espaces de Banach]] : Espaces de Banach, opérateurs linéaires continus entre Banach et topologie induite par la norme d'opérateur.
+- [ ] [[Jalon 98 (Théorème de Hahn-Banach)/Jalon 98 (Théorème de Hahn-Banach).md|Jalon 98 : Théorème de Hahn-Banach]] : Théorème de Hahn-Banach (forme analytique), prolongement des formes linéaires sous-linéaires.
+- [ ] [[Jalon 99 (Théorème de Hahn-Banach)/Jalon 99 (Théorème de Hahn-Banach).md|Jalon 99 : Théorème de Hahn-Banach]] : Théorème de Hahn-Banach (formes géométriques), séparation des ensembles convexes par des hyperplans.
+- [ ] [[Jalon 100 (Démonstration du théorème de Banach-Steinhaus)/Jalon 100 (Démonstration du théorème de Banach-Steinhaus).md|Jalon 100 : Démonstration du théorème de Banach-Steinhaus]] : Démonstration du théorème de Banach-Steinhaus (principe de la borne uniforme).
+- [ ] [[Jalon 101 (Théorème de l'application ouverte et théorème du graphe fermé.)/Jalon 101 (Théorème de l'application ouverte et théorème du graphe fermé.).md|Jalon 101 : Théorème de l'application ouverte et théorème du graphe fermé.]] : Théorème de l'application ouverte et théorème du graphe fermé.
+- [ ] [[Jalon 102 (Topologies faibles et faibles-)/Jalon 102 (Topologies faibles et faibles-).md|Jalon 102 : Topologies faibles et faibles-*]] : Topologies faibles et faibles-*, compacité de la boule unité duale (Théorème de Banach-Alaoglu).
+- [ ] [[Jalon 103 (Espaces de Hilbert généraux)/Jalon 103 (Espaces de Hilbert généraux).md|Jalon 103 : Espaces de Hilbert généraux]] : Espaces de Hilbert généraux, théorème de projection sur un convexe fermé et dualité de Riesz.
+- [ ] [[Jalon 104 (Bases hilbertiennes)/Jalon 104 (Bases hilbertiennes).md|Jalon 104 : Bases hilbertiennes]] : Bases hilbertiennes (systèmes orthonormés complets) et séparabilité des espaces de Hilbert.
+- [ ] [[Jalon 105 (Opérateurs adjoints)/Jalon 105 (Opérateurs adjoints).md|Jalon 105 : Opérateurs adjoints]] : Opérateurs adjoints, opérateurs compacts et propriétés de régularisation.
+- [ ] [[Jalon 106 (Théorème spectral pour les opérateurs compacts autoadjoints)/Jalon 106 (Théorème spectral pour les opérateurs compacts autoadjoints).md|Jalon 106 : Théorème spectral pour les opérateurs compacts autoadjoints]] : Théorème spectral pour les opérateurs compacts autoadjoints (décomposition en base hilbertienne d'éléments propres).
+- [ ] [[Jalon 107 (Introduction à la théorie des opérateurs non bornés et résolvante.)/Jalon 107 (Introduction à la théorie des opérateurs non bornés et résolvante.).md|Jalon 107 : Introduction à la théorie des opérateurs non bornés et résolvante.]] : Introduction à la théorie des opérateurs non bornés et résolvante.
+- [ ] [[Jalon 108 (Livrable IA)/Jalon 108 (Livrable IA).md|Jalon 108 : Livrable IA]] : Livrable IA T9 : Modélisation de l'opérateur d'Attention de la structure Transformer sous forme d'opérateur intégral borné sur un espace hilbertien.
+### Trimestre 10 : géométrie différentielle et calcul des variations
+- [ ] [[Jalon 109 (Topologie des sous-variétés de --mathbb{R}^n-)/Jalon 109 (Topologie des sous-variétés de --mathbb{R}^n-).md|Jalon 109 : Topologie des sous-variétés de $\\mathbb{R}^n$]] : Topologie des sous-variétés de $\\mathbb{R}^n$, définition par des cartes locales, des paramétrages ou des équations.
+- [ ] [[Jalon 110 (Variétés différentielles abstraites)/Jalon 110 (Variétés différentielles abstraites).md|Jalon 110 : Variétés différentielles abstraites]] : Variétés différentielles abstraites, atlas, fonctions de transition (structures lisses).
+- [ ] [[Jalon 111 (Applications différentiables entre variétés)/Jalon 111 (Applications différentiables entre variétés).md|Jalon 111 : Applications différentiables entre variétés]] : Applications différentiables entre variétés, espace tangent en un point (dérivations) et fibré tangent $TM$.
+- [ ] [[Jalon 112 (Champs de vecteurs)/Jalon 112 (Champs de vecteurs).md|Jalon 112 : Champs de vecteurs]] : Champs de vecteurs, flots locaux, courbes intégrales et crochet de Lie.
+- [ ] [[Jalon 113 (Tenseurs)/Jalon 113 (Tenseurs).md|Jalon 113 : Tenseurs]] : Tenseurs, formes différentielles, produit extérieur $\\wedge$ et calcul de la dérivée extérieure $d$.
+- [ ] [[Jalon 114 (Orientation des variétés et intégration des formes différentielles à support compact.)/Jalon 114 (Orientation des variétés et intégration des formes différentielles à support compact.).md|Jalon 114 : Orientation des variétés et intégration des formes différentielles à support compact.]] : Orientation des variétés et intégration des formes différentielles à support compact.
+- [ ] [[Jalon 115 (Démonstration du théorème de Stokes généralisé)/Jalon 115 (Démonstration du théorème de Stokes généralisé).md|Jalon 115 : Démonstration du théorème de Stokes généralisé]] : Démonstration du théorème de Stokes généralisé ($\\int_{\\partial M} \\omega = \\int_M d\\omega$).
+- [ ] [[Jalon 116 (Variétés riemanniennes)/Jalon 116 (Variétés riemanniennes).md|Jalon 116 : Variétés riemanniennes]] : Variétés riemanniennes, tenseur métrique, longueur des courbes et équations des géodésiques.
+- [ ] [[Jalon 117 (Calcul des variations)/Jalon 117 (Calcul des variations).md|Jalon 117 : Calcul des variations]] : Calcul des variations, fonctionnelles, dérivation au sens de Gâteaux et équations d'Euler-Lagrange.
+- [ ] [[Jalon 118 (Conditions d'optimalité du second ordre pour les fonctionnelles et introduction aux multiplicateurs de Lagrange de dimension infinie.)/Jalon 118 (Conditions d'optimalité du second ordre pour les fonctionnelles et introduction aux multiplicateurs de Lagrange de dimension infinie.).md|Jalon 118 : Conditions d'optimalité du second ordre pour les fonctionnelles et introduction aux multiplicateurs de Lagrange de dimension infinie.]] : Conditions d'optimalité du second ordre pour les fonctionnelles et introduction aux multiplicateurs de Lagrange de dimension infinie.
+- [ ] [[Jalon 119 (Connexions avec les groupes de Lie)/Jalon 119 (Connexions avec les groupes de Lie).md|Jalon 119 : Connexions avec les groupes de Lie]] : Connexions avec les groupes de Lie, algèbres de Lie et symétries spatiales.
+- [ ] [[Jalon 120 (Livrable IA)/Jalon 120 (Livrable IA).md|Jalon 120 : Livrable IA]] : Livrable IA T10 : Formalisation mathématique des contraintes d'invariance par translation et rotation dans le cadre du Geometric Deep Learning (Graph Neural Networks).
+### Trimestre 11 : optimisation convexe avancée et méthodes à noyaux
+- [ ] [[Jalon 121 (Ensembles convexes)/Jalon 121 (Ensembles convexes).md|Jalon 121 : Ensembles convexes]] : Ensembles convexes, fonctions convexes, épigraphe et propriétés de continuité des fonctions convexes.
+- [ ] [[Jalon 122 (Notion de sous-gradient)/Jalon 122 (Notion de sous-gradient).md|Jalon 122 : Notion de sous-gradient]] : Notion de sous-gradient, sous-différentiel $\\partial f(x)$ et optimisation de fonctions non lisses.
+- [ ] [[Jalon 123 (Problèmes d'optimisation sous contraintes)/Jalon 123 (Problèmes d'optimisation sous contraintes).md|Jalon 123 : Problèmes d'optimisation sous contraintes]] : Problèmes d'optimisation sous contraintes, lagrangien et dualité de Lagrange (problème dual).
+- [ ] [[Jalon 124 (Conditions de Karush-Kuhn-Tucker)/Jalon 124 (Conditions de Karush-Kuhn-Tucker).md|Jalon 124 : Conditions de Karush-Kuhn-Tucker]] : Conditions de Karush-Kuhn-Tucker (KKT) pour l'optimalité globale sous contraintes de qualification (Slater).
+- [ ] [[Jalon 125 (Opérateurs proximaux)/Jalon 125 (Opérateurs proximaux).md|Jalon 125 : Opérateurs proximaux]] : Opérateurs proximaux, théorème de Moreau-Yosida et algorithmes de descente de gradient proximale (ISTA/FISTA).
+- [ ] [[Jalon 126 (Noyaux définis positifs)/Jalon 126 (Noyaux définis positifs).md|Jalon 126 : Noyaux définis positifs]] : Noyaux définis positifs, théorème de Mercer et construction des espaces de Hilbert à noyau reproduisant (RKHS).
+- [ ] [[Jalon 127 (Démonstration du théorème du représentant dans les RKHS)/Jalon 127 (Démonstration du théorème du représentant dans les RKHS).md|Jalon 127 : Démonstration du théorème du représentant dans les RKHS]] : Démonstration du théorème du représentant dans les RKHS (réduction d'un problème d'optimisation infini à la dimension finie).
+- [ ] [[Jalon 128 (Flots de gradient)/Jalon 128 (Flots de gradient).md|Jalon 128 : Flots de gradient]] : Flots de gradient (Gradient Flows) : interprétation continue de la descente de gradient comme courbe de plus grande pente dans l'espace des mesures.
+- [ ] [[Jalon 129 (Optimisation stochastique)/Jalon 129 (Optimisation stochastique).md|Jalon 129 : Optimisation stochastique]] : Optimisation stochastique, algorithme de Robbins-Monro et critères de convergence presque sûre de la descente de gradient stochastique (SGD).
+- [ ] [[Jalon 130 (Régularisation implicite de la descente de gradient dans les modèles sur-paramétrés.)/Jalon 130 (Régularisation implicite de la descente de gradient dans les modèles sur-paramétrés.).md|Jalon 130 : Régularisation implicite de la descente de gradient dans les modèles sur-paramétrés.]] : Régularisation implicite de la descente de gradient dans les modèles sur-paramétrés.
+- [ ] [[Jalon 131 (Algorithmes d'optimisation de second ordre en grande dimension)/Jalon 131 (Algorithmes d'optimisation de second ordre en grande dimension).md|Jalon 131 : Algorithmes d'optimisation de second ordre en grande dimension]] : Algorithmes d'optimisation de second ordre en grande dimension (quasi-Newton, L-BFGS).
+- [ ] [[Jalon 132 (Livrable IA)/Jalon 132 (Livrable IA).md|Jalon 132 : Livrable IA]] : Livrable IA T11 : Codage complet en Python pur d'un solveur de point proximal sous contraintes KKT strictes pour l'élagage théorique (pruning) de réseaux profonds.
+### Trimestre 12 : théorie de l'apprentissage statistique
+- [ ] [[Jalon 133 (Modèle PAC)/Jalon 133 (Modèle PAC).md|Jalon 133 : Modèle PAC]] : Modèle PAC (Probably Approximately Correct), risque empirique vs risque réel.
+- [ ] [[Jalon 134 (Complexité des classes de fonctions)/Jalon 134 (Complexité des classes de fonctions).md|Jalon 134 : Complexité des classes de fonctions]] : Complexité des classes de fonctions, processus empiriques et inégalités de concentration maximales.
+- [ ] [[Jalon 135 (Complexité de Rademacher)/Jalon 135 (Complexité de Rademacher).md|Jalon 135 : Complexité de Rademacher]] : Complexité de Rademacher, symétrisation et bornes de généralisation basées sur Rademacher.
+- [ ] [[Jalon 136 (Théorie de Vapnik-Chervonenkis)/Jalon 136 (Théorie de Vapnik-Chervonenkis).md|Jalon 136 : Théorie de Vapnik-Chervonenkis]] : Théorie de Vapnik-Chervonenkis, fonction de croissance, dimension VC d'un espace d'hypothèses et lemme de Sauer.
+- [ ] [[Jalon 137 (Preuve des bornes de généralisation universelles de Vapnik via la dimension VC.)/Jalon 137 (Preuve des bornes de généralisation universelles de Vapnik via la dimension VC.).md|Jalon 137 : Preuve des bornes de généralisation universelles de Vapnik via la dimension VC.]] : Preuve des bornes de généralisation universelles de Vapnik via la dimension VC.
+- [ ] [[Jalon 138 (Inégalités de concentration avancées)/Jalon 138 (Inégalités de concentration avancées).md|Jalon 138 : Inégalités de concentration avancées]] : Inégalités de concentration avancées, inégalité de McDiarmid (différences bornées) et entropie de concentration.
+- [ ] [[Jalon 139 (Notion de stabilité algorithmique)/Jalon 139 (Notion de stabilité algorithmique).md|Jalon 139 : Notion de stabilité algorithmique]] : Notion de stabilité algorithmique (Bousquet-Elisseeff) et son lien direct avec la capacité de généralisation.
+- [ ] [[Jalon 140 (Classifieur de Bayes optimal)/Jalon 140 (Classifieur de Bayes optimal).md|Jalon 140 : Classifieur de Bayes optimal]] : Classifieur de Bayes optimal, fonctions de perte de substitution (Surrogate losses) et consistance de la minimisation du risque empirique.
+- [ ] [[Jalon 141 (Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC.)/Jalon 141 (Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC.).md|Jalon 141 : Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC.]] : Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC.
+- [ ] [[Jalon 142 (Processus de décision de Markov)/Jalon 142 (Processus de décision de Markov).md|Jalon 142 : Processus de décision de Markov]] : Processus de décision de Markov (MDP) sur des espaces d'états continus, opérateurs de contraction de Bellman.
+- [ ] [[Jalon 143 (Théorie spectrale des graphes)/Jalon 143 (Théorie spectrale des graphes).md|Jalon 143 : Théorie spectrale des graphes]] : Théorie spectrale des graphes, laplacien combinatoire, laplacien normalisé et étude des coupures optimales (Min-Cut).
+- [ ] [[Jalon 144 (Le phénomène de double descente)/Jalon 144 (Le phénomène de double descente).md|Jalon 144 : Le phénomène de double descente]] : Le phénomène de double descente : analyse de la rupture de la théorie statistique classique (compromis biais-variance) dans le régime sur-paramétré.
+- [ ] [[Jalons 145 à 152 (Rédaction d'un article de recherche théorique de synthèse analysant les garanties de généralisation PAC d'une couche d'attention multi-têtes.)/Jalons 145 à 152 (Rédaction d'un article de recherche théorique de synthèse analysant les garanties de généralisation PAC d'une couche d'attention multi-têtes.).md|Jalons 145 à 152 : Rédaction d'un article de recherche théorique de synthèse analysant les garanties de généralisation PAC d'une couche d'attention multi-têtes.]] : Rédaction d'un article de recherche théorique de synthèse analysant les garanties de généralisation PAC d'une couche d'attention multi-têtes.
+- [ ] [[Jalons 153 à 156 (Synthèse finale)/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.

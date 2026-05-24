@@ -11,6 +11,8 @@ Le projet génère des "Jalons" d'apprentissage répartis sur trois années de c
 
 Ces notes sont structurées et interconnectées. Elles incluent des liens de navigation vers les jalons précédents et suivants, ainsi que des liens sémantiques automatiques entre les concepts mathématiques transversaux.
 
+- **`Tableau de bord.md`** : Un index global interactif (sous forme de checklist) permettant de suivre votre progression à travers tout le cursus. Chaque jalon y est lié pour une navigation rapide.
+
 ## Fichiers Principaux
 
 - **`generate_jalons.py`** : C'est le script principal du projet, écrit en Python. Il contient le texte source du programme complet, le découpe par années et trimestres, et génère pour chaque jalon un dossier dédié contenant la fiche principale (par exemple : `Jalon 1 (Logique formelle)/Jalon 1 (Logique formelle).md`). Cette structure permet d'organiser proprement chaque jalon en y ajoutant des ressources complémentaires (exercices, schémas, notes personnelles) sans encombrer la racine du dépôt.
