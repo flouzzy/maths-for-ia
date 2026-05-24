@@ -84,6 +84,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 61** : Insuffisances de l'intégrale de Riemann et motivation pour la mesure de Lebesgue. (Enrichi le 2026-05-24)
 - **Jalon 62** : Algèbres, tribus (sigma-algèbres) et classes monotones. (Enrichi le 2026-05-24)
 - **Jalon 63** : Définition axiomatique d'une mesure, mesures de probabilité et propriétés de continuité monotone. (Enrichi le 2026-05-24)
+- **Jalon 64** : Construction pas à pas de la mesure de Lebesgue sur $\mathbb{R}$ via la mesure extérieure. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
