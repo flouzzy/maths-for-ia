@@ -108,6 +108,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 85** : Axiomes de Kolmogorov et espace de probabilité $(\Omega, \mathcal{F}, P)$. (Enrichi le 2026-05-24)
 - **Jalon 86** : Variables aléatoires vues comme des applications mesurables. (Enrichi le 2026-05-24)
 - **Jalon 87** : Intégration des variables aléatoires et définition de l'espérance mathématique. (Enrichi le 2026-05-24)
+- **Jalon 88** : Indépendance d'événements, de tribus et de variables aléatoires. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
