@@ -78,6 +78,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 55** : Connexité, connexité par arcs et étude des composantes connexes. (Enrichi le 2026-05-24)
 - **Jalon 56** : Espaces métriques complets, suites de Cauchy et théorème de prolongement des applications continues. (Enrichi le 2026-05-24)
 - **Jalon 57** : Théorème du point fixe de Banach (contractions) et application à l'existence locale des solutions d'EDP. (Enrichi le 2026-05-24)
+- **Jalon 58** : Théorème de Baire (les espaces de l'impossible) et applications aux fonctions continues nulle part dérivables. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
