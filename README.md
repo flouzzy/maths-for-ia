@@ -58,6 +58,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 35** : Caractérisation séquentielle des ouverts, des fermés et des compacts (Heine-Borel). (Enrichi le 2026-05-24)
 - **Jalon 36** : Livrable IA T3 : Écriture des équations de la décomposition en valeurs singulières (SVD) et application mathématique à la compression d'une matrice de pixels d'image. (Enrichi le 2026-05-24)
 - **Jalon 37** : Intégrale de Riemann sur un segment, fonctions en escalier et propriétés de l'intégrale. (Enrichi le 2026-05-24)
+- **Jalon 38** : Théorème fondamental de l'analyse, primitives et techniques d'intégration (IPP, changement de variable). (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
