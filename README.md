@@ -61,6 +61,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 38** : Théorème fondamental de l'analyse, primitives et techniques d'intégration (IPP, changement de variable). (Enrichi le 2026-05-24)
 - **Jalon 39** : Intégrales généralisées sur un intervalle quelconque et critères de convergence. (Enrichi le 2026-05-24)
 - **Jalon 40** : Intégrales dépendant d'un paramètre, théorèmes de continuité et de dérivation sous le signe $\int$. (Enrichi le 2026-05-24)
+- **Jalon 41** : Équations différentielles linéaires du premier ordre et méthode de variation de la constante. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
