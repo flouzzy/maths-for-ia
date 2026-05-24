@@ -119,6 +119,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 96** : Livrable IA T8 : Démonstration rigoureuse de la convergence de la fonction de perte Cross-Entropy vers l'information théorique de Shannon lors de l'entraînement des modèles de langage. (Enrichi le 2026-05-24)
 - **Jalon 97** : Espaces de Banach, normes d'opérateurs et espace dual. (Enrichi le 2026-05-24)
 - **Jalon 98** : Théorème de Hahn-Banach (forme analytique) et prolongement des formes linéaires. (Enrichi le 2026-05-24)
+- **Jalon 99** : Théorème de Hahn-Banach (forme géométrique) : théorèmes de séparation des convexes. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
