@@ -109,6 +109,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 86** : Variables aléatoires vues comme des applications mesurables. (Enrichi le 2026-05-24)
 - **Jalon 87** : Intégration des variables aléatoires et définition de l'espérance mathématique. (Enrichi le 2026-05-24)
 - **Jalon 88** : Indépendance d'événements, de tribus et de variables aléatoires. (Enrichi le 2026-05-24)
+- **Jalon 89** : Lemmes de Borel-Cantelli et loi du zéro-un de Kolmogorov. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
