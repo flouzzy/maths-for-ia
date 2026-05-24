@@ -73,6 +73,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 50** : Opérateurs topologiques : intérieur, adhérence, frontière et ensembles denses. (Enrichi le 2026-05-24)
 - **Jalon 51** : Espaces métriques, topologie induite par une distance et distances équivalentes. (Enrichi le 2026-05-24)
 - **Jalon 52** : Applications continues entre espaces topologiques et définition fine des homéomorphismes. (Enrichi le 2026-05-24)
+- **Jalon 53** : Axiomes de séparation (notamment les espaces de Hausdorff). (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
