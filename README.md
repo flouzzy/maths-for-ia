@@ -76,6 +76,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 53** : Axiomes de séparation (notamment les espaces de Hausdorff). (Enrichi le 2026-05-24)
 - **Jalon 54** : Compacité générale (propriété de Borel-Lebesgue) et démonstration du théorème de Tychonoff pour les produits finis. (Enrichi le 2026-05-24)
 - **Jalon 55** : Connexité, connexité par arcs et étude des composantes connexes. (Enrichi le 2026-05-24)
+- **Jalon 56** : Espaces métriques complets, suites de Cauchy et théorème de prolongement des applications continues. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
