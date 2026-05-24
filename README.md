@@ -104,6 +104,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 81** : Transformée de Fourier dans $L^2$, isométrie de Plancherel. (Enrichi le 2026-05-24)
 - **Jalon 82** : Introduction à la théorie des distributions de Schwartz. (Enrichi le 2026-05-24)
 - **Jalon 83** : Dérivation au sens des distributions. (Enrichi le 2026-05-24)
+- **Jalon 84** : Livrable IA T7 : Création d'un module d'analyse spectrale pour l'extraction de caractéristiques audio à partir de la transformée de Fourier dans $L^2$. (Enrichi le 2026-05-24)
 
 ## Comment Générer les Notes
 
