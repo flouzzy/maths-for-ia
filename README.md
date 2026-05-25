@@ -149,6 +149,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **Jalon 126** : Noyaux définis positifs et théorème de Moore-Aronszajn. (Enrichi le 2026-05-24)
 - **Jalon 127** : Démonstration du théorème du représentant dans les RKHS. (Enrichi le 2026-05-24)
 - **Jalon 128** : Flots de gradient sur les variétés et convergence vers les minima. (Enrichi le 2026-05-24)
+- **Jalon 129** : Optimisation stochastique, algorithme de Robbins-Monro et critères de convergence presque sûre de la descente de gradient stochastique (SGD). (Enrichi le 2026-05-25)
 
 ## Comment Générer les Notes
 
