@@ -274,14 +274,16 @@ def generate_concept_links(desc):
 if __name__ == '__main__':
     jalons, all_jalon_titles = parse_jalons(text)
 
-    cwd = os.getcwd()
+    created_dirs = set()
     for i, jalon in enumerate(jalons):
         # Create a folder for the jalon
         folder_name = jalon['filename'].replace('.md', '')
-        folder_path = os.path.join(cwd, folder_name)
-        os.makedirs(folder_path, exist_ok=True)
         
-        filepath = os.path.join(folder_path, jalon['filename'])
+        if folder_name not in created_dirs:
+            os.makedirs(folder_name, exist_ok=True)
+            created_dirs.add(folder_name)
+
+        filepath = os.path.join(folder_name, jalon['filename'])
         
         content = f"# {jalon['id']}\n\n"
         content += f"**{jalon['year']}** > **{jalon['trimester']}**\n\n"
@@ -305,4 +307,4 @@ if __name__ == '__main__':
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
 
-    print(f"Created {len(jalons)} notes in their respective folders in {cwd}")
+    print(f"Created {len(jalons)} notes in their respective folders.")
