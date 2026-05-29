@@ -151,6 +151,8 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **[Jalon 128](Jalon%20128%20(Flots%20de%20gradient)/Jalon%20128%20(Flots%20de%20gradient).md)** : Flots de gradient sur les variétés et convergence vers les minima. (Enrichi le 2026-05-24)
 - **[Jalon 129](Jalon%20129%20(Optimisation%20stochastique)/Jalon%20129%20(Optimisation%20stochastique).md)** : Optimisation stochastique, algorithme de Robbins-Monro et critères de convergence presque sûre de la descente de gradient stochastique (SGD). (Enrichi le 2026-05-25)
 - **[Jalon 130](Jalon%20130%20(Regularisation%20implicite%20de%20la%20descente%20de%20gradient%20dans%20les%20modeles%20sur-parametres)/Jalon%20130%20(Regularisation%20implicite%20de%20la%20descente%20de%20gradient%20dans%20les%20modeles%20sur-parametres).md)** : Régularisation implicite de la descente de gradient dans les modèles sur-paramétrés. (Enrichi le 2026-05-26)
+- **[Jalon 131](Jalon%20131%20(Algorithmes%20d'optimisation%20de%20second%20ordre%20en%20grande%20dimension)/Jalon%20131%20(Algorithmes%20d'optimisation%20de%20second%20ordre%20en%20grande%20dimension).md)** : Algorithmes d'optimisation de second ordre en grande dimension (quasi-Newton, L-BFGS). (Enrichi le 2026-05-27)
+- **[Jalon 132](Jalon%20132%20(Livrable%20IA)/Jalon%20132%20(Livrable%20IA).md)** : Livrable IA T11 : Codage complet en Python pur d'un solveur de point proximal sous contraintes KKT strictes pour l'élagage théorique (pruning) de réseaux profonds. (Enrichi le 2026-05-29)
 
 ## Comment Générer les Notes
 
