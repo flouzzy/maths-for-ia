@@ -75,4 +75,4 @@ Oui, bien que ReLU ne soit pas bornée. On peut construire une fonction "chapeau
 ## 6. Liens Sémantiques & Maillage Obsidian
 
 - **Concepts Précédents requis :** [[Jalon 59 (Topologie des espaces de fonctions).md]], [[Jalon 98 (Théorème de Hahn-Banach).md]] (anticipé)
-- **Concepts Futurs dépendants :** [[Jalon 134 (Complexité des classes de fonctions).md]], [[Jalon 144 (Le phénomène de double descente).md]]
+- **Concepts Futurs dépendants :** [[Jalon 134 (Complexite des classes de fonctions).md]], [[Jalon 144 (Le phénomène de double descente).md]]

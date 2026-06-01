@@ -85,4 +85,4 @@ Cela signifie que $X \setminus F_N = X$, donc $F_N = \emptyset$. Contradiction.
 ## 6. Liens Sémantiques & Maillage Obsidian
 
 - **Concepts Précédents requis :** [[Jalon 35 (Caractérisation séquentielle des ouverts).md]], [[Jalon 53 (Axiomes de séparation).md]]
-- **Concepts Futurs dépendants :** [[Jalon 56 (Espaces métriques complets).md]], [[Jalon 134 (Complexité des classes de fonctions).md]]
+- **Concepts Futurs dépendants :** [[Jalon 56 (Espaces métriques complets).md]], [[Jalon 134 (Complexite des classes de fonctions).md]]
