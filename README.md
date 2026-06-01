@@ -154,7 +154,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **[Jalon 131](Jalon%20131%20(Algorithmes%20d'optimisation%20de%20second%20ordre%20en%20grande%20dimension)/Jalon%20131%20(Algorithmes%20d'optimisation%20de%20second%20ordre%20en%20grande%20dimension).md)** : Algorithmes d'optimisation de second ordre en grande dimension (quasi-Newton, L-BFGS). (Enrichi le 2026-05-27)
 - **[Jalon 132](Jalon%20132%20(Livrable%20IA)/Jalon%20132%20(Livrable%20IA).md)** : Livrable IA T11 : Codage complet en Python pur d'un solveur de point proximal sous contraintes KKT strictes pour l'élagage théorique (pruning) de réseaux profonds. (Enrichi le 2026-05-29)
 - **[Jalon 133](Jalon%20133%20(Modele%20PAC)/Jalon%20133%20(Modele%20PAC).md)** : Modèle PAC (Probably Approximately Correct), risque empirique vs risque réel. (Enrichi le 2026-05-30)
-- **[Jalon 134](Jalon%20134%20(Complexite%20des%20classes%20de%20fonctions)/Jalon%20134%20(Complexite%20des%20classes%20de%20fonctions).md)** : Complexité des classes de fonctions, processus empiriques et inégalités de concentration maximales. (Enrichi le 2026-06-01)
+- **[Jalon 134](Jalon%20134%20(Complexite%20des%20classes%20de%20fonctions)/Jalon%20134%20(Complexite%20des%20classes%20de%20fonctions).md)** : Complexité des classes de fonctions, processus empiriques et inégalités de concentration maximales. (Enrichi le 2026-05-31)
 
 ## Comment Générer les Notes
 
