@@ -163,7 +163,7 @@ Trimestre 12 : théorie de l'apprentissage statistique
 Le sommet du cursus : prouver mathématiquement qu'une machine est capable de généraliser.
 Jalon 133 : Modèle PAC (Probably Approximately Correct), risque empirique vs risque réel.
 Jalon 134 : Complexité des classes de fonctions, processus empiriques et inégalités de concentration maximales.
-Jalon 135 : Complexité de Rademacher, symétrisation et bornes de généralisation basées sur Rademacher.
+Jalon 135 : Complexite de Rademacher, symétrisation et bornes de généralisation basées sur Rademacher.
 Jalon 136 : Théorie de Vapnik-Chervonenkis, fonction de croissance, dimension VC d'un espace d'hypothèses et lemme de Sauer.
 Jalon 137 : Preuve des bornes de généralisation universelles de Vapnik via la dimension VC.
 Jalon 138 : Inégalités de concentration avancées, inégalité de McDiarmid (différences bornées) et entropie de concentration.

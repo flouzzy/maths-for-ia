@@ -155,6 +155,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **[Jalon 132](Jalon%20132%20(Livrable%20IA)/Jalon%20132%20(Livrable%20IA).md)** : Livrable IA T11 : Codage complet en Python pur d'un solveur de point proximal sous contraintes KKT strictes pour l'élagage théorique (pruning) de réseaux profonds. (Enrichi le 2026-05-29)
 - **[Jalon 133](Jalon%20133%20(Modele%20PAC)/Jalon%20133%20(Modele%20PAC).md)** : Modèle PAC (Probably Approximately Correct), risque empirique vs risque réel. (Enrichi le 2026-05-30)
 - **[Jalon 134](Jalon%20134%20(Complexite%20des%20classes%20de%20fonctions)/Jalon%20134%20(Complexite%20des%20classes%20de%20fonctions).md)** : Complexité des classes de fonctions, processus empiriques et inégalités de concentration maximales. (Enrichi le 2026-05-31)
+- **[Jalon 135](Jalon%20135%20(Complexite%20de%20Rademacher)/Jalon%20135%20(Complexite%20de%20Rademacher).md)** : Complexité de Rademacher, symétrisation et bornes de généralisation basées sur Rademacher. (Enrichi le 2026-06-02)
 
 ## Comment Générer les Notes
 
