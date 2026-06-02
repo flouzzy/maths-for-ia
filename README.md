@@ -1,10 +1,10 @@
-# Jalons de Mathématiques pour l'Intelligence Artificielle
+# Mathématiques pour l'Intelligence Artificielle
 
-Ce dépôt contient un script permettant de générer automatiquement un ensemble de fiches de notes (au format Markdown) destinées à être utilisées comme coffre (*vault*) dans [Obsidian](https://obsidian.md/). Ce projet modélise un programme de mathématiques sur 3 ans, spécifiquement orienté vers les fondements théoriques de l'intelligence artificielle.
+Ce dépôt contient un ensemble de fiches de notes (au format Markdown) destinées à être utilisées comme coffre (*vault*) dans [Obsidian](https://obsidian.md/). Il propose un programme intensif de mathématiques sur 3 ans (de la L1 au Master), spécifiquement orienté vers les fondements théoriques de l'intelligence artificielle.
 
 ## Objectif du Projet
 
-Le projet génère des "Jalons" d'apprentissage répartis sur trois années de cursus :
+Le projet propose des "Jalons" d'apprentissage répartis sur trois années de cursus :
 - **Année 1 : Le socle des fondations et l'analyse réelle** (Logique, algèbre linéaire, analyse réelle, réduction d'endomorphismes, etc.)
 - **Année 2 : L'abstraction topologique et la théorie de la mesure** (Topologie générale, théorie de la mesure, intégration de Lebesgue, espaces $L^p$, probabilités axiomatiques, etc.)
 - **Année 3 : Le niveau master (analyse fonctionnelle, géométrie et apprentissage)** (Analyse fonctionnelle, géométrie différentielle, optimisation convexe avancée, théorie de l'apprentissage statistique, etc.)
