@@ -156,6 +156,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **[Jalon 133](Jalon%20133%20(Modele%20PAC)/Jalon%20133%20(Modele%20PAC).md)** : Modèle PAC (Probably Approximately Correct), risque empirique vs risque réel. (Enrichi le 2026-05-30)
 - **[Jalon 134](Jalon%20134%20(Complexite%20des%20classes%20de%20fonctions)/Jalon%20134%20(Complexite%20des%20classes%20de%20fonctions).md)** : Complexité des classes de fonctions, processus empiriques et inégalités de concentration maximales. (Enrichi le 2026-05-31)
 - **[Jalon 135](Jalon%20135%20(Complexite%20de%20Rademacher)/Jalon%20135%20(Complexite%20de%20Rademacher).md)** : Complexité de Rademacher, symétrisation et bornes de généralisation basées sur Rademacher. (Enrichi le 2026-06-02)
+- **[Jalon 136](Jalon%20136%20(Theorie%20de%20Vapnik-Chervonenkis)/Jalon%20136%20(Theorie%20de%20Vapnik-Chervonenkis).md)** : Théorie de Vapnik-Chervonenkis, fonction de croissance, dimension VC d'un espace d'hypothèses et lemme de Sauer. (Enrichi le 2026-06-03)
 
 ## Comment Générer les Notes
 
