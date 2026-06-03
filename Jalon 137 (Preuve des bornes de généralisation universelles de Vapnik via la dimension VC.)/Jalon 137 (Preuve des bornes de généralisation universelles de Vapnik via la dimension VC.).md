@@ -8,4 +8,4 @@
 Preuve des bornes de généralisation universelles de Vapnik via la dimension VC.
 
 ---
-**Précédent** : [[Jalon 136 (Théorie de Vapnik-Chervonenkis)]] | **Suivant** : [[Jalon 138 (Inégalités de concentration avancées)]]
+**Précédent** : [[Jalon 136 (Theorie de Vapnik-Chervonenkis)]] | **Suivant** : [[Jalon 138 (Inégalités de concentration avancées)]]
