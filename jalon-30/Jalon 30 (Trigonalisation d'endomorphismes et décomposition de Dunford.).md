@@ -25,7 +25,7 @@ next: "[[Jalon 31 (Introduction à la réduction de Jordan et structure des nilp
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
-1. **Trigonalisation :** $f$ est trigonalisable s'il existe une base $\mathcal{B}$ telle que $	ext{Mat}_{\mathcal{B}}(f)$ soit triangulaire supérieure.
+1. **Trigonalisation :** $f$ est trigonalisable s'il existe une base $\mathcal{B}$ telle que $\text{Mat}_{\mathcal{B}}(f)$ soit triangulaire supérieure.
 2. **Décomposition de Dunford :** Soit $f \in \mathcal{L}(E)$ dont le polynôme caractéristique est scindé. Il existe un unique couple $(d, n)$ tel que $f = d + n$, avec $d$ diagonalisable, $n$ nilpotent, et $d \circ n = n \circ d$.
 
 ### B. Théorèmes, Propositions & Lemmes
@@ -39,7 +39,7 @@ next: "[[Jalon 31 (Introduction à la réduction de Jordan et structure des nilp
 ### Démonstration : Existence de la trigonalisation (par récurrence)
 1. **Initialisation :** $n=1$, trivial.
 2. **Hérédité :** Soit $f$ de dimension $n$ avec $\chi_f$ scindé. Soit $\lambda$ une valeur propre et $e_1$ un vecteur propre associé.
-3. **Réduction :** Soit $F = 	ext{Vect}(e_1)$. On passe au quotient $E/F$. $f$ induit $\bar{f}$ sur $E/F$.
+3. **Réduction :** Soit $F = \text{Vect}(e_1)$. On passe au quotient $E/F$. $f$ induit $\bar{f}$ sur $E/F$.
 4. **Récurrence :** $\chi_{\bar{f}}$ est scindé. Il existe une base de $E/F$ trigonalisant $\bar{f}$.
 5. **Conclusion :** En relevant cette base dans $E$, on obtient une base de trigonalisation.
 

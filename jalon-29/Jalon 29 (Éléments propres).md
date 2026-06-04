@@ -21,25 +21,22 @@ next: "[[Jalon 30 (Trigonalisation d'endomorphismes et décomposition de Dunford
 
 ## 2. Formalisation & Rigueur Académique
 ### A. Définitions
-1. **Vecteur propre :** $v 
-eq 0$ tel que $f(v) = \lambda v$. $\lambda$ est la valeur propre.
+1. **Vecteur propre :** $v \neq 0$ tel que $f(v) = \lambda v$. $\lambda$ est la valeur propre.
 2. **Sous-espace propre :** $E_\lambda(f) = \ker(f - \lambda Id)$.
 3. **Polynôme caractéristique :** $\chi_f(X) = \det(X \cdot Id - f)$.
 
 ### B. Théorèmes
 > **Critère de Diagonalisabilité :**
-> $f$ est diagonalisable $\iff \chi_f$ est scindé ET $\forall \lambda, \dim(E_\lambda) = 	ext{ordre de multiplicité de } \lambda$.
+> $f$ est diagonalisable $\iff \chi_f$ est scindé ET $\forall \lambda, \dim(E_\lambda) = \text{ordre de multiplicité de } \lambda$.
 
 ## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
 ### Démonstration : Familles de vecteurs propres de valeurs propres distinctes sont libres
 Soient $\lambda_1, ..., \lambda_k$ des valeurs propres distinctes et $v_1, ..., v_k$ des vecteurs propres associés.
-1. **Récurrence :** Pour $k=1$, $\{v_1\}$ est libre car $v_1 
-eq 0$.
+1. **Récurrence :** Pour $k=1$, $\{v_1\}$ est libre car $v_1 \neq 0$.
 2. **Hérédité :** Supposons la famille libre jusqu'à $k$. Soit $\sum_{i=1}^{k+1} \alpha_i v_i = 0$.
 3. **Calcul :** $f(\sum_{i=1}^{k+1} \alpha_i v_i) = \sum_{i=1}^{k+1} \alpha_i \lambda_i v_i = 0$.
 4. **Combinaison :** Soustraire $\lambda_{k+1}$ fois la somme initiale : $\sum_{i=1}^k \alpha_i (\lambda_i - \lambda_{k+1}) v_i = 0$.
-5. **Conclusion :** Par hypothèse de récurrence, les $\alpha_i (\lambda_i - \lambda_{k+1}) = 0$. Comme $\lambda_i 
-eq \lambda_{k+1}$, alors $\alpha_i = 0$. La famille est libre.
+5. **Conclusion :** Par hypothèse de récurrence, les $\alpha_i (\lambda_i - \lambda_{k+1}) = 0$. Comme $\lambda_i \neq \lambda_{k+1}$, alors $\alpha_i = 0$. La famille est libre.
 
 ## 4. Exercices d'Application
 ### Exercice 1 : Diagonalisation
