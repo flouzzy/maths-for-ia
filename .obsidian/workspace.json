@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Jalon 7 (Espaces vectoriels abstraits)/Jalon 7 (Espaces vectoriels abstraits).md",
+                "file": "Jalon 2 (Méthodes de raisonnement)/Jalon 2 (Méthodes de raisonnement).md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Jalon 7 (Espaces vectoriels abstraits)"
+              "title": "Jalon 2 (Méthodes de raisonnement)"
             }
           }
         ]
@@ -186,17 +186,21 @@
   },
   "active": "8ceda288c71f7e44",
   "lastOpenFiles": [
+    "Jalon 1 (Logique formelle)/Jalon 1 (Logique formelle).md",
+    "Sans titre 1.base",
+    "2026-06-04.md",
+    "Sans titre 1.canvas",
+    "Sans titre.canvas",
+    "Jalon 7 (Espaces vectoriels abstraits)/Jalon 7 (Espaces vectoriels abstraits).md",
     "Jalon 6 (Relations d'équivalence)/Jalon 6 (Relations d'équivalence).md",
     "Jalon 5 (Applications)/Jalon 5 (Applications).md",
     "Jalon 4 (Théorie des ensembles)/Jalon 4 (Théorie des ensembles).md",
     "Jalon 3 (Quantification)/Jalon 3 (Quantification).md",
     "Jalon 2 (Méthodes de raisonnement)/Jalon 2 (Méthodes de raisonnement).md",
     "Jalon 54 (Compacité générale)/Jalon 54 (Compacité générale).md",
-    "Jalon 1 (Logique formelle)/Jalon 1 (Logique formelle).md",
     "Sans titre.base",
     "Jalon 26 (Espaces euclidiens)/Jalon 26 (Espaces euclidiens).md",
     "Jalon 27 (Endomorphismes symétriques)/Jalon 27 (Endomorphismes symétriques).md",
-    "Jalon 7 (Espaces vectoriels abstraits)/Jalon 7 (Espaces vectoriels abstraits).md",
     "Jalon 11 (Formes linéaires)/Jalon 11 (Formes linéaires).md",
     "Jalon 9 (Calcul matriciel)/Jalon 9 (Calcul matriciel).md",
     "Jalon 13 (Structure de --mathbb{R}-)/Jalon 13 (Structure de --mathbb{R}-).md",
@@ -212,15 +216,12 @@
     "Jalon 24 (Livrable IA).md",
     "Jalon 21 (Suites de fonctions).md",
     "Jalon 20 (Derivees successives).md",
-    "Jalon 10 (Changements de base).md",
-    "Jalon 3 (Quantification).md",
     "test_generate_jalons.py",
     "rename_files.py",
     "enrich_jalons_gemini.py",
     "generate_index.ps1",
     "git-sync.ps1",
     "generate_jalons.ps1",
-    "generate_jalons.py",
-    "desktop.ini"
+    "generate_jalons.py"
   ]
 }
