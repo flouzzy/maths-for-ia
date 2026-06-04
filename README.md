@@ -159,6 +159,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **[Jalon 136](Jalon%20136%20(Theorie%20de%20Vapnik-Chervonenkis)/Jalon%20136%20(Theorie%20de%20Vapnik-Chervonenkis).md)** : Théorie de Vapnik-Chervonenkis, fonction de croissance, dimension VC d'un espace d'hypothèses et lemme de Sauer. (Enrichi le 2026-06-03)
 - **[Jalon 137](Jalon%20137%20(Preuve%20des%20bornes%20de%20generalisation%20universelles%20de%20Vapnik%20via%20la%20dimension%20VC)/Jalon%20137%20(Preuve%20des%20bornes%20de%20generalisation%20universelles%20de%20Vapnik%20via%20la%20dimension%20VC).md)** : Preuve des bornes de généralisation universelles de Vapnik via la dimension VC. (Enrichi le 2026-06-04)
 - **[Jalon 138](3-12-Jalon-138%20(In%C3%A9galit%C3%A9s%20de%20concentration%20avanc%C3%A9es)/Jalon-138%20(In%C3%A9galit%C3%A9s%20de%20concentration%20avanc%C3%A9es).md)** : Inégalités de concentration avancées, inégalité de McDiarmid (différences bornées) et entropie de concentration. (Enrichi le 2026-06-04)
+- **[Jalon 139](03-12-Jalon-139_Notion_de_stabilite_algorithmique/Jalon-139_Notion_de_stabilite_algorithmique.md)** : Notion de stabilité algorithmique (Bousquet-Elisseeff) et son lien direct avec la capacité de généralisation. (Enrichi le 2026-06-04)
 
 ## Comment Générer les Notes
 
@@ -177,3 +178,7 @@ Le projet utilise le framework standard `unittest` de Python. Pour lancer les te
 ```bash
 python3 -m unittest test_generate_jalons.py
 ```
+
+## Historique des Modifications
+
+- 2026-06-04 : [Upsert/Création] du Jalon 139 - Notion de stabilité algorithmique (Bousquet-Elisseeff) et son lien direct avec la capacité de généralisation. Status: Terminé.
