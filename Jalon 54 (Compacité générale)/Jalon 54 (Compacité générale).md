@@ -9,10 +9,9 @@ tags:
 prev: "[[Jalon 53 (Axiomes de séparation).md]]"
 next: "[[Jalon 55 (Connexité).md]]"
 ---
-
 # Jalon 54 : Compacité générale
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous vouliez surveiller une grande salle avec des caméras de sécurité. Chaque caméra a un champ de vision limité (un ouvert). Si la salle est **compacte**, cela signifie que peu importe le nombre infini de caméras que vous pourriez installer, vous pourrez toujours en choisir un nombre **fini** (disons 10 ou 20) qui suffiront à surveiller toute la salle sans laisser d'angle mort. C'est la propriété de "finitude cachée" dans l'infini.
 - **Le "Pourquoi on a inventé ça" :** En mathématiques, on travaille souvent avec des objets infinis. La compacité est la propriété magique qui permet de traiter ces objets infinis comme s'ils étaient finis. C'est ce qui garantit qu'une fonction continue ne peut pas s'envoler vers l'infini et qu'elle atteint forcément son maximum et son minimum.

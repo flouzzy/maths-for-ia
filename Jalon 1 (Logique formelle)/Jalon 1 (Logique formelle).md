@@ -12,7 +12,7 @@ next: "[[Jalon 2 (Méthodes de raisonnement).md]]"
 
 # Jalon 1 : Logique formelle, connecteurs, tables de vérité et calcul des propositions
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous êtes un détective face à un tableau de bord composé de leviers qui peuvent être soit "Haut" (Vrai), soit "Bas" (Faux). La logique formelle, c'est le manuel d'instruction qui vous dit exactement quel voyant s'allume en fonction de la position des leviers. Si je vous dis : "Le voyant s'allume SI le levier A est haut ET le levier B est bas", vous venez de pratiquer la logique. C'est le code source universel de la pensée : avant même de savoir *ce que* l'on dit, on définit *comment* les briques de vérité s'emboîtent.

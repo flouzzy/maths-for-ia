@@ -12,7 +12,7 @@ next: "[[Jalon 3 (Quantification).md]]"
 
 # Jalon 2 : Méthodes de raisonnement (implication, contraposée, l'absurde, analyse-synthèse)
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Pensez à un avocat dans un tribunal. Pour prouver que son client est innocent, il peut utiliser plusieurs tactiques. L'**implication** est un chemin direct : "S'il était au cinéma, il ne pouvait pas être sur les lieux du crime". L'**absurde**, c'est montrer que l'hypothèse inverse est ridicule : "Supposons qu'il soit coupable... mais alors il aurait dû être à deux endroits en même temps, ce qui est impossible ! Donc il est innocent". La **contraposée**, c'est retourner la veste : au lieu de dire "S'il pleut, le sol est mouillé", on dit "Si le sol est sec, c'est qu'il ne pleut pas".
