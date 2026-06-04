@@ -12,7 +12,7 @@ next: "[[Jalon 128 (Flots de gradient).md]]"
 
 # Jalon 127 : Théorème du représentant dans les RKHS
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez un compositeur et que vous ayez accès à une infinité d'instruments de musique (un espace de dimension infinie). On vous demande de composer la chanson qui ressemble le plus à une série de 10 enregistrements que l'on vous donne (vos données).
     - On pourrait croire que pour trouver la meilleure chanson, vous devez essayer toutes les combinaisons d'instruments possibles. C'est un travail infini !

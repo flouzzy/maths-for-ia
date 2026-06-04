@@ -12,7 +12,7 @@ next: "[[Jalon 123 (Problèmes d'optimisation sous contraintes).md]]"
 
 # Jalon 122 : Notion de sous-gradient
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez dans une vallée en forme de "V" (comme la fonction $|x|$).
     - Au fond de la vallée, il y a une pointe. Si vous essayez de poser une plaque de verre (un plan tangent) sur cette pointe, vous pouvez la faire basculer dans plusieurs directions sans qu'elle ne rentre à l'intérieur de la montagne.

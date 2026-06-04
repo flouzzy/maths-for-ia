@@ -12,7 +12,7 @@ next: "[[Jalon 103 (Espaces de Hilbert généraux).md]]"
 
 # Jalon 102 : Topologies faibles et faibles-*
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous regardiez une hélice d'avion qui tourne de plus en plus vite.
     - Si vous mesurez la vitesse de chaque point, elle est énorme et ne s'arrête jamais (pas de convergence classique).

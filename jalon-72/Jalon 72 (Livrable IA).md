@@ -12,7 +12,7 @@ next: "[[Jalon 73 (Définition des espaces Lp).md]]"
 
 # Jalon 72 : Livrable IA T6 : Formalisation de la divergence de Kullback-Leibler
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous deviez ranger des livres dans une bibliothèque.
     - Vous avez un plan idéal de rangement ($P$, la réalité).

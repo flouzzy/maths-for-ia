@@ -12,7 +12,7 @@ next: "[[Jalon 135 (Complexite de Rademacher).md]]"
 
 # Complexité des classes de fonctions
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 **La Métaphore :** Imagine que tu sois un recruteur de talents qui doit engager un spécialiste pour prédire si un film va plaire au public. Tu as deux candidats : le premier n'utilise qu'une seule règle très simple ("si le film a des explosions, ça marche"). Le second a un livre de règles complexe avec un million de critères ("si le film a des explosions, mais que l'acteur principal a les cheveux roux et qu'il pleut dans la scène 4...").
 

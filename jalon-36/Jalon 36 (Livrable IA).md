@@ -12,7 +12,7 @@ next: "[[Jalon 37 (Intégrale de Riemann sur un segment).md]]"
 
 # Jalon 36 : Livrable IA T3 : Décomposition en valeurs singulières (SVD) et compression d'image
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous ayez une photo numérique. C'est en fait une grille géante de nombres (des pixels). La **SVD** est un outil magique qui permet de décomposer cette photo complexe en une somme de "couches" de plus en plus simples. Les premières couches contiennent les formes principales (les visages, les horizons), tandis que les dernières couches ne contiennent que des détails insignifiants ou du bruit. Pour compresser l'image, on décide simplement de jeter les couches de détails et de ne garder que les couches essentielles.
 - **Le "Pourquoi on a inventé ça" :** Contrairement à la diagonalisation classique, qui ne marche que pour les matrices carrées et très spéciales, la SVD fonctionne sur **n'importe quelle matrice**, même rectangulaire. C'est le "couteau suisse" ultime de l'algèbre linéaire pour extraire l'information importante d'un jeu de données.

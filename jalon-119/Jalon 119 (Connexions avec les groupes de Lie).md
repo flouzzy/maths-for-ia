@@ -12,7 +12,7 @@ next: "[[Jalon 120 (Livrable IA).md]]"
 
 # Jalon 119 : Connexions avec les groupes de Lie
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous teniez un Rubik's Cube.
     - Chaque rotation d'une face est une action. Si vous faites une rotation, puis une autre, vous obtenez une nouvelle position. L'ensemble de tous les mouvements possibles forme un **Groupe**.

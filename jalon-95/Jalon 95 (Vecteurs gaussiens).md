@@ -12,7 +12,7 @@ next: "[[Jalon 96 (Livrable IA).md]]"
 
 # Jalon 95 : Vecteurs gaussiens
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous lâchiez des gouttes de peinture du haut d'une échelle sur une toile posée au sol.
     - Si vous visez bien le centre, les gouttes vont former une tache ronde, plus dense au milieu et s'éclaircissant vers les bords (une loi Normale en 2D).

@@ -12,7 +12,7 @@ next: "[[Jalon 110 (Variétés différentielles abstraites).md]]"
 
 # Jalon 109 : Topologie des sous-variétés de $\mathbb{R}^n$
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez une fourmi sur un immense ballon de baudruche.
     - Pour vous, le monde semble plat : vous pouvez avancer, reculer, aller à gauche ou à droite. Vous avez l'impression de vivre dans un plan ($\mathbb{R}^2$).

@@ -12,7 +12,7 @@ next: "[[Jalon 59 (Topologie des espaces de fonctions).md]]"
 
 # Jalon 58 : Théorème de Baire
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous ayez une grande feuille de papier (un espace complet). Vous décidez de la percer avec une épingle. Un trou d'épingle, c'est minuscule, ça ne "remplit" rien (c'est nulle part dense). Maintenant, imaginez que vous perciez des millions, des milliards, voire une infinité (dénombrable) de trous. Le **Théorème de Baire** dit que, peu importe le nombre de trous que vous faites, il restera toujours de la "matière" sur votre feuille. Vous ne pourrez jamais faire disparaître toute la feuille en ne faisant que des trous isolés. La feuille est "trop solide" pour être détruite par des poussières de vide.
 - **Le "Pourquoi on a inventé ça" :** Parfois, on veut prouver qu'un objet bizarre existe (ex: une fonction qui est continue partout mais qui n'a de pente nulle part). Au lieu de construire cet objet à la main, on prouve que l'ensemble des objets "normaux" est tout petit, et que la "grande majorité" des objets de l'espace sont bizarres. Baire est l'outil qui permet de dire : "ce que vous croyez impossible est en fait le cas général".

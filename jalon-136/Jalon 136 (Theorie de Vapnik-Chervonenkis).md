@@ -13,7 +13,7 @@ next: "[[Jalon 137 (Preuve des bornes de generalisation universelles de Vapnik v
 
 # Théorie de Vapnik-Chervonenkis et Lemme de Sauer
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 **La Métaphore : Le Jeu du Devin et des Points Colorés**
 

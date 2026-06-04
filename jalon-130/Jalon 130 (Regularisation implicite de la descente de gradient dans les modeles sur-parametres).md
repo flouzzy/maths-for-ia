@@ -14,7 +14,7 @@ next: "[[Jalon 131 (Algorithmes d'optimisation de second ordre en grande dimensi
 
 # Régularisation implicite de la descente de gradient dans les modèles sur-paramétrés
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imagine que tu sois un sculpteur face à un immense bloc d'argile. Ton objectif est de façonner un visage précis (c'est l'objectif de ton modèle IA : apprendre à reconnaître des données). Le problème, c'est que tu as tellement d'argile (le modèle est "sur-paramétré") qu'il existe une infinité de façons de sculpter ce visage. Tu pourrais faire un visage avec un énorme nez, ou avec des oreilles pointues, tant que les traits principaux sont là. Mais toi, tu utilises un outil très simple, un petit burin qui enlève l'argile petit à petit (c'est la descente de gradient). Le fait d'utiliser cet outil t'oblige, sans que tu t'en rendes compte, à sculpter le visage le plus "lisse", le plus simple et le plus naturel possible, sans rajouter de détails farfelus.

@@ -12,7 +12,7 @@ next: "[[Jalon 42 (Équations différentielles linéaires du second ordre à coe
 
 # Jalon 41 : Équations différentielles linéaires du premier ordre
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous poussez un petit bateau sur un étang. La vitesse à laquelle le bateau avance (la dérivée) dépend de deux choses : le courant de l'eau qui l'entraîne naturellement (la partie homogène de l'équation) et la force avec laquelle vous le poussez (le second membre). Une équation différentielle du premier ordre, c'est comme une règle de conduite qui vous dit, à chaque instant, quelle doit être votre vitesse en fonction de votre position actuelle.
 - **Le "Pourquoi on a inventé ça" :** La nature ne nous donne pas souvent des positions directes, elle nous donne des lois de mouvement (des forces, des taux de croissance). Pour retrouver la trajectoire complète (la position), il faut "remonter" de la dérivée à la fonction. C'est le cœur de la physique, de la biologie (croissance de populations) et de l'IA (évolution des poids d'un réseau).

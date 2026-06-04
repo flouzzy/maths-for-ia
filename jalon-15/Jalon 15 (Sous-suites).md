@@ -12,7 +12,7 @@ next: "[[Jalon 16 (Séries numériques à termes positifs).md]]"
 
 # Jalon 15 : Sous-suites, valeurs d'adhérence et preuve par séparation du théorème de Bolzano-Weierstrass
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous observez une foule qui marche dans une rue. Si vous ne regardez que certaines personnes (par exemple, seulement celles qui portent un chapeau rouge), vous observez une **sous-suite**. Même si la foule entière semble aller dans tous les sens sans direction précise, il se peut que le groupe des "chapeaux rouges" finisse par se regrouper tous devant une boulangerie. Le **théorème de Bolzano-Weierstrass**, c'est la garantie que si une foule est coincée dans une rue fermée (un espace borné), il y aura forcément au moins un petit groupe (une sous-suite) qui finira par s'agglutiner quelque part (converger).

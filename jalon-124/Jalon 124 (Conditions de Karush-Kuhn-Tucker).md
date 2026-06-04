@@ -12,7 +12,7 @@ next: "[[Jalon 125 (Opérateurs proximaux).md]]"
 
 # Jalon 124 : Conditions de Karush-Kuhn-Tucker (KKT)
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous poussiez un gros carton (l'objectif à minimiser) vers un coin de la pièce.
     - Tant que le carton est au milieu, vous pouvez le pousser librement.

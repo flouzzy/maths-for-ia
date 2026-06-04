@@ -12,7 +12,7 @@ next: "[[Jalon 33 (Formes quadratiques).md]]"
 
 # Jalon 32 : Preuve complète du théorème spectral pour les endomorphismes symétriques
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous ayez une forme complexe dans l'espace. Le théorème spectral dit que peu importe l'orientation initiale de cette forme, vous pouvez *toujours* trouver un angle de vue spécial (une base orthonormée) où cette forme devient un simple étirement sur des axes privilégiés (les axes principaux). C'est le résultat le plus puissant de l'algèbre linéaire.

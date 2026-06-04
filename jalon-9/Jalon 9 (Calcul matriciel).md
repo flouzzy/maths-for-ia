@@ -12,7 +12,7 @@ next: "[[Jalon 10 (Changements de base).md]]"
 
 # Jalon 9 : Calcul matriciel, opérations, inversibilité et représentations des applications linéaires
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez un tableau de commande pour une usine de peinture. Les colonnes sont les pigments (Rouge, Bleu, Jaune) et les lignes sont les produits finis (Peinture Murs, Peinture Portes). Chaque case du tableau vous dit "combien de ce pigment il faut pour ce produit". Une **matrice**, c'est exactement ça : un tableau de nombres qui sert de "recette" pour transformer une entrée en sortie.

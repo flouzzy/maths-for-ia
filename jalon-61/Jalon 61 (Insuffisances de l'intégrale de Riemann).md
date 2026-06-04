@@ -12,7 +12,7 @@ next: "[[Jalon 62 (Algèbres).md]]"
 
 # Jalon 61 : Insuffisances de l'intégrale de Riemann
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez un caissier et que vous deviez compter l'argent dans une boîte remplie de pièces de monnaie mélangées.
     - **La méthode de Riemann**, c'est de prendre les pièces dans l'ordre où elles viennent dans la boîte, une par une, et de faire l'addition. Si les pièces sont bien rangées, ça va. Mais si elles sont éparpillées au hasard, vous risquez de vous perdre.

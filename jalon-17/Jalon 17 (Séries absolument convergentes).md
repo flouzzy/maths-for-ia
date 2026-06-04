@@ -12,7 +12,7 @@ next: "[[Jalon 18 (Continuité des fonctions d'une variable réelle).md]]"
 
 # Jalon 17 : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous fassiez des pas en avant (positifs) et des pas en arrière (négatifs).

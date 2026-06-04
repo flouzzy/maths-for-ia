@@ -12,7 +12,7 @@ next: "[[Jalon 41 (Équations différentielles linéaires du premier ordre et m�
 
 # Jalon 40 : Intégrales dépendant d'un paramètre
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous cuisinez une soupe. L'intégrale, c'est le goût final de la soupe (le résultat de tout le mélange). Le "paramètre", c'est la température du feu. Si vous changez très légèrement la température, le goût de la soupe va-t-il changer radicalement d'un coup, ou bien va-t-il évoluer de manière fluide et prévisible ? Le calcul des intégrales à paramètres nous permet de savoir quand le résultat global (la soupe) réagit de manière lisse aux changements d'un réglage extérieur (le paramètre).
 - **Le "Pourquoi on a inventé ça" :** Dans la vraie vie, beaucoup de fonctions ne sont pas écrites avec des formules simples comme $x^2$. Elles sont définies comme le résultat d'un processus cumulatif (une intégrale). Pour pouvoir optimiser ces processus, il faut savoir si on peut les dériver. On appelle cela "passer la dérivée sous le signe somme".

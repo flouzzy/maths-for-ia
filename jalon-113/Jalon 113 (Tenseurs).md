@@ -12,7 +12,7 @@ next: "[[Jalon 114 (Orientation des variétés et intégration des formes diffé
 
 # Jalon 113 : Tenseurs et Formes différentielles
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :**
     - Un **Nombre (Scalaire)**, c'est un point.

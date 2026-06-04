@@ -12,7 +12,7 @@ next: "[[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions m
 
 # Jalon 65 : Fonctions mesurables
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez un douanier. Vous avez une liste officielle des objets autorisés à passer (votre **Tribu**). Une fonction, c'est comme une machine qui transforme un objet A en un objet B. Pour que la machine soit "mesurable", il faut qu'elle soit transparente : si je vous donne un critère sur le résultat final (ex: "est-ce que le résultat pèse plus de 1kg ?"), vous devez être capable de me dire quels objets au départ satisfont ce critère, et ces objets de départ doivent être dans votre liste officielle (ils doivent être mesurables). Si la machine mélange les choses de manière si complexe que vous ne pouvez plus identifier les coupables dans votre liste, alors la fonction n'est pas mesurable.
 - **Le "Pourquoi on a inventé ça" :** On ne peut pas intégrer n'importe quelle fonction. Pour pouvoir calculer $\int f d\mu$, il faut que la fonction $f$ "respecte" la structure de la tribu $\mathcal{F}$. C'est la condition de base pour que la théorie des probabilités et de l'intégration fonctionne sans bugs logiques.

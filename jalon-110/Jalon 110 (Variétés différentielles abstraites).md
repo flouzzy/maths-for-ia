@@ -12,7 +12,7 @@ next: "[[Jalon 111 (Applications différentiables entre variétés).md]]"
 
 # Jalon 110 : Variétés différentielles abstraites
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez un marin au XVème siècle. Vous voulez explorer toute la Terre.
     - Vous n'avez pas de vue d'ensemble (pas de satellite).

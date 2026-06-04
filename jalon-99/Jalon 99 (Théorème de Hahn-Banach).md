@@ -12,7 +12,7 @@ next: "[[Jalon 100 (Démonstration du théorème de Banach-Steinhaus).md]]"
 
 # Jalon 99 : Théorème de Hahn-Banach (forme géométrique)
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez deux nuages de fumée (des ensembles convexes) qui flottent dans une pièce. Tant que les deux nuages ne s'imbriquent pas, vous pouvez toujours glisser une immense plaque de verre plate (un **hyperplan**) entre eux sans toucher aucun des deux nuages.
     - La plaque de verre sépare l'espace en deux : le "côté A" et le "côté B".

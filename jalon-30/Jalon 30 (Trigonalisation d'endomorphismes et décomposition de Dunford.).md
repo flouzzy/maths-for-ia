@@ -12,7 +12,7 @@ next: "[[Jalon 31 (Introduction à la réduction de Jordan et structure des nilp
 
 # Jalon 30 : Trigonalisation d'endomorphismes et décomposition de Dunford
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** 

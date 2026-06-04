@@ -12,7 +12,7 @@ next: "[[Jalon 85 (Axiomes de Kolmogorov).md]]"
 
 # Jalon 84 : Livrable IA T7 : Analyse spectrale et extraction de caractéristiques audio
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous regardiez un orchestre jouer.
     - Le signal audio brut, c'est comme regarder l'orchestre de très loin : vous voyez un groupe de gens qui bougent, mais vous ne savez pas qui fait quoi.

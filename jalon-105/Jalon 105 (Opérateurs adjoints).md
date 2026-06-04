@@ -12,7 +12,7 @@ next: "[[Jalon 106 (Théorème spectral pour les opérateurs compacts autoadjoin
 
 # Jalon 105 : Opérateurs adjoints
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous ayez une machine à transformer les sons (un opérateur $T$). Elle prend une note pure et la déforme.
     - Vous avez aussi un micro qui mesure la ressemblance entre deux sons (le produit scalaire $\langle \cdot, \cdot \rangle$).

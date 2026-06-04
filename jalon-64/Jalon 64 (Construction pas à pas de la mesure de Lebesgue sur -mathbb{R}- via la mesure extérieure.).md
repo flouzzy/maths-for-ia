@@ -12,7 +12,7 @@ next: "[[Jalon 65 (Fonctions mesurables).md]]"
 
 # Jalon 64 : Construction de la mesure de Lebesgue
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous ayez une règle infiniment précise. Mesurer la longueur d'un segment bien droit, c'est facile. Mais comment mesurer la "longueur" d'un nuage de points éparpillés sur la règle ?
     - L'idée de la **mesure extérieure**, c'est de recouvrir votre nuage de points avec plein de petits pansements (des intervalles ouverts). Vous additionnez la longueur de tous les pansements.

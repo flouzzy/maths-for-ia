@@ -12,7 +12,7 @@ next: "[[Jalon 44 (Fonctions de plusieurs variables).md]]"
 
 # Jalon 43 : Systèmes différentiels linéaires et exponentielle de matrice
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez un groupe de personnes qui discutent. L'humeur de chaque personne change en fonction de sa propre humeur mais aussi de celle de ses voisins. Si la personne A est joyeuse, elle rend la personne B joyeuse, mais si la personne B devient trop joyeuse, elle finit par agacer la personne A. C'est un **système différentiel** : tout bouge en même temps, et chaque variable influence les autres. L'**exponentielle de matrice**, c'est l'outil qui permet de calculer d'un seul coup l'état de tout le groupe dans 10 minutes, sans avoir à calculer seconde par seconde.
 - **Le "Pourquoi on a inventé ça" :** Dans la nature, rien n'est isolé. La température d'une pièce, la pression d'un gaz, le cours de la bourse... tout est lié. Au lieu de résoudre 100 équations séparées, on les regroupe dans une seule boîte (un vecteur) et on utilise une seule matrice pour décrire toutes les interactions.

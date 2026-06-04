@@ -11,7 +11,7 @@ next: "[[Jalon 28 (Polynômes d'endomorphismes).md]]"
 ---
 # Jalon 27 : Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** 

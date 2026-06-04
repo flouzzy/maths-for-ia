@@ -12,7 +12,7 @@ next: "[[Jalon 134 (Complexite des classes de fonctions).md]]"
 
 # Modèle PAC (Probably Approximately Correct)
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imagine que tu sois un goûteur dont le métier est de dire si une pomme est bonne (délicieuse) ou mauvaise (pourrie). Tu ne peux pas goûter toutes les pommes du monde. Tu dois te faire un avis ("apprendre" la règle) en ne goûtant qu'un petit panier (ton ensemble d'entraînement). Le modèle PAC, c'est comme une garantie sur un contrat : "Si tu goûtes assez de pommes, il est *très probable* (Probably) que ta règle pour trier les bonnes des mauvaises soit *presque parfaite* (Approximately Correct) sur toutes les pommes futures de ce verger."

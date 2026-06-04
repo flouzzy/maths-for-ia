@@ -12,7 +12,7 @@ next: "[[Jalon 79 (Convergence en moyenne quadratique des séries de Fourier et 
 
 # Jalon 78 : Séries de Fourier
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez un chef cuisinier. On vous apporte un plat tout prêt (un signal complexe $f$) et on vous demande de retrouver la recette.
     - Les **Séries de Fourier**, c'est l'art de décomposer n'importe quel signal périodique en une liste d'ingrédients de base : des ondes pures (des sinus et des cosinus).

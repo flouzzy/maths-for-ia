@@ -12,7 +12,7 @@ next: "[[Jalon 89 (Lemmes de Borel-Cantelli).md]]"
 
 # Jalon 88 : Indépendance d'événements et de variables aléatoires
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous lanciez deux dés à deux endroits différents de la Terre.
     - Ce que fait le premier dé n'influence absolument pas ce que fait le second dé. Ils sont **Indépendants**.

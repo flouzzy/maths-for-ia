@@ -12,7 +12,7 @@ next: "[[Jalon 81 (Transformée de Fourier dans L2).md]]"
 
 # Jalon 80 : Transformée de Fourier dans $L^1$
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous parliez. Votre voix n'est pas un son qui se répète en boucle à l'infini (comme une sirène), c'est un flux de sons qui changent tout le temps.
     - Les **Séries de Fourier** (Jalon 78) étaient faites pour les sons répétitifs.

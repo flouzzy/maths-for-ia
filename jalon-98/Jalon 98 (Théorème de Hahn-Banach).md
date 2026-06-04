@@ -12,7 +12,7 @@ next: "[[Jalon 99 (Théorème de Hahn-Banach).md]]"
 
 # Jalon 98 : Théorème de Hahn-Banach (forme analytique)
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez un cartographe. Vous avez dessiné une carte très précise d'un petit quartier (un sous-espace $M$). Vous avez une règle qui vous donne l'altitude exacte dans ce quartier.
     - Maintenant, on vous demande de compléter la carte pour tout le pays (l'espace $E$).

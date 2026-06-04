@@ -137,7 +137,7 @@ tags:
 
 # Jalon {jalon_num} : {title}
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 - **La Métaphore :** [Développer une analogie concrète, une image mentale ou une histoire qui capture l'essence géométrique ou logique du concept]
 - **Le "Pourquoi on a inventé ça" :** [Expliquer le problème historique, l'impasse ou le défi conceptuel que les mathématiciens cherchaient à résoudre]
@@ -237,7 +237,7 @@ def main():
         # (Si year, trimester et uuid sont là, on suppose que c'est bon)
         with open(filepath, 'r', encoding='utf-8') as f:
             first_lines = "".join([f.readline() for _ in range(10)])
-            if "uuid: \"jalon-" in first_lines and "year:" in first_lines and "trimester:" in first_lines and "## 1. L'Intuition Première" in original_content:
+            if "uuid: \"jalon-" in first_lines and "year:" in first_lines and "trimester:" in first_lines and "## 1. Présentation du concept clé" in original_content:
                 print(f"  -> Le fichier {filepath} possède déjà la nouvelle structure. Ignoré.")
                 sys.stdout.flush()
                 continue

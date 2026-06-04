@@ -12,7 +12,7 @@ next: "[[Jalon 35 (Caractérisation séquentielle des ouverts).md]]"
 
 # Jalon 34 : Topologie élémentaire des espaces vectoriels normés
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Comment mesurer la distance entre deux points ? Si vous êtes un oiseau, vous volez en ligne droite (c'est la distance "normale"). Si vous êtes un taxi à New York, vous devez suivre les rues perpendiculaires (c'est la distance "Manhattan"). Une **norme**, c'est simplement une règle du jeu pour mesurer une "taille" ou une "distance". Selon la règle choisie, la forme d'un "cercle" change : il peut être rond, carré ou en forme de losange !
 - **Le "Pourquoi on a inventé ça" :** En mathématiques, on veut savoir si une suite de nombres ou de fonctions s'approche d'une cible. Pour dire "proche", il faut pouvoir mesurer l'écart. Les espaces vectoriels normés (EVN) fournissent le cadre rigoureux pour parler de limites, de continuité et de convergence sans avoir besoin d'un dessin.

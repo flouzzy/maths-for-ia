@@ -12,7 +12,7 @@ next: "[[Jalon 36 (Livrable IA).md]]"
 
 # Jalon 35 : Caractérisation séquentielle des ouverts, des fermés et des compacts
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez un parc entouré d'une clôture.
     - Un ensemble **ouvert**, c'est comme être à l'intérieur du parc : peu importe où vous êtes, vous pouvez toujours faire un petit pas dans n'importe quelle direction sans sortir du parc.

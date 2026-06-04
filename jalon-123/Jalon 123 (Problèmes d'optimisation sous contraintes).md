@@ -12,7 +12,7 @@ next: "[[Jalon 124 (Conditions de Karush-Kuhn-Tucker).md]]"
 
 # Jalon 123 : Problèmes d'optimisation sous contraintes
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous deviez construire la maison la plus spacieuse possible, mais vous avez deux règles à respecter :
     1. Vous ne pouvez pas dépasser les limites de votre terrain (une **Contrainte d'inégalité**).

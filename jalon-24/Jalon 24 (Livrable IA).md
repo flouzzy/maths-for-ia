@@ -12,7 +12,7 @@ next: "[[Jalon 25 (Formes bilinéaires).md]]"
 
 # Jalon 24 : Livrable IA T2 : Analyse mathématique des critères de convergence d'une régression polynomiale et résolution d'un problème d'analyse de l'ENS sur les interversions de limites
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous ayez des points sur un graphique représentant le prix des maisons en fonction de leur taille. Ces points ne forment pas une ligne droite parfaite, mais une courbe un peu bosselée. Faire une **Régression Polynomiale**, c'est comme essayer de faire passer une règle souple (un polynôme) à travers ces points. 

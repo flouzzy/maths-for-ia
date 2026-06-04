@@ -12,7 +12,7 @@ next: "[[Jalon 19 (Dérivabilité).md]]"
 
 # Jalon 18 : Continuité des fonctions d'une variable réelle, théorème des valeurs intermédiaires et compacité locale
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous dessiniez une courbe avec un crayon sur une feuille de papier. La **Continuité**, c'est simplement la règle d'or : vous n'avez pas le droit de lever le crayon. Si vous devez passer de la gauche à la droite de la feuille, votre trait doit être ininterrompu. Le **Théorème des Valeurs Intermédiaires (TVI)**, c'est comme dire que si vous commencez à dessiner en bas de la feuille et que vous finissez en haut, votre crayon a forcément dû traverser la ligne du milieu à un moment donné. Vous ne pouvez pas vous téléporter !

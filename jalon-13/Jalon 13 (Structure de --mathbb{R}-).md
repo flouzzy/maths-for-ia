@@ -12,7 +12,7 @@ next: "[[Jalon 14 (Suites réelles et complexes).md]]"
 
 # Jalon 13 : Structure de $\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez une règle graduée infiniment longue. Si vous n'utilisez que des nombres entiers (1, 2, 3), il y a des trous géants entre les marques. Si vous utilisez des fractions (1/2, 2/3), la règle semble pleine, mais en fait, elle est encore pleine de micro-trous invisibles (comme $\sqrt{2}$ ou $\pi$). L'ensemble des nombres réels ($\mathbb{R}$), c'est la règle **parfaite** : il n'y a absolument aucun trou. C'est comme une ligne de soie continue. L'**axiome de la borne supérieure**, c'est la garantie que si vous essayez de monter un escalier de nombres sans fin, il y a toujours un plafond (une limite) que vous allez toucher ou frôler de très près.

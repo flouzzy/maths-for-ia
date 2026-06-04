@@ -12,7 +12,7 @@ next: "[[Jalon 63 (Définition axiomatique d'une mesure).md]]"
 
 # Jalon 62 : Algèbres et Tribus ($\sigma$-algèbres)
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez un inspecteur des impôts et que vous vouliez mesurer la richesse d'une ville. Vous ne pouvez pas mesurer chaque grain de poussière. Vous devez décider à quel niveau de détail vous travaillez : les maisons, les quartiers, ou la ville entière. Une **Tribu** (ou $\sigma$-algèbre), c'est simplement la liste officielle de tous les "objets" que vous avez le droit de mesurer.
     - Si vous savez mesurer la maison A, vous savez forcément mesurer tout ce qui n'est pas la maison A (le complémentaire).

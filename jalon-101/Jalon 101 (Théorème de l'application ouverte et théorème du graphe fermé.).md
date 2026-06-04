@@ -12,7 +12,7 @@ next: "[[Jalon 102 (Topologies faibles et faibles-).md]]"
 
 # Jalon 101 : Application ouverte et Graphe fermé
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :**
     - **L'Application Ouverte :** Imaginez que vous projetiez la lumière d'une lampe de poche à travers un pochoir sur un mur. Si le mur est "solide" (espace de Banach) et que votre lumière couvre tout le mur (surjectivité), alors n'importe quelle petite zone du pochoir doit projeter une petite zone visible sur le mur. On ne peut pas "écraser" un disque ouvert en un simple point ou une ligne invisible.

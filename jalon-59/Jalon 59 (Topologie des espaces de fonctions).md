@@ -12,7 +12,7 @@ next: "[[Jalon 60 (Livrable IA).md]]"
 
 # Jalon 59 : Topologie des espaces de fonctions et Arzelà-Ascoli
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous filmiez un danseur.
     - La **convergence simple**, c'est comme prendre une photo à chaque seconde et regarder si le pied du danseur est à la bonne place à chaque instant $t$. Même si chaque photo semble correcte, le mouvement global pourrait être totalement saccadé ou discontinu.

@@ -12,7 +12,7 @@ next: "[[Jalon 119 (Connexions avec les groupes de Lie).md]]"
 
 # Jalon 118 : Optimalité et Multiplicateurs de Lagrange (Master)
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :**
     - **Le second ordre :** Imaginez que vous ayez trouvé le point le plus bas d'un drap (le minimum). Pour être sûr que c'est un vrai creux (et pas un sommet plat), vous appuyez dessus avec votre doigt. Si le drap résiste et revient à sa place, c'est que la "courbure" est bonne. C'est l'**optimalité du second ordre**.

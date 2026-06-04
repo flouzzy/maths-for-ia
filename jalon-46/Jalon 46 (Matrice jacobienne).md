@@ -12,7 +12,7 @@ next: "[[Jalon 47 (Dérivées partielles d'ordre deux).md]]"
 
 # Jalon 46 : Matrice jacobienne et Règle de la chaîne
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez une chaîne de montage dans une usine.
     - La première machine transforme du métal en vis.

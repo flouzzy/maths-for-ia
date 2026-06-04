@@ -12,7 +12,7 @@ next: "[[Jalon 67 (Démonstration du théorème de convergence monotone).md]]"
 
 # Jalon 66 : Intégrale de Lebesgue pour les fonctions positives
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous vouliez calculer l'aire totale de confiture étalée sur une table.
     - La confiture n'est pas étalée de manière régulière : il y a des endroits où elle est épaisse et d'autres où elle est très fine.

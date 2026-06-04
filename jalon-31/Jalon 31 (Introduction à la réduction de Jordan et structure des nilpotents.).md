@@ -12,7 +12,7 @@ next: "[[Jalon 32 (Preuve complète du théorème spectral pour les endomorphism
 
 # Jalon 31 : Introduction à la réduction de Jordan et structure des nilpotents
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** La réduction de Jordan est le "chaînon manquant" pour les matrices qui ne sont pas diagonalisables. Si la diagonalisation est une base parfaite avec des étirements, la forme de Jordan, c'est une base où les vecteurs sont "enchaînés" les uns aux autres par des relations de dépendance très précises (des 1 sur la diagonale supérieure). 

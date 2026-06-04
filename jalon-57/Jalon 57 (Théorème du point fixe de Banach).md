@@ -12,7 +12,7 @@ next: "[[Jalon 58 (Théorème de Baire).md]]"
 
 # Jalon 57 : Théorème du point fixe de Banach
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous ayez une carte de votre ville et que vous la froissiez un peu, puis que vous la jetiez par terre, n'importe où dans la ville. Le **Théorème de Banach** dit que, si la carte est restée dans les limites de la ville, il y aura toujours **exactement un point** de la carte qui se trouve pile-poil au-dessus de l'endroit réel qu'il représente. Un autre exemple : si vous mélangez une tasse de café, après que le mouvement s'est calmé, il y a au moins une molécule de café qui est revenue exactement à sa position initiale.
 - **Le "Pourquoi on a inventé ça" :** Parfois, on ne sait pas résoudre une équation $f(x) = L$. Mais on peut la réécrire sous la forme $x = g(x)$. Si on applique $g$ encore et encore ($x, g(x), g(g(x)), \dots$), on espère se rapprocher de la solution. Le théorème de Banach donne les conditions pour que ce processus de "répétition" (itération) nous mène à coup sûr vers la solution unique.

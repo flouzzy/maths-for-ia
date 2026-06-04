@@ -13,7 +13,7 @@ next: "[[Jalon 130 (Régularisation implicite de la descente de gradient dans le
 
 # Optimisation Stochastique
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imagine que tu sois un randonneur cherchant à atteindre le point le plus bas d'une immense vallée (le minimum d'une fonction). Le problème, c'est qu'il fait complètement nuit et qu'un vent très fort souffle. Ton seul outil est une boussole magique qui t'indique la pente, mais à cause du vent, l'aiguille tremble énormément. Parfois elle t'indique la bonne direction pour descendre, parfois elle se trompe complètement. L'optimisation stochastique, c'est la méthode qui t'explique comment, malgré cette boussole très imparfaite, tu peux quand même être sûr d'arriver tout au fond de la vallée : il suffit de faire des pas de plus en plus petits au fur et à mesure que tu avances, pour que les erreurs de la boussole se compensent et ne te fassent pas remonter.
 - **Le "Pourquoi on a inventé ça" :** Dans la vraie vie (et surtout en Intelligence Artificielle), on a souvent des milliards de données. Calculer la pente exacte (le "vrai gradient") en utilisant *toutes* les données en même temps prendrait des mois pour un seul pas. L'idée géniale de l'optimisation stochastique est de n'utiliser qu'un tout petit peu de données au hasard à chaque pas. C'est beaucoup plus rapide, mais le calcul de la pente devient "bruité" (plein d'erreurs aléatoires). Il a fallu inventer des mathématiques pour prouver que cet algorithme avec des erreurs converge quand même.

@@ -12,7 +12,7 @@ next: "[[Jalon 46 (Matrice jacobienne).md]]"
 
 # Jalon 45 : Différentiabilité et Gradient
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous êtes aveugle et que vous vous tenez sur le flanc d'une montagne. Vous voulez savoir comment le terrain "penche" autour de vous.
     - Les **dérivées partielles**, c'est tâter le terrain uniquement vers le Nord/Sud ou uniquement vers l'Est/Ouest.

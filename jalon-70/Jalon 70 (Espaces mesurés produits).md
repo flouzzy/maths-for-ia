@@ -12,7 +12,7 @@ next: "[[Jalon 71 (Théorèmes de Fubini-Tonelli).md]]"
 
 # Jalon 70 : Espaces mesurés produits
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous ayez deux règles. L'une mesure des longueurs sur un axe horizontal ($X$), l'autre mesure des longueurs sur un axe vertical ($Y$). Si vous croisez ces deux règles, vous créez un monde en 2D (le produit $X \times Y$).
     - Une **Tribu produit**, c'est décider que les "rectangles" (un ensemble de $X$ croisé avec un ensemble de $Y$) sont nos nouvelles briques de base pour mesurer des surfaces.

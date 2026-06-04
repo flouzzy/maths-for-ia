@@ -12,7 +12,7 @@ next: "[[Jalon 91 (Inégalités de concentration).md]]"
 
 # Jalon 90 : Les modes de convergence en probabilités
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous appreniez à tirer à l'arc. Chaque flèche tirée est une tentative ($X_n$). La cible est le centre ($X$).
     - **Convergence Presque Sûre :** Après beaucoup d'entraînement, vous finissez par mettre TOUTES vos flèches dans le mille, sans plus jamais faire d'erreur (sauf peut-être une fois tous les milliards d'années).

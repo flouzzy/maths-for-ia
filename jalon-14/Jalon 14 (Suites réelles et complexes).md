@@ -12,7 +12,7 @@ next: "[[Jalon 15 (Sous-suites).md]]"
 
 # Jalon 14 : Suites réelles et complexes, définitions rigoureuses des limites ($\epsilon, N$) et critères de convergence
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez un archer qui s'entraîne sur une cible infiniment loin. Au début, ses flèches tombent un peu partout. Mais plus il tire, plus il devient précis. Une **suite qui converge**, c'est comme cet archer : après un certain nombre de tirs, toutes ses flèches finissent par tomber dans un cercle minuscule autour du centre. Peu importe la taille du cercle que vous lui imposez (aussi petit soit-il), l'archer finit toujours par réussir à mettre TOUTES ses flèches suivantes à l'intérieur.

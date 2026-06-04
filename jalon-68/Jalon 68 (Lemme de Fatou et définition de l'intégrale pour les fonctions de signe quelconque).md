@@ -12,7 +12,7 @@ next: "[[Jalon 69 (Démonstration complète du théorème de convergence dominé
 
 # Jalon 68 : Lemme de Fatou et fonctions de signe quelconque
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :**
     - **Le Lemme de Fatou :** Imaginez des athlètes qui sautent en hauteur. Chaque athlète fait plusieurs essais ($f_n$). La "performance minimale garantie" de l'équipe à la fin ($\liminf f_n$) ne peut pas être plus grande que la moyenne des performances au fil du temps. Autrement dit, si de la "masse" s'échappe vers l'infini ou s'évapore dans des oscillations folles, l'intégrale de la limite sera plus petite que la limite des intégrales. On peut perdre de l'information à la limite, mais on n'en gagne jamais par magie.

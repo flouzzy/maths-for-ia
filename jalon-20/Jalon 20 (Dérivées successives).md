@@ -12,7 +12,7 @@ next: "[[Jalon 21 (Suites de fonctions).md]]"
 
 # Jalon 20 : Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous vouliez copier un tableau célèbre (comme la Joconde). 

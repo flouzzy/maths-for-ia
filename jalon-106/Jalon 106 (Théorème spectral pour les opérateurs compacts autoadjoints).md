@@ -12,7 +12,7 @@ next: "[[Jalon 107 (Introduction à la théorie des opérateurs non bornés et r
 
 # Jalon 106 : Théorème spectral pour les opérateurs compacts
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous fassiez briller une lumière à travers un cristal de roche (l'opérateur $T$).
     - Normalement, la lumière ressort dans tous les sens de manière confuse.

@@ -12,7 +12,7 @@ next: "[[Jalon 80 (Transformée de Fourier dans L1).md]]"
 
 # Jalon 79 : Convergence $L^2$ et Identité de Parseval
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous démontiez une voiture pour la vendre en pièces détachées.
     - La voiture entière a un certain poids ($L^2$ norme du signal).

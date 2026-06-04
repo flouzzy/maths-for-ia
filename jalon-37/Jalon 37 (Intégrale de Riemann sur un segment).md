@@ -12,7 +12,7 @@ next: "[[Jalon 38 (Théorème fondamental de l'analyse).md]]"
 
 # Jalon 37 : Intégrale de Riemann sur un segment
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous vouliez mesurer la surface d'un champ dont l'un des bords est une rivière sinueuse. Comme vous ne connaissez que la formule du rectangle (longueur $\times$ largeur), vous décidez de découper votre champ en plein de petites bandes verticales très fines. Chaque bande ressemble presque à un rectangle. En additionnant la surface de tous ces petits rectangles, vous obtenez une excellente approximation de la surface totale. Plus les bandes sont fines, plus vous êtes précis.
 - **Le "Pourquoi on a inventé ça" :** Avant Riemann, on calculait des aires au cas par cas. L'intégrale de Riemann a apporté une méthode **universelle** et rigoureuse pour sommer une infinité de quantités infiniment petites. C'est l'outil de base pour calculer des moyennes, des probabilités et des énergies.

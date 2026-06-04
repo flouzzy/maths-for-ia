@@ -12,7 +12,7 @@ next: "[[Jalon 113 (Tenseurs).md]]"
 
 # Jalon 112 : Champs de vecteurs et Crochet de Lie
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :**
     - Un **Champ de vecteurs**, c'est comme le vent qui souffle partout sur la Terre. À chaque endroit, le vent a une direction et une force précises.

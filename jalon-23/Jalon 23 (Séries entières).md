@@ -12,7 +12,7 @@ next: "[[Jalon 24 (Livrable IA).md]]"
 
 # Jalon 23 : Séries entières, calcul du rayon de convergence (règle de d'Alembert-Cauchy) et propriétés de la somme
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez un élastique magique attaché à l'origine (zéro). Vous pouvez tirer cet élastique vers la gauche ou la droite. Les **Séries entières**, ce sont comme des polynômes qui n'en finissent jamais (de degré infini). La "magie" de l'élastique, c'est le **Rayon de Convergence** : c'est la distance maximale jusqu'où vous pouvez tirer l'élastique sans qu'il ne casse (sans que la somme ne devienne infinie). À l'intérieur de cette distance, tout est lisse et parfait. À l'extérieur, tout explose.

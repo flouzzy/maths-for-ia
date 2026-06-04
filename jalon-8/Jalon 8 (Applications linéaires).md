@@ -12,7 +12,7 @@ next: "[[Jalon 9 (Calcul matriciel).md]]"
 
 # Jalon 8 : Applications linéaires, noyau ($\ker$), image ($\text{Im}$) et démonstration du théorème du rang
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez une machine à étirer ou à faire tourner de la pâte à modeler. 

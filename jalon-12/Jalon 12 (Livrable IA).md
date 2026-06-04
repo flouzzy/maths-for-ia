@@ -12,7 +12,7 @@ next: "[[Jalon 13 (Structure de R).md]]"
 
 # Jalon 12 : Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous voulez ranger des milliers de livres dans une bibliothèque géante, mais pas par ordre alphabétique. Vous les rangez par "sens". Les livres qui parlent de "Chiens" sont proches de ceux qui parlent de "Loups", mais loin de ceux qui parlent de "Recettes de cuisine". Pour trouver un livre, vous n'utilisez pas de mots-clés exacts, vous lancez un petit drone (votre requête) qui va se poser là où le sens est le plus proche. La **similarité cosinus**, c'est l'outil qui mesure l'angle entre le drone et les livres : plus l'angle est petit, plus ils "regardent" dans la même direction sémantique.

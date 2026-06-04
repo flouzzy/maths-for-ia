@@ -12,7 +12,7 @@ next: "[[Jalon 22 (Séries de fonctions).md]]"
 
 # Jalon 21 : Suites de fonctions, étude de la convergence simple et de la convergence uniforme
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous regardiez un dessin animé. Chaque image du film est une fonction. 

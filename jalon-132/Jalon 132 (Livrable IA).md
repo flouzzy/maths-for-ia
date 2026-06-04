@@ -12,7 +12,7 @@ next: "[[Jalon 133 (Modèle PAC).md]]"
 
 # Livrable IA T11 : Solveur Proximal sous Contraintes KKT pour l'Élagage Théorique de Réseaux Profonds
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section rend le concept métaphorique sans utiliser de formalisme complexe.*
 
 **La Métaphore du Sculpteur et du Tuteur :**

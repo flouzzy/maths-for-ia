@@ -12,7 +12,7 @@ next: "[[Jalon 54 (Compacité générale).md]]"
 
 # Jalon 53 : Axiomes de séparation
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez une fête où tout le monde est habillé exactement pareil. Si vous voyez deux personnes au loin, comment être sûr que ce sont bien deux individus différents et pas une illusion d'optique ? Les **Axiomes de séparation**, c'est comme une règle de politesse pour l'espace : pour que l'espace soit "propre" (Hausdorff), il faut que pour n'importe quelles deux personnes distinctes, on puisse dessiner deux cercles autour d'elles qui ne se touchent pas. Chacun a sa "bulle privée". Si l'espace ne respecte pas ça, il devient flou : deux points peuvent être si proches qu'on ne peut plus les distinguer avec des voisinages.
 - **Le "Pourquoi on a inventé ça" :** En topologie générale, certains espaces sont pathologiques. Sans axiome de séparation, une suite de nombres pourrait converger vers deux cibles différentes en même temps ! C'est catastrophique pour le calcul. On a donc défini des niveaux de "séparation" pour garantir que nos objets mathématiques se comportent de manière saine.

@@ -12,7 +12,7 @@ next: "[[Jalon 48 (Livrable IA).md]]"
 
 # Jalon 47 : Dérivées partielles d'ordre deux et Hessienne
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous roulez à vélo sur un terrain vallonné.
     - Le **gradient** (dérivée première) vous dit si vous montez ou si vous descendez à cet instant précis.

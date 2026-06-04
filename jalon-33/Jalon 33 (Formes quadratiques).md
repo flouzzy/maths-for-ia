@@ -12,7 +12,7 @@ next: "[[Jalon 34 (Topologie élémentaire des espaces vectoriels normés).md]]"
 
 # Jalon 33 : Formes quadratiques
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous marchez sur un terrain vallonné. À chaque endroit où vous posez le pied, le sol peut monter, descendre ou rester plat. Une **forme quadratique**, c'est comme une loupe mathématique qui regarde la courbure du sol juste sous votre pied. Elle nous dit si nous sommes au sommet d'une colline (tout redescend), au fond d'un vallon (tout remonte) ou sur un col de montagne (ça monte dans une direction et ça descend dans une autre, comme une selle de cheval).
 - **Le "Pourquoi on a inventé ça" :** Les mathématiciens voulaient un outil simple pour mesurer des distances et des "énergies". Une forme linéaire (comme $f(x) = ax$) est trop simple : elle ne fait que des lignes droites. Pour capturer des courbes, des paraboles et des ellipses (qui sont partout en physique et en IA), il fallait passer au "degré 2". C'est l'étape charnière entre le monde plat (linéaire) et le monde courbe (analyse).

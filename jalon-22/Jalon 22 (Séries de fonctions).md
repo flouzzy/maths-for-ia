@@ -12,7 +12,7 @@ next: "[[Jalon 23 (Séries entières).md]]"
 
 # Jalon 22 : Séries de fonctions, convergence normale, théorèmes d'interversion limite-intégrale et limite-dérivée
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous construisiez un orchestre virtuel. Chaque musicien joue une note (une fonction). La **Série de fonctions**, c'est le son global produit par l'orchestre quand tous les musiciens jouent en même temps. 

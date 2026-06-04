@@ -12,7 +12,7 @@ next: "[[Jalon 87 (Intégration des variables aléatoires).md]]"
 
 # Jalon 86 : Variables aléatoires et Applications mesurables
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous fassiez rouler un dé sur une table.
     - L'**Univers ($\Omega$)**, c'est tout ce qui se passe sur la table (le mouvement du dé, le vent, la poussière).

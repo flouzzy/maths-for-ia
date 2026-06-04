@@ -12,7 +12,7 @@ next: "[[Jalon 97 (Espaces de Banach).md]]"
 
 # Jalon 96 : Livrable IA T8 : Convergence de la Cross-Entropy vers l'Entropie de Shannon
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous essayiez de deviner quel sera le prochain mot d'une phrase.
     - La **Réalité ($P$)**, c'est la manière dont les gens parlent vraiment. Cette réalité a un niveau de "surprise" inévitable : on ne peut pas tout deviner (c'est l'**Entropie de Shannon**).

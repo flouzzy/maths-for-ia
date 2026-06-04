@@ -12,7 +12,7 @@ next: "[[Jalon 94 (Démonstration du théorème central limite).md]]"
 
 # Jalon 93 : Fonctions caractéristiques
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que chaque loi de probabilité soit une chanson.
     - La **Loi (densité)** est le son que vous entendez seconde par seconde.

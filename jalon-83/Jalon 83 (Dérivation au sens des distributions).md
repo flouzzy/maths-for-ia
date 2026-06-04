@@ -12,7 +12,7 @@ next: "[[Jalon 84 (Livrable IA).md]]"
 
 # Jalon 83 : Dérivation au sens des distributions
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous deviez mesurer la pente d'un escalier.
     - Pour une rampe lisse (une fonction dérivable), c'est facile : il suffit de poser une règle.

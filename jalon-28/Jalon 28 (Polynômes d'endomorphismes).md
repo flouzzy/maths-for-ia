@@ -12,7 +12,7 @@ next: "[[Jalon 29 (Éléments propres).md]]"
 
 # Jalon 28 : Polynômes d'endomorphismes, idéaux annulateurs et théorème de Cayley-Hamilton
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Un polynôme, c'est une formule mathématique comme $P(x) = x^2 - 3x + 2$. Si on remplace $x$ par un nombre, on obtient un résultat. La magie ici, c'est qu'on peut remplacer $x$ par une **matrice** (ou un endomorphisme). On obtient alors une nouvelle matrice. Le **théorème de Cayley-Hamilton**, c'est une propriété fascinante : chaque matrice, lorsqu'on la met dans sa propre formule caractéristique, donne la matrice nulle. Elle "s'annule" elle-même.

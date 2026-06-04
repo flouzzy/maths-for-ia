@@ -12,7 +12,7 @@ next: "[[Jalon 108 (Livrable IA).md]]"
 
 # Jalon 107 : Introduction aux opérateurs non bornés
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez une machine à laver très puissante.
     - La machine ne peut pas laver n'importe quoi : si vous mettez des briques dedans, elle casse (c'est le **Domaine** de la machine).

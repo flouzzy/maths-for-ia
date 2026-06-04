@@ -12,7 +12,7 @@ next: "[[Jalon 75 (Preuve de la complétude des espaces Lp).md]]"
 
 # Jalon 74 : Inégalités fondamentales : Hölder, Minkowski, Jensen
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :**
     - **Jensen (Les moyennes) :** Imaginez que vous fassiez cuire une omelette. Est-il préférable de faire cuire chaque œuf séparément puis de les mélanger, ou de mélanger tous les œufs puis de les faire cuire d'un coup ? Si la poêle est "convexe" (elle répartit bien la chaleur), le mélange global sera toujours "meilleur" (ou égal) à la somme des parties.

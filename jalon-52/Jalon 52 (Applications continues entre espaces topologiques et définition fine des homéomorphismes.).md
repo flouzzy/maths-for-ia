@@ -12,7 +12,7 @@ next: "[[Jalon 53 (Axiomes de séparation).md]]"
 
 # Jalon 52 : Applications continues et Homéomorphismes
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :**
     - Une **application continue**, c'est comme une pâte à modeler que l'on étire ou que l'on écrase. Vous pouvez la transformer tant que vous ne la déchirez pas. Si deux points étaient collés au début, ils resteront "proches" après la déformation.

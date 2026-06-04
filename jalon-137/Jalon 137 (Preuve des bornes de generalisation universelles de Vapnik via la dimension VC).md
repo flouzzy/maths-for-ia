@@ -12,7 +12,7 @@ next: "[[Jalon 138 (Inégalités de concentration avancées).md]]"
 
 # Preuve des bornes de généralisation universelles de Vapnik via la dimension VC
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 **La Métaphore :** Imagine que tu essaies d'apprendre à reconnaître des chats et des chiens à partir de photos. Si tu regardes seulement 10 photos (ton ensemble d'entraînement), tu pourrais trouver une règle farfelue pour les séparer, comme "tout ce qui a un collier rouge est un chien". Mais cette règle ne marchera pas sur toutes les autres photos du monde. Par contre, si tu as regardé 10 000 photos, la règle que tu trouveras (comme "la forme des oreilles et le museau") a de très fortes chances de marcher pour *n'importe quelle* photo que tu verras plus tard.
 
 **Le "Pourquoi on a inventé ça" :** En intelligence artificielle, on entraîne une machine sur des données que l'on possède déjà (le passé). Mais ce qu'on veut vraiment, c'est que la machine se trompe le moins possible sur les données qu'elle n'a *pas encore vues* (le futur). Vladimir Vapnik et Alexey Chervonenkis voulaient prouver mathématiquement que, sous certaines conditions, ce qu'on observe sur l'échantillon d'entraînement est le reflet fidèle de la réalité globale. Ils voulaient une garantie absolue.

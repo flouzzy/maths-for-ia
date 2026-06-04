@@ -12,7 +12,7 @@ next: "[[Jalon 93 (Fonctions caractéristiques).md]]"
 
 # Jalon 92 : Loi forte des grands nombres (LFGN)
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous ayez une pièce de monnaie truquée qui tombe sur "Pile" avec une chance sur trois.
     - Si vous la lancez 3 fois, vous pourriez très bien obtenir trois fois "Face". Vous auriez l'impression que la chance est de 0%.

@@ -12,7 +12,7 @@ next: "[[Jalon 83 (Dérivation au sens des distributions).md]]"
 
 # Jalon 82 : Introduction aux distributions de Schwartz
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez dans le noir complet. Vous ne pouvez pas voir les objets, mais vous avez des **capteurs** (des lampes de poche très précises).
     - Un **objet classique** (une fonction), c'est quelque chose que vous pouvez voir point par point.

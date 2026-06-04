@@ -12,7 +12,7 @@ next: "[[Jalon 132 (Livrable IA).md]]"
 
 # Algorithmes d'optimisation de second ordre en grande dimension
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 **La Métaphore :**
 Imagine que tu as les yeux bandés et que tu essaies de descendre au fond d'une vallée pour trouver le point le plus bas. L'approche la plus simple (la "descente de gradient") consiste à tâter le sol avec ton pied, à sentir dans quelle direction la pente descend le plus fort, et à faire un petit pas dans cette direction. Ça marche, mais si la vallée a une forme un peu bizarre, comme un long ravin très étroit et légèrement en pente, tu vas faire des zigzags en rebondissant d'un bord à l'autre, et tu mettras un temps fou à arriver en bas.

@@ -12,7 +12,7 @@ next: "[[Jalon 78 (Séries de Fourier).md]]"
 
 # Jalon 77 : Densité dans $L^p$
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous vouliez reproduire une photo haute résolution (une fonction de $L^p$) avec des outils limités.
     - **Les fonctions simples**, c'est comme utiliser des pixels : vous avez des petits carrés de couleur uniforme. Si vos pixels sont assez petits, vous pouvez reproduire n'importe quelle image.

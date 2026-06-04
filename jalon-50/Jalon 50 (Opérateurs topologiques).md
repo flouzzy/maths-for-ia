@@ -12,7 +12,7 @@ next: "[[Jalon 51 (Espaces métriques).md]]"
 
 # Jalon 50 : Opérateurs topologiques : Intérieur, Adhérence, Frontière
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez une île au milieu de l'océan.
     - L'**Intérieur**, c'est le cœur de l'île : si vous y êtes, vous pouvez faire quelques pas dans n'importe quelle direction et vous resterez toujours au sec sur la terre ferme.

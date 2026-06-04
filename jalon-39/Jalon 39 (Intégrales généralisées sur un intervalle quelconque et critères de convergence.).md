@@ -12,7 +12,7 @@ next: "[[Jalon 40 (Intégrales dépendant d'un paramètre).md]]"
 
 # Jalon 39 : Intégrales généralisées sur un intervalle quelconque
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous peignez une clôture qui s'étend à l'infini vers la droite. Plus vous avancez, plus la clôture devient basse, s'écrasant presque contre le sol. La question est : aurez-vous besoin d'une quantité infinie de peinture, ou bien un seul pot suffira-t-il pour peindre cette clôture "infinie" ? Si la hauteur de la clôture diminue assez vite (comme $1/x^2$), vous n'utiliserez qu'une quantité finie de peinture. C'est le concept d'**intégrale généralisée**.
 - **Le "Pourquoi on a inventé ça" :** L'intégrale de Riemann classique ne fonctionne que sur des segments finis $[a, b]$ avec des fonctions bornées. Mais en statistiques ou en physique, on a souvent besoin de sommer des choses sur tout l'espace (de $-\infty$ à $+\infty$) ou près de points où la fonction explose (comme $1/x$ en 0). Il fallait donc étendre la définition de l'intégrale par un passage à la limite.

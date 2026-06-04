@@ -12,7 +12,7 @@ next: "[[Jalon 112 (Champs de vecteurs).md]]"
 
 # Jalon 111 : Applications différentiables et Fibré tangent
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez un pilote d'avion (un point $x$ sur une variété $M$).
     - Votre avion a une direction et une vitesse à chaque instant : c'est votre **vecteur tangent**.

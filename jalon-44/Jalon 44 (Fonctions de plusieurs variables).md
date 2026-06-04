@@ -12,7 +12,7 @@ next: "[[Jalon 45 (Différentiabilité).md]]"
 
 # Jalon 44 : Fonctions de plusieurs variables
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous utilisez une application de cartographie. Votre position est donnée par deux nombres : la latitude et la longitude. L'altitude à laquelle vous vous trouvez est une fonction qui dépend de ces deux nombres. C'est une **fonction de plusieurs variables**. Si vous bougez un tout petit peu, l'altitude change normalement un tout petit peu (c'est la continuité). Mais sur une falaise abrupte, un petit pas peut provoquer une chute énorme (discontinuité).
 - **Le "Pourquoi on a inventé ça" :** Le monde n'est pas unidimensionnel. Pour décrire le climat, on a besoin de la pression, de la température et de l'humidité en chaque point de l'espace. En IA, on ne manipule jamais un seul nombre, mais des milliers de caractéristiques (pixels d'une image, mots d'une phrase). On doit donc apprendre à faire de l'analyse dans des espaces à $n$ dimensions.

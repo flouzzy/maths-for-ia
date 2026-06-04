@@ -12,7 +12,7 @@ next: "[[Jalon 104 (Bases hilbertiennes).md]]"
 
 # Jalon 103 : Espaces de Hilbert généraux
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez dans une pièce avec un miroir magique.
     - Pour chaque point de la pièce (un vecteur), le miroir vous montre une manière de regarder la pièce (une forme linéaire).

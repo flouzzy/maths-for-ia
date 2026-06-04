@@ -12,7 +12,7 @@ next: "[[Jalon 17 (Séries absolument convergentes).md]]"
 
 # Jalon 16 : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous voulez construire une tour infiniment haute avec des briques de plus en plus fines. Si la première brique fait 1 mètre, la deuxième 50 cm, la troisième 25 cm, et ainsi de suite (on divise par 2 à chaque fois), votre tour ne dépassera jamais les 2 mètres de haut, même si vous ajoutez une infinité de briques ! C'est ce qu'on appelle une **série convergente**. Par contre, si vous ajoutez des briques de taille constante, ou même des briques qui diminuent trop lentement (comme 1/2, 1/3, 1/4...), votre tour finira par toucher les étoiles. C'est une **série divergente**.

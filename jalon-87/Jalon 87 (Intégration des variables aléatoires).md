@@ -12,7 +12,7 @@ next: "[[Jalon 88 (Indépendance d'événements).md]]"
 
 # Jalon 87 : Intégration et Espérance mathématique
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous jouiez à un jeu de hasard où vous pouvez gagner différentes sommes d'argent.
     - L'**Espérance ($\mathbb{E}$)**, c'est le gain moyen que vous pouvez espérer si vous jouez une infinité de fois. C'est le "prix juste" d'un ticket de jeu.

@@ -12,7 +12,7 @@ next: "[[Jalon 57 (Théorème du point fixe de Banach).md]]"
 
 # Jalon 56 : Espaces métriques complets
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous construisiez un puzzle géant.
     - Une **suite de Cauchy**, c'est comme poser les pièces une par une de telle sorte que chaque nouvelle pièce soit de plus en plus proche de la précédente. On a l'impression que le puzzle est en train de se terminer.

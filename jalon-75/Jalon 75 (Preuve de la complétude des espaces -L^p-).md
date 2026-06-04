@@ -12,7 +12,7 @@ next: "[[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L2).md]]"
 
 # Jalon 75 : Complétude des espaces $L^p$ (Riesz-Fischer)
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez un sculpteur. Vous avez un bloc de marbre géant qui contient toutes les chansons possibles.
     - Vous commencez à tailler une chanson en faisant des retouches successives. Chaque retouche est de plus en plus petite ($f_n$ est une suite de Cauchy).

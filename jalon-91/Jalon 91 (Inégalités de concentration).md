@@ -12,7 +12,7 @@ next: "[[Jalon 92 (Démonstration rigoureuse de la loi forte des grands nombres.
 
 # Jalon 91 : Inégalités de concentration
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez le gérant d'un restaurant. Vous savez qu'en moyenne, un client dépense 20€.
     - **Markov :** C'est le niveau de base. Il dit : "Il est impossible que tout le monde dépense 200€, car alors la moyenne ne pourrait pas être 20€". Plus vous demandez un écart grand par rapport à la moyenne, plus la chance que cela arrive diminue.

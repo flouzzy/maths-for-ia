@@ -12,7 +12,7 @@ next: "[[Jalon 126 (Noyaux définis positifs).md]]"
 
 # Jalon 125 : Opérateurs proximaux
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez perdu dans le brouillard sur une montagne (la fonction $f$). Vous voulez descendre, mais vous avez peur de vous égarer trop loin de votre campement actuel (le point $x$).
     - L'**Opérateur Proximal**, c'est comme avoir un guide qui vous propose un compromis : "On va aller vers un point plus bas, mais en restant dans un rayon raisonnable autour du camp".

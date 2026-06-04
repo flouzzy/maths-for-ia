@@ -12,7 +12,7 @@ next: "[[Jalon 127 (Démonstration du théorème du représentant dans les RKHS)
 
 # Jalon 126 : Noyaux définis positifs et RKHS
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous ayez deux objets très complexes, comme deux nuages ou deux chansons. Vous voulez savoir s'ils se ressemblent.
     - Une manière de faire est de les transformer en une liste de millions de caractéristiques (la taille, la couleur, les pics de fréquence) et de faire un produit scalaire. C'est très long.

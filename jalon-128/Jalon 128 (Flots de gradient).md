@@ -12,7 +12,7 @@ next: "[[Jalon 129 (Optimisation stochastique).md]]"
 
 # Jalon 128 : Flots de gradient
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous posiez une bille au sommet d'une montagne (la fonction de perte $L$).
     - La **Descente de Gradient** classique (Jalon 45), c'est comme si la bille faisait des petits sauts successifs. Si le saut est trop grand, la bille peut rater le trou.

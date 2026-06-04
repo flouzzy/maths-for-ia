@@ -12,7 +12,7 @@ next: "[[Jalon 105 (Opérateurs adjoints).md]]"
 
 # Jalon 104 : Bases hilbertiennes
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez un peintre et que vous ayez une infinité de tubes de peinture, mais chaque tube contient une couleur "pure" qui ne peut pas être fabriquée en mélangeant les autres (elles sont **orthogonales**).
     - Une **Base Hilbertienne**, c'est la collection minimale de tubes de peinture dont vous avez besoin pour pouvoir reproduire n'importe quel tableau du monde (n'importe quelle fonction du Hilbert).

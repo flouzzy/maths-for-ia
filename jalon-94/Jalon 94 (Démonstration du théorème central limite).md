@@ -12,7 +12,7 @@ next: "[[Jalon 95 (Vecteurs gaussiens).md]]"
 
 # Jalon 94 : Théorème central limite (TCL)
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous demandiez à 1000 personnes de lancer chacune un dé et de noter le résultat.
     - Chaque personne a un résultat imprévisible entre 1 et 6 (une loi uniforme).

@@ -12,7 +12,7 @@ next: "[[Jalon 11 (Formes linéaires).md]]"
 
 # Jalon 10 : Changements de base, matrices de passage et matrices par blocs
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** 

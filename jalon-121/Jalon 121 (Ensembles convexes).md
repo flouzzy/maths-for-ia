@@ -12,7 +12,7 @@ next: "[[Jalon 122 (Notion de sous-gradient).md]]"
 
 # Jalon 121 : Ensembles et Fonctions convexes
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :**
     - Un **Ensemble Convexe**, c'est comme un ballon bien gonflé ou un bloc de pâte à modeler sans aucun trou ni aucune bosse vers l'intérieur. Si vous prenez deux points n'importe où à l'intérieur et que vous tirez un fil entre eux, le fil reste entièrement à l'intérieur.

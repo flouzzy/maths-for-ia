@@ -12,7 +12,7 @@ next: "[[Jalon 26 (Espaces euclidiens).md]]"
 
 # Jalon 25 : Formes bilinéaires, formes sesquilinieaires, produit scalaire et inégalité de Cauchy-Schwarz
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous soyez un évaluateur de compatibilité pour un site de rencontre. Un vecteur $x$, c'est le profil d'une personne (ses goûts, son âge, etc.). Une **Forme Bilinéaire**, c'est une règle de calcul qui prend DEUX profils et qui donne un score de compatibilité (un nombre). 

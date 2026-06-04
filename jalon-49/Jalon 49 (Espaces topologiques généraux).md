@@ -12,7 +12,7 @@ next: "[[Jalon 50 (Opérateurs topologiques).md]]"
 
 # Jalon 49 : Espaces topologiques généraux
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous dessiniez sur un drap en caoutchouc. Vous pouvez étirer le drap, le tordre, le déformer autant que vous voulez, mais vous n'avez pas le droit de le déchirer ni de coller deux points qui étaient éloignés. Qu'est-ce qui ne change pas ? Si deux points étaient "voisins" avant la déformation, ils le resteront après. La **Topologie**, c'est l'étude de cette notion de "voisinage" sans avoir besoin d'une règle pour mesurer les distances. C'est la géométrie du "proche" et du "lointain" dans sa forme la plus pure.
 - **Le "Pourquoi on a inventé ça" :** Parfois, on veut parler de continuité ou de limite sur des ensembles bizarres où on ne peut pas mesurer de distance (comme des ensembles de fonctions ou des graphes géants). Les mathématiciens ont donc créé une règle du jeu universelle : au lieu de mesurer des mètres, on définit simplement quels sous-ensembles sont des "zones ouvertes" (les ouverts).

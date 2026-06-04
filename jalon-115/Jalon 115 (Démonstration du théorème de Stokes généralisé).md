@@ -12,7 +12,7 @@ next: "[[Jalon 116 (Variétés riemanniennes).md]]"
 
 # Jalon 115 : Démonstration du théorème de Stokes généralisé
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous comptiez les entrées et les sorties dans un centre commercial.
     - Il y a deux manières de connaître le nombre total de personnes qui sont entrées dans le bâtiment :

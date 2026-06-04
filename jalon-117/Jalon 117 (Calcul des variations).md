@@ -12,7 +12,7 @@ next: "[[Jalon 118 (Conditions d'optimalité du second ordre pour les fonctionne
 
 # Jalon 117 : Calcul des variations
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous deviez construire une route entre deux villes séparées par des montagnes, des rivières et des forêts.
     - Vous ne cherchez pas un simple nombre, vous cherchez tout le **tracé de la route** (une fonction $y(x)$).

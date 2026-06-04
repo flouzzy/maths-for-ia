@@ -12,7 +12,7 @@ next: "[[Jalon 72 (Livrable IA).md]]"
 
 # Jalon 71 : Théorèmes de Fubini-Tonelli
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous vouliez compter le nombre total d'élèves dans une école. Les élèves sont rangés en rangées et en colonnes dans la cour.
     - Vous avez deux méthodes :

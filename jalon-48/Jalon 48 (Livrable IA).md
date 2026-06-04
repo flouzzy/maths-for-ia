@@ -12,7 +12,7 @@ next: "[[Jalon 49 (Espaces topologiques généraux).md]]"
 
 # Jalon 48 : Livrable IA T4 : Formalisation mathématique de la Rétropropagation
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous jouez à "téléphone arabe" mais avec une règle spéciale : à la fin, on compare le message final avec le message original. S'il y a une erreur, on repart en arrière. Le dernier joueur dit à l'avant-dernier : "Tu as un peu trop transformé le son 'A' en 'O'". L'avant-dernier dit au précédent : "Puisqu'il me dit ça, c'est que toi, tu as trop insisté sur telle syllabe". On remonte ainsi jusqu'au premier joueur pour que tout le monde ajuste sa manière de parler. La **Rétropropagation**, c'est exactement ce voyage à rebours pour corriger les erreurs de chaque participant (chaque neurone).
 - **Le "Pourquoi on a inventé ça" :** Un réseau de neurones peut avoir des millions de réglages (poids). Si le réseau se trompe, comment savoir quel poids précis il faut modifier ? On ne peut pas tous les tester un par un. La rétropropagation utilise le calcul différentiel pour calculer d'un seul coup l'influence de chaque poids sur l'erreur finale.

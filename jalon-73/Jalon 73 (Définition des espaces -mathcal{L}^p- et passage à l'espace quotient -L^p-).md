@@ -12,7 +12,7 @@ next: "[[Jalon 74 (Inégalités fondamentales de l'analyse fonctionnelle).md]]"
 
 # Jalon 73 : Espaces $L^p$ et passage au quotient
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous enregistriez une chanson.
     - Il y a la chanson parfaite, mathématique ($f$).

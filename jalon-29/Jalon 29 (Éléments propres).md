@@ -12,7 +12,7 @@ next: "[[Jalon 30 (Trigonalisation d'endomorphismes et décomposition de Dunford
 
 # Jalon 29 : Éléments propres, polynôme caractéristique, sous-espaces propres et critères de diagonalisabilité
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous transformez une image (par exemple en la tournant ou en l'étirant). La plupart des points vont bouger et changer de direction. Mais il existe parfois des vecteurs (des flèches) qui, même après la transformation, restent sur la **même ligne** qu'au départ. Ils ont seulement été étirés ou rétrécis. Ces vecteurs sont les "vecteurs propres". Le facteur par lequel ils ont été étirés est la "valeur propre".

@@ -12,7 +12,7 @@ next: "[[Jalon 90 (Les modes de convergence).md]]"
 
 # Jalon 89 : Lemmes de Borel-Cantelli
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous lanciez une pièce de monnaie tous les jours, pour l'éternité.
     - La question est : allez-vous voir "Pile" apparaître une infinité de fois ?

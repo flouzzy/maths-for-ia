@@ -12,7 +12,7 @@ next: "[[Jalon 61 (Insuffisances de l'intégrale de Riemann).md]]"
 
 # Jalon 60 : Livrable IA T5 : Preuve du théorème d'approximation universelle
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous ayez une boîte de LEGO. Chaque pièce de LEGO est très simple (une bosse, un creux). Le **Théorème d'Approximation Universelle** dit que, si vous avez assez de pièces, vous pouvez construire n'importe quelle forme complexe (une voiture, un château, un visage) avec une précision infinie. En IA, les LEGO sont les "neurones" et la forme complexe est la "fonction" que l'on veut apprendre. Tant que la fonction est continue (pas de sauts brusques), un réseau de neurones avec une seule couche cachée très large peut l'imiter parfaitement.
 - **Le "Pourquoi on a inventé ça" :** Au début de l'IA, on se demandait si les réseaux de neurones étaient juste des gadgets ou s'ils pouvaient vraiment tout calculer. Cette preuve mathématique a confirmé que les réseaux de neurones sont des **estimateurs universels** : ils ont la capacité théorique de représenter n'importe quelle logique ou n'importe quel phénomène physique.

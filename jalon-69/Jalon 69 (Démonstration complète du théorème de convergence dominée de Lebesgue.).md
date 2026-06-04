@@ -12,7 +12,7 @@ next: "[[Jalon 70 (Espaces mesurés produits).md]]"
 
 # Jalon 69 : Théorème de convergence dominée (TCD)
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez une colonie de fourmis qui marchent sur une table. Chaque fourmi représente une valeur d'une fonction à un instant donné. La colonie entière forme une courbe $(f_n)$.
     - Au fil du temps, les fourmis changent de trajectoire et la courbe se déforme.

@@ -12,7 +12,7 @@ next: "[[Jalon 101 (Théorème de l'application ouverte et théorème du graphe 
 
 # Jalon 100 : Théorème de Banach-Steinhaus
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez une bibliothèque infinie remplie de traducteurs (des opérateurs linéaires).
     - Pour chaque livre (un vecteur $x$), vous demandez à tous les traducteurs de faire leur travail.

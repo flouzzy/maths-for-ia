@@ -12,7 +12,7 @@ next: "[[Jalon 121 (Ensembles convexes).md]]"
 
 # Jalon 120 : Livrable IA T10 : Invariance et Équivariance en Geometric Deep Learning
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous montriez une photo de chat à une IA.
     - Si vous décalez la photo de 10 pixels vers la gauche, l'IA doit toujours dire "C'est un chat". C'est l'**Invariance par translation**.

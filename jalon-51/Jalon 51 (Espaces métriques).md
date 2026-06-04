@@ -12,7 +12,7 @@ next: "[[Jalon 52 (Applications continues entre espaces topologiques et définit
 
 # Jalon 51 : Espaces métriques
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez un explorateur dans un monde inconnu. Pour vous repérer, vous avez besoin d'un instrument de mesure (une règle ou un GPS) qui vous dit à quelle distance vous êtes d'un objectif. Un **Espace métrique**, c'est simplement un ensemble d'objets où l'on a défini une règle de calcul pour la "distance" entre n'importe quelle paire d'objets. Cette règle doit être honnête : la distance pour aller de A vers B doit être la même que pour revenir (symétrie), et faire un détour par C ne peut pas être plus court que d'y aller directement (inégalité triangulaire).
 - **Le "Pourquoi on a inventé ça" :** La topologie générale (Jalon 49) est très puissante mais parfois trop abstraite. En sciences, on a souvent besoin de quantifier "à quel point" deux choses sont proches. Les espaces métriques permettent de ramener la rigueur du calcul numérique (les nombres réels) au sein de la topologie.

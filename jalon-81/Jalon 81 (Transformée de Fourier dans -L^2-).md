@@ -12,7 +12,7 @@ next: "[[Jalon 82 (Introduction à la théorie des distributions de Schwartz).md
 
 # Jalon 81 : Transformée de Fourier dans $L^2$ et Plancherel
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous ayez une lampe torche magique.
     - Dans le monde réel, vous voyez des objets (le signal $f$).

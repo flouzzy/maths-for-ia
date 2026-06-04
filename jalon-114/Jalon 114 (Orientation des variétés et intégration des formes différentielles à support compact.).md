@@ -12,7 +12,7 @@ next: "[[Jalon 115 (Démonstration du théorème de Stokes généralisé).md]]"
 
 # Jalon 114 : Orientation et Intégration sur variétés
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :**
     - **L'Orientation :** Imaginez que vous peigniez un ruban. Pour que le travail soit propre, vous devez décider quel côté est le "dessus" et quel côté est le "dessous". Si vous pouvez faire tout le tour du ruban et revenir au point de départ en restant toujours sur le "dessus", le ruban est **orientable**. (Le ruban de Möbius, lui, ne l'est pas : on finit par se retrouver la tête en bas sans s'en rendre compte !).

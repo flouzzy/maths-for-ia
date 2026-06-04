@@ -12,7 +12,7 @@ next: "[[Jalon 117 (Calcul des variations).md]]"
 
 # Jalon 116 : Variétés riemanniennes
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous marchiez sur un trampoline géant.
     - À certains endroits, le tissu est très tendu (distance courte), à d'autres il est très lâche ou étiré (distance longue).

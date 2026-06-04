@@ -12,7 +12,7 @@ next: "[[Jalon 43 (Systèmes différentiels linéaires d'ordre 1 et calcul de l'
 
 # Jalon 42 : Équations différentielles linéaires du second ordre à coefficients constants
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez un poids attaché à un ressort et plongé dans un bocal d'huile. Si vous tirez sur le poids et que vous le lâchez :
     1. Le ressort veut le ramener (force proportionnelle à la position $y$).

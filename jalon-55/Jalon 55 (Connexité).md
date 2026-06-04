@@ -12,7 +12,7 @@ next: "[[Jalon 56 (Espaces métriques complets).md]]"
 
 # Jalon 55 : Connexité et Connexité par arcs
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez un archipel d'îles.
     - Si vous pouvez marcher d'un point A à un point B sans jamais vous mouiller les pieds, c'est que A et B sont sur la même île. L'île elle-même est un ensemble **connexe**.

@@ -12,7 +12,7 @@ next: "[[Jalon 64 (Construction pas à pas de la mesure de Lebesgue sur Rn via l
 
 # Jalon 63 : Définition axiomatique d'une mesure
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous ayez une balance de précision. Vous voulez peser différents objets (les ensembles de votre tribu). La balance doit respecter trois règles de bon sens :
     1. Un objet ne peut pas avoir un poids négatif (positivité).

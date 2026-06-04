@@ -12,7 +12,7 @@ next: "[[Jalon 136 (Theorie de Vapnik-Chervonenkis).md]]"
 
 # Complexité de Rademacher
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imagine qu'on donne à une classe d'élèves une série de questions sous forme de devinettes. Si les réponses correctes sont choisies totalement au hasard (pile ou face pour chaque question) par le professeur, il est impossible d'avoir systématiquement une bonne note en utilisant une vraie logique. Si un élève réussit quand même à avoir 100% de bonnes réponses même quand les réponses sont tirées à pile ou face, cela veut dire qu'il ne réfléchit pas : il triche en apprenant toutes les possibilités par cœur. La complexité de Rademacher mesure exactement cela pour un programme informatique : sa capacité à "apprendre par cœur" du bruit aléatoire. Plus un programme peut s'adapter à des résultats purement aléatoires, plus sa "complexité" est élevée, et plus on risque qu'il apprenne par cœur sans rien comprendre.

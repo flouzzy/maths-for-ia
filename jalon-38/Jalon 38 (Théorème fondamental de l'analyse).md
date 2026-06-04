@@ -12,7 +12,7 @@ next: "[[Jalon 39 (Intégrales généralisées sur un intervalle quelconque et c
 
 # Jalon 38 : Théorème fondamental de l'analyse
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous regardez le compteur de vitesse de votre voiture. Il vous donne votre vitesse instantanée (la dérivée de votre position). Si vous notez cette vitesse à chaque seconde et que vous calculez l'aire sous la courbe de vitesse (l'intégrale), vous obtenez exactement la distance totale parcourue. Le **Théorème Fondamental de l'Analyse** est le pont magique qui relie ces deux mondes : la vitesse (le changement local) et la distance (l'accumulation globale).
 - **Le "Pourquoi on a inventé ça" :** Avant ce théorème, la dérivation (trouver la pente) et l'intégration (trouver l'aire) semblaient être deux problèmes totalement différents. Newton et Leibniz ont réalisé qu'ils étaient en fait les "ennemis jurés" l'un de l'autre : l'un est l'opération inverse de l'autre. C'est ce qui a permis de transformer le calcul d'aires complexes en un simple calcul de soustraction de fonctions.

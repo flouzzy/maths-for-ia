@@ -12,7 +12,7 @@ next: "[[Jalon 109 (Topologie des sous-variétés de Rn).md]]"
 
 # Jalon 108 : Livrable IA T9 : Modélisation de l'opérateur d'Attention
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous lisiez un livre. Pour comprendre une phrase compliquée, vos yeux font des va-et-vient entre les mots.
     - Quand vous lisez le mot "il", votre cerveau cherche à savoir de qui on parle. Il porte une **Attention** particulière au nom propre cité trois lignes plus haut.

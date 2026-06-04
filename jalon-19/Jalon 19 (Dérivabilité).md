@@ -12,7 +12,7 @@ next: "[[Jalon 20 (Dérivées successives).md]]"
 
 # Jalon 19 : Dérivabilité, théorème de Rolle, théorème des accroissements finis et prolongement de la dérivée
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous conduisez une voiture. Votre compteur de vitesse vous indique votre vitesse à chaque seconde précise. La **Dérivée**, c'est exactement cette vitesse instantanée. Si la courbe est votre trajet, la dérivée est l'inclinaison de la route sous vos pneus.

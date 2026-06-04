@@ -12,7 +12,7 @@ next: "[[Jalon 77 (Densité des fonctions simples).md]]"
 
 # Jalon 76 : Propriétés géométriques de l'espace de Hilbert $L^2$
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez dans un simulateur de vol. Votre avion (une fonction $f$) peut se déplacer dans une infinité de directions. Même si cet espace est "infini", vous aimeriez pouvoir utiliser votre boussole et votre règle comme dans le monde réel.
     - L'espace **$L^2$** est le seul sac de fonctions qui se comporte exactement comme notre espace 3D habituel.

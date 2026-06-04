@@ -12,7 +12,7 @@ next: "[[Jalon 86 (Variables aléatoires vues comme des applications mesurables)
 
 # Jalon 85 : Axiomes de Kolmogorov
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous ayez un gâteau géant qui représente tout ce qui peut arriver dans le futur (l'univers $\Omega$).
     - Le gâteau entier pèse exactement **1 kilo** (la probabilité totale est 1).

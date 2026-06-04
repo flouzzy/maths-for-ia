@@ -12,7 +12,7 @@ next: "[[Jalon 98 (Théorème de Hahn-Banach).md]]"
 
 # Jalon 97 : Espaces de Banach et Opérateurs Linéaires
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez un élastique géant dans un espace à une infinité de dimensions.
     - Un **Espace de Banach**, c'est un gymnase parfaitement solide : vous pouvez tirer sur les élastiques (les fonctions) autant que vous voulez, s'ils se stabilisent, ils ne sortiront jamais du gymnase.
