@@ -9,7 +9,6 @@ tags:
 prev: "None"
 next: "[[Jalon 2 (Méthodes de raisonnement).md]]"
 ---
-
 # Jalon 1 : Logique formelle, connecteurs, tables de vérité et calcul des propositions
 
 ## 1. Présentation du concept clé

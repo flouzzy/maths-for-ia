@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Jalon 2 (Méthodes de raisonnement)/Jalon 2 (Méthodes de raisonnement).md",
+                "file": "Jalon 1 (Logique formelle)/Jalon 1 (Logique formelle).md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Jalon 2 (Méthodes de raisonnement)"
+              "title": "Jalon 1 (Logique formelle)"
             }
           }
         ]
@@ -164,13 +164,25 @@
               "icon": "lucide-list",
               "title": "Plan de Jalon 13 (Structure de $-mathbb{R}$)"
             }
+          },
+          {
+            "id": "83370cb1c349abad",
+            "type": "leaf",
+            "state": {
+              "type": "file-properties",
+              "state": {
+                "file": "Jalon 1 (Logique formelle)/Jalon 1 (Logique formelle).md"
+              },
+              "icon": "lucide-info",
+              "title": "Propriétés du fichier pour Jalon 1 (Logique formelle)"
+            }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -184,8 +196,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "8ceda288c71f7e44",
+  "active": "83370cb1c349abad",
   "lastOpenFiles": [
+    "Jalon 2 (Méthodes de raisonnement)/Jalon 2 (Méthodes de raisonnement).md",
     "Jalon 1 (Logique formelle)/Jalon 1 (Logique formelle).md",
     "Sans titre 1.base",
     "2026-06-04.md",
@@ -196,7 +209,6 @@
     "Jalon 5 (Applications)/Jalon 5 (Applications).md",
     "Jalon 4 (Théorie des ensembles)/Jalon 4 (Théorie des ensembles).md",
     "Jalon 3 (Quantification)/Jalon 3 (Quantification).md",
-    "Jalon 2 (Méthodes de raisonnement)/Jalon 2 (Méthodes de raisonnement).md",
     "Jalon 54 (Compacité générale)/Jalon 54 (Compacité générale).md",
     "Sans titre.base",
     "Jalon 26 (Espaces euclidiens)/Jalon 26 (Espaces euclidiens).md",
