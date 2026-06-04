@@ -12,7 +12,7 @@ next: "[[Jalon 4 (Théorie des ensembles).md]]"
 
 # Jalon 3 : Quantification ($\forall, \exists$), ordre des quantificateurs et négation de propositions complexes
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous êtes le maire d'une ville. Vous voulez faire des lois. Si vous dites : "Tous les habitants doivent porter un chapeau", vous utilisez un quantificateur **universel** ($\forall$). Si vous dites : "Il existe au moins un habitant qui sait jongler", vous utilisez un quantificateur **existentiel** ($\exists$). La magie (et le piège) réside dans l'ordre. Dire "Pour chaque enfant, il existe un cadeau qui lui plaît" est très différent de dire "Il existe un cadeau qui plaît à tous les enfants". Dans le premier cas, chaque enfant a son propre cadeau ; dans le second, c'est le même cadeau magique pour tout le monde !

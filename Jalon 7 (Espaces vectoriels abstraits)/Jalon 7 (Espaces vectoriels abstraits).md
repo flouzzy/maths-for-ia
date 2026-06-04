@@ -12,7 +12,7 @@ next: "[[Jalon 8 (Applications linéaires).md]]"
 
 # Jalon 7 : Espaces vectoriels abstraits, familles libres, familles génératrices et bases en dimension finie
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous êtes un cuisinier. Un **espace vectoriel**, c'est comme votre cuisine : vous avez des ingrédients de base et vous savez comment les mélanger (addition) ou comment multiplier les doses (multiplication par un scalaire). Une **famille génératrice**, c'est une liste de courses qui contient assez d'ingrédients pour préparer n'importe quel plat du menu. Une **famille libre**, c'est une liste où aucun ingrédient ne peut être fabriqué à partir des autres (pas de doublon inutile). Une **base**, c'est la liste de courses parfaite : le minimum vital d'ingrédients nécessaires pour tout cuisiner, sans aucun gaspillage.

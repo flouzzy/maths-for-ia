@@ -12,7 +12,7 @@ next: "[[Jalon 6 (Relations d'équivalence).md]]"
 
 # Jalon 5 : Applications, injections, surjections, bijections et composition de fonctions
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez un archer qui tire des flèches sur des cibles.

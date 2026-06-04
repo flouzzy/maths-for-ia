@@ -9,10 +9,9 @@ tags:
 prev: "[[Jalon 3 (Quantification).md]]"
 next: "[[Jalon 5 (Applications).md]]"
 ---
-
 # Jalon 4 : Théorie des ensembles (ZFC), opérations sur les ensembles, ensembles des parties $\mathcal{P}(E)$
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous avez des sacs magiques. Un sac peut contenir des billes, des jouets, ou même d'autres sacs ! La théorie des ensembles, c'est la science qui étudie comment on peut remplir ces sacs, les vider, les mélanger ou regarder ce qu'ils ont en commun. On peut prendre deux sacs et créer un nouveau sac qui contient tout ce qu'il y avait dans les deux (**Union**), ou seulement ce qui était présent dans les deux en même temps (**Intersection**). L'**ensemble des parties**, c'est comme si vous preniez tous les sous-groupes possibles que vous pouvez former avec les objets d'un sac : si vous avez une pomme et une banane, vous pouvez faire un sac vide, un sac avec juste la pomme, un sac avec juste la banane, et un sac avec les deux.
