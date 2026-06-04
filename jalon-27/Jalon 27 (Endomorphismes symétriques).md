@@ -9,7 +9,6 @@ tags:
 prev: "[[Jalon 26 (Espaces euclidiens).md]]"
 next: "[[Jalon 28 (Polynômes d'endomorphismes).md]]"
 ---
-
 # Jalon 27 : Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales
 
 ## 1. L'Intuition Première (Niveau 12 ans)
@@ -27,7 +26,9 @@ next: "[[Jalon 28 (Polynômes d'endomorphismes).md]]"
 
 ### A. Définitions Formelles
 Soit $E$ un espace euclidien.
-1. **Adjoint d'un endomorphisme :** Pour $f \in \mathcal{L}(E)$, il existe un unique endomorphisme $f^* \in \mathcal{L}(E)$ tel que $\forall x, y \in E, \langle f(x), y angle = \langle x, f^*(y) angle$.
+1. **Adjoint d'un endomorphisme :** Pour $f \in \mathcal{L}(E)$, il existe un unique endomorphisme $f^* \in \mathcal{L}(E)$ tel que $\forall x, y \in E, \langle f(x), y 
+angle = \langle x, f^*(y) 
+angle$.
 2. **Endomorphisme symétrique :** $f \in \mathcal{L}(E)$ est symétrique si $f^* = f$. (Matrice symétrique $A^T = A$).
 3. **Matrice Orthogonale :** $P \in \mathcal{M}_n(\mathbb{R})$ est orthogonale si $P^T P = I_n$. Les colonnes de $P$ forment une base orthonormée de $\mathbb{R}^n$.
 
@@ -42,11 +43,22 @@ Soit $E$ un espace euclidien.
 ### Démonstration : $f$ symétrique $\implies$ sous-espaces propres orthogonaux
 Soient $\lambda, \mu$ deux valeurs propres distinctes de $f$ symétrique, et $x, y$ des vecteurs propres associés.
 
-1. **Initialisation :** $\langle f(x), y angle = \langle \lambda x, y angle = \lambda \langle x, y angle$.
-2. **Utilisation de la symétrie :** $\langle f(x), y angle = \langle x, f(y) angle = \langle x, \mu y angle = \mu \langle x, y angle$.
-3. **Égalité :** $\lambda \langle x, y angle = \mu \langle x, y angle \implies (\lambda - \mu) \langle x, y angle = 0$.
+1. **Initialisation :** $\langle f(x), y 
+angle = \langle \lambda x, y 
+angle = \lambda \langle x, y 
+angle$.
+2. **Utilisation de la symétrie :** $\langle f(x), y 
+angle = \langle x, f(y) 
+angle = \langle x, \mu y 
+angle = \mu \langle x, y 
+angle$.
+3. **Égalité :** $\lambda \langle x, y 
+angle = \mu \langle x, y 
+angle \implies (\lambda - \mu) \langle x, y 
+angle = 0$.
 4. **Conclusion :** Comme $\lambda 
-eq \mu$, alors $\langle x, y angle = 0$. Les espaces propres sont orthogonaux.
+eq \mu$, alors $\langle x, y 
+angle = 0$. Les espaces propres sont orthogonaux.
 
 ## 4. Exercices d'Application
 ### Exercice 1 : Orthogonalité
