@@ -8,4 +8,4 @@
 Inégalités de concentration avancées, inégalité de McDiarmid (différences bornées) et entropie de concentration.
 
 ---
-**Précédent** : [[Jalon 137 (Preuve des bornes de généralisation universelles de Vapnik via la dimension VC.)]] | **Suivant** : [[Jalon 139 (Notion de stabilité algorithmique)]]
+**Précédent** : [[Jalon 137 (Preuve des bornes de generalisation universelles de Vapnik via la dimension VC)]] | **Suivant** : [[Jalon 139 (Notion de stabilité algorithmique)]]

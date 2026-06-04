@@ -86,4 +86,4 @@ C'est immédiat : $P(|\bar{X}_n - \mu| \ge \epsilon) \le \frac{\sigma^2}{n\epsil
 ## 6. Liens Sémantiques & Maillage Obsidian
 
 - **Concepts Précédents requis :** [[Jalon 87 (Intégration et Espérance mathématique).md]], [[Jalon 88 (Indépendance d'événements et de variables aléatoires).md]]
-- **Concepts Futurs dépendants :** [[Jalon 92 (Démonstration rigoureuse de la loi forte des grands nombres.).md]], [[Jalon 137 (Preuve des bornes de généralisation universelles de Vapnik via la dimension VC.).md]]
+- **Concepts Futurs dépendants :** [[Jalon 92 (Démonstration rigoureuse de la loi forte des grands nombres.).md]], [[Jalon 137 (Preuve des bornes de generalisation universelles de Vapnik via la dimension VC).md]]

@@ -161,4 +161,4 @@ S'il existe des ensembles de taille arbitrairement grande qui peuvent être pulv
 ## 6. Liens Sémantiques & Maillage Obsidian
 
 - **Concepts Précédents requis :** [[Jalon 133 (Modele PAC)]], [[Jalon 134 (Complexite des classes de fonctions)]], [[Jalon 135 (Complexite de Rademacher)]]
-- **Concepts Futurs dépendants :** [[Jalon 137 (Preuve des bornes de generalisation universelles de Vapnik via la dimension VC.)]], [[Jalon 144 (Le phénomène de double descente)]]
+- **Concepts Futurs dépendants :** [[Jalon 137 (Preuve des bornes de generalisation universelles de Vapnik via la dimension VC)]], [[Jalon 144 (Le phénomène de double descente)]]

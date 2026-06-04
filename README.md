@@ -157,6 +157,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **[Jalon 134](Jalon%20134%20(Complexite%20des%20classes%20de%20fonctions)/Jalon%20134%20(Complexite%20des%20classes%20de%20fonctions).md)** : Complexité des classes de fonctions, processus empiriques et inégalités de concentration maximales. (Enrichi le 2026-05-31)
 - **[Jalon 135](Jalon%20135%20(Complexite%20de%20Rademacher)/Jalon%20135%20(Complexite%20de%20Rademacher).md)** : Complexité de Rademacher, symétrisation et bornes de généralisation basées sur Rademacher. (Enrichi le 2026-06-02)
 - **[Jalon 136](Jalon%20136%20(Theorie%20de%20Vapnik-Chervonenkis)/Jalon%20136%20(Theorie%20de%20Vapnik-Chervonenkis).md)** : Théorie de Vapnik-Chervonenkis, fonction de croissance, dimension VC d'un espace d'hypothèses et lemme de Sauer. (Enrichi le 2026-06-03)
+- **[Jalon 137](Jalon%20137%20(Preuve%20des%20bornes%20de%20generalisation%20universelles%20de%20Vapnik%20via%20la%20dimension%20VC)/Jalon%20137%20(Preuve%20des%20bornes%20de%20generalisation%20universelles%20de%20Vapnik%20via%20la%20dimension%20VC).md)** : Preuve des bornes de généralisation universelles de Vapnik via la dimension VC. (Enrichi le 2026-06-04)
 
 ## Comment Générer les Notes
 
