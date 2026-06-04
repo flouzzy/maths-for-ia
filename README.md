@@ -15,7 +15,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 
 ## Fichiers Principaux
 
-- **`generate_jalons.py`** : C'est le script principal du projet, écrit en Python. Il contient le texte source du programme complet, le découpe par années et trimestres, et génère pour chaque jalon un dossier dédié contenant la fiche principale (par exemple : `Jalon 1 (Logique formelle)/Jalon 1 (Logique formelle).md`). Cette structure permet d'organiser proprement chaque jalon en y ajoutant des ressources complémentaires (exercices, schémas, notes personnelles) sans encombrer la racine du dépôt.
+- **`generate_jalons.py`** : C'est le script principal du projet, écrit en Python. Il contient le texte source du programme complet, le découpe par années et trimestres, et génère pour chaque jalon un dossier dédié contenant la fiche principale (par exemple : `jalon-1/Jalon 1 (Logique formelle).md`). Cette structure permet d'organiser proprement chaque jalon en y ajoutant des ressources complémentaires (exercices, schémas, notes personnelles) sans encombrer la racine du dépôt.
 - **`test_generate_jalons.py`** : Contient la suite de tests unitaires du projet, permettant de vérifier la logique de création de liens inter-concepts (`generate_concept_links`) définie dans le script principal.
 - **`generate_jalons.ps1`, `generate_index.ps1`, `git-sync.ps1`** : Scripts utilitaires PowerShell prévus pour une utilisation sous environnement Windows ou via `pwsh` pour générer des index ou automatiser certaines tâches Git.
 
@@ -159,7 +159,7 @@ Ces notes sont structurées et interconnectées. Elles incluent des liens de nav
 - **[Jalon 136](Jalon%20136%20(Theorie%20de%20Vapnik-Chervonenkis)/Jalon%20136%20(Theorie%20de%20Vapnik-Chervonenkis).md)** : Théorie de Vapnik-Chervonenkis, fonction de croissance, dimension VC d'un espace d'hypothèses et lemme de Sauer. (Enrichi le 2026-06-03)
 - **[Jalon 137](Jalon%20137%20(Preuve%20des%20bornes%20de%20generalisation%20universelles%20de%20Vapnik%20via%20la%20dimension%20VC)/Jalon%20137%20(Preuve%20des%20bornes%20de%20generalisation%20universelles%20de%20Vapnik%20via%20la%20dimension%20VC).md)** : Preuve des bornes de généralisation universelles de Vapnik via la dimension VC. (Enrichi le 2026-06-04)
 - **[Jalon 138](3-12-Jalon-138%20(In%C3%A9galit%C3%A9s%20de%20concentration%20avanc%C3%A9es)/Jalon-138%20(In%C3%A9galit%C3%A9s%20de%20concentration%20avanc%C3%A9es).md)** : Inégalités de concentration avancées, inégalité de McDiarmid (différences bornées) et entropie de concentration. (Enrichi le 2026-06-04)
-- **[Jalon 139](03-12-Jalon-139_Notion_de_stabilite_algorithmique/Jalon-139_Notion_de_stabilite_algorithmique.md)** : Notion de stabilité algorithmique (Bousquet-Elisseeff) et son lien direct avec la capacité de généralisation. (Enrichi le 2026-06-04)
+- **[Jalon 139](jalon-139/Jalon-139_Notion_de_stabilite_algorithmique.md)** : Notion de stabilité algorithmique (Bousquet-Elisseeff) et son lien direct avec la capacité de généralisation. (Enrichi le 2026-06-04)
 
 ## Comment Générer les Notes
 
