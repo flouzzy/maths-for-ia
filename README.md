@@ -68,7 +68,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 <summary><b>Trimestre 1 : logique, ensembles et algèbre linéaire de base</b></summary>
 <br>
 
-- **[Jalon 1](jalon-1/Jalon%201%20%28Logique%20formelle%29.md)** : Logique formelle, connecteurs, tables de vérité et calcul des propositions.
+- **[Jalon 1](jalon-1/Jalon%201%20%28Logique%20formelle%29.md)** : Logique formelle, connecteurs, tables de vérité et calcul des propositions. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 2](jalon-2/Jalon%202%20%28M%C3%A9thodes%20de%20raisonnement%29.md)** : Méthodes de raisonnement (implication, contraposée, l'absurde, analyse-synthèse).
 - **[Jalon 3](jalon-3/Jalon%203%20%28Quantification%29.md)** : Quantification ($\forall, \exists$), ordre des quantificateurs et négation de propositions complexes.
 - **[Jalon 4](jalon-4/Jalon%204%20%28Th%C3%A9orie%20des%20ensembles%29.md)** : Théorie des ensembles (ZFC), opérations sur les ensembles, ensembles des parties $\mathcal{P}(E)$.

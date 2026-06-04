@@ -35,9 +35,9 @@ next: "[[Jalon 29 (Éléments propres).md]]"
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration : Cayley-Hamilton (pour les matrices diagonalisables)
-1. **Initialisation :** Soit $A$ diagonalisable. Il existe $P$ inversible telle que $A = P D P^{-1}$ avec $D = 	ext{diag}(\lambda_1, ..., \lambda_n)$.
+1. **Initialisation :** Soit $A$ diagonalisable. Il existe $P$ inversible telle que $A = P D P^{-1}$ avec $D = \text{diag}(\lambda_1, ..., \lambda_n)$.
 2. **Calcul :** $\chi_A(A) = \det(A \cdot I - A) = P \det(D \cdot I - D) P^{-1} = P \chi_D(D) P^{-1}$.
-3. **Diagonal :** $\chi_D(X) = \prod (X - \lambda_i)$. $\chi_D(D) = 	ext{diag}(\prod (\lambda_j - \lambda_i), ..., \prod (\lambda_j - \lambda_n))$.
+3. **Diagonal :** $\chi_D(X) = \prod (X - \lambda_i)$. $\chi_D(D) = \text{diag}(\prod (\lambda_j - \lambda_i), ..., \prod (\lambda_j - \lambda_n))$.
 4. **Conclusion :** Chaque élément diagonal contient un facteur $(\lambda_i - \lambda_i) = 0$. Donc $\chi_D(D) = 0 \implies \chi_A(A) = 0$.
 
 ## 4. Exercices d'Application

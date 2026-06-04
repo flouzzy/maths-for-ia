@@ -26,9 +26,7 @@ next: "[[Jalon 28 (Polynômes d'endomorphismes).md]]"
 
 ### A. Définitions Formelles
 Soit $E$ un espace euclidien.
-1. **Adjoint d'un endomorphisme :** Pour $f \in \mathcal{L}(E)$, il existe un unique endomorphisme $f^* \in \mathcal{L}(E)$ tel que $\forall x, y \in E, \langle f(x), y 
-angle = \langle x, f^*(y) 
-angle$.
+1. **Adjoint d'un endomorphisme :** Pour $f \in \mathcal{L}(E)$, il existe un unique endomorphisme $f^* \in \mathcal{L}(E)$ tel que $\forall x, y \in E, \langle f(x), y \rangle = \langle x, f^*(y) \rangle$.
 2. **Endomorphisme symétrique :** $f \in \mathcal{L}(E)$ est symétrique si $f^* = f$. (Matrice symétrique $A^T = A$).
 3. **Matrice Orthogonale :** $P \in \mathcal{M}_n(\mathbb{R})$ est orthogonale si $P^T P = I_n$. Les colonnes de $P$ forment une base orthonormée de $\mathbb{R}^n$.
 
@@ -37,28 +35,16 @@ angle$.
 > Si $f$ est symétrique, alors il existe une base orthonormée de vecteurs propres de $f$. $f$ est diagonalisable dans une base orthonormée.
 
 > **Isométries et Matrices orthogonales :**
-> $f$ est une isométrie $\iff 	ext{Mat}(f)$ est orthogonale.
+> $f$ est une isométrie $\iff \text{Mat}(f)$ est orthogonale.
 
 ## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
 ### Démonstration : $f$ symétrique $\implies$ sous-espaces propres orthogonaux
 Soient $\lambda, \mu$ deux valeurs propres distinctes de $f$ symétrique, et $x, y$ des vecteurs propres associés.
 
-1. **Initialisation :** $\langle f(x), y 
-angle = \langle \lambda x, y 
-angle = \lambda \langle x, y 
-angle$.
-2. **Utilisation de la symétrie :** $\langle f(x), y 
-angle = \langle x, f(y) 
-angle = \langle x, \mu y 
-angle = \mu \langle x, y 
-angle$.
-3. **Égalité :** $\lambda \langle x, y 
-angle = \mu \langle x, y 
-angle \implies (\lambda - \mu) \langle x, y 
-angle = 0$.
-4. **Conclusion :** Comme $\lambda 
-eq \mu$, alors $\langle x, y 
-angle = 0$. Les espaces propres sont orthogonaux.
+1. **Initialisation :** $\langle f(x), y \rangle = \langle \lambda x, y \rangle = \lambda \langle x, y \rangle$.
+2. **Utilisation de la symétrie :** $\langle f(x), y \rangle = \langle x, f(y) \rangle = \langle x, \mu y \rangle = \mu \langle x, y \rangle$.
+3. **Égalité :** $\lambda \langle x, y \rangle = \mu \langle x, y \rangle \implies (\lambda - \mu) \langle x, y \rangle = 0$.
+4. **Conclusion :** Comme $\lambda \neq \mu$, alors $\langle x, y \rangle = 0$. Les espaces propres sont orthogonaux.
 
 ## 4. Exercices d'Application
 ### Exercice 1 : Orthogonalité

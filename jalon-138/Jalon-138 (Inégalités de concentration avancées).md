@@ -225,8 +225,7 @@ Calculons le dénominateur de l'exposant de McDiarmid :
 $$\sum_{i=1}^n c_i^2 = \sum_{i=1}^n \left(\frac{1}{n}\right)^2 = n \times \frac{1}{n^2} = \frac{1}{n}$$
 
 Par application directe du Théorème de McDiarmid, nous concluons que pour tout $t > 0$ :
-$$\mathbb{P}\Big(\Phi(S_n) - \mathbb{E}[\Phi(S_n)] \ge t\Big) \le \exp\left( - \frac{2 t^2}{1/n} \right) = \exp\big( - 2 n t^2 \big)$$
-et
+$$\mathbb{P}\Big(\Phi(S_n) - \mathbb{E}[\Phi(S_n)] \ge t\Big) \le \exp\left( - \frac{2 t^2}{1/n} \right) = \exp\big( - 2 n t^2 \big)$$\net
 $$\mathbb{P}\Big(\big|\Phi(S_n) - \mathbb{E}[\Phi(S_n)]\big| \ge t\Big) \le 2 \exp\big( - 2 n t^2 \big)$$
 L'exercice est résolu de manière complète et rigoureuse.
 
@@ -307,8 +306,7 @@ Calculons la somme de ces constantes au carré :
 $$\sum_{i=1}^n c_i^2 = n \times \left(\frac{2B}{n}\right)^2 = \frac{4 B^2}{n}$$
 
 En appliquant l'inégalité de McDiarmid, nous pouvons affirmer que pour tout $t > 0$ :
-$$\mathbb{P}\left( \widehat{\mathcal{R}}_S(\mathcal{H}) - \mathbb{E}[\widehat{\mathcal{R}}_S(\mathcal{H})] \ge t \right) \le \exp\left( - \frac{2 t^2}{4 B^2 / n} \right) = \exp\left( - \frac{n t^2}{2 B^2} \right)$$
-et de même pour la déviation bilatérale :
+$$\mathbb{P}\left( \widehat{\mathcal{R}}_S(\mathcal{H}) - \mathbb{E}[\widehat{\mathcal{R}}_S(\mathcal{H})] \ge t \right) \le \exp\left( - \frac{2 t^2}{4 B^2 / n} \right) = \exp\left( - \frac{n t^2}{2 B^2} \right)$$\net de même pour la déviation bilatérale :
 $$\mathbb{P}\left( \big|\widehat{\mathcal{R}}_S(\mathcal{H}) - \mathbb{E}[\widehat{\mathcal{R}}_S(\mathcal{H})]\big| \ge t \right) \le 2 \exp\left( - \frac{n t^2}{2 B^2} \right)$$
 
 Ce résultat démontre de manière rigoureuse que la complexité de Rademacher calculée sur un échantillon empirique est extrêmement proche de sa valeur théorique attendue dès que $n$ devient grand. C'est le théorème clé qui valide l'utilisation pratique des bornes de généralisation dans l'apprentissage automatique moderne.

@@ -34,7 +34,7 @@ next: "[[Jalon 33 (Formes quadratiques).md]]"
 1. **Base :** $n=1$, trivial.
 2. **Hérédité :** Soit $f$ symétrique sur $E$.
 3. **Valeur propre :** $f$ admet au moins une valeur propre réelle $\lambda$ (via le polynôme caractéristique). Soit $u$ un vecteur propre associé ($\|u\|=1$).
-4. **Sous-espace :** Soit $F = 	ext{Vect}(u)$. $F$ est stable.
+4. **Sous-espace :** Soit $F = \text{Vect}(u)$. $F$ est stable.
 5. **Orthogonal :** $F^\perp$ est stable par $f$ (lemme). $\dim(F^\perp) = n-1$.
 6. **Conclusion :** $f_{|F^\perp}$ est symétrique. Par récurrence, $F^\perp$ admet une base orthonormée de vecteurs propres. En ajoutant $u$, on a une base orthonormée de $E$.
 

@@ -34,7 +34,7 @@ $$\mathbb{P}(|X - \mu| \ge t) \le \frac{\sigma^2}{t^2}$$
 Pour saturer cette inégalité pour un seuil $t > 0$ donné, définissons une variable aléatoire symétrique $X$ prenant trois valeurs : $\mu - t$, $\mu$ et $\mu + t$.
 Posons sa loi de probabilité :
 $$\mathbb{P}(X = \mu - t) = \frac{p}{2}, \quad \mathbb{P}(X = \mu + t) = \frac{p}{2}, \quad \text{et} \quad \mathbb{P}(X = \mu) = 1 - p$$
-où $p \in (0, 1]$$.
+où $p \in (0, 1]$.
 Calculons l'espérance de $X$ :
 $$\mathbb{E}[X] = (\mu - t)\frac{p}{2} + (\mu + t)\frac{p}{2} + \mu(1-p) = \mu$$
 L'espérance est bien $\mu$. Calculons maintenant la variance :
