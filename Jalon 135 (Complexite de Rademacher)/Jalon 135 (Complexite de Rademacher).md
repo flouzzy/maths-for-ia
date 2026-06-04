@@ -159,4 +159,4 @@ $$ \mathbb{E}_{\boldsymbol{\sigma}} \left[ \sup_{a \in A} \sum_{i=1}^n \sigma_i 
 
 ## 6. Liens Sémantiques & Maillage Obsidian
 - **Concepts Précédents requis :** [[Jalon 133 (Modele PAC)]], [[Jalon 134 (Complexite des classes de fonctions)]]
-- **Concepts Futurs dépendants :** [[Jalon 136 (Theorie de Vapnik-Chervonenkis)]], [[Jalon 137 (Preuve des bornes de generalisation universelles de Vapnik via la dimension VC.)]]
+- **Concepts Futurs dépendants :** [[Jalon 136 (Theorie de Vapnik-Chervonenkis)]], [[Jalon 137 (Preuve des bornes de generalisation universelles de Vapnik via la dimension VC)]]

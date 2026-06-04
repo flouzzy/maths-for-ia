@@ -111,4 +111,4 @@ Soit $(f_n)$ convergeant uniformément vers $f$ sur $D$. On suppose chaque $f_n$
 
 ## 6. Liens Sémantiques & Maillage Obsidian
 - **Concepts Précédents requis :** [[Jalon 14 (Suites réelles et complexes)]], [[Jalon 18 (Continuité des fonctions d'une variable réelle)]]
-- **Concepts Futurs dépendants :** [[Jalon 22 (Séries de fonctions)]], [[Jalon 59 (Topologie des espaces de fonctions)]], [[Jalon 137 (Preuve des bornes de généralisation universelles de Vapnik via la dimension VC.)]]
+- **Concepts Futurs dépendants :** [[Jalon 22 (Séries de fonctions)]], [[Jalon 59 (Topologie des espaces de fonctions)]], [[Jalon 137 (Preuve des bornes de generalisation universelles de Vapnik via la dimension VC)]]

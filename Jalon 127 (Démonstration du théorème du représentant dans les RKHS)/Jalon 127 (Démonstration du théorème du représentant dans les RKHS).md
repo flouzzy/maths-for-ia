@@ -85,4 +85,4 @@ Le théorème dit que $f$ est une somme sur tous les $n$ points. Mais pour les S
 ## 6. Liens Sémantiques & Maillage Obsidian
 
 - **Concepts Précédents requis :** [[Jalon 126 (Noyaux définis positifs et RKHS).md]], [[Jalon 103 (Espaces de Hilbert généraux).md]]
-- **Concepts Futurs dépendants :** [[Jalon 137 (Preuve des bornes de généralisation universelles de Vapnik via la dimension VC.).md]], [[Jalon 140 (Classifieur de Bayes optimal).md]]
+- **Concepts Futurs dépendants :** [[Jalon 137 (Preuve des bornes de generalisation universelles de Vapnik via la dimension VC).md]], [[Jalon 140 (Classifieur de Bayes optimal).md]]

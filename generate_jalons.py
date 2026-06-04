@@ -165,7 +165,7 @@ Jalon 133 : Modèle PAC (Probably Approximately Correct), risque empirique vs ri
 Jalon 134 : Complexité des classes de fonctions, processus empiriques et inégalités de concentration maximales.
 Jalon 135 : Complexite de Rademacher, symétrisation et bornes de généralisation basées sur Rademacher.
 Jalon 136 : Théorie de Vapnik-Chervonenkis, fonction de croissance, dimension VC d'un espace d'hypothèses et lemme de Sauer.
-Jalon 137 : Preuve des bornes de généralisation universelles de Vapnik via la dimension VC.
+Jalon 137 : Preuve des bornes de generalisation universelles de Vapnik via la dimension VC
 Jalon 138 : Inégalités de concentration avancées, inégalité de McDiarmid (différences bornées) et entropie de concentration.
 Jalon 139 : Notion de stabilité algorithmique (Bousquet-Elisseeff) et son lien direct avec la capacité de généralisation.
 Jalon 140 : Classifieur de Bayes optimal, fonctions de perte de substitution (Surrogate losses) et consistance de la minimisation du risque empirique.
