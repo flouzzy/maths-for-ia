@@ -9,7 +9,6 @@ tags:
 prev: "[[Jalon 1 (Logique formelle).md]]"
 next: "[[Jalon 3 (Quantification).md]]"
 ---
-
 # Jalon 2 : Méthodes de raisonnement (implication, contraposée, l'absurde, analyse-synthèse)
 
 ## 1. Présentation du concept clé
