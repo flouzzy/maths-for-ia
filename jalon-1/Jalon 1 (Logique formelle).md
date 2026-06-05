@@ -13,15 +13,31 @@ next: "[[Jalon 2 (Méthodes de raisonnement).md]]"
 
 ## 1. Présentation du concept clé
 
-La logique formelle est la science des structures de raisonnement valides. Pour aborder ce concept de manière géométrique et intuitive, libérée du formalisme brut, imaginons un labyrinthe géant représentant l'ensemble des possibles. Ce labyrinthe est composé d'une multitude d'aiguillages et de portes commandés à distance. Chaque porte ne peut être que dans deux états stables : ouverte (valeur de vérité Vrai, notée $1$) ou fermée (valeur de vérité Faux, notée $0$).
+La logique formelle est la science des structures de raisonnement valides. Pour aborder ce concept de manière géométrique et intuitive, libérée du formalisme brut, imaginons un labyrinthe géant représentant l'ensemble des possibles. Ce labyrinthe est composé d'une multitude d'aiguillages et de portes commandés à distance. Chaque porte ne peut être que dans deux états stables : 
+- ouverte (valeur de vérité Vrai, notée $1$) ou 
+- fermée (valeur de vérité Faux, notée $0$).
 
-La métaphore fondamentale de la logique propositionnelle réside dans la notion de flot ou de flux d'information à travers un réseau d'aiguillages. Considérons un fluide circulant dans ce réseau. Si nous plaçons deux vannes à la suite sur une même canalisation, le fluide ne passera que si la première vanne ET la seconde vanne sont ouvertes. C'est l'essence du connecteur de conjonction ($\land$). Si nous plaçons ces deux vannes en parallèle sur deux embranchements distincts reliant les mêmes points, il suffit que la première vanne OU la seconde vanne soit ouverte pour que le fluide traverse. C'est l'essence du connecteur de disjonction ($\lor$).
+La métaphore fondamentale de la logique propositionnelle réside dans la notion de flot ou de flux d'information à travers un réseau d'aiguillages. Considérons un fluide circulant dans ce réseau. 
 
-Pourquoi a-t-on ressenti le besoin d'inventer un tel formalisme ? Le langage naturel (le français, l'anglais, etc.) est parsemé d'ambiguïtés sémantiques. Le mot "ou", par exemple, exprime tantôt une disjonction exclusive ("fromage ou dessert", mais pas les deux), tantôt une disjonction inclusive ("recherche programmeur maîtrisant le C++ ou le Python", de préférence les deux). De plus, l'esprit humain est sujet aux biais cognitifs et aux sophismes. La création d'une langue artificielle universelle, libre de toute ambiguïté contextuelle, a permis de détacher la forme d'un raisonnement de son contenu. C'est le projet leibnizien de la *characteristica universalis* et du *calculus ratiocinator* : transformer toute dispute philosophique ou scientifique en un simple calcul mathématique. "Calculons !" disait Leibniz. Gottlob Frege, à la fin du XIXe siècle, a concrétisé ce rêve avec son *Idéographie* (*Begriffsschrift*), jetant les bases de la logique mathématique moderne.
+Si nous plaçons deux vannes à la suite sur une même canalisation, le fluide ne passera que si la première vanne **ET** la seconde vanne sont ouvertes. 
 
-Dans cette optique, les variables propositionnelles agissent comme des interrupteurs élémentaires, et les formules logiques sont des montages complexes d'interrupteurs. Construire une table de vérité revient à dresser la carte complète des tensions de notre circuit pour toutes les configurations possibles des interrupteurs d'entrée. Si un circuit produit une tension de sortie positive (Vrai) quelle que soit la position des interrupteurs d'entrée, nous avons affaire à une tautologie : une vérité structurelle inébranlable, indépendante du monde réel. À l'inverse, si la sortie est toujours nulle, c'est une contradiction.
+C'est l'essence du connecteur de conjonction **($\land$)**. Si nous plaçons ces deux vannes en parallèle sur deux embranchements distincts reliant les mêmes points, il suffit que la première vanne OU la seconde vanne soit ouverte pour que le fluide traverse. C'est l'essence du connecteur de disjonction ($\lor$).
 
-Cette dissociation fondamentale entre la syntaxe (la forme de la formule) et la sémantique (sa signification ou sa valeur de vérité dans un monde donné) est la clé de voûte de la logique. Elle montre comment des règles de manipulation purement symboliques peuvent refléter fidèlement des réalités sémantiques. En manipulant des symboles selon des règles strictes, sans même savoir ce qu'ils représentent, on préserve la vérité. C'est cette nature purement mécanique qui permettra plus tard aux ordinateurs de manipuler des concepts abstraits et de raisonner de manière autonome.
+Pourquoi a-t-on ressenti le besoin d'inventer un tel formalisme ? Le langage naturel (le français, l'anglais, etc.) est parsemé d'ambiguïtés sémantiques. Le mot "ou", par exemple, exprime tantôt une disjonction exclusive ("fromage ou dessert", mais pas les deux), tantôt une disjonction inclusive ("recherche développeur maîtrisant le C++ ou le Python", de préférence les deux). De plus, l'esprit humain est sujet aux biais cognitifs et aux sophismes. 
+
+La création d'une langue artificielle universelle, libre de toute ambiguïté contextuelle, a permis de détacher la forme d'un raisonnement de son contenu. C'est le projet leibnizien de la *characteristica universalis* et du *calculus ratiocinator* : transformer toute dispute philosophique ou scientifique en un simple calcul mathématique. "Calculons !" disait Leibniz. 
+
+Gottlob Frege, à la fin du XIXe siècle, a concrétisé ce rêve avec son *Idéographie* (*Begriffsschrift*), jetant les bases de la logique mathématique moderne.
+
+Dans cette optique, les variables propositionnelles agissent comme des interrupteurs élémentaires, et les formules logiques sont des montages complexes d'interrupteurs. 
+
+Construire une table de vérité revient à dresser la carte complète des tensions de notre circuit pour toutes les configurations possibles des interrupteurs d'entrée. 
+
+Si un circuit produit une tension de sortie positive (Vrai) quelle que soit la position des interrupteurs d'entrée, nous avons affaire à une tautologie : une vérité structurelle inébranlable, indépendante du monde réel. À l'inverse, si la sortie est toujours nulle, c'est une contradiction.
+
+Cette dissociation fondamentale entre la syntaxe (la forme de la formule) et la sémantique (sa signification ou sa valeur de vérité dans un monde donné) est la clé de voûte de la logique. Elle montre comment des règles de manipulation purement symboliques peuvent refléter fidèlement des réalités sémantiques. 
+
+En manipulant des symboles selon des règles strictes, sans même savoir ce qu'ils représentent, on préserve la vérité. C'est cette nature purement mécanique qui permettra plus tard aux ordinateurs de manipuler des concepts abstraits et de raisonner de manière autonome.
 
 ---
 

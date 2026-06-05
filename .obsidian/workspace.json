@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "jalon-1/README.md",
+                "file": "jalon-1/Jalon 1 (Logique formelle).md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "Jalon 1 (Logique formelle)"
             }
           }
         ]
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "jalon-1/README.md",
+                "file": "jalon-1/Jalon 1 (Logique formelle).md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Liens sortants de README"
+              "title": "Liens sortants de Jalon 1 (Logique formelle)"
             }
           },
           {
@@ -171,10 +171,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "jalon-1/README.md"
+                "file": "jalon-1/Jalon 1 (Logique formelle).md"
               },
               "icon": "lucide-info",
-              "title": "Propriétés du fichier pour README"
+              "title": "Propriétés du fichier pour Jalon 1 (Logique formelle)"
             }
           }
         ],
@@ -198,12 +198,12 @@
   },
   "active": "8ceda288c71f7e44",
   "lastOpenFiles": [
+    "jalon-1/README.md",
     "jalon-1/Jalon 1 (Logique formelle).md",
     "jalon-1/exos/Exo-09_Algebres-Boole-Representation-Stone.md",
     "jalon-1/exos/Exo-07_Completude-Fonctionnelle.md",
     "jalon-1/exos/Exo-01_Application-Directe.md",
     "jalon-2/Jalon 2 (Méthodes de raisonnement).md",
-    "jalon-1/README.md",
     "jalon-1/tp/TP-05_Avance.md",
     "jalon-1/tp/TP-04_DPLL-Solver.md",
     "jalon-1/tp/TP-03_Mise-Sous-CNF.md",
