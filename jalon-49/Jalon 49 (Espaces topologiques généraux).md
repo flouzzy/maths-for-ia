@@ -9,7 +9,6 @@ tags:
 prev: "[[Jalon 48 (Livrable IA).md]]"
 next: "[[Jalon 50 (Opérateurs topologiques).md]]"
 ---
-
 # Jalon 49 : Espaces topologiques généraux
 
 ## 1. Présentation du concept clé
