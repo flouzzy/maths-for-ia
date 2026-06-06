@@ -1,6 +1,5 @@
 import os
 import glob
-import re
 
 def clean_filename(filename):
     # Remove specific mojibake
