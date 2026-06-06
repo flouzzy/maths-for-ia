@@ -1,5 +1,5 @@
 import unittest
-from generate_jalons import generate_concept_links, extract_short_title
+from generate_jalons import generate_concept_links, extract_short_title, parse_jalons
 
 class TestExtractShortTitle(unittest.TestCase):
 

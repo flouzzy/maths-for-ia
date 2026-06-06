@@ -323,4 +323,5 @@ python3 -m unittest test_generate_jalons.py
 Le cursus est enrichi jalon par jalon de manière progressive :
 - **Dernier Jalon Enrichi** : [Jalon 140 - Classifieur de Bayes optimal](jalon-140/Jalon-140.md) (Cours complet, 10 exercices avancés, 5 TP d'implémentation pure Python).
 - [2026-06-06] : Upsert du Jalon 140 - Classifieur de Bayes optimal. Status: Terminé.
+- [2026-06-06] : Audit & Auto-correction du Jalon 141 - Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC.. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - **Date de mise à jour** : 2026-06-06
