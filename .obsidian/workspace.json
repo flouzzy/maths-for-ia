@@ -198,6 +198,10 @@
   },
   "active": "8ceda288c71f7e44",
   "lastOpenFiles": [
+    "test_rename_files.py",
+    "test_enrich_jalons_gemini.py",
+    "prompt_template.txt",
+    "benchmark_rename.py",
     "jalon-49/Jalon 49 (Espaces topologiques généraux).md",
     "jalon-14/Jalon 14 (Suites réelles et complexes).md",
     "jalon-2/Jalon 2 (Méthodes de raisonnement).md",
@@ -227,13 +231,9 @@
     "jalon-99",
     "jalon-98/Jalon 98 (Théorème de Hahn-Banach).md",
     "jalon-98",
-    "jalon-97/Jalon 97 (Espaces de Banach).md",
     "jalon-97",
     "jalon-96",
     "jalon-95",
-    "jalon-94",
-    "jalon-93",
-    "jalon-92",
     "Sans titre 1.canvas",
     "Sans titre.canvas"
   ]
