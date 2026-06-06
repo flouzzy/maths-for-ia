@@ -2,28 +2,28 @@ import os
 import glob
 import re
 
-def clean_filename(filename):
-    # Remove specific mojibake
-    replacements = {
-        'Ã©': 'e',
-        'Ã¨': 'e',
-        'Ãª': 'e',
-        'Ã«': 'e',
-        'Ã ': 'a',
-        'Ã¢': 'a',
-        'Ã´': 'o',
-        'Ã»': 'u',
-        'Ã§': 'c',
-        'Ã®': 'i',
-        'Ã¯': 'i',
-        'Ã': 'e', # fallback for cut-off sequences
-        '$-mathbb{R}^n$': 'Rn',
-        '$-mathcal{L}^p$': 'Lp',
-        '$-mathbb{R}$': 'R'
-    }
+# Remove specific mojibake
+REPLACEMENTS = {
+    'Ã©': 'e',
+    'Ã¨': 'e',
+    'Ãª': 'e',
+    'Ã«': 'e',
+    'Ã ': 'a',
+    'Ã¢': 'a',
+    'Ã´': 'o',
+    'Ã»': 'u',
+    'Ã§': 'c',
+    'Ã®': 'i',
+    'Ã¯': 'i',
+    'Ã': 'e', # fallback for cut-off sequences
+    '$-mathbb{R}^n$': 'Rn',
+    '$-mathcal{L}^p$': 'Lp',
+    '$-mathbb{R}$': 'R'
+}
 
+def clean_filename(filename):
     new_name = filename
-    for bad, good in replacements.items():
+    for bad, good in REPLACEMENTS.items():
         new_name = new_name.replace(bad, good)
 
     # Remove any remaining $ or \
