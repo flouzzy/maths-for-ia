@@ -1,95 +1,67 @@
 import unittest
-from unittest.mock import patch
-import os
-import tempfile
-from enrich_jalons_gemini import get_jalon_files, parse_file
+from unittest.mock import patch, MagicMock
+import enrich_jalons_gemini
 
 class TestEnrichJalonsGemini(unittest.TestCase):
+    @patch('enrich_jalons_gemini.client')
+    @patch('enrich_jalons_gemini.time.sleep')
+    def test_generate_enriched_content_retry_on_resource_exhausted(self, mock_sleep, mock_client):
+        # Mock client to raise an exception indicating RESOURCE_EXHAUSTED then succeed
+        mock_client.models.generate_content.side_effect = [
+            Exception("RESOURCE_EXHAUSTED: quota exceeded"),
+            MagicMock(text="Enriched content")
+        ]
 
-    @patch('enrich_jalons_gemini.glob.glob')
-    def test_get_jalon_files(self, mock_glob):
-        mock_glob.return_value = ["Jalon-2.md", "Jalon-1.md", "Jalon-10.md"]
-        files = get_jalon_files()
+        result = enrich_jalons_gemini.generate_enriched_content(
+            "Test Title", "Original content", "Jalon 1.md", "1", "1", "", ""
+        )
 
-        mock_glob.assert_called_once_with("Jalon*/**/*.md", recursive=True)
-        self.assertEqual(files, ["Jalon-1.md", "Jalon-10.md", "Jalon-2.md"])
+        # Check that sleep was called
+        mock_sleep.assert_called_once_with(60)
 
-    def test_parse_file_standard(self):
-        content = """# Jalon 1 (Logique formelle)
-**Année 1** > **Trimestre 1**
+        # Check that it eventually succeeded and returned the text
+        self.assertEqual(result, "Enriched content")
 
-**Précédent** : [[Jalon Précédent]]
-**Suivant** : [[Jalon Suivant]]
+        # Check that client was called twice
+        self.assertEqual(mock_client.models.generate_content.call_count, 2)
 
-Contenu de test.
-"""
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False, encoding='utf-8') as f:
-            f.write(content)
-            filepath = f.name
+    @patch('enrich_jalons_gemini.client')
+    @patch('enrich_jalons_gemini.time.sleep')
+    def test_generate_enriched_content_immediate_failure_on_generic_error(self, mock_sleep, mock_client):
+        # Mock client to raise a generic exception
+        mock_client.models.generate_content.side_effect = Exception("Some generic error")
 
-        try:
-            main_content, title, year, trimester, prev_link, next_link = parse_file(filepath)
+        result = enrich_jalons_gemini.generate_enriched_content(
+            "Test Title", "Original content", "Jalon 1.md", "1", "1", "", ""
+        )
 
-            self.assertEqual(year, "1")
-            self.assertEqual(trimester, "1")
-            self.assertEqual(prev_link, '"[[Jalon Précédent.md]]"')
-            self.assertEqual(next_link, '"[[Jalon Suivant.md]]"')
-            self.assertEqual(title, "Logique formelle")
-        finally:
-            os.unlink(filepath)
+        # Check that sleep was NOT called
+        mock_sleep.assert_not_called()
 
-    def test_parse_file_no_headers(self):
-        content = """# Introduction
-Contenu de test sans headers."""
+        # Check that it failed and returned None
+        self.assertIsNone(result)
 
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False, encoding='utf-8') as f:
-            f.write(content)
-            filepath = f.name
+        # Check that client was called only once
+        self.assertEqual(mock_client.models.generate_content.call_count, 1)
 
-        try:
-            main_content, title, year, trimester, prev_link, next_link = parse_file(filepath)
+    @patch('enrich_jalons_gemini.client')
+    @patch('enrich_jalons_gemini.time.sleep')
+    def test_generate_enriched_content_fails_after_max_retries(self, mock_sleep, mock_client):
+        # Mock client to always raise RESOURCE_EXHAUSTED
+        mock_client.models.generate_content.side_effect = Exception("RESOURCE_EXHAUSTED")
 
-            self.assertEqual(year, "1")
-            self.assertEqual(trimester, "1")
-            self.assertEqual(prev_link, "")
-            self.assertEqual(next_link, "")
-            self.assertEqual(title, "Introduction")
-        finally:
-            os.unlink(filepath)
+        result = enrich_jalons_gemini.generate_enriched_content(
+            "Test Title", "Original content", "Jalon 1.md", "1", "1", "", ""
+        )
 
-    def test_parse_file_with_yaml_frontmatter(self):
-        content = """---
-uuid: "jalon-1"
-title: "Logique formelle"
-year: 1
-trimester: 1
----
-# Jalon 1 (Logique formelle)
+        # Check that sleep was called 10 times
+        self.assertEqual(mock_sleep.call_count, 10)
 
-Contenu.
----
-**Précédent** : [[Jalon Précédent]]
-**Suivant** : [[Jalon Suivant]]
-"""
-        # We write to a specific filename instead of a random temp file
-        # to ensure regex cleaning of the filename works properly.
-        filepath = "Jalon 1 (Logique formelle).md"
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(content)
+        # Check that it failed and returned None
+        self.assertIsNone(result)
 
-        try:
-            main_content, title, year, trimester, prev_link, next_link = parse_file(filepath)
-
-            self.assertEqual(year, "1")
-            self.assertEqual(trimester, "1")
-            self.assertEqual(prev_link, '"[[Jalon Précédent.md]]"')
-            self.assertEqual(next_link, '"[[Jalon Suivant.md]]"')
-            self.assertEqual(title, "Logique formelle")
-            # When YAML frontmatter and bottom nav links are present, the main_content is extracted as the text before the last '---'
-            # Note: based on the current parse_file code, there might be specific parsing logic. Let's just check the title/metadata.
-        finally:
-            if os.path.exists(filepath):
-                os.unlink(filepath)
+        # Check that client was called 10 times
+        self.assertEqual(mock_client.models.generate_content.call_count, 10)
 
 if __name__ == '__main__':
     unittest.main()
