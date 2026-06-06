@@ -12,6 +12,16 @@ client = genai.Client(api_key=os.environ.get("GOOGLE_API_KEY"))
 # Le modèle recommandé pour un équilibre entre rapidité, fenêtres de contexte et qualité
 MODEL_ID = 'gemini-2.5-flash'
 
+# Pre-compile regular expressions for performance
+RE_YEAR = re.compile(r'\*\*Année\s+(\d+).*?\*\*')
+RE_TRIM = re.compile(r'\*\*Trimestre\s+(\d+).*?\*\*')
+RE_PREV = re.compile(r'\*\*Précédent\*\*\s*:\s*\[\[(.*?)\]\]')
+RE_NEXT = re.compile(r'\*\*Suivant\*\*\s*:\s*\[\[(.*?)\]\]')
+RE_TITLE_CLEAN_PARENS = re.compile(r'Jalon(s)? [\d à]+ \((.*?)\)')
+RE_TITLE_CLEAN_PREFIX = re.compile(r'^Jalon(s)? [\d à]+\s*:?\s*')
+RE_TITLE_CLEAN_FILE = re.compile(r'^Jalon(s)? [\d à]+ \((.*?)\)\.md$')
+RE_JALON_NUM = re.compile(r'Jalon(s)? ([\d à]+)')
+
 def get_jalon_files():
     # Trouve tous les fichiers de Jalons dans les sous-dossiers
     files = glob.glob("Jalon*/**/*.md", recursive=True)
@@ -35,21 +45,21 @@ def parse_file(filepath):
     # **Année Y** > **Trimestre Z**
 
     # Extract year
-    match_year = re.search(r'\*\*Année\s+(\d+).*?\*\*', content)
+    match_year = RE_YEAR.search(content)
     if match_year:
         year = match_year.group(1)
 
     # Extract trimester
-    match_trim = re.search(r'\*\*Trimestre\s+(\d+).*?\*\*', content)
+    match_trim = RE_TRIM.search(content)
     if match_trim:
         trimester = match_trim.group(1)
 
     # Extract links
-    match_prev = re.search(r'\*\*Précédent\*\*\s*:\s*\[\[(.*?)\]\]', content)
+    match_prev = RE_PREV.search(content)
     if match_prev:
         prev_link = f'"[[{match_prev.group(1)}.md]]"'
 
-    match_next = re.search(r'\*\*Suivant\*\*\s*:\s*\[\[(.*?)\]\]', content)
+    match_next = RE_NEXT.search(content)
     if match_next:
         next_link = f'"[[{match_next.group(1)}.md]]"'
 
@@ -73,13 +83,13 @@ def parse_file(filepath):
     title = lines[0].replace('# ', '') if lines and lines[0].startswith('# ') else os.path.basename(filepath).replace('.md', '')
 
     # Nettoyage rapide du titre pour le prompt
-    title_clean = re.sub(r'Jalon(s)? [\d à]+ \((.*?)\)', r'\2', title)
+    title_clean = RE_TITLE_CLEAN_PARENS.sub(r'\2', title)
     # also remove the 'Jalon X' prefix if any
-    title_clean = re.sub(r'^Jalon(s)? [\d à]+\s*:?\s*', '', title_clean)
+    title_clean = RE_TITLE_CLEAN_PREFIX.sub('', title_clean)
     title_clean = title_clean.strip()
 
     # Sometimes title contains original mojibake if not properly parsed, so use clean fallback
-    clean_filename_title = re.sub(r'^Jalon(s)? [\d à]+ \((.*?)\)\.md$', r'\2', os.path.basename(filepath))
+    clean_filename_title = RE_TITLE_CLEAN_FILE.sub(r'\2', os.path.basename(filepath))
 
     if not title_clean or title_clean == os.path.basename(filepath).replace('.md', ''):
         title_clean = clean_filename_title
@@ -88,7 +98,7 @@ def parse_file(filepath):
 
 def generate_enriched_content(title, original_content, filepath, year, trimester, prev_link, next_link):
     # Extraction du numéro de jalon depuis le nom du fichier pour le YAML
-    match_num = re.search(r'Jalon(s)? ([\d à]+)', os.path.basename(filepath))
+    match_num = RE_JALON_NUM.search(os.path.basename(filepath))
     jalon_num = match_num.group(2) if match_num else "0"
     # normalize for uuid
     jalon_num_clean = jalon_num.replace(" à ", "-").strip()
