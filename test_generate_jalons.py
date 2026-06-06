@@ -1,5 +1,5 @@
 import unittest
-from generate_jalons import generate_concept_links
+from generate_jalons import generate_concept_links, parse_jalons
 
 class TestGenerateConceptLinks(unittest.TestCase):
 
@@ -52,6 +52,53 @@ class TestGenerateConceptLinks(unittest.TestCase):
         result = generate_concept_links("hilbert and mesure")
         expected = "\\n**Concepts liés** : [[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L^2)]], [[Jalon 63 (Définition axiomatique d'une mesure)]]\\n"
         self.assertEqual(result, expected)
+
+class TestParseJalons(unittest.TestCase):
+    def test_basic_parsing(self):
+        text = """
+Année 1 : le socle des fondations
+Trimestre 1 : logique
+L'objectif est de réapprendre la langue.
+Jalon 1 : Logique formelle, connecteurs.
+"""
+        jalons, titles = parse_jalons(text)
+        self.assertEqual(len(jalons), 1)
+        j = jalons[0]
+        self.assertEqual(j['id'], "Jalon 1")
+        self.assertEqual(j['year'], "Année 1 : le socle des fondations")
+        self.assertEqual(j['trimester'], "Trimestre 1 : logique")
+        self.assertEqual(j['context'].strip(), "L'objectif est de réapprendre la langue.")
+        self.assertEqual(j['desc'], "Logique formelle, connecteurs.")
+        self.assertEqual(j['filename'], "Jalon 1 (Logique formelle).md")
+        self.assertEqual(titles, ["Jalon 1 (Logique formelle).md"])
+
+    def test_livrable_ia_title(self):
+        text = "Jalon 12 : Livrable IA T1 : Conception théorique d'un moteur de recherche"
+        jalons, titles = parse_jalons(text)
+        self.assertEqual(len(jalons), 1)
+        self.assertEqual(jalons[0]['filename'], "Jalon 12 (Livrable IA).md")
+
+    def test_filename_sanitization(self):
+        # We need a string where extract_short_title keeps the problematic characters.
+        # Since extract_short_title splits on `,`, `(`, and `:`, we shouldn't use them in the short title part.
+        text = 'Jalon 2 : A \\ / * ? " < > | $ -- C'
+        jalons, titles = parse_jalons(text)
+        self.assertEqual(len(jalons), 1)
+        # "A \ / * ? \" < > | $ -- C" -> "A - - - - - - - - - - C"
+        self.assertEqual(jalons[0]['filename'], "Jalon 2 (A - - - - - - - - - - C).md")
+
+    def test_multiple_jalons(self):
+        text = "Jalons 145 à 152 : Synthèse"
+        jalons, titles = parse_jalons(text)
+        self.assertEqual(len(jalons), 1)
+        self.assertEqual(jalons[0]['id'], "Jalons 145 à 152")
+        self.assertEqual(jalons[0]['filename'], "Jalons 145 à 152 (Synthèse).md")
+
+    def test_empty_input(self):
+        jalons, titles = parse_jalons("")
+        self.assertEqual(jalons, [])
+        self.assertEqual(titles, [])
+
 
 if __name__ == '__main__':
     unittest.main()
