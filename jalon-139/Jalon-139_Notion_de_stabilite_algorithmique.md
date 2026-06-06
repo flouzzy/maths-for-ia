@@ -7,7 +7,7 @@ tags:
   - math/apprentissage_statistique
   - ia/generalisation
 prev: "[[Jalon-138_Inégalités_de_concentration_avancées.md]]"
-next: "[[Jalon-140_Classifieur_de_Bayes_optimal.md]]"
+next: "[[Jalon-140.md]]"
 ---
 
 # Notion de stabilité algorithmique (Bousquet-Elisseeff) et son lien direct avec la capacité de généralisation
@@ -322,4 +322,4 @@ Ce résultat fondamental montre que la stabilité de SGD est en $\mathcal{O}(1/n
 ## 6. Liens Sémantiques & Maillage Obsidian
 
 - **Concepts Précédents requis :** [[Jalon-137_Preuve_des_bornes_de_generalisation_universelles_de_Vapnik_via_la_dimension_VC.md]], [[Jalon-138_Inégalités_de_concentration_avancées.md]]
-- **Concepts Futurs dépendants :** [[Jalon-140_Classifieur_de_Bayes_optimal.md]], [[Jalon-141_Théorèmes_de_Glivenko-Cantelli_généralisés_pour_les_classes_de_fonctions_VC..md]]
+- **Concepts Futurs dépendants :** [[Jalon-140.md]], [[Jalon-141_Théorèmes_de_Glivenko-Cantelli_généralisés_pour_les_classes_de_fonctions_VC..md]]

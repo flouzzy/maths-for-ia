@@ -8,4 +8,4 @@
 Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC.
 
 ---
-**Précédent** : [[Jalon 140 (Classifieur de Bayes optimal)]] | **Suivant** : [[Jalon 142 (Processus de décision de Markov)]]
+**Précédent** : [[Jalon-140]] | **Suivant** : [[Jalon 142 (Processus de décision de Markov)]]
