@@ -1,5 +1,27 @@
 import unittest
-from generate_jalons import generate_concept_links, parse_jalons
+from generate_jalons import generate_concept_links, extract_short_title
+
+class TestExtractShortTitle(unittest.TestCase):
+
+    def test_split_on_comma(self):
+        self.assertEqual(extract_short_title("Logique formelle, connecteurs"), "Logique formelle")
+
+    def test_split_on_parenthesis(self):
+        self.assertEqual(extract_short_title("Quantification (\\forall, \\exists)"), "Quantification")
+
+    def test_split_on_colon(self):
+        self.assertEqual(extract_short_title("Titre: Sous-titre"), "Titre")
+
+    def test_no_separator(self):
+        self.assertEqual(extract_short_title("Titre simple sans separateur"), "Titre simple sans separateur")
+
+    def test_strips_whitespace(self):
+        self.assertEqual(extract_short_title("  Espaces vectoriels   , suite"), "Espaces vectoriels")
+
+    def test_multiple_separators(self):
+        # Should split on the FIRST separator
+        self.assertEqual(extract_short_title("Titre, sous-titre (suite)"), "Titre")
+
 
 class TestGenerateConceptLinks(unittest.TestCase):
 
