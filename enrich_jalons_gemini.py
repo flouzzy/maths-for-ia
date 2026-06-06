@@ -235,12 +235,11 @@ def main():
 
         # On vérifie si le fichier possède déjà la nouvelle structure YAML complète pour éviter de le refaire
         # (Si year, trimester et uuid sont là, on suppose que c'est bon)
-        with open(filepath, 'r', encoding='utf-8') as f:
-            first_lines = "".join([f.readline() for _ in range(10)])
-            if "uuid: \"jalon-" in first_lines and "year:" in first_lines and "trimester:" in first_lines and "## 1. Présentation du concept clé" in original_content:
-                print(f"  -> Le fichier {filepath} possède déjà la nouvelle structure. Ignoré.")
-                sys.stdout.flush()
-                continue
+        first_lines = "".join(original_content.splitlines(True)[:10])
+        if "uuid: \"jalon-" in first_lines and "year:" in first_lines and "trimester:" in first_lines and "## 1. Présentation du concept clé" in original_content:
+            print(f"  -> Le fichier {filepath} possède déjà la nouvelle structure. Ignoré.")
+            sys.stdout.flush()
+            continue
 
         enriched_text = generate_enriched_content(title, original_content, filepath, year, trimester, prev_link, next_link)
 
