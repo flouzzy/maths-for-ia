@@ -29,11 +29,7 @@ def get_jalon_files():
     # but based on the move, they are the only ones for now.
     return sorted(files)
 
-def parse_file(filepath):
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
-
-    # Variables to parse
+def extract_metadata(content):
     year = "1"
     trimester = "1"
     prev_link = ""
@@ -44,18 +40,15 @@ def parse_file(filepath):
     # # Jalon X
     # **Année Y** > **Trimestre Z**
 
-    # Extract year
-    match_year = RE_YEAR.search(content)
+    match_year = re.search(r'\*\*Année\s+(\d+).*?\*\*', content)
     if match_year:
         year = match_year.group(1)
 
-    # Extract trimester
-    match_trim = RE_TRIM.search(content)
+    match_trim = re.search(r'\*\*Trimestre\s+(\d+).*?\*\*', content)
     if match_trim:
         trimester = match_trim.group(1)
 
-    # Extract links
-    match_prev = RE_PREV.search(content)
+    match_prev = re.search(r'\*\*Précédent\*\*\s*:\s*\[\[(.*?)\]\]', content)
     if match_prev:
         prev_link = f'"[[{match_prev.group(1)}.md]]"'
 
@@ -63,6 +56,9 @@ def parse_file(filepath):
     if match_next:
         next_link = f'"[[{match_next.group(1)}.md]]"'
 
+    return year, trimester, prev_link, next_link
+
+def extract_main_content(content):
     # Check if the first part is YAML frontmatter (for existing enrichments)
     parts = content.split('---\n')
     if len(parts) > 1:
@@ -74,11 +70,12 @@ def parse_file(filepath):
         nav_links = parts[-1].strip()
         if not ("**Précédent**" in nav_links or "**Suivant**" in nav_links):
             main_content = content
-            nav_links = ""
     else:
         main_content = content
-        nav_links = ""
 
+    return main_content
+
+def extract_clean_title(main_content, filepath):
     lines = main_content.split('\n')
     title = lines[0].replace('# ', '') if lines and lines[0].startswith('# ') else os.path.basename(filepath).replace('.md', '')
 
@@ -93,6 +90,16 @@ def parse_file(filepath):
 
     if not title_clean or title_clean == os.path.basename(filepath).replace('.md', ''):
         title_clean = clean_filename_title
+
+    return title_clean
+
+def parse_file(filepath):
+    with open(filepath, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    year, trimester, prev_link, next_link = extract_metadata(content)
+    main_content = extract_main_content(content)
+    title_clean = extract_clean_title(main_content, filepath)
 
     return main_content, title_clean, year, trimester, prev_link, next_link
 
