@@ -316,4 +316,4 @@ Ce résultat démontre de manière rigoureuse que la complexité de Rademacher c
 ## 6. Liens Sémantiques & Maillage Obsidian
 
 - **Concepts Précédents requis :** [[Jalon 91 (Inégalités de concentration)]], [[Jalon 135 (Complexite de Rademacher)]], [[Jalon 137 (Preuve des bornes de generalisation universelles de Vapnik via la dimension VC)]]
-- **Concepts Futurs dépendants :** [[Jalon 139 (Notion de stabilité algorithmique)]], [[Jalon 141 (Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC.)]]
+- **Concepts Futurs dépendants :** [[Jalon 139 (Notion de stabilité algorithmique)]], [[Jalon-141]]
