@@ -1,9 +1,13 @@
-# Jalon 141 : Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC.
+# Jalon 141: Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC
 
-## Description
-Ce jalon constitue une pierre angulaire du Master, prouvant l'uniforme convergence empirique.
+**Statut :** Validé et Fixé
 
-## Structure
-- `Jalon-141.md` : Le cours magistral complet.
-- `exos/` : 10 exercices.
-- `tp/` : 5 travaux pratiques.
+---
+
+## Contenu du Jalon
+
+Ce jalon regroupe l'ensemble des ressources pédagogiques et pratiques relatives aux théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC. Il est structuré comme suit :
+
+*   **1 cours complet** : Un document exhaustif présentant la théorie, les démonstrations et les applications des théorèmes de Glivenko-Cantelli dans le contexte des classes de fonctions VC.
+*   **10 exercices corrigés** : Une série de dix exercices progressifs (dans `exos/`) conçus pour renforcer la compréhension et la maîtrise des concepts abordés, avec zéro ellipse mathématique.
+*   **5 Travaux Pratiques (TPs)** : Cinq sessions de travaux pratiques (dans `tp/`) permettant d'appliquer concrètement les connaissances théoriques, codés en Python pur "from scratch" avec assertions mathématiques.
