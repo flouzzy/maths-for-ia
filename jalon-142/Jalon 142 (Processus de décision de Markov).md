@@ -8,4 +8,4 @@
 Processus de décision de Markov (MDP) sur des espaces d'états continus, opérateurs de contraction de Bellman.
 
 ---
-**Précédent** : [[Jalon 141 (Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC.)]] | **Suivant** : [[Jalon 143 (Théorie spectrale des graphes)]]
+**Précédent** : [[Jalon-141]] | **Suivant** : [[Jalon 143 (Théorie spectrale des graphes)]]
