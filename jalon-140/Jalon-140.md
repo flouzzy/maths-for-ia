@@ -7,7 +7,7 @@ tags:
   - math/fondations
   - ia/theorie
 prev: "[[Jalon-139_Notion_de_stabilite_algorithmique.md]]"
-next: "[[Jalon 141 (Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC.).md]]"
+next: "[[Jalon-141.md]]"
 ---
 
 # Jalon 140 : Classifieur de Bayes optimal, fonctions de perte de substitution (Surrogate losses) et consistance de la minimisation du risque empirique
@@ -384,4 +384,4 @@ Enfin, la **consistance de la minimisation du risque empirique (ERM)** est la ga
 
 ## 6. Liens Sémantiques & Maillage Obsidian
 - **Concepts Précédents requis :** [[Jalon 139 (Notion de stabilité algorithmique)]], [[Jalon 105 (Espérance conditionnelle et théorème de Radon-Nikodym)]], [[Jalon 110 (Théorie de la mesure et intégration de Lebesgue)]], [[Jalon 120 (Convergence des variables aléatoires (presque sûre, en probabilité, en loi, en moyenne L^p))]]
-- **Concepts Futurs dépendants :** [[Jalon 141 (Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC.)]], [[Jalon 142 (Bornes d'erreur de généralisation (Hoeffding, McDiarmid, Rademacher, VC-dimension))]], [[Jalon 145 (Algorithmes de boosting (AdaBoost, Gradient Boosting))]], [[Jalon 150 (Régression Logistique et SVM : fondements théoriques)]]
+- **Concepts Futurs dépendants :** [[Jalon-141]], [[Jalon 142 (Bornes d'erreur de généralisation (Hoeffding, McDiarmid, Rademacher, VC-dimension))]], [[Jalon 145 (Algorithmes de boosting (AdaBoost, Gradient Boosting))]], [[Jalon 150 (Régression Logistique et SVM : fondements théoriques)]]
