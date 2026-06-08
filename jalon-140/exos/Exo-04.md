@@ -1,111 +1,185 @@
 ---
-uuid: jalon-140-exo-04
-title: "Exercice 4 - Classifieur de Bayes"
-type: Exercice
-difficulty: 2
+uuid: "jalon-140-exo-04"
+title: "Exercice 4 - Jalon 140"
 ---
+# Exercice 4 : Classifieur de Bayes Optimal pour Données Discrètes
+**Difficulté:** ★★
 
-### Énoncé
+## Énoncé
+Considérons un problème de classification binaire où la variable de classe $Y$ peut prendre les valeurs $0$ ou $1$, et la variable d'entrée $X$ peut prendre les valeurs discrètes $x_1, x_2, x_3$.
 
-Soit un problème de classification binaire où l'espace des caractéristiques est $(\mathcal{X}, \mathcal{A})$ et l'espace des labels est $\mathcal{Y} = \{-1, 1\}$. Nous considérons un couple de variables aléatoires $(X, Y)$ distribué selon une probabilité $P_{X,Y}$ sur l'espace mesurable produit $(\mathcal{X} \times \mathcal{Y}, \mathcal{A} \otimes \mathcal{P}(\mathcal{Y}))$.
-Soit $\eta: \mathcal{X} \to [0, 1]$ la fonction de probabilité conditionnelle $P(Y=1|X=x)$. Par conséquent, $P(Y=-1|X=x) = 1 - \eta(x)$.
+Les probabilités a priori des classes sont données par :
+$P(Y=0) = 0.6$
+$P(Y=1) = 0.4$
 
-Pour la classification, nous utilisons la fonction de perte 0-1, définie par $L_{01}(y, \hat{y}) = \mathbf{1}_{y \neq \hat{y}}$ pour $y, \hat{y} \in \mathcal{Y}$. Le risque d'un classifieur $f: \mathcal{X} \to \mathcal{Y}$ est donné par $R(f) = \mathbb{E}[L_{01}(Y, f(X))]$.
+Les probabilités conditionnelles de $X$ étant donné $Y$ sont les suivantes :
+Pour la classe $Y=0$:
+$P(X=x_1|Y=0) = 0.3$
+$P(X=x_2|Y=0) = 0.5$
+$P(X=x_3|Y=0) = 0.2$
 
-1.  **Classifieur de Bayes :** Déterminez l'expression du classifieur de Bayes $f_B: \mathcal{X} \to \mathcal{Y}$, qui minimise le risque $R(f)$, en fonction de $\eta(x)$.
-2.  **Risque de Bayes :** Calculez le risque de Bayes $R(f_B)$ correspondant à ce classifieur optimal.
-3.  **Perte de substitution (Surrogate Loss) :** Considérons la perte exponentielle $L_{exp}: \mathcal{Y} \times \mathbb{R} \to \mathbb{R}^+$ définie par $L_{exp}(y, h) = \exp(-y h)$ pour $y \in \mathcal{Y}$ et $h \in \mathbb{R}$. Pour une fonction de score $h: \mathcal{X} \to \mathbb{R}$, le risque associé à cette perte est $R_{exp}(h) = \mathbb{E}[L_{exp}(Y, h(X))]$. Déterminez la fonction de score optimale $h^*: \mathcal{X} \to \mathbb{R}$ qui minimise $R_{exp}(h)$ point par point, c'est-à-dire qui minimise $\mathbb{E}[L_{exp}(Y, h(X))|X=x]$ pour tout $x \in \mathcal{X}$. Discutez brièvement du lien entre le signe de $h^*(x)$ et le classifieur de Bayes $f_B(x)$.
+Pour la classe $Y=1$:
+$P(X=x_1|Y=1) = 0.6$
+$P(X=x_2|Y=1) = 0.3$
+$P(X=x_3|Y=1) = 0.1$
 
----
+1.  Déterminez le classifieur de Bayes optimal $h^*(x)$ pour ce problème.
+2.  Calculez le taux d'erreur de Bayes $R(h^*)$.
 
-### Correction
+## Correction Pas-à-Pas
 
-1.  **Classifieur de Bayes $f_B(x)$ :**
+### Partie 1 : Détermination du classifieur de Bayes optimal $h^*(x)$
 
-    Le classifieur de Bayes $f_B(x)$ est défini comme la fonction qui minimise le risque conditionnel en chaque point $x \in \mathcal{X}$ :
-    $$f_B(x) = \arg\min_{\hat{y} \in \{-1, 1\}} \mathbb{E}[L_{01}(Y, \hat{y})|X=x]$$
+Le classifieur de Bayes optimal $h^*(x)$ est la fonction qui minimise le risque de classification pour une fonction de perte $0-1$. Il attribue à chaque $x$ la classe $y$ qui maximise la probabilité a posteriori $P(Y=y|X=x)$.
+$h^*(x) = \operatorname{argmax}_{y \in \{0,1\}} P(Y=y|X=x)$
 
-    Calculons les risques conditionnels pour $\hat{y}=1$ et $\hat{y}=-1$ :
+En utilisant le théorème de Bayes, la probabilité a posteriori peut être exprimée comme :
+$P(Y=y|X=x) = \frac{P(X=x|Y=y) P(Y=y)}{P(X=x)}$
 
-    *   Pour $\hat{y} = 1$:
-        $$ \mathbb{E}[L_{01}(Y, 1)|X=x] = \mathbb{E}[\mathbf{1}_{Y \neq 1}|X=x] $$
-        $$ = P(Y=-1|X=x) $$
-        $$ = 1 - \eta(x) $$
+Puisque $P(X=x)$ est une constante positive pour un $x$ donné, la décision du classifieur de Bayes peut être simplifiée en maximisant le numérateur :
+$h^*(x) = \operatorname{argmax}_{y \in \{0,1\}} P(X=x|Y=y) P(Y=y)$
 
-    *   Pour $\hat{y} = -1$:
-        $$ \mathbb{E}[L_{01}(Y, -1)|X=x] = \mathbb{E}[\mathbf{1}_{Y \neq -1}|X=x] $$
-        $$ = P(Y=1|X=x) $$
-        $$ = \eta(x) $$
+Nous allons calculer $P(X=x|Y=y) P(Y=y)$ pour chaque valeur de $X$ et chaque classe $Y$.
 
-    Le classifieur de Bayes $f_B(x)$ choisit la valeur de $\hat{y}$ qui a le risque conditionnel minimal.
-    Donc, $f_B(x) = 1$ si $1 - \eta(x) < \eta(x)$, et $f_B(x) = -1$ si $\eta(x) < 1 - \eta(x)$.
-    Si $1 - \eta(x) = \eta(x)$, c'est-à-dire $\eta(x) = 1/2$, le choix est arbitraire (par convention, on peut choisir 1).
+#### Pour $X=x_1$:
+Calculons $P(X=x_1|Y=0) P(Y=0)$ et $P(X=x_1|Y=1) P(Y=1)$.
 
-    Simplifions les inégalités :
-    *   $1 - \eta(x) < \eta(x) \iff 1 < 2\eta(x) \iff \eta(x) > 1/2$. Dans ce cas, $f_B(x) = 1$.
-    *   $\eta(x) < 1 - \eta(x) \iff 2\eta(x) < 1 \iff \eta(x) < 1/2$. Dans ce cas, $f_B(x) = -1$.
-    *   Si $\eta(x) = 1/2$, alors $1 - \eta(x) = \eta(x)$, et le risque est égal pour les deux classes. Par convention, nous choisissons $f_B(x)=1$.
+Pour $Y=0$:
+$P(X=x_1|Y=0) P(Y=0) = 0.3 \times 0.6$
+$P(X=x_1|Y=0) P(Y=0) = 0.18$
 
-    Ainsi, nous pouvons exprimer le classifieur de Bayes comme :
-    $$ f_B(x) = \begin{cases} 1 & \text{si } \eta(x) \ge 1/2 \\ -1 & \text{si } \eta(x) < 1/2 \end{cases} $$
-    Une écriture compacte souvent utilisée est :
-    $$ f_B(x) = \text{sgn}(2\eta(x) - 1) $$
-    où $\text{sgn}(0)$ est défini comme 1.
+Pour $Y=1$:
+$P(X=x_1|Y=1) P(Y=1) = 0.6 \times 0.4$
+$P(X=x_1|Y=1) P(Y=1) = 0.24$
 
-2.  **Risque de Bayes $R(f_B)$ :**
+Comparaison pour $X=x_1$:
+$0.18 < 0.24$
+La valeur $0.24$ est la plus grande. Elle correspond à $Y=1$.
+Donc, pour $X=x_1$, le classifieur de Bayes attribue la classe $Y=1$.
+$h^*(x_1) = 1$
 
-    Le risque de Bayes est le risque du classifieur de Bayes :
-    $$ R(f_B) = \mathbb{E}[L_{01}(Y, f_B(X))] $$
-    Par la loi de l'espérance totale, on peut écrire :
-    $$ R(f_B) = \mathbb{E}_X[\mathbb{E}[L_{01}(Y, f_B(X))|X]] $$
-    Pour un $x$ fixé, $\mathbb{E}[L_{01}(Y, f_B(X))|X=x]$ est le minimum des risques conditionnels que nous avons calculés.
-    $$ \mathbb{E}[L_{01}(Y, f_B(x))|X=x] = \min(\eta(x), 1 - \eta(x)) $$
-    Donc, le risque de Bayes s'exprime par :
-    $$ R(f_B) = \mathbb{E}_X[\min(\eta(X), 1 - \eta(X))] $$
-    Alternativement, en utilisant la propriété $\min(a, b) = \frac{a+b - |a-b|}{2}$:
-    $$ \min(\eta(x), 1 - \eta(x)) = \frac{\eta(x) + (1-\eta(x)) - |\eta(x) - (1-\eta(x))|}{2} $$
-    $$ = \frac{1 - |2\eta(x) - 1|}{2} $$
-    Ainsi, le risque de Bayes peut également s'écrire :
-    $$ R(f_B) = \mathbb{E}_X\left[\frac{1 - |2\eta(X) - 1|}{2}\right] = \frac{1}{2} - \frac{1}{2}\mathbb{E}_X[|2\eta(X) - 1|] $$
+#### Pour $X=x_2$:
+Calculons $P(X=x_2|Y=0) P(Y=0)$ et $P(X=x_2|Y=1) P(Y=1)$.
 
-3.  **Perte de substitution (Surrogate Loss) :**
+Pour $Y=0$:
+$P(X=x_2|Y=0) P(Y=0) = 0.5 \times 0.6$
+$P(X=x_2|Y=0) P(Y=0) = 0.30$
 
-    Nous cherchons la fonction de score $h^*: \mathcal{X} \to \mathbb{R}$ qui minimise $R_{exp}(h) = \mathbb{E}[L_{exp}(Y, h(X))]$.
-    Comme pour le classifieur de Bayes, nous pouvons minimiser le risque conditionnel point par point. Soit $h_x = h(x)$ la valeur du score pour un $x$ donné. Nous voulons minimiser :
-    $$ \mathbb{E}[L_{exp}(Y, h_x)|X=x] = \mathbb{E}[\exp(-Y h_x)|X=x] $$
-    En décomposant par les valeurs possibles de $Y$:
-    $$ \mathbb{E}[\exp(-Y h_x)|X=x] = P(Y=1|X=x) \exp(-1 \cdot h_x) + P(Y=-1|X=x) \exp(-(-1) \cdot h_x) $$
-    $$ = \eta(x) \exp(-h_x) + (1 - \eta(x)) \exp(h_x) $$
-    Soit $g(h_x) = \eta(x) \exp(-h_x) + (1 - \eta(x)) \exp(h_x)$. Pour trouver le minimum, nous calculons la dérivée première par rapport à $h_x$ et la mettons à zéro :
-    $$ \frac{d}{dh_x} g(h_x) = -\eta(x) \exp(-h_x) + (1 - \eta(x)) \exp(h_x) $$
-    En égalant la dérivée à zéro :
-    $$ -\eta(x) \exp(-h_x) + (1 - \eta(x)) \exp(h_x) = 0 $$
-    $$ (1 - \eta(x)) \exp(h_x) = \eta(x) \exp(-h_x) $$
-    Multiplions les deux côtés par $\exp(h_x)$ (valide car $\exp(h_x) > 0$):
-    $$ (1 - \eta(x)) \exp(2h_x) = \eta(x) $$
-    Pour $\eta(x) \in (0, 1)$, $1-\eta(x) \neq 0$. Nous pouvons diviser :
-    $$ \exp(2h_x) = \frac{\eta(x)}{1 - \eta(x)} $$
-    Prenons le logarithme naturel des deux côtés :
-    $$ 2h_x = \log\left(\frac{\eta(x)}{1 - \eta(x)}\right) $$
-    La fonction de score optimale $h^*(x)$ est donc :
-    $$ h^*(x) = \frac{1}{2} \log\left(\frac{\eta(x)}{1 - \eta(x)}\right) $$
-    (Note : cette solution est définie pour $\eta(x) \in (0, 1)$. Si $\eta(x)=0$, le terme devient $\log(0)$ ce qui tend vers $-\infty$. Si $\eta(x)=1$, le terme devient $\log(\infty)$ ce qui tend vers $+\infty$. Ces cas extrêmes indiquent une classification parfaite pour la perte exponentielle, où le score doit être $-\infty$ ou $+\infty$ pour minimiser le risque.)
+Pour $Y=1$:
+$P(X=x_2|Y=1) P(Y=1) = 0.3 \times 0.4$
+$P(X=x_2|Y=1) P(Y=1) = 0.12$
 
-    Pour vérifier que c'est bien un minimum, calculons la dérivée seconde :
-    $$ \frac{d^2}{dh_x^2} g(h_x) = \eta(x) \exp(-h_x) + (1 - \eta(x)) \exp(h_x) $$
-    Comme $\eta(x) \in [0, 1]$ et les fonctions exponentielles sont toujours positives, la dérivée seconde est toujours positive (strictement positive pour $\eta(x) \in (0,1)$). Il s'agit donc bien d'un minimum global.
+Comparaison pour $X=x_2$:
+$0.30 > 0.12$
+La valeur $0.30$ est la plus grande. Elle correspond à $Y=0$.
+Donc, pour $X=x_2$, le classifieur de Bayes attribue la classe $Y=0$.
+$h^*(x_2) = 0$
 
-    **Lien avec le classifieur de Bayes $f_B(x)$ :**
+#### Pour $X=x_3$:
+Calculons $P(X=x_3|Y=0) P(Y=0)$ et $P(X=x_3|Y=1) P(Y=1)$.
 
-    Analysons le signe de $h^*(x)$ :
-    *   Si $\eta(x) > 1/2$: alors $2\eta(x) - 1 > 0$. De plus, $1 - \eta(x) < \eta(x)$, donc $\frac{\eta(x)}{1 - \eta(x)} > 1$. Par conséquent, $\log\left(\frac{\eta(x)}{1 - \eta(x)}\right) > 0$, ce qui implique $h^*(x) > 0$.
-    *   Si $\eta(x) < 1/2$: alors $2\eta(x) - 1 < 0$. De plus, $1 - \eta(x) > \eta(x)$, donc $\frac{\eta(x)}{1 - \eta(x)} < 1$. Par conséquent, $\log\left(\frac{\eta(x)}{1 - \eta(x)}\right) < 0$, ce qui implique $h^*(x) < 0$.
-    *   Si $\eta(x) = 1/2$: alors $2\eta(x) - 1 = 0$. De plus, $\frac{\eta(x)}{1 - \eta(x)} = 1$. Par conséquent, $\log(1) = 0$, ce qui implique $h^*(x) = 0$.
+Pour $Y=0$:
+$P(X=x_3|Y=0) P(Y=0) = 0.2 \times 0.6$
+$P(X=x_3|Y=0) P(Y=0) = 0.12$
 
-    En comparant avec l'expression du classifieur de Bayes $f_B(x) = \text{sgn}(2\eta(x) - 1)$:
-    *   Si $h^*(x) > 0$, alors $\eta(x) > 1/2$, et $f_B(x) = 1$.
-    *   Si $h^*(x) < 0$, alors $\eta(x) < 1/2$, et $f_B(x) = -1$.
-    *   Si $h^*(x) = 0$, alors $\eta(x) = 1/2$, et $f_B(x) = 1$ (par convention, $\text{sgn}(0)=1$).
+Pour $Y=1$:
+$P(X=x_3|Y=1) P(Y=1) = 0.1 \times 0.4$
+$P(X=x_3|Y=1) P(Y=1) = 0.04$
 
-    On observe que le signe de la fonction de score optimale $h^*(x)$ est cohérent avec le classifieur de Bayes $f_B(x)$. Plus précisément, si on définit un classifieur $\hat{f}(x) = \text{sgn}(h(x))$, alors le classifieur $\hat{f}^*(x) = \text{sgn}(h^*(x))$ est équivalent au classifieur de Bayes $f_B(x)$.
-    Cette propriété est connue sous le nom de **consistance de Fisher** (ou *Fisher consistency*). Elle signifie que la minimisation du risque de la perte de substitution (ici la perte exponentielle) conduit à un prédicteur dont le signe est optimal par rapport à la perte 0-1, ce qui en fait une bonne perte de substitution pour la classification binaire.
+Comparaison pour $X=x_3$:
+$0.12 > 0.04$
+La valeur $0.12$ est la plus grande. Elle correspond à $Y=0$.
+Donc, pour $X=x_3$, le classifieur de Bayes attribue la classe $Y=0$.
+$h^*(x_3) = 0$
+
+En résumé, le classifieur de Bayes optimal $h^*(x)$ est défini comme suit :
+$h^*(x_1) = 1$
+$h^*(x_2) = 0$
+$h^*(x_3) = 0$
+
+### Partie 2 : Calcul du taux d'erreur de Bayes $R(h^*)$
+
+Le taux d'erreur de Bayes $R(h^*)$ est la probabilité que le classifieur de Bayes fasse une erreur. Il est donné par l'espérance de la fonction indicatrice d'erreur :
+$R(h^*) = E[1_{h^*(X) \neq Y}]$
+Pour des variables discrètes, cela se traduit par la somme des probabilités d'erreur pour chaque valeur de $X$:
+$R(h^*) = \sum_{x} P(X=x, h^*(x) \neq Y)$
+$R(h^*) = \sum_{x} P(X=x) P(h^*(x) \neq Y | X=x)$
+La probabilité d'erreur conditionnelle $P(h^*(x) \neq Y | X=x)$ est la plus petite des probabilités a posteriori pour un $x$ donné :
+$P(h^*(x) \neq Y | X=x) = \min(P(Y=0|X=x), P(Y=1|X=x))$
+Donc, le taux d'erreur de Bayes est :
+$R(h^*) = \sum_{x} P(X=x) \min(P(Y=0|X=x), P(Y=1|X=x))$
+
+Pour utiliser cette formule, nous devons d'abord calculer $P(X=x)$ pour chaque $x$, puis $P(Y=y|X=x)$.
+
+#### Calcul de $P(X=x)$ pour chaque $x$:
+La probabilité marginale $P(X=x)$ est calculée en sommant sur les classes $Y$:
+$P(X=x) = P(X=x|Y=0) P(Y=0) + P(X=x|Y=1) P(Y=1)$
+
+Pour $X=x_1$:
+$P(X=x_1) = P(X=x_1|Y=0) P(Y=0) + P(X=x_1|Y=1) P(Y=1)$
+$P(X=x_1) = (0.3 \times 0.6) + (0.6 \times 0.4)$
+$P(X=x_1) = 0.18 + 0.24$
+$P(X=x_1) = 0.42$
+
+Pour $X=x_2$:
+$P(X=x_2) = P(X=x_2|Y=0) P(Y=0) + P(X=x_2|Y=1) P(Y=1)$
+$P(X=x_2) = (0.5 \times 0.6) + (0.3 \times 0.4)$
+$P(X=x_2) = 0.30 + 0.12$
+$P(X=x_2) = 0.42$
+
+Pour $X=x_3$:
+$P(X=x_3) = P(X=x_3|Y=0) P(Y=0) + P(X=x_3|Y=1) P(Y=1)$
+$P(X=x_3) = (0.2 \times 0.6) + (0.1 \times 0.4)$
+$P(X=x_3) = 0.12 + 0.04$
+$P(X=x_3) = 0.16$
+
+Vérification de la somme des probabilités marginales de $X$:
+$P(X=x_1) + P(X=x_2) + P(X=x_3) = 0.42 + 0.42 + 0.16 = 1.00$. La somme est correcte.
+
+#### Calcul de $P(Y=y|X=x)$ pour chaque $x$ et $y$:
+Nous utilisons la formule $P(Y=y|X=x) = \frac{P(X=x|Y=y) P(Y=y)}{P(X=x)}$.
+
+Pour $X=x_1$:
+$P(Y=0|X=x_1) = \frac{P(X=x_1|Y=0) P(Y=0)}{P(X=x_1)} = \frac{0.18}{0.42} = \frac{18}{42} = \frac{3}{7}$
+$P(Y=1|X=x_1) = \frac{P(X=x_1|Y=1) P(Y=1)}{P(X=x_1)} = \frac{0.24}{0.42} = \frac{24}{42} = \frac{4}{7}$
+Vérification : $3/7 + 4/7 = 7/7 = 1$. Correct.
+Pour $X=x_1$, le classifieur de Bayes $h^*(x_1)=1$. La probabilité d'erreur pour $X=x_1$ est $\min(P(Y=0|X=x_1), P(Y=1|X=x_1)) = P(Y=0|X=x_1) = 3/7$.
+
+Pour $X=x_2$:
+$P(Y=0|X=x_2) = \frac{P(X=x_2|Y=0) P(Y=0)}{P(X=x_2)} = \frac{0.30}{0.42} = \frac{30}{42} = \frac{5}{7}$
+$P(Y=1|X=x_2) = \frac{P(X=x_2|Y=1) P(Y=1)}{P(X=x_2)} = \frac{0.12}{0.42} = \frac{12}{42} = \frac{2}{7}$
+Vérification : $5/7 + 2/7 = 7/7 = 1$. Correct.
+Pour $X=x_2$, le classifieur de Bayes $h^*(x_2)=0$. La probabilité d'erreur pour $X=x_2$ est $\min(P(Y=0|X=x_2), P(Y=1|X=x_2)) = P(Y=1|X=x_2) = 2/7$.
+
+Pour $X=x_3$:
+$P(Y=0|X=x_3) = \frac{P(X=x_3|Y=0) P(Y=0)}{P(X=x_3)} = \frac{0.12}{0.16} = \frac{12}{16} = \frac{3}{4}$
+$P(Y=1|X=x_3) = \frac{P(X=x_3|Y=1) P(Y=1)}{P(X=x_3)} = \frac{0.04}{0.16} = \frac{4}{16} = \frac{1}{4}$
+Vérification : $3/4 + 1/4 = 4/4 = 1$. Correct.
+Pour $X=x_3$, le classifieur de Bayes $h^*(x_3)=0$. La probabilité d'erreur pour $X=x_3$ est $\min(P(Y=0|X=x_3), P(Y=1|X=x_3)) = P(Y=1|X=x_3) = 1/4$.
+
+#### Calcul du taux d'erreur de Bayes $R(h^*)$:
+$R(h^*) = P(X=x_1) \times \min(P(Y=0|X=x_1), P(Y=1|X=x_1)) + P(X=x_2) \times \min(P(Y=0|X=x_2), P(Y=1|X=x_2)) + P(X=x_3) \times \min(P(Y=0|X=x_3), P(Y=1|X=x_3))$
+
+En substituant les valeurs calculées :
+$R(h^*) = P(X=x_1) \times P(Y=0|X=x_1) + P(X=x_2) \times P(Y=1|X=x_2) + P(X=x_3) \times P(Y=1|X=x_3)$
+
+$R(h^*) = 0.42 \times \frac{3}{7} + 0.42 \times \frac{2}{7} + 0.16 \times \frac{1}{4}$
+
+Pour faciliter le calcul, convertissons les décimales en fractions :
+$0.42 = \frac{42}{100}$
+$0.16 = \frac{16}{100}$
+
+$R(h^*) = \frac{42}{100} \times \frac{3}{7} + \frac{42}{100} \times \frac{2}{7} + \frac{16}{100} \times \frac{1}{4}$
+
+Simplifions les fractions :
+$R(h^*) = \frac{6 \times 7}{100} \times \frac{3}{7} + \frac{6 \times 7}{100} \times \frac{2}{7} + \frac{4 \times 4}{100} \times \frac{1}{4}$
+
+$R(h^*) = \frac{6 \times 3}{100} + \frac{6 \times 2}{100} + \frac{4 \times 1}{100}$
+
+$R(h^*) = \frac{18}{100} + \frac{12}{100} + \frac{4}{100}$
+
+$R(h^*) = 0.18 + 0.12 + 0.04$
+
+$R(h^*) = 0.34$
+
+Le taux d'erreur de Bayes optimal pour ce problème est $0.34$.

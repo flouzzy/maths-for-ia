@@ -1,99 +1,166 @@
 ---
-uuid: jalon-140-exo-10
-title: "Exercice 10 - Inégalité de Zhang et Surrogate Loss"
-type: Exercice
-difficulty: 5
+uuid: "jalon-140-exo-10"
+title: "Exercice 10 - Jalon 140"
 ---
-
-# Exercice 10 - Inégalité de Zhang et Surrogate Loss
+# Exercice 10 : Analyse du Classifieur de Bayes Optimal et de la Minimisation du Risque Exponentiel
+**Difficulté:** ★★★★★
 
 ## Énoncé
-Soit $(X, Y)$ un couple de variables aléatoires à valeurs dans $\mathcal{X} \times \{-1, 1\}$ suivant une distribution conjointe $\mathbb{P}$. Soit $\eta(x) = \mathbb{P}(Y=1 | X=x)$ la probabilité conditionnelle.
-Considérons une fonction de perte de substitution (surrogate loss) $\phi : \mathbb{R} \to \mathbb{R}_+$. On définit le risque $\phi$-associé d'une fonction mesurable $f : \mathcal{X} \to \mathbb{R}$ par :
-$$ R_\phi(f) = \mathbb{E}_{(X,Y) \sim \mathbb{P}}[\phi(Y f(X))] $$
+Soit un problème de classification binaire où la variable de classe $Y$ prend ses valeurs dans $\{-1, 1\}$ et la variable d'entrée $X$ prend ses valeurs dans un espace $\mathcal{X}$. On note $\eta(x) = P(Y=1|X=x)$ la probabilité conditionnelle de la classe positive.
 
-Et le risque de classification (0-1) par :
-$$ R(f) = \mathbb{E}_{(X,Y) \sim \mathbb{P}}[\mathbb{1}_{Y \neq \text{sign}(f(X))}] $$
+Le classifieur de Bayes optimal $h^*(x)$ est défini comme la règle de décision qui minimise le risque de classification $R(h) = E_X[P(Y \neq h(X)|X)]$. Son risque minimal est $R^*(h^*) = E_X[\min(\eta(X), 1-\eta(X))]$.
 
-Soit $R^*$ le risque de Bayes pour la classification 0-1, et $R_\phi^*$ l'infimum du risque $\phi$-associé sur l'ensemble de toutes les fonctions mesurables.
-Montrez l'inégalité de Zhang pour la perte logistique $\phi(z) = \log_2(1 + \exp(-z))$, c'est-à-dire trouvez une relation rigoureuse entre l'excès de risque de classification $R(f) - R^*$ et l'excès de risque $\phi$-associé $R_\phi(f) - R_\phi^*$.
+On considère la fonction de perte exponentielle (surrogate loss) définie par $L_{exp}(y, f(x)) = e^{-y f(x)}$, où $f: \mathcal{X} \to \mathbb{R}$ est une fonction de score. Le classifieur associé à une fonction de score $f$ est $h_f(x) = \text{sgn}(f(x))$.
 
-## Correction (Zéro Ellipse Mathématique)
+1.  **Minimisation du Risque Conditionnel Exponentiel (★★★★)**
+    Pour un $x \in \mathcal{X}$ fixé, on cherche la fonction de score $f^*(x)$ qui minimise le risque exponentiel conditionnel $R_{exp}(f|x) = E_Y[e^{-Y f(X)} | X=x]$.
+    Démontrez que $f^*(x) = \frac{1}{2} \log \left( \frac{\eta(x)}{1-\eta(x)} \right)$.
 
-### 1. Expression des risques conditionnels
+2.  **Lien avec le Classifieur de Bayes (★★★★)**
+    Montrez que le classifieur $h_{f^*}(x) = \text{sgn}(f^*(x))$ est équivalent au classifieur de Bayes optimal $h^*(x)$.
 
-Commençons par exprimer le risque $\phi$-associé conditionnellement à $X=x$. Le risque conditionnel est :
-$$ C_\phi(f(x), x) = \mathbb{E}_{Y|X=x}[\phi(Y f(x))] $$
-Puisque $Y \in \{-1, 1\}$ avec $\mathbb{P}(Y=1 | X=x) = \eta(x)$ et $\mathbb{P}(Y=-1 | X=x) = 1 - \eta(x)$, nous avons :
-$$ C_\phi(f(x), x) = \eta(x) \phi(f(x)) + (1 - \eta(x)) \phi(-f(x)) $$
+3.  **Analyse du Risque Exponentiel Minimal (★★★★★)**
+    Soit $R_{exp}^* = E_X[R_{exp}(f^*|X)]$ le risque exponentiel minimal.
+    Démontrez que $R_{exp}^* = E_X[2\sqrt{\eta(X)(1-\eta(X))}]$.
 
-De même, le risque 0-1 conditionnel pour un classifieur de signe est :
-$$ C(f(x), x) = \mathbb{E}_{Y|X=x}[\mathbb{1}_{Y \neq \text{sign}(f(x))}] = \eta(x) \mathbb{1}_{\text{sign}(f(x)) \neq 1} + (1 - \eta(x)) \mathbb{1}_{\text{sign}(f(x)) \neq -1} $$
+4.  **Borne Supérieure de l'Excès de Risque de Classification (★★★★★)**
+    En utilisant les résultats précédents, et en considérant la relation entre le risque de classification $R(h_f) = E_X[P(Y \neq h_f(X)|X)]$ et le risque exponentiel $R_{exp}(f) = E_X[R_{exp}(f|X)]$, montrez qu'il existe une constante $C > 0$ telle que pour tout classifieur $h_f$ dérivé d'une fonction de score $f$, l'excès de risque de classification est borné par l'excès de risque exponentiel :
+    $R(h_f) - R^*(h^*) \le C \cdot (R_{exp}(f) - R_{exp}^*)$.
+    *Indication : Vous pourrez utiliser le fait que pour tout $x \in \mathcal{X}$ et pour toute fonction de score $f(x)$, l'excès de risque de classification conditionnel est borné par l'excès de risque exponentiel conditionnel de la manière suivante :*
+    $P(Y \neq \text{sgn}(f(X))|X=x) - \min(\eta(X), 1-\eta(X)) \le \frac{1}{2} \left( \eta(X) e^{-f(X)} + (1-\eta(X)) e^{f(X)} - 2\sqrt{\eta(X)(1-\eta(X))} \right)$.
+    *Vous n'avez pas à prouver cette inégalité, mais à l'utiliser pour dériver la borne globale.*
 
-Le risque de Bayes conditionnel optimal pour le risque 0-1 est obtenu par la règle de Bayes : on prédit $+1$ si $\eta(x) \ge 1/2$ et $-1$ sinon. Ainsi :
-$$ C^*(x) = \min(\eta(x), 1 - \eta(x)) $$
+## Correction Pas-à-Pas
 
-L'excès de risque 0-1 conditionnel pour une prédiction $v = f(x)$ est donc :
-$$ \Delta C(v, x) = C(v, x) - C^*(x) = |2\eta(x) - 1| \mathbb{1}_{\text{sign}(v) \neq \text{sign}(\eta(x) - 1/2)} $$
+### Question 1 : Minimisation du Risque Conditionnel Exponentiel
 
-### 2. Infimum du risque $\phi$-associé conditionnel
+Le risque exponentiel conditionnel pour un $x \in \mathcal{X}$ fixé est donné par :
+$R_{exp}(f|x) = E_Y[e^{-Y f(X)} | X=x]$
 
-Soit $H_\phi(\eta)$ l'infimum du risque conditionnel pour une probabilité $\eta \in [0, 1]$ :
-$$ H_\phi(\eta) = \inf_{\alpha \in \mathbb{R}} (\eta \phi(\alpha) + (1-\eta) \phi(-\alpha)) $$
+Puisque $Y \in \{-1, 1\}$, on peut développer l'espérance :
+$R_{exp}(f|x) = P(Y=1|X=x) \cdot e^{-1 \cdot f(x)} + P(Y=-1|X=x) \cdot e^{-(-1) \cdot f(x)}$
+$R_{exp}(f|x) = \eta(x) e^{-f(x)} + (1-\eta(x)) e^{f(x)}$
 
-Pour la perte logistique $\phi(z) = \log_2(1 + \exp(-z))$ (souvent redimensionnée par $1/\ln(2)$, mais gardons le log base 2 ici pour correspondre à l'entropie binaire en bits), la fonction à minimiser par rapport à $\alpha$ est :
-$$ J(\alpha) = \eta \log_2(1 + \exp(-\alpha)) + (1-\eta) \log_2(1 + \exp(\alpha)) $$
+Pour trouver la fonction de score $f^*(x)$ qui minimise ce risque, nous allons dériver $R_{exp}(f|x)$ par rapport à $f(x)$ et égaliser la dérivée à zéro.
+Soit $g(f) = \eta(x) e^{-f} + (1-\eta(x)) e^{f}$.
+La dérivée première par rapport à $f$ est :
+$\frac{\partial g(f)}{\partial f} = \frac{\partial}{\partial f} (\eta(x) e^{-f}) + \frac{\partial}{\partial f} ((1-\eta(x)) e^{f})$
+$\frac{\partial g(f)}{\partial f} = \eta(x) (-e^{-f}) + (1-\eta(x)) (e^{f})$
+$\frac{\partial g(f)}{\partial f} = -\eta(x) e^{-f} + (1-\eta(x)) e^{f}$
 
-Calculons la dérivée par rapport à $\alpha$ pour trouver le minimum. Soit $\ln$ le logarithme népérien. On a $\log_2(u) = \frac{\ln(u)}{\ln(2)}$.
-$$ \frac{\partial J(\alpha)}{\partial \alpha} = \frac{1}{\ln(2)} \left[ \eta \frac{-\exp(-\alpha)}{1+\exp(-\alpha)} + (1-\eta) \frac{\exp(\alpha)}{1+\exp(\alpha)} \right] $$
-En multipliant par $\frac{1+\exp(\alpha)}{1+\exp(\alpha)}$ dans le premier terme, on remarque que $\frac{\exp(-\alpha)}{1+\exp(-\alpha)} = \frac{1}{1+\exp(\alpha)}$.
-$$ \frac{\partial J(\alpha)}{\partial \alpha} = \frac{1}{\ln(2)} \left[ -\frac{\eta}{1+\exp(\alpha)} + \frac{(1-\eta)\exp(\alpha)}{1+\exp(\alpha)} \right] = \frac{1}{\ln(2) (1+\exp(\alpha))} [ -\eta + (1-\eta)\exp(\alpha) ] $$
+Pour trouver le minimum, nous égalisons la dérivée à zéro :
+$-\eta(x) e^{-f^*(x)} + (1-\eta(x)) e^{f^*(x)} = 0$
+$(1-\eta(x)) e^{f^*(x)} = \eta(x) e^{-f^*(x)}$
 
-En annulant la dérivée, on obtient :
-$$ (1-\eta)\exp(\alpha) = \eta \implies \exp(\alpha) = \frac{\eta}{1-\eta} \implies \alpha^* = \ln\left(\frac{\eta}{1-\eta}\right) $$
+Multiplions les deux côtés par $e^{f^*(x)}$ :
+$(1-\eta(x)) e^{f^*(x)} e^{f^*(x)} = \eta(x) e^{-f^*(x)} e^{f^*(x)}$
+$(1-\eta(x)) e^{2f^*(x)} = \eta(x) e^0$
+$(1-\eta(x)) e^{2f^*(x)} = \eta(x)$
 
-En substituant $\alpha^*$ dans $H_\phi(\eta)$ :
-$$ H_\phi(\eta) = \eta \log_2\left(1 + \frac{1-\eta}{\eta}\right) + (1-\eta) \log_2\left(1 + \frac{\eta}{1-\eta}\right) $$
-$$ H_\phi(\eta) = \eta \log_2\left(\frac{1}{\eta}\right) + (1-\eta) \log_2\left(\frac{1}{1-\eta}\right) = -\eta \log_2(\eta) - (1-\eta) \log_2(1-\eta) $$
-Ceci est exactement l'entropie binaire $h(\eta)$.
+Divisons par $(1-\eta(x))$ :
+$e^{2f^*(x)} = \frac{\eta(x)}{1-\eta(x)}$
 
-### 3. Relation de calibration (Transformée de Zhang)
+Prenons le logarithme naturel des deux côtés :
+$\ln(e^{2f^*(x)}) = \ln\left(\frac{\eta(x)}{1-\eta(x)}\right)$
+$2f^*(x) = \ln\left(\frac{\eta(x)}{1-\eta(x)}\right)$
 
-L'excès de risque $\phi$-conditionnel pour une prédiction $v$ est :
-$$ \Delta C_\phi(v, \eta) = \eta \phi(v) + (1-\eta) \phi(-v) - H_\phi(\eta) $$
-Nous cherchons à minorer cet excès en fonction de l'excès de risque 0-1, $\Delta C(v, \eta) = |2\eta - 1| \mathbb{1}_{\text{sign}(v) \neq \text{sign}(\eta - 1/2)}$.
+Enfin, divisons par 2 :
+$f^*(x) = \frac{1}{2} \ln\left(\frac{\eta(x)}{1-\eta(x)}\right)$
 
-Considérons le cas où la prédiction a le mauvais signe, c'est-à-dire $v (\eta - 1/2) \le 0$. Par symétrie, supposons $\eta > 1/2$, donc $v \le 0$. L'excès de risque 0-1 conditionnel est alors $\theta = 2\eta - 1$.
-Nous voulons minorer l'excès de risque $\phi$ conditionnel sur toutes les valeurs de $v \le 0$. Puisque $\phi$ est convexe et décroissante (pour la perte logistique), la fonction $\alpha \mapsto \eta \phi(\alpha) + (1-\eta) \phi(-\alpha)$ atteint son minimum sur $\alpha \le 0$ en $\alpha=0$.
+Pour confirmer qu'il s'agit bien d'un minimum, nous pouvons calculer la dérivée seconde :
+$\frac{\partial^2 g(f)}{\partial f^2} = \frac{\partial}{\partial f} (-\eta(x) e^{-f} + (1-\eta(x)) e^{f})$
+$\frac{\partial^2 g(f)}{\partial f^2} = -\eta(x) (-e^{-f}) + (1-\eta(x)) (e^{f})$
+$\frac{\partial^2 g(f)}{\partial f^2} = \eta(x) e^{-f} + (1-\eta(x)) e^{f}$
+Puisque $\eta(x) \in [0,1]$ et $e^{-f}, e^f > 0$, la dérivée seconde est toujours positive. Cela confirme que $f^*(x)$ est bien un minimum global.
 
-Évaluons l'excès en $\alpha=0$ :
-$$ \Delta C_\phi(0, \eta) = \eta \log_2(2) + (1-\eta) \log_2(2) - h(\eta) = 1 - h(\eta) $$
+### Question 2 : Lien avec le Classifieur de Bayes
 
-Nous voulons lier cet excès $1 - h(\eta)$ à l'excès de risque 0-1 qui est $|2\eta - 1|$. On note que $h(\eta)$ peut s'écrire en fonction de $\delta = \eta - 1/2$. On a $\eta = 1/2 + \delta$ et $1-\eta = 1/2 - \delta$.
-Il est bien connu que pour l'entropie binaire, par le développement de Taylor ou l'inégalité de Pinsker :
-$$ 1 - h(1/2 + \delta) \ge \frac{2}{\ln(2)} \delta^2 $$
+Le classifieur associé à $f^*(x)$ est $h_{f^*}(x) = \text{sgn}(f^*(x))$.
+Nous avons $f^*(x) = \frac{1}{2} \ln\left(\frac{\eta(x)}{1-\eta(x)}\right)$.
+Le signe de $f^*(x)$ est déterminé par le signe de $\ln\left(\frac{\eta(x)}{1-\eta(x)}\right)$.
+Le logarithme naturel est positif si son argument est supérieur à 1, négatif si son argument est inférieur à 1, et nul si son argument est égal à 1.
 
-Or, l'excès de risque 0-1 est $\Delta C(v, \eta) = |2\eta - 1| = 2|\delta|$. Ainsi, $\delta^2 = \frac{(\Delta C(v, \eta))^2}{4}$.
-L'inégalité devient :
-$$ \Delta C_\phi(v, \eta) \ge 1 - h(\eta) \ge \frac{2}{\ln(2)} \frac{(\Delta C(v, \eta))^2}{4} = \frac{1}{2 \ln(2)} (\Delta C(v, \eta))^2 $$
+Analysons les cas :
+1.  Si $\eta(x) > 1-\eta(x)$ :
+    Cela implique $2\eta(x) > 1$, soit $\eta(x) > 0.5$.
+    Dans ce cas, $\frac{\eta(x)}{1-\eta(x)} > 1$, donc $\ln\left(\frac{\eta(x)}{1-\eta(x)}\right) > 0$.
+    Par conséquent, $f^*(x) > 0$, et $h_{f^*}(x) = \text{sgn}(f^*(x)) = 1$.
+    Le classifieur de Bayes optimal $h^*(x)$ est défini comme $h^*(x) = 1$ si $\eta(x) > 0.5$.
+    Donc, $h_{f^*}(x) = h^*(x)$.
 
-### 4. Intégration sur $\mathcal{X}$
+2.  Si $\eta(x) < 1-\eta(x)$ :
+    Cela implique $2\eta(x) < 1$, soit $\eta(x) < 0.5$.
+    Dans ce cas, $\frac{\eta(x)}{1-\eta(x)} < 1$, donc $\ln\left(\frac{\eta(x)}{1-\eta(x)}\right) < 0$.
+    Par conséquent, $f^*(x) < 0$, et $h_{f^*}(x) = \text{sgn}(f^*(x)) = -1$.
+    Le classifieur de Bayes optimal $h^*(x)$ est défini comme $h^*(x) = -1$ si $\eta(x) < 0.5$.
+    Donc, $h_{f^*}(x) = h^*(x)$.
 
-Nous avons établi pour tout $x \in \mathcal{X}$ :
-$$ \Delta C_\phi(f(x), \eta(x)) \ge \frac{1}{2 \ln(2)} (\Delta C(f(x), \eta(x)))^2 $$
+3.  Si $\eta(x) = 1-\eta(x)$ :
+    Cela implique $2\eta(x) = 1$, soit $\eta(x) = 0.5$.
+    Dans ce cas, $\frac{\eta(x)}{1-\eta(x)} = 1$, donc $\ln\left(\frac{\eta(x)}{1-\eta(x)}\right) = 0$.
+    Par conséquent, $f^*(x) = 0$.
+    Le classifieur de Bayes optimal $h^*(x)$ est généralement défini comme $1$ (ou $-1$) par convention lorsque $\eta(x) = 0.5$. Par exemple, $h^*(x) = \text{sgn}(\eta(x) - 0.5)$ donnerait $h^*(x)=0$ si $\eta(x)=0.5$, ce qui est une convention à gérer. Si l'on utilise la convention $h^*(x) = 1$ pour $\eta(x) \ge 0.5$, alors $h_{f^*}(x) = \text{sgn}(0)$ est souvent défini comme $1$ ou $-1$ selon la convention. Cependant, l'important est que le point de décision est le même.
 
-Prenons l'espérance sur $X$ :
-$$ \mathbb{E}_X [\Delta C_\phi(f(X), \eta(X))] \ge \mathbb{E}_X \left[ \frac{1}{2 \ln(2)} (\Delta C(f(X), \eta(X)))^2 \right] $$
+Dans tous les cas, le signe de $f^*(x)$ est le même que le signe de $\eta(x) - 0.5$.
+Par conséquent, le classifieur $h_{f^*}(x) = \text{sgn}(f^*(x))$ est équivalent au classifieur de Bayes optimal $h^*(x) = \text{sgn}(\eta(x) - 0.5)$.
 
-Le membre de gauche est l'excès de risque global $\phi$-associé :
-$$ \mathbb{E}_X [\Delta C_\phi(f(X), \eta(X))] = \mathbb{E}_X [C_\phi(f(X), X)] - \mathbb{E}_X [C_\phi^*(X)] = R_\phi(f) - R_\phi^* $$
+### Question 3 : Analyse du Risque Exponentiel Minimal
 
-Pour le membre de droite, par l'inégalité de Jensen (puisque la fonction $t \mapsto t^2$ est convexe), l'espérance du carré est minorée par le carré de l'espérance :
-$$ \mathbb{E}_X \left[ (\Delta C(f(X), \eta(X)))^2 \right] \ge \left( \mathbb{E}_X [\Delta C(f(X), \eta(X))] \right)^2 $$
+Le risque exponentiel minimal conditionnel pour un $x$ fixé est $R_{exp}(f^*|x)$.
+Nous substituons $f^*(x) = \frac{1}{2} \ln\left(\frac{\eta(x)}{1-\eta(x)}\right)$ dans l'expression de $R_{exp}(f|x)$ :
+$R_{exp}(f^*|x) = \eta(x) e^{-f^*(x)} + (1-\eta(x)) e^{f^*(x)}$
 
-Et puisque l'espérance de l'excès de risque 0-1 conditionnel est l'excès de risque 0-1 global :
-$$ \mathbb{E}_X [\Delta C(f(X), \eta(X))] = R(f) - R^* $$
+Calculons $e^{f^*(x)}$ et $e^{-f^*(x)}$ :
+$e^{f^*(x)} = e^{\frac{1}{2} \ln\left(\frac{\eta(x)}{1-\eta(x)}\right)} = \left(e^{\ln\left(\frac{\eta(x)}{1-\eta(x)}\right)}\right)^{1/2} = \left(\frac{\eta(x)}{1-\eta(x)}\right)^{1/2} = \sqrt{\frac{\eta(x)}{1-\eta(x)}}$
+$e^{-f^*(x)} = e^{-\frac{1}{2} \ln\left(\frac{\eta(x)}{1-\eta(x)}\right)} = \left(e^{\ln\left(\frac{\eta(x)}{1-\eta(x)}\right)}\right)^{-1/2} = \left(\frac{\eta(x)}{1-\eta(x)}\right)^{-1/2} = \sqrt{\frac{1-\eta(x)}{\eta(x)}}$
 
-Nous obtenons finalement :
-$$ R_\phi(f) - R_\phi^* \ge \frac{1}{2 \ln(2)} (R(f) - R^*)^2 $$
-Ce qui démontre rigoureusement l'inégalité de Zhang pour la perte logistique, reliant l'excès de risque de la perte de substitution à l'excès de risque de la classification binaire.
+Maintenant, substituons ces expressions dans $R_{exp}(f^*|x)$ :
+$R_{exp}(f^*|x) = \eta(x) \sqrt{\frac{1-\eta(x)}{\eta(x)}} + (1-\eta(x)) \sqrt{\frac{\eta(x)}{1-\eta(x)}}$
+$R_{exp}(f^*|x) = \frac{\eta(x) \sqrt{1-\eta(x)}}{\sqrt{\eta(x)}} + \frac{(1-\eta(x)) \sqrt{\eta(x)}}{\sqrt{1-\eta(x)}}$
+$R_{exp}(f^*|x) = \sqrt{\eta(x)} \sqrt{1-\eta(x)} + \sqrt{1-\eta(x)} \sqrt{\eta(x)}$
+$R_{exp}(f^*|x) = \sqrt{\eta(x)(1-\eta(x))} + \sqrt{\eta(x)(1-\eta(x))}$
+$R_{exp}(f^*|x) = 2\sqrt{\eta(x)(1-\eta(x))}$
+
+Le risque exponentiel minimal total $R_{exp}^*$ est l'espérance de ce risque conditionnel sur $X$ :
+$R_{exp}^* = E_X[R_{exp}(f^*|X)]$
+$R_{exp}^* = E_X[2\sqrt{\eta(X)(1-\eta(X))}]$
+
+### Question 4 : Borne Supérieure de l'Excès de Risque de Classification
+
+Nous voulons montrer que $R(h_f) - R^*(h^*) \le C \cdot (R_{exp}(f) - R_{exp}^*)$ pour une constante $C > 0$.
+
+Nous avons l'inégalité donnée en indication :
+$P(Y \neq \text{sgn}(f(X))|X=x) - \min(\eta(X), 1-\eta(X)) \le \frac{1}{2} \left( \eta(X) e^{-f(X)} + (1-\eta(X)) e^{f(X)} - 2\sqrt{\eta(X)(1-\eta(X))} \right)$
+
+Définissons les termes pour plus de clarté :
+*   Le terme de gauche est l'excès de risque de classification conditionnel en $x$ :
+    $E_{class}(f|x) = P(Y \neq h_f(X)|X=x) - \min(\eta(X), 1-\eta(X))$
+*   Le terme de droite est $\frac{1}{2}$ fois l'excès de risque exponentiel conditionnel en $x$ :
+    $E_{exp}(f|x) = \eta(X) e^{-f(X)} + (1-\eta(X)) e^{f(X)} - 2\sqrt{\eta(X)(1-\eta(X))}$
+    Nous savons d'après la Question 1 et la Question 3 que $R_{exp}(f|x) = \eta(X) e^{-f(X)} + (1-\eta(X)) e^{f(X)}$ et $R_{exp}(f^*|x) = 2\sqrt{\eta(X)(1-\eta(X))}$.
+    Donc, $E_{exp}(f|x) = R_{exp}(f|x) - R_{exp}(f^*|x)$.
+
+L'inégalité donnée peut donc s'écrire :
+$E_{class}(f|x) \le \frac{1}{2} (R_{exp}(f|x) - R_{exp}(f^*|x))$
+
+Pour obtenir la borne globale, nous prenons l'espérance des deux côtés de cette inégalité par rapport à $X$.
+$E_X[E_{class}(f|X)] \le E_X\left[\frac{1}{2} (R_{exp}(f|X) - R_{exp}(f^*|X))\right]$
+
+Développons le terme de gauche :
+$E_X[E_{class}(f|X)] = E_X[P(Y \neq h_f(X)|X)] - E_X[\min(\eta(X), 1-\eta(X))]$
+$E_X[E_{class}(f|X)] = R(h_f) - R^*(h^*)$
+
+Développons le terme de droite :
+$E_X\left[\frac{1}{2} (R_{exp}(f|X) - R_{exp}(f^*|X))\right] = \frac{1}{2} E_X[R_{exp}(f|X) - R_{exp}(f^*|X)]$
+$E_X\left[\frac{1}{2} (R_{exp}(f|X) - R_{exp}(f^*|X))\right] = \frac{1}{2} (E_X[R_{exp}(f|X)] - E_X[R_{exp}(f^*|X)])$
+$E_X\left[\frac{1}{2} (R_{exp}(f|X) - R_{exp}(f^*|X))\right] = \frac{1}{2} (R_{exp}(f) - R_{exp}^*)$
+
+En combinant les deux côtés, nous obtenons :
+$R(h_f) - R^*(h^*) \le \frac{1}{2} (R_{exp}(f) - R_{exp}^*)$
+
+Cette inégalité montre que l'excès de risque de classification est borné par la moitié de l'excès de risque exponentiel.
+Nous pouvons donc identifier la constante $C = \frac{1}{2}$.
+Puisque $C = \frac{1}{2} > 0$, la condition est satisfaite.
+
+Conclusion : Il existe une constante $C = \frac{1}{2}$ telle que pour tout classifieur $h_f$ dérivé d'une fonction de score $f$, l'excès de risque de classification est borné par l'excès de risque exponentiel :
+$R(h_f) - R^*(h^*) \le \frac{1}{2} (R_{exp}(f) - R_{exp}^*)$

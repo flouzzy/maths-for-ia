@@ -1,8 +1,12 @@
 # Jalon 140 : Classifieur de Bayes optimal
 
-Ce dossier contient les ressources pour le Jalon 140.
+## Description
+Ce jalon constitue le sommet du cursus en théorie de l'apprentissage statistique. Il démontre mathématiquement qu'une machine est capable de généraliser en étudiant :
+- Le classifieur de Bayes optimal.
+- Les fonctions de perte de substitution (Surrogate losses).
+- La consistance de la minimisation du risque empirique (ERM).
 
-## Fichiers
-- [Jalon 140 (Classifieur de Bayes optimal).md](Jalon 140 (Classifieur de Bayes optimal).md) : Cours principal
-- `exos/` : 10 exercices d'application
-- `tp/` : 5 travaux pratiques
+## Structure
+- `Jalon-140.md` : Le cours magistral complet.
+- `exos/` : 10 exercices d'application à la difficulté croissante.
+- `tp/` : 5 travaux pratiques implémentés en pur Python.

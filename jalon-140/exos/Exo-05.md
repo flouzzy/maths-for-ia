@@ -1,109 +1,128 @@
 ---
-uuid: jalon-140-exo-05
-title: "Exercice 5 - Classifieur de Bayes"
-type: Exercice
-difficulty: 3
+uuid: "jalon-140-exo-05"
+title: "Exercice 5 - Classifieur de Bayes Optimal et Fonctions de Perte Substituts"
 ---
+# Exercice 5 : Classifieur de Bayes Optimal et Fonctions de Perte Substituts
+**Difficulté:** ★★★
 
-### Énoncé
+## Énoncé
+Soit un problème de classification binaire où la variable cible $Y \in \{-1, 1\}$ et la variable d'entrée $X \in \mathbb{R}^d$.
+Nous disposons des probabilités a priori $P(Y=1) = \pi$ et $P(Y=-1) = 1-\pi$.
+Nous disposons également des densités de probabilité conditionnelles $p(x|Y=1)$ et $p(x|Y=-1)$.
 
-Soit un problème de classification binaire où nous observons des paires $(X, Y)$ de variables aléatoires, avec $X$ prenant ses valeurs dans un espace mesurable $(\mathcal{X}, \mathcal{A})$ et $Y$ prenant ses valeurs dans $\mathcal{Y} = \{-1, 1\}$. Le couple $(X, Y)$ est régi par une distribution de probabilité $P$ sur l'espace mesurable produit $(\mathcal{X} \times \mathcal{Y}, \mathcal{A} \otimes \mathcal{B}(\mathcal{Y}))$.
+1.  **Classifieur de Bayes Optimal (0-1 loss)**
+    Le classifieur de Bayes optimal $h^*(x)$ minimise le risque attendu sous la fonction de perte 0-1, définie par $\ell_{0-1}(y, \hat{y}) = \mathbb{I}(y \neq \hat{y})$, où $\mathbb{I}(\cdot)$ est la fonction indicatrice.
+    Dérivez l'expression du classifieur de Bayes optimal $h^*(x)$ en fonction des probabilités a priori $P(Y=1)$, $P(Y=-1)$ et des densités conditionnelles $p(x|Y=1)$, $p(x|Y=-1)$.
 
-La fonction de perte 0-1 est définie par $L_{01}(y, \hat{y}) = \mathbf{1}_{y \neq \hat{y}}$, où $\hat{y} \in \mathcal{Y}$ est la prédiction d'un classifieur. Le risque de Bayes associé à cette perte est $R_{01}^* = \min_{f: \mathcal{X} \to \mathcal{Y}} \mathbb{E}[L_{01}(Y, f(X))]$. Le classifieur de Bayes optimal, noté $f_{01}^*$, est donné par $f_{01}^*(x) = \text{sgn}(P(Y=1|X=x) - P(Y=-1|X=x))$. On note $\eta(x) = P(Y=1|X=x)$ la probabilité a posteriori.
+2.  **Risque de Bayes**
+    Exprimez le risque de Bayes $R(h^*) = E[\ell_{0-1}(Y, h^*(X))]$ en fonction des probabilités a priori et des densités conditionnelles.
 
-Dans le cadre des fonctions de perte de substitution (surrogate loss functions), on considère la perte logistique (logistic loss) définie pour une étiquette $y \in \{-1, 1\}$ et un score $v \in \mathbb{R}$ par $\phi(y, v) = \log(1 + e^{-yv})$.
+3.  **Fonction de Perte Substitut (Hinge Loss)**
+    Considérons une fonction de score $f(x) \in \mathbb{R}$ et un classifieur $\hat{y} = \text{sgn}(f(x))$.
+    La fonction de perte charnière (hinge loss) est définie par $\ell_{hinge}(y, f(x)) = \max(0, 1 - y f(x))$.
+    Pour les cas suivants, calculez la perte 0-1 $\ell_{0-1}(y, \text{sgn}(f(x)))$ et la perte charnière $\ell_{hinge}(y, f(x))$ :
+    a.  $y = 1, f(x) = 2$
+    b.  $y = 1, f(x) = 0.5$
+    c.  $y = 1, f(x) = -1$
+    d.  $y = -1, f(x) = -2$
+    e.  $y = -1, f(x) = 0.8$
+    f.  $y = -1, f(x) = 1.5$
+    Commentez les différences observées entre les deux fonctions de perte.
 
-**Questions :**
+## Correction Pas-à-Pas
 
-1.  Démontrer formellement que la perte logistique est **Fisher consistante** par rapport à la perte 0-1 pour la classification binaire. C'est-à-dire, montrer que le minimiseur du risque conditionnel de la perte logistique, $v^*(x) = \arg\min_{v \in \mathbb{R}} \mathbb{E}[\phi(Y, v)|X=x]$, conduit à un classifieur $f^*(x) = \text{sgn}(v^*(x))$ qui est égal au classifieur de Bayes optimal $f_{01}^*(x)$ (à des points de mesure nulle près si $P(Y=1|X=x)=1/2$).
-2.  Interpréter le résultat $v^*(x)$ en termes de **calibration** du modèle.
+**Partie 1 : Classifieur de Bayes Optimal (0-1 loss)**
 
----
+Le classifieur de Bayes optimal $h^*(x)$ minimise le risque conditionnel $R(h|x) = E[\ell_{0-1}(Y, h(x))|X=x]$ pour chaque valeur de $x$.
+Pour la fonction de perte 0-1, le risque conditionnel est donné par :
+$R(h|x) = P(Y \neq h(x)|X=x)$
 
-### Correction
+Pour un $x$ donné, nous devons choisir $h(x) \in \{-1, 1\}$ pour minimiser $P(Y \neq h(x)|X=x)$.
+Si nous choisissons $h(x) = 1$, le risque est $P(Y = -1|X=x)$.
+Si nous choisissons $h(x) = -1$, le risque est $P(Y = 1|X=x)$.
 
-#### Question 1 : Démonstration de la consistance de Fisher de la perte logistique
+Le classifieur de Bayes optimal $h^*(x)$ est donc défini par la règle de décision suivante :
+$h^*(x) = \begin{cases} 1 & \text{si } P(Y=1|X=x) \ge P(Y=-1|X=x) \\ -1 & \text{si } P(Y=1|X=x) < P(Y=-1|X=x) \end{cases}$
 
-Soient $(\mathcal{X}, \mathcal{A})$ un espace mesurable pour les caractéristiques $X$, et $\mathcal{Y} = \{-1, 1\}$ pour les étiquettes $Y$.
-Soit $P$ la mesure de probabilité sur $(\mathcal{X} \times \mathcal{Y}, \mathcal{A} \otimes \mathcal{P}(\mathcal{Y}))$ qui régit la distribution du couple $(X, Y)$.
-On note $\eta(x) = P(Y=1|X=x)$ la probabilité a posteriori conditionnelle.
-Le classifieur de Bayes optimal pour la perte 0-1 est donné par $f_{01}^*(x) = \text{sgn}(2\eta(x)-1)$, où par convention $\text{sgn}(0)$ peut être arbitrairement défini comme $1$ ou $-1$.
+Nous utilisons le théorème de Bayes pour exprimer les probabilités a posteriori en fonction des probabilités a priori et des densités conditionnelles :
+$P(Y=1|X=x) = \frac{p(x|Y=1)P(Y=1)}{p(x)}$
+$P(Y=-1|X=x) = \frac{p(x|Y=-1)P(Y=-1)}{p(x)}$
+où $p(x) = p(x|Y=1)P(Y=1) + p(x|Y=-1)P(Y=-1)$ est la densité marginale de $X$.
 
-La perte logistique est définie par $\phi(y, v) = \log(1 + e^{-yv})$ pour $y \in \{-1, 1\}$ et $v \in \mathbb{R}$.
+En substituant ces expressions dans la règle de décision :
+$h^*(x) = \begin{cases} 1 & \text{si } \frac{p(x|Y=1)P(Y=1)}{p(x)} \ge \frac{p(x|Y=-1)P(Y=-1)}{p(x)} \\ -1 & \text{si } \frac{p(x|Y=1)P(Y=1)}{p(x)} < \frac{p(x|Y=-1)P(Y=-1)}{p(x)} \end{cases}$
 
-Nous cherchons à trouver $v^*(x) = \arg\min_{v \in \mathbb{R}} \mathbb{E}[\phi(Y, v)|X=x]$.
-Le risque conditionnel de la perte logistique pour un $x$ fixe est :
-$$ R_{\phi}(v|x) = \mathbb{E}[\phi(Y, v)|X=x] $$
-En utilisant la définition de l'espérance conditionnelle pour une variable aléatoire discrète $Y$:
-$$ R_{\phi}(v|x) = P(Y=1|X=x) \phi(1, v) + P(Y=-1|X=x) \phi(-1, v) $$
-En substituant $\eta(x)$ et la définition de $\phi$:
-$$ R_{\phi}(v|x) = \eta(x) \log(1 + e^{-1 \cdot v}) + (1 - \eta(x)) \log(1 + e^{-(-1) \cdot v}) $$
-$$ R_{\phi}(v|x) = \eta(x) \log(1 + e^{-v}) + (1 - \eta(x)) \log(1 + e^{v}) $$
+Puisque la densité marginale $p(x)$ est positive, nous pouvons multiplier les deux côtés de l'inégalité par $p(x)$ sans changer le sens de l'inégalité :
+$h^*(x) = \begin{cases} 1 & \text{si } p(x|Y=1)P(Y=1) \ge p(x|Y=-1)P(Y=-1) \\ -1 & \text{si } p(x|Y=1)P(Y=1) < p(x|Y=-1)P(Y=-1) \end{cases}$
 
-Pour trouver le minimiseur $v^*(x)$, nous devons calculer la dérivée de $R_{\phi}(v|x)$ par rapport à $v$ et l'égaler à zéro.
-La fonction $\log(1+e^{-v})$ a pour dérivée :
-$$ \frac{d}{dv} \log(1+e^{-v}) = \frac{1}{1+e^{-v}} \cdot (-e^{-v}) = \frac{-e^{-v}}{1+e^{-v}} = \frac{-1}{e^v+1} $$
-La fonction $\log(1+e^{v})$ a pour dérivée :
-$$ \frac{d}{dv} \log(1+e^{v}) = \frac{1}{1+e^{v}} \cdot (e^{v}) = \frac{e^{v}}{1+e^{v}} $$
+En utilisant les probabilités a priori données $P(Y=1) = \pi$ et $P(Y=-1) = 1-\pi$ :
+$h^*(x) = \begin{cases} 1 & \text{si } p(x|Y=1)\pi \ge p(x|Y=-1)(1-\pi) \\ -1 & \text{si } p(x|Y=1)\pi < p(x|Y=-1)(1-\pi) \end{cases}$
 
-Maintenant, calculons la dérivée de $R_{\phi}(v|x)$ par rapport à $v$:
-$$ \frac{\partial}{\partial v} R_{\phi}(v|x) = \eta(x) \left( \frac{-1}{e^v+1} \right) + (1 - \eta(x)) \left( \frac{e^{v}}{e^{v}+1} \right) $$
-Pour trouver le minimiseur, nous fixons cette dérivée à zéro :
-$$ \frac{-\eta(x)}{e^v+1} + \frac{(1 - \eta(x))e^{v}}{e^{v}+1} = 0 $$
-Puisque $e^v+1 > 0$ pour tout $v \in \mathbb{R}$, nous pouvons multiplier par $e^v+1$:
-$$ -\eta(x) + (1 - \eta(x))e^{v} = 0 $$
-$$ (1 - \eta(x))e^{v} = \eta(x) $$
+**Partie 2 : Risque de Bayes**
 
-Deux cas se présentent :
-1.  Si $\eta(x) = 1$, alors $0 \cdot e^v = 1$, ce qui est impossible. Cependant, si $\eta(x)=1$, alors $P(Y=-1|X=x)=0$, et le risque conditionnel est $\log(1+e^{-v})$. Sa dérivée est $\frac{-1}{e^v+1}$ qui ne peut être nulle. Dans ce cas, $v \to \infty$ minimise la perte logistique, car $\log(1+e^{-v}) \to \log(1) = 0$ quand $v \to \infty$. Si $v^*(x) = \infty$, alors $\text{sgn}(v^*(x))=1$. Le classifieur de Bayes optimal est $f_{01}^*(x) = \text{sgn}(2(1)-1) = \text{sgn}(1) = 1$. Il y a consistance.
-2.  Si $\eta(x) = 0$, alors $1 \cdot e^v = 0$, ce qui est impossible. Cependant, si $\eta(x)=0$, alors $P(Y=1|X=x)=0$, et le risque conditionnel est $\log(1+e^v)$. Sa dérivée est $\frac{e^v}{e^v+1}$ qui ne peut être nulle. Dans ce cas, $v \to -\infty$ minimise la perte logistique, car $\log(1+e^{v}) \to \log(1) = 0$ quand $v \to -\infty$. Si $v^*(x) = -\infty$, alors $\text{sgn}(v^*(x))=-1$. Le classifieur de Bayes optimal est $f_{01}^*(x) = \text{sgn}(2(0)-1) = \text{sgn}(-1) = -1$. Il y a consistance.
+Le risque de Bayes $R(h^*)$ est le risque attendu du classifieur de Bayes optimal.
+$R(h^*) = E[\ell_{0-1}(Y, h^*(X))]$
+Par la loi de l'espérance totale, nous pouvons écrire :
+$R(h^*) = \int_{\mathbb{R}^d} E[\ell_{0-1}(Y, h^*(X))|X=x] p(x) dx$
+$R(h^*) = \int_{\mathbb{R}^d} P(Y \neq h^*(x)|X=x) p(x) dx$
+Pour chaque $x$, le classifieur de Bayes $h^*(x)$ est choisi pour minimiser $P(Y \neq h(x)|X=x)$.
+Donc, $P(Y \neq h^*(x)|X=x) = \min(P(Y=1|X=x), P(Y=-1|X=x))$.
 
-3.  Si $0 < \eta(x) < 1$:
-    $$ e^{v^*(x)} = \frac{\eta(x)}{1 - \eta(x)} $$
-    En prenant le logarithme naturel des deux côtés :
-    $$ v^*(x) = \log\left(\frac{\eta(x)}{1 - \eta(x)}\right) $$
-    Pour vérifier que c'est bien un minimum, on peut calculer la seconde dérivée :
-    $$ \frac{\partial^2}{\partial v^2} R_{\phi}(v|x) = \frac{\partial}{\partial v} \left( \frac{-\eta(x) + (1 - \eta(x))e^{v}}{e^{v}+1} \right) $$
-    $$ = \frac{(1-\eta(x))e^v(e^v+1) - ( (1-\eta(x))e^v - \eta(x) )e^v}{(e^v+1)^2} $$
-    $$ = \frac{e^v}{(e^v+1)^2} [ (1-\eta(x))(e^v+1) - ((1-\eta(x))e^v - \eta(x)) ] $$
-    $$ = \frac{e^v}{(e^v+1)^2} [ (1-\eta(x))e^v + (1-\eta(x)) - (1-\eta(x))e^v + \eta(x) ] $$
-    $$ = \frac{e^v}{(e^v+1)^2} [ 1-\eta(x) + \eta(x) ] = \frac{e^v}{(e^v+1)^2} $$
-    Puisque $\frac{e^v}{(e^v+1)^2} > 0$ pour tout $v \in \mathbb{R}$, le point critique est bien un minimum.
+Ainsi, le risque de Bayes est :
+$R(h^*) = \int_{\mathbb{R}^d} \min(P(Y=1|X=x), P(Y=-1|X=x)) p(x) dx$
 
-Maintenant, nous devons vérifier si $\text{sgn}(v^*(x))$ est égal à $f_{01}^*(x)$.
-$$ \text{sgn}(v^*(x)) = \text{sgn}\left(\log\left(\frac{\eta(x)}{1 - \eta(x)}\right)\right) $$
-Le signe d'une valeur $u$ est positif si $u > 0$, négatif si $u < 0$, et nul si $u=0$.
-1.  Si $\frac{\eta(x)}{1 - \eta(x)} > 1$:
-    Ceci implique $\eta(x) > 1 - \eta(x)$, ce qui signifie $2\eta(x) > 1$, ou $\eta(x) > 1/2$.
-    Dans ce cas, $\log\left(\frac{\eta(x)}{1 - \eta(x)}\right) > 0$, donc $\text{sgn}(v^*(x)) = 1$.
-    Le classifieur de Bayes optimal est $f_{01}^*(x) = \text{sgn}(2\eta(x)-1) = \text{sgn}(>0) = 1$.
-2.  Si $\frac{\eta(x)}{1 - \eta(x)} < 1$:
-    Ceci implique $\eta(x) < 1 - \eta(x)$, ce qui signifie $2\eta(x) < 1$, ou $\eta(x) < 1/2$.
-    Dans ce cas, $\log\left(\frac{\eta(x)}{1 - \eta(x)}\right) < 0$, donc $\text{sgn}(v^*(x)) = -1$.
-    Le classifieur de Bayes optimal est $f_{01}^*(x) = \text{sgn}(2\eta(x)-1) = \text{sgn}(<0) = -1$.
-3.  Si $\frac{\eta(x)}{1 - \eta(x)} = 1$:
-    Ceci implique $\eta(x) = 1 - \eta(x)$, ce qui signifie $2\eta(x) = 1$, ou $\eta(x) = 1/2$.
-    Dans ce cas, $\log\left(\frac{\eta(x)}{1 - \eta(x)}\right) = \log(1) = 0$, donc $v^*(x) = 0$.
-    Le classifieur de Bayes optimal est $f_{01}^*(x) = \text{sgn}(2\eta(x)-1) = \text{sgn}(0)$. Dans ce cas, la perte 0-1 est la même quelle que soit la classe prédite.
+En utilisant la relation $P(Y=y|X=x)p(x) = p(x|Y=y)P(Y=y)$ :
+$R(h^*) = \int_{\mathbb{R}^d} \min(p(x|Y=1)P(Y=1), p(x|Y=-1)P(Y=-1)) dx$
 
-En résumé, si l'on ignore le cas $\eta(x)=1/2$ (qui est un ensemble de mesure nulle pour les distributions continues, ou un cas d'égalité où la prédiction n'affecte pas le risque de Bayes), nous avons montré que $\text{sgn}(v^*(x)) = f_{01}^*(x)$.
-Par conséquent, la perte logistique est Fisher consistante.
+En substituant les probabilités a priori $P(Y=1) = \pi$ et $P(Y=-1) = 1-\pi$ :
+$R(h^*) = \int_{\mathbb{R}^d} \min(p(x|Y=1)\pi, p(x|Y=-1)(1-\pi)) dx$
 
-#### Question 2 : Interprétation en termes de calibration
+**Partie 3 : Fonction de Perte Substitut (Hinge Loss)**
 
-Le résultat $v^*(x) = \log\left(\frac{\eta(x)}{1 - \eta(x)}\right)$ est extrêmement significatif. C'est le **log-odds** de la probabilité conditionnelle $\eta(x) = P(Y=1|X=x)$.
+Nous calculons la perte 0-1 $\ell_{0-1}(y, \text{sgn}(f(x)))$ et la perte charnière $\ell_{hinge}(y, f(x)) = \max(0, 1 - y f(x))$ pour les cas donnés.
 
-On peut résoudre cette équation pour $\eta(x)$:
-$$ e^{v^*(x)} = \frac{\eta(x)}{1 - \eta(x)} $$
-$$ (1 - \eta(x))e^{v^*(x)} = \eta(x) $$
-$$ e^{v^*(x)} - \eta(x)e^{v^*(x)} = \eta(x) $$
-$$ e^{v^*(x)} = \eta(x) (1 + e^{v^*(x)}) $$
-$$ \eta(x) = \frac{e^{v^*(x)}}{1 + e^{v^*(x)}} $$
-Cette expression est précisément la fonction sigmoïde logistique standard, souvent notée $\sigma(v^*(x))$.
+a.  $y = 1, f(x) = 2$
+    $\hat{y} = \text{sgn}(2) = 1$
+    $\ell_{0-1}(1, 1) = \mathbb{I}(1 \neq 1) = 0$
+    $\ell_{hinge}(1, 2) = \max(0, 1 - (1)(2)) = \max(0, 1 - 2) = \max(0, -1) = 0$
 
-Cela signifie que le minimiseur $v^*(x)$ du risque conditionnel de la perte logistique n'est pas seulement un score dont le signe donne le classifieur optimal, mais il est une transformation directe de la probabilité a posteriori $\eta(x)$. Plus précisément, $v^*(x)$ modélise le log-odds de la probabilité de la classe positive.
+b.  $y = 1, f(x) = 0.5$
+    $\hat{y} = \text{sgn}(0.5) = 1$
+    $\ell_{0-1}(1, 1) = \mathbb{I}(1 \neq 1) = 0$
+    $\ell_{hinge}(1, 0.5) = \max(0, 1 - (1)(0.5)) = \max(0, 1 - 0.5) = \max(0, 0.5) = 0.5$
 
-Un modèle est dit **calibré** si ses sorties de probabilité correspondent aux probabilités réelles des événements. Pour un classifieur qui sort un score $g(x) \in \mathbb{R}$, on dit que le modèle est bien calibré si $P(Y=1|g(X)=v) = \sigma(v)$ pour tout $v \in \mathbb{R}$ dans le support de $g(X)$.
-Le fait que $v^*(x)$ soit précisément le log-odds de $\eta(x)$ indique que si un modèle est capable de minimiser parfaitement la perte logistique conditionnelle, alors ses sorties (les $v^*(x)$) sont directement interprétables comme les log-odds des probabilités conditionnelles vraies. En appliquant la fonction sigmoïde à $v^*(x)$, on obtient une estimation directe de $P(Y=1|X=x)$.
+c.  $y = 1, f(x) = -1$
+    $\hat{y} = \text{sgn}(-1) = -1$
+    $\ell_{0-1}(1, -1) = \mathbb{I}(1 \neq -1) = 1$
+    $\ell_{hinge}(1, -1) = \max(0, 1 - (1)(-1)) = \max(0, 1 + 1) = \max(0, 2) = 2$
 
-Par conséquent, la perte logistique encourage non seulement la consistance de Fisher pour la classification (c'est-à-dire, trouver le bon classifieur), mais elle promeut également la **calibration** des scores de sortie, en les forçant à s'aligner sur les log-odds des probabilités a posteriori. C'est une propriété plus forte que la simple consistance de Fisher et est très utile lorsque l'on souhaite des estimations de probabilités fiables en plus des classifications.
+d.  $y = -1, f(x) = -2$
+    $\hat{y} = \text{sgn}(-2) = -1$
+    $\ell_{0-1}(-1, -1) = \mathbb{I}(-1 \neq -1) = 0$
+    $\ell_{hinge}(-1, -2) = \max(0, 1 - (-1)(-2)) = \max(0, 1 - 2) = \max(0, -1) = 0$
+
+e.  $y = -1, f(x) = 0.8$
+    $\hat{y} = \text{sgn}(0.8) = 1$
+    $\ell_{0-1}(-1, 1) = \mathbb{I}(-1 \neq 1) = 1$
+    $\ell_{hinge}(-1, 0.8) = \max(0, 1 - (-1)(0.8)) = \max(0, 1 + 0.8) = \max(0, 1.8) = 1.8$
+
+f.  $y = -1, f(x) = 1.5$
+    $\hat{y} = \text{sgn}(1.5) = 1$
+    $\ell_{0-1}(-1, 1) = \mathbb{I}(-1 \neq 1) = 1$
+    $\ell_{hinge}(-1, 1.5) = \max(0, 1 - (-1)(1.5)) = \max(0, 1 + 1.5) = \max(0, 2.5) = 2.5$
+
+**Commentaires sur les différences observées :**
+
+*   **Classification correcte avec forte confiance (cas a, d) :** Lorsque le produit $y f(x) \ge 1$, cela signifie que le classifieur $\hat{y} = \text{sgn}(f(x))$ prédit la bonne classe ($y = \hat{y}$) et que la magnitude du score $f(x)$ est suffisamment grande dans la bonne direction. Dans ces situations, la perte 0-1 est nulle, et la perte charnière est également nulle. Les deux fonctions de perte sont en accord.
+
+*   **Classification correcte avec faible confiance (cas b) :** Lorsque $0 < y f(x) < 1$, le classifieur $\hat{y} = \text{sgn}(f(x))$ prédit la bonne classe ($y = \hat{y}$), ce qui entraîne une perte 0-1 de 0. Cependant, la perte charnière est positive (0.5 dans l'exemple b). Cela indique que la perte charnière pénalise les classifications correctes qui ne sont pas faites avec une "marge" suffisante (le score $f(x)$ est du bon signe mais sa valeur absolue est inférieure à 1). Elle encourage le modèle à produire des scores $f(x)$ dont la valeur absolue est grande et du bon signe, afin d'augmenter la confiance dans la prédiction.
+
+*   **Classification incorrecte (cas c, e, f) :** Lorsque $\text{sgn}(f(x)) \neq y$, le classifieur prédit la mauvaise classe, ce qui entraîne une perte 0-1 de 1. La perte charnière est également positive et, dans ces exemples, est supérieure ou égale à 1.
+    *   La perte charnière pénalise d'autant plus l'erreur que le score $f(x)$ est "confiant" dans la mauvaise direction. Par exemple, dans le cas (f) où $y=-1$ et $f(x)=1.5$, le modèle prédit fortement la classe 1 alors que la vraie classe est -1. La perte charnière est de 2.5. Dans le cas (e) où $y=-1$ et $f(x)=0.8$, le modèle prédit la classe 1 avec une confiance moindre, et la perte charnière est de 1.8.
+    *   La perte charnière est donc plus sensible à la magnitude et au signe du score $f(x)$ que la perte 0-1, qui ne considère que la classification finale correcte ou incorrecte.
+
+En résumé, la perte charnière est une fonction de perte substitut convexe et continue qui sert de proxy à la perte 0-1. Elle présente les caractéristiques suivantes :
+1.  Elle est nulle pour les classifications correctes avec une marge suffisante ($y f(x) \ge 1$).
+2.  Elle pénalise linéairement les classifications correctes avec une marge insuffisante ($0 < y f(x) < 1$), encourageant le modèle à être plus confiant.
+3.  Elle pénalise linéairement les classifications incorrectes, avec une pénalité d'autant plus grande que la prédiction est "fausse" et "confiante" ($y f(x) \le 0$).
+Cette propriété de convexité et de continuité rend la perte charnière plus facile à optimiser que la perte 0-1, qui est non-convexe et non-différentiable, ce qui est crucial pour l'apprentissage de modèles comme les machines à vecteurs de support (SVM).
