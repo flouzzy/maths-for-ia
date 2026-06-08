@@ -1,20 +1,24 @@
-# Exercice 6 : Croissance polynomiale
-**Énoncé :** Soit $\mathcal{H}$ une classe de fonctions de dimension VC égale à $d$. Le lemme de Sauer affirme que $\Pi_{\mathcal{H}}(n) \le \sum_{i=0}^d \binom{n}{i}$. Démontrer que pour $n \ge d$, $\sum_{i=0}^d \binom{n}{i} \le \left(\frac{en}{d}\right)^d$.
-
+# Exercice 6 : Dimension VC des demi-espaces en 2D
+**Énoncé :** Soit $\mathcal{X} = \mathbb{R}^2$. Prouver que la classe des demi-espaces fermés délimités par des droites a une dimension VC de 3.
 **Correction Détaillée :**
-* *Analyse de l'énoncé :* On cherche à majorer une somme partielle de coefficients binomiaux par une expression puissance simple. Cette astuce est classique en théorie de l'apprentissage pour obtenir une borne gérable.
+* *Analyse de l'énoncé :* L'équation d'un demi-espace est $\omega_1 x_1 + \omega_2 x_2 + b \ge 0$.
 * *Résolution pas-à-pas :*
-  1. Partons de la somme $\sum_{i=0}^d \binom{n}{i}$. Puisque $n \ge d$, nous avons pour tout $0 \le i \le d$, $\left(\frac{n}{d}\right)^{d-i} \ge 1$.
-  2. Nous pouvons donc multiplier chaque terme de la somme par ce facteur qui est supérieur ou égal à 1 :
-     $$ \sum_{i=0}^d \binom{n}{i} \le \sum_{i=0}^d \binom{n}{i} \left(\frac{n}{d}\right)^{d-i} $$
-  3. Factorisons le terme $\left(\frac{n}{d}\right)^d$ à droite de la somme :
-     $$ \sum_{i=0}^d \binom{n}{i} \left(\frac{n}{d}\right)^{-i} \left(\frac{n}{d}\right)^d = \left(\frac{n}{d}\right)^d \sum_{i=0}^d \binom{n}{i} \left(\frac{d}{n}\right)^i $$
-  4. Observons la somme restante. Tous ses termes sont positifs, on peut donc la majorer en étendant la somme jusqu'à $n$ (puisque $\binom{n}{i}=0$ pour $i>n$ et on ajoute des termes positifs) :
-     $$ \sum_{i=0}^d \binom{n}{i} \left(\frac{d}{n}\right)^i \le \sum_{i=0}^n \binom{n}{i} \left(\frac{d}{n}\right)^i 1^{n-i} $$
-  5. On reconnaît le développement du binôme de Newton $(x+y)^n = \sum_{i=0}^n \binom{n}{i} x^i y^{n-i}$ avec $x = \frac{d}{n}$ et $y = 1$ :
-     $$ \sum_{i=0}^n \binom{n}{i} \left(\frac{d}{n}\right)^i 1^{n-i} = \left(1 + \frac{d}{n}\right)^n $$
-  6. On utilise maintenant l'inégalité fondamentale $1 + x \le e^x$ pour tout $x \in \mathbb{R}$. En posant $x = \frac{d}{n}$ :
-     $$ \left(1 + \frac{d}{n}\right)^n \le \left(e^{d/n}\right)^n = e^d $$
-  7. En rassemblant les inégalités :
-     $$ \sum_{i=0}^d \binom{n}{i} \le \left(\frac{n}{d}\right)^d e^d = \left(\frac{en}{d}\right)^d $$
-  8. Ce qui achève la démonstration.
+**Étape 1 : Pulvérisation de trois points.**
+Choisissons 3 points non alignés : $p_1=(0,0), p_2=(1,0), p_3=(0,1)$.
+Leurs 8 sous-ensembles peuvent être obtenus par des droites :
+- $\emptyset$ : $x_1 + x_2 \le -1$.
+- $\{p_1\}$ : $x_1 + x_2 \le 0.5$.
+- $\{p_2\}$ : $x_1 - x_2 \ge 0.5$.
+- $\{p_3\}$ : $-x_1 + x_2 \ge 0.5$.
+- $\{p_1, p_2\}$ : $x_2 \le 0.5$.
+- $\{p_1, p_3\}$ : $x_1 \le 0.5$.
+- $\{p_2, p_3\}$ : $x_1 + x_2 \ge 0.5$.
+- $\{p_1, p_2, p_3\}$ : $x_1 + x_2 \ge -1$.
+Ainsi, au moins un ensemble de 3 points est pulvérisable. $VC \ge 3$.
+
+**Étape 2 : Impossibilité pour quatre points.**
+Soient 4 points quelconques dans $\mathbb{R}^2$. Deux cas géométriques existent par le théorème de Radon :
+Cas 1 : Un point est à l'intérieur du triangle formé par les 3 autres. Soit $p_4$ dans le triangle $(p_1, p_2, p_3)$. Pour isoler $\{p_1, p_2, p_3\}$, le demi-espace doit inclure les 3 sommets. Par convexité, tout le triangle est inclus, donc $p_4$ aussi. Il est impossible de former $\{p_1, p_2, p_3\}$.
+Cas 2 : Les 4 points forment un quadrilatère convexe $p_1, p_2, p_3, p_4$. Prenons les points opposés $\{p_1, p_3\}$. Tout demi-espace contenant $p_1$ et $p_3$ contient nécessairement le segment $[p_1, p_3]$. Puisque les diagonales se croisent, toute droite séparant $p_1, p_3$ de $p_2, p_4$ devrait traverser les deux diagonales en leur point d'intersection, ce qui implique que la droite passe par le point d'intersection. Les segments $[p_1, p_3]$ et $[p_2, p_4]$ s'intersectent. Un demi-espace contenant $p_1$ et $p_3$ est convexe, il contient le segment $[p_1, p_3]$. Un demi-espace fermé opposé contenant $p_2$ et $p_4$ contient $[p_2, p_4]$. L'intersection des deux diagonales serait à la fois dans le demi-espace et dans son complément, ce qui est absurde.
+Ainsi, aucun ensemble de 4 points ne peut être pulvérisé.
+$VC(\mathcal{F}) = 3$. $\blacksquare$

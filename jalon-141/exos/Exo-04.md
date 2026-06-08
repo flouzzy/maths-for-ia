@@ -1,22 +1,23 @@
-# Exercice 4 : Classe de Glivenko-Cantelli unitaire
-**Énoncé :** Soit $\mathcal{H} = \{h_0\}$ une classe de fonctions contenant une unique fonction mesurable $h_0: \mathcal{Z} \to \{0, 1\}$. Montrer que $\mathcal{H}$ est une classe de Glivenko-Cantelli universelle.
-
+# Exercice 4 : Dimension VC des intervalles ouverts
+**Énoncé :** Soit $\mathcal{X} = \mathbb{R}$. Montrer que la classe $\mathcal{F} = \{ (a, b) \mid a, b \in \mathbb{R}, a < b \}$ a une dimension VC égale à 2.
 **Correction Détaillée :**
-* *Analyse de l'énoncé :* On doit revenir à la définition de base d'une classe de Glivenko-Cantelli, en considérant le cas le plus simple possible : un ensemble contenant un seul élément.
+* *Analyse de l'énoncé :* On doit pulvériser au moins un ensemble de 2 points, et montrer qu'aucun ensemble de 3 points n'est pulvérisable.
 * *Résolution pas-à-pas :*
-  1. Par définition, nous devons montrer que pour toute distribution $\mathcal{P}$ :
-     $$\lim_{n \to \infty} \sup_{h \in \mathcal{H}} |R_n(h) - R(h)| = 0 \quad \text{presque sûrement.}$$
-  2. Puisque la classe ne contient que la fonction $h_0$, le supremum sur $\mathcal{H}$ se réduit à l'évaluation en $h_0$ :
-     $$\sup_{h \in \mathcal{H}} |R_n(h) - R(h)| = |R_n(h_0) - R(h_0)|$$
-  3. Rappelons les définitions pour $h_0$ :
-     - $R(h_0) = \mathbb{E}_{Z \sim \mathcal{P}}[h_0(Z)]$
-     - $R_n(h_0) = \frac{1}{n} \sum_{i=1}^n h_0(Z_i)$
-  4. Les variables aléatoires $Y_i = h_0(Z_i)$ sont indépendantes, identiquement distribuées, et possèdent une espérance finie $\mathbb{E}[Y_1] = R(h_0)$ (car elles sont bornées entre 0 et 1).
-  5. Par conséquent, on peut appliquer la Loi Forte des Grands Nombres de Kolmogorov à la suite $(Y_i)_{i \ge 1}$.
-  6. La Loi Forte affirme que la moyenne empirique converge vers l'espérance mathématique presque sûrement :
-     $$\lim_{n \to \infty} \frac{1}{n} \sum_{i=1}^n Y_i = \mathbb{E}[Y_1] \quad \text{p.s.}$$
-  7. En remplaçant par nos notations :
-     $$\lim_{n \to \infty} R_n(h_0) = R(h_0) \quad \text{p.s.}$$
-  8. Ce qui équivaut exactement à :
-     $$\lim_{n \to \infty} |R_n(h_0) - R(h_0)| = 0 \quad \text{p.s.}$$
-  9. La condition de Glivenko-Cantelli est donc satisfaite pour toute distribution $\mathcal{P}$. $\mathcal{H}$ est bien une classe de Glivenko-Cantelli universelle.
+**Étape 1 : Pulvérisation de deux points.**
+Soit $S = \{1, 2\}$.
+- Pour $\emptyset$, choisissons l'intervalle $(3, 4)$. $(3, 4) \cap \{1, 2\} = \emptyset$.
+- Pour $\{1\}$, choisissons $(0, 1.5)$. $(0, 1.5) \cap \{1, 2\} = \{1\}$.
+- Pour $\{2\}$, choisissons $(1.5, 3)$. $(1.5, 3) \cap \{1, 2\} = \{2\}$.
+- Pour $\{1, 2\}$, choisissons $(0, 3)$. $(0, 3) \cap \{1, 2\} = \{1, 2\}$.
+Donc $VC(\mathcal{F}) \ge 2$.
+
+**Étape 2 : Impossibilité pour trois points.**
+Soit $S = \{x_1, x_2, x_3\}$ avec $x_1 < x_2 < x_3$.
+Pour pulvériser $S$, nous devons pouvoir isoler le sous-ensemble $T = \{x_1, x_3\}$.
+Il faudrait donc trouver $a$ et $b$ tels que $(a, b) \cap \{x_1, x_2, x_3\} = \{x_1, x_3\}$.
+Cela implique $x_1 \in (a, b)$ et $x_3 \in (a, b)$, donc $a < x_1$ et $x_3 < b$.
+Puisque $x_1 < x_2 < x_3$, on a nécessairement $a < x_1 < x_2 < x_3 < b$.
+Par conséquent, $x_2$ doit obligatoirement appartenir à $(a, b)$.
+Il est donc mathématiquement impossible de former $\{x_1, x_3\}$ sans y inclure $x_2$.
+Aucun ensemble de 3 points ne peut être pulvérisé.
+Conclusion : $VC(\mathcal{F}) = 2$. $\blacksquare$

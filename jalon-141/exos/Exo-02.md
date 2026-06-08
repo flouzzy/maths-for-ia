@@ -1,18 +1,20 @@
-# Exercice 2 : Inégalité de Hoeffding pour une fonction indicatrice
-**Énoncé :** Soit $\mathcal{Z} = \mathbb{R}$, une probabilité $\mathcal{P}$ de fonction de répartition $F(t) = \mathcal{P}(Z \le t)$, et la fonction $h_t(z) = \mathbb{I}_{z \le t}$ pour un réel $t$ fixé. En utilisant l'inégalité de Hoeffding, démontrer une borne supérieure sur la probabilité que l'écart absolu entre la fonction de répartition empirique $F_n(t)$ et la fonction de répartition réelle $F(t)$ dépasse un certain $\epsilon > 0$.
-
+# Exercice 2 : Inégalité de Hoeffding
+**Énoncé :** Soient $X_1, \dots, X_n$ des variables aléatoires indépendantes telles que $X_i \in [0, 1]$ presque sûrement. Démontrer l'inégalité de Hoeffding pour $S_n = \sum_{i=1}^n X_i$.
 **Correction Détaillée :**
-* *Analyse de l'énoncé :* On se place en un point fixé $t \in \mathbb{R}$. La variable aléatoire d'intérêt est $Y_i = h_t(Z_i) = \mathbb{I}_{Z_i \le t}$. C'est une variable de Bernoulli.
+* *Analyse de l'énoncé :* Montrer la borne $P(S_n - \mathbb{E}[S_n] \ge t) \le \exp(-2 t^2 / n)$.
 * *Résolution pas-à-pas :*
-  1. Les variables $Y_i$ sont indépendantes et identiquement distribuées, car les $Z_i$ le le sont.
-  2. L'espérance de $Y_i$ est $\mathbb{E}[Y_i] = \mathbb{P}(Z_i \le t) = F(t)$.
-  3. Les variables $Y_i$ prennent leurs valeurs dans l'intervalle borné $[0, 1]$. Donc $Y_i \in [a, b]$ avec $a=0$ et $b=1$.
-  4. La fonction de répartition empirique est la moyenne empirique des $Y_i$ :
-     $$F_n(t) = \frac{1}{n} \sum_{i=1}^n Y_i$$
-  5. L'inégalité de Hoeffding stipule que pour des variables aléatoires indépendantes $X_1, \dots, X_n$ prenant leurs valeurs dans $[a_i, b_i]$, la moyenne empirique $\bar{X} = \frac{1}{n} \sum X_i$ vérifie :
-     $$\mathbb{P}(|\bar{X} - \mathbb{E}[\bar{X}]| \ge \epsilon) \le 2 \exp\left( -\frac{2 n^2 \epsilon^2}{\sum_{i=1}^n (b_i - a_i)^2} \right)$$
-  6. En appliquant Hoeffding à nos variables $Y_i$ avec $\bar{X} = F_n(t)$ et $\mathbb{E}[\bar{X}] = F(t)$ :
-     $$\mathbb{P}(|F_n(t) - F(t)| \ge \epsilon) \le 2 \exp\left( -\frac{2 n^2 \epsilon^2}{n (1 - 0)^2} \right)$$
-  7. Simplification finale :
-     $$\mathbb{P}(|F_n(t) - F(t)| \ge \epsilon) \le 2 \exp(-2 n \epsilon^2)$$
-     Cette borne montre une décroissance exponentiellement rapide de la probabilité d'un grand écart, mais pour un unique point $t$.
+Soit $\lambda > 0$. Par l'inégalité de Markov sur $e^{\lambda (S_n - \mathbb{E}[S_n])}$ :
+$$P(S_n - \mathbb{E}[S_n] \ge t) = P(e^{\lambda (S_n - \mathbb{E}[S_n])} \ge e^{\lambda t}) \le e^{-\lambda t} \mathbb{E}[e^{\lambda (S_n - \mathbb{E}[S_n])}]$$
+Par indépendance des $X_i$ :
+$$\mathbb{E}[e^{\lambda (S_n - \mathbb{E}[S_n])}] = \prod_{i=1}^n \mathbb{E}[e^{\lambda (X_i - \mathbb{E}[X_i])}]$$
+D'après le lemme de Hoeffding, pour toute variable $Y$ telle que $a \le Y \le b$ presque sûrement avec $\mathbb{E}[Y]=0$, on a $\mathbb{E}[e^{\lambda Y}] \le \exp(\frac{\lambda^2 (b-a)^2}{8})$.
+Ici, $Y_i = X_i - \mathbb{E}[X_i] \in [-\mathbb{E}[X_i], 1-\mathbb{E}[X_i]]$, l'amplitude est $b-a = 1 - 0 = 1$.
+Donc $\mathbb{E}[e^{\lambda Y_i}] \le \exp(\frac{\lambda^2}{8})$.
+En multipliant ces $n$ inégalités :
+$$\prod_{i=1}^n \mathbb{E}[e^{\lambda Y_i}] \le \prod_{i=1}^n e^{\lambda^2 / 8} = e^{n \lambda^2 / 8}$$
+Ainsi :
+$$P(S_n - \mathbb{E}[S_n] \ge t) \le e^{-\lambda t} e^{n \lambda^2 / 8} = \exp\left(-\lambda t + \frac{n \lambda^2}{8}\right)$$
+Pour minimiser cette borne, dérivons par rapport à $\lambda$ : $\frac{d}{d\lambda} (-\lambda t + \frac{n \lambda^2}{8}) = -t + \frac{n \lambda}{4} = 0 \implies \lambda = \frac{4t}{n}$.
+En substituant cette valeur optimale :
+$$\exp\left(-\frac{4t}{n} t + \frac{n}{8} \left(\frac{4t}{n}\right)^2\right) = \exp\left(-\frac{4t^2}{n} + \frac{16nt^2}{8n^2}\right) = \exp\left(-\frac{4t^2}{n} + \frac{2t^2}{n}\right) = \exp\left(-\frac{2t^2}{n}\right)$$
+La preuve est complète. $\blacksquare$

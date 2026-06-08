@@ -1,21 +1,15 @@
-# Exercice 7 : Théorème de Borel-Cantelli
-**Énoncé :** Soit $(A_n)_{n \ge 1}$ une suite d'événements dans un espace probabilisé $(\Omega, \mathcal{F}, \mathbb{P})$. Démontrer le premier lemme de Borel-Cantelli : si $\sum_{n=1}^\infty \mathbb{P}(A_n) < \infty$, alors $\mathbb{P}(\limsup_{n \to \infty} A_n) = 0$.
-
+# Exercice 7 : Lemme de Sauer-Shelah (Définition)
+**Énoncé :** Énoncer le lemme de Sauer-Shelah et calculer la borne pour un espace de dimension $d=3$ avec $n=10$ échantillons.
 **Correction Détaillée :**
-* *Analyse de l'énoncé :* On doit prouver que si la somme des probabilités est finie, alors la probabilité qu'une infinité d'événements se réalisent est nulle.
+* *Analyse de l'énoncé :* Calcul numérique explicite de la formule de borne polynomiale.
 * *Résolution pas-à-pas :*
-  1. On définit la limite supérieure des événements $A_n$ par :
-     $$ \limsup_{n \to \infty} A_n = \bigcap_{N=1}^\infty \bigcup_{n=N}^\infty A_n $$
-     C'est l'événement défini par "pour tout $N$, il existe un $n \ge N$ tel que $A_n$ se réalise".
-  2. Par la continuité décroissante de la mesure de probabilité (puisque la suite $B_N = \bigcup_{n=N}^\infty A_n$ est décroissante par inclusion) :
-     $$ \mathbb{P}\left(\limsup_{n \to \infty} A_n\right) = \lim_{N \to \infty} \mathbb{P}\left(\bigcup_{n=N}^\infty A_n\right) $$
-  3. Par la propriété de sous-additivité (inégalité de Boole) :
-     $$ \mathbb{P}\left(\bigcup_{n=N}^\infty A_n\right) \le \sum_{n=N}^\infty \mathbb{P}(A_n) $$
-  4. L'hypothèse de départ est que la série complète converge, soit $\sum_{n=1}^\infty \mathbb{P}(A_n) = S < \infty$.
-  5. La somme $\sum_{n=N}^\infty \mathbb{P}(A_n)$ correspond au reste d'ordre $N-1$ de cette série convergente.
-  6. Un résultat fondamental d'analyse affirme que le reste d'une série convergente tend vers zéro lorsque l'ordre tend vers l'infini :
-     $$ \lim_{N \to \infty} \sum_{n=N}^\infty \mathbb{P}(A_n) = 0 $$
-  7. En utilisant le fait que les probabilités sont positives ou nulles :
-     $$ 0 \le \mathbb{P}\left(\limsup_{n \to \infty} A_n\right) \le \lim_{N \to \infty} \sum_{n=N}^\infty \mathbb{P}(A_n) = 0 $$
-  8. On obtient bien :
-     $$ \mathbb{P}\left(\limsup_{n \to \infty} A_n\right) = 0 $$
+Le lemme de Sauer-Shelah stipule que pour une classe $\mathcal{F}$ de dimension de Vapnik-Chervonenkis $d$ finie, pour tout $n$, la fonction de croissance vérifie :
+$$S_{\mathcal{F}}(n) \le \sum_{i=0}^d \binom{n}{i}$$
+Et pour $n \ge d$, on a la borne supérieure relâchée :
+$$S_{\mathcal{F}}(n) \le \left( \frac{en}{d} \right)^d$$
+Pour $d = 3$ et $n = 10$, on calcule la valeur exacte de la somme :
+$$\sum_{i=0}^3 \binom{10}{i} = \binom{10}{0} + \binom{10}{1} + \binom{10}{2} + \binom{10}{3}$$
+$$= 1 + 10 + \frac{10 \times 9}{2} + \frac{10 \times 9 \times 8}{3 \times 2 \times 1}$$
+$$= 1 + 10 + 45 + \frac{720}{6}$$
+$$= 56 + 120 = 176$$
+Le nombre maximal de sous-ensembles réalisables par la classe sur $10$ points est $176$, ce qui est massivement inférieur à $2^{10} = 1024$. La classe est donc très restreinte, prouvant que la généralisation est possible. $\blacksquare$
