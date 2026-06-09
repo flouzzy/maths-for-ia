@@ -326,4 +326,5 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-06-07] : Audit & Auto-correction du Jalon 141 - Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - [2026-06-08] : Audit & Auto-correction du Jalon 142 - Processus de décision de Markov. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - [2026-06-09] : Upsert du Jalon 143 - Théorie spectrale des graphes. Status: Terminé.
+- [2026-06-09] : Audit & Auto-correction du Jalon 143 - Théorie spectrale des graphes. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - **Date de mise à jour** : 2026-06-09

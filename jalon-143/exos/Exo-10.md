@@ -56,12 +56,18 @@ $$\lambda_2 = \min_{x \perp \mathbf{1}, x \neq 0} \frac{\sum_{\{i,j\} \in E} (x_
    $R(x) = \frac{x^T L x}{x^T x} \geq \frac{\lambda_2 \sum_{k=2}^n \alpha_k^2}{\sum_{k=2}^n \alpha_k^2} = \lambda_2$
 
 7. **Atteinte du minimum :**
-   Pour montrer que ce minorant est bien le minimum, il suffit de trouver un vecteur $x$ pour lequel l'égalité est vérifiée.
-   Prenons $x = v_2$ (le vecteur propre associé à $\lambda_2$).
-   On a bien $v_2 \perp v_1$, donc $v_2 \perp \mathbf{1}$.
-   Le quotient de Rayleigh pour $v_2$ est :
-   $R(v_2) = \frac{v_2^T L v_2}{v_2^T v_2} = \frac{v_2^T (\lambda_2 v_2)}{1} = \lambda_2 v_2^T v_2 = \lambda_2$
-   Ainsi, le minimum est atteint.
+   Nous avons établi que pour tout vecteur $x$ orthogonal à $\mathbf{1}$, le quotient de Rayleigh est minoré par $\lambda_2$. Pour prouver rigoureusement que cette borne inférieure est le minimum effectif, nous devons construire explicitement un vecteur qui atteint cette borne.
+   Considérons le vecteur propre $v_2$ associé à la valeur propre $\lambda_2$.
+   Par construction de la base orthonormée au moyen du théorème spectral, tous les vecteurs propres sont deux à deux orthogonaux. Ainsi, $v_2$ est orthogonal à $v_1$.
+   Puisque $v_1 = \frac{1}{\sqrt{n}} \mathbf{1}$, cela implique directement que $v_2$ est orthogonal au vecteur constant $\mathbf{1}$ (c'est-à-dire $v_2^T \mathbf{1} = 0$).
+   De plus, $v_2$ est un vecteur propre normalisé, donc sa norme est de $1$ ($v_2^T v_2 = 1$).
+   Évaluons maintenant le quotient de Rayleigh pour ce vecteur spécifique $x = v_2$ :
+   $R(v_2) = \frac{v_2^T L v_2}{v_2^T v_2}$
+   En utilisant l'équation aux valeurs propres $L v_2 = \lambda_2 v_2$, le numérateur devient :
+   $v_2^T L v_2 = v_2^T (\lambda_2 v_2) = \lambda_2 (v_2^T v_2)$
+   En substituant cela dans le quotient de Rayleigh :
+   $R(v_2) = \frac{\lambda_2 (v_2^T v_2)}{v_2^T v_2} = \lambda_2$
+   Nous avons donc identifié un vecteur légitime ($v_2 \perp \mathbf{1}$) pour lequel le quotient de Rayleigh vaut exactement $\lambda_2$. Le minorant est donc atteint et constitue bien le minimum.
 
 8. **Conclusion Finale :**
    En se rappelant de la forme quadratique fondamentale $x^T L x = \sum_{\{i,j\} \in E} (x_i - x_j)^2$,
