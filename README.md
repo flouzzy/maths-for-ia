@@ -292,7 +292,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 139](jalon-139/Jalon-139_Notion_de_stabilite_algorithmique.md)** : Notion de stabilité algorithmique (Bousquet-Elisseeff) et son lien direct avec la capacité de généralisation. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 140](jalon-140/Jalon-140.md)** : Classifieur de Bayes optimal, fonctions de perte de substitution (Surrogate losses) et consistance de la minimisation du risque empirique. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 141](jalon-141/Jalon-141.md)** : Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 142](jalon-142/Jalon%20142%20%28Processus%20de%20d%C3%A9cision%20de%20Markov%29.md)** : Processus de décision de Markov (MDP) sur des espaces d'états continus, opérateurs de contraction de Bellman.
+- **[Jalon 142](jalon-142/Jalon-142.md)** : Processus de décision de Markov (MDP) sur des espaces d'états continus, opérateurs de contraction de Bellman.
 - **[Jalon 143](jalon-143/Jalon%20143%20%28Th%C3%A9orie%20spectrale%20des%20graphes%29.md)** : Théorie spectrale des graphes, laplacien combinatoire, laplacien normalisé et étude des coupures optimales (Min-Cut).
 - **[Jalon 144](jalon-144/Jalon%20144%20%28Le%20ph%C3%A9nom%C3%A8ne%20de%20double%20descente%29.md)** : Le phénomène de double descente : analyse de la rupture de la théorie statistique classique (compromis biais-variance) dans le régime sur-paramétré.
 - **[Jalons 145 à 152](jalon-145-152/Jalons%20145%20%C3%A0%20152%20%28R%C3%A9daction%20d%27un%20article%20de%20recherche%20th%C3%A9orique%20de%20synth%C3%A8se%20analysant%20les%20garanties%20de%20g%C3%A9n%C3%A9ralisation%20PAC%20d%27une%20couche%20d%27attention%20multi-t%C3%AAtes.%29.md)** : Rédaction d'un article de recherche théorique de synthèse analysant les garanties de généralisation PAC d'une couche d'attention multi-têtes.
@@ -321,7 +321,8 @@ python3 -m unittest test_generate_jalons.py
 ## 📝 Historique & Avancement
 
 Le cursus est enrichi jalon par jalon de manière progressive :
-- **Dernier Jalon Enrichi** : [Jalon 141 - Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC](jalon-141/Jalon-141.md) (Cours complet, 10 exercices avancés, 5 TP d'implémentation pure Python).
+- **Dernier Jalon Enrichi** : [Jalon 142 - Processus de décision de Markov](jalon-142/Jalon-142.md) (Cours complet, 10 exercices avancés, 5 TP d'implémentation pure Python).
 - [2026-06-06] : Upsert du Jalon 140 - Classifieur de Bayes optimal. Status: Terminé.
 - [2026-06-07] : Audit & Auto-correction du Jalon 141 - Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC. Statut : Validé et Fixé. Prêt pour le jalon suivant.
-- **Date de mise à jour** : 2026-06-07
+- [2026-06-08] : Audit & Auto-correction du Jalon 142 - Processus de décision de Markov. Statut : Validé et Fixé. Prêt pour le jalon suivant.
+- **Date de mise à jour** : 2026-06-09

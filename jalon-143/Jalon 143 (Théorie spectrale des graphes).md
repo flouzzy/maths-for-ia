@@ -8,4 +8,4 @@
 Théorie spectrale des graphes, laplacien combinatoire, laplacien normalisé et étude des coupures optimales (Min-Cut).
 
 ---
-**Précédent** : [[Jalon 142 (Processus de décision de Markov)]] | **Suivant** : [[Jalon 144 (Le phénomène de double descente)]]
+**Précédent** : [[Jalon-142]] | **Suivant** : [[Jalon 144 (Le phénomène de double descente)]]
