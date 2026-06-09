@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "jalon-3/Jalon 3 (Quantification).md",
+                "file": "jalon-1/Jalon 1 (Logique formelle).md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Jalon 3 (Quantification)"
+              "title": "Jalon 1 (Logique formelle)"
             }
           }
         ]
@@ -221,8 +221,13 @@
   },
   "active": "8ceda288c71f7e44",
   "lastOpenFiles": [
-    "jalon-143/Jalon 143 (Théorie spectrale des graphes).md",
+    "jalon-1/README.md",
+    "jalon-141/Jalon-141.md",
+    "jalon-142/Jalon-142.md",
+    "jalon-143/Jalon-143.md",
+    "jalon-143/README.md",
     "jalon-3/Jalon 3 (Quantification).md",
+    "jalon-143/Jalon 143 (Théorie spectrale des graphes).md",
     "generate_content.py",
     "jalon-5/Jalon 5 (Applications).md",
     "jalon-14/Jalon 14 (Suites réelles et complexes).md",
@@ -235,7 +240,6 @@
     "benchmark_rename.py",
     "jalon-49/Jalon 49 (Espaces topologiques généraux).md",
     "jalon-2/Jalon 2 (Méthodes de raisonnement).md",
-    "jalon-1/README.md",
     "jalon-1/exos/Exo-09_Algebres-Boole-Representation-Stone.md",
     "jalon-1/exos/Exo-07_Completude-Fonctionnelle.md",
     "jalon-1/exos/Exo-01_Application-Directe.md",
@@ -249,11 +253,7 @@
     "jalon-1/exos/Exo-08_Interpolation-Craig.md",
     "jalon-1/exos/Exo-06_SAT-Resolution-Refutation.md",
     "jalon-1/exos/Exo-05_Forme-Normale-Conjonctive.md",
-    "jalon-1/exos/Exo-04_Peirce-Law-Natural-Deduction.md",
-    "jalon-1/exos/Exo-03_Dualite-Operateurs.md",
-    "jalon-1/exos/Exo-02_Equivalence-Algébrique.md",
     "jalon-1/exos",
-    "jalon-27/Jalon 27 (Endomorphismes symétriques).md",
     "jalon-99",
     "jalon-98",
     "jalon-97",
