@@ -56,9 +56,9 @@ Démontrons que la somme partielle converge et calculons sa limite.
 
 2. **Étape 1 : Astuce algébrique (télescopage)**
    Calculons $S_N - q S_N$ :
-   $S_N = 1 + q + q^2 + ... + q^N$
-   $q S_N = q + q^2 + ... + q^N + q^{N+1}$
-   $(1-q) S_N = (1 + q + ... + q^N) - (q + q^2 + ... + q^{N+1})$
+   $$S_N = 1 + q + q^2 + \dots + q^N$$
+   $$q S_N = q + q^2 + \dots + q^N + q^{N+1}$$
+   $$(1-q) S_N = (1 + q + \dots + q^N) - (q + q^2 + \dots + q^{N+1})$$
    Tous les termes centraux s'annulent (somme télescopique) :
    $$(1-q) S_N = 1 - q^{N+1}$$
 
@@ -70,7 +70,7 @@ Démontrons que la somme partielle converge et calculons sa limite.
    Étudions la limite de $q^{N+1}$ quand $N \to \infty$.
    Comme $|q| < 1$, par les propriétés des suites géométriques, $\lim_{N \to \infty} q^{N+1} = 0$.
    Ainsi :
-   $\lim_{N \to \infty} S_N = \lim_{N \to \infty} \frac{1 - q^{N+1}}{1 - q} = \frac{1 - 0}{1 - q}$
+   $$\lim_{N \to \infty} S_N = \lim_{N \to \infty} \frac{1 - q^{N+1}}{1 - q} = \frac{1 - 0}{1 - q}$$
 
 5. **Conclusion :**
    La série $\sum q^n$ converge et sa somme est :
@@ -84,9 +84,9 @@ Démontrons que la somme partielle converge et calculons sa limite.
 **Correction Détaillée :**
 1. Posons $u_n = \frac{n^2}{2^n}$. On a $u_n > 0$.
 2. Calculons le rapport $\frac{u_{n+1}}{u_n}$ :
-   $\frac{u_{n+1}}{u_n} = \frac{(n+1)^2}{2^{n+1}} \times \frac{2^n}{n^2} = \frac{(n+1)^2}{n^2} \times \frac{2^n}{2^{n+1}} = \left( \frac{n+1}{n} \right)^2 \times \frac{1}{2}$.
-3. $\frac{u_{n+1}}{u_n} = \left( 1 + \frac{1}{n} \right)^2 \times \frac{1}{2}$.
-4. Étudions la limite : $\lim_{n \to \infty} (1 + 1/n) = 1$, donc $\lim (1 + 1/n)^2 = 1^2 = 1$.
+   $$\frac{u_{n+1}}{u_n} = \frac{(n+1)^2}{2^{n+1}} \times \frac{2^n}{n^2} = \frac{(n+1)^2}{n^2} \times \frac{2^n}{2^{n+1}} = \left( \frac{n+1}{n} \right)^2 \times \frac{1}{2}.$$
+3. $$\frac{u_{n+1}}{u_n} = \left( 1 + \frac{1}{n} \right)^2 \times \frac{1}{2}.$$
+4. Étudions la limite : $\lim_{n \to \infty} (1 + 1/n) = 1$, donc $\lim_{n \to \infty} (1 + 1/n)^2 = 1^2 = 1$.
 5. On en déduit $\lim_{n \to \infty} \frac{u_{n+1}}{u_n} = 1 \times \frac{1}{2} = \frac{1}{2}$.
 6. Comme $L = 1/2 < 1$, d'après le critère de d'Alembert, la série converge.
 **Conclusion :** La série $\sum \frac{n^2}{2^n}$ est convergente.
@@ -98,7 +98,7 @@ Démontrons que la somme partielle converge et calculons sa limite.
 2. Cherchons un équivalent ou une majoration simple.
 3. Pour tout $n \ge 1$, $n^2 + \sqrt{n} > n^2$.
 4. En prenant l'inverse (la fonction $x \mapsto 1/x$ est décroissante sur $\mathbb{R}^{+*}$) :
-   $0 < \frac{1}{n^2 + \sqrt{n}} < \frac{1}{n^2}$.
+   $$0 < \frac{1}{n^2 + \sqrt{n}} < \frac{1}{n^2}.$$
 5. Or la série $\sum \frac{1}{n^2}$ est une série de Riemann de paramètre $\alpha = 2$.
 6. Comme $\alpha > 1$, la série $\sum \frac{1}{n^2}$ converge.
 7. Par le critère de comparaison des séries à termes positifs, la série $\sum u_n$ est majorée par une série convergente.

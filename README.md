@@ -90,7 +90,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 13](jalon-13/Jalon%2013%20%28Structure%20de%20--mathbb%7BR%7D-%29.md)** : Structure de $\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède.
 - **[Jalon 14](jalon-14/Jalon%2014%20%28Suites%20r%C3%A9elles%20et%20complexes%29.md)** : Suites réelles et complexes, définitions rigoureuses des limites ($\epsilon, N$) et critères de convergence.
 - **[Jalon 15](jalon-15/Jalon%2015%20%28Sous-suites%29.md)** : Sous-suites, valeurs d'adhérence et preuve par séparation du théorème de Bolzano-Weierstrass.
-- **[Jalon 16](jalon-16/Jalon%2016%20%28S%C3%A9ries%20num%C3%A9riques%20%C3%A0%20termes%20positifs%29.md)** : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy.
+- **[Jalon 16](jalon-16/Jalon-16.md)** : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 17](jalon-17/Jalon%2017%20%28S%C3%A9ries%20absolument%20convergentes%29.md)** : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries.
 - **[Jalon 18](jalon-18/Jalon%2018%20%28Continuit%C3%A9%20des%20fonctions%20d%27une%20variable%20r%C3%A9elle%29.md)** : Continuité des fonctions d'une variable réelle, théorème des valeurs intermédiaires et compacité locale.
 - **[Jalon 19](jalon-19/Jalon%2019%20%28D%C3%A9rivabilit%C3%A9%29.md)** : Dérivabilité, théorème de Rolle, théorème des accroissements finis et prolongement de la dérivée.
@@ -326,4 +326,5 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-06-07] : Audit & Auto-correction du Jalon 141 - Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - [2026-06-08] : Audit & Auto-correction du Jalon 142 - Processus de décision de Markov. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - [2026-06-09] : Upsert du Jalon 143 - Théorie spectrale des graphes. Status: Terminé.
+- [2026-06-09] : Upsert du Jalon 16 - Séries numériques à termes positifs. Status: Terminé.
 - **Date de mise à jour** : 2026-06-09

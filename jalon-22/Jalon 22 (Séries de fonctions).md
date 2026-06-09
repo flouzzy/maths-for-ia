@@ -112,5 +112,5 @@ Soit $\sum u_n$ une série de fonctions convergeant normalement sur $D$. Montron
 - **Exemple Concret :** Dans la **Compression de Données (Spectrogrammes)** et les **Réseaux de Neurones Récurrents (RNN)**, on manipule des sommes infinies pour modéliser des dépendances temporelles. La convergence normale garantit que si on ajoute de plus en plus de détails (harmoniques) pour reconstruire un son, le signal résultant ne diverge pas et reste "écoutable" (physiquement possible). Les théorèmes d'interversion permettent de dériver ces séries pour calculer la vitesse de changement d'un signal (fréquence instantanée).
 
 ## 6. Liens Sémantiques & Maillage Obsidian
-- **Concepts Précédents requis :** [[Jalon 16 (Séries numériques à termes positifs)]], [[Jalon 21 (Suites de fonctions)]]
+- **Concepts Précédents requis :** [[Jalon-16]], [[Jalon 21 (Suites de fonctions)]]
 - **Concepts Futurs dépendants :** [[Jalon 23 (Séries entières)]], [[Jalon 78 (Séries de Fourier)]], [[Jalon 80 (Transformée de Fourier dans L^1)]]

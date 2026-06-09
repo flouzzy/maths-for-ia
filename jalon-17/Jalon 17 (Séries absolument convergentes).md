@@ -6,7 +6,7 @@ trimester: 2
 tags:
   - math/analyse
   - ia/calcul-series
-prev: "[[Jalon 16 (Séries numériques à termes positifs).md]]"
+prev: "[[Jalon-16.md]]"
 next: "[[Jalon 18 (Continuité des fonctions d'une variable réelle).md]]"
 ---
 
@@ -108,5 +108,5 @@ Soit $\sum u_n$ une série telle que $\sum |u_n|$ converge. Montrons que $\sum u
 - **Exemple Concret :** Dans le **Traitement du Signal (Audio/Image)**, on utilise souvent des filtres dont la réponse impulsionnelle est infinie (filtres IIR). Pour que le filtre soit stable (qu'il n'amplifie pas le bruit à l'infini), la série de ses coefficients doit être **absolument convergente**. De même, le produit de Cauchy est l'opération fondamentale derrière la **Convolution Discrète** de deux signaux. Si vous multipliez deux polynômes de prédiction (utilisés dans les modèles ARMA), vous effectuez un produit de Cauchy.
 
 ## 6. Liens Sémantiques & Maillage Obsidian
-- **Concepts Précédents requis :** [[Jalon 14 (Suites réelles et complexes)]], [[Jalon 16 (Séries numériques à termes positifs)]]
+- **Concepts Précédents requis :** [[Jalon 14 (Suites réelles et complexes)]], [[Jalon-16]]
 - **Concepts Futurs dépendants :** [[Jalon 23 (Séries entières)]], [[Jalon 80 (Transformée de Fourier dans L^1)]], [[Jalon 126 (Noyaux définis positifs)]]
