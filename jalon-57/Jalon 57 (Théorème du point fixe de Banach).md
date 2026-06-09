@@ -80,4 +80,4 @@ On définit l'opérateur $T(y) = y_0 + \int f(s, y)$. Si $f$ est lipschitzienne,
 ## 6. Liens Sémantiques & Maillage Obsidian
 
 - **Concepts Précédents requis :** [[Jalon 56 (Espaces métriques complets).md]], [[Jalon 19 (Dérivabilité).md]]
-- **Concepts Futurs dépendants :** [[Jalon 101 (Théorème de l'application ouverte et théorème du graphe fermé.).md]], [[Jalon 142 (Processus de décision de Markov).md]]
+- **Concepts Futurs dépendants :** [[Jalon 101 (Théorème de l'application ouverte et théorème du graphe fermé.).md]], [[Jalon-142.md]]
