@@ -12,7 +12,7 @@ next: "[[Jalon 124 (Conditions de Karush-Kuhn-Tucker).md]]"
 
 # Jalon 123 : Problèmes d'optimisation sous contraintes
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous deviez construire la maison la plus spacieuse possible, mais vous avez deux règles à respecter :
     1. Vous ne pouvez pas dépasser les limites de votre terrain (une **Contrainte d'inégalité**).
@@ -23,7 +23,7 @@ next: "[[Jalon 124 (Conditions de Karush-Kuhn-Tucker).md]]"
 - **Le "Pourquoi on a inventé ça" :** Dans la vraie vie, on n'est jamais totalement libre. On a un budget limité, un temps limité, ou des lois physiques à respecter. L'optimisation sous contraintes permet de trouver le "meilleur compromis" sous pression.
 - **Visualisation :** On cherche le point le plus bas d'un paysage, mais seulement à l'intérieur d'une zone délimitée par des clôtures.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $f_0 : \mathbb{R}^n \to \mathbb{R}$ la fonction objectif à minimiser.
 
@@ -55,7 +55,7 @@ L'ensemble des points $x$ vérifiant ces conditions est l'**ensemble admissible*
 > $g(\lambda, \nu) \le f_0(x^*)$
 > La **Dualité Forte** ($g(\lambda^*, \nu^*) = f_0(x^*)$) est vérifiée sous certaines conditions de convexité (ex: condition de Slater).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Preuve de la Dualité Faible
 
@@ -76,7 +76,7 @@ Soit $x$ un point admissible (vérifiant $f_i(x) \le 0$ et $h_j(x) = 0$). Soit $
    $$d^* \le p^*$$
    L'écart $p^* - d^*$ est appelé le **saut de dualité** (duality gap).
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Dual d'un problème quadratique simple
 **Énoncé :** Minimiser $f(x) = \frac{1}{2} x^2$ sous la contrainte $ax - b = 0$.
@@ -92,7 +92,7 @@ Soit $x$ un point admissible (vérifiant $f_i(x) \le 0$ et $h_j(x) = 0$). Soit $
 **Correction Détaillée :**
 La condition de Slater dit qu'il doit exister au moins un point $x$ strictement admissible (vérifiant $f_i(x) < 0$ pour toutes les inégalités). Si cette condition est remplie, alors le saut de dualité est nul ($d^* = p^*$). C'est la garantie que l'on peut résoudre le problème en passant par le dual.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** L'optimisation duale est la base algorithmique des **SVM** et de l'**Apprentissage par Renforcement** (via les fonctions de valeur).
 - **Example Concret :**
@@ -100,7 +100,7 @@ La condition de Slater dit qu'il doit exister au moins un point $x$ strictement 
     - **Maximum Entropy RL (Soft Actor-Critic) :** On veut maximiser la récompense sous la contrainte que la politique reste "exploratrice" (haute entropie). Le multiplicateur de Lagrange $\lambda$ devient la température du modèle qui règle le compromis entre exploration et exploitation.
     - **Differential Privacy :** On minimise l'erreur du modèle sous des contraintes de confidentialité (bornes sur l'influence de chaque donnée). On résout cela en ajoutant des multiplicateurs de Lagrange aux gradients.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 121 (Ensembles et Fonctions convexes).md]], [[Jalon 33 (Formes quadratiques).md]]
 - **Concepts Futurs dépendants :** [[Jalon 124 (Conditions de Karush-Kuhn-Tucker).md]], [[Jalon 125 (Opérateurs proximaux).md]]

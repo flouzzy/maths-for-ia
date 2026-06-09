@@ -12,7 +12,7 @@ next: "[[Jalon 119 (Connexions avec les groupes de Lie).md]]"
 
 # Jalon 118 : Optimalité et Multiplicateurs de Lagrange (Master)
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :**
     - **Le second ordre :** Imaginez que vous ayez trouvé le point le plus bas d'un drap (le minimum). Pour être sûr que c'est un vrai creux (et pas un sommet plat), vous appuyez dessus avec votre doigt. Si le drap résiste et revient à sa place, c'est que la "courbure" est bonne. C'est l'**optimalité du second ordre**.
@@ -20,7 +20,7 @@ next: "[[Jalon 119 (Connexions avec les groupes de Lie).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour résoudre des problèmes d'optimisation complexes où l'on ne peut pas simplement bouger librement. En ingénierie, on veut minimiser le poids d'un pont mais il **doit** supporter une charge. En IA, on veut minimiser l'erreur mais le modèle **doit** rester simple ou respecter des lois d'éthique.
 - **Visualisation :** Une surface courbe avec une ligne tracée dessus. On cherche le point le plus bas de la surface mais en restant obligatoirement sur la ligne.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Seconde Variation et Condition de Legendre
 
@@ -42,7 +42,7 @@ On veut minimiser $J(y)$ sous la contrainte fonctionnelle $G(y) = 0$.
 > $$\delta J(y) + \lambda \delta G(y) = 0$$
 > Cela revient à chercher les points stationnaires du **Lagrangien** $\mathcal{L}(y, \lambda) = J(y) + \lambda G(y)$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Condition d'optimalité avec contrainte intégrale
 
@@ -54,7 +54,7 @@ Cherchons à minimiser $J(y) = \int_{x_1}^{x_2} f(x, y, y') dx$ sous la contrain
    $$\left( \frac{\partial f}{\partial y} + \lambda \frac{\partial g}{\partial y} \right) - \frac{d}{dx} \left( \frac{\partial f}{\partial y'} + \lambda \frac{\partial g}{\partial y'} \right) = 0$$
 4. **Conclusion :** Pour résoudre le problème, on résout cette EDO (qui dépend de $\lambda$), puis on utilise la valeur de la contrainte $K(y)=C$ pour trouver la valeur précise du paramètre $\lambda$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : La chaînette (Problème isopérimétrique)
 **Énoncé :** Une corde de longueur $L$ fixée à ses extrémités pend sous son propre poids. Quelle forme prend-elle ?
@@ -70,7 +70,7 @@ Cherchons à minimiser $J(y) = \int_{x_1}^{x_2} f(x, y, y') dx$ sous la contrain
 **Correction Détaillée :**
 C'est un problème d'optimalité du second ordre. On cherche le minimum de $\int (y')^2$ sous la contrainte $\int y^2 = 1$. Le multiplicateur de Lagrange mène à l'équation des ondes $y'' + \frac{1}{\lambda} y = 0$. La plus petite valeur propre donne $\lambda = 1/\pi^2$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En IA, nous utilisons les multiplicateurs de Lagrange pour l'**Apprentissage sous contraintes** (Constrained Learning).
 - **Example Concret :**
@@ -78,7 +78,7 @@ C'est un problème d'optimalité du second ordre. On cherche le minimum de $\int
     - **Fairness in AI :** On veut minimiser la perte tout en imposant une contrainte d'équité (ex: $P(\hat{Y}=1 | Group=A) = P(\hat{Y}=1 | Group=B)$). C'est une optimisation fonctionnelle avec contrainte résolue par les outils de ce jalon.
     - **Physics-Informed Neural Networks (PINNs) :** On minimise l'erreur sur les données sous la contrainte que le réseau satisfasse une équation de physique (ex: Navier-Stokes). On traite cette contrainte par des multiplicateurs de Lagrange de dimension infinie.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 117 (Calcul des variations).md]], [[Jalon 123 (Problèmes d'optimisation sous contraintes).md]] (anticipé)
 - **Concepts Futurs dépendants :** [[Jalon 124 (Conditions de Karush-Kuhn-Tucker).md]], [[Jalon 125 (Opérateurs proximaux).md]]

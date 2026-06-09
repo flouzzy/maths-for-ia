@@ -12,7 +12,7 @@ next: "[[Jalon 83 (Dérivation au sens des distributions).md]]"
 
 # Jalon 82 : Introduction aux distributions de Schwartz
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez dans le noir complet. Vous ne pouvez pas voir les objets, mais vous avez des **capteurs** (des lampes de poche très précises).
     - Un **objet classique** (une fonction), c'est quelque chose que vous pouvez voir point par point.
@@ -21,7 +21,7 @@ next: "[[Jalon 83 (Dérivation au sens des distributions).md]]"
 - **Le "Pourquoi on a inventé ça" :** Laurent Schwartz a réalisé que certaines fonctions physiques (comme une force d'impact instantanée ou une charge ponctuelle) ne peuvent pas être décrites par des fonctions mathématiques classiques sans créer des paradoxes. La théorie des distributions permet de manipuler ces "objets généralisés" avec la même rigueur que des nombres.
 - **Visualisation :** Un pic infiniment haut et infiniment fin. On ne peut pas dessiner ses points, mais on sait que l'aire totale sous le pic vaut exactement 1.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. L'Espace des fonctions tests $\mathcal{D}(\mathbb{R})$
 
@@ -45,7 +45,7 @@ Pour définir une distribution, on a besoin de "fonctions sondes" très réguli�
 2. **Distributions singulières :** Ce sont celles qui ne peuvent pas s'écrire sous forme d'intégrale avec une fonction. L'exemple le plus célèbre est la **masse de Dirac** en $a$ :
    $$\langle \delta_a, \phi \rangle = \phi(a)$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : $\delta_0$ n'est pas une distribution régulière
 
@@ -59,7 +59,7 @@ Montrons par l'absurde qu'il n'existe aucune fonction $f \in L^1_{loc}$ telle qu
 4. **Utilisation de la théorie de la mesure :** Comme $f \in L^1_{loc}$, l'intégrale sur un ensemble dont la mesure tend vers 0 doit tendre vers 0 (continuité absolue de l'intégrale).
 5. **Conclusion :** On aurait $1 = 0$, ce qui est absurde. $\delta_0$ est donc un objet d'une nature nouvelle, plus riche que les fonctions.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : La fonction de Heaviside
 **Énoncé :** Soit $H(x) = 1$ si $x > 0$ et $0$ sinon. Calculer sa distribution associée appliquée à une fonction test $\phi$.
@@ -77,7 +77,7 @@ Donc $\langle T_{f_n}, \phi \rangle = n \cdot \frac{1}{n} \phi(c_n) = \phi(c_n)$
 Quand $n \to \infty$, $c_n \to 0$. Par continuité de $\phi$, $\phi(c_n) \to \phi(0) = \langle \delta_0, \phi \rangle$.
 L'approximation de l'impact par des fonctions de plus en plus brèves et hautes converge vers le Dirac.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En IA, nous travaillons souvent avec des **mesures empiriques**. La distribution d'un jeu de données $\{x_i\}$ est une somme de Diracs : $\hat{p}(x) = \frac{1}{N} \sum \delta(x - x_i)$. C'est une distribution au sens de Schwartz.
 - **Example Concret :**
@@ -85,7 +85,7 @@ L'approximation de l'impact par des fonctions de plus en plus brèves et hautes 
     - **Calcul du Gradient sur des données discrètes :** Pour optimiser un modèle sur des points précis, on utilise le fait que la dérivée d'une distribution existe toujours (Jalon 83). Cela permet de définir le gradient de l'erreur même là où les données sont "pointues".
     - **Impulses dans les RNNs :** Pour modéliser des entrées soudaines (événements), on utilise des fonctions impulsions qui sont des approximations de distributions de Schwartz.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 77 (Densité des fonctions simples).md]], [[Jalon 61 (Insuffisances de l'intégrale de Riemann).md]]
 - **Concepts Futurs dépendants :** [[Jalon 83 (Dérivation au sens des distributions).md]], [[Jalon 85 (Axiomes de Kolmogorov).md]]

@@ -12,13 +12,13 @@ next: "[[Jalon 35 (Caractérisation séquentielle des ouverts).md]]"
 
 # Jalon 34 : Topologie élémentaire des espaces vectoriels normés
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Comment mesurer la distance entre deux points ? Si vous êtes un oiseau, vous volez en ligne droite (c'est la distance "normale"). Si vous êtes un taxi à New York, vous devez suivre les rues perpendiculaires (c'est la distance "Manhattan"). Une **norme**, c'est simplement une règle du jeu pour mesurer une "taille" ou une "distance". Selon la règle choisie, la forme d'un "cercle" change : il peut être rond, carré ou en forme de losange !
 - **Le "Pourquoi on a inventé ça" :** En mathématiques, on veut savoir si une suite de nombres ou de fonctions s'approche d'une cible. Pour dire "proche", il faut pouvoir mesurer l'écart. Les espaces vectoriels normés (EVN) fournissent le cadre rigoureux pour parler de limites, de continuité et de convergence sans avoir besoin d'un dessin.
 - **Visualisation :** Dessinez l'ensemble des points à distance 1 de l'origine. Avec la norme usuelle, c'est un cercle. Avec la norme "Manhattan" (somme des valeurs absolues), c'est un losange tourné à 45°. Avec la norme "Maximum", c'est un carré.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Définitions Formelles
 
@@ -48,7 +48,7 @@ Soit $E$ un espace vectoriel sur $\mathbb{K} = \mathbb{R}$ ou $\mathbb{C}$.
 > Toute norme est une application lipschitzienne (donc continue) sur $E$ pour elle-même :
 > $| \|x\| - \|y\| | \le \|x - y\|$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration du Théorème d'Équivalence des Normes en Dimension Finie
 
@@ -73,7 +73,7 @@ Nous allons montrer que toute norme $N$ sur $E$ est équivalente à la norme inf
 3. **Conclusion :**
    $C_1 \|x\|_\infty \le N(x) \le C_2 \|x\|_\infty$. Toutes les normes sont équivalentes à $\| \cdot \|_\infty$, donc elles sont toutes équivalentes entre elles par transitivité.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Comparaison de normes usuelles
 **Énoncé :** Sur $\mathbb{R}^n$, on considère $\|x\|_1 = \sum |x_i|$, $\|x\|_2 = \sqrt{\sum x_i^2}$ et $\|x\|_\infty = \max |x_i|$.
@@ -93,14 +93,14 @@ $\|f_n\|_\infty = 1$ pour tout $n$.
 $\|f_n\|_1 = \int_0^1 t^n dt = \frac{1}{n+1}$.
 Si les normes étaient équivalentes, on aurait $C_1 \|f_n\|_\infty \le \|f_n\|_1$, soit $C_1 \le \frac{1}{n+1}$ pour tout $n$. En faisant tendre $n \to \infty$, on obtient $C_1 \le 0$, ce qui contredit $C_1 > 0$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En IA, le choix de la norme pour définir la fonction de perte (loss function) ou la régularisation change radicalement le comportement du modèle. C'est ce qu'on appelle la **géométrie de l'apprentissage**.
 - **Exemple Concret :**
     - **Régularisation L2 (Ridge) :** Utilise la norme $\|\theta\|_2^2$. Comme la boule unité est ronde, elle tend à réduire uniformément les poids sans les annuler complètement.
     - **Régularisation L1 (Lasso) :** Utilise la norme $\|\theta\|_1$. Comme la boule unité a des pointes sur les axes (forme de losange), le minimum de la fonction de perte a de fortes chances de se trouver sur un axe, forçant certains poids à être **exactement nuls**. C'est fondamental pour la **sélection de variables** (sparse models).
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 7 (Espaces vectoriels abstraits).md]], [[Jalon 26 (Espaces euclidiens).md]]
 - **Concepts Futurs dépendants :** [[Jalon 35 (Caractérisation séquentielle des ouverts).md]], [[Jalon 56 (Espaces métriques complets).md]]

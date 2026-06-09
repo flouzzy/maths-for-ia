@@ -12,7 +12,7 @@ next: "[[Jalon 27 (Endomorphismes symétriques).md]]"
 
 # Jalon 26 : Espaces euclidiens, orthogonalité, théorème de la projection orthogonale et algorithme de Gram-Schmidt
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** 
@@ -23,7 +23,7 @@ next: "[[Jalon 27 (Endomorphismes symétriques).md]]"
 - **Le "Pourquoi on a inventé ça" :** Travailler avec des angles droits simplifie énormément les calculs. Au lieu d'avoir des équations croisées, chaque dimension devient indépendante. La projection est l'outil ultime pour simplifier des données : on garde l'essentiel (l'ombre) et on ignore le reste.
 - **Visualisation :** Imaginez un plan incliné dans l'espace. Projeter un point sur ce plan, c'est trouver la "perpendiculaire" qui tombe pile sur le plan. C'est la distance la plus courte.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -45,7 +45,7 @@ Soit $E$ un espace vectoriel réel de dimension finie $n$.
 > **Théorème de Pythagore :**
 > $x \perp y \implies \|x+y\|^2 = \|x\|^2 + \|y\|^2$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Formule de la projection orthogonale
@@ -77,7 +77,7 @@ Soit $F$ un sous-espace de $E$ et $(e_1, ..., e_k)$ une base **orthonormée** de
    Comme $x = y + (x-y)$ avec $y \in F$ et $(x-y) \in F^\perp$, alors par définition de la projection orthogonale, $y = p_F(x)$.
    La formule est démontrée.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Algorithme de Gram-Schmidt
@@ -107,11 +107,11 @@ Soit $F$ un sous-espace de $E$ et $(e_1, ..., e_k)$ une base **orthonormée** de
 6. $\| p_{P^\perp}(\vec{OA}) \| = | \langle \vec{OA}, e \rangle | \cdot \|e\| = 2\sqrt{3} \cdot 1 = 2\sqrt{3}$.
 **Conclusion :** La distance est $2\sqrt{3}$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** La projection orthogonale est le fondement de la **Réduction de Bruit** et de la **Compression**.
 - **Exemple Concret :** Dans l'**ACP (Analyse en Composantes Principales)**, on cherche un sous-espace $F$ (de dimension $k < n$) qui préserve le plus d'information possible des données. Mathématiquement, on projette orthogonalement tous les vecteurs de données sur ce sous-espace. L'algorithme de **Gram-Schmidt** est utilisé numériquement (sous la forme de la **Décomposition QR**) pour stabiliser les calculs de matrices de poids dans les réseaux de neurones profonds, garantissant que les filtres d'une même couche restent orthogonaux et ne capturent pas des informations redondantes.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 25 (Formes bilinéaires)]]
 - **Concepts Futurs dépendants :** [[Jalon 27 (Endomorphismes symétriques)]], [[Jalon 32 (Preuve complète du théorème spectral pour les endomorphismes symétriques.)]], [[Jalon 36 (Livrable IA)]], [[Jalon 103 (Espaces de Hilbert généraux)]]

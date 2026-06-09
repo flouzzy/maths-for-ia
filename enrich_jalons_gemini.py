@@ -137,13 +137,13 @@ tags:
 
 # Jalon {jalon_num} : {title}
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 - **La Métaphore :** [Développer une analogie concrète, une image mentale ou une histoire qui capture l'essence géométrique ou logique du concept]
 - **Le "Pourquoi on a inventé ça" :** [Expliquer le problème historique, l'impasse ou le défi conceptuel que les mathématiciens cherchaient à résoudre]
 - **Visualisation :** [Décrire précisément ce qu'on verrait si on devait dessiner, projeter ou cartographier graphiquement cette idée]
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -154,7 +154,7 @@ tags:
 > Soient [Hypothèses explicites, exhaustives et restrictives]. Alors :
 > $$[Équation ou propriété formelle]$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : [Nom du Théorème]
@@ -165,7 +165,7 @@ tags:
    $$[Développement complet]$$
 4. **Conclusion :** [Synthèse finale montrant que l'assertion recherchée est démontrée]
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application Directe
@@ -180,12 +180,12 @@ tags:
 * *Analyse de l'énoncé :* [Décomposition logique]
 * *Résolution pas-à-pas :* [Rédaction académique irréprochable et intégrale]
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** [Expliquer comment ce concept abstrait se matérialise directement dans les fondations de l'IA]
 - **Exemple Concret :** [Donner un cas d'usage ou un calcul précis dans l'IA moderne.]
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon X (Nom épuré)]], [[Jalon Y (Nom épuré)]]
 - **Concepts Futurs dépendants :** [[Jalon Z (Nom épuré)]], [[Jalon W (Nom épuré)]]
 ```"""
@@ -237,7 +237,7 @@ def main():
         # (Si year, trimester et uuid sont là, on suppose que c'est bon)
         with open(filepath, 'r', encoding='utf-8') as f:
             first_lines = "".join([f.readline() for _ in range(10)])
-            if "uuid: \"jalon-" in first_lines and "year:" in first_lines and "trimester:" in first_lines and "## 1. L'Intuition Première" in original_content:
+            if "uuid: \"jalon-" in first_lines and "year:" in first_lines and "trimester:" in first_lines and "## 1. Présentation du concept clé
                 print(f"  -> Le fichier {filepath} possède déjà la nouvelle structure. Ignoré.")
                 sys.stdout.flush()
                 continue

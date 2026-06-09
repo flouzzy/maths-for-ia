@@ -12,14 +12,14 @@ next: "[[Jalon 33 (Formes quadratiques).md]]"
 
 # Jalon 32 : Preuve complète du théorème spectral pour les endomorphismes symétriques
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous ayez une forme complexe dans l'espace. Le théorème spectral dit que peu importe l'orientation initiale de cette forme, vous pouvez *toujours* trouver un angle de vue spécial (une base orthonormée) où cette forme devient un simple étirement sur des axes privilégiés (les axes principaux). C'est le résultat le plus puissant de l'algèbre linéaire.
 - **Le "Pourquoi on a inventé ça" :** Pour simplifier radicalement les transformations linéaires "symétriques" qui préservent certaines structures géométriques.
 - **Visualisation :** Un ellipsoïde (un ballon de rugby) peut toujours être orienté pour que ses axes principaux soient alignés avec les axes de coordonnées ($x, y, z$).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Théorème Fondamental
@@ -29,7 +29,7 @@ next: "[[Jalon 33 (Formes quadratiques).md]]"
 ### B. Lemme crucial
 > $F$ stable par $f \implies F^\perp$ stable par $f$ (si $f$ est symétrique).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 ### Démonstration : Récurrence sur la dimension
 1. **Base :** $n=1$, trivial.
 2. **Hérédité :** Soit $f$ symétrique sur $E$.

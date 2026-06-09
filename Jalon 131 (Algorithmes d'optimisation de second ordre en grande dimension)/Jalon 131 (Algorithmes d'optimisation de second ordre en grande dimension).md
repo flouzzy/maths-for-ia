@@ -12,7 +12,7 @@ next: "[[Jalon 132 (Livrable IA).md]]"
 
 # Algorithmes d'optimisation de second ordre en grande dimension
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 **La Métaphore :**
 Imagine que tu as les yeux bandés et que tu essaies de descendre au fond d'une vallée pour trouver le point le plus bas. L'approche la plus simple (la "descente de gradient") consiste à tâter le sol avec ton pied, à sentir dans quelle direction la pente descend le plus fort, et à faire un petit pas dans cette direction. Ça marche, mais si la vallée a une forme un peu bizarre, comme un long ravin très étroit et légèrement en pente, tu vas faire des zigzags en rebondissant d'un bord à l'autre, et tu mettras un temps fou à arriver en bas.
@@ -25,7 +25,7 @@ Le problème de ce super-pouvoir mathématique, c'est qu'il demande de calculer 
 **Visualisation :**
 Graphiquement, la descente de gradient simple approxime le terrain localement par un plan incliné. La méthode de Newton approxime le terrain localement par un paraboloïde (une forme de bol). Les méthodes quasi-Newton déforment progressivement un bol initial au fur et à mesure qu'elles explorent le terrain, en le "moulant" sur la vraie forme de la vallée pour trouver son fond le plus rapidement possible.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Nous nous plaçons dans le cadre de l'optimisation non linéaire sans contraintes en dimension $n$.
 
@@ -76,7 +76,7 @@ Pour construire $B_{k+1}$ à partir de $B_k$, on exploite la variation de gradie
 > $$ H_{k+1} = \left( I_n - \rho_k s_k y_k^T \right) H_k \left( I_n - \rho_k y_k s_k^T \right) + \rho_k s_k s_k^T $$
 > avec $\rho_k = \frac{1}{\langle y_k, s_k \rangle}$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration de l'actualisation de la Hessienne inverse par l'identité de Sherman-Morrison-Woodbury
 
@@ -139,7 +139,7 @@ $$ = H_k + \frac{(s_k^T y_k + y_k^T H_k y_k)}{(s_k^T y_k)^2} s_k s_k^T - \frac{H
 5. **Conclusion :**
 La formule obtenue pour $H_{k+1}$ est symétrique (si $H_k$ l'est) et préserve la propriété définie positive sous la condition de courbure stricte $y_k^T s_k > 0$. Elle est l'outil fondamental de l'algorithme BFGS, permettant de calculer $p_k = -H_k \nabla f(x_k)$ par un simple produit matrice-vecteur (coût $O(n^2)$), évitant ainsi la résolution d'un système linéaire complet (coût $O(n^3)$).
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Condition de courbure de Wolfe
 **Énoncé :**
@@ -215,7 +215,7 @@ En posant $H_k^{(0)} = \gamma_k I_n$ (une approximation scalaire initiale), dém
    La complexité temporelle totale est de l'ordre de $4mn$, ce qui est linéaire en la dimension $n$.
    La complexité spatiale nécessite uniquement de stocker la mémoire L-BFGS, soit $m$ vecteurs $s_i$, $m$ vecteurs $y_i$ et $m$ scalaires $\rho_i$, de taille $n$, et le vecteur courant $q$. Soit $2m + \mathcal{O}(1)$ vecteurs de taille $n$. L'espace requis est strictement en $\mathcal{O}(m n)$. Le problème de la Hessienne géante en $\mathcal{O}(n^2)$ est ainsi contourné.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 **Le Pont Théorique :**
 En Machine Learning et Deep Learning, l'apprentissage consiste à minimiser une fonction de perte empirique (Loss function) de très grande dimension (parfois des dizaines de milliards de paramètres $n$). La descente de gradient stochastique (SGD) est reine en raison de son faible coût par itération, mais elle souffre cruellement du mauvais conditionnement du problème (le fait que la vallée soit un ravin étroit). Les algorithmes du second ordre comme Newton convergeraient beaucoup plus vite en termes d'itérations, car ils s'adaptent naturellement à la géométrie de la vallée, rendant l'algorithme invariant par transformations affines du système de coordonnées.
@@ -225,7 +225,7 @@ Bien que l'optimisation des très grands réseaux de neurones profonds (ResNet, 
 - **Régression logistique à grande échelle** ou les Modèles Linéaires Généralisés (GLM) avec régularisation, où l'objectif est fortement convexe, lisse, déterministe (full-batch) et extrêmement mal conditionné. La bibliothèque `scikit-learn` utilise L-BFGS par défaut pour `LogisticRegression`.
 - **PINNs (Physics-Informed Neural Networks)** : L-BFGS est le standard de l'industrie pour fine-tuner les réseaux de neurones informés par la physique (résolution d'EDP). Une fois qu'Adam a amené les poids dans la bonne vallée, on bascule sur L-BFGS qui garantit une convergence quasi-quadratique vers la solution avec une précision d'ingénierie que les algorithmes de gradient stochastique peinent à atteindre à cause du bruit inhérent au mini-batching.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 45 (Différentiabilité)]], [[Jalon 47 (Dérivées partielles d'ordre deux)]], [[Jalon 121 (Ensembles convexes)]], [[Jalon 130 (Regularisation implicite de la descente de gradient dans les modeles sur-parametres)]]
 - **Concepts Futurs dépendants :** [[Jalon 131 (Algorithmes d'optimisation de second ordre en grande dimension)]], [[Jalon 132 (Livrable IA)]], [[Jalon 144 (Le phénomène de double descente)]]

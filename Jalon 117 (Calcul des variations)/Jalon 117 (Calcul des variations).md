@@ -12,7 +12,7 @@ next: "[[Jalon 118 (Conditions d'optimalité du second ordre pour les fonctionne
 
 # Jalon 117 : Calcul des variations
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous deviez construire une route entre deux villes séparées par des montagnes, des rivières et des forêts.
     - Vous ne cherchez pas un simple nombre, vous cherchez tout le **tracé de la route** (une fonction $y(x)$).
@@ -22,7 +22,7 @@ next: "[[Jalon 118 (Conditions d'optimalité du second ordre pour les fonctionne
 - **Le "Pourquoi on a inventé ça" :** Pour comprendre les lois fondamentales de l'univers. La lumière prend toujours le chemin le plus rapide (principe de Fermat), et une planète suit toujours la trajectoire qui demande le moins d'énergie. En IA, cela nous permet de chercher non pas un poids optimal, mais une **fonction optimale** tout entière.
 - **Visualisation :** On imagine une corde tenue par deux points. Si on change un tout petit peu la forme de la corde (une "variation"), le score change. On cherche la forme où n'importe quel petit changement ne fait plus baisser le score.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $y : [x_1, x_2] \to \mathbb{R}$ une fonction de classe $\mathcal{C}^1$. On considère une fonctionnelle de la forme :
 $$J(y) = \int_{x_1}^{x_2} L(x, y(x), y'(x)) dx$$
@@ -38,7 +38,7 @@ où $L$ est le **Lagrangien**. On cherche $y$ qui minimise $J$ avec conditions a
 > **Théorème :** Si $y$ est un extremum de $J$, alors pour tout $x \in [x_1, x_2]$, $y$ doit satisfaire l'équation différentielle suivante :
 > $$\frac{\partial L}{\partial y} - \frac{d}{dx} \left( \frac{\partial L}{\partial y'} \right) = 0$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration de l'Équation d'Euler-Lagrange
 
@@ -54,7 +54,7 @@ où $L$ est le **Lagrangien**. On cherche $y$ qui minimise $J$ avec conditions a
 6. **Lemme fondamental du calcul des variations :** Si $\int g(x) h(x) dx = 0$ pour toute fonction $h$ "gentille", alors $g(x) = 0$ partout.
 7. **Conclusion :** Le terme entre parenthèses est nul. L'équation d'Euler-Lagrange est démontrée.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Le chemin le plus court
 **Énoncé :** Trouver la fonction $y(x)$ qui minimise la longueur $L = \int_{x_1}^{x_2} \sqrt{1 + (y')^2} dx$.
@@ -72,7 +72,7 @@ où $L$ est le **Lagrangien**. On cherche $y$ qui minimise $J$ avec conditions a
 **Correction Détaillée :**
 En faisant deux IPP, on fait apparaître des dérivées d'ordre 4. L'équation devient $\frac{\partial L}{\partial y} - \frac{d}{dx} \frac{\partial L}{\partial y'} + \frac{d^2}{dx^2} \frac{\partial L}{\partial y''} = 0$. C'est le principe utilisé pour modéliser les poutres flexibles ou les courbes "splines" en informatique graphique.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** De nombreux problèmes d'apprentissage peuvent être formulés comme la recherche d'une fonction dans un espace de Hilbert (RKHS) qui minimise une perte fonctionnelle.
 - **Example Concret :**
@@ -80,7 +80,7 @@ En faisant deux IPP, on fait apparaître des dérivées d'ordre 4. L'équation d
     - **Active Contours (Snakes) :** En segmentation d'image, on définit une courbe qui "colle" aux bords des objets en minimisant une énergie. Le mouvement de la courbe est guidé par l'équation d'Euler-Lagrange.
     - **Flow-Matching and ODEs :** Pour transformer un bruit en une image, on cherche le champ de vecteurs le plus "économe" (énergie minimale). On résout cela par du calcul des variations pour obtenir des trajectoires droites et rapides.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 38 (Théorème fondamental de l'analyse).md]], [[Jalon 47 (Dérivées partielles d'ordre deux et Hessienne).md]]
 - **Concepts Futurs dépendants :** [[Jalon 118 (Conditions d'optimalité du second ordre pour les fonctionnelles et introduction aux multiplicateurs de Lagrange de dimension infinie.).md]], [[Jalon 128 (Flots de gradient).md]]

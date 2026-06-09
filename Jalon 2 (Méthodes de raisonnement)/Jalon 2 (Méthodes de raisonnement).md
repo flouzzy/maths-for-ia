@@ -12,14 +12,14 @@ next: "[[Jalon 3 (Quantification).md]]"
 
 # Jalon 2 : Méthodes de raisonnement (implication, contraposée, l'absurde, analyse-synthèse)
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Pensez à un avocat dans un tribunal. Pour prouver que son client est innocent, il peut utiliser plusieurs tactiques. L'**implication** est un chemin direct : "S'il était au cinéma, il ne pouvait pas être sur les lieux du crime". L'**absurde**, c'est montrer que l'hypothèse inverse est ridicule : "Supposons qu'il soit coupable... mais alors il aurait dû être à deux endroits en même temps, ce qui est impossible ! Donc il est innocent". La **contraposée**, c'est retourner la veste : au lieu de dire "S'il pleut, le sol est mouillé", on dit "Si le sol est sec, c'est qu'il ne pleut pas".
 - **Le "Pourquoi on a inventé ça" :** Les mathématiques ne sont pas juste des calculs, c'est l'art de la certitude. Sans méthodes de raisonnement claires, on pourrait croire des choses fausses. Ces outils sont les "plans de construction" qui garantissent que l'édifice mathématique ne s'écroulera jamais.
 - **Visualisation :** Imaginez un labyrinthe. L'**analyse-synthèse** consiste d'abord à partir de la sortie pour voir par où on a pu passer (analyse), puis à vérifier qu'en partant de l'entrée on arrive bien à la sortie en suivant ce chemin (synthèse).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -35,7 +35,7 @@ Soient $P$ et $Q$ deux propositions.
 > Pour toute proposition $P$, soit $P$ est vraie, soit $\neg P$ est vraie. Il n'y a pas de troisième possibilité.
 > $$\vDash P \lor \neg P$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Irrationalité de $\sqrt{2}$ (Raisonnement par l'absurde)
@@ -65,7 +65,7 @@ Nous voulons démontrer que $\sqrt{2} \notin \mathbb{Q}$.
 
 5. **Conclusion :** L'hypothèse de départ ($\sqrt{2} \in \mathbb{Q}$) est donc fausse. Par conséquent, $\sqrt{2}$ est irrationnel.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application Directe (Contraposée)
@@ -103,11 +103,11 @@ Nous voulons démontrer que $\sqrt{2} \notin \mathbb{Q}$.
    3. $f$ est une fonction polynomiale de degré 1, elle est donc continue.
 * *Conclusion :* Les solutions sont exactement les fonctions de la forme $f(x) = ax$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** Le raisonnement par l'absurde et la contraposée sont au cœur des algorithmes de **vérification formelle** (Formal Verification) qui garantissent qu'une IA critique (voiture autonome, diagnostic médical) ne prendra jamais de décision catastrophique.
 - **Exemple Concret :** Dans l'**apprentissage par renforcement**, pour prouver qu'un agent finira par atteindre son objectif, on utilise souvent des raisonnements par l'absurde : "Supposons que l'agent reste bloqué indéfiniment... alors une certaine énergie (fonction de Lyapunov) devrait décroître à l'infini, ce qui est impossible car elle est bornée. Donc il ne peut pas rester bloqué."
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 1 (Logique formelle)]]
 - **Concepts Futurs dépendants :** [[Jalon 3 (Quantification)]], [[Jalon 4 (Théorie des ensembles)]]

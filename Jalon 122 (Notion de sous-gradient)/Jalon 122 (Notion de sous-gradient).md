@@ -12,7 +12,7 @@ next: "[[Jalon 123 (Problèmes d'optimisation sous contraintes).md]]"
 
 # Jalon 122 : Notion de sous-gradient
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez dans une vallée en forme de "V" (comme la fonction $|x|$).
     - Au fond de la vallée, il y a une pointe. Si vous essayez de poser une plaque de verre (un plan tangent) sur cette pointe, vous pouvez la faire basculer dans plusieurs directions sans qu'elle ne rentre à l'intérieur de la montagne.
@@ -22,7 +22,7 @@ next: "[[Jalon 123 (Problèmes d'optimisation sous contraintes).md]]"
 - **Le "Pourquoi on a inventé ça" :** En IA, on utilise souvent des fonctions qui ont des "cures" ou des angles droits (comme la ReLU ou la norme L1). Le gradient classique (la dérivée) n'existe pas à ces endroits précis. Pour pouvoir quand même faire une descente de gradient, on a dû inventer cette version "élargie" de la pente.
 - **Visualisation :** Un point sur une courbe en "V". On peut tracer plusieurs droites qui passent par ce point et qui restent toutes en dessous de la courbe.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $f : \mathbb{R}^n \to \mathbb{R}$ une fonction convexe.
 
@@ -44,7 +44,7 @@ Soit $f : \mathbb{R}^n \to \mathbb{R}$ une fonction convexe.
 > 3. **Condition d'optimalité :** $x^*$ est un minimum global de $f$ si et seulement si le vecteur nul appartient au sous-différentiel :
 >    $$x^* = \text{argmin } f(x) \iff 0 \in \partial f(x^*)$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Exemple : Sous-différentiel de la valeur absolue $|x|$
 
@@ -59,7 +59,7 @@ Soit $f(x) = |x|$ sur $\mathbb{R}$.
 4. **Conclusion :** $\partial f(0) = [-1, 1]$.
    Remarquons que $0 \in [-1, 1]$, ce qui confirme que 0 est le minimum de la valeur absolue.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Maximum de deux fonctions
 **Énoncé :** Soit $f(x) = \max(f_1(x), f_2(x))$ où $f_1, f_2$ sont convexes et différentiables. Quel est le sous-différentiel au point $x$ où $f_1(x) = f_2(x)$ ?
@@ -76,7 +76,7 @@ $\partial f(x) = \partial |x_1| \times \dots \times \partial |x_n|$.
 - Si $x_i \neq 0$, la $i$-ème composante du sous-gradient est $\text{sgn}(x_i)$.
 - Si $x_i = 0$, la $i$-ème composante peut être n'importe quel nombre dans $[-1, 1]$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Les algorithmes de **Descente de Sous-gradient** (Subgradient Descent) remplacent le gradient par n'importe quel élément du sous-différentiel. $\theta_{t+1} = \theta_t - \eta g_t$ avec $g_t \in \partial L(\theta_t)$.
 - **Example Concret :**
@@ -84,7 +84,7 @@ $\partial f(x) = \partial |x_1| \times \dots \times \partial |x_n|$.
     - **Entraînement de ReLU :** La fonction ReLU n'est pas dérivable en 0. En pratique, les frameworks comme PyTorch posent arbitrairement que la dérivée en 0 est 0 ou 1. Mathématiquement, ils piochent simplement un élément dans le sous-différentiel $[0, 1]$.
     - **SVM (Hinge Loss) :** La fonction de perte des SVM est $L(y) = \max(0, 1-y)$. C'est une fonction "coude" non-lisse. L'utilisation du sous-gradient est ce qui permet de résoudre le problème d'optimisation des SVM de manière robuste.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 121 (Ensembles et Fonctions convexes).md]], [[Jalon 45 (Différentiabilité et Gradient).md]]
 - **Concepts Futurs dépendants :** [[Jalon 125 (Opérateurs proximaux).md]], [[Jalon 124 (Conditions de Karush-Kuhn-Tucker).md]]

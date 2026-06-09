@@ -12,7 +12,7 @@ next: "[[Jalon 43 (Systèmes différentiels linéaires d'ordre 1 et calcul de l'
 
 # Jalon 42 : Équations différentielles linéaires du second ordre à coefficients constants
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez un poids attaché à un ressort et plongé dans un bocal d'huile. Si vous tirez sur le poids et que vous le lâchez :
     1. Le ressort veut le ramener (force proportionnelle à la position $y$).
@@ -22,7 +22,7 @@ next: "[[Jalon 43 (Systèmes différentiels linéaires d'ordre 1 et calcul de l'
 - **Le "Pourquoi on a inventé ça" :** Les lois fondamentales de la physique (Newton : $F = ma$) font intervenir l'accélération, qui est la dérivée seconde de la position. Presque tous les systèmes physiques réels (ponts, circuits électriques, robots) sont régis par des équations du second ordre. En IA, cela nous aide à modéliser des optimisateurs "nerveux" ou "calmes".
 - **Visualisation :** Une courbe qui oscille de moins en moins fort (amortissement) ou une courbe qui s'envole (instabilité).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soient $a, b, c \in \mathbb{R}$ avec $a \neq 0$, et $d$ une fonction continue sur $I \subset \mathbb{R}$.
 L'équation différentielle est $(E) : a y''(t) + b y'(t) + c y(t) = d(t)$.
@@ -45,7 +45,7 @@ On considère l'équation caractéristique : $a r^2 + b r + c = 0$, de discrimin
 > **Théorème (Structure des solutions) :**
 > La solution générale de $(E)$ est $y = y_H + y_P$, où $y_P$ est une solution particulière de $(E)$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Pourquoi l'exponentielle ?
 
@@ -62,7 +62,7 @@ Si $d(t) = P(t) e^{mt}$ où $P$ est un polynôme :
 2. Si $m$ est racine simple : $y_P(t) = t Q(t) e^{mt}$.
 3. Si $m$ est racine double : $y_P(t) = t^2 Q(t) e^{mt}$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Résolution avec second membre
 **Énoncé :** Résoudre $y'' - 3y' + 2y = 2e^{3t}$.
@@ -86,7 +86,7 @@ Si $d(t) = P(t) e^{mt}$ où $P$ est un polynôme :
    $y'(0) = B - A = 0 \implies B = A = 1$.
 4. **Résultat :** $y(t) = (1+t) e^{-t}$. C'est le régime critique (le plus rapide pour revenir à l'équilibre sans osciller).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Les optimisateurs de second ordre (comme le Momentum ou le Nesterov Momentum) sont basés sur une discrétisation d'une équation du second ordre.
 - **Exemple Concret :**
@@ -95,7 +95,7 @@ Si $d(t) = P(t) e^{mt}$ où $P$ est un polynôme :
       Si le coefficient de friction $\gamma$ est trop faible ($\Delta < 0$ dans l'analogue linéaire), l'optimiseur va **osciller** autour du minimum avant de s'arrêter. Si $\gamma$ est bien choisi (régime critique), il plonge au fond du minimum sans perdre de temps.
     - **EDO pour les réseaux de neurones :** Comprendre le régime oscillatoire permet d'expliquer pourquoi certains modèles "divergent" si le pas d'apprentissage est trop grand : l'analogie physique est celle d'un ressort qui devient instable.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 41 (Équations différentielles linéaires du premier ordre et méthode de variation de la constante.).md]], [[Jalon 28 (Polynômes d'endomorphismes).md]]
 - **Concepts Futurs dépendants :** [[Jalon 43 (Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.).md]], [[Jalon 117 (Calcul des variations).md]]

@@ -12,7 +12,7 @@ next: "[[Jalon 74 (Inégalités fondamentales de l'analyse fonctionnelle).md]]"
 
 # Jalon 73 : Espaces $L^p$ et passage au quotient
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous enregistriez une chanson.
     - Il y a la chanson parfaite, mathématique ($f$).
@@ -22,7 +22,7 @@ next: "[[Jalon 74 (Inégalités fondamentales de l'analyse fonctionnelle).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour transformer l'espace des fonctions en un véritable espace géométrique (un espace vectoriel normé). Sans le passage au quotient (ignorer le "presque partout"), on ne pourrait pas dire que $\|f\|=0 \implies f=0$, car une fonction peut avoir une aire nulle sans être nulle partout (ex: la fonction de Dirichlet).
 - **Visualisation :** On prend toutes les fonctions possibles et on les jette dans des tiroirs. Dans le tiroir $L^1$, on met celles dont l'aire totale est finie. Dans le tiroir $L^2$, celles dont l'énergie est finie.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 
@@ -48,7 +48,7 @@ L'application $f \mapsto \|f\|_p$ n'est qu'une **semi-norme** sur $\mathcal{L}^p
 > L'espace $L^p(\mu)$ est l'espace quotient de $\mathcal{L}^p(\mu)$ par la relation $\sim$. Ses éléments sont des **classes d'équivalence** de fonctions.
 > Sur cet espace, $\| \cdot \|_p$ devient une véritable **norme**.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : $\|f\|_p = 0 \iff f = 0$ p.p.
 
@@ -63,7 +63,7 @@ Pour montrer que $L^p$ est un espace vectoriel, il faut montrer que $f, g \in L^
 On utilise l'inégalité de convexité : $|f+g|^p \le ( |f| + |g| )^p \le 2^{p-1} ( |f|^p + |g|^p )$.
 En intégrant, on voit que l'intégrale de $|f+g|^p$ est finie.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Comparaison des espaces $L^p$ sur un ensemble fini
 **Énoncé :** Soit $\mu$ une mesure de probabilité ($\mu(X)=1$). Montrer que si $1 \le p \le q \le \infty$, alors $L^q(\mu) \subset L^p(\mu)$.
@@ -78,7 +78,7 @@ C'est une application directe de l'inégalité de Jensen ou de l'inégalité de 
 2. Quand $p \to \infty$, $\frac{\ln(p+1)}{p} \to 0$, donc $\|f\|_p \to e^0 = 1$.
 3. Par ailleurs, $\sup |f| = 1$ sur $[0, 1]$, donc $\|f\|_\infty = 1$. L'égalité est vérifiée.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le choix de la fonction de perte en IA correspond exactement au choix de la norme $L^p$ dans laquelle on veut minimiser l'erreur.
 - **Example Concret :**
@@ -86,7 +86,7 @@ C'est une application directe de l'inégalité de Jensen ou de l'inégalité de 
     - **Régression $L^1$ (MAE) :** Minimiser $\mathbb{E}[|Y - f(X)|]$. C'est la norme $L^1$. C'est beaucoup plus robuste aux "outliers" (points aberrants) car on ne porte pas l'erreur au carré. Cela conduit à la médiane conditionnelle.
     - **Compression d'image :** Les métriques comme le PSNR sont basées sur la norme $L^2$. Des métriques plus récentes essaient de se rapprocher de la perception humaine, qui est une norme topologique beaucoup plus complexe sur l'espace des fonctions.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.).md]], [[Jalon 68 (Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque).md]]
 - **Concepts Futurs dépendants :** [[Jalon 75 (Preuve de la complétude des espaces Lp).md]], [[Jalon 81 (Transformée de Fourier dans L2).md]]

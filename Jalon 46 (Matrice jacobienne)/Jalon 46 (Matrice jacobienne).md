@@ -12,7 +12,7 @@ next: "[[Jalon 47 (Dérivées partielles d'ordre deux).md]]"
 
 # Jalon 46 : Matrice jacobienne et Règle de la chaîne
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez une chaîne de montage dans une usine.
     - La première machine transforme du métal en vis.
@@ -22,7 +22,7 @@ next: "[[Jalon 47 (Dérivées partielles d'ordre deux).md]]"
 - **Le "Pourquoi on a inventé ça" :** Dans les systèmes complexes, les fonctions sont imbriquées. Pour calculer la dérivée d'une fonction composée, on ne peut pas simplement dériver "l'extérieur" ou "l'intérieur". Il faut combiner les deux de manière structurée. C'est la base absolue du fonctionnement des réseaux de neurones profonds.
 - **Visualisation :** Une cascade de transformations. Chaque transformation déforme l'espace, et la Jacobienne est la matrice qui décrit localement cette déformation (étirement, rotation).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. La Matrice Jacobienne
 
@@ -43,7 +43,7 @@ Soient $f : U \subset \mathbb{R}^n \to V \subset \mathbb{R}^p$ et $g : V \to \ma
 > En termes de matrices jacobiennes, cela se traduit par un **produit matriciel** :
 > $$J_{g \circ f}(a) = J_g(f(a)) \times J_f(a)$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration de la Règle de la Chaîne (Esquisse)
 
@@ -60,7 +60,7 @@ Soient $f : U \subset \mathbb{R}^n \to V \subset \mathbb{R}^p$ et $g : V \to \ma
 5. **Conclusion :**
    La partie linéaire du développement de $g \circ f$ est $dg_{f(a)} \circ df_a$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Jacobienne d'un passage en polaires
 **Énoncé :** Soit $f : \mathbb{R}^2 \to \mathbb{R}^2$ définie par $f(r, \theta) = (r \cos \theta, r \sin \theta)$. Calculer sa matrice jacobienne et son déterminant (le Jacobien).
@@ -80,14 +80,14 @@ $\frac{\partial z}{\partial u} = \frac{\partial z}{\partial x} \frac{\partial x}
 Comme $\frac{\partial x}{\partial u} = 1$ et $\frac{\partial y}{\partial u} = 1$, on a :
 $\frac{\partial z}{\partial u} = \frac{\partial f}{\partial x} + \frac{\partial f}{\partial y}$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** La règle de la chaîne est le moteur de l'algorithme de **Backpropagation** (Rétropropagation du gradient). Un réseau de neurones est une composition massive de fonctions : $Loss = \ell \circ \sigma_k \circ W_k \circ \dots \circ \sigma_1 \circ W_1(input)$.
 - **Exemple Concret :**
     - **Calcul du gradient des poids :** Pour mettre à jour la première couche $W_1$, on doit calculer $\frac{\partial Loss}{\partial W_1}$. En utilisant la règle de la chaîne, cela devient un produit de matrices jacobiennes en remontant de la sortie vers l'entrée.
     - **Vecteur-Jacobian Product (VJP) :** Dans les bibliothèques comme PyTorch ou TensorFlow, on ne calcule jamais la matrice jacobienne entière (elle serait trop grosse). On calcule directement le produit d'un vecteur (le gradient de la couche suivante) par la jacobienne de la couche actuelle. C'est l'implémentation efficace de la règle de la chaîne.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 45 (Différentiabilité).md]], [[Jalon 9 (Calcul matriciel).md]]
 - **Concepts Futurs dépendants :** [[Jalon 48 (Livrable IA).md]], [[Jalon 111 (Applications différentiables entre variétés).md]]

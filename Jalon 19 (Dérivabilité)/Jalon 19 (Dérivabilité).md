@@ -12,7 +12,7 @@ next: "[[Jalon 20 (Dérivées successives).md]]"
 
 # Jalon 19 : Dérivabilité, théorème de Rolle, théorème des accroissements finis et prolongement de la dérivée
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous conduisez une voiture. Votre compteur de vitesse vous indique votre vitesse à chaque seconde précise. La **Dérivée**, c'est exactement cette vitesse instantanée. Si la courbe est votre trajet, la dérivée est l'inclinaison de la route sous vos pneus.
@@ -21,7 +21,7 @@ next: "[[Jalon 20 (Dérivées successives).md]]"
 - **Le "Pourquoi on a inventé ça" :** La continuité nous dit qu'on peut dessiner sans lever le crayon. La dérivabilité nous dit qu'on peut dessiner sans faire d'angles pointus. C'est l'outil suprême pour trouver les sommets (maxima) et les vallées (minima) d'une fonction.
 - **Visualisation :** Imaginez zoomer sur une courbe. Si elle est dérivable, plus vous zoomez, plus la courbe ressemble à une ligne droite (la tangente).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -43,7 +43,7 @@ Soit $I$ un intervalle ouvert et $f : I \to \mathbb{R}$.
 > **Inégalité des Accroissements Finis :**
 > Si $|f'(x)| \le M$ pour tout $x \in I$, alors $|f(b) - f(a)| \le M|b - a|$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Théorème des Accroissements Finis
@@ -80,7 +80,7 @@ Soit $f$ vérifiant les hypothèses du TAF sur $[a, b]$.
    $f(b) - f(a) = f'(c)(b - a)$.
    Le théorème est démontré.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application de l'Inégalité des Accroissements Finis
@@ -107,11 +107,11 @@ Soit $f$ vérifiant les hypothèses du TAF sur $[a, b]$.
 8. $f'(c) - y = 0 \implies f'(c) = y$.
 **Conclusion :** La propriété des valeurs intermédiaires est vérifiée par toute fonction dérivée.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** La dérivabilité est la pierre angulaire de l'**Optimisation par Gradient**. La pente nous indique dans quelle direction modifier les poids pour descendre vers l'erreur minimale.
 - **Exemple Concret :** Dans la **Rétropropagation (Backpropagation)**, on calcule des dérivées partielles. Le fait que les fonctions d'activation (comme ReLU, GELU ou Sigmoïde) soient presque partout dérivables permet d'utiliser le TAF pour analyser la stabilité du réseau. Par exemple, pour éviter l'**Explosion du Gradient**, on s'assure que la norme de la dérivée (le "gain" de la couche) reste bornée, souvent en utilisant l'inégalité des accroissements finis pour prouver que la transformation est contractante.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 18 (Continuité des fonctions d'une variable réelle)]]
 - **Concepts Futurs dépendants :** [[Jalon 20 (Dérivées successives)]], [[Jalon 45 (Différentiabilité)]], [[Jalon 128 (Flots de gradient)]]

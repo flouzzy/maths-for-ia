@@ -12,7 +12,7 @@ next: "[[Jalon 110 (Variétés différentielles abstraites).md]]"
 
 # Jalon 109 : Topologie des sous-variétés de $\mathbb{R}^n$
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez une fourmi sur un immense ballon de baudruche.
     - Pour vous, le monde semble plat : vous pouvez avancer, reculer, aller à gauche ou à droite. Vous avez l'impression de vivre dans un plan ($\mathbb{R}^2$).
@@ -22,7 +22,7 @@ next: "[[Jalon 110 (Variétés différentielles abstraites).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour pouvoir faire du calcul (dérivées, intégrales) sur des formes courbes. On ne veut pas être limité aux lignes droites. Les sous-variétés sont le cadre naturel pour la physique (la Terre, l'espace-temps) et pour l'IA (la forme des données).
 - **Visualisation :** Un fil de fer entortillé dans l'air (variété de dimension 1) ou une nappe de tissu froissée (variété de dimension 2).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $M$ un sous-ensemble de $\mathbb{R}^n$.
 
@@ -41,7 +41,7 @@ On dit que $M$ est une **sous-variété de $\mathbb{R}^n$ de dimension $k$** et 
 > L'espace tangent à $M$ au point $x$, noté $T_x M$, est le sous-espace vectoriel de $\mathbb{R}^n$ de dimension $k$ constitué de toutes les vitesses possibles des courbes tracées sur $M$ passant par $x$.
 > - Si $M$ est défini par $f(y)=0$, alors $T_x M = \ker(df_x)$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : La sphère unité est une sous-variété
 
@@ -57,7 +57,7 @@ Soit $S^n = \{ x \in \mathbb{R}^{n+1} \mid \sum_{i=1}^{n+1} x_i^2 = 1 \}$.
    Par le théorème des fonctions implicites (Jalon 46/47), $S^n$ est une sous-variété de dimension $(n+1) - 1 = n$ de $\mathbb{R}^{n+1}$.
 5. **Espace tangent :** $T_x S^n = \ker(df_x) = \{ h \in \mathbb{R}^{n+1} \mid \langle x, h \rangle = 0 \}$. C'est l'hyperplan perpendiculaire au rayon passant par $x$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Le groupe orthogonal
 **Énoncé :** Montrer que $\mathcal{O}_n(\mathbb{R}) = \{ M \in \mathcal{M}_n \mid M^T M = I_n \}$ est une sous-variété. Quelle est sa dimension ?
@@ -73,7 +73,7 @@ Soit $S^n = \{ x \in \mathbb{R}^{n+1} \mid \sum_{i=1}^{n+1} x_i^2 = 1 \}$.
 **Correction Détaillée :**
 On trace une droite passant par le pôle Nord $N(0, 0, 1)$ et un point $P(x, y, z)$ de la sphère. Cette droite coupe le plan $z=0$ en un point $(u, v, 0)$. L'application $(u, v) \mapsto (x, y, z)$ est un paramétrage local (une carte). On vérifie qu'elle est lisse et que son inverse aussi.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** L'**Hypothèse de Variété (Manifold Hypothesis)** postule que les données réelles de haute dimension (comme les images de visages) se concentrent près d'une sous-variété de dimension beaucoup plus faible.
 - **Example Concret :**
@@ -81,7 +81,7 @@ On trace une droite passant par le pôle Nord $N(0, 0, 1)$ et un point $P(x, y, 
     - **Geodesic Distances :** Sur une variété (ex: la Terre), la distance en ligne droite à travers le volume n'a pas de sens. On utilise des **Géodésiques** (le chemin le plus court en restant sur la surface). En IA, pour transformer une image de chat en image de chien, on cherche un chemin (une géodésique) sur la variété des images "plausibles".
     - **Normalizing Flows :** On apprend des transformations qui sont des difféomorphismes (homéomorphismes lisses) entre une variété de données complexe et un espace latent simple.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 45 (Différentiabilité et Gradient).md]], [[Jalon 46 (Matrice jacobienne et Règle de la chaîne).md]], [[Jalon 52 (Applications continues et Homéomorphismes).md]]
 - **Concepts Futurs dépendants :** [[Jalon 110 (Variétés différentielles abstraites).md]], [[Jalon 116 (Variétés riemanniennes).md]]

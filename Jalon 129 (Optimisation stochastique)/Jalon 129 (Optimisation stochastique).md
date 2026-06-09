@@ -13,13 +13,13 @@ next: "[[Jalon 130 (Régularisation implicite de la descente de gradient dans le
 
 # Optimisation Stochastique
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imagine que tu sois un randonneur cherchant à atteindre le point le plus bas d'une immense vallée (le minimum d'une fonction). Le problème, c'est qu'il fait complètement nuit et qu'un vent très fort souffle. Ton seul outil est une boussole magique qui t'indique la pente, mais à cause du vent, l'aiguille tremble énormément. Parfois elle t'indique la bonne direction pour descendre, parfois elle se trompe complètement. L'optimisation stochastique, c'est la méthode qui t'explique comment, malgré cette boussole très imparfaite, tu peux quand même être sûr d'arriver tout au fond de la vallée : il suffit de faire des pas de plus en plus petits au fur et à mesure que tu avances, pour que les erreurs de la boussole se compensent et ne te fassent pas remonter.
 - **Le "Pourquoi on a inventé ça" :** Dans la vraie vie (et surtout en Intelligence Artificielle), on a souvent des milliards de données. Calculer la pente exacte (le "vrai gradient") en utilisant *toutes* les données en même temps prendrait des mois pour un seul pas. L'idée géniale de l'optimisation stochastique est de n'utiliser qu'un tout petit peu de données au hasard à chaque pas. C'est beaucoup plus rapide, mais le calcul de la pente devient "bruité" (plein d'erreurs aléatoires). Il a fallu inventer des mathématiques pour prouver que cet algorithme avec des erreurs converge quand même.
 - **Visualisation :** Dessine un grand bol. Si tu lâches une bille de tout en haut, elle descend en ligne droite jusqu'au fond : ça, c'est la descente de gradient normale. Maintenant, imagine une bille qui avance en zigzaguant, allant parfois un peu à gauche, parfois un peu à droite, voire même en remontant légèrement sur les bords de temps en temps, mais dont les zigzags deviennent de plus en plus minuscules, jusqu'à ce qu'elle s'arrête exactement et parfaitement au fond du bol. C'est la descente de gradient stochastique (SGD).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Définitions Formelles
 
@@ -61,7 +61,7 @@ Si de plus, $\sum_{t=0}^{+\infty} \alpha_t < +\infty$ p.s. et $\sum_{t=0}^{+\inf
 > Si la suite des pas $(\gamma_t)_{t \in \mathbb{N}}$ vérifie les conditions de Robbins-Monro (et $\gamma_t < \frac{2}{L}$), alors la suite $(X_t)_{t \in \mathbb{N}}$ générée par SGD converge presque sûrement vers l'optimum global $x^*$ :
 > $$ \mathbb{P} \left( \lim_{t \to +\infty} X_t = x^* \right) = 1 $$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration du Théorème Pivot : Convergence Presque Sûre de la SGD
 
@@ -131,7 +131,7 @@ On a donc prouvé que :
 $$ \lim_{t \to +\infty} \|X_t - x^*\|^2 = 0 \text{ presque sûrement.} $$
 Ce qui clôt rigoureusement la démonstration.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Application Directe de SGD sur une fonction quadratique
 
@@ -193,12 +193,12 @@ $$ \mathbb{E}[\|X_t - x^*\|^2] \le \frac{e_1}{t} + \frac{\sigma^2}{\mu^2} \frac{
 Le taux global est donc en $\mathcal{O}\left( \frac{\ln(t)}{t} \right)$.
 *Remarque de concours :* Pour obtenir le taux asymptotiquement optimal de $\mathcal{O}(1/t)$ sans le facteur logarithmique, la littérature démontre qu'il faut choisir un moyennage des itérés (moyennage de Polyak-Ruppert) couplé avec un pas qui décroît un peu plus lentement (typiquement $\gamma_t = \mathcal{O}(1/\sqrt{t})$).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le Machine Learning repose entièrement sur l'optimisation stochastique. L'apprentissage supervisé revient à trouver les paramètres (les poids $\theta$) d'un modèle qui minimisent l'espérance d'une fonction de perte sur une distribution de données inconnue. Comme on ne possède qu'un ensemble d'entraînement fini, on calcule l'estimateur du vrai gradient (le gradient de la perte) sur des "mini-batchs" (des petits échantillons tirés au hasard). L'estimateur de gradient ainsi formé est un estimateur sans biais (si les données sont i.i.d.) et de variance bornée. La SGD garantit ainsi la convergence des poids du réseau vers un minimum de la fonction de perte (bien que pour les réseaux de neurones, la fonction soit non-convexe et l'on converge vers un minimum local).
 - **Exemple Concret :** Dans l'entraînement des réseaux profonds (par exemple un ResNet sur ImageNet), chaque étape de la SGD calcule le gradient de la perte de classification (Cross-Entropy) en n'utilisant que $B=256$ images sur les $1.2$ million disponibles. Le choix délicat du "Learning Rate Schedule" (la suite des pas $\gamma_t$) est justifié par la théorie de Robbins-Monro : on commence avec un pas grand pour avancer vite dans la vallée (phase d'exploration), puis on diminue le pas (Step Decay ou Cosine Annealing) pour s'assurer que $\sum \gamma_t^2 < \infty$ et ainsi écraser la variance due au petit échantillon, permettant aux poids $\theta$ de se stabiliser parfaitement au fond du minimum.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 128 (Flots de gradient)]], [[Jalon 121 (Ensembles convexes)]], [[Jalon 89 (Lemmes de Borel-Cantelli)]]
 - **Concepts Futurs dépendants :** [[Jalon 130 (Régularisation implicite de la descente de gradient dans les modèles sur-paramétrés.)]], [[Jalon 131 (Algorithmes d'optimisation de second ordre en grande dimension)]]

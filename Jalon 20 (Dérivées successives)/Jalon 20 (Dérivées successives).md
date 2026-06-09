@@ -12,7 +12,7 @@ next: "[[Jalon 21 (Suites de fonctions).md]]"
 
 # Jalon 20 : Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous vouliez copier un tableau célèbre (comme la Joconde). 
@@ -23,7 +23,7 @@ next: "[[Jalon 21 (Suites de fonctions).md]]"
 - **Le "Pourquoi on a inventé ça" :** Les fonctions compliquées (comme $\sin(x)$ ou $e^x$) sont difficiles à calculer à la main ou par un ordinateur simple. Taylor a découvert qu'on peut remplacer n'importe quelle fonction lisse par un **polynôme** (une simple somme de puissances), beaucoup plus facile à manipuler.
 - **Visualisation :** Imaginez une courbe complexe. Taylor-Young nous donne une parabole, puis une courbe de degré 3, 4... qui "épouse" la forme de la courbe originale de plus en plus loin autour du point de contact.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -44,7 +44,7 @@ Soit $I$ un intervalle ouvert et $f : I \to \mathbb{R}$.
 
 > **Développement Limité (DL) :** $f$ admet un DL à l'ordre $n$ en $a$ s'il existe des réels $a_0, ..., a_n$ tels que $f(x) = \sum_{k=0}^n a_k(x-a)^k + o((x-a)^n)$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Formule de Taylor-Lagrange à l'ordre 1 (TAF généralisé)
@@ -80,7 +80,7 @@ Montrons que $f(b) = f(a) + f'(a)(b-a) + \frac{f''(c)}{2}(b-a)^2$.
    $f(b) = f(a) + (b-a)f'(a) + f''(c) \frac{(b-a)^2}{2}$.
    Le théorème est démontré.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Calcul de DL (Composition)
@@ -112,13 +112,13 @@ Montrons que $f(b) = f(a) + f'(a)(b-a) + \frac{f''(c)}{2}(b-a)^2$.
 7. Comme $(x-a)^2 \ge 0$, alors $f(x) - f(a) \ge 0$ pour tout $x$ proche de $a$.
 **Conclusion :** $f(a)$ est un minimum local.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** En IA, la formule de Taylor à l'ordre 2 est le fondement des **Méthodes de Second Ordre** (comme la méthode de Newton ou L-BFGS).
 - **Exemple Concret :** Pour optimiser une fonction de perte $L(W)$, on utilise souvent la **Matrice Hessienne** (les dérivées secondes). La formule de Taylor nous dit :
   $$L(W + \Delta W) \approx L(W) + \nabla L^T \Delta W + \frac{1}{2} \Delta W^T H \Delta W$$
   Si on veut que l'erreur diminue le plus vite possible, on ne regarde pas juste la pente ($\nabla L$), mais aussi la courbure ($H$). C'est ce qui permet aux algorithmes de type **Adam** ou **RMSProp** d'ajuster dynamiquement le pas d'apprentissage : ils utilisent une approximation de cette courbure pour savoir s'ils sont dans un virage serré ou sur une longue ligne droite.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 19 (Dérivabilité)]]
 - **Concepts Futurs dépendants :** [[Jalon 23 (Séries entières)]], [[Jalon 47 (Dérivées partielles d'ordre deux)]], [[Jalon 122 (Notion de sous-gradient)]], [[Jalon 131 (Algorithmes d'optimisation de second ordre en grande dimension)]]

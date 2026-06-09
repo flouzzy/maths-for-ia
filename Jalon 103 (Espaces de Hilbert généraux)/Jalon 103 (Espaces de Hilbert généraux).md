@@ -12,7 +12,7 @@ next: "[[Jalon 104 (Bases hilbertiennes).md]]"
 
 # Jalon 103 : Espaces de Hilbert généraux
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez dans une pièce avec un miroir magique.
     - Pour chaque point de la pièce (un vecteur), le miroir vous montre une manière de regarder la pièce (une forme linéaire).
@@ -21,7 +21,7 @@ next: "[[Jalon 104 (Bases hilbertiennes).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour unifier l'algèbre et l'analyse. En dimension finie, on sait tout projeter. En dimension infinie, c'est beaucoup plus dur. Les espaces de Hilbert sont les seuls espaces de dimension infinie où l'on garde toutes nos intuitions géométriques (perpendicularité, plus court chemin).
 - **Visualisation :** Une lampe qui projette l'ombre d'un objet sur un mur. Dans un Hilbert, l'ombre (la projection) est unique et c'est le point du mur le plus proche de l'objet.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $H$ un espace vectoriel complexe.
 
@@ -49,7 +49,7 @@ C'est l'un des résultats les plus profonds de l'analyse fonctionnelle.
 > $$\forall x \in H, \quad L(x) = \langle x, a \rangle$$
 > De plus, on a l'égalité des normes : $\|L\|_{H^*} = \|a\|_H$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration du Théorème de Riesz
 
@@ -64,7 +64,7 @@ C'est l'un des résultats les plus profonds de l'analyse fonctionnelle.
 7. **Conclusion :** Le vecteur $a = \frac{\overline{L(z)}}{\|z\|^2} z$ convient.
 8. **Unicité :** Si $\langle x, a \rangle = \langle x, b \rangle$ pour tout $x$, alors $\langle x, a-b \rangle = 0$, donc $a-b=0$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Évaluation ponctuelle
 **Énoncé :** Soit $H = L^2([0, 1])$. Existe-t-il un vecteur $a \in H$ tel que $\int_0^1 f(x) a(x) dx = f(0)$ pour tout $f$ continue ?
@@ -76,7 +76,7 @@ Non. L'application $L(f) = f(0)$ n'est pas continue sur $L^2$. On peut trouver d
 **Correction Détaillée :**
 C'est une application immédiate du théorème de Riesz. La fonction $k(x, y) = \langle k_y, k_x \rangle$ est appelée le **Noyau Reproduisant**. Toute la théorie des SVM et des processus gaussiens découle de l'existence de ces vecteurs $k_x$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Les espaces de Hilbert sont le terrain de jeu du **Machine Learning à noyaux** (Kernel Methods). Le théorème de Riesz est ce qui permet de transformer une opération de comparaison (le noyau) en un simple produit scalaire.
 - **Example Concret :**
@@ -84,7 +84,7 @@ C'est une application immédiate du théorème de Riesz. La fonction $k(x, y) = 
     - **Calcul du Gradient :** En optimisation, le gradient $\nabla f$ est défini comme le vecteur qui représente la différentielle $df$ via le théorème de Riesz. Sans Hilbert, la notion de gradient n'existerait pas de manière géométrique.
     - **Quantum Machine Learning :** Les états d'un ordinateur quantique sont des vecteurs dans un espace de Hilbert complexe. Les algorithmes d'IA quantique utilisent les propriétés de projection et de Riesz pour manipuler l'information.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L2).md]], [[Jalon 101 (Application ouverte et Graphe fermé).md]]
 - **Concepts Futurs dépendants :** [[Jalon 105 (Opérateurs adjoints).md]], [[Jalon 126 (Noyaux définis positifs).md]]

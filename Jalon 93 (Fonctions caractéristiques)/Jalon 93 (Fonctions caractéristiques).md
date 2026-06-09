@@ -12,7 +12,7 @@ next: "[[Jalon 94 (Démonstration du théorème central limite).md]]"
 
 # Jalon 93 : Fonctions caractéristiques
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que chaque loi de probabilité soit une chanson.
     - La **Loi (densité)** est le son que vous entendez seconde par seconde.
@@ -22,7 +22,7 @@ next: "[[Jalon 94 (Démonstration du théorème central limite).md]]"
 - **Le "Pourquoi on a inventé ça" :** Sommer des variables aléatoires est très difficile avec les densités (il faut faire des calculs de convolution compliqués). En passant dans le "monde fréquentiel" (Fourier), la somme devient une simple multiplication. Cela a permis de prouver les plus grands théorèmes des probabilités (comme le TCL, Jalon 94).
 - **Visualisation :** Une courbe dans le plan complexe qui tourne autour de l'origine. Sa forme et sa vitesse de rotation capturent tous les secrets de la variable aléatoire (moyenne, écart-type, etc.).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $X$ une variable aléatoire réelle sur $(\Omega, \mathcal{F}, P)$.
 
@@ -47,7 +47,7 @@ Soit $X$ une variable aléatoire réelle sur $(\Omega, \mathcal{F}, P)$.
 > Si $X$ admet un moment d'ordre $n$ fini ($\mathbb{E}[|X|^n] < \infty$), alors $\phi_X$ est de classe $\mathcal{C}^n$ et :
 > $$\phi_X^{(k)}(0) = i^k \mathbb{E}[X^k] \quad \text{pour } k \le n$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Loi d'une somme de variables indépendantes
 
@@ -63,7 +63,7 @@ Soient $X$ et $Y$ deux V.A. indépendantes. Posons $S = X+Y$.
    $$\phi_{X+Y}(t) = \phi_X(t) \cdot \phi_Y(t)$$
    La transformée de Fourier transforme la convolution des lois en produit des fonctions caractéristiques.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Fonction caractéristique de la loi Normale
 **Énoncé :** Calculer $\phi_X(t)$ pour $X \sim \mathcal{N}(0, 1)$.
@@ -82,7 +82,7 @@ $\phi_X(t) = \sum_{k=0}^\infty e^{itk} e^{-\lambda} \frac{\lambda^k}{k!} = e^{-\
 On reconnaît la série de l'exponentielle : $e^{-\lambda} \cdot \exp(\lambda e^{it})$.
 **Résultat :** $\phi_X(t) = \exp(\lambda(e^{it} - 1))$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** La fonction caractéristique est utilisée pour prouver la convergence en loi (Jalon 90). D'après le **Théorème de continuité de Lévy**, $X_n \xrightarrow{\mathcal{L}} X$ si et seulement si $\phi_{X_n}(t) \to \phi_X(t)$ pour tout $t$.
 - **Example Concret :**
@@ -90,7 +90,7 @@ On reconnaît la série de l'exponentielle : $e^{-\lambda} \cdot \exp(\lambda e^
     - **Maximum Mean Discrepancy (MMD) :** Pour comparer deux jeux de données en IA (ex: images réelles vs images générées), on calcule la distance entre leurs "moyennes" dans un espace de Hilbert (RKHS). Mathématiquement, c'est une généralisation de la comparaison de leurs fonctions caractéristiques.
     - **Différentiation automatique :** Certains outils avancés utilisent les fonctions caractéristiques pour calculer des moments de haute importance dans des réseaux de neurones stochastiques.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 80 (Transformée de Fourier dans L1).md]], [[Jalon 87 (Intégration et Espérance mathématique).md]]
 - **Concepts Futurs dépendants :** [[Jalon 94 (Démonstration du théorème central limite).md]], [[Jalon 95 (Vecteurs gaussiens).md]]

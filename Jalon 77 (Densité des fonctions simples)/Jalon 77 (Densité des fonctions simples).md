@@ -12,7 +12,7 @@ next: "[[Jalon 78 (Séries de Fourier).md]]"
 
 # Jalon 77 : Densité dans $L^p$
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous vouliez reproduire une photo haute résolution (une fonction de $L^p$) avec des outils limités.
     - **Les fonctions simples**, c'est comme utiliser des pixels : vous avez des petits carrés de couleur uniforme. Si vos pixels sont assez petits, vous pouvez reproduire n'importe quelle image.
@@ -21,7 +21,7 @@ next: "[[Jalon 78 (Séries de Fourier).md]]"
 - **Le "Pourquoi on a inventé ça" :** Il est très difficile de prouver une propriété sur TOUTES les fonctions de $L^p$. Grâce à la densité, on prouve la propriété uniquement sur les fonctions simples ou continues (qui sont faciles à manipuler), puis on dit : "par passage à la limite, c'est vrai pour tout le monde". C'est l'outil de simplification par excellence.
 - **Visualisation :** Une courbe très découpée que l'on approche par une ligne brisée (continue) ou par un escalier (simple). Plus on ajoute de segments, plus l'écart (la norme $L^p$) devient invisible.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $(X, \mathcal{F}, \mu)$ un espace mesuré. On s'intéresse à $L^p(\mu)$ avec $1 \le p < +\infty$.
 *Note :* Pour $p = \infty$, les résultats de densité ci-dessous sont généralement faux.
@@ -40,7 +40,7 @@ Soit $X = \mathbb{R}^n$ muni de la mesure de Lebesgue $\lambda$. On note $\mathc
 > $\mathcal{C}_c(\mathbb{R}^n)$ est **dense** dans $L^p(\lambda)$.
 > Autrement dit, toute fonction de $L^p$ peut être approchée par une fonction "lisse" qui s'annule en dehors d'une grande boîte.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Densité des fonctions simples
 
@@ -56,7 +56,7 @@ Soit $X = \mathbb{R}^n$ muni de la mesure de Lebesgue $\lambda$. On note $\mathc
 
 Pour approcher une fonction indicatrice $\mathbf{1}_{[a, b]}$ par une fonction continue, on utilise une fonction "trapèze" qui vaut 1 sur $[a, b]$ et qui descend linéairement vers 0 sur $[a-\epsilon, a]$ et $[b, b+\epsilon]$. Quand $\epsilon \to 0$, la norme $L^p$ de la différence tend vers 0. Comme les fonctions simples sont des sommes d'indicatrices, on en déduit la densité de $\mathcal{C}_c$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Approximation d'un signal créneau
 **Énoncé :** Soit $f = \mathbf{1}_{[0, 1]}$. Trouver une fonction continue $g$ telle que $\|f - g\|_1 < 0.1$.
@@ -74,7 +74,7 @@ En choisissant $\epsilon = 0.05$, on a bien $\|f - g\|_1 = 0.05 < 0.1$.
 3. On utilise l'inégalité triangulaire : $\|f_h - f\| \le \|f_h - g_h\| + \|g_h - g\| + \|g - f\| = 2\|f-g\| + \|g_h - g\|$.
 4. On conclut par passage à la limite. C'est un exemple type de l'utilisation de la densité pour prouver une propriété générale.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le Théorème d'Approximation Universelle (Jalon 60) est un cas particulier de théorème de densité. Il dit que les réseaux de neurones sont denses dans l'espace des fonctions continues, qui lui-même est dense dans $L^p$.
 - **Example Concret :**
@@ -82,7 +82,7 @@ En choisissant $\epsilon = 0.05$, on a bien $\|f - g\|_1 = 0.05 < 0.1$.
     - **Robustesse au bruit :** Si les fonctions "lisses" sont denses, cela signifie que tout modèle complexe peut être approché par un modèle stable. La régularisation (Weight Decay) pousse le modèle vers ces fonctions lisses sans perdre de capacité d'expression.
     - **Finis Elements Methods (FEM) :** En simulation physique (météo, crash-test), on approche les solutions d'équations (dans des espaces de Sobolev, Jalon 83) par des fonctions simples (polynomiales par morceaux). La densité garantit que la simulation converge vers la réalité.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 75 (Preuve de la complétude des espaces Lp).md]], [[Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md]]
 - **Concepts Futurs dépendants :** [[Jalon 78 (Séries de Fourier).md]], [[Jalon 82 (Introduction à la théorie des distributions de Schwartz).md]]

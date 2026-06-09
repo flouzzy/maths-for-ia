@@ -12,7 +12,7 @@ next: "[[Jalon 120 (Livrable IA).md]]"
 
 # Jalon 119 : Connexions avec les groupes de Lie
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous teniez un Rubik's Cube.
     - Chaque rotation d'une face est une action. Si vous faites une rotation, puis une autre, vous obtenez une nouvelle position. L'ensemble de tous les mouvements possibles forme un **Groupe**.
@@ -21,7 +21,7 @@ next: "[[Jalon 120 (Livrable IA).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour étudier les **symétries**. Dans l'univers, de nombreuses lois ne changent pas si vous tournez l'expérience ou si vous vous déplacez. Les groupes de Lie permettent de mettre ces symétries en équations. En IA, cela permet de créer des modèles qui "comprennent" naturellement que la rotation d'une image de chat reste une image de chat.
 - **Visualisation :** Le groupe des rotations d'un ballon. C'est une variété à 3 dimensions (on peut tourner selon 3 axes). L'algèbre de Lie est l'espace des 3 flèches de rotation à la base du ballon.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Groupes de Lie
 
@@ -44,7 +44,7 @@ C'est le pont entre les "pichenettes" (algèbre) et les "mouvements" (groupe).
 > L'application $\exp : \mathfrak{g} \to G$ associe à chaque vecteur $v \in \mathfrak{g}$ le point $\gamma(1)$ où $\gamma$ est l'unique courbe passant par $e$ à $t=0$ avec la vitesse $v$, telle que le mouvement soit "uniforme" au sens du groupe.
 > Pour les matrices, c'est l'exponentielle de matrice classique (Jalon 43).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : L'algèbre de Lie du groupe orthogonal $SO(n)$
 
@@ -58,7 +58,7 @@ $SO(n) = \{ R \in \mathcal{M}_n(\mathbb{R}) \mid R^T R = I \text{ and } \det R =
 4. **Conclusion :** L'algèbre de Lie $\mathfrak{so}(n)$ est l'ensemble des **matrices antisymétriques**.
 5. **Dimension :** Une matrice antisymétrique est définie par ses coefficients au-dessus de la diagonale, soit $\frac{n(n-1)}{2}$. C'est la dimension du groupe des rotations.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Le crochet de Pauli
 **Énoncé :** Soient $X = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$ and $Y = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}$. Calculer leur crochet $[X, Y]$ dans l'algèbre de Lie $\mathfrak{sl}_2(\mathbb{C})$.
@@ -74,7 +74,7 @@ $SO(n) = \{ R \in \mathcal{M}_n(\mathbb{R}) \mid R^T R = I \text{ and } \det R =
 **Correction Détaillée :**
 Pour $SO(n)$, oui (toute rotation se fait autour d'un axe). Pour $SL_2(\mathbb{R})$, non : certaines transformations (matrices avec valeurs propres négatives) ne peuvent pas être atteintes par une trajectoire continue partant de l'identité. Cela montre que la topologie du groupe influence les mouvements possibles.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le domaine émergent de la **Lie Group Deep Learning** utilise ces structures pour construire des réseaux qui respectent les symétries physiques du monde.
 - **Example Concret :**
@@ -82,7 +82,7 @@ Pour $SO(n)$, oui (toute rotation se fait autour d'un axe). Pour $SL_2(\mathbb{R
     - **Robotique et Pose Estimation :** Pour prédire la position d'un objet en 3D, le réseau de neurones ne prédit pas des coordonnées $x, y, z$, il prédit un élément du groupe $SE(3)$ (Special Euclidean Group). On utilise l'application $\exp$ pour mettre à jour la position de manière fluide.
     - **Geometric Diffusion :** On définit des modèles de diffusion sur des groupes de Lie pour générer des mouvements de bras articulés ou des trajectoires de drones qui sont physiquement réalistes.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 110 (Variétés différentielles abstraites).md]], [[Jalon 112 (Champs de vecteurs et Crochet de Lie).md]], [[Jalon 43 (Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.).md]]
 - **Concepts Futurs dépendants :** [[Jalon 143 (Théorie spectrale des graphes).md]], [[Jalon 116 (Variétés riemanniennes).md]]

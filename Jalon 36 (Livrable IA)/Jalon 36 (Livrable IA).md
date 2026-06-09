@@ -12,7 +12,7 @@ next: "[[Jalon 37 (Intégrale de Riemann sur un segment).md]]"
 
 # Jalon 36 : Livrable IA T3 : Décomposition en valeurs singulières (SVD) et compression d'image
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous ayez une photo numérique. C'est en fait une grille géante de nombres (des pixels). La **SVD** est un outil magique qui permet de décomposer cette photo complexe en une somme de "couches" de plus en plus simples. Les premières couches contiennent les formes principales (les visages, les horizons), tandis que les dernières couches ne contiennent que des détails insignifiants ou du bruit. Pour compresser l'image, on décide simplement de jeter les couches de détails et de ne garder que les couches essentielles.
 - **Le "Pourquoi on a inventé ça" :** Contrairement à la diagonalisation classique, qui ne marche que pour les matrices carrées et très spéciales, la SVD fonctionne sur **n'importe quelle matrice**, même rectangulaire. C'est le "couteau suisse" ultime de l'algèbre linéaire pour extraire l'information importante d'un jeu de données.
@@ -21,7 +21,7 @@ next: "[[Jalon 37 (Intégrale de Riemann sur un segment).md]]"
     2. Un étirement selon les axes principaux (on déforme l'image pour en faire une ellipse).
     3. Une seconde rotation (on tourne à nouveau l'image finale).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Théorème de la Décomposition en Valeurs Singulières (SVD)
 
@@ -44,7 +44,7 @@ Soit $A \in \mathcal{M}_{m,n}(\mathbb{R})$ une matrice réelle de taille $m \tim
 > $$A_k = \sum_{i=1}^k \sigma_i u_i v_i^T$$
 > On ne conserve que les $k$ plus grandes valeurs singulières.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration de l'existence de la SVD (Cas $m \ge n$)
 
@@ -66,7 +66,7 @@ Soit $A \in \mathcal{M}_{m,n}(\mathbb{R})$ une matrice réelle de taille $m \tim
    Par construction, $A v_i = \sigma_i u_i$ pour $i \le r$ et $A v_i = 0$ pour $i > r$.
    Cela se traduit matriciellement par $A V = U \Sigma$, soit $A = U \Sigma V^T$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Calcul de SVD d'une matrice 2x2
 **Énoncé :** Trouver la SVD de $A = \begin{pmatrix} 3 & 0 \\ 0 & -2 \end{pmatrix}$.
@@ -89,7 +89,7 @@ Soit $A \in \mathcal{M}_{m,n}(\mathbb{R})$ une matrice réelle de taille $m \tim
 * *Ratio :* $100,000 / 1,000,000 = 1/10$.
 **Conclusion :** On a réduit le poids de l'image par 10 en ne gardant que les 50 structures les plus importantes.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** La SVD est la base mathématique de la **PCA** (Analyse en Composantes Principales) mais aussi de la **Réduction de Dimension**. Elle permet de projeter des données de haute dimension vers un espace plus petit en perdant le minimum d'information.
 - **Exemple Concret :**
@@ -97,7 +97,7 @@ Soit $A \in \mathcal{M}_{m,n}(\mathbb{R})$ une matrice réelle de taille $m \tim
     - **Systèmes de Recommandation (Netflix) :** La matrice "Utilisateurs x Films" est décomposée par SVD. Les vecteurs $u_i$ représentent des profils d'utilisateurs types et $v_i$ des genres de films types. On peut alors prédire une note en faisant un produit scalaire dans cet espace réduit (Latent Semantic Analysis).
     - **Stabilité des Réseaux de Neurones :** On analyse le spectre des valeurs singulières des matrices de poids pour éviter l'explosion ou la disparition du gradient.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 32 (Preuve complète du théorème spectral pour les endomorphismes symétriques.).md]], [[Jalon 33 (Formes quadratiques).md]]
 - **Concepts Futurs dépendants :** [[Jalon 48 (Livrable IA).md]], [[Jalon 143 (Théorie spectrale des graphes).md]]

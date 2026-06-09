@@ -12,7 +12,7 @@ next: "[[Jalon 90 (Les modes de convergence).md]]"
 
 # Jalon 89 : Lemmes de Borel-Cantelli
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous lanciez une pièce de monnaie tous les jours, pour l'éternité.
     - La question est : allez-vous voir "Pile" apparaître une infinité de fois ?
@@ -22,7 +22,7 @@ next: "[[Jalon 90 (Les modes de convergence).md]]"
 - **Le "Pourquoi on a inventé ça" :** En mathématiques, on veut savoir ce qui se passe "à la fin des temps" (à l'infini). Borel-Cantelli est l'outil qui permet de dire si un événement rare va finir par se produire ou s'il va disparaître pour toujours. C'est la base de la **loi du zéro-un** : à l'infini, soit un événement n'arrive plus jamais, soit il arrive tout le temps. Il n'y a pas de milieu.
 - **Visualisation :** Une file d'attente infinie de lampes. Si on additionne la probabilité que chaque lampe s'allume, Borel-Cantelli nous dit si nous verrons un clignotement éternel ou si tout finira par s'éteindre.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $(\Omega, \mathcal{F}, P)$ un espace de probabilité et $(A_n)_{n \in \mathbb{N}}$ une suite d'événements.
 
@@ -48,7 +48,7 @@ On s'intéresse à l'ensemble des résultats qui appartiennent à une infinité 
 > $$\sum_{n=0}^\infty P(A_n) = +\infty \implies P(\limsup_{n \to \infty} A_n) = 1$$
 > (Presque sûrement, une infinité de $A_n$ se réalisent).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration du Premier Lemme
 
@@ -60,7 +60,7 @@ On s'intéresse à l'ensemble des résultats qui appartiennent à une infinité 
 5. **Reste d'une série convergente :** Comme la série $\sum P(A_k)$ converge, son reste $R_n = \sum_{k=n}^\infty P(A_k)$ tend vers 0 quand $n \to \infty$.
 6. **Conclusion :** $0 \le P(\limsup A_n) \le \lim R_n = 0$. Donc $P(\limsup A_n) = 0$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Le paradoxe du singe savant
 **Énoncé :** Un singe tape au hasard sur une machine à écrire. On considère $A_n$ l'événement "le singe tape les oeuvres de Shakespeare entre le caractère $n$ et $n+K$". Montrer qu'il finira par les taper avec probabilité 1.
@@ -79,14 +79,14 @@ Cela signifie que pour presque tout $\omega$, il n'y a qu'un nombre fini de $n$ 
 Donc $|X_n(\omega)| \le \epsilon$ pour tout $n$ assez grand.
 C'est la définition de la convergence presque sûre (Jalon 90).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Borel-Cantelli est l'outil technique pour prouver la **Convergence Presque Sûre** des algorithmes stochastiques (comme SGD ou Adam).
 - **Example Concret :**
     - **Exploration en Reinforcement Learning :** On veut que l'agent visite tous les états possibles une infinité de fois pour être sûr de trouver l'optimal. Si la stratégie d'exploration (ex: $\epsilon$-greedy) décroît trop vite, la série des probabilités d'exploration pourrait converger, et l'agent arrêterait d'explorer prématurément. Borel-Cantelli aide à régler la décroissance de $\epsilon$ pour garantir une exploration éternelle.
     - **Stabilité des réseaux de neurones profonds :** On étudie la probabilité que les gradients "explosent" ou "disparaissent" à une couche $n$ donnée. Si cette probabilité décroît assez vite quand on ajoute des couches, le premier lemme nous garantit que pour un réseau donné, le problème ne se produira qu'un nombre fini de fois (donc sur un nombre fini de couches), assurant la viabilité des modèles très profonds.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 88 (Indépendance d'événements et de variables aléatoires).md]], [[Jalon 63 (Définition axiomatique d'une mesure).md]]
 - **Concepts Futurs dépendants :** [[Jalon 90 (Les modes de convergence).md]], [[Jalon 92 (Démonstration rigoureuse de la loi forte des grands nombres.).md]]

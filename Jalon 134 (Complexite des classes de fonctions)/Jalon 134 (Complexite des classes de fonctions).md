@@ -12,7 +12,7 @@ next: "[[Jalon 135 (Complexite de Rademacher).md]]"
 
 # Complexité des classes de fonctions
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 **La Métaphore :** Imagine que tu sois un recruteur de talents qui doit engager un spécialiste pour prédire si un film va plaire au public. Tu as deux candidats : le premier n'utilise qu'une seule règle très simple ("si le film a des explosions, ça marche"). Le second a un livre de règles complexe avec un million de critères ("si le film a des explosions, mais que l'acteur principal a les cheveux roux et qu'il pleut dans la scène 4...").
 
@@ -24,7 +24,7 @@ En apprentissage automatique, le "candidat" est notre modèle (ou algorithme), e
 
 **Visualisation :** Imagine un nuage de points rouges et bleus sur une feuille. Si tu ne peux tracer que des lignes droites pour les séparer (faible complexité), tu n'as pas beaucoup de choix. Si tu peux tracer n'importe quel gribouillis arbitraire (haute complexité), tu peux parfaitement entourer chaque point rouge, mais ton gribouillis n'aura aucun sens logique pour les nouveaux points. La théorie de la complexité mesure exactement à quel point tes gribouillis sont autorisés à être tortueux.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Le cadre formel bascule dans l'analyse de processus empiriques. Nous cherchons à contrôler l'écart maximal (le *supremum*) entre le risque empirique et le risque réel sur l'ensemble complet d'une classe de fonctions $\mathcal{H}$.
 
@@ -70,7 +70,7 @@ Le nombre de recouvrement empirique est $\mathcal{N}(\mathcal{F}, d_{L_1(S)}, \e
 > Alors, pour tout $\epsilon > 0$,
 > $$ \mathbb{P}\left( \Phi(S) - \mathbb{E}_S[\Phi(S)] \geq \epsilon \right) \leq \exp\left( - \frac{2n\epsilon^2}{M^2} \right) $$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration du Lemme : Concentration du Supremum du Processus Empirique
 
@@ -119,7 +119,7 @@ Cette démonstration repose sur l'application rigoureuse de l'inégalité de McD
    $$ \mathbb{P}\left( \Phi(S) - \mathbb{E}_S[\Phi(S)] \geq \epsilon \right) \leq \exp\left( - \frac{2\epsilon^2}{\sum_{i=1}^n c_i^2} \right) = \exp\left( - \frac{2\epsilon^2}{\frac{M^2}{n}} \right) = \exp\left( - \frac{2n\epsilon^2}{M^2} \right) $$
    La concentration exponentielle autour de l'espérance est rigoureusement établie.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Borne de l'Union pour une Classe Finie
 
@@ -182,12 +182,12 @@ Montrez rigoureusement que si l'on dispose d'un $\frac{\epsilon}{4}$-recouvremen
      $$ = \mathcal{N}(\mathcal{F}, d_\infty, \epsilon/4) \cdot \exp\left( - \frac{n\epsilon^2}{2} \right) $$
   9. L'erreur de généralisation sur la classe infinie est ainsi rigoureusement contrôlée par la "capacité volumique" (le nombre de recouvrement) de la classe.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En apprentissage profond (Deep Learning), les réseaux de neurones définissent des classes de fonctions $\mathcal{H}$ d'une complexité gigantesque (des milliards de paramètres). Si la capacité de cette classe est mal régulée, le supremum du processus empirique explosera, indiquant que le réseau peut avoir une erreur nulle à l'entraînement ($\mathbb{E}_n[f] = 0$) mais une erreur désastreuse en production ($\mathbb{E}[f]$ grand). Les mathématiques des processus empiriques fournissent le cadre théorique strict pour comprendre pourquoi des techniques comme la régularisation $L_2$, le Dropout, ou l'arrêt précoce (Early Stopping) fonctionnent : elles limitent artificiellement la complexité ou le "volume" effectif (les nombres de recouvrement) de la classe des fonctions explorées par l'optimiseur.
 - **Exemple Concret :** Pour prouver les garanties théoriques des Support Vector Machines (SVM), on utilise la complexité des hyperplans séparateurs avec une marge maximale. La marge impose une restriction géométrique sévère sur la classe de fonctions, ce qui fait chuter de manière drastique les nombres de recouvrement empirique. On utilise alors ces inégalités de concentration pour prouver que, malgré une dimension de caractéristiques infinie (comme dans le "Kernel Trick" RKHS), l'algorithme est PAC-apprenable et garantit une erreur réelle faible en s'appuyant rigoureusement sur la théorie développée dans ce jalon.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 133 (Modele PAC)]], [[Jalon 91 (Inegalites de concentration)]], [[Jalon 89 (Lemmes de Borel-Cantelli)]]
 - **Concepts Futurs dépendants :** [[Jalon 135 (Complexite de Rademacher)]], [[Jalon 136 (Theorie de Vapnik-Chervonenkis)]]

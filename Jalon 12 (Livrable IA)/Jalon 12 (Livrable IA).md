@@ -12,14 +12,14 @@ next: "[[Jalon 13 (Structure de R).md]]"
 
 # Jalon 12 : Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous voulez ranger des milliers de livres dans une bibliothèque géante, mais pas par ordre alphabétique. Vous les rangez par "sens". Les livres qui parlent de "Chiens" sont proches de ceux qui parlent de "Loups", mais loin de ceux qui parlent de "Recettes de cuisine". Pour trouver un livre, vous n'utilisez pas de mots-clés exacts, vous lancez un petit drone (votre requête) qui va se poser là où le sens est le plus proche. La **similarité cosinus**, c'est l'outil qui mesure l'angle entre le drone et les livres : plus l'angle est petit, plus ils "regardent" dans la même direction sémantique.
 - **Le "Pourquoi on a inventé ça" :** Les ordinateurs ne comprennent pas le sens des mots, ils ne voient que des suites de lettres. Pour faire une recherche intelligente (sémantique), on doit transformer les mots en listes de nombres (vecteurs) dans un espace où la géométrie reflète le sens.
 - **Visualisation :** Imaginez des flèches partant de l'origine dans un espace à 3 dimensions (en réalité, il y en a des centaines). Une flèche "Roi" et une flèche "Reine" seront presque confondues. L'angle entre elles est minuscule. C'est ce qu'on appelle la proximité sémantique.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -36,7 +36,7 @@ Soit $E = \mathbb{R}^d$ l'espace des plongements (embeddings) de dimension $d$.
 > $$| \langle u, v \rangle | \le \|u\| \|v\|$$
 > L'égalité a lieu si et seulement si $u$ et $v$ sont colinéaires. Cela garantit que $S_C(u, v) \in [-1, 1]$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Invariance de la similarité cosinus par homothétie
@@ -64,7 +64,7 @@ Montrons que si on amplifie le signal d'un vecteur (multiplication par $\alpha >
 
 5. **Conclusion :** La similarité cosinus est invariante par multiplication par un scalaire positif. Cela démontre géométriquement pourquoi cette mesure est robuste à la variation de fréquence des mots dans un document.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application IA (Calcul de distance sémantique)
@@ -94,11 +94,11 @@ Lequel des deux documents est le plus "proche" de la requête selon la similarit
 5. On en déduit : $\dim(\ker \Phi) = \dim E - \text{rg}(\Phi) \ge n - p$.
 **Conclusion :** L'intersection de $p$ hyperplans est de dimension au moins $n-p$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** Ce jalon réalise la synthèse entre l'**Algèbre Linéaire Abstraite** (hyperplans, dualité) et l'**Ingénierie des Données**.
 - **Exemple Concret :** Dans les **Bases de Données Vectorielles** (comme Pinecone, Milvus ou FAISS), on stocke des millions de vecteurs de haute dimension. Pour répondre à une requête en millisecondes, on utilise des structures d'**Indexation Spatiale** qui partitionnent l'espace par des **Hyperplans de séparation**. Le calcul de similarité cosinus est l'opération atomique effectuée des milliards de fois par jour pour alimenter ChatGPT, les moteurs de recherche et les systèmes de traduction.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 8 (Applications linéaires)]], [[Jalon 9 (Calcul matriciel)]], [[Jalon 11 (Formes linéaires)]]
 - **Concepts Futurs dépendants :** [[Jalon 13 (Structure de R)]], [[Jalon 26 (Espaces euclidiens)]], [[Jalon 60 (Livrable IA)]]

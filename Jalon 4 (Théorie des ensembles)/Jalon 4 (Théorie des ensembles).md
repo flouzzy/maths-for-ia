@@ -12,14 +12,14 @@ next: "[[Jalon 5 (Applications).md]]"
 
 # Jalon 4 : Théorie des ensembles (ZFC), opérations sur les ensembles, ensembles des parties $\mathcal{P}(E)$
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous avez des sacs magiques. Un sac peut contenir des billes, des jouets, ou même d'autres sacs ! La théorie des ensembles, c'est la science qui étudie comment on peut remplir ces sacs, les vider, les mélanger ou regarder ce qu'ils ont en commun. On peut prendre deux sacs et créer un nouveau sac qui contient tout ce qu'il y avait dans les deux (**Union**), ou seulement ce qui était présent dans les deux en même temps (**Intersection**). L'**ensemble des parties**, c'est comme si vous preniez tous les sous-groupes possibles que vous pouvez former avec les objets d'un sac : si vous avez une pomme et une banane, vous pouvez faire un sac vide, un sac avec juste la pomme, un sac avec juste la banane, et un sac avec les deux.
 - **Le "Pourquoi on a inventé ça" :** Au début du 20ème siècle, les mathématiques ont failli s'effondrer à cause de paradoxes (comme celui du barbier qui rase tous ceux qui ne se rasent pas eux-mêmes). Les mathématiciens ont dû créer des règles très strictes (les axiomes ZFC) pour définir ce qu'est un "sac" valide, afin d'éviter ces pièges logiques.
 - **Visualisation :** On utilise souvent des diagrammes de Venn (des patates dessinées sur une feuille). L'ensemble des parties $\mathcal{P}(E)$ peut être vu comme une explosion de combinaisons : plus $E$ grandit, plus $\mathcal{P}(E)$ devient gigantesque de manière exponentielle.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -42,7 +42,7 @@ On travaille dans le cadre de la théorie axiomatique de Zermelo-Fraenkel avec a
 > Pour tout ensemble $E$ (même infini), il n'existe pas de surjection de $E$ vers $\mathcal{P}(E)$. Cela implique que le "nombre d'éléments" de $\mathcal{P}(E)$ est strictement supérieur à celui de $E$.
 > $$\text{card}(E) < \text{card}(\mathcal{P}(E))$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Lois de distributivité $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$
@@ -70,7 +70,7 @@ Nous allons démontrer cette égalité par double inclusion.
 
 4. **Conclusion :** Par double inclusion, l'égalité $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$ est rigoureusement démontrée.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application Directe (Ensemble des parties)
@@ -105,13 +105,13 @@ Nous allons démontrer cette égalité par double inclusion.
       - Par double inclusion, $A = B$. Ce sens est prouvé.
 * *Conclusion :* L'équivalence est démontrée. La différence symétrique mesure "l'écart" entre deux ensembles.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** La théorie des ensembles est le fondement de toutes les structures de données en informatique (Listes, Sets, Dictionnaires) et de la théorie des bases de données relationnelles (Algèbre relationnelle).
 - **Exemple Concret :** Dans le **filtrage collaboratif** (systèmes de recommandation de Netflix ou Amazon), on calcule l'**Indice de Jaccard** pour mesurer la similarité entre deux utilisateurs $A$ et $B$. Cet indice est défini par le rapport entre la taille de l'intersection et la taille de l'union de leurs paniers d'achats :
   $$J(A, B) = \frac{|A \cap B|}{|A \cup B|}$$
   C'est une application directe et massive des opérations de base sur les ensembles pour prédire vos goûts.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 1 (Logique formelle)]], [[Jalon 2 (Méthodes de raisonnement)]]
 - **Concepts Futurs dépendants :** [[Jalon 5 (Applications)]], [[Jalon 6 (Relations d'équivalence)]], [[Jalon 63 (Définition axiomatique d'une mesure)]]

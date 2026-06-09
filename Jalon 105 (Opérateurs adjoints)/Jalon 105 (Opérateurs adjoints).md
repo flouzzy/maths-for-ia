@@ -12,7 +12,7 @@ next: "[[Jalon 106 (Théorème spectral pour les opérateurs compacts autoadjoin
 
 # Jalon 105 : Opérateurs adjoints
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous ayez une machine à transformer les sons (un opérateur $T$). Elle prend une note pure et la déforme.
     - Vous avez aussi un micro qui mesure la ressemblance entre deux sons (le produit scalaire $\langle \cdot, \cdot \rangle$).
@@ -22,7 +22,7 @@ next: "[[Jalon 106 (Théorème spectral pour les opérateurs compacts autoadjoin
 - **Le "Pourquoi on a inventé ça" :** En dimension finie, c'est simplement la matrice transposée $A^T$. En dimension infinie, on ne peut pas toujours écrire de matrices. L'adjoint est la généralisation universelle de la symétrie. Il permet de "faire passer" un opérateur d'un côté à l'autre d'un calcul, ce qui est crucial pour résoudre des équations.
 - **Visualisation :** Un reflet. Si $T$ fait une rotation vers la droite, $T^*$ fait la même rotation vers la gauche pour compenser et garder l'alignement.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $H$ un espace de Hilbert.
 
@@ -46,7 +46,7 @@ Soit $H$ un espace de Hilbert.
 2. **Unitaire :** $T^* = T^{-1}$. (Conserve le produit scalaire, analogue des rotations).
 3. **Normal :** $T^* T = T T^*$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Existence de l'adjoint (via Riesz)
 
@@ -60,7 +60,7 @@ Soit $H$ un espace de Hilbert.
 6. **Linéarité de T* :** On vérifie facilement que $y \mapsto z_y$ est linéaire.
 7. **Unicité :** Découle de l'unicité du vecteur dans le théorème de Riesz.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : L'opérateur de décalage (Shift)
 **Énoncé :** Sur $\ell^2(\mathbb{N})$, on définit $S(x_0, x_1, \dots) = (0, x_0, x_1, \dots)$. Calculer $S^*$.
@@ -78,7 +78,7 @@ $y \in \ker(T^*) \iff T^*y = 0 \iff \forall x, \langle x, T^*y \rangle = 0 \iff 
 Cela signifie que $y$ est orthogonal à tous les vecteurs de l'image de $T$.
 **Conséquence :** C'est la base de la résolution des moindres carrés : l'erreur minimale est orthogonale à l'espace des prédictions.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Dans un réseau de neurones, la **Rétropropagation** est l'application successive des adjoints des opérateurs linéaires de chaque couche.
 - **Example Concret :**
@@ -87,7 +87,7 @@ Cela signifie que $y$ est orthogonal à tous les vecteurs de l'image de $T$.
     - **Auto-encodeurs :** Un auto-encodeur linéaire parfait cherche une matrice $W$ telle que $W^T W = I$. Cela signifie que l'encodeur est l'adjoint du décodeur, formant une paire unitaire qui préserve toute l'information.
     - **Attention Mechanism :** Dans les Transformers, le calcul des scores d'attention $QK^T$ utilise la transposée (l'adjoint) de la matrice des Keys pour mesurer la similarité avec les Queries.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 103 (Espaces de Hilbert généraux).md]], [[Jalon 9 (Calcul matriciel).md]]
 - **Concepts Futurs dépendants :** [[Jalon 106 (Théorème spectral pour les opérateurs compacts autoadjoints).md]], [[Jalon 125 (Opérateurs proximaux).md]]

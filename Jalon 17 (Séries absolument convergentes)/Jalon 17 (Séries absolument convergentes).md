@@ -12,7 +12,7 @@ next: "[[Jalon 18 (Continuité des fonctions d'une variable réelle).md]]"
 
 # Jalon 17 : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous fassiez des pas en avant (positifs) et des pas en arrière (négatifs).
@@ -22,7 +22,7 @@ next: "[[Jalon 18 (Continuité des fonctions d'une variable réelle).md]]"
 - **Le "Pourquoi on a inventé ça" :** On a besoin de manipuler des séries qui ne sont pas toujours positives. La convergence absolue est le "laissez-passer" qui permet de manipuler les séries infinies presque aussi facilement que des sommes finies (on peut changer l'ordre, regrouper, multiplier).
 - **Visualisation :** Imaginez une spirale qui tourne autour d'un point central. Si la longueur totale du fil de la spirale est finie, c'est absolument convergent. Si la spirale tourne indéfiniment mais se rapproche du centre parce que les tours se compensent, c'est semi-convergent.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Definitions Formelles
@@ -44,7 +44,7 @@ Soit $\sum u_n$ une série à termes dans $\mathbb{K}$ ($\mathbb{R}$ ou $\mathbb
 > **Théorème de réarrangement de Riemann (Curiosité) :**
 > Si $\sum u_n$ est semi-convergente, on peut changer l'ordre de ses termes pour que la nouvelle série converge vers n'importe quel réel donné, ou même diverge.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : La convergence absolue implique la convergence
@@ -75,7 +75,7 @@ Soit $\sum u_n$ une série telle que $\sum |u_n|$ converge. Montrons que $\sum u
    Puisque $\mathbb{R}$ (ou $\mathbb{C}$) est un espace complet, toute suite de Cauchy (et donc toute série vérifiant le critère de Cauchy) converge.
    La série $\sum u_n$ est donc convergente.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Série Alternée (Semi-convergence)
@@ -102,11 +102,11 @@ Soit $\sum u_n$ une série telle que $\sum |u_n|$ converge. Montrons que $\sum u
 4. **Réassemblage :** $c_n = \frac{(x+y)^n}{n!}$.
 **Conclusion :** $\sum c_n = \sum \frac{(x+y)^n}{n!} = E(x+y)$. L'identité est prouvée.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** En IA, les séries absolument convergentes garantissent la stabilité des **Noyaux de Convolution** infinis et des **Séries Temporelles**.
 - **Exemple Concret :** Dans le **Traitement du Signal (Audio/Image)**, on utilise souvent des filtres dont la réponse impulsionnelle est infinie (filtres IIR). Pour que le filtre soit stable (qu'il n'amplifie pas le bruit à l'infini), la série de ses coefficients doit être **absolument convergente**. De même, le produit de Cauchy est l'opération fondamentale derrière la **Convolution Discrète** de deux signaux. Si vous multipliez deux polynômes de prédiction (utilisés dans les modèles ARMA), vous effectuez un produit de Cauchy.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 14 (Suites réelles et complexes)]], [[Jalon 16 (Séries numériques à termes positifs)]]
 - **Concepts Futurs dépendants :** [[Jalon 23 (Séries entières)]], [[Jalon 80 (Transformée de Fourier dans L^1)]], [[Jalon 126 (Noyaux définis positifs)]]

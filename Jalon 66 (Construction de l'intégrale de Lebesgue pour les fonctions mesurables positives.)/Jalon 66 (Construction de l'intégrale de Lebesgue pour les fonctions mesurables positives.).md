@@ -12,7 +12,7 @@ next: "[[Jalon 67 (Démonstration du théorème de convergence monotone).md]]"
 
 # Jalon 66 : Intégrale de Lebesgue pour les fonctions positives
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous vouliez calculer l'aire totale de confiture étalée sur une table.
     - La confiture n'est pas étalée de manière régulière : il y a des endroits où elle est épaisse et d'autres où elle est très fine.
@@ -22,7 +22,7 @@ next: "[[Jalon 67 (Démonstration du théorème de convergence monotone).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour pouvoir intégrer des fonctions qui "sautent" partout (comme la fonction de Dirichlet). La construction de Lebesgue est descendante : on définit l'intégrale pour des briques très simples, puis on généralise par un passage au supremum.
 - **Visualisation :** On remplit l'espace sous la courbe par des "rectangles horizontaux" de plus en plus nombreux et de plus en plus fins.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 
@@ -51,7 +51,7 @@ Soit $\mathcal{M}_+$ l'ensemble des fonctions mesurables de $X$ dans $[0, +\inft
 > 2. **Croissance :** Si $f \le g$, alors $\int f \le \int g$.
 > 3. **Homogénéité :** $\int \alpha f d\mu = \alpha \int f d\mu$ pour $\alpha \ge 0$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Relation entre intégrale et ensembles de mesure nulle
 
@@ -68,7 +68,7 @@ Montrons que si $f \in \mathcal{M}_+$ et $\int f d\mu = 0$, alors $f = 0$ presqu
    $$\mu(A) = \mu\left( \bigcup_{n=1}^\infty A_n \right) \le \sum_{n=1}^\infty \mu(A_n) = 0$$
    Donc $f$ est nulle presque partout.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Intégrale de la fonction de Dirichlet
 **Énoncé :** Calculer l'intégrale de Lebesgue de $f = \mathbf{1}_\mathbb{Q}$ sur $[0, 1]$ pour la mesure de Lebesgue $\lambda$.
@@ -86,7 +86,7 @@ Toute fonction sur $\mathbb{N}$ est limite de fonctions simples (sommes finies).
 $$\int_{\mathbb{N}} f d\mu = \sum_{n=0}^\infty f(n)$$
 La théorie de Lebesgue unifie donc le calcul intégral et le calcul des séries.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** L'intégrale de Lebesgue permet de définir l'**Espérance mathématique** de manière universelle, que la variable soit discrète, continue ou mixte. $\mathbb{E}[X] = \int_\Omega X(\omega) dP(\omega)$.
 - **Example Concret :**
@@ -94,7 +94,7 @@ La théorie de Lebesgue unifie donc le calcul intégral et le calcul des séries
     - **Mesures de similarité entre distributions :** La divergence de Jensen-Shannon ou la divergence KL sont définies par des intégrales de Lebesgue. Ces mesures sont le cœur des modèles génératifs et du clustering.
     - **Filtrage de Kalman :** La mise à jour des croyances dans un système dynamique repose sur l'intégration de fonctions de vraisemblance, souvent sur des espaces de grande dimension.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 65 (Fonctions mesurables).md]], [[Jalon 63 (Définition axiomatique d'une mesure).md]]
 - **Concepts Futurs dépendants :** [[Jalon 67 (Démonstration du théorème de convergence monotone).md]], [[Jalon 73 (Définition des espaces Lp).md]]

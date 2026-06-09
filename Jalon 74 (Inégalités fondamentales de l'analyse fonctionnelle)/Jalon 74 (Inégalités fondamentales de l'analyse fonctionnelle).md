@@ -12,7 +12,7 @@ next: "[[Jalon 75 (Preuve de la complétude des espaces Lp).md]]"
 
 # Jalon 74 : Inégalités fondamentales : Hölder, Minkowski, Jensen
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :**
     - **Jensen (Les moyennes) :** Imaginez que vous fassiez cuire une omelette. Est-il préférable de faire cuire chaque œuf séparément puis de les mélanger, ou de mélanger tous les œufs puis de les faire cuire d'un coup ? Si la poêle est "convexe" (elle répartit bien la chaleur), le mélange global sera toujours "meilleur" (ou égal) à la somme des parties.
@@ -21,7 +21,7 @@ next: "[[Jalon 75 (Preuve de la complétude des espaces Lp).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour pouvoir majorer des erreurs. En sciences, on ne connaît jamais la valeur exacte d'une fonction, on connaît seulement sa "taille" (sa norme). Ces inégalités sont les outils de base qui permettent de dire : "si l'erreur sur A est petite et l'erreur sur B est petite, alors l'erreur sur leur combinaison reste sous contrôle".
 - **Visualisation :** La courbure d'une fonction convexe ( Jensen). La superposition de deux ondes (Minkowski).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. L'Inégalité de Hölder
 
@@ -46,7 +46,7 @@ Soient $p, q \in [1, +\infty]$ tels que $\frac{1}{p} + \frac{1}{q} = 1$ (on dit 
 > $$\phi \left( \int_X f d\mu \right) \le \int_X \phi(f) d\mu$$
 > En termes probabilistes : $\phi(\mathbb{E}[X]) \le \mathbb{E}[\phi(X)]$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration de l'inégalité de Hölder
 
@@ -63,7 +63,7 @@ Soient $p, q \in [1, +\infty]$ tels que $\frac{1}{p} + \frac{1}{q} = 1$ (on dit 
    $\int \frac{|fg|}{\|f\|_p \|g\|_q} d\mu \le \frac{1}{p}(1) + \frac{1}{q}(1) = 1$.
 7. **Conclusion :** $\|fg\|_1 \le \|f\|_p \|g\|_q$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Application de Jensen (Moyennes)
 **Énoncé :** Prouver que la moyenne géométrique est inférieure à la moyenne arithmétique : $(x_1 x_2 \dots x_n)^{1/n} \le \frac{x_1 + \dots + x_n}{n}$.
@@ -81,7 +81,7 @@ Par Cauchy-Schwarz : $\int fg \le \|f\|_2 \|g\|_2$.
 Donc $\|f+g\|_2^2 \le \|f\|_2^2 + 2\|f\|_2 \|g\|_2 + \|g\|_2^2 = (\|f\|_2 + \|g\|_2)^2$.
 En prenant la racine, on obtient Minkowski.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** L'inégalité de Jensen est la "reine" de l'apprentissage automatique moderne. Elle permet de transformer des problèmes de minimisation impossibles (car l'intégrale est à l'intérieur d'une fonction complexe) en problèmes gérables.
 - **Example Concret :**
@@ -89,7 +89,7 @@ En prenant la racine, on obtient Minkowski.
     - **Divergence KL :** La preuve que $D_{KL} \ge 0$ (Jalon 72) repose entièrement sur Jensen. C'est ce qui justifie que minimiser la Cross-Entropy a un sens.
     - **EM Algorithm :** L'algorithme Expectation-Maximization utilise Jensen à chaque étape pour garantir que l'on augmente bien la vraisemblance du modèle.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 73 (Espaces Lp et passage au quotient).md]], [[Jalon 18 (Continuité des fonctions d'une variable réelle).md]]
 - **Concepts Futurs dépendants :** [[Jalon 75 (Preuve de la complétude des espaces Lp).md]], [[Jalon 91 (Inégalités de concentration).md]]

@@ -12,14 +12,14 @@ next: "[[Jalon 32 (Preuve complète du théorème spectral pour les endomorphism
 
 # Jalon 31 : Introduction à la réduction de Jordan et structure des nilpotents
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** La réduction de Jordan est le "chaînon manquant" pour les matrices qui ne sont pas diagonalisables. Si la diagonalisation est une base parfaite avec des étirements, la forme de Jordan, c'est une base où les vecteurs sont "enchaînés" les uns aux autres par des relations de dépendance très précises (des 1 sur la diagonale supérieure). 
 - **Structure des nilpotents :** Un opérateur nilpotent est une machine qui finit par "écraser" n'importe quel vecteur en zéro si on l'applique assez souvent. C'est le degré ultime de la "dégradation" d'un vecteur.
 - **Visualisation :** Une chaîne de Jordan, c'est un groupe de vecteurs qui se transforment successivement les uns dans les autres, comme un effet domino.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -33,7 +33,7 @@ next: "[[Jalon 32 (Preuve complète du théorème spectral pour les endomorphism
 > **Structure des nilpotents :**
 > Un opérateur est nilpotent ssi il est trigonalisable avec des 0 sur la diagonale.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 ### Démonstration : Nilpotence $\iff$ $\chi_f = (-1)^n X^n$
 1. **Sens $\implies$ :** Si $f^k=0$, les valeurs propres sont nulles. $\chi_f = (X-0)^n = X^n$.
 2. **Sens $\impliedby$ :** Si $\chi_f = X^n$, alors par Cayley-Hamilton, $f^n=0$.

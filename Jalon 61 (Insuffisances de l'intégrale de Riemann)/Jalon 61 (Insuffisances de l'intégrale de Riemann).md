@@ -12,7 +12,7 @@ next: "[[Jalon 62 (Algèbres).md]]"
 
 # Jalon 61 : Insuffisances de l'intégrale de Riemann
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez un caissier et que vous deviez compter l'argent dans une boîte remplie de pièces de monnaie mélangées.
     - **La méthode de Riemann**, c'est de prendre les pièces dans l'ordre où elles viennent dans la boîte, une par une, et de faire l'addition. Si les pièces sont bien rangées, ça va. Mais si elles sont éparpillées au hasard, vous risquez de vous perdre.
@@ -20,7 +20,7 @@ next: "[[Jalon 62 (Algèbres).md]]"
 - **Le "Pourquoi on a inventé ça" :** L'intégrale de Riemann (découper en petits rectangles verticaux) marche très bien pour les fonctions lisses. Mais dès que la fonction devient "sauvage" (elle saute tout le temps, comme un signal avec beaucoup de bruit), la méthode des rectangles échoue. On avait besoin d'une intégrale plus puissante pour traiter des cas limites et construire des espaces de fonctions "complets" (sans trous).
 - **Visualisation :** La fonction de Dirichlet. Imaginez un nuage de points où chaque nombre rationnel vaut 1 et chaque nombre irrationnel vaut 0. Si vous essayez de dessiner des rectangles en dessous, vous ne saurez jamais s'ils doivent avoir une hauteur de 0 ou de 1. L'aire semble impossible à définir avec Riemann.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Rappel : Intégrabilité au sens de Riemann
 
@@ -39,7 +39,7 @@ $$f(x) = \begin{cases} 1 & \text{si } x \in \mathbb{Q} \\ 0 & \text{si } x \noti
 
 L'ensemble des fonctions Riemann-intégrables muni de la norme $\|f\|_1 = \int |f|$ n'est pas un espace complet (pas un Banach). On peut construire une suite de fonctions "gentilles" dont la limite est "sauvage" et non intégrable par Riemann.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Non-intégrabilité de la fonction de Dirichlet
 
@@ -53,7 +53,7 @@ L'ensemble des fonctions Riemann-intégrables muni de la norme $\|f\|_1 = \int |
 4. **Conclusion :** Pour toute subdivision, $s(f, \sigma) = 0$ et $S(f, \sigma) = 1$.
    Comme $0 \neq 1$, l'intégrale inférieure et l'intégrale supérieure ne coïncident jamais. La fonction n'est pas Riemann-intégrable.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Limite de fonctions intégrables
 **Énoncé :** Soit $q_1, q_2, \dots$ une énumération des rationnels de $[0, 1]$. On définit $f_n(x) = 1$ si $x \in \{q_1, \dots, q_n\}$ et $0$ sinon.
@@ -70,7 +70,7 @@ L'ensemble des fonctions Riemann-intégrables muni de la norme $\|f\|_1 = \int |
 **Correction Détaillée :**
 La fonction de Dirichlet est discontinue en **tout point** de $[0, 1]$. L'ensemble des points de discontinuité est donc $[0, 1]$, qui n'est absolument pas négligeable (sa longueur est 1).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En IA, nous manipulons des **variables aléatoires**. La définition moderne d'une probabilité repose sur l'intégrale de Lebesgue. Sans elle, on ne pourrait pas traiter proprement les distributions qui mélangent du continu et du discret (ex: un capteur qui donne une valeur précise 0.5 avec une probabilité 0.1, et une valeur continue ailleurs).
 - **Example Concret :**
@@ -78,7 +78,7 @@ La fonction de Dirichlet est discontinue en **tout point** de $[0, 1]$. L'ensemb
     - **Processus Stochastiques :** Le mouvement Brownien (utilisé en finance ou pour modéliser le bruit) a des trajectoires qui sont continues presque partout mais dérivables nulle part. L'intégrale de Riemann explose face à de tels objets, alors que la théorie de Lebesgue les gère parfaitement.
     - **Loi de probabilité de Dirac :** En traitement du signal ou en IA, on utilise souvent des "pics" de probabilité ($\delta$). C'est une mesure de Lebesgue, mais ce n'est pas une fonction intégrable au sens de Riemann.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 37 (Intégrale de Riemann sur un segment).md]], [[Jalon 13 (Structure de R).md]]
 - **Concepts Futurs dépendants :** [[Jalon 63 (Définition axiomatique d'une mesure).md]], [[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.).md]]

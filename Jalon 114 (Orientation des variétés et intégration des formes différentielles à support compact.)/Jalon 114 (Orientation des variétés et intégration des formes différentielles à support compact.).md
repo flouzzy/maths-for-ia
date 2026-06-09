@@ -12,7 +12,7 @@ next: "[[Jalon 115 (Démonstration du théorème de Stokes généralisé).md]]"
 
 # Jalon 114 : Orientation et Intégration sur variétés
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :**
     - **L'Orientation :** Imaginez que vous peigniez un ruban. Pour que le travail soit propre, vous devez décider quel côté est le "dessus" et quel côté est le "dessous". Si vous pouvez faire tout le tour du ruban et revenir au point de départ en restant toujours sur le "dessus", le ruban est **orientable**. (Le ruban de Möbius, lui, ne l'est pas : on finit par se retrouver la tête en bas sans s'en rendre compte !).
@@ -21,7 +21,7 @@ next: "[[Jalon 115 (Démonstration du théorème de Stokes généralisé).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour calculer des masses, des flux d'énergie ou des probabilités sur des mondes courbes. Sans orientation, on ne pourrait pas définir de "flux" (on ne saurait pas si l'énergie entre ou sort). Sans intégration, on ne pourrait pas définir de "moyenne" sur une variété.
 - **Visualisation :** Une sphère recouverte de petits patchs colorés qui se fondent les uns dans les autres.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $M$ une variété différentielle de dimension $n$.
 
@@ -46,7 +46,7 @@ Soit $\omega$ une $n$-forme différentielle sur $M$ à support compact.
 
 > **Théorème :** L'intégrale est bien définie, c'est-à-dire qu'elle ne dépend ni de l'atlas orienté choisi, ni de la partition de l'unité utilisée.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Indépendance du changement de carte
 
@@ -62,7 +62,7 @@ Soient deux cartes $(U, \phi)$ and $(V, \psi)$ recouvrant le support de $\omega$
    $$\int_{\psi(V)} g(y) d^n y = \int_{\phi(U)} g(h(x)) |\det(J_h(x))| d^n x$$
 6. **Conclusion :** Comme l'atlas est orienté, $\det(J_h) > 0$, donc $|\det(J_h)| = \det(J_h)$. Les deux calculs donnent le même résultat. L'orientation est donc la condition sine qua non pour que l'intégration ait un sens global.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Aire de la sphère $S^2$
 **Énoncé :** Calculer l'intégrale de la forme volume $\omega = \sin \theta d\theta \wedge d\phi$ sur la sphère unité (en coordonnées sphériques).
@@ -78,7 +78,7 @@ Soient deux cartes $(U, \phi)$ and $(V, \psi)$ recouvrant le support de $\omega$
 **Correction Détaillée :**
 Si on essaie de définir une forme volume partout non nulle, on s'aperçoit qu'en faisant un tour, le signe du Jacobien change obligatoirement à cause de la torsion. On ne peut pas trouver d'atlas orienté. L'intégrale dépendrait du "sens" dans lequel on a décidé de commencer le calcul, ce qui est mathématiquement inacceptable.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En IA, pour calculer la **Perte de Reconstruction** sur une variété (ex: dans un Auto-encodeur géométrique), on doit intégrer l'erreur sur toute la surface des données.
 - **Example Concret :**
@@ -86,7 +86,7 @@ Si on essaie de définir une forme volume partout non nulle, on s'aperçoit qu'e
     - **Normalisation sur Variété :** Dans les réseaux de neurones pour la vision 360° (sphérique), on doit normaliser les activations. Pour cela, on calcule l'espérance et la variance en intégrant les signaux sur la sphère $S^2$ en utilisant les outils de ce jalon.
     - **Information Geometry :** On voit l'espace des modèles $\theta$ comme une variété (la variété de Fisher). La distance entre deux modèles est une intégrale sur cette variété.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 113 (Tenseurs et Formes différentielles).md]], [[Jalon 110 (Variétés différentielles abstraites).md]]
 - **Concepts Futurs dépendants :** [[Jalon 115 (Démonstration du théorème de Stokes généralisé).md]], [[Jalon 116 (Variétés riemanniennes).md]]

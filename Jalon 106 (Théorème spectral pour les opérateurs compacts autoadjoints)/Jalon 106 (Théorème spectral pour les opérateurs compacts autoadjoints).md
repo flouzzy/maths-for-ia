@@ -12,7 +12,7 @@ next: "[[Jalon 107 (Introduction à la théorie des opérateurs non bornés et r
 
 # Jalon 106 : Théorème spectral pour les opérateurs compacts
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous fassiez briller une lumière à travers un cristal de roche (l'opérateur $T$).
     - Normalement, la lumière ressort dans tous les sens de manière confuse.
@@ -24,7 +24,7 @@ next: "[[Jalon 107 (Introduction à la théorie des opérateurs non bornés et r
 - **Le "Pourquoi on a inventé ça" :** C'est la généralisation finale de la diagonalisation des matrices (Jalon 32). En dimension infinie, la plupart des opérateurs sont trop compliqués pour être diagonalisés. Les opérateurs compacts sont les seuls qui se comportent "presque" comme des matrices finies. C'est l'outil qui permet de résoudre les équations de la physique et de l'IA (comme la compression de données).
 - **Visualisation :** Une machine qui transforme une sphère géante en une ellipse dont les axes deviennent de plus en plus petits. On peut décrire la machine simplement en donnant la direction et la longueur de chaque axe.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $H$ un espace de Hilbert de dimension infinie.
 
@@ -47,7 +47,7 @@ Soit $H$ un espace de Hilbert de dimension infinie.
 > $$\forall x \in H, \quad Tx = \sum_{n=0}^\infty \lambda_n \langle x, e_n \rangle e_n$$
 > où $\lambda_n$ est la valeur propre associée à $e_n$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Existence de la plus grande valeur propre
 
@@ -57,7 +57,7 @@ Soit $H$ un espace de Hilbert de dimension infinie.
 4. **Utilisation de la compacité de T :** Comme $T$ est compact, la convergence faible $x_n \rightharpoonup x$ implique la convergence **forte** $Tx_n \to Tx$.
 5. **Conclusion :** Par continuité du produit scalaire (fort $\times$ faible), on montre que $q(x_n) \to q(x)$. Donc $q(x) = \lambda$. Le maximum est atteint en $x$, et on prouve par un calcul de différentielle que $Tx = \lambda x$. $x$ est donc un vecteur propre.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Opérateur intégral
 **Énoncé :** Soit $T : L^2([0, 1]) \to L^2([0, 1])$ défini par $Tf(x) = \int_0^1 K(x, y) f(y) dy$ avec $K(x, y) = \min(x, y)$. Montrer que $T$ est compact auto-adjoint.
@@ -71,7 +71,7 @@ Soit $H$ un espace de Hilbert de dimension infinie.
 **Correction Détaillée :**
 C'est une conséquence directe du théorème spectral : les sommes partielles $T_N = \sum_{n=0}^N \lambda_n \langle \cdot, e_n \rangle e_n$ sont de rang $N$ et $\|T - T_N\| = \sup_{n > N} |\lambda_n|$, qui tend vers 0 car les valeurs propres tendent vers 0.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le théorème spectral est le fondement mathématique de l'**Analyse en Composantes Principales (PCA)** et des **Méthodes à Noyaux**.
 - **Example Concret :**
@@ -79,7 +79,7 @@ C'est une conséquence directe du théorème spectral : les sommes partielles $T
     - **Compression de Modèles (SVD/Pruning) :** Dans un Transformer, on décompose les matrices de poids par SVD (qui est la version non-carrée du théorème spectral). On remarque que les valeurs propres décroissent très vite : on peut donc supprimer 90% des petites valeurs propres sans changer la sortie du réseau.
     - **Diffusion Models :** L'évolution de la distribution des données pendant le débruitage est régie par un opérateur (le générateur du semi-groupe) dont on étudie le spectre pour garantir la vitesse de convergence.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 105 (Opérateurs adjoints).md]], [[Jalon 104 (Bases hilbertiennes).md]], [[Jalon 32 (Preuve complète du théorème spectral pour les endomorphismes symétriques.).md]]
 - **Concepts Futurs dépendants :** [[Jalon 107 (Introduction à la théorie des opérateurs non bornés et résolvante.).md]], [[Jalon 143 (Théorie spectrale des graphes).md]]

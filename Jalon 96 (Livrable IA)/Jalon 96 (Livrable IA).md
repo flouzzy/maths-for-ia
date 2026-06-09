@@ -12,7 +12,7 @@ next: "[[Jalon 97 (Espaces de Banach).md]]"
 
 # Jalon 96 : Livrable IA T8 : Convergence de la Cross-Entropy vers l'Entropie de Shannon
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous essayiez de deviner quel sera le prochain mot d'une phrase.
     - La **Réalité ($P$)**, c'est la manière dont les gens parlent vraiment. Cette réalité a un niveau de "surprise" inévitable : on ne peut pas tout deviner (c'est l'**Entropie de Shannon**).
@@ -22,7 +22,7 @@ next: "[[Jalon 97 (Espaces de Banach).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour savoir si l'entraînement d'un LLM (comme ChatGPT) a une fin. On veut savoir s'il existe une limite théorique à la précision d'un modèle de langage. Ce lien mathématique unit la probabilité pure et la science de l'information.
 - **Visualisation :** Une courbe de perte qui descend au fil du temps. Elle ne descend pas jusqu'à zéro, elle s'écrase sur un "plancher" invisible. Ce plancher, c'est l'entropie de la source de données.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $(\mathcal{X}, \mathcal{B}(\mathcal{X}))$ un espace de données. Soit $P$ la distribution réelle des données (inconnue) et $Q_\theta$ la distribution prédite par un modèle paramétré par $\theta$.
 
@@ -43,7 +43,7 @@ On a la relation directe avec la divergence KL (Jalon 72) :
 $$H(P, Q_\theta) = H(P) + D_{KL}(P \| Q_\theta)$$
 Comme $D_{KL} \ge 0$, on a toujours $H(P, Q_\theta) \ge H(P)$. L'entropie réelle est le plancher de la fonction de perte.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration de la convergence de la perte empirique
 
@@ -58,7 +58,7 @@ $$\hat{H}_n(\theta) = - \frac{1}{n} \sum_{i=1}^n \ln q_\theta(x_i)$$
    $$\hat{H}_n(\theta) \xrightarrow{p.s.} H(P, Q_\theta)$$
 5. **Conséquence pour l'optimisation :** En minimisant $\hat{H}_n(\theta)$ sur un jeu de données de plus en plus grand, on tend vers la minimisation de $D_{KL}(P \| Q_\theta)$. Si le modèle est assez riche (Jalon 60), on peut espérer $Q_\theta \to P$, et donc $\hat{H}_n \to H(P)$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Entropie d'un texte binaire
 **Énoncé :** Un texte est composé uniquement de '0' (avec probabilité $p$) et de '1' (avec probabilité $1-p$). Quelle est la perte Cross-Entropy minimale d'un modèle de langage sur ce texte ?
@@ -73,7 +73,7 @@ $$\hat{H}_n(\theta) = - \frac{1}{n} \sum_{i=1}^n \ln q_\theta(x_i)$$
 **Correction Détaillée :**
 Une perplexité de 10 signifie que le modèle est "aussi surpris" que s'il devait choisir uniformément entre 10 mots à chaque étape. Bien qu'il y ait 1000 mots possibles, la structure de la langue (apprise par le modèle) a réduit l'incertitude effective à seulement 10 choix probables.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Ce jalon explique pourquoi nous utilisons la **Log-Likelihood** comme objectif d'entraînement. C'est la seule fonction de perte qui possède ce lien direct avec la limite fondamentale de l'information (Théorie de Shannon).
 - **Example Concret :**
@@ -81,7 +81,7 @@ Une perplexité de 10 signifie que le modèle est "aussi surpris" que s'il devai
     - **Compression de données (Arithmetic Coding) :** Un modèle d'IA avec une faible Cross-Entropy peut être utilisé pour compresser des fichiers. La longueur du fichier compressé sera exactement $n \times H(P, Q)$. Plus le modèle est bon en IA, meilleur il est en compression.
     - **Détection d'anomalies :** Si un nouveau texte a une Cross-Entropy beaucoup plus élevée que la moyenne pour un modèle donné, c'est qu'il est "surprenant" (hors distribution).
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 92 (Loi forte des grands nombres (LFGN)).md]], [[Jalon 72 (Livrable IA).md]]
 - **Concepts Futurs dépendants :** [[Jalon 135 (Complexité de Rademacher).md]], [[Jalon 144 (Le phénomène de double descente).md]]

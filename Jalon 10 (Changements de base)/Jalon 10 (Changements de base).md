@@ -12,7 +12,7 @@ next: "[[Jalon 11 (Formes linéaires).md]]"
 
 # Jalon 10 : Changements de base, matrices de passage et matrices par blocs
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** 
@@ -21,7 +21,7 @@ next: "[[Jalon 11 (Formes linéaires).md]]"
 - **Le "Pourquoi on a inventé ça" :** Certaines transformations sont très difficiles à calculer dans la base "facile" (comme la grille des pixels d'une image), mais deviennent triviales si on change de point de vue (comme les fréquences ou les directions principales des données).
 - **Visualisation :** Imaginez que vous inclinez votre tête. Le monde n'a pas changé, mais les axes "Haut/Bas" et "Gauche/Droite" de votre vision ont tourné par rapport au sol. Le changement de base recalcule les coordonnées des objets dans votre nouveau champ de vision.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -44,7 +44,7 @@ Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension $n$.
 > $$M' = P^{-1} M P$$
 > On dit que $M$ et $M'$ sont des matrices **semblables**.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Formule du changement de base pour un endomorphisme
@@ -79,7 +79,7 @@ Nous voulons établir $M' = P^{-1} M P$.
    Ceci étant vrai pour tout vecteur $X'$, on en déduit par unicité de la matrice associée à une application linéaire :
    $M' = P^{-1} M P$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application Directe (Coordonnées dans une nouvelle base)
@@ -103,11 +103,11 @@ Nous voulons établir $M' = P^{-1} M P$.
    - $AY + BW = 0 \implies AY + B D^{-1} = 0 \implies AY = -B D^{-1} \implies Y = -A^{-1} B D^{-1}$.
 **Conclusion :** $M$ est inversible et $M^{-1} = \begin{pmatrix} A^{-1} & -A^{-1} B D^{-1} \\ 0 & D^{-1} \end{pmatrix}$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** Le changement de base est l'essence même de l'**Extraction de Caractéristiques** (Feature Engineering). On passe d'un espace de données brutes à un espace où les motifs sont évidents.
 - **Exemple Concret :** Dans la **Compression d'Images (JPEG)**, on effectue un changement de base vers la base des **Cosinus Discrets (DCT)**. Dans cette nouvelle base, les informations visuelles importantes se concentrent sur quelques coefficients (les basses fréquences), permettant de supprimer les autres (les hautes fréquences, invisibles à l'œil nu) sans perte de qualité perçue. C'est un changement de base massif appliqué par blocs de $8 \times 8$ pixels.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon 9 (Calcul matriciel)]]
 - **Concepts Futurs dépendants :** [[Jalon 29 (Éléments propres)]], [[Jalon 30 (Trigonalisation d'endomorphismes et décomposition de Dunford.)]], [[Jalon 80 (Transformée de Fourier dans L^1)]]

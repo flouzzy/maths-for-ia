@@ -12,7 +12,7 @@ next: "[[Jalon 64 (Construction pas à pas de la mesure de Lebesgue sur Rn via l
 
 # Jalon 63 : Définition axiomatique d'une mesure
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous ayez une balance de précision. Vous voulez peser différents objets (les ensembles de votre tribu). La balance doit respecter trois règles de bon sens :
     1. Un objet ne peut pas avoir un poids négatif (positivité).
@@ -22,7 +22,7 @@ next: "[[Jalon 64 (Construction pas à pas de la mesure de Lebesgue sur Rn via l
 - **Le "Pourquoi on a inventé ça" :** Avant, on mesurait des longueurs, des aires ou des volumes avec des formules différentes. La théorie de la mesure unifie tout cela dans un seul concept abstrait. Que ce soit la longueur d'un segment, la probabilité d'un événement ou le nombre d'éléments dans un ensemble, tout est une mesure.
 - **Visualisation :** De la pâte à modeler étalée sur une table. La mesure, c'est la quantité de pâte qu'il y a sur une zone donnée. Si vous regroupez deux zones disjointes, vous additionnez simplement la quantité de pâte.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $(X, \mathcal{F})$ un espace mesurable.
 
@@ -47,7 +47,7 @@ Soit $(X, \mathcal{F})$ un espace mesurable.
 > 1. **Croissance :** Si $(A_n)$ est une suite croissante ($A_n \subset A_{n+1}$), alors $\mu(\bigcup A_n) = \lim \mu(A_n)$.
 > 2. **Décroissance :** Si $(A_n)$ est une suite décroissante ($A_{n+1} \subset A_n$) ET $\mu(A_0) < +\infty$, alors $\mu(\bigcap A_n) = \lim \mu(A_n)$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : La continuité par le bas (croissance)
 
@@ -62,7 +62,7 @@ Soit $(X, \mathcal{F})$ un espace mesurable.
    Par additivité finie, $\sum_{n=0}^N \mu(B_n) = \mu(\bigcup_{n=0}^N B_n) = \mu(A_N)$.
 5. **Conclusion :** $\mu(A) = \lim_{N \to \infty} \mu(A_N)$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : La mesure de Dirac
 **Énoncé :** Soit $a \in X$. On définit $\delta_a(A) = 1$ si $a \in A$ et $0$ sinon. Montrer que $\delta_a$ est une mesure de probabilité.
@@ -79,7 +79,7 @@ $\mu(\cup A_n) = \mu(\cup B_n) = \sum \mu(B_n)$.
 Comme $B_n \subset A_n$, par croissance de la mesure (démontrée par $\mu(A) = \mu(B) + \mu(A\setminus B) \ge \mu(B)$), on a $\mu(B_n) \le \mu(A_n)$.
 D'où l'inégalité de Boole.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En IA, nous ne manipulons pas des points, mais des **distributions**. Une distribution de données est une mesure de probabilité sur l'espace des caractéristiques.
 - **Example Concret :**
@@ -87,7 +87,7 @@ D'où l'inégalité de Boole.
     - **Noyaux de convolution :** En vision par ordinateur, on peut voir un filtre comme une mesure locale. L'opération de convolution est en fait une intégrale par rapport à cette mesure.
     - **Processus de Dirichlet :** En apprentissage Bayésien non-paramétrique, on définit une "mesure sur les mesures". Cela permet de créer des modèles dont le nombre de paramètres (ex: nombre de clusters) s'adapte automatiquement à la complexité des données.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 62 (Algèbres).md]], [[Jalon 14 (Suites réelles et complexes).md]]
 - **Concepts Futurs dépendants :** [[Jalon 64 (Construction pas à pas de la mesure de Lebesgue sur Rn via la mesure extérieure.).md]], [[Jalon 85 (Axiomes de Kolmogorov).md]]

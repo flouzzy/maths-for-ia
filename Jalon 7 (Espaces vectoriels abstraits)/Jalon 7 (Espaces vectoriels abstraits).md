@@ -12,14 +12,14 @@ next: "[[Jalon 8 (Applications linéaires).md]]"
 
 # Jalon 7 : Espaces vectoriels abstraits, familles libres, familles génératrices et bases en dimension finie
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous êtes un cuisinier. Un **espace vectoriel**, c'est comme votre cuisine : vous avez des ingrédients de base et vous savez comment les mélanger (addition) ou comment multiplier les doses (multiplication par un scalaire). Une **famille génératrice**, c'est une liste de courses qui contient assez d'ingrédients pour préparer n'importe quel plat du menu. Une **famille libre**, c'est une liste où aucun ingrédient ne peut être fabriqué à partir des autres (pas de doublon inutile). Une **base**, c'est la liste de courses parfaite : le minimum vital d'ingrédients nécessaires pour tout cuisiner, sans aucun gaspillage.
 - **Le "Pourquoi on a inventé ça" :** Les mathématiciens ont réalisé que beaucoup de choses (les nombres, les fonctions, les images, les signaux audio) se manipulent de la même manière : on peut les additionner et les amplifier. En créant la théorie des espaces vectoriels, ils ont créé un langage unique pour traiter tous ces domaines d'un coup.
 - **Visualisation :** Pensez aux couleurs sur un écran (Rouge, Vert, Bleu). N'importe quelle couleur est un "vecteur" créé en mélangeant ces trois couleurs de base. Si vous enlevez le Bleu, vous ne pouvez plus tout créer : votre famille n'est plus génératrice. Si vous ajoutez une couleur "Bleu-Clair" déjà fabricable avec les autres, votre famille n'est plus libre.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -45,7 +45,7 @@ Soit $\mathbb{K}$ un corps (généralement $\mathbb{R}$ ou $\mathbb{C}$).
 > **Théorème de la Dimension :**
 > Toutes les bases d'un espace vectoriel de dimension finie ont le même nombre d'éléments, appelé **dimension** de $E$ (noté $\dim E$).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Unicité de la décomposition dans une base
@@ -71,7 +71,7 @@ Soit $\mathcal{B} = (e_1, ..., e_n)$ une base de $E$. Démontrons que pour tout 
 
 5. **Conclusion :** Les deux familles de scalaires sont identiques. La décomposition est donc unique.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application Directe (Liberté dans R^3)
@@ -101,11 +101,11 @@ Soit $\mathcal{B} = (e_1, ..., e_n)$ une base de $E$. Démontrons que pour tout 
 4. Enfin, $b + 0 = 0 \implies b = 0$.
 **Conclusion :** $a=b=c=0$. La famille est libre. (Généralisation : toute famille de polynômes de degrés distincts est libre).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** En IA, les données (mots, utilisateurs, images) sont projetées dans des **Espaces de Plongement** (Embedding Spaces). Ce sont des espaces vectoriels de grande dimension (ex: dimension 768 pour BERT).
 - **Exemple Concret :** Dans le **Traitement du Langage Naturel (NLP)**, si votre base de vecteurs de mots n'est pas "libre", cela signifie que vous avez des dimensions redondantes (du bruit). On cherche souvent à trouver une **base optimale** via des techniques comme l'**ACP (Analyse en Composantes Principales)** pour réduire la dimension tout en gardant une famille "presque génératrice" (qui capture l'essentiel de l'information).
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 1 (Logique formelle)]], [[Jalon 6 (Relations d'équivalence)]]
 - **Concepts Futurs dépendants :** [[Jalon 8 (Applications linéaires)]], [[Jalon 9 (Calcul matriciel)]], [[Jalon 26 (Espaces euclidiens)]]

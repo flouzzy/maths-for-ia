@@ -12,7 +12,7 @@ next: "[[Jalon 71 (Théorèmes de Fubini-Tonelli).md]]"
 
 # Jalon 70 : Espaces mesurés produits
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous ayez deux règles. L'une mesure des longueurs sur un axe horizontal ($X$), l'autre mesure des longueurs sur un axe vertical ($Y$). Si vous croisez ces deux règles, vous créez un monde en 2D (le produit $X \times Y$).
     - Une **Tribu produit**, c'est décider que les "rectangles" (un ensemble de $X$ croisé avec un ensemble de $Y$) sont nos nouvelles briques de base pour mesurer des surfaces.
@@ -21,7 +21,7 @@ next: "[[Jalon 71 (Théorèmes de Fubini-Tonelli).md]]"
 - **Le "Pourquoi on a inventé ça" :** La plupart des phénomènes réels dépendent de plusieurs facteurs. Pour calculer le volume d'un objet, ou la probabilité que deux événements indépendants arrivent en même temps, on a besoin de savoir comment "multiplier" les mesures entre elles de manière rigoureuse.
 - **Visualisation :** Un quadrillage. On définit la mesure sur chaque petit carreau, puis on étend cette définition à toutes les formes bizarres que l'on peut construire en assemblant des carreaux.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soient $(X_1, \mathcal{F}_1, \mu_1)$ et $(X_2, \mathcal{F}_2, \mu_2)$ deux espaces mesurés.
 
@@ -45,7 +45,7 @@ Soit $E \in \mathcal{F}_1 \otimes \mathcal{F}_2$. Pour tout $x \in X_1$, on déf
 $$E_x = \{ y \in X_2 \mid (x, y) \in E \}$$
 *Propriété :* Pour tout $x$, $E_x \in \mathcal{F}_2$ (la section d'un mesurable est mesurable).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Calcul de la mesure par intégration des sections
 
@@ -59,7 +59,7 @@ Montrons que $\pi(E) = \int_{X_1} \mu_2(E_x) d\mu_1(x)$.
 2. **Généralisation :** On utilise le théorème des classes monotones (ou de transport de propriété). La propriété est vraie sur les rectangles, qui forment un $\pi$-système engendrant la tribu. Elle est stable par union dénombrable croissante et par passage au complémentaire.
 3. **Conclusion :** La formule est vraie pour tout ensemble de la tribu produit. Cela montre que la mesure produit est "cohérente" avec l'intégration couche par couche.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Mesure de Lebesgue sur $\mathbb{R}^2$
 **Énoncé :** On définit la mesure de Lebesgue sur $\mathbb{R}^2$ comme le produit $\lambda \otimes \lambda$. Calculer la mesure du triangle $T = \{ (x, y) \in [0, 1]^2 \mid y \le x \}$.
@@ -74,7 +74,7 @@ Le triangle occupe bien la moitié du carré unité.
 **Correction Détaillée :**
 Si l'une des mesures est la mesure de comptage sur un ensemble non dénombrable, on peut construire plusieurs mesures produits qui coïncident sur les rectangles mais diffèrent sur d'autres ensembles (comme la diagonale). C'est un piège classique qui souligne l'importance des hypothèses techniques.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En IA, on travaille presque exclusivement dans des espaces produits. Une image de $224 \times 224$ pixels est un point dans un espace produit de dimension 50 176.
 - **Example Concret :**
@@ -82,7 +82,7 @@ Si l'une des mesures est la mesure de comptage sur un ensemble non dénombrable,
     - **Modèles Génératifs (GANs, VAEs) :** On essaie souvent de factoriser la distribution des données dans un espace latent où les dimensions sont indépendantes. Topologiquement, cela revient à forcer la mesure latente à être une mesure produit.
     - **Calcul de l'erreur moyenne (Risk) :** Le risque est une intégrale sur l'espace produit "Données $\times$ Étiquettes". Pour l'estimer, on suppose que les exemples sont "IID" (indépendants et identiquement distribués), ce qui permet d'utiliser la structure de mesure produit.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 63 (Définition axiomatique d'une mesure).md]], [[Jalon 62 (Algèbres).md]]
 - **Concepts Futurs dépendants :** [[Jalon 71 (Théorèmes de Fubini-Tonelli).md]], [[Jalon 88 (Indépendance d'événements).md]]

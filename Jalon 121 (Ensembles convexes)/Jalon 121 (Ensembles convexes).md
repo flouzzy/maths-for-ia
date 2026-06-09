@@ -12,7 +12,7 @@ next: "[[Jalon 122 (Notion de sous-gradient).md]]"
 
 # Jalon 121 : Ensembles et Fonctions convexes
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :**
     - Un **Ensemble Convexe**, c'est comme un ballon bien gonflé ou un bloc de pâte à modeler sans aucun trou ni aucune bosse vers l'intérieur. Si vous prenez deux points n'importe où à l'intérieur et que vous tirez un fil entre eux, le fil reste entièrement à l'intérieur.
@@ -20,7 +20,7 @@ next: "[[Jalon 122 (Notion de sous-gradient).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour garantir la réussite de l'optimisation. Dans un monde convexe (un bol), si vous lâchez une bille, elle finira toujours, absolument toujours, au point le plus bas (le minimum global). Il n'y a pas de "faux trous" (minima locaux) pour piéger la bille. C'est le paradis du mathématicien et de l'ingénieur en IA.
 - **Visualisation :** L'**Épigraphe**. Imaginez que vous versiez de la peinture dans votre bol. Toute la zone remplie de peinture (au-dessus de la courbe) forme un ensemble solide qui est lui-même convexe.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $E$ un espace vectoriel réel.
 
@@ -45,7 +45,7 @@ Soit $E$ un espace vectoriel réel.
 > $$epi(f) = \{ (x, t) \in C \times \mathbb{R} \mid f(x) \le t \}$$
 > **Théorème :** $f$ est convexe si et seulement si $epi(f)$ est un ensemble convexe.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Un minimum local d'une fonction convexe est global
 
@@ -59,7 +59,7 @@ Soit $E$ un espace vectoriel réel.
 5. **Contradiction :** Pour $\lambda$ suffisamment petit, $z_\lambda$ appartient au voisinage $V$. On a donc trouvé un point dans le voisinage avec une valeur plus petite que $f(x^*)$, ce qui contredit le fait que $x^*$ est un minimum local.
 6. **Conclusion :** $x^*$ est nécessairement un minimum global.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Convexité des normes
 **Énoncé :** Montrer que toute norme sur un espace vectoriel est une fonction convexe.
@@ -78,7 +78,7 @@ Soient $A, B \in \mathcal{S}_n^+$. Pour tout vecteur $v$, $v^T A v \ge 0$ et $v^
 Alors $v^T ((1-\lambda)A + \lambda B) v = (1-\lambda) v^T A v + \lambda v^T B v$. Comme c'est une somme de termes positifs pour $\lambda \in [0, 1]$, le résultat est $\ge 0$.
 **Utilité :** En IA, de nombreux problèmes (comme l'apprentissage de métriques) consistent à optimiser une fonction sur cet ensemble convexe.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** L'**Optimisation Convexe** est la seule branche de l'optimisation où l'on possède des algorithmes ultra-rapides et garantis. En IA, on essaie toujours de se ramener à de la convexité quand c'est possible.
 - **Example Concret :**
@@ -86,7 +86,7 @@ Alors $v^T ((1-\lambda)A + \lambda B) v = (1-\lambda) v^T A v + \lambda v^T B v$
     - **Support Vector Machines (SVM) :** Le problème de la marge maximale est une optimisation quadratique sous contraintes linéaires. Comme l'objectif et les contraintes sont convexes, on peut le résoudre parfaitement (globalement).
     - **Maximum d'Entropie :** Chercher la distribution de probabilité qui a l'entropie maximale sous certaines contraintes est un problème de maximisation d'une fonction concave (donc minimisation d'une convexe), garantissant une solution unique et stable.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 33 (Formes quadratiques).md]], [[Jalon 34 (Topologie élémentaire des espaces vectoriels normés).md]], [[Jalon 99 (Théorème de Hahn-Banach (forme géométrique)).md]]
 - **Concepts Futurs dépendants :** [[Jalon 122 (Notion de sous-gradient).md]], [[Jalon 123 (Problèmes d'optimisation sous contraintes).md]]

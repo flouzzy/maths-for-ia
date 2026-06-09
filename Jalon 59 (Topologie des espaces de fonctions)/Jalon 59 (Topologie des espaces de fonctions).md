@@ -12,7 +12,7 @@ next: "[[Jalon 60 (Livrable IA).md]]"
 
 # Jalon 59 : Topologie des espaces de fonctions et Arzelà-Ascoli
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous filmiez un danseur.
     - La **convergence simple**, c'est comme prendre une photo à chaque seconde et regarder si le pied du danseur est à la bonne place à chaque instant $t$. Même si chaque photo semble correcte, le mouvement global pourrait être totalement saccadé ou discontinu.
@@ -21,7 +21,7 @@ next: "[[Jalon 60 (Livrable IA).md]]"
 - **Le "Pourquoi on a inventé ça" :** En mathématiques, les points de notre espace sont parfois des fonctions elles-mêmes. Pour savoir si une suite de fonctions "se stabilise", on a besoin d'une topologie. Le théorème d'Arzelà-Ascoli est l'équivalent du théorème de Bolzano-Weierstrass (Jalon 15) mais pour les fonctions : il nous dit quand on peut extraire une sous-suite convergente d'un nuage de fonctions.
 - **Visualisation :** Une famille de courbes qui s'approchent d'une courbe cible. Si les courbes ne "gigent" pas trop (pente contrôlée), elles finissent par se confondre avec la cible.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Les Modes de Convergence
 
@@ -49,7 +49,7 @@ Soit $(f_n)$ une suite d'applications de $X$ dans $(Y, d)$.
 > 1. $\mathcal{F}$ est **équicontinue**.
 > 2. Pour tout $x \in K$, l'ensemble $\{ f(x) \mid f \in \mathcal{F} \}$ est relativement compact dans $E$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : CVU $\implies$ Conservation de la continuité
 
@@ -62,7 +62,7 @@ Soit $(f_n)$ une suite d'applications de $X$ dans $(Y, d)$.
 6. **Somme :** Pour $|x - a| < \delta$, on a $|f(x) - f(a)| < \epsilon/3 + \epsilon/3 + \epsilon/3 = \epsilon$.
 7. **Conclusion :** $f$ est continue.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Défaut de convergence uniforme
 **Énoncé :** Soit $f_n(x) = x^n$ sur $[0, 1]$. Étudier les modes de convergence.
@@ -80,7 +80,7 @@ Soit $(f_n)$ une suite d'applications de $X$ dans $(Y, d)$.
 3. **Fermeture :** Une limite uniforme de fonctions 1-lipschitziennes est 1-lipschitzienne.
 4. **Conclusion :** Par Arzelà-Ascoli, $\mathcal{F}$ est compact.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En apprentissage automatique, on cherche une fonction dans un espace d'hypothèses $\mathcal{H}$. Arzelà-Ascoli est l'outil fondamental pour prouver que si on contraint la complexité de notre modèle (ex: via la norme des poids), alors on travaille dans un ensemble de fonctions **compact**, ce qui garantit la convergence de nos méthodes.
 - **Example Concret :**
@@ -88,7 +88,7 @@ Soit $(f_n)$ une suite d'applications de $X$ dans $(Y, d)$.
     - **Neural Tangent Kernel (NTK) :** L'analyse des réseaux de neurones de largeur infinie utilise Arzelà-Ascoli pour montrer que la fonction apprise par le réseau converge uniformément vers une limite déterministe quand la largeur tend vers l'infini.
     - **Deep RL :** Pour prouver qu'un agent finit par apprendre une stratégie stable, on utilise souvent des arguments de compacité dans l'espace des politiques.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 21 (Suites de fonctions).md]], [[Jalon 54 (Compacité générale).md]]
 - **Concepts Futurs dépendants :** [[Jalon 77 (Densité des fonctions simples).md]], [[Jalon 100 (Démonstration du théorème de Banach-Steinhaus).md]]

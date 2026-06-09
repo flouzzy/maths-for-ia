@@ -12,7 +12,7 @@ next: "[[Jalon 91 (Inégalités de concentration).md]]"
 
 # Jalon 90 : Les modes de convergence en probabilités
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous appreniez à tirer à l'arc. Chaque flèche tirée est une tentative ($X_n$). La cible est le centre ($X$).
     - **Convergence Presque Sûre :** Après beaucoup d'entraînement, vous finissez par mettre TOUTES vos flèches dans le mille, sans plus jamais faire d'erreur (sauf peut-être une fois tous les milliards d'années).
@@ -22,7 +22,7 @@ next: "[[Jalon 91 (Inégalités de concentration).md]]"
 - **Le "Pourquoi on a inventé ça" :** En statistiques, on ne peut jamais être sûr à 100% de la valeur d'un paramètre. On a donc besoin de plusieurs langages pour dire à quel point on "s'approche" de la vérité. Certains langages sont très exigeants (presque sûre), d'autres sont plus souples (en loi).
 - **Visualisation :** Un entonnoir. Dans les convergences fortes, les points s'accumulent au fond. Dans la convergence en loi, c'est la "cloche" de la distribution qui se déplace et se stabilise.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $(X_n)_{n \in \mathbb{N}}$ une suite de variables aléatoires et $X$ une variable aléatoire définies sur $(\Omega, \mathcal{F}, P)$.
 
@@ -49,7 +49,7 @@ Soit $(X_n)_{n \in \mathbb{N}}$ une suite de variables aléatoires et $X$ une va
 > - $(X_n \xrightarrow{P} X) \implies (X_n \xrightarrow{\mathcal{L}} X)$
 > *Attention :* Les réciproques sont fausses en général.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : $L^p \implies P$ (Inégalité de Markov)
 
@@ -66,7 +66,7 @@ Soit $(X_n)_{n \in \mathbb{N}}$ une suite de variables aléatoires et $X$ une va
 2. **Décomposition :** On découpe l'intégrale sur l'événement $\{ |X_n - X| \le \delta \}$ (où $h(X_n) \approx h(X)$ par continuité) et son complémentaire (dont la probabilité tend vers 0 par hypothèse $P$).
 3. **Conclusion :** On peut rendre l'écart arbitrairement petit.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : La "bosse" qui s'échappe
 **Énoncé :** Soit $X_n$ une suite telle que $P(X_n = n) = 1/n$ and $P(X_n = 0) = 1 - 1/n$.
@@ -84,7 +84,7 @@ Soit $(X_n)_{n \in \mathbb{N}}$ une suite de variables aléatoires et $X$ une va
 **Correction Détaillée :**
 C'est le même argument que pour le théorème de Riesz-Fischer (Jalon 75). On choisit $\phi(n)$ tel que $P(|X_{\phi(n)} - X| > 1/2^n) < 1/2^n$. La série des probabilités converge, et on conclut par le lemme de Borel-Cantelli (Jalon 89).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En IA, on distingue la **Consistance** (convergence en probabilité) de la **Consistance Forte** (convergence presque sûre) d'un algorithme d'apprentissage.
 - **Example Concret :**
@@ -92,7 +92,7 @@ C'est le même argument que pour le théorème de Riesz-Fischer (Jalon 75). On c
     - **Théorème Central Limite :** C'est une convergence **en loi**. Il explique pourquoi l'erreur d'un modèle (somme de petites erreurs indépendantes) finit toujours par ressembler à une cloche de Gauss. C'est ce qui permet de définir des intervalles de confiance sur les prédictions.
     - **Quantification d'incertitude :** Dans les modèles de prédiction météo ou financière, on ne s'intéresse pas seulement à la convergence de la moyenne ($L^1$), mais à la convergence de toute la distribution (en loi) pour capturer les risques extrêmes.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 87 (Intégration et Espérance mathématique).md]], [[Jalon 89 (Lemmes de Borel-Cantelli).md]]
 - **Concepts Futurs dépendants :** [[Jalon 92 (Démonstration rigoureuse de la loi forte des grands nombres.).md]], [[Jalon 94 (Démonstration du théorème central limite).md]]

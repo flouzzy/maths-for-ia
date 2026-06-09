@@ -12,7 +12,7 @@ next: "[[Jalon 102 (Topologies faibles et faibles-).md]]"
 
 # Jalon 101 : Application ouverte et Graphe fermé
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :**
     - **L'Application Ouverte :** Imaginez que vous projetiez la lumière d'une lampe de poche à travers un pochoir sur un mur. Si le mur est "solide" (espace de Banach) et que votre lumière couvre tout le mur (surjectivité), alors n'importe quelle petite zone du pochoir doit projeter une petite zone visible sur le mur. On ne peut pas "écraser" un disque ouvert en un simple point ou une ligne invisible.
@@ -20,7 +20,7 @@ next: "[[Jalon 102 (Topologies faibles et faibles-).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour s'épargner des calculs. En dimension finie, si une matrice est inversible, son inverse est toujours continue. En dimension infinie, ce n'est pas automatique. Ces théorèmes prouvent que dans les "bons" espaces (Banach), la structure algébrique (bijection) entraîne la structure topologique (continuité).
 - **Visualisation :** L'image d'une boule ouverte est encore une boule ouverte. Une fonction dont on ne peut pas "sortir" du graphe par passage à la limite.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soient $E$ et $F$ deux espaces de **Banach**.
 
@@ -41,7 +41,7 @@ Soient $E$ et $F$ deux espaces de **Banach**.
 > **Théorème :**
 > Soit $T : E \to F$ une application linéaire. $T$ est continue si et seulement si son graphe $\Gamma(T) = \{ (x, Tx) \mid x \in E \}$ est un sous-ensemble **fermé** de l'espace produit $E \times F$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : $T^{-1}$ est continu $\iff$ Graphe fermé
 
@@ -58,7 +58,7 @@ Cette preuve montre comment le théorème de l'application ouverte simplifie la 
 6. **Reconstruction de T :** On peut écrire $T$ comme la composée : $x \xrightarrow{\pi^{-1}} (x, Tx) \xrightarrow{proj_F} Tx$.
 7. **Conclusion :** Comme composée d'applications continues, $T$ est continu.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Équivalence de deux normes
 **Énoncé :** Soient $\|\cdot\|_1$ et $\|\cdot\|_2$ deux normes sur $E$ telles que $E$ soit complet pour les deux. On suppose qu'il existe $C > 0$ tel que $\|x\|_1 \le C \|x\|_2$. Montrer que les deux normes sont équivalentes.
@@ -75,7 +75,7 @@ Cette preuve montre comment le théorème de l'application ouverte simplifie la 
 **Correction Détaillée :**
 Si on définit $D$ sur un domaine restreint (ex: fonctions $\mathcal{C}^1$ dans $L^2$), son graphe est fermé car une limite de fonctions et de leurs dérivées (au sens des distributions) est cohérente. Cependant, $D$ n'est pas continu. Le théorème du graphe fermé n'est pas contredit car le domaine de $D$ n'est pas l'espace de Banach $L^2$ entier (c'est un sous-espace dense).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Ces théorèmes définissent la notion de **Problème bien posé** au sens de Hadamard. Un problème est bien posé si la solution existe, est unique, et **dépend continûment des données**.
 - **Example Concret :**
@@ -83,7 +83,7 @@ Si on définit $D$ sur un domaine restreint (ex: fonctions $\mathcal{C}^1$ dans 
     - **Stabilité des GANs :** On veut que le générateur apprenne une application surjective entre l'espace latent et l'espace des données. Le théorème de l'application ouverte aide à comprendre sous quelles conditions le générateur ne va pas "s'effondrer" sur un petit nombre de modes (Mode Collapse).
     - **Invertible Neural Networks (INN) :** Les architectures comme les Normalizing Flows imposent que le réseau soit une bijection. Ces théorèmes garantissent que si le réseau est continu, son inverse l'est aussi, ce qui est crucial pour reconstruire les données sans bruit numérique.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 100 (Théorème de Banach-Steinhaus).md]], [[Jalon 57 (Théorème du point fixe de Banach).md]]
 - **Concepts Futurs dépendants :** [[Jalon 107 (Introduction à la théorie des opérateurs non bornés et résolvante.).md]], [[Jalon 125 (Opérateurs proximaux).md]]

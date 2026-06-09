@@ -12,13 +12,13 @@ next: "[[Jalon 55 (Connexité).md]]"
 
 # Jalon 54 : Compacité générale
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous vouliez surveiller une grande salle avec des caméras de sécurité. Chaque caméra a un champ de vision limité (un ouvert). Si la salle est **compacte**, cela signifie que peu importe le nombre infini de caméras que vous pourriez installer, vous pourrez toujours en choisir un nombre **fini** (disons 10 ou 20) qui suffiront à surveiller toute la salle sans laisser d'angle mort. C'est la propriété de "finitude cachée" dans l'infini.
 - **Le "Pourquoi on a inventé ça" :** En mathématiques, on travaille souvent avec des objets infinis. La compacité est la propriété magique qui permet de traiter ces objets infinis comme s'ils étaient finis. C'est ce qui garantit qu'une fonction continue ne peut pas s'envoler vers l'infini et qu'elle atteint forcément son maximum et son minimum.
 - **Visualisation :** Un élastique fermé. Vous pouvez le déformer, mais il reste "petit" et "complet". Contrairement à une droite qui s'étend à l'infini ou à un intervalle ouvert qui a des "trous" à ses extrémités.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Définition de Borel-Lebesgue
 
@@ -41,7 +41,7 @@ Soit $(X, \mathcal{T})$ un espace topologique.
 > **Théorème de Tychonoff (Version finie) :**
 > Le produit d'un nombre fini d'espaces topologiques compacts est compact pour la topologie produit.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : L'image continue d'un compact est compacte
 
@@ -55,7 +55,7 @@ Soit $(X, \mathcal{T})$ un espace topologique.
    Comme $f(f^{-1}(V_j)) \subset V_j$, on a $f(X) \subset \bigcup_{j \in J} V_j$.
 6. **Conclusion :** On a extrait un sous-recouvrement fini. $f(X)$ est donc compact.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Compacité de $[0, 1]$
 **Énoncé :** Utiliser la propriété de la borne supérieure pour montrer que $[0, 1]$ est compact (Lemme de Cousin).
@@ -74,7 +74,7 @@ Par compacité, il existe $N$ tel que $\bigcup_{n=1}^N U_n = X$.
 Comme les $F_n$ sont décroissants, les $U_n$ sont croissants, donc $U_N = X$.
 Cela signifie que $X \setminus F_N = X$, donc $F_N = \emptyset$. Contradiction.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En apprentissage statistique, on cherche à minimiser le risque empirique $R_n(\theta)$. Pour garantir qu'il existe une solution optimale $\theta^*$, on suppose souvent que l'espace des paramètres $\Theta$ est **compact**.
 - **Example Concret :**
@@ -82,7 +82,7 @@ Cela signifie que $X \setminus F_N = X$, donc $F_N = \emptyset$. Contradiction.
     - **Théorème d'Approximation Universelle :** On prouve qu'un réseau de neurones peut approcher n'importe quelle fonction continue sur un ensemble **compact**. La compacité est cruciale ici car sur un ensemble non borné, l'erreur pourrait diverger à l'infini.
     - **Généralisation :** Les bornes de généralisation (PAC Learning, Jalon 133) dépendent souvent de la "taille" de l'espace des fonctions. Si cet espace est compact, sa "Complexité de Rademacher" est finie, ce qui garantit que le modèle ne va pas sur-apprendre (overfitting) de manière catastrophique.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 35 (Caractérisation séquentielle des ouverts).md]], [[Jalon 53 (Axiomes de séparation).md]]
 - **Concepts Futurs dépendants :** [[Jalon 56 (Espaces métriques complets).md]], [[Jalon 134 (Complexite des classes de fonctions).md]]

@@ -12,7 +12,7 @@ next: "[[Jalon 125 (Opérateurs proximaux).md]]"
 
 # Jalon 124 : Conditions de Karush-Kuhn-Tucker (KKT)
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous poussiez un gros carton (l'objectif à minimiser) vers un coin de la pièce.
     - Tant que le carton est au milieu, vous pouvez le pousser librement.
@@ -26,7 +26,7 @@ next: "[[Jalon 125 (Opérateurs proximaux).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour transformer un problème d'optimisation avec des "barrières" (inégalités) en un simple système d'équations à résoudre. C'est le couteau suisse de l'optimisation moderne.
 - **Visualisation :** Le gradient de la fonction objectif pointant vers l'extérieur de la zone autorisée, exactement compensé par une combinaison des gradients des contraintes.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit le problème d'optimisation (Primal) défini au Jalon 123 :
 $\min f_0(x)$ s.t. $f_i(x) \le 0$ ($i=1 \dots m$) and $h_j(x) = 0$ ($j=1 \dots p$).
@@ -51,7 +51,7 @@ Un point $x^*$ (primal) et des multiplicateurs $(\lambda^*, \nu^*)$ (duaux) vér
 > - **Nécessité :** Pour un problème quelconque, si $x^*$ est optimal et que les contraintes sont "qualifiées" (ex: Slater), alors les conditions KKT sont nécessaires.
 > - **Suffisance :** Si le problème est **convexe** (fonctions $f_0, f_i$ convexes et $h_j$ affines), alors les conditions KKT sont **suffisantes** pour garantir l'optimalité globale.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Pourquoi la slackness est-elle nulle à l'optimum ?
 
@@ -65,7 +65,7 @@ Supposons que la dualité forte soit vérifiée ($f_0(x^*) = g(\lambda^*, \nu^*)
 5. **Égalité :** Comme on a supposé la dualité forte ($g = f_0$), toutes les inégalités ci-dessus doivent être des **égalités**.
 6. **Conclusion :** Pour que $f_0(x^*) + \sum \lambda_i^* f_i(x^*) = f_0(x^*)$, il faut impérativement que la somme soit nulle. Comme chaque terme est négatif, chaque terme doit être nul : $\lambda_i^* f_i(x^*) = 0$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Minimisation sous contrainte de demi-plan
 **Énoncé :** Minimiser $f(x, y) = x^2 + y^2$ sous la contrainte $x+y \ge 2$.
@@ -83,7 +83,7 @@ Supposons que la dualité forte soit vérifiée ($f_0(x^*) = g(\lambda^*, \nu^*)
 **Correction Détaillée :**
 C'est le théorème de l'enveloppe. Si on remplace $f_i \le 0$ par $f_i \le \epsilon$, on montre que $\frac{d f_0^*}{d\epsilon} = -\lambda_i^*$. C'est fondamental en économie et pour le réglage des hyperparamètres en IA.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Les conditions KKT sont la "recette de fabrication" des **algorithmes d'optimisation duale**.
 - **Example Concret :**
@@ -91,7 +91,7 @@ C'est le théorème de l'enveloppe. Si on remplace $f_i \le 0$ par $f_i \le \eps
     - **Calcul de l'Incertitude :** Dans les modèles avec contraintes de confiance, les KKT permettent de calculer comment l'incertitude sur les données se propage vers l'incertitude sur la décision optimale.
     - **Régularisation par le dual :** Certains modèles de vision utilisent des contraintes géométriques dures. On les entraîne en utilisant des couches "KKT" qui résolvent un petit problème d'optimisation à l'intérieur même du réseau de neurones.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 123 (Problèmes d'optimisation sous contraintes).md]], [[Jalon 122 (Notion de sous-gradient).md]]
 - **Concepts Futurs dépendants :** [[Jalon 125 (Opérateurs proximaux).md]], [[Jalon 127 (Démonstration du théorème du représentant dans les RKHS).md]]

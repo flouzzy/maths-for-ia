@@ -12,7 +12,7 @@ next: "[[Jalon 101 (Théorème de l'application ouverte et théorème du graphe 
 
 # Jalon 100 : Théorème de Banach-Steinhaus
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez une bibliothèque infinie remplie de traducteurs (des opérateurs linéaires).
     - Pour chaque livre (un vecteur $x$), vous demandez à tous les traducteurs de faire leur travail.
@@ -21,7 +21,7 @@ next: "[[Jalon 101 (Théorème de l'application ouverte et théorème du graphe 
 - **Le "Pourquoi on a inventé ça" :** En dimension infinie, on peut avoir des suites de fonctions qui se comportent bien point par point, mais qui deviennent "folles" globalement. Banach-Steinhaus est le garde-fou qui dit : "si c'est raisonnable partout, alors c'est raisonnable globalement". C'est l'un des trois piliers de l'analyse fonctionnelle avec Hahn-Banach et l'Application Ouverte.
 - **Visualisation :** Une famille de fonctions $f_n(x)$. Même si elles peuvent avoir des formes différentes, si pour chaque $x$ elles ne dépassent pas une certaine hauteur, alors elles sont toutes emprisonnées dans un tube horizontal de largeur finie.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Énoncé du Théorème
 
@@ -38,7 +38,7 @@ Soit $(T_i)_{i \in I}$ une famille d'opérateurs linéaires **continus** de $E$ 
 
 Si une suite d'opérateurs continus $(T_n)$ converge ponctuellement vers un opérateur $T$ (i.e. $T_n(x) \to T(x)$ pour tout $x$), alors l'opérateur limite $T$ est lui aussi continu.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration utilisant le Théorème de Baire
 
@@ -57,7 +57,7 @@ Si une suite d'opérateurs continus $(T_n)$ converge ponctuellement vers un opé
    $\|T_i(u)\| = \frac{1}{r} \|T_i(h)\| \le \frac{2N}{r}$.
    La borne $\frac{2N}{r}$ est indépendante de $x$ et de $i$. Donc $\sup_I \|T_i\| < \infty$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Divergence des séries de Fourier
 **Énoncé :** Utiliser Banach-Steinhaus pour montrer qu'il existe des fonctions continues dont la série de Fourier diverge en 0.
@@ -73,7 +73,7 @@ Si une suite d'opérateurs continus $(T_n)$ converge ponctuellement vers un opé
 **Correction Détaillée :**
 Oui. On utilise Banach-Steinhaus pour dire que $\sup \|T_n\| < \infty$, puis on utilise un argument d'équicontinuïté (Jalon 59) pour passer de la convergence ponctuelle à la convergence uniforme sur les parties compactes.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Ce jalon garantit la **Stabilité Numérique** des processus d'apprentissage infinis. Il assure que si un système réagit de manière finie à chaque donnée, il ne possède pas de "faille" cachée qui le ferait exploser.
 - **Example Concret :**
@@ -81,7 +81,7 @@ Oui. On utilise Banach-Steinhaus pour dire que $\sup \|T_n\| < \infty$, puis on 
     - **Réseaux de neurones de largeur infinie (NTK) :** Dans l'analyse théorique, on regarde la limite d'opérateurs quand le nombre de neurones tend vers l'infini. Le principe de la borne uniforme garantit que l'opérateur limite (le noyau tangentiel) reste continu et bien défini.
     - **Stabilité des ODE Solvers :** En Neural ODEs, on utilise des solveurs itératifs. Ce théorème justifie que si le solveur converge pour chaque condition initiale, alors l'erreur globale du solveur est bornée uniformément.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 97 (Espaces de Banach et Opérateurs Linéaires).md]], [[Jalon 58 (Théorème de Baire).md]]
 - **Concepts Futurs dépendants :** [[Jalon 101 (Théorème de l'application ouverte et théorème du graphe fermé.).md]], [[Jalon 102 (Topologies faibles et faibles-).md]]

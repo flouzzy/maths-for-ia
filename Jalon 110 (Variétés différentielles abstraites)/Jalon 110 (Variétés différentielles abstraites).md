@@ -12,7 +12,7 @@ next: "[[Jalon 111 (Applications différentiables entre variétés).md]]"
 
 # Jalon 110 : Variétés différentielles abstraites
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez un marin au XVème siècle. Vous voulez explorer toute la Terre.
     - Vous n'avez pas de vue d'ensemble (pas de satellite).
@@ -22,7 +22,7 @@ next: "[[Jalon 111 (Applications différentiables entre variétés).md]]"
 - **Le "Pourquoi on a inventé ça" :** Parfois, un objet n'est pas "dans" un espace plus grand. L'univers tout entier, ou l'espace des configurations d'un robot, sont des objets qui existent par eux-mêmes. On a besoin d'une définition intrinsèque qui ne dépend pas d'un "mur" extérieur. C'est la base de la relativité générale et de la robotique moderne.
 - **Visualisation :** Un patchwork de tissus. Chaque morceau est plat, mais en les cousant ensemble avec soin, on peut créer une forme en 3D complexe.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Définition d'une Variété Topologique
 
@@ -44,7 +44,7 @@ Soit $M$ un espace topologique (séparé et à base dénombrable).
 > **Définition 4 (Variété Différentielle) :**
 > $M$ est une **variété de classe $\mathcal{C}^k$** si elle possède un atlas dont tous les changements de cartes sont des difféomorphismes de classe $\mathcal{C}^k$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Exemple : Structure de variété sur le cercle $S^1$
 
@@ -59,7 +59,7 @@ Montrons que le cercle unité $S^1$ est une variété de dimension 1 sans utilis
 4. **Conclusion :** L'application de transition est $\psi_{12}(u) = 1/u$, définie sur $\mathbb{R} \setminus \{0\}$. Elle est infiniment dérivable.
    Le cercle est donc une variété différentielle de dimension 1.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : L'espace projectif $\mathbb{P}^n(\mathbb{R})$
 **Énoncé :** On définit l'espace projectif comme l'ensemble des droites passant par l'origine dans $\mathbb{R}^{n+1}$. Montrer qu'il s'agit d'une variété.
@@ -71,7 +71,7 @@ Une droite est caractérisée par un vecteur $(x_0, \dots, x_n) \neq 0$. On déf
 **Correction Détaillée :**
 Oui, c'est l'opération de **somme connexe**. On retire une petite boule dans chaque variété et on recolle les bords (des sphères) par un difféomorphisme. Cela montre que l'on peut construire des mondes topologiques extrêmement riches à partir de briques simples.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En IA, nous manipulons des **Espaces de Représentation**. Parfois, ces espaces ont une topologie non-triviale (des trous, des boucles).
 - **Example Concret :**
@@ -79,7 +79,7 @@ Oui, c'est l'opération de **somme connexe**. On retire une petite boule dans ch
     - **Manifold Regularization :** Pour forcer une IA à être cohérente, on impose que sa sortie ne change pas si on se déplace le long de la variété des données. On utilise le Laplacien de Beltrami (Jalon 143), qui est l'équivalent de la dérivée seconde mais sur une variété abstraite.
     - **Topologie des réseaux de neurones :** On étudie la variété formée par l'ensemble des réseaux de neurones ayant la même architecture. Cette variété possède des singularités (endroits où la dimension change) qui expliquent pourquoi l'apprentissage peut parfois ralentir brusquement.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 109 (Topologie des sous-variétés de Rn).md]], [[Jalon 52 (Applications continues et Homéomorphismes).md]]
 - **Concepts Futurs dépendants :** [[Jalon 111 (Applications différentiables entre variétés).md]], [[Jalon 119 (Connexions avec les groupes de Lie).md]]

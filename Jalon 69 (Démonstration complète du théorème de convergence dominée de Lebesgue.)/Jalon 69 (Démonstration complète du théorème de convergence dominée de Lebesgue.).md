@@ -12,7 +12,7 @@ next: "[[Jalon 70 (Espaces mesurés produits).md]]"
 
 # Jalon 69 : Théorème de convergence dominée (TCD)
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez une colonie de fourmis qui marchent sur une table. Chaque fourmi représente une valeur d'une fonction à un instant donné. La colonie entière forme une courbe $(f_n)$.
     - Au fil du temps, les fourmis changent de trajectoire et la courbe se déforme.
@@ -21,7 +21,7 @@ next: "[[Jalon 70 (Espaces mesurés produits).md]]"
 - **Le "Pourquoi on a inventé ça" :** C'est le théorème le plus utilisé de toute l'analyse moderne. Il permet d'intervertir limite et intégrale sans les conditions très restrictives de la convergence uniforme (Jalon 59) ou de la croissance monotone (Jalon 67). C'est l'outil de base pour dériver sous le signe somme ou calculer des probabilités limites.
 - **Visualisation :** Une suite de courbes qui peuvent osciller, mais qui sont toutes emprisonnées entre une courbe $g$ et son opposé $-g$.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 
@@ -38,7 +38,7 @@ Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 > - $\lim_{n \to \infty} \int_X f_n d\mu = \int_X f d\mu$.
 > - $\lim_{n \to \infty} \int_X |f_n - f| d\mu = 0$ (Convergence dans $L^1$).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration du TCD (via le Lemme de Fatou)
 
@@ -58,7 +58,7 @@ Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
    On a $\limsup \int f_n \le \int f \le \liminf \int f_n$.
    Comme $\liminf \le \limsup$, toutes ces valeurs sont égales. L'intégrale converge.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Calcul de limite d'intégrale
 **Énoncé :** Calculer $\lim_{n \to \infty} \int_0^{+\infty} \frac{n \sin(x/n)}{x(1+x^2)} dx$.
@@ -76,7 +76,7 @@ Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 **Correction Détaillée :**
 On écrit le taux d'accroissement $\frac{F(x+h)-F(x)}{h} = \int \frac{f(x+h, t)-f(x, t)}{h} dt$. D'après le théorème des accroissements finis, le terme sous l'intégrale est égal à $\frac{\partial f}{\partial x}(c, t)$. Si cette dérivée est dominée par une fonction intégrable, on applique le TCD pour passer à la limite $h \to 0$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le TCD est la garantie mathématique que nos **Espérances** se comportent bien. En apprentissage statistique, il justifie la convergence de la fonction de perte empirique vers la fonction de perte théorique.
 - **Example Concret :**
@@ -84,7 +84,7 @@ On écrit le taux d'accroissement $\frac{F(x+h)-F(x)}{h} = \int \frac{f(x+h, t)-
     - **Robustesse des VAE :** Dans les Variational Auto-Encoders, on maximise l'ELBO. Le passage du gradient à travers l'intégrale de la distribution latente (Reparameterization Trick) est validé par le TCD.
     - **Loi des Grands Nombres :** La preuve de certaines versions de la loi forte des grands nombres utilise des arguments de convergence dominée pour traiter les moments d'ordre supérieur.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 68 (Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque).md]], [[Jalon 40 (Intégrales dépendant d'un paramètre).md]]
 - **Concepts Futurs dépendants :** [[Jalon 75 (Preuve de la complétude des espaces Lp).md]], [[Jalon 80 (Transformée de Fourier dans L1).md]]

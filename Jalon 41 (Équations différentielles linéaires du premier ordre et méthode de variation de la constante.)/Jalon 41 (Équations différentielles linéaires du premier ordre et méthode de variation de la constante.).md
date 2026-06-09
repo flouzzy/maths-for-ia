@@ -12,13 +12,13 @@ next: "[[Jalon 42 (Équations différentielles linéaires du second ordre à coe
 
 # Jalon 41 : Équations différentielles linéaires du premier ordre
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous poussez un petit bateau sur un étang. La vitesse à laquelle le bateau avance (la dérivée) dépend de deux choses : le courant de l'eau qui l'entraîne naturellement (la partie homogène de l'équation) et la force avec laquelle vous le poussez (le second membre). Une équation différentielle du premier ordre, c'est comme une règle de conduite qui vous dit, à chaque instant, quelle doit être votre vitesse en fonction de votre position actuelle.
 - **Le "Pourquoi on a inventé ça" :** La nature ne nous donne pas souvent des positions directes, elle nous donne des lois de mouvement (des forces, des taux de croissance). Pour retrouver la trajectoire complète (la position), il faut "remonter" de la dérivée à la fonction. C'est le cœur de la physique, de la biologie (croissance de populations) et de l'IA (évolution des poids d'un réseau).
 - **Visualisation :** Imaginez un champ de petites flèches sur une feuille. Chaque flèche indique la direction à suivre. Résoudre l'équation, c'est tracer une courbe qui suit parfaitement ces flèches.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soient $a$ et $b$ deux fonctions continues sur un intervalle $I \subset \mathbb{R}$. On considère l'équation différentielle linéaire du premier ordre $(E)$ :
 $$y'(t) + a(t) y(t) = b(t)$$
@@ -42,7 +42,7 @@ L'équation homogène associée est $(H) : y'(t) + a(t) y(t) = 0$.
 > **Théorème de Cauchy-Lipschitz (Cas linéaire) :**
 > Pour tout $t_0 \in I$ et $y_0 \in \mathbb{R}$, il existe une unique solution $y$ de $(E)$ telle que $y(t_0) = y_0$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Méthode de la Variation de la Constante
 
@@ -67,7 +67,7 @@ On cherche une solution particulière de $(E)$ sous la forme $y_P(t) = \lambda(t
    Une solution particulière est $y_P(t) = \left( \int b(t) e^{A(t)} dt \right) e^{-A(t)}$.
    La solution générale est $y(t) = \left( C + \int_{t_0}^t b(s) e^{A(s)} ds \right) e^{-A(t)}$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Résolution d'une équation simple
 **Énoncé :** Résoudre sur $\mathbb{R}$ : $y'(t) + 2t y(t) = t$.
@@ -89,7 +89,7 @@ On cherche une solution particulière de $(E)$ sous la forme $y_P(t) = \lambda(t
    Donc $\lambda(t) = t$.
 4. **Solution :** $y(t) = (C + t) t = C t + t^2$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En IA, de nombreux processus d'optimisation sont des discrétisations d'équations différentielles du premier ordre. La **descente de gradient** $\theta_{t+1} = \theta_t - \eta \nabla L(\theta_t)$ peut être vue comme la discrétisation d'Euler de l'EDO :
   $$\frac{d\theta}{dt} = -\nabla L(\theta)$$
@@ -97,7 +97,7 @@ On cherche une solution particulière de $(E)$ sous la forme $y_P(t) = \lambda(t
     - **Apprentissage avec Momentum :** L'ajout d'un terme de momentum transforme l'équation en une EDO du second ordre (Jalon 42), mais on peut la réécrire comme un système de deux équations du premier ordre. Comprendre la stabilité des solutions de ces EDO permet de choisir le bon **taux d'apprentissage** (learning rate) pour éviter que le modèle n'oscille ou ne diverge.
     - **Neural ODEs :** Cette architecture remplace les couches discrètes $h_{t+1} = f(h_t)$ par une évolution continue $\frac{dh}{dt} = f(h(t), t, \theta)$. Le réseau "apprend" l'équation différentielle elle-même. Pour prédire, on résout l'équation du premier ordre à l'aide de solveurs numériques (Runge-Kutta).
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 38 (Théorème fondamental de l'analyse).md]], [[Jalon 19 (Dérivabilité).md]]
 - **Concepts Futurs dépendants :** [[Jalon 42 (Équations différentielles linéaires du second ordre à coefficients constants.).md]], [[Jalon 128 (Flots de gradient).md]]

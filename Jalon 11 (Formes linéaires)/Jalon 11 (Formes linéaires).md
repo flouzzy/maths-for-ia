@@ -12,7 +12,7 @@ next: "[[Jalon 12 (Livrable IA).md]]"
 
 # Jalon 11 : Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** 
@@ -22,7 +22,7 @@ next: "[[Jalon 12 (Livrable IA).md]]"
 - **Le "Pourquoi on a inventé ça" :** Parfois, il est plus facile de décrire un objet par la manière dont il réagit à des tests (le dual) plutôt que par sa structure interne. C'est fondamental pour définir la notion de "perpendiculaire" ou pour séparer des données.
 - **Visualisation :** Imaginez une montagne. La hauteur en chaque point est une fonction (peut-être linéaire localement). L'hyperplan, c'est le "niveau de la mer" (altitude 0). L'espace dual, c'est l'ensemble de tous les plans inclinés possibles qui pourraient toucher la montagne.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -42,7 +42,7 @@ Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension $n$.
 > **Isomorphisme de Dualité :**
 > L'application qui à un vecteur $x$ associe son évaluation $\text{ev}_x : \phi \mapsto \phi(x)$ définit un isomorphisme canonique entre $E$ et son bidual $E^{**}$ (en dimension finie).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Dimension d'un hyperplan
@@ -70,7 +70,7 @@ Soit $H$ un hyperplan de $E$ (dimension $n$). Montrons que $\dim H = n-1$.
 
 5. **Conclusion :** Tout hyperplan d'un espace de dimension $n$ possède une dimension égale à $n-1$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application Directe (Base Duale)
@@ -99,11 +99,11 @@ Soit $H$ un hyperplan de $E$ (dimension $n$). Montrons que $\dim H = n-1$.
 7. $\text{rg}(\Phi) = 2 \implies n = \dim(H_1 \cap H_2) + 2$.
 **Conclusion :** $\dim(H_1 \cap H_2) = n - 2$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** Les hyperplans sont les **Séparateurs Linéaires** fondamentaux de l'apprentissage automatique.
 - **Exemple Concret :** Dans les **SVM (Support Vector Machines)**, l'algorithme cherche l'hyperplan optimal qui sépare deux classes de données (ex: Spam vs Non-Spam). L'équation de l'hyperplan $\phi(x) + b = 0$ (où $\phi$ est une forme linéaire) définit la frontière de décision. La **Dualité de Lagrange**, utilisée pour résoudre ce problème d'optimisation, repose entièrement sur le passage de l'espace des données (primal) à l'espace des contraintes (dual).
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon 8 (Applications linéaires)]]
 - **Concepts Futurs dépendants :** [[Jalon 12 (Livrable IA)]], [[Jalon 25 (Formes bilinéaires)]], [[Jalon 123 (Problèmes d'optimisation sous contraintes)]]

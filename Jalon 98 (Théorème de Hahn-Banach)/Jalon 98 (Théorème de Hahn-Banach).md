@@ -12,7 +12,7 @@ next: "[[Jalon 99 (Théorème de Hahn-Banach).md]]"
 
 # Jalon 98 : Théorème de Hahn-Banach (forme analytique)
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez un cartographe. Vous avez dessiné une carte très précise d'un petit quartier (un sous-espace $M$). Vous avez une règle qui vous donne l'altitude exacte dans ce quartier.
     - Maintenant, on vous demande de compléter la carte pour tout le pays (l'espace $E$).
@@ -21,7 +21,7 @@ next: "[[Jalon 99 (Théorème de Hahn-Banach).md]]"
 - **Le "Pourquoi on a inventé ça" :** En dimension infinie, les espaces sont si vastes qu'on pourrait craindre qu'il n'y ait pas assez de "scanners" (formes linéaires) pour tout voir. Hahn-Banach garantit qu'il y a "suffisamment" de formes linéaires pour distinguer tous les points et pour supporter toutes les contraintes d'optimisation.
 - **Visualisation :** Une droite (forme linéaire) qui effleure une surface courbe (fonction convexe) sans jamais entrer dedans.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $E$ un espace vectoriel sur $\mathbb{R}$.
 
@@ -41,7 +41,7 @@ Soit $E$ un espace vectoriel sur $\mathbb{R}$.
 > 1. $F|_M = f$ (C'est un prolongement).
 > 2. $\forall x \in E, \quad F(x) \le p(x)$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Le prolongement d'un pas (Dimension +1)
 
@@ -58,7 +58,7 @@ Pour tout $x \in M$ and $\lambda \in \mathbb{R}$, on veut $F(x + \lambda x_0) \l
    Le membre de gauche est toujours inférieur à celui de droite. On peut donc choisir un $c$ entre les deux.
 4. **Conclusion :** On peut prolonger de proche en proche. Pour le cas de dimension infinie quelconque, on utilise l'**Axiome du Choix** (sous la forme du Lemme de Zorn) pour montrer qu'il existe un prolongement maximal qui couvre tout $E$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Existence de formes linéaires
 **Énoncé :** Soit $E$ un espace vectoriel normé et $x \neq 0$. Montrer qu'il existe $L \in E^*$ telle que $\|L\|=1$ and $L(x) = \|x\|$.
@@ -74,7 +74,7 @@ Pour tout $x \in M$ and $\lambda \in \mathbb{R}$, on veut $F(x + \lambda x_0) \l
 **Correction Détaillée :**
 C'est une application directe de Hahn-Banach. On construit une forme linéaire qui vaut 0 sur $M$ et qui mesure l'écart de $x$ par rapport à $M$. C'est le fondement de la **Dualité de Fenchel** en optimisation.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Hahn-Banach garantit que les problèmes d'**Optimisation Convexe** sous contraintes ont des solutions duales (les multiplicateurs de Lagrange).
 - **Example Concret :**
@@ -82,7 +82,7 @@ C'est une application directe de Hahn-Banach. On construit une forme linéaire q
     - **Théorie de la Robustesse :** Pour prouver qu'un réseau de neurones est robuste, on essaie de trouver une forme linéaire qui "borne" ses sorties. Hahn-Banach est utilisé pour prouver l'existence de telles bornes dans des espaces de fonctions complexes.
     - **Apprentissage de Mesures (GANS) :** La distance de Wasserstein peut s'écrire sous une forme duale (Kantorovich-Rubinstein) grâce à une variante de Hahn-Banach. C'est ce qui permet de transformer une intégrale difficile sur des joints de probabilités en une optimisation sur des fonctions lipschitziennes.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 97 (Espaces de Banach et Opérateurs Linéaires).md]], [[Jalon 11 (Formes linéaires).md]]
 - **Concepts Futurs dépendants :** [[Jalon 99 (Théorème de Hahn-Banach).md]], [[Jalon 123 (Problèmes d'optimisation sous contraintes).md]]

@@ -12,14 +12,14 @@ next: "[[Jalon 17 (Séries absolument convergentes).md]]"
 
 # Jalon 16 : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous voulez construire une tour infiniment haute avec des briques de plus en plus fines. Si la première brique fait 1 mètre, la deuxième 50 cm, la troisième 25 cm, et ainsi de suite (on divise par 2 à chaque fois), votre tour ne dépassera jamais les 2 mètres de haut, même si vous ajoutez une infinité de briques ! C'est ce qu'on appelle une **série convergente**. Par contre, si vous ajoutez des briques de taille constante, ou même des briques qui diminuent trop lentement (comme 1/2, 1/3, 1/4...), votre tour finira par toucher les étoiles. C'est une **série divergente**.
 - **Le "Pourquoi on a inventé ça" :** On a souvent besoin d'additionner une infinité de petites contributions (en probabilités, en physique, ou pour calculer des aires). Les critères de convergence sont les "tests de sécurité" qui nous disent si le total final est un nombre bien précis ou s'il explose vers l'infini.
 - **Visualisation :** Imaginez un sablier. Si les grains de sable tombent de plus en plus lentement selon une règle mathématique précise, le tas de sable dans le réceptacle peut se stabiliser à une hauteur finie.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -45,7 +45,7 @@ Soit $(u_n)_{n \in \mathbb{N}}$ une suite réelle.
 > - Si $L < 1$, la série converge.
 > - Si $L > 1$, la série diverge.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Convergence de la série géométrique $\sum q^n$ pour $0 \le q < 1$
@@ -76,7 +76,7 @@ Démontrons que la somme partielle converge et calculons sa limite.
    La série $\sum q^n$ converge et sa somme est :
    $$\sum_{n=0}^\infty q^n = \frac{1}{1 - q}$$
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application de la règle de d'Alembert
@@ -104,11 +104,11 @@ Démontrons que la somme partielle converge et calculons sa limite.
 7. Par le critère de comparaison des séries à termes positifs, la série $\sum u_n$ est majorée par une série convergente.
 **Conclusion :** La série $\sum \frac{1}{n^2 + \sqrt{n}}$ converge.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** En IA, les séries numériques apparaissent dans le calcul des **Espérances** (moyennes pondérées) pour des variables aléatoires discrètes infinies (comme la loi de Poisson). Elles servent aussi à définir les **Fonctions d'Activation** par leurs développements en série (ex: Softmax, Sigmoïde).
 - **Exemple Concret :** Dans l'**Apprentissage par Renforcement (Reinforcement Learning)**, on calcule la "Récompense Totale Escomptée" (Discounted Return) : $G = \sum_{t=0}^\infty \gamma^t R_{t+1}$. Ici, $\gamma$ est un facteur d'escompte compris entre 0 et 1. C'est exactement une **série géométrique** pondérée par les récompenses $R_t$. La convergence de cette série (garantie par $\gamma < 1$) est ce qui permet à l'agent de ne pas avoir une récompense infinie, rendant ainsi le problème d'optimisation mathématiquement bien posé.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 13 (Structure de R)]], [[Jalon 14 (Suites réelles et complexes)]]
 - **Concepts Futurs dépendants :** [[Jalon 17 (Séries absolument convergentes)]], [[Jalon 22 (Séries de fonctions)]], [[Jalon 23 (Séries entières)]], [[Jalon 85 (Axiomes de Kolmogorov)]]

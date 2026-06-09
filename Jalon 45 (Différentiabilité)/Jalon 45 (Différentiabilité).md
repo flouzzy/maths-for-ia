@@ -12,7 +12,7 @@ next: "[[Jalon 46 (Matrice jacobienne).md]]"
 
 # Jalon 45 : Différentiabilité et Gradient
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous êtes aveugle et que vous vous tenez sur le flanc d'une montagne. Vous voulez savoir comment le terrain "penche" autour de vous.
     - Les **dérivées partielles**, c'est tâter le terrain uniquement vers le Nord/Sud ou uniquement vers l'Est/Ouest.
@@ -21,7 +21,7 @@ next: "[[Jalon 46 (Matrice jacobienne).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour optimiser. Si on veut trouver le point le plus bas d'une vallée (le minimum d'une erreur), on a besoin de savoir dans quelle direction descendre. Le gradient est la boussole de toute l'intelligence artificielle.
 - **Visualisation :** Un plan incliné qui effleure une surface courbe en un point unique. Le gradient est un vecteur dans le plan horizontal qui pointe vers le haut de la pente.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Définitions Formelles
 
@@ -50,7 +50,7 @@ Soit $f : U \to \mathbb{R}$ une fonction définie sur un ouvert $U \subset \math
 > **Théorème (Condition suffisante - Classe $\mathcal{C}^1$) :**
 > Si toutes les dérivées partielles de $f$ existent et sont **continues** au voisinage de $a$, alors $f$ est différentiable en $a$. On dit que $f$ est de classe $\mathcal{C}^1$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Différentiabilité $\implies$ Continuité
 
@@ -71,7 +71,7 @@ $$| \langle \nabla f(a), u \rangle | \le \|\nabla f(a)\| \cdot \|u\| = \|\nabla 
 L'égalité est atteinte quand $u$ est colinéaire à $\nabla f(a)$.
 **Conclusion :** La variation de $f$ est maximale quand on se déplace dans la direction du gradient.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Calcul de différentielle et gradient
 **Énoncé :** Soit $f(x, y) = x^2 + 3xy + e^y$. Calculer le gradient en tout point et la différentielle au point $(1, 0)$.
@@ -90,14 +90,14 @@ L'égalité est atteinte quand $u$ est colinéaire à $\nabla f(a)$.
 2. **Dérivées partielles :** $\frac{f(t, 0) - f(0, 0)}{t} = \frac{\sqrt{t^2}}{t} = \frac{|t|}{t}$. Cette limite n'existe pas en 0 (elle vaut 1 à droite, -1 à gauche).
 3. **Conclusion :** Comme les dérivées partielles n'existent pas, la fonction ne peut pas être différentiable en $(0, 0)$. (Géométriquement, c'est un cône avec une pointe).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le **Gradient Descent** (Descente de Gradient) est l'algorithme qui permet d'ajuster les poids $\theta$ d'un modèle pour minimiser la perte $L(\theta)$.
 - **Exemple Concret :**
     - **Backpropagation :** Pour calculer le gradient d'un réseau complexe, on utilise la "Chain Rule" (Règle de la chaîne, Jalon 46), qui est la manière de composer les différentielles. Le gradient nous indique comment modifier chaque poids $w_{ij}$ pour réduire l'erreur globale.
     - **Direction de descente :** On met à jour les poids par la formule $\theta \leftarrow \theta - \eta \nabla L(\theta)$. Le signe "moins" indique qu'on va dans la direction opposée au gradient pour **descendre** vers le minimum. $\eta$ (le learning rate) est la taille du pas que l'on fait dans cette direction.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 44 (Fonctions de plusieurs variables).md]], [[Jalon 8 (Applications linéaires).md]]
 - **Concepts Futurs dépendants :** [[Jalon 46 (Matrice jacobienne).md]], [[Jalon 128 (Flots de gradient).md]]

@@ -12,7 +12,7 @@ next: "[[Jalon 84 (Livrable IA).md]]"
 
 # Jalon 83 : Dérivation au sens des distributions
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous deviez mesurer la pente d'un escalier.
     - Pour une rampe lisse (une fonction dérivable), c'est facile : il suffit de poser une règle.
@@ -21,7 +21,7 @@ next: "[[Jalon 84 (Livrable IA).md]]"
 - **Le "Pourquoi on a inventé ça" :** En physique, on a besoin de dériver des signaux qui sautent brusquement (interrupteur ON/OFF). En mathématiques, on veut que TOUT soit dérivable. Avec les distributions, même une fonction discontinue ou une poussière de points (un Dirac) possède une dérivée. Cela permet de résoudre des équations différentielles qui n'avaient pas de solutions auparavant.
 - **Visualisation :** La dérivée d'un virage serré est un pic de force. Plus le virage est brusque, plus le pic est haut. À la limite, pour un angle droit, la dérivée est une impulsion infinie.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Définition de la dérivée d'une distribution
 
@@ -46,7 +46,7 @@ Soit $f$ une fonction de classe $\mathcal{C}^1$ par morceaux, présentant un sau
 > **Définition (Espace $H^1$) :**
 > L'espace de Sobolev $H^1(\mathbb{R})$ est l'ensemble des fonctions $f \in L^2(\mathbb{R})$ dont la dérivée au sens des distributions $f'$ appartient aussi à $L^2(\mathbb{R})$. Ce sont des fonctions "globalement lisses" même si elles ont des pointes.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : La dérivée de Heaviside est le Dirac
 
@@ -66,7 +66,7 @@ Soit $H(x) = \mathbf{1}_{x>0}$. Montrons que $H' = \delta_0$.
    On a $\langle H', \phi \rangle = \phi(0) = \langle \delta_0, \phi \rangle$.
    Donc $H' = \delta_0$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Dérivée de la valeur absolue
 **Énoncé :** Calculer la dérivée de $f(x) = |x|$ au sens des distributions.
@@ -85,7 +85,7 @@ Soit $H(x) = \mathbf{1}_{x>0}$. Montrons que $H' = \delta_0$.
 4. Par la formule des sauts : $\text{sgn}' = 0 + 2\delta_0 = 2\delta_0$.
 **Conclusion :** $|x|'' = 2\delta_0$. La "pointe" de la valeur absolue génère une impulsion de Dirac dans la dérivée seconde.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Les fonctions d'activation non-lisses (ReLU, Leaky ReLU) sont les briques de base de l'IA. La théorie des distributions justifie mathématiquement que l'on puisse calculer leur gradient.
 - **Example Concret :**
@@ -93,7 +93,7 @@ Soit $H(x) = \mathbf{1}_{x>0}$. Montrons que $H' = \delta_0$.
     - **Edge Detection (Détection de contours) :** En vision par ordinateur, un contour est un "saut" de luminosité. Dériver une image (filtre de Sobel) fait apparaître des pics là où il y a des contours. C'est l'application directe de la formule des sauts : la dérivée d'une image discontinue est une distribution riche en informations spatiales.
     - **Physics-Informed Neural Networks (PINNs) :** Pour forcer un réseau à respecter une loi physique (ex: équation de la chaleur), on définit une perte qui contient les dérivées du réseau. Si la solution physique a des chocs (discontinuités), on utilise la dérivation au sens des distributions pour calculer la perte correctement.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 82 (Introduction à la théorie des distributions de Schwartz).md]], [[Jalon 38 (Théorème fondamental de l'analyse).md]]
 - **Concepts Futurs dépendants :** [[Jalon 107 (Introduction à la théorie des opérateurs non bornés et résolvante.).md]], [[Jalon 117 (Calcul des variations).md]]

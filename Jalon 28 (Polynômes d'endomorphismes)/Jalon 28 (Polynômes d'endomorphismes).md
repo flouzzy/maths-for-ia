@@ -12,14 +12,14 @@ next: "[[Jalon 29 (Éléments propres).md]]"
 
 # Jalon 28 : Polynômes d'endomorphismes, idéaux annulateurs et théorème de Cayley-Hamilton
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Un polynôme, c'est une formule mathématique comme $P(x) = x^2 - 3x + 2$. Si on remplace $x$ par un nombre, on obtient un résultat. La magie ici, c'est qu'on peut remplacer $x$ par une **matrice** (ou un endomorphisme). On obtient alors une nouvelle matrice. Le **théorème de Cayley-Hamilton**, c'est une propriété fascinante : chaque matrice, lorsqu'on la met dans sa propre formule caractéristique, donne la matrice nulle. Elle "s'annule" elle-même.
 - **Le "Pourquoi on a inventé ça" :** Pour comprendre comment une transformation agit (rotation, étirement), il faut comprendre ses "polynômes". Cela permet de simplifier les calculs de puissances de matrices (ex: calculer $A^{1000}$ devient très facile avec le polynôme minimal).
 - **Visualisation :** Si une matrice est une machine, son polynôme caractéristique est son "ADN". Si vous nourrissez la machine avec son propre ADN, elle s'éteint (elle devient la matrice zéro).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -31,7 +31,7 @@ next: "[[Jalon 29 (Éléments propres).md]]"
 > **Théorème de Cayley-Hamilton :**
 > Soit $\chi_f$ le polynôme caractéristique de $f$ ($\chi_f(X) = \det(X \cdot Id - f)$). Alors $\chi_f(f) = 0_E$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration : Cayley-Hamilton (pour les matrices diagonalisables)

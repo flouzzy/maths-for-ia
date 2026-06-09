@@ -12,7 +12,7 @@ next: "[[Jalon 22 (Séries de fonctions).md]]"
 
 # Jalon 21 : Suites de fonctions, étude de la convergence simple et de la convergence uniforme
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous regardiez un dessin animé. Chaque image du film est une fonction. 
@@ -21,7 +21,7 @@ next: "[[Jalon 22 (Séries de fonctions).md]]"
 - **Le "Pourquoi on a inventé ça" :** Les mathématiciens ont découvert avec horreur que si on additionne une infinité de fonctions continues, le résultat peut être une fonction discontinue ! La convergence uniforme est le "garde-fou" qui permet de transférer les propriétés (continuité, dérivabilité) des fonctions d'une suite vers leur limite.
 - **Visualisation :** Imaginez un tuyau de plus en plus fin autour de la courbe limite. La convergence est uniforme si, après un certain temps, TOUTE la courbe de votre fonction rentre entièrement dans le tuyau.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -45,7 +45,7 @@ Soit $D \subset \mathbb{R}$ et $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions
 > **Théorème de Dérivation :**
 > Si $(f_n)$ est de classe $C^1$, si $(f_n(x_0))$ converge pour au moins un $x_0$, et si $(f'_n)$ converge **uniformément** vers $g$, alors $(f_n)$ converge uniformément vers $f$ et $f' = g$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : La limite uniforme de fonctions continues est continue
@@ -77,7 +77,7 @@ Soit $(f_n)$ convergeant uniformément vers $f$ sur $D$. On suppose chaque $f_n$
 5. **Conclusion :**
    Nous avons trouvé un $\delta$ tel que $|f(x) - f(x_0)| < \epsilon$. La fonction limite $f$ est donc continue en $x_0$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : CS mais pas CU (Contre-exemple classique)
@@ -104,11 +104,11 @@ Soit $(f_n)$ convergeant uniformément vers $f$ sur $D$. On suppose chaque $f_n$
    - Comme $\frac{M^2 e^M}{2n} \to 0$ quand $n \to \infty$, le supremum de l'écart tend vers 0.
 **Conclusion :** La convergence est uniforme sur tout compact de $\mathbb{R}$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** En IA, la convergence uniforme est la condition sine qua non de la **Généralisation**. On veut que l'erreur mesurée sur les données d'entraînement (une fonction de $n$ exemples) converge uniformément vers l'erreur réelle sur toutes les données possibles.
 - **Exemple Concret :** Dans la **Théorie de l'Apprentissage Statistique (Vapnik-Chervonenkis)**, on définit des classes de fonctions (ex: tous les réseaux de neurones d'une certaine architecture). On prouve que pour que l'apprentissage soit fiable, la convergence de l'erreur doit être uniforme sur toute la classe de fonctions. C'est ce qu'on appelle une **Borne de Généralisation Uniforme**. Si la convergence n'était que simple, il existerait toujours une fonction du réseau qui "triche" sur les données d'entraînement sans être bonne en réalité (Overfitting).
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 14 (Suites réelles et complexes)]], [[Jalon 18 (Continuité des fonctions d'une variable réelle)]]
 - **Concepts Futurs dépendants :** [[Jalon 22 (Séries de fonctions)]], [[Jalon 59 (Topologie des espaces de fonctions)]], [[Jalon 137 (Preuve des bornes de généralisation universelles de Vapnik via la dimension VC.)]]

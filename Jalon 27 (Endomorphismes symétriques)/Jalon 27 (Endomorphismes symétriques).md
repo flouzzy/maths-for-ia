@@ -12,7 +12,7 @@ next: "[[Jalon 28 (Polynômes d'endomorphismes).md]]"
 
 # Jalon 27 : Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** 
@@ -22,12 +22,14 @@ next: "[[Jalon 28 (Polynômes d'endomorphismes).md]]"
 - **Le "Pourquoi on a inventé ça" :** Les opérateurs symétriques ont des propriétés magiques : ils sont toujours diagonalisables avec des bases orthogonales. Cela simplifie radicalement les calculs en physique et en IA.
 - **Visualisation :** Une rotation 2D est une matrice orthogonale. Un étirement sur les axes est une matrice symétrique.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
 Soit $E$ un espace euclidien.
-1. **Adjoint d'un endomorphisme :** Pour $f \in \mathcal{L}(E)$, il existe un unique endomorphisme $f^* \in \mathcal{L}(E)$ tel que $\forall x, y \in E, \langle f(x), y angle = \langle x, f^*(y) angle$.
+1. **Adjoint d'un endomorphisme :** Pour $f \in \mathcal{L}(E)$, il existe un unique endomorphisme $f^* \in \mathcal{L}(E)$ tel que $\forall x, y \in E, \langle f(x), y
+angle = \langle x, f^*(y)
+angle$.
 2. **Endomorphisme symétrique :** $f \in \mathcal{L}(E)$ est symétrique si $f^* = f$. (Matrice symétrique $A^T = A$).
 3. **Matrice Orthogonale :** $P \in \mathcal{M}_n(\mathbb{R})$ est orthogonale si $P^T P = I_n$. Les colonnes de $P$ forment une base orthonormée de $\mathbb{R}^n$.
 
@@ -38,15 +40,26 @@ Soit $E$ un espace euclidien.
 > **Isométries et Matrices orthogonales :**
 > $f$ est une isométrie $\iff 	ext{Mat}(f)$ est orthogonale.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 ### Démonstration : $f$ symétrique $\implies$ sous-espaces propres orthogonaux
 Soient $\lambda, \mu$ deux valeurs propres distinctes de $f$ symétrique, et $x, y$ des vecteurs propres associés.
 
-1. **Initialisation :** $\langle f(x), y angle = \langle \lambda x, y angle = \lambda \langle x, y angle$.
-2. **Utilisation de la symétrie :** $\langle f(x), y angle = \langle x, f(y) angle = \langle x, \mu y angle = \mu \langle x, y angle$.
-3. **Égalité :** $\lambda \langle x, y angle = \mu \langle x, y angle \implies (\lambda - \mu) \langle x, y angle = 0$.
+1. **Initialisation :** $\langle f(x), y
+angle = \langle \lambda x, y
+angle = \lambda \langle x, y
+angle$.
+2. **Utilisation de la symétrie :** $\langle f(x), y
+angle = \langle x, f(y)
+angle = \langle x, \mu y
+angle = \mu \langle x, y
+angle$.
+3. **Égalité :** $\lambda \langle x, y
+angle = \mu \langle x, y
+angle \implies (\lambda - \mu) \langle x, y
+angle = 0$.
 4. **Conclusion :** Comme $\lambda 
-eq \mu$, alors $\langle x, y angle = 0$. Les espaces propres sont orthogonaux.
+eq \mu$, alors $\langle x, y
+angle = 0$. Les espaces propres sont orthogonaux.
 
 ## 4. Exercices d'Application
 ### Exercice 1 : Orthogonalité

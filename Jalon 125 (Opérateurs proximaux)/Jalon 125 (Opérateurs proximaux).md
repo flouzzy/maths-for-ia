@@ -12,7 +12,7 @@ next: "[[Jalon 126 (Noyaux définis positifs).md]]"
 
 # Jalon 125 : Opérateurs proximaux
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez perdu dans le brouillard sur une montagne (la fonction $f$). Vous voulez descendre, mais vous avez peur de vous égarer trop loin de votre campement actuel (le point $x$).
     - L'**Opérateur Proximal**, c'est comme avoir un guide qui vous propose un compromis : "On va aller vers un point plus bas, mais en restant dans un rayon raisonnable autour du camp".
@@ -21,7 +21,7 @@ next: "[[Jalon 126 (Noyaux définis positifs).md]]"
 - **Le "Pourquoi on a inventé ça" :** La descente de gradient classique échoue sur les fonctions "pointues" (comme la valeur absolue). L'opérateur proximal permet de "lisser" mathématiquement ces pointes pour pouvoir continuer à optimiser sans que l'algorithme ne saute dans tous les sens. C'est le moteur des algorithmes d'IA qui cherchent la simplicité (parcimonie).
 - **Visualisation :** On remplace une pointe de "V" par une petite courbe arrondie (enveloppe de Moreau) qui est beaucoup plus facile à descendre.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $f : \mathbb{R}^n \to \mathbb{R}$ une fonction convexe, propre et inférieurement semi-continue.
 
@@ -45,7 +45,7 @@ Soit $f : \mathbb{R}^n \to \mathbb{R}$ une fonction convexe, propre et inférieu
 
 > **Théorème :** $x = prox_f(x) + prox_{f^*}(x)$, où $f^*$ est la transformée de Fenchel-Legendre de $f$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Exemple : Proximal de la valeur absolue (Soft-Thresholding)
 
@@ -63,7 +63,7 @@ Soit $f(x) = |x|$ sur $\mathbb{R}$. Cherchons $p = prox_{\lambda | \cdot |}(x)$.
    $$prox_{\lambda | \cdot |}(x) = \begin{cases} x-\lambda & \text{si } x > \lambda \\ 0 & \text{si } |x| \le \lambda \\ x+\lambda & \text{si } x < -\lambda \end{cases} = \text{sgn}(x) \cdot \max(|x|-\lambda, 0)$$
    C'est l'opérateur de **Seuillage Doux** (Soft-thresholding).
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Projection sur un convexe
 **Énoncé :** Soit $C$ un ensemble convexe fermé. On définit $f(x) = 0$ si $x \in C$ and $+\infty$ sinon (fonction indicatrice $\iota_C$). Calculer $prox_f(x)$.
@@ -78,7 +78,7 @@ C'est exactement la définition de la **Projection orthogonale** sur l'ensemble 
 On utilise l'algorithme de **Gradient Proximal** : $x_{k+1} = prox_{\eta f}(x_k - \eta \nabla g(x_k))$.
 On fait un pas de gradient sur la partie lisse, puis on "projette" le résultat via l'opérateur proximal pour gérer la partie pointue. C'est l'algorithme standard pour le Lasso.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Les opérateurs proximaux sont la clé de l'**IA parcimonieuse** (Sparse AI). Ils permettent d'annuler exactement les poids inutiles sans perturber la convergence.
 - **Example Concret :**
@@ -86,7 +86,7 @@ On fait un pas de gradient sur la partie lisse, puis on "projette" le résultat 
     - **ADMM (Alternating Direction Method of Multipliers) :** Cet algorithme, très utilisé pour l'IA distribuée (plusieurs serveurs qui apprennent ensemble), repose sur l'application alternée d'opérateurs proximaux.
     - **Total Variation Denoising :** Pour nettoyer une image tout en gardant les contours nets, on utilise un proximal par rapport à la norme de la dérivée (TV norm). Cela "écrase" le bruit tout en préservant les sauts brusques.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 122 (Notion de sous-gradient).md]], [[Jalon 121 (Ensembles et Fonctions convexes).md]]
 - **Concepts Futurs dépendants :** [[Jalon 129 (Optimisation stochastique).md]], [[Jalon 130 (Régularisation implicite de la descente de gradient dans les modèles sur-paramétrés.).md]]

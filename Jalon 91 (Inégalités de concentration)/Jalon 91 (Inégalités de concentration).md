@@ -12,7 +12,7 @@ next: "[[Jalon 92 (Démonstration rigoureuse de la loi forte des grands nombres.
 
 # Jalon 91 : Inégalités de concentration
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 
 - **La Métaphore :** Imaginez que vous soyez le gérant d'un restaurant. Vous savez qu'en moyenne, un client dépense 20€.
     - **Markov :** C'est le niveau de base. Il dit : "Il est impossible que tout le monde dépense 200€, car alors la moyenne ne pourrait pas être 20€". Plus vous demandez un écart grand par rapport à la moyenne, plus la chance que cela arrive diminue.
@@ -21,7 +21,7 @@ next: "[[Jalon 92 (Démonstration rigoureuse de la loi forte des grands nombres.
 - **Le "Pourquoi on a inventé ça" :** En science, on ne connaît jamais tout. On a souvent juste une moyenne ou une variance. Les inégalités de concentration nous permettent de dire : "Je ne sais pas exactement ce qui va se passer, mais je peux vous garantir avec 99,9% de certitude que l'erreur ne dépassera pas telle valeur".
 - **Visualisation :** Une cloche de probabilité. L'aire des "queues" (les événements extrêmes) devient minuscule très rapidement quand on s'éloigne du centre.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Inégalité de Markov (Le socle)
 
@@ -41,7 +41,7 @@ next: "[[Jalon 92 (Démonstration rigoureuse de la loi forte des grands nombres.
 > Soient $X_1, \dots, X_n$ des variables aléatoires **indépendantes** telles que $X_i \in [a_i, b_i]$. Soit $S_n = \sum X_i$. Pour tout $t > 0$ :
 > $$P(S_n - \mathbb{E}[S_n] \ge t) \le \exp\left( - \frac{2t^2}{\sum (b_i - a_i)^2} \right)$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : De Markov à Tchebychev
 
@@ -59,7 +59,7 @@ Pour obtenir une décroissance exponentielle, on applique Markov à la variable 
 $P(X \ge a) = P(e^{\lambda X} \ge e^{\lambda a}) \le \frac{\mathbb{E}[e^{\lambda X}]}{e^{\lambda a}}$.
 On minimise ensuite par rapport à $\lambda$ pour obtenir la borne la plus serrée possible.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Sondage d'opinion
 **Énoncé :** On veut estimer la proportion $p$ de gens votant "Oui" dans une population. On interroge $n$ personnes. On veut que notre erreur soit inférieure à $1\%$ avec une confiance de $95\%$. Combien de personnes faut-il interroger (via Tchebychev) ?
@@ -75,7 +75,7 @@ On minimise ensuite par rapport à $\lambda$ pour obtenir la borne la plus serr�
 **Correction Détaillée :**
 C'est immédiat : $P(|\bar{X}_n - \mu| \ge \epsilon) \le \frac{\sigma^2}{n\epsilon^2}$. Quand $n \to \infty$, cette probabilité tend vers 0 pour tout $\epsilon > 0$. C'est la définition de la convergence en probabilité.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Les inégalités de concentration sont le fondement de la **Théorie de l'Apprentissage Statistique** (Statistical Learning Theory). Elles permettent de borner l'erreur de généralisation.
 - **Example Concret :**
@@ -83,7 +83,7 @@ C'est immédiat : $P(|\bar{X}_n - \mu| \ge \epsilon) \le \frac{\sigma^2}{n\epsil
     - **Multi-Armed Bandits :** L'algorithme **UCB** (Upper Confidence Bound) utilise des inégalités de concentration pour décider quel bras de levier tirer. Il calcule une "borne supérieure de confiance" sur le gain de chaque bras et choisit le plus prometteur.
     - **Stabilité de la SGD :** On utilise ces inégalités pour garantir que les trajectoires de l'optimisation ne s'éloignent pas trop du chemin idéal, malgré le bruit des mini-batchs.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 87 (Intégration et Espérance mathématique).md]], [[Jalon 88 (Indépendance d'événements et de variables aléatoires).md]]
 - **Concepts Futurs dépendants :** [[Jalon 92 (Démonstration rigoureuse de la loi forte des grands nombres.).md]], [[Jalon 137 (Preuve des bornes de généralisation universelles de Vapnik via la dimension VC.).md]]

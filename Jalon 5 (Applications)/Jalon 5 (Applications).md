@@ -12,7 +12,7 @@ next: "[[Jalon 6 (Relations d'équivalence).md]]"
 
 # Jalon 5 : Applications, injections, surjections, bijections et composition de fonctions
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez un archer qui tire des flèches sur des cibles.
@@ -23,7 +23,7 @@ next: "[[Jalon 6 (Relations d'équivalence).md]]"
 - **Le "Pourquoi on a inventé ça" :** Les mathématiques consistent souvent à transformer des objets en d'autres objets. Les fonctions sont les "machines à transformer". Comprendre si une machine est "réversible" (bijection) ou si elle "perd de l'information" (non injective) est crucial pour savoir si on peut revenir en arrière.
 - **Visualisation :** Imaginez deux ensembles de points reliés par des fils. Si les fils ne s'emmêlent jamais sur le même point d'arrivée, c'est injectif. Si chaque point d'arrivée a au moins un fil qui lui arrive dessus, c'est surjectif.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -41,7 +41,7 @@ Soient $E$ (ensemble de départ) et $F$ (ensemble d'arrivée) deux ensembles.
 > **Caractérisation de l'injectivité par la composition :**
 > $f$ est injective si et seulement s'il existe une application $g : F \to E$ telle que $g \circ f = Id_E$ (rétraction).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Injection de la composée $g \circ f$
@@ -67,7 +67,7 @@ Soient $f : E \to F$ et $g : F \to G$. Montrons que si $f$ et $g$ sont injective
 5. **Conclusion :** Nous avons montré que $(g \circ f)(x) = (g \circ f)(x') \Rightarrow x = x'$.
    L'application $g \circ f$ est donc injective. La démonstration est achevée.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application Directe (Fonction réelle)
@@ -97,11 +97,11 @@ Soient $f : E \to F$ et $g : F \to G$. Montrons que si $f$ et $g$ sont injective
    6. Cela est vrai pour tout $z \in G$.
 * *Conclusion :* L'application $g$ est donc surjective. (Note : On ne peut rien conclure sur la surjectivité de $f$ sans information supplémentaire).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** Les réseaux de neurones sont des **compositions massives** de fonctions élémentaires (couches).
 - **Exemple Concret :** Dans les **Normalizing Flows** (modèles génératifs d'IA), on cherche à apprendre une suite de transformations $f_1, f_2, ..., f_n$ qui sont toutes des **bijections**. Pourquoi ? Parce qu'une bijection permet de transformer une distribution de probabilité simple (comme une Gaussienne) en une distribution complexe (une image), tout en étant capable de faire le calcul inverse (calculer la probabilité d'une image) de manière exacte. Si une couche n'est pas bijective, on perd de l'information et le modèle devient "aveugle" à certaines données.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 4 (Théorie des ensembles)]]
 - **Concepts Futurs dépendants :** [[Jalon 6 (Relations d'équivalence)]], [[Jalon 52 (Applications continues entre espaces topologiques et définition fine des homéomorphismes.)]], [[Jalon 111 (Applications différentiables entre variétés)]]

@@ -12,14 +12,14 @@ next: "[[Jalon 30 (Trigonalisation d'endomorphismes et décomposition de Dunford
 
 # Jalon 29 : Éléments propres, polynôme caractéristique, sous-espaces propres et critères de diagonalisabilité
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous transformez une image (par exemple en la tournant ou en l'étirant). La plupart des points vont bouger et changer de direction. Mais il existe parfois des vecteurs (des flèches) qui, même après la transformation, restent sur la **même ligne** qu'au départ. Ils ont seulement été étirés ou rétrécis. Ces vecteurs sont les "vecteurs propres". Le facteur par lequel ils ont été étirés est la "valeur propre".
 - **Le "Pourquoi on a inventé ça" :** Diagonaliser, c'est trouver une base dans laquelle une transformation complexe devient une simple mise à l'échelle sur chaque axe. C'est le moyen le plus simple possible pour "voir" ce que fait une matrice.
 - **Visualisation :** Une rotation tourne tout. Un étirement garde les axes stables : ce sont les vecteurs propres.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 ### A. Définitions
 1. **Vecteur propre :** $v 
 eq 0$ tel que $f(v) = \lambda v$. $\lambda$ est la valeur propre.
@@ -30,7 +30,7 @@ eq 0$ tel que $f(v) = \lambda v$. $\lambda$ est la valeur propre.
 > **Critère de Diagonalisabilité :**
 > $f$ est diagonalisable $\iff \chi_f$ est scindé ET $\forall \lambda, \dim(E_\lambda) = 	ext{ordre de multiplicité de } \lambda$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 ### Démonstration : Familles de vecteurs propres de valeurs propres distinctes sont libres
 Soient $\lambda_1, ..., \lambda_k$ des valeurs propres distinctes et $v_1, ..., v_k$ des vecteurs propres associés.
 1. **Récurrence :** Pour $k=1$, $\{v_1\}$ est libre car $v_1 

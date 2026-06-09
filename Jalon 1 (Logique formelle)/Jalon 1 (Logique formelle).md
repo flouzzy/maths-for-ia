@@ -12,14 +12,14 @@ next: "[[Jalon 2 (Méthodes de raisonnement).md]]"
 
 # Jalon 1 : Logique formelle, connecteurs, tables de vérité et calcul des propositions
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous êtes un détective face à un tableau de bord composé de leviers qui peuvent être soit "Haut" (Vrai), soit "Bas" (Faux). La logique formelle, c'est le manuel d'instruction qui vous dit exactement quel voyant s'allume en fonction de la position des leviers. Si je vous dis : "Le voyant s'allume SI le levier A est haut ET le levier B est bas", vous venez de pratiquer la logique. C'est le code source universel de la pensée : avant même de savoir *ce que* l'on dit, on définit *comment* les briques de vérité s'emboîtent.
 - **Le "Pourquoi on a inventé ça" :** Les mathématiciens voulaient éliminer le flou du langage humain. Les mots comme "ou" peuvent être ambigus (est-ce "fromage ou dessert" ou bien "l'un, l'autre, ou les deux" ?). En créant une langue artificielle pure, ils ont pu construire des raisonnements infaillibles que même une machine peut exécuter sans jamais se tromper.
 - **Visualisation :** On peut imaginer des circuits électriques. Un connecteur "ET" est comme deux interrupteurs placés l'un après l'autre : le courant ne passe que si les deux sont fermés. Un connecteur "OU" est comme deux interrupteurs en parallèle : il suffit qu'un seul soit fermé pour que la lumière brille.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -35,7 +35,7 @@ On appelle **interprétation** (ou distribution de valeurs de vérité) une appl
 > Une formule $A$ est une **tautologie** (notée $\vDash A$) si et seulement si elle est démontrable dans le système formel du calcul des propositions (notée $\vdash A$).
 > $$v(A) = 1 \text{ pour toute interprétation } v \iff \vdash A$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Loi de De Morgan $\neg(A \land B) \iff (\neg A \lor \neg B)$
@@ -68,7 +68,7 @@ Nous allons démontrer cette équivalence par la méthode des tables de vérité
 
 5. **Conclusion :** Les colonnes des étapes 3 et 4 sont identiques pour toutes les interprétations. L'équivalence $\neg(A \land B) \Leftrightarrow (\neg A \lor \neg B)$ est donc une tautologie. Elle est rigoureusement démontrée.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application Directe
@@ -105,11 +105,11 @@ Nous allons démontrer cette équivalence par la méthode des tables de vérité
    11. Par propriété de l'élément absorbant du Vrai ($1 \lor X = 1$) : $F = 1$.
    12. La formule est identiquement égale à Vrai, c'est donc une tautologie.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** Le calcul des propositions est l'ancêtre direct des circuits logiques (portes logiques) et des moteurs d'inférence en IA symbolique.
 - **Exemple Concret :** Dans les **systèmes experts** ou les **solveurs SAT** (utilisés pour vérifier la sécurité de codes logiciels complexes ou optimiser la planification logistique), l'algorithme doit décider si une énorme conjonction de contraintes logiques est "satisfaisable". C'est précisément l'application massive des tables de vérité et de l'algèbre de Boole pour résoudre des problèmes où le nombre de combinaisons dépasse l'entendement humain.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** Aucun (Jalon initial)
 - **Concepts Futurs dépendants :** [[Jalon 2 (Méthodes de raisonnement)]], [[Jalon 3 (Quantification)]]

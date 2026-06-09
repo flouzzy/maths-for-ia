@@ -12,7 +12,7 @@ next: "[[Jalon 25 (Formes bilinéaires).md]]"
 
 # Jalon 24 : Livrable IA T2 : Analyse mathématique des critères de convergence d'une régression polynomiale et résolution d'un problème d'analyse de l'ENS sur les interversions de limites
 
-## 1. L'Intuition Première (Niveau 12 ans)
+## 1. Présentation du concept clé
 *Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez que vous ayez des points sur un graphique représentant le prix des maisons en fonction de leur taille. Ces points ne forment pas une ligne droite parfaite, mais une courbe un peu bosselée. Faire une **Régression Polynomiale**, c'est comme essayer de faire passer une règle souple (un polynôme) à travers ces points. 
@@ -22,7 +22,7 @@ next: "[[Jalon 25 (Formes bilinéaires).md]]"
 - **Le "Pourquoi on a inventé ça" :** On ne veut pas juste relier des points, on veut comprendre la loi cachée derrière les données. La convergence nous garantit que si on ajoute de plus en plus de données, notre règle souple va finir par se stabiliser vers la "vraie" loi de la nature.
 - **Visualisation :** Imaginez un sculpteur qui dégrossit un bloc de marbre. Au début, il utilise de gros outils (bas degré), puis des outils de plus en plus fins (haut degré). S'il s'arrête au bon moment, il a un chef-d'œuvre. S'il va trop loin, il détruit la statue.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -40,7 +40,7 @@ Soit un ensemble de données $\{(x_i, y_i)\}_{i=1}^n$. On cherche un polynôme $
 > **Phénomène de Runge (Mise en garde) :**
 > L'augmentation du degré $d$ pour une interpolation sur des points équidistants ne garantit pas la convergence uniforme (divergence aux bords). Cela justifie l'utilisation de la régularisation ou de points de Tchebychev.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Convergence de la solution des moindres carrés
@@ -71,7 +71,7 @@ Montrons que la solution optimale $a^*$ vérifie les équations normales $(X^T X
    $$a^* = (X^T X)^{-1} X^T Y$$
    C'est la solution unique qui minimise l'erreur quadratique.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Problème d'Analyse (Inspiré ENS)
@@ -94,11 +94,11 @@ Montrons que la solution optimale $a^*$ vérifie les équations normales $(X^T X
 4. **Système :** $\begin{cases} 2b + a = 4 \\ b + a = 3 \end{cases} \implies b = 1$ and $a = 2$.
 **Conclusion :** La droite est $y = 2x + 1$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** La régression polynomiale est l'ancêtre du **Deep Learning**. Un réseau de neurones avec des fonctions d'activation polynomiales n'est rien d'autre qu'une régression polynomiale généralisée.
 - **Exemple Concret :** Dans la **Régularisation L2 (Ridge Regression)**, on ajoute un terme $\lambda \|a\|^2$ à la fonction de perte pour empêcher les coefficients du polynôme de devenir trop grands. Cela revient mathématiquement à modifier les équations normales : $(X^T X + \lambda I) a = X^T Y$. Ce petit ajout garantit l'inversibilité de la matrice et empêche le modèle d'apprendre par cœur le bruit des données, résolvant ainsi le problème de non-convergence mis en évidence par le phénomène de Runge.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 9 (Calcul matriciel)]], [[Jalon 21 (Suites de fonctions)]], [[Jalon 22 (Séries de fonctions)]]
 - **Concepts Futurs dépendants :** [[Jalon 25 (Formes bilinéaires)]], [[Jalon 36 (Livrable IA)]], [[Jalon 133 (Modèle PAC)]]
