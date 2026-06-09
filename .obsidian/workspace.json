@@ -176,9 +176,19 @@
               "icon": "lucide-info",
               "title": "Propriétés du fichier pour Jalon 1 (Logique formelle)"
             }
+          },
+          {
+            "id": "18864fee124c4f40",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
@@ -201,6 +211,8 @@
   },
   "active": "8ceda288c71f7e44",
   "lastOpenFiles": [
+    "jalon-143/Jalon 143 (Théorie spectrale des graphes).md",
+    "jalon-3/Jalon 3 (Quantification).md",
     "generate_content.py",
     "jalon-5/Jalon 5 (Applications).md",
     "jalon-14/Jalon 14 (Suites réelles et complexes).md",
@@ -232,11 +244,9 @@
     "jalon-1/exos/Exo-02_Equivalence-Algébrique.md",
     "jalon-1/exos",
     "jalon-27/Jalon 27 (Endomorphismes symétriques).md",
-    "jalon-32/Jalon 32 (Preuve complète du théorème spectral pour les endomorphismes symétriques.).md",
     "jalon-99",
     "jalon-98",
     "jalon-97",
-    "jalon-96",
     "Sans titre 1.canvas",
     "Sans titre.canvas"
   ]
