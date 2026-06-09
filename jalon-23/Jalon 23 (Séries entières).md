@@ -113,5 +113,5 @@ Soit $\sum a_n z^n$ de rayon $R$. Montrons que la série dérivée $\sum n a_n z
 - **Exemple Concret :** Dans la modélisation des **Graphes Aléatoires** et des **Réseaux de Neurones à Largeur Infinie (Infinite Width limits)**, on utilise les séries entières pour calculer les moments d'une distribution de poids. De plus, les **Noyaux (Kernels)** utilisés en machine learning (comme le noyau RBF/Gaussien) peuvent être vus comme des séries entières de produits scalaires. Comprendre le rayon de convergence de ces séries permet de savoir pour quelles plages de données le modèle reste stable et mathématiquement prévisible.
 
 ## 6. Liens Sémantiques & Maillage Obsidian
-- **Concepts Précédents requis :** [[Jalon 16 (Séries numériques à termes positifs)]], [[Jalon 22 (Séries de fonctions)]]
+- **Concepts Précédents requis :** [[Jalon-16]], [[Jalon 22 (Séries de fonctions)]]
 - **Concepts Futurs dépendants :** [[Jalon 24 (Livrable IA)]], [[Jalon 31 (Introduction à la réduction de Jordan et structure des nilpotents.)]], [[Jalon 43 (Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.)]], [[Jalon 93 (Fonctions caractéristiques)]]

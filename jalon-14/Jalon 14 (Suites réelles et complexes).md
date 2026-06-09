@@ -120,4 +120,4 @@ Supposons qu'une suite $(u_n)$ converge vers deux limites distinctes $l_1$ et $l
 
 ## 6. Liens Sémantiques & Maillage Obsidian
 - **Concepts Précédents requis :** [[Jalon 13 (Structure de R)]]
-- **Concepts Futurs dépendants :** [[Jalon 15 (Sous-suites)]], [[Jalon 16 (Séries numériques à termes positifs)]], [[Jalon 21 (Suites de fonctions)]], [[Jalon 56 (Espaces métriques complets)]]
+- **Concepts Futurs dépendants :** [[Jalon 15 (Sous-suites)]], [[Jalon-16]], [[Jalon 21 (Suites de fonctions)]], [[Jalon 56 (Espaces métriques complets)]]
