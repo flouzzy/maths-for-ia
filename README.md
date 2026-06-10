@@ -329,3 +329,4 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-06-09] : Audit & Auto-correction du Jalon 143 - Théorie spectrale des graphes. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - [2026-06-09] : Upsert du Jalon 16 - Séries numériques à termes positifs. Status: Terminé.
 - **Date de mise à jour** : 2026-06-09
+- [2026-06-10] : Upsert du Jalon 2 - Méthodes de raisonnement. Status: Terminé.

@@ -1,0 +1,8 @@
+# Exercice 8 - Difficulté: Niveau 4.5
+
+## 1. Énoncé
+Démontrer qu'un nombre est rationnel si et seulement si son développement décimal est périodique à partir d'un certain rang.
+
+## 2. Démonstration (Zéro Ellipse)
+Soit $x$ un nombre. **Sens direct :** Si $x \in \mathbb{Q}$, alors $x = \frac{p}{q}$ avec $p \in \mathbb{Z}$ et $q \in \mathbb{N}^*$. Lorsqu'on effectue la division euclidienne de $p$ par $q$, les restes successifs appartiennent à l'ensemble $\{0, 1, \dots, q-1\}$, qui contient au plus $q$ éléments. D'après le principe des tiroirs de Dirichlet, après au plus $q$ étapes après la virgule, un reste apparaîtra pour la deuxième fois. À partir de ce moment, la séquence des divisions et donc des décimales produites sera identique à celle produite à partir du moment où ce reste est apparu la première fois. La séquence de décimales est donc périodique.
+**Sens réciproque :** Supposons que $x$ admet un développement décimal périodique à partir d'un certain rang. On peut écrire $x = A + 10^{-k} \cdot B + 10^{-k-m} \cdot C + 10^{-k-2m} \cdot C + \dots$ où $A$ est la partie entière, $B$ est la partie non périodique (de longueur $k$), et $C$ est la période (de longueur $m$). La partie décimale périodique s'écrit $y = C \cdot \sum_{i=0}^{\infty} (10^{-m})^i$. Il s'agit d'une série géométrique de raison $10^{-m} < 1$. La somme de la série est $\sum_{i=0}^{\infty} (10^{-m})^i = \frac{1}{1 - 10^{-m}} = \frac{10^m}{10^m - 1}$. Donc $y = \frac{C \cdot 10^m}{10^m - 1}$, qui est un nombre rationnel. Comme $A$ et $10^{-k} \cdot B$ sont des rationnels avec un nombre fini de décimales, $x$ est une somme de nombres rationnels. Or $\mathbb{Q}$ est stable par addition. Par conséquent, $x \in \mathbb{Q}$.
