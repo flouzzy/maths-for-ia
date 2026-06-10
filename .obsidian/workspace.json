@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "jalon-1/Jalon 1 (Logique formelle).md",
+                "file": "jalon-14/Jalon 14 (Suites réelles et complexes).md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Jalon 1 (Logique formelle)"
+              "title": "Jalon 14 (Suites réelles et complexes)"
             }
           }
         ]
@@ -221,6 +221,7 @@
   },
   "active": "8ceda288c71f7e44",
   "lastOpenFiles": [
+    "jalon-1/Jalon 1 (Logique formelle).md",
     "jalon-1/README.md",
     "jalon-141/Jalon-141.md",
     "jalon-142/Jalon-142.md",
@@ -233,7 +234,6 @@
     "jalon-14/Jalon 14 (Suites réelles et complexes).md",
     "jalon-139/Jalon-139_Notion_de_stabilite_algorithmique.md",
     "jalon-141/Jalon 141 (Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC.).md",
-    "jalon-1/Jalon 1 (Logique formelle).md",
     "test_rename_files.py",
     "test_enrich_jalons_gemini.py",
     "prompt_template.txt",
