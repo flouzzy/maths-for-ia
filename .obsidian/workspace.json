@@ -4,21 +4,31 @@
     "type": "split",
     "children": [
       {
-        "id": "a398bb77c5940683",
+        "id": "bc1e7782e8dc77d0",
         "type": "tabs",
         "children": [
           {
-            "id": "604975679d4f51cb",
+            "id": "8ceda288c71f7e44",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Jalon 26 (Espaces euclidiens)/Jalon 26 (Espaces euclidiens).md",
-                "mode": "preview",
-                "source": false
+                "file": "jalon-1/Jalon 1 (Logique formelle).md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
               "icon": "lucide-file",
-              "title": "Jalon 26 (Espaces euclidiens)"
+              "title": "Jalon 1 (Logique formelle)"
             }
           }
         ]
@@ -113,12 +123,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Jalon 13 (Structure de $-mathbb{R}$).md",
+                "file": "jalon-3/Jalon 3 (Quantification).md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Liens sortants de Jalon 13 (Structure de $-mathbb{R}$)"
+              "title": "Liens sortants de Jalon 3 (Quantification)"
             }
           },
           {
@@ -164,13 +174,35 @@
               "icon": "lucide-list",
               "title": "Plan de Jalon 13 (Structure de $-mathbb{R}$)"
             }
+          },
+          {
+            "id": "83370cb1c349abad",
+            "type": "leaf",
+            "state": {
+              "type": "file-properties",
+              "state": {
+                "file": "jalon-1/Jalon 1 (Logique formelle).md"
+              },
+              "icon": "lucide-info",
+              "title": "Propriétés du fichier pour Jalon 1 (Logique formelle)"
+            }
+          },
+          {
+            "id": "18864fee124c4f40",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
-        ]
+        ],
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -180,45 +212,52 @@
       "daily-notes:Ouvrir la note quotidienne": false,
       "templates:Insérer le modèle": false,
       "command-palette:Ouvrir la palette de commandes": false,
-      "bases:Créer une nouvelle base": false
+      "bases:Créer une nouvelle base": false,
+      "obsidian-git:Open Git source control": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "workspaces:Gérer les espaces de travail": false,
+      "publish:Publier les modifications": false
     }
   },
-  "active": "604975679d4f51cb",
+  "active": "8ceda288c71f7e44",
   "lastOpenFiles": [
-    "Jalon 27 (Endomorphismes symétriques)/Jalon 27 (Endomorphismes symétriques).md",
-    "Jalon 26 (Espaces euclidiens)/Jalon 26 (Espaces euclidiens).md",
-    "Jalon 7 (Espaces vectoriels abstraits)/Jalon 7 (Espaces vectoriels abstraits).md",
-    "Jalon 11 (Formes linéaires)/Jalon 11 (Formes linéaires).md",
-    "Jalon 9 (Calcul matriciel)/Jalon 9 (Calcul matriciel).md",
-    "Jalon 13 (Structure de --mathbb{R}-)/Jalon 13 (Structure de --mathbb{R}-).md",
-    "Jalon 13 (Structure de --mathbb{R}-)",
-    "Jalon 99 (ThÃ©orÃ¨me de Hahn-Banach).md",
-    "Jalon 99 (Théorème de Hahn-Banach)/Jalon 99 (Théorème de Hahn-Banach).md",
-    "Jalon 4 (Théorie des ensembles)/Jalon 4 (Théorie des ensembles).md",
-    "Jalon 5 (Applications)/Jalon 5 (Applications).md",
-    "Jalon 6 (Relations d'équivalence)/Jalon 6 (Relations d'équivalence).md",
-    "Jalon 3 (Quantification)/Jalon 3 (Quantification).md",
-    "Jalon 2 (Méthodes de raisonnement)/Jalon 2 (Méthodes de raisonnement).md",
-    "Jalon 1 (Logique formelle)/Jalon 1 (Logique formelle).md",
-    "README.md",
-    "Bienvenue.md",
-    "Jalon 1 (Logique formelle).md",
-    "Jalon 141 (Theoremes de Glivenko-Cantelli generalises pour les classes de fonctions VC.).md",
-    "Jalon 98 (Theoreme de Hahn-Banach).md",
-    "Jalon 100 (Demonstration du theoreme de Banach-Steinhaus).md",
-    "Jalon 24 (Livrable IA).md",
-    "Jalon 21 (Suites de fonctions).md",
-    "Jalon 20 (Derivees successives).md",
-    "Jalon 10 (Changements de base).md",
-    "Jalon 3 (Quantification).md",
-    "Jalon 2 (Méthodes de raisonnement).md",
-    "test_generate_jalons.py",
-    "rename_files.py",
-    "enrich_jalons_gemini.py",
-    "generate_index.ps1",
-    "git-sync.ps1",
-    "generate_jalons.ps1",
-    "generate_jalons.py",
-    "desktop.ini"
+    "jalon-1/README.md",
+    "jalon-141/Jalon-141.md",
+    "jalon-142/Jalon-142.md",
+    "jalon-143/Jalon-143.md",
+    "jalon-143/README.md",
+    "jalon-3/Jalon 3 (Quantification).md",
+    "jalon-143/Jalon 143 (Théorie spectrale des graphes).md",
+    "generate_content.py",
+    "jalon-5/Jalon 5 (Applications).md",
+    "jalon-14/Jalon 14 (Suites réelles et complexes).md",
+    "jalon-139/Jalon-139_Notion_de_stabilite_algorithmique.md",
+    "jalon-141/Jalon 141 (Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC.).md",
+    "jalon-1/Jalon 1 (Logique formelle).md",
+    "test_rename_files.py",
+    "test_enrich_jalons_gemini.py",
+    "prompt_template.txt",
+    "benchmark_rename.py",
+    "jalon-49/Jalon 49 (Espaces topologiques généraux).md",
+    "jalon-2/Jalon 2 (Méthodes de raisonnement).md",
+    "jalon-1/exos/Exo-09_Algebres-Boole-Representation-Stone.md",
+    "jalon-1/exos/Exo-07_Completude-Fonctionnelle.md",
+    "jalon-1/exos/Exo-01_Application-Directe.md",
+    "jalon-1/tp/TP-05_Avance.md",
+    "jalon-1/tp/TP-04_DPLL-Solver.md",
+    "jalon-1/tp/TP-03_Mise-Sous-CNF.md",
+    "jalon-1/tp/TP-02_Table-Verite.md",
+    "jalon-1/tp/TP-01_De-Scratch.md",
+    "jalon-1/tp",
+    "jalon-1/exos/Exo-10_Niveau-ENS.md",
+    "jalon-1/exos/Exo-08_Interpolation-Craig.md",
+    "jalon-1/exos/Exo-06_SAT-Resolution-Refutation.md",
+    "jalon-1/exos/Exo-05_Forme-Normale-Conjonctive.md",
+    "jalon-1/exos",
+    "jalon-99",
+    "jalon-98",
+    "jalon-97",
+    "Sans titre 1.canvas",
+    "Sans titre.canvas"
   ]
 }

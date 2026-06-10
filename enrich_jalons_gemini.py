@@ -12,6 +12,16 @@ client = genai.Client(api_key=os.environ.get("GOOGLE_API_KEY"))
 # Le modèle recommandé pour un équilibre entre rapidité, fenêtres de contexte et qualité
 MODEL_ID = 'gemini-2.5-flash'
 
+# Pre-compile regular expressions for performance
+RE_YEAR = re.compile(r'\*\*Année\s+(\d+).*?\*\*')
+RE_TRIM = re.compile(r'\*\*Trimestre\s+(\d+).*?\*\*')
+RE_PREV = re.compile(r'\*\*Précédent\*\*\s*:\s*\[\[(.*?)\]\]')
+RE_NEXT = re.compile(r'\*\*Suivant\*\*\s*:\s*\[\[(.*?)\]\]')
+RE_TITLE_CLEAN_PARENS = re.compile(r'Jalon(s)? [\d à]+ \((.*?)\)')
+RE_TITLE_CLEAN_PREFIX = re.compile(r'^Jalon(s)? [\d à]+\s*:?\s*')
+RE_TITLE_CLEAN_FILE = re.compile(r'^Jalon(s)? [\d à]+ \((.*?)\)\.md$')
+RE_JALON_NUM = re.compile(r'Jalon(s)? ([\d à]+)')
+
 def get_jalon_files():
     # Trouve tous les fichiers de Jalons dans les sous-dossiers
     files = glob.glob("Jalon*/**/*.md", recursive=True)
@@ -19,11 +29,7 @@ def get_jalon_files():
     # but based on the move, they are the only ones for now.
     return sorted(files)
 
-def parse_file(filepath):
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
-
-    # Variables to parse
+def extract_metadata(content):
     year = "1"
     trimester = "1"
     prev_link = ""
@@ -34,25 +40,25 @@ def parse_file(filepath):
     # # Jalon X
     # **Année Y** > **Trimestre Z**
 
-    # Extract year
     match_year = re.search(r'\*\*Année\s+(\d+).*?\*\*', content)
     if match_year:
         year = match_year.group(1)
 
-    # Extract trimester
     match_trim = re.search(r'\*\*Trimestre\s+(\d+).*?\*\*', content)
     if match_trim:
         trimester = match_trim.group(1)
 
-    # Extract links
     match_prev = re.search(r'\*\*Précédent\*\*\s*:\s*\[\[(.*?)\]\]', content)
     if match_prev:
         prev_link = f'"[[{match_prev.group(1)}.md]]"'
 
-    match_next = re.search(r'\*\*Suivant\*\*\s*:\s*\[\[(.*?)\]\]', content)
+    match_next = RE_NEXT.search(content)
     if match_next:
         next_link = f'"[[{match_next.group(1)}.md]]"'
 
+    return year, trimester, prev_link, next_link
+
+def extract_main_content(content):
     # Check if the first part is YAML frontmatter (for existing enrichments)
     parts = content.split('---\n')
     if len(parts) > 1:
@@ -64,31 +70,42 @@ def parse_file(filepath):
         nav_links = parts[-1].strip()
         if not ("**Précédent**" in nav_links or "**Suivant**" in nav_links):
             main_content = content
-            nav_links = ""
     else:
         main_content = content
-        nav_links = ""
 
+    return main_content
+
+def extract_clean_title(main_content, filepath):
     lines = main_content.split('\n')
     title = lines[0].replace('# ', '') if lines and lines[0].startswith('# ') else os.path.basename(filepath).replace('.md', '')
 
     # Nettoyage rapide du titre pour le prompt
-    title_clean = re.sub(r'Jalon(s)? [\d à]+ \((.*?)\)', r'\2', title)
+    title_clean = RE_TITLE_CLEAN_PARENS.sub(r'\2', title)
     # also remove the 'Jalon X' prefix if any
-    title_clean = re.sub(r'^Jalon(s)? [\d à]+\s*:?\s*', '', title_clean)
+    title_clean = RE_TITLE_CLEAN_PREFIX.sub('', title_clean)
     title_clean = title_clean.strip()
 
     # Sometimes title contains original mojibake if not properly parsed, so use clean fallback
-    clean_filename_title = re.sub(r'^Jalon(s)? [\d à]+ \((.*?)\)\.md$', r'\2', os.path.basename(filepath))
+    clean_filename_title = RE_TITLE_CLEAN_FILE.sub(r'\2', os.path.basename(filepath))
 
     if not title_clean or title_clean == os.path.basename(filepath).replace('.md', ''):
         title_clean = clean_filename_title
+
+    return title_clean
+
+def parse_file(filepath):
+    with open(filepath, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    year, trimester, prev_link, next_link = extract_metadata(content)
+    main_content = extract_main_content(content)
+    title_clean = extract_clean_title(main_content, filepath)
 
     return main_content, title_clean, year, trimester, prev_link, next_link
 
 def generate_enriched_content(title, original_content, filepath, year, trimester, prev_link, next_link):
     # Extraction du numéro de jalon depuis le nom du fichier pour le YAML
-    match_num = re.search(r'Jalon(s)? ([\d à]+)', os.path.basename(filepath))
+    match_num = RE_JALON_NUM.search(os.path.basename(filepath))
     jalon_num = match_num.group(2) if match_num else "0"
     # normalize for uuid
     jalon_num_clean = jalon_num.replace(" à ", "-").strip()
@@ -96,99 +113,21 @@ def generate_enriched_content(title, original_content, filepath, year, trimester
     prev_yaml = f'\nprev: {prev_link}' if prev_link else ''
     next_yaml = f'\nnext: {next_link}' if next_link else ''
 
-    prompt = f"""Tu agis en tant que Professeur Émérite de Mathématiques (niveau de rigueur requis : ENS / École Polytechnique / MIT) et Ingénieur Pédagogique d'Élite. Ton objectif est de générer ou d'enrichir le contenu textuel exhaustif d'un "Jalon" spécifique du programme "Jalons de Mathématiques pour l'Intelligence Artificielle".
+    # Load the prompt template from an external file to keep the code clean
+    template_path = os.path.join(os.path.dirname(__file__), 'prompt_template.txt')
+    with open(template_path, "r", encoding="utf-8") as template_file:
+        template = template_file.read()
 
-Le fichier produit doit constituer un module de cours magistral d'excellence absolue, permettant à un développeur ou ingénieur motivé de partir d'une intuition géométrique ou visuelle basique (niveau Bac S) pour s'élever sans rupture jusqu'à la rigueur absolue du niveau Master, afin d'être capable de reconstruire la preuve pivot à blanc.
-
-### CONCEPT CIBLE
-- Titre Exact: {title}
-- Numéro: {jalon_num}
-- Contenu initial: {original_content}
-
----
-
-### CADRE PÉDAGOGIQUE & RÈGLES COMPORTEMENTALES IMPÉRATIVES
-1. **L'Échafaudage Cognitif (Règle des deux extrêmes) :** Débute par une vulgarisation (12 ans), puis bascule de manière fluide mais intransigeante dans le formalisme pur (MP* / Master).
-2. **Zéro Ellipse Mathématique (Règle de l'honnêteté calculatoire) :** INTERDICTION ABSOLUE d'utiliser des raccourcis paresseux ("il est trivial de voir que", "le reste du calcul est laissé au lecteur"). Chaque transition algébrique doit être écrite.
-3. **Cohérence Absolue des Notations :** Conserve une rigueur totale dans tes variables.
-4. **Ton de Mentor Académique :** Pédagogique, encourageant mais exigeant (précision chirurgicale).
-
-### CONTRAINTES ABSOLUES DE FORMATAGE
-1. Zéro Caractère Spécial dans le Nom du Fichier (déjà géré).
-2. Encodage Strict: UTF-8.
-3. Syntaxe LaTeX Standard: `$...$` pour en ligne, `$$...$$` pour les blocs.
-
----
-
-### STRUCTURE UNIVERSELLE DU JALON (À RESPECTER STRICTEMENT)
-
-Tu dois générer l'intégralité du contenu en Markdown exactement avec le format ci-dessous. Ne rajoute aucun texte avant ni après.
-
-```markdown
----
-uuid: "jalon-{jalon_num_clean}"
-title: "{title}"
-year: {year}
-trimester: {trimester}
-tags:
-  - math/fondations
-  - ia/theorie{prev_yaml}{next_yaml}
----
-
-# Jalon {jalon_num} : {title}
-
-## 1. Présentation du concept clé
-*Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
-- **La Métaphore :** [Développer une analogie concrète, une image mentale ou une histoire qui capture l'essence géométrique ou logique du concept]
-- **Le "Pourquoi on a inventé ça" :** [Expliquer le problème historique, l'impasse ou le défi conceptuel que les mathématiciens cherchaient à résoudre]
-- **Visualisation :** [Décrire précisément ce qu'on verrait si on devait dessiner, projeter ou cartographier graphiquement cette idée]
-
-## 2. Formalisation
-*Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
-
-### A. Définitions Formelles
-[Donner toutes les définitions de manière ultra-exhaustive. Spécifier systématiquement et rigoureusement la nature et le typage de tous les objets mathématiques introduits : corps $\\mathbb{{K}}$, espaces vectoriels $E$, familles, ouverts, espaces mesurés, tribus $\\mathcal{{F}}$, etc.]
-
-### B. Théorèmes, Propositions & Lemmes
-> **Théorème de [Nom] (Propriétés Fondamentales) :**
-> Soient [Hypothèses explicites, exhaustives et restrictives]. Alors :
-> $$[Équation ou propriété formelle]$$
-
-## 3. Démonstrations
-*Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
-
-### Démonstration du Théorème Pivot : [Nom du Théorème]
-1. **Initialisation / Cadre :** [Poser les variables et expliciter clairement la stratégie logique adoptée]
-2. **Étape 1 :** [Explication textuelle précise de l'action mathématique]
-   $$[Formule ou égalité ultra-détaillée]$$
-3. **Étape 2 (Transition micro-calculatoire) :** [Détailler l'ensemble des étapes algébriques sans sauter aucune ligne intermédiaire]
-   $$[Développement complet]$$
-4. **Conclusion :** [Synthèse finale montrant que l'assertion recherchée est démontrée]
-
-## 4. Exercices d'Application
-*Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
-
-### Exercice 1 : Application Directe
-**Énoncé :** [Clair, précis, posant le cadre calculatoire]
-**Correction Détaillée :**
-* *Analyse de l'énoncé :* [Comment appréhender les données]
-* *Résolution pas-à-pas :* [Développement intégral du calcul]
-
-### Exercice 2 : Niveau Avancé (Inspiré Concours X / ENS / MIT)
-**Énoncé :** [Problème plus profond, demandant de combiner plusieurs notions du jalon]
-**Correction Détaillée :**
-* *Analyse de l'énoncé :* [Décomposition logique]
-* *Résolution pas-à-pas :* [Rédaction académique irréprochable et intégrale]
-
-## 5. Application en Intelligence Artificielle
-*Démontrer la finalité technologique moderne de ce jalon théorique.*
-- **Le Pont Théorique :** [Expliquer comment ce concept abstrait se matérialise directement dans les fondations de l'IA]
-- **Exemple Concret :** [Donner un cas d'usage ou un calcul précis dans l'IA moderne.]
-
-## 6. Liens Sémantiques
-- **Concepts Précédents requis :** [[Jalon X (Nom épuré)]], [[Jalon Y (Nom épuré)]]
-- **Concepts Futurs dépendants :** [[Jalon Z (Nom épuré)]], [[Jalon W (Nom épuré)]]
-```"""
+    prompt = template.format(
+        title=title,
+        jalon_num=jalon_num,
+        original_content=original_content,
+        jalon_num_clean=jalon_num_clean,
+        year=year,
+        trimester=trimester,
+        prev_yaml=prev_yaml,
+        next_yaml=next_yaml
+    )
 
     max_retries = 10
     retry_delay = 60
@@ -235,12 +174,11 @@ def main():
 
         # On vérifie si le fichier possède déjà la nouvelle structure YAML complète pour éviter de le refaire
         # (Si year, trimester et uuid sont là, on suppose que c'est bon)
-        with open(filepath, 'r', encoding='utf-8') as f:
-            first_lines = "".join([f.readline() for _ in range(10)])
-            if "uuid: \"jalon-" in first_lines and "year:" in first_lines and "trimester:" in first_lines and "## 1. Présentation du concept clé
-                print(f"  -> Le fichier {filepath} possède déjà la nouvelle structure. Ignoré.")
-                sys.stdout.flush()
-                continue
+        first_lines = "".join(original_content.splitlines(True)[:10])
+        if "uuid: \"jalon-" in first_lines and "year:" in first_lines and "trimester:" in first_lines and "## 1. Présentation du concept clé" in original_content:
+            print(f"  -> Le fichier {filepath} possède déjà la nouvelle structure. Ignoré.")
+            sys.stdout.flush()
+            continue
 
         enriched_text = generate_enriched_content(title, original_content, filepath, year, trimester, prev_link, next_link)
 
