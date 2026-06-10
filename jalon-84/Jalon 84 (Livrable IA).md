@@ -21,7 +21,7 @@ next: "[[Jalon 85 (Axiomes de Kolmogorov).md]]"
 - **Le "Pourquoi on a inventé ça" :** Une onde sonore change trop vite pour qu'une IA puisse l'analyser directement de manière efficace. En passant dans le domaine de Fourier, on extrait les motifs stables (les notes, les voyelles) qui portent le sens de l'information.
 - **Visualisation :** Le **Spectrogramme**. C'est une carte où l'axe horizontal est le temps, l'axe vertical est la fréquence, et la couleur indique l'intensité du son à cet instant et à cette fréquence.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. La Transformée de Fourier à Court Terme (STFT)
 
@@ -44,7 +44,7 @@ Comme un signal audio n'est pas stationnaire (les fréquences changent au fil du
 L'oreille humaine ne perçoit pas les fréquences de manière linéaire. On utilise une transformation logarithmique de l'axe des fréquences appelée **échelle de Mel**.
 $$m = 2595 \log_{10}(1 + \frac{f}{700})$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Justification de la discrétisation (DFT)
 
@@ -55,7 +55,7 @@ En pratique, l'IA travaille sur des signaux discrets de longueur $N$.
 3. **Inversion :** On peut reconstruire exactement le signal original par $x = \frac{1}{N} \sum X_k e_k$.
 4. **Conclusion :** Le spectrogramme discret est une décomposition orthogonale locale du signal. Chaque "bin" de fréquence capture l'énergie d'une bande spécifique.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Résolution fréquentielle
 **Énoncé :** On échantillonne un son à $44100$ Hz. On fait une FFT sur des fenêtres de $1024$ échantillons. Quelle est la largeur de chaque "bin" de fréquence ?
@@ -70,7 +70,7 @@ En pratique, l'IA travaille sur des signaux discrets de longueur $N$.
 **Correction Détaillée :**
 Le signal réel est "coupé" brusquement aux bords de la fenêtre. Cette coupure est une discontinuité qui génère des hautes fréquences artificielles en Fourier (Leakage). En utilisant une fenêtre qui s'adoucit vers zéro aux extrémités, on rend le signal périodique de manière fluide, ce qui nettoie le spectre et permet à l'IA de se concentrer sur les vraies fréquences.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** L'analyse spectrale est la couche de **Feature Extraction** obligatoire pour toute IA traitant du son ou des vibrations.
 - **Example Concret :**
@@ -78,7 +78,7 @@ Le signal réel est "coupé" brusquement aux bords de la fenêtre. Cette coupure
     - **Classification de musique (Shazam) :** L'empreinte digitale d'une chanson est basée sur les "pics" de son spectrogramme. On cherche les points de plus haute énergie dans le plan temps-fréquence pour identifier le morceau.
     - **Analyse de séries temporelles financières :** On utilise Fourier pour détecter des cycles (saisonnalité) dans les cours de bourse ou la consommation d'énergie.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 81 (Transformée de Fourier dans L2).md]], [[Jalon 78 (Séries de Fourier).md]]
 - **Concepts Futurs dépendants :** [[Jalon 113 (Tenseurs).md]], [[Jalon 144 (Le phénomène de double descente).md]]

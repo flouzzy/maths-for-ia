@@ -21,7 +21,7 @@ next: "[[Jalon 131 (Algorithmes d'optimisation de second ordre en grande dimensi
 - **Le "Pourquoi on a inventé ça" :** En Intelligence Artificielle, on s'est aperçu d'un phénomène très étrange : les réseaux de neurones gigantesques ont des milliards de paramètres. Mathématiquement, ils pourraient apprendre "par cœur" toutes les données (avec du bruit) et échouer lamentablement sur de nouvelles données (ce qu'on appelle le "surapprentissage" ou *overfitting*). Pourtant, ils généralisent très bien. Les mathématiciens ont dû inventer une théorie pour comprendre pourquoi : c'est parce que l'algorithme d'apprentissage lui-même (la descente de gradient) choisit *naturellement* la solution la plus "simple" parmi l'infinité de solutions possibles. L'algorithme a une préférence cachée, une "régularisation implicite".
 - **Visualisation :** Imagine une feuille de papier posée sur une table, avec plein de points dessinés dessus. Tu cherches à relier tous les points. Il y a une infinité de gribouillis possibles qui passent par tous les points. Mais si tu tends un élastique pour relier ces points, l'élastique va prendre la forme la plus tendue, la plus courte possible. La descente de gradient agit exactement comme la tension de cet élastique.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -56,7 +56,7 @@ $$ \nabla \mathcal{L}(w) = \frac{1}{n} X^\top (Xw - y) $$
 > $$ w_\infty = \underset{w \in \mathbb{R}^d}{\text{argmin}} \frac{1}{2} \|w\|_2^2 \quad \text{sous la contrainte} \quad Xw = y $$
 > Ce point limite correspond précisément à la projection orthogonale de l'origine sur l'espace affine des solutions $\mathcal{M}$, ou de manière équivalente, à l'estimateur de norme minimale (minimum norm interpolator).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème de la Régularisation Implicite
@@ -133,7 +133,7 @@ Nous savons que toute solution appartenant à l'intersection de l'espace affine 
 Or, nous avons trouvé exactement que notre limite du flot de gradient $w_\infty$ vérifie simultanément $X w_\infty = y$ et $w_\infty \in \text{Im}(X^\top)$.
 Conclusion finale : La dynamique de la descente de gradient, lorsqu'elle est initialisée à zéro, sélectionne implicitement l'unique solution interpolatrice de norme minimale euclidienne $\ell_2$. L'algorithme d'optimisation induit donc une régularisation invisible, en pénalisant la norme des poids sans qu'aucun terme de type $\|w\|_2^2$ (Ridge) n'ait été ajouté à la fonction de perte empirique.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Application Directe : Régularisation implicite avec une initialisation non nulle
 **Énoncé :**
@@ -190,12 +190,12 @@ Dans un régime fortement sur-paramétré (données linéairement séparables, i
 4. *Conclusion :*
    Bien que l'on n'ait codé aucun terme pénalisant la norme ou imposant une marge complexe dans la perte logistique, l'algorithme d'optimisation par flot de gradient sur une perte exponentielle agit comme un solveur SVM de marge maximale. C'est l'essence même de la **régularisation implicite** : le biais inductif profond de l'optimiseur sélectionne un modèle géométriquement maximalement robuste parmi une infinité d'hyperplans qui séparent parfaitement (à $100\%$ d'accuracy d'entraînement) les données.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le phénomène de double descente (abordé au [[Jalon 144 (Le phénomène de double descente)]]) et la généralisation hors-norme des réseaux de neurones profonds (Deep Learning) défient la théorie classique de l'apprentissage statistique de Vapnik-Chervonenkis (voir [[Jalon 136 (Theorie de Vapnik-Chervonenkis)]]). Dans le régime sur-paramétré des LLMs (Large Language Models) ou des CNNs massifs, les modèles ont la capacité de mémoriser n'importe quel bruit aléatoire. S'ils ne le font pas en pratique, c'est grâce au biais inductif de la descente de gradient stochastique (SGD). La SGD agit comme un rasoir d'Ockham mathématique implicite, cherchant activement la variété de dimension minimale ou la fonction la plus régulière qui interpole les données, évitant ainsi les fluctuations violentes (hautes fréquences) caractéristiques de l'overfitting pur.
 - **Exemple Concret :** Lors du pré-entraînement (Pre-training) d'un Transformer doté de 175 milliards de paramètres comme GPT-3. La dimension des poids $d$ est monstrueusement supérieure au nombre d'exemples d'un mini-batch $n$. Le problème local est infini-sous-déterminé. Si un optimiseur abstrait générique cherchait les racines, il pourrait exploser les normes des poids et créer un modèle hautement instable (qui prédirait des tokens absurdes à la moindre variation de prompt). Or l'usage de l'optimiseur Adam ou de la SGD force les matrices de poids (les matrices Query, Key, Value de l'Attention) à maintenir de faibles normes spectrales et un faible rang de manière organique. Le réseau apprend des représentations lisses, douces et généralisables *uniquement* parce que le trajet que parcourt l'algorithme d'optimisation pénalise implicitement la complexité.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 128 (Flots de gradient)]], [[Jalon 124 (Conditions de Karush-Kuhn-Tucker)]], [[Jalon 7 (Espaces vectoriels abstraits)]]
 - **Concepts Futurs dépendants :** [[Jalon 144 (Le phénomène de double descente)]], [[Jalon 130 (Régularisation implicite de la descente de gradient dans les modèles sur-paramétrés.)]], [[Jalon 140 (Classifieur de Bayes optimal)]]

@@ -21,7 +21,7 @@ next: "[[Jalon 26 (Espaces euclidiens).md]]"
 - **Le "Pourquoi on a inventé ça" :** On a besoin de mesurer des angles et des longueurs dans des espaces qui ne sont pas forcément le monde réel en 3D. Le produit scalaire est l'outil universel pour définir la notion de "proximité" et de "direction" dans n'importe quel ensemble de données.
 - **Visualisation :** Imaginez projeter un vecteur sur un autre. La longueur de l'ombre portée dépend de la "ressemblance" des deux vecteurs. Le produit scalaire est la mesure de cette ombre.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -45,7 +45,7 @@ Soit $E$ un $\mathbb{K}$-espace vectoriel.
 > **Inégalité Minkowski (Triangulaire) :**
 > $$\|x + y\| \le \|x\| + \|y\|$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : L'Inégalité de Cauchy-Schwarz (Cas réel)
@@ -86,7 +86,7 @@ Soit $\langle \cdot, \cdot \rangle$ un produit scalaire réel sur $E$.
 
 6. **Conclusion :** L'inégalité de Cauchy-Schwarz est démontrée.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Produit scalaire de fonctions
@@ -116,11 +116,11 @@ Soit $\langle \cdot, \cdot \rangle$ un produit scalaire réel sur $E$.
 6. $n^2 \le (\sum a_i) (\sum \frac{1}{a_i})$.
 **Conclusion :** L'inégalité est démontrée.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** Le produit scalaire est l'opération de base qui définit la **Similarité** entre deux vecteurs de données.
 - **Exemple Concret :** Dans le **Mécanisme d'Attention (Transformers)** de GPT-4 ou BERT, on calcule des scores d'attention en faisant des produits scalaires entre des vecteurs de "Requête" (Query) et de "Clé" (Key) : $\text{Score} = Q \cdot K^T$. Plus le produit scalaire est élevé, plus le modèle "porte attention" à un mot spécifique dans une phrase. L'inégalité de Cauchy-Schwarz garantit que ces scores peuvent être normalisés (via Softmax) pour former une distribution de probabilité cohérente, évitant ainsi que certaines connexions ne dominent de manière aberrante.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon 9 (Calcul matriciel)]]
 - **Concepts Futurs dépendants :** [[Jalon 26 (Espaces euclidiens)]], [[Jalon 33 (Formes quadratiques)]], [[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L^2)]], [[Jalon 126 (Noyaux définis positifs)]]

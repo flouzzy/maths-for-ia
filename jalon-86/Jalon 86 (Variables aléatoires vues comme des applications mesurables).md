@@ -21,7 +21,7 @@ next: "[[Jalon 87 (Intégration des variables aléatoires).md]]"
 - **Le "Pourquoi on a inventé ça" :** Dans la nature, les événements sont abstraits. On ne peut pas faire de calculs sur "il pleut" ou "le client achète". On doit transformer ces événements en **nombres** pour faire des statistiques. La théorie de la mesure garantit que cette transformation ne perd pas la notion de probabilité en route.
 - **Visualisation :** Une flèche qui part d'un point dans un nuage abstrait ($\Omega$) et qui atterrit sur un point précis de la droite graduée ($\mathbb{R}$).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $(\Omega, \mathcal{F}, P)$ un espace de probabilité.
 
@@ -44,7 +44,7 @@ Soit $(\Omega, \mathcal{F}, P)$ un espace de probabilité.
 > **Définition 3 (Fonction de Répartition) :**
 > La fonction $F_X : \mathbb{R} \to [0, 1]$ définie par $F_X(x) = P(X \le x)$ caractérise entièrement la loi de $X$. Elle est croissante, continue à droite, et ses limites en $\pm \infty$ sont 0 et 1.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Critère de mesurabilité simplifié
 
@@ -58,7 +58,7 @@ Montrons qu'il suffit de vérifier la mesurabilité sur les intervalles du type 
 5. **Conclusion :** Si cette tribu contient $\mathcal{E}$ (les intervalles), elle contient nécessairement la plus petite tribu contenant $\mathcal{E}$, c'est-à-dire $\mathcal{B}(\mathbb{R})$.
    Donc, si $P(X \le a)$ est défini pour tout $a$, $X$ est une variable aléatoire.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Loi d'une transformation (Carré)
 **Énoncé :** Soit $X$ une variable aléatoire de loi uniforme sur $[-1, 1]$. Déterminer la fonction de répartition de $Y = X^2$.
@@ -75,7 +75,7 @@ Montrons qu'il suffit de vérifier la mesurabilité sur les intervalles du type 
 **Correction Détaillée :**
 C'est la définition des fonctions simples (Jalon 65). Comme une fonction simple est une somme finie de fonctions indicatrices d'ensembles mesurables, elle est mesurable. Les variables aléatoires discrètes sont exactement les fonctions simples (ou limites de fonctions simples).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En IA, tout est variable aléatoire : les **Données ($X$)**, les **Poids ($W$)**, et les **Labels ($Y$)**. La mesurabilité garantit que l'on peut manipuler ces objets de manière cohérente à travers les couches du réseau.
 - **Example Concret :**
@@ -83,7 +83,7 @@ C'est la définition des fonctions simples (Jalon 65). Comme une fonction simple
     - **Activation Functions :** Appliquer une ReLU sur une sortie de neurone $Z$ crée une nouvelle variable $A = \max(0, Z)$. Si $Z$ suivait une loi Normale, $A$ suivra une loi "Rectified Gaussian". Le cadre des applications mesurables permet de calculer cette nouvelle distribution.
     - **Génération de bruit :** Dans les modèles de diffusion ou les GANs, on part d'une variable simple (Gaussienne blanche) et on apprend l'application mesurable $G$ la plus complexe possible pour que la loi de $G(Z)$ ressemble à la loi des images réelles.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 65 (Fonctions mesurables).md]], [[Jalon 85 (Axiomes de Kolmogorov).md]]
 - **Concepts Futurs dépendants :** [[Jalon 87 (Intégration des variables aléatoires).md]], [[Jalon 90 (Les modes de convergence).md]]

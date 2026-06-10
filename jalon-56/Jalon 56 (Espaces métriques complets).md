@@ -21,7 +21,7 @@ next: "[[Jalon 57 (Théorème du point fixe de Banach).md]]"
 - **Le "Pourquoi on a inventé ça" :** En mathématiques, on définit souvent des objets comme des limites (ex: le nombre $\pi$, ou la solution d'une équation compliquée). Pour être sûr que ces objets existent vraiment, on doit travailler dans des espaces "sans trous". C'est la garantie de robustesse du calcul numérique.
 - **Visualisation :** La droite réelle $\mathbb{R}$ est complète (tous les nombres à virgule infinie existent). L'ensemble des nombres rationnels $\mathbb{Q}$ n'est pas complet : une suite de fractions peut s'approcher de $\sqrt{2}$, mais $\sqrt{2}$ n'est pas une fraction, donc elle "sort" de $\mathbb{Q}$.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Suites de Cauchy
 
@@ -48,7 +48,7 @@ Soit $(X, d)$ un espace métrique.
 > **Théorème de prolongement des applications uniformément continues :**
 > Soit $A$ une partie dense d'un espace métrique $X$. Soit $f : A \to Y$ une application uniformément continue, où $Y$ est un espace **complet**. Alors $f$ admet un unique prolongement continu sur $X$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Un fermé d'un complet est complet
 
@@ -58,7 +58,7 @@ Soit $(X, d)$ un espace métrique.
 4. **Utilisation de la fermeture de F :** La suite $(x_n)$ est dans $F$ et converge vers $L$. Par la caractérisation séquentielle des fermés (Jalon 35), la limite $L$ appartient nécessairement à $F$.
 5. **Conclusion :** Toute suite de Cauchy de $F$ converge dans $F$. Donc $F$ est complet.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Non-complétude de $]0, 1[$
 **Énoncé :** Montrer que l'intervalle ouvert $]0, 1[$ muni de la distance usuelle n'est pas complet.
@@ -78,7 +78,7 @@ Soit $(f_n)$ une suite de Cauchy pour cette norme.
 3. Comme chaque $f_n$ est continue et que la convergence est uniforme, la limite $f$ est continue (Théorème du Jalon 21).
 4. Conclusion : La limite est dans l'espace. L'espace est complet.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En IA, la complétude garantit que nos algorithmes itératifs "atterrissent" quelque part. Si l'espace des modèles n'était pas complet, on pourrait avoir une perte qui diminue sans jamais atteindre de modèle final valide.
 - **Example Concret :**
@@ -86,7 +86,7 @@ Soit $(f_n)$ une suite de Cauchy pour cette norme.
     - **Espaces de Hilbert (RKHS) :** Les méthodes à noyaux (SVM) travaillent dans des espaces de fonctions appelés RKHS. Pour que ces méthodes fonctionnent, il est impératif que ces espaces soient complets (ce sont des espaces de Hilbert). Cela permet d'utiliser le théorème du représentant (Jalon 127).
     - **EDP et Physique-Informed Neural Networks (PINNs) :** On cherche des solutions de fonctions qui sont limites de suites de réseaux. La complétude des espaces de Sobolev (Jalon 83) est ce qui donne un sens mathématique à ces solutions.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 51 (Espaces métriques).md]], [[Jalon 35 (Caractérisation séquentielle des ouverts).md]]
 - **Concepts Futurs dépendants :** [[Jalon 57 (Théorème du point fixe de Banach).md]], [[Jalon 75 (Preuve de la complétude des espaces Lp).md]]

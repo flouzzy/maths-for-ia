@@ -19,7 +19,7 @@ next: "[[Jalon 32 (Preuve complète du théorème spectral pour les endomorphism
 - **Structure des nilpotents :** Un opérateur nilpotent est une machine qui finit par "écraser" n'importe quel vecteur en zéro si on l'applique assez souvent. C'est le degré ultime de la "dégradation" d'un vecteur.
 - **Visualisation :** Une chaîne de Jordan, c'est un groupe de vecteurs qui se transforment successivement les uns dans les autres, comme un effet domino.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -33,7 +33,7 @@ next: "[[Jalon 32 (Preuve complète du théorème spectral pour les endomorphism
 > **Structure des nilpotents :**
 > Un opérateur est nilpotent ssi il est trigonalisable avec des 0 sur la diagonale.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 ### Démonstration : Nilpotence $\iff$ $\chi_f = (-1)^n X^n$
 1. **Sens $\implies$ :** Si $f^k=0$, les valeurs propres sont nulles. $\chi_f = (X-0)^n = X^n$.
 2. **Sens $\impliedby$ :** Si $\chi_f = X^n$, alors par Cayley-Hamilton, $f^n=0$.

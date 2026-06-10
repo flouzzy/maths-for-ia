@@ -18,7 +18,7 @@ next: "[[Jalon 44 (Fonctions de plusieurs variables).md]]"
 - **Le "Pourquoi on a inventé ça" :** Dans la nature, rien n'est isolé. La température d'une pièce, la pression d'un gaz, le cours de la bourse... tout est lié. Au lieu de résoudre 100 équations séparées, on les regroupe dans une seule boîte (un vecteur) et on utilise une seule matrice pour décrire toutes les interactions.
 - **Visualisation :** Imaginez un tourbillon d'eau. Chaque goutte suit une trajectoire complexe, mais le mouvement global est dicté par une structure simple (la matrice). L'exponentielle nous donne la "photo" du tourbillon après un certain temps.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Systèmes Différentiels Linéaires
 
@@ -45,7 +45,7 @@ où $X(t) = (x_1(t), \dots, x_n(t))^T$ est le vecteur des fonctions inconnues.
 > Pour le système complet ($B \neq 0$), on utilise la formule de Duhamel :
 > $$X(t) = e^{At} X_0 + \int_0^t e^{A(t-s)} B(s) ds$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Calcul de l'exponentielle par diagonalisation
 
@@ -61,7 +61,7 @@ Supposons que $A$ soit diagonalisable : $A = P D P^{-1}$ avec $D = \text{diag}(\
 4. **Conclusion :**
    $e^A = P \begin{pmatrix} e^{\lambda_1} & & 0 \\ & \ddots & \\ 0 & & e^{\lambda_n} \end{pmatrix} P^{-1}$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Résolution d'un système 2x2
 **Énoncé :** Résoudre le système $\begin{cases} x' = x + y \\ y' = x - y \end{cases}$ avec $x(0)=1, y(0)=0$.
@@ -79,14 +79,14 @@ Supposons que $A$ soit diagonalisable : $A = P D P^{-1}$ avec $D = \text{diag}(\
 2. **Série finie :** $e^{At} = I + tA + \frac{t^2}{2} A^2$.
 3. **Résultat :** $e^{At} = \begin{pmatrix} 1 & t & t^2/2 \\ 0 & 1 & t \\ 0 & 0 & 1 \end{pmatrix}$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Les réseaux de neurones récurrents (RNN) et les **Transformers** peuvent être modélisés comme des systèmes dynamiques. L'évolution de l'état caché $h$ est une version discrète de $h' = Ah$.
 - **Exemple Concret :**
     - **Problème du Gradient qui disparait (Vanishing Gradient) :** Si les valeurs propres de $A$ ont une partie réelle très négative, $e^{At}$ tend vers 0 très vite : le réseau "oublie" le passé. Si elles sont très positives, l'état explose. Pour avoir une mémoire longue, on veut des valeurs propres proches de 0 (ou sur le cercle unité en discret).
     - **Linear Recurrent Units (LRU) :** Des modèles récents comme S4 ou Mamba utilisent directement des systèmes différentiels linéaires et le calcul de l'exponentielle de matrice (via des techniques de discrétisation sophistiquées comme la transformée bilinéaire) pour traiter des séquences de texte très longues avec une efficacité bien supérieure aux RNN classiques.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 29 (Éléments propres).md]], [[Jalon 30 (Trigonalisation d'endomorphismes et décomposition de Dunford.).md]]
 - **Concepts Futurs dépendants :** [[Jalon 44 (Fonctions de plusieurs variables).md]], [[Jalon 128 (Flots de gradient).md]]

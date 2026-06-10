@@ -21,7 +21,7 @@ next: "[[Jalon 117 (Calcul des variations).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour pouvoir faire de la vraie géométrie (distances, angles, volumes) sur des objets qui ne sont pas plats. C'est le cadre de la théorie d'Einstein (la gravité courbe l'espace) et de l'IA géométrique (les données forment des variétés courbes).
 - **Visualisation :** La surface de la Terre. Le chemin le plus court entre Paris et Tokyo est un "grand cercle" (une géodésique). Vue sur une carte plate, cette ligne semble courbe, mais sur le globe, c'est la trajectoire la plus directe.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $M$ une variété différentielle.
 
@@ -47,7 +47,7 @@ Une géodésique est une courbe de "vitesse constante" qui ne tourne pas par rap
 > $$\frac{d^2 \gamma^k}{dt^2} + \sum_{i,j} \Gamma^k_{ij} \frac{d\gamma^i}{dt} \frac{d\gamma^j}{dt} = 0$$
 > où $\Gamma^k_{ij}$ sont les **symboles de Christoffel**, calculés à partir des dérivées de la métrique $g_{ij}$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Lien entre distance et géodésique (Intuition)
 
@@ -61,7 +61,7 @@ On veut minimiser l'énergie $E(\gamma) = \frac{1}{2} \int \|\gamma'(t)\|^2 dt$.
 5. **Équations d'Euler-Lagrange :** On obtient un système d'équations qui est exactement l'équation des géodésiques mentionnée plus haut.
 6. **Conclusion :** Les chemins de longueur minimale sont nécessairement des géodésiques. C'est l'équivalent du principe de moindre action en physique.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : La métrique de la sphère
 **Énoncé :** Sur la sphère $S^2$ de rayon $R$, en coordonnées $(\theta, \phi)$, la métrique est $ds^2 = R^2 d\theta^2 + R^2 \sin^2 \theta d\phi^2$. Calculer la longueur du cercle équatorial.
@@ -77,7 +77,7 @@ On veut minimiser l'énergie $E(\gamma) = \frac{1}{2} \int \|\gamma'(t)\|^2 dt$.
 **Correction Détaillée :**
 C'est le phénomène d'holonomie. La courbure de la variété empêche les espaces tangents d'être "parallèles" de manière globale. L'angle de décalage est proportionnel à l'intégrale de la courbure de Gauss sur la surface du triangle (Théorème de Gauss-Bonnet).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** L'**Information Geometry** voit l'ensemble des paramètres d'un modèle comme une variété riemannienne. La métrique utilisée est la **Matrice d'Information de Fisher**.
 - **Example Concret :**
@@ -85,7 +85,7 @@ C'est le phénomène d'holonomie. La courbure de la variété empêche les espac
     - **Diffusion sur Variétés :** Pour générer des données qui respectent des contraintes (ex: des protéines), on définit un processus de diffusion dont le bruit suit les géodésiques de la variété des contraintes.
     - **Hyperbolic Embeddings :** Pour représenter des hiérarchies (arbres, graphes sociaux), on utilise des variétés à courbure négative (Espace Hyperbolique). La géométrie riemannienne y permet de placer une infinité de points "loin" les uns des autres tout en restant dans un espace de petite dimension.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 113 (Tenseurs et Formes différentielles).md]], [[Jalon 109 (Topologie des sous-variétés de Rn).md]]
 - **Concepts Futurs dépendants :** [[Jalon 117 (Calcul des variations).md]], [[Jalon 143 (Théorie spectrale des graphes).md]]

@@ -23,7 +23,7 @@ next: "[[Jalon 114 (Orientation des variétés et intégration des formes diffé
 - **Le "Pourquoi on a inventé ça" :** Pour que les lois de la physique ne dépendent pas du choix des coordonnées. Que vous mesuriez en mètres ou en pouces, sur une carte plate ou sur un globe, les tenseurs gardent la même "âme". En IA, c'est le langage par défaut pour manipuler des données massives (images, vidéos).
 - **Visualisation :** Un bloc de données à plusieurs dimensions. Une forme différentielle est une petite surface orientée qui "capte" un flux.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $E$ un espace vectoriel (typiquement $T_p M$).
 
@@ -50,7 +50,7 @@ C'est l'unique opérateur $d : \Lambda^k(M) \to \Lambda^{k+1}(M)$ qui générali
 > 2. Antidérivation : $d(\omega \wedge \eta) = d\omega \wedge \eta + (-1)^k \omega \wedge d\eta$.
 > 3. **Nilpotence :** $d(d\omega) = 0$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : $d^2 = 0$ sur une fonction de $\mathbb{R}^n$
 
@@ -67,7 +67,7 @@ C'est l'unique opérateur $d : \Lambda^k(M) \to \Lambda^{k+1}(M)$ qui générali
 6. **Conclusion :** Dans la double somme, les termes $(i, j)$ et $(j, i)$ s'annulent deux à deux.
    D'où $d(df) = 0$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Calcul de produit extérieur
 **Énoncé :** Soient $\alpha = x dx + dy$ and $\beta = y dx + dz$ deux 1-formes sur $\mathbb{R}^3$. Calculer $\alpha \wedge \beta$.
@@ -84,7 +84,7 @@ C'est l'unique opérateur $d : \Lambda^k(M) \to \Lambda^{k+1}(M)$ qui générali
 - Si $\eta$ est une 2-forme (flux), $d\eta$ est une 3-forme dont le coefficient est la **Divergence**.
 Le langage des formes différentielles unifie tous les opérateurs de la physique classique.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En Deep Learning, le mot "Tensor" est utilisé partout (PyTorch/TensorFlow). Mais au-delà des tableaux de nombres, la structure tensorielle géométrique est utilisée pour l'**Analyse de Données Multimodales**.
 - **Example Concret :**
@@ -92,7 +92,7 @@ Le langage des formes différentielles unifie tous les opérateurs de la physiqu
     - **Graph Neural Networks (GNN) :** Les messages qui circulent entre les nœuds d'un graphe peuvent être vus comme des formes différentielles discrètes. Le calcul du gradient sur le graphe utilise l'analogue discret de l'opérateur $d$.
     - **Riemannian Manifolds in IA :** Pour apprendre sur des surfaces courbes, on définit une "Métrique Riemannienne" qui est un tenseur de type $(0, 2)$ symétrique. Ce tenseur définit la distance locale et guide la descente de gradient sur la variété.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 112 (Champs de vecteurs et Crochet de Lie).md]], [[Jalon 9 (Calcul matriciel).md]]
 - **Concepts Futurs dépendants :** [[Jalon 114 (Orientation des variétés et intégration des formes différentielles à support compact.).md]], [[Jalon 115 (Démonstration du théorème de Stokes généralisé).md]]

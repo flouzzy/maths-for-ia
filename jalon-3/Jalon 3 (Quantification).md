@@ -19,7 +19,7 @@ next: "[[Jalon 4 (Théorie des ensembles).md]]"
 - **Le "Pourquoi on a inventé ça" :** Les propositions simples ("Il pleut") ne suffisent pas pour décrire le monde réel ou les mathématiques. On a besoin de parler de collections d'objets. La quantification permet de passer d'une affirmation sur un individu à une affirmation sur tout un univers.
 - **Visualisation :** Imaginez un champ de fleurs. $\forall$ est comme un projecteur géant qui éclaire tout le champ d'un coup. $\exists$ est comme une lampe de poche qui cherche un point précis dans le noir jusqu'à ce qu'elle trouve une fleur rouge.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -41,7 +41,7 @@ Soit $E$ un ensemble et $P(x)$ un prédicat (une propriété dépendant de $x \i
 > $$(\exists y, \forall x, P(x,y)) \implies (\forall x, \exists y, P(x,y)) \text{ est VRAI}$$
 > $$(\forall x, \exists y, P(x,y)) \implies (\exists y, \forall x, P(x,y)) \text{ est FAUX en général}$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Négation d'une proposition complexe (Continuité)
@@ -71,7 +71,7 @@ Démontrons la forme de la proposition "f n'est pas continue en $x_0$".
 
 6. **Conclusion :** La négation rigoureuse est établie. Elle signifie qu'il existe un écart $\epsilon$ tel que, aussi petit que soit le voisinage $\delta$, on trouvera toujours un point $x$ proche de $x_0$ dont l'image "saute" au-delà de $\epsilon$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application Directe (Ordre des quantificateurs)
@@ -100,11 +100,11 @@ Démontrons la forme de la proposition "f n'est pas continue en $x_0$".
    5. Résultat : $\exists x \in A, x > M$.
 * *Conclusion :* Ne pas être majorant signifie qu'il existe au moins un élément de l'ensemble qui "dépasse" la valeur $M$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** La quantification est le fondement de la **logique des prédicats** (First-Order Logic), utilisée pour structurer les bases de connaissances et les graphes de savoir (Knowledge Graphs).
 - **Exemple Concret :** Dans les **moteurs de recherche sémantique** ou les **systèmes de recommandation**, on utilise des prédicats quantifiés pour exprimer des requêtes complexes : "Trouver tous les utilisateurs ($\forall$) pour lesquels il existe ($\exists$) un film de genre Science-Fiction qu'ils n'ont pas encore vu". L'ordre des quantificateurs ici détermine si on cherche des films spécifiques ou si on fait une généralisation statistique sur une population.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 1 (Logique formelle)]], [[Jalon 2 (Méthodes de raisonnement)]]
 - **Concepts Futurs dépendants :** [[Jalon 4 (Théorie des ensembles)]], [[Jalon 13 (Structure de R)]]

@@ -25,7 +25,7 @@ next: "[[Jalon 86 (Variables aléatoires vues comme des applications mesurables)
 - **Le "Pourquoi on a inventé ça" :** Avant 1933, les probabilités étaient un peu floues. Andreï Kolmogorov a réalisé qu'une probabilité n'est rien d'autre qu'une **mesure** (comme une longueur ou une aire) appliquée à un espace de possibilités. Cela a permis de donner aux statistiques la même rigueur que la géométrie ou l'algèbre.
 - **Visualisation :** Un cercle ($\Omega$) rempli de zones colorées. La probabilité d'une zone est son aire par rapport à l'aire totale du cercle.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. L'Espace de Probabilité
 
@@ -53,7 +53,7 @@ Une application $P : \mathcal{F} \to [0, 1]$ est une probabilité si :
 > - **Additivité :** $P(A \cup B) = P(A) + P(B) - P(A \cap B)$.
 > - **Continuité monotone :** Si $A_n \uparrow A$, alors $P(A_n) \to P(A)$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Formule de l'union $P(A \cup B) = P(A) + P(B) - P(A \cap B)$
 
@@ -70,7 +70,7 @@ Une application $P : \mathcal{F} \to [0, 1]$ est une probabilité si :
 5. **Conclusion :**
    $P(A \cup B) = P(A) + P(B) - P(A \cap B)$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Événements presque sûrs
 **Énoncé :** On dit qu'un événement est presque sûr si $P(A)=1$. Montrer que l'intersection dénombrable d'événements presque sûrs est encore presque sûre.
@@ -87,7 +87,7 @@ Une application $P : \mathcal{F} \to [0, 1]$ est une probabilité si :
 **Correction Détaillée :**
 C'est une borne utile quand les probabilités sont très proches de 1. On l'obtient par récurrence ou en passant par les complémentaires et en utilisant l'inégalité de Boole $\sum P(A_i^c) \ge P(\cup A_i^c)$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** L'IA moderne est **Probabiliste**. Un réseau de neurones ne prédit pas un résultat, il prédit une mesure de probabilité (via Softmax). Les axiomes de Kolmogorov garantissent que cette sortie est mathématiquement valide.
 - **Example Concret :**
@@ -95,7 +95,7 @@ C'est une borne utile quand les probabilités sont très proches de 1. On l'obti
     - **Gestion du Risque :** Dans les systèmes critiques (santé, voiture autonome), on calcule la probabilité de défaillance. Comme cette probabilité doit être minuscule, on utilise les propriétés de continuité de Kolmogorov pour estimer les risques extrêmes à partir de données limitées.
     - **Bayesian Neural Networks :** Au lieu d'avoir des poids fixes, on a une distribution de probabilité sur les poids. L'inférence consiste à manipuler ces mesures sur l'espace des paramètres.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 63 (Définition axiomatique d'une mesure).md]], [[Jalon 62 (Algèbres).md]]
 - **Concepts Futurs dépendants :** [[Jalon 86 (Variables aléatoires vues comme des applications mesurables).md]], [[Jalon 133 (Modèle PAC).md]]

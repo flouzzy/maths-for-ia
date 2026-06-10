@@ -18,7 +18,7 @@ next: "[[Jalon 59 (Topologie des espaces de fonctions).md]]"
 - **Le "Pourquoi on a inventé ça" :** Parfois, on veut prouver qu'un objet bizarre existe (ex: une fonction qui est continue partout mais qui n'a de pente nulle part). Au lieu de construire cet objet à la main, on prouve que l'ensemble des objets "normaux" est tout petit, et que la "grande majorité" des objets de l'espace sont bizarres. Baire est l'outil qui permet de dire : "ce que vous croyez impossible est en fait le cas général".
 - **Visualisation :** Un fromage de Gruyère infini. Même avec une infinité de trous, il reste toujours du fromage entre les trous.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Ensembles Nulle Part Denses
 
@@ -37,7 +37,7 @@ Soit $(X, d)$ un espace métrique.
 > **Théorème de Baire (Version 2 - Ouverts denses) :**
 > Dans un espace métrique complet, toute intersection dénombrable d'ouverts denses est dense.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Version des ouverts denses
 
@@ -52,7 +52,7 @@ Soit $(X, d)$ un espace métrique.
    Comme $\bar{B}_{n+1} \subset U_n$, alors $x \in U_n$ pour tout $n$.
    Donc $x \in \bigcap U_n$ et $x \in B_0$. L'intersection rencontre toutes les boules, elle est donc dense.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : $\mathbb{Q}$ n'est pas un $G_\delta$ de $\mathbb{R}$
 **Énoncé :** Un ensemble est un $G_\delta$ s'il est une intersection dénombrable d'ouverts. Montrer que $\mathbb{Q}$ ne peut pas être un $G_\delta$ de $\mathbb{R}$.
@@ -64,7 +64,7 @@ Si $\mathbb{Q} = \bigcap U_n$, alors $\mathbb{R} \setminus \mathbb{Q} = \bigcup 
 **Correction Détaillée :**
 C'est l'application la plus célèbre de Baire (via le théorème de Banach-Mazur). On définit $F_n = \{ f \in E \mid \exists x \in [0, 1], \forall h, |f(x+h)-f(x)| \le n|h| \}$. On montre que $F_n$ est fermé et d'intérieur vide. L'union des $F_n$ contient toutes les fonctions dérivables. Par Baire, le complémentaire (les fonctions nulle part dérivables) est dense !
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En IA, on s'intéresse à la **Généricité** des propriétés des réseaux de neurones. Une propriété est générique si elle est vraie sur un ouvert dense de l'espace des modèles.
 - **Example Concret :**
@@ -72,7 +72,7 @@ C'est l'application la plus célèbre de Baire (via le théorème de Banach-Mazu
     - **Capacité de mémorisation :** On montre que pour un réseau assez large, la propriété de pouvoir mémoriser parfaitement $N$ points de données est générique : si vous prenez un réseau au hasard, il aura cette capacité avec une probabilité de 1, car l'ensemble des "mauvais" réseaux est de "première catégorie" (maigre).
     - **Stabilité Structurelle :** On veut que les prédictions d'une IA soient stables par rapport à des petites perturbations topologiques de l'espace des entrées. Le théorème de Baire aide à comprendre la structure des zones de stabilité.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 56 (Espaces métriques complets).md]], [[Jalon 50 (Opérateurs topologiques).md]]
 - **Concepts Futurs dépendants :** [[Jalon 100 (Démonstration du théorème de Banach-Steinhaus).md]], [[Jalon 101 (Théorème de l'application ouverte et théorème du graphe fermé.).md]]

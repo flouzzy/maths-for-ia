@@ -21,7 +21,7 @@ next: "[[Jalon 63 (Définition axiomatique d'une mesure).md]]"
 - **Le "Pourquoi on a inventé ça" :** On a découvert (paradoxe de Banach-Tarski) qu'on ne peut pas mesurer n'importe quel sous-ensemble de $\mathbb{R}^n$ sans créer de contradictions logiques. On a donc dû restreindre l'usage de la "règle graduée" à une liste précise d'ensembles dits **mesurables**. La Tribu de Borel est cette liste magique qui contient tous les ensembles normaux (intervalles, cercles, etc.).
 - **Visualisation :** Un puzzle. Chaque pièce est un élément de la tribu. En assemblant des pièces ou en regardant les trous qu'elles laissent, vous obtenez toujours une forme qui appartient encore au catalogue du puzzle.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $X$ un ensemble non vide.
 
@@ -44,7 +44,7 @@ Soit $X$ un ensemble non vide.
 > **Définition 3 (Tribu de Borel) :**
 > Sur un espace topologique $X$, on appelle **tribu borélienne** (notée $\mathcal{B}(X)$) la tribu engendrée par tous les **ouverts** de $X$. Sur $\mathbb{R}$, elle est engendrée par tous les intervalles ouverts $]a, b[$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Stabilité par intersection dénombrable
 
@@ -59,7 +59,7 @@ Montrons que si $\mathcal{F}$ est une tribu, alors l'intersection d'une suite d'
    - Par l'axiome 2 à nouveau, le complémentaire de cette réunion est dans $\mathcal{F}$.
 4. **Conclusion :** L'intersection dénombrable est bien un élément de la tribu.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : La tribu la plus simple
 **Énoncé :** Soit $A \subset X$. Quelle est la tribu engendrée par $\{A\}$ ?
@@ -77,7 +77,7 @@ Montrons que si $\mathcal{F}$ est une tribu, alors l'intersection d'une suite d'
 2. Inversement, tout ouvert $]a, b[$ peut s'écrire comme une réunion dénombrable de fermés : $]a, b[ = \bigcup_{n=1}^\infty [a + 1/n, b - 1/n]$. Donc les ouverts appartiennent à la tribu engendrée par les fermés.
 **Conclusion :** Les deux tribus sont identiques.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** C'est le fondement axiomatique de la **Théorie des Probabilités** (Axiomes de Kolmogorov, Jalon 85). En IA, chaque fois qu'on écrit $P(X \in A)$, cela n'a de sens que si $A$ appartient à la tribu $\mathcal{F}$.
 - **Example Concret :**
@@ -85,7 +85,7 @@ Montrons que si $\mathcal{F}$ est une tribu, alors l'intersection d'une suite d'
     - **Filtrations (Séries Temporelles) :** Dans l'analyse des flux de données, on utilise une suite croissante de tribus $\mathcal{F}_t$. $\mathcal{F}_t$ représente toute l'information (le "catalogue" de ce qu'on peut mesurer) disponible jusqu'au temps $t$. Cela permet de formaliser mathématiquement qu'une décision prise au temps $t$ ne peut pas dépendre d'informations futures (non mesurables dans $\mathcal{F}_t$).
     - **Modèles de Diffusion :** La théorie mathématique derrière Stable Diffusion repose sur des espérances conditionnelles définies par rapport à des tribus qui capturent le niveau de bruit injecté dans l'image.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 4 (Théorie des ensembles).md]], [[Jalon 49 (Espaces topologiques généraux).md]]
 - **Concepts Futurs dépendants :** [[Jalon 63 (Définition axiomatique d'une mesure).md]], [[Jalon 85 (Axiomes de Kolmogorov).md]]

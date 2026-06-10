@@ -17,7 +17,7 @@ next: "[[Jalon 50 (Opérateurs topologiques).md]]"
 - **Le "Pourquoi on a inventé ça" :** Parfois, on veut parler de continuité ou de limite sur des ensembles bizarres où on ne peut pas mesurer de distance (comme des ensembles de fonctions ou des graphes géants). Les mathématiciens ont donc créé une règle du jeu universelle : au lieu de mesurer des mètres, on définit simplement quels sous-ensembles sont des "zones ouvertes" (les ouverts).
 - **Visualisation :** Un nuage de points. On ne regarde pas la distance exacte entre les points, on regarde seulement quels points sont "dans le même quartier".
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Définition d'une Topologie
 
@@ -45,7 +45,7 @@ Soit $X$ un ensemble non vide.
 2. **Topologie grossière :** Les seuls ouverts sont $\emptyset$ et $X$ ($\mathcal{T} = \{ \emptyset, X \}$).
 3. **Topologie induite par une distance :** C'est la topologie usuelle sur $\mathbb{R}^n$ (voir Jalon 34).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Stabilité des fermés
 
@@ -64,7 +64,7 @@ Montrons que l'intersection de fermés est un fermé, et que la réunion finie d
    C'est une intersection **finie** d'ouverts. Par l'axiome 3, c'est un ouvert.
    Donc $B$ est fermé.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Topologie Co-finie
 **Énoncé :** Soit $X$ un ensemble infini. On définit $\mathcal{T} = \{ \emptyset \} \cup \{ U \subset X \mid X \setminus U \text{ est fini} \}$. Montrer que $\mathcal{T}$ est une topologie.
@@ -78,14 +78,14 @@ Montrons que l'intersection de fermés est un fermé, et que la réunion finie d
 **Correction Détaillée :**
 On définit $\mathring{A}$ comme la réunion de tous les ouverts inclus dans $A$. Par l'axiome 2, cette réunion est un ouvert. Comme tout ouvert inclus dans $A$ fait partie de cette réunion, $\mathring{A}$ est bien le plus grand.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En IA, on travaille souvent sur des **Graphes** (réseaux sociaux, molécules). Un graphe est un ensemble discret. On peut y définir des topologies (voisinages de nœuds) pour parler de la "diffusion" de l'information sans avoir de coordonnées GPS pour les nœuds.
 - **Exemple Concret :**
     - **Manifold Learning (Apprentissage de variétés) :** On suppose que des données de haute dimension (ex: des photos de visages) se situent en fait sur une "forme" de dimension plus petite (une variété) pliée dans l'espace. Des algorithmes comme **t-SNE** ou **UMAP** essaient de préserver la **topologie locale** (les voisinages) des données tout en réduisant la dimension. Si deux visages sont topologiquement proches dans l'espace 1000D, ils doivent rester proches dans l'affichage 2D.
     - **Analyse Topologique des Données (TDA) :** On utilise des outils comme l'**Homologie Persistante** pour détecter des trous ou des structures dans un nuage de points (ex: détecter une boucle dans des données de séries temporelles), ce qui donne des signatures géométriques robustes au bruit.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 4 (Théorie des ensembles).md]], [[Jalon 35 (Caractérisation séquentielle des ouverts).md]]
 - **Concepts Futurs dépendants :** [[Jalon 50 (Opérateurs topologiques).md]], [[Jalon 52 (Applications continues entre espaces topologiques et définition fine des homéomorphismes.).md]]

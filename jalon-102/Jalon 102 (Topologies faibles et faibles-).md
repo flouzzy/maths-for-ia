@@ -21,7 +21,7 @@ next: "[[Jalon 103 (Espaces de Hilbert généraux).md]]"
 - **Le "Pourquoi on a inventé ça" :** En dimension infinie, les boules ne sont jamais compactes (Théorème de Riesz). On ne peut donc pas extraire de sous-suite convergente d'une suite bornée, ce qui bloque tous les calculs d'optimisation. La topologie faible "assouplit" l'espace pour rendre les boules à nouveau compactes. C'est le prix à payer pour garantir que nos algorithmes trouvent toujours un point d'arrêt.
 - **Visualisation :** Une suite de fonctions $f_n$ qui font des vagues de plus en plus serrées. Elles ne s'écrasent pas au sol, mais leur aire moyenne vue par n'importe quel "filtre" tend vers zéro.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Topologie Faible $\sigma(E, E^*)$
 
@@ -48,7 +48,7 @@ C'est le résultat central qui justifie l'existence de ces topologies.
 > La boule unité fermée de l'espace dual $E^*$ est **compacte** pour la topologie faible-*.
 > $$B_{E^*} = \{ L \in E^* \mid \|L\| \le 1 \} \text{ est } \sigma(E^*, E)\text{-compacte.}$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Convergence faible $\neq$ Convergence forte dans $L^2$
 
@@ -61,7 +61,7 @@ Considérons $e_n(x) = \sin(nx)$ sur $[0, \pi]$ dans l'espace $L^2$.
 4. **Conclusion :** Pour tout instrument de mesure $g$, on lit 0 à la limite. Donc $e_n \rightharpoonup 0$ (convergence faible).
    Le signal "vibre" si vite qu'il devient invisible pour tout intégrateur.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Unicité de la limite faible
 **Énoncé :** Montrer que si une suite converge faiblement, sa limite est unique.
@@ -74,7 +74,7 @@ Si c'est vrai pour TOUTE forme linéaire $L$, alors par le corollaire de Hahn-Ba
 **Correction Détaillée :**
 C'est une application élégante du **Théorème de Banach-Steinhaus** (Jalon 100). On voit chaque $x_n$ comme une forme linéaire sur $E^*$ définie par $J(x_n)(L) = L(x_n)$. Par hypothèse, pour chaque $L$, la suite $J(x_n)(L)$ est convergente donc bornée. Par Banach-Steinhaus, la famille d'opérateurs $\{J(x_n)\}$ est bornée en norme. Comme $\|J(x_n)\| = \|x_n\|$, la suite est bornée.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En optimisation de grande dimension, la compacité faible est ce qui garantit qu'une suite de modèles dont l'erreur diminue finit par "converger" vers un modèle limite, même si les paramètres eux-mêmes bougent beaucoup.
 - **Example Concret :**
@@ -82,7 +82,7 @@ C'est une application élégante du **Théorème de Banach-Steinhaus** (Jalon 10
     - **Generalization Bounds :** On utilise la topologie faible pour montrer que de petites perturbations des données entraînent de petites perturbations des prédictions "en moyenne", assurant la stabilité statistique du modèle.
     - **Neural Tangent Kernel (NTK) :** L'étude de la convergence des réseaux larges repose sur la convergence faible des opérateurs associés aux couches du réseau.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 101 (Application ouverte et Graphe fermé).md]], [[Jalon 98 (Théorème de Hahn-Banach (forme analytique)).md]], [[Jalon 80 (Transformée de Fourier dans L1).md]]
 - **Concepts Futurs dépendants :** [[Jalon 103 (Espaces de Hilbert généraux).md]], [[Jalon 106 (Théorème spectral pour les opérateurs compacts autoadjoints).md]]

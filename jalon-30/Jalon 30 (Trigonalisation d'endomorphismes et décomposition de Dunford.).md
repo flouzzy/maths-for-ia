@@ -21,7 +21,7 @@ next: "[[Jalon 31 (Introduction à la réduction de Jordan et structure des nilp
 - **Le "Pourquoi on a inventé ça" :** Les matrices non diagonalisables sont un cauchemar pour le calcul des puissances ou de l'exponentielle de matrice. La décomposition de Dunford permet de traiter ces deux types de comportements séparément, simplifiant ainsi drastiquement les calculs.
 - **Visualisation :** Une matrice triangulaire, c'est comme une transformation qui étire les axes, mais où chaque axe peut "tirer" sur les axes précédents.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -35,7 +35,7 @@ next: "[[Jalon 31 (Introduction à la réduction de Jordan et structure des nilp
 > **Propriété de Dunford :**
 > Les éléments $d$ et $n$ sont des polynômes en $f$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 ### Démonstration : Existence de la trigonalisation (par récurrence)
 1. **Initialisation :** $n=1$, trivial.
 2. **Hérédité :** Soit $f$ de dimension $n$ avec $\chi_f$ scindé. Soit $\lambda$ une valeur propre et $e_1$ un vecteur propre associé.

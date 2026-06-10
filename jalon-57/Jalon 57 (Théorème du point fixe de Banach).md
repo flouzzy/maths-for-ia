@@ -18,7 +18,7 @@ next: "[[Jalon 58 (Théorème de Baire).md]]"
 - **Le "Pourquoi on a inventé ça" :** Parfois, on ne sait pas résoudre une équation $f(x) = L$. Mais on peut la réécrire sous la forme $x = g(x)$. Si on applique $g$ encore et encore ($x, g(x), g(g(x)), \dots$), on espère se rapprocher de la solution. Le théorème de Banach donne les conditions pour que ce processus de "répétition" (itération) nous mène à coup sûr vers la solution unique.
 - **Visualisation :** Un entonnoir. Peu importe où vous lancez une bille, si chaque rebond la rapproche du centre (contraction), elle finira par s'arrêter exactement au fond.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Applications Contractantes
 
@@ -35,7 +35,7 @@ Soit $(X, d)$ un espace métrique.
 > De plus, pour tout $x_0 \in X$, la suite définie par $x_{n+1} = f(x_n)$ converge vers $\alpha$, avec une vitesse de convergence géométrique :
 > $$d(x_n, \alpha) \le \frac{k^n}{1-k} d(x_1, x_0)$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration du Théorème
 
@@ -53,7 +53,7 @@ Soit $(X, d)$ un espace métrique.
 4. **Point fixe :** Comme $f$ est contractante, elle est continue.
    $x_{n+1} = f(x_n) \implies \lim x_{n+1} = f(\lim x_n) \implies \alpha = f(\alpha)$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Résolution de $\cos(x) = x$
 **Énoncé :** Montrer que l'équation $\cos(x) = x$ admet une unique solution sur $[0, 1]$.
@@ -69,7 +69,7 @@ Soit $(X, d)$ un espace métrique.
 L'équation équivaut à $y(t) = y_0 + \int_{t_0}^t f(s, y(s)) ds$.
 On définit l'opérateur $T(y) = y_0 + \int f(s, y)$. Si $f$ est lipschitzienne, on montre que pour un intervalle de temps assez petit, $T$ est une contraction sur l'espace des fonctions continues (qui est complet, Jalon 56). C'est la base de l'existence des solutions d'équations différentielles.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le théorème de Banach est au cœur des algorithmes de **Reinforcement Learning** (Apprentissage par renforcement) et des modèles d'équilibre.
 - **Example Concret :**
@@ -77,7 +77,7 @@ On définit l'opérateur $T(y) = y_0 + \int f(s, y)$. Si $f$ est lipschitzienne,
     - **Deep Equilibrium Models (DEQ) :** Au lieu d'avoir un réseau avec $L$ couches différentes, on définit une seule couche $x = \sigma(Wx + b + u)$. On itère cette couche jusqu'à convergence. Le théorème de Banach garantit que si les poids $W$ sont assez petits (contraction), le réseau convergera toujours vers la même représentation, peu importe le nombre d'itérations.
     - **PageRank (Google) :** Le score d'une page Web est le point fixe d'une transformation matricielle (le vecteur propre associé à la valeur propre 1). C'est une application directe des méthodes itératives de point fixe.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 56 (Espaces métriques complets).md]], [[Jalon 19 (Dérivabilité).md]]
 - **Concepts Futurs dépendants :** [[Jalon 101 (Théorème de l'application ouverte et théorème du graphe fermé.).md]], [[Jalon-142.md]]

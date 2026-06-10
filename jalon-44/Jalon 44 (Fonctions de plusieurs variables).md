@@ -18,7 +18,7 @@ next: "[[Jalon 45 (Différentiabilité).md]]"
 - **Le "Pourquoi on a inventé ça" :** Le monde n'est pas unidimensionnel. Pour décrire le climat, on a besoin de la pression, de la température et de l'humidité en chaque point de l'espace. En IA, on ne manipule jamais un seul nombre, mais des milliers de caractéristiques (pixels d'une image, mots d'une phrase). On doit donc apprendre à faire de l'analyse dans des espaces à $n$ dimensions.
 - **Visualisation :** Une surface ondulée au-dessus d'un plan. Les "lignes de niveau" sur une carte de randonnée sont la visualisation parfaite de ces fonctions : elles relient les points de même altitude.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Topologie de $\mathbb{R}^n$ (Rappels)
 
@@ -46,7 +46,7 @@ Soit $\mathbb{R}^n$ muni de sa structure d'espace vectoriel normé (généraleme
 > **Théorème des Valeurs Intermédiaires (Version plusieurs variables) :**
 > Si $f$ est continue sur un ensemble **connexe** (d'un seul tenant), alors l'image de cet ensemble par $f$ est un intervalle de $\mathbb{R}$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Le Piège de la Continuité : Pourquoi les limites directionnelles ne suffisent pas
 
@@ -67,7 +67,7 @@ Il est tentant de croire que si une fonction est continue selon chaque axe sépa
 1. **Méthode :** Pour étudier la limite en $(0, 0)$, on pose $x = r \cos \theta$ and $y = r \sin \theta$.
 2. **Condition :** Si $|f(r \cos \theta, r \sin \theta) - L|$ peut être majoré par une fonction $h(r)$ telle que $h(r) \to 0$ (indépendamment de $\theta$), alors la limite est $L$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Étude de limite
 **Énoncé :** Étudier la continuité en $(0, 0)$ de $f(x, y) = \frac{x^2 y^2}{x^2 + y^2}$.
@@ -83,14 +83,14 @@ Il est tentant de croire que si une fonction est continue selon chaque axe sépa
 **Correction Détaillée :**
 C'est une application directe de la définition topologique de la continuité : "l'image réciproque d'un ouvert par une application continue est un ouvert". Ici, $f^{-1}(]-\infty, c[)$. Comme $]-\infty, c[$ est un ouvert de $\mathbb{R}$, son image réciproque est un ouvert de $\mathbb{R}^n$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le Deep Learning consiste à optimiser une **fonction de perte** (Loss Function) qui dépend de millions de paramètres. C'est l'exemple ultime d'une fonction de plusieurs variables.
 - **Exemple Concret :**
     - **Surface de perte (Loss Surface) :** On visualise souvent la perte comme une surface en 3D (2 variables de poids). On y cherche les "trous" (minima). La topologie de cette surface (présence de points selles, de plateaux) détermine si le modèle va apprendre vite ou rester bloqué.
     - **Normalisation des données (Input Normalization) :** Si les variables d'entrée ont des échelles très différentes (ex: une entre 0 et 1, l'autre entre 0 et 1000), la fonction de plusieurs variables devient "étirée" dans une direction. Cela rend l'optimisation par descente de gradient très difficile. C'est pourquoi on ramène toutes les variables à la même échelle.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 34 (Topologie élémentaire des espaces vectoriels normés).md]], [[Jalon 18 (Continuité des fonctions d'une variable réelle).md]]
 - **Concepts Futurs dépendants :** [[Jalon 45 (Différentiabilité).md]], [[Jalon 121 (Ensembles convexes).md]]

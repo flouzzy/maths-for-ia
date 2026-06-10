@@ -20,7 +20,7 @@ next: "[[Jalon 128 (Flots de gradient).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour pouvoir coder. Un ordinateur ne peut pas chercher une solution dans un espace de dimension infinie. Ce théorème prouve que l'on peut ramener un problème de dimension infinie à un simple calcul sur $N$ nombres (les coefficients associés à chaque donnée). C'est ce qui rend les méthodes à noyaux (comme les SVM) utilisables en pratique.
 - **Visualisation :** On a un immense espace (un Hilbert). La solution optimale est un vecteur. Ce vecteur est "poussé" par les données vers un petit sous-espace plat. On n'a plus qu'à chercher la solution dans ce petit espace.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $\mathcal{X}$ un ensemble et $H$ un RKHS de fonctions de $\mathcal{X}$ vers $\mathbb{R}$, associé au noyau $K$. On dispose de $n$ données $(x_i, y_i) \in \mathcal{X} \times \mathbb{R}$.
 
@@ -39,7 +39,7 @@ où :
 > $$f^*(\cdot) = \sum_{i=1}^n \alpha_i K(x_i, \cdot)$$
 > où $\alpha_1, \dots, \alpha_n \in \mathbb{R}$ sont des coefficients scalaires.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration du Théorème
 
@@ -59,7 +59,7 @@ où :
    L'égalité n'est atteinte que si $\|f_\perp\|=0$ (car $\Omega$ est strictement croissante).
 6. **Conclusion :** Le minimum est nécessairement atteint pour une fonction $f_{||}$ appartenant à $S$. Toute solution $f^*$ est donc une combinaison linéaire des $K(x_i, \cdot)$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Kernel Ridge Regression
 **Énoncé :** Transformer le problème de minimisation $\sum (f(x_i) - y_i)^2 + \lambda \|f\|_H^2$ en un problème matriciel sur $\alpha$.
@@ -74,7 +74,7 @@ où :
 **Correction Détaillée :**
 Le théorème dit que $f$ est une somme sur tous les $n$ points. Mais pour les SVM, les conditions KKT (Jalon 124) imposent que de nombreux $\alpha_i$ soient nuls. La solution "représentée" n'utilise en fait que les points les plus importants (les vecteurs supports).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Ce théorème est le lien final entre l'**Analyse Fonctionnelle** et l'**Algorithme Informatique**. Il garantit que l'on peut apprendre dans des espaces de caractéristiques de dimension infinie avec un budget de calcul fini.
 - **Example Concret :**
@@ -82,7 +82,7 @@ Le théorème dit que $f$ est une somme sur tous les $n$ points. Mais pour les S
     - **Processus Gaussiens :** La prédiction d'un GP en un nouveau point $x$ est une combinaison linéaire des observations passées, où les poids sont donnés par le noyau. C'est l'application directe de la forme du représentant.
     - **Large-scale Learning :** Comme le problème dépend de $N$, si $N$ est immense (millions), l'inversion de $\mathbf{K}$ devient impossible. On utilise alors des approximations (Nyström method) qui consistent à choisir une "base" plus petite que les $N$ données tout en respectant l'esprit du théorème.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 126 (Noyaux définis positifs et RKHS).md]], [[Jalon 103 (Espaces de Hilbert généraux).md]]
 - **Concepts Futurs dépendants :** [[Jalon 137 (Preuve des bornes de generalisation universelles de Vapnik via la dimension VC).md]], [[Jalon 140 (Classifieur de Bayes optimal).md]]

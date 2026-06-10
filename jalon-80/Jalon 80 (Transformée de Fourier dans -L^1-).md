@@ -21,7 +21,7 @@ next: "[[Jalon 81 (Transformée de Fourier dans L2).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour résoudre des équations où les choses se passent sur toute la droite réelle (de $-\infty$ à $+\infty$). La transformée de Fourier a une propriété magique : elle transforme la dérivation (opération difficile) en une simple multiplication (opération facile).
 - **Visualisation :** On passe d'un graphique "Amplitude en fonction du temps" à un graphique "Amplitude en fonction de la fréquence". Une cloche très large dans le temps devient une cloche très étroite dans les fréquences, et vice versa (Principe d'incertitude).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $L^1(\mathbb{R})$ l'espace des fonctions intégrables par rapport à la mesure de Lebesgue.
 
@@ -48,7 +48,7 @@ Soit $L^1(\mathbb{R})$ l'espace des fonctions intégrables par rapport à la mes
 > **Théorème :** $\widehat{f * g} = \hat{f} \cdot \hat{g}$.
 > La transformée d'une convolution est le produit des transformées.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Transformée de la dérivée
 
@@ -64,7 +64,7 @@ Soit $L^1(\mathbb{R})$ l'espace des fonctions intégrables par rapport à la mes
    - Le second terme devient : $+i\xi \int f(t) e^{-i\xi t} dt = i\xi \hat{f}(\xi)$.
 6. **Conclusion :** $\widehat{f'}(\xi) = i\xi \hat{f}(\xi)$. Dériver revient à multiplier par la fréquence.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Transformée d'une porte (Cénneau)
 **Énoncé :** Calculer la transformée de Fourier de $f = \mathbf{1}_{[-a, a]}$.
@@ -83,7 +83,7 @@ $g'(x) = -x g(x)$.
 En passant en Fourier : $i\xi \hat{g}(\xi) = - \widehat{xg}(\xi) = - (i \frac{d}{d\xi} \hat{g}(\xi))$.
 D'où $\hat{g}'(\xi) = -\xi \hat{g}(\xi)$, ce qui implique $\hat{g}(\xi) = C e^{-\xi^2/2}$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** La transformée de Fourier est l'outil fondamental de la **Théorie des Probabilités** (sous le nom de **Fonction Caractéristique**, Jalon 93). Elle permet de manipuler les sommes de variables aléatoires via des produits de fonctions.
 - **Example Concret :**
@@ -91,7 +91,7 @@ D'où $\hat{g}'(\xi) = -\xi \hat{g}(\xi)$, ce qui implique $\hat{g}(\xi) = C e^{
     - **Algorithmes de compression (Audio/Image) :** La transformée en cosinus discrète (DCT), une variante de Fourier, est le cœur du format **JPEG** et du **MP3**. On ne garde que les fréquences basses car l'œil et l'oreille y sont plus sensibles.
     - **Signal Denoising :** Pour nettoyer un signal bruité, on le passe en Fourier, on coupe les hautes fréquences (le bruit), et on revient dans le temps. C'est le principe des filtres utilisés pour nettoyer les données avant l'entrée dans un modèle d'IA.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 39 (Intégrales généralisées sur un intervalle quelconque et critères de convergence.).md]], [[Jalon 73 (Espaces Lp et passage au quotient).md]]
 - **Concepts Futurs dépendants :** [[Jalon 81 (Transformée de Fourier dans L2).md]], [[Jalon 93 (Fonctions caractéristiques).md]]

@@ -21,7 +21,7 @@ next: "[[Jalon 98 (Théorème de Hahn-Banach).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour traiter les fonctions comme des objets géométriques. Au lieu d'étudier une fonction $f(x)$ point par point, on regarde $f$ comme un point unique dans un espace géant. Cela permet d'utiliser des outils de géométrie pour résoudre des équations complexes.
 - **Visualisation :** Une sphère unité qui est déformée en une ellipse par une application. La norme de l'opérateur est le demi-grand axe de cette ellipse.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soient $E$ et $F$ deux espaces vectoriels normés sur $\mathbb{K} = \mathbb{R}$ ou $\mathbb{C}$.
 
@@ -49,7 +49,7 @@ Soit $T : E \to F$ une application linéaire.
 > **Définition 3 (Dual) :**
 > On appelle **Espace Dual** de $E$, noté $E^*$, l'espace des formes linéaires continues de $E$ vers $\mathbb{K}$. C'est l'ensemble des "scanners" qui transforment un vecteur en un simple nombre.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : $\mathcal{L}(E, F)$ est un Banach si $F$ l'est
 
@@ -62,7 +62,7 @@ Soit $T : E \to F$ une application linéaire.
    $\|T_n(x)\| \le M \|x\| \implies \|T(x)\| \le M \|x\|$. Donc $T$ est continu.
 5. **Convergence en norme :** On montre que $\|T_n - T\| \to 0$ en utilisant la définition de la borne supérieure et le caractère de Cauchy de la suite.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Norme de la dérivation
 **Énoncé :** Soit $E = \mathcal{C}^1([0, 1], \mathbb{R})$ muni de la norme $\|f\|_\infty$. On considère l'opérateur $D : f \mapsto f'$. Est-il continu ?
@@ -77,7 +77,7 @@ Soit $T : E \to F$ une application linéaire.
 **Correction Détaillée :**
 C'est le théorème de représentation de Riesz en dimension finie. Toute forme linéaire $L(x)$ peut s'écrire $L(x) = \langle a, x \rangle$. On montre que $\|L\| = \|a\|_2$ en utilisant l'inégalité de Cauchy-Schwarz.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Un réseau de neurones est une suite d'opérateurs (matrices de poids) et de non-linéarités. L'analyse des espaces de Banach permet d'étudier la **Stabilité Lipshitzienne** du réseau global.
 - **Example Concret :**
@@ -85,7 +85,7 @@ C'est le théorème de représentation de Riesz en dimension finie. Toute forme 
     - **Optimisation de dimension infinie :** Dans les modèles comme les "Neural Operators" (utilisés pour prédire la météo ou la mécanique des fluides), le réseau n'apprend pas à transformer des vecteurs, mais à transformer des fonctions (éléments d'un espace de Banach).
     - **Gradients de fonctions :** Le calcul du gradient d'une perte par rapport à une fonction (ex: dans l'apprentissage de noyaux) nécessite de travailler dans le dual $E^*$.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 56 (Espaces métriques complets).md]], [[Jalon 8 (Applications linéaires).md]]
 - **Concepts Futurs dépendants :** [[Jalon 98 (Théorème de Hahn-Banach).md]], [[Jalon 105 (Opérateurs adjoints).md]]

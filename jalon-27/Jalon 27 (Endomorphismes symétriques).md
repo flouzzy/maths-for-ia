@@ -21,7 +21,7 @@ next: "[[Jalon 28 (Polynômes d'endomorphismes).md]]"
 - **Le "Pourquoi on a inventé ça" :** Les opérateurs symétriques ont des propriétés magiques : ils sont toujours diagonalisables avec des bases orthogonales. Cela simplifie radicalement les calculs en physique et en IA.
 - **Visualisation :** Une rotation 2D est une matrice orthogonale. Un étirement sur les axes est une matrice symétrique.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -37,7 +37,7 @@ Soit $E$ un espace euclidien.
 > **Isométries et Matrices orthogonales :**
 > $f$ est une isométrie $\iff \text{Mat}(f)$ est orthogonale.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 ### Démonstration : $f$ symétrique $\implies$ sous-espaces propres orthogonaux
 Soient $\lambda, \mu$ deux valeurs propres distinctes de $f$ symétrique, et $x, y$ des vecteurs propres associés.
 

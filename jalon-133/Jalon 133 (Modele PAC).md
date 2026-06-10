@@ -21,7 +21,7 @@ next: "[[Jalon 134 (Complexite des classes de fonctions).md]]"
 
 - **Visualisation :** Imagine un grand sac rempli de millions de billes rouges et bleues. Tu tires une poignée de 100 billes. En fonction des billes de ta main, tu essaies de deviner la proportion de couleurs dans le sac tout entier. Tu peux faire une erreur (Approximately Correct), et il se peut même que par malchance incroyable tu aies tiré uniquement des billes bleues alors que le sac est rouge (c'est le risque d'échec : Probably). Le modèle PAC met en équation la taille de la poignée dont tu as besoin pour limiter ce double risque.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -57,7 +57,7 @@ On dispose d'un **échantillon d'apprentissage** (training sample) de taille $m$
 > Soit $\mathcal{H}$ un espace d'hypothèses fini ($|\mathcal{H}| < \infty$). Sous l'hypothèse de réalisabilité (il existe au moins un $h^* \in \mathcal{H}$ tel que $L_{\mathcal{D}, c}(h^*) = 0$), la classe $\mathcal{H}$ est PAC-apprenable par n'importe quel algorithme de Minimisation du Risque Empirique (ERM). La complexité échantillonnale est majorée par :
 > $$ m_{\mathcal{H}}(\epsilon, \delta) \leq \left\lceil \frac{\ln(|\mathcal{H}|) + \ln(1/\delta)}{\epsilon} \right\rceil $$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : PAC Bound pour $|\mathcal{H}| < \infty$ dans le cas réalisable
@@ -119,7 +119,7 @@ On dispose d'un **échantillon d'apprentissage** (training sample) de taille $m$
    $$ m \geq \frac{\ln(|\mathcal{H}|) + \ln(1/\delta)}{\epsilon} $$
    Le théorème est rigoureusement démontré. $\blacksquare$
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Application Directe - PAC pour l'apprentissage de conjonctions booléennes
 **Énoncé :**
@@ -181,7 +181,7 @@ Concluez sur la dépendance en $\epsilon$.
 * *Conclusion :*
 Dans le cas agnostique (non-réalisable), la taille de l'échantillon $m$ requise évolue en $\frac{1}{\epsilon^2}$, contrairement au cas réalisable où elle évoluait en $\frac{1}{\epsilon}$. Pour atteindre une haute précision (un petit $\epsilon$), le cas non-réalisable est exponentiellement plus gourmand en données empiriques, reflétant la grande difficulté d'optimiser en présence de "bruit" fondamental incompressible de la distribution.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :**
 Le cadre PAC est le socle fondateur de toute la "Statistical Learning Theory" (SLT). En Deep Learning, quand on observe un grand écart entre la précision sur l'ensemble d'entraînement ("Training Accuracy") et la précision sur l'ensemble de test ("Test Accuracy"), on est face à une perte de généralisation (Overfitting). Les bornes PAC quantifient théoriquement ce gap. Elles montrent que si un réseau de neurones possède un espace d'hypothèses $\mathcal{H}$ massivement grand (des millions de poids, ce qui implique une très grande "capacité"), le terme $\ln(|\mathcal{H}|)$ (qui deviendra la dimension VC ou la complexité de Rademacher) explose. Pour maintenir l'erreur $\epsilon$ basse, il faut augmenter $m$ (le nombre d'images, de textes) proportionnellement pour contrer cette capacité.
@@ -191,7 +191,7 @@ Si une équipe d'ingénieurs en IA chez OpenAI entraîne un modèle type GPT ou 
 1. Augmenter drastiquement $m$ (loi d'échelle ou "scaling law", récolter plus de données massives).
 2. Restreindre mathématiquement la taille effective de $|\mathcal{H}|$ par des techniques de régularisation (Weight Decay, Dropout, ou architecture plus parcimonieuse, forçant un espace d'hypothèses effectif plus petit).
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 90 (Les modes de convergence)]], [[Jalon 91 (Inegalites de concentration)]]
 - **Concepts Futurs dépendants :** [[Jalon 134 (Complexite des classes de fonctions)]], [[Jalon 136 (Theorie de Vapnik-Chervonenkis)]]

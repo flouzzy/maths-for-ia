@@ -22,7 +22,7 @@ next: "[[Jalon 93 (Fonctions caractéristiques).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour justifier les statistiques. On ne peut pas observer une "probabilité" directement dans la nature. On observe des fréquences. La LFGN est le pont qui nous permet de dire : "puisque j'ai observé 33% de Pile sur un grand nombre d'essais, alors la probabilité réelle est de 1/3".
 - **Visualisation :** Un graphique montrant la moyenne glissante d'un lancer de dé. Au début, la courbe zigzague violemment entre 1 et 6. Plus le temps passe, plus elle se stabilise en une ligne droite horizontale parfaite à la hauteur 3,5.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $(X_n)_{n \in \mathbb{N}^*}$ une suite de variables aléatoires indépendantes et identiquement distribuées (I.I.D.) définies sur $(\Omega, \mathcal{F}, P)$. On note $\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$.
 
@@ -36,7 +36,7 @@ Soit $(X_n)_{n \in \mathbb{N}^*}$ une suite de variables aléatoires indépendan
 
 La loi faible (Jalon 91) garantit seulement une convergence **en probabilité**. La loi forte est beaucoup plus puissante car elle garantit que pour presque chaque univers possible ($\omega$), la trajectoire complète de la moyenne converge.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration sous l'hypothèse d'un moment d'ordre 4 fini
 
@@ -53,7 +53,7 @@ Supposons $\mathbb{E}[X^4] < \infty$ et $\mu = 0$.
    D'après le premier lemme de Borel-Cantelli (Jalon 89), l'événement $\{ |\bar{X}_n| \ge \epsilon \text{ infiniment souvent} \}$ a une probabilité nulle.
 4. **Conclusion :** Pour tout $\epsilon$, $\bar{X}_n$ reste dans $[\mu-\epsilon, \mu+\epsilon]$ pour tout $n$ assez grand, presque sûrement. Donc $\bar{X}_n \xrightarrow{p.s.} \mu$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Monte-Carlo pour le calcul de $\pi$
 **Énoncé :** On tire $n$ points $(x, y)$ uniformément dans le carré $[0, 1]^2$. On note $X_i = 1$ si $x^2 + y^2 \le 1$ and 0 sinon. Que vaut la limite de $4 \bar{X}_n$ ?
@@ -70,7 +70,7 @@ C'est la méthode de Monte-Carlo pour estimer $\pi$.
 **Correction Détaillée :**
 Non. L'intégrale $\int |x| \frac{1}{1+x^2} dx$ diverge (en $\ln|x|$). La loi de Cauchy n'a pas d'espérance finie. En simulant, on remarque que la moyenne $\bar{X}_n$ continue de zigzaguer sauvagement sans jamais se stabiliser, quelle que soit la taille de $n$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** La LFGN est ce qui permet de passer de la théorie (la perte attendue sur tous les futurs possibles) à la pratique (la perte moyenne sur un jeu de données fixe).
 - **Example Concret :**
@@ -78,7 +78,7 @@ Non. L'intégrale $\int |x| \frac{1}{1+x^2} dx$ diverge (en $\ln|x|$). La loi de
     - **Large Batch Training :** Plus le "batch" utilisé pour calculer le gradient est grand, plus le gradient estimé est proche du vrai gradient théorique (par la LFGN). C'est pourquoi les batchs plus grands sont plus stables mais nécessitent plus de mémoire.
     - **Évaluation des LLM (Benchmarks) :** Quand on teste une IA sur 10 000 questions, on utilise la LFGN pour dire que son score de 85% reflète sa "vraie" compétence sur ce type de sujet.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 91 (Inégalités de concentration).md]], [[Jalon 89 (Lemmes de Borel-Cantelli).md]]
 - **Concepts Futurs dépendants :** [[Jalon 94 (Démonstration du théorème central limite).md]], [[Jalon 133 (Modèle PAC).md]]

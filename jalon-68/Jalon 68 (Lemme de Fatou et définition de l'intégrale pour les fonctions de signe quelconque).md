@@ -20,7 +20,7 @@ next: "[[Jalon 69 (Démonstration complète du théorème de convergence dominé
 - **Le "Pourquoi on a inventé ça" :** Jusqu'ici, on ne savait intégrer que des fonctions positives. Mais en physique ou en finance, les flux peuvent être négatifs. Il fallait donc étendre la définition de Lebesgue tout en gardant une cohérence mathématique absolue.
 - **Visualisation :** On découpe une fonction qui ondule au-dessus et en dessous de l'axe des abscisses en deux fonctions strictement positives. L'intégrale totale est l'aire au-dessus moins l'aire en dessous.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Le Lemme de Fatou
 
@@ -39,7 +39,7 @@ On a alors $f = f^+ - f^-$ and $|f| = f^+ + f^-$.
 > On dit que $f$ est **intégrable** (ou appartient à $\mathcal{L}^1(\mu)$) si les intégrales de $f^+$ et $f^-$ sont finies. L'intégrale de $f$ est alors définie par :
 > $$\int_X f d\mu = \int_X f^+ d\mu - \int_X f^- d\mu$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration du Lemme de Fatou
 
@@ -54,7 +54,7 @@ On a alors $f = f^+ - f^-$ and $|f| = f^+ + f^-$.
    $$\lim_{k \to \infty} \int g_k \le \lim_{k \to \infty} \left( \inf_{n \ge k} \int f_n \right) = \liminf \int f_n$$
 6. **Conclusion :** $\int \liminf f_n \le \liminf \int f_n$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Inégalité stricte dans Fatou
 **Énoncé :** Soit $f_n = n \mathbf{1}_{]0, 1/n[}$ sur $\mathbb{R}$ avec la mesure de Lebesgue.
@@ -72,7 +72,7 @@ On a alors $f = f^+ - f^-$ and $|f| = f^+ + f^-$.
 1. **Sens ($\implies$) :** Si $f$ est intégrable, alors $\int f^+$ et $\int f^-$ sont finies. Comme $|f| = f^+ + f^-$, par linéarité $\int |f| = \int f^+ + \int f^-$, qui est une somme de deux nombres finis.
 2. **Sens ($\impliedby$) :** Comme $0 \le f^+ \le |f|$ and $0 \le f^- \le |f|$, par croissance, si $\int |f| < \infty$, alors les deux intégrales sont finies.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En IA, on manipule souvent des **récompenses** (Rewards) en Reinforcement Learning qui peuvent être positives ou négatives. La définition de l'espérance du gain total nécessite ce cadre.
 - **Example Concret :**
@@ -80,7 +80,7 @@ On a alors $f = f^+ - f^-$ and $|f| = f^+ + f^-$.
     - **Fonctions de score (Log-Likelihood) :** La log-vraisemblance $\ln(p(x))$ est presque toujours négative (car $p(x) \le 1$). Pour calculer l'information de Fisher ou l'entropie, on utilise la décomposition en parties positives et négatives.
     - **Stabilité des Algorithmes :** Le lemme de Fatou est utilisé pour prouver que si une suite de modèles a une erreur moyenne qui converge, alors le modèle limite ne peut pas être "pire" que la limite de l'erreur. C'est une garantie de sécurité pour la convergence des algorithmes stochastiques.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 67 (Démonstration du théorème de convergence monotone).md]], [[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.).md]]
 - **Concepts Futurs dépendants :** [[Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md]], [[Jalon 73 (Définition des espaces Lp).md]]

@@ -21,7 +21,7 @@ next: "[[Jalon 10 (Changements de base).md]]"
 - **Le "Pourquoi on a inventé ça" :** Écrire des listes de transformations pour des milliers de vecteurs prendrait des pages. Les matrices permettent de compresser toute une application linéaire en un seul bloc rectangulaire et d'effectuer des calculs massifs très rapidement.
 - **Visualisation :** Une matrice $2 \times 2$ peut être vue comme une déformation de l'espace : elle prend le carré unité et l'étire en un parallélogramme. Si la matrice n'est pas inversible, elle écrase le carré en une simple ligne ou un point (perte d'une dimension).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -40,7 +40,7 @@ Soient $n, p \in \mathbb{N}^*$.
 > **Caractérisation de l'inversibilité :**
 > $A$ est inversible $\iff f$ est un isomorphisme $\iff \det(A) \neq 0 \iff \text{rg}(A) = n$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Matrice d'une composée et produit matriciel
@@ -72,7 +72,7 @@ Montrons que $\text{Mat}_{\mathcal{B}_E, \mathcal{B}_G}(g \circ f) = \text{Mat}_
    C'est précisément la définition du produit matriciel $AB$.
    L'égalité $\text{Mat}(g \circ f) = \text{Mat}(g) \times \text{Mat}(f)$ est démontrée.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application Directe (Inversion de matrice 2x2)
@@ -100,11 +100,11 @@ Montrons que $\text{Mat}_{\mathcal{B}_E, \mathcal{B}_G}(g \circ f) = \text{Mat}_
    - $X = \begin{pmatrix} z \\ -2z \\ z \end{pmatrix} = z \begin{pmatrix} 1 \\ -2 \\ 1 \end{pmatrix}$
 **Conclusion :** $\ker M = \text{Vect}((1, -2, 1))$. Sa dimension est 1, ce qui concorde avec le théorème du rang ($3 = 2 + 1$).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** En IA, les **poids d'un réseau de neurones** sont stockés sous forme de matrices. L'inférence (le passage d'une donnée dans le réseau) n'est rien d'autre qu'une suite de multiplications matricielles.
 - **Exemple Concret :** L'entraînement des modèles sur **GPU** (unités de traitement graphique) est extrêmement rapide car ces puces sont conçues pour effectuer des millions de **produits matriciels** en parallèle. Chaque couche $h_{l+1} = \sigma(W_l h_l + b_l)$ utilise une matrice de poids $W_l$. Si $W_l$ est de grande taille, on utilise des techniques de **factorisation de matrice** (comme LoRA - Low-Rank Adaptation) pour n'apprendre qu'une petite partie de la matrice, ce qui permet de fine-tuner des modèles géants (LLM) sur du matériel grand public.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon 8 (Applications linéaires)]]
 - **Concepts Futurs dépendants :** [[Jalon 10 (Changements de base)]], [[Jalon 29 (Éléments propres)]], [[Jalon 43 (Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.)]]

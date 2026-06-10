@@ -19,7 +19,7 @@ next: "[[Jalon 14 (Suites réelles et complexes).md]]"
 - **Le "Pourquoi on a inventé ça" :** Les Grecs ont découvert avec horreur que la diagonale d'un carré de côté 1 ne pouvait pas s'écrire comme une fraction. Il fallait inventer un nouveau monde de nombres pour que la géométrie et le calcul s'entendent. Sans $\mathbb{R}$, on ne pourrait pas définir la notion de "limite" ou de "courbe lisse".
 - **Visualisation :** Imaginez zoomer indéfiniment sur la droite numérique. Avec les fractions, vous finiriez par tomber dans le vide. Avec les réels, peu importe la puissance de votre microscope, vous verrez toujours une ligne pleine.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -38,7 +38,7 @@ next: "[[Jalon 14 (Suites réelles et complexes).md]]"
 > Entre deux nombres réels distincts, il existe toujours un nombre rationnel.
 > $$\forall x, y \in \mathbb{R}, x < y \Rightarrow \exists q \in \mathbb{Q}, x < q < y$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : La partie entière et le caractère archimédien
@@ -72,7 +72,7 @@ Théorème : $\forall x \in \mathbb{R}, \exists ! n \in \mathbb{Z}, n \le x < n+
    - Comme $n = \max E$, alors $n+1 \notin E$, ce qui impose $n+1 > x$.
    - On a bien $n \le x < n+1$. L'unicité est immédiate par l'écart de 1 entre deux entiers distincts.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application Directe (Calcul de borne sup)
@@ -98,11 +98,11 @@ Théorème : $\forall x \in \mathbb{R}, \exists ! n \in \mathbb{Z}, n \le x < n+
    - Cela montre que n'importe quel nombre strictement plus petit que $\sup A + \sup B$ n'est pas un majorant de $A+B$.
 **Conclusion :** Par caractérisation, $\sup(A+B) = \sup A + \sup B$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** Les algorithmes d'optimisation (comme la descente de gradient) reposent sur l'existence de bornes inférieures (le minimum de la fonction de perte). Sans la structure complète de $\mathbb{R}$, on ne pourrait jamais garantir qu'une suite de poids "converge" vers un nombre réel précis.
 - **Exemple Concret :** En **Deep Learning**, lors de la **Normalisation (Batch Norm / Layer Norm)**, on manipule des statistiques (moyenne, variance) qui sont des nombres réels. La stabilité numérique des calculs en virgule flottante (Float32/Float16) est une approximation informatique de la structure de $\mathbb{R}$. Comprendre que $\mathbb{R}$ n'a pas de "trous" permet de justifier l'utilisation du calcul différentiel pour ajuster les neurones de manière continue.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 3 (Quantification)]], [[Jalon 6 (Relations d'équivalence)]]
 - **Concepts Futurs dépendants :** [[Jalon 14 (Suites réelles et complexes)]], [[Jalon 18 (Continuité des fonctions d'une variable réelle)]], [[Jalon 34 (Topologie élémentaire des espaces vectoriels normés)]]

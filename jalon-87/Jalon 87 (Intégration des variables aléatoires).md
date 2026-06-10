@@ -21,7 +21,7 @@ next: "[[Jalon 88 (Indépendance d'événements).md]]"
 - **Le "Pourquoi on a inventé ça" :** Les probabilités nous disent *ce qui peut arriver*. L'espérance nous dit *ce qui arrive en moyenne*. C'est l'outil qui permet de passer du hasard pur à la gestion de risque et à la prise de décision rationnelle.
 - **Visualisation :** Le centre de gravité d'un objet. Si vous posez la distribution de probabilité sur une règle, l'espérance est le point précis où la règle tient en équilibre.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $(\Omega, \mathcal{F}, P)$ un espace de probabilité.
 
@@ -50,7 +50,7 @@ Ce théorème est fondamental car il permet de calculer l'espérance sans conna�
 > - **Variance :** $Var(X) = \mathbb{E}[(X - \mathbb{E}[X])^2] = \mathbb{E}[X^2] - (\mathbb{E}[X])^2$.
 > - Écart-type : $\sigma(X) = \sqrt{Var(X)}$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Linéarité de l'espérance
 
@@ -64,7 +64,7 @@ Montrons que $\mathbb{E}[aX + bY] = a\mathbb{E}[X] + b\mathbb{E}[Y]$.
    $$= a \int_{\Omega} X dP + b \int_{\Omega} Y dP = a\mathbb{E}[X] + b\mathbb{E}[Y]$$
 4. **Conclusion :** L'espérance respecte toujours les combinaisons linéaires, même si les variables ne sont pas indépendantes.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Espérance d'une loi exponentielle
 **Énoncé :** Soit $X$ de densité $f(x) = \lambda e^{-\lambda x}$ sur $[0, +\infty[$. Calculer $\mathbb{E}[X]$.
@@ -83,7 +83,7 @@ Montrons que $\mathbb{E}[aX + bY] = a\mathbb{E}[X] + b\mathbb{E}[Y]$.
 3. On divise par $a$ pour obtenir le résultat.
 **Utilité :** Cela permet de borner la probabilité d'un événement rare en ne connaissant que la moyenne.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Tout l'apprentissage automatique (Machine Learning) repose sur la minimisation d'une espérance : le **Risque Attendu** $R(\theta) = \mathbb{E}_{(x,y) \sim P} [ \mathcal{L}(f_\theta(x), y) ]$.
 - **Example Concret :**
@@ -91,7 +91,7 @@ Montrons que $\mathbb{E}[aX + bY] = a\mathbb{E}[X] + b\mathbb{E}[Y]$.
     - **Monte-Carlo Integration :** Comme on ne connaît pas la loi $P$, on remplace l'espérance théorique par une moyenne sur $N$ données : $\frac{1}{N} \sum \mathcal{L}_i$. La loi des grands nombres (Jalon 92) garantit que cette approximation converge vers la vraie espérance.
     - **Batch Normalization :** Cette technique d'IA consiste à recentrer les activations des neurones en soustrayant leur espérance et en divisant par leur écart-type ($\sigma$). Cela stabilise l'apprentissage en normalisant les moments de premier et second ordre.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 86 (Variables aléatoires vues comme des applications mesurables).md]], [[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.).md]]
 - **Concepts Futurs dépendants :** [[Jalon 90 (Les modes de convergence).md]], [[Jalon 92 (Démonstration rigoureuse de la loi forte des grands nombres.).md]]

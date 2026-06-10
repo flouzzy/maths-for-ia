@@ -19,7 +19,7 @@ next: "[[Jalon 33 (Formes quadratiques).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour simplifier radicalement les transformations linéaires "symétriques" qui préservent certaines structures géométriques.
 - **Visualisation :** Un ellipsoïde (un ballon de rugby) peut toujours être orienté pour que ses axes principaux soient alignés avec les axes de coordonnées ($x, y, z$).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Théorème Fondamental
@@ -29,7 +29,7 @@ next: "[[Jalon 33 (Formes quadratiques).md]]"
 ### B. Lemme crucial
 > $F$ stable par $f \implies F^\perp$ stable par $f$ (si $f$ est symétrique).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 ### Démonstration : Récurrence sur la dimension
 1. **Base :** $n=1$, trivial.
 2. **Hérédité :** Soit $f$ symétrique sur $E$.

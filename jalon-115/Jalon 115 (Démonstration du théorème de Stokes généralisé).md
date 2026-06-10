@@ -22,7 +22,7 @@ next: "[[Jalon 116 (Variétés riemanniennes).md]]"
 - **Le "Pourquoi on a inventé ça" :** C'est la version "grand luxe" du théorème fondamental de l'analyse (celui qui dit que $\int_a^b f' = f(b) - f(a)$). Il permet de transformer des intégrales de volume très compliquées en simples intégrales de surface, ou vice-versa. C'est le pilier de l'électromagnétisme (équations de Maxwell) et de la mécanique des fluides.
 - **Visualisation :** Un filet de pêche. La quantité de poissons attrapés par le filet dépend uniquement de ce qui se passe sur le contour (le cercle de métal du filet) et de la force du courant à cet endroit.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $M$ une variété différentielle de dimension $n$ orientée, compacte, à bord $\partial M$.
 
@@ -39,7 +39,7 @@ Soit $M$ une variété différentielle de dimension $n$ orientée, compacte, à 
 2. **Dimension 2 :** Théorème de Green (plan) ou de Kelvin-Stokes (surface dans $\mathbb{R}^3$).
 3. **Dimension 3 :** Théorème de la divergence (Ostrogradski).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Cas du demi-espace $\mathbb{H}^n$
 
@@ -61,7 +61,7 @@ Toute la preuve repose sur ce cas local. Soit $\mathbb{H}^n = \{ (x_1, \dots, x_
    Avec l'orientation sortante (normale), on vérifie que les signes correspondent.
 7. **Conclusion :** Par linéarité et partition de l'unité, on étend ce résultat local à n'importe quelle variété globale.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Théorème de Green
 **Énoncé :** Soit $D$ un disque dans le plan. Calculer $\oint_{\partial D} (x dy - y dx)$.
@@ -75,7 +75,7 @@ Toute la preuve repose sur ce cas local. Soit $\mathbb{H}^n = \{ (x_1, \dots, x_
 **Correction Détaillée :**
 Le flux est $\int_S \mathbf{B} \cdot \mathbf{n} dA$. Si $\mathbf{B} = \text{rot } \mathbf{A}$, alors le flux est $\int_S d\alpha$ où $\alpha$ est la 1-forme associée à $\mathbf{A}$. Par Stokes, c'est $\int_{\partial S} \alpha$. Comme la surface est fermée, son bord $\partial S$ est vide. L'intégrale est donc nulle.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le théorème de Stokes est l'outil qui permet de passer des **Lois de Conservation locales** (équations différentielles) aux **Bilan Globaux** (intégrales).
 - **Example Concret :**
@@ -83,7 +83,7 @@ Le flux est $\int_S \mathbf{B} \cdot \mathbf{n} dA$. Si $\mathbf{B} = \text{rot 
     - **Optimization on Manifolds :** Lorsqu'on calcule le gradient d'une fonction sur une variété complexe, Stokes aide à simplifier les intégrales de perte, notamment pour les méthodes de "Boundary Integrals" en vision par ordinateur.
     - **Graph Signal Processing :** On définit un opérateur de "Divergence" sur les graphes qui vérifie une version discrète du théorème de Stokes. Cela permet de modéliser des flux d'information cohérents entre les nœuds d'un réseau social.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 114 (Orientation et Intégration sur variétés).md]], [[Jalon 113 (Tenseurs et Formes différentielles).md]]
 - **Concepts Futurs dépendants :** [[Jalon 116 (Variétés riemanniennes).md]], [[Jalon 117 (Calcul des variations).md]]

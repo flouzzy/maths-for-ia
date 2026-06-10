@@ -19,7 +19,7 @@ next: "[[Jalon 24 (Livrable IA).md]]"
 - **Le "Pourquoi on a inventé ça" :** Parfois, on connaît une règle simple pour passer d'un terme au suivant, mais on ne sait pas calculer la valeur finale. Les séries entières permettent de définir de nouvelles fonctions très complexes (comme l'exponentielle ou le sinus) à partir de règles de multiplication très simples. C'est l'outil qui fait le pont entre l'algèbre (calculer des puissances) et l'analyse (étudier des courbes).
 - **Visualisation :** Imaginez un disque de lumière sur un plan. À l'intérieur du disque, l'image est nette et détaillée. Dès que vous sortez du disque, l'image devient blanche et saturée (elle diverge). Le rayon de ce disque est le rayon de convergence.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -41,7 +41,7 @@ Soit $(a_n)_{n \in \mathbb{N}}$ une suite de complexes.
 > **Propriétés de la somme :**
 > À l'intérieur du disque de convergence, la fonction $S(z) = \sum_{n=0}^\infty a_n z^n$ est de classe $C^\infty$. On peut la dériver et l'intégrer terme à terme, et le rayon de convergence reste le même.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : La dérivation terme à terme conserve le rayon de convergence
@@ -76,7 +76,7 @@ Soit $\sum a_n z^n$ de rayon $R$. Montrons que la série dérivée $\sum n a_n z
 5. **Conclusion :**
    Par double inégalité $R' \le R$ et $R \le R'$, on en déduit $R = R'$. La dérivation ne change pas le domaine de convergence.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Calcul de rayon de convergence
@@ -107,7 +107,7 @@ Soit $\sum a_n z^n$ de rayon $R$. Montrons que la série dérivée $\sum n a_n z
 6. Par décalage d'indice $k = n-1$ : $f(x) = \sum_{k=0}^\infty (k+1) x^k$.
 **Conclusion :** $\frac{1}{(1-x)^2} = \sum_{n=0}^\infty (n+1) x^n$ avec un rayon $R = 1$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** Les séries entières sont la base de la définition des **Fonctions Génératrices** en combinatoire et en probabilités. Elles permettent de manipuler des distributions de données discrètes comme des objets analytiques continus.
 - **Exemple Concret :** Dans la modélisation des **Graphes Aléatoires** et des **Réseaux de Neurones à Largeur Infinie (Infinite Width limits)**, on utilise les séries entières pour calculer les moments d'une distribution de poids. De plus, les **Noyaux (Kernels)** utilisés en machine learning (comme le noyau RBF/Gaussien) peuvent être vus comme des séries entières de produits scalaires. Comprendre le rayon de convergence de ces séries permet de savoir pour quelles plages de données le modèle reste stable et mathématiquement prévisible.

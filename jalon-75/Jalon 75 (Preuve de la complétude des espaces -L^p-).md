@@ -21,7 +21,7 @@ next: "[[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L2).md]]"
 - **Le "Pourquoi on a inventé ça" :** C'était le point faible de l'intégrale de Riemann : on pouvait avoir une suite de fonctions "gentilles" dont la limite était un monstre qu'on ne savait pas mesurer. Le théorème de Riesz-Fischer prouve que l'intégrale de Lebesgue a corrigé ce défaut. C'est ce qui permet d'utiliser toutes les techniques de la géométrie (distances, projections) sur des espaces de fonctions.
 - **Visualisation :** Une suite de courbes qui se superposent de mieux en mieux. La limite est une courbe qui appartient à la même "famille" de fonctions (même énergie, même aire).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 
@@ -37,7 +37,7 @@ Contrairement à la dimension finie, la convergence dans $L^p$ n'implique pas la
 > **Théorème (Sous-suite convergente) :**
 > Si une suite $(f_n)$ converge vers $f$ dans $L^p$, alors il existe une **sous-suite** $(f_{\phi(n)})$ qui converge vers $f$ presque partout.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration de la complétude (Cas $1 \le p < \infty$)
 
@@ -53,7 +53,7 @@ Contrairement à la dimension finie, la convergence dans $L^p$ n'implique pas la
    $\int |S_k - f|^p d\mu \to 0$ quand $k \to \infty$.
 4. **Conclusion :** La série converge vers $f$ dans $L^p$. L'espace est donc complet.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Convergence $L^p$ n'implique pas CVS
 **Énoncé :** Construire une suite de fonctions sur $[0, 1]$ qui converge vers 0 dans $L^1$ mais qui ne converge en aucun point.
@@ -68,7 +68,7 @@ $\mathbf{1}_{[0, 1]}, \mathbf{1}_{[0, 1/2]}, \mathbf{1}_{[1/2, 1]}, \mathbf{1}_{
 **Correction Détaillée :**
 C'est le seul espace $L^p$ qui est un **espace de Hilbert**. La norme $\| \cdot \|_2$ provient d'un produit scalaire $\langle f, g \rangle = \int f \bar{g}$. La complétude de $L^2$ est la base de toute l'analyse de Fourier moderne et de la mécanique quantique.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En IA, nous optimisons des modèles dans des espaces de fonctions. La complétude nous donne un cadre rigoureux pour dire que nos algorithmes convergent vers quelque chose de réel.
 - **Example Concret :**
@@ -76,7 +76,7 @@ C'est le seul espace $L^p$ qui est un **espace de Hilbert**. La norme $\| \cdot 
     - **Stabilité de l'Apprentissage :** Si nous entraînons une suite de réseaux de neurones $h_n$ et que l'écart entre les prédictions (au sens MSE, donc $L^2$) diminue, nous sommes certains qu'il existe un réseau "idéal" $h$ vers lequel nous tendons.
     - **Traitement du Signal :** La complétude de $L^2$ garantit que n'importe quel signal d'énergie finie peut être décomposé parfaitement en une série de Fourier. Sans cela, la compression audio ou vidéo aurait des erreurs de reconstruction imprévisibles.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 73 (Espaces Lp et passage au quotient).md]], [[Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md]]
 - **Concepts Futurs dépendants :** [[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L2).md]], [[Jalon 81 (Transformée de Fourier dans L2).md]]

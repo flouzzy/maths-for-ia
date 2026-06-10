@@ -22,7 +22,7 @@ next: "[[Jalon 7 (Espaces vectoriels abstraits).md]]"
 - **Le "Pourquoi on a inventé ça" :** On a besoin de simplifier le monde. Au lieu d'étudier chaque objet individuellement, on les regroupe par propriétés communes (quotients) ou on définit des règles de calcul universelles (structures) pour ne pas avoir à réinventer la roue pour chaque nouveau type de nombre ou d'objet.
 - **Visualisation :** L'**ensemble quotient**, c'est comme regarder une ville depuis très haut : les détails des maisons disparaissent et on ne voit plus que des "quartiers". Chaque quartier est un point unique dans un nouvel ensemble simplifié.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -50,7 +50,7 @@ Soit $E$ un ensemble non vide. Une relation binaire $\mathcal{R}$ sur $E$ est un
 > **Théorème Fondamental des Relations d'Équivalence :**
 > Les classes d'équivalence d'une relation $\mathcal{R}$ sur $E$ forment une **partition** de $E$. Inversement, toute partition de $E$ définit une relation d'équivalence unique.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Structure de Groupe de $(\mathbb{Z}/n\mathbb{Z}, +)$
@@ -80,7 +80,7 @@ Démontrons que l'ensemble quotient $\mathbb{Z}/n\mathbb{Z}$ muni de l'addition 
 
 5. **Conclusion :** $(\mathbb{Z}/n\mathbb{Z}, +)$ est un groupe abélien de cardinal $n$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application Directe (Relation d'ordre)
@@ -103,11 +103,11 @@ Démontrons que l'ensemble quotient $\mathbb{Z}/n\mathbb{Z}$ muni de l'addition 
 4. **Inverse :** Par définition d'un corps, tout élément non nul $x$ possède un inverse $x^{-1}$ tel que $x \times x^{-1} = 1$. Comme $1 \neq 0$, alors $x^{-1} \neq 0$ (sinon $x \times 0 = 1$ impossible), donc $x^{-1} \in \mathbb{K}^*$.
 **Conclusion :** $(\mathbb{K}^*, \times)$ est un groupe (abélien puisque le corps est commutatif).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** Les relations d'équivalence et les quotients sont à la base de la **Topologie des Données** (TDA - Topological Data Analysis).
 - **Exemple Concret :** Dans les algorithmes de **Clustering** (comme DBSCAN ou Single-Linkage), on définit une relation d'équivalence "être dans le même groupe" basée sur une distance seuil. L'ensemble des clusters n'est rien d'autre que l'**ensemble quotient** de l'ensemble des points de données par la relation "être connectés". De même, dans les **Graphes de Connaissances**, on quotient l'espace des entités pour fusionner les synonymes (Entity Resolution).
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 4 (Théorie des ensembles)]], [[Jalon 5 (Applications)]]
 - **Concepts Futurs dépendants :** [[Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon 62 (Algèbres)]], [[Jalon 119 (Connexions avec les groupes de Lie)]]

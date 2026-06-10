@@ -22,7 +22,7 @@ next: "[[Jalon 95 (Vecteurs gaussiens).md]]"
 - **Le "Pourquoi on a inventé ça" :** C'est le théorème le plus important des statistiques. Il permet de transformer n'importe quel problème inconnu en un problème de loi Normale, que l'on sait parfaitement résoudre. C'est grâce à lui qu'on peut calculer des marges d'erreur dans les sondages ou les tests médicaux.
 - **Visualisation :** La planche de Galton. Des billes tombent à travers des clous et s'éparpillent au hasard. À la fin, elles forment toujours une cloche parfaite au fond de la boîte.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $(X_n)_{n \in \mathbb{N}^*}$ une suite de variables aléatoires I.I.D. de moyenne $\mu$ et de variance $\sigma^2 > 0$ finie.
 On note $S_n = \sum_{i=1}^n X_i$ and $\bar{X}_n = S_n / n$.
@@ -39,7 +39,7 @@ On note $S_n = \sum_{i=1}^n X_i$ and $\bar{X}_n = S_n / n$.
 
 Le théorème de Berry-Esseen précise que l'erreur d'approximation est de l'ordre de $1/\sqrt{n}$. Plus on a de données, plus la cloche est parfaite.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration via les fonctions caractéristiques
 
@@ -61,7 +61,7 @@ Supposons sans perte de généralité que $\mu = 0$ and $\sigma = 1$. On veut mo
    $\lim_{n \to \infty} \phi_{Z_n}(t) = e^{-t^2/2}$.
 6. **Conclusion :** La limite des fonctions caractéristiques est celle de la loi $\mathcal{N}(0, 1)$. Par le théorème de continuité de Lévy, $Z_n \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Approximation d'une loi Binomiale
 **Énoncé :** On lance $100$ fois une pièce équilibrée. Quelle est la probabilité d'obtenir entre $45$ et $55$ "Pile" ?
@@ -79,7 +79,7 @@ Supposons sans perte de généralité que $\mu = 0$ and $\sigma = 1$. On veut mo
 **Correction Détaillée :**
 On remarque qu'une loi $\mathcal{P}(n)$ est la somme de $n$ variables indépendantes de loi $\mathcal{P}(1)$. Le résultat est une application directe du TCL.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le TCL est la raison pour laquelle la **Loi Normale** est le modèle par défaut pour le bruit en IA.
 - **Example Concret :**
@@ -87,7 +87,7 @@ On remarque qu'une loi $\mathcal{P}(n)$ est la somme de $n$ variables indépenda
     - **Diffusion Models :** Ces modèles (DALL-E, Stable Diffusion) ajoutent progressivement du bruit à une image jusqu'à ce qu'elle devienne une purée de pixels. Le TCL garantit que ce bruit accumulé converge vers une distribution Gaussienne parfaite, ce qui simplifie énormément les calculs de reconstruction (Reverse Diffusion).
     - **Estimation d'incertitude :** Dans les systèmes de recommandation, on estime la confiance d'une prédiction en supposant que l'erreur résiduelle est Gaussienne (justifié par le TCL si l'erreur vient de multiples facteurs).
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 93 (Fonctions caractéristiques).md]], [[Jalon 92 (Loi forte des grands nombres (LFGN)).md]]
 - **Concepts Futurs dépendants :** [[Jalon 95 (Vecteurs gaussiens).md]], [[Jalon 138 (Inégalités de concentration avancées).md]]

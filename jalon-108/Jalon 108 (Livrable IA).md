@@ -21,7 +21,7 @@ next: "[[Jalon 109 (Topologie des sous-variétés de Rn).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour s'affranchir des limites des réseaux classiques qui "oublient" le début d'une phrase quand elle est trop longue. L'attention permet de relier instantanément deux points très éloignés, peu importe la distance, car elle traite la séquence comme un tout global.
 - **Visualisation :** Une nappe de lumière. Pour chaque point $x$, on allume une lampe qui éclaire plus ou moins fort les autres points $y$. La sortie en $x$ est la somme de toute la lumière collectée.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Rappel du mécanisme discret (Dot-Product Attention)
 
@@ -43,7 +43,7 @@ Imaginons que les données soient des fonctions $f \in L^2(\Omega, \mathbb{R}^d)
 > **Théorème :** Si le noyau $\kappa(x, y)$ est de carré intégrable sur $\Omega \times \Omega$ (Noyau de Hilbert-Schmidt), alors l'opérateur d'attention est un **opérateur compact** sur $L^2(\Omega)$.
 > En pratique, grâce à la normalisation Softmax, l'opérateur est souvent **borné** (continu) de norme 1, ce qui garantit la stabilité numérique du Transformer.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Pourquoi l'attention est un opérateur borné ?
 
@@ -59,7 +59,7 @@ Imaginons que les données soient des fonctions $f \in L^2(\Omega, \mathbb{R}^d)
    $\|Af\|_2^2 \le \int |f(y)|^2 dy = \|f\|_2^2$.
 7. **Conclusion :** L'opérateur est une **Contraction** (Jalon 57). Cela explique pourquoi les Transformers sont si stables face aux variations d'échelle des entrées.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Attention Gaussienne
 **Énoncé :** Soit $\kappa(x, y) = \frac{1}{\sqrt{2\pi}\sigma} e^{-(x-y)^2 / 2\sigma^2}$. À quel type d'opération classique cela correspond-il ?
@@ -71,7 +71,7 @@ C'est une **Convolution** par une Gaussienne (un flou). L'attention, dans sa for
 **Correction Détaillée :**
 D'après le théorème spectral (Jalon 106), il existe une base de fonctions propres. Les valeurs propres indiquent les "modes" de la séquence sur lesquels le réseau se concentre. Si une valeur propre est proche de 1, le réseau capture une dépendance globale forte. Si elles tendent vers 0, le réseau ignore les détails fins.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Ce jalon montre que les Transformers ne sont pas juste des empilements de matrices, mais des approximations discrètes d'**opérateurs fonctionnels**.
 - **Example Concret :**
@@ -79,7 +79,7 @@ D'après le théorème spectral (Jalon 106), il existe une base de fonctions pro
     - **Linear Attention :** Pour traiter des séquences très longues, on utilise des noyaux $\kappa(x, y) = \phi(x)^T \phi(y)$ (Kernel Trick, Jalon 126). Cela transforme l'intégrale complexe en un produit de deux intégrales simples, réduisant la complexité de $O(n^2)$ à $O(n)$.
     - **Neural Operators :** Des modèles comme le **Fourier Neural Operator (FNO)** utilisent ces théories pour apprendre à résoudre des équations de physique (ex: prédire le climat) directement dans l'espace des fonctions, sans se soucier de la résolution de la grille de calcul.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 106 (Théorème spectral pour les opérateurs compacts autoadjoints).md]], [[Jalon 71 (Théorèmes de Fubini-Tonelli).md]]
 - **Concepts Futurs dépendants :** [[Jalon 126 (Noyaux définis positifs).md]], [[Jalon 144 (Le phénomène de double descente).md]]

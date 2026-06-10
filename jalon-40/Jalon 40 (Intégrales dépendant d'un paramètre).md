@@ -18,7 +18,7 @@ next: "[[Jalon 41 (Équations différentielles linéaires du premier ordre et m�
 - **Le "Pourquoi on a inventé ça" :** Dans la vraie vie, beaucoup de fonctions ne sont pas écrites avec des formules simples comme $x^2$. Elles sont définies comme le résultat d'un processus cumulatif (une intégrale). Pour pouvoir optimiser ces processus, il faut savoir si on peut les dériver. On appelle cela "passer la dérivée sous le signe somme".
 - **Visualisation :** Imaginez une famille de courbes qui se déforment quand vous bougez un curseur $x$. L'aire sous ces courbes se déforme elle aussi. On cherche à calculer la vitesse à laquelle cette aire change par rapport au curseur.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $f : A \times I \to \mathbb{R}$ une fonction où $I$ est un intervalle d'intégration et $A$ un intervalle de paramètres. On pose $F(x) = \int_I f(x, t) dt$.
 
@@ -43,7 +43,7 @@ Soit $f : A \times I \to \mathbb{R}$ une fonction où $I$ est un intervalle d'in
 > Alors $F$ est de classe $\mathcal{C}^1$ sur $A$ et :
 > $$F'(x) = \int_I \frac{\partial f}{\partial x}(x, t) dt$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration du Théorème de Dérivation (Esquisse par les accroissements finis)
 
@@ -57,7 +57,7 @@ Soit $f : A \times I \to \mathbb{R}$ une fonction où $I$ est un intervalle d'in
    Par hypothèse de domination, $\left| \frac{\partial f}{\partial x} \right| \le h(t)$. On peut donc appliquer le **Théorème de Convergence Dominée** (qui sera vu en détail au Jalon 69, mais dont on utilise ici la version pour fonctions continues). Quand $k \to 0$, $c_{x,k,t} \to x$.
 5. **Conclusion :** Par continuité de la dérivée partielle, la limite passe sous l'intégrale.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Calcul d'intégrale à paramètre
 **Énoncé :** Soit $F(x) = \int_0^1 \frac{t^x - 1}{\ln(t)} dt$ pour $x > -1$. Calculer $F'(x)$ puis $F(x)$.
@@ -74,7 +74,7 @@ Soit $f : A \times I \to \mathbb{R}$ une fonction où $I$ est un intervalle d'in
 **Correction Détaillée :**
 C'est un classique des concours. On montre par dérivation sous le signe $\int$ que certaines formes d'intégrales à paramètres permettent de résoudre des intégrales que l'on ne sait pas calculer par des primitives usuelles.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** C'est la base mathématique de l'**Optimisation Stochastique**. En IA, on veut minimiser la perte attendue :
   $$J(\theta) = \mathbb{E}_{x \sim p}[L(x, \theta)] = \int L(x, \theta) p(x) dx$$
@@ -83,7 +83,7 @@ C'est un classique des concours. On montre par dérivation sous le signe $\int$ 
     - **Interversion Gradient-Intégrale :** Le fait de calculer le gradient sur un "mini-batch" et d'espérer que sa moyenne converge vers le vrai gradient du système repose sur la règle de Leibniz. On dérive *sous* l'intégrale (la somme) pour obtenir le gradient moyen.
     - **Modèles Génératifs (VAE) :** Dans les Variational Auto-Encoders, on maximise une borne (ELBO) qui est une intégrale à paramètre (les paramètres du réseau). La "Reparameterization Trick" est une astuce géniale qui change la variable d'intégration pour faciliter cette dérivation sous le signe $\int$.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 39 (Intégrales généralisées sur un intervalle quelconque et critères de convergence.).md]], [[Jalon 20 (Dérivées successives).md]]
 - **Concepts Futurs dépendants :** [[Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md]], [[Jalon 80 (Transformée de Fourier dans L1).md]]

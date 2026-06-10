@@ -19,7 +19,7 @@ next: "[[Jalon-16.md]]"
 - **Le "Pourquoi on a inventé ça" :** Parfois, une suite est trop chaotique pour converger (pensez à $(-1)^n$). Mais elle contient souvent des morceaux plus sages qui, eux, se stabilisent. C'est essentiel pour trouver des solutions optimales dans des problèmes complexes : on ne trouve pas la solution parfaite d'un coup, mais on s'en rapproche par morceaux.
 - **Visualisation :** Imaginez un élastique que vous tendez entre vos mains. Si vous lâchez des grains de sable sur l'élastique, peu importe comment vous les jetez, comme ils sont coincés sur l'élastique, ils finiront par être proches les uns des autres.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -36,7 +36,7 @@ Soit $(u_n)_{n \in \mathbb{N}}$ une suite d'éléments de $E$ ($\mathbb{R}$ ou $
 > **Lien avec la convergence :**
 > Une suite bornée converge si et seulement si elle admet une unique valeur d'adhérence.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Bolzano-Weierstrass par dichotomie (méthode de séparation)
@@ -68,7 +68,7 @@ Soit $(u_n)$ une suite réelle bornée. Montrons qu'il existe une sous-suite con
    - Par le théorème des gendarmes, comme $\lim a_k = l$ et $\lim b_k = l$, alors $\lim_{k \to \infty} u_{\phi(k)} = l$.
    - Nous avons extrait une sous-suite convergente. Le théorème est démontré.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application Directe (Valeurs d'adhérence)
@@ -97,11 +97,11 @@ Soit $(u_n)$ une suite réelle bornée. Montrons qu'il existe une sous-suite con
 5. Donc $|\cos(n) - l| < \epsilon$. Comme on peut trouver de tels $n$ arbitrairement grands (par la structure de groupe dense), $l$ est une valeur d'adhérence.
 **Conclusion :** Chaque point de $[-1, 1]$ est limite d'une sous-suite de $\cos(n)$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** Le concept de compacité (Bolzano-Weierstrass) est crucial pour garantir l'**existence d'un optimum**. Si on cherche à minimiser une erreur dans un espace de paramètres borné et fermé, Bolzano-Weierstrass nous assure qu'il y a au moins un point d'accumulation où l'erreur est minimale.
 - **Exemple Concret :** Dans l'**Initialisation des Poids** des réseaux de neurones, on veut éviter que les signaux ne s'évaporent (Vanishing Gradient) ou n'explosent (Exploding Gradient). On s'assure que la suite des activations à travers les couches reste dans un ensemble compact. Sans cette garantie, l'algorithme d'apprentissage pourrait "diverger" vers l'infini sans jamais rencontrer de valeur d'adhérence (solution stable), rendant l'entraînement impossible.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 14 (Suites réelles et complexes)]]
 - **Concepts Futurs dépendants :** [[Jalon 35 (Caractérisation séquentielle des ouverts)]], [[Jalon 54 (Compacité générale)]], [[Jalon 129 (Optimisation stochastique)]]

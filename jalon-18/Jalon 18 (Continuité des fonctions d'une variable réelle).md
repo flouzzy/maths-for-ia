@@ -19,7 +19,7 @@ next: "[[Jalon 19 (Dérivabilité).md]]"
 - **Le "Pourquoi on a inventé ça" :** Dans la nature, peu de choses changent instantanément. La température, la position d'une voiture, ou la croissance d'une plante sont des phénomènes continus. Les mathématiciens ont eu besoin de définir cette notion pour garantir que si on cherche une solution (un point où une fonction vaut zéro), elle existe vraiment.
 - **Visualisation :** Imaginez un élastique tendu. Si vous tirez sur un point, les points voisins suivent le mouvement. C'est la continuité : des causes proches produisent des effets proches.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -41,7 +41,7 @@ Soit $I$ un intervalle de $\mathbb{R}$ et $f : I \to \mathbb{R}$.
 > **Théorème des Bornes Atteintes (Weierstrass) :**
 > L'image d'un segment $[a, b]$ par une fonction continue $f$ est un segment $[m, M]$. La fonction est bornée et atteint ses bornes.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Théorème des Valeurs Intermédiaires (par dichotomie)
@@ -72,7 +72,7 @@ Soit $f : [a, b] \to \mathbb{R}$ continue telle que $f(a) < 0 < f(b)$. Montrons 
    - $f(c) \le 0$ et $f(c) \ge 0 \implies f(c) = 0$.
    - Le point $c$ existe bien. Le théorème est démontré.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Point Fixe (Application du TVI)
@@ -100,11 +100,11 @@ Soit $f : [a, b] \to \mathbb{R}$ continue telle que $f(a) < 0 < f(b)$. Montrons 
 3. Recollement : $f$ étant uniformément continue sur deux intervalles dont l'intersection n'est pas vide et qui recouvrent $[0, +\infty[$, elle l'est sur l'union.
 **Conclusion :** $f(x) = \sqrt{x}$ est bien uniformément continue.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** En IA, la continuité garantit que de petites modifications des données d'entrée (images, texte) n'entraînent pas de changements brutaux et imprévisibles dans la prédiction. C'est la base de la **Robustesse**.
 - **Exemple Concret :** Dans la génération d'images par **GAN (Generative Adversarial Networks)** ou **Auto-encodeurs**, on manipule un "Espace Latent". On veut que cet espace soit continu : si on se déplace doucement entre le vecteur d'un "Chien" et celui d'un "Chat", le décodeur doit générer une suite d'images qui se transforment graduellement de l'un à l'autre sans sauter. Si la fonction apprise par le réseau n'était pas continue, le modèle "hallucinerait" des images incohérentes au moindre petit changement de paramètre.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 13 (Structure de R)]], [[Jalon 14 (Suites réelles et complexes)]]
 - **Concepts Futurs dépendants :** [[Jalon 19 (Dérivabilité)]], [[Jalon 44 (Fonctions de plusieurs variables)]], [[Jalon 52 (Applications continues entre espaces topologiques et définition fine des homéomorphismes.)]]

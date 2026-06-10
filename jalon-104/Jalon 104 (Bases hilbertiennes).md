@@ -21,7 +21,7 @@ next: "[[Jalon 105 (Opérateurs adjoints).md]]"
 - **Le "Pourquoi on a inventé ça" :** Travailler avec des fonctions est difficile. Travailler avec des listes de nombres (des suites) est beaucoup plus simple. Les bases hilbertiennes permettent de transformer n'importe quel espace de Hilbert compliqué (comme $L^2$) en un espace de suites simple (comme $\ell^2$). C'est la numérisation universelle de l'analyse.
 - **Visualisation :** Un repère $(x, y, z)$ avec une infinité d'axes, tous à angle droit les uns des autres. Chaque fonction est un point dans ce repère géant.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $H$ un espace de Hilbert.
 
@@ -44,7 +44,7 @@ Soit $H$ un espace de Hilbert.
 > 2. Pour tout $x \in H$, si $\forall n, \langle x, e_n \rangle = 0$, alors $x=0$.
 > 3. **Identité de Parseval :** $\forall x \in H, \|x\|^2 = \sum_{n=0}^\infty |\langle x, e_n \rangle|^2$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Existence d'une base dans un espace séparable
 
@@ -61,7 +61,7 @@ Un Hilbert est **séparable** s'il contient une partie dénombrable dense.
    - L'espace engendré par $\{e_0, \dots, e_n\}$ est le même que celui engendré par $\{x_0, \dots, x_n\}$.
 5. **Conclusion :** Comme l'union des $\text{vect}(x_0, \dots, x_n)$ est dense dans $H$, l'espace engendré par la famille orthonormée $(e_n)$ est dense. C'est donc une base hilbertienne.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Les polynômes de Legendre
 **Énoncé :** On considère $H = L^2([-1, 1], \lambda)$. Appliquer Gram-Schmidt à la famille des monômes $(1, x, x^2, \dots)$.
@@ -78,7 +78,7 @@ Un Hilbert est **séparable** s'il contient une partie dénombrable dense.
 Soit $(e_n)$ une base hilbertienne de $H$. On définit $\Phi : H \to \ell^2(\mathbb{N})$ par $\Phi(x) = (\langle x, e_n \rangle)_{n \in \mathbb{N}}$.
 Par l'identité de Parseval, $\|\Phi(x)\|_{\ell^2} = \|x\|_H$. $\Phi$ est donc une isométrie linéaire. Comme elle est bijective (on peut reconstruire $x$ à partir des coefficients), c'est un isomorphisme d'espaces de Hilbert.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Les bases hilbertiennes sont la version continue et de dimension infinie de la **SVD** (Jalon 36) et de la **Diagonalisation** (Jalon 32).
 - **Example Concret :**
@@ -86,7 +86,7 @@ Par l'identité de Parseval, $\|\Phi(x)\|_{\ell^2} = \|x\|_H$. $\Phi$ est donc u
     - **Compression d'image (Ondelettes) :** Au lieu d'utiliser la base de Fourier (sinus/cosinus), on utilise une base d'ondelettes (Wavelets). Cette base hilbertienne est "localisée", ce qui permet de compresser les détails d'une image de manière beaucoup plus efficace que Fourier.
     - **Représentation de Graphes :** Pour les réseaux de neurones sur graphes (GNN), on utilise la base hilbertienne formée par les vecteurs propres du Laplacien du graphe pour définir des "convolutions spectrales".
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 103 (Espaces de Hilbert généraux).md]], [[Jalon 78 (Séries de Fourier).md]]
 - **Concepts Futurs dépendants :** [[Jalon 106 (Théorème spectral pour les opérateurs compacts autoadjoints).md]], [[Jalon 143 (Théorie spectrale des graphes).md]]

@@ -21,7 +21,7 @@ next: "[[Jalon 127 (Démonstration du théorème du représentant dans les RKHS)
 - **Le "Pourquoi on a inventé ça" :** Pour rendre les modèles simples (linéaires) incroyablement puissants. Au lieu de tordre les données pour qu'elles rentrent dans une ligne droite, on change notre manière de mesurer la distance pour que la ligne droite devienne une courbe complexe dans le monde réel.
 - **Visualisation :** On projette des points d'une feuille de papier plate sur une montagne courbe (l'espace des caractéristiques). Sur la montagne, on peut séparer les points par un plan droit, alors que sur la feuille, il aurait fallu dessiner une boucle compliquée.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $\mathcal{X}$ un ensemble (l'espace des entrées).
 
@@ -43,7 +43,7 @@ Soit $\mathcal{X}$ un ensemble (l'espace des entrées).
 > 2. **Propriété de Reproduction :** $\forall x \in \mathcal{X}, \forall f \in H, \quad f(x) = \langle f, K(x, \cdot) \rangle_H$.
 > En particulier, $K(x, y) = \langle K(x, \cdot), K(y, \cdot) \rangle_H$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : La propriété de reproduction implique que K est PD
 
@@ -59,7 +59,7 @@ Supposons qu'il existe un Hilbert $H$ et une application $\phi : \mathcal{X} \to
 5. **Conclusion :** Une norme au carré est toujours $\ge 0$.
    Donc $\sum_{i,j} c_i c_j K(x_i, x_j) \ge 0$. Le noyau est défini positif.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Le noyau Gaussien (RBF)
 **Énoncé :** Pourquoi le noyau $K(x, y) = \exp(-\|x-y\|^2)$ est-il défini positif ?
@@ -76,7 +76,7 @@ Supposons qu'il existe un Hilbert $H$ et une application $\phi : \mathcal{X} \to
 **Correction Détaillée :**
 Oui, c'est le noyau associé au produit scalaire $\langle f, g \rangle = f(0)g(0) + \int f' g'$. On vérifie par IPP que $\langle f, 1 + \min(x, \cdot) \rangle = f(x)$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le **Kernel Trick** permet d'utiliser des algorithmes linéaires (comme la régression ou les SVM) dans des espaces de caractéristiques de dimension infinie sans jamais en payer le prix computationnel.
 - **Example Concret :**
@@ -84,7 +84,7 @@ Oui, c'est le noyau associé au produit scalaire $\langle f, g \rangle = f(0)g(0
     - **Gaussian Processes (GP) :** La fonction de covariance d'un processus gaussien est un noyau défini positif. L'RKHS associé définit l'espace des fonctions "probables" pour le modèle.
     - **Neural Tangent Kernel (NTK) :** On a découvert que les réseaux de neurones très larges se comportent comme des modèles à noyaux. Le noyau (NTK) est défini par l'architecture du réseau et détermine la vitesse d'apprentissage de chaque composante du signal.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 103 (Espaces de Hilbert généraux).md]], [[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L2).md]]
 - **Concepts Futurs dépendants :** [[Jalon 127 (Démonstration du théorème du représentant dans les RKHS).md]], [[Jalon 143 (Théorie spectrale des graphes).md]]

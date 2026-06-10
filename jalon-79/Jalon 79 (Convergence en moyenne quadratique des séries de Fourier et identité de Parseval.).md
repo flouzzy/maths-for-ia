@@ -22,7 +22,7 @@ next: "[[Jalon 80 (Transformée de Fourier dans L1).md]]"
 - **Le "Pourquoi on a inventé ça" :** Parfois, on ne sait pas calculer l'intégrale d'une fonction complexe. Mais si on connaît ses fréquences, on peut trouver la réponse par une simple somme. Inversement, cela permet de calculer des sommes infinies de nombres en utilisant des intégrales. C'est le pont final qui prouve que la décomposition de Fourier est "parfaite" dans le monde de l'énergie ($L^2$).
 - **Visualisation :** Un graphique où l'aire sous la courbe (énergie temporelle) est égale à la somme des hauteurs de bâtons dans un spectre (énergie fréquentielle).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $f \in L^2([0, 2\pi])$ une fonction $2\pi$-périodique.
 
@@ -41,7 +41,7 @@ Soit $f \in L^2([0, 2\pi])$ une fonction $2\pi$-périodique.
 > En version réelle avec $a_n, b_n$ :
 > $$\frac{1}{2\pi} \int_0^{2\pi} |f(t)|^2 dt = \frac{a_0^2}{4} + \frac{1}{2} \sum_{n=1}^\infty (a_n^2 + b_n^2)$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration de l'Identité de Parseval (Cadre Hilbertien)
 
@@ -55,7 +55,7 @@ Soit $f \in L^2([0, 2\pi])$ une fonction $2\pi$-périodique.
 6. **Utilisation de l'orthonormalité :** Comme $\langle e_n, e_m \rangle = \delta_{nm}$, tous les termes de la double somme s'annulent sauf quand $n=m$.
 7. **Conclusion :** $\|f\|^2 = \sum_{n=-\infty}^{+\infty} |c_n|^2$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Calcul de la somme de Bâle ($\sum 1/n^2$)
 **Énoncé :** Utiliser la série de Fourier de $f(t) = t$ sur $]-\pi, \pi]$ pour calculer $\sum_{n=1}^\infty \frac{1}{n^2}$.
@@ -72,7 +72,7 @@ On utilise les coefficients de Fourier. $c_n(f') = i n c_n(f)$.
 Par Parseval : $\int |f'|^2 = \sum n^2 |c_n|^2$ et $\int |f|^2 = \sum |c_n|^2$.
 Comme $\int f = 0$, alors $c_0 = 0$. Pour $n \neq 0$, $n^2 \ge 1$, donc $\sum n^2 |c_n|^2 \ge \sum |c_n|^2$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Parseval est la raison pour laquelle on peut entraîner des modèles dans le domaine fréquentiel. L'erreur quadratique (MSE) est la même, qu'on la calcule sur les pixels ou sur les fréquences.
 - **Example Concret :**
@@ -80,7 +80,7 @@ Comme $\int f = 0$, alors $c_0 = 0$. Pour $n \neq 0$, $n^2 \ge 1$, donc $\sum n^
     - **Analyse du Bruit :** Le bruit blanc a des coefficients de Fourier de même amplitude en moyenne. Parseval permet de calculer le rapport Signal/Bruit (SNR) de manière très efficace.
     - **Audio Generation (Diff-Wave) :** Les modèles de diffusion pour l'audio travaillent souvent sur des représentations de Fourier. La fonction de perte est définie dans l'espace fréquentiel, et Parseval garantit que minimiser cette perte revient à minimiser l'erreur sur l'onde sonore réelle.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 78 (Séries de Fourier).md]], [[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L2).md]]
 - **Concepts Futurs dépendants :** [[Jalon 81 (Transformée de Fourier dans L2).md]], [[Jalon 116 (Variétés riemanniennes).md]]

@@ -19,7 +19,7 @@ next: "[[Jalon 30 (Trigonalisation d'endomorphismes et décomposition de Dunford
 - **Le "Pourquoi on a inventé ça" :** Diagonaliser, c'est trouver une base dans laquelle une transformation complexe devient une simple mise à l'échelle sur chaque axe. C'est le moyen le plus simple possible pour "voir" ce que fait une matrice.
 - **Visualisation :** Une rotation tourne tout. Un étirement garde les axes stables : ce sont les vecteurs propres.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 ### A. Définitions
 1. **Vecteur propre :** $v \neq 0$ tel que $f(v) = \lambda v$. $\lambda$ est la valeur propre.
 2. **Sous-espace propre :** $E_\lambda(f) = \ker(f - \lambda Id)$.
@@ -29,7 +29,7 @@ next: "[[Jalon 30 (Trigonalisation d'endomorphismes et décomposition de Dunford
 > **Critère de Diagonalisabilité :**
 > $f$ est diagonalisable $\iff \chi_f$ est scindé ET $\forall \lambda, \dim(E_\lambda) = \text{ordre de multiplicité de } \lambda$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 ### Démonstration : Familles de vecteurs propres de valeurs propres distinctes sont libres
 Soient $\lambda_1, ..., \lambda_k$ des valeurs propres distinctes et $v_1, ..., v_k$ des vecteurs propres associés.
 1. **Récurrence :** Pour $k=1$, $\{v_1\}$ est libre car $v_1 \neq 0$.

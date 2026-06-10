@@ -22,7 +22,7 @@ next: "[[Jalon 112 (Champs de vecteurs).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour pouvoir faire de la physique (calculer des forces, des énergies) sur des surfaces courbes. On a besoin de savoir comment les vecteurs (vitesses, gradients) se transforment quand on change de point de vue ou d'espace.
 - **Visualisation :** Une forêt de flèches. À chaque point de la surface courbe, on plante une flèche qui indique une direction possible. Le **Fibré Tangent** est la collection complète de toutes ces flèches.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Applications Différentiables
 
@@ -47,7 +47,7 @@ Il existe plusieurs manières de définir l'espace tangent $T_x M$. La plus mode
 > Pour $f : M \to N$ différentiable, l'application tangente $df_x : T_x M \to T_{f(x)} N$ est définie par :
 > $$\forall v \in T_x M, \forall h \in \mathcal{C}^\infty(N), \quad (df_x(v))(h) = v(h \circ f)$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Indépendance de la différentielle par rapport aux cartes
 
@@ -62,7 +62,7 @@ Montrons que la définition de la différentielle est cohérente même si on cha
 5. **Conclusion :** Les composantes de $w$ dans la base $(\frac{\partial}{\partial y_j})$ sont $w_j = \sum_i \frac{\partial \hat{f}_j}{\partial x_i} v_i$.
    Cela correspond exactement au produit par la **matrice jacobienne** de l'expression locale. Comme le changement de carte est lui-même un difféomorphisme, la structure linéaire est préservée.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Tangente de l'exponentielle complexe
 **Énoncé :** Soit $f : \mathbb{R} \to S^1$ définie par $f(t) = e^{it}$. Calculer $df_t(1)$.
@@ -77,7 +77,7 @@ Montrons que la définition de la différentielle est cohérente même si on cha
 **Correction Détaillée :**
 Pour chaque carte $(U, \phi)$ de $M$, on construit une carte $(TU, \Phi)$ de $TM$. Si $\phi(x) = (x_1, \dots, x_m)$, alors un vecteur $v \in T_x M$ est donné par ses composantes $(v_1, \dots, v_m)$. On pose $\Phi(x, v) = (x_1, \dots, x_m, v_1, \dots, v_m)$. Les changements de cartes sur $M$ induisent des changements de cartes lisses sur $TM$ (via la Jacobienne).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le **Geometric Deep Learning** étend les réseaux de neurones aux variétés. Le calcul des gradients sur ces réseaux nécessite de transporter les vecteurs d'un espace tangent à un autre.
 - **Example Concret :**
@@ -85,7 +85,7 @@ Pour chaque carte $(U, \phi)$ de $M$, on construit une carte $(TU, \Phi)$ de $TM
     - **Equivariant CNNs :** Si on veut qu'une IA reconnaisse un objet peu importe sa rotation, on utilise des couches dont la différentielle (le tangent map) commute avec l'action du groupe de rotation.
     - **Neural ODEs on Manifolds :** On définit l'évolution de l'état caché comme un champ de vecteurs sur le **Fibré Tangent**. Le réseau apprend à choisir la "vitesse" optimale à chaque point de la variété des représentations.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 110 (Variétés différentielles abstraites).md]], [[Jalon 46 (Matrice jacobienne et Règle de la chaîne).md]]
 - **Concepts Futurs dépendants :** [[Jalon 112 (Champs de vecteurs).md]], [[Jalon 116 (Variétés riemanniennes).md]]

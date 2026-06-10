@@ -21,7 +21,7 @@ next: "[[Jalon 113 (Tenseurs).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour comprendre les mouvements complexes. En robotique, pour faire bouger un bras, on active plusieurs moteurs (plusieurs champs de vecteurs). Le crochet de Lie nous dit si la combinaison de ces moteurs permet d'atteindre toutes les positions possibles ou si on est limité.
 - **Visualisation :** Un champ de flèches sur une sphère. Le crochet de Lie est un nouveau champ de flèches qui représente le "tourbillon" créé par l'interaction de deux autres champs.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Champs de vecteurs
 
@@ -46,7 +46,7 @@ Si on applique deux champs successivement ($X$ puis $Y$), l'opération $X(Yf)$ n
 > On appelle **crochet de Lie** de deux champs $X$ et $Y$ l'unique champ de vecteurs $[X, Y]$ tel que :
 > $$\forall f \in \mathcal{C}^\infty(M), \quad [X, Y]f = X(Yf) - Y(Xf)$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Le crochet de Lie est une dérivation
 
@@ -65,7 +65,7 @@ Vérifions que $[X, Y]$ satisfait la règle de Leibniz $[X, Y](gh) = ([X, Y]g)h 
    $[X, Y](gh) = ([X, Y]g)h + g([X, Y]h)$.
    C'est bien une dérivation, donc c'est bien un champ de vecteurs tangent.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Crochet sur le plan
 **Énoncé :** Soient $X = \frac{\partial}{\partial x}$ (translation) and $Y = x \frac{\partial}{\partial y}$ (cisaillement). Calculer $[X, Y]$.
@@ -81,7 +81,7 @@ Vérifions que $[X, Y]$ satisfait la règle de Leibniz $[X, Y](gh) = ([X, Y]g)h 
 **Correction Détaillée :**
 Cela signifie que les deux "vents" restent prisonniers d'une même surface (une sous-variété). On peut feuilleter l'espace en surfaces parallèles. C'est le théorème de Frobenius, crucial pour comprendre les contraintes dans les systèmes physiques.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le crochet de Lie définit la structure des **Groupes de Lie** (Jalon 119). En IA, on utilise ces structures pour créer des réseaux de neurones qui respectent les symétries des données.
 - **Example Concret :**
@@ -89,7 +89,7 @@ Cela signifie que les deux "vents" restent prisonniers d'une même surface (une 
     - **Equivariant Neural Networks :** Pour qu'un réseau reconnaisse un objet dans n'importe quelle orientation, on utilise des couches dont les champs de vecteurs commutent avec les champs de vecteurs du groupe des rotations (leur crochet de Lie est nul).
     - **Contrôlabilité (Robotique/IA) :** Pour un agent qui doit apprendre à marcher, le crochet de Lie des forces qu'il peut appliquer nous dit s'il peut atteindre tous les états de son environnement ou s'il est restreint à une zone.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 111 (Applications différentiables et Fibré tangent).md]], [[Jalon 47 (Dérivées partielles d'ordre deux et Hessienne).md]]
 - **Concepts Futurs dépendants :** [[Jalon 119 (Connexions avec les groupes de Lie).md]], [[Jalon 128 (Flots de gradient).md]]

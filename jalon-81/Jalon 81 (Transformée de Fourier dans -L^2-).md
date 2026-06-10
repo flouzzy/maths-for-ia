@@ -22,7 +22,7 @@ next: "[[Jalon 82 (Introduction à la théorie des distributions de Schwartz).md
 - **Le "Pourquoi on a inventé ça" :** La définition du Jalon 80 (intégrale directe) ne marche que si la fonction décroît assez vite vers zéro ($L^1$). Mais en physique, beaucoup de signaux (comme une onde sinusoïdale pure) ne sont pas dans $L^1$. Le théorème de Plancherel permet d'étendre la transformée de Fourier à tout l'espace $L^2$, rendant l'outil enfin universel pour les ingénieurs.
 - **Visualisation :** Une rotation dans l'espace de Hilbert. Comme une rotation en 3D ne change pas la longueur d'un vecteur, la transformée de Fourier "tourne" notre fonction du domaine temporel vers le domaine fréquentiel sans changer sa "longueur" (son énergie).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $L^2(\mathbb{R})$ l'espace des fonctions dont le carré est intégrable.
 
@@ -41,7 +41,7 @@ La transformée de Fourier $\mathcal{F}$ est initialement définie sur $L^1 \cap
 > $$f(t) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} \hat{f}(\xi) e^{i\xi t} d\xi$$
 > (L'intégrale est ici une limite au sens $L^2$).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Esquisse de la preuve du prolongement
 
@@ -56,7 +56,7 @@ La transformée de Fourier $\mathcal{F}$ est initialement définie sur $L^1 \cap
    Comme $L^2$ est complet (Riesz-Fischer, Jalon 75), la suite $(\hat{f}_n)$ converge vers une limite que l'on définit comme étant $\hat{f}$.
 5. **Conclusion :** La transformée de Fourier est définie sur $L^2$ par passage à la limite.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Transformée du Sinus Cardinal
 **Énoncé :** On sait que $\mathcal{F}(\mathbf{1}_{[-1, 1]}) = 2 \text{sinc}(\xi)$. En déduire la transformée de Fourier de $f(x) = \text{sinc}(x)$.
@@ -72,7 +72,7 @@ Par linéarité : $\hat{f}(\xi) = \pi \mathbf{1}_{[-1, 1]}(\xi)$.
 **Correction Détaillée :**
 C'est l'identité de Parseval-Plancherel. Elle découle directement du fait que $\mathcal{F}$ est une isométrie (à un facteur près) sur un espace de Hilbert.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Plancherel permet de définir la **Densité Spectrale de Puissance** (PSD). En IA, pour analyser des séries temporelles (vent, électricité, battements de cœur), on ne regarde pas le signal mais son énergie par bande de fréquence.
 - **Example Concret :**
@@ -80,7 +80,7 @@ C'est l'identité de Parseval-Plancherel. Elle découle directement du fait que 
     - **Génération d'images (StyleGAN) :** L'analyse fréquentielle via Plancherel permet de séparer les "styles" (basses fréquences pour la forme du visage, hautes fréquences pour les pores de la peau). On peut alors mixer les énergies de deux images pour en créer une troisième.
     - **Algorithmes de compression sans perte :** L'isométrie garantit qu'en travaillant dans l'espace de Fourier, on dispose de toute l'information nécessaire pour reconstruire le signal original sans aucune distorsion d'énergie.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 80 (Transformée de Fourier dans L1).md]], [[Jalon 75 (Preuve de la complétude des espaces Lp).md]]
 - **Concepts Futurs dépendants :** [[Jalon 82 (Introduction à la théorie des distributions de Schwartz).md]], [[Jalon 115 (Démonstration du théorème de Stokes généralisé).md]]

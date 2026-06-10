@@ -22,7 +22,7 @@ next: "[[Jalon 108 (Livrable IA).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour modéliser la physique. L'énergie d'une particule (Hamiltonien) ou la chaleur qui se diffuse sont des processus qui font intervenir des dérivées. En IA, cela permet d'étudier comment un réseau de neurones apprend de manière continue dans le temps.
 - **Visualisation :** Un élastique que l'on tend. Pour la plupart des formes, tout va bien. Mais pour certaines formes très pointues, l'élastique casse car la tension (l'opérateur) devient trop forte.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $H$ un espace de Hilbert.
 
@@ -46,7 +46,7 @@ Soit $T$ un opérateur fermé de domaine dense.
 > **Définition 4 (Spectre) :**
 > Le spectre est le complémentaire $\sigma(T) = \mathbb{C} \setminus \rho(T)$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Exemple fondamental : L'opérateur de dérivation
 
@@ -63,7 +63,7 @@ Soit $H = L^2([0, 1])$ and $T = \frac{d}{dx}$ avec $D(T) = \{ f \in H^1([0, 1]) 
    $f(x) = \int_0^x e^{\lambda(x-s)} g(s) ds$.
 3. **Conclusion :** L'opérateur $R_\lambda(g) = \int_0^x e^{\lambda(x-s)} g(s) ds$ est un opérateur intégral. On montre qu'il est continu pour tout $\lambda$. Donc $\rho(T) = \mathbb{C}$ et le spectre est vide (dans ce cas précis avec cette condition au bord).
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Opérateur de multiplication
 **Énoncé :** Sur $L^2(\mathbb{R})$, soit $Tf(x) = x f(x)$. Quel est son domaine ? Est-il borné ?
@@ -77,7 +77,7 @@ Soit $H = L^2([0, 1])$ and $T = \frac{d}{dx}$ avec $D(T) = \{ f \in H^1([0, 1]) 
 **Correction Détaillée :**
 On dit que $y \in D(T^*)$ s'il existe $z \in H$ tel que $\forall x \in D(T), \langle Tx, y \rangle = \langle x, z \rangle$. On pose alors $T^*y = z$. C'est beaucoup plus restrictif que pour les opérateurs bornés (Jalon 105).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En IA, on étudie le **Gradient Flow** : la trajectoire des poids d'un réseau pendant l'entraînement. Dans la limite où la couche est infinie, le gradient devient un opérateur non borné sur un espace de Hilbert.
 - **Example Concret :**
@@ -85,7 +85,7 @@ On dit que $y \in D(T^*)$ s'il existe $z \in H$ tel que $\forall x \in D(T), \la
     - **Smoothing et Régularisation :** Appliquer un flou Gaussien à une image revient à appliquer l'opérateur $e^{t\Delta}$. Pour "dé-flouter" (deconvolution), on doit inverser cet opérateur, ce qui est très instable car son inverse est "très" non borné (il amplifie le bruit infiniment).
     - **Kernel Methods (RKHS) :** Les fonctions de l'espace de Hilbert peuvent être très régulières, mais les opérateurs de dérivation dessus sont souvent non bornés. Cela impose d'utiliser des noyaux très lisses (comme le noyau RBF) pour pouvoir calculer des dérivées de manière stable.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 106 (Théorème spectral pour les opérateurs compacts autoadjoints).md]], [[Jalon 41 (Équations différentielles linéaires du premier ordre et méthode de variation de la constante.).md]]
 - **Concepts Futurs dépendants :** [[Jalon 115 (Démonstration du théorème de Stokes généralisé).md]], [[Jalon 128 (Flots de gradient).md]]

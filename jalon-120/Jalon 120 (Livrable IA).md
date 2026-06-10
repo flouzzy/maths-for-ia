@@ -21,7 +21,7 @@ next: "[[Jalon 121 (Ensembles convexes).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour rendre l'IA plus efficace. Sans ces contraintes, une IA doit voir des millions d'images de chats dans TOUTES les positions possibles pour apprendre. Avec l'équivariance, une seule photo suffit pour que l'IA comprenne toutes les versions tournées ou décalées de ce chat. On gagne énormément en temps de calcul et en quantité de données.
 - **Visualisation :** Un filtre qui glisse sur une image. Peu importe où l'objet se trouve, le filtre réagira de la même manière. Si l'objet tourne, le filtre doit "tourner" lui aussi pour capter l'information.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $X$ un espace de données (ex: $\mathbb{R}^n$ pour des images ou une variété $M$ pour des graphes). Soit $G$ un groupe de Lie (ex: $SO(3)$ pour les rotations).
 
@@ -45,7 +45,7 @@ Soit $\Phi : \mathcal{F}(X) \to \mathcal{F}(Y)$ une couche d'un réseau de neuro
 > $$\forall g \in G, \forall f, \quad \Phi(L_g f) = L'_g \Phi(f)$$
 > Transformer l'entrée puis appliquer la couche revient au même que d'appliquer la couche puis transformer la sortie.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Pourquoi la convolution est-elle équivariante par translation ?
 
@@ -61,7 +61,7 @@ Soit $\Phi(f) = f * k$ où $k$ est un noyau de convolution. Soit $T_\tau$ l'opé
    Les deux expressions sont identiques.
 5. **Conclusion :** $\Phi \circ T_\tau = T_\tau \circ \Phi$. La convolution "commute" avec la translation. C'est ce qui permet aux CNN de détecter des motifs n'importe où dans une image.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Pooling et Invariance
 **Énoncé :** Montrer que l'opération de Global Average Pooling ($f \mapsto \int_X f(x) dx$) est invariante par translation si $X = \mathbb{R}^n$.
@@ -73,7 +73,7 @@ $\int f(x-\tau) dx = \int f(u) du$ (par changement de variable $u=x-\tau$, le Ja
 **Correction Détaillée :**
 C'est le **Message Passing**. Si on change l'ordre des noms des nœuds, le résultat du calcul sur chaque nœud doit changer de la même manière. On montre que cela impose d'utiliser des fonctions d'agrégation symétriques (comme la somme ou le max) sur les voisinages.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le **Geometric Deep Learning** unifie les CNN (données sur grilles), les GNN (données sur graphes) et les réseaux sur variétés. Tout repose sur le choix du groupe $G$.
 - **Example Concret :**
@@ -81,7 +81,7 @@ C'est le **Message Passing**. Si on change l'ordre des noms des nœuds, le résu
     - **Imagerie Médicale :** On utilise des réseaux équivariants par rotation pour analyser des IRM ou des coupes de tissus, car l'orientation de l'organe dans le scanner est aléatoire.
     - **Cosmologie :** Les réseaux de neurones sphériques analysent le fond diffus cosmologique (données sur la sphère $S^2$) en utilisant l'équivariance sous le groupe $SO(3)$.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 119 (Connexions avec les groupes de Lie).md]], [[Jalon 80 (Transformée de Fourier dans L1).md]] (Convolution)
 - **Concepts Futurs dépendants :** [[Jalon 143 (Théorie spectrale des graphes).md]], [[Jalon 145 à 152 (PAC pour Attention).md]]

@@ -23,7 +23,7 @@ next: "[[Jalon 96 (Livrable IA).md]]"
 - **Le "Pourquoi on a inventé ça" :** Dans la nature, les variables ne sont jamais isolées. Le climat dépend de la pression ET de la température. Pour modéliser ces dépendances de manière simple et puissante, on utilise les vecteurs gaussiens. C'est la brique de base de presque toutes les statistiques multidimensionnelles.
 - **Visualisation :** Une colline en 3D (ou une "patate" en dimension supérieure). Si vous coupez cette colline par un plan horizontal, vous obtenez toujours une ellipse.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Définition Fondamentale
 
@@ -45,7 +45,7 @@ Soit $X = (X_1, \dots, X_n)^T$ un vecteur aléatoire à valeurs dans $\mathbb{R}
 Si la matrice $\Sigma$ est inversible (définie positive), $X$ admet une densité par rapport à la mesure de Lebesgue sur $\mathbb{R}^n$ :
 $$f_X(x) = \frac{1}{(2\pi)^{n/2} \sqrt{\det \Sigma}} \exp\left( -\frac{1}{2} (x-\mu)^T \Sigma^{-1} (x-\mu) \right)$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Propriété : Transformation linéaire d'un vecteur gaussien
 
@@ -61,7 +61,7 @@ Montrons que si $X \sim \mathcal{N}(\mu, \Sigma)$ est un vecteur gaussien, alors
    - $\mathbb{E}[Y] = A\mu + B$.
    - $Cov(Y) = A \Sigma A^T$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Indépendance et Covariance
 **Énoncé :** Soit $X = (X_1, X_2)^T$ un vecteur gaussien. Montrer que $X_1$ et $X_2$ sont indépendants si et seulement si leur covariance est nulle.
@@ -80,7 +80,7 @@ $\|X\|^2 = \sum_{i=1}^n X_i^2$. Par linéarité : $\mathbb{E}[\|X\|^2] = \sum \m
 Comme $X_i \sim \mathcal{N}(0, 1)$, $\mathbb{E}[X_i^2] = Var(X_i) + \mathbb{E}[X_i]^2 = 1 + 0 = 1$.
 **Résultat :** $\mathbb{E}[\|X\|^2] = n$. En moyenne, un vecteur gaussien de dimension $n$ se trouve à une distance $\sqrt{n}$ de l'origine.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le vecteur gaussien est le modèle de base pour les **modèles génératifs** et l'**inférence Bayésienne**.
 - **Example Concret :**
@@ -89,7 +89,7 @@ Comme $X_i \sim \mathcal{N}(0, 1)$, $\mathbb{E}[X_i^2] = Var(X_i) + \mathbb{E}[X
     - **Processus Gaussiens (GP) :** C'est l'extension des vecteurs gaussiens à une dimension infinie. On les utilise en IA pour faire de la régression avec une estimation de l'incertitude (Bayesian Optimization).
     - **Kalman Filters :** Utilisés dans les robots et les voitures autonomes pour fusionner les données des capteurs. Chaque estimation de position est traitée comme un vecteur gaussien.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 93 (Fonctions caractéristiques).md]], [[Jalon 9 (Calcul matriciel).md]]
 - **Concepts Futurs dépendants :** [[Jalon 129 (Optimisation stochastique).md]], [[Jalon 140 (Classifieur de Bayes optimal).md]]

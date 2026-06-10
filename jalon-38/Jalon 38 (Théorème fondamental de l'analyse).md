@@ -18,7 +18,7 @@ next: "[[Jalon 39 (Intégrales généralisées sur un intervalle quelconque et c
 - **Le "Pourquoi on a inventé ça" :** Avant ce théorème, la dérivation (trouver la pente) et l'intégration (trouver l'aire) semblaient être deux problèmes totalement différents. Newton et Leibniz ont réalisé qu'ils étaient en fait les "ennemis jurés" l'un de l'autre : l'un est l'opération inverse de l'autre. C'est ce qui a permis de transformer le calcul d'aires complexes en un simple calcul de soustraction de fonctions.
 - **Visualisation :** Si on définit une fonction $F(x)$ comme l'aire sous une courbe $f$ entre $a$ et $x$, alors la pente de $F$ au point $x$ est exactement la hauteur de la courbe $f(x)$.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Définitions et Théorème Fondamental
 
@@ -45,7 +45,7 @@ Soit $f : I \to \mathbb{R}$ une fonction continue sur un intervalle $I \subset \
 > Soit $f$ continue sur $I$ et $\phi : [a, b] \to I$ une fonction de classe $\mathcal{C}^1$. Alors :
 > $$\int_a^b f(\phi(t)) \phi'(t) dt = \int_{\phi(a)}^{\phi(b)} f(u) du$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration du Théorème Fondamental (Partie 1)
 
@@ -64,7 +64,7 @@ Soit $f : I \to \mathbb{R}$ une fonction continue sur un intervalle $I \subset \
    Ceci étant vrai pour tout $\epsilon$, le taux d'accroissement tend vers $f(x)$.
 6. **Conclusion :** $\Phi$ est dérivable et $\Phi' = f$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Intégration par parties (IPP)
 **Énoncé :** Calculer $I = \int_0^\pi x \sin(x) dx$.
@@ -84,14 +84,14 @@ Soit $f : I \to \mathbb{R}$ une fonction continue sur un intervalle $I \subset \
 4. Primitive : $J = [\arctan(u)]_1^e = \arctan(e) - \arctan(1)$.
 5. Résultat : $J = \arctan(e) - \frac{\pi}{4}$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le Théorème Fondamental lie l'optimisation locale (gradients) à la performance globale. C'est ce qui justifie l'utilisation des intégrales pour calculer les espérances des gradients dans les algorithmes stochastiques.
 - **Exemple Concret :**
     - **Accumulation du Gradient :** Dans l'entraînement de grands modèles (LLM), on ne peut pas mettre tout un "batch" en mémoire. On calcule le gradient sur des petits sous-groupes et on les **somme** (on les intègre numériquement). Le théorème fondamental garantit que la somme de ces petits changements locaux équivaut au changement total que l'on aurait eu avec le batch entier.
     - **Neural ODEs :** C'est une architecture d'IA moderne où les couches du réseau de neurones ne sont plus discrètes, mais définies par une équation différentielle continue. Pour calculer la sortie du réseau, l'ordinateur résout une intégrale en utilisant le théorème fondamental.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 19 (Dérivabilité).md]], [[Jalon 37 (Intégrale de Riemann sur un segment).md]]
 - **Concepts Futurs dépendants :** [[Jalon 39 (Intégrales généralisées sur un intervalle quelconque et critères de convergence.).md]], [[Jalon 43 (Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.).md]]

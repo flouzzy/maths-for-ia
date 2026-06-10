@@ -18,7 +18,7 @@ next: "[[Jalon 52 (Applications continues entre espaces topologiques et définit
 - **Le "Pourquoi on a inventé ça" :** La topologie générale (Jalon 49) est très puissante mais parfois trop abstraite. En sciences, on a souvent besoin de quantifier "à quel point" deux choses sont proches. Les espaces métriques permettent de ramener la rigueur du calcul numérique (les nombres réels) au sein de la topologie.
 - **Visualisation :** Un réseau de villes reliées par des routes. La distance est le nombre de kilomètres. Dans un espace métrique, on peut dessiner des "cercles" parfaits (tous les points à une distance donnée).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Définition d'une Distance
 
@@ -47,7 +47,7 @@ Soit $X$ un ensemble non vide.
 > $$\forall (x, y) \in X^2, \quad C_1 d_1(x, y) \le d_2(x, y) \le C_2 d_1(x, y)$$
 > *Propriété :* Deux distances équivalentes induisent la **même topologie** (les mêmes ouverts, les mêmes limites).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Une boule ouverte est un ouvert au sens topologique
 
@@ -62,7 +62,7 @@ Soit $X$ un ensemble non vide.
    $d(a, y) < d(a, x) + (r - d(a, x)) = r$.
    Donc $y \in B(a, r)$. La boule ouverte $B(a, r)$ contient un voisinage de chacun de ses points, c'est donc un ouvert.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : La distance discrète
 **Énoncé :** On définit $d(x, y) = 1$ si $x \neq y$ et $d(x, x) = 0$. Vérifier qu'il s'agit d'une distance et décrire la topologie induite.
@@ -75,7 +75,7 @@ Soit $X$ un ensemble non vide.
 **Correction Détaillée :**
 Si $d(f, g) = 0$, alors $\int_0^1 |f-g| = 0$. Comme $|f-g|$ est une fonction **continue** et **positive**, son intégrale n'est nulle que si la fonction est identiquement nulle. Donc $f-g=0 \implies f=g$. (C'est pour cela que la continuité est cruciale ici).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En Machine Learning, "apprendre" revient souvent à minimiser la **distance** entre la prédiction du modèle et la réalité. Le choix de la métrique définit ce que le modèle considère comme une "petite" erreur.
 - **Exemple Concret :**
@@ -83,7 +83,7 @@ Si $d(f, g) = 0$, alors $\int_0^1 |f-g| = 0$. Comme $|f-g|$ est une fonction **c
     - **Auto-encodeurs et Espaces Latents :** Un auto-encodeur compresse une image en un vecteur dans un "espace latent". On veut que dans cet espace, la distance métrique reflète la ressemblance sémantique (ex: deux photos du même chien doivent être proches métriquement, même si leurs pixels sont différents).
     - ** Wasserstein Distance (Optimal Transport) :** Utilisée dans les GANs (WGAN) pour mesurer la distance entre deux distributions de probabilités. C'est une métrique beaucoup plus robuste que la divergence KL pour entraîner des modèles génératifs.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 34 (Topologie élémentaire des espaces vectoriels normés).md]], [[Jalon 49 (Espaces topologiques généraux).md]]
 - **Concepts Futurs dépendants :** [[Jalon 56 (Espaces métriques complets).md]], [[Jalon 126 (Noyaux définis positifs).md]]

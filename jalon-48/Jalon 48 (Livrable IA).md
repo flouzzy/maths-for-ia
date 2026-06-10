@@ -18,7 +18,7 @@ next: "[[Jalon 49 (Espaces topologiques généraux).md]]"
 - **Le "Pourquoi on a inventé ça" :** Un réseau de neurones peut avoir des millions de réglages (poids). Si le réseau se trompe, comment savoir quel poids précis il faut modifier ? On ne peut pas tous les tester un par un. La rétropropagation utilise le calcul différentiel pour calculer d'un seul coup l'influence de chaque poids sur l'erreur finale.
 - **Visualisation :** Une cascade d'eau qui remonte la montagne. L'erreur "coule" de la sortie vers l'entrée, en se divisant à chaque embranchement selon la pente locale de chaque neurone.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Modèle du Réseau de Neurones (MLP)
 
@@ -39,7 +39,7 @@ En termes de matrices jacobiennes, le gradient de la perte par rapport aux activ
 $$\frac{\partial \mathcal{L}}{\partial a^{(l-1)}} = \left( \frac{\partial a^{(l)}}{\partial a^{(l-1)}} \right)^T \frac{\partial \mathcal{L}}{\partial a^{(l)}}$$
 où $\frac{\partial a^{(l)}}{\partial a^{(l-1)}}$ est la matrice jacobienne de la couche $l$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Dérivation des équations de base
 
@@ -57,7 +57,7 @@ Posons $\delta^{(l)} = \frac{\partial \mathcal{L}}{\partial z^{(l)}}$ (l'erreur 
    D'où : $\frac{\partial \mathcal{L}}{\partial W^{(l)}} = \delta^{(l)} (a^{(l-1)})^T$.
 4. **Conclusion :** Le gradient par rapport à une matrice de poids est le produit extérieur du vecteur d'erreur de la couche actuelle par le vecteur d'activation de la couche précédente.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Un neurone unique
 **Énoncé :** Soit un neurone unique $y = \sigma(wx+b)$ avec une perte $\mathcal{L} = \frac{1}{2}(y-t)^2$. Calculer $\frac{\partial \mathcal{L}}{\partial w}$.
@@ -74,14 +74,14 @@ C'est un calcul classique montrant que le choix de la paire (Softmax, Cross-Entr
 $\mathcal{L} = -\sum y_i \ln(a_i)$ et $a_i = e^{z_i} / \sum e^{z_k}$.
 Le calcul de $\frac{\partial \mathcal{L}}{\partial z_i}$ mène directement à $a_i - y_i$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Ce jalon est le pont final entre l'analyse vectorielle et l'IA. Sans la formalisation des Jacobiennes, on ne pourrait pas entraîner de modèles profonds de manière efficace.
 - **Exemple Concret :**
     - **Autograd dans PyTorch :** Quand vous écrivez `loss.backward()`, PyTorch parcourt le graphe de calcul en sens inverse et applique exactement ces produits de matrices jacobiennes.
     - **Vanishing Gradient :** Si $\sigma'(z)$ est très petit (ex: zone plate d'une Sigmoïde), le produit de Hadamard va "écraser" le signal $\delta^{(l)}$. Comme on multiplie ces termes à chaque couche, l'erreur devient nulle avant d'atteindre les premières couches du réseau. C'est pourquoi on utilise aujourd'hui des fonctions comme **ReLU** ($\sigma'=1$ pour $z>0$) qui ne saturent pas.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 46 (Matrice jacobienne).md]], [[Jalon 9 (Calcul matriciel).md]]
 - **Concepts Futurs dépendants :** [[Jalon 60 (Livrable IA).md]], [[Jalon 132 (Livrable IA).md]]

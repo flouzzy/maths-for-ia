@@ -20,7 +20,7 @@ next: "[[Jalon 53 (Axiomes de séparation).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour classer les objets. On ne veut pas s'occuper des détails (la taille exacte, la couleur), on veut savoir si deux structures ont la même "forme fondamentale". Si deux espaces sont homéomorphes, toutes les propriétés topologiques de l'un (connexité, compacité) sont vraies pour l'autre.
 - **Visualisation :** Une sphère que l'on déforme pour en faire un cube. C'est un homéomorphisme. Mais une sphère que l'on perce pour en faire un anneau, ce n'en est pas un.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Continuité Topologique
 
@@ -46,7 +46,7 @@ Soient $(X, \mathcal{T}_X)$ et $(Y, \mathcal{T}_Y)$ deux espaces topologiques.
 
 Une propriété est dite **topologique** si elle est conservée par homéomorphisme. Exemples : la compacité, la connexité, la dimension (dans certains contextes).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Équivalence des définitions de la continuité
 
@@ -55,7 +55,7 @@ Montrons que "Image réciproque d'un ouvert est un ouvert" est équivalent à la
 1. **Sens ($\implies$) :** Supposons que $f^{-1}(V)$ est ouvert pour tout ouvert $V$. Soit $a \in X$. Soit $W$ un voisinage de $f(a)$. Par définition du voisinage, il existe un ouvert $V$ tel que $f(a) \in V \subset W$. Alors $a \in f^{-1}(V) \subset f^{-1}(W)$. Comme $f^{-1}(V)$ est un ouvert contenant $a$, alors $f^{-1}(W)$ est un voisinage de $a$. $f$ est donc continue en $a$.
 2. **Sens ($\impliedby$) :** Supposons $f$ continue en tout point. Soit $V$ un ouvert de $Y$. Montrons que $f^{-1}(V)$ est un ouvert de $X$. Soit $a \in f^{-1}(V)$. Alors $f(a) \in V$. Comme $V$ est un ouvert, c'est un voisinage de $f(a)$. Par continuité en $a$, $f^{-1}(V)$ est un voisinage de $a$. Ainsi, $f^{-1}(V)$ est voisinage de chacun de ses points, c'est donc un ouvert.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Un homéomorphisme classique
 **Énoncé :** Montrer que $f : \mathbb{R} \to ]-1, 1[$ définie par $f(x) = \frac{x}{1+|x|}$ est un homéomorphisme.
@@ -70,14 +70,14 @@ Montrons que "Image réciproque d'un ouvert est un ouvert" est équivalent à la
 **Correction Détaillée :**
 $f$ est bijective et continue. Cependant, $f^{-1}$ n'est pas continue en $(1, 0)$. Si on "tourne" sur le cercle pour revenir vers $(1, 0)$ par le haut, l'angle tend vers $2\pi$, alors que $f^{-1}(1, 0) = 0$. Il y a un "saut". Topologiquement, on ne peut pas transformer un segment (même semi-ouvert) en cercle sans "coller" les deux bouts, ce qui n'est pas permis pour un homéomorphisme.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En Deep Learning, on veut souvent que le réseau de neurones apprenne un **homéomorphisme** entre l'espace des données (images de chats) et un espace de caractéristiques simple (une boule dans $\mathbb{R}^d$). Si la transformation est un homéomorphisme, on ne perd aucune information et on peut générer de nouvelles données en utilisant l'inverse.
 - **Example Concret :**
     - **Normalizing Flows (Flux de normalisation) :** C'est une famille de modèles génératifs (comme RealNVP ou Glow) construits explicitement comme une suite d'homéomorphismes différentiables (des difféomorphismes). On transforme une distribution simple (Gaussienne) en une distribution complexe en appliquant des fonctions bijectives dont on sait calculer le Jacobien.
     - **Théorie des variétés (Manifold Hypothesis) :** On suppose que les données réelles se situent sur une variété de basse dimension. Apprendre le modèle, c'est trouver l'homéomorphisme qui "déplie" cette variété pour la rendre plate et facile à manipuler par un classifieur linéaire.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 49 (Espaces topologiques généraux).md]], [[Jalon 5 (Applications).md]]
 - **Concepts Futurs dépendants :** [[Jalon 57 (Théorème du point fixe de Banach).md]], [[Jalon 110 (Variétés différentielles abstraites).md]]

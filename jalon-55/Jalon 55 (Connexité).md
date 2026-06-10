@@ -21,7 +21,7 @@ next: "[[Jalon 56 (Espaces métriques complets).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour formaliser l'idée d'un objet "d'un seul tenant". En analyse, cela permet de généraliser le Théorème des Valeurs Intermédiaires. Si vous savez que votre fonction est positive à un endroit et négative à un autre sur un ensemble connexe, elle doit forcément passer par zéro quelque part entre les deux.
 - **Visualisation :** Une ligne continue ou un cercle (connexe). Deux cercles séparés (non connexe).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Connexité
 
@@ -47,7 +47,7 @@ Soit $(X, \mathcal{T})$ un espace topologique.
 > **Théorème (Image continue) :**
 > L'image d'un connexe (resp. connexe par arcs) par une application continue est un connexe (resp. connexe par arcs).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Connexité par arcs $\implies$ Connexité
 
@@ -61,7 +61,7 @@ Soit $(X, \mathcal{T})$ un espace topologique.
    - $0 \in A$ (car $\gamma(0)=x \in U$) et $1 \in B$ (car $\gamma(1)=y \in V$).
 5. **Conclusion :** On a partitionné $[0, 1]$ en deux ouverts non vides disjoints. Or, on sait que $[0, 1]$ est connexe (théorème admis ici, basé sur la propriété de la borne supérieure). C'est une contradiction. Donc $X$ est connexe.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Les connexes de $\mathbb{R}$
 **Énoncé :** Montrer que les seules parties connexes de $\mathbb{R}$ sont les intervalles.
@@ -75,7 +75,7 @@ Soit $(X, \mathcal{T})$ un espace topologique.
 - **Connexe :** C'est l'adhérence d'un ensemble connexe par arcs (le graphe de $\sin(1/x)$ pour $x>0$), donc c'est connexe.
 - **Non connexe par arcs :** On ne peut pas tracer de chemin continu qui "arrive" à l'origine depuis la droite car la fonction oscille infiniment vite en se rapprochant de 0.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Dans l'étude des **Surfaces de Perte** (Loss Landscapes) des réseaux de neurones profonds, la connexité des minima est un sujet de recherche majeur.
 - **Exemple Concret :**
@@ -83,7 +83,7 @@ Soit $(X, \mathcal{T})$ un espace topologique.
     - **Algorithmes de Clustering :** Le clustering basé sur la densité (comme **DBSCAN**) définit un cluster comme une composante connexe d'un ensemble de points "denses". Si deux points peuvent être reliés par une chaîne de points proches, ils appartiennent au même groupe.
     - **Générateurs de graphes :** Pour garantir qu'une molécule générée par une IA est valide, on doit souvent vérifier que son graphe chimique est connexe (tous les atomes sont liés entre eux).
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 52 (Applications continues entre espaces topologiques et définition fine des homéomorphismes.).md]], [[Jalon 13 (Structure de R).md]]
 - **Concepts Futurs dépendants :** [[Jalon 109 (Topologie des sous-variétés de Rn).md]], [[Jalon 115 (Démonstration du théorème de Stokes généralisé).md]]

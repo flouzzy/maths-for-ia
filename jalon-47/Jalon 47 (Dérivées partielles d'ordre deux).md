@@ -21,7 +21,7 @@ next: "[[Jalon 48 (Livrable IA).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour ne pas s'arrêter n'importe où. Le gradient s'annule aussi bien au sommet d'une montagne qu'au fond d'un ravin. Les dérivées secondes permettent de faire la différence entre les deux et de garantir qu'on a bien trouvé la solution la plus basse possible.
 - **Visualisation :** La forme locale de la surface. Une Hessienne positive correspond à un bol (convexe), une Hessienne négative à une cloche (concave).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Dérivées d'ordre deux
 
@@ -41,7 +41,7 @@ Soit $f : U \subset \mathbb{R}^n \to \mathbb{R}$ une fonction.
 > Soit $f$ une fonction de classe $\mathcal{C}^2$ en $a \in U$. La **matrice hessienne** de $f$ en $a$ est la matrice symétrique $H_f(a)$ de taille $n \times n$ définie par :
 > $$H_f(a) = \begin{pmatrix} \frac{\partial^2 f}{\partial x_1^2}(a) & \dots & \frac{\partial^2 f}{\partial x_1 \partial x_n}(a) \\ \vdots & \ddots & \vdots \\ \frac{\partial^2 f}{\partial x_n \partial x_1}(a) & \dots & \frac{\partial^2 f}{\partial x_n^2}(a) \end{pmatrix}$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Utilisation de la Hessienne pour l'étude des points critiques
 
@@ -58,7 +58,7 @@ Soit $a$ un point critique de $f$ (c'est-à-dire $\nabla f(a) = 0$).
    - **Si $\Delta < 0$ :** Point selle (col).
    - **Si $\Delta = 0$ :** On ne peut pas conclure (cas dégénéré).
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Calcul de Hessienne et nature d'un point
 **Énoncé :** Soit $f(x, y) = x^3 + y^3 - 3xy$.
@@ -80,7 +80,7 @@ Soit $a$ un point critique de $f$ (c'est-à-dire $\nabla f(a) = 0$).
 3. Par symétrie, $\frac{\partial^2 f}{\partial y^2} = \frac{2x^2 - 2y^2}{(x^2+y^2)^2}$.
 4. Somme : $\Delta f = 0$. (On dit que $f$ est une fonction harmonique).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** La courbure de la fonction de perte dictée par la Hessienne est ce qui rend l'entraînement des réseaux de neurones difficile. C'est le problème du **conditionnement**.
 - **Exemple Concret :**
@@ -88,7 +88,7 @@ Soit $a$ un point critique de $f$ (c'est-à-dire $\nabla f(a) = 0$).
     - **Adam et RMSProp :** Ces algorithmes populaires utilisent une estimation de la courbure (via les moments d'ordre 2 du gradient) pour ajuster le pas d'apprentissage direction par direction. C'est une manière "pauvre" d'utiliser l'information contenue dans la Hessienne sans la calculer.
     - **Stabilité de l'entraînement :** Si la plus grande valeur propre de la Hessienne est très grande, le gradient change très brusquement, ce qui force à utiliser un learning rate minuscule pour ne pas faire exploser le modèle.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 45 (Différentiabilité).md]], [[Jalon 33 (Formes quadratiques).md]]
 - **Concepts Futurs dépendants :** [[Jalon 48 (Livrable IA).md]], [[Jalon 117 (Calcul des variations).md]]

@@ -22,7 +22,7 @@ next: "[[Jalon 51 (Espaces métriques).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour découper proprement l'espace. En IA, on veut souvent séparer les "bons" exemples des "mauvais". Ces opérateurs permettent de définir mathématiquement ce qu'est une "marge de sécurité" (l'intérieur) ou une "zone d'incertitude" (la frontière).
 - **Visualisation :** Un disque plein (adhérence), un disque sans son bord (intérieur), et le cercle qui l'entoure (frontière).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $(X, \mathcal{T})$ un espace topologique et $A$ une partie de $X$.
 
@@ -46,14 +46,14 @@ Soit $(X, \mathcal{T})$ un espace topologique et $A$ une partie de $X$.
 > On dit que $A$ est **dense** dans $X$ si son adhérence est l'espace tout entier : $\bar{A} = X$.
 > Cela signifie qu'on peut approcher n'importe quel point de $X$ aussi près qu'on veut par des points de $A$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : $x \in \bar{A} \iff$ tout voisinage de $x$ rencontre $A$
 
 1. **Sens direct ($\implies$) :** Supposons $x \in \bar{A}$. Par l'absurde, supposons qu'il existe un voisinage $V$ de $x$ tel que $V \cap A = \emptyset$. Par définition du voisinage, il existe un ouvert $U$ tel que $x \in U \subset V$. Alors $U \cap A = \emptyset$, donc $A \subset X \setminus U$. Comme $U$ est ouvert, $X \setminus U$ est fermé. Mais $\bar{A}$ est le plus petit fermé contenant $A$, donc $\bar{A} \subset X \setminus U$. Comme $x \in U$, alors $x \notin X \setminus U$, donc $x \notin \bar{A}$. Contradiction.
 2. **Sens réciproque ($\impliedby$) :** Supposons que tout voisinage de $x$ rencontre $A$. Soit $F$ un fermé quelconque contenant $A$. Montrons que $x \in F$. Si $x \notin F$, alors $x \in X \setminus F$. Or $X \setminus F$ est un ouvert, c'est donc un voisinage de $x$. Par hypothèse, $(X \setminus F) \cap A \neq \emptyset$. Mais c'est impossible car $A \subset F$. Donc $x$ appartient à tous les fermés contenant $A$, donc $x \in \bar{A}$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Topologie de $\mathbb{Q}$ dans $\mathbb{R}$
 **Énoncé :** Déterminer l'intérieur, l'adhérence et la frontière de $\mathbb{Q}$ dans $\mathbb{R}$.
@@ -69,14 +69,14 @@ On utilise la caractérisation par les voisinages. Un voisinage de $(x, y)$ dans
 $(V_x \times V_y) \cap (A \times B) \neq \emptyset \iff (V_x \cap A) \neq \emptyset \text{ et } (V_y \cap B) \neq \emptyset$.
 Ceci est vrai pour tous $V_x, V_y$ si et seulement si $x \in \bar{A}$ et $y \in \bar{B}$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En classification, on cherche une **Frontière de Décision** (Decision Boundary). C'est l'ensemble des points où le modèle hésite entre deux classes. Topologiquement, c'est la frontière des deux ensembles de points classés "A" ou "B".
 - **Exemple Concret :**
     - **SVM (Support Vector Machines) :** L'objectif est de trouver l'hyperplan qui maximise la distance entre la frontière et les points les plus proches (les vecteurs supports). On travaille ici sur l'intérieur des marges.
     - **Robustesse Adversaire :** Une "attaque adversaire" consiste à prendre un point $x$ dans l'intérieur de la classe "Chat" et à lui ajouter un petit bruit pour le pousser de l'autre côté de la **frontière** de décision, dans la classe "Chien", tout en restant dans l'**adhérence** visuelle de l'image originale. Comprendre la topologie de ces frontières permet de créer des modèles plus robustes.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 49 (Espaces topologiques généraux).md]], [[Jalon 13 (Structure de R).md]]
 - **Concepts Futurs dépendants :** [[Jalon 51 (Espaces métriques).md]], [[Jalon 52 (Applications continues entre espaces topologiques et définition fine des homéomorphismes.).md]]

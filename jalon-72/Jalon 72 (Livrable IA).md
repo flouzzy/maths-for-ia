@@ -21,7 +21,7 @@ next: "[[Jalon 73 (Définition des espaces Lp).md]]"
 - **Le "Pourquoi on a inventé ça" :** En IA, on ne peut pas simplement dire "le modèle est proche de la réalité". On a besoin d'un nombre précis pour mesurer l'erreur. Comme nous travaillons avec des probabilités, on utilise une mesure issue de la théorie de l'information. C'est la "boussole" qui guide l'apprentissage : on modifie le modèle pour réduire le score KL.
 - **Visualisation :** Deux cloches (Gaussiennes). La divergence KL est une surface qui mesure l'aire où les deux cloches ne se superposent pas, pondérée par l'importance (la probabilité) de chaque zone.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $(\mathcal{X}, \mathcal{F}, \lambda)$ un espace mesuré (généralement $\mathbb{R}^n$ avec la mesure de Lebesgue). Soient $P$ et $Q$ deux mesures de probabilité sur cet espace.
 
@@ -43,7 +43,7 @@ Supposons que $P$ et $Q$ admettent des densités $p$ et $q$ par rapport à $\lam
 
 > **Asymétrie :** Attention, en général $D_{KL}(P \| Q) \neq D_{KL}(Q \| P)$. Ce n'est donc pas une "distance" au sens métrique du terme (Jalon 51).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration de la positivité (via l'inégalité de Jensen)
 
@@ -59,7 +59,7 @@ Supposons que $P$ et $Q$ admettent des densités $p$ et $q$ par rapport à $\lam
    $D_{KL}(P \| Q) \ge \phi(1) = -\ln(1) = 0$.
    La positivité est démontrée.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : KL entre deux Gaussiennes
 **Énoncé :** Calculer $D_{KL}(P \| Q)$ pour $P = \mathcal{N}(\mu_1, \sigma^2)$ et $Q = \mathcal{N}(\mu_2, \sigma^2)$.
@@ -78,7 +78,7 @@ $H(P, Q) = -\int p(x) \ln q(x) dx$.
 On remarque que $D_{KL}(P \| Q) = \int p \ln p - \int p \ln q = -H(P) + H(P, Q)$.
 Comme l'entropie des données $H(P)$ est constante par rapport aux paramètres du modèle, minimiser $H(P, Q)$ est équivalent à minimiser $D_{KL}$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** La divergence KL est la fonction de perte par défaut pour tous les modèles probabilistes. Elle fait le lien entre la **Théorie de la Mesure** et la **Théorie de l'Information**.
 - **Example Concret :**
@@ -86,7 +86,7 @@ Comme l'entropie des données $H(P)$ est constante par rapport aux paramètres d
     - **Apprentissage par Renforcement (PPO) :** L'algorithme Proximal Policy Optimization utilise une contrainte KL pour éviter que la nouvelle politique ne s'éloigne trop de l'ancienne, garantissant ainsi une mise à jour stable.
     - **Classification Multi-classe :** Le calcul de la perte Softmax est rigoureusement une minimisation de la divergence KL entre la distribution "one-hot" des étiquettes et les probabilités prédites par le réseau.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 71 (Théorèmes de Fubini-Tonelli).md]], [[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.).md]]
 - **Concepts Futurs dépendants :** [[Jalon 85 (Axiomes de Kolmogorov).md]], [[Jalon 140 (Classifieur de Bayes optimal).md]]

@@ -27,7 +27,7 @@ Les intelligences artificielles modernes (comme ChatGPT ou Midjourney) sont giga
 **Visualisation :**
 C'est comme descendre une montagne dans le brouillard en cherchant le point le plus bas (la descente de gradient), mais avec un sol gluant qui "tire" tes chaussures vers l'origine (l'opérateur proximal qui force les poids à s'annuler), tout en ayant des barrières infranchissables autour de toi (les contraintes KKT). À chaque pas, tu avances vers la vallée, puis un élastique géant (le proximal) te ramène violemment vers le zéro, "tuant" au passage les petits pas inutiles, te laissant sur un chemin minimaliste, juste au bord des barrières.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -71,7 +71,7 @@ $$ \text{prox}_{\gamma g}(v) = \arg\min_{x \in \mathbb{R}^d} \left\{ g(x) + \fra
 > L'inclusion différentielle de la stationnarité KKT est rigoureusement équivalente à l'équation de point fixe suivante pour tout pas $\gamma > 0$ :
 > $$ x^* = \text{prox}_{\gamma g} \left( x^* - \gamma \left( \nabla f(x^*) + \sum_{i=1}^m \mu_i^* \nabla c_i(x^*) + \sum_{j=1}^p \nu_j^* \nabla h_j(x^*) \right) \right) $$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration du Lemme (Caractérisation proximale de la stationnarité)
 
@@ -108,7 +108,7 @@ $$ \text{prox}_{\gamma g}(v) = \arg\min_{x \in \mathbb{R}^d} \left\{ g(x) + \fra
 6. **Conclusion :**
    Nous avons ainsi démontré rigoureusement que la stationnarité d'un problème composite sous contraintes est équivalente à un point fixe de la composée entre une étape de descente de gradient sur le Lagrangien lisse et une étape d'opérateur proximal pour la fonction non-lisse. Cette preuve est la clé de voûte de l'algorithme "Proximal Gradient Descent". $\blacksquare$
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Calcul de l'Opérateur Proximal de la Norme L1 (Soft-Thresholding)
 **Énoncé :**
@@ -197,7 +197,7 @@ D'après les conditions de complémentarité ($\mu_i^* c_i(x^*) = 0$), puisque $
 
 **Conclusion :** La solution globale est $w_1^* = 0$ et $w_2^* = 1.75$. Le multiplicateur de Lagrange optimal est $\mu^* = 0$. Ce cas est sublime : l'élagage structurel (Pruning via $\ell_1$) a été si agressif qu'il a naturellement repoussé la solution dans l'intérieur de l'ensemble de contraintes ($w_1+w_2 \leq 2$), rendant la contrainte d'énergie "inactive" à l'optimum. Le neurone 1 a été "pruné" ($w_1 = 0$).
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :**
 L'entraînement moderne de réseaux profonds massifs (Large Language Models, ResNets) produit des matrices de poids sur-paramétrées (des milliards de paramètres). Pour déployer ces modèles sur des smartphones (Edge AI) ou réduire leur empreinte carbone, nous appliquons un **"Sparse Learning"**. Mathématiquement, c'est l'introduction de la pénalité $g(x) = \lambda \|x\|_1$ (régularisation LASSO) et potentiellement de contraintes mémoire (budget FLOPs modélisé par $c_i(x) \leq 0$). La Descente de Gradient Proximal (Proximal Gradient Descent ou algorithme FISTA) permet, via l'opérateur de Soft-Thresholding, de ramener *exactement* à zéro des millions de poids à chaque itération d'optimisation. Contrairement à une descente de gradient classique (SGD) qui produit des petits poids ($w_i \approx 10^{-5}$), le proximal garantit le *zéro machine* strict, permettant une compression physique du tenseur en mémoire.
@@ -205,7 +205,7 @@ L'entraînement moderne de réseaux profonds massifs (Large Language Models, Res
 - **Exemple Concret :**
 Dans un algorithme d'élagage en ligne pour un réseau convolutif, si l'on veut contraindre une couche $l$ à n'utiliser qu'un budget énergétique fini $E_{max}$, on pose la contrainte affine $\mathbf{1}^\top |W^{(l)}| \leq E_{max}$. Le solveur Proximal KKT alternera entre une étape d'adaptation des poids aux données d'entraînement (Gradient sur la Cross-Entropy), un seuillage (Opérateur Proximal) pour "tuer" les filtres redondants, et une projection sur le demi-espace défini par $E_{max}$ via l'activation dynamique d'un multiplicateur dual $\mu^*$.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 45 (Différentiabilité).md]], [[Jalon 122 (Notion de sous-gradient).md]], [[Jalon 124 (Conditions de Karush-Kuhn-Tucker).md]], [[Jalon 125 (Opérateurs proximaux).md]]
 - **Concepts Futurs dépendants :** [[Jalon 133 (Modèle PAC).md]]

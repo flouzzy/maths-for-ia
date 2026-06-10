@@ -23,7 +23,7 @@ next: "[[Jalon 9 (Calcul matriciel).md]]"
 - **Le "Pourquoi on a inventé ça" :** La plupart des phénomènes physiques simples sont linéaires. En IA, transformer une image ou un texte revient souvent à appliquer une suite de ces machines. Savoir ce qui est "perdu" (le noyau) est vital.
 - **Visualisation :** Imaginez projeter l'ombre d'un cube 3D sur une feuille 2D. L'ombre est l'**Image** (2D). La direction de la lumière qui "écrase" la profondeur est le **Noyau** (1D). $3 = 1 + 2$. C'est le théorème du rang !
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -45,7 +45,7 @@ Soient $E$ et $F$ deux $\mathbb{K}$-espaces vectoriels.
 > Soit $E$ un espace vectoriel de dimension finie. Pour toute application linéaire $f : E \to F$, on a :
 > $$\dim E = \dim(\ker f) + \text{rg}(f)$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Théorème du Rang
@@ -80,7 +80,7 @@ Soit $f \in \mathcal{L}(E, F)$ avec $\dim E = n$.
 4. **Conclusion :** $(f(e_{p+1}), ..., f(e_n))$ est une base de $\text{Im } f$. Son cardinal est $n - p$.
    Ainsi, $\text{rg}(f) = \dim E - \dim(\ker f)$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application Directe (Noyau et Image)
@@ -110,11 +110,11 @@ Soit $f \in \mathcal{L}(E, F)$ avec $\dim E = n$.
    - Comme $p(u) = 0$, on en déduit $u = 0$. L'intersection est réduite à $\{0\}$.
 **Conclusion :** $E = \ker p \oplus \text{Im } p$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** Les couches denses (Dense Layers / Linear Layers) des réseaux de neurones sont des applications affines (Linéaire + Translation).
 - **Exemple Concret :** Dans la **réduction de dimension** et la **Compression de Réseaux**, on cherche à savoir si une couche linéaire a un gros **Noyau**. Si $\dim(\ker f)$ est grand, cela signifie que beaucoup de combinaisons d'entrées sont "oubliées" par le réseau. Le **Rang** de la matrice de poids d'une couche détermine la "capacité expressive" de cette couche. Un réseau "Low-Rank" est plus rapide à entraîner et moins sujet au sur-apprentissage (Overfitting).
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 7 (Espaces vectoriels abstraits)]]
 - **Concepts Futurs dépendants :** [[Jalon 9 (Calcul matriciel)]], [[Jalon 30 (Trigonalisation d'endomorphismes et décomposition de Dunford.)]], [[Jalon 46 (Matrice jacobienne)]]

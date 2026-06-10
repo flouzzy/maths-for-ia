@@ -21,7 +21,7 @@ next: "[[Jalon 36 (Livrable IA).md]]"
 - **Le "Pourquoi on a inventé ça" :** Les mathématiciens voulaient traduire des concepts géométriques flous ("bord", "intérieur", "limité") en un langage logique basé sur les **suites**. C'est beaucoup plus facile de manipuler une liste de points $(x_n)$ qui bougent que d'essayer de visualiser des formes abstraites dans des espaces à 1000 dimensions.
 - **Visualisation :** Un disque sans son bord est ouvert. Un disque avec son bord est fermé. Le disque entier est compact car il est "petit" (borné) et "complet" (fermé).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 ### A. Définitions Formelles
 
@@ -46,7 +46,7 @@ Soit $(E, \| \cdot \|)$ un espace vectoriel normé.
 > **Théorème des Bornes Atteintes :**
 > Toute application continue $f : K \to \mathbb{R}$ sur un compact $K$ est bornée et atteint ses bornes. (Il existe $x_{min}, x_{max} \in K$ tels que $f(x_{min}) = \inf f$ et $f(x_{max}) = \sup f$).
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Fermé $\iff$ Caractérisation séquentielle
 
@@ -59,7 +59,7 @@ Soit $(E, \| \cdot \|)$ un espace vectoriel normé.
 1. **Nécessité :** Si $K$ est compact, il est fermé (caractérisation séquentielle) et borné (sinon on construit une suite $x_n$ avec $\|x_n\| \to \infty$ sans sous-suite convergente).
 2. **Suffisance :** Si $K \subset E$ est borné, ses coordonnées dans une base sont bornées. Par le théorème de Bolzano-Weierstrass sur $\mathbb{R}$ appliqué successivement à chaque coordonnée, on extrait une sous-suite convergente dans $E$. Comme $K$ est fermé, la limite est dans $K$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Fermeture de l'ensemble des matrices orthogonales
 **Énoncé :** Montrer que $\mathcal{O}_n(\mathbb{R}) = \{ M \in \mathcal{M}_n(\mathbb{R}) \mid M^T M = I_n \}$ est un compact de $\mathcal{M}_n(\mathbb{R})$.
@@ -81,14 +81,14 @@ Comme $F$ est fermé, $y \in F$.
 Par continuité de la norme, $\|x - z_{\phi(n)}\| \to \|x - y\|$. Or la limite est $d$.
 Donc $\|x - y\| = d$. Le minimum est atteint.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** En optimisation (entraînement de modèles), on veut minimiser une fonction de coût $J(\theta)$. Pour être sûr qu'un minimum **existe**, on invoque souvent le théorème des bornes atteintes sur un ensemble de paramètres **compact**.
 - **Exemple Concret :**
     - **Poids bornés :** Dans certains réseaux de neurones, on impose une contrainte $\|w\| \le C$ (Weight Clipping). L'ensemble des poids devient alors un compact (boule fermée). Cela garantit mathématiquement que l'algorithme ne divergera pas vers l'infini et qu'il existe une configuration "optimale" dans cette zone.
     - **Stabilité de GANs :** La compacité de l'espace des paramètres aide à prouver l'existence d'équilibres de Nash dans les jeux de minimax utilisés pour les réseaux antagonistes (GANs).
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 34 (Topologie élémentaire des espaces vectoriels normés).md]], [[Jalon 15 (Sous-suites).md]]
 - **Concepts Futurs dépendants :** [[Jalon 54 (Compacité générale).md]], [[Jalon 123 (Problèmes d'optimisation sous contraintes).md]]

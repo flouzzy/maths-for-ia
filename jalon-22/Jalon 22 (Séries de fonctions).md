@@ -21,7 +21,7 @@ next: "[[Jalon 23 (Séries entières).md]]"
 - **Le "Pourquoi on a inventé ça" :** De nombreux signaux complexes (comme la voix humaine) ne sont pas des fonctions simples, mais des sommes infinies de fonctions simples (des ondes). Pour manipuler ces signaux (les filtrer, les compresser), on doit savoir quand on a le droit d'échanger l'ordre des opérations mathématiques.
 - **Visualisation :** Imaginez empiler des couches de calque transparents. Chaque calque a un dessin. La série est l'image finale vue par transparence. La convergence normale garantit que l'image finale n'est pas un gribouillis illisible.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -46,7 +46,7 @@ Soit $\sum u_n(x)$ une série de fonctions définies sur $D \subset \mathbb{R}$.
 > **Théorème d'Interversion $\sum$ et Dérivation :**
 > Si les $u_n$ sont de classe $C^1$, si $\sum u_n(x_0)$ converge, et si $\sum u'_n$ converge **uniformément**, alors $S$ est de classe $C^1$ et $S' = \sum u'_n$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : La convergence normale implique la convergence uniforme
@@ -79,7 +79,7 @@ Soit $\sum u_n$ une série de fonctions convergeant normalement sur $D$. Montron
 5. **Conclusion :**
    La suite $(S_N)$ vérifie le critère de Cauchy uniforme sur $D$. Puisque l'espace des fonctions bornées sur $D$ muni de la norme $\| \cdot \|_\infty$ est complet, la série converge uniformément.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Étude de convergence normale
@@ -106,7 +106,7 @@ Soit $\sum u_n$ une série de fonctions convergeant normalement sur $D$. Montron
    - $\int_0^1 \frac{x^n}{n^2} dx = \frac{1}{n^2} [ \frac{x^{n+1}}{n+1} ]_0^1 = \frac{1}{n^2(n+1)}$.
 **Conclusion :** L'égalité est justifiée par la convergence normale de la série sur le segment d'intégration.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** Les séries de fonctions sont le fondement de l'**Analyse Harmonique** et des **Séries de Fourier**. Tout signal complexe (audio, série temporelle boursière) est décomposé en une série de fonctions sinus et cosinus.
 - **Exemple Concret :** Dans la **Compression de Données (Spectrogrammes)** et les **Réseaux de Neurones Récurrents (RNN)**, on manipule des sommes infinies pour modéliser des dépendances temporelles. La convergence normale garantit que si on ajoute de plus en plus de détails (harmoniques) pour reconstruire un son, le signal résultant ne diverge pas et reste "écoutable" (physiquement possible). Les théorèmes d'interversion permettent de dériver ces séries pour calculer la vitesse de changement d'un signal (fréquence instantanée).

@@ -19,7 +19,7 @@ next: "[[Jalon 15 (Sous-suites).md]]"
 - **Le "Pourquoi on a inventé ça" :** On ne peut pas toujours calculer une valeur exacte (comme $\pi$ ou $e$). Mais on peut s'en approcher de plus en plus. Les suites sont les "chemins" vers ces valeurs. La définition rigoureuse ($\epsilon, N$) permet de dire précisément quand on est "assez proche" pour que la différence ne compte plus.
 - **Visualisation :** Imaginez des points sur un graphique qui sautillent. La limite est une ligne horizontale. Si la suite converge, les points finissent par "s'écraser" sur cette ligne et ne s'en éloignent plus jamais, même d'un millimètre.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
@@ -41,7 +41,7 @@ Soit $(u_n)_{n \in \mathbb{N}}$ une suite d'éléments de $\mathbb{K}$ ($\mathbb
 > **Complétude de $\mathbb{R}$ et $\mathbb{C}$ :**
 > Dans $\mathbb{R}$ ou $\mathbb{C}$, une suite converge si et seulement si elle est de Cauchy.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Unicité de la limite
@@ -82,7 +82,7 @@ Supposons qu'une suite $(u_n)$ converge vers deux limites distinctes $l_1$ et $l
    Ceci est une contradiction flagrante. Notre hypothèse de départ ($l_1 \neq l_2$) est donc fausse.
    La limite est unique : $l_1 = l_2$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application de la définition ($\epsilon, N$)
@@ -113,11 +113,11 @@ Supposons qu'une suite $(u_n)$ converge vers deux limites distinctes $l_1$ et $l
    - Comme $l \ge 0$, alors $l = 2$.
 **Conclusion :** $\lim u_n = 2$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 *Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** L'**Apprentissage (Learning)** est un processus itératif. On définit une suite de paramètres $W_0, W_1, ..., W_n$. Dire que l'IA a "appris", c'est dire que cette suite converge vers un minimum de la fonction d'erreur.
 - **Exemple Concret :** Dans la **Descente de Gradient Stochastique (SGD)**, on définit un "taux d'apprentissage" (Learning Rate) $\eta_n$. Pour que les poids du réseau convergent vers une solution stable, la suite des taux doit vérifier certaines propriétés de convergence (Critères de Robbins-Monro). Si la suite des poids ne converge pas (elle diverge ou oscille), le modèle ne sera jamais capable de faire des prédictions fiables.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 13 (Structure de R)]]
 - **Concepts Futurs dépendants :** [[Jalon 15 (Sous-suites)]], [[Jalon-16]], [[Jalon 21 (Suites de fonctions)]], [[Jalon 56 (Espaces métriques complets)]]

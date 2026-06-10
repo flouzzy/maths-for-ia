@@ -21,7 +21,7 @@ next: "[[Jalon 89 (Lemmes de Borel-Cantelli).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour simplifier le monde. Si tout dépendait de tout, on ne pourrait rien calculer. En identifiant ce qui est indépendant, on peut découper un problème géant en plein de petits problèmes simples que l'on traite séparément.
 - **Visualisation :** Deux événements $A$ et $B$ sont indépendants si la proportion de $A$ à l'intérieur de $B$ est la même que la proportion de $A$ dans l'univers entier.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $(\Omega, \mathcal{F}, P)$ un espace de probabilité.
 
@@ -46,7 +46,7 @@ Soit $(\Omega, \mathcal{F}, P)$ un espace de probabilité.
 > Cela revient à dire que pour tous boréliens $B_1, B_2$ :
 > $$P(X \in B_1 \text{ et } Y \in B_2) = P(X \in B_1) \cdot P(Y \in B_2)$$
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : Indépendance $\implies \mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y]$
 
@@ -61,7 +61,7 @@ Soit $(\Omega, \mathcal{F}, P)$ un espace de probabilité.
    $$\mathbb{E}[XY] = \mathbb{E}[Y] \int_{\mathbb{R}} x dP_X(x) = \mathbb{E}[Y] \mathbb{E}[X]$$
 5. **Conclusion :** Le produit des espérances est l'espérance du produit. *Attention :* La réciproque est fausse (des variables peuvent avoir une covariance nulle sans être indépendantes).
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Indépendance et Incompatibilité
 **Énoncé :** Soient $A$ et $B$ deux événements de probabilité non nulle. Peuvent-ils être à la fois indépendants et incompatibles ($A \cap B = \emptyset$) ?
@@ -79,7 +79,7 @@ On calcule $P(X+Y = n) = \sum_{k=0}^n P(X=k \text{ et } Y=n-k)$.
 Par indépendance : $\sum_{k=0}^n P(X=k) P(Y=n-k)$.
 En remplaçant par les formules de Poisson et en utilisant le binôme de Newton, on trouve que $X+Y$ suit une loi $\mathcal{P}(\lambda_1 + \lambda_2)$.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** L'hypothèse **I.I.D.** (Independent and Identically Distributed) est le fondement de 99% des algorithmes d'IA. Elle stipule que chaque exemple de votre base de données est un tirage indépendant de la même loi de probabilité.
 - **Example Concret :**
@@ -87,7 +87,7 @@ En remplaçant par les formules de Poisson et en utilisant le binôme de Newton,
     - **DropOut :** Dans un réseau de neurones, on désactive aléatoirement des neurones de manière indépendante pendant l'entraînement. Cela force le réseau à ne pas trop compter sur une seule connexion (éviter la co-adaptation) et améliore la robustesse.
     - **Algorithmes Génératifs :** Dans les VAE, on force l'espace latent à être une Gaussienne à matrice de covariance diagonale. Cela signifie que chaque dimension du vecteur latent est **indépendante** des autres, ce qui permet de modifier un seul trait de l'image (ex: la couleur des yeux) sans changer le reste (ex: la forme du visage).
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 85 (Axiomes de Kolmogorov).md]], [[Jalon 70 (Espaces mesurés produits).md]]
 - **Concepts Futurs dépendants :** [[Jalon 92 (Démonstration rigoureuse de la loi forte des grands nombres.).md]], [[Jalon 94 (Démonstration du théorème central limite).md]]

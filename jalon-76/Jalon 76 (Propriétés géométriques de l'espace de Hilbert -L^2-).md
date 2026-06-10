@@ -21,7 +21,7 @@ next: "[[Jalon 77 (Densité des fonctions simples).md]]"
 - **Le "Pourquoi on a inventé ça" :** La plupart des outils de l'ingénieur (Fourier, ondelettes, filtrage) reposent sur l'idée de "projeter" un signal compliqué sur des briques de base simples. Pour faire une projection propre (trouver le chemin le plus court), on a besoin d'un produit scalaire. $L^2$ est le cadre naturel pour cela.
 - **Visualisation :** Un cercle dans un plan. Dans $L^2$, la "sphère unité" est parfaitement ronde, contrairement aux autres espaces $L^p$ qui peuvent être pointus (L1) ou carrés (L-infini).
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 
@@ -45,7 +45,7 @@ Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 > **Théorème de Pythagore :**
 > $f \perp g \iff \langle f, g \rangle = 0 \implies \|f+g\|^2 = \|f\|^2 + \|g\|^2$.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration de l'identité du parallélogramme
 
@@ -64,7 +64,7 @@ Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 
 C'est la propriété géométrique la plus puissante. Dans un Hilbert $H$, pour tout point $x$ et tout sous-espace fermé $M$, il existe un unique point $p \in M$ tel que $\|x-p\|$ soit minimal. Ce point est caractérisé par $\langle x-p, m \rangle = 0$ pour tout $m \in M$.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Orthogonalité de fonctions sinus/cosinus
 **Énoncé :** Sur $[0, 2\pi]$, montrer que $f(x) = \sin(x)$ et $g(x) = \cos(x)$ sont orthogonales dans $L^2$.
@@ -79,7 +79,7 @@ Les deux fonctions sont orthogonales. C'est la base des séries de Fourier.
 **Correction Détaillée :**
 On considère la projection $p_N$ sur l'espace engendré par les $N$ premiers vecteurs. Par Pythagore, $\|f\|^2 = \|p_N\|^2 + \|f-p_N\|^2 \ge \|p_N\|^2$. Or $\|p_N\|^2 = \sum_{n=1}^N |\langle f, e_n \rangle|^2$. En faisant tendre $N \to \infty$, on obtient l'inégalité de Bessel.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le Machine Learning "classique" (linéaire) n'est rien d'autre que de la géométrie dans un espace de Hilbert.
 - **Example Concret :**
@@ -87,7 +87,7 @@ On considère la projection $p_N$ sur l'espace engendré par les $N$ premiers ve
     - **Kernel Trick (RKHS) :** Dans les SVM, on envoie les données dans un espace de dimension infinie où le produit scalaire est facile à calculer (le noyau). Cet espace est un espace de Hilbert. On y fait de la géométrie simple (séparation par un plan) pour résoudre des problèmes complexes.
     - **Analyse en Composantes Principales (PCA) :** On cherche les directions (vecteurs propres) qui capturent le maximum d'énergie (norme $L^2$) des données. C'est une décomposition orthogonale dans un espace de Hilbert.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 75 (Preuve de la complétude des espaces Lp).md]], [[Jalon 26 (Espaces euclidiens).md]]
 - **Concepts Futurs dépendants :** [[Jalon 103 (Espaces de Hilbert généraux).md]], [[Jalon 126 (Noyaux définis positifs).md]]

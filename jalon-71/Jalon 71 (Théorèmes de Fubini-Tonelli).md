@@ -22,7 +22,7 @@ next: "[[Jalon 72 (Livrable IA).md]]"
 - **Le "Pourquoi on a inventé ça" :** Parfois, calculer une intégrale double est très difficile dans un sens, mais devient trivial si on change l'ordre d'intégration. Fubini est le "permis de changer d'ordre" qui simplifie la vie des mathématiciens et des ingénieurs.
 - **Visualisation :** On scanne une surface 3D tranche par tranche. On peut scanner de gauche à droite ou de l'avant vers l'arrière. Si le volume est bien défini, le scan donne la même quantité totale.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soient $(X_1, \mathcal{F}_1, \mu_1)$ et $(X_2, \mathcal{F}_2, \mu_2)$ deux espaces mesurés **$\sigma$-finis**. Soit $\pi = \mu_1 \otimes \mu_2$ la mesure produit.
 
@@ -46,7 +46,7 @@ Si la fonction peut changer de signe, on doit s'assurer qu'elle n'explose pas.
 > $$\int_{X_1} \left( \int_{X_2} |f(x, y)| d\mu_2(y) \right) d\mu_1(x) < +\infty$$
 > **Alors** $f$ est intégrable par rapport à $\pi$ et l'égalité des intégrales itérées est vraie.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Le danger de l'interversion : Un contre-exemple célèbre
 
@@ -60,7 +60,7 @@ Considérons $f(x, y) = \frac{x^2 - y^2}{(x^2 + y^2)^2}$ sur $]0, 1]^2$.
 3. **Conclusion :** $\pi/4 \neq -\pi/4$. L'ordre d'intégration change le résultat !
 4. **Pourquoi Fubini ne s'applique pas ?** Si on calcule l'intégrale de la valeur absolue $|f|$, on trouvera $+\infty$. La fonction n'est pas intégrable sur le carré. Cela montre que l'hypothèse d'intégrabilité absolue dans Fubini est **indispensable**.
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Intégrale de Gauss (Encore elle !)
 **Énoncé :** Calculer $I = \int_0^{+\infty} e^{-x^2} dx$ en calculant $I^2$ à l'aide de Fubini.
@@ -77,7 +77,7 @@ Considérons $f(x, y) = \frac{x^2 - y^2}{(x^2 + y^2)^2}$ sur $]0, 1]^2$.
 **Correction Détaillée :**
 On écrit la boule comme l'ensemble des points $(x, y, z)$ tels que $x^2 + y^2 \le 1$ and $-\sqrt{1-x^2-y^2} \le z \le \sqrt{1-x^2-y^2}$. L'application successive de Fubini ramène le calcul à une intégrale simple sur un disque, puis sur un segment.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Fubini est le socle de tout le calcul des **Marginales** et des **Conditionnelles** en probabilités. $p(x) = \int p(x, y) dy$.
 - **Example Concret :**
@@ -85,7 +85,7 @@ On écrit la boule comme l'ensemble des points $(x, y, z)$ tels que $x^2 + y^2 \
     - **Calcul du Gradient du Risque :** On veut $\nabla_\theta \mathbb{E}[L] = \nabla_\theta \int L(x, \theta) p(x) dx$. Pour passer le gradient sous l'intégrale (Jalon 69), on utilise souvent Fubini pour réorganiser les variables de manière à isoler le paramètre $\theta$.
     - **Convolution 2D :** En CNN, l'opération de convolution est une intégrale double. Fubini permet de décomposer une convolution 2D en deux convolutions 1D successives (Separable Convolutions), ce qui est beaucoup plus rapide pour un ordinateur.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 70 (Espaces mesurés produits).md]], [[Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md]]
 - **Concepts Futurs dépendants :** [[Jalon 88 (Indépendance d'événements).md]], [[Jalon 80 (Transformée de Fourier dans L1).md]]

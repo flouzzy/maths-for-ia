@@ -21,7 +21,7 @@ next: "[[Jalon 129 (Optimisation stochastique).md]]"
 - **Le "Pourquoi on a inventé ça" :** Pour comprendre comment les réseaux de neurones apprennent "vraiment". En passant du discret (les pas) au continu (le flot), on peut utiliser les outils de la physique (équations différentielles) pour prouver que l'IA va converger vers une bonne solution, même dans des espaces très complexes.
 - **Visualisation :** Un champ de vecteurs (Jalon 112) où toutes les flèches pointent vers le bas de la vallée. Le flot est la trajectoire d'un point qui suit ces flèches.
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Soit $f : \mathbb{R}^n \to \mathbb{R}$ une fonction de classe $\mathcal{C}^1$.
 
@@ -42,7 +42,7 @@ Soit $f : \mathbb{R}^n \to \mathbb{R}$ une fonction de classe $\mathcal{C}^1$.
 
 Si $f$ est convexe et admet un minimum, alors $x(t)$ converge vers un point $x^*$ tel que $\nabla f(x^*) = 0$. En dimension infinie (espaces de Hilbert), on parle de **Flots de gradient métriques**.
 
-## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
 ### Démonstration : La perte diminue toujours le long du flot
 
@@ -56,7 +56,7 @@ Si $f$ est convexe et admet un minimum, alors $x(t)$ converge vers un point $x^*
    - Si $\nabla f \neq 0$, la perte diminue strictement.
    - Si $\nabla f = 0$, la bille est arrêtée (point critique).
 
-## 4. Exercices d'Application & Pratique de Concours
+## 4. Exercices d'Application
 
 ### Exercice 1 : Flot d'une fonction quadratique
 **Énoncé :** Résoudre le flot de gradient pour $f(x) = \frac{1}{2} x^T A x$ où $A$ est une matrice symétrique définie positive.
@@ -72,7 +72,7 @@ Si $f$ est convexe et admet un minimum, alors $x(t)$ converge vers un point $x^*
 **Correction Détaillée :**
 L'approximation d'Euler pour $\dot{x} = G(x)$ est $\frac{x(t+\eta) - x(t)}{\eta} = G(x(t))$. En posant $x_k = x(k\eta)$ et $G = -\nabla f$, on retrouve exactement la formule de l'algorithme. Cela prouve que pour un pas $\eta$ très petit, l'algorithme suit la trajectoire "physique" idéale.
 
-## 5. Ancrage & Application en Intelligence Artificielle
+## 5. Application en Intelligence Artificielle
 
 - **Le Pont Théorique :** Le passage au continu permet d'utiliser les outils de la **Géométrie Riemannienne** (Jalon 116) pour définir des flots de gradient plus intelligents (Natural Gradient Flow).
 - **Example Concret :**
@@ -80,7 +80,7 @@ L'approximation d'Euler pour $\dot{x} = G(x)$ est $\frac{x(t+\eta) - x(t)}{\eta}
     - **Wasserstein Gradient Flow :** C'est le flot de gradient dans l'espace des mesures de probabilité. Il est utilisé pour prouver que les algorithmes de Langevin (utilisés dans les modèles de diffusion) convergent vers la distribution de données réelle.
     - **Flow Matching :** Une technique moderne pour entraîner des modèles génératifs ultra-rapides en apprenant à faire correspondre le flot du modèle à un flot de gradient idéal reliant le bruit aux données.
 
-## 6. Liens Sémantiques & Maillage Obsidian
+## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 112 (Champs de vecteurs et Crochet de Lie).md]], [[Jalon 45 (Différentiabilité et Gradient).md]]
 - **Concepts Futurs dépendants :** [[Jalon 129 (Optimisation stochastique).md]], [[Jalon 130 (Régularisation implicite de la descente de gradient dans les modèles sur-paramétrés.).md]]
