@@ -294,7 +294,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 141](jalon-141/Jalon-141.md)** : Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 142](jalon-142/Jalon-142.md)** : Processus de décision de Markov (MDP) sur des espaces d'états continus, opérateurs de contraction de Bellman.
 - **[Jalon 143](jalon-143/Jalon-143.md)** : Théorie spectrale des graphes, laplacien combinatoire, laplacien normalisé et étude des coupures optimales (Min-Cut). 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 144](jalon-144/Jalon%20144%20%28Le%20ph%C3%A9nom%C3%A8ne%20de%20double%20descente%29.md)** : Le phénomène de double descente : analyse de la rupture de la théorie statistique classique (compromis biais-variance) dans le régime sur-paramétré.
+- **[Jalon 144](jalon-144/Jalon-144.md)** : Le phénomène de double descente : analyse de la rupture de la théorie statistique classique (compromis biais-variance) dans le régime sur-paramétré. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalons 145 à 152](jalon-145-152/Jalons%20145%20%C3%A0%20152%20%28R%C3%A9daction%20d%27un%20article%20de%20recherche%20th%C3%A9orique%20de%20synth%C3%A8se%20analysant%20les%20garanties%20de%20g%C3%A9n%C3%A9ralisation%20PAC%20d%27une%20couche%20d%27attention%20multi-t%C3%AAtes.%29.md)** : Rédaction d'un article de recherche théorique de synthèse analysant les garanties de généralisation PAC d'une couche d'attention multi-têtes.
 - **[Jalons 153 à 156](jalon-153-156/Jalons%20153%20%C3%A0%20156%20%28Synth%C3%A8se%20finale%29.md)** : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
@@ -328,4 +328,6 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-06-09] : Upsert du Jalon 143 - Théorie spectrale des graphes. Status: Terminé.
 - [2026-06-09] : Audit & Auto-correction du Jalon 143 - Théorie spectrale des graphes. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - [2026-06-09] : Upsert du Jalon 16 - Séries numériques à termes positifs. Status: Terminé.
+- [2026-06-10] : Upsert du Jalon 144 - Le phénomène de double descente. Status: Terminé.
+- [2026-06-10] : Audit & Auto-correction du Jalon 144 - Le phénomène de double descente. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - **Date de mise à jour** : 2026-06-09
