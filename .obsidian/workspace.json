@@ -123,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "jalon-3/Jalon 3 (Quantification).md",
+                "file": "jalon-3/Jalon-3.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -227,7 +227,7 @@
     "jalon-142/Jalon-142.md",
     "jalon-143/Jalon-143.md",
     "jalon-143/README.md",
-    "jalon-3/Jalon 3 (Quantification).md",
+    "jalon-3/Jalon-3.md",
     "jalon-143/Jalon 143 (Théorie spectrale des graphes).md",
     "generate_content.py",
     "jalon-5/Jalon 5 (Applications).md",

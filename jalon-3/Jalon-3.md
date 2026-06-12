@@ -106,5 +106,5 @@ Démontrons la forme de la proposition "f n'est pas continue en $x_0$".
 - **Exemple Concret :** Dans les **moteurs de recherche sémantique** ou les **systèmes de recommandation**, on utilise des prédicats quantifiés pour exprimer des requêtes complexes : "Trouver tous les utilisateurs ($\forall$) pour lesquels il existe ($\exists$) un film de genre Science-Fiction qu'ils n'ont pas encore vu". L'ordre des quantificateurs ici détermine si on cherche des films spécifiques ou si on fait une généralisation statistique sur une population.
 
 ## 6. Liens Sémantiques
-- **Concepts Précédents requis :** [[Jalon 1 (Logique formelle)]], [[Jalon 2 (Méthodes de raisonnement)]]
-- **Concepts Futurs dépendants :** [[Jalon 4 (Théorie des ensembles)]], [[Jalon 13 (Structure de R)]]
+- **Concepts Précédents requis :** [[Jalon-1.md|Jalon 1 (Logique formelle)]], [[Jalon-2.md|Jalon 2 (Méthodes de raisonnement)]]
+- **Concepts Futurs dépendants :** [[Jalon-4.md|Jalon 4 (Théorie des ensembles)]], [[Jalon-13.md|Jalon 13 (Structure de R)]]

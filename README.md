@@ -70,7 +70,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 
 - **[Jalon 1](jalon-1/Jalon%201%20%28Logique%20formelle%29.md)** : Logique formelle, connecteurs, tables de vérité et calcul des propositions. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 2](jalon-2/Jalon%202%20%28M%C3%A9thodes%20de%20raisonnement%29.md)** : Méthodes de raisonnement (implication, contraposée, l'absurde, analyse-synthèse).
-- **[Jalon 3](jalon-3/Jalon%203%20%28Quantification%29.md)** : Quantification ($\forall, \exists$), ordre des quantificateurs et négation de propositions complexes.
+- **[Jalon 3](jalon-3/Jalon-3.md)** : Quantification ($\forall, \exists$), ordre des quantificateurs et négation de propositions complexes. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 4](jalon-4/Jalon%204%20%28Th%C3%A9orie%20des%20ensembles%29.md)** : Théorie des ensembles (ZFC), opérations sur les ensembles, ensembles des parties $\mathcal{P}(E)$.
 - **[Jalon 5](jalon-5/Jalon%205%20%28Applications%29.md)** : Applications, injections, surjections, bijections et composition de fonctions.
 - **[Jalon 6](jalon-6/Jalon%206%20%28Relations%20d%27%C3%A9quivalence%29.md)** : Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps).
@@ -332,3 +332,4 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-06-10] : Audit & Auto-correction du Jalon 144 - Le phénomène de double descente. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - **Date de mise à jour** : 2026-06-09
 - [2026-06-10] : Upsert du Jalon 2 - Méthodes de raisonnement. Status: Terminé.
+- [2026-06-12] : Upsert du Jalon 3 - Quantification. Status: Terminé.

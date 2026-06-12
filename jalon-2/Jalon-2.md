@@ -7,7 +7,7 @@ tags:
   - math/fondations
   - ia/logique-algorithmique
 prev: "[[Jalon 1 (Logique formelle).md]]"
-next: "[[Jalon 3 (Quantification).md]]"
+next: "[[Jalon-3.md]]"
 ---
 # Jalon 2 : Méthodes de raisonnement (implication, contraposée, l'absurde, analyse-synthèse)
 

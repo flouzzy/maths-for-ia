@@ -6,7 +6,7 @@ trimester: 1
 tags:
   - math/fondations
   - ia/structures-donnees
-prev: "[[Jalon 3 (Quantification).md]]"
+prev: "[[Jalon-3.md]]"
 next: "[[Jalon 5 (Applications).md]]"
 ---
 # Jalon 4 : Théorie des ensembles (ZFC), opérations sur les ensembles, ensembles des parties $\mathcal{P}(E)$
