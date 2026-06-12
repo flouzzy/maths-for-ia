@@ -6,7 +6,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 ### Trimestre 1 : logique, ensembles et algèbre linéaire de base
 - [x] [[jalon-1/Jalon 1 (Logique formelle).md|Jalon 1 : Logique formelle]] : Logique formelle, connecteurs, tables de vérité et calcul des propositions.
 - [x] [[jalon-2/Jalon-2.md|Jalon 2 : Méthodes de raisonnement]] : Méthodes de raisonnement (implication, contraposée, l'absurde, analyse-synthèse).
-- [ ] [[jalon-3/Jalon 3 (Quantification).md|Jalon 3 : Quantification]] : Quantification ($\\forall, \\exists$), ordre des quantificateurs et négation de propositions complexes.
+- [x] [[jalon-3/Jalon-3.md|Jalon 3 : Quantification]] : Quantification ($\\forall, \\exists$), ordre des quantificateurs et négation de propositions complexes.
 - [ ] [[jalon-4/Jalon 4 (Théorie des ensembles).md|Jalon 4 : Théorie des ensembles]] : Théorie des ensembles (ZFC), opérations sur les ensembles, ensembles des parties $\\mathcal{P}(E)$.
 - [ ] [[jalon-5/Jalon 5 (Applications).md|Jalon 5 : Applications]] : Applications, injections, surjections, bijections et composition de fonctions.
 - [ ] [[jalon-6/Jalon 6 (Relations d'équivalence).md|Jalon 6 : Relations d'équivalence]] : Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps).
