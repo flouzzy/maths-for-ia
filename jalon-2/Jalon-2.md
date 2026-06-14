@@ -109,4 +109,4 @@ Nous voulons démontrer que $\sqrt{2} \notin \mathbb{Q}$.
 
 ## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 1 (Logique formelle)]]
-- **Concepts Futurs dépendants :** [[Jalon 3 (Quantification)]], [[Jalon 4 (Théorie des ensembles)]]
+- **Concepts Futurs dépendants :** [[Jalon 3 (Quantification)]], [[Jalon-4]]

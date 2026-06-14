@@ -6,7 +6,7 @@ trimester: 1
 tags:
   - math/fondations
   - ia/transformation-donnees
-prev: "[[Jalon 4 (Théorie des ensembles).md]]"
+prev: "[[Jalon-4.md]]"
 next: "[[Jalon 6 (Relations d'équivalence).md]]"
 ---
 
@@ -103,5 +103,5 @@ Soient $f : E \to F$ et $g : F \to G$. Montrons que si $f$ et $g$ sont injective
 - **Exemple Concret :** Dans les **Normalizing Flows** (modèles génératifs d'IA), on cherche à apprendre une suite de transformations $f_1, f_2, ..., f_n$ qui sont toutes des **bijections**. Pourquoi ? Parce qu'une bijection permet de transformer une distribution de probabilité simple (comme une Gaussienne) en une distribution complexe (une image), tout en étant capable de faire le calcul inverse (calculer la probabilité d'une image) de manière exacte. Si une couche n'est pas bijective, on perd de l'information et le modèle devient "aveugle" à certaines données.
 
 ## 6. Liens Sémantiques
-- **Concepts Précédents requis :** [[Jalon 4 (Théorie des ensembles)]]
+- **Concepts Précédents requis :** [[Jalon-4]]
 - **Concepts Futurs dépendants :** [[Jalon 6 (Relations d'équivalence)]], [[Jalon 52 (Applications continues entre espaces topologiques et définition fine des homéomorphismes.)]], [[Jalon 111 (Applications différentiables entre variétés)]]
