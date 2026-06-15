@@ -1,73 +1,103 @@
----
-uuid: "jalon-4-exo-08"
-title: "Exercice 08 - 4 étoiles"
----
-# Exercice 08 : Distributivité de l'intersection sur la différence symétrique
+# Exercice 8 : Caractérisation de l'Union des Ensembles des Parties
+
 **Difficulté :** ⭐⭐⭐⭐
+**Thème :** Ensembles des parties, opérations ensemblistes, inclusions d'ensembles.
 
 ## Énoncé
-Soient $E$ un ensemble non vide, et $A$, $B$, $C$ trois parties quelconques de $E$.
-Démontrer l'égalité suivante :
-$$ (A \Delta B) \cap C = (A \cap C) \Delta (B \cap C) $$
-où $\Delta$ désigne la différence symétrique et $\cap$ désigne l'intersection.
+Soient $A$ et $B$ deux ensembles arbitraires. Démontrer l'équivalence suivante :
+$$ \mathcal{P}(A) \cup \mathcal{P}(B) = \mathcal{P}(A \cup B) \iff (A \subseteq B \text{ ou } B \subseteq A) $$
 
 ## Correction Détaillée
-*   **Analyse de l'énoncé :**
-    L'objectif est de démontrer l'égalité entre les deux ensembles $(A \Delta B) \cap C$ et $(A \cap C) \Delta (B \cap C)$. Pour ce faire, nous allons employer la méthode des fonctions indicatrices. Cette approche consiste à montrer que les fonctions indicatrices des deux ensembles sont identiques pour tout élément $x$ appartenant à l'ensemble universel $E$. L'égalité des fonctions indicatrices pour tout $x \in E$ est une condition nécessaire et suffisante pour l'égalité des ensembles correspondants.
 
-*   **Résolution pas-à-pas :**
-    Soient $A$, $B$, $C$ des parties de l'ensemble non vide $E$.
-    Soit $x$ un élément quelconque et arbitraire de $E$.
-    Nous rappelons la définition de la fonction indicatrice d'une partie $X$ de $E$, notée $\mathbf{1}_X(x)$, qui est une fonction de $E$ dans l'ensemble $\{0, 1\}$ définie comme suit :
-    $$ \mathbf{1}_X(x) = \begin{cases} 1 & \text{si } x \in X \\ 0 & \text{si } x \notin X \end{cases} $$
-    Pour toutes parties $X$ et $Y$ de $E$, les fonctions indicatrices vérifient les propriétés algébriques suivantes :
-    1.  $\mathbf{1}_{X \cap Y}(x) = \mathbf{1}_X(x) \cdot \mathbf{1}_Y(x)$
-    2.  $\mathbf{1}_{X \cup Y}(x) = \mathbf{1}_X(x) + \mathbf{1}_Y(x) - \mathbf{1}_X(x) \cdot \mathbf{1}_Y(x)$
-    3.  $\mathbf{1}_{X^c}(x) = 1 - \mathbf{1}_X(x)$
-    4.  $\mathbf{1}_{X \setminus Y}(x) = \mathbf{1}_X(x) \cdot (1 - \mathbf{1}_Y(x))$
-    5.  $\mathbf{1}_{X \Delta Y}(x) = \mathbf{1}_X(x) + \mathbf{1}_Y(x) - 2 \cdot \mathbf{1}_X(x) \cdot \mathbf{1}_Y(x)$
-        Démontrons la propriété 5 en utilisant la définition de la différence symétrique :
-        Par définition, la différence symétrique $X \Delta Y$ est égale à $(X \setminus Y) \cup (Y \setminus X)$.
-        Les ensembles $(X \setminus Y)$ et $(Y \setminus X)$ sont disjoints, c'est-à-dire $(X \setminus Y) \cap (Y \setminus X) = \emptyset$.
-        Par conséquent, la fonction indicatrice de leur union est la somme de leurs fonctions indicatrices (propriété 2 simplifiée pour ensembles disjoints, ou directement par définition) :
-        $$ \mathbf{1}_{X \Delta Y}(x) = \mathbf{1}_{(X \setminus Y) \cup (Y \setminus X)}(x) = \mathbf{1}_{X \setminus Y}(x) + \mathbf{1}_{Y \setminus X}(x) $$
-        En appliquant la propriété 4 pour chaque terme :
-        $$ \mathbf{1}_{X \Delta Y}(x) = \mathbf{1}_X(x) \cdot (1 - \mathbf{1}_Y(x)) + \mathbf{1}_Y(x) \cdot (1 - \mathbf{1}_X(x)) $$
-        Développons cette expression :
-        $$ \mathbf{1}_{X \Delta Y}(x) = \mathbf{1}_X(x) - \mathbf{1}_X(x)\mathbf{1}_Y(x) + \mathbf{1}_Y(x) - \mathbf{1}_Y(x)\mathbf{1}_X(x) $$
-        Regroupons les termes similaires :
-        $$ \mathbf{1}_{X \Delta Y}(x) = \mathbf{1}_X(x) + \mathbf{1}_Y(x) - 2\mathbf{1}_X(x)\mathbf{1}_Y(x) $$
-        La propriété 5 est ainsi établie.
+Pour démontrer une équivalence de la forme $P \iff Q$, nous devons prouver les deux implications : $P \Rightarrow Q$ et $Q \Rightarrow P$.
 
-    Calculons la fonction indicatrice du membre de gauche de l'égalité à démontrer, soit $(A \Delta B) \cap C$ :
-    En utilisant la propriété 1 pour l'intersection :
-    $$ \mathbf{1}_{(A \Delta B) \cap C}(x) = \mathbf{1}_{A \Delta B}(x) \cdot \mathbf{1}_C(x) $$
-    Substituons l'expression de $\mathbf{1}_{A \Delta B}(x)$ en utilisant la propriété 5 :
-    $$ \mathbf{1}_{(A \Delta B) \cap C}(x) = (\mathbf{1}_A(x) + \mathbf{1}_B(x) - 2 \cdot \mathbf{1}_A(x) \cdot \mathbf{1}_B(x)) \cdot \mathbf{1}_C(x) $$
-    Développons le produit :
-    $$ \mathbf{1}_{(A \Delta B) \cap C}(x) = \mathbf{1}_A(x) \cdot \mathbf{1}_C(x) + \mathbf{1}_B(x) \cdot \mathbf{1}_C(x) - 2 \cdot \mathbf{1}_A(x) \cdot \mathbf{1}_B(x) \cdot \mathbf{1}_C(x) \quad (*) $$
+### Partie 1 : Démonstration de l'implication $(\Rightarrow)$
+Nous allons prouver que si $\mathcal{P}(A) \cup \mathcal{P}(B) = \mathcal{P}(A \cup B)$, alors $A \subseteq B$ ou $B \subseteq A$.
+Nous allons utiliser une preuve par contraposition ou par l'absurde. Supposons que la conclusion soit fausse, c'est-à-dire que ni $A \subseteq B$ ni $B \subseteq A$ ne soient vrais.
+Cela signifie qu'il existe un élément $x$ tel que $x \in A$ et $x \notin B$, ET il existe un élément $y$ tel que $y \in B$ et $y \notin A$.
 
-    Calculons maintenant la fonction indicatrice du membre de droite de l'égalité, soit $(A \cap C) \Delta (B \cap C)$ :
-    Nous allons d'abord déterminer les fonctions indicatrices des ensembles $(A \cap C)$ et $(B \cap C)$.
-    En utilisant la propriété 1 pour l'intersection :
-    $$ \mathbf{1}_{A \cap C}(x) = \mathbf{1}_A(x) \cdot \mathbf{1}_C(x) $$
-    $$ \mathbf{1}_{B \cap C}(x) = \mathbf{1}_B(x) \cdot \mathbf{1}_C(x) $$
-    Appliquons ensuite la propriété 5 pour la différence symétrique $(A \cap C) \Delta (B \cap C)$ :
-    $$ \mathbf{1}_{(A \cap C) \Delta (B \cap C)}(x) = \mathbf{1}_{A \cap C}(x) + \mathbf{1}_{B \cap C}(x) - 2 \cdot \mathbf{1}_{A \cap C}(x) \cdot \mathbf{1}_{B \cap C}(x) $$
-    Substituons les expressions des fonctions indicatrices de $(A \cap C)$ et $(B \cap C)$ dans cette équation :
-    $$ \mathbf{1}_{(A \cap C) \Delta (B \cap C)}(x) = (\mathbf{1}_A(x) \cdot \mathbf{1}_C(x)) + (\mathbf{1}_B(x) \cdot \mathbf{1}_C(x)) - 2 \cdot (\mathbf{1}_A(x) \cdot \mathbf{1}_C(x)) \cdot (\mathbf{1}_B(x) \cdot \mathbf{1}_C(x)) $$
-    Simplifions le dernier terme du produit :
-    $$ (\mathbf{1}_A(x) \cdot \mathbf{1}_C(x)) \cdot (\mathbf{1}_B(x) \cdot \mathbf{1}_C(x)) = \mathbf{1}_A(x) \cdot \mathbf{1}_B(x) \cdot \mathbf{1}_C(x) \cdot \mathbf{1}_C(x) $$
-    Étant donné que la fonction indicatrice $\mathbf{1}_C(x)$ ne peut prendre que les valeurs 0 ou 1, nous avons la propriété $\mathbf{1}_C(x) \cdot \mathbf{1}_C(x) = \mathbf{1}_C(x)$.
-    Par conséquent, le produit se simplifie en :
-    $$ (\mathbf{1}_A(x) \cdot \mathbf{1}_C(x)) \cdot (\mathbf{1}_B(x) \cdot \mathbf{1}_C(x)) = \mathbf{1}_A(x) \cdot \mathbf{1}_B(x) \cdot \mathbf{1}_C(x) $$
-    En substituant cette simplification dans l'expression de $\mathbf{1}_{(A \cap C) \Delta (B \cap C)}(x)$ :
-    $$ \mathbf{1}_{(A \cap C) \Delta (B \cap C)}(x) = \mathbf{1}_A(x) \cdot \mathbf{1}_C(x) + \mathbf{1}_B(x) \cdot \mathbf{1}_C(x) - 2 \cdot \mathbf{1}_A(x) \cdot \mathbf{1}_B(x) \cdot \mathbf{1}_C(x) \quad (**) $$
+1.  **Existence de $x$ et $y$ :**
+    *   Puisque $A \not\subseteq B$, par définition de l'inclusion, il existe un élément $x$ (que nous notons $x_0$) tel que $x_0 \in A$ et $x_0 \notin B$.
+    *   Puisque $B \not\subseteq A$, par définition de l'inclusion, il existe un élément $y$ (que nous notons $y_0$) tel que $y_0 \in B$ et $y_0 \notin A$.
 
-    En comparant les expressions finales des fonctions indicatrices obtenues pour le membre de gauche $(*)$ et le membre de droite $(**)$, nous constatons qu'elles sont rigoureusement identiques pour tout $x \in E$ :
-    $$ \mathbf{1}_{(A \Delta B) \cap C}(x) = \mathbf{1}_A(x) \cdot \mathbf{1}_C(x) + \mathbf{1}_B(x) \cdot \mathbf{1}_C(x) - 2 \cdot \mathbf{1}_A(x) \cdot \mathbf{1}_B(x) \cdot \mathbf{1}_C(x) $$
-    $$ \mathbf{1}_{(A \cap C) \Delta (B \cap C)}(x) = \mathbf{1}_A(x) \cdot \mathbf{1}_C(x) + \mathbf{1}_B(x) \cdot \mathbf{1}_C(x) - 2 \cdot \mathbf{1}_A(x) \cdot \mathbf{1}_B(x) \cdot \mathbf{1}_C(x) $$
-    Puisque les fonctions indicatrices des deux ensembles sont égales pour tout élément $x \in E$, les ensembles eux-mêmes sont égaux.
+2.  **Construction d'un ensemble test :**
+    Considérons l'ensemble $S$ défini comme $S = \{x_0, y_0\}$. Cet ensemble est bien défini par l'Axiome de la Paire.
 
-*   **Conclusion :**
-    Par l'application rigoureuse de la méthode des fonctions indicatrices et de leurs propriétés algébriques, nous avons démontré que pour toutes parties $A$, $B$, $C$ d'un ensemble non vide $E$, l'égalité $(A \Delta B) \cap C = (A \cap C) \Delta (B \cap C)$ est vérifiée. Cette propriété illustre une forme de distributivité de l'intersection sur la différence symétrique, similaire à la distributivité de l'intersection sur l'union ou de l'union sur l'intersection.
+3.  **Appartenance de $S$ à $\mathcal{P}(A \cup B)$ :**
+    *   Nous avons $x_0 \in A$. Par définition de l'union, $A \subseteq A \cup B$, donc $x_0 \in A \cup B$.
+    *   Nous avons $y_0 \in B$. Par définition de l'union, $B \subseteq A \cup B$, donc $y_0 \in A \cup B$.
+    *   Puisque tous les éléments de $S$ (à savoir $x_0$ et $y_0$) appartiennent à $A \cup B$, nous pouvons conclure que $S \subseteq A \cup B$.
+    *   Par définition de l'ensemble des parties, cela signifie que $S \in \mathcal{P}(A \cup B)$.
+
+4.  **Application de l'hypothèse :**
+    *   Notre hypothèse est $\mathcal{P}(A) \cup \mathcal{P}(B) = \mathcal{P}(A \cup B)$.
+    *   Puisque $S \in \mathcal{P}(A \cup B)$, il s'ensuit que $S \in \mathcal{P}(A) \cup \mathcal{P}(B)$.
+    *   Par définition de l'union d'ensembles, cela signifie que $S \in \mathcal{P}(A)$ ou $S \in \mathcal{P}(B)$.
+
+5.  **Analyse des deux cas menant à une contradiction :**
+    *   **Cas 1 :** Supposons $S \in \mathcal{P}(A)$.
+        *   Par définition de l'ensemble des parties, $S \subseteq A$.
+        *   Puisque $S = \{x_0, y_0\}$, cela implique que $x_0 \in A$ et $y_0 \in A$.
+        *   Cependant, nous avons initialement défini $y_0$ comme un élément tel que $y_0 \in B$ et $y_0 \notin A$.
+        *   L'affirmation $y_0 \in A$ contredit $y_0 \notin A$. Nous avons donc une contradiction.
+
+    *   **Cas 2 :** Supposons $S \in \mathcal{P}(B)$.
+        *   Par définition de l'ensemble des parties, $S \subseteq B$.
+        *   Puisque $S = \{x_0, y_0\}$, cela implique que $x_0 \in B$ et $y_0 \in B$.
+        *   Cependant, nous avons initialement défini $x_0$ comme un élément tel que $x_0 \in A$ et $x_0 \notin B$.
+        *   L'affirmation $x_0 \in B$ contredit $x_0 \notin B$. Nous avons donc une contradiction.
+
+6.  **Conclusion de l'implication $(\Rightarrow)$ :**
+    Puisque les deux cas (qui couvrent toutes les possibilités découlant de l'hypothèse $S \in \mathcal{P}(A) \cup \mathcal{P}(B)$) mènent à une contradiction, notre supposition initiale ("ni $A \subseteq B$ ni $B \subseteq A$") doit être fausse.
+    Par conséquent, il est vrai que $A \subseteq B$ ou $B \subseteq A$.
+
+### Partie 2 : Démonstration de l'implication $(\Leftarrow)$
+Nous allons prouver que si $A \subseteq B$ ou $B \subseteq A$, alors $\mathcal{P}(A) \cup \mathcal{P}(B) = \mathcal{P}(A \cup B)$.
+Pour prouver l'égalité de deux ensembles, nous devons montrer la double inclusion :
+1.  $\mathcal{P}(A) \cup \mathcal{P}(B) \subseteq \mathcal{P}(A \cup B)$
+2.  $\mathcal{P}(A \cup B) \subseteq \mathcal{P}(A) \cup \mathcal{P}(B)$
+
+#### Sous-partie 2.1 : Démonstration de $\mathcal{P}(A) \cup \mathcal{P}(B) \subseteq \mathcal{P}(A \cup B)$
+Cette inclusion est toujours vraie, indépendamment de la condition $A \subseteq B$ ou $B \subseteq A$.
+1.  Soit $X$ un ensemble quelconque tel que $X \in \mathcal{P}(A) \cup \mathcal{P}(B)$.
+2.  Par définition de l'union d'ensembles, cela signifie que $X \in \mathcal{P}(A)$ ou $X \in \mathcal{P}(B)$.
+3.  **Cas 1 :** Si $X \in \mathcal{P}(A)$.
+    *   Par définition de l'ensemble des parties, $X \subseteq A$.
+    *   Nous savons que $A \subseteq A \cup B$.
+    *   Par transitivité de l'inclusion, $X \subseteq A \cup B$.
+    *   Par définition de l'ensemble des parties, $X \in \mathcal{P}(A \cup B)$.
+4.  **Cas 2 :** Si $X \in \mathcal{P}(B)$.
+    *   Par définition de l'ensemble des parties, $X \subseteq B$.
+    *   Nous savons que $B \subseteq A \cup B$.
+    *   Par transitivité de l'inclusion, $X \subseteq A \cup B$.
+    *   Par définition de l'ensemble des parties, $X \in \mathcal{P}(A \cup B)$.
+5.  Dans les deux cas, nous avons montré que si $X \in \mathcal{P}(A) \cup \mathcal{P}(B)$, alors $X \in \mathcal{P}(A \cup B)$.
+6.  Par conséquent, $\mathcal{P}(A) \cup \mathcal{P}(B) \subseteq \mathcal{P}(A \cup B)$.
+
+#### Sous-partie 2.2 : Démonstration de $\mathcal{P}(A \cup B) \subseteq \mathcal{P}(A) \cup \mathcal{P}(B)$
+Cette inclusion utilise notre hypothèse : $A \subseteq B$ ou $B \subseteq A$.
+Nous allons examiner les deux cas séparément.
+
+1.  **Cas A :** Supposons que $A \subseteq B$.
+    *   Par définition de l'union, si $A \subseteq B$, alors $A \cup B = B$.
+    *   En substituant $A \cup B$ par $B$ dans notre inclusion à prouver, nous devons montrer que $\mathcal{P}(B) \subseteq \mathcal{P}(A) \cup \mathcal{P}(B)$.
+    *   Soit $X$ un ensemble quelconque tel que $X \in \mathcal{P}(B)$.
+    *   Par définition de l'union d'ensembles, tout ensemble appartenant à $\mathcal{P}(B)$ appartient également à $\mathcal{P}(A) \cup \mathcal{P}(B)$.
+    *   Donc, $X \in \mathcal{P}(A) \cup \mathcal{P}(B)$.
+    *   Par conséquent, si $A \subseteq B$, alors $\mathcal{P}(A \cup B) \subseteq \mathcal{P}(A) \cup \mathcal{P}(B)$ est vraie.
+
+2.  **Cas B :** Supposons que $B \subseteq A$.
+    *   Par définition de l'union, si $B \subseteq A$, alors $A \cup B = A$.
+    *   En substituant $A \cup B$ par $A$ dans notre inclusion à prouver, nous devons montrer que $\mathcal{P}(A) \subseteq \mathcal{P}(A) \cup \mathcal{P}(B)$.
+    *   Soit $X$ un ensemble quelconque tel que $X \in \mathcal{P}(A)$.
+    *   Par définition de l'union d'ensembles, tout ensemble appartenant à $\mathcal{P}(A)$ appartient également à $\mathcal{P}(A) \cup \mathcal{P}(B)$.
+    *   Donc, $X \in \mathcal{P}(A) \cup \mathcal{P}(B)$.
+    *   Par conséquent, si $B \subseteq A$, alors $\mathcal{P}(A \cup B) \subseteq \mathcal{P}(A) \cup \mathcal{P}(B)$ est vraie.
+
+3.  **Conclusion pour la sous-partie 2.2 :**
+    Puisque l'hypothèse est "$A \subseteq B$ ou $B \subseteq A$", et que dans chacun de ces cas l'inclusion $\mathcal{P}(A \cup B) \subseteq \mathcal{P}(A) \cup \mathcal{P}(B)$ est démontrée, cette inclusion est vraie sous l'hypothèse donnée.
+
+### Conclusion Générale
+Nous avons démontré que l'implication $(\Rightarrow)$ est vraie et que l'implication $(\Leftarrow)$ est vraie. Par conséquent, l'équivalence est prouvée :
+$$ \mathcal{P}(A) \cup \mathcal{P}(B) = \mathcal{P}(A \cup B) \iff (A \subseteq B \text{ ou } B \subseteq A) $$
+Cette démonstration ne fait aucune hypothèse de finitude sur les ensembles $A$ et $B$; elle est valable pour des ensembles arbitraires, qu'ils soient finis ou infinis. Les principes utilisés sont les axiomes fondamentaux de la théorie des ensembles (Extensionalité, Paire, Union, Ensemble des Parties).

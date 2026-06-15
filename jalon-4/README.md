@@ -1,9 +1,12 @@
 # Jalon 4 : Théorie des ensembles
 
-Ce dossier contient le matériel complet pour le Jalon 4, traitant de la théorie des ensembles (ZFC), des opérations sur les ensembles, et de l'ensemble des parties $\mathcal{P}(E)$.
+## Statut
+- [x] Cours principal
+- [x] 10 Exercices (Difficulté L1 à ENS/X)
+- [x] 5 TPs (Python pur)
 
-## Contenu
+## Description
+Théorie des ensembles (ZFC), opérations sur les ensembles, ensembles des parties $\mathcal{P}(E)$.
 
-- `Jalon-4.md` : Le cours principal, structuré de l'intuition aux démonstrations rigoureuses.
-- `exos/` : 10 exercices progressifs (Exo-01.md à Exo-10.md) avec corrections sans ellipse.
-- `tp/` : 5 travaux pratiques (TP-01.md à TP-05.md) d'implémentation algorithmique pure en Python.
+## Historique
+- [2026-06-13] : Upsert du Jalon 4 - Théorie des ensembles. Status: Terminé.

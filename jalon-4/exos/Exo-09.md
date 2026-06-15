@@ -1,101 +1,137 @@
----
-uuid: "jalon-4-exo-09"
-title: "Exercice 09 - 5 étoiles"
----
-# Exercice 09 : Associativité de la différence symétrique
+# Exercice 9 : Propriétés des familles de parties à complémentaire-disjointe-exhaustive
 **Difficulté :** ⭐⭐⭐⭐⭐
+**Thème :** Théorie des ensembles, opérations sur les ensembles, ensemble des parties, cardinaux, démonstration par l'absurde.
 
 ## Énoncé
-Soient $E$ un ensemble non vide et $A, B, C$ trois parties quelconques de $E$.
-Démontrer que l'opération de différence symétrique $\Delta$ est associative, c'est-à-dire que l'égalité suivante est vérifiée :
-$$ (A \Delta B) \Delta C = A \Delta (B \Delta C) $$
+Soit $E$ un ensemble non vide.
+On considère une famille $\mathcal{F} \subseteq \mathcal{P}(E)$ de parties de $E$ qui satisfait la propriété suivante :
+(P) Pour toute partie $X \in \mathcal{P}(E)$, on a $X \in \mathcal{F}$ si et seulement si $E \setminus X \notin \mathcal{F}$.
 
-Rappel : Pour deux parties $X$ et $Y$ d'un ensemble $E$, la différence symétrique $X \Delta Y$ est définie par $X \Delta Y = (X \setminus Y) \cup (Y \setminus X)$.
+1.  Démontrer que pour toute partie $X \in \mathcal{P}(E)$, soit $X \in \mathcal{F}$ soit $E \setminus X \in \mathcal{F}$, mais pas les deux.
+2.  Supposons que $E$ est un ensemble fini de cardinal $n \in \mathbb{N}^*$. Quel est le cardinal de $\mathcal{F}$? Justifier rigoureusement.
+3.  Pour les besoins de cette question, on admet qu'une telle famille $\mathcal{F}$ existe pour tout ensemble non vide $E$.
+    Soit $E$ un ensemble infini. Démontrer que $\mathcal{F}$ ne peut pas être stable par unions arbitraires (i.e., pour toute sous-famille $\mathcal{G} \subseteq \mathcal{F}$, $\bigcup_{A \in \mathcal{G}} A \in \mathcal{F}$) et en même temps stable par intersections arbitraires (i.e., pour toute sous-famille $\mathcal{G} \subseteq \mathcal{F}$, $\bigcap_{A \in \mathcal{G}} A \in \mathcal{F}$).
 
 ## Correction Détaillée
-*   **Analyse de l'énoncé :**
-    L'objectif de cet exercice est de démontrer l'associativité de l'opération de différence symétrique pour trois ensembles $A, B, C$ qui sont des parties d'un ensemble universel $E$. Pour prouver l'égalité de deux ensembles, $X = Y$, la méthode la plus rigoureuse et exhaustive consiste à montrer que leurs fonctions indicatrices (ou fonctions caractéristiques) sont égales pour tout élément de l'ensemble universel $E$. Cette approche permet d'éviter les omissions de cas et garantit une démonstration complète et sans ambiguïté.
 
-    La stratégie de résolution sera la suivante :
-    1.  Définir formellement la fonction indicatrice d'une partie d'un ensemble.
-    2.  Établir une relation clé entre la fonction indicatrice de la différence symétrique de deux ensembles et les fonctions indicatrices de ces ensembles, en utilisant l'arithmétique modulo 2. Cette étape nécessite une justification exhaustive par cas.
-    3.  Appliquer cette relation de manière séquentielle pour calculer la fonction indicatrice du membre de gauche de l'égalité à démontrer : $(A \Delta B) \Delta C$.
-    4.  Appliquer la même relation de manière séquentielle pour calculer la fonction indicatrice du membre de droite de l'égalité à démontrer : $A \Delta (B \Delta C)$.
-    5.  Utiliser la propriété d'associativité de l'addition modulo 2 pour simplifier les expressions obtenues.
-    6.  Conclure que l'égalité des fonctions indicatrices pour tout élément de $E$ implique l'égalité des ensembles.
+1.  **Démontrer que pour toute partie $X \in \mathcal{P}(E)$, soit $X \in \mathcal{F}$ soit $E \setminus X \in \mathcal{F}$, mais pas les deux.**
 
-*   **Résolution pas-à-pas :**
+    Soit $X$ une partie quelconque de $E$, i.e., $X \in \mathcal{P}(E)$.
+    La propriété (P) s'énonce comme $X \in \mathcal{F} \iff E \setminus X \notin \mathcal{F}$.
+    Ceci est une équivalence logique de la forme $P \iff \neg Q$, où $P$ est "$X \in \mathcal{F}$" et $Q$ est "$E \setminus X \in \mathcal{F}$".
 
-    **Étape 1 : Définition de la fonction indicatrice**
-    Soit $X$ une partie de l'ensemble $E$. La fonction indicatrice de $X$, notée $\mathbf{1}_X$, est une application de $E$ dans l'ensemble $\{0, 1\}$ définie pour tout $x \in E$ par :
-    $$ \mathbf{1}_X(x) = \begin{cases} 1 & \text{si } x \in X \\ 0 & \text{si } x \notin X \end{cases} $$
+    *   **Prouvons que soit $X \in \mathcal{F}$ soit $E \setminus X \in \mathcal{F}$ :**
+        Supposons par l'absurde que ni $X \in \mathcal{F}$ ni $E \setminus X \in \mathcal{F}$.
+        Alors $X \notin \mathcal{F}$ et $E \setminus X \notin \mathcal{F}$.
+        De $X \notin \mathcal{F}$, la propriété (P) implique $\neg (X \in \mathcal{F}) \iff \neg (E \setminus X \notin \mathcal{F})$.
+        Donc $X \notin \mathcal{F} \iff E \setminus X \in \mathcal{F}$.
+        Puisque $X \notin \mathcal{F}$ est vraie par hypothèse, on doit avoir $E \setminus X \in \mathcal{F}$.
+        Ceci contredit notre hypothèse $E \setminus X \notin \mathcal{F}$.
+        Donc l'hypothèse de départ est fausse. Par conséquent, au moins l'une des deux affirmations "$X \in \mathcal{F}$" ou "$E \setminus X \in \mathcal{F}$" est vraie.
 
-    **Étape 2 : Relation entre la fonction indicatrice de la différence symétrique et l'addition modulo 2**
-    Soient $X$ et $Y$ deux parties quelconques de $E$. Nous allons démontrer que pour tout $x \in E$, la fonction indicatrice de leur différence symétrique $\mathbf{1}_{X \Delta Y}(x)$ est égale à la somme de leurs fonctions indicatrices modulo 2, c'est-à-dire $\mathbf{1}_{X \Delta Y}(x) = (\mathbf{1}_X(x) + \mathbf{1}_Y(x)) \pmod 2$.
-    La différence symétrique $X \Delta Y$ est définie par $X \Delta Y = (X \setminus Y) \cup (Y \setminus X)$.
-    Un élément $x \in E$ appartient à $X \Delta Y$ si et seulement si $x$ appartient à $X$ et n'appartient pas à $Y$, ou $x$ appartient à $Y$ et n'appartient pas à $X$. Nous allons examiner exhaustivement tous les quatre cas possibles pour la localisation de $x$ par rapport à $X$ et $Y$.
+    *   **Prouvons que $X \in \mathcal{F}$ et $E \setminus X \in \mathcal{F}$ ne peuvent pas être vraies simultanément :**
+        Supposons par l'absurde que $X \in \mathcal{F}$ et $E \setminus X \in \mathcal{F}$.
+        De $X \in \mathcal{F}$, la propriété (P) implique $X \in \mathcal{F} \iff E \setminus X \notin \mathcal{F}$.
+        Puisque $X \in \mathcal{F}$ est vraie par hypothèse, on doit avoir $E \setminus X \notin \mathcal{F}$.
+        Ceci contredit notre hypothèse $E \setminus X \in \mathcal{F}$.
+        Donc l'hypothèse de départ est fausse. Par conséquent, les deux affirmations "$X \in \mathcal{F}$" et "$E \setminus X \in \mathcal{F}$" ne peuvent pas être vraies simultanément.
 
-    *   **Cas 1 :** $x \in X$ et $x \in Y$.
-        Dans ce cas, $x$ n'appartient ni à $X \setminus Y$ (car $x \in Y$) ni à $Y \setminus X$ (car $x \in X$). Par conséquent, $x \notin (X \setminus Y) \cup (Y \setminus X)$, ce qui signifie $x \notin X \Delta Y$.
-        Les valeurs des fonctions indicatrices sont : $\mathbf{1}_X(x) = 1$, $\mathbf{1}_Y(x) = 1$, et $\mathbf{1}_{X \Delta Y}(x) = 0$.
-        Vérifions la relation proposée : $(\mathbf{1}_X(x) + \mathbf{1}_Y(x)) \pmod 2 = (1 + 1) \pmod 2 = 2 \pmod 2 = 0$.
-        L'égalité $\mathbf{1}_{X \Delta Y}(x) = (\mathbf{1}_X(x) + \mathbf{1}_Y(x)) \pmod 2$ est vérifiée dans ce cas (0 = 0).
+    En combinant ces deux points, on conclut que pour toute partie $X \in \mathcal{P}(E)$, soit $X \in \mathcal{F}$ soit $E \setminus X \in \mathcal{F}$, mais pas les deux.
 
-    *   **Cas 2 :** $x \in X$ et $x \notin Y$.
-        Dans ce cas, $x$ appartient à $X \setminus Y$ et n'appartient pas à $Y \setminus X$. Par conséquent, $x \in (X \setminus Y) \cup (Y \setminus X)$, ce qui signifie $x \in X \Delta Y$.
-        Les valeurs des fonctions indicatrices sont : $\mathbf{1}_X(x) = 1$, $\mathbf{1}_Y(x) = 0$, et $\mathbf{1}_{X \Delta Y}(x) = 1$.
-        Vérifions la relation proposée : $(\mathbf{1}_X(x) + \mathbf{1}_Y(x)) \pmod 2 = (1 + 0) \pmod 2 = 1 \pmod 2 = 1$.
-        L'égalité $\mathbf{1}_{X \Delta Y}(x) = (\mathbf{1}_X(x) + \mathbf{1}_Y(x)) \pmod 2$ est vérifiée dans ce cas (1 = 1).
+2.  **Calcul du cardinal de $\mathcal{F}$ si $E$ est fini.**
 
-    *   **Cas 3 :** $x \notin X$ et $x \in Y$.
-        Dans ce cas, $x$ n'appartient pas à $X \setminus Y$ et appartient à $Y \setminus X$. Par conséquent, $x \in (X \setminus Y) \cup (Y \setminus X)$, ce qui signifie $x \in X \Delta Y$.
-        Les valeurs des fonctions indicatrices sont : $\mathbf{1}_X(x) = 0$, $\mathbf{1}_Y(x) = 1$, et $\mathbf{1}_{X \Delta Y}(x) = 1$.
-        Vérifions la relation proposée : $(\mathbf{1}_X(x) + \mathbf{1}_Y(x)) \pmod 2 = (0 + 1) \pmod 2 = 1 \pmod 2 = 1$.
-        L'égalité $\mathbf{1}_{X \Delta Y}(x) = (\mathbf{1}_X(x) + \mathbf{1}_Y(x)) \pmod 2$ est vérifiée dans ce cas (1 = 1).
+    Soit $E$ un ensemble fini de cardinal $n \in \mathbb{N}^*$.
+    Le cardinal de l'ensemble des parties $\mathcal{P}(E)$ est $2^n$.
+    Considérons la relation de complémentation sur $\mathcal{P}(E)$. Pour toute partie $X \in \mathcal{P}(E)$, $E \setminus X$ est son complémentaire.
+    Nous allons montrer que pour tout $X \in \mathcal{P}(E)$, $X \neq E \setminus X$.
+    Supposons par l'absurde que $X = E \setminus X$. Alors, pour tout élément $x \in E$, si $x \in X$, alors $x \in E \setminus X$, ce qui implique $x \notin X$. Ceci est une contradiction. Donc $X \neq E \setminus X$.
+    Puisque $X \neq E \setminus X$, les paires $\{X, E \setminus X\}$ formées d'une partie et de son complémentaire sont des ensembles de deux éléments distincts.
+    De plus, ces paires partitionnent $\mathcal{P}(E)$. En effet, chaque partie $Y \in \mathcal{P}(E)$ appartient à exactement une telle paire (soit $\{Y, E \setminus Y\}$).
+    Le nombre de ces paires distinctes est donc $|\mathcal{P}(E)| / 2 = 2^n / 2 = 2^{n-1}$.
+    Par la question 1, pour chaque paire $\{X, E \setminus X\}$, exactement l'un des deux éléments doit appartenir à $\mathcal{F}$.
+    Puisqu'il y a $2^{n-1}$ de ces paires, et que pour chaque paire nous devons choisir exactement un élément pour $\mathcal{F}$, le cardinal de $\mathcal{F}$ est $2^{n-1} \times 1 = 2^{n-1}$.
+    Ainsi, $|\mathcal{F}| = 2^{n-1}$.
 
-    *   **Cas 4 :** $x \notin X$ et $x \notin Y$.
-        Dans ce cas, $x$ n'appartient ni à $X \setminus Y$ ni à $Y \setminus X$. Par conséquent, $x \notin (X \setminus Y) \cup (Y \setminus X)$, ce qui signifie $x \notin X \Delta Y$.
-        Les valeurs des fonctions indicatrices sont : $\mathbf{1}_X(x) = 0$, $\mathbf{1}_Y(x) = 0$, et $\mathbf{1}_{X \Delta Y}(x) = 0$.
-        Vérifions la relation proposée : $(\mathbf{1}_X(x) + \mathbf{1}_Y(x)) \pmod 2 = (0 + 0) \pmod 2 = 0 \pmod 2 = 0$.
-        L'égalité $\mathbf{1}_{X \Delta Y}(x) = (\mathbf{1}_X(x) + \mathbf{1}_Y(x)) \pmod 2$ est vérifiée dans ce cas (0 = 0).
+3.  **Démonstration pour un ensemble infini $E$ : $\mathcal{F}$ ne peut pas être stable par unions arbitraires et intersections arbitraires simultanément.**
 
-    Puisque la relation est vérifiée dans tous les cas possibles, nous pouvons affirmer que pour toutes parties $X, Y$ de $E$, et pour tout $x \in E$, nous avons :
-    $$ \mathbf{1}_{X \Delta Y}(x) = (\mathbf{1}_X(x) + \mathbf{1}_Y(x)) \pmod 2 $$
+    Supposons par l'absurde que $\mathcal{F}$ satisfait la propriété (P) et est stable par unions arbitraires et intersections arbitraires.
+    Soit $I$ l'intersection de tous les éléments de $\mathcal{F}$, i.e., $I = \bigcap_{A \in \mathcal{F}} A$.
+    Soit $U$ l'union de tous les éléments de $\mathcal{F}$, i.e., $U = \bigcup_{A \in \mathcal{F}} A$.
+    Puisque $\mathcal{F}$ est stable par intersections arbitraires, $I \in \mathcal{F}$.
+    Puisque $\mathcal{F}$ est stable par unions arbitraires, $U \in \mathcal{F}$.
 
-    **Étape 3 : Calcul de la fonction indicatrice du membre de gauche**
-    Considérons le membre de gauche de l'égalité à démontrer : $(A \Delta B) \Delta C$.
-    En appliquant la relation fondamentale établie à l'étape 2, en posant $X' = (A \Delta B)$ et $Y' = C$, nous obtenons pour tout $x \in E$ :
-    $$ \mathbf{1}_{(A \Delta B) \Delta C}(x) = (\mathbf{1}_{A \Delta B}(x) + \mathbf{1}_C(x)) \pmod 2 $$
-    Nous appliquons ensuite la même relation à $\mathbf{1}_{A \Delta B}(x)$, en posant $X'' = A$ et $Y'' = B$ :
-    $$ \mathbf{1}_{A \Delta B}(x) = (\mathbf{1}_A(x) + \mathbf{1}_B(x)) \pmod 2 $$
-    En substituant cette expression dans la première égalité, nous obtenons :
-    $$ \mathbf{1}_{(A \Delta B) \Delta C}(x) = ((\mathbf{1}_A(x) + \mathbf{1}_B(x)) \pmod 2 + \mathbf{1}_C(x)) \pmod 2 $$
-    Soient $a = \mathbf{1}_A(x)$, $b = \mathbf{1}_B(x)$, et $c = \mathbf{1}_C(x)$. Ces valeurs sont toutes des éléments de l'ensemble $\{0, 1\}$.
-    L'addition modulo 2 est une opération associative. Cela signifie que pour tout $a, b, c \in \{0, 1\}$ :
-    $( (a+b) \pmod 2 + c ) \pmod 2 = ( a + (b+c) \pmod 2 ) \pmod 2 = (a+b+c) \pmod 2$.
-    En appliquant cette propriété d'associativité de l'addition modulo 2, nous pouvons simplifier l'expression :
-    $$ \mathbf{1}_{(A \Delta B) \Delta C}(x) = (\mathbf{1}_A(x) + \mathbf{1}_B(x) + \mathbf{1}_C(x)) \pmod 2 $$
-    Cette expression est valable pour tout $x \in E$.
+    D'après la définition de $I$ et $U$, pour toute partie $A \in \mathcal{F}$, nous avons $I \subseteq A \subseteq U$.
+    Si $\mathcal{F}$ est non vide (ce qui est le cas car $E$ est non vide et $\mathcal{F}$ ne peut être vide d'après la Q1 : si $\mathcal{F}=\emptyset$, alors $X \notin \mathcal{F}$ est toujours vrai, donc (P) devient $X \in \mathcal{F} \iff E \setminus X \in \mathcal{F}$, donc $E \setminus X \in \mathcal{F}$ doit être faux pour tout $X$, ce qui est impossible car la Q1 dit qu'au moins l'un doit être dans $\mathcal{F}$).
+    En fait, $I$ et $U$ sont des éléments de $\mathcal{F}$. Par la Q1, $\mathcal{F}$ n'est ni $\emptyset$ ni $\mathcal{P}(E)$.
 
-    **Étape 4 : Calcul de la fonction indicatrice du membre de droite**
-    Considérons le membre de droite de l'égalité à démontrer : $A \Delta (B \Delta C)$.
-    En appliquant la relation fondamentale établie à l'étape 2, en posant $X' = A$ et $Y' = (B \Delta C)$, nous obtenons pour tout $x \in E$ :
-    $$ \mathbf{1}_{A \Delta (B \Delta C)}(x) = (\mathbf{1}_A(x) + \mathbf{1}_{B \Delta C}(x)) \pmod 2 $$
-    Nous appliquons ensuite la même relation à $\mathbf{1}_{B \Delta C}(x)$, en posant $X'' = B$ et $Y'' = C$ :
-    $$ \mathbf{1}_{B \Delta C}(x) = (\mathbf{1}_B(x) + \mathbf{1}_C(x)) \pmod 2 $$
-    En substituant cette expression dans la première égalité, nous obtenons :
-    $$ \mathbf{1}_{A \Delta (B \Delta C)}(x) = (\mathbf{1}_A(x) + (\mathbf{1}_B(x) + \mathbf{1}_C(x)) \pmod 2) \pmod 2 $$
-    En utilisant à nouveau l'associativité de l'addition modulo 2, comme justifié à l'étape 3 :
-    $$ \mathbf{1}_{A \Delta (B \Delta C)}(x) = (\mathbf{1}_A(x) + \mathbf{1}_B(x) + \mathbf{1}_C(x)) \pmod 2 $$
-    Cette expression est valable pour tout $x \in E$.
+    Puisque $I \in \mathcal{F}$ et $U \in \mathcal{F}$, la famille $\mathcal{F}$ doit être exactement l'ensemble des parties $A$ de $E$ telles que $I \subseteq A \subseteq U$.
+    Donc, $\mathcal{F} = \{A \in \mathcal{P}(E) \mid I \subseteq A \subseteq U\}$.
 
-    **Étape 5 : Conclusion de l'égalité des ensembles**
-    Nous avons démontré que pour tout élément $x \in E$ :
-    $$ \mathbf{1}_{(A \Delta B) \Delta C}(x) = (\mathbf{1}_A(x) + \mathbf{1}_B(x) + \mathbf{1}_C(x)) \pmod 2 $$
-    et
-    $$ \mathbf{1}_{A \Delta (B \Delta C)}(x) = (\mathbf{1}_A(x) + \mathbf{1}_B(x) + \mathbf{1}_C(x)) \pmod 2 $$
-    Puisque les fonctions indicatrices des deux ensembles $(A \Delta B) \Delta C$ et $A \Delta (B \Delta C)$ sont égales pour tout élément $x$ de l'ensemble universel $E$, cela implique, par définition de l'égalité des ensembles, que les deux ensembles sont identiques.
-    $$ (A \Delta B) \Delta C = A \Delta (B \Delta C) $$
+    Appliquons la propriété (P) aux parties $\emptyset$ et $E$:
+    *   Si $\emptyset \in \mathcal{F}$ :
+        Alors d'après (P), $E \setminus \emptyset = E \notin \mathcal{F}$.
+        Si $\emptyset \in \mathcal{F}$, cela implique que $I \subseteq \emptyset \subseteq U$, donc $I = \emptyset$.
+        Si $E \notin \mathcal{F}$, cela implique que l'affirmation $I \subseteq E \subseteq U$ est fausse.
+        Puisque $I=\emptyset$, cela signifie que $\emptyset \subseteq E \subseteq U$ est fausse, ce qui ne peut être que si $U \neq E$.
+        Donc, si $\emptyset \in \mathcal{F}$, alors $I = \emptyset$ et $U \subsetneq E$.
+    *   Si $E \in \mathcal{F}$ :
+        Alors d'après (P), $E \setminus E = \emptyset \notin \mathcal{F}$.
+        Si $E \in \mathcal{F}$, cela implique que $I \subseteq E \subseteq U$, donc $U = E$.
+        Si $\emptyset \notin \mathcal{F}$, cela implique que l'affirmation $I \subseteq \emptyset \subseteq U$ est fausse.
+        Puisque $U=E$, cela signifie que $I \subseteq \emptyset \subseteq E$ est fausse, ce qui ne peut être que si $I \neq \emptyset$.
+        Donc, si $E \in \mathcal{F}$, alors $U = E$ et $I \supsetneq \emptyset$.
 
-*   **Conclusion :**
-    Nous avons rigoureusement démontré que l'opération de différence symétrique est associative pour toutes parties $A, B, C$ d'un ensemble $E$. La preuve a été menée de manière exhaustive en utilisant les fonctions indicatrices des ensembles et les propriétés de l'arithmétique modulo 2, garantissant qu'aucune étape de raisonnement n'a été omise. Cette propriété fondamentale est cruciale en théorie des ensembles et en algèbre, car elle établit que l'ensemble des parties de $E$, muni de la différence symétrique comme addition et de l'intersection comme multiplication, forme un anneau de Boole, noté $(\mathcal{P}(E), \Delta, \cap)$.
+    D'après la question 1, soit $\emptyset \in \mathcal{F}$ soit $E \in \mathcal{F}$ (mais pas les deux).
+    *   Si $\emptyset \in \mathcal{F}$, alors $I = \emptyset$ et $U \subsetneq E$.
+    *   Si $E \in \mathcal{F}$, alors $U = E$ et $I \supsetneq \emptyset$.
+
+    Dans les deux cas, on ne peut pas avoir $I = \emptyset$ et $U = E$ simultanément.
+    Si $I = \emptyset$ et $U = E$, alors $\mathcal{F} = \{A \in \mathcal{P}(E) \mid \emptyset \subseteq A \subseteq E\} = \mathcal{P}(E)$.
+    Mais si $\mathcal{F} = \mathcal{P}(E)$, alors pour tout $X \in \mathcal{P}(E)$, $X \in \mathcal{F}$ et $E \setminus X \in \mathcal{F}$. Cela contredit la question 1 ("pas les deux").
+    Donc $\mathcal{F} \neq \mathcal{P}(E)$.
+    Par conséquent, nous avons montré que $I \neq \emptyset$ et $U \neq E$.
+
+    Reprenons notre expression de $\mathcal{F}$: $\mathcal{F} = \{A \in \mathcal{P}(E) \mid I \subseteq A \subseteq U\}$.
+    Puisque $I \in \mathcal{F}$, nous avons $I \subseteq I \subseteq U$, ce qui est vrai.
+    Par la propriété (P), $E \setminus I \notin \mathcal{F}$.
+    Ceci signifie que l'affirmation "$I \subseteq E \setminus I \subseteq U$" est fausse.
+    Pour que $I \subseteq E \setminus I$ soit vraie, il faudrait que $I \cap I = \emptyset$, ce qui signifie $I = \emptyset$.
+    Mais nous avons prouvé que $I \neq \emptyset$.
+    Donc, l'affirmation $I \subseteq E \setminus I$ est fausse.
+    Par conséquent, la condition "$I \subseteq E \setminus I \subseteq U$" est fausse (car sa première partie l'est).
+    Donc, $E \setminus I \notin \mathcal{F}$ est une conséquence logique de $I \neq \emptyset$. Cette partie est consistante.
+
+    Faisons le même raisonnement avec $U$.
+    Puisque $U \in \mathcal{F}$, nous avons $I \subseteq U \subseteq U$, ce qui est vrai.
+    Par la propriété (P), $E \setminus U \notin \mathcal{F}$.
+    Ceci signifie que l'affirmation "$I \subseteq E \setminus U \subseteq U$" est fausse.
+    Pour que $E \setminus U \subseteq U$ soit vraie, il faudrait que $U \cup (E \setminus U) = U$, ce qui signifie $E = U$.
+    Mais nous avons prouvé que $U \neq E$.
+    Donc, l'affirmation $E \setminus U \subseteq U$ est fausse.
+    Par conséquent, la condition "$I \subseteq E \setminus U \subseteq U$" est fausse (car sa deuxième partie l'est).
+    Donc, $E \setminus U \notin \mathcal{F}$ est une conséquence logique de $U \neq E$. Cette partie est consistante.
+
+    Le point crucial est que pour tout $A \in \mathcal{P}(E)$, la propriété (P) nous dit que $A \in \mathcal{F} \iff E \setminus A \notin \mathcal{F}$.
+    En utilisant la forme de $\mathcal{F}$, cela devient:
+    $(I \subseteq A \subseteq U) \iff \neg (I \subseteq E \setminus A \subseteq U)$.
+
+    Considérons la partie de droite : $\neg (I \subseteq E \setminus A \subseteq U)$.
+    Nous avons déjà montré que $I \subseteq E \setminus A$ est faux si $I \ne \emptyset$ (ce que nous avons établi).
+    En effet, si $I \ne \emptyset$, et si $I \subseteq E \setminus A$ était vrai, alors pour tout $x \in I$, $x \in E \setminus A$, ce qui signifie $x \notin A$. Mais par la définition de $\mathcal{F}$, si $A \in \mathcal{F}$, alors $I \subseteq A$. Donc $x \in A$.
+    Ceci est une contradiction ($x \notin A$ et $x \in A$). Donc, si $I \ne \emptyset$, alors $I \not\subseteq E \setminus A$ est toujours vrai.
+
+    Puisque $I \not\subseteq E \setminus A$ est toujours vrai (car $I \ne \emptyset$), alors l'affirmation "$I \subseteq E \setminus A \subseteq U$" est toujours fausse.
+    Par conséquent, sa négation $\neg (I \subseteq E \setminus A \subseteq U)$ est toujours vraie.
+
+    Reprenons la propriété (P) avec cette déduction :
+    $(I \subseteq A \subseteq U) \iff \text{Vrai}$.
+    Cette équivalence logique signifie que l'affirmation $(I \subseteq A \subseteq U)$ doit être toujours vraie pour n'importe quelle partie $A \in \mathcal{P}(E)$.
+    Ceci implique que pour toute partie $A \in \mathcal{P}(E)$, $A \in \mathcal{F}$.
+    Autrement dit, $\mathcal{F} = \mathcal{P}(E)$.
+
+    Cependant, nous avons montré au début de la Q3 (déduite de Q1) que $\mathcal{F} \neq \mathcal{P}(E)$ car cette situation mène à une contradiction avec la propriété (P) elle-même (True $\iff$ False).
+
+    Nous sommes donc arrivés à une contradiction.
+    L'hypothèse initiale que $\mathcal{F}$ peut être stable par unions arbitraires et intersections arbitraires sur un ensemble infini $E$ est donc fausse.
+
+    **Conclusion :** Pour un ensemble infini $E$, une famille $\mathcal{F} \subseteq \mathcal{P}(E)$ satisfaisant la propriété (P) ne peut pas être stable par unions arbitraires et en même temps stable par intersections arbitraires.

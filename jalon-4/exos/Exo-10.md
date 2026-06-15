@@ -1,144 +1,113 @@
----
-uuid: "jalon-4-exo-10"
-title: "Exercice 10 - 5 étoiles"
----
-# Exercice 10 : Distributivité de l'Intersection sur la Différence Symétrique et Conséquences
+# Exercice 10 : Caractérisation de la Surjectivité d'une Fonction par l'Application de Préimage sur l'Ensemble des Parties
 **Difficulté :** ⭐⭐⭐⭐⭐
+**Thème :** Application de préimage, injectivité, surjectivité, ensemble des parties, ZFC.
 
 ## Énoncé
-Soient $E$ un ensemble non vide et $A, B, C$ trois parties quelconques de $E$.
+Soient $E$ un ensemble et $F$ un ensemble. On considère une fonction $f: E \to F$.
+On définit l'application de préimage $f^*: \mathcal{P}(F) \to \mathcal{P}(E)$ par :
+Pour tout $B \in \mathcal{P}(F)$, $f^*(B) = \{x \in E \mid f(x) \in B\}$.
 
-1.  Démontrer l'identité suivante, connue sous le nom de distributivité de l'intersection sur la différence symétrique :
-    $$A \cap (B \Delta C) = (A \cap B) \Delta (A \cap C)$$
-    où $X \Delta Y$ représente la différence symétrique des ensembles $X$ et $Y$.
-
-2.  En déduire que si $A \cap B = A \cap C$, alors $A \cap (B \Delta C) = \emptyset$.
+Démontrez l'équivalence suivante :
+La fonction $f$ est surjective si et seulement si l'application $f^*$ est injective.
 
 ## Correction Détaillée
-*   **Analyse de l'énoncé :**
-    L'exercice nous demande de prouver une identité fondamentale en théorie des ensembles, à savoir la distributivité de l'intersection sur la différence symétrique. Cette propriété est cruciale car elle est l'une des axiomes qui, avec d'autres, confère à l'ensemble des parties $\mathcal{P}(E)$ muni de la différence symétrique et de l'intersection une structure d'anneau de Boole. La première partie requiert une démonstration rigoureuse de cette identité. La stratégie la plus directe pour prouver l'égalité de deux ensembles est la double inclusion, c'est-à-dire montrer que chaque ensemble est un sous-ensemble de l'autre. Alternativement, on pourrait utiliser les fonctions indicatrices, mais la méthode par double inclusion est souvent plus fondamentale pour les débutants en théorie des ensembles et permet une justification pas-à-pas très explicite. La deuxième partie de l'exercice est une déduction directe de la première partie, ce qui signifie que le résultat de la première partie doit être utilisé comme point de départ pour la démonstration. Il faudra manipuler l'identité en utilisant l'hypothèse donnée.
 
-*   **Résolution pas-à-pas :**
+### Précisions et Hypothèses Fondamentales
+*   $E$ et $F$ sont des ensembles. Nous travaillerons dans le cadre de la théorie des ensembles de Zermelo-Fraenkel avec l'Axiome du Choix (ZFC).
+*   La définition d'une fonction $f: E \to F$ implique que pour tout $x \in E$, il existe un unique $y \in F$ tel que $f(x)=y$.
+*   $\mathcal{P}(X)$ désigne l'ensemble des parties de $X$, défini par $\mathcal{P}(X) = \{A \mid A \subseteq X\}$. L'existence de $\mathcal{P}(X)$ est garantie par l'axiome de l'ensemble des parties de ZFC.
+*   Nous supposons que l'ensemble $F$ est non vide. Si $F$ est l'ensemble vide ($\emptyset$), alors :
+    *   La fonction $f: E \to \emptyset$ ne peut exister que si $E$ est vide (par l'axiome de la fonctionnalité). Si $E = \emptyset$ et $F = \emptyset$, alors $f$ est surjective par vacuité.
+    *   $\mathcal{P}(F) = \mathcal{P}(\emptyset) = \{\emptyset\}$. L'application $f^*: \{\emptyset\} \to \mathcal{P}(\emptyset)$ est définie par $f^*(\emptyset) = \{x \in \emptyset \mid f(x) \in \emptyset\} = \emptyset$. Dans ce cas, $f^*$ est triviale et injective (par vacuité). L'équivalence tient donc dans ce cas trivial.
+    Afin d'éviter les arguments par vacuité qui simplifieraient artificiellement certaines étapes, nous allons traiter le cas général où $F$ est un ensemble non vide. Le cas des ensembles finis, comme mentionné dans le thème, est un cas particulier de cette preuve générale.
 
-    **Partie 1 : Démontrer $A \cap (B \Delta C) = (A \cap B) \Delta (A \cap C)$.**
+### Partie 1 : Démonstration de "$f$ est surjective $\implies$ $f^*$ est injective"
 
-    Pour prouver l'égalité de deux ensembles, nous allons démontrer la double inclusion : $A \cap (B \Delta C) \subseteq (A \cap B) \Delta (A \cap C)$ et $(A \cap B) \Delta (A \cap C) \subseteq A \cap (B \Delta C)$.
+**Hypothèse :** La fonction $f: E \to F$ est surjective.
+Par définition de la surjectivité, cela signifie que pour tout élément $y \in F$, il existe au moins un élément $x \in E$ tel que $f(x)=y$.
 
-    Rappelons la définition de la différence symétrique pour deux ensembles $X$ et $Y$ :
-    $$X \Delta Y = (X \setminus Y) \cup (Y \setminus X)$$
-    où $X \setminus Y = \{z \in E \mid z \in X \text{ et } z \notin Y\}$.
+**But :** Démontrer que l'application $f^*: \mathcal{P}(F) \to \mathcal{P}(E)$ est injective.
+Par définition de l'injectivité d'une fonction, nous devons montrer que pour tous $B_1 \in \mathcal{P}(F)$ et $B_2 \in \mathcal{P}(F)$, si $f^*(B_1) = f^*(B_2)$, alors $B_1 = B_2$.
 
-    **Étape 1 : Démontrons $A \cap (B \Delta C) \subseteq (A \cap B) \Delta (A \cap C)$.**
+Soient $B_1$ un élément arbitraire de $\mathcal{P}(F)$ et $B_2$ un élément arbitraire de $\mathcal{P}(F)$.
+Supposons que $f^*(B_1) = f^*(B_2)$.
+Par la définition de l'application de préimage $f^*$, cette égalité signifie que :
+$$ \{x \in E \mid f(x) \in B_1\} = \{x \in E \mid f(x) \in B_2\} \quad (*)$$.
 
-    Soit $x$ un élément quelconque de l'ensemble $A \cap (B \Delta C)$.
-    Par définition de l'intersection, cela signifie que $x \in A$ et $x \in (B \Delta C)$.
-    Par définition de la différence symétrique, $x \in (B \Delta C)$ signifie que $x \in (B \setminus C) \cup (C \setminus B)$.
-    Cela implique que ($x \in B$ et $x \notin C$) ou ($x \in C$ et $x \notin B$).
+Nous allons montrer que cette égalité d'ensembles de préimages implique que $B_1$ et $B_2$ sont égaux. Pour cela, nous devons prouver la double inclusion : $B_1 \subseteq B_2$ et $B_2 \subseteq B_1$.
 
-    Nous allons analyser ces deux cas séparément.
+**Démonstration de $B_1 \subseteq B_2$ :**
+Soit $y$ un élément arbitraire de $F$ tel que $y \in B_1$.
+Puisque $f$ est surjective (par hypothèse) et que $y \in F$, il existe un élément $x_0 \in E$ tel que $f(x_0)=y$.
+Comme $f(x_0)=y$ et $y \in B_1$, nous avons $f(x_0) \in B_1$.
+Par la définition de l'ensemble $f^*(B_1)$, l'appartenance $f(x_0) \in B_1$ implique que $x_0 \in f^*(B_1)$.
+En utilisant l'égalité $(*)$ que nous avons supposée, nous avons $f^*(B_1) = f^*(B_2)$.
+Par conséquent, $x_0 \in f^*(B_2)$.
+Par la définition de l'ensemble $f^*(B_2)$, l'appartenance $x_0 \in f^*(B_2)$ implique que $f(x_0) \in B_2$.
+Or, nous avons établi que $f(x_0)=y$. Donc, $y \in B_2$.
+Puisque $y$ était un élément arbitraire de $B_1$, nous avons montré que si $y \in B_1$, alors $y \in B_2$.
+Par conséquent, $B_1 \subseteq B_2$.
 
-    *   **Cas 1 : $x \in B$ et $x \notin C$.**
-        Puisque nous savons que $x \in A$, nous avons les conditions suivantes :
-        1.  $x \in A$
-        2.  $x \in B$
-        3.  $x \notin C$
+**Démonstration de $B_2 \subseteq B_1$ :**
+La démonstration est symétrique à la précédente.
+Soit $y$ un élément arbitraire de $F$ tel que $y \in B_2$.
+Puisque $f$ est surjective (par hypothèse) et que $y \in F$, il existe un élément $x_1 \in E$ tel que $f(x_1)=y$.
+Comme $f(x_1)=y$ et $y \in B_2$, nous avons $f(x_1) \in B_2$.
+Par la définition de l'ensemble $f^*(B_2)$, l'appartenance $f(x_1) \in B_2$ implique que $x_1 \in f^*(B_2)$.
+En utilisant l'égalité $(*)$, nous avons $f^*(B_2) = f^*(B_1)$.
+Par conséquent, $x_1 \in f^*(B_1)$.
+Par la définition de l'ensemble $f^*(B_1)$, l'appartenance $x_1 \in f^*(B_1)$ implique que $f(x_1) \in B_1$.
+Or, nous avons établi que $f(x_1)=y$. Donc, $y \in B_1$.
+Puisque $y$ était un élément arbitraire de $B_2$, nous avons montré que si $y \in B_2$, alors $y \in B_1$.
+Par conséquent, $B_2 \subseteq B_1$.
 
-        De (1) et (2), nous déduisons que $x \in A \cap B$ (par définition de l'intersection).
-        De (1) et (3), nous déduisons que $x \notin A \cap C$ (car si $x$ était dans $A \cap C$, alors $x$ devrait être dans $C$, ce qui contredit $x \notin C$).
-        Donc, $x \in A \cap B$ et $x \notin A \cap C$.
-        Par définition de la différence ensembliste, cela signifie que $x \in (A \cap B) \setminus (A \cap C)$.
-        Par définition de la différence symétrique, $(A \cap B) \setminus (A \cap C)$ est un sous-ensemble de $(A \cap B) \Delta (A \cap C)$.
-        Par conséquent, $x \in (A \cap B) \Delta (A \cap C)$.
+Puisque nous avons démontré que $B_1 \subseteq B_2$ et $B_2 \subseteq B_1$, nous concluons que $B_1 = B_2$.
+Ayant montré que si $f^*(B_1) = f^*(B_2)$ alors $B_1 = B_2$, l'application $f^*$ est injective.
 
-    *   **Cas 2 : $x \in C$ et $x \notin B$.**
-        Puisque nous savons que $x \in A$, nous avons les conditions suivantes :
-        1.  $x \in A$
-        2.  $x \in C$
-        3.  $x \notin B$
+### Partie 2 : Démonstration de "$f^*$ est injective $\implies$ $f$ est surjective"
 
-        De (1) et (2), nous déduisons que $x \in A \cap C$ (par définition de l'intersection).
-        De (1) et (3), nous déduisons que $x \notin A \cap B$ (car si $x$ était dans $A \cap B$, alors $x$ devrait être dans $B$, ce qui contredit $x \notin B$).
-        Donc, $x \in A \cap C$ et $x \notin A \cap B$.
-        Par définition de la différence ensembliste, cela signifie que $x \in (A \cap C) \setminus (A \cap B)$.
-        Par définition de la différence symétrique, $(A \cap C) \setminus (A \cap B)$ est un sous-ensemble de $(A \cap B) \Delta (A \cap C)$.
-        Par conséquent, $x \in (A \cap B) \Delta (A \cap C)$.
+**Hypothèse :** L'application $f^*: \mathcal{P}(F) \to \mathcal{P}(E)$ est injective.
+Par définition de l'injectivité, cela signifie que pour tous $B_1 \in \mathcal{P}(F)$ et $B_2 \in \mathcal{P}(F)$, si $f^*(B_1) = f^*(B_2)$, alors $B_1 = B_2$.
 
-    Dans les deux cas possibles, nous avons montré que si $x \in A \cap (B \Delta C)$, alors $x \in (A \cap B) \Delta (A \cap C)$.
-    Nous avons donc prouvé la première inclusion : $A \cap (B \Delta C) \subseteq (A \cap B) \Delta (A \cap C)$.
+**But :** Démontrer que la fonction $f: E \to F$ est surjective.
+Nous allons procéder par preuve par contradiction.
 
-    **Étape 2 : Démontrons $(A \cap B) \Delta (A \cap C) \subseteq A \cap (B \Delta C)$.**
+Supposons, par l'absurde, que la fonction $f$ n'est pas surjective.
+Par définition de la non-surjectivité, cela signifie qu'il existe au moins un élément $y_0 \in F$ tel que pour tout $x \in E$, l'image $f(x)$ est différente de $y_0$. En d'autres termes, $y_0$ n'appartient pas à l'image de $f$, c'est-à-dire $y_0 \notin \text{Im}(f)$.
+Rappelons que nous avons supposé $F$ non vide, donc l'existence d'un tel $y_0$ est possible sans rendre $F$ vide.
 
-    Soit $y$ un élément quelconque de l'ensemble $(A \cap B) \Delta (A \cap C)$.
-    Par définition de la différence symétrique, cela signifie que $y \in ((A \cap B) \setminus (A \cap C)) \cup ((A \cap C) \setminus (A \cap B))$.
-    Cela implique que ($y \in A \cap B$ et $y \notin A \cap C$) ou ($y \in A \cap C$ et $y \notin A \cap B$).
+Considérons les deux sous-ensembles de $F$ suivants :
+1.  $B_1 = \{y_0\}$. Par l'axiome de l'ensemble des parties et l'axiome de la paire de ZFC, $B_1$ est un élément de $\mathcal{P}(F)$.
+2.  $B_2 = \emptyset$. Par l'axiome de l'ensemble vide, $\emptyset$ existe, et par l'axiome de l'ensemble des parties, $\emptyset$ est un élément de $\mathcal{P}(F)$.
 
-    Nous allons analyser ces deux cas séparément.
+Maintenant, calculons les préimages de ces ensembles sous l'application $f^*$:
 
-    *   **Cas 1 : $y \in A \cap B$ et $y \notin A \cap C$.**
-        De $y \in A \cap B$, nous déduisons que $y \in A$ et $y \in B$ (par définition de l'intersection).
-        De $y \notin A \cap C$, nous déduisons que $y$ n'est pas dans l'intersection de $A$ et $C$. Cela signifie que ($y \notin A$ ou $y \notin C$).
-        Puisque nous savons déjà que $y \in A$, l'affirmation $y \notin A$ est fausse. Par conséquent, il doit être vrai que $y \notin C$.
-        En résumé, nous avons les conditions suivantes :
-        1.  $y \in A$
-        2.  $y \in B$
-        3.  $y \notin C$
+Pour $B_1 = \{y_0\}$ :
+La définition de $f^*(B_1)$ est $\{x \in E \mid f(x) \in \{y_0\}\}$.
+Cette expression est équivalente à $\{x \in E \mid f(x) = y_0\}$.
+Puisque nous avons supposé que $f$ n'est pas surjective et que $y_0$ est précisément l'élément de $F$ pour lequel il n'existe aucun $x \in E$ tel que $f(x)=y_0$, l'ensemble $\{x \in E \mid f(x) = y_0\}$ ne contient aucun élément.
+Par conséquent, $f^*(B_1) = \emptyset$.
 
-        De (2) et (3), nous déduisons que $y \in B \setminus C$ (par définition de la différence ensembliste).
-        Par définition de la différence symétrique, $B \setminus C$ est un sous-ensemble de $B \Delta C$.
-        Donc, $y \in B \Delta C$.
-        Puisque nous avons $y \in A$ (condition 1) et $y \in B \Delta C$, nous déduisons que $y \in A \cap (B \Delta C)$ (par définition de l'intersection).
+Pour $B_2 = \emptyset$ :
+La définition de $f^*(B_2)$ est $\{x \in E \mid f(x) \in \emptyset\}$.
+Puisque l'ensemble vide ne contient aucun élément, il n'existe aucun $y$ tel que $y \in \emptyset$. Par conséquent, il n'existe aucun $f(x)$ tel que $f(x) \in \emptyset$.
+L'ensemble $\{x \in E \mid f(x) \in \emptyset\}$ ne contient donc aucun élément.
+Ainsi, $f^*(B_2) = \emptyset$.
 
-    *   **Cas 2 : $y \in A \cap C$ et $y \notin A \cap B$.**
-        De $y \in A \cap C$, nous déduisons que $y \in A$ et $y \in C$ (par définition de l'intersection).
-        De $y \notin A \cap B$, nous déduisons que $y$ n'est pas dans l'intersection de $A$ et $B$. Cela signifie que ($y \notin A$ ou $y \notin B$).
-        Puisque nous savons déjà que $y \in A$, l'affirmation $y \notin A$ est fausse. Par conséquent, il doit être vrai que $y \notin B$.
-        En résumé, nous avons les conditions suivantes :
-        1.  $y \in A$
-        2.  $y \in C$
-        3.  $y \notin B$
+Nous avons donc trouvé deux éléments $B_1 = \{y_0\}$ et $B_2 = \emptyset$ de $\mathcal{P}(F)$ tels que $f^*(B_1) = \emptyset$ et $f^*(B_2) = \emptyset$.
+Il s'ensuit que $f^*(B_1) = f^*(B_2)$.
 
-        De (2) et (3), nous déduisons que $y \in C \setminus B$ (par définition de la différence ensembliste).
-        Par définition de la différence symétrique, $C \setminus B$ est un sous-ensemble de $B \Delta C$.
-        Donc, $y \in B \Delta C$.
-        Puisque nous avons $y \in A$ (condition 1) et $y \in B \Delta C$, nous déduisons que $y \in A \cap (B \Delta C)$ (par définition de l'intersection).
+Cependant, nous savons que $y_0 \in F$ est l'élément qui n'appartient pas à l'image de $f$. Par l'axiome de la paire de ZFC, $\{y_0\}$ est un ensemble contenant $y_0$.
+L'ensemble $B_1 = \{y_0\}$ contient l'élément $y_0$.
+L'ensemble $B_2 = \emptyset$ ne contient aucun élément.
+Puisque $y_0 \in B_1$ et $y_0 \notin B_2$, il s'ensuit que $B_1 \neq B_2$.
 
-    Dans les deux cas possibles, nous avons montré que si $y \in (A \cap B) \Delta (A \cap C)$, alors $y \in A \cap (B \Delta C)$.
-    Nous avons donc prouvé la deuxième inclusion : $(A \cap B) \Delta (A \cap C) \subseteq A \cap (B \Delta C)$.
+Nous avons donc abouti à la situation suivante : $f^*(B_1) = f^*(B_2)$ mais $B_1 \neq B_2$.
+Cette conclusion contredit directement notre hypothèse selon laquelle l'application $f^*$ est injective.
+Par conséquent, notre hypothèse initiale selon laquelle $f$ n'est pas surjective doit être fausse.
+Il s'ensuit que la fonction $f$ est surjective.
 
-    **Conclusion de la Partie 1 :**
-    Puisque nous avons démontré les deux inclusions, $A \cap (B \Delta C) \subseteq (A \cap B) \Delta (A \cap C)$ et $(A \cap B) \Delta (A \cap C) \subseteq A \cap (B \Delta C)$, nous pouvons conclure que les deux ensembles sont égaux :
-    $$A \cap (B \Delta C) = (A \cap B) \Delta (A \cap C)$$
-
-    ---
-
-    **Partie 2 : En déduire que si $A \cap B = A \cap C$, alors $A \cap (B \Delta C) = \emptyset$.**
-
-    Nous partons de l'identité démontrée dans la Partie 1 :
-    $$A \cap (B \Delta C) = (A \cap B) \Delta (A \cap C)$$
-
-    Nous avons l'hypothèse que $A \cap B = A \cap C$.
-    Nous allons substituer cette égalité dans le membre de droite de l'identité.
-    Soit $X = A \cap B$. Alors, d'après l'hypothèse, $A \cap C = X$.
-    Le membre de droite devient alors $X \Delta X$.
-
-    Appliquons la définition de la différence symétrique à $X \Delta X$ :
-    $$X \Delta X = (X \setminus X) \cup (X \setminus X)$$
-
-    Par définition de la différence ensembliste, pour tout ensemble $X$, $X \setminus X$ est l'ensemble des éléments qui sont dans $X$ et qui ne sont pas dans $X$. Un tel ensemble ne contient aucun élément, il est donc égal à l'ensemble vide $\emptyset$.
-    Ainsi, $X \setminus X = \emptyset$.
-
-    En substituant cela dans l'expression de $X \Delta X$ :
-    $$X \Delta X = \emptyset \cup \emptyset$$
-
-    Par définition de l'union, l'union de l'ensemble vide avec l'ensemble vide est l'ensemble vide lui-même :
-    $$\emptyset \cup \emptyset = \emptyset$$
-
-    Par conséquent, nous avons montré que $(A \cap B) \Delta (A \cap C) = \emptyset$ sous l'hypothèse $A \cap B = A \cap C$.
-
-    En utilisant l'identité démontrée dans la Partie 1, nous pouvons remplacer le membre de droite par $\emptyset$ :
-    $$A \cap (B \Delta C) = \emptyset$$
-
-    Nous avons ainsi déduit que si $A \cap B = A \cap C$, alors $A \cap (B \Delta C) = \emptyset$.
-
-*   **Conclusion :**
-    Nous avons rigoureusement démontré la propriété de distributivité de l'intersection sur la différence symétrique, à savoir $A \cap (B \Delta C) = (A \cap B) \Delta (A \cap C)$, en utilisant la méthode de la double inclusion avec une analyse exhaustive de tous les cas possibles pour les éléments. Cette identité est fondamentale en théorie des ensembles et en algèbre booléenne. De plus, nous avons utilisé cette identité pour en déduire une conséquence significative : si l'intersection d'un ensemble $A$ avec $B$ est la même que son intersection avec $C$, alors l'intersection de $A$ avec la différence symétrique de $B$ et $C$ est nécessairement l'ensemble vide. Cela illustre comment des propriétés établies peuvent être utilisées pour dériver de nouveaux résultats logiques de manière structurée et déductive.
+### Conclusion
+Ayant démontré que $f$ est surjective $\implies$ $f^*$ est injective (Partie 1) et que $f^*$ est injective $\implies$ $f$ est surjective (Partie 2), nous avons prouvé l'équivalence :
+La fonction $f: E \to F$ est surjective si et seulement si l'application de préimage $f^*: \mathcal{P}(F) \to \mathcal{P}(E)$ est injective.
+Cette preuve est valide pour des ensembles $E$ et $F$ quelconques (finis ou infinis), à condition que $F$ soit non vide. Le cas des ensembles finis est une restriction de ce résultat général.

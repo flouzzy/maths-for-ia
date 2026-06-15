@@ -1,43 +1,127 @@
----
-uuid: "jalon-4-exo-01"
-title: "Exercice 01 - 1 étoiles"
----
-# Exercice 01 : Loi d'absorption fondamentale
+# Exercice 1 : Concepts fondamentaux d'ensembles, d'appartenance et d'inclusion
 **Difficulté :** ⭐
+**Thème :** Appartenance, inclusion, sous-ensembles, ensemble des parties, cardinalité d'ensembles finis.
 
 ## Énoncé
-Soient $E$ un ensemble non vide, et $A$ et $B$ deux parties de $E$.
-Démontrez l'égalité d'ensembles suivante :
-$$A \cup (A \cap B) = A$$
+Soit un ensemble $E$ défini comme $E = \{1, 2, 3\}$.
+
+1.  Spécifier les éléments de l'ensemble $E$.
+2.  Déterminer tous les sous-ensembles de $E$.
+3.  Définir l'ensemble des parties de $E$, noté $\mathcal{P}(E)$, en énumérant explicitement ses éléments.
+4.  Calculer les cardinaux de $E$ et de $\mathcal{P}(E)$, c'est-à-dire $|E|$ et $|\mathcal{P}(E)|$.
+5.  Pour chacun des objets suivants, indiquer s'il s'agit d'une assertion vraie ou fausse, en justifiant rigoureusement votre réponse :
+    a.  $1 \in E$
+    b.  $\{1\} \in E$
+    c.  $\{1\} \subseteq E$
+    d.  $1 \in \mathcal{P}(E)$
+    e.  $\{1\} \in \mathcal{P}(E)$
+    f.  $\emptyset \in E$
+    g.  $\emptyset \subseteq E$
+    h.  $\emptyset \in \mathcal{P}(E)$
+    i.  $E \in \mathcal{P}(E)$
+    j.  $E \subseteq \mathcal{P}(E)$
 
 ## Correction Détaillée
-* **Analyse de l'énoncé :**
-Nous devons démontrer l'égalité entre deux ensembles, $A \cup (A \cap B)$ et $A$. Pour prouver que deux ensembles sont égaux, la méthode standard en théorie des ensembles est de démontrer une double inclusion. C'est-à-dire, nous devons montrer que $A \cup (A \cap B) \subseteq A$ et que $A \subseteq A \cup (A \cap B)$. La démonstration se fera par l'analyse des propriétés des éléments.
 
-* **Résolution pas-à-pas :**
+### 1. Spécification des éléments de l'ensemble $E$
+**Définition :** Un ensemble est une collection d'objets distincts, appelés éléments.
+L'ensemble $E$ est défini explicitement par énumération de ses éléments comme $E = \{1, 2, 3\}$.
+Les éléments de $E$ sont donc les nombres entiers $1$, $2$, et $3$.
+On peut formaliser cela par les assertions d'appartenance suivantes :
+*   $1 \in E$ (Le nombre entier $1$ est un élément de l'ensemble $E$).
+*   $2 \in E$ (Le nombre entier $2$ est un élément de l'ensemble $E$).
+*   $3 \in E$ (Le nombre entier $3$ est un élément de l'ensemble $E$).
 
-**Partie 1 : Démontrons que $A \cup (A \cap B) \subseteq A$.**
+### 2. Détermination de tous les sous-ensembles de $E$
+**Définition :** Un ensemble $A$ est un sous-ensemble de $E$, noté $A \subseteq E$, si et seulement si tout élément de $A$ est également un élément de $E$. Formellement, $\forall x, (x \in A \implies x \in E)$.
 
-1.  Soit $x$ un élément arbitraire de l'ensemble $A \cup (A \cap B)$.
-2.  Par la définition de l'union d'ensembles, l'appartenance de $x$ à $A \cup (A \cap B)$ signifie que $x \in A$ ou $x \in (A \cap B)$.
-3.  Nous analysons ces deux cas distinctement, en considérant chaque terme de la disjonction :
-    *   **Cas 1 :** Supposons que $x \in A$.
-        Dans cette hypothèse, la condition que $x$ appartient à l'ensemble $A$ est directement satisfaite.
-    *   **Cas 2 :** Supposons que $x \in (A \cap B)$.
-        Par la définition de l'intersection d'ensembles, l'appartenance de $x$ à $(A \cap B)$ signifie que $x \in A$ et $x \in B$.
-        De cette conjonction logique, nous pouvons spécifiquement déduire que $x \in A$.
-4.  Dans les deux cas possibles (que $x \in A$ ou que $x \in (A \cap B)$), nous avons systématiquement montré que $x$ appartient nécessairement à l'ensemble $A$.
-5.  Puisque $x$ était un élément arbitraire de $A \cup (A \cap B)$ et que nous avons rigoureusement démontré qu'il appartient à $A$, nous pouvons conclure que l'ensemble $A \cup (A \cap B)$ est un sous-ensemble de $A$, ce qui s'écrit $A \cup (A \cap B) \subseteq A$.
+Les sous-ensembles de $E$ sont énumérés de la manière suivante, en classant par le nombre d'éléments qu'ils contiennent :
+*   **Sous-ensembles à 0 élément :**
+    *   L'ensemble vide : $\emptyset$ (L'ensemble vide est, par définition, un sous-ensemble de tout ensemble).
+*   **Sous-ensembles à 1 élément (singletons) :**
+    *   $\{1\}$ (L'unique élément $1$ de cet ensemble est dans $E$).
+    *   $\{2\}$ (L'unique élément $2$ de cet ensemble est dans $E$).
+    *   $\{3\}$ (L'unique élément $3$ de cet ensemble est dans $E$).
+*   **Sous-ensembles à 2 éléments (paires) :**
+    *   $\{1, 2\}$ (Les éléments $1$ et $2$ de cet ensemble sont tous deux dans $E$).
+    *   $\{1, 3\}$ (Les éléments $1$ et $3$ de cet ensemble sont tous deux dans $E$).
+    *   $\{2, 3\}$ (Les éléments $2$ et $3$ de cet ensemble sont tous deux dans $E$).
+*   **Sous-ensembles à 3 éléments :**
+    *   $\{1, 2, 3\}$ (Tous les éléments de cet ensemble sont dans $E$. C'est l'ensemble $E$ lui-même).
 
-**Partie 2 : Démontrons que $A \subseteq A \cup (A \cap B)$.**
+En résumé, les sous-ensembles de $E$ sont : $\emptyset$, $\{1\}$, $\{2\}$, $\{3\}$, $\{1, 2\}$, $\{1, 3\}$, $\{2, 3\}$, $\{1, 2, 3\}$.
 
-1.  Soit $y$ un élément arbitraire de l'ensemble $A$.
-2.  Par la définition de l'union d'ensembles, un élément appartient à $A \cup (A \cap B)$ si et seulement si il appartient à $A$ ou il appartient à $(A \cap B)$.
-3.  Puisque nous avons supposé que $y \in A$, la première partie de la disjonction ("$y \in A$") est vraie.
-4.  En logique propositionnelle, une disjonction (P ou Q) est vraie si au moins une de ses composantes (P ou Q) est vraie. Étant donné que "$y \in A$" est vraie, l'affirmation "$y \in A$ ou $y \in (A \cap B)$" est nécessairement vraie.
-5.  Cela signifie, par la définition de l'union, que $y \in A \cup (A \cap B)$.
-6.  Puisque $y$ était un élément arbitraire de $A$ et que nous avons démontré qu'il appartient à $A \cup (A \cap B)$, nous pouvons conclure que l'ensemble $A$ est un sous-ensemble de $A \cup (A \cap B)$, ce qui s'écrit $A \subseteq A \cup (A \cap B)$.
+### 3. Définition de l'ensemble des parties de $E$, $\mathcal{P}(E)$
+**Définition :** L'ensemble des parties d'un ensemble $E$, noté $\mathcal{P}(E)$, est l'ensemble de tous les sous-ensembles de $E$. Formellement, $\mathcal{P}(E) = \{A \mid A \subseteq E\}$.
 
-* **Conclusion :**
-Nous avons démontré successivement que $A \cup (A \cap B) \subseteq A$ (Partie 1) et que $A \subseteq A \cup (A \cap B)$ (Partie 2). Par la propriété de double inclusion, qui stipule que si $X \subseteq Y$ et $Y \subseteq X$, alors $X = Y$, ces deux inclusions impliquent l'égalité des ensembles.
-Par conséquent, nous avons prouvé que pour toutes parties $A$ et $B$ d'un ensemble $E$, l'égalité $A \cup (A \cap B) = A$ est vérifiée. Cette propriété est connue sous le nom de loi d'absorption pour l'union et l'intersection.
+En utilisant la liste des sous-ensembles déterminée au point 2, les éléments de $\mathcal{P}(E)$ sont ces sous-ensembles. Ainsi, on a :
+$$ \mathcal{P}(E) = \{\emptyset, \{1\}, \{2\}, \{3\}, \{1, 2\}, \{1, 3\}, \{2, 3\}, \{1, 2, 3\}\} $$
+
+### 4. Calcul des cardinaux de $E$ et de $\mathcal{P}(E)$
+**Définition :** Le cardinal d'un ensemble fini $X$, noté $|X|$, est le nombre d'éléments distincts contenus dans $X$.
+
+*   **Cardinal de $E$ :** L'ensemble $E = \{1, 2, 3\}$ contient trois éléments distincts (les nombres entiers $1, 2, 3$).
+    Donc, $|E| = 3$.
+
+*   **Cardinal de $\mathcal{P}(E)$ :** L'ensemble $\mathcal{P}(E)$ est composé de tous les sous-ensembles de $E$. En comptant les éléments de $\mathcal{P}(E)$ que nous avons énumérés au point 3 :
+    $\mathcal{P}(E) = \{\emptyset, \{1\}, \{2\}, \{3\}, \{1, 2\}, \{1, 3\}, \{2, 3\}, \{1, 2, 3\}\}$.
+    Cet ensemble contient $8$ éléments distincts.
+    Donc, $|\mathcal{P}(E)| = 8$.
+
+    **Propriété générale :** Pour tout ensemble fini $E$, le cardinal de son ensemble des parties est donné par la formule $|\mathcal{P}(E)| = 2^{|E|}$.
+    Dans notre cas, $|E| = 3$, donc $|\mathcal{P}(E)| = 2^{3} = 8$. Ce résultat est cohérent avec le dénombrement explicite des éléments de $\mathcal{P}(E)$.
+
+### 5. Validation d'assertions d'appartenance et d'inclusion
+Nous allons évaluer la véracité de chaque assertion en nous basant sur les définitions de l'appartenance ($\in$) et de l'inclusion ($\subseteq$).
+
+**a. $1 \in E$**
+*   **Nature des objets :** $1$ est un nombre entier (un objet, un élément potentiel). $E$ est un ensemble.
+*   **Justification :** L'ensemble $E$ est défini comme $E = \{1, 2, 3\}$. Par cette définition, le nombre entier $1$ est explicitement listé comme un élément de $E$.
+*   **Valeur de vérité :** Vraie.
+
+**b. $\{1\} \in E$**
+*   **Nature des objets :** $\{1\}$ est un ensemble (un singleton, c'est-à-dire un ensemble contenant le nombre entier $1$). $E$ est un ensemble.
+*   **Justification :** Pour qu'un objet soit un élément de $E$, il doit être l'un des objets listés dans la définition de $E$. Les éléments de $E$ sont $1, 2, 3$. L'ensemble $\{1\}$ n'est ni le nombre $1$, ni le nombre $2$, ni le nombre $3$. L'objet $\{1\}$ est un ensemble, tandis que les éléments de $E$ sont des nombres.
+*   **Valeur de vérité :** Fausse.
+
+**c. $\{1\} \subseteq E$**
+*   **Nature des objets :** $\{1\}$ est un ensemble. $E$ est un ensemble.
+*   **Justification :** Un ensemble $A$ est un sous-ensemble de $E$ si et seulement si tout élément de $A$ est aussi un élément de $E$. L'ensemble $\{1\}$ a pour unique élément le nombre entier $1$. Nous avons établi en 5.a que $1 \in E$. Par conséquent, tout élément de $\{1\}$ (en l'occurrence, le seul élément $1$) est un élément de $E$.
+*   **Valeur de vérité :** Vraie.
+
+**d. $1 \in \mathcal{P}(E)$**
+*   **Nature des objets :** $1$ est un nombre entier. $\mathcal{P}(E)$ est un ensemble dont les éléments sont eux-mêmes des ensembles (plus précisément, tous les sous-ensembles de $E$).
+*   **Justification :** Les éléments de $\mathcal{P}(E)$ sont des ensembles. Le nombre entier $1$ n'est pas un ensemble (c'est un élément atomique, non un conteneur d'éléments dans ce contexte). Par conséquent, $1$ ne peut pas être un élément de $\mathcal{P}(E)$.
+*   **Valeur de vérité :** Fausse.
+
+**e. $\{1\} \in \mathcal{P}(E)$**
+*   **Nature des objets :** $\{1\}$ est un ensemble. $\mathcal{P}(E)$ est un ensemble dont les éléments sont des ensembles.
+*   **Justification :** Par définition, $\mathcal{P}(E)$ contient précisément tous les sous-ensembles de $E$. Nous avons établi en 5.c que l'ensemble $\{1\}$ est un sous-ensemble de $E$ (i.e., $\{1\} \subseteq E$). Par conséquent, $\{1\}$ est un élément de $\mathcal{P}(E)$.
+*   **Valeur de vérité :** Vraie.
+
+**f. $\emptyset \in E$**
+*   **Nature des objets :** $\emptyset$ est un ensemble (l'ensemble vide). $E$ est un ensemble.
+*   **Justification :** Pour que l'ensemble vide soit un élément de $E$, il faudrait qu'il soit listé explicitement comme un des éléments de $E$. Les éléments de $E$ sont $1, 2, 3$. L'ensemble vide n'est pas l'un de ces nombres. Dans la théorie des ensembles (ZFC), l'ensemble vide est généralement un ensemble et non un élément "atomique" comme $1$ ou $2$ à moins qu'il ne soit spécifiquement inclus.
+*   **Valeur de vérité :** Fausse.
+
+**g. $\emptyset \subseteq E$**
+*   **Nature des objets :** $\emptyset$ est un ensemble. $E$ est un ensemble.
+*   **Justification :** L'ensemble vide est, par définition fondamentale en théorie des ensembles (et par l'axiome de l'ensemble vide conjugué à l'axiome d'extensionnalité), un sous-ensemble de tout ensemble. La condition $\forall x, (x \in \emptyset \implies x \in E)$ est toujours vraie, car la prémisse $x \in \emptyset$ est toujours fausse (l'ensemble vide n'a aucun élément). Une implication avec une prémisse fausse est toujours vraie.
+*   **Valeur de vérité :** Vraie.
+
+**h. $\emptyset \in \mathcal{P}(E)$**
+*   **Nature des objets :** $\emptyset$ est un ensemble. $\mathcal{P}(E)$ est un ensemble d'ensembles.
+*   **Justification :** Par définition, $\mathcal{P}(E)$ contient tous les sous-ensembles de $E$. Nous avons établi en 5.g que $\emptyset$ est un sous-ensemble de $E$ (i.e., $\emptyset \subseteq E$). Par conséquent, l'ensemble vide est un élément de $\mathcal{P}(E)$.
+*   **Valeur de vérité :** Vraie.
+
+**i. $E \in \mathcal{P}(E)$**
+*   **Nature des objets :** $E$ est un ensemble. $\mathcal{P}(E)$ est un ensemble d'ensembles.
+*   **Justification :** Par définition, $\mathcal{P}(E)$ contient tous les sous-ensembles de $E$. L'ensemble $E$ est toujours un sous-ensemble de lui-même (i.e., $E \subseteq E$). Par conséquent, $E$ est un élément de $\mathcal{P}(E)$.
+*   **Valeur de vérité :** Vraie.
+
+**j. $E \subseteq \mathcal{P}(E)$**
+*   **Nature des objets :** $E$ est un ensemble. $\mathcal{P}(E)$ est un ensemble d'ensembles.
+*   **Justification :** Pour que $E \subseteq \mathcal{P}(E)$ soit vraie, il faudrait que chaque élément de $E$ soit également un élément de $\mathcal{P}(E)$. Les éléments de $E$ sont $1, 2, 3$. Les éléments de $\mathcal{P}(E)$ sont des ensembles (sous-ensembles de $E$).
+    Considérons l'élément $1 \in E$. Pour que $E \subseteq \mathcal{P}(E)$ soit vraie, il faudrait que $1 \in \mathcal{P}(E)$. Or, nous avons montré en 5.d que l'assertion $1 \in \mathcal{P}(E)$ est fausse, car $1$ est un nombre et non un ensemble.
+    Puisqu'il existe au moins un élément de $E$ (à savoir $1$) qui n'est pas un élément de $\mathcal{P}(E)$, l'assertion $E \subseteq \mathcal{P}(E)$ est fausse.
+*   **Valeur de vérité :** Fausse.
