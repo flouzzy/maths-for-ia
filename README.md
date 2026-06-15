@@ -333,3 +333,4 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - **Date de mise à jour** : 2026-06-09
 - [2026-06-10] : Upsert du Jalon 2 - Méthodes de raisonnement. Status: Terminé.
 - [2026-06-12] : Upsert du Jalon 3 - Quantification. Status: Terminé.
+- [2026-06-14] : Audit & Auto-correction du Jalon 1 - Logique formelle. Statut : Validé et Fixé. Prêt pour le jalon suivant.
