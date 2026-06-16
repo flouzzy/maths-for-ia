@@ -9,7 +9,6 @@ tags:
 prev: "[[Jalon 12 (Livrable IA).md]]"
 next: "[[Jalon 14 (Suites réelles et complexes).md]]"
 ---
-
 # Jalon 13 : Structure de $\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède
 
 ## 1. Présentation du concept clé

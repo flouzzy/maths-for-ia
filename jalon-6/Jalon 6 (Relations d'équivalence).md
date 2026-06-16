@@ -9,7 +9,6 @@ tags:
 prev: "[[Jalon 5 (Applications).md]]"
 next: "[[Jalon 7 (Espaces vectoriels abstraits).md]]"
 ---
-
 # Jalon 6 : Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps)
 
 ## 1. Présentation du concept clé

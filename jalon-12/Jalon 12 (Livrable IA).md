@@ -9,7 +9,6 @@ tags:
 prev: "[[Jalon 11 (Formes linéaires).md]]"
 next: "[[Jalon 13 (Structure de R).md]]"
 ---
-
 # Jalon 12 : Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X
 
 ## 1. Présentation du concept clé

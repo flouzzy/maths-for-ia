@@ -9,7 +9,6 @@ tags:
 prev: "[[Jalon 7 (Espaces vectoriels abstraits).md]]"
 next: "[[Jalon 9 (Calcul matriciel).md]]"
 ---
-
 # Jalon 8 : Applications linéaires, noyau ($\ker$), image ($\text{Im}$) et démonstration du théorème du rang
 
 ## 1. Présentation du concept clé
