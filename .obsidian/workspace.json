@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "jalon-16/Jalon-16.md",
+                "file": "jalon-69/Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Jalon-16"
+              "title": "Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.)"
             }
           }
         ]
@@ -221,6 +221,7 @@
   },
   "active": "8ceda288c71f7e44",
   "lastOpenFiles": [
+    "jalon-16/Jalon-16.md",
     "jalon-15/Jalon 15 (Sous-suites).md",
     "jalon-14/Jalon 14 (Suites réelles et complexes).md",
     "jalon-13/Jalon 13 (Structure de --mathbb{R}-).md",
@@ -231,7 +232,6 @@
     "jalon-8/Jalon 8 (Applications linéaires).md",
     "jalon-7/Jalon 7 (Espaces vectoriels abstraits).md",
     "jalon-6/Jalon 6 (Relations d'équivalence).md",
-    "jalon-16/Jalon-16.md",
     "jalon-1/Jalon 1 (Logique formelle).md",
     "jalon-1/README.md",
     "jalon-141/Jalon-141.md",
