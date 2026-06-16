@@ -79,5 +79,5 @@ $f$ est bijective et continue. Cependant, $f^{-1}$ n'est pas continue en $(1, 0)
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 49 (Espaces topologiques généraux).md]], [[Jalon 5 (Applications).md]]
+- **Concepts Précédents requis :** [[Jalon 49 (Espaces topologiques généraux).md]], [[Jalon-5.md]]
 - **Concepts Futurs dépendants :** [[Jalon 57 (Théorème du point fixe de Banach).md]], [[Jalon 110 (Variétés différentielles abstraites).md]]
