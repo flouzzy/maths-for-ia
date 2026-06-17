@@ -7,7 +7,7 @@ tags:
   - math/fondations
   - ia/logique-predicats
 prev: "[[Jalon 2 (Méthodes de raisonnement).md]]"
-next: "[[Jalon 4 (Théorie des ensembles).md]]"
+next: "[[Jalon-4.md]]"
 ---
 
 # Jalon 3 : Quantification ($\forall, \exists$), ordre des quantificateurs et négation de propositions complexes
@@ -107,4 +107,4 @@ Démontrons la forme de la proposition "f n'est pas continue en $x_0$".
 
 ## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon-1.md|Jalon 1 (Logique formelle)]], [[Jalon-2.md|Jalon 2 (Méthodes de raisonnement)]]
-- **Concepts Futurs dépendants :** [[Jalon-4.md|Jalon 4 (Théorie des ensembles)]], [[Jalon-13.md|Jalon 13 (Structure de R)]]
+- **Concepts Futurs dépendants :** [[Jalon-4.md|Jalon-4]], [[Jalon-13.md|Jalon 13 (Structure de R)]]

@@ -87,5 +87,5 @@ Montrons que si $\mathcal{F}$ est une tribu, alors l'intersection d'une suite d'
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 4 (Théorie des ensembles).md]], [[Jalon 49 (Espaces topologiques généraux).md]]
+- **Concepts Précédents requis :** [[Jalon-4.md]], [[Jalon 49 (Espaces topologiques généraux).md]]
 - **Concepts Futurs dépendants :** [[Jalon 63 (Définition axiomatique d'une mesure).md]], [[Jalon 85 (Axiomes de Kolmogorov).md]]

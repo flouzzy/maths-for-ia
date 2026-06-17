@@ -9,7 +9,6 @@ tags:
 prev: "[[Jalon 8 (Applications linéaires).md]]"
 next: "[[Jalon 10 (Changements de base).md]]"
 ---
-
 # Jalon 9 : Calcul matriciel, opérations, inversibilité et représentations des applications linéaires
 
 ## 1. Présentation du concept clé

@@ -9,7 +9,6 @@ tags:
 prev: "[[Jalon 68 (Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque).md]]"
 next: "[[Jalon 70 (Espaces mesurés produits).md]]"
 ---
-
 # Jalon 69 : Théorème de convergence dominée (TCD)
 
 ## 1. Présentation du concept clé

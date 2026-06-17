@@ -9,7 +9,6 @@ tags:
 prev: "[[Jalon 6 (Relations d'équivalence).md]]"
 next: "[[Jalon 8 (Applications linéaires).md]]"
 ---
-
 # Jalon 7 : Espaces vectoriels abstraits, familles libres, familles génératrices et bases en dimension finie
 
 ## 1. Présentation du concept clé

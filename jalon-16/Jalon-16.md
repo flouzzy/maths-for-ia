@@ -9,7 +9,6 @@ tags:
 prev: "[[Jalon 15 (Sous-suites).md]]"
 next: "[[Jalon 17 (Séries absolument convergentes).md]]"
 ---
-
 # Jalon 16 : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy
 
 ## 1. Présentation du concept clé

@@ -9,7 +9,6 @@ tags:
 prev: "[[Jalon 13 (Structure de R).md]]"
 next: "[[Jalon 15 (Sous-suites).md]]"
 ---
-
 # Jalon 14 : Suites réelles et complexes, définitions rigoureuses des limites ($\epsilon, N$) et critères de convergence
 
 ## 1. Présentation du concept clé

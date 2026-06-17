@@ -87,5 +87,5 @@ On définit $\mathring{A}$ comme la réunion de tous les ouverts inclus dans $A$
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 4 (Théorie des ensembles).md]], [[Jalon 35 (Caractérisation séquentielle des ouverts).md]]
+- **Concepts Précédents requis :** [[Jalon-4.md]], [[Jalon 35 (Caractérisation séquentielle des ouverts).md]]
 - **Concepts Futurs dépendants :** [[Jalon 50 (Opérateurs topologiques).md]], [[Jalon 52 (Applications continues entre espaces topologiques et définition fine des homéomorphismes.).md]]

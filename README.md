@@ -71,7 +71,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 1](jalon-1/Jalon%201%20%28Logique%20formelle%29.md)** : Logique formelle, connecteurs, tables de vérité et calcul des propositions. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 2](jalon-2/Jalon%202%20%28M%C3%A9thodes%20de%20raisonnement%29.md)** : Méthodes de raisonnement (implication, contraposée, l'absurde, analyse-synthèse).
 - **[Jalon 3](jalon-3/Jalon-3.md)** : Quantification ($\forall, \exists$), ordre des quantificateurs et négation de propositions complexes. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 4](jalon-4/Jalon%204%20%28Th%C3%A9orie%20des%20ensembles%29.md)** : Théorie des ensembles (ZFC), opérations sur les ensembles, ensembles des parties $\mathcal{P}(E)$.
+- **[Jalon 4](jalon-4/Jalon-4.md)** : Théorie des ensembles (ZFC), opérations sur les ensembles, ensembles des parties $\mathcal{P}(E)$.
 - **[Jalon 5](jalon-5/Jalon%205%20%28Applications%29.md)** : Applications, injections, surjections, bijections et composition de fonctions.
 - **[Jalon 6](jalon-6/Jalon%206%20%28Relations%20d%27%C3%A9quivalence%29.md)** : Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps).
 - **[Jalon 7](jalon-7/Jalon%207%20%28Espaces%20vectoriels%20abstraits%29.md)** : Espaces vectoriels abstraits, familles libres, familles génératrices et bases en dimension finie.
@@ -321,6 +321,8 @@ python3 -m unittest test_generate_jalons.py
 ## 📝 Historique & Avancement
 
 Le cursus est enrichi jalon par jalon de manière progressive :
+- [2026-06-16] : Audit & Auto-correction du Jalon 2 - Méthodes de raisonnement. Statut : Validé et Fixé. Prêt pour le jalon suivant.
+- [2026-06-14] : Audit & Auto-correction du Jalon 1 - Logique formelle. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - **Dernier Jalon Enrichi** : [Jalon 143](jalon-143/Jalon-143.md) (Cours complet, 10 exercices avancés, 5 TP d'implémentation pure Python).
 - [2026-06-06] : Upsert du Jalon 140 - Classifieur de Bayes optimal. Status: Terminé.
 - [2026-06-07] : Audit & Auto-correction du Jalon 141 - Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC. Statut : Validé et Fixé. Prêt pour le jalon suivant.
@@ -330,7 +332,8 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-06-09] : Upsert du Jalon 16 - Séries numériques à termes positifs. Status: Terminé.
 - [2026-06-10] : Upsert du Jalon 144 - Le phénomène de double descente. Status: Terminé.
 - [2026-06-10] : Audit & Auto-correction du Jalon 144 - Le phénomène de double descente. Statut : Validé et Fixé. Prêt pour le jalon suivant.
-- **Date de mise à jour** : 2026-06-09
+- [2026-06-13] : Audit & Auto-correction du Jalon 145-152 - Rédaction d'un article de recherche théorique de synthèse analysant les garanties de généralisation PAC d'une couche d'attention multi-têtes. Statut : Validé et Fixé. Prêt pour le jalon suivant.
+- **Date de mise à jour** : 2026-06-13
 - [2026-06-10] : Upsert du Jalon 2 - Méthodes de raisonnement. Status: Terminé.
 - [2026-06-12] : Upsert du Jalon 3 - Quantification. Status: Terminé.
 - [2026-06-12] : Audit & Auto-correction du Jalon 1 - Logique formelle. Statut : Validé et Fixé. Prêt pour le jalon suivant.

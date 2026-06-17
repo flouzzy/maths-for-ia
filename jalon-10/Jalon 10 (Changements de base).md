@@ -9,7 +9,6 @@ tags:
 prev: "[[Jalon 9 (Calcul matriciel).md]]"
 next: "[[Jalon 11 (Formes linéaires).md]]"
 ---
-
 # Jalon 10 : Changements de base, matrices de passage et matrices par blocs
 
 ## 1. Présentation du concept clé

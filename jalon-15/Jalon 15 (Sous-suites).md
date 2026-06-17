@@ -9,7 +9,6 @@ tags:
 prev: "[[Jalon 14 (Suites réelles et complexes).md]]"
 next: "[[Jalon-16.md]]"
 ---
-
 # Jalon 15 : Sous-suites, valeurs d'adhérence et preuve par séparation du théorème de Bolzano-Weierstrass
 
 ## 1. Présentation du concept clé
