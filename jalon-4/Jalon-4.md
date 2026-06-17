@@ -7,7 +7,7 @@ tags:
   - math/fondations
   - ia/structures-donnees
 prev: "[[Jalon-3.md]]"
-next: "[[Jalon 5 (Applications).md]]"
+next: "[[Jalon-5.md]]"
 ---
 # Jalon 4 : Théorie des ensembles (ZFC), opérations sur les ensembles, ensembles des parties $\mathcal{P}(E)$
 
@@ -113,4 +113,4 @@ Nous allons démontrer cette égalité par double inclusion.
 
 ## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 1 (Logique formelle)]], [[Jalon 2 (Méthodes de raisonnement)]]
-- **Concepts Futurs dépendants :** [[Jalon 5 (Applications)]], [[Jalon 6 (Relations d'équivalence)]], [[Jalon 63 (Définition axiomatique d'une mesure)]]
+- **Concepts Futurs dépendants :** [[Jalon-5.md|Jalon 5]], [[Jalon 6 (Relations d'équivalence)]], [[Jalon 63 (Définition axiomatique d'une mesure)]]

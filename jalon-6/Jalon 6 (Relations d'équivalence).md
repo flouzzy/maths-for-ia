@@ -6,7 +6,7 @@ trimester: 1
 tags:
   - math/fondations
   - ia/topologie-donnees
-prev: "[[Jalon 5 (Applications).md]]"
+prev: "[[Jalon-5.md]]"
 next: "[[Jalon 7 (Espaces vectoriels abstraits).md]]"
 ---
 # Jalon 6 : Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps)
@@ -108,5 +108,5 @@ Démontrons que l'ensemble quotient $\mathbb{Z}/n\mathbb{Z}$ muni de l'addition 
 - **Exemple Concret :** Dans les algorithmes de **Clustering** (comme DBSCAN ou Single-Linkage), on définit une relation d'équivalence "être dans le même groupe" basée sur une distance seuil. L'ensemble des clusters n'est rien d'autre que l'**ensemble quotient** de l'ensemble des points de données par la relation "être connectés". De même, dans les **Graphes de Connaissances**, on quotient l'espace des entités pour fusionner les synonymes (Entity Resolution).
 
 ## 6. Liens Sémantiques
-- **Concepts Précédents requis :** [[Jalon-4]], [[Jalon 5 (Applications)]]
+- **Concepts Précédents requis :** [[Jalon-4]], [[Jalon-5.md|Jalon 5]]
 - **Concepts Futurs dépendants :** [[Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon 62 (Algèbres)]], [[Jalon 119 (Connexions avec les groupes de Lie)]]

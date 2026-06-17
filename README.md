@@ -72,7 +72,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 2](jalon-2/Jalon%202%20%28M%C3%A9thodes%20de%20raisonnement%29.md)** : Méthodes de raisonnement (implication, contraposée, l'absurde, analyse-synthèse).
 - **[Jalon 3](jalon-3/Jalon-3.md)** : Quantification ($\forall, \exists$), ordre des quantificateurs et négation de propositions complexes. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 4](jalon-4/Jalon-4.md)** : Théorie des ensembles (ZFC), opérations sur les ensembles, ensembles des parties $\mathcal{P}(E)$.
-- **[Jalon 5](jalon-5/Jalon%205%20%28Applications%29.md)** : Applications, injections, surjections, bijections et composition de fonctions.
+- **[Jalon 5](jalon-5/Jalon-5.md)** : Applications, injections, surjections, bijections et composition de fonctions.
 - **[Jalon 6](jalon-6/Jalon%206%20%28Relations%20d%27%C3%A9quivalence%29.md)** : Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps).
 - **[Jalon 7](jalon-7/Jalon%207%20%28Espaces%20vectoriels%20abstraits%29.md)** : Espaces vectoriels abstraits, familles libres, familles génératrices et bases en dimension finie.
 - **[Jalon 8](jalon-8/Jalon%208%20%28Applications%20lin%C3%A9aires%29.md)** : Applications linéaires, noyau ($\ker$), image ($\text{Im}$) et démonstration du théorème du rang.
@@ -321,7 +321,7 @@ python3 -m unittest test_generate_jalons.py
 ## 📝 Historique & Avancement
 
 Le cursus est enrichi jalon par jalon de manière progressive :
-- [2026-06-16] : Audit & Auto-correction du Jalon 2 - Méthodes de raisonnement. Statut : Validé et Fixé. Prêt pour le jalon suivant.
+- [2026-06-16] : Upsert du Jalon 5 - Applications. Status: Terminé.
 - [2026-06-14] : Audit & Auto-correction du Jalon 1 - Logique formelle. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - **Dernier Jalon Enrichi** : [Jalon 143](jalon-143/Jalon-143.md) (Cours complet, 10 exercices avancés, 5 TP d'implémentation pure Python).
 - [2026-06-06] : Upsert du Jalon 140 - Classifieur de Bayes optimal. Status: Terminé.
