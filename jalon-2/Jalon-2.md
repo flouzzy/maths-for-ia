@@ -86,10 +86,17 @@ Nous voulons démontrer que $\sqrt{2} \notin \mathbb{Q}$.
 * *Analyse de l'énoncé :* Nous cherchons un ensemble de fonctions. Nous allons restreindre les candidats.
 * *Résolution pas-à-pas (ANALYSE) :*
    1. Si $f$ existe, alors $f(0+0) = f(0)+f(0) \implies f(0) = 0$.
-   2. Par récurrence immédiate (que nous détaillons) : $f(n \cdot x) = n \cdot f(x)$ pour $n \in \mathbb{N}$.
-      - Pour $n=1$, $f(x)=f(x)$ (vrai).
-      - Supposons $f(kx) = kf(x)$. Alors $f((k+1)x) = f(kx+x) = f(kx)+f(x) = kf(x)+f(x) = (k+1)f(x)$.
-   3. Pour $x=1$, on a $f(n) = n \cdot f(1)$. Posons $a = f(1)$. Alors $f(n) = an$.
+   2. Montrons par récurrence sur $n \in \mathbb{N}$ la propriété $\mathcal{P}(n) : f(n \cdot x) = n \cdot f(x)$ pour un $x \in \mathbb{R}$ fixé.
+      - **Initialisation** : Pour $n=0$, $f(0 \cdot x) = f(0) = 0$ et $0 \cdot f(x) = 0$. Donc $\mathcal{P}(0)$ est vraie. (On remarque que pour $n=1$, $f(1 \cdot x) = f(x)$ et $1 \cdot f(x) = f(x)$ est également vrai).
+      - **Hérédité** : Soit $k \in \mathbb{N}$. Supposons que la propriété est vraie pour ce rang $k$, c'est-à-dire $\mathcal{P}(k) : f(kx) = kf(x)$. Montrons que $\mathcal{P}(k+1)$ est vraie :
+        $f((k+1)x) = f(kx+x)$
+        Par additivité de $f$ (hypothèse de l'énoncé), on obtient :
+        $f(kx+x) = f(kx) + f(x)$
+        En utilisant l'hypothèse de récurrence $f(kx) = kf(x)$, on a :
+        $f(kx) + f(x) = kf(x) + f(x) = (k+1)f(x)$
+        Ce qui prouve $\mathcal{P}(k+1)$.
+      - **Conclusion** : Par le principe de récurrence, pour tout $n \in \mathbb{N}$ et $x \in \mathbb{R}$, $f(n \cdot x) = n \cdot f(x)$.
+   3. Pour $x=1$, on a $f(n \cdot 1) = n \cdot f(1)$. Posons $a = f(1)$. Alors $f(n) = an$.
    4. On montre de même pour $q \in \mathbb{Q}$ que $f(q) = aq$.
       - $f(1) = f(q \cdot \frac{1}{q}) = q \cdot f(\frac{1}{q}) \implies f(\frac{1}{q}) = \frac{1}{q} a$.
       - $f(\frac{p}{q}) = p \cdot f(\frac{1}{q}) = \frac{p}{q} a$.
