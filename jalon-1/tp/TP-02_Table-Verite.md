@@ -7,7 +7,7 @@ L'objectif de ce TP est de concevoir un générateur automatique de tables de v�
 
 ## Algorithme et Méthode
 1. **Extraction et tri des variables :** On extrait l'ensemble des variables propositionnelles libres de la formule en appelant `formula.get_variables()`. On convertit cet ensemble en une liste ordonnée alphabétiquement afin de garantir un affichage reproductible et cohérent des colonnes.
-2. **Génération de l'espace des valuations $\{0, 1\}^n$ :** On utilise la récursion ou la bibliothèque Python standard `itertools.product` pour engendrer toutes les $2^n$ configurations de vérité.
+2. **Génération de l'espace des valuations $\{0, 1\}^n$ :** On utilise la récursion pour engendrer toutes les $2^n$ configurations de vérité sans utiliser de bibliothèque standard afin de rester strictement "from scratch".
 3. **Évaluation et formatage :** Pour chaque configuration (valuation), on évalue la formule à l'aide de sa méthode `.evaluate(valuation)`. On affiche chaque ligne avec des symboles lisibles (par exemple `1` ou `T` pour True, `0` ou `F` pour False) et on trace la grille de la table au format Markdown.
 
 ---
@@ -15,10 +15,16 @@ L'objectif de ce TP est de concevoir un générateur automatique de tables de v�
 ## Code Source Python
 
 ```python
-import itertools
 # Import des classes du TP 1
 # On suppose les classes du TP 1 présentes dans le même fichier ou importées
 from tp_01_ast import Formula, Variable, Not, And, Or, Implies, Equiv
+
+def generate_combinations(n):
+    """Génère récursivement toutes les 2^n combinaisons de valeurs de vérité de True à False."""
+    if n == 0:
+        return [()]
+    sub_combinations = generate_combinations(n - 1)
+    return [(True,) + combo for combo in sub_combinations] + [(False,) + combo for combo in sub_combinations]
 
 def generate_truth_table(formula: Formula):
     """Génère et affiche la table de vérité d'une formule au format Markdown."""
@@ -35,8 +41,7 @@ def generate_truth_table(formula: Formula):
     table_lines = [header_line, separator_line]
     
     # 3. Génération de toutes les valuations possibles (2^n)
-    # product([True, False], repeat=n) génère les tuples de toutes les combinaisons
-    combinations = list(itertools.product([True, False], repeat=n))
+    combinations = generate_combinations(n)
     
     # Pour respecter l'ordre traditionnel (Vrai en premier, c'est-à-dire 1 puis 0),
     # product avec [True, False] trie naturellement de True à False.
