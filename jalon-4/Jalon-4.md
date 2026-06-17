@@ -113,4 +113,4 @@ Nous allons démontrer cette égalité par double inclusion.
 
 ## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 1 (Logique formelle)]], [[Jalon 2 (Méthodes de raisonnement)]]
-- **Concepts Futurs dépendants :** [[Jalon-5.md|Jalon 5]], [[Jalon 6 (Relations d'équivalence)]], [[Jalon 63 (Définition axiomatique d'une mesure)]]
+- **Concepts Futurs dépendants :** [[Jalon-5.md|Jalon 5]], [[Jalon-6.md|Jalon 6]], [[Jalon 63 (Définition axiomatique d'une mesure)]]

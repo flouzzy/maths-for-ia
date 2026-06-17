@@ -7,7 +7,7 @@ tags:
   - math/fondations
   - ia/transformation-donnees
 prev: "[[Jalon-4.md]]"
-next: "[[Jalon 6 (Relations d'équivalence).md]]"
+next: "[[Jalon-6.md]]"
 ---
 
 # Jalon 5 : Applications, injections, surjections, bijections et composition de fonctions
@@ -104,4 +104,4 @@ Soient $f : E \to F$ et $g : F \to G$. Montrons que si $f$ et $g$ sont injective
 
 ## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon-4]]
-- **Concepts Futurs dépendants :** [[Jalon 6 (Relations d'équivalence)]], [[Jalon 52 (Applications continues entre espaces topologiques et définition fine des homéomorphismes.)]], [[Jalon 111 (Applications différentiables entre variétés)]]
+- **Concepts Futurs dépendants :** [[Jalon-6.md|Jalon 6]], [[Jalon 52 (Applications continues entre espaces topologiques et définition fine des homéomorphismes.)]], [[Jalon 111 (Applications différentiables entre variétés)]]

@@ -321,6 +321,7 @@ python3 -m unittest test_generate_jalons.py
 ## 📝 Historique & Avancement
 
 Le cursus est enrichi jalon par jalon de manière progressive :
+- [2026-06-17] : Upsert du Jalon 6 - Relations d'équivalence. Status: Terminé.
 - [2026-06-16] : Upsert du Jalon 5 - Applications. Status: Terminé.
 - [2026-06-14] : Audit & Auto-correction du Jalon 1 - Logique formelle. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - **Dernier Jalon Enrichi** : [Jalon 143](jalon-143/Jalon-143.md) (Cours complet, 10 exercices avancés, 5 TP d'implémentation pure Python).
