@@ -9,7 +9,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-3/Jalon-3.md|Jalon 3 : Quantification]] : Quantification ($\\forall, \\exists$), ordre des quantificateurs et négation de propositions complexes.
 - [x] [[jalon-4/Jalon-4.md|Jalon 4 : Théorie des ensembles]] : Théorie des ensembles (ZFC), opérations sur les ensembles, ensembles des parties $\\mathcal{P}(E)$.
 - [x] [[jalon-5/Jalon-5.md|Jalon 5 : Applications]] : Applications, injections, surjections, bijections et composition de fonctions.
-- [ ] [[jalon-6/Jalon 6 (Relations d'équivalence).md|Jalon 6 : Relations d'équivalence]] : Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps).
+- [x] [[jalon-6/Jalon-6.md|Jalon 6 : Relations d'équivalence]] : Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps).
 - [ ] [[jalon-7/Jalon 7 (Espaces vectoriels abstraits).md|Jalon 7 : Espaces vectoriels abstraits]] : Espaces vectoriels abstraits, familles libres, familles génératrices et bases en dimension finie.
 - [ ] [[jalon-8/Jalon 8 (Applications linéaires).md|Jalon 8 : Applications linéaires]] : Applications linéaires, noyau ($\\ker$), image ($\\text{Im}$) et démonstration du théorème du rang.
 - [ ] [[jalon-9/Jalon 9 (Calcul matriciel).md|Jalon 9 : Calcul matriciel]] : Calcul matriciel, opérations, inversibilité et représentations des applications linéaires.

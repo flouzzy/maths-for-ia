@@ -56,7 +56,11 @@ Soit $E$ un ensemble non vide. Une relation binaire $\mathcal{R}$ sur $E$ est un
 Soit $n \in \mathbb{N}^*$. On définit la relation de congruence modulo $n$ sur $\mathbb{Z}$ par : $x \equiv y [n] \iff \exists k \in \mathbb{Z}, x - y = kn$.
 Démontrons que l'ensemble quotient $\mathbb{Z}/n\mathbb{Z}$ muni de l'addition induite est un groupe abélien.
 
-1. **Initialisation / Cadre :** La relation $\equiv [n]$ est une relation d'équivalence (immédiat par linéarité de la divisibilité). On note $\dot{x}$ la classe de $x$. On définit l'addition sur $\mathbb{Z}/n\mathbb{Z}$ par : $\dot{x} + \dot{y} = \overline{x+y}$.
+1. **Initialisation / Cadre :** Prouvons d'abord que la relation $\equiv [n]$ est une relation d'équivalence.
+   - **Réflexivité :** Pour tout $x \in \mathbb{Z}$, on a $x - x = 0 = 0 \times n$. Comme $0 \in \mathbb{Z}$, alors $x \equiv x [n]$.
+   - **Symétrie :** Soient $x, y \in \mathbb{Z}$ tels que $x \equiv y [n]$. Alors il existe $k \in \mathbb{Z}$ tel que $x - y = kn$. On peut réécrire ceci comme $y - x = (-k)n$. Comme $-k \in \mathbb{Z}$, alors $y \equiv x [n]$.
+   - **Transitivité :** Soient $x, y, z \in \mathbb{Z}$ tels que $x \equiv y [n]$ et $y \equiv z [n]$. Alors il existe $k_1, k_2 \in \mathbb{Z}$ tels que $x - y = k_1n$ et $y - z = k_2n$. En additionnant ces deux équations, on obtient $(x - y) + (y - z) = k_1n + k_2n$, soit $x - z = (k_1 + k_2)n$. Comme $k_1 + k_2 \in \mathbb{Z}$, alors $x \equiv z [n]$.
+   La relation $\equiv [n]$ est donc bien une relation d'équivalence. On note $\dot{x}$ (ou $\overline{x}$) la classe de $x$. On définit l'addition sur l'ensemble quotient $\mathbb{Z}/n\mathbb{Z}$ par : $\dot{x} + \dot{y} = \overline{x+y}$.
 
 2. **Étape 1 : Vérification de la bonne définition de la loi**
    Soient $x, x', y, y' \in \mathbb{Z}$ tels que $\dot{x} = \dot{x'}$ et $\dot{y} = \dot{y'}$.

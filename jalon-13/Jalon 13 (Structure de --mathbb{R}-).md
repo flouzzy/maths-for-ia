@@ -103,5 +103,5 @@ Théorème : $\forall x \in \mathbb{R}, \exists ! n \in \mathbb{Z}, n \le x < n+
 - **Exemple Concret :** En **Deep Learning**, lors de la **Normalisation (Batch Norm / Layer Norm)**, on manipule des statistiques (moyenne, variance) qui sont des nombres réels. La stabilité numérique des calculs en virgule flottante (Float32/Float16) est une approximation informatique de la structure de $\mathbb{R}$. Comprendre que $\mathbb{R}$ n'a pas de "trous" permet de justifier l'utilisation du calcul différentiel pour ajuster les neurones de manière continue.
 
 ## 6. Liens Sémantiques
-- **Concepts Précédents requis :** [[Jalon 3 (Quantification)]], [[Jalon 6 (Relations d'équivalence)]]
+- **Concepts Précédents requis :** [[Jalon 3 (Quantification)]], [[Jalon-6.md|Jalon 6]]
 - **Concepts Futurs dépendants :** [[Jalon 14 (Suites réelles et complexes)]], [[Jalon 18 (Continuité des fonctions d'une variable réelle)]], [[Jalon 34 (Topologie élémentaire des espaces vectoriels normés)]]

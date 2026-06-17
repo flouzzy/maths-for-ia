@@ -6,7 +6,7 @@ trimester: 1
 tags:
   - math/algebre-lineaire
   - ia/plongements
-prev: "[[Jalon 6 (Relations d'équivalence).md]]"
+prev: "[[Jalon-6.md]]"
 next: "[[Jalon 8 (Applications linéaires).md]]"
 ---
 # Jalon 7 : Espaces vectoriels abstraits, familles libres, familles génératrices et bases en dimension finie
@@ -106,5 +106,5 @@ Soit $\mathcal{B} = (e_1, ..., e_n)$ une base de $E$. Démontrons que pour tout 
 - **Exemple Concret :** Dans le **Traitement du Langage Naturel (NLP)**, si votre base de vecteurs de mots n'est pas "libre", cela signifie que vous avez des dimensions redondantes (du bruit). On cherche souvent à trouver une **base optimale** via des techniques comme l'**ACP (Analyse en Composantes Principales)** pour réduire la dimension tout en gardant une famille "presque génératrice" (qui capture l'essentiel de l'information).
 
 ## 6. Liens Sémantiques
-- **Concepts Précédents requis :** [[Jalon 1 (Logique formelle)]], [[Jalon 6 (Relations d'équivalence)]]
+- **Concepts Précédents requis :** [[Jalon 1 (Logique formelle)]], [[Jalon-6.md|Jalon 6]]
 - **Concepts Futurs dépendants :** [[Jalon 8 (Applications linéaires)]], [[Jalon 9 (Calcul matriciel)]], [[Jalon 26 (Espaces euclidiens)]]
