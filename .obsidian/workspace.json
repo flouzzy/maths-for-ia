@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "jalon-69/Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md",
+                "file": "jalon-141/Jalon-141.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.)"
+              "title": "Jalon-141"
             }
           }
         ]
@@ -221,6 +221,14 @@
   },
   "active": "8ceda288c71f7e44",
   "lastOpenFiles": [
+    "Tableau de bord.md",
+    "Bienvenue.md",
+    "README.md",
+    "Sans titre.base",
+    "Sans titre 1.base",
+    "Sans titre.canvas",
+    "Sans titre 1.canvas",
+    "jalon-69/Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md",
     "jalon-16/Jalon-16.md",
     "jalon-15/Jalon 15 (Sous-suites).md",
     "jalon-14/Jalon 14 (Suites réelles et complexes).md",
@@ -241,23 +249,15 @@
     "jalon-3/Jalon 3 (Quantification).md",
     "jalon-143/Jalon 143 (Théorie spectrale des graphes).md",
     "generate_content.py",
-    "jalon-5/Jalon-5.md",
+    "jalon-5/Jalon 5 (Applications).md",
     "jalon-139/Jalon-139_Notion_de_stabilite_algorithmique.md",
     "jalon-141/Jalon 141 (Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC.).md",
     "test_rename_files.py",
     "test_enrich_jalons_gemini.py",
     "prompt_template.txt",
     "benchmark_rename.py",
-    "jalon-49/Jalon 49 (Espaces topologiques généraux).md",
-    "jalon-2/Jalon 2 (Méthodes de raisonnement).md",
-    "jalon-1/exos/Exo-09_Algebres-Boole-Representation-Stone.md",
-    "jalon-1/exos/Exo-07_Completude-Fonctionnelle.md",
     "jalon-1/tp",
     "jalon-1/exos",
-    "jalon-99",
-    "jalon-98",
-    "jalon-97",
-    "Sans titre 1.canvas",
-    "Sans titre.canvas"
+    "jalon-99"
   ]
 }

@@ -9,7 +9,6 @@ tags:
   - "[[Jalon-140.md]]"
   - "[[Jalon-142.md]]"
 ---
-
 # Jalon 141 : Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC
 
 ## 1. Présentation du concept clé
