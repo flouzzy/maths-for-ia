@@ -96,13 +96,15 @@ Nous voulons démontrer que $\sqrt{2} \notin \mathbb{Q}$.
         $f(kx) + f(x) = kf(x) + f(x) = (k+1)f(x)$
         Ce qui prouve $\mathcal{P}(k+1)$.
       - **Conclusion** : Par le principe de récurrence, pour tout $n \in \mathbb{N}$ et $x \in \mathbb{R}$, $f(n \cdot x) = n \cdot f(x)$.
-   3. Pour $x=1$, on a $f(n \cdot 1) = n \cdot f(1)$. Posons $a = f(1)$. Alors $f(n) = an$.
-   4. On montre de même pour $q \in \mathbb{Q}$ que $f(q) = aq$.
-      - $f(1) = f(q \cdot \frac{1}{q}) = q \cdot f(\frac{1}{q}) \implies f(\frac{1}{q}) = \frac{1}{q} a$.
-      - $f(\frac{p}{q}) = p \cdot f(\frac{1}{q}) = \frac{p}{q} a$.
-   5. Par continuité, comme $\mathbb{Q}$ est dense dans $\mathbb{R}$, pour tout $x \in \mathbb{R}$, il existe une suite de rationnels $q_n \to x$.
-   6. $f(x) = f(\lim q_n) = \lim f(q_n) = \lim (aq_n) = a \lim q_n = ax$.
-   7. Les candidats sont les fonctions linéaires $f(x) = ax$.
+   3. Pour $x=1$, on a $f(n \cdot 1) = n \cdot f(1)$. Posons $a = f(1)$. Alors pour tout $n \in \mathbb{N}$, $f(n) = an$.
+   4. Étendons cela à $\mathbb{Z}$. On sait que $f(0) = 0$. Pour tout $n \in \mathbb{N}$, on a $0 = f(n - n) = f(n) + f(-n)$. Donc $f(-n) = -f(n) = -an = a(-n)$. Ainsi, pour tout $n \in \mathbb{Z}$, $f(n) = an$.
+   5. Étendons cela à $\mathbb{Q}$. Soit $r \in \mathbb{Q}$. On peut écrire $r = \frac{p}{q}$ avec $p \in \mathbb{Z}$ et $q \in \mathbb{N}^*$.
+      On calcule $f(p) = f\left(q \cdot \frac{p}{q}\right)$. Par la propriété démontrée pour les entiers naturels (appliquée à l'entier $q$), on a $f\left(q \cdot \frac{p}{q}\right) = q \cdot f\left(\frac{p}{q}\right)$.
+      Or on sait que $f(p) = ap$. Donc $ap = q \cdot f\left(\frac{p}{q}\right)$.
+      En divisant par $q \neq 0$, on obtient $f\left(\frac{p}{q}\right) = a\frac{p}{q}$. Ainsi, pour tout $r \in \mathbb{Q}$, $f(r) = ar$.
+   6. Par continuité, comme $\mathbb{Q}$ est dense dans $\mathbb{R}$, pour tout $x \in \mathbb{R}$, il existe une suite de rationnels $q_n \to x$.
+   7. $f(x) = f(\lim q_n) = \lim f(q_n) = \lim (aq_n) = a \lim q_n = ax$.
+   8. Les candidats sont les fonctions linéaires $f(x) = ax$.
 * *Résolution pas-à-pas (SYNTHÈSE) :*
    1. Soit $f(x) = ax$ avec $a \in \mathbb{R}$.
    2. $f(x+y) = a(x+y) = ax + ay = f(x) + f(y)$. La condition est vérifiée.
