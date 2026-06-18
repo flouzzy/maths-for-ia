@@ -145,7 +145,7 @@ Deux cas se présentent pour chaque $x_n$:
 2.  **Cas où $x_n = 0$ :**
     Dans ce cas, par définition de la fonction $f_2$, nous avons $f_2(x_n) = f_2(0) = 0$.
     Par conséquent, $\left|f_2(x_n)\right| = |0| = 0$.
-    L'inégalité $0 \le 1$ est trivialement vraie.
+    L'inégalité $0 \le 1$ est toujours vérifiée dans $\mathbb{R}$, donc la borne est respectée.
 
 En combinant ces deux cas, nous constatons que pour tout $n \in \mathbb{N}$, que $x_n$ soit nul ou non nul, nous avons toujours $|f_2(x_n)| \le 1$.
 Nous pouvons donc choisir $M=1$.
