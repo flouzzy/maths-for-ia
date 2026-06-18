@@ -6,7 +6,7 @@ trimester: 1
 tags:
   - math/algebre-lineaire
   - ia/transformation-lineaire
-prev: "[[Jalon 7 (Espaces vectoriels abstraits).md]]"
+prev: "[[Jalon-7.md]]"
 next: "[[Jalon 9 (Calcul matriciel).md]]"
 ---
 # Jalon 8 : Applications linéaires, noyau ($\ker$), image ($\text{Im}$) et démonstration du théorème du rang

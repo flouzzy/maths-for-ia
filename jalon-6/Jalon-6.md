@@ -7,7 +7,7 @@ tags:
   - math/fondations
   - ia/topologie-donnees
 prev: "[[Jalon-5.md]]"
-next: "[[Jalon 7 (Espaces vectoriels abstraits).md]]"
+next: "[[Jalon-7.md]]"
 ---
 # Jalon 6 : Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps)
 

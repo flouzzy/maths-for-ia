@@ -102,5 +102,5 @@ Si les normes étaient équivalentes, on aurait $C_1 \|f_n\|_\infty \le \|f_n\|_
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 7 (Espaces vectoriels abstraits).md]], [[Jalon 26 (Espaces euclidiens).md]]
+- **Concepts Précédents requis :** [[Jalon-7.md]], [[Jalon 26 (Espaces euclidiens).md]]
 - **Concepts Futurs dépendants :** [[Jalon 35 (Caractérisation séquentielle des ouverts).md]], [[Jalon 56 (Espaces métriques complets).md]]
