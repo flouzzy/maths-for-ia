@@ -115,5 +115,5 @@ Soit $f \in \mathcal{L}(E, F)$ avec $\dim E = n$.
 - **Exemple Concret :** Dans la **réduction de dimension** et la **Compression de Réseaux**, on cherche à savoir si une couche linéaire a un gros **Noyau**. Si $\dim(\ker f)$ est grand, cela signifie que beaucoup de combinaisons d'entrées sont "oubliées" par le réseau. Le **Rang** de la matrice de poids d'une couche détermine la "capacité expressive" de cette couche. Un réseau "Low-Rank" est plus rapide à entraîner et moins sujet au sur-apprentissage (Overfitting).
 
 ## 6. Liens Sémantiques
-- **Concepts Précédents requis :** [[Jalon 7 (Espaces vectoriels abstraits)]]
+- **Concepts Précédents requis :** [[Jalon-7.md|Jalon 7 (Espaces vectoriels abstraits)]]
 - **Concepts Futurs dépendants :** [[Jalon 9 (Calcul matriciel)]], [[Jalon 30 (Trigonalisation d'endomorphismes et décomposition de Dunford.)]], [[Jalon 46 (Matrice jacobienne)]]

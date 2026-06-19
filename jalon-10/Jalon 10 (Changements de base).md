@@ -108,5 +108,5 @@ Nous voulons établir $M' = P^{-1} M P$.
 - **Exemple Concret :** Dans la **Compression d'Images (JPEG)**, on effectue un changement de base vers la base des **Cosinus Discrets (DCT)**. Dans cette nouvelle base, les informations visuelles importantes se concentrent sur quelques coefficients (les basses fréquences), permettant de supprimer les autres (les hautes fréquences, invisibles à l'œil nu) sans perte de qualité perçue. C'est un changement de base massif appliqué par blocs de $8 \times 8$ pixels.
 
 ## 6. Liens Sémantiques
-- **Concepts Précédents requis :** [[Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon 9 (Calcul matriciel)]]
+- **Concepts Précédents requis :** [[Jalon-7.md|Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon 9 (Calcul matriciel)]]
 - **Concepts Futurs dépendants :** [[Jalon 29 (Éléments propres)]], [[Jalon 30 (Trigonalisation d'endomorphismes et décomposition de Dunford.)]], [[Jalon 80 (Transformée de Fourier dans L^1)]]

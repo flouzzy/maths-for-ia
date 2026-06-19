@@ -113,4 +113,4 @@ Démontrons que l'ensemble quotient $\mathbb{Z}/n\mathbb{Z}$ muni de l'addition 
 
 ## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon-4]], [[Jalon-5.md|Jalon 5]]
-- **Concepts Futurs dépendants :** [[Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon 62 (Algèbres)]], [[Jalon 119 (Connexions avec les groupes de Lie)]]
+- **Concepts Futurs dépendants :** [[Jalon-7.md|Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon 62 (Algèbres)]], [[Jalon 119 (Connexions avec les groupes de Lie)]]

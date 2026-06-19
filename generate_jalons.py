@@ -265,7 +265,7 @@ def generate_concept_links(desc):
     if "topologi" in desc_lower and "49" not in desc:
         links.append("[[Jalon 49 (Espaces topologiques généraux)]]")
     if "vectoriel" in desc_lower and "7" not in desc:
-        links.append("[[Jalon 7 (Espaces vectoriels abstraits)]]")
+        links.append("[[Jalon-7.md|Jalon 7 (Espaces vectoriels abstraits)]]")
     
     if links:
         return "\\n**Concepts liés** : " + ", ".join(links) + "\\n"
