@@ -74,7 +74,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 4](jalon-4/Jalon-4.md)** : Théorie des ensembles (ZFC), opérations sur les ensembles, ensembles des parties $\mathcal{P}(E)$.
 - **[Jalon 5](jalon-5/Jalon-5.md)** : Applications, injections, surjections, bijections et composition de fonctions.
 - **[Jalon 6](jalon-6/Jalon%206%20%28Relations%20d%27%C3%A9quivalence%29.md)** : Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps).
-- **[Jalon 7](jalon-7/Jalon%207%20%28Espaces%20vectoriels%20abstraits%29.md)** : Espaces vectoriels abstraits, familles libres, familles génératrices et bases en dimension finie.
+- **[Jalon 7](jalon-7/Jalon-7.md)** : Espaces vectoriels abstraits, familles libres, familles génératrices et bases en dimension finie.
 - **[Jalon 8](jalon-8/Jalon%208%20%28Applications%20lin%C3%A9aires%29.md)** : Applications linéaires, noyau ($\ker$), image ($\text{Im}$) et démonstration du théorème du rang.
 - **[Jalon 9](jalon-9/Jalon%209%20%28Calcul%20matriciel%29.md)** : Calcul matriciel, opérations, inversibilité et représentations des applications linéaires.
 - **[Jalon 10](jalon-10/Jalon%2010%20%28Changements%20de%20base%29.md)** : Changements de base, matrices de passage et matrices par blocs.
@@ -321,7 +321,7 @@ python3 -m unittest test_generate_jalons.py
 ## 📝 Historique & Avancement
 
 Le cursus est enrichi jalon par jalon de manière progressive :
-- [2026-06-18] : Audit & Auto-correction du Jalon 3 - Quantification. Statut : Validé et Fixé. Prêt pour le jalon suivant.
+- [2026-06-18] : Upsert du Jalon 7 - Espaces vectoriels abstraits. Status: Terminé.
 - [2026-06-17] : Upsert du Jalon 6 - Relations d'équivalence. Status: Terminé.
 - [2026-06-16] : Upsert du Jalon 5 - Applications. Status: Terminé.
 - [2026-06-14] : Audit & Auto-correction du Jalon 1 - Logique formelle. Statut : Validé et Fixé. Prêt pour le jalon suivant.

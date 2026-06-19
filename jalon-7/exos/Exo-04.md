@@ -1,123 +1,226 @@
-Cher étudiante, cher étudiant,
+---
+uuid: "exo-7-4"
+title: "Exo 4 - Jalon 7"
+---
 
-Nous poursuivons notre exploration des structures fondamentales de l'algèbre linéaire avec ce quatrième exercice, qui nous permettra de consolider notre compréhension des sous-espaces vectoriels engendrés, des familles libres et des bases en dimension finie. Je vous invite à aborder cet exercice avec la rigueur et la précision qui s'imposent.
+Mes chers étudiants,
+
+Nous allons aujourd'hui explorer les concepts fondamentaux d'espaces vectoriels, de familles libres, génératrices et de bases à travers un exemple concret, mais suffisamment abstrait pour illustrer la généralité de ces notions. L'exercice que je vous propose porte sur un espace de suites réelles, un cadre qui vous est familier mais que nous allons analyser sous l'angle de l'algèbre linéaire.
 
 ---
 
-# Exercice 4 : Caractérisation d'un sous-espace polynomial
+### Exercice 4 : L'Espace des Suites de Fibonacci Généralisées
 
-## Énoncé
+Soit $E$ l'ensemble de toutes les suites réelles $(u_n)_{n \in \mathbb{N}}$ qui vérifient la relation de récurrence linéaire suivante pour tout entier naturel $n$:
+$$u_{n+2} = u_{n+1} + u_n$$
+On munit $E$ des opérations d'addition de suites et de multiplication par un scalaire réel usuelles, c'est-à-dire, pour deux suites $(u_n)$ et $(v_n)$ de $E$ et un scalaire $\lambda \in \mathbb{R}$:
+*   L'addition: $(u_n) + (v_n) = (u_n + v_n)_{n \in \mathbb{N}}$
+*   La multiplication par un scalaire: $\lambda (u_n) = (\lambda u_n)_{n \in \mathbb{N}}$
 
-Soit $\mathbb{R}$ le corps des nombres réels.
-Soit $E = \mathbb{R}_2[X]$ l'espace vectoriel des polynômes à coefficients réels de degré inférieur ou égal à 2.
-Considérons la famille de polynômes $\mathcal{F} = (P_1, P_2, P_3)$ définie par :
-$P_1(X) = 1 + X$
-$P_2(X) = X + X^2$
-$P_3(X) = 1 - X^2$
+1.  Démontrer que $E$ est un $\mathbb{R}$-espace vectoriel.
+2.  On considère les deux nombres réels $\phi = \frac{1+\sqrt{5}}{2}$ (le nombre d'or) et $1-\phi = \frac{1-\sqrt{5}}{2}$.
+    On définit deux suites $F = (\phi^n)_{n \in \mathbb{N}}$ et $G = ((1-\phi)^n)_{n \in \mathbb{N}}$.
+    a.  Vérifier que $F$ et $G$ sont des éléments de $E$.
+    b.  Démontrer que la famille $\{F, G\}$ est une famille libre dans $E$.
+3.  Démontrer que la famille $\{F, G\}$ est une famille génératrice de $E$.
+4.  En déduire une base de $E$ et sa dimension.
 
-1.  Soit $F$ le sous-espace vectoriel de $E$ engendré par la famille $\mathcal{F}$, c'est-à-dire $F = \text{Vect}(P_1, P_2, P_3)$. Déterminer une base de $F$.
-2.  Quelle est la dimension de $F$?
-3.  Le polynôme $Q(X) = 3 + 2X - X^2$ appartient-il à $F$? Justifier votre réponse.
+---
 
-## Correction Détaillée
+### Correction de l'Exercice 4
 
-**1. Détermination d'une base de $F$**
+Nous allons aborder chaque question avec la rigueur nécessaire, en détaillant chaque étape.
 
-Soit $\mathbb{R}$ le corps des nombres réels.
-Soit $E = \mathbb{R}_2[X]$ l'espace vectoriel des polynômes à coefficients réels de degré inférieur ou égal à 2.
-La famille $\mathcal{F} = (P_1, P_2, P_3)$ est une famille de vecteurs de $E$.
-Le sous-espace vectoriel $F$ est défini comme $F = \text{Vect}(P_1, P_2, P_3)$.
-Pour déterminer une base de $F$, nous devons extraire de $\mathcal{F}$ une sous-famille qui soit à la fois libre et génératrice de $F$. Nous commençons par tester la liberté de la famille $\mathcal{F}$.
+#### Question 1 : Démontrer que $E$ est un $\mathbb{R}$-espace vectoriel.
 
-Considérons une combinaison linéaire nulle des polynômes $P_1, P_2, P_3$. Soient $\alpha, \beta, \gamma \in \mathbb{R}$ des scalaires tels que :
-$\alpha P_1(X) + \beta P_2(X) + \gamma P_3(X) = 0_{\mathbb{R}_2[X]}$
+Pour démontrer que $E$ est un $\mathbb{R}$-espace vectoriel, nous allons montrer qu'il s'agit d'un sous-espace vectoriel de l'espace vectoriel des suites réelles $\mathbb{R}^{\mathbb{N}}$. L'espace $\mathbb{R}^{\mathbb{N}}$ est l'ensemble de toutes les suites réelles, muni des opérations d'addition de suites et de multiplication par un scalaire réel définies dans l'énoncé. Nous savons que $\mathbb{R}^{\mathbb{N}}$ est un $\mathbb{R}$-espace vectoriel.
 
-Substituons les expressions des polynômes :
-$\alpha(1 + X) + \beta(X + X^2) + \gamma(1 - X^2) = 0 + 0X + 0X^2$
+Pour qu'un sous-ensemble $E$ d'un espace vectoriel $V$ soit lui-même un espace vectoriel (un sous-espace vectoriel), trois conditions doivent être satisfaites :
+1.  $E$ doit être non vide.
+2.  $E$ doit être fermé sous l'addition vectorielle.
+3.  $E$ doit être fermé sous la multiplication par un scalaire.
 
-Développons et regroupons les termes selon les puissances de $X$ :
-$\alpha + \alpha X + \beta X + \beta X^2 + \gamma - \gamma X^2 = 0 + 0X + 0X^2$
-$(\alpha + \gamma) \cdot 1 + (\alpha + \beta) \cdot X + (\beta - \gamma) \cdot X^2 = 0 + 0X + 0X^2$
+Appliquons ces conditions à notre ensemble $E$:
 
-Par identification des coefficients des polynômes, nous obtenons le système d'équations linéaires suivant :
-(1) $\alpha + \gamma = 0$ (coefficient constant)
-(2) $\alpha + \beta = 0$ (coefficient de $X$)
-(3) $\beta - \gamma = 0$ (coefficient de $X^2$)
+1.  **$E$ est non vide :**
+    Considérons la suite nulle, notée $(0)_{n \in \mathbb{N}}$, dont tous les termes sont égaux à 0. C'est-à-dire $u_n = 0$ pour tout $n \in \mathbb{N}$.
+    Vérifions si cette suite satisfait la relation de récurrence $u_{n+2} = u_{n+1} + u_n$.
+    Pour tout $n \in \mathbb{N}$, nous avons $0 = 0 + 0$.
+    Cette égalité est vraie. Par conséquent, la suite nulle appartient à $E$.
+    Puisque la suite nulle est un élément de $E$, l'ensemble $E$ n'est pas vide.
 
-Résolvons ce système :
-De l'équation (1), nous tirons $\gamma = -\alpha$.
-De l'équation (2), nous tirons $\beta = -\alpha$.
+2.  **$E$ est fermé sous l'addition vectorielle :**
+    Soient $(u_n)_{n \in \mathbb{N}}$ et $(v_n)_{n \in \mathbb{N}}$ deux suites quelconques appartenant à $E$.
+    Par définition, cela signifie que pour tout $n \in \mathbb{N}$:
+    *   $u_{n+2} = u_{n+1} + u_n$ (car $(u_n) \in E$)
+    *   $v_{n+2} = v_{n+1} + v_n$ (car $(v_n) \in E$)
+    Considérons la suite somme $(w_n)_{n \in \mathbb{N}} = (u_n)_{n \in \mathbb{N}} + (v_n)_{n \in \mathbb{N}}$. Par définition de l'addition de suites, chaque terme de $(w_n)$ est $w_n = u_n + v_n$.
+    Nous devons vérifier si $(w_n)$ satisfait la relation de récurrence. Calculons $w_{n+2}$:
+    $w_{n+2} = u_{n+2} + v_{n+2}$
+    En utilisant les relations de récurrence pour $(u_n)$ et $(v_n)$, nous substituons:
+    $w_{n+2} = (u_{n+1} + u_n) + (v_{n+1} + v_n)$
+    Par associativité et commutativité de l'addition des nombres réels, nous pouvons regrouper les termes:
+    $w_{n+2} = (u_{n+1} + v_{n+1}) + (u_n + v_n)$
+    En reconnaissant les termes de la suite $(w_n)$:
+    $w_{n+2} = w_{n+1} + w_n$
+    Cette égalité est vraie pour tout $n \in \mathbb{N}$. Par conséquent, la suite $(w_n)$ appartient à $E$.
+    L'ensemble $E$ est donc fermé sous l'addition vectorielle.
 
-Substituons ces expressions de $\beta$ et $\gamma$ dans l'équation (3) :
-$(-\alpha) - (-\alpha) = 0$
-$-\alpha + \alpha = 0$
-$0 = 0$
+3.  **$E$ est fermé sous la multiplication par un scalaire :**
+    Soit $(u_n)_{n \in \mathbb{N}}$ une suite quelconque appartenant à $E$, et soit $\lambda$ un scalaire réel quelconque ($\lambda \in \mathbb{R}$).
+    Par définition, $(u_n) \in E$ signifie que pour tout $n \in \mathbb{N}$, $u_{n+2} = u_{n+1} + u_n$.
+    Considérons la suite produit par un scalaire $(x_n)_{n \in \mathbb{N}} = \lambda (u_n)_{n \in \mathbb{N}}$. Par définition de la multiplication par un scalaire, chaque terme de $(x_n)$ est $x_n = \lambda u_n$.
+    Nous devons vérifier si $(x_n)$ satisfait la relation de récurrence. Calculons $x_{n+2}$:
+    $x_{n+2} = \lambda u_{n+2}$
+    En utilisant la relation de récurrence pour $(u_n)$, nous substituons:
+    $x_{n+2} = \lambda (u_{n+1} + u_n)$
+    Par distributivité de la multiplication sur l'addition dans $\mathbb{R}$:
+    $x_{n+2} = \lambda u_{n+1} + \lambda u_n$
+    En reconnaissant les termes de la suite $(x_n)$:
+    $x_{n+2} = x_{n+1} + x_n$
+    Cette égalité est vraie pour tout $n \in \mathbb{N}$. Par conséquent, la suite $(x_n)$ appartient à $E$.
+    L'ensemble $E$ est donc fermé sous la multiplication par un scalaire.
 
-Cette dernière équation est toujours vraie, ce qui signifie que le système admet des solutions non triviales. Par exemple, si nous choisissons $\alpha = 1$, alors $\beta = -1$ et $\gamma = -1$.
-Ainsi, nous avons trouvé une combinaison linéaire non triviale qui donne le polynôme nul :
-$1 \cdot P_1(X) - 1 \cdot P_2(X) - 1 \cdot P_3(X) = 0_{\mathbb{R}_2[X]}$
+Puisque les trois conditions sont satisfaites, nous pouvons conclure que $E$ est un sous-espace vectoriel de $\mathbb{R}^{\mathbb{N}}$. Par conséquent, $E$ est un $\mathbb{R}$-espace vectoriel.
 
-Ceci démontre que la famille $\mathcal{F}$ est liée.
-Nous pouvons exprimer un des polynômes en fonction des autres. Par exemple, isolons $P_1(X)$ :
-$P_1(X) = P_2(X) + P_3(X)$
+#### Question 2a : Vérifier que $F$ et $G$ sont des éléments de $E$.
 
-Puisque $P_1$ est une combinaison linéaire de $P_2$ et $P_3$, il peut être retiré de la famille génératrice sans modifier l'espace engendré.
-Donc, $F = \text{Vect}(P_1, P_2, P_3) = \text{Vect}(P_2, P_3)$.
+Les suites $F = (\phi^n)_{n \in \mathbb{N}}$ et $G = ((1-\phi)^n)_{n \in \mathbb{N}}$ sont définies à partir des nombres $\phi = \frac{1+\sqrt{5}}{2}$ et $1-\phi = \frac{1-\sqrt{5}}{2}$.
+Ces deux nombres sont les racines de l'équation caractéristique associée à la relation de récurrence $r^2 - r - 1 = 0$.
+Cela signifie que $\phi^2 - \phi - 1 = 0$ et $(1-\phi)^2 - (1-\phi) - 1 = 0$.
+Ces équations peuvent être réécrites comme $\phi^2 = \phi + 1$ et $(1-\phi)^2 = (1-\phi) + 1$.
 
-Maintenant, nous devons vérifier si la famille réduite $\mathcal{F}' = (P_2, P_3)$ est libre.
-Considérons une combinaison linéaire nulle de $P_2$ et $P_3$. Soient $a, b \in \mathbb{R}$ des scalaires tels que :
-$a P_2(X) + b P_3(X) = 0_{\mathbb{R}_2[X]}$
+1.  **Vérification pour la suite $F = (\phi^n)_{n \in \mathbb{N}}$ :**
+    Pour que $F$ appartienne à $E$, ses termes doivent satisfaire la relation de récurrence $u_{n+2} = u_{n+1} + u_n$.
+    Nous devons vérifier si $\phi^{n+2} = \phi^{n+1} + \phi^n$ pour tout $n \in \mathbb{N}$.
+    Puisque $\phi = \frac{1+\sqrt{5}}{2}$ est un nombre non nul, nous pouvons diviser l'équation par $\phi^n$ (pour $n \ge 0$).
+    L'équation devient $\phi^2 = \phi + 1$.
+    Nous savons que $\phi$ est une racine de $r^2 - r - 1 = 0$, donc $\phi^2 - \phi - 1 = 0$, ce qui est équivalent à $\phi^2 = \phi + 1$.
+    Cette égalité est vraie. Par conséquent, la suite $F$ appartient à $E$.
 
-Substituons les expressions des polynômes :
-$a(X + X^2) + b(1 - X^2) = 0 + 0X + 0X^2$
+2.  **Vérification pour la suite $G = ((1-\phi)^n)_{n \in \mathbb{N}}$ :**
+    Pour que $G$ appartienne à $E$, ses termes doivent satisfaire la relation de récurrence $u_{n+2} = u_{n+1} + u_n$.
+    Nous devons vérifier si $(1-\phi)^{n+2} = (1-\phi)^{n+1} + (1-\phi)^n$ pour tout $n \in \mathbb{N}$.
+    Puisque $1-\phi = \frac{1-\sqrt{5}}{2}$ est un nombre non nul, nous pouvons diviser l'équation par $(1-\phi)^n$ (pour $n \ge 0$).
+    L'équation devient $(1-\phi)^2 = (1-\phi) + 1$.
+    Nous savons que $1-\phi$ est l'autre racine de $r^2 - r - 1 = 0$, donc $(1-\phi)^2 - (1-\phi) - 1 = 0$, ce qui est équivalent à $(1-\phi)^2 = (1-\phi) + 1$.
+    Cette égalité est vraie. Par conséquent, la suite $G$ appartient à $E$.
 
-Développons et regroupons les termes :
-$aX + aX^2 + b - bX^2 = 0 + 0X + 0X^2$
-$b \cdot 1 + a \cdot X + (a - b) \cdot X^2 = 0 + 0X + 0X^2$
+Nous avons vérifié que $F$ et $G$ sont bien des éléments de l'espace vectoriel $E$.
 
-Par identification des coefficients :
-(4) $b = 0$ (coefficient constant)
-(5) $a = 0$ (coefficient de $X$)
-(6) $a - b = 0$ (coefficient de $X^2$)
+#### Question 2b : Démontrer que la famille $\{F, G\}$ est une famille libre dans $E$.
 
-En substituant $a=0$ et $b=0$ dans l'équation (6) :
-$0 - 0 = 0$
-$0 = 0$
-Le système n'admet que la solution triviale $a=0$ et $b=0$.
-Par conséquent, la famille $\mathcal{F}' = (P_2, P_3)$ est une famille libre.
+Une famille de vecteurs $\{v_1, v_2, \dots, v_k\}$ d'un espace vectoriel est dite libre si la seule combinaison linéaire de ces vecteurs qui est égale au vecteur nul est celle où tous les coefficients scalaires sont nuls.
+Dans notre cas, les vecteurs sont les suites $F$ et $G$, et le vecteur nul est la suite nulle $(0)_{n \in \mathbb{N}}$.
+Soient $\alpha, \beta \in \mathbb{R}$ des scalaires tels que la combinaison linéaire $\alpha F + \beta G$ est égale à la suite nulle.
+Cela signifie que pour tout $n \in \mathbb{N}$, le $n$-ième terme de la suite $\alpha F + \beta G$ est égal à 0.
+Donc, pour tout $n \in \mathbb{N}$:
+$$\alpha \phi^n + \beta (1-\phi)^n = 0$$
+Nous allons utiliser cette égalité pour des valeurs spécifiques de $n$.
 
-Puisque $\mathcal{F}' = (P_2, P_3)$ est une famille libre et qu'elle engendre $F$, elle constitue une base de $F$.
-Une base de $F$ est donc $(P_2(X), P_3(X)) = (X + X^2, 1 - X^2)$.
+1.  **Pour $n=0$ :**
+    $\alpha \phi^0 + \beta (1-\phi)^0 = 0$
+    Puisque $\phi^0 = 1$ et $(1-\phi)^0 = 1$:
+    $\alpha \cdot 1 + \beta \cdot 1 = 0$
+    $\alpha + \beta = 0$ (Équation 1)
 
-**2. Dimension de $F$**
+2.  **Pour $n=1$ :**
+    $\alpha \phi^1 + \beta (1-\phi)^1 = 0$
+    $\alpha \phi + \beta (1-\phi) = 0$ (Équation 2)
 
-La dimension d'un espace vectoriel est le nombre de vecteurs dans n'importe quelle de ses bases.
-Nous avons trouvé que $(P_2, P_3)$ est une base de $F$. Cette base contient 2 vecteurs.
-Par conséquent, la dimension de $F$ est $\text{dim}(F) = 2$.
+Nous avons maintenant un système de deux équations linéaires avec deux inconnues $\alpha$ et $\beta$:
+$$ \begin{cases} \alpha + \beta = 0 \\ \alpha \phi + \beta (1-\phi) = 0 \end{cases} $$
+De l'Équation 1, nous pouvons exprimer $\beta$ en fonction de $\alpha$:
+$\beta = -\alpha$
 
-**3. Appartenance du polynôme $Q(X)$ à $F$**
+Substituons cette expression de $\beta$ dans l'Équation 2:
+$\alpha \phi + (-\alpha) (1-\phi) = 0$
+$\alpha \phi - \alpha (1-\phi) = 0$
+Factorisons $\alpha$:
+$\alpha (\phi - (1-\phi)) = 0$
+$\alpha (\phi - 1 + \phi) = 0$
+$\alpha (2\phi - 1) = 0$
 
-Le polynôme $Q(X) = 3 + 2X - X^2$ appartient à $F$ si et seulement s'il peut être exprimé comme une combinaison linéaire des vecteurs de la base de $F$, c'est-à-dire $P_2$ et $P_3$.
-Nous cherchons donc des scalaires $a, b \in \mathbb{R}$ tels que :
-$Q(X) = a P_2(X) + b P_3(X)$
+Calculons la valeur de $2\phi - 1$:
+$2\phi - 1 = 2 \left(\frac{1+\sqrt{5}}{2}\right) - 1 = (1+\sqrt{5}) - 1 = \sqrt{5}$
 
-Substituons les expressions des polynômes :
-$3 + 2X - X^2 = a(X + X^2) + b(1 - X^2)$
+L'équation devient donc:
+$\alpha \sqrt{5} = 0$
+Puisque $\sqrt{5}$ est un nombre réel non nul, nous devons avoir $\alpha = 0$.
 
-Développons et regroupons les termes :
-$3 + 2X - X^2 = aX + aX^2 + b - bX^2$
-$3 + 2X - X^2 = b \cdot 1 + a \cdot X + (a - b) \cdot X^2$
+Maintenant, substituons $\alpha = 0$ dans l'expression de $\beta$:
+$\beta = -\alpha = -0 = 0$
 
-Par identification des coefficients des polynômes :
-(7) $b = 3$ (coefficient constant)
-(8) $a = 2$ (coefficient de $X$)
-(9) $a - b = -1$ (coefficient de $X^2$)
+Nous avons trouvé que $\alpha = 0$ et $\beta = 0$ sont les seules solutions possibles pour que la combinaison linéaire $\alpha F + \beta G$ soit la suite nulle.
+Par conséquent, la famille $\{F, G\}$ est une famille libre dans $E$.
 
-Nous avons directement les valeurs de $a$ et $b$ à partir des équations (7) et (8) : $a=2$ et $b=3$.
-Vérifions si ces valeurs sont cohérentes avec l'équation (9) :
-$a - b = 2 - 3 = -1$
-L'équation (9) est $-1 = -1$, ce qui est vrai.
-Le système est donc compatible et admet une solution unique.
+#### Question 3 : Démontrer que la famille $\{F, G\}$ est une famille génératrice de $E$.
 
-Nous avons trouvé que $Q(X) = 2 P_2(X) + 3 P_3(X)$.
-Puisque $Q(X)$ peut être écrit comme une combinaison linéaire des vecteurs de la base de $F$, nous pouvons conclure que $Q(X)$ appartient à $F$.
+Une famille de vecteurs $\{v_1, v_2, \dots, v_k\}$ est dite génératrice d'un espace vectoriel $E$ si tout vecteur de $E$ peut être exprimé comme une combinaison linéaire de ces vecteurs.
+Dans notre cas, nous devons montrer que pour toute suite $U = (u_n)_{n \in \mathbb{N}}$ appartenant à $E$, il existe des scalaires $A, B \in \mathbb{R}$ tels que $U = A F + B G$.
+Cela signifie que pour tout $n \in \mathbb{N}$:
+$$u_n = A \phi^n + B (1-\phi)^n$$
+
+Une propriété fondamentale des suites définies par une relation de récurrence linéaire d'ordre 2 (comme celle de $E$) est qu'une suite est entièrement déterminée par ses deux premiers termes, $u_0$ et $u_1$. En effet, si $u_0$ et $u_1$ sont connus, alors $u_2 = u_1 + u_0$, $u_3 = u_2 + u_1$, et ainsi de suite, tous les termes suivants sont fixés de manière unique.
+
+Nous allons donc chercher à trouver des scalaires $A$ et $B$ tels que l'égalité $u_n = A \phi^n + B (1-\phi)^n$ soit satisfaite pour $n=0$ et $n=1$. Si nous trouvons de tels $A$ et $B$, alors la suite $A F + B G$ aura les mêmes termes $u_0$ et $u_1$ que la suite $U$. Puisque les deux suites appartiennent à $E$ et sont déterminées de manière unique par leurs deux premiers termes, elles doivent être identiques pour tous les $n$.
+
+1.  **Pour $n=0$ :**
+    $u_0 = A \phi^0 + B (1-\phi)^0$
+    $u_0 = A \cdot 1 + B \cdot 1$
+    $u_0 = A + B$ (Équation 3)
+
+2.  **Pour $n=1$ :**
+    $u_1 = A \phi^1 + B (1-\phi)^1$
+    $u_1 = A \phi + B (1-\phi)$ (Équation 4)
+
+Nous avons un système de deux équations linéaires avec deux inconnues $A$ et $B$:
+$$ \begin{cases} A + B = u_0 \\ A \phi + B (1-\phi) = u_1 \end{cases} $$
+De l'Équation 3, nous exprimons $B$ en fonction de $A$ et $u_0$:
+$B = u_0 - A$
+
+Substituons cette expression de $B$ dans l'Équation 4:
+$A \phi + (u_0 - A)(1-\phi) = u_1$
+Développons le terme $(u_0 - A)(1-\phi)$:
+$A \phi + u_0(1-\phi) - A(1-\phi) = u_1$
+Regroupons les termes contenant $A$:
+$A (\phi - (1-\phi)) + u_0(1-\phi) = u_1$
+Simplifions le coefficient de $A$:
+$\phi - (1-\phi) = \phi - 1 + \phi = 2\phi - 1$
+Comme nous l'avons calculé précédemment, $2\phi - 1 = \sqrt{5}$.
+Donc l'équation devient:
+$A \sqrt{5} + u_0(1-\phi) = u_1$
+Isolons $A$:
+$A \sqrt{5} = u_1 - u_0(1-\phi)$
+$A = \frac{u_1 - u_0(1-\phi)}{\sqrt{5}}$
+
+Maintenant, substituons la valeur de $A$ dans l'expression de $B = u_0 - A$:
+$B = u_0 - \frac{u_1 - u_0(1-\phi)}{\sqrt{5}}$
+Pour simplifier, mettons au même dénominateur:
+$B = \frac{u_0 \sqrt{5} - (u_1 - u_0(1-\phi))}{\sqrt{5}}$
+$B = \frac{u_0 \sqrt{5} - u_1 + u_0(1-\phi)}{\sqrt{5}}$
+$B = \frac{u_0 (\sqrt{5} + 1 - \phi) - u_1}{\sqrt{5}}$
+Rappelons que $\phi = \frac{1+\sqrt{5}}{2}$, donc $\sqrt{5} = 2\phi - 1$.
+Substituons $\sqrt{5}$ dans l'expression de $B$:
+$B = \frac{u_0 (2\phi - 1 + 1 - \phi) - u_1}{\sqrt{5}}$
+$B = \frac{u_0 \phi - u_1}{\sqrt{5}}$
+
+Puisque $\sqrt{5} \neq 0$, nous avons trouvé des valeurs uniques pour $A$ et $B$ pour n'importe quelle paire de termes initiaux $(u_0, u_1)$.
+Cela signifie que pour toute suite $U = (u_n)_{n \in \mathbb{N}}$ dans $E$, il existe une unique combinaison linéaire $A F + B G$ qui correspond à $U$.
+Par conséquent, la famille $\{F, G\}$ est une famille génératrice de $E$.
+
+#### Question 4 : En déduire une base de $E$ et sa dimension.
+
+Une base d'un espace vectoriel est une famille de vecteurs qui est à la fois libre et génératrice de cet espace.
+1.  D'après la Question 2b, nous avons démontré que la famille $\{F, G\}$ est une famille libre dans $E$.
+2.  D'après la Question 3, nous avons démontré que la famille $\{F, G\}$ est une famille génératrice de $E$.
+
+Puisque la famille $\{F, G\}$ est à la fois libre et génératrice pour l'espace vectoriel $E$, elle constitue une base de $E$.
+
+La dimension d'un espace vectoriel est le nombre de vecteurs dans n'importe laquelle de ses bases.
+La base $\{F, G\}$ contient deux vecteurs distincts ($F$ et $G$).
+Par conséquent, la dimension de l'espace vectoriel $E$ est 2.
+Nous notons $\dim_{\mathbb{R}}(E) = 2$.
+
+---
+Ceci conclut l'exercice. J'espère que cette exploration détaillée vous a permis de solidifier votre compréhension des concepts fondamentaux des espaces vectoriels en dimension finie.
