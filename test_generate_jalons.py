@@ -57,7 +57,7 @@ class TestGenerateConceptLinks(unittest.TestCase):
 
     def test_vectoriel_match(self):
         result = generate_concept_links("Espace vectoriel.")
-        self.assertIn("[[Jalon 7 (Espaces vectoriels abstraits)]]", result)
+        self.assertIn("[[Jalon-7.md|Jalon 7 (Espaces vectoriels abstraits)]]", result)
 
     def test_vectoriel_exclude_7(self):
         result = generate_concept_links("Espace vectoriel in jalon 7.")
@@ -68,7 +68,7 @@ class TestGenerateConceptLinks(unittest.TestCase):
         self.assertIn("[[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L^2)]]", result)
         self.assertIn("[[Jalon 63 (Définition axiomatique d'une mesure)]]", result)
         self.assertIn("[[Jalon 49 (Espaces topologiques généraux)]]", result)
-        self.assertIn("[[Jalon 7 (Espaces vectoriels abstraits)]]", result)
+        self.assertIn("[[Jalon-7.md|Jalon 7 (Espaces vectoriels abstraits)]]", result)
 
     def test_multiple_matches(self):
         result = generate_concept_links("hilbert and mesure")
