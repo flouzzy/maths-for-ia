@@ -197,5 +197,5 @@ Dans un régime fortement sur-paramétré (données linéairement séparables, i
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 128 (Flots de gradient)]], [[Jalon 124 (Conditions de Karush-Kuhn-Tucker)]], [[Jalon 7 (Espaces vectoriels abstraits)]]
+- **Concepts Précédents requis :** [[Jalon 128 (Flots de gradient)]], [[Jalon 124 (Conditions de Karush-Kuhn-Tucker)]], [[Jalon-7.md|Jalon 7 (Espaces vectoriels abstraits)]]
 - **Concepts Futurs dépendants :** [[Jalon 144 (Le phénomène de double descente)]], [[Jalon 130 (Régularisation implicite de la descente de gradient dans les modèles sur-paramétrés.)]], [[Jalon 140 (Classifieur de Bayes optimal)]]
