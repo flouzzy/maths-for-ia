@@ -122,5 +122,5 @@ Soit $\langle \cdot, \cdot \rangle$ un produit scalaire réel sur $E$.
 - **Exemple Concret :** Dans le **Mécanisme d'Attention (Transformers)** de GPT-4 ou BERT, on calcule des scores d'attention en faisant des produits scalaires entre des vecteurs de "Requête" (Query) et de "Clé" (Key) : $\text{Score} = Q \cdot K^T$. Plus le produit scalaire est élevé, plus le modèle "porte attention" à un mot spécifique dans une phrase. L'inégalité de Cauchy-Schwarz garantit que ces scores peuvent être normalisés (via Softmax) pour former une distribution de probabilité cohérente, évitant ainsi que certaines connexions ne dominent de manière aberrante.
 
 ## 6. Liens Sémantiques
-- **Concepts Précédents requis :** [[Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon 9 (Calcul matriciel)]]
+- **Concepts Précédents requis :** [[Jalon-7.md|Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon 9 (Calcul matriciel)]]
 - **Concepts Futurs dépendants :** [[Jalon 26 (Espaces euclidiens)]], [[Jalon 33 (Formes quadratiques)]], [[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L^2)]], [[Jalon 126 (Noyaux définis positifs)]]
