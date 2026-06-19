@@ -321,7 +321,7 @@ python3 -m unittest test_generate_jalons.py
 ## 📝 Historique & Avancement
 
 Le cursus est enrichi jalon par jalon de manière progressive :
-- [2026-06-19] : Upsert du Jalon 7 - Espaces vectoriels abstraits. Status: Terminé.
+- [2026-06-18] : Audit & Auto-correction du Jalon 3 - Quantification. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - [2026-06-17] : Upsert du Jalon 6 - Relations d'équivalence. Status: Terminé.
 - [2026-06-16] : Upsert du Jalon 5 - Applications. Status: Terminé.
 - [2026-06-14] : Audit & Auto-correction du Jalon 1 - Logique formelle. Statut : Validé et Fixé. Prêt pour le jalon suivant.
