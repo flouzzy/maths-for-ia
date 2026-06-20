@@ -104,5 +104,5 @@ Soit $H$ un hyperplan de $E$ (dimension $n$). Montrons que $\dim H = n-1$.
 - **Exemple Concret :** Dans les **SVM (Support Vector Machines)**, l'algorithme cherche l'hyperplan optimal qui sépare deux classes de données (ex: Spam vs Non-Spam). L'équation de l'hyperplan $\phi(x) + b = 0$ (où $\phi$ est une forme linéaire) définit la frontière de décision. La **Dualité de Lagrange**, utilisée pour résoudre ce problème d'optimisation, repose entièrement sur le passage de l'espace des données (primal) à l'espace des contraintes (dual).
 
 ## 6. Liens Sémantiques
-- **Concepts Précédents requis :** [[Jalon-7.md|Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon 8 (Applications linéaires)]]
+- **Concepts Précédents requis :** [[Jalon-7.md|Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon-8]]
 - **Concepts Futurs dépendants :** [[Jalon 12 (Livrable IA)]], [[Jalon 25 (Formes bilinéaires)]], [[Jalon 123 (Problèmes d'optimisation sous contraintes)]]
