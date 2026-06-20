@@ -118,7 +118,7 @@ Nous avons trouvé un $w$ (à savoir $w=1$). La condition est donc satisfaite po
 
 Puisque nous avons montré que pour $x=1$, le choix $y=2$ fonctionne pour tous les $z$ pertinents, la propriété est vraie pour $x=1$.
 
-Par symétrie de la relation $R$ et de l'ensemble $E$:
+Nous devons également vérifier de manière explicite les autres cas pour $x$ :
 *   Si $x=2$, nous pouvons choisir $y=3$.
     *   Pour $z=1$: $2 R 1 \land 1 \neq 2$. On cherche $w$ tel que $3 R w \land w R 1 \land w \neq 3 \land w \neq 1$. $w=2$ convient (car $3 R 2$, $2 R 1$, $2 \neq 3$, $2 \neq 1$).
     *   Pour $z=3$: $2 R 3 \land 3 \neq 2$. On cherche $w$ tel que $3 R w \land w R 3 \land w \neq 3$. $w=1$ ou $w=2$ conviennent.

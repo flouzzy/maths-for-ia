@@ -19,11 +19,11 @@ Ce répertoire regroupe les exercices et Travaux Pratiques (TPs) du Jalon 3, ax�
 
 Voici la liste des 10 exercices proposés pour ce jalon, classés par difficulté :
 
-*   **Exercice 1 : Introduction à la quantification** (Facile)
+*   **Exercice 1 : Introduction à la quantification**
     *   Traduction d'énoncés simples avec un seul quantificateur.
-*   **Exercice 2 : Négation d'énoncés simples** (Facile)
+*   **Exercice 2 : Négation d'énoncés simples**
     *   Appliquer les règles de négation aux quantificateurs.
-*   **Exercice 3 : Ordre des quantificateurs - Cas élémentaire** (Facile)
+*   **Exercice 3 : Ordre des quantificateurs - Cas élémentaire**
     *   Identifier la différence entre `∀x ∃y P(x,y)` et `∃y ∀x P(x,y)` sur des exemples concrets.
 *   **Exercice 4 : Vérification de vérité sur domaines finis** (Moyen)
     *   Évaluer la vérité d'énoncés quantifiés sur des ensembles de nombres ou d'objets finis.

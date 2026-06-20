@@ -34,7 +34,7 @@ Considérons les deux propositions suivantes :
 *   $S_1 : \forall y \in F, \exists x \in E, R(x,y)$
 *   $S_2 : \exists x \in E, \forall y \in F, R(x,y)$
 
-1.  Expliquer clairement, en langage courant, la différence fondamentale entre les propositions $S_1$ et $S_2$. Préciser si l'une implique l'autre.
+1.  Expliquer explicitement, en langage courant, la différence fondamentale entre les propositions $S_1$ et $S_2$. Préciser si l'une implique l'autre.
 
 2.  Donner un exemple concret d'ensembles $E, F$ et d'un prédicat $R(x,y)$ pour lequel la proposition $S_1$ est vraie et la proposition $S_2$ est fausse. Justifier votre réponse.
 
