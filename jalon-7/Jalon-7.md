@@ -7,7 +7,7 @@ tags:
   - math/algebre-lineaire
   - ia/plongements
 prev: "[[Jalon-6.md]]"
-next: "[[Jalon 8 (Applications linéaires).md]]"
+next: "[[Jalon-8.md]]"
 ---
 # Jalon 7 : Espaces vectoriels abstraits, familles libres, familles génératrices et bases en dimension finie
 
