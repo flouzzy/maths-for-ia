@@ -6,7 +6,7 @@ trimester: 1
 tags:
   - math/algebre-lineaire
   - ia/poids-reseaux
-prev: "[[Jalon 8 (Applications linéaires).md]]"
+prev: "[[Jalon-8.md]]"
 next: "[[Jalon 10 (Changements de base).md]]"
 ---
 # Jalon 9 : Calcul matriciel, opérations, inversibilité et représentations des applications linéaires

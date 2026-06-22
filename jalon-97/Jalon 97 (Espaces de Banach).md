@@ -87,5 +87,5 @@ C'est le théorème de représentation de Riesz en dimension finie. Toute forme 
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 56 (Espaces métriques complets).md]], [[Jalon 8 (Applications linéaires).md]]
+- **Concepts Précédents requis :** [[Jalon 56 (Espaces métriques complets).md]], [[Jalon-8.md]]
 - **Concepts Futurs dépendants :** [[Jalon 98 (Théorème de Hahn-Banach).md]], [[Jalon 105 (Opérateurs adjoints).md]]
