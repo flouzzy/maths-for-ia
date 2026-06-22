@@ -99,5 +99,5 @@ Lequel des deux documents est le plus "proche" de la requête selon la similarit
 - **Exemple Concret :** Dans les **Bases de Données Vectorielles** (comme Pinecone, Milvus ou FAISS), on stocke des millions de vecteurs de haute dimension. Pour répondre à une requête en millisecondes, on utilise des structures d'**Indexation Spatiale** qui partitionnent l'espace par des **Hyperplans de séparation**. Le calcul de similarité cosinus est l'opération atomique effectuée des milliards de fois par jour pour alimenter ChatGPT, les moteurs de recherche et les systèmes de traduction.
 
 ## 6. Liens Sémantiques
-- **Concepts Précédents requis :** [[Jalon 8 (Applications linéaires)]], [[Jalon 9 (Calcul matriciel)]], [[Jalon 11 (Formes linéaires)]]
+- **Concepts Précédents requis :** [[Jalon-8]], [[Jalon 9 (Calcul matriciel)]], [[Jalon 11 (Formes linéaires)]]
 - **Concepts Futurs dépendants :** [[Jalon 13 (Structure de R)]], [[Jalon 26 (Espaces euclidiens)]], [[Jalon 60 (Livrable IA)]]

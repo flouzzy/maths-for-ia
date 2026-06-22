@@ -1,164 +1,161 @@
+# Exercice 8 : Indice de Fitting et Décomposition de Fitting (Difficulté : ****)
+
+Soit $\mathbb{K}$ un corps commutatif.
+Soit $E$ un espace vectoriel sur $\mathbb{K}$ de dimension finie $n \ge 1$.
+Soit $f \in \mathcal{L}(E)$ un endomorphisme de $E$.
+On définit l'application $f^0 = \text{Id}_E$ (l'application identité sur $E$), et pour tout entier $k \in \mathbb{N}$, $f^{k+1} = f \circ f^k$.
+
 ---
-uuid: "jalon-8-exo-08"
-title: "Exercice 8 : Propriétés du Noyau et de l'Image d'une Composition d'Applications Linéaires"
-tags:
-  - math/algebre-lineaire
-  - exercice
+
+## Énoncé du problème
+
+1.  **Analyse des Noyaux**
+    a.  Montrer que la suite des noyaux $(\ker(f^k))_{k \in \mathbb{N}}$ est une suite croissante de sous-espaces vectoriels de $E$, c'est-à-dire, montrer que $\ker(f^k) \subseteq \ker(f^{k+1})$ pour tout $k \in \mathbb{N}$.
+    b.  Justifier que cette suite de sous-espaces vectoriels doit nécessairement stabiliser. On notera $d_0$ le plus petit entier naturel tel que $\ker(f^{d_0}) = \ker(f^{d_0+1})$.
+    c.  Montrer que pour tout entier $k \ge d_0$, on a $\ker(f^k) = \ker(f^{d_0})$.
+
+2.  **Analyse des Images**
+    a.  Montrer que la suite des images $(\text{Im}(f^k))_{k \in \mathbb{N}}$ est une suite décroissante de sous-espaces vectoriels de $E$, c'est-à-dire, montrer que $\text{Im}(f^{k+1}) \subseteq \text{Im}(f^k)$ pour tout $k \in \mathbb{N}$.
+    b.  Justifier que cette suite de sous-espaces vectoriels doit nécessairement stabiliser. On notera $p_0$ le plus petit entier naturel tel que $\text{Im}(f^{p_0}) = \text{Im}(f^{p_0+1})$.
+    c.  Montrer que pour tout entier $k \ge p_0$, on a $\text{Im}(f^k) = \text{Im}(f^{p_0})$.
+
+3.  **Lien entre Noyau et Image (Théorème du Rang)**
+    a.  En utilisant le théorème du rang, montrer que $d_0 = p_0$. On notera $k_0$ cette valeur commune, appelée l'indice de Fitting de $f$.
+    b.  Montrer que la restriction de $f$ à $\text{Im}(f^{k_0})$ induit un automorphisme de $\text{Im}(f^{k_0})$, c'est-à-dire que $f|_{\text{Im}(f^{k_0})} : \text{Im}(f^{k_0}) \to \text{Im}(f^{k_0})$ est un isomorphisme.
+
+4.  **Décomposition de Fitting**
+    a.  Montrer que $\ker(f^{k_0}) \cap \text{Im}(f^{k_0}) = \{0_E\}$, où $0_E$ est le vecteur nul de $E$.
+    b.  En déduire que $E = \ker(f^{k_0}) \oplus \text{Im}(f^{k_0})$.
+
 ---
-# Exercice 8 : Propriétés du Noyau et de l'Image d'une Composition d'Applications Linéaires (Difficulté : ★★★★☆)
 
-## Énoncé
-Soient $E, F, G$ trois $\mathbb{K}$-espaces vectoriels de dimensions finies. Soient $f \in \mathcal{L}(E, F)$ et $g \in \mathcal{L}(F, G)$ deux applications linéaires.
-On considère l'application composée $g \circ f : E \to G$.
+## Correction détaillée
 
-1.  **Noyau de la composition :**
-    a.  Démontrer que $\ker f \subseteq \ker(g \circ f)$. En déduire une inégalité entre les dimensions.
-    b.  Démontrer que $\ker(g \circ f) = f^{-1}(\ker g \cap \text{Im } f)$.
-    c.  En considérant la restriction de $f$ à un sous-espace vectoriel approprié, ou en utilisant le théorème du rang sur une application bien choisie, établir la relation :
-        $$\dim(\ker(g \circ f)) = \dim(\ker f) + \dim(\ker g \cap \text{Im } f)$$
-    d.  En déduire que $\dim(\ker(g \circ f)) \le \dim(\ker f) + \dim(\ker g)$.
+1.  **Analyse des Noyaux**
 
-2.  **Image de la composition :**
-    a.  Démontrer que $\text{Im}(g \circ f) \subseteq \text{Im } g$. En déduire une inégalité entre les rangs.
-    b.  Démontrer que $\text{Im}(g \circ f) = g(\text{Im } f)$.
-    c.  En appliquant le théorème du rang à la restriction de $g$ à $\text{Im } f$, établir la relation :
-        $$\text{rg}(g \circ f) = \text{rg}(f) - \dim(\ker g \cap \text{Im } f)$$
-    d.  En déduire que $\text{rg}(g \circ f) \le \text{rg}(f)$.
-    e.  À partir des résultats précédents et du théorème du rang, démontrer l'inégalité de Sylvester :
-        $$\text{rg}(g \circ f) \ge \text{rg}(f) + \text{rg}(g) - \dim F$$
+    a.  Pour montrer que $\ker(f^k) \subseteq \ker(f^{k+1})$ pour tout $k \in \mathbb{N}$ :
+        Soit $x \in \ker(f^k)$. Par définition du noyau d'une application linéaire, cela signifie que $f^k(x) = 0_E$.
+        Appliquons l'endomorphisme $f$ à cette égalité. Puisque $f$ est linéaire, $f(0_E) = 0_E$.
+        Nous obtenons $f(f^k(x)) = f(0_E)$, ce qui se simplifie en $f^{k+1}(x) = 0_E$ par définition de la composition des applications.
+        L'égalité $f^{k+1}(x) = 0_E$ signifie que $x$ appartient au noyau de $f^{k+1}$, c'est-à-dire $x \in \ker(f^{k+1})$.
+        Par conséquent, tout élément de $\ker(f^k)$ est aussi un élément de $\ker(f^{k+1})$, d'où l'inclusion $\ker(f^k) \subseteq \ker(f^{k+1})$ pour tout $k \in \mathbb{N}$.
 
-## Correction Détaillée
+    b.  La suite $(\ker(f^k))_{k \in \mathbb{N}}$ est une suite croissante de sous-espaces vectoriels de $E$.
+        Puisque $E$ est un espace vectoriel de dimension finie $n$, la dimension de chaque sous-espace vectoriel $\ker(f^k)$ est un entier naturel. Cette dimension est bornée supérieurement par la dimension de $E$, c'est-à-dire $n$.
+        Nous avons la suite d'inégalités de dimensions :
+        $0 \le \dim(\ker(f^0)) \le \dim(\ker(f^1)) \le \dim(\ker(f^2)) \le \dots \le \dim(E) = n$.
+        Une suite croissante d'entiers naturels qui est bornée supérieurement converge et donc doit nécessairement stabiliser à partir d'un certain rang.
+        Si la dimension $\dim(\ker(f^k))$ est égale à $\dim(\ker(f^{k+1}))$, et comme nous avons déjà établi l'inclusion $\ker(f^k) \subseteq \ker(f^{k+1})$, l'égalité des dimensions implique que les deux sous-espaces vectoriels sont identiques : $\ker(f^k) = \ker(f^{k+1})$.
+        Ainsi, la suite des noyaux doit stabiliser. Par le principe du bon ordre des entiers naturels, il existe un plus petit entier naturel $d_0$ tel que $\ker(f^{d_0}) = \ker(f^{d_0+1})$.
 
-Soient $E, F, G$ trois $\mathbb{K}$-espaces vectoriels de dimensions finies. Soient $f \in \mathcal{L}(E, F)$ et $g \in \mathcal{L}(F, G)$ deux applications linéaires.
+    c.  Nous montrons par récurrence sur $k$ que pour tout $k \ge d_0$, on a $\ker(f^k) = \ker(f^{d_0})$.
+        *   **Initialisation (k = d_0) :** La propriété est vraie par définition de $d_0$, puisque $\ker(f^{d_0}) = \ker(f^{d_0+1})$.
+        *   **Hypothèse de récurrence :** Supposons que pour un certain entier $k \ge d_0$, on ait $\ker(f^k) = \ker(f^{d_0})$.
+        *   **Hérédité :** Démontrons que $\ker(f^{k+1}) = \ker(f^{d_0})$.
+            Nous savons d'après 1.a que $\ker(f^k) \subseteq \ker(f^{k+1})$. Par transitivité, $\ker(f^{d_0}) = \ker(f^k) \subseteq \ker(f^{k+1})$.
+            Il reste à prouver l'inclusion inverse : $\ker(f^{k+1}) \subseteq \ker(f^{d_0})$.
+            Soit $x \in \ker(f^{k+1})$. Par définition, $f^{k+1}(x) = 0_E$.
+            On peut écrire $f^{k+1}(x) = f^k(f(x))$. Donc $f^k(f(x)) = 0_E$.
+            Ceci signifie que $f(x) \in \ker(f^k)$.
+            D'après l'hypothèse de récurrence, $\ker(f^k) = \ker(f^{d_0})$.
+            Par conséquent, $f(x) \in \ker(f^{d_0})$.
+            Cela implique que $f^{d_0}(f(x)) = 0_E$, ce qui est équivalent à $f^{d_0+1}(x) = 0_E$.
+            Puisque, par définition de $d_0$, nous avons $\ker(f^{d_0+1}) = \ker(f^{d_0})$, l'égalité $f^{d_0+1}(x) = 0_E$ signifie que $x \in \ker(f^{d_0})$.
+            Ainsi, $\ker(f^{k+1}) \subseteq \ker(f^{d_0})$.
+            En combinant les inclusions, nous avons $\ker(f^{k+1}) = \ker(f^{d_0})$.
+        Par le principe de récurrence, pour tout $k \ge d_0$, l'égalité $\ker(f^k) = \ker(f^{d_0})$ est établie.
 
-1.  **Noyau de la composition :**
+2.  **Analyse des Images**
 
-    a.  Démontrons que $\ker f \subseteq \ker(g \circ f)$.
-        Soit $x \in \ker f$. Par définition du noyau, $f(x) = 0_F$.
-        Alors, par définition de la composition, $(g \circ f)(x) = g(f(x))$.
-        En substituant $f(x) = 0_F$, nous obtenons $(g \circ f)(x) = g(0_F)$.
-        Puisque $g$ est une application linéaire, elle envoie le vecteur nul de son espace de départ sur le vecteur nul de son espace d'arrivée, c'est-à-dire $g(0_F) = 0_G$.
-        Donc, $(g \circ f)(x) = 0_G$, ce qui signifie que $x \in \ker(g \circ f)$.
-        Ainsi, tout élément de $\ker f$ est aussi un élément de $\ker(g \circ f)$, ce qui prouve l'inclusion $\ker f \subseteq \ker(g \circ f)$.
-        Comme $\ker f$ est un sous-espace vectoriel de $\ker(g \circ f)$, sa dimension est inférieure ou égale à celle de $\ker(g \circ f)$.
-        Par conséquent, $\dim(\ker f) \le \dim(\ker(g \circ f))$.
+    a.  Pour montrer que $\text{Im}(f^{k+1}) \subseteq \text{Im}(f^k)$ pour tout $k \in \mathbb{N}$ :
+        Soit $y \in \text{Im}(f^{k+1})$. Par définition de l'image, il existe un vecteur $x \in E$ tel que $y = f^{k+1}(x)$.
+        On peut réécrire $f^{k+1}(x)$ comme $f^k(f(x))$.
+        Posons $x' = f(x)$. Alors $x'$ est un vecteur de $E$.
+        L'égalité devient $y = f^k(x')$.
+        Ceci signifie que $y$ appartient à l'image de $f^k$, c'est-à-dire $y \in \text{Im}(f^k)$.
+        Par conséquent, $\text{Im}(f^{k+1}) \subseteq \text{Im}(f^k)$ pour tout $k \in \mathbb{N}$.
 
-    b.  Démontrons que $\ker(g \circ f) = f^{-1}(\ker g \cap \text{Im } f)$.
-        Soit $x \in \ker(g \circ f)$. Par définition, $(g \circ f)(x) = 0_G$, ce qui signifie $g(f(x)) = 0_G$.
-        Cette égalité implique que le vecteur $f(x)$ appartient au noyau de $g$, c'est-à-dire $f(x) \in \ker g$.
-        De plus, par définition de l'image, $f(x)$ est un élément de l'image de $f$, c'est-à-dire $f(x) \in \text{Im } f$.
-        Par conséquent, $f(x)$ appartient à l'intersection de ces deux sous-espaces : $f(x) \in \ker g \cap \text{Im } f$.
-        Par définition de l'image réciproque, si $f(x) \in S$ pour un ensemble $S$, alors $x \in f^{-1}(S)$.
-        Donc, $x \in f^{-1}(\ker g \cap \text{Im } f)$.
-        Ceci prouve l'inclusion $\ker(g \circ f) \subseteq f^{-1}(\ker g \cap \text{Im } f)$.
+    b.  La suite $(\text{Im}(f^k))_{k \in \mathbb{N}}$ est une suite décroissante de sous-espaces vectoriels de $E$.
+        Puisque $E$ est un espace vectoriel de dimension finie $n$, la dimension de chaque sous-espace vectoriel $\text{Im}(f^k)$ est un entier naturel, bornée inférieurement par 0.
+        Nous avons la suite d'inégalités de dimensions :
+        $n = \dim(E) \ge \dim(\text{Im}(f^0)) \ge \dim(\text{Im}(f^1)) \ge \dim(\text{Im}(f^2)) \ge \dots \ge 0$.
+        Une suite décroissante d'entiers naturels qui est bornée inférieurement doit nécessairement stabiliser à partir d'un certain rang.
+        Si la dimension $\dim(\text{Im}(f^k))$ est égale à $\dim(\text{Im}(f^{k+1}))$, et comme nous avons déjà établi l'inclusion $\text{Im}(f^{k+1}) \subseteq \text{Im}(f^k)$, l'égalité des dimensions implique que les deux sous-espaces vectoriels sont identiques : $\text{Im}(f^k) = \text{Im}(f^{k+1})$.
+        Ainsi, la suite des images doit stabiliser. Par le principe du bon ordre des entiers naturels, il existe un plus petit entier naturel $p_0$ tel que $\text{Im}(f^{p_0}) = \text{Im}(f^{p_0+1})$.
 
-        Réciproquement, soit $x \in f^{-1}(\ker g \cap \text{Im } f)$.
-        Par définition de l'image réciproque, cela signifie que $f(x) \in \ker g \cap \text{Im } f$.
-        Puisque $f(x) \in \ker g$, par définition du noyau, nous avons $g(f(x)) = 0_G$.
-        Par définition de la composition, $g(f(x)) = (g \circ f)(x)$.
-        Donc, $(g \circ f)(x) = 0_G$, ce qui signifie que $x \in \ker(g \circ f)$.
-        Ceci prouve l'inclusion $f^{-1}(\ker g \cap \text{Im } f) \subseteq \ker(g \circ f)$.
+    c.  Nous devons montrer que pour tout $k \ge p_0$, on a $\text{Im}(f^k) = \text{Im}(f^{p_0})$.
+        Par définition de $p_0$, nous avons $\text{Im}(f^{p_0}) = \text{Im}(f^{p_0+1})$.
+        Considérons la restriction de $f$ à $\text{Im}(f^{p_0})$. Notons cette application $g = f|_{\text{Im}(f^{p_0})} : \text{Im}(f^{p_0}) \to E$.
+        L'image de cette application est $g(\text{Im}(f^{p_0})) = f(\text{Im}(f^{p_0})) = f(f^{p_0}(E)) = f^{p_0+1}(E) = \text{Im}(f^{p_0+1})$.
+        Puisque $\text{Im}(f^{p_0}) = \text{Im}(f^{p_0+1})$, cela signifie que l'image de $g$ est $\text{Im}(f^{p_0})$.
+        Ainsi, $g: \text{Im}(f^{p_0}) \to \text{Im}(f^{p_0})$ est un endomorphisme de l'espace $\text{Im}(f^{p_0})$.
+        De plus, puisque l'image de $g$ est $\text{Im}(f^{p_0})$ lui-même, cet endomorphisme $g$ est surjectif.
+        Comme $\text{Im}(f^{p_0})$ est un sous-espace vectoriel de $E$, il est de dimension finie. Pour un espace vectoriel de dimension finie, un endomorphisme surjectif est aussi injectif, et donc un automorphisme.
+        Par conséquent, $f|_{\text{Im}(f^{p_0})} : \text{Im}(f^{p_0}) \to \text{Im}(f^{p_0})$ est un automorphisme.
+        Cela signifie que pour tout entier $k \ge 1$, la $k$-ième composition de $f|_{\text{Im}(f^{p_0})}$ sur lui-même, notée $(f|_{\text{Im}(f^{p_0})})^k$, est également un automorphisme de $\text{Im}(f^{p_0})$.
+        En particulier, $(f|_{\text{Im}(f^{p_0})})^k$ est surjective, ce qui implique que $f^k(\text{Im}(f^{p_0})) = \text{Im}(f^{p_0})$ pour tout $k \ge 1$.
+        Par définition, $f^k(\text{Im}(f^{p_0})) = f^k(f^{p_0}(E)) = f^{k+p_0}(E) = \text{Im}(f^{k+p_0})$.
+        En combinant ces résultats, nous obtenons $\text{Im}(f^{p_0+k}) = \text{Im}(f^{p_0})$ pour tout $k \ge 1$.
+        Ceci démontre que pour tout $k \ge p_0$, on a $\text{Im}(f^k) = \text{Im}(f^{p_0})$.
 
-        Par double inclusion, nous avons établi l'égalité $\ker(g \circ f) = f^{-1}(\ker g \cap \text{Im } f)$.
+3.  **Lien entre Noyau et Image (Théorème du Rang)**
 
-    c.  Établissons la relation $\dim(\ker(g \circ f)) = \dim(\ker f) + \dim(\ker g \cap \text{Im } f)$.
-        Considérons l'application linéaire $f$ restreinte à $\ker(g \circ f)$. Notons cette restriction $f' : \ker(g \circ f) \to F$.
-        Le domaine de $f'$ est $\ker(g \circ f)$.
-        L'image de $f'$ est $\text{Im } f' = \{ f(x) \mid x \in \ker(g \circ f) \}$.
-        D'après la question 1.b, nous savons que $f(x) \in \ker g \cap \text{Im } f$ pour tout $x \in \ker(g \circ f)$.
-        Réciproquement, si $y \in \ker g \cap \text{Im } f$, alors $y \in \text{Im } f$, donc il existe $x \in E$ tel que $f(x) = y$. De plus, $y \in \ker g$, donc $g(y) = 0_G$. Ainsi $g(f(x)) = 0_G$, ce qui signifie $x \in \ker(g \circ f)$. Donc $y = f(x)$ est dans l'image de $f'$.
-        Par conséquent, $\text{Im } f' = \ker g \cap \text{Im } f$.
+    a.  Le théorème du rang affirme que pour toute application linéaire $L: V \to W$ où $V$ est de dimension finie, on a $\dim(V) = \dim(\ker(L)) + \dim(\text{Im}(L))$.
+        Appliquons ce théorème à l'endomorphisme $f^k: E \to E$ pour tout $k \in \mathbb{N}$. L'espace $E$ est de dimension finie $n$.
+        Donc, $n = \dim(\ker(f^k)) + \dim(\text{Im}(f^k))$.
 
-        Le noyau de $f'$ est $\ker f' = \{ x \in \ker(g \circ f) \mid f(x) = 0_F \}$.
-        Par définition, $f(x) = 0_F$ signifie $x \in \ker f$.
-        Donc, $\ker f' = \{ x \mid x \in \ker(g \circ f) \text{ et } x \in \ker f \} = \ker(g \circ f) \cap \ker f$.
-        D'après la question 1.a, nous avons montré que $\ker f \subseteq \ker(g \circ f)$.
-        Par conséquent, l'intersection $\ker(g \circ f) \cap \ker f$ est simplement $\ker f$.
-        Ainsi, $\ker f' = \ker f$.
+        *   Montrons que $p_0 \le d_0$ :
+            Par définition de $d_0$, nous avons $\ker(f^{d_0}) = \ker(f^{d_0+1})$.
+            Ceci implique que $\dim(\ker(f^{d_0})) = \dim(\ker(f^{d_0+1}))$.
+            En utilisant le théorème du rang pour $f^{d_0}$ et $f^{d_0+1}$ :
+            $\dim(\text{Im}(f^{d_0})) = n - \dim(\ker(f^{d_0}))$
+            $\dim(\text{Im}(f^{d_0+1})) = n - \dim(\ker(f^{d_0+1}))$
+            Puisque $\dim(\ker(f^{d_0})) = \dim(\ker(f^{d_0+1}))$, il s'ensuit que $\dim(\text{Im}(f^{d_0})) = \dim(\text{Im}(f^{d_0+1}))$.
+            Comme nous savons que $\text{Im}(f^{d_0+1}) \subseteq \text{Im}(f^{d_0})$ (d'après 2.a), l'égalité des dimensions implique que $\text{Im}(f^{d_0}) = \text{Im}(f^{d_0+1})$.
+            Par définition, $p_0$ est le plus petit entier tel que $\text{Im}(f^{p_0}) = \text{Im}(f^{p_0+1})$. Puisque cette égalité est vérifiée pour $d_0$, nous devons avoir $p_0 \le d_0$.
 
-        Appliquons le théorème du rang à l'application linéaire $f' : \ker(g \circ f) \to F$.
-        Le théorème du rang stipule que $\dim(\text{domaine}) = \dim(\text{noyau}) + \dim(\text{image})$.
-        Donc, $\dim(\ker(g \circ f)) = \dim(\ker f') + \dim(\text{Im } f')$.
-        En substituant les expressions que nous avons trouvées pour $\ker f'$ et $\text{Im } f'$ :
-        $$\dim(\ker(g \circ f)) = \dim(\ker f) + \dim(\ker g \cap \text{Im } f)$$
+        *   Montrons que $d_0 \le p_0$ :
+            Par définition de $p_0$, nous avons $\text{Im}(f^{p_0}) = \text{Im}(f^{p_0+1})$.
+            Ceci implique que $\dim(\text{Im}(f^{p_0})) = \dim(\text{Im}(f^{p_0+1}))$.
+            En utilisant le théorème du rang pour $f^{p_0}$ et $f^{p_0+1}$ :
+            $\dim(\ker(f^{p_0})) = n - \dim(\text{Im}(f^{p_0}))$
+            $\dim(\ker(f^{p_0+1})) = n - \dim(\text{Im}(f^{p_0+1}))$
+            Puisque $\dim(\text{Im}(f^{p_0})) = \dim(\text{Im}(f^{p_0+1}))$, il s'ensuit que $\dim(\ker(f^{p_0})) = \dim(\ker(f^{p_0+1}))$.
+            Comme nous savons que $\ker(f^{p_0}) \subseteq \ker(f^{p_0+1})$ (d'après 1.a), l'égalité des dimensions implique que $\ker(f^{p_0}) = \ker(f^{p_0+1})$.
+            Par définition, $d_0$ est le plus petit entier tel que $\ker(f^{d_0}) = \ker(f^{d_0+1})$. Puisque cette égalité est vérifiée pour $p_0$, nous devons avoir $d_0 \le p_0$.
 
-    d.  Déduisons que $\dim(\ker(g \circ f)) \le \dim(\ker f) + \dim(\ker g)$.
-        Nous savons que $\ker g \cap \text{Im } f$ est un sous-espace vectoriel de $\ker g$.
-        Par conséquent, la dimension de l'intersection est inférieure ou égale à la dimension de $\ker g$ :
-        $$\dim(\ker g \cap \text{Im } f) \le \dim(\ker g)$$
-        En utilisant la relation établie en 1.c :
-        $$\dim(\ker(g \circ f)) = \dim(\ker f) + \dim(\ker g \cap \text{Im } f)$$
-        Puisque $\dim(\ker g \cap \text{Im } f) \le \dim(\ker g)$, nous pouvons remplacer $\dim(\ker g \cap \text{Im } f)$ par une valeur plus grande ou égale, ce qui rend le membre de droite plus grand ou égal :
-        $$\dim(\ker(g \circ f)) \le \dim(\ker f) + \dim(\ker g)$$
+        Des deux inégalités $p_0 \le d_0$ et $d_0 \le p_0$, nous concluons que $d_0 = p_0$. Nous noterons cette valeur commune $k_0$.
 
-2.  **Image de la composition :**
+    b.  D'après la question 2.c, la condition $\text{Im}(f^{p_0}) = \text{Im}(f^{p_0+1})$ implique que la restriction de $f$ à $\text{Im}(f^{p_0})$, soit $f|_{\text{Im}(f^{p_0})}$, est un automorphisme de $\text{Im}(f^{p_0})$.
+        En utilisant $k_0 = p_0$, cela signifie que $f|_{\text{Im}(f^{k_0})} : \text{Im}(f^{k_0}) \to \text{Im}(f^{k_0})$ est un endomorphisme dont l'image est $\text{Im}(f^{k_0+1})$, qui est égale à $\text{Im}(f^{k_0})$.
+        Par conséquent, $f|_{\text{Im}(f^{k_0})}$ est un endomorphisme surjectif de $\text{Im}(f^{k_0})$.
+        Puisque $\text{Im}(f^{k_0})$ est un sous-espace vectoriel de $E$, il est de dimension finie.
+        Dans un espace vectoriel de dimension finie, un endomorphisme surjectif est nécessairement bijectif (et donc injectif).
+        Ainsi, $f|_{\text{Im}(f^{k_0})}$ est un isomorphisme (un automorphisme) de $\text{Im}(f^{k_0})$ sur lui-même.
 
-    a.  Démontrons que $\text{Im}(g \circ f) \subseteq \text{Im } g$.
-        Soit $y \in \text{Im}(g \circ f)$. Par définition, il existe un vecteur $x \in E$ tel que $y = (g \circ f)(x)$.
-        Par définition de la composition, $y = g(f(x))$.
-        Posons $z = f(x)$. Alors $z$ est un vecteur de $F$.
-        Nous avons $y = g(z)$, ce qui signifie que $y$ est l'image d'un élément $z \in F$ par l'application $g$.
-        Par conséquent, $y \in \text{Im } g$.
-        Ainsi, tout élément de $\text{Im}(g \circ f)$ est aussi un élément de $\text{Im } g$, ce qui prouve l'inclusion $\text{Im}(g \circ f) \subseteq \text{Im } g$.
-        Comme $\text{Im}(g \circ f)$ est un sous-espace vectoriel de $\text{Im } g$, sa dimension est inférieure ou égale à celle de $\text{Im } g$.
-        Par conséquent, $\text{rg}(g \circ f) \le \text{rg}(g)$.
+4.  **Décomposition de Fitting**
 
-    b.  Démontrons que $\text{Im}(g \circ f) = g(\text{Im } f)$.
-        Soit $y \in \text{Im}(g \circ f)$. Il existe $x \in E$ tel que $y = (g \circ f)(x) = g(f(x))$.
-        Puisque $f(x)$ est un élément de l'image de $f$, nous pouvons écrire $f(x) \in \text{Im } f$.
-        Donc, $y$ est l'image par $g$ d'un élément de $\text{Im } f$. Par définition, $y \in g(\text{Im } f)$.
-        Ceci prouve l'inclusion $\text{Im}(g \circ f) \subseteq g(\text{Im } f)$.
+    a.  Nous devons montrer que $\ker(f^{k_0}) \cap \text{Im}(f^{k_0}) = \{0_E\}$.
+        Soit $x \in \ker(f^{k_0}) \cap \text{Im}(f^{k_0})$.
+        Puisque $x \in \ker(f^{k_0})$, par définition, $f^{k_0}(x) = 0_E$.
+        Puisque $x \in \text{Im}(f^{k_0})$, par définition, il existe un vecteur $y \in E$ tel que $x = f^{k_0}(y)$.
+        Substituons cette expression de $x$ dans la première égalité :
+        $f^{k_0}(f^{k_0}(y)) = 0_E$.
+        Ceci s'écrit $f^{2k_0}(y) = 0_E$.
+        Cela implique que $y \in \ker(f^{2k_0})$.
+        D'après la question 1.c, nous savons que pour tout $k \ge d_0$, $\ker(f^k) = \ker(f^{d_0})$. Puisque $k_0 = d_0$, cette propriété s'applique à $k_0$.
+        En particulier, puisque $2k_0 \ge k_0$ (tout en supposant $k_0 \ge 0$; si $k_0=0$, $\ker(f^0)=\{0_E\}$, alors $\ker(f^{2\cdot 0})=\ker(f^0)$), nous avons $\ker(f^{2k_0}) = \ker(f^{k_0})$.
+        Par conséquent, $y \in \ker(f^{k_0})$.
+        Cela signifie que $f^{k_0}(y) = 0_E$.
+        Puisque nous avions posé $x = f^{k_0}(y)$, nous en déduisons que $x = 0_E$.
+        Ainsi, le seul élément de l'intersection de $\ker(f^{k_0})$ et $\text{Im}(f^{k_0})$ est le vecteur nul, donc $\ker(f^{k_0}) \cap \text{Im}(f^{k_0}) = \{0_E\}$.
 
-        Réciproquement, soit $y \in g(\text{Im } f)$. Par définition, il existe un vecteur $z \in \text{Im } f$ tel que $y = g(z)$.
-        Puisque $z \in \text{Im } f$, par définition de l'image, il existe un vecteur $x \in E$ tel que $z = f(x)$.
-        En substituant $z$ dans l'expression de $y$, nous obtenons $y = g(f(x))$.
-        Par définition de la composition, $y = (g \circ f)(x)$.
-        Donc, $y$ est l'image d'un élément $x \in E$ par $g \circ f$. Par conséquent, $y \in \text{Im}(g \circ f)$.
-        Ceci prouve l'inclusion $g(\text{Im } f) \subseteq \text{Im}(g \circ f)$.
+    b.  Pour prouver que $E = \ker(f^{k_0}) \oplus \text{Im}(f^{k_0})$, il suffit de montrer deux conditions pour les sous-espaces vectoriels $U = \ker(f^{k_0})$ et $V = \text{Im}(f^{k_0})$ :
+        i.  Leur intersection est triviale : $U \cap V = \{0_E\}$. Cette condition a été démontrée à la question 4.a.
+        ii. La somme de leurs dimensions est égale à la dimension de l'espace ambiant : $\dim(U) + \dim(V) = \dim(E)$.
+            Appliquons le théorème du rang à l'endomorphisme $f^{k_0} : E \to E$:
+            $\dim(E) = \dim(\ker(f^{k_0})) + \dim(\text{Im}(f^{k_0}))$.
+            Cette condition est également vérifiée.
 
-        Par double inclusion, nous avons établi l'égalité $\text{Im}(g \circ f) = g(\text{Im } f)$.
-
-    c.  Établissons la relation $\text{rg}(g \circ f) = \text{rg}(f) - \dim(\ker g \cap \text{Im } f)$.
-        Considérons l'application linéaire $g$ restreinte à $\text{Im } f$. Notons cette restriction $g' : \text{Im } f \to G$.
-        Le domaine de $g'$ est $\text{Im } f$. Sa dimension est $\dim(\text{Im } f) = \text{rg}(f)$.
-        L'image de $g'$ est $\text{Im } g' = \{ g(z) \mid z \in \text{Im } f \}$.
-        D'après la question 2.b, nous avons montré que $\text{Im } g' = g(\text{Im } f) = \text{Im}(g \circ f)$.
-        Le noyau de $g'$ est $\ker g' = \{ z \in \text{Im } f \mid g(z) = 0_G \}$.
-        Par définition, ceci est exactement l'intersection de $\ker g$ et $\text{Im } f$.
-        Ainsi, $\ker g' = \ker g \cap \text{Im } f$.
-
-        Appliquons le théorème du rang à l'application linéaire $g' : \text{Im } f \to G$.
-        Le théorème du rang stipule que $\dim(\text{domaine}) = \dim(\text{noyau}) + \dim(\text{image})$.
-        Donc, $\dim(\text{Im } f) = \dim(\ker g') + \dim(\text{Im } g')$.
-        En substituant les expressions que nous avons trouvées pour $\dim(\text{Im } f)$, $\ker g'$ et $\text{Im } g'$ :
-        $$\text{rg}(f) = \dim(\ker g \cap \text{Im } f) + \text{rg}(g \circ f)$$
-        En réarrangeant les termes pour isoler $\text{rg}(g \circ f)$, nous obtenons :
-        $$\text{rg}(g \circ f) = \text{rg}(f) - \dim(\ker g \cap \text{Im } f)$$
-
-    d.  Déduisons que $\text{rg}(g \circ f) \le \text{rg}(f)$.
-        Nous savons que $\dim(\ker g \cap \text{Im } f)$ est une dimension d'un sous-espace vectoriel, donc elle est toujours supérieure ou égale à zéro :
-        $$\dim(\ker g \cap \text{Im } f) \ge 0$$
-        En utilisant la relation établie en 2.c :
-        $$\text{rg}(g \circ f) = \text{rg}(f) - \dim(\ker g \cap \text{Im } f)$$
-        Puisque nous soustrayons une quantité non-négative de $\text{rg}(f)$, il s'ensuit que :
-        $$\text{rg}(g \circ f) \le \text{rg}(f)$$
-
-    e.  Démontrons l'inégalité de Sylvester : $\text{rg}(g \circ f) \ge \text{rg}(f) + \text{rg}(g) - \dim F$.
-        Nous partons de la relation établie à la question 2.c :
-        $$\text{rg}(g \circ f) = \text{rg}(f) - \dim(\ker g \cap \text{Im } f) \quad (*)$$
-        Nous savons que $\ker g \cap \text{Im } f$ est un sous-espace vectoriel de $\ker g$.
-        Par conséquent, sa dimension est inférieure ou égale à la dimension de $\ker g$ :
-        $$\dim(\ker g \cap \text{Im } f) \le \dim(\ker g)$$
-        Multiplions cette inégalité par $-1$ et inversons le sens de l'inégalité :
-        $$-\dim(\ker g \cap \text{Im } f) \ge -\dim(\ker g)$$
-        Ajoutons $\text{rg}(f)$ aux deux membres de l'inégalité :
-        $$\text{rg}(f) - \dim(\ker g \cap \text{Im } f) \ge \text{rg}(f) - \dim(\ker g)$$
-        Le membre de gauche de cette inégalité est précisément $\text{rg}(g \circ f)$ d'après l'équation $(*)$.
-        Le membre de droite peut être simplifié en utilisant le théorème du rang pour l'application linéaire $g : F \to G$.
-        Le théorème du rang pour $g$ stipule que $\dim F = \dim(\ker g) + \text{rg}(g)$.
-        De cette relation, nous pouvons exprimer $\dim(\ker g)$ comme $\dim(\ker g) = \dim F - \text{rg}(g)$.
-        Substituons cette expression de $\dim(\ker g)$ dans le membre de droite de notre inégalité :
-        $$\text{rg}(f) - \dim(\ker g) = \text{rg}(f) - (\dim F - \text{rg}(g))$$
-        $$\text{rg}(f) - \dim(\ker g) = \text{rg}(f) - \dim F + \text{rg}(g)$$
-        En combinant toutes ces étapes, nous obtenons l'inégalité de Sylvester :
-        $$\text{rg}(g \circ f) \ge \text{rg}(f) + \text{rg}(g) - \dim F$$
+        Étant donné que ces deux conditions sont satisfaites, nous pouvons conclure que l'espace vectoriel $E$ est la somme directe de $\ker(f^{k_0})$ et $\text{Im}(f^{k_0})$.
+        Ainsi, $E = \ker(f^{k_0}) \oplus \text{Im}(f^{k_0})$.

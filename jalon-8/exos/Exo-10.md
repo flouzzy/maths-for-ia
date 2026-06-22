@@ -1,147 +1,190 @@
----
-uuid: "jalon-8-exo-10"
-title: "Exercice 10 : Décomposition de Fitting et propriétés des puissances d'un endomorphisme"
-tags:
-  - math/algebre-lineaire
-  - exercice
----
-# Exercice 10 : Décomposition de Fitting et propriétés des puissances d'un endomorphisme (Difficulté : ★★★★★)
+# Exercice 10 : Noyau et Image d'une Composée d'Applications Linéaires (Difficulté : *****)
 
-## Énoncé
-Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension finie $n \in \mathbb{N}^*$.
-Soit $f \in \mathcal{L}(E)$ un endomorphisme de $E$.
-Pour tout entier naturel $k \in \mathbb{N}$, on définit les sous-espaces vectoriels $K_k$ et $I_k$ de $E$ par :
-$K_k = \ker(f^k)$ et $I_k = \text{Im}(f^k)$.
-Par convention, $f^0 = \text{id}_E$ (l'application identité sur $E$), donc $K_0 = \ker(\text{id}_E) = \{0_E\}$ et $I_0 = \text{Im}(\text{id}_E) = E$.
+**Énoncé**
 
-1.  Démontrer que la suite $(K_k)_{k \in \mathbb{N}}$ est une suite croissante de sous-espaces vectoriels de $E$, c'est-à-dire que pour tout $k \in \mathbb{N}$, $K_k \subseteq K_{k+1}$.
-2.  Démontrer que la suite $(I_k)_{k \in \mathbb{N}}$ est une suite décroissante de sous-espaces vectoriels de $E$, c'est-à-dire que pour tout $k \in \mathbb{N}$, $I_{k+1} \subseteq I_k$.
-3.  Puisque $E$ est de dimension finie, en déduire qu'il existe un plus petit entier $p \in \mathbb{N}$ tel que $K_p = K_{p+1}$.
-4.  Démontrer que si $K_p = K_{p+1}$, alors pour tout entier $j \ge 1$, on a $K_p = K_{p+j}$.
-5.  Démontrer que si $K_p = K_{p+1}$, alors $I_p = I_{p+1}$.
-6.  Démontrer que $E = K_p \oplus I_p$.
+Soient $\mathbb{K}$ un corps commutatif et $E, F, G$ des $\mathbb{K}$-espaces vectoriels.
+Soient $f \in \mathcal{L}(E, F)$ et $g \in \mathcal{L}(F, G)$ deux applications linéaires.
+On note $\ker(\cdot)$ le noyau et $\text{Im}(\cdot)$ l'image d'une application linéaire.
 
-## Correction Détaillée
+1.  Démontrer que $\ker(g \circ f) = f^{-1}(\ker g \cap \text{Im } f)$.
+    (Rappel : $f^{-1}(A) = \{x \in E \mid f(x) \in A\}$ pour un sous-ensemble $A \subseteq F$).
 
-1.  **Démonstration de $K_k \subseteq K_{k+1}$ pour tout $k \in \mathbb{N}$ :**
-    Soit $k \in \mathbb{N}$.
-    Soit $x \in K_k$. Par définition de $K_k$, cela signifie que $f^k(x) = 0_E$.
-    Nous voulons montrer que $x \in K_{k+1}$, c'est-à-dire que $f^{k+1}(x) = 0_E$.
-    Calculons $f^{k+1}(x)$ :
-    $$f^{k+1}(x) = (f \circ f^k)(x)$$
-    $$f^{k+1}(x) = f(f^k(x))$$
-    Puisque $f^k(x) = 0_E$, nous avons :
-    $$f^{k+1}(x) = f(0_E)$$
-    Comme $f$ est une application linéaire, elle envoie le vecteur nul de $E$ sur le vecteur nul de $E$.
-    Donc, $f(0_E) = 0_E$.
-    Par conséquent, $f^{k+1}(x) = 0_E$.
-    Ceci implique que $x \in K_{k+1}$.
-    Ainsi, tout élément de $K_k$ est aussi un élément de $K_{k+1}$.
-    Par conséquent, $K_k \subseteq K_{k+1}$ pour tout $k \in \mathbb{N}$.
+2.  Prouver que l'application $\hat{f}: \ker(g \circ f) \to \ker g \cap \text{Im } f$ définie par $\hat{f}(x) = f(x)$ est une application linéaire surjective dont le noyau est $\ker f$. En déduire l'isomorphisme de $\mathbb{K}$-espaces vectoriels : $\ker(g \circ f) / \ker f \cong \ker g \cap \text{Im } f$.
 
-2.  **Démonstration de $I_{k+1} \subseteq I_k$ pour tout $k \in \mathbb{N}$ :**
-    Soit $k \in \mathbb{N}$.
-    Soit $y \in I_{k+1}$. Par définition de $I_{k+1}$, cela signifie qu'il existe un vecteur $x \in E$ tel que $y = f^{k+1}(x)$.
-    Nous voulons montrer que $y \in I_k$, c'est-à-dire qu'il existe un vecteur $x' \in E$ tel que $y = f^k(x')$.
-    Nous pouvons réécrire l'expression de $y$ comme suit :
-    $$y = f^{k+1}(x) = f^k(f(x))$$
-    Posons $x' = f(x)$. Puisque $x \in E$ et $f \in \mathcal{L}(E)$, l'image $f(x)$ est bien un vecteur de $E$. Donc $x' \in E$.
-    Alors, l'expression de $y$ devient :
-    $$y = f^k(x')$$
-    Ceci implique que $y$ est l'image d'un vecteur de $E$ par $f^k$.
-    Par conséquent, $y \in I_k$.
-    Ainsi, tout élément de $I_{k+1}$ est aussi un élément de $I_k$.
-    Par conséquent, $I_{k+1} \subseteq I_k$ pour tout $k \in \mathbb{N}$.
+3.  Prouver que l'application $\bar{g}: \text{Im } f / (\ker g \cap \text{Im } f) \to \text{Im}(g \circ f)$ définie par $\bar{g}(y + (\ker g \cap \text{Im } f)) = g(y)$ pour tout $y \in \text{Im } f$ est un isomorphisme de $\mathbb{K}$-espaces vectoriels.
+    (On vérifiera d'abord que le sous-espace $\ker g \cap \text{Im } f$ est bien un sous-espace de $\text{Im } f$ et que $\bar{g}$ est bien définie, linéaire et injective/surjective).
 
-3.  **Existence de $p$ tel que $K_p = K_{p+1}$ :**
-    D'après la question 1, nous avons une suite croissante de sous-espaces vectoriels de $E$:
-    $$K_0 \subseteq K_1 \subseteq K_2 \subseteq \dots \subseteq K_k \subseteq K_{k+1} \subseteq \dots \subseteq E$$
-    Puisque $E$ est un $\mathbb{K}$-espace vectoriel de dimension finie $n$, la dimension de chaque sous-espace $K_k$ est un entier naturel. De plus, la dimension d'un sous-espace ne peut pas excéder la dimension de l'espace ambiant.
-    La suite des dimensions $(\dim(K_k))_{k \in \mathbb{N}}$ est donc une suite croissante d'entiers naturels :
-    $$0 = \dim(K_0) \le \dim(K_1) \le \dim(K_2) \le \dots \le \dim(K_k) \le \dim(K_{k+1}) \le \dots \le n$$
-    Une suite croissante d'entiers naturels qui est bornée (ici par $n$) est nécessairement stationnaire à partir d'un certain rang.
-    Il existe donc un plus petit entier $p \in \mathbb{N}$ tel que $\dim(K_p) = \dim(K_{p+1})$.
-    Or, nous savons que $K_p \subseteq K_{p+1}$. Si deux sous-espaces vectoriels sont inclus l'un dans l'autre et ont la même dimension, alors ils sont égaux.
-    Par conséquent, $K_p = K_{p+1}$.
+4.  On suppose désormais que $E, F, G$ sont des $\mathbb{K}$-espaces vectoriels de dimensions finies. On note $\dim(V)$ la dimension de $V$ et $\text{rang}(h) = \dim(\text{Im } h)$ le rang d'une application linéaire $h$.
+    À partir des résultats des questions 2 et 3, établir les égalités suivantes :
+    a) $\dim(\ker(g \circ f)) = \dim(\ker f) + \dim(\ker g \cap \text{Im } f)$.
+    b) $\text{rang}(g \circ f) = \text{rang}(f) - \dim(\ker g \cap \text{Im } f)$.
 
-4.  **Démonstration de $K_p = K_{p+j}$ pour tout $j \ge 1$ si $K_p = K_{p+1}$ :**
-    Nous allons démontrer cette propriété par récurrence sur l'entier $j \ge 1$.
+5.  Utiliser les résultats précédents et le théorème du rang pour $f$ et $g$ pour démontrer l'inégalité de Sylvester :
+    $\text{rang}(f) + \text{rang}(g) - \dim(F) \le \text{rang}(g \circ f) \le \min(\text{rang } f, \text{rang } g)$.
 
-    **Cas de base ($j=1$) :** L'énoncé stipule que $K_p = K_{p+1}$, donc la propriété est vraie pour $j=1$.
+## Correction détaillée
 
-    **Hypothèse de récurrence :** Supposons que pour un certain entier $j \ge 1$, on ait $K_p = K_{p+j}$.
+1.  **Démonstration de $\ker(g \circ f) = f^{-1}(\ker g \cap \text{Im } f)$**
 
-    **Étape de récurrence :** Montrons que $K_p = K_{p+j+1}$.
-    D'après la question 1, nous savons que $K_{p+j} \subseteq K_{p+j+1}$.
-    D'après l'hypothèse de récurrence, $K_p = K_{p+j}$, ce qui implique $K_p \subseteq K_{p+j+1}$.
-    Il nous reste à montrer l'inclusion inverse, c'est-à-dire $K_{p+j+1} \subseteq K_p$.
-    Soit $x \in K_{p+j+1}$. Par définition, $f^{p+j+1}(x) = 0_E$.
-    Nous pouvons écrire $f^{p+j+1}(x)$ comme suit :
-    $$f^{p+j+1}(x) = f^{p+1}(f^j(x))$$
-    Puisque $f^{p+1}(f^j(x)) = 0_E$, cela signifie que le vecteur $f^j(x)$ appartient au noyau de $f^{p+1}$, c'est-à-dire $f^j(x) \in K_{p+1}$.
-    Or, par l'hypothèse de l'énoncé, nous avons $K_p = K_{p+1}$.
-    Donc, $f^j(x) \in K_p$.
-    Par définition de $K_p$, cela signifie que $f^p(f^j(x)) = 0_E$.
-    Ce qui est équivalent à $f^{p+j}(x) = 0_E$.
-    Par définition, cela signifie que $x \in K_{p+j}$.
-    D'après l'hypothèse de récurrence, $K_{p+j} = K_p$.
-    Donc, $x \in K_p$.
-    Ainsi, $K_{p+j+1} \subseteq K_p$.
-    En combinant les deux inclusions $K_p \subseteq K_{p+j+1}$ et $K_{p+j+1} \subseteq K_p$, nous obtenons $K_p = K_{p+j+1}$.
+    Pour prouver l'égalité de deux ensembles, nous allons démontrer l'inclusion dans les deux sens.
 
-    **Conclusion :** Par le principe de récurrence, pour tout entier $j \ge 1$, si $K_p = K_{p+1}$, alors $K_p = K_{p+j}$.
+    *   **Inclusion $\ker(g \circ f) \subseteq f^{-1}(\ker g \cap \text{Im } f)$** :
+        Soit $x \in \ker(g \circ f)$. Par définition du noyau, cela signifie que $(g \circ f)(x) = 0_G$.
+        Par définition de la composition, $g(f(x)) = 0_G$.
+        Cela implique que $f(x) \in \ker g$.
+        Par ailleurs, par définition de l'image, $f(x)$ est un élément de $\text{Im } f$.
+        Donc, $f(x)$ appartient à l'intersection $\ker g \cap \text{Im } f$.
+        Par définition de l'image réciproque, $x \in f^{-1}(\ker g \cap \text{Im } f)$.
+        L'inclusion est démontrée.
 
-5.  **Démonstration de $I_p = I_{p+1}$ si $K_p = K_{p+1}$ :**
-    D'après la question 2, nous savons que $I_{p+1} \subseteq I_p$.
-    Pour montrer l'égalité, il suffit de montrer que $\dim(I_p) = \dim(I_{p+1})$.
-    Nous utilisons le Théorème du Rang, qui s'applique car $E$ est de dimension finie.
-    Pour tout $k \in \mathbb{N}$, le Théorème du Rang appliqué à l'endomorphisme $f^k \in \mathcal{L}(E)$ donne :
-    $$\dim(E) = \dim(\ker(f^k)) + \dim(\text{Im}(f^k))$$
-    En utilisant nos notations, cela s'écrit :
-    $$\dim(E) = \dim(K_k) + \dim(I_k)$$
+    *   **Inclusion $f^{-1}(\ker g \cap \text{Im } f) \subseteq \ker(g \circ f)$** :
+        Soit $x \in f^{-1}(\ker g \cap \text{Im } f)$. Par définition de l'image réciproque, cela signifie que $f(x) \in \ker g \cap \text{Im } f$.
+        Puisque $f(x) \in \ker g$, par définition du noyau, nous avons $g(f(x)) = 0_G$.
+        Par définition de la composition, $(g \circ f)(x) = 0_G$.
+        Cela signifie que $x \in \ker(g \circ f)$.
+        L'inclusion est démontrée.
 
-    Appliquons ce théorème pour $k=p$ et pour $k=p+1$ :
-    1. Pour $k=p$ : $\dim(E) = \dim(K_p) + \dim(I_p)$ (Équation $\star$)
-    2. Pour $k=p+1$ : $\dim(E) = \dim(K_{p+1}) + \dim(I_{p+1})$ (Équation $\star\star$)
+    Ayant démontré les deux inclusions, nous concluons que $\ker(g \circ f) = f^{-1}(\ker g \cap \text{Im } f)$.
 
-    L'énoncé nous donne l'hypothèse $K_p = K_{p+1}$.
-    Ceci implique que leurs dimensions sont égales : $\dim(K_p) = \dim(K_{p+1})$.
-    En substituant $\dim(K_{p+1})$ par $\dim(K_p)$ dans l'Équation $\star\star$, nous obtenons :
-    $$\dim(E) = \dim(K_p) + \dim(I_{p+1})$$
-    Comparons cette nouvelle expression avec l'Équation $\star$ :
-    $$\dim(K_p) + \dim(I_p) = \dim(K_p) + \dim(I_{p+1})$$
-    En soustrayant $\dim(K_p)$ des deux côtés de l'égalité, nous obtenons :
-    $$\dim(I_p) = \dim(I_{p+1})$$
-    Puisque $I_{p+1} \subseteq I_p$ (démontré en question 2) et que ces deux sous-espaces ont la même dimension, ils sont égaux.
-    Par conséquent, $I_p = I_{p+1}$.
+2.  **Analyse de l'application $\hat{f}$ et isomorphisme de quotient**
 
-6.  **Démonstration de $E = K_p \oplus I_p$ :**
-    Pour démontrer que $E$ est la somme directe de $K_p$ et $I_p$, nous devons prouver deux conditions :
-    a) L'intersection des deux sous-espaces est réduite au vecteur nul : $K_p \cap I_p = \{0_E\}$.
-    b) La somme des dimensions de $K_p$ et $I_p$ est égale à la dimension de $E$ : $\dim(K_p) + \dim(I_p) = \dim(E)$. (Cette dernière condition est déjà établie par le Théorème du Rang, comme vu à la question 5).
+    Considérons l'application $\hat{f}: \ker(g \circ f) \to \ker g \cap \text{Im } f$ définie par $\hat{f}(x) = f(x)$.
 
-    **Démonstration de $K_p \cap I_p = \{0_E\}$ :**
-    Soit $x \in K_p \cap I_p$.
-    Puisque $x \in K_p$, par définition, $f^p(x) = 0_E$.
-    Puisque $x \in I_p$, par définition, il existe un vecteur $y \in E$ tel que $x = f^p(y)$.
-    Substituons cette expression de $x$ dans la première égalité ($f^p(x) = 0_E$) :
-    $$f^p(f^p(y)) = 0_E$$
-    Ce qui est équivalent à :
-    $$f^{2p}(y) = 0_E$$
-    Par définition, cela signifie que $y \in \ker(f^{2p})$, c'est-à-dire $y \in K_{2p}$.
-    D'après la question 4, puisque nous avons établi que $K_p = K_{p+1}$, nous avons $K_p = K_{p+j}$ pour tout entier $j \ge 1$.
-    En particulier, pour $j=p$, nous avons $K_p = K_{p+p} = K_{2p}$.
-    Donc, puisque $y \in K_{2p}$, il s'ensuit que $y \in K_p$.
-    Par définition de $K_p$, cela signifie que $f^p(y) = 0_E$.
-    Or, nous avions initialement $x = f^p(y)$.
-    Par conséquent, $x = 0_E$.
-    L'intersection $K_p \cap I_p$ est donc réduite au seul vecteur nul $\{0_E\}$.
+    *   **$\hat{f}$ est bien définie et linéaire** :
+        Le domaine de $\hat{f}$ est $\ker(g \circ f)$, qui est un sous-espace vectoriel de $E$.
+        Pour tout $x \in \ker(g \circ f)$, nous avons montré à la question 1 que $f(x) \in \ker g \cap \text{Im } f$. Donc le codomaine est correct.
+        L'application $f$ est linéaire, et $\hat{f}$ est simplement la restriction de $f$ à un sous-espace vectoriel, avec un codomaine restreint. Par conséquent, $\hat{f}$ est linéaire.
 
-    **Démonstration de $E = K_p + I_p$ :**
-    Nous avons montré que $K_p$ et $I_p$ sont des sous-espaces vectoriels de $E$.
-    Nous avons également démontré que leur intersection est triviale : $K_p \cap I_p = \{0_E\}$.
-    Ces deux conditions impliquent que la somme $K_p + I_p$ est une somme directe, que l'on note $K_p \oplus I_p$.
-    De plus, d'après le Théorème du Rang appliqué à l'endomorphisme $f^p$, nous avons :
-    $$\dim(E) = \dim(K_p) + \dim(I_p)$$
-    Puisque $K_p \oplus I_p$ est un sous-espace vectoriel de $E$ et que sa dimension est égale à la dimension de $E$, il en découle que $K_p \oplus I_p = E$.
-    Par conséquent, $E = K_p \oplus I_p$.
+    *   **$\hat{f}$ est surjective** :
+        Soit $y \in \ker g \cap \text{Im } f$. Puisque $y \in \text{Im } f$, il existe un $x \in E$ tel que $f(x) = y$.
+        Puisque $y \in \ker g$, nous avons $g(y) = 0_G$.
+        Donc, $g(f(x)) = 0_G$, ce qui signifie $(g \circ f)(x) = 0_G$.
+        Par conséquent, $x \in \ker(g \circ f)$.
+        Nous avons trouvé un élément $x$ dans le domaine de $\hat{f}$ tel que $\hat{f}(x) = f(x) = y$.
+        Donc, $\hat{f}$ est surjective sur son codomaine $\ker g \cap \text{Im } f$.
+
+    *   **Détermination du noyau de $\hat{f}$** :
+        Par définition, $\ker \hat{f} = \{x \in \ker(g \circ f) \mid \hat{f}(x) = 0_F\}$.
+        Cela signifie $\ker \hat{f} = \{x \in \ker(g \circ f) \mid f(x) = 0_F\}$.
+        L'ensemble $\{x \in E \mid f(x) = 0_F\}$ est $\ker f$.
+        Donc, $\ker \hat{f} = \ker(g \circ f) \cap \ker f$.
+        Nous savons que si $x \in \ker f$, alors $f(x) = 0_F$. Par suite, $g(f(x)) = g(0_F) = 0_G$, ce qui implique $x \in \ker(g \circ f)$.
+        Ainsi, $\ker f \subseteq \ker(g \circ f)$.
+        Par conséquent, l'intersection $\ker(g \circ f) \cap \ker f$ se réduit à $\ker f$.
+        Donc, $\ker \hat{f} = \ker f$.
+
+    *   **Application du premier théorème d'isomorphisme** :
+        Puisque $\hat{f}: \ker(g \circ f) \to \ker g \cap \text{Im } f$ est une application linéaire surjective de noyau $\ker f$, le premier théorème d'isomorphisme établit que
+        $\ker(g \circ f) / \ker f \cong \text{Im}(\hat{f})$.
+        Comme $\hat{f}$ est surjective sur son codomaine, $\text{Im}(\hat{f}) = \ker g \cap \text{Im } f$.
+        Nous en déduisons l'isomorphisme : $\ker(g \circ f) / \ker f \cong \ker g \cap \text{Im } f$.
+
+3.  **Analyse de l'application $\bar{g}$ et isomorphisme de quotient**
+
+    Considérons l'application $\bar{g}: \text{Im } f / (\ker g \cap \text{Im } f) \to \text{Im}(g \circ f)$ définie par $\bar{g}(y + (\ker g \cap \text{Im } f)) = g(y)$.
+
+    *   **$\ker g \cap \text{Im } f$ est un sous-espace de $\text{Im } f$** :
+        $\ker g$ est un sous-espace de $F$ car c'est le noyau d'une application linéaire.
+        $\text{Im } f$ est un sous-espace de $F$ car c'est l'image d'une application linéaire.
+        L'intersection de deux sous-espaces vectoriels est toujours un sous-espace vectoriel.
+        Puisque $\ker g \cap \text{Im } f$ est contenu dans $\text{Im } f$, il est bien un sous-espace de $\text{Im } f$.
+        Le quotient $\text{Im } f / (\ker g \cap \text{Im } f)$ est donc bien défini.
+
+    *   **$\bar{g}$ est bien définie** :
+        Soient $Y_1 = y_1 + (\ker g \cap \text{Im } f)$ et $Y_2 = y_2 + (\ker g \cap \text{Im } f)$ deux représentants de la même classe dans le quotient.
+        Cela signifie que $y_1 - y_2 \in \ker g \cap \text{Im } f$.
+        Puisque $y_1 - y_2 \in \ker g$, nous avons $g(y_1 - y_2) = 0_G$.
+        Par linéarité de $g$, $g(y_1) - g(y_2) = 0_G$, d'où $g(y_1) = g(y_2)$.
+        Ainsi, $\bar{g}(Y_1) = g(y_1) = g(y_2) = \bar{g}(Y_2)$. L'application $\bar{g}$ est donc bien définie.
+
+    *   **$\bar{g}$ est linéaire** :
+        Soient $Y_1 = y_1 + (\ker g \cap \text{Im } f)$ et $Y_2 = y_2 + (\ker g \cap \text{Im } f)$ deux éléments du quotient, et $\lambda \in \mathbb{K}$.
+        $\bar{g}(Y_1 + Y_2) = \bar{g}((y_1+y_2) + (\ker g \cap \text{Im } f)) = g(y_1+y_2)$.
+        Par linéarité de $g$, $g(y_1+y_2) = g(y_1) + g(y_2) = \bar{g}(Y_1) + \bar{g}(Y_2)$.
+        $\bar{g}(\lambda Y_1) = \bar{g}(\lambda y_1 + (\ker g \cap \text{Im } f)) = g(\lambda y_1)$.
+        Par linéarité de $g$, $g(\lambda y_1) = \lambda g(y_1) = \lambda \bar{g}(Y_1)$.
+        L'application $\bar{g}$ est donc linéaire.
+
+    *   **$\bar{g}$ est surjective** :
+        Soit $z \in \text{Im}(g \circ f)$. Par définition, il existe $x \in E$ tel que $z = (g \circ f)(x)$.
+        Cela signifie $z = g(f(x))$.
+        Posons $y = f(x)$. Alors $y \in \text{Im } f$.
+        L'élément $y + (\ker g \cap \text{Im } f)$ est un élément du domaine de $\bar{g}$.
+        Alors $\bar{g}(y + (\ker g \cap \text{Im } f)) = g(y) = g(f(x)) = z$.
+        Donc, pour tout $z \in \text{Im}(g \circ f)$, il existe un antécédent dans le domaine de $\bar{g}$.
+        L'application $\bar{g}$ est surjective.
+
+    *   **$\bar{g}$ est injective** :
+        Soit $Y = y + (\ker g \cap \text{Im } f)$ un élément du noyau de $\bar{g}$.
+        Cela signifie $\bar{g}(Y) = 0_G$, c'est-à-dire $g(y) = 0_G$.
+        Puisque $g(y) = 0_G$, $y$ appartient à $\ker g$.
+        Par ailleurs, par la définition du domaine du quotient, $y$ appartient à $\text{Im } f$.
+        Donc, $y \in \ker g \cap \text{Im } f$.
+        Par conséquent, la classe $Y = y + (\ker g \cap \text{Im } f)$ est la classe zéro du quotient, i.e., $Y = \ker g \cap \text{Im } f$.
+        Le noyau de $\bar{g}$ est réduit à l'élément neutre du quotient.
+        L'application $\bar{g}$ est injective.
+
+    *   **Conclusion** :
+        Puisque $\bar{g}$ est linéaire, bien définie, surjective et injective, c'est un isomorphisme de $\mathbb{K}$-espaces vectoriels.
+        Ainsi, $\text{Im } f / (\ker g \cap \text{Im } f) \cong \text{Im}(g \circ f)$.
+
+4.  **Application aux dimensions finies**
+
+    Nous supposons $E, F, G$ de dimensions finies.
+
+    a) **Égalité pour le noyau** :
+        D'après la question 2, nous avons l'isomorphisme $\ker(g \circ f) / \ker f \cong \ker g \cap \text{Im } f$.
+        Pour des espaces vectoriels de dimensions finies, si $V_1 \cong V_2$, alors $\dim(V_1) = \dim(V_2)$.
+        De plus, pour un quotient $V/W$, $\dim(V/W) = \dim(V) - \dim(W)$.
+        Donc, $\dim(\ker(g \circ f) / \ker f) = \dim(\ker(g \circ f)) - \dim(\ker f)$.
+        Par conséquent, $\dim(\ker(g \circ f)) - \dim(\ker f) = \dim(\ker g \cap \text{Im } f)$.
+        Ce qui donne l'égalité souhaitée :
+        $\dim(\ker(g \circ f)) = \dim(\ker f) + \dim(\ker g \cap \text{Im } f)$.
+
+    b) **Égalité pour l'image (rang)** :
+        D'après la question 3, nous avons l'isomorphisme $\text{Im } f / (\ker g \cap \text{Im } f) \cong \text{Im}(g \circ f)$.
+        En appliquant le même principe des dimensions finies :
+        $\dim(\text{Im } f / (\ker g \cap \text{Im } f)) = \dim(\text{Im } f) - \dim(\ker g \cap \text{Im } f)$.
+        Et $\dim(\text{Im}(g \circ f)) = \text{rang}(g \circ f)$.
+        De plus, $\dim(\text{Im } f) = \text{rang}(f)$.
+        Par conséquent, $\text{rang}(g \circ f) = \text{rang}(f) - \dim(\ker g \cap \text{Im } f)$.
+
+5.  **Démonstration de l'inégalité de Sylvester**
+
+    L'inégalité de Sylvester est de la forme $\text{rang}(f) + \text{rang}(g) - \dim(F) \le \text{rang}(g \circ f) \le \min(\text{rang } f, \text{rang } g)$.
+    Nous allons prouver les deux parties de l'inégalité.
+
+    *   **Borne supérieure : $\text{rang}(g \circ f) \le \min(\text{rang } f, \text{rang } g)$** :
+        1.  **$\text{rang}(g \circ f) \le \text{rang}(f)$** :
+            D'après la question 4b, $\text{rang}(g \circ f) = \text{rang}(f) - \dim(\ker g \cap \text{Im } f)$.
+            Comme $\ker g \cap \text{Im } f$ est un sous-espace vectoriel, sa dimension est non-négative : $\dim(\ker g \cap \text{Im } f) \ge 0$.
+            Par conséquent, $\text{rang}(g \circ f) \le \text{rang}(f)$.
+            On peut aussi observer que $\text{Im}(g \circ f) = g(\text{Im } f)$. L'image d'un sous-espace par une application linéaire a une dimension inférieure ou égale à la dimension de ce sous-espace. Ainsi, $\dim(g(\text{Im } f)) \le \dim(\text{Im } f)$, ce qui signifie $\text{rang}(g \circ f) \le \text{rang}(f)$.
+
+        2.  **$\text{rang}(g \circ f) \le \text{rang}(g)$** :
+            Comme précédemment, $\text{Im}(g \circ f) = g(\text{Im } f)$.
+            Puisque $\text{Im } f \subseteq F$, tout vecteur dans $g(\text{Im } f)$ est aussi un vecteur dans $g(F)$, c'est-à-dire dans $\text{Im } g$.
+            Donc $\text{Im}(g \circ f)$ est un sous-espace de $\text{Im } g$.
+            Par conséquent, $\dim(\text{Im}(g \circ f)) \le \dim(\text{Im } g)$, ce qui signifie $\text{rang}(g \circ f) \le \text{rang}(g)$.
+
+        Ces deux inégalités prouvent que $\text{rang}(g \circ f) \le \min(\text{rang } f, \text{rang } g)$.
+
+    *   **Borne inférieure : $\text{rang}(f) + \text{rang}(g) - \dim(F) \le \text{rang}(g \circ f)$** :
+        D'après la question 4b, nous avons $\text{rang}(g \circ f) = \text{rang}(f) - \dim(\ker g \cap \text{Im } f)$.
+        Nous devons maintenant borner $\dim(\ker g \cap \text{Im } f)$.
+        Le sous-espace $\ker g \cap \text{Im } f$ est un sous-espace de $\ker g$.
+        Donc, $\dim(\ker g \cap \text{Im } f) \le \dim(\ker g)$.
+        En utilisant cette inégalité dans l'expression de $\text{rang}(g \circ f)$ :
+        $\text{rang}(g \circ f) \ge \text{rang}(f) - \dim(\ker g)$.
+
+        Maintenant, nous utilisons le théorème du rang pour l'application linéaire $g: F \to G$.
+        Le théorème du rang stipule que $\dim(F) = \dim(\ker g) + \dim(\text{Im } g)$.
+        Puisque $\dim(\text{Im } g) = \text{rang}(g)$, nous avons $\dim(F) = \dim(\ker g) + \text{rang}(g)$.
+        D'où $\dim(\ker g) = \dim(F) - \text{rang}(g)$.
+
+        Substituons cette expression de $\dim(\ker g)$ dans l'inégalité pour $\text{rang}(g \circ f)$ :
+        $\text{rang}(g \circ f) \ge \text{rang}(f) - (\dim(F) - \text{rang}(g))$.
+        En réarrangeant les termes, nous obtenons :
+        $\text{rang}(g \circ f) \ge \text{rang}(f) + \text{rang}(g) - \dim(F)$.
+
+    Nous avons ainsi démontré les deux parties de l'inégalité de Sylvester.

@@ -1,145 +1,169 @@
+# Exercice 6 : L'opérateur de différence finie sur les polynômes (Difficulté : ***)
+
+## Énoncé du problème
+
+Soit $n \in \mathbb{N}$ un entier naturel. On considère l'espace vectoriel réel $E = \mathbb{R}_n[X]$, l'ensemble des polynômes à coefficients réels de degré inférieur ou égal à $n$. La base canonique de $E$ est $B = (1, X, X^2, \dots, X^n)$.
+
+On définit l'application $L: E \to E$ par :
+$$L(P)(X) = P(X+1) - P(X)$$
+pour tout polynôme $P \in E$.
+
+1.  Démontrer que $L$ est une application linéaire.
+2.  Déterminer le noyau $\mathrm{Ker}(L)$ de $L$. Donner une base de $\mathrm{Ker}(L)$ et sa dimension.
+3.  Déterminer l'image $\mathrm{Im}(L)$ de $L$. Donner une base de $\mathrm{Im}(L)$ et sa dimension.
+4.  Calculer le rang de $L$ et vérifier le théorème du rang.
+5.  Déterminer la matrice $M_B(L)$ de $L$ dans la base canonique $B$ de $E$.
+
 ---
-uuid: "jalon-8-exo-06"
-title: "Exercice 6 : Noyau, Image et Théorème du Rang pour un Opérateur Différentiel sur les Polynômes"
-tags:
-  - math/algebre-lineaire
-  - exercice
----
-# Exercice 6 : Noyau, Image et Théorème du Rang pour un Opérateur Différentiel sur les Polynômes (Difficulté : ★★★☆☆)
 
-## Énoncé
-Soit $E = \mathbb{R}_3[X]$ l'espace vectoriel des polynômes à coefficients réels de degré inférieur ou égal à 3.
-On considère l'application $f: E \to E$ définie pour tout polynôme $P \in E$ par $f(P) = P' - P''$, où $P'$ et $P''$ désignent respectivement la dérivée première et la dérivée seconde de $P$.
+## Correction détaillée
 
-1.  Démontrer que $f$ est une application linéaire.
-2.  Déterminer le noyau $\ker f$ de $f$ et en donner une base ainsi que sa dimension.
-3.  Déterminer l'image $\text{Im } f$ de $f$ et en donner une base ainsi que sa dimension.
-4.  Vérifier le théorème du rang pour l'application $f$.
+### Question 1 : Démontrer que $L$ est une application linéaire.
 
-## Correction Détaillée
+Pour que $L$ soit linéaire, elle doit satisfaire deux propriétés :
+a) $L(P+Q) = L(P) + L(Q)$ pour tous $P, Q \in E$.
+b) $L(\lambda P) = \lambda L(P)$ pour tout $P \in E$ et tout scalaire $\lambda \in \mathbb{R}$.
 
-### 1. Démonstration de la linéarité de $f$
+Soient $P, Q \in E$ et $\lambda \in \mathbb{R}$.
 
-Pour montrer que $f$ est une application linéaire, nous devons vérifier deux propriétés : l'additivité et l'homogénéité.
+a) Calculons $L(P+Q)(X)$:
+$$L(P+Q)(X) = (P+Q)(X+1) - (P+Q)(X)$$
+Par définition de l'addition de polynômes, $(P+Q)(X+1) = P(X+1) + Q(X+1)$ et $(P+Q)(X) = P(X) + Q(X)$.
+Donc,
+$$L(P+Q)(X) = (P(X+1) + Q(X+1)) - (P(X) + Q(X))$$
+Regroupons les termes :
+$$L(P+Q)(X) = (P(X+1) - P(X)) + (Q(X+1) - Q(X))$$
+Par définition de $L$, ceci est égal à $L(P)(X) + L(Q)(X)$.
+Ainsi, $L(P+Q) = L(P) + L(Q)$.
 
-Soient $P, Q \in E = \mathbb{R}_3[X]$ et $\lambda \in \mathbb{R}$.
+b) Calculons $L(\lambda P)(X)$:
+$$L(\lambda P)(X) = (\lambda P)(X+1) - (\lambda P)(X)$$
+Par définition de la multiplication d'un polynôme par un scalaire, $(\lambda P)(X+1) = \lambda P(X+1)$ et $(\lambda P)(X) = \lambda P(X)$.
+Donc,
+$$L(\lambda P)(X) = \lambda P(X+1) - \lambda P(X)$$
+Mettons $\lambda$ en facteur :
+$$L(\lambda P)(X) = \lambda (P(X+1) - P(X))$$
+Par définition de $L$, ceci est égal à $\lambda L(P)(X)$.
+Ainsi, $L(\lambda P) = \lambda L(P)$.
 
-**a) Additivité :** Montrons que $f(P+Q) = f(P) + f(Q)$.
-Par définition de $f$:
-$f(P+Q) = (P+Q)' - (P+Q)''$.
-En utilisant la linéarité de l'opérateur de dérivation (la dérivée d'une somme est la somme des dérivées) :
-$(P+Q)' = P' + Q'$.
-$(P+Q)'' = P'' + Q''$.
-En substituant ces expressions dans l'équation de $f(P+Q)$ :
-$f(P+Q) = (P' + Q') - (P'' + Q'')$.
-En regroupant les termes relatifs à $P$ et $Q$ :
-$f(P+Q) = (P' - P'') + (Q' - Q'')$.
-Par définition de $f$, nous reconnaissons $f(P)$ et $f(Q)$ :
-$f(P+Q) = f(P) + f(Q)$.
-L'additivité est vérifiée.
+Les deux propriétés étant vérifiées, $L$ est bien une application linéaire.
+De plus, si $P \in \mathbb{R}_n[X]$, alors $P(X+1)$ est également un polynôme de degré au plus $n$. La différence $P(X+1)-P(X)$ est donc un polynôme de degré au plus $n$. L'application $L$ est donc bien définie de $E$ vers $E$.
 
-**b) Homogénéité :** Montrons que $f(\lambda P) = \lambda f(P)$.
-Par définition de $f$:
-$f(\lambda P) = (\lambda P)' - (\lambda P)''$.
-En utilisant la linéarité de l'opérateur de dérivation (la dérivée d'un scalaire fois une fonction est le scalaire fois la dérivée de la fonction) :
-$(\lambda P)' = \lambda P'$.
-$(\lambda P)'' = \lambda P''$.
-En substituant ces expressions dans l'équation de $f(\lambda P)$ :
-$f(\lambda P) = \lambda P' - \lambda P''$.
-En factorisant par $\lambda$:
-$f(\lambda P) = \lambda (P' - P'')$.
-Par définition de $f$, nous reconnaissons $f(P)$ :
-$f(\lambda P) = \lambda f(P)$.
-L'homogénéité est vérifiée.
+### Question 2 : Déterminer le noyau $\mathrm{Ker}(L)$.
 
-Puisque $f$ satisfait les propriétés d'additivité et d'homogénéité, $f$ est bien une application linéaire.
+Le noyau $\mathrm{Ker}(L)$ est l'ensemble des polynômes $P \in E$ tels que $L(P) = 0$.
+$$P \in \mathrm{Ker}(L) \iff L(P)(X) = 0 \text{ pour tout } X \in \mathbb{R}$$
+$$P(X+1) - P(X) = 0 \iff P(X+1) = P(X)$$
+Un polynôme qui vérifie $P(X+1) = P(X)$ pour tout $X \in \mathbb{R}$ est un polynôme constant.
+Pour le prouver, soit $P(X) = a_k X^k + a_{k-1} X^{k-1} + \dots + a_1 X + a_0$ un polynôme de degré $k \le n$, avec $a_k \neq 0$ si $k \ge 1$.
+Alors $P(X+1) = a_k (X+1)^k + a_{k-1} (X+1)^{k-1} + \dots + a_1 (X+1) + a_0$.
+Développons $(X+1)^k$ : $(X+1)^k = X^k + k X^{k-1} + \binom{k}{2} X^{k-2} + \dots + 1$.
+$$P(X+1) = a_k (X^k + k X^{k-1} + \dots) + a_{k-1} (X^{k-1} + \dots) + \dots + a_0$$
+$$P(X+1) - P(X) = a_k k X^{k-1} + (\text{termes de degré inférieur})$$
+Si $k \ge 1$, alors le polynôme $P(X+1) - P(X)$ a pour degré $k-1$ et son coefficient dominant est $a_k k$.
+Pour que $P(X+1) - P(X) = 0$, il faut que tous ses coefficients soient nuls. En particulier, $a_k k$ doit être nul.
+Puisque $a_k \neq 0$ (par hypothèse $P$ est de degré $k$), il faut que $k=0$.
+Si $k=0$, le polynôme $P(X)$ est de degré 0, c'est-à-dire une constante $P(X) = a_0$.
+Dans ce cas, $L(a_0) = a_0 - a_0 = 0$.
+Donc, les seuls polynômes dans $E$ qui appartiennent à $\mathrm{Ker}(L)$ sont les polynômes constants.
+L'ensemble des polynômes constants dans $E$ est $\mathbb{R}_0[X]$.
+Une base pour $\mathbb{R}_0[X]$ est le polynôme constant $1$.
+Par conséquent, $\mathrm{Ker}(L) = \mathrm{Vect}(1)$.
+La dimension de $\mathrm{Ker}(L)$ est $\mathrm{dim}(\mathrm{Ker}(L)) = 1$.
 
-### 2. Détermination du noyau $\ker f$
+### Question 3 : Déterminer l'image $\mathrm{Im}(L)$.
 
-Le noyau de $f$ est l'ensemble des polynômes $P \in E$ tels que $f(P) = 0_E$, où $0_E$ est le polynôme nul.
-$P \in \ker f \iff P' - P'' = 0_E$.
+L'image $\mathrm{Im}(L)$ est l'ensemble des polynômes $Q \in E$ tels que $Q = L(P)$ pour un certain $P \in E$.
+D'après la question 2, si $P(X)$ est un polynôme de degré $k \ge 1$, alors $L(P)(X)$ est un polynôme de degré $k-1$.
+Si $P(X)$ est un polynôme constant (de degré 0), $L(P)(X) = 0$.
+Puisque $P \in \mathbb{R}_n[X]$, le degré maximal de $P$ est $n$.
+Si $P$ est de degré $n$, $L(P)$ est de degré $n-1$.
+Si $P$ est de degré $k < n$, $L(P)$ est de degré $k-1$ (si $k \ge 1$) ou 0 (si $k=0$).
+Donc, tous les polynômes dans $\mathrm{Im}(L)$ ont un degré inférieur ou égal à $n-1$.
+Cela signifie que $\mathrm{Im}(L) \subseteq \mathbb{R}_{n-1}[X]$.
 
-Soit $P(X) \in \mathbb{R}_3[X]$. On peut écrire $P(X)$ sous la forme générale :
-$P(X) = aX^3 + bX^2 + cX + d$, où $a, b, c, d \in \mathbb{R}$.
+Nous connaissons la dimension de l'espace de départ $E = \mathbb{R}_n[X]$, qui est $\mathrm{dim}(E) = n+1$.
+Nous avons trouvé $\mathrm{dim}(\mathrm{Ker}(L)) = 1$.
+D'après le théorème du rang (voir question 4), $\mathrm{dim}(\mathrm{Im}(L)) = \mathrm{dim}(E) - \mathrm{dim}(\mathrm{Ker}(L)) = (n+1) - 1 = n$.
 
-Calculons la première dérivée $P'(X)$ :
-$P'(X) = \frac{d}{dX}(aX^3 + bX^2 + cX + d) = 3aX^2 + 2bX + c$.
+Nous avons donc $\mathrm{Im}(L) \subseteq \mathbb{R}_{n-1}[X]$ et $\mathrm{dim}(\mathrm{Im}(L)) = n$.
+Puisque $\mathrm{dim}(\mathbb{R}_{n-1}[X]) = n$, et que $\mathrm{Im}(L)$ est un sous-espace de $\mathbb{R}_{n-1}[X]$ de même dimension, nous pouvons conclure que $\mathrm{Im}(L) = \mathbb{R}_{n-1}[X]$.
 
-Calculons la seconde dérivée $P''(X)$ :
-$P''(X) = \frac{d}{dX}(3aX^2 + 2bX + c) = 6aX + 2b$.
+Une base pour $\mathrm{Im}(L) = \mathbb{R}_{n-1}[X]$ est la base canonique $(1, X, X^2, \dots, X^{n-1})$.
+La dimension de $\mathrm{Im}(L)$ est $n$.
 
-Maintenant, calculons $P'(X) - P''(X)$:
-$P'(X) - P''(X) = (3aX^2 + 2bX + c) - (6aX + 2b)$.
-$P'(X) - P''(X) = 3aX^2 + (2b - 6a)X + (c - 2b)$.
+### Question 4 : Calculer le rang de $L$ et vérifier le théorème du rang.
 
-Pour que $P'(X) - P''(X)$ soit le polynôme nul, tous ses coefficients doivent être nuls :
-1. Coefficient de $X^2$: $3a = 0 \implies a = 0$.
-2. Coefficient de $X$: $2b - 6a = 0$. Puisque $a=0$, cette équation devient $2b - 6(0) = 0 \implies 2b = 0 \implies b = 0$.
-3. Terme constant: $c - 2b = 0$. Puisque $b=0$, cette équation devient $c - 2(0) = 0 \implies c = 0$.
+Le rang d'une application linéaire $L$, noté $\mathrm{rang}(L)$, est la dimension de son image $\mathrm{Im}(L)$.
+D'après la question 3, $\mathrm{dim}(\mathrm{Im}(L)) = n$.
+Donc, $\mathrm{rang}(L) = n$.
 
-Les coefficients $a, b, c$ doivent être nuls. Le coefficient $d$ n'apparaît pas dans les dérivées, il peut donc prendre n'importe quelle valeur réelle.
-Ainsi, les polynômes $P(X)$ appartenant à $\ker f$ sont de la forme :
-$P(X) = 0 \cdot X^3 + 0 \cdot X^2 + 0 \cdot X + d = d$, où $d \in \mathbb{R}$.
-
-Le noyau $\ker f$ est donc l'ensemble des polynômes constants :
-$\ker f = \{ d \mid d \in \mathbb{R} \} = \text{Vect}(1)$.
-
-Une base de $\ker f$ est la famille $(1)$.
-La dimension de $\ker f$ est le nombre de vecteurs dans cette base :
-$\dim(\ker f) = 1$.
-
-### 3. Détermination de l'image $\text{Im } f$
-
-L'image de $f$ est l'ensemble des polynômes $Q \in E$ tels qu'il existe un $P \in E$ avec $Q = f(P)$.
-$\text{Im } f = \{ f(P) \mid P \in E \}$.
-
-L'espace $E = \mathbb{R}_3[X]$ a pour dimension $\dim E = 4$. Une base canonique de $E$ est $\mathcal{B}_E = (1, X, X^2, X^3)$.
-L'image de $f$ est engendrée par l'image des vecteurs de cette base :
-$\text{Im } f = \text{Vect}(f(1), f(X), f(X^2), f(X^3))$.
-
-Calculons les images de ces polynômes :
-- $f(1) = 1' - 1'' = 0 - 0 = 0_E$.
-- $f(X) = X' - X'' = 1 - 0 = 1$.
-- $f(X^2) = (X^2)' - (X^2)'' = 2X - 2$.
-- $f(X^3) = (X^3)' - (X^3)'' = 3X^2 - 6X$.
-
-Donc, $\text{Im } f = \text{Vect}(0_E, 1, 2X-2, 3X^2-6X)$.
-On peut ignorer le vecteur nul dans la famille génératrice :
-$\text{Im } f = \text{Vect}(1, 2X-2, 3X^2-6X)$.
-
-Soit la famille $\mathcal{B}_{\text{Im } f} = (P_1, P_2, P_3)$ avec $P_1 = 1$, $P_2 = 2X-2$, $P_3 = 3X^2-6X$.
-Cette famille est génératrice de $\text{Im } f$. Pour qu'elle soit une base, il faut qu'elle soit libre.
-Supposons une combinaison linéaire nulle de ces polynômes :
-$\alpha_1 P_1 + \alpha_2 P_2 + \alpha_3 P_3 = 0_E$, où $\alpha_1, \alpha_2, \alpha_3 \in \mathbb{R}$.
-$\alpha_1(1) + \alpha_2(2X-2) + \alpha_3(3X^2-6X) = 0_E$.
-Développons et regroupons par puissances de $X$:
-$\alpha_1 - 2\alpha_2 + (2\alpha_2 - 6\alpha_3)X + 3\alpha_3 X^2 = 0_E$.
-
-Pour que ce polynôme soit le polynôme nul, tous ses coefficients doivent être nuls :
-1. Coefficient de $X^2$: $3\alpha_3 = 0 \implies \alpha_3 = 0$.
-2. Coefficient de $X$: $2\alpha_2 - 6\alpha_3 = 0$. Puisque $\alpha_3=0$, cette équation devient $2\alpha_2 - 6(0) = 0 \implies 2\alpha_2 = 0 \implies \alpha_2 = 0$.
-3. Terme constant: $\alpha_1 - 2\alpha_2 = 0$. Puisque $\alpha_2=0$, cette équation devient $\alpha_1 - 2(0) = 0 \implies \alpha_1 = 0$.
-
-Tous les coefficients $\alpha_1, \alpha_2, \alpha_3$ sont nuls. La famille $\mathcal{B}_{\text{Im } f}$ est donc libre.
-Puisqu'elle est à la fois génératrice et libre, c'est une base de $\text{Im } f$.
-La dimension de $\text{Im } f$ est le nombre de vecteurs dans cette base :
-$\dim(\text{Im } f) = 3$.
-On appelle également cette dimension le rang de $f$, noté $\text{rg } f$.
-$\text{rg } f = 3$.
-
-### 4. Vérification du théorème du rang
-
-Le théorème du rang stipule que pour toute application linéaire $f: E \to F$ où $E$ est de dimension finie, on a :
-$\dim E = \dim(\ker f) + \text{rg}(f)$.
-
+Le théorème du rang stipule que pour une application linéaire $L: E \to F$, où $E$ est un espace vectoriel de dimension finie, on a :
+$$\mathrm{dim}(E) = \mathrm{dim}(\mathrm{Ker}(L)) + \mathrm{dim}(\mathrm{Im}(L))$$
 Dans notre cas :
-- L'espace de départ est $E = \mathbb{R}_3[X]$, dont la dimension est $\dim E = 4$.
-- Nous avons trouvé $\dim(\ker f) = 1$.
-- Nous avons trouvé $\text{rg}(f) = \dim(\text{Im } f) = 3$.
+*   $\mathrm{dim}(E) = \mathrm{dim}(\mathbb{R}_n[X]) = n+1$.
+*   $\mathrm{dim}(\mathrm{Ker}(L)) = 1$ (d'après la question 2).
+*   $\mathrm{dim}(\mathrm{Im}(L)) = n$ (d'après la question 3).
 
-Vérifions l'égalité :
-$\dim E = \dim(\ker f) + \text{rg}(f)$
-$4 = 1 + 3$
-$4 = 4$.
+Vérifions le théorème du rang :
+$$(n+1) = 1 + n$$
+L'égalité est bien vérifiée.
 
-L'égalité est vérifiée. Le théorème du rang est confirmé pour cette application linéaire.
+### Question 5 : Déterminer la matrice $M_B(L)$ de $L$ dans la base canonique $B$ de $E$.
+
+La base canonique de $E = \mathbb{R}_n[X]$ est $B = (P_0, P_1, \dots, P_n)$ où $P_k(X) = X^k$.
+Pour construire la matrice $M_B(L)$, nous devons calculer $L(P_k)$ pour chaque $k \in \{0, \dots, n\}$ et exprimer le résultat comme une combinaison linéaire des éléments de la base $B$. Le vecteur colonne $j$ de la matrice sera constitué des coefficients de $L(P_j)$.
+
+1.  Pour $P_0(X) = 1$:
+    $L(1)(X) = (1) - (1) = 0$.
+    Donc, $L(1) = 0 \cdot 1 + 0 \cdot X + \dots + 0 \cdot X^n$. La première colonne de $M_B(L)$ est $(0, 0, \dots, 0)^T$.
+
+2.  Pour $P_k(X) = X^k$, avec $k \ge 1$:
+    $L(X^k)(X) = (X+1)^k - X^k$.
+    Utilisons la formule du binôme de Newton : $(X+1)^k = \sum_{j=0}^k \binom{k}{j} X^j = \binom{k}{0} X^0 + \binom{k}{1} X^1 + \dots + \binom{k}{k-1} X^{k-1} + \binom{k}{k} X^k$.
+    $L(X^k)(X) = \left( \sum_{j=0}^k \binom{k}{j} X^j \right) - X^k$.
+    Comme $\binom{k}{k}=1$, le terme $X^k$ s'annule :
+    $L(X^k)(X) = \sum_{j=0}^{k-1} \binom{k}{j} X^j = \binom{k}{0} + \binom{k}{1} X + \binom{k}{2} X^2 + \dots + \binom{k}{k-1} X^{k-1}$.
+    Ce polynôme est de degré $k-1$.
+
+Les colonnes de la matrice $M_B(L)$ sont les vecteurs de coordonnées de $L(X^j)$ dans la base $(1, X, \dots, X^n)$.
+*   Colonne 0 (pour $X^0=1$): $(0, 0, \dots, 0)^T$.
+*   Colonne 1 (pour $X^1=X$): $L(X) = \binom{1}{0} = 1$. Coordonnées: $(1, 0, \dots, 0)^T$.
+*   Colonne 2 (pour $X^2$): $L(X^2) = \binom{2}{0} + \binom{2}{1} X = 1 + 2X$. Coordonnées: $(1, 2, 0, \dots, 0)^T$.
+*   Colonne 3 (pour $X^3$): $L(X^3) = \binom{3}{0} + \binom{3}{1} X + \binom{3}{2} X^2 = 1 + 3X + 3X^2$. Coordonnées: $(1, 3, 3, 0, \dots, 0)^T$.
+*   Généralement, pour la colonne $j$ (correspondant à $X^j$): les coefficients sont $\binom{j}{0}, \binom{j}{1}, \dots, \binom{j}{j-1}$, suivis de zéros.
+
+La matrice $M_B(L)$ est de taille $(n+1) \times (n+1)$. Ses coefficients $(M_B(L))_{i,j}$ (où $i$ est l'indice de ligne et $j$ l'indice de colonne, tous deux allant de 0 à $n$) sont donnés par :
+$$(M_B(L))_{i,j} = \begin{cases} \binom{j}{i} & \text{si } i < j \\ 0 & \text{si } i \ge j \end{cases}$$
+(Notez que $\binom{j}{i}=0$ si $i>j$ ou $i<0$, donc la condition $i<j$ est suffisante).
+
+Exemple pour $n=3$, $E = \mathbb{R}_3[X]$, base $(1, X, X^2, X^3)$:
+$L(1) = 0$
+$L(X) = 1$
+$L(X^2) = 1 + 2X$
+$L(X^3) = 1 + 3X + 3X^2$
+
+La matrice $M_B(L)$ est :
+$$
+M_B(L) = \begin{pmatrix}
+(M_B(L))_{0,0} & (M_B(L))_{0,1} & (M_B(L))_{0,2} & (M_B(L))_{0,3} \\
+(M_B(L))_{1,0} & (M_B(L))_{1,1} & (M_B(L))_{1,2} & (M_B(L))_{1,3} \\
+(M_B(L))_{2,0} & (M_B(L))_{2,1} & (M_B(L))_{2,2} & (M_B(L))_{2,3} \\
+(M_B(L))_{3,0} & (M_B(L))_{3,1} & (M_B(L))_{3,2} & (M_B(L))_{3,3}
+\end{pmatrix}
+=
+\begin{pmatrix}
+0 & \binom{1}{0} & \binom{2}{0} & \binom{3}{0} \\
+0 & 0 & \binom{2}{1} & \binom{3}{1} \\
+0 & 0 & 0 & \binom{3}{2} \\
+0 & 0 & 0 & 0
+\end{pmatrix}
+=
+\begin{pmatrix}
+0 & 1 & 1 & 1 \\
+0 & 0 & 2 & 3 \\
+0 & 0 & 0 & 3 \\
+0 & 0 & 0 & 0
+\end{pmatrix}
+$$
+Cette matrice est strictement triangulaire supérieure. Son rang est $n$, comme attendu.

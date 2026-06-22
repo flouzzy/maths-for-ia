@@ -1,73 +1,125 @@
+# Exercice 5 : Noyau, Image et Rang de la composition d'applications linéaires (Difficulté : ***)
+
+**Énoncé du Problème**
+
+Soient $K$ un corps commutatif. Soient $E, F, G$ trois $K$-espaces vectoriels de dimensions finies.
+Soient $f: E \to F$ et $g: F \to G$ deux applications linéaires.
+
+1.  Démontrer que $\ker(f) \subseteq \ker(g \circ f)$ et que $\text{Im}(g \circ f) \subseteq \text{Im}(g)$.
+2.  On considère l'application linéaire restreinte $g_f: \text{Im}(f) \to G$ définie par $g_f(y) = g(y)$ pour tout $y \in \text{Im}(f)$.
+    a) Démontrer que $\ker(g_f) = \text{Im}(f) \cap \ker(g)$.
+    b) Démontrer que $\text{Im}(g_f) = \text{Im}(g \circ f)$.
+3.  En utilisant le théorème du rang pour l'application $g_f$ et l'application $f$, établir la relation suivante :
+    $$ \dim(\ker(g \circ f)) = \dim(\ker(f)) + \dim(\text{Im}(f) \cap \ker(g)) $$
+4.  En déduire la relation liant les rangs des applications linéaires :
+    $$ \text{rg}(g \circ f) = \text{rg}(f) - \dim(\text{Im}(f) \cap \ker(g)) $$
+
 ---
-uuid: "jalon-8-exo-05"
-title: "Exercice 5 : Analyse d'une application linéaire de $\mathbb{R}^4$ dans $\mathbb{R}^3$"
-tags:
-  - math/algebre-lineaire
-  - exercice
----
-# Exercice 5 : Analyse d'une application linéaire de $\mathbb{R}^4$ dans $\mathbb{R}^3$ (Difficulté : ★★★☆☆)
 
-## Énoncé
-Soit $f : \mathbb{R}^4 \to \mathbb{R}^3$ l'application définie pour tout $(x,y,z,w) \in \mathbb{R}^4$ par :
-$$f(x,y,z,w) = (x+y, y+z, z+w)$$
-1. Déterminer le noyau $\ker f$ de $f$. En donner une base et sa dimension.
-2. Déterminer le rang de $f$, $\text{rg } f$.
-3. En déduire la nature de l'image $\text{Im } f$.
+## Correction détaillée
 
-## Correction Détaillée
+1.  **Démonstration de $\ker(f) \subseteq \ker(g \circ f)$ et $\text{Im}(g \circ f) \subseteq \text{Im}(g)$**
 
-1.  **Détermination du noyau $\ker f$ :**
-    Par définition, le noyau $\ker f$ est l'ensemble des vecteurs $(x,y,z,w) \in \mathbb{R}^4$ tels que $f(x,y,z,w) = (0,0,0)$.
-    Cela revient à résoudre le système d'équations linéaires homogènes suivant sur le corps $\mathbb{R}$ :
-    $$ \begin{cases} x+y = 0 \quad (L_1) \\ y+z = 0 \quad (L_2) \\ z+w = 0 \quad (L_3) \end{cases} $$
+    *   **Pour $\ker(f) \subseteq \ker(g \circ f)$ :**
+        Soit $x \in \ker(f)$. Par définition du noyau, cela signifie que $f(x) = 0_F$, où $0_F$ est le vecteur nul de $F$.
+        Appliquons l'application $g$ à $f(x)$ :
+        $(g \circ f)(x) = g(f(x)) = g(0_F)$.
+        Puisque $g$ est une application linéaire, elle envoie le vecteur nul sur le vecteur nul : $g(0_F) = 0_G$.
+        Ainsi, $(g \circ f)(x) = 0_G$.
+        Par définition du noyau, $x \in \ker(g \circ f)$.
+        Donc, tout élément de $\ker(f)$ est aussi un élément de $\ker(g \circ f)$, ce qui prouve $\ker(f) \subseteq \ker(g \circ f)$.
 
-    Nous allons résoudre ce système en exprimant les variables en fonction d'une ou plusieurs variables libres.
-    De l'équation $(L_1)$, nous pouvons exprimer $x$ en fonction de $y$ :
-    $$ x = -y $$
-    De l'équation $(L_2)$, nous pouvons exprimer $z$ en fonction de $y$ :
-    $$ z = -y $$
-    De l'équation $(L_3)$, nous pouvons exprimer $w$ en fonction de $z$ :
-    $$ w = -z $$
-    Maintenant, nous substituons l'expression de $z$ dans l'expression de $w$ :
-    $$ w = -(-y) $$
-    $$ w = y $$
+    *   **Pour $\text{Im}(g \circ f) \subseteq \text{Im}(g)$ :**
+        Soit $z \in \text{Im}(g \circ f)$. Par définition de l'image, cela signifie qu'il existe un vecteur $x \in E$ tel que $z = (g \circ f)(x)$.
+        On peut réécrire $z = g(f(x))$.
+        Posons $y = f(x)$. Alors, par définition de l'image de $f$, $y \in \text{Im}(f)$.
+        Nous avons $z = g(y)$.
+        Puisque $y \in F$ et $z = g(y)$, par définition de l'image de $g$, $z \in \text{Im}(g)$.
+        Donc, tout élément de $\text{Im}(g \circ f)$ est aussi un élément de $\text{Im}(g)$, ce qui prouve $\text{Im}(g \circ f) \subseteq \text{Im}(g)$.
 
-    Ainsi, tout vecteur $(x,y,z,w)$ appartenant à $\ker f$ doit satisfaire les relations $x=-y$, $z=-y$, et $w=y$.
-    Les vecteurs de $\ker f$ sont donc de la forme :
-    $$ (-y, y, -y, y) $$
-    où $y$ est un scalaire réel quelconque, $y \in \mathbb{R}$.
+2.  **Propriétés de l'application linéaire restreinte $g_f$**
 
-    Nous pouvons factoriser le scalaire $y$ de cette expression vectorielle :
-    $$ (-y, y, -y, y) = y \cdot (-1, 1, -1, 1) $$
+    L'application $g_f: \text{Im}(f) \to G$ est définie par $g_f(y) = g(y)$ pour tout $y \in \text{Im}(f)$.
+    Il est important de noter que $\text{Im}(f)$ est un sous-espace vectoriel de $F$, et $g_f$ est la restriction de $g$ à ce sous-espace.
 
-    Le noyau $\ker f$ est donc l'ensemble des multiples scalaires du vecteur $v_1 = (-1, 1, -1, 1)$.
-    $$ \ker f = \text{Vect}((-1, 1, -1, 1)) $$
+    a) **Démonstration de $\ker(g_f) = \text{Im}(f) \cap \ker(g)$**
 
-    Le vecteur $v_1 = (-1, 1, -1, 1)$ est un vecteur non nul de $\mathbb{R}^4$. Par conséquent, la famille constituée uniquement de ce vecteur, $(v_1)$, est une famille libre.
-    Puisqu'elle est génératrice de $\ker f$ et qu'elle est libre, elle constitue une base de $\ker f$.
-    La dimension de $\ker f$ est le nombre de vecteurs dans cette base.
-    $$ \dim(\ker f) = 1 $$
+        *   **Inclusion $\subseteq$ :**
+            Soit $y \in \ker(g_f)$. Par définition du noyau de $g_f$, cela signifie que $y \in \text{Im}(f)$ et $g_f(y) = 0_G$.
+            Par définition de $g_f$, on a $g_f(y) = g(y)$. Donc, $g(y) = 0_G$.
+            Puisque $g(y) = 0_G$, par définition du noyau de $g$, on a $y \in \ker(g)$.
+            Ainsi, $y$ appartient à la fois à $\text{Im}(f)$ et à $\ker(g)$. Donc $y \in \text{Im}(f) \cap \ker(g)$.
+            Ceci prouve $\ker(g_f) \subseteq \text{Im}(f) \cap \ker(g)$.
 
-2.  **Détermination du rang de $f$ :**
-    L'espace de départ $E = \mathbb{R}^4$ est un espace vectoriel de dimension finie sur $\mathbb{R}$. Sa dimension est $\dim E = 4$.
-    Nous pouvons appliquer le Théorème du Rang, qui est un théorème fondamental de l'algèbre linéaire. Il stipule que pour toute application linéaire $f : E \to F$ où $E$ est un espace vectoriel de dimension finie, on a la relation suivante :
-    $$ \dim E = \dim(\ker f) + \text{rg}(f) $$
-    où $\text{rg}(f)$ est la dimension de l'image de $f$, c'est-à-dire $\dim(\text{Im } f)$.
+        *   **Inclusion $\supseteq$ :**
+            Soit $y \in \text{Im}(f) \cap \ker(g)$. Par définition de l'intersection, cela signifie que $y \in \text{Im}(f)$ et $y \in \ker(g)$.
+            Puisque $y \in \text{Im}(f)$, l'application $g_f(y)$ est bien définie.
+            Puisque $y \in \ker(g)$, par définition du noyau de $g$, on a $g(y) = 0_G$.
+            Par définition de $g_f$, on a $g_f(y) = g(y)$. Donc, $g_f(y) = 0_G$.
+            Ainsi, $y \in \ker(g_f)$.
+            Ceci prouve $\text{Im}(f) \cap \ker(g) \subseteq \ker(g_f)$.
 
-    En substituant les valeurs que nous avons déterminées :
-    $$ 4 = 1 + \text{rg}(f) $$
+        Les deux inclusions étant établies, on conclut que $\ker(g_f) = \text{Im}(f) \cap \ker(g)$.
 
-    Pour trouver la valeur de $\text{rg}(f)$, nous soustrayons 1 des deux côtés de l'équation :
-    $$ \text{rg}(f) = 4 - 1 $$
-    $$ \text{rg}(f) = 3 $$
+    b) **Démonstration de $\text{Im}(g_f) = \text{Im}(g \circ f)$**
 
-3.  **Déduction de la nature de l'image $\text{Im } f$ :**
-    Nous avons déterminé que le rang de $f$ est $\text{rg}(f) = 3$.
-    Par définition même du rang d'une application linéaire, $\text{rg}(f)$ est la dimension de son image. Donc :
-    $$ \dim(\text{Im } f) = 3 $$
+        *   **Inclusion $\subseteq$ :**
+            Soit $z \in \text{Im}(g_f)$. Par définition de l'image de $g_f$, cela signifie qu'il existe un vecteur $y \in \text{Im}(f)$ tel que $z = g_f(y)$.
+            Par définition de $g_f$, on a $z = g(y)$.
+            Puisque $y \in \text{Im}(f)$, par définition de l'image de $f$, il existe un vecteur $x \in E$ tel que $y = f(x)$.
+            En substituant $y$, nous obtenons $z = g(f(x))$.
+            Par définition de la composition d'applications, $z = (g \circ f)(x)$.
+            Puisque $x \in E$ et $z = (g \circ f)(x)$, par définition de l'image de $g \circ f$, on a $z \in \text{Im}(g \circ f)$.
+            Ceci prouve $\text{Im}(g_f) \subseteq \text{Im}(g \circ f)$.
 
-    L'image $\text{Im } f$ est un sous-espace vectoriel de l'espace d'arrivée $F = \mathbb{R}^3$.
-    Nous savons que la dimension de l'espace d'arrivée est $\dim(\mathbb{R}^3) = 3$.
-    Puisque $\text{Im } f$ est un sous-espace vectoriel de $\mathbb{R}^3$ et que sa dimension est égale à celle de $\mathbb{R}^3$ ($\dim(\text{Im } f) = \dim(\mathbb{R}^3) = 3$), il s'ensuit que $\text{Im } f$ est égal à l'espace $\mathbb{R}^3$ tout entier.
-    $$ \text{Im } f = \mathbb{R}^3 $$
-    Cela signifie que l'application linéaire $f$ est surjective.
+        *   **Inclusion $\supseteq$ :**
+            Soit $z \in \text{Im}(g \circ f)$. Par définition de l'image de $g \circ f$, cela signifie qu'il existe un vecteur $x \in E$ tel que $z = (g \circ f)(x)$.
+            On peut réécrire $z = g(f(x))$.
+            Posons $y = f(x)$. Alors, par définition de l'image de $f$, $y \in \text{Im}(f)$.
+            Puisque $y \in \text{Im}(f)$, l'application $g_f(y)$ est bien définie, et par définition $g_f(y) = g(y)$.
+            Ainsi, $z = g(f(x)) = g(y) = g_f(y)$.
+            Puisque $y \in \text{Im}(f)$ et $z = g_f(y)$, par définition de l'image de $g_f$, on a $z \in \text{Im}(g_f)$.
+            Ceci prouve $\text{Im}(g \circ f) \subseteq \text{Im}(g_f)$.
+
+        Les deux inclusions étant établies, on conclut que $\text{Im}(g_f) = \text{Im}(g \circ f)$.
+
+3.  **Établissement de la relation $\dim(\ker(g \circ f)) = \dim(\ker(f)) + \dim(\text{Im}(f) \cap \ker(g))$**
+
+    Nous allons appliquer le théorème du rang aux applications linéaires $f$ et $g_f$.
+
+    *   **Théorème du rang pour $g_f: \text{Im}(f) \to G$ :**
+        Puisque $\text{Im}(f)$ est un sous-espace vectoriel de $F$ et est de dimension finie (car $F$ est de dimension finie), le théorème du rang s'applique à $g_f$.
+        $$ \dim(\text{Im}(f)) = \dim(\ker(g_f)) + \dim(\text{Im}(g_f)) $$
+        En utilisant les résultats de la question 2a) et 2b) :
+        $$ \dim(\text{Im}(f)) = \dim(\text{Im}(f) \cap \ker(g)) + \dim(\text{Im}(g \circ f)) \quad (*)$$
+
+    *   **Théorème du rang pour $f: E \to F$ :**
+        $$ \dim(E) = \dim(\ker(f)) + \dim(\text{Im}(f)) $$
+        On peut exprimer $\dim(\text{Im}(f))$ comme :
+        $$ \dim(\text{Im}(f)) = \dim(E) - \dim(\ker(f)) \quad (**) $$
+
+    *   **Théorème du rang pour $g \circ f: E \to G$ :**
+        $$ \dim(E) = \dim(\ker(g \circ f)) + \dim(\text{Im}(g \circ f)) $$
+        On peut exprimer $\dim(\text{Im}(g \circ f))$ comme :
+        $$ \dim(\text{Im}(g \circ f)) = \dim(E) - \dim(\ker(g \circ f)) \quad (***) $$
+
+    Substituons $(**)$ et $(***)$ dans l'équation $(*)$ :
+    $$ (\dim(E) - \dim(\ker(f))) = \dim(\text{Im}(f) \cap \ker(g)) + (\dim(E) - \dim(\ker(g \circ f))) $$
+    Simplifions en soustrayant $\dim(E)$ des deux côtés :
+    $$ -\dim(\ker(f)) = \dim(\text{Im}(f) \cap \ker(g)) - \dim(\ker(g \circ f)) $$
+    Réarrangeons les termes pour isoler $\dim(\ker(g \circ f))$ :
+    $$ \dim(\ker(g \circ f)) = \dim(\ker(f)) + \dim(\text{Im}(f) \cap \ker(g)) $$
+    Ceci établit la relation demandée.
+
+4.  **Déduction de la relation $\text{rg}(g \circ f) = \text{rg}(f) - \dim(\text{Im}(f) \cap \ker(g))$**
+
+    Par définition, le rang d'une application linéaire est la dimension de son image.
+    Donc $\text{rg}(f) = \dim(\text{Im}(f))$ et $\text{rg}(g \circ f) = \dim(\text{Im}(g \circ f))$.
+
+    Reprenons l'équation $(*)$ établie à la question 3 :
+    $$ \dim(\text{Im}(f)) = \dim(\text{Im}(f) \cap \ker(g)) + \dim(\text{Im}(g \circ f)) $$
+    En substituant les termes par leurs rangs correspondants :
+    $$ \text{rg}(f) = \dim(\text{Im}(f) \cap \ker(g)) + \text{rg}(g \circ f) $$
+    Pour obtenir la relation souhaitée, il suffit de réarranger les termes :
+    $$ \text{rg}(g \circ f) = \text{rg}(f) - \dim(\text{Im}(f) \cap \ker(g)) $$
+    Ceci conclut la déduction.

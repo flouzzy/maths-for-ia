@@ -1,98 +1,167 @@
+# Exercice 9 : Décomposition de Fitting et endomorphismes nilpotents/inversibles (Difficulté : *****)
+
+Soit $K$ un corps commutatif quelconque. Soit $E$ un $K$-espace vectoriel de dimension finie $n \ge 1$.
+Soit $u \in L(E)$ un endomorphisme de $E$.
+
+Pour tout entier naturel $k \ge 0$, on définit les sous-espaces vectoriels :
+- $K_k = \ker(u^k)$, le noyau de $u^k$.
+- $I_k = \mathrm{Im}(u^k)$, l'image de $u^k$.
+Par convention, $u^0 = \mathrm{id}_E$, donc $K_0 = \{0\}$ et $I_0 = E$.
+
+1.  Démontrer que la suite $(K_k)_{k \ge 0}$ est une suite croissante de sous-espaces vectoriels de $E$ (pour l'inclusion), et que la suite $(I_k)_{k \ge 0}$ est une suite décroissante de sous-espaces vectoriels de $E$.
+2.  Démontrer qu'il existe un plus petit entier $p \in \{0, \dots, n\}$ tel que $K_p = K_{p+1}$. Démontrer alors que pour tout $k \ge p$, on a $K_k = K_p$. Démontrer un résultat analogue pour la suite $(I_k)_{k \ge 0}$, c'est-à-dire $I_p = I_{p+1}$ et $I_k = I_p$ pour tout $k \ge p$. Cet entier $p$ est appelé l'indice de Fitting de l'endomorphisme $u$.
+3.  On se place avec l'entier $p$ défini à la question précédente. Démontrer que $E = K_p \oplus I_p$.
+4.  Démontrer que les sous-espaces $K_p$ et $I_p$ sont stables par $u$. On note $u_K$ la restriction de $u$ à $K_p$ (vue comme endomorphisme de $K_p$) et $u_I$ la restriction de $u$ à $I_p$ (vue comme endomorphisme de $I_p$). Démontrer que $u_K$ est un endomorphisme nilpotent et que $u_I$ est un automorphisme.
+
 ---
-uuid: "jalon-8-exo-09"
-title: "Exercice 9 : Propriétés du Noyau et de l'Image d'une Composition d'Applications Linéaires"
-tags:
-  - math/algebre-lineaire
-  - exercice
----
-# Exercice 9 : Propriétés du Noyau et de l'Image d'une Composition d'Applications Linéaires (Difficulté : ★★★★★)
 
-## Énoncé
-Soient $E, F, G$ des $\mathbb{K}$-espaces vectoriels de dimension finie.
-Soient $f \in \mathcal{L}(E, F)$ et $g \in \mathcal{L}(F, G)$ deux applications linéaires.
-On considère l'application composée $g \circ f : E \to G$.
+## Correction détaillée
 
-1.  Démontrer que $\ker f \subseteq \ker(g \circ f)$.
-2.  Démontrer que $\text{Im}(g \circ f) \subseteq \text{Im } g$.
-3.  Démontrer que $\text{rg}(g \circ f) \le \text{rg } f$.
-4.  Démontrer que $\text{rg}(g \circ f) \le \text{rg } g$.
-5.  Démontrer la formule suivante : $\text{rg}(g \circ f) = \text{rg } f - \dim(\text{Im } f \cap \ker g)$.
-6.  En déduire que $\dim(\ker(g \circ f)) = \dim(\ker f) + \dim(\text{Im } f \cap \ker g)$.
+1.  **Monotonie des suites $(K_k)_{k \ge 0}$ et $(I_k)_{k \ge 0}$**
 
-## Correction Détaillée
+    *   **Pour $(K_k)_{k \ge 0}$ :**
+        Soit $k \ge 0$. Nous voulons montrer que $K_k \subseteq K_{k+1}$.
+        Soit $x \in K_k$. Par définition, $u^k(x) = 0$.
+        Alors $u^{k+1}(x) = u(u^k(x)) = u(0) = 0$.
+        Donc $x \in K_{k+1}$.
+        Ceci prouve que $K_k \subseteq K_{k+1}$ pour tout $k \ge 0$. La suite $(K_k)_{k \ge 0}$ est donc croissante pour l'inclusion.
 
-**1. Démontrer que $\ker f \subseteq \ker(g \circ f)$.**
-Soit $x \in \ker f$.
-Par définition du noyau d'une application linéaire, $f(x) = 0_F$, où $0_F$ est le vecteur nul de l'espace vectoriel $F$.
-Appliquons l'application linéaire $g$ à cette égalité :
-$g(f(x)) = g(0_F)$.
-Puisque $g$ est une application linéaire, elle préserve le vecteur nul, c'est-à-dire $g(0_F) = 0_G$, où $0_G$ est le vecteur nul de l'espace vectoriel $G$.
-Par conséquent, nous avons $(g \circ f)(x) = 0_G$.
-D'après la définition du noyau de l'application linéaire $g \circ f$, cela signifie que $x \in \ker(g \circ f)$.
-Ainsi, tout élément de $\ker f$ est également un élément de $\ker(g \circ f)$, ce qui prouve l'inclusion $\ker f \subseteq \ker(g \circ f)$.
+    *   **Pour $(I_k)_{k \ge 0}$ :**
+        Soit $k \ge 0$. Nous voulons montrer que $I_{k+1} \subseteq I_k$.
+        Soit $y \in I_{k+1}$. Par définition, il existe $x \in E$ tel que $y = u^{k+1}(x)$.
+        On peut écrire $y = u^k(u(x))$.
+        Puisque $u(x) \in E$, $y$ est l'image d'un élément de $E$ par $u^k$.
+        Donc $y \in I_k$.
+        Ceci prouve que $I_{k+1} \subseteq I_k$ pour tout $k \ge 0$. La suite $(I_k)_{k \ge 0}$ est donc décroissante pour l'inclusion.
 
-**2. Démontrer que $\text{Im}(g \circ f) \subseteq \text{Im } g$.**
-Soit $y \in \text{Im}(g \circ f)$.
-Par définition de l'image d'une application linéaire, il existe un vecteur $x \in E$ tel que $y = (g \circ f)(x)$.
-Nous pouvons réécrire cette expression en utilisant la définition de la composition d'applications : $y = g(f(x))$.
-Posons $z = f(x)$. Puisque $x \in E$ et $f \in \mathcal{L}(E, F)$, le vecteur $z$ appartient à l'espace vectoriel $F$.
-L'expression de $y$ devient alors $y = g(z)$.
-D'après la définition de l'image de l'application linéaire $g$, puisque $z \in F$ et $y = g(z)$, cela signifie que $y \in \text{Im } g$.
-Ainsi, tout élément de $\text{Im}(g \circ f)$ est également un élément de $\text{Im } g$, ce qui prouve l'inclusion $\text{Im}(g \circ f) \subseteq \text{Im } g$.
+2.  **Stabilisation des suites $(K_k)_{k \ge 0}$ et $(I_k)_{k \ge 0}$**
 
-**3. Démontrer que $\text{rg}(g \circ f) \le \text{rg } f$.**
-Nous avons $\text{Im}(g \circ f) = \{ (g \circ f)(x) \mid x \in E \}$.
-En utilisant la définition de la composition, ceci est égal à $\{ g(f(x)) \mid x \in E \}$.
-L'ensemble $\{ f(x) \mid x \in E \}$ est, par définition, l'image de $f$, notée $\text{Im } f$.
-Donc, $\text{Im}(g \circ f)$ est l'image de l'ensemble $\text{Im } f$ par l'application $g$. On peut écrire $\text{Im}(g \circ f) = g(\text{Im } f)$.
-Soit $\mathcal{B}_{\text{Im } f} = (u_1, ..., u_k)$ une base de $\text{Im } f$, où $k = \dim(\text{Im } f) = \text{rg } f$.
-Tout vecteur $v \in \text{Im } f$ peut s'écrire comme une combinaison linéaire $v = \sum_{i=1}^k \lambda_i u_i$.
-Alors, pour tout $y \in \text{Im}(g \circ f)$, il existe $v \in \text{Im } f$ tel que $y = g(v)$.
-Donc $y = g(\sum_{i=1}^k \lambda_i u_i)$.
-Par linéarité de $g$, $y = \sum_{i=1}^k \lambda_i g(u_i)$.
-Ceci montre que la famille $(g(u_1), ..., g(u_k))$ est une famille génératrice de $\text{Im}(g \circ f)$.
-La dimension d'un espace vectoriel est le cardinal minimal d'une famille génératrice.
-Puisque $\text{Im}(g \circ f)$ est engendré par une famille de $k$ vecteurs, sa dimension est au plus $k$.
-Donc, $\dim(\text{Im}(g \circ f)) \le k$.
-En substituant les définitions du rang, nous obtenons $\text{rg}(g \circ f) \le \text{rg } f$.
+    *   **Pour $(K_k)_{k \ge 0}$ :**
+        La suite $(K_k)_{k \ge 0}$ est une suite croissante de sous-espaces vectoriels de $E$.
+        De plus, $E$ est de dimension finie $n$.
+        Cela implique que la suite des dimensions $\mathrm{dim}(K_k)$ est une suite croissante d'entiers naturels, majorée par $n$.
+        Une telle suite doit nécessairement stationner. C'est-à-dire qu'il existe un entier $p_0$ tel que $\mathrm{dim}(K_{p_0}) = \mathrm{dim}(K_{p_0+1})$.
+        Puisque $K_{p_0} \subseteq K_{p_0+1}$ et qu'ils ont la même dimension, on en déduit que $K_{p_0} = K_{p_0+1}$.
+        Soit $p$ le plus petit entier tel que $K_p = K_{p+1}$. Un tel $p$ existe car la suite stationne et $K_0 \subseteq K_1 \subseteq \dots \subseteq K_n = E$ est la chaîne maximale de sous-espaces strictement croissants. Si $K_i \subsetneq K_{i+1}$ pour tout $i$, alors on aurait $\mathrm{dim}(K_{i+1}) \ge \mathrm{dim}(K_i) + 1$, ce qui impliquerait $\mathrm{dim}(K_n) \ge \mathrm{dim}(K_0) + n = n$, atteignant la dimension de $E$ au plus en $n$ étapes.
+        Nous allons montrer par récurrence que pour tout $k \ge p$, $K_k = K_p$.
+        L'initialisation ($k=p$) est triviale : $K_p = K_p$.
+        L'étape de récurrence : Supposons que $K_k = K_p$ pour un $k \ge p$. Nous voulons montrer que $K_{k+1} = K_p$.
+        Nous savons déjà que $K_p \subseteq K_{k+1}$ (car la suite est croissante).
+        Il reste à montrer que $K_{k+1} \subseteq K_p$. Soit $x \in K_{k+1}$. Alors $u^{k+1}(x) = 0$.
+        Nous avons $u^p(x) \in E$. Alors $u^{k+1-p}(u^p(x)) = u^{k+1}(x) = 0$.
+        Puisque $k \ge p$, $k+1-p \ge 1$.
+        Considérons l'application $u$ restreinte à $K_{j+1}$ pour un certain $j$.
+        Si $y \in K_{k+1}$, alors $u^{k+1}(y)=0$.
+        Si $K_p=K_{p+1}$, montrons $K_{p+1}=K_{p+2}$.
+        Soit $x \in K_{p+2}$. Alors $u^{p+2}(x)=0$. On peut écrire $u^{p+1}(u(x))=0$. Donc $u(x) \in K_{p+1}$.
+        Puisque $K_{p+1} = K_p$, on a $u(x) \in K_p$, ce qui signifie $u^p(u(x)) = 0$, donc $u^{p+1}(x) = 0$.
+        Par conséquent $x \in K_{p+1}$. Comme $K_{p+1} = K_p$, on a $x \in K_p$.
+        Donc $K_{p+2} \subseteq K_p$. Puisque $K_p \subseteq K_{p+2}$ (par croissance), on a $K_{p+2}=K_p$.
+        En réitérant ce raisonnement, on montre par récurrence que $K_k=K_p$ pour tout $k \ge p$.
 
-**4. Démontrer que $\text{rg}(g \circ f) \le \text{rg } g$.**
-D'après la question 2, nous avons établi que $\text{Im}(g \circ f) \subseteq \text{Im } g$.
-Puisque $\text{Im}(g \circ f)$ est un sous-espace vectoriel de $\text{Im } g$, la dimension de $\text{Im}(g \circ f)$ ne peut pas être strictement supérieure à la dimension de $\text{Im } g$.
-Par conséquent, $\dim(\text{Im}(g \circ f)) \le \dim(\text{Im } g)$.
-En utilisant la définition du rang, cela se traduit par $\text{rg}(g \circ f) \le \text{rg } g$.
+    *   **Pour $(I_k)_{k \ge 0}$ :**
+        La suite $(I_k)_{k \ge 0}$ est une suite décroissante de sous-espaces vectoriels de $E$.
+        Comme précédemment, la suite des dimensions $\mathrm{dim}(I_k)$ est une suite décroissante d'entiers naturels, minorée par $0$.
+        Elle doit donc stationner. Il existe un entier $p'$ tel que $\mathrm{dim}(I_{p'}) = \mathrm{dim}(I_{p'+1})$.
+        Puisque $I_{p'+1} \subseteq I_{p'}$ et qu'ils ont la même dimension, on en déduit que $I_{p'} = I_{p'+1}$.
+        Le théorème du rang stipule que $\mathrm{dim}(E) = \mathrm{dim}(\ker(u^k)) + \mathrm{dim}(\mathrm{Im}(u^k))$, soit $n = \mathrm{dim}(K_k) + \mathrm{dim}(I_k)$.
+        Si $K_p = K_{p+1}$, alors $\mathrm{dim}(K_p) = \mathrm{dim}(K_{p+1})$.
+        Donc $n - \mathrm{dim}(I_p) = n - \mathrm{dim}(I_{p+1})$, ce qui implique $\mathrm{dim}(I_p) = \mathrm{dim}(I_{p+1})$.
+        Puisque $I_{p+1} \subseteq I_p$ et qu'ils ont la même dimension, on a $I_p = I_{p+1}$.
+        Ainsi, l'entier $p$ est le même pour la stabilisation de $(K_k)$ et $(I_k)$.
+        Pour montrer $I_k = I_p$ pour tout $k \ge p$:
+        Nous savons déjà que $I_k \subseteq I_p$ (car la suite est décroissante).
+        Il reste à montrer $I_p \subseteq I_k$.
+        Puisque $I_p = I_{p+1}$, cela signifie que pour tout $y \in I_p$, $y \in I_{p+1}$, donc $y = u^{p+1}(x')$ pour un certain $x' \in E$.
+        Plus généralement, si $I_j = I_{j+1}$, alors l'application $u$ restreinte à $I_j$ est surjective de $I_j$ dans $I_j$. En effet, $u(I_j) = u(\mathrm{Im}(u^j)) = \mathrm{Im}(u^{j+1}) = I_{j+1} = I_j$. Étant surjective sur un espace de dimension finie, elle est un automorphisme.
+        Donc $u|_{I_p} : I_p \to I_p$ est un automorphisme.
+        Ceci signifie que $u(I_p) = I_p$. Par conséquent $u^2(I_p) = u(I_p) = I_p$, et par récurrence $u^k(I_p) = I_p$ pour tout $k \ge 0$.
+        En particulier, $u^k(E) = u^k(I_0) \supseteq u^k(I_p)$.
+        Soit $y \in I_p$. Alors $y = u^p(x)$ pour un certain $x \in E$.
+        Puisque $I_p = I_k$ pour $k \ge p$, et on sait que $I_k \subseteq I_p$.
+        Si $y \in I_p$, alors $y = u^p(x)$. Mais on a montré que $u|_{I_p}$ est un automorphisme.
+        Donc $u^k|_{I_p}$ est aussi un automorphisme pour tout $k \ge 0$.
+        Conséquence : $\mathrm{Im}(u^k|_{I_p}) = I_p$.
+        Mais $\mathrm{Im}(u^k|_{I_p})$ est l'ensemble des éléments de la forme $u^k(z)$ où $z \in I_p$.
+        C'est donc un sous-ensemble de $I_k$.
+        Non, c'est $u^k(I_p)$. Et nous avons montré que $u^k(I_p) = I_p$.
+        Donc $I_p \subseteq I_k$ pour $k \ge p$.
+        Puisque nous avons aussi $I_k \subseteq I_p$, il s'ensuit que $I_k = I_p$ pour tout $k \ge p$.
 
-**5. Démontrer la formule suivante : $\text{rg}(g \circ f) = \text{rg } f - \dim(\text{Im } f \cap \ker g)$.**
-Considérons l'application linéaire $g$ restreinte au sous-espace vectoriel $\text{Im } f$.
-Définissons une nouvelle application linéaire $g' : \text{Im } f \to G$ par $g'(x) = g(x)$ pour tout $x \in \text{Im } f$.
-L'espace de départ de $g'$ est $\text{Im } f$, qui est un sous-espace vectoriel de $F$ et est de dimension finie $\text{rg } f$.
-Calculons l'image de $g'$ :
-$\text{Im } g' = \{ g'(x) \mid x \in \text{Im } f \} = \{ g(x) \mid x \in \text{Im } f \}$.
-Par définition, cet ensemble est exactement $\text{Im}(g \circ f)$.
-Calculons le noyau de $g'$ :
-$\ker g' = \{ x \in \text{Im } f \mid g'(x) = 0_G \} = \{ x \in \text{Im } f \mid g(x) = 0_G \}$.
-Par définition, cet ensemble est l'intersection de $\text{Im } f$ et $\ker g$, c'est-à-dire $\text{Im } f \cap \ker g$.
-Nous pouvons appliquer le théorème du rang à l'application linéaire $g' : \text{Im } f \to G$.
-Le théorème du rang stipule que la dimension de l'espace de départ est égale à la somme de la dimension du noyau et de la dimension de l'image.
-Donc, $\dim(\text{Im } f) = \dim(\ker g') + \dim(\text{Im } g')$.
-En substituant les expressions que nous avons trouvées pour $\dim(\text{Im } f)$, $\ker g'$ et $\text{Im } g'$ :
-$\text{rg } f = \dim(\text{Im } f \cap \ker g) + \text{rg}(g \circ f)$.
-En réarrangeant les termes pour isoler $\text{rg}(g \circ f)$, nous obtenons la formule désirée :
-$$ \text{rg}(g \circ f) = \text{rg } f - \dim(\text{Im } f \cap \ker g) $$
+3.  **Décomposition $E = K_p \oplus I_p$**
 
-**6. En déduire que $\dim(\ker(g \circ f)) = \dim(\ker f) + \dim(\text{Im } f \cap \ker g)$.**
-Appliquons le théorème du rang à l'application linéaire $f : E \to F$. L'espace de départ est $E$.
-$$ \dim E = \dim(\ker f) + \text{rg } f \quad (*)$$
-Appliquons le théorème du rang à l'application linéaire $g \circ f : E \to G$. L'espace de départ est également $E$.
-$$ \dim E = \dim(\ker(g \circ f)) + \text{rg}(g \circ f) \quad (**)$$
-De l'équation $(*)$, nous pouvons exprimer $\text{rg } f$ :
-$\text{rg } f = \dim E - \dim(\ker f)$.
-De l'équation $(**)$, nous pouvons exprimer $\text{rg}(g \circ f)$ :
-$\text{rg}(g \circ f) = \dim E - \dim(\ker(g \circ f))$.
-Maintenant, substituons ces expressions dans la formule démontrée à la question 5 :
-$\text{rg}(g \circ f) = \text{rg } f - \dim(\text{Im } f \cap \ker g)$
-$(\dim E - \dim(\ker(g \circ f))) = (\dim E - \dim(\ker f)) - \dim(\text{Im } f \cap \ker g)$.
-Nous pouvons simplifier le terme $\dim E$ de chaque côté de l'égalité :
-$-\dim(\ker(g \circ f)) = -\dim(\ker f) - \dim(\text{Im } f \cap \ker g)$.
-En multipliant toute l'équation par $-1$, nous obtenons le résultat final :
-$$ \dim(\ker(g \circ f)) = \dim(\ker f) + \dim(\text{Im } f \cap \ker g) $$
+    Pour montrer que $E = K_p \oplus I_p$, nous devons montrer deux choses :
+    a. $K_p \cap I_p = \{0\}$
+    b. $K_p + I_p = E$ (ou de manière équivalente $\mathrm{dim}(K_p) + \mathrm{dim}(I_p) = \mathrm{dim}(E)$ si $K_p \cap I_p = \{0\}$)
+
+    *   **a. $K_p \cap I_p = \{0\}$ :**
+        Soit $y \in K_p \cap I_p$.
+        Puisque $y \in K_p$, on a $u^p(y) = 0$.
+        Puisque $y \in I_p$, il existe un $x \in E$ tel que $y = u^p(x)$.
+        En substituant, nous obtenons $u^p(u^p(x)) = 0$, c'est-à-dire $u^{2p}(x) = 0$.
+        Cela signifie que $x \in K_{2p}$.
+        Or, d'après la question 2, puisque $p$ est l'indice de stabilisation, nous avons $K_{2p} = K_p$ (car $2p \ge p$).
+        Donc $x \in K_p$.
+        Par conséquent, $u^p(x) = 0$.
+        Puisque $y = u^p(x)$, on en déduit $y = 0$.
+        Donc $K_p \cap I_p = \{0\}$.
+
+    *   **b. $K_p + I_p = E$ :**
+        D'après le théorème du rang appliqué à $u^p$:
+        $\mathrm{dim}(E) = \mathrm{dim}(\ker(u^p)) + \mathrm{dim}(\mathrm{Im}(u^p))$
+        $\mathrm{dim}(E) = \mathrm{dim}(K_p) + \mathrm{dim}(I_p)$.
+        Puisque $K_p \cap I_p = \{0\}$, la somme $K_p + I_p$ est directe, et sa dimension est $\mathrm{dim}(K_p \oplus I_p) = \mathrm{dim}(K_p) + \mathrm{dim}(I_p)$.
+        Donc $\mathrm{dim}(K_p \oplus I_p) = \mathrm{dim}(E)$.
+        Puisque $K_p \oplus I_p$ est un sous-espace vectoriel de $E$ et qu'il a la même dimension que $E$, il est égal à $E$.
+        Ainsi, $E = K_p \oplus I_p$.
+
+4.  **Stabilité par $u$, nilpotence et automorphisme**
+
+    *   **Stabilité des sous-espaces $K_p$ et $I_p$ par $u$ :**
+        *   **Pour $K_p$ :**
+            Soit $x \in K_p$. Alors $u^p(x) = 0$.
+            Nous devons montrer que $u(x) \in K_p$.
+            Calculons $u^p(u(x))$. C'est $u^{p+1}(x)$.
+            D'après la question 2, $K_p = K_{p+1}$ (par définition de $p$).
+            Puisque $x \in K_p$, $u^p(x)=0$. On peut dire que $x \in K_{p+1}$ également.
+            Or $K_p = K_{p+1}$ signifie que si $u^{p+1}(x) = 0$, alors $u^p(x) = 0$.
+            Ah, wait. $u(x) \in K_p$ requires $u^p(u(x))=0$.
+            We know $u^p(x)=0$. So $x \in K_p$.
+            We want to check if $u(x) \in K_p$. This means $u^p(u(x))=0$, i.e. $u^{p+1}(x)=0$.
+            Since $x \in K_p$ and $K_p = K_{p+1}$, it implies that $x \in K_{p+1}$, so $u^{p+1}(x)=0$ holds.
+            Therefore, $u(x) \in K_p$.
+            Ceci prouve que $K_p$ est stable par $u$.
+
+        *   **Pour $I_p$ :**
+            Soit $y \in I_p$. Alors il existe $x \in E$ tel que $y = u^p(x)$.
+            Nous devons montrer que $u(y) \in I_p$.
+            Calculons $u(y) = u(u^p(x)) = u^{p+1}(x)$.
+            Par définition, $u^{p+1}(x) \in \mathrm{Im}(u^{p+1}) = I_{p+1}$.
+            D'après la question 2, $I_p = I_{p+1}$ (car $p$ est l'indice de stabilisation).
+            Donc $u(y) \in I_p$.
+            Ceci prouve que $I_p$ est stable par $u$.
+
+    *   **Nature des endomorphismes $u_K$ et $u_I$ :**
+        *   **Pour $u_K : K_p \to K_p$ :**
+            Par définition, $u_K(x) = u(x)$ pour $x \in K_p$.
+            Pour tout $x \in K_p$, nous avons $u^p(x) = 0$.
+            Donc $u_K^p(x) = u^p(x) = 0$.
+            Ceci signifie que $u_K^p$ est l'endomorphisme nul sur $K_p$.
+            Par conséquent, $u_K$ est un endomorphisme nilpotent.
+
+        *   **Pour $u_I : I_p \to I_p$ :**
+            Par définition, $u_I(y) = u(y)$ pour $y \in I_p$.
+            Nous savons que $u_I$ est un endomorphisme de $I_p$.
+            Pour montrer que $u_I$ est un automorphisme, il suffit de montrer qu'il est injectif ou surjectif, car $I_p$ est de dimension finie.
+            Montrons que $u_I$ est surjectif.
+            L'image de $u_I$ est $\mathrm{Im}(u_I) = \{u(y) \mid y \in I_p\}$.
+            Puisque $y \in I_p = \mathrm{Im}(u^p)$, il existe $x \in E$ tel que $y = u^p(x)$.
+            Alors $u(y) = u(u^p(x)) = u^{p+1}(x)$.
+            Ainsi, $\mathrm{Im}(u_I) = \{u^{p+1}(x) \mid x \in E\} = \mathrm{Im}(u^{p+1}) = I_{p+1}$.
+            D'après la question 2, nous savons que $I_{p+1} = I_p$.
+            Donc $\mathrm{Im}(u_I) = I_p$.
+            Ceci signifie que $u_I$ est surjectif.
+            Puisque $u_I$ est un endomorphisme d'un espace de dimension finie $I_p$ et qu'il est surjectif, il est également injectif.
+            Par conséquent, $u_I$ est un automorphisme de $I_p$.
+
+Cette décomposition $E = K_p \oplus I_p$ est connue sous le nom de **Décomposition de Fitting**, et elle est fondamentale dans l'étude des endomorphismes en dimension finie, notamment pour la forme de Jordan ou la décomposition de Dunford.

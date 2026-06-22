@@ -1,103 +1,115 @@
----
-uuid: "jalon-8-exo-01"
-title: "Exercice 1 : Noyau, Image et Rang d'une application linéaire simple"
-tags:
-  - math/algebre-lineaire
-  - exercice
----
-# Exercice 1 : Noyau, Image et Rang d'une application linéaire simple (Difficulté : ★☆☆☆☆)
+# Exercice 1 : Applications linéaires élémentaires (Difficulté : \*)
 
-## Énoncé
-Soit $f : \mathbb{R}^2 \to \mathbb{R}^3$ l'application définie pour tout $(x,y) \in \mathbb{R}^2$ par $f(x,y) = (x, y, x+y)$.
+## Énoncé du problème
 
-1. Montrer que $f$ est une application linéaire.
-2. Déterminer le noyau $\ker f$ de $f$ et sa dimension.
-3. Déterminer l'image $\text{Im } f$ de $f$ et sa dimension.
-4. Vérifier le théorème du rang pour cette application.
+On considère l'application $f: \mathbb{R}^2 \to \mathbb{R}^3$ définie pour tout $(x, y) \in \mathbb{R}^2$ par :
+$$f(x, y) = (x+y, x-y, 2x)$$
+où $\mathbb{R}$ est le corps des nombres réels.
 
-## Correction Détaillée
+1.  Démontrer que $f$ est une application linéaire.
+2.  Déterminer le noyau de $f$, noté $\text{ker}(f)$. En donner une base et préciser sa dimension.
+3.  Déterminer l'image de $f$, notée $\text{Im}(f)$. En donner une base et préciser sa dimension (qui est le rang de $f$).
+4.  Vérifier le théorème du rang pour l'application $f$.
 
-1. **Montrer que $f$ est une application linéaire.**
-   Pour montrer que $f$ est une application linéaire, nous devons vérifier deux propriétés : l'additivité et l'homogénéité.
+## Correction détaillée
 
-   *Additivité :* Soient $u = (x_1, y_1) \in \mathbb{R}^2$ et $v = (x_2, y_2) \in \mathbb{R}^2$.
-   Leur somme est $u+v = (x_1+x_2, y_1+y_2)$.
-   Calculons $f(u+v)$ :
-   $$f(u+v) = f(x_1+x_2, y_1+y_2) = (x_1+x_2, y_1+y_2, (x_1+x_2)+(y_1+y_2))$$
-   Calculons $f(u)+f(v)$ :
-   $$f(u) = (x_1, y_1, x_1+y_1)$$
-   $$f(v) = (x_2, y_2, x_2+y_2)$$
-   $$f(u)+f(v) = (x_1+x_2, y_1+y_2, (x_1+y_1)+(x_2+y_2))$$
-   Puisque l'addition dans $\mathbb{R}$ est commutative et associative, nous avons $(x_1+y_1)+(x_2+y_2) = x_1+x_2+y_1+y_2 = (x_1+x_2)+(y_1+y_2)$.
-   Par conséquent, $f(u+v) = f(u)+f(v)$. L'additivité est vérifiée.
+### 1. Démontrer que $f$ est une application linéaire.
 
-   *Homogénéité :* Soit $\lambda \in \mathbb{R}$ et $u = (x,y) \in \mathbb{R}^2$.
-   Le produit scalaire est $\lambda u = (\lambda x, \lambda y)$.
-   Calculons $f(\lambda u)$ :
-   $$f(\lambda u) = f(\lambda x, \lambda y) = (\lambda x, \lambda y, \lambda x + \lambda y)$$
-   Calculons $\lambda f(u)$ :
-   $$\lambda f(u) = \lambda (x, y, x+y) = (\lambda x, \lambda y, \lambda(x+y))$$
-   Puisque la multiplication dans $\mathbb{R}$ est distributive sur l'addition, nous avons $\lambda(x+y) = \lambda x + \lambda y$.
-   Par conséquent, $f(\lambda u) = \lambda f(u)$. L'homogénéité est vérifiée.
+Pour qu'une application $f: E \to F$ soit linéaire, où $E$ et $F$ sont des espaces vectoriels sur un corps $K$, elle doit satisfaire deux propriétés :
+a) $f(\mathbf{u} + \mathbf{v}) = f(\mathbf{u}) + f(\mathbf{v})$ pour tous $\mathbf{u}, \mathbf{v} \in E$.
+b) $f(\lambda \mathbf{u}) = \lambda f(\mathbf{u})$ pour tout $\lambda \in K$ et tout $\mathbf{u} \in E$.
 
-   Puisque $f$ satisfait les propriétés d'additivité et d'homogénéité, $f$ est une application linéaire.
+Soient $\mathbf{u} = (x_1, y_1)$ et $\mathbf{v} = (x_2, y_2)$ deux vecteurs de $\mathbb{R}^2$.
+Soit $\lambda \in \mathbb{R}$ un scalaire.
 
-2. **Déterminer le noyau $\ker f$ de $f$ et sa dimension.**
-   Par définition, le noyau de $f$ est l'ensemble des vecteurs de l'espace de départ $\mathbb{R}^2$ qui sont envoyés sur le vecteur nul de l'espace d'arrivée $\mathbb{R}^3$.
-   $$\ker f = \{ (x,y) \in \mathbb{R}^2 \mid f(x,y) = (0,0,0) \}$$
-   Nous devons résoudre le système d'équations $f(x,y) = (0,0,0)$ :
-   $$
-   \begin{cases}
-   x = 0 & (L_1) \\
-   y = 0 & (L_2) \\
-   x+y = 0 & (L_3)
-   \end{cases}
-   $$
-   D'après l'équation $(L_1)$, nous avons $x=0$.
-   D'après l'équation $(L_2)$, nous avons $y=0$.
-   Substituons ces valeurs dans l'équation $(L_3)$ : $0+0=0$, ce qui est une égalité vraie.
-   Ainsi, les seules valeurs de $x$ et $y$ qui satisfont le système sont $x=0$ et $y=0$.
-   Le noyau de $f$ est donc $\ker f = \{ (0,0) \}$.
-   Le noyau est réduit au seul vecteur nul de $\mathbb{R}^2$.
-   La dimension du noyau est $\dim(\ker f) = 0$.
+#### Propriété a) : Additivité
+$\mathbf{u} + \mathbf{v} = (x_1+x_2, y_1+y_2)$.
+Calculons $f(\mathbf{u} + \mathbf{v})$ :
+$$f(\mathbf{u} + \mathbf{v}) = f(x_1+x_2, y_1+y_2) = ((x_1+x_2)+(y_1+y_2), (x_1+x_2)-(y_1+y_2), 2(x_1+x_2))$$
+Réorganisons les termes :
+$$f(\mathbf{u} + \mathbf{v}) = ((x_1+y_1)+(x_2+y_2), (x_1-y_1)+(x_2-y_2), 2x_1+2x_2)$$
+Par ailleurs, calculons $f(\mathbf{u}) + f(\mathbf{v})$ :
+$$f(\mathbf{u}) = (x_1+y_1, x_1-y_1, 2x_1)$$
+$$f(\mathbf{v}) = (x_2+y_2, x_2-y_2, 2x_2)$$
+$$f(\mathbf{u}) + f(\mathbf{v}) = ((x_1+y_1)+(x_2+y_2), (x_1-y_1)+(x_2-y_2), (2x_1)+(2x_2))$$
+Nous constatons que $f(\mathbf{u} + \mathbf{v}) = f(\mathbf{u}) + f(\mathbf{v})$. La première propriété est vérifiée.
 
-3. **Déterminer l'image $\text{Im } f$ de $f$ et sa dimension.**
-   Par définition, l'image de $f$ est l'ensemble des vecteurs de l'espace d'arrivée $\mathbb{R}^3$ qui sont atteints par $f$.
-   $$\text{Im } f = \{ f(x,y) \mid (x,y) \in \mathbb{R}^2 \}$$
-   Tout vecteur de l'image est de la forme $(x, y, x+y)$ pour certains scalaires $x,y \in \mathbb{R}$.
-   Nous pouvons décomposer un tel vecteur comme une somme de vecteurs :
-   $$(x, y, x+y) = (x, 0, x) + (0, y, y)$$
-   Nous pouvons ensuite factoriser les scalaires $x$ et $y$ :
-   $$(x, y, x+y) = x(1,0,1) + y(0,1,1)$$
-   Cela signifie que tout vecteur de l'image est une combinaison linéaire des vecteurs $v_1 = (1,0,1)$ et $v_2 = (0,1,1)$.
-   Donc, $\text{Im } f = \text{Vect}((1,0,1), (0,1,1))$.
-   Pour trouver la dimension de $\text{Im } f$, nous devons déterminer si la famille de vecteurs $(v_1, v_2)$ est libre.
-   Supposons qu'il existe des scalaires $\alpha, \beta \in \mathbb{R}$ tels que $\alpha v_1 + \beta v_2 = (0,0,0)$.
-   $$\alpha(1,0,1) + \beta(0,1,1) = (0,0,0)$$
-   $$(\alpha \cdot 1 + \beta \cdot 0, \alpha \cdot 0 + \beta \cdot 1, \alpha \cdot 1 + \beta \cdot 1) = (0,0,0)$$
-   $$(\alpha, \beta, \alpha+\beta) = (0,0,0)$$
-   Ceci conduit au système d'équations :
-   $$
-   \begin{cases}
-   \alpha = 0 \\
-   \beta = 0 \\
-   \alpha+\beta = 0
-   \end{cases}
-   $$
-   Les deux premières équations nous donnent directement $\alpha=0$ et $\beta=0$.
-   La troisième équation $0+0=0$ est satisfaite.
-   Puisque les seuls scalaires $\alpha$ et $\beta$ qui satisfont l'équation sont $\alpha=0$ et $\beta=0$, les vecteurs $v_1$ et $v_2$ sont linéairement indépendants.
-   La famille $(v_1, v_2)$ est une famille génératrice et libre de $\text{Im } f$, c'est donc une base de $\text{Im } f$.
-   La dimension de l'image est le nombre de vecteurs dans cette base, soit $\dim(\text{Im } f) = 2$.
-   Par définition, le rang de $f$ est $\text{rg}(f) = \dim(\text{Im } f) = 2$.
+#### Propriété b) : Homogénéité
+$\lambda \mathbf{u} = (\lambda x_1, \lambda y_1)$.
+Calculons $f(\lambda \mathbf{u})$ :
+$$f(\lambda \mathbf{u}) = f(\lambda x_1, \lambda y_1) = (\lambda x_1 + \lambda y_1, \lambda x_1 - \lambda y_1, 2\lambda x_1)$$
+Factorisons $\lambda$ dans chaque composante :
+$$f(\lambda \mathbf{u}) = (\lambda(x_1 + y_1), \lambda(x_1 - y_1), \lambda(2x_1))$$
+$$f(\lambda \mathbf{u}) = \lambda(x_1 + y_1, x_1 - y_1, 2x_1)$$
+Par définition de $f(\mathbf{u})$, on a :
+$$f(\lambda \mathbf{u}) = \lambda f(\mathbf{u})$$
+La deuxième propriété est vérifiée.
 
-4. **Vérifier le théorème du rang pour cette application.**
-   Le théorème du rang stipule que pour toute application linéaire $f : E \to F$ où $E$ est un espace vectoriel de dimension finie, on a la relation :
-   $$\dim E = \dim(\ker f) + \text{rg}(f)$$
-   Dans notre cas, l'espace de départ est $E = \mathbb{R}^2$, donc sa dimension est $\dim E = 2$.
-   D'après la question 2, nous avons trouvé $\dim(\ker f) = 0$.
-   D'après la question 3, nous avons trouvé $\text{rg}(f) = 2$.
-   Substituons ces valeurs dans la formule du théorème du rang :
-   $$2 = 0 + 2$$
-   $$2 = 2$$
-   L'égalité est vérifiée. Le théorème du rang est bien confirmé pour cette application linéaire.
+Puisque les deux propriétés sont satisfaites, $f$ est bien une application linéaire.
+
+### 2. Déterminer le noyau de $f$, $\text{ker}(f)$. En donner une base et sa dimension.
+
+Le noyau de $f$, $\text{ker}(f)$, est l'ensemble des vecteurs $\mathbf{u} \in \mathbb{R}^2$ tels que $f(\mathbf{u}) = \mathbf{0}_{\mathbb{R}^3}$, où $\mathbf{0}_{\mathbb{R}^3}$ est le vecteur nul de $\mathbb{R}^3$.
+Soit $\mathbf{u} = (x, y) \in \mathbb{R}^2$.
+$f(x, y) = (0, 0, 0)$ implique le système d'équations linéaires suivant :
+1.  $x+y = 0$
+2.  $x-y = 0$
+3.  $2x = 0$
+
+À partir de l'équation (3), nous déduisons directement $x = 0$.
+Substituons $x=0$ dans l'équation (1) :
+$0+y = 0 \implies y = 0$.
+Vérifions ces valeurs dans l'équation (2) :
+$0-0 = 0$, ce qui est consistant.
+
+Ainsi, le seul vecteur $(x, y)$ qui satisfait $f(x, y) = (0, 0, 0)$ est $(0, 0)$.
+Donc, $\text{ker}(f) = \{(0, 0)\}$.
+
+Une base de $\text{ker}(f)$ est l'ensemble vide $\emptyset$, car le noyau ne contient que le vecteur nul.
+La dimension de $\text{ker}(f)$, notée $\text{dim}(\text{ker}(f))$, est 0.
+
+### 3. Déterminer l'image de $f$, $\text{Im}(f)$. En donner une base et sa dimension.
+
+L'image de $f$, $\text{Im}(f)$, est l'ensemble des vecteurs de $\mathbb{R}^3$ qui sont des images de vecteurs de $\mathbb{R}^2$ par $f$.
+$\text{Im}(f) = \{ f(x,y) \mid (x,y) \in \mathbb{R}^2 \}$.
+On peut écrire $f(x,y)$ comme une combinaison linéaire de vecteurs fixes :
+$$f(x,y) = (x+y, x-y, 2x) = (x,x,2x) + (y,-y,0)$$
+$$f(x,y) = x(1,1,2) + y(1,-1,0)$$
+Ceci signifie que l'image de $f$ est l'espace vectoriel engendré par les vecteurs $v_1 = (1,1,2)$ et $v_2 = (1,-1,0)$.
+$\text{Im}(f) = \text{Vect}((1,1,2), (1,-1,0))$.
+
+Pour trouver une base de $\text{Im}(f)$, nous devons vérifier si les vecteurs $v_1$ et $v_2$ sont linéairement indépendants.
+Soient $\lambda_1, \lambda_2 \in \mathbb{R}$ tels que $\lambda_1 v_1 + \lambda_2 v_2 = \mathbf{0}_{\mathbb{R}^3}$.
+$$\lambda_1(1,1,2) + \lambda_2(1,-1,0) = (0,0,0)$$
+Ceci conduit au système d'équations :
+1.  $\lambda_1 + \lambda_2 = 0$
+2.  $\lambda_1 - \lambda_2 = 0$
+3.  $2\lambda_1 = 0$
+
+De l'équation (3), nous obtenons $\lambda_1 = 0$.
+Substituons $\lambda_1 = 0$ dans l'équation (1) :
+$0 + \lambda_2 = 0 \implies \lambda_2 = 0$.
+Substituons $\lambda_1 = 0$ et $\lambda_2 = 0$ dans l'équation (2) :
+$0 - 0 = 0$, ce qui est consistant.
+
+Puisque la seule solution est $\lambda_1 = 0$ et $\lambda_2 = 0$, les vecteurs $v_1 = (1,1,2)$ et $v_2 = (1,-1,0)$ sont linéairement indépendants.
+Ils forment donc une base de $\text{Im}(f)$.
+Une base de $\text{Im}(f)$ est $\{(1,1,2), (1,-1,0)\}$.
+La dimension de $\text{Im}(f)$, notée $\text{dim}(\text{Im}(f))$, est le nombre de vecteurs dans sa base, soit 2.
+Le rang de $f$ est $\text{rg}(f) = \text{dim}(\text{Im}(f)) = 2$.
+
+### 4. Vérifier le théorème du rang.
+
+Le théorème du rang stipule que pour une application linéaire $f: E \to F$, où $E$ est un espace vectoriel de dimension finie, on a :
+$$\text{dim}(E) = \text{dim}(\text{ker}(f)) + \text{dim}(\text{Im}(f))$$
+
+Dans notre cas :
+L'espace de départ $E$ est $\mathbb{R}^2$. Sa dimension est $\text{dim}(\mathbb{R}^2) = 2$.
+Nous avons trouvé $\text{dim}(\text{ker}(f)) = 0$.
+Nous avons trouvé $\text{dim}(\text{Im}(f)) = 2$.
+
+Vérifions l'égalité :
+$\text{dim}(\text{ker}(f)) + \text{dim}(\text{Im}(f)) = 0 + 2 = 2$.
+Cette somme est égale à la dimension de l'espace de départ $\mathbb{R}^2$.
+$$2 = 2$$
+Le théorème du rang est bien vérifié pour cette application linéaire.

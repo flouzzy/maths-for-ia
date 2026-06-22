@@ -1,135 +1,86 @@
----
-uuid: "jalon-8-exo-02"
-title: "Exercice 2 : Noyau, Image et Rang d'une application linéaire simple"
-tags:
-  - math/algebre-lineaire
-  - exercice
----
-# Exercice 2 : Noyau, Image et Rang d'une application linéaire simple (Difficulté : ★☆☆☆☆)
+# Exercice 2 : Application linéaire de dérivation (Difficulté : *)
 
-## Énoncé
-Soit $f : \mathbb{R}^2 \to \mathbb{R}^2$ l'application définie pour tout $(x,y) \in \mathbb{R}^2$ par $f(x,y) = (2x - y, 4x - 2y)$.
+## Énoncé du problème
 
-1.  Démontrer que $f$ est une application linéaire.
-2.  Déterminer le noyau $\ker f$ de $f$.
-3.  Déterminer l'image $\text{Im } f$ de $f$.
-4.  Calculer le rang de $f$ et vérifier le théorème du rang.
+Soit $\mathbb{K}$ le corps des nombres réels, $\mathbb{K} = \mathbb{R}$.
+On considère l'espace vectoriel $E = \mathbb{R}_2[X]$ des polynômes à coefficients réels de degré au plus 2. Autrement dit, $E = \{ a_0 + a_1 X + a_2 X^2 \mid a_0, a_1, a_2 \in \mathbb{R} \}$.
 
-## Correction Détaillée
+On définit l'application $D: E \to E$ par $D(P) = P'$, où $P'$ désigne le polynôme dérivé de $P$.
 
-### 1. Démontrer que $f$ est une application linéaire
+1.  Justifier que $D$ est une application linéaire.
+2.  Déterminer le noyau de $D$, noté $\text{Ker}(D)$. En donner une base et sa dimension.
+3.  Déterminer l'image de $D$, notée $\text{Im}(D)$. En donner une base et sa dimension.
+4.  Vérifier le théorème du rang pour l'application $D$.
 
-Pour démontrer que $f$ est une application linéaire, nous devons vérifier les deux propriétés suivantes :
-   - Additivité : $\forall u, v \in \mathbb{R}^2, f(u + v) = f(u) + f(v)$.
-   - Homogénéité : $\forall \lambda \in \mathbb{R}, \forall u \in \mathbb{R}^2, f(\lambda \cdot u) = \lambda \cdot f(u)$.
+## Correction détaillée
 
-Soient $u = (x_1, y_1) \in \mathbb{R}^2$ et $v = (x_2, y_2) \in \mathbb{R}^2$. Soit $\lambda \in \mathbb{R}$.
+### Question 1 : Justifier que $D$ est une application linéaire.
 
-**Vérification de l'additivité :**
-Calculons $u + v$:
-$u + v = (x_1 + x_2, y_1 + y_2)$.
+Pour montrer que $D$ est une application linéaire, nous devons vérifier deux propriétés :
+1.  Additivité : $D(P+Q) = D(P) + D(Q)$ pour tous $P, Q \in E$.
+2.  Homogénéité : $D(\lambda P) = \lambda D(P)$ pour tout $P \in E$ et tout scalaire $\lambda \in \mathbb{R}$.
 
-Appliquons $f$ à $u + v$:
-$f(u + v) = f(x_1 + x_2, y_1 + y_2)$
-$f(u + v) = (2(x_1 + x_2) - (y_1 + y_2), 4(x_1 + x_2) - 2(y_1 + y_2))$
-$f(u + v) = (2x_1 + 2x_2 - y_1 - y_2, 4x_1 + 4x_2 - 2y_1 - 2y_2)$
-Réorganisons les termes :
-$f(u + v) = ((2x_1 - y_1) + (2x_2 - y_2), (4x_1 - 2y_1) + (4x_2 - 2y_2))$
+Soient $P, Q \in E$. Par les propriétés de la dérivation des polynômes :
+*   $D(P+Q) = (P+Q)' = P' + Q' = D(P) + D(Q)$.
+Soit $\lambda \in \mathbb{R}$. Par les propriétés de la dérivation des polynômes :
+*   $D(\lambda P) = (\lambda P)' = \lambda P' = \lambda D(P)$.
 
-Calculons $f(u) + f(v)$:
-$f(u) = (2x_1 - y_1, 4x_1 - 2y_1)$
-$f(v) = (2x_2 - y_2, 4x_2 - 2y_2)$
-$f(u) + f(v) = ((2x_1 - y_1) + (2x_2 - y_2), (4x_1 - 2y_1) + (4x_2 - 2y_2))$
+Puisque ces deux propriétés sont satisfaites, l'application $D$ est bien une application linéaire de $E$ dans $E$.
 
-Nous constatons que $f(u + v) = f(u) + f(v)$. L'additivité est vérifiée.
+### Question 2 : Déterminer le noyau de $D$, $\text{Ker}(D)$. En donner une base et sa dimension.
 
-**Vérification de l'homogénéité :**
-Calculons $\lambda \cdot u$:
-$\lambda \cdot u = (\lambda x_1, \lambda y_1)$.
+Par définition, le noyau de $D$ est l'ensemble des polynômes $P \in E$ tels que $D(P) = 0_E$, où $0_E$ est le polynôme nul.
+$P \in \text{Ker}(D) \iff D(P) = 0_E \iff P' = 0_E$.
 
-Appliquons $f$ à $\lambda \cdot u$:
-$f(\lambda \cdot u) = f(\lambda x_1, \lambda y_1)$
-$f(\lambda \cdot u) = (2(\lambda x_1) - (\lambda y_1), 4(\lambda x_1) - 2(\lambda y_1))$
-$f(\lambda \cdot u) = (\lambda (2x_1 - y_1), \lambda (4x_1 - 2y_1))$
+Soit un polynôme $P(X) \in E$, il s'écrit sous la forme $P(X) = a_0 + a_1 X + a_2 X^2$ avec $a_0, a_1, a_2 \in \mathbb{R}$.
+La dérivée de $P(X)$ est $P'(X) = a_1 + 2a_2 X$.
 
-Calculons $\lambda \cdot f(u)$:
-$f(u) = (2x_1 - y_1, 4x_1 - 2y_1)$
-$\lambda \cdot f(u) = \lambda (2x_1 - y_1, 4x_1 - 2y_1)$
-$\lambda \cdot f(u) = (\lambda (2x_1 - y_1), \lambda (4x_1 - 2y_1))$
+Pour que $P'(X)$ soit le polynôme nul, il faut que tous ses coefficients soient nuls.
+Ainsi, $P'(X) = 0_E \iff a_1 = 0 \text{ et } 2a_2 = 0$.
+Cela implique $a_1 = 0$ et $a_2 = 0$.
 
-Nous constatons que $f(\lambda \cdot u) = \lambda \cdot f(u)$. L'homogénéité est vérifiée.
+Le polynôme $P(X)$ doit donc s'écrire $P(X) = a_0 + 0 \cdot X + 0 \cdot X^2 = a_0$, où $a_0$ est un réel quelconque.
+Le noyau de $D$ est donc l'ensemble des polynômes constants :
+$\text{Ker}(D) = \{ a_0 \mid a_0 \in \mathbb{R} \} = \mathbb{R}_0[X]$.
 
-Puisque $f$ satisfait les deux propriétés d'additivité et d'homogénéité, $f$ est bien une application linéaire de $\mathbb{R}^2$ dans $\mathbb{R}^2$.
+Pour trouver une base de $\text{Ker}(D)$, nous pouvons observer que tout polynôme constant $P(X) = a_0$ peut s'écrire $a_0 \cdot 1$. Le polynôme constant $1$ est non nul et engendre $\text{Ker}(D)$.
+Une base de $\text{Ker}(D)$ est $(1)$.
+La dimension de $\text{Ker}(D)$ est le nombre de vecteurs dans cette base, donc $\dim(\text{Ker}(D)) = 1$.
 
-### 2. Déterminer le noyau $\ker f$ de $f$
+### Question 3 : Déterminer l'image de $D$, $\text{Im}(D)$. En donner une base et sa dimension.
 
-Par définition, le noyau de $f$ est l'ensemble des vecteurs $u = (x,y) \in \mathbb{R}^2$ tels que $f(u) = 0_{\mathbb{R}^2}$.
-$f(x,y) = (0,0)$.
-Cela nous donne le système d'équations suivant :
-$$
-\begin{cases}
-2x - y = 0 \\
-4x - 2y = 0
-\end{cases}
-$$
+Par définition, l'image de $D$ est l'ensemble des polynômes $Q \in E$ pour lesquels il existe au moins un polynôme $P \in E$ tel que $D(P) = Q$.
+$Q \in \text{Im}(D) \iff \exists P \in E \text{ tel que } P' = Q$.
 
-De la première équation, nous obtenons $y = 2x$.
-Substituons cette expression de $y$ dans la deuxième équation :
-$4x - 2(2x) = 0$
-$4x - 4x = 0$
-$0 = 0$
+Soit un polynôme $P(X) = a_0 + a_1 X + a_2 X^2 \in E$.
+Son image par $D$ est $D(P) = P'(X) = a_1 + 2a_2 X$.
+Tout polynôme dans l'image est donc de la forme $a_1 + 2a_2 X$.
+Ces polynômes sont de degré au plus 1. L'ensemble de ces polynômes est l'espace vectoriel $\mathbb{R}_1[X]$.
+Tout polynôme de $\mathbb{R}_1[X]$, disons $Q(X) = b_0 + b_1 X$, peut être obtenu comme la dérivée d'un polynôme de $\mathbb{R}_2[X]$. Par exemple, $P(X) = b_0 X + \frac{b_1}{2} X^2$ est dans $\mathbb{R}_2[X]$ et $P'(X) = b_0 + b_1 X = Q(X)$. (Nous pouvons choisir $a_0=0$ et ajuster $a_1, a_2$ pour obtenir n'importe quel $b_0+b_1X$).
 
-Cette dernière équation est toujours vraie, ce qui signifie que la deuxième équation est une conséquence de la première (elles sont linéairement dépendantes).
-Les vecteurs $(x,y)$ dans le noyau sont ceux pour lesquels $y = 2x$.
-Donc, un vecteur $(x,y)$ dans $\ker f$ peut s'écrire sous la forme $(x, 2x)$.
-Nous pouvons factoriser $x$ :
-$(x, 2x) = x(1, 2)$.
+Ainsi, $\text{Im}(D) = \{ a_1 + 2a_2 X \mid a_1, a_2 \in \mathbb{R} \} = \mathbb{R}_1[X]$.
 
-Ainsi, le noyau de $f$ est l'ensemble des multiples scalaires du vecteur $(1, 2)$.
-$\ker f = \{ x(1, 2) \mid x \in \mathbb{R} \}$.
-C'est la droite vectorielle engendrée par le vecteur $(1, 2)$.
-$\ker f = \text{Vect}((1, 2))$.
+Pour trouver une base de $\text{Im}(D)$, nous cherchons un ensemble de polynômes qui engendrent $\mathbb{R}_1[X]$ et sont linéairement indépendants.
+Les polynômes $1$ et $X$ forment une base standard de $\mathbb{R}_1[X]$.
+*   $1$ est la dérivée de $X$ (qui est dans $\mathbb{R}_2[X]$).
+*   $X$ est la dérivée de $\frac{1}{2}X^2$ (qui est dans $\mathbb{R}_2[X]$).
+Une base de $\text{Im}(D)$ est $(1, X)$.
+La dimension de $\text{Im}(D)$ est le nombre de vecteurs dans cette base, donc $\dim(\text{Im}(D)) = 2$.
 
-Le vecteur $(1, 2)$ est non nul, il forme donc une base de $\ker f$.
-Par conséquent, la dimension du noyau est $\dim(\ker f) = 1$.
+### Question 4 : Vérifier le théorème du rang pour l'application $D$.
 
-### 3. Déterminer l'image $\text{Im } f$ de $f$
+Le théorème du rang stipule que pour une application linéaire $D: E \to F$, on a la relation :
+$\dim(E) = \dim(\text{Ker}(D)) + \dim(\text{Im}(D))$.
 
-Par définition, l'image de $f$ est l'ensemble des vecteurs $w \in \mathbb{R}^2$ tels qu'il existe un vecteur $u = (x,y) \in \mathbb{R}^2$ avec $w = f(u)$.
-$w = (w_1, w_2) = (2x - y, 4x - 2y)$.
+Nous avons l'espace de départ $E = \mathbb{R}_2[X]$. Une base canonique de $\mathbb{R}_2[X]$ est $(1, X, X^2)$.
+Le nombre d'éléments dans cette base est 3, donc $\dim(E) = 3$.
 
-Nous pouvons écrire $w$ comme une combinaison linéaire des vecteurs colonnes de la matrice associée à $f$ (si on considère la base canonique).
-$f(x,y) = x(2,4) + y(-1,-2)$.
-Donc, l'image de $f$ est l'espace vectoriel engendré par les vecteurs $(2,4)$ et $(-1,-2)$.
-$\text{Im } f = \text{Vect}((2,4), (-1,-2))$.
+D'après la question 2, nous avons trouvé $\dim(\text{Ker}(D)) = 1$.
+D'après la question 3, nous avons trouvé $\dim(\text{Im}(D)) = 2$.
 
-Vérifions si ces vecteurs sont linéairement indépendants.
-Le vecteur $(2,4)$ est un multiple du vecteur $(-1,-2)$ :
-$(2,4) = -2(-1,-2)$.
-Puisque $(2,4)$ est un multiple non nul de $(-1,-2)$, ces deux vecteurs sont linéairement dépendants.
-Par conséquent, l'un des vecteurs est redondant pour générer l'espace. Nous pouvons choisir l'un d'eux comme base.
-Par exemple, $\text{Im } f = \text{Vect}((2,4))$.
-Ou, de manière équivalente, $\text{Im } f = \text{Vect}((1,2))$ puisque $(2,4) = 2(1,2)$.
+Calculons la somme de ces dimensions :
+$\dim(\text{Ker}(D)) + \dim(\text{Im}(D)) = 1 + 2 = 3$.
 
-L'image de $f$ est la droite vectorielle engendrée par le vecteur $(1,2)$.
-Le vecteur $(1,2)$ est non nul, il forme donc une base de $\text{Im } f$.
-Par conséquent, la dimension de l'image est $\dim(\text{Im } f) = 1$.
-
-### 4. Calculer le rang de $f$ et vérifier le théorème du rang
-
-Le rang de $f$, noté $\text{rg } f$, est par définition la dimension de son image.
-D'après la question précédente, nous avons trouvé $\dim(\text{Im } f) = 1$.
-Donc, $\text{rg } f = 1$.
-
-Vérifions le théorème du rang. Le théorème du rang stipule que pour une application linéaire $f : E \to F$ où $E$ est de dimension finie, on a :
-$\dim E = \dim(\ker f) + \text{rg } f$.
-
-Dans notre cas, $E = \mathbb{R}^2$, donc $\dim E = 2$.
-Nous avons trouvé $\dim(\ker f) = 1$.
-Nous avons trouvé $\text{rg } f = 1$.
-
-Substituons ces valeurs dans le théorème du rang :
-$2 = 1 + 1$.
-$2 = 2$.
-
-Le théorème du rang est bien vérifié pour cette application linéaire.
+Nous observons que $\dim(E) = 3$ et $\dim(\text{Ker}(D)) + \dim(\text{Im}(D)) = 3$.
+L'égalité est vérifiée : $\dim(E) = \dim(\text{Ker}(D)) + \dim(\text{Im}(D))$.
+Le théorème du rang est bien vérifié pour l'application linéaire $D$.
