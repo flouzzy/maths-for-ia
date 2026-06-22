@@ -6,7 +6,7 @@ trimester: 1
 tags:
   - math/algebre-lineaire
   - ia/poids-reseaux
-prev: "[[Jalon 8 (Applications linéaires).md]]"
+prev: "[[Jalon-8.md]]"
 next: "[[Jalon 10 (Changements de base).md]]"
 ---
 # Jalon 9 : Calcul matriciel, opérations, inversibilité et représentations des applications linéaires
@@ -105,5 +105,5 @@ Montrons que $\text{Mat}_{\mathcal{B}_E, \mathcal{B}_G}(g \circ f) = \text{Mat}_
 - **Exemple Concret :** L'entraînement des modèles sur **GPU** (unités de traitement graphique) est extrêmement rapide car ces puces sont conçues pour effectuer des millions de **produits matriciels** en parallèle. Chaque couche $h_{l+1} = \sigma(W_l h_l + b_l)$ utilise une matrice de poids $W_l$. Si $W_l$ est de grande taille, on utilise des techniques de **factorisation de matrice** (comme LoRA - Low-Rank Adaptation) pour n'apprendre qu'une petite partie de la matrice, ce qui permet de fine-tuner des modèles géants (LLM) sur du matériel grand public.
 
 ## 6. Liens Sémantiques
-- **Concepts Précédents requis :** [[Jalon-7.md|Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon 8 (Applications linéaires)]]
+- **Concepts Précédents requis :** [[Jalon-7.md|Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon-8]]
 - **Concepts Futurs dépendants :** [[Jalon 10 (Changements de base)]], [[Jalon 29 (Éléments propres)]], [[Jalon 43 (Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.)]]

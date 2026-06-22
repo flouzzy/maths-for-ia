@@ -24,7 +24,7 @@ On considère la propriété $P(f)$ suivante, exprimée en langage courant :
 **Partie B : Négation**
 
 1.  Écrire la négation de la propriété $P(f)$, notée $\neg P(f)$, de manière formelle. Détailler chaque étape de la négation.
-2.  Écrire la propriété $\neg P(f)$ en langage courant, de la manière la plus claire et concise possible.
+2.  Écrire la propriété $\neg P(f)$ en langage courant, de la manière la plus explicite et rigoureuse possible.
 
 **Partie C : Application**
 
