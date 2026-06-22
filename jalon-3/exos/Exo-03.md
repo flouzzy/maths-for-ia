@@ -76,7 +76,7 @@ Choisissons $y = x+1$. (Typage : Puisque $x \in \mathbb{Z}$ et $1 \in \mathbb{Z}
 Vérifions les deux conditions de la conjonction :
 
 1.  **$y \neq x$ :**
-    Puisque $y = x+1$, l'équation $y = x$ impliquerait $x+1 = x$, c'est-à-dire $1 = 0$, ce qui est absurde. Donc $y \neq x$. Cette condition est satisfaite.
+    Puisque $y = x+1$, nous avons $y - x = 1 \neq 0$, d'où $y \neq x$. Cette condition est rigoureusement satisfaite.
 
 2.  **$\forall z \in \mathbb{R}, \left( (\min(x,y) < z < \max(x,y)) \implies z \notin \mathbb{Z} \right)$ :**
     Puisque $y = x+1$, nous avons $x < y$.
@@ -135,7 +135,7 @@ Vérifions les deux conditions de la conjonction pour ce choix de $z$ :
     Puisque $y \in (0,1]$, nous avons $0 < y \le 1$.
     En multipliant par $\frac{1}{2}$ : $0 \cdot \frac{1}{2} < y \cdot \frac{1}{2} \le 1 \cdot \frac{1}{2}$.
     Ceci nous donne $0 < \frac{y}{2} \le \frac{1}{2}$.
-    Puisque $0 < \frac{y}{2} \le \frac{1}{2}$, et que $\frac{1}{2} \le 1$, nous déduisons par transitivité que $0 < \frac{y}{2} \le 1$. Par conséquent, $\frac{y}{2}$ appartient formellement à l'intervalle $[0,1]$.
+    Puisque $0 < \frac{y}{2} \le \frac{1}{2}$, et que $\frac{1}{2} \le 1$, nous déduisons par transitivité que $0 \le \frac{y}{2} \le 1$, ce qui implique formellement que $\frac{y}{2} \in [0,1]$.
     Ainsi, $z \in [0,1]$ est satisfaite.
 
 Puisque nous avons trouvé un tel $z$ (à savoir $y/2$) pour tout $y \neq 0$, et que la propriété est vraie pour $y=0$, la condition pour $x=0$ est entièrement vérifiée.
