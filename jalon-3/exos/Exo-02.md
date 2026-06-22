@@ -10,7 +10,7 @@ Voici l'Exercice 2 pour le Jalon 3, rédigé avec la rigueur attendue.
 1.  **Typage des objets :** Identifier et typer rigoureusement tous les objets mathématiques (ensembles, variables, constantes, relations, opérations).
 2.  **Formalisation :** Écrire la proposition en utilisant des quantificateurs ($\forall$, $\exists$) et des symboles logiques ($\land$, $\lor$, $\neg$, $\implies$, $\iff$).
 3.  **Négation formelle :** Écrire la négation de la proposition formalisée, en poussant la négation le plus loin possible à l'intérieur de la formule (c'est-à-dire en minimisant la portée de l'opérateur $\neg$).
-4.  **Négation en langage naturel :** Traduire cette négation formelle en une phrase claire et précise en langage naturel.
+4.  **Négation en langage naturel :** Traduire cette négation formelle en une phrase rigoureuse et précise en langage naturel.
 5.  **Valeur de vérité et justification :** Déterminer si la proposition originale est vraie ou fausse, et justifier votre réponse de manière ultra-détaillée, sans aucune ellipse mathématique. Chaque étape logique et chaque définition utilisée doit être explicitée.
 
 On rappelle que $\mathbb{N}$ désigne l'ensemble des entiers naturels $\{0, 1, 2, \ldots\}$ et $\mathbb{Z}$ l'ensemble des entiers relatifs $\{\ldots, -2, -1, 0, 1, 2, \ldots\}$.

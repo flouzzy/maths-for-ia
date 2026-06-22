@@ -240,7 +240,7 @@ Une suite convergente, ou même une suite constante, satisfera ces deux conditio
     *   **Justification :**
         1.  **$\mathcal{P}_1$ n'est pas satisfaite :**
             *   Considérons l'intervalle $(a,b) = (1, 2)$. Cet intervalle est non vide.
-            *   Pour tout $n \in \mathbb{N}$, $u_n = 0$. Clairement, $0 \notin (1, 2)$.
+            *   Pour tout $n \in \mathbb{N}$, $u_n = 0$. Puisque $0 \le 1$, l'élément $0$ n'appartient pas à l'intervalle $(1, 2)$.
             *   Donc, pour tout $N \in \mathbb{N}$ (par exemple $N=0$), il n'existe aucun $n \ge N$ tel que $u_n \in (1, 2)$.
             *   Ceci correspond à la négation de $\mathcal{P}_1$.
             *   Ainsi, $\mathcal{P}_1$ n'est pas satisfaite.
