@@ -7,7 +7,7 @@ tags:
   - math/algebre-lineaire
   - ia/transformation-lineaire
 prev: "[[Jalon-7.md]]"
-next: "[[Jalon 9 (Calcul matriciel).md]]"
+next: "[[Jalon-9.md]]"
 ---
 # Jalon 8 : Applications linéaires, noyau ($\ker$), image ($\text{Im}$) et démonstration du théorème du rang
 
@@ -116,4 +116,4 @@ Soit $f \in \mathcal{L}(E, F)$ avec $\dim E = n$.
 
 ## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon-7.md|Jalon 7 (Espaces vectoriels abstraits)]]
-- **Concepts Futurs dépendants :** [[Jalon 9 (Calcul matriciel)]], [[Jalon 30 (Trigonalisation d'endomorphismes et décomposition de Dunford.)]], [[Jalon 46 (Matrice jacobienne)]]
+- **Concepts Futurs dépendants :** [[Jalon-9]], [[Jalon 30 (Trigonalisation d'endomorphismes et décomposition de Dunford.)]], [[Jalon 46 (Matrice jacobienne)]]
