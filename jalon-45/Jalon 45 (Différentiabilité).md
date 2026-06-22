@@ -99,5 +99,5 @@ L'égalité est atteinte quand $u$ est colinéaire à $\nabla f(a)$.
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 44 (Fonctions de plusieurs variables).md]], [[Jalon 8 (Applications linéaires).md]]
+- **Concepts Précédents requis :** [[Jalon 44 (Fonctions de plusieurs variables).md]], [[Jalon-8.md]]
 - **Concepts Futurs dépendants :** [[Jalon 46 (Matrice jacobienne).md]], [[Jalon 128 (Flots de gradient).md]]

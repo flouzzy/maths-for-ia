@@ -11,7 +11,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-5/Jalon-5.md|Jalon 5 : Applications]] : Applications, injections, surjections, bijections et composition de fonctions.
 - [x] [[jalon-6/Jalon-6.md|Jalon 6 : Relations d'équivalence]] : Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps).
 - [x] [[jalon-7/Jalon-7.md|Jalon 7 : Espaces vectoriels abstraits]] : Espaces vectoriels abstraits, familles libres, familles génératrices et bases en dimension finie.
-- [ ] [[jalon-8/Jalon 8 (Applications linéaires).md|Jalon 8 : Applications linéaires]] : Applications linéaires, noyau ($\\ker$), image ($\\text{Im}$) et démonstration du théorème du rang.
+- [x] [[jalon-8/Jalon-8.md|Jalon 8 : Applications linéaires]] : Applications linéaires, noyau ($\\ker$), image ($\\text{Im}$) et démonstration du théorème du rang.
 - [ ] [[jalon-9/Jalon 9 (Calcul matriciel).md|Jalon 9 : Calcul matriciel]] : Calcul matriciel, opérations, inversibilité et représentations des applications linéaires.
 - [ ] [[jalon-10/Jalon 10 (Changements de base).md|Jalon 10 : Changements de base]] : Changements de base, matrices de passage et matrices par blocs.
 - [ ] [[jalon-11/Jalon 11 (Formes linéaires).md|Jalon 11 : Formes linéaires]] : Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie.

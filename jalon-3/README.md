@@ -25,19 +25,19 @@ Voici la liste des 10 exercices proposés pour ce jalon, classés par difficult�
     *   Appliquer les règles de négation aux quantificateurs.
 *   **Exercice 3 : Ordre des quantificateurs - Cas élémentaire**
     *   Identifier la différence entre `∀x ∃y P(x,y)` et `∃y ∀x P(x,y)` sur des exemples concrets.
-*   **Exercice 4 : Vérification de vérité sur domaines finis** (Moyen)
+*   **Exercice 4 : Vérification de vérité sur domaines finis**
     *   Évaluer la vérité d'énoncés quantifiés sur des ensembles de nombres ou d'objets finis.
-*   **Exercice 5 : Équivalences logiques avec quantificateurs** (Moyen)
+*   **Exercice 5 : Équivalences logiques avec quantificateurs**
     *   Démontrer des équivalences comme `¬(∀x P(x)) ≡ ∃x ¬P(x)`.
-*   **Exercice 6 : Traduction d'énoncés complexes** (Moyen)
+*   **Exercice 6 : Traduction d'énoncés complexes**
     *   Traduire des phrases plus élaborées du langage naturel vers la logique quantifiée.
-*   **Exercice 7 : Interprétation de formules quantifiées** (Moyen)
+*   **Exercice 7 : Interprétation de formules quantifiées**
     *   Expliquer en langage naturel la signification de formules logiques données.
-*   **Exercice 8 : Ordre des quantificateurs - Analyse approfondie** (Difficile)
+*   **Exercice 8 : Ordre des quantificateurs - Analyse approfondie**
     *   Construire des exemples où l'inversion de l'ordre des quantificateurs change la valeur de vérité.
-*   **Exercice 9 : Preuve par contre-exemple** (Difficile)
+*   **Exercice 9 : Preuve par contre-exemple**
     *   Utiliser la quantification pour prouver qu'un énoncé est faux en trouvant un contre-exemple.
-*   **Exercice 10 : Problèmes de modélisation** (Difficile)
+*   **Exercice 10 : Problèmes de modélisation**
     *   Appliquer la quantification à la modélisation de situations réelles ou de définitions mathématiques (ex: continuité).
 
 ---
