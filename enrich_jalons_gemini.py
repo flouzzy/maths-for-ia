@@ -40,15 +40,15 @@ def extract_metadata(content):
     # # Jalon X
     # **Année Y** > **Trimestre Z**
 
-    match_year = re.search(r'\*\*Année\s+(\d+).*?\*\*', content)
+    match_year = RE_YEAR.search(content)
     if match_year:
         year = match_year.group(1)
 
-    match_trim = re.search(r'\*\*Trimestre\s+(\d+).*?\*\*', content)
+    match_trim = RE_TRIM.search(content)
     if match_trim:
         trimester = match_trim.group(1)
 
-    match_prev = re.search(r'\*\*Précédent\*\*\s*:\s*\[\[(.*?)\]\]', content)
+    match_prev = RE_PREV.search(content)
     if match_prev:
         prev_link = f'"[[{match_prev.group(1)}.md]]"'
 
