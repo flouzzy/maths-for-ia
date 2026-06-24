@@ -92,5 +92,30 @@ class TestEnrichJalonsGemini(unittest.TestCase):
         title = enrich_jalons_gemini.extract_clean_title("Just some content without title", "Jalon 7.md")
         self.assertEqual(title, "Jalon 7")
 
+    def test_extract_main_content(self):
+        # Case 1: Simple content without YAML or nav links
+        content = "Just some plain text content.\nNo lines."
+        self.assertEqual(enrich_jalons_gemini.extract_main_content(content), content)
+
+        # Case 2: Content with YAML frontmatter but NO nav links at the end
+        content_yaml = "---\nuuid: 123\n---\n# Jalon 1\nSome text here"
+        # Since it has --- but no **Précédent** or **Suivant**, it should return the entire content
+        self.assertEqual(enrich_jalons_gemini.extract_main_content(content_yaml), content_yaml)
+
+        # Case 3: Content with frontmatter AND nav links (Précédent)
+        content_nav_prev = "---\nuuid: 123\n---\n# Jalon 1\nMain text\n---\n**Précédent** : [[Jalon 0.md]]"
+        expected_nav_prev = "---\nuuid: 123\n---\n# Jalon 1\nMain text"
+        self.assertEqual(enrich_jalons_gemini.extract_main_content(content_nav_prev), expected_nav_prev)
+
+        # Case 4: Content with frontmatter AND nav links (Suivant)
+        content_nav_next = "---\nuuid: 123\n---\n# Jalon 1\nMain text\n---\n**Suivant** : [[Jalon 2.md]]"
+        expected_nav_next = "---\nuuid: 123\n---\n# Jalon 1\nMain text"
+        self.assertEqual(enrich_jalons_gemini.extract_main_content(content_nav_next), expected_nav_next)
+
+        # Case 5: Content with frontmatter AND both nav links
+        content_nav_both = "---\nuuid: 123\n---\n# Jalon 1\nMain text\n---\n**Précédent** : [[Jalon 0.md]]\n**Suivant** : [[Jalon 2.md]]"
+        expected_nav_both = "---\nuuid: 123\n---\n# Jalon 1\nMain text"
+        self.assertEqual(enrich_jalons_gemini.extract_main_content(content_nav_both), expected_nav_both)
+
 if __name__ == '__main__':
     unittest.main()
