@@ -83,7 +83,7 @@ Trimestre 1 : logique
 L'objectif est de réapprendre la langue.
 Jalon 1 : Logique formelle, connecteurs.
 """
-        jalons, titles = parse_jalons(text)
+        jalons = parse_jalons(text)
         self.assertEqual(len(jalons), 1)
         j = jalons[0]
         self.assertEqual(j['id'], "Jalon 1")
@@ -92,11 +92,10 @@ Jalon 1 : Logique formelle, connecteurs.
         self.assertEqual(j['context'].strip(), "L'objectif est de réapprendre la langue.")
         self.assertEqual(j['desc'], "Logique formelle, connecteurs.")
         self.assertEqual(j['filename'], "Jalon 1 (Logique formelle).md")
-        self.assertEqual(titles, ["Jalon 1 (Logique formelle).md"])
 
     def test_livrable_ia_title(self):
         text = "Jalon 12 : Livrable IA T1 : Conception théorique d'un moteur de recherche"
-        jalons, titles = parse_jalons(text)
+        jalons = parse_jalons(text)
         self.assertEqual(len(jalons), 1)
         self.assertEqual(jalons[0]['filename'], "Jalon 12 (Livrable IA).md")
 
@@ -104,22 +103,21 @@ Jalon 1 : Logique formelle, connecteurs.
         # We need a string where extract_short_title keeps the problematic characters.
         # Since extract_short_title splits on `,`, `(`, and `:`, we shouldn't use them in the short title part.
         text = 'Jalon 2 : A \\ / * ? " < > | $ -- C'
-        jalons, titles = parse_jalons(text)
+        jalons = parse_jalons(text)
         self.assertEqual(len(jalons), 1)
         # "A \ / * ? \" < > | $ -- C" -> "A - - - - - - - - - - C"
         self.assertEqual(jalons[0]['filename'], "Jalon 2 (A - - - - - - - - - - C).md")
 
     def test_multiple_jalons(self):
         text = "Jalons 145 à 152 : Synthèse"
-        jalons, titles = parse_jalons(text)
+        jalons = parse_jalons(text)
         self.assertEqual(len(jalons), 1)
         self.assertEqual(jalons[0]['id'], "Jalons 145 à 152")
         self.assertEqual(jalons[0]['filename'], "Jalons 145 à 152 (Synthèse).md")
 
     def test_empty_input(self):
-        jalons, titles = parse_jalons("")
+        jalons = parse_jalons("")
         self.assertEqual(jalons, [])
-        self.assertEqual(titles, [])
 
 
 if __name__ == '__main__':
