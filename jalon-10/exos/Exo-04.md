@@ -1,57 +1,42 @@
-```yaml
-title: "Exercice 04"
-subtitle: "Changements de base et matrices de passage"
-course: "Mathématiques pour l'Intelligence Artificielle"
-level: "L1 à Master"
-jalon: "Jalon 10"
-topics: ["Changements de base", "Matrices de passage", "Coordonnées d'un vecteur", "Inversion de matrice 2x2"]
-difficulty: "2/5"
-date: "2023-10-27"
-author: "Équipe Pédagogique"
-```
+# Exercice 04
+## Énoncé
+Dans l'espace vectoriel $E = \mathbb{R}^2$, on considère la base canonique $\mathcal{B} = (e_1, e_2)$.
+On définit l'endomorphisme $f$ par sa matrice dans $\mathcal{B}$ :
+$A = \begin{pmatrix} 1 & 4 \\ 2 & 3 \end{pmatrix}$.
+On pose $u_1 = (1, 1)$ et $u_2 = (2, -1)$.
+1. Montrer que $\mathcal{B}' = (u_1, u_2)$ est une base de $E$.
+2. Écrire la matrice de passage $P$ de $\mathcal{B}$ à $\mathcal{B}'$, et calculer $P^{-1}$.
+3. Calculer $f(u_1)$ et $f(u_2)$ sous forme de vecteurs de la base canonique. En déduire que $u_1$ et $u_2$ sont des vecteurs propres de $f$.
+4. Quelle est la matrice $A'$ de $f$ dans la base $\mathcal{B}'$ ?
+5. Retrouver le résultat précédent en effectuant le produit matriciel $P^{-1} A P$.
 
-# Exercice 04 : Changements de base dans $\mathbb{R}^2$
+## Correction
+**1. Montrer que $\mathcal{B}'$ est une base :**
+Il suffit de calculer le déterminant des vecteurs de la famille dans la base canonique :
+$\det(u_1, u_2) = \begin{vmatrix} 1 & 2 \\ 1 & -1 \end{vmatrix} = 1(-1) - 1(2) = -1 - 2 = -3$.
+Comme le déterminant est non nul, la famille est libre. De cardinal 2 en dimension 2, c'est une base.
 
-Cet exercice vise à consolider la compréhension des concepts de bases, de matrices de passage et de calcul de coordonnées de vecteurs dans différentes bases.
+**2. Matrice de passage $P$ et son inverse :**
+$P = \begin{pmatrix} 1 & 2 \\ 1 & -1 \end{pmatrix}$.
+$P^{-1} = \frac{1}{-3} \begin{pmatrix} -1 & -2 \\ -1 & 1 \end{pmatrix} = \begin{pmatrix} 1/3 & 2/3 \\ 1/3 & -1/3 \end{pmatrix}$.
 
----
+**3. Calcul de $f(u_1)$ et $f(u_2)$ :**
+Le vecteur coordonnée de $u_1$ est $X_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+$f(u_1)$ a pour vecteur coordonnée $AX_1 = \begin{pmatrix} 1 & 4 \\ 2 & 3 \end{pmatrix} \begin{pmatrix} 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 1+4 \\ 2+3 \end{pmatrix} = \begin{pmatrix} 5 \\ 5 \end{pmatrix} = 5 \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+Donc $f(u_1) = 5u_1$. $u_1$ est un vecteur propre associé à la valeur propre $5$.
 
-## Contexte et Définitions Préliminaires
+Le vecteur coordonnée de $u_2$ est $X_2 = \begin{pmatrix} 2 \\ -1 \end{pmatrix}$.
+$f(u_2)$ a pour vecteur coordonnée $AX_2 = \begin{pmatrix} 1 & 4 \\ 2 & 3 \end{pmatrix} \begin{pmatrix} 2 \\ -1 \end{pmatrix} = \begin{pmatrix} 2-4 \\ 4-3 \end{pmatrix} = \begin{pmatrix} -2 \\ 1 \end{pmatrix} = -1 \begin{pmatrix} 2 \\ -1 \end{pmatrix}$.
+Donc $f(u_2) = -u_2$. $u_2$ est un vecteur propre associé à la valeur propre $-1$.
 
-Soit $E$ un espace vectoriel sur le corps $\mathbb{K} = \mathbb{R}$. Dans cet exercice, nous considérons spécifiquement l'espace vectoriel $E = \mathbb{R}^2$.
+**4. Matrice $A'$ de $f$ dans $\mathcal{B}'$ :**
+Les colonnes de $A'$ sont formées par les coordonnées de $f(u_1)$ et $f(u_2)$ dans la base $(u_1, u_2)$.
+Comme $f(u_1) = 5u_1 + 0u_2$ et $f(u_2) = 0u_1 - 1u_2$, on a directement :
+$A' = \begin{pmatrix} 5 & 0 \\ 0 & -1 \end{pmatrix}$.
 
-Nous définissons la base canonique de $\mathbb{R}^2$, notée $\mathcal{B}_c$, comme l'ensemble ordonné de vecteurs :
-$$ \mathcal{B}_c = (e_1, e_2) $$
-où $e_1 \in \mathbb{R}^2$ est le vecteur colonne $e_1 = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$ et $e_2 \in \mathbb{R}^2$ est le vecteur colonne $e_2 = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$.
-
-Nous introduisons une nouvelle famille de vecteurs de $\mathbb{R}^2$, notée $\mathcal{B}'$, définie par :
-$$ \mathcal{B}' = (u_1, u_2) $$
-où $u_1 \in \mathbb{R}^2$ est le vecteur colonne $u_1 = \begin{pmatrix} 2 \\ 1 \end{pmatrix}$ et $u_2 \in \mathbb{R}^2$ est le vecteur colonne $u_2 = \begin{pmatrix} -1 \\ 1 \end{pmatrix}$.
-
----
-
-## Questions
-
-1.  **Vérification de la nature de $\mathcal{B}'$ :**
-    Démontrer rigoureusement que la famille de vecteurs $\mathcal{B}' = (u_1, u_2)$ constitue bien une base de l'espace vectoriel $E = \mathbb{R}^2$.
-    Pour ce faire, vous pouvez vérifier la liberté de la famille.
-
-2.  **Détermination de la matrice de passage de $\mathcal{B}_c$ à $\mathcal{B}'$ :**
-    Déterminer la matrice de passage $P_{\mathcal{B}_c \to \mathcal{B}'}$ (parfois notée $P_{\mathcal{B}', \mathcal{B}_c}$ dans certaines conventions), qui permet de passer des coordonnées exprimées dans la base $\mathcal{B}'$ aux coordonnées exprimées dans la base $\mathcal{B}_c$.
-    Cette matrice est construite en plaçant les vecteurs de la nouvelle base $\mathcal{B}'$ (exprimés dans l'ancienne base $\mathcal{B}_c$) en colonnes.
-
-3.  **Détermination de la matrice de passage de $\mathcal{B}'$ à $\mathcal{B}_c$ :**
-    Déterminer la matrice de passage $P_{\mathcal{B}' \to \mathcal{B}_c}$ (parfois notée $P_{\mathcal{B}_c, \mathcal{B}'}$ dans certaines conventions), qui permet de passer des coordonnées exprimées dans la base $\mathcal{B}_c$ aux coordonnées exprimées dans la base $\mathcal{B}'$.
-    Expliquer la relation entre $P_{\mathcal{B}' \to \mathcal{B}_c}$ et $P_{\mathcal{B}_c \to \mathcal{B}'}$.
-    Pour calculer $P_{\mathcal{B}' \to \mathcal{B}_c}$, vous devrez calculer l'inverse d'une matrice $2 \times 2$. Rappelons que pour une matrice $A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$, son inverse est $A^{-1} = \frac{1}{\det(A)} \begin{pmatrix} d & -b \\ -c & a \end{pmatrix}$, à condition que $\det(A) \neq 0$.
-
-4.  **Calcul des coordonnées d'un vecteur dans la nouvelle base :**
-    Soit un vecteur $v \in \mathbb{R}^2$ dont les coordonnées dans la base canonique $\mathcal{B}_c$ sont $[v]_{\mathcal{B}_c} = \begin{pmatrix} 3 \\ 4 \end{pmatrix}$.
-    Calculer les coordonnées de $v$ dans la base $\mathcal{B}'$, notées $[v]_{\mathcal{B}'}$, en utilisant la matrice de passage appropriée déterminée précédemment.
-    Expliciter toutes les étapes du calcul matriciel.
-
-5.  **Vérification du résultat :**
-    Vérifier le résultat obtenu à la question 4. Pour ce faire, exprimez le vecteur $v$ comme une combinaison linéaire des vecteurs de la base $\mathcal{B}'$ en utilisant les coordonnées $[v]_{\mathcal{B}'}$ que vous avez calculées, et montrez que cela correspond bien au vecteur $v$ dont les coordonnées dans $\mathcal{B}_c$ sont $\begin{pmatrix} 3 \\ 4 \end{pmatrix}$.
-    Expliciter toutes les étapes du calcul vectoriel.
-
----
+**5. Vérification avec $P^{-1} A P$ :**
+Calculons d'abord $AP$ :
+$AP = \begin{pmatrix} 1 & 4 \\ 2 & 3 \end{pmatrix} \begin{pmatrix} 1 & 2 \\ 1 & -1 \end{pmatrix} = \begin{pmatrix} 1 \times 1 + 4 \times 1 & 1 \times 2 + 4 \times (-1) \\ 2 \times 1 + 3 \times 1 & 2 \times 2 + 3 \times (-1) \end{pmatrix} = \begin{pmatrix} 5 & -2 \\ 5 & 1 \end{pmatrix}$.
+Calculons ensuite $P^{-1}(AP)$ :
+$P^{-1}(AP) = \begin{pmatrix} 1/3 & 2/3 \\ 1/3 & -1/3 \end{pmatrix} \begin{pmatrix} 5 & -2 \\ 5 & 1 \end{pmatrix} = \begin{pmatrix} \frac{5}{3} + \frac{10}{3} & \frac{-2}{3} + \frac{2}{3} \\ \frac{5}{3} - \frac{5}{3} & \frac{-2}{3} - \frac{1}{3} \end{pmatrix} = \begin{pmatrix} \frac{15}{3} & 0 \\ 0 & \frac{-3}{3} \end{pmatrix} = \begin{pmatrix} 5 & 0 \\ 0 & -1 \end{pmatrix}$.
+On retrouve bien la matrice diagonale $A'$.
