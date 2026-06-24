@@ -13,7 +13,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-7/Jalon-7.md|Jalon 7 : Espaces vectoriels abstraits]] : Espaces vectoriels abstraits, familles libres, familles génératrices et bases en dimension finie.
 - [x] [[jalon-8/Jalon-8.md|Jalon 8 : Applications linéaires]] : Applications linéaires, noyau ($\\ker$), image ($\\text{Im}$) et démonstration du théorème du rang.
 - [x] [[jalon-9/Jalon-9.md|Jalon 9 : Calcul matriciel]] : Calcul matriciel, opérations, inversibilité et représentations des applications linéaires.
-- [ ] [[jalon-10/Jalon 10 (Changements de base).md|Jalon 10 : Changements de base]] : Changements de base, matrices de passage et matrices par blocs.
+- [x] [[jalon-10/Jalon-10.md|Jalon 10 : Changements de base]] : Changements de base, matrices de passage et matrices par blocs.
 - [ ] [[jalon-11/Jalon 11 (Formes linéaires).md|Jalon 11 : Formes linéaires]] : Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie.
 - [ ] [[jalon-12/Jalon 12 (Livrable IA).md|Jalon 12 : Livrable IA]] : Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X.
 ### Trimestre 2 : analyse réelle, suites et séries de fonctions
