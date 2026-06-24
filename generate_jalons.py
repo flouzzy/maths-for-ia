@@ -178,6 +178,7 @@ Jalons 153 à 156 : Synthèse finale, structuration de vos notes Obsidian en un 
 """
 
 TITLE_SPLIT_PATTERN = re.compile(r'[,(:]')
+INVALID_CHAR_PATTERN = re.compile(r'[\\/*?:"<>|$]')
 
 def extract_short_title(text):
     # Take part before first comma, parentheses, colon (if inside), or end
@@ -219,7 +220,7 @@ def parse_jalons(text_content):
                     short_title = "Livrable IA"
 
                 filename = f"{j_id} ({short_title}).md"
-                filename = re.sub(r'[\\/*?:"<>|$]', '-', filename) # added $ to sanitize
+                filename = INVALID_CHAR_PATTERN.sub('-', filename) # added $ to sanitize
                 filename = filename.replace('--', '-') # avoid double dashes
                 jalons.append({
                     'id': j_id,
