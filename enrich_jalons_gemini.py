@@ -22,6 +22,16 @@ RE_TITLE_CLEAN_PREFIX = re.compile(r'^Jalon(s)? [\d à]+\s*:?\s*')
 RE_TITLE_CLEAN_FILE = re.compile(r'^Jalon(s)? [\d à]+ \((.*?)\)\.md$')
 RE_JALON_NUM = re.compile(r'Jalon(s)? ([\d à]+)')
 
+TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), 'prompt_template.txt')
+PROMPT_TEMPLATE = None
+
+def get_prompt_template():
+    global PROMPT_TEMPLATE
+    if PROMPT_TEMPLATE is None:
+        with open(TEMPLATE_PATH, "r", encoding="utf-8") as template_file:
+            PROMPT_TEMPLATE = template_file.read()
+    return PROMPT_TEMPLATE
+
 def get_jalon_files():
     # Trouve tous les fichiers de Jalons dans les sous-dossiers
     files = glob.glob("Jalon*/**/*.md", recursive=True)
@@ -111,9 +121,7 @@ def generate_enriched_content(title, original_content, filepath, year, trimester
     next_yaml = f'\nnext: {next_link}' if next_link else ''
 
     # Load the prompt template from an external file to keep the code clean
-    template_path = os.path.join(os.path.dirname(__file__), 'prompt_template.txt')
-    with open(template_path, "r", encoding="utf-8") as template_file:
-        template = template_file.read()
+    template = get_prompt_template()
 
     prompt = template.format(
         title=title,
