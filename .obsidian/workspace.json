@@ -51,7 +51,7 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": true
               },
               "icon": "lucide-folder-closed",
               "title": "Explorateur de fichiers"
@@ -219,7 +219,7 @@
       "publish:Publier les modifications": false
     }
   },
-  "active": "8ceda288c71f7e44",
+  "active": "753729c1afd42e33",
   "lastOpenFiles": [
     "test_parse_jalons.py",
     "benchmark_sanitize.py",
