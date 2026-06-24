@@ -94,6 +94,10 @@ def extract_clean_title(main_content, filepath):
 
     # Sometimes title contains original mojibake if not properly parsed, so use clean fallback
     clean_filename_title = RE_TITLE_CLEAN_FILE.sub(r'\2', os.path.basename(filepath))
+    # If RE_TITLE_CLEAN_FILE didn't match, it returns the full filename (e.g. Jalon 7.md)
+    # We should strip the .md extension in that case
+    if clean_filename_title == os.path.basename(filepath):
+        clean_filename_title = os.path.basename(filepath).replace('.md', '')
 
     if not title_clean or title_clean == os.path.basename(filepath).replace('.md', ''):
         title_clean = clean_filename_title
