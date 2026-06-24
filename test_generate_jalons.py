@@ -1,5 +1,32 @@
 import unittest
-from generate_jalons import generate_concept_links, extract_short_title, parse_jalons
+from generate_jalons import generate_concept_links, extract_short_title, parse_jalons, generate_links
+
+class TestGenerateLinks(unittest.TestCase):
+
+    def setUp(self):
+        self.jalons_list = [
+            {'filename': 'Jalon-1.md'},
+            {'filename': 'Jalon-2.md'},
+            {'filename': 'Jalon-3.md'}
+        ]
+
+    def test_first_element(self):
+        result = generate_links(self.jalons_list[0], self.jalons_list, 0)
+        self.assertEqual(result, "**Suivant** : [[Jalon-2]]")
+
+    def test_middle_element(self):
+        result = generate_links(self.jalons_list[1], self.jalons_list, 1)
+        self.assertEqual(result, "**Précédent** : [[Jalon-1]] | **Suivant** : [[Jalon-3]]")
+
+    def test_last_element(self):
+        result = generate_links(self.jalons_list[2], self.jalons_list, 2)
+        self.assertEqual(result, "**Précédent** : [[Jalon-2]]")
+
+    def test_single_element(self):
+        single_list = [{'filename': 'Jalon-1.md'}]
+        result = generate_links(single_list[0], single_list, 0)
+        self.assertEqual(result, "")
+
 
 class TestExtractShortTitle(unittest.TestCase):
 
