@@ -1,5 +1,6 @@
 import os
 import glob
+import re
 
 # Remove specific mojibake
 REPLACEMENTS = {
@@ -17,19 +18,20 @@ REPLACEMENTS = {
     'Ã': 'e', # fallback for cut-off sequences
     '$-mathbb{R}^n$': 'Rn',
     '$-mathcal{L}^p$': 'Lp',
-    '$-mathbb{R}$': 'R'
+    '$-mathbb{R}$': 'R',
+    '$': '',
+    '\\': ''
 }
 
+# Sort keys by length descending to match longest sequences first, avoiding partial matches
+_sorted_keys = sorted(REPLACEMENTS.keys(), key=len, reverse=True)
+_PATTERN = re.compile('|'.join(re.escape(k) for k in _sorted_keys))
+
+def _replacer(match):
+    return REPLACEMENTS[match.group(0)]
+
 def clean_filename(filename):
-    new_name = filename
-    for bad, good in REPLACEMENTS.items():
-        new_name = new_name.replace(bad, good)
-
-    # Remove any remaining $ or \
-    new_name = new_name.replace('$', '')
-    new_name = new_name.replace('\\', '')
-
-    return new_name
+    return _PATTERN.sub(_replacer, filename)
 
 def main():
     files = glob.glob("Jalon *.md") + glob.glob("Jalons *.md")
