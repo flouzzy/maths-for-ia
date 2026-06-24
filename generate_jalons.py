@@ -234,8 +234,7 @@ def parse_jalons(text_content):
             if current_trimester and not line.startswith("Jalon"):
                 trimester_context += line + " "
 
-    all_jalon_titles = [j['filename'] for j in jalons]
-    return jalons, all_jalon_titles
+    return jalons
 
 def generate_links(jalon, jalons_list, index):
     links = []
@@ -272,7 +271,7 @@ def generate_concept_links(desc):
     return ""
 
 if __name__ == '__main__':
-    jalons, all_jalon_titles = parse_jalons(text)
+    jalons = parse_jalons(text)
 
     created_dirs = set()
     for i, jalon in enumerate(jalons):
