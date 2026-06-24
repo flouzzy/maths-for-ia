@@ -22,6 +22,16 @@ RE_TITLE_CLEAN_PREFIX = re.compile(r'^Jalon(s)? [\d à]+\s*:?\s*')
 RE_TITLE_CLEAN_FILE = re.compile(r'^Jalon(s)? [\d à]+ \((.*?)\)\.md$')
 RE_JALON_NUM = re.compile(r'Jalon(s)? ([\d à]+)')
 
+TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), 'prompt_template.txt')
+PROMPT_TEMPLATE = None
+
+def get_prompt_template():
+    global PROMPT_TEMPLATE
+    if PROMPT_TEMPLATE is None:
+        with open(TEMPLATE_PATH, "r", encoding="utf-8") as template_file:
+            PROMPT_TEMPLATE = template_file.read()
+    return PROMPT_TEMPLATE
+
 def get_jalon_files():
     # Trouve tous les fichiers de Jalons dans les sous-dossiers
     files = glob.glob("Jalon*/**/*.md", recursive=True)
@@ -40,15 +50,15 @@ def extract_metadata(content):
     # # Jalon X
     # **Année Y** > **Trimestre Z**
 
-    match_year = re.search(r'\*\*Année\s+(\d+).*?\*\*', content)
+    match_year = RE_YEAR.search(content)
     if match_year:
         year = match_year.group(1)
 
-    match_trim = re.search(r'\*\*Trimestre\s+(\d+).*?\*\*', content)
+    match_trim = RE_TRIM.search(content)
     if match_trim:
         trimester = match_trim.group(1)
 
-    match_prev = re.search(r'\*\*Précédent\*\*\s*:\s*\[\[(.*?)\]\]', content)
+    match_prev = RE_PREV.search(content)
     if match_prev:
         prev_link = f'"[[{match_prev.group(1)}.md]]"'
 
@@ -62,10 +72,7 @@ def extract_main_content(content):
     # Check if the first part is YAML frontmatter (for existing enrichments)
     parts = content.split('---\n')
     if len(parts) > 1:
-        if content.startswith('---'):
-            main_content = "---\n".join(parts[:-1]).strip()
-        else:
-            main_content = "---\n".join(parts[:-1]).strip()
+        main_content = "---\n".join(parts[:-1]).strip()
 
         nav_links = parts[-1].strip()
         if not ("**Précédent**" in nav_links or "**Suivant**" in nav_links):
@@ -114,9 +121,7 @@ def generate_enriched_content(title, original_content, filepath, year, trimester
     next_yaml = f'\nnext: {next_link}' if next_link else ''
 
     # Load the prompt template from an external file to keep the code clean
-    template_path = os.path.join(os.path.dirname(__file__), 'prompt_template.txt')
-    with open(template_path, "r", encoding="utf-8") as template_file:
-        template = template_file.read()
+    template = get_prompt_template()
 
     prompt = template.format(
         title=title,

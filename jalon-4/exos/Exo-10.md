@@ -18,7 +18,7 @@ La fonction $f$ est surjective si et seulement si l'application $f^*$ est inject
 *   $\mathcal{P}(X)$ désigne l'ensemble des parties de $X$, défini par $\mathcal{P}(X) = \{A \mid A \subseteq X\}$. L'existence de $\mathcal{P}(X)$ est garantie par l'axiome de l'ensemble des parties de ZFC.
 *   Nous supposons que l'ensemble $F$ est non vide. Si $F$ est l'ensemble vide ($\emptyset$), alors :
     *   La fonction $f: E \to \emptyset$ ne peut exister que si $E$ est vide (par l'axiome de la fonctionnalité). Si $E = \emptyset$ et $F = \emptyset$, alors $f$ est surjective par vacuité.
-    *   $\mathcal{P}(F) = \mathcal{P}(\emptyset) = \{\emptyset\}$. L'application $f^*: \{\emptyset\} \to \mathcal{P}(\emptyset)$ est définie par $f^*(\emptyset) = \{x \in \emptyset \mid f(x) \in \emptyset\} = \emptyset$. Dans ce cas, $f^*$ est triviale et injective (par vacuité). L'équivalence tient donc dans ce cas trivial.
+    *   $\mathcal{P}(F) = \mathcal{P}(\emptyset) = \{\emptyset\}$. L'application $f^*: \{\emptyset\} \to \mathcal{P}(\emptyset)$ est définie par $f^*(\emptyset) = \{x \in \emptyset \mid f(x) \in \emptyset\} = \emptyset$. Dans ce cas, $f^*$ est injective (par vacuité). L'équivalence tient donc dans ce cas particulier.
     Afin d'éviter les arguments par vacuité qui simplifieraient artificiellement certaines étapes, nous allons traiter le cas général où $F$ est un ensemble non vide. Le cas des ensembles finis, comme mentionné dans le thème, est un cas particulier de cette preuve générale.
 
 ### Partie 1 : Démonstration de "$f$ est surjective $\implies$ $f^*$ est injective"
@@ -49,7 +49,6 @@ Puisque $y$ était un élément arbitraire de $B_1$, nous avons montré que si $
 Par conséquent, $B_1 \subseteq B_2$.
 
 **Démonstration de $B_2 \subseteq B_1$ :**
-La démonstration est symétrique à la précédente.
 Soit $y$ un élément arbitraire de $F$ tel que $y \in B_2$.
 Puisque $f$ est surjective (par hypothèse) et que $y \in F$, il existe un élément $x_1 \in E$ tel que $f(x_1)=y$.
 Comme $f(x_1)=y$ et $y \in B_2$, nous avons $f(x_1) \in B_2$.

@@ -36,10 +36,10 @@ Soient $E$ (ensemble de départ) et $F$ (ensemble d'arrivée) deux ensembles.
 
 ### B. Théorèmes, Propositions & Lemmes
 > **Proposition (Composition et Bijection) :**
-> Si $f$ et $g$ sont bijectives, alors $g \circ f$ est bijective et $(g \circ f)^{-1} = f^{-1} \circ g^{-1}$.
+> Soient $f : E \to F$ et $g : F \to G$ deux applications bijectives. Alors $g \circ f : E \to G$ est bijective et sa réciproque est donnée par $(g \circ f)^{-1} = f^{-1} \circ g^{-1}$.
 
 > **Caractérisation de l'injectivité par la composition :**
-> $f$ est injective si et seulement s'il existe une application $g : F \to E$ telle que $g \circ f = Id_E$ (rétraction).
+> Soit un ensemble de départ non vide $E \neq \emptyset$. Une application $f : E \to F$ est injective si et seulement s'il existe une application $g : F \to E$ telle que $g \circ f = \text{Id}_E$ (rétraction à gauche).
 
 ## 3. Démonstrations
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*

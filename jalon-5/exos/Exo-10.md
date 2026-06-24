@@ -53,7 +53,7 @@ Analysons cette définition :
 *   Pour chaque élément $x \in E$, $f(x)$ est un sous-ensemble de $E$, c'est-à-dire $f(x) \in \mathcal{P}(E)$.
 *   La condition "$x \notin f(x)$" est une proposition logique qui est soit vraie, soit fausse pour chaque $x \in E$.
 *   L'ensemble $Y$ est donc l'ensemble de tous les éléments $x$ de $E$ qui n'appartiennent *pas* à l'image d'eux-mêmes par $f$.
-*   Par sa construction, $Y$ est clairement un sous-ensemble de $E$. Par conséquent, $Y \in \mathcal{P}(E)$.
+*   Par l'axiome de compréhension, l'ensemble $Y$ est formé d'éléments $x$ qui appartiennent préalablement à $E$. Ainsi, pour tout $x \in Y$, nous avons logiquement $x \in E$, ce qui caractérise l'inclusion $Y \subseteq E$. Par conséquent, par définition de l'ensemble des parties, $Y \in \mathcal{P}(E)$.
 
 **Étape 3 : Utilisation de l'hypothèse de surjectivité**
 

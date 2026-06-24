@@ -77,7 +77,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 7](jalon-7/Jalon-7.md)** : Espaces vectoriels abstraits, familles libres, familles génératrices et bases en dimension finie.
 - **[Jalon 8](jalon-8/Jalon-8.md)** : Applications linéaires, noyau ($\ker$), image ($\text{Im}$) et démonstration du théorème du rang.
 - **[Jalon 9](jalon-9/Jalon%209%20%28Calcul%20matriciel%29.md)** : Calcul matriciel, opérations, inversibilité et représentations des applications linéaires.
-- **[Jalon 10](jalon-10/Jalon%2010%20%28Changements%20de%20base%29.md)** : Changements de base, matrices de passage et matrices par blocs.
+- **[Jalon 10](jalon-10/Jalon-10.md)** : Changements de base, matrices de passage et matrices par blocs. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 11](jalon-11/Jalon%2011%20%28Formes%20lin%C3%A9aires%29.md)** : Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie.
 - **[Jalon 12](jalon-12/Jalon%2012%20%28Livrable%20IA%29.md)** : Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X.
 
