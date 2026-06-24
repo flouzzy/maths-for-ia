@@ -62,10 +62,7 @@ def extract_main_content(content):
     # Check if the first part is YAML frontmatter (for existing enrichments)
     parts = content.split('---\n')
     if len(parts) > 1:
-        if content.startswith('---'):
-            main_content = "---\n".join(parts[:-1]).strip()
-        else:
-            main_content = "---\n".join(parts[:-1]).strip()
+        main_content = "---\n".join(parts[:-1]).strip()
 
         nav_links = parts[-1].strip()
         if not ("**Précédent**" in nav_links or "**Suivant**" in nav_links):
