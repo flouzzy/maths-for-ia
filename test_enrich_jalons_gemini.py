@@ -63,5 +63,34 @@ class TestEnrichJalonsGemini(unittest.TestCase):
         # Check that client was called 10 times
         self.assertEqual(mock_client.models.generate_content.call_count, 10)
 
+    def test_extract_clean_title(self):
+        # Case 1: Standard `# Jalon X : Title` format
+        title = enrich_jalons_gemini.extract_clean_title("# Jalon 1 : Introduction à l'IA\nSome text", "Jalon 1.md")
+        self.assertEqual(title, "Introduction à l'IA")
+
+        # Case 2: Content with `# Jalon X (Title)` format
+        title = enrich_jalons_gemini.extract_clean_title("# Jalon 1 (Introduction à l'IA)\nSome text", "Jalon 1.md")
+        self.assertEqual(title, "Introduction à l'IA")
+
+        # Case 3: Content missing H1 header, extract from filename with parens `Jalon X (Title).md`
+        title = enrich_jalons_gemini.extract_clean_title("No title header here\nJust text", "Jalon 2 (Réseaux de neurones).md")
+        self.assertEqual(title, "Réseaux de neurones")
+
+        # Case 4: Content missing H1 header, falling back to clean filename `Jalon X.md` and empty text
+        title = enrich_jalons_gemini.extract_clean_title("", "Jalon 3 (Deep Learning).md")
+        self.assertEqual(title, "Deep Learning")
+
+        # Case 5: "Jalons" plural and ranges like "Jalons X à Y : Title"
+        title = enrich_jalons_gemini.extract_clean_title("# Jalons 4 à 5 : Optimisation\nText", "Jalons 4 à 5.md")
+        self.assertEqual(title, "Optimisation")
+
+        # Case 6: Stripping prefix completely where title is something else
+        title = enrich_jalons_gemini.extract_clean_title("# Les arbres de décision\nText", "Jalon 6.md")
+        self.assertEqual(title, "Les arbres de décision")
+
+        # Case 7: Content missing H1 header, falling back to simple filename
+        title = enrich_jalons_gemini.extract_clean_title("Just some content without title", "Jalon 7.md")
+        self.assertEqual(title, "Jalon 7")
+
 if __name__ == '__main__':
     unittest.main()
