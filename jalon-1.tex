@@ -1,0 +1,3186 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!50!black},
+    showstringspaces=false,
+    frame=single
+}
+
+\title{Logique formelle, connecteurs, tables de vérité et calcul des propositions}
+\author{Charles EDOU NZE \\ \small Independent Researcher}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Ce jalon introduit les fondements de la logique formelle, en explorant la syntaxe et la sémantique du calcul des propositions. À travers une approche rigoureuse et des démonstrations sans ellipse, il aborde les tables de vérité, les lois fondamentales (De Morgan, Peirce), et culmine avec une ouverture sur le SAT-solving en intelligence artificielle. Le jalon inclut également des exercices d'application théoriques et des travaux pratiques d'implémentation en Python.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\part{Cours magistral et fondations théoriques}
+\hypertarget{jalon-1-logique-formelle-connecteurs-tables-de-vuxe9rituxe9-et-calcul-des-propositions}{%
+\section{Jalon 1 : Logique formelle, connecteurs, tables de vérité et
+calcul des
+propositions}\label{jalon-1-logique-formelle-connecteurs-tables-de-vuxe9rituxe9-et-calcul-des-propositions}}
+
+\hypertarget{pruxe9sentation-du-concept-cluxe9}{%
+\subsection{1. Présentation du concept
+clé}\label{pruxe9sentation-du-concept-cluxe9}}
+
+La logique formelle est la science des structures de raisonnement
+valides. Pour aborder ce concept de manière géométrique et intuitive,
+libérée du formalisme brut, imaginons un labyrinthe géant représentant
+l'ensemble des possibles. Ce labyrinthe est composé d'une multitude
+d'aiguillages et de portes commandés à distance. Chaque porte ne peut
+être que dans deux états stables : - ouverte (valeur de vérité Vrai,
+notée \(1\)) ou - fermée (valeur de vérité Faux, notée \(0\)).
+
+La métaphore fondamentale de la logique propositionnelle réside dans la
+notion de flot ou de flux d'information à travers un réseau
+d'aiguillages. Considérons un fluide circulant dans ce réseau.
+
+Si nous plaçons deux vannes à la suite sur une même canalisation, le
+fluide ne passera que si la première vanne \textbf{ET} la seconde vanne
+sont ouvertes.
+
+C'est l'essence du connecteur de conjonction \textbf{(\(\land\))}. Si
+nous plaçons ces deux vannes en parallèle sur deux embranchements
+distincts reliant les mêmes points, il suffit que la première vanne OU
+la seconde vanne soit ouverte pour que le fluide traverse. C'est
+l'essence du connecteur de disjonction (\(\lor\)).
+
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node distance=2cm and 3cm,
+    valve/.style={rectangle, draw=blue!60, fill=blue!5, very thick, minimum size=1cm},
+    line/.style={draw, -latex', very thick}
+]
+
+% Nodes for AND logic (Series)
+\node[valve] (v1) {Vanne $A$};
+\node[valve, right=of v1] (v2) {Vanne $B$};
+\node[left=1.5cm of v1] (in_and) {Flux entrant};
+\node[right=1.5cm of v2] (out_and) {Flux sortant};
+
+% Paths for AND
+\path[line] (in_and) -- (v1);
+\path[line] (v1) -- (v2) node[midway, above] {$A \land B$};
+\path[line] (v2) -- (out_and);
+
+\node[above=0.5cm of v1, xshift=1.5cm] {\textbf{Conjonction (ET) : vannes en série}};
+
+% Nodes for OR logic (Parallel)
+\node[valve, below=3cm of v1] (v3) {Vanne $A$};
+\node[valve, below=5cm of v1] (v4) {Vanne $B$};
+\coordinate[left=1.5cm of v3, yshift=-1cm] (split_in);
+\coordinate[right=1.5cm of v3, yshift=-1cm] (split_out);
+\node[left=1cm of split_in] (in_or) {Flux entrant};
+\node[right=1cm of split_out] (out_or) {Flux sortant};
+
+% Paths for OR
+\path[line] (in_or) -- (split_in);
+\path[draw, very thick] (split_in) |- (v3);
+\path[draw, very thick] (split_in) |- (v4);
+\path[draw, very thick] (v3) -| (split_out) node[pos=0.25, above] {$A \lor B$};
+\path[draw, very thick] (v4) -| (split_out);
+\path[line] (split_out) -- (out_or);
+
+\node[above=0.5cm of v3, xshift=1.5cm] {\textbf{Disjonction (OU) : vannes en parallèle}};
+
+\end{tikzpicture}
+\caption{Analogie physique des connecteurs logiques à l'aide de réseaux de distribution de flux d'eau.}
+\label{fig:logic-gates}
+\end{figure}
+
+
+Pourquoi a-t-on ressenti le besoin d'inventer un tel formalisme ? Le
+langage naturel (le français, l'anglais, etc.) est parsemé d'ambiguïtés
+sémantiques. Le mot ``ou'', par exemple, exprime tantôt une disjonction
+exclusive (``fromage ou dessert'', mais pas les deux), tantôt une
+disjonction inclusive (``recherche développeur maîtrisant le C++ ou le
+Python'', de préférence les deux). De plus, l'esprit humain est sujet
+aux biais cognitifs et aux sophismes.
+
+La création d'une langue artificielle universelle, libre de toute
+ambiguïté contextuelle, a permis de détacher la forme d'un raisonnement
+de son contenu. C'est le projet leibnizien de la \emph{characteristica
+universalis} et du \emph{calculus ratiocinator} : transformer toute
+dispute philosophique ou scientifique en un simple calcul mathématique.
+``Calculons !'' disait Leibniz.
+
+Gottlob Frege, à la fin du XIXe siècle, a concrétisé ce rêve avec son
+\emph{Idéographie} (\emph{Begriffsschrift}), jetant les bases de la
+logique mathématique moderne.
+
+Dans cette optique, les variables propositionnelles agissent comme des
+interrupteurs élémentaires, et les formules logiques sont des montages
+complexes d'interrupteurs.
+
+Construire une table de vérité revient à dresser la carte complète des
+tensions de notre circuit pour toutes les configurations possibles des
+interrupteurs d'entrée.
+
+Si un circuit produit une tension de sortie positive (Vrai) quelle que
+soit la position des interrupteurs d'entrée, nous avons affaire à une
+tautologie : une vérité structurelle inébranlable, indépendante du monde
+réel. À l'inverse, si la sortie est toujours nulle, c'est une
+contradiction.
+
+Cette dissociation fondamentale entre la syntaxe (la forme de la
+formule) et la sémantique (sa signification ou sa valeur de vérité dans
+un monde donné) est la clé de voûte de la logique. Elle montre comment
+des règles de manipulation purement symboliques peuvent refléter
+fidèlement des réalités sémantiques.
+
+En manipulant des symboles selon des règles strictes, sans même savoir
+ce qu'ils représentent, on préserve la vérité. C'est cette nature
+purement mécanique qui permettra plus tard aux ordinateurs de manipuler
+des concepts abstraits et de raisonner de manière autonome.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{formalisation-rigueur-acaduxe9mique}{%
+\subsection{2. Formalisation \& Rigueur
+Académique}\label{formalisation-rigueur-acaduxe9mique}}
+
+Pour structurer rigoureusement le calcul des propositions (ou logique
+propositionnelle classique), nous devons définir précisément sa syntaxe
+(l'ensemble des formules bien formées) et sa sémantique (l'évaluation de
+ces formules).
+
+\hypertarget{a.-syntaxe-du-calcul-des-propositions}{%
+\subsubsection{A. Syntaxe du calcul des
+propositions}\label{a.-syntaxe-du-calcul-des-propositions}}
+
+Soit \(\mathcal{P}\) un ensemble dénombrable de symboles appelés
+\textbf{variables propositionnelles} (ou atomes), généralement notés
+\(p, q, r, \dots\) ou \(p_1, p_2, \dots\)
+
+On définit l'alphabet de notre langage par la réunion de
+\(\mathcal{P}\), des connecteurs logiques
+\(\{\neg, \lor, \land, \Rightarrow, \Leftrightarrow\}\) et des symboles
+de ponctuation \(\{\) ( , ) \(\}\).
+
+L'ensemble \(\mathcal{F}\) des \textbf{formules bien formées} (FBF) est
+défini de manière inductive comme le plus petit ensemble de mots sur cet
+alphabet satisfaisant aux règles suivantes : 1. \textbf{Règle de base :}
+Si \(p \in \mathcal{P}\), alors \(p \in \mathcal{F}\) (les variables
+propositionnelles sont des formules atomiques). 2. \textbf{Règle
+d'induction unaire :} Si \(A \in \mathcal{F}\), alors
+\((\neg A) \in \mathcal{F}\). 3. \textbf{Règle d'induction binaire :} Si
+\(A \in \mathcal{F}\) et \(B \in \mathcal{F}\), alors
+\((A \land B) \in \mathcal{F}\), \((A \lor B) \in \mathcal{F}\),
+\((A \Rightarrow B) \in \mathcal{F}\) et
+\((A \Leftrightarrow B) \in \mathcal{F}\).
+
+\emph{Remarque sur l'écriture :} Pour alléger la lecture, on omet
+souvent les parenthèses extérieures et on établit des règles de priorité
+des connecteurs (le connecteur \(\neg\) est plus prioritaire que
+\(\land\) et \(\lor\), qui sont plus prioritaires que \(\Rightarrow\) et
+\(\Leftrightarrow\)).
+
+Le \textbf{Théorème de lecture unique} (ou d'auto-analyse) garantit que
+pour toute formule bien formée non atomique \(F\), il existe un unique
+connecteur principal et d'uniques sous-formules directes permettant de
+la construire. Cela permet de définir des propriétés sur les formules
+par induction structurelle et des fonctions par récurrence sur la
+complexité des formules.
+
+\hypertarget{b.-suxe9mantique-et-uxe9valuation}{%
+\subsubsection{B. Sémantique et
+Évaluation}\label{b.-suxe9mantique-et-uxe9valuation}}
+
+La sémantique de la logique propositionnelle repose sur le principe de
+bivalence (les formules sont soit vraies, soit fausses) et de
+compositionnalité (la valeur de vérité d'une formule complexe dépend
+uniquement de celle de ses sous-formules).
+
+On appelle \textbf{valuation} (ou interprétation) une application
+\(v : \mathcal{P} \to \{0, 1\}\). L'ensemble des valuations est noté
+\(\mathcal{V} = \{0, 1\}^\mathcal{P}\).
+
+Toute valuation \(v\) s'étend de manière unique en une application
+\(\bar{v} : \mathcal{F} \to \{0, 1\}\) (que l'on notera également \(v\)
+par abus de langage) définie par récurrence structurelle : - Pour tout
+\(p \in \mathcal{P}\), \(\bar{v}(p) = v(p)\). -
+\(\bar{v}((\neg A)) = 1 - \bar{v}(A)\). -
+\(\bar{v}((A \land B)) = \min(\bar{v}(A), \bar{v}(B))\). -
+\(\bar{v}((A \lor B)) = \max(\bar{v}(A), \bar{v}(B))\). -
+\(\bar{v}((A \Rightarrow B)) = \max(1 - \bar{v}(A), \bar{v}(B))\). -
+\(\bar{v}((A \Leftrightarrow B)) = 1 - |\bar{v}(A) - \bar{v}(B)|\).
+
+Une formule \(A\) est dite \textbf{satisfaisable} s'il existe une
+valuation \(v\) telle que \(v(A) = 1\). Dans ce cas, \(v\) est appelée
+un \textbf{modèle} de \(A\) (noté \(v \models A\)). Un ensemble de
+formules \(\Sigma\) est satisfaisable s'il existe une valuation qui est
+modèle de toutes les formules de \(\Sigma\).
+
+Une formule \(A\) est une \textbf{tautologie} (ou est universellement
+valide) si pour toute valuation \(v\), \(v(A) = 1\). On note alors
+\(\models A\). Une formule \(A\) est une \textbf{contradiction} (ou est
+antilogie) si pour toute valuation \(v\), \(v(A) = 0\).
+
+Soit \(\Sigma \subseteq \mathcal{F}\) un ensemble de formules et
+\(A \in \mathcal{F}\) une formule. On dit que \(A\) est une
+\textbf{conséquence sémantique} de \(\Sigma\), notée
+\(\Sigma \models A\), si pour toute valuation \(v\), si \(v(B) = 1\)
+pour tout \(B \in \Sigma\), alors \(v(A) = 1\).
+
+\hypertarget{c.-systuxe8mes-formels-de-duxe9duction-syntaxe}{%
+\subsubsection{C. Systèmes Formels de Déduction
+(Syntaxe)}\label{c.-systuxe8mes-formels-de-duxe9duction-syntaxe}}
+
+Parallèlement à la sémantique, on définit des systèmes de preuve
+purement syntaxiques (comme les systèmes de Hilbert, la déduction
+naturelle ou le calcul des séquents). Une preuve formelle d'une formule
+\(A\) sous les hypothèses \(\Sigma\) est une suite finie de formules se
+terminant par \(A\), où chaque formule est soit un axiome du système,
+soit une formule de \(\Sigma\), soit obtenue à partir de formules
+précédentes par une règle d'inférence (comme le \emph{Modus Ponens} : de
+\(X\) et \(X \Rightarrow Y\), on déduit \(Y\)). On note alors
+\(\Sigma \vdash A\).
+
+Les propriétés fondamentales reliant sémantique et syntaxe sont : -
+\textbf{Théorème de Correction (Soundness) :} Si \(\Sigma \vdash A\),
+alors \(\Sigma \models A\). (Tout ce qui est démontrable est vrai). -
+\textbf{Théorème de Complétude (Completeness) :} Si
+\(\Sigma \models A\), alors \(\Sigma \vdash A\). (Tout ce qui est vrai
+est démontrable).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{le-noyau-dur-duxe9monstrations-pas-uxe0-pas}{%
+\subsection{3. Le Noyau Dur : Démonstrations
+Pas-à-Pas}\label{le-noyau-dur-duxe9monstrations-pas-uxe0-pas}}
+
+Nous présentons ici trois démonstrations fondamentales du calcul des
+propositions, rédigées avec une rigueur absolue et sans aucune ellipse
+mathématique.
+
+\hypertarget{duxe9monstration-1-loi-de-de-morgan-nega-lor-b-leftrightarrow-neg-a-land-neg-b}{%
+\subsubsection{\texorpdfstring{Démonstration 1 : Loi de De Morgan
+\(\neg(A \lor B) \Leftrightarrow (\neg A \land \neg B)\)}{Démonstration 1 : Loi de De Morgan \textbackslash neg(A \textbackslash lor B) \textbackslash Leftrightarrow (\textbackslash neg A \textbackslash land \textbackslash neg B)}}\label{duxe9monstration-1-loi-de-de-morgan-nega-lor-b-leftrightarrow-neg-a-land-neg-b}}
+
+Soit \(v\) une valuation quelconque. Nous voulons démontrer que pour
+toutes formules \(A\) et \(B\),
+\(v(\neg(A \lor B)) = v(\neg A \land \neg B)\). Nous allons procéder par
+étude exhaustive des cas (valeurs de vérité de \(A\) et \(B\)).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Cas 1 : \(v(A) = 1\) et \(v(B) = 1\)}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Évaluons le membre gauche :
+    \[v(A \lor B) = \max(v(A), v(B)) = \max(1, 1) = 1\]
+    \[v(\neg(A \lor B)) = 1 - v(A \lor B) = 1 - 1 = 0\]
+  \item
+    Évaluons le membre droit : \[v(\neg A) = 1 - v(A) = 1 - 1 = 0\]
+    \[v(\neg B) = 1 - v(B) = 1 - 1 = 0\]
+    \[v(\neg A \land \neg B) = \min(v(\neg A), v(\neg B)) = \min(0, 0) = 0\]
+  \item
+    Les deux valeurs coïncident : \(0 = 0\).
+  \end{itemize}
+\item
+  \textbf{Cas 2 : \(v(A) = 1\) et \(v(B) = 0\)}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Évaluons le membre gauche :
+    \[v(A \lor B) = \max(v(A), v(B)) = \max(1, 0) = 1\]
+    \[v(\neg(A \lor B)) = 1 - v(A \lor B) = 1 - 1 = 0\]
+  \item
+    Évaluons le membre droit : \[v(\neg A) = 1 - v(A) = 1 - 1 = 0\]
+    \[v(\neg B) = 1 - v(B) = 1 - 0 = 1\]
+    \[v(\neg A \land \neg B) = \min(v(\neg A), v(\neg B)) = \min(0, 1) = 0\]
+  \item
+    Les deux valeurs coïncident : \(0 = 0\).
+  \end{itemize}
+\item
+  \textbf{Cas 3 : \(v(A) = 0\) et \(v(B) = 1\)}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Évaluons le membre gauche :
+    \[v(A \lor B) = \max(v(A), v(B)) = \max(0, 1) = 1\]
+    \[v(\neg(A \lor B)) = 1 - v(A \lor B) = 1 - 1 = 0\]
+  \item
+    Évaluons le membre droit : \[v(\neg A) = 1 - v(A) = 1 - 0 = 1\]
+    \[v(\neg B) = 1 - v(B) = 1 - 1 = 0\]
+    \[v(\neg A \land \neg B) = \min(v(\neg A), v(\neg B)) = \min(1, 0) = 0\]
+  \item
+    Les deux valeurs coïncident : \(0 = 0\).
+  \end{itemize}
+\item
+  \textbf{Cas 4 : \(v(A) = 0\) et \(v(B) = 0\)}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Évaluons le membre gauche :
+    \[v(A \lor B) = \max(v(A), v(B)) = \max(0, 0) = 0\]
+    \[v(\neg(A \lor B)) = 1 - v(A \lor B) = 1 - 0 = 1\]
+  \item
+    Évaluons le membre droit : \[v(\neg A) = 1 - v(A) = 1 - 0 = 1\]
+    \[v(\neg B) = 1 - v(B) = 1 - 0 = 1\]
+    \[v(\neg A \land \neg B) = \min(v(\neg A), v(\neg B)) = \min(1, 1) = 1\]
+  \item
+    Les deux valeurs coïncident : \(1 = 1\).
+  \end{itemize}
+\end{enumerate}
+
+Dans tous les cas possibles,
+\(v(\neg(A \lor B)) = v(\neg A \land \neg B)\). La formule
+\(\neg(A \lor B) \Leftrightarrow (\neg A \land \neg B)\) est donc une
+tautologie.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{duxe9monstration-2-distributivituxe9-de-la-disjonction-par-rapport-uxe0-la-conjonction-a-lor-b-land-c-leftrightarrow-a-lor-b-land-a-lor-c}{%
+\subsubsection{\texorpdfstring{Démonstration 2 : Distributivité de la
+disjonction par rapport à la conjonction :
+\(A \lor (B \land C) \Leftrightarrow (A \lor B) \land (A \lor C)\)}{Démonstration 2 : Distributivité de la disjonction par rapport à la conjonction : A \textbackslash lor (B \textbackslash land C) \textbackslash Leftrightarrow (A \textbackslash lor B) \textbackslash land (A \textbackslash lor C)}}\label{duxe9monstration-2-distributivituxe9-de-la-disjonction-par-rapport-uxe0-la-conjonction-a-lor-b-land-c-leftrightarrow-a-lor-b-land-a-lor-c}}
+
+Soit \(v\) une valuation. Posons \(x = v(A)\), \(y = v(B)\) et
+\(z = v(C)\), où \(x, y, z \in \{0, 1\}\). Nous devons prouver l'égalité
+algébrique suivante dans l'algèbre de Boole \(\{0, 1\}\) :
+\[\max(x, \min(y, z)) = \min(\max(x, y), \max(x, z))\]
+
+Analysons les cas possibles selon la valeur de \(x\) :
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Cas 1 : \(x = 1\)}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Évaluons le membre de gauche (MG) :
+    \[\text{MG} = \max(1, \min(y, z))\] Puisque pour tout
+    \(t \in \{0, 1\}\), \(\max(1, t) = 1\), nous avons :
+    \[\text{MG} = 1\]
+  \item
+    Évaluons le membre de droite (MD) :
+    \[\max(1, y) = 1 \quad \text{et} \quad \max(1, z) = 1\] D'où :
+    \[\text{MD} = \min(1, 1) = 1\]
+  \item
+    Ainsi, \(\text{MG} = \text{MD}\).
+  \end{itemize}
+\item
+  \textbf{Cas 2 : \(x = 0\)}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Évaluons le membre de gauche (MG) :
+    \[\text{MG} = \max(0, \min(y, z))\] Puisque pour tout
+    \(t \in \{0, 1\}\), \(\max(0, t) = t\), nous avons :
+    \[\text{MG} = \min(y, z)\]
+  \item
+    Évaluons le membre de droite (MD) :
+    \[\max(0, y) = y \quad \text{et} \quad \max(0, z) = z\] D'où :
+    \[\text{MD} = \min(y, z)\]
+  \item
+    Ainsi, \(\text{MG} = \text{MD}\).
+  \end{itemize}
+\end{enumerate}
+
+Dans tous les cas, l'équivalence est vérifiée, ce qui valide la
+distributivité de \(\lor\) sur \(\land\).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{duxe9monstration-3-thuxe9oruxe8me-de-compacituxe9-de-la-logique-propositionnelle}{%
+\subsubsection{Démonstration 3 : Théorème de compacité de la logique
+propositionnelle}\label{duxe9monstration-3-thuxe9oruxe8me-de-compacituxe9-de-la-logique-propositionnelle}}
+
+\begin{quote}
+\textbf{Théorème :} Soit \(\Sigma \subseteq \mathcal{F}\) un ensemble
+infini de formules. Si tout sous-ensemble fini
+\(\Sigma_0 \subseteq \Sigma\) est satisfaisable, alors \(\Sigma\)
+lui-même est satisfaisable.
+\end{quote}
+
+\textbf{Démonstration par le théorème de Tychonoff :}
+
+Soit \(\mathcal{P}\) l'ensemble des variables propositionnelles
+apparaissant dans \(\Sigma\). L'ensemble des valuations de
+\(\mathcal{P}\) est l'ensemble \(\mathcal{V} = \{0, 1\}^\mathcal{P}\).
+Nous pouvons munir l'ensemble discret \(\{0, 1\}\) de la topologie
+discrète (qui est compacte car l'espace est fini). Par le
+\textbf{Théorème de Tychonoff}, l'espace produit
+\(\mathcal{V} = \{0, 1\}^\mathcal{P}\) muni de la topologie produit est
+compact (espace de Cantor).
+
+Pour chaque formule \(A \in \Sigma\), définissons l'ensemble
+\(M(A) = \{v \in \mathcal{V} \mid v(A) = 1\}\), c'est-à-dire l'ensemble
+des modèles de \(A\). Puisque la syntaxe d'une formule \(A\) ne fait
+intervenir qu'un nombre fini de variables propositionnelles, la valeur
+de vérité de \(A\) ne dépend que d'une projection finie de
+\(\mathcal{V}\). Un sous-ensemble défini par un nombre fini de
+coordonnées dans une topologie produit de topologies discrètes est fermé
+(et même ouvert). Donc, \(M(A)\) est un fermé de l'espace compact
+\(\mathcal{V}\).
+
+L'hypothèse selon laquelle tout sous-ensemble fini
+\(\Sigma_0 \subseteq \Sigma\) est satisfaisable se traduit
+sémantiquement par : \[\bigcap_{A \in \Sigma_0} M(A) \neq \emptyset\]
+
+Considérons la famille de fermés de l'espace compact \(\mathcal{V}\)
+définie par \(\mathcal{C} = \{ M(A) \mid A \in \Sigma \}\). D'après le
+résultat ci-dessus, cette famille possède la \textbf{propriété de
+l'intersection finie} (toute intersection d'un nombre fini de membres de
+la famille est non vide).
+
+Par caractérisation de la compacité, une famille de fermés d'un espace
+compact ayant la propriété de l'intersection finie a une intersection
+totale non vide : \[\bigcap_{A \in \Sigma} M(A) \neq \emptyset\]
+
+Il existe donc une valuation \(v^* \in \bigcap_{A \in \Sigma} M(A)\).
+Cette valuation \(v^*\) est modèle de toutes les formules de \(\Sigma\).
+Par conséquent, \(\Sigma\) est satisfaisable. \(\blacksquare\)
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercices-dapplication-pratique-de-concours}{%
+\subsection{4. Exercices d'Application \& Pratique de
+Concours}\label{exercices-dapplication-pratique-de-concours}}
+
+\hypertarget{exercice-1-preuve-de-la-loi-de-peirce}{%
+\subsubsection{Exercice 1 : Preuve de la Loi de
+Peirce}\label{exercice-1-preuve-de-la-loi-de-peirce}}
+
+\textbf{Énoncé :} Démontrer algébriquement, puis à l'aide de
+l'évaluation sémantique, que la formule
+\(((A \Rightarrow B) \Rightarrow A) \Rightarrow A\) (Loi de Peirce) est
+une tautologie.
+
+\textbf{Correction pas-à-pas :}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Méthode sémantique :} Soit \(v\) une valuation. Posons
+  \(a = v(A)\) et \(b = v(B)\). Nous voulons évaluer
+  \(v(((A \Rightarrow B) \Rightarrow A) \Rightarrow A)\). Rappelons que
+  \(v(X \Rightarrow Y) = 1\) ssi \(v(X) \le v(Y)\), ce qui s'écrit
+  algébriquement \(v(X \Rightarrow Y) = \max(1 - v(X), v(Y))\).
+
+  \begin{itemize}
+  \item
+    \textbf{Cas 1 : \(a = 1\).} Le membre final de notre implication
+    principale est la formule \(A\). Or sa valeur est \(a = 1\). Une
+    implication de la forme \(X \Rightarrow Y\) prend la valeur \(1\) si
+    la conséquence \(Y\) vaut \(1\), car \(\max(1-v(X), 1) = 1\).
+    Puisque la conséquence de notre implication principale est \(A\) et
+    que \(v(A) = 1\), la formule entière prend la valeur \(1\).
+  \item
+    \textbf{Cas 2 : \(a = 0\).}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Évaluons d'abord l'implication la plus interne :
+      \[v(A \Rightarrow B) = \max(1 - a, b) = \max(1 - 0, b) = \max(1, b) = 1\]
+    \item
+      Évaluons le membre gauche de l'implication principale :
+      \[v((A \Rightarrow B) \Rightarrow A) = \max(1 - v(A \Rightarrow B), a) = \max(1 - 1, 0) = \max(0, 0) = 0\]
+    \item
+      Évaluons enfin l'implication principale :
+      \[v(((A \Rightarrow B) \Rightarrow A) \Rightarrow A) = \max(1 - v((A \Rightarrow B) \Rightarrow A), a) = \max(1 - 0, 0) = \max(1, 0) = 1\]
+    \end{itemize}
+  \end{itemize}
+
+  Dans les deux cas possibles, la valeur de vérité de la formule est
+  \(1\). C'est donc une tautologie.
+\item
+  \textbf{Méthode algébrique (Simplification propositionnelle) :}
+  Utilisons l'équivalence \(X \Rightarrow Y \equiv \neg X \lor Y\).
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Étape 1 : Réécriture de l'implication interne :
+    \[(A \Rightarrow B) \Rightarrow A \equiv \neg(\neg A \lor B) \lor A\]
+  \item
+    Étape 2 : Application de la loi de De Morgan sur la négation externe
+    :
+    \[\neg(\neg A \lor B) \lor A \equiv (\neg\neg A \land \neg B) \lor A \equiv (A \land \neg B) \lor A\]
+  \item
+    Étape 3 : Par absorption dans l'algèbre de Boole,
+    \((A \land \neg B) \lor A \equiv A\). \emph{Justification pas-à-pas
+    de l'absorption :}
+    \[(A \land \neg B) \lor A \equiv (A \land \neg B) \lor (A \land 1) \equiv A \land (\neg B \lor 1) \equiv A \land 1 \equiv A\]
+  \item
+    Étape 4 : Substituons ce résultat dans la formule complète :
+    \[((A \Rightarrow B) \Rightarrow A) \Rightarrow A \equiv A \Rightarrow A\]
+  \item
+    Étape 5 : Simplifions \(A \Rightarrow A\) :
+    \[A \Rightarrow A \equiv \neg A \lor A \equiv 1\] La formule est
+    bien équivalente à la constante Vrai, c'est une tautologie.
+  \end{itemize}
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercice-2-compluxe9tude-fonctionnelle-du-connecteur-de-sheffer-nand}{%
+\subsubsection{Exercice 2 : Complétude fonctionnelle du connecteur de
+Sheffer
+(NAND)}\label{exercice-2-compluxe9tude-fonctionnelle-du-connecteur-de-sheffer-nand}}
+
+\textbf{Énoncé :} On définit le connecteur binaire \(\mid\) (appelé
+barre de Sheffer ou NAND) par la table de vérité suivante :
+\(v(A \mid B) = 1 - \min(v(A), v(B))\). Démontrer que le singleton
+\(\{\mid\}\) est un système complet de connecteurs (c'est-à-dire que
+n'importe quelle formule propositionnelle peut s'écrire uniquement à
+l'aide de ce connecteur).
+
+\textbf{Correction pas-à-pas :}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Rappel théorique :} On sait que le couple de connecteurs
+  \(\{\neg, \land\}\) est fonctionnellement complet. Pour montrer que
+  \(\{\mid\}\) est complet, il suffit d'exprimer les opérations de
+  négation (\(\neg\)) et de conjonction (\(\land\)) en utilisant
+  exclusivement le connecteur \(\mid\).
+\item
+  \textbf{Expression de la négation \(\neg A\) :} Montrons que
+  \(\neg A\) est équivalent à \(A \mid A\). Soit \(v\) une valuation
+  quelconque. \[v(A \mid A) = 1 - \min(v(A), v(A)) = 1 - v(A)\] Or,
+  \(v(\neg A) = 1 - v(A)\). Les deux évaluations coïncident. Nous avons
+  donc : \[\neg A \equiv A \mid A\]
+\item
+  \textbf{Expression de la conjonction \(A \land B\) :} Montrons que
+  \(A \land B\) est équivalent à \((A \mid B) \mid (A \mid B)\). Soit
+  \(v\) une valuation. Posons \(X = A \mid B\). Par la définition de la
+  négation établie au point précédent : \[v(X \mid X) = 1 - v(X)\]
+  Remplaçons \(v(X)\) par sa définition :
+  \[v(X) = 1 - \min(v(A), v(B)) = v(\neg(A \land B))\] D'où :
+  \[v(X \mid X) = 1 - (1 - \min(v(A), v(B))) = \min(v(A), v(B)) = v(A \land B)\]
+  Ainsi, les formules coïncident. Nous avons établi :
+  \[A \land B \equiv (A \mid B) \mid (A \mid B)\]
+\item
+  \textbf{Conclusion :} Puisque nous pouvons traduire la négation
+  (\(\neg\)) et la conjonction (\(\land\)) uniquement à l'aide de la
+  barre de Sheffer, et que le système \(\{\neg, \land\}\) est complet,
+  le singleton \(\{\mid\}\) est à son tour un système complet de
+  connecteurs.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{ancrage-application-en-intelligence-artificielle}{%
+\subsection{5. Ancrage \& Application en Intelligence
+Artificielle}\label{ancrage-application-en-intelligence-artificielle}}
+
+La logique propositionnelle, bien que formulée au XIXe siècle, est au
+cœur des révolutions technologiques de l'Intelligence Artificielle
+contemporaine, qu'elle soit symbolique ou hybride.
+
+\hypertarget{le-sat-solving-le-moteur-de-lia-symbolique}{%
+\subsubsection{Le SAT-Solving : Le moteur de l'IA
+symbolique}\label{le-sat-solving-le-moteur-de-lia-symbolique}}
+
+Le problème de la décidabilité de la satisfaisabilité d'une formule
+propositionnelle (problème \textbf{SAT}) est le premier problème à avoir
+été prouvé \textbf{NP-complet} par Stephen Cook (1971) et Leonid Levin.
+Malgré cette complexité théorique redoutable en pire des cas, les
+chercheurs en IA ont développé des moteurs de résolution de contraintes
+logiques d'une efficacité spectaculaire (les \textbf{SAT-Solvers}),
+capables de traiter des formules comportant des millions de variables et
+de clauses.
+
+Le cœur de ces moteurs repose sur l'algorithme historique \textbf{DPLL}
+(Davis-Putnam-Logemann-Loveland) et sa version moderne \textbf{CDCL}
+(Conflict-Driven Clause Learning). L'algorithme opère sur des formules
+écrites sous Forme Normale Conjonctive (CNF) -- c'est-à-dire des
+conjonctions de clauses, où chaque clause est une disjonction de
+littéraux (variables ou négation de variables). Le principe du CDCL est
+le suivant : 1. \textbf{Assignation de variables (décisions) :} On
+choisit une variable et on lui affecte arbitrairement une valeur (\(0\)
+ou \(1\)). 2. \textbf{Propagation unitaire (Boolean Constraint
+Propagation - BCP) :} Si une clause ne contient plus qu'un littéral non
+assigné, cette variable doit être forcée à la valeur qui rend le
+littéral vrai. 3. \textbf{Analyse de conflit et Apprentissage :} Si une
+contradiction (conflit) émerge (une clause devenant entièrement fausse),
+le solveur n'effectue pas un simple retour en arrière classique
+(\emph{backtracking}). Il analyse le graphe des implications qui a mené
+au conflit, extrait une clause dite de conflit (la cause minimale de
+l'erreur) et l'ajoute à sa base de connaissances pour ne plus jamais
+reproduire la même suite d'erreurs. 4. \textbf{Retour arrière
+non-chronologique (\emph{backjumping}) :} Le solveur remonte directement
+au niveau de décision qui a provoqué le conflit.
+
+Ces moteurs sont utilisés en IA pour : - \textbf{La vérification
+formelle de modèles :} S'assurer que le code d'un pilote automatique ou
+d'un système critique (médical, aérospatial) ne peut jamais se retrouver
+dans un état instable ou interdit (modélisé par une contradiction
+logique). - \textbf{La planification automatisée :} Trouver une séquence
+d'actions permettant à un robot d'atteindre un but sous des contraintes
+logiques strictes (l'approche SATPlan). - \textbf{La vérification
+formelle des Réseaux de Neurones :} Des outils récents encodent le
+comportement local de neurones avec des fonctions d'activation linéaires
+par morceaux (ReLU) sous forme de contraintes logiques pour prouver
+qu'un réseau profond ne subira pas de failles de type ``exemples
+contradictoires'' ou ``exemples antagonistes'' (\emph{adversarial
+examples}).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    level 1/.style={sibling distance=4cm},
+    level 2/.style={sibling distance=2cm},
+    node/.style={circle, draw=red!60, fill=red!5, very thick, minimum size=8mm},
+    leaf/.style={rectangle, draw=green!60, fill=green!5, very thick, minimum size=8mm},
+    conflict/.style={rectangle, draw=orange!80, fill=orange!10, very thick, minimum size=8mm},
+    edge/.style={draw, very thick, -latex'}
+]
+
+\node[node] (p) {$P$}
+    child { node[node] (q1) {$Q$}
+        child { node[leaf] (sat) {SAT} edge from parent node[left, xshift=-0.1cm] {$0$} }
+        child { node[conflict] (c1) {Conflit} edge from parent node[right, xshift=0.1cm] {$1$} }
+        edge from parent node[left, xshift=-0.1cm] {$0$}
+    }
+    child { node[node] (q2) {$Q$}
+        child { node[conflict] (c2) {Conflit} edge from parent node[left, xshift=-0.1cm] {$0$} }
+        child { node[conflict] (c3) {Conflit} edge from parent node[right, xshift=0.1cm] {$1$} }
+        edge from parent node[right, xshift=0.1cm] {$1$}
+    };
+
+\end{tikzpicture}
+\caption{Arbre de recherche (Backtracking/DPLL) explorant l'espace des valuations d'une formule propositionnelle.}
+\label{fig:dpll-tree}
+\end{figure}
+
+
+\hypertarget{liens-suxe9mantiques-maillage-obsidian}{%
+\subsection{6. Liens Sémantiques \& Maillage
+Obsidian}\label{liens-suxe9mantiques-maillage-obsidian}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Concepts Précédents requis :} Aucun (Jalon initial)
+\item
+  \textbf{Concepts Futurs dépendants :} {[}{[}Jalon 2 (Méthodes de
+  raisonnement){]}{]}, {[}{[}Jalon 3 (Quantification){]}{]}, {[}{[}Jalon
+  12 (Livrable IA){]}{]}, {[}{[}Jalon 133 (Modele PAC){]}{]}
+\end{itemize}
+
+
+\part{Exercices d'application et pratique de concours}
+\hypertarget{exercice-1-construction-et-interpruxe9tation-de-tables-de-vuxe9rituxe9}{%
+\section{Exercice 1 : Construction et interprétation de tables de
+vérité}\label{exercice-1-construction-et-interpruxe9tation-de-tables-de-vuxe9rituxe9}}
+
+\hypertarget{uxe9noncuxe9}{%
+\subsection{Énoncé}\label{uxe9noncuxe9}}
+
+Soient \(P\), \(Q\) et \(R\) trois variables propositionnelles
+indépendantes. On considère la formule propositionnelle complexe
+suivante, notée \(F\) :
+\[F = \big( (P \Rightarrow Q) \land (Q \Rightarrow R) \big) \Rightarrow (P \Rightarrow R)\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Expliquer pourquoi le nombre de lignes de la table de vérité pour
+  cette formule est égal à \(8\).
+\item
+  Construire pas-à-pas la table de vérité complète de la formule \(F\),
+  en détaillant chaque colonne intermédiaire.
+\item
+  Déduire de la table de vérité la nature de la formule \(F\)
+  (satisfaisable, tautologie ou contradiction).
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{correction-duxe9tailluxe9e}{%
+\subsection{Correction Détaillée}\label{correction-duxe9tailluxe9e}}
+
+\hypertarget{question-1-nombre-de-lignes-de-la-table-de-vuxe9rituxe9}{%
+\subsubsection{Question 1 : Nombre de lignes de la table de
+vérité}\label{question-1-nombre-de-lignes-de-la-table-de-vuxe9rituxe9}}
+
+Chaque variable propositionnelle (\(P\), \(Q\), \(R\)) peut prendre de
+manière indépendante deux valeurs de vérité distinctes : \(1\) (Vrai) ou
+\(0\) (Faux). Puisqu'il y a \(3\) variables propositionnelles
+distinctes, l'ensemble de toutes les configurations possibles
+(valuations) correspond au produit cartésien \(\{0, 1\}^3\). Le nombre
+cardinal de cet ensemble est : \[\text{Cardinal}(\{0, 1\}^3) = 2^3 = 8\]
+Il y a donc exactement \(8\) valuations distinctes à analyser, ce qui se
+traduit par \(8\) lignes dans notre table de vérité.
+
+\hypertarget{question-2-construction-de-la-table-de-vuxe9rituxe9}{%
+\subsubsection{Question 2 : Construction de la table de
+vérité}\label{question-2-construction-de-la-table-de-vuxe9rituxe9}}
+
+Nous allons définir les colonnes de notre tableau dans l'ordre
+d'évaluation des sous-formules : - Colonnes 1, 2, 3 : Variables de base
+\(P\), \(Q\), \(R\). - Colonne 4 : \(P \Rightarrow Q\) (vaut \(0\)
+uniquement si \(P=1\) et \(Q=0\)). - Colonne 5 : \(Q \Rightarrow R\)
+(vaut \(0\) uniquement si \(Q=1\) et \(R=0\)). - Colonne 6 :
+\((P \Rightarrow Q) \land (Q \Rightarrow R)\) (conjonction des colonnes
+4 et 5 ; vaut \(1\) si et seulement si les deux valent \(1\)). - Colonne
+7 : \(P \Rightarrow R\) (vaut \(0\) uniquement si \(P=1\) et \(R=0\)). -
+Colonne 8 : \(F = \text{Col } 6 \Rightarrow \text{Col } 7\) (vaut \(0\)
+uniquement si la colonne 6 vaut \(1\) et la colonne 7 vaut \(0\)).
+
+Dressons le tableau exhaustif :
+
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0450}}
+  >{\centering\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0270}}
+  >{\centering\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0270}}
+  >{\centering\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0270}}
+  >{\centering\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1532}}
+  >{\centering\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1532}}
+  >{\centering\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.3874}}
+  >{\centering\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1532}}
+  >{\centering\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0270}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+Ligne
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(P\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(Q\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(R\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(P \Rightarrow Q\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(Q \Rightarrow R\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\((P \Rightarrow Q) \land (Q \Rightarrow R)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(P \Rightarrow R\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(F\)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & \textbf{1} \\
+2 & 1 & 1 & 0 & 1 & 0 & 0 & 0 & \textbf{1} \\
+3 & 1 & 0 & 1 & 0 & 1 & 0 & 1 & \textbf{1} \\
+4 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & \textbf{1} \\
+5 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & \textbf{1} \\
+6 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & \textbf{1} \\
+7 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & \textbf{1} \\
+8 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & \textbf{1} \\
+\end{longtable}
+
+Vérifions pas-à-pas la ligne 2 : - \(P=1, Q=1, R=0\). -
+\(P \Rightarrow Q = 1 \Rightarrow 1 = 1\). -
+\(Q \Rightarrow R = 1 \Rightarrow 0 = 0\). - Conjonction :
+\(1 \land 0 = 0\). - \(P \Rightarrow R = 1 \Rightarrow 0 = 0\). -
+Implication principale : \(0 \Rightarrow 0 = 1\). La ligne 2 est
+correcte.
+
+Vérifions pas-à-pas la ligne 6 : - \(P=0, Q=1, R=0\). -
+\(P \Rightarrow Q = 0 \Rightarrow 1 = 1\). -
+\(Q \Rightarrow R = 1 \Rightarrow 0 = 0\). - Conjonction :
+\(1 \land 0 = 0\). - \(P \Rightarrow R = 0 \Rightarrow 0 = 1\). -
+Implication principale : \(0 \Rightarrow 1 = 1\). La ligne 6 est
+correcte.
+
+\hypertarget{question-3-analyse-du-ruxe9sultat}{%
+\subsubsection{Question 3 : Analyse du
+résultat}\label{question-3-analyse-du-ruxe9sultat}}
+
+La colonne finale associée à la formule \(F\) ne contient que des
+valeurs de vérité \(1\) (Vrai) pour l'ensemble des \(8\) lignes. Cela
+signifie que pour toute valuation \(v \in \{0, 1\}^3\), nous avons :
+\[v(F) = 1\] Par définition, la formule \(F\) est donc une
+\textbf{tautologie} (notée \(\models F\)). Elle est sémantiquement
+universellement valide. De plus, étant toujours vraie, elle est
+également satisfaisable. Il s'agit de la loi de transitivité de
+l'implication logique (ou syllogisme hypothétique).
+\n
+\hypertarget{exercice-2-simplification-suxe9mantique-par-lalguxe8bre-de-boole}{%
+\section{Exercice 2 : Simplification sémantique par l'algèbre de
+Boole}\label{exercice-2-simplification-suxe9mantique-par-lalguxe8bre-de-boole}}
+
+\hypertarget{uxe9noncuxe9}{%
+\subsection{Énoncé}\label{uxe9noncuxe9}}
+
+Soient \(P\) et \(Q\) deux variables propositionnelles. On considère la
+formule logique suivante :
+\[A = \big( P \lor (\neg P \land Q) \big) \land \big( \neg Q \lor (P \land \neg Q) \big)\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Simplifier algébriquement le membre de gauche
+  \(L = P \lor (\neg P \land Q)\) en utilisant les axiomes de
+  distributivité et d'absorption.
+\item
+  Simplifier algébriquement le membre de droite
+  \(R = \neg Q \lor (P \land \neg Q)\) en utilisant la loi d'absorption.
+\item
+  En déduire la forme simplifiée finale de la formule \(A\).
+\item
+  Démontrer le résultat obtenu en dressant la table de vérité de la
+  formule originale \(A\).
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{correction-duxe9tailluxe9e}{%
+\subsection{Correction Détaillée}\label{correction-duxe9tailluxe9e}}
+
+\hypertarget{question-1-simplification-du-membre-de-gauche-l-p-lor-neg-p-land-q}{%
+\subsubsection{\texorpdfstring{Question 1 : Simplification du membre de
+gauche
+\(L = P \lor (\neg P \land Q)\)}{Question 1 : Simplification du membre de gauche L = P \textbackslash lor (\textbackslash neg P \textbackslash land Q)}}\label{question-1-simplification-du-membre-de-gauche-l-p-lor-neg-p-land-q}}
+
+Appliquons la règle de \textbf{distributivité de la disjonction
+(\(\lor\)) par rapport à la conjonction (\(\land\))} :
+\[L = (P \lor \neg P) \land (P \lor Q)\]
+
+Or, d'après la loi du tiers exclu (complémentarité dans les algèbres de
+Boole) : \[P \lor \neg P \equiv 1\]
+
+Substituons cette valeur dans l'expression :
+\[L \equiv 1 \land (P \lor Q)\]
+
+Puisque \(1\) (Vrai) est l'élément neutre pour la conjonction
+(\(\land\)) : \[L \equiv P \lor Q\]
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{question-2-simplification-du-membre-de-droite-r-neg-q-lor-p-land-neg-q}{%
+\subsubsection{\texorpdfstring{Question 2 : Simplification du membre de
+droite
+\(R = \neg Q \lor (P \land \neg Q)\)}{Question 2 : Simplification du membre de droite R = \textbackslash neg Q \textbackslash lor (P \textbackslash land \textbackslash neg Q)}}\label{question-2-simplification-du-membre-de-droite-r-neg-q-lor-p-land-neg-q}}
+
+Nous pouvons appliquer directement la \textbf{loi d'absorption} de
+l'algèbre de Boole. Rappelons la loi d'absorption générale : pour tous
+éléments \(x\) et \(y\), \(x \lor (y \land x) \equiv x\).
+
+Ici, posons \(x = \neg Q\) et \(y = P\). L'expression devient :
+\[R = x \lor (y \land x)\]
+
+Par application directe de la loi d'absorption :
+\[R \equiv x \equiv \neg Q\]
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{question-3-simplification-finale-de-la-formule-a}{%
+\subsubsection{\texorpdfstring{Question 3 : Simplification finale de la
+formule
+\(A\)}{Question 3 : Simplification finale de la formule A}}\label{question-3-simplification-finale-de-la-formule-a}}
+
+La formule complète s'écrit \(A = L \land R\). Substituons les
+expressions simplifiées obtenues aux questions 1 et 2 :
+\[A \equiv (P \lor Q) \land \neg Q\]
+
+Appliquons la distributivité de la conjonction (\(\land\)) par rapport à
+la disjonction (\(\lor\)) :
+\[A \equiv (P \land \neg Q) \lor (Q \land \neg Q)\]
+
+D'après le principe de non-contradiction, \(Q \land \neg Q \equiv 0\).
+L'expression devient : \[A \equiv (P \land \neg Q) \lor 0\]
+
+Puisque \(0\) (Faux) est l'élément neutre pour la disjonction (\(\lor\))
+: \[A \equiv P \land \neg Q\]
+
+La formule originale complexe \(A\) est donc sémantiquement équivalente
+à la conjonction simple de \(P\) et de la négation de \(Q\).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{question-4-validation-par-table-de-vuxe9rituxe9}{%
+\subsubsection{Question 4 : Validation par table de
+vérité}\label{question-4-validation-par-table-de-vuxe9rituxe9}}
+
+Construisons la table de vérité pour vérifier l'équivalence
+\(A \equiv P \land \neg Q\).
+
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.0192}}
+  >{\centering\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.0192}}
+  >{\centering\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.0513}}
+  >{\centering\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.0513}}
+  >{\centering\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1026}}
+  >{\centering\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1859}}
+  >{\centering\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1026}}
+  >{\centering\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.2179}}
+  >{\centering\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.0962}}
+  >{\centering\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1538}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+\(P\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(Q\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(\neg P\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(\neg Q\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(\neg P \land Q\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(L = P \lor (\neg P \land Q)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(P \land \neg Q\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(R = \neg Q \lor (P \land \neg Q)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(A = L \land R\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(P \land \neg Q\) (cible)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & \textbf{0} & \textbf{0} \\
+1 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & \textbf{1} & \textbf{1} \\
+0 & 1 & 1 & 0 & 1 & 1 & 0 & 0 & \textbf{0} & \textbf{0} \\
+0 & 0 & 1 & 1 & 0 & 0 & 0 & 1 & \textbf{0} & \textbf{0} \\
+\end{longtable}
+
+Les colonnes \(A = L \land R\) (colonne 9) et \(P \land \neg Q\)
+(colonne 10) sont parfaitement identiques pour toutes les lignes
+\(\{0, 1, 0, 0\}\). L'équivalence logique \(A \equiv P \land \neg Q\)
+est donc rigoureusement démontrée par la méthode sémantique.
+\n
+\hypertarget{exercice-3-dualituxe9-des-connecteurs-et-foncteurs-de-vuxe9rituxe9}{%
+\section{Exercice 3 : Dualité des connecteurs et foncteurs de
+vérité}\label{exercice-3-dualituxe9-des-connecteurs-et-foncteurs-de-vuxe9rituxe9}}
+
+\hypertarget{uxe9noncuxe9}{%
+\subsection{Énoncé}\label{uxe9noncuxe9}}
+
+On restreint dans cet exercice notre langage de formules à l'ensemble
+des formules positives construites exclusivement à partir des variables
+de \(\mathcal{P}\), des connecteurs de conjonction \(\land\), de
+disjonction \(\lor\) et de négation \(\neg\).
+
+Soit \(F\) une formule. On définit sa \textbf{formule duale}, notée
+\(F^*\), par récurrence structurelle sur la complexité de \(F\) comme
+suit : 1. Si \(F = p\) (avec \(p \in \mathcal{P}\)), alors \(F^* = p\).
+2. Si \(F = \neg A\), alors \(F^* = \neg (A^*)\). 3. Si
+\(F = A \land B\), alors \(F^* = A^* \lor B^*\). 4. Si \(F = A \lor B\),
+alors \(F^* = A^* \land B^*\).
+
+Pour toute valuation \(v \in \{0, 1\}^\mathcal{P}\), on définit la
+valuation conjuguée \(\bar{v}\) par \(\bar{v}(p) = 1 - v(p)\) pour tout
+\(p \in \mathcal{P}\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Démontrer par induction structurelle sur la formule \(F\) le théorème
+  de dualité sémantique suivant :
+  \[\text{Pour toute valuation } v, \quad v(F^*) = 1 - \bar{v}(F)\]
+\item
+  En déduire que \(F\) est une tautologie si et seulement si la formule
+  \(\neg (F^*[\neg p_1/p_1, \dots, \neg p_n/p_n])\) en est une, où la
+  notation \(G[\neg p/p]\) représente la substitution uniforme de la
+  variable \(p\) par son opposée \(\neg p\).
+\item
+  Déterminer et simplifier la duale de la formule :
+  \[G = (P \land Q) \lor R\]
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{correction-duxe9tailluxe9e}{%
+\subsection{Correction Détaillée}\label{correction-duxe9tailluxe9e}}
+
+\hypertarget{question-1-preuve-du-thuxe9oruxe8me-de-dualituxe9-suxe9mantique}{%
+\subsubsection{Question 1 : Preuve du théorème de dualité
+sémantique}\label{question-1-preuve-du-thuxe9oruxe8me-de-dualituxe9-suxe9mantique}}
+
+Nous allons procéder par induction structurelle sur la formule \(F\).
+Soit la propriété \(\mathcal{H}(F)\) : « Pour toute valuation \(v\),
+\(v(F^*) = 1 - \bar{v}(F)\) ».
+
+\hypertarget{uxe9tape-de-base-formules-atomiques}{%
+\paragraph{Étape de base (formules atomiques)
+:}\label{uxe9tape-de-base-formules-atomiques}}
+
+Soit \(F = p\) avec \(p \in \mathcal{P}\). - D'après la règle 1 de
+définition du dual, \(F^* = p\). Donc \(v(F^*) = v(p)\). - Évaluons le
+membre droit : \[1 - \bar{v}(F) = 1 - \bar{v}(p)\] Par définition de la
+valuation conjuguée, \(\bar{v}(p) = 1 - v(p)\). D'où :
+\[1 - \bar{v}(F) = 1 - (1 - v(p)) = v(p)\] Les deux membres coïncident.
+L'étape de base est vérifiée.
+
+\hypertarget{uxe9tape-dinduction}{%
+\paragraph{Étape d'induction :}\label{uxe9tape-dinduction}}
+
+Supposons que \(\mathcal{H}(A)\) et \(\mathcal{H}(B)\) sont vraies pour
+deux formules \(A\) et \(B\).
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Sous-cas 1 : \(F = \neg A\)} D'après la définition du dual,
+  \(F^* = \neg(A^*)\).
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Évaluons \(v(F^*)\) : \[v(F^*) = v(\neg (A^*)) = 1 - v(A^*)\] Par
+    hypothèse de récurrence sémantique sur \(A\), nous avons
+    \(v(A^*) = 1 - \bar{v}(A)\). D'où :
+    \[v(F^*) = 1 - (1 - \bar{v}(A)) = \bar{v}(A)\]
+  \item
+    Évaluons le membre droit \(1 - \bar{v}(F)\) :
+    \[1 - \bar{v}(\neg A) = 1 - (1 - \bar{v}(A)) = \bar{v}(A)\] Les deux
+    valeurs coïncident. \(\mathcal{H}(\neg A)\) est vraie.
+  \end{itemize}
+\item
+  \textbf{Sous-cas 2 : \(F = A \land B\)} D'après la définition,
+  \(F^* = A^* \lor B^*\).
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Évaluons \(v(F^*)\) :
+    \[v(F^*) = v(A^* \lor B^*) = \max(v(A^*), v(B^*))\] En utilisant
+    l'hypothèse de récurrence sémantique sur \(A\) et \(B\) :
+    \[v(F^*) = \max(1 - \bar{v}(A), 1 - \bar{v}(B))\] Puisque pour tous
+    réels \(a\) et \(b\), \(\max(1-a, 1-b) = 1 - \min(a, b)\), on a :
+    \[v(F^*) = 1 - \min(\bar{v}(A), \bar{v}(B))\] Par définition
+    sémantique de la conjonction,
+    \(\min(\bar{v}(A), \bar{v}(B)) = \bar{v}(A \land B) = \bar{v}(F)\).
+    D'où : \[v(F^*) = 1 - \bar{v}(F)\] Les deux valeurs coïncident.
+    \(\mathcal{H}(A \land B)\) est vraie.
+  \end{itemize}
+\item
+  \textbf{Sous-cas 3 : \(F = A \lor B\)} D'après la définition,
+  \(F^* = A^* \land B^*\).
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Évaluons \(v(F^*)\) :
+    \[v(F^*) = v(A^* \land B^*) = \min(v(A^*), v(B^*))\] En utilisant
+    l'hypothèse de récurrence :
+    \[v(F^*) = \min(1 - \bar{v}(A), 1 - \bar{v}(B))\] Puisque
+    \(\min(1-a, 1-b) = 1 - \max(a, b)\), on a :
+    \[v(F^*) = 1 - \max(\bar{v}(A), \bar{v}(B)) = 1 - \bar{v}(A \lor B) = 1 - \bar{v}(F)\]
+    Les deux valeurs coïncident. \(\mathcal{H}(A \lor B)\) est vraie.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{conclusion-de-linduction}{%
+\paragraph{Conclusion de l'induction :}\label{conclusion-de-linduction}}
+
+La propriété \(\mathcal{H}(F)\) est héréditaire pour tous les
+constructeurs du langage. Elle est donc vraie pour toute formule
+\(F \in \mathcal{F}\).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{question-2-uxe9quivalence-de-validituxe9}{%
+\subsubsection{Question 2 : Équivalence de
+validité}\label{question-2-uxe9quivalence-de-validituxe9}}
+
+Soit \(F\) une formule contenant les variables \(p_1, \dots, p_n\). Le
+résultat de la question 1 montre que la table de vérité de \(F^*\)
+s'obtient en prenant le complément de la table de vérité de \(F\)
+évaluée sur les lignes conjuguées. Si l'on substitue uniformément chaque
+variable \(p_i\) par sa négation dans \(F^*\), on compense le passage à
+la valuation conjuguée \(\bar{v}\). Ainsi, en posant
+\(H = \neg (F^*[\neg p_1/p_1, \dots, \neg p_n/p_n])\), nous avons pour
+toute valuation \(v\) :
+\[v(H) = 1 - v(F^*[\neg p_1/p_1, \dots, \neg p_n/p_n]) = 1 - (1 - v(F)) = v(F)\]
+Puisque \(v(H) = v(F)\) pour toute valuation \(v\), la formule \(H\) est
+sémantiquement équivalente à \(F\). Par conséquent, \(F\) est une
+tautologie si et seulement si \(H\) est une tautologie.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{question-3-duale-de-la-formule-g-p-land-q-lor-r}{%
+\subsubsection{\texorpdfstring{Question 3 : Duale de la formule
+\(G = (P \land Q) \lor R\)}{Question 3 : Duale de la formule G = (P \textbackslash land Q) \textbackslash lor R}}\label{question-3-duale-de-la-formule-g-p-land-q-lor-r}}
+
+Appliquons pas-à-pas les règles de construction récursive du dual : 1.
+Repérons le connecteur principal de \(G\). Il s'agit d'une disjonction
+\(\lor\) entre la sous-formule \(A = P \land Q\) et \(B = R\). 2. Par la
+règle 4 : \[G^* = (P \land Q)^* \land R^*\] 3. Déterminons
+\((P \land Q)^*\) par la règle 3 : \[(P \land Q)^* = P^* \lor Q^*\] 4.
+D'après la règle 1 pour les atomes :
+\[P^* = P, \quad Q^* = Q, \quad R^* = R\] 5. Réassemblons le tout :
+\[G^* = (P \lor Q) \land R\]
+
+La duale de \((P \land Q) \lor R\) est donc \((P \lor Q) \land R\). On
+remarque que la conjonction et la disjonction ont été permutées.
+\n
+\hypertarget{exercice-4-preuve-en-duxe9duction-naturelle-de-la-loi-de-peirce}{%
+\section{Exercice 4 : Preuve en déduction naturelle de la loi de
+Peirce}\label{exercice-4-preuve-en-duxe9duction-naturelle-de-la-loi-de-peirce}}
+
+\hypertarget{uxe9noncuxe9}{%
+\subsection{Énoncé}\label{uxe9noncuxe9}}
+
+La \textbf{déduction naturelle} est un système formel syntaxique
+introduit par Gerhard Gentzen. Dans sa version classique, il dispose
+notamment des règles suivantes (où \(\Gamma\) est un ensemble de
+formules servant d'hypothèses) : - \textbf{Règle
+d'Implication-Introduction (\(\Rightarrow\)-I) :} Si
+\(\Gamma, A \vdash B\), alors \(\Gamma \vdash A \Rightarrow B\). -
+\textbf{Règle d'Implication-Élimination ou Modus Ponens
+(\(\Rightarrow\)-E) :} Si \(\Gamma \vdash A \Rightarrow B\) et
+\(\Gamma \vdash A\), alors \(\Gamma \vdash B\). - \textbf{Règle de
+l'Absurde Classique ou Élimination de la Double Négation
+(\(\neg\neg\)-E) :} Si \(\Gamma, \neg A \vdash \bot\) (où \(\bot\)
+représente une contradiction), alors \(\Gamma \vdash A\). -
+\textbf{Règle de Négation-Introduction (\(\neg\)-I) :} Si
+\(\Gamma, A \vdash \bot\), alors \(\Gamma \vdash \neg A\). -
+\textbf{Règle de Négation-Élimination (\(\neg\)-E) :} Si
+\(\Gamma \vdash \neg A\) et \(\Gamma \vdash A\), alors
+\(\Gamma \vdash \bot\).
+
+Démontrer la \textbf{loi de Peirce}
+\(\vdash ((A \Rightarrow B) \Rightarrow A) \Rightarrow A\) dans ce
+système formel en détaillant chaque étape de déduction.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{correction-duxe9tailluxe9e}{%
+\subsection{Correction Détaillée}\label{correction-duxe9tailluxe9e}}
+
+Pour démontrer la formule
+\(((A \Rightarrow B) \Rightarrow A) \Rightarrow A\), nous allons
+chercher à appliquer la règle d'introduction de l'implication
+(\(\Rightarrow\)-I) à l'étape finale. Il nous suffit donc de prouver le
+séquent suivant sous hypothèse :
+\[(A \Rightarrow B) \Rightarrow A \vdash A\]
+
+Pour démontrer \(A\) sous cette hypothèse, nous allons procéder par
+l'absurde classique. Nous rajoutons donc l'hypothèse \(\neg A\) et
+cherchons à déduire la contradiction \(\bot\). Notre but intermédiaire
+est de prouver :
+\[(A \Rightarrow B) \Rightarrow A, \quad \neg A \vdash \bot\]
+
+Voici la construction pas-à-pas de la démonstration :
+
+\hypertarget{uxe9tape-1-hypothuxe8ses-de-duxe9part}{%
+\subsubsection{Étape 1 : Hypothèses de
+départ}\label{uxe9tape-1-hypothuxe8ses-de-duxe9part}}
+
+Nous disposons dans notre contexte de deux hypothèses : - \((1)\) :
+\((A \Rightarrow B) \Rightarrow A\) - \((2)\) : \(\neg A\)
+
+\hypertarget{uxe9tape-2-construction-de-la-sous-preuve-de-a-rightarrow-b}{%
+\subsubsection{\texorpdfstring{Étape 2 : Construction de la sous-preuve
+de
+\(A \Rightarrow B\)}{Étape 2 : Construction de la sous-preuve de A \textbackslash Rightarrow B}}\label{uxe9tape-2-construction-de-la-sous-preuve-de-a-rightarrow-b}}
+
+Pour exploiter l'hypothèse \((1)\) par élimination de l'implication, il
+serait utile de disposer de la formule \(A \Rightarrow B\). Montrons que
+sous les hypothèses \((1)\) et \((2)\), nous pouvons déduire
+\(A \Rightarrow B\). Pour cela, introduisons une hypothèse temporaire
+supplémentaire pour construire l'implication : - \((3)\) : \(A\)
+(hypothèse pour l'introduction de \(\Rightarrow\))
+
+Maintenant, nous avons dans le contexte local les formules \(A\)
+(hypothèse 3) et \(\neg A\) (hypothèse 2). 1. Appliquons la règle de
+négation-élimination (\(\neg\)-E) sur \(A\) et \(\neg A\) :
+\[\text{De } \Gamma, A \vdash A \text{ et } \Gamma, A \vdash \neg A \implies \Gamma, A \vdash \bot\]
+Nous obtenons une contradiction \(\bot\). 2. Sous la contradiction
+\(\bot\), nous pouvons déduire n'importe quelle proposition (règle du
+\emph{Principe d'explosion} ou \emph{ex falso sequitur quodlibet}).
+Appliquons cette règle pour déduire \(B\) :
+\[\text{Puisque } (A \Rightarrow B) \Rightarrow A, \neg A, A \vdash \bot \implies (A \Rightarrow B) \Rightarrow A, \neg A, A \vdash B\]
+3. Déchargeons maintenant l'hypothèse temporaire \(A\) (3) par la règle
+d'introduction de l'implication (\(\Rightarrow\)-I) :
+\[\text{Puisque } (A \Rightarrow B) \Rightarrow A, \neg A, A \vdash B \implies (A \Rightarrow B) \Rightarrow A, \neg A \vdash A \Rightarrow B\]
+Nous avons réussi à démontrer la formule \(A \Rightarrow B\) sous les
+hypothèses de base.
+
+\hypertarget{uxe9tape-3-application-du-modus-ponens-et-obtention-de-la-contradiction}{%
+\subsubsection{Étape 3 : Application du Modus Ponens et Obtention de la
+Contradiction}\label{uxe9tape-3-application-du-modus-ponens-et-obtention-de-la-contradiction}}
+
+Reprenons notre contexte global avec les hypothèses \((1)\)
+\((A \Rightarrow B) \Rightarrow A\) et \((2)\) \(\neg A\). 1. Nous
+venons de prouver que ce contexte permet de déduire \(A \Rightarrow B\).
+2. Appliquons la règle d'élimination de l'implication
+(\(\Rightarrow\)-E, ou Modus Ponens) entre l'hypothèse \((1)\) et la
+formule \(A \Rightarrow B\) :
+\[\text{De } \Gamma \vdash (A \Rightarrow B) \Rightarrow A \quad \text{et} \quad \Gamma \vdash A \Rightarrow B \implies \Gamma \vdash A\]
+Nous avons donc déduit \(A\). 3. Nous disposons désormais à la fois de
+\(A\) et de l'hypothèse de base \(\neg A\) (2). Appliquons la règle de
+négation-élimination (\(\neg\)-E) :
+\[\text{De } \Gamma \vdash A \quad \text{et} \quad \Gamma \vdash \neg A \implies \Gamma \vdash \bot\]
+Nous obtenons la contradiction souhaitée.
+
+\hypertarget{uxe9tape-4-duxe9chargement-des-hypothuxe8ses}{%
+\subsubsection{Étape 4 : Déchargement des
+hypothèses}\label{uxe9tape-4-duxe9chargement-des-hypothuxe8ses}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Appliquons la règle de l'absurde classique (\(\neg\neg\)-E) pour
+  décharger l'hypothèse \(\neg A\) (2) :
+  \[\text{Puisque } (A \Rightarrow B) \Rightarrow A, \neg A \vdash \bot \implies (A \Rightarrow B) \Rightarrow A \vdash A\]
+\item
+  Appliquons enfin la règle d'introduction de l'implication
+  (\(\Rightarrow\)-I) pour décharger la dernière hypothèse
+  \((A \Rightarrow B) \Rightarrow A\) (1) :
+  \[\text{Puisque } (A \Rightarrow B) \Rightarrow A \vdash A \implies \vdash ((A \Rightarrow B) \Rightarrow A) \Rightarrow A\]
+\end{enumerate}
+
+La loi de Peirce est démontrée de manière purement syntaxique dans le
+système classique de déduction naturelle.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{repruxe9sentation-sous-forme-darbre-de-preuve}{%
+\subsubsection{Représentation sous forme d'Arbre de
+Preuve}\label{repruxe9sentation-sous-forme-darbre-de-preuve}}
+
+Voici l'arbre syntaxique complet résumant la démonstration :
+
+\[\frac{
+  \frac{
+    \displaystyle [(A \Rightarrow B) \Rightarrow A]^1 \qquad
+    \frac{
+      \frac{\displaystyle [\neg A]^2 \quad [A]^3}{\bot}\small\text{($\neg$-E)}
+      }{
+        \displaystyle B
+      }\small\text{($\bot$-E)}
+    }{
+      \displaystyle A \Rightarrow B
+    }\small\text{($\Rightarrow$-I décharge 3)}
+  }{
+    \displaystyle A
+  }\small\text{($\Rightarrow$-E)} \qquad [\neg A]^2
+}{
+  \frac{
+    \displaystyle \bot
+  }{
+    \displaystyle A
+  }\small\text{($\neg\neg$-E décharge 2)}
+}\small\text{($\neg$-E)}\]
+\[\overline{\displaystyle ((A \Rightarrow B) \Rightarrow A) \Rightarrow A}\small\text{($\Rightarrow$-I décharge 1)}\]
+\n
+\hypertarget{exercice-5-conversion-en-forme-normale-conjonctive-cnf}{%
+\section{Exercice 5 : Conversion en forme normale conjonctive
+(CNF)}\label{exercice-5-conversion-en-forme-normale-conjonctive-cnf}}
+
+\hypertarget{uxe9noncuxe9}{%
+\subsection{Énoncé}\label{uxe9noncuxe9}}
+
+Soient \(P\), \(Q\), \(R\) et \(S\) quatre variables propositionnelles.
+On considère la formule propositionnelle suivante :
+\[H = (P \Rightarrow Q) \Rightarrow (R \land \neg S)\]
+
+Convertir la formule \(H\) en \textbf{Forme Normale Conjonctive (CNF)}
+(conjonction de clauses disjonctives) en détaillant chaque étape de
+transformation algébrique.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{correction-duxe9tailluxe9e}{%
+\subsection{Correction Détaillée}\label{correction-duxe9tailluxe9e}}
+
+Une formule est sous Forme Normale Conjonctive (CNF) si elle se présente
+sous la forme :
+\[\bigwedge_{i=1}^n \left( \bigvee_{j=1}^{m_i} L_{i,j} \right)\] où
+chaque \(L_{i,j}\) est un littéral (une variable propositionnelle ou sa
+négation).
+
+Pour transformer \(H\) en CNF, nous appliquons un algorithme en trois
+grandes étapes : 1. Élimination des connecteurs d'implication
+(\(\Rightarrow\)). 2. Descente des négations (\(\neg\)) au niveau des
+variables (en utilisant les lois de De Morgan et de double négation). 3.
+Distribution des disjonctions (\(\lor\)) par rapport aux conjonctions
+(\(\land\)).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxe9tape-1-uxe9limination-des-connecteurs-dimplication-rightarrow}{%
+\subsubsection{\texorpdfstring{Étape 1 : Élimination des connecteurs
+d'implication
+(\(\Rightarrow\))}{Étape 1 : Élimination des connecteurs d'implication (\textbackslash Rightarrow)}}\label{uxe9tape-1-uxe9limination-des-connecteurs-dimplication-rightarrow}}
+
+Rappelons la règle d'équivalence de base :
+\(A \Rightarrow B \equiv \neg A \lor B\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Éliminons l'implication principale de \(H\). Posons
+  \(A = (P \Rightarrow Q)\) et \(B = (R \land \neg S)\). L'expression
+  devient : \[H \equiv \neg(P \Rightarrow Q) \lor (R \land \neg S)\]
+\item
+  Éliminons l'implication résiduelle à l'intérieur de la négation :
+  \[P \Rightarrow Q \equiv \neg P \lor Q\]
+\item
+  Substituons ce résultat dans la formule complète :
+  \[H \equiv \neg(\neg P \lor Q) \lor (R \land \neg S)\]
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxe9tape-2-descente-des-nuxe9gations-neg}{%
+\subsubsection{\texorpdfstring{Étape 2 : Descente des négations
+(\(\neg\))}{Étape 2 : Descente des négations (\textbackslash neg)}}\label{uxe9tape-2-descente-des-nuxe9gations-neg}}
+
+Appliquons la loi de De Morgan sur le premier bloc
+\(\neg(\neg P \lor Q)\) :
+\[\neg(\neg P \lor Q) \equiv \neg(\neg P) \land \neg Q\]
+
+Par la règle de double négation (\(\neg\neg P \equiv P\)) :
+\[\neg(\neg P \lor Q) \equiv P \land \neg Q\]
+
+Substituons cette forme simplifiée dans l'expression globale de \(H\) :
+\[H \equiv (P \land \neg Q) \lor (R \land \neg S)\]
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxe9tape-3-distribution-de-la-disjonction-lor-par-rapport-uxe0-la-conjonction-land}{%
+\subsubsection{\texorpdfstring{Étape 3 : Distribution de la disjonction
+(\(\lor\)) par rapport à la conjonction
+(\(\land\))}{Étape 3 : Distribution de la disjonction (\textbackslash lor) par rapport à la conjonction (\textbackslash land)}}\label{uxe9tape-3-distribution-de-la-disjonction-lor-par-rapport-uxe0-la-conjonction-land}}
+
+Nous devons maintenant distribuer la disjonction extérieure par rapport
+aux conjonctions intérieures. Soient \(X = (P \land \neg Q)\) et
+\(Y = (R \land \neg S)\). L'expression est \(X \lor Y\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Distribuons d'abord le bloc \(X\) sur la conjonction
+  \(Y = (R \land \neg S)\) :
+  \[X \lor (R \land \neg S) \equiv (X \lor R) \land (X \lor \neg S)\]
+\item
+  Remplaçons maintenant \(X\) par sa valeur originelle
+  \((P \land \neg Q)\) dans le premier terme \((X \lor R)\) :
+  \[X \lor R \equiv (P \land \neg Q) \lor R\] Appliquons la
+  distributivité de \(\lor\) par rapport à \(\land\) sur ce terme :
+  \[(P \land \neg Q) \lor R \equiv (P \lor R) \land (\neg Q \lor R)\]
+\item
+  Remplaçons \(X\) dans le second terme \((X \lor \neg S)\) :
+  \[X \lor \neg S \equiv (P \land \neg Q) \lor \neg S\] Distribuons
+  également :
+  \[(P \land \neg Q) \lor \neg S \equiv (P \lor \neg S) \land (\neg Q \lor \neg S)\]
+\item
+  Assemblons maintenant les résultats des points 2 et 3 dans la formule
+  générale obtenue au point 1 :
+  \[H \equiv \Big( (P \lor R) \land (\neg Q \lor R) \Big) \land \Big( (P \lor \neg S) \land (\neg Q \lor \neg S) \Big)\]
+\item
+  Par associativité de la conjonction \(\land\), nous pouvons supprimer
+  les parenthèses superflues :
+  \[H \equiv (P \lor R) \land (\neg Q \lor R) \land (P \lor \neg S) \land (\neg Q \lor \neg S)\]
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{ruxe9sultat-final}{%
+\subsubsection{Résultat final}\label{ruxe9sultat-final}}
+
+La formule \(H\) sous Forme Normale Conjonctive est :
+\[H \equiv (P \lor R) \land (\neg Q \lor R) \land (P \lor \neg S) \land (\neg Q \lor \neg S)\]
+
+Cette CNF est composée de \(4\) clauses disjonctives : - Clause 1 :
+\(P \lor R\) - Clause 2 : \(\neg Q \lor R\) - Clause 3 :
+\(P \lor \neg S\) - Clause 4 : \(\neg Q \lor \neg S\)
+\n
+\hypertarget{exercice-6-ruxe9futation-et-ruxe9solution-de-clauses}{%
+\section{Exercice 6 : Réfutation et résolution de
+clauses}\label{exercice-6-ruxe9futation-et-ruxe9solution-de-clauses}}
+
+\hypertarget{uxe9noncuxe9}{%
+\subsection{Énoncé}\label{uxe9noncuxe9}}
+
+En logique propositionnelle, la \textbf{résolution} est une règle
+d'inférence syntaxique qui opère sur des clauses. La règle de résolution
+s'énonce ainsi :
+\[\text{De } A \lor B \quad \text{et} \quad \neg A \lor C, \quad \text{on déduit} \quad B \lor C\]
+La clause \(B \lor C\) est appelée la \textbf{résolvante} des deux
+clauses parentes. La variable \(A\) est la variable pivot. Si l'une des
+clauses est réduite à un littéral unique (par exemple \(A\)) et l'autre
+à sa négation (par exemple \(\neg A\)), la résolvante est la
+\textbf{clause vide}, notée \(\square\) (ou \(\bot\)), qui représente
+une contradiction.
+
+Considérons la base de connaissances \(\Sigma\) composée des quatre
+clauses suivantes : 1. \(C_1 = P \lor Q\) 2. \(C_2 = \neg P \lor Q\) 3.
+\(C_3 = P \lor \neg Q\) 4. \(C_4 = \neg P \lor \neg Q\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Expliquer le principe de la \textbf{démonstration par réfutation}
+  (preuve par l'absurde à l'aide de la résolution).
+\item
+  Utiliser la méthode de réfutation par résolution pour démontrer que la
+  base de connaissances \(\Sigma\) est incompatible (c'est-à-dire non
+  satisfaisable). On construira pour cela un arbre de résolution menant
+  à la clause vide \(\square\).
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{correction-duxe9tailluxe9e}{%
+\subsection{Correction Détaillée}\label{correction-duxe9tailluxe9e}}
+
+\hypertarget{question-1-principe-de-la-duxe9monstration-par-ruxe9futation}{%
+\subsubsection{Question 1 : Principe de la démonstration par
+réfutation}\label{question-1-principe-de-la-duxe9monstration-par-ruxe9futation}}
+
+La démonstration par réfutation s'appuie sur le théorème logique suivant
+: un ensemble de formules \(\Sigma\) implique logiquement une formule
+\(A\) (noté \(\Sigma \models A\)) si et seulement si l'ensemble
+\(\Sigma \cup \{\neg A\}\) est insatisfaisable (c'est-à-dire
+contradictoire).
+
+En résolution, pour démontrer qu'une base de connaissances est
+insatisfaisable, on applique de manière répétée la règle d'inférence de
+résolution sur les clauses disponibles dans \(\Sigma\). Si l'on parvient
+à déduire la clause vide \(\square\), cela signifie que la base de
+connaissances contient une contradiction sémantique sous-jacente. Comme
+la règle de résolution est \textbf{correcte} (si elle produit
+\(\square\), alors l'ensemble est insatisfaisable) et \textbf{complète
+pour la réfutation} (si l'ensemble est insatisfaisable, il existe
+toujours une suite d'applications de la résolution menant à
+\(\square\)), l'obtention de la clause vide constitue une preuve
+irréfutable d'insatisfaisabilité.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{question-2-ruxe9futation-par-ruxe9solution-sur-sigma}{%
+\subsubsection{\texorpdfstring{Question 2 : Réfutation par résolution
+sur
+\(\Sigma\)}{Question 2 : Réfutation par résolution sur \textbackslash Sigma}}\label{question-2-ruxe9futation-par-ruxe9solution-sur-sigma}}
+
+Notre but est de déduire la clause vide \(\square\) à partir de notre
+ensemble de clauses de départ :
+\[\Sigma = \{ P \lor Q, \quad \neg P \lor Q, \quad P \lor \neg Q, \quad \neg P \lor \neg Q \}\]
+
+Appliquons la règle de résolution pas-à-pas en choisissant
+judicieusement les pivots :
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Étape 1 : Résolution sur le pivot \(P\) (première paire de
+  clauses)} Considérons les clauses parentes :
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(C_1 = P \lor Q\)
+  \item
+    \(C_2 = \neg P \lor Q\)
+  \end{itemize}
+
+  La variable pivot est \(P\). La règle de résolution élimine \(P\) et
+  \(\neg P\) pour former la disjonction des littéraux restants :
+  \[C_5 = \text{Res}(C_1, C_2) = Q \lor Q\] Par la règle d'idempotence
+  de la disjonction (\(Q \lor Q \equiv Q\)), nous obtenons le littéral
+  unitaire : \[C_5 = Q\]
+\item
+  \textbf{Étape 2 : Résolution sur le pivot \(P\) (seconde paire de
+  clauses)} Considérons les clauses parentes :
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(C_3 = P \lor \neg Q\)
+  \item
+    \(C_4 = \neg P \lor \neg Q\)
+  \end{itemize}
+
+  La variable pivot est \(P\). La résolution produit :
+  \[C_6 = \text{Res}(C_3, C_4) = \neg Q \lor \neg Q\] Par la règle
+  d'idempotence, nous obtenons le littéral unitaire : \[C_6 = \neg Q\]
+\item
+  \textbf{Étape 3 : Déduction de la contradiction (clause vide)}
+  Considérons désormais les deux clauses dérivées unitaires :
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(C_5 = Q\)
+  \item
+    \(C_6 = \neg Q\)
+  \end{itemize}
+
+  Appliquons la règle de résolution sur le pivot \(Q\). Puisqu'il n'y a
+  plus aucun autre littéral dans les clauses, nous déduisons la clause
+  vide : \[C_7 = \text{Res}(C_5, C_6) = \square\]
+\end{enumerate}
+
+L'arbre de résolution menant à la clause vide \(\square\) est donc
+construit avec succès. La base de connaissances \(\Sigma\) est
+incompatible et non satisfaisable.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{repruxe9sentation-graphique-de-larbre-de-ruxe9solution}{%
+\subsubsection{Représentation graphique de l'arbre de
+résolution}\label{repruxe9sentation-graphique-de-larbre-de-ruxe9solution}}
+
+\begin{lstlisting}
+\NormalTok{       C1: P v Q     C2: \textasciitilde{}P v Q           C3: P v \textasciitilde{}Q    C4: \textasciitilde{}P v \textasciitilde{}Q}
+\NormalTok{          \textbackslash{}           /                      \textbackslash{}           /}
+\NormalTok{           \textbackslash{}         /                        \textbackslash{}         /}
+\NormalTok{            \textbackslash{}       /                          \textbackslash{}       /}
+\NormalTok{             C5: Q                              C6: \textasciitilde{}Q}
+\NormalTok{               \textbackslash{}                                  /}
+\NormalTok{                \textbackslash{}                                /}
+\NormalTok{                 \textbackslash{}                              /}
+\NormalTok{                  \textbackslash{}                            /}
+\NormalTok{                         C7: [Clause vide]}
+\end{lstlisting}
+\n
+\hypertarget{exercice-7-compluxe9tude-du-connecteur-nor-barre-de-peirce}{%
+\section{Exercice 7 : Complétude du connecteur NOR (barre de
+Peirce)}\label{exercice-7-compluxe9tude-du-connecteur-nor-barre-de-peirce}}
+
+\hypertarget{uxe9noncuxe9}{%
+\subsection{Énoncé}\label{uxe9noncuxe9}}
+
+Le connecteur binaire \(\downarrow\) (appelé connecteur NOR ou flèche de
+Peirce) est défini par la règle d'évaluation sémantique suivante :
+\[\text{Pour toute valuation } v, \quad v(A \downarrow B) = 1 \iff v(A) = 0 \text{ et } v(B) = 0\]
+Ce qui correspond sémantiquement à \(\neg(A \lor B)\).
+
+Démontrer que le singleton \(\{\downarrow\}\) est un \textbf{système
+complet de connecteurs} (ou base fonctionnellement complète) en
+exprimant à l'aide de ce seul connecteur : 1. La négation \(\neg A\). 2.
+La disjonction \(A \lor B\). 3. La conjonction \(A \land B\).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{correction-duxe9tailluxe9e}{%
+\subsection{Correction Détaillée}\label{correction-duxe9tailluxe9e}}
+
+\hypertarget{question-1-expression-de-la-nuxe9gation-neg-a}{%
+\subsubsection{\texorpdfstring{Question 1 : Expression de la négation
+\(\neg A\)}{Question 1 : Expression de la négation \textbackslash neg A}}\label{question-1-expression-de-la-nuxe9gation-neg-a}}
+
+Montrons que \(\neg A \equiv A \downarrow A\). Soit \(v\) une valuation
+quelconque. - D'après la définition du connecteur \(\downarrow\) :
+\[v(A \downarrow A) = 1 \iff v(A) = 0 \text{ et } v(A) = 0 \iff v(A) = 0\]
+- Ainsi, \(v(A \downarrow A) = 1 - v(A) = v(\neg A)\). Les deux
+expressions prennent les mêmes valeurs de vérité pour toutes les
+valuations possibles. Nous avons donc bien :
+\[\neg A \equiv A \downarrow A\]
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{question-2-expression-de-la-disjonction-a-lor-b}{%
+\subsubsection{\texorpdfstring{Question 2 : Expression de la disjonction
+\(A \lor B\)}{Question 2 : Expression de la disjonction A \textbackslash lor B}}\label{question-2-expression-de-la-disjonction-a-lor-b}}
+
+Par double négation, nous savons que
+\(A \lor B \equiv \neg(\neg(A \lor B))\). - Par définition du connecteur
+\(\downarrow\), nous avons \(\neg(A \lor B) \equiv A \downarrow B\). -
+Par conséquent, la disjonction est la négation du connecteur
+\(\downarrow\) : \[A \lor B \equiv \neg(A \downarrow B)\] - En utilisant
+le résultat de la question 1 pour exprimer la négation d'une formule
+\(X = (A \downarrow B)\), nous avons :
+\[\neg X \equiv X \downarrow X \implies \neg(A \downarrow B) \equiv (A \downarrow B) \downarrow (A \downarrow B)\]
+Les deux expressions sont logiquement équivalentes :
+\[A \lor B \equiv (A \downarrow B) \downarrow (A \downarrow B)\]
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{question-3-expression-de-la-conjonction-a-land-b}{%
+\subsubsection{\texorpdfstring{Question 3 : Expression de la conjonction
+\(A \land B\)}{Question 3 : Expression de la conjonction A \textbackslash land B}}\label{question-3-expression-de-la-conjonction-a-land-b}}
+
+Par les lois de De Morgan, nous savons que la conjonction peut s'écrire
+sous forme d'une négation sur des termes niés :
+\[A \land B \equiv \neg(\neg A \lor \neg B)\] - Par définition du
+connecteur \(\downarrow\), la négation d'une disjonction s'écrit avec la
+flèche : \[\neg(X \lor Y) \equiv X \downarrow Y\] - Posons
+\(X = \neg A\) et \(Y = \neg B\). L'expression devient :
+\[A \land B \equiv \neg A \downarrow \neg B\] - Remplaçons désormais les
+négations internes \(\neg A\) et \(\neg B\) en utilisant le connecteur
+\(\downarrow\) d'après la question 1 :
+\[\neg A \equiv A \downarrow A \quad \text{et} \quad \neg B \equiv B \downarrow B\]
+- En substituant ces formes, nous obtenons :
+\[A \land B \equiv (A \downarrow A) \downarrow (B \downarrow B)\]
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{synthuxe8se}{%
+\subsubsection{Synthèse}\label{synthuxe8se}}
+
+Nous avons réussi à exprimer les trois connecteurs fondamentaux
+\(\{\neg, \lor, \land\}\) uniquement à l'aide de la flèche de Peirce
+\(\downarrow\) : - \(\neg A \equiv A \downarrow A\) -
+\(A \lor B \equiv (A \downarrow B) \downarrow (A \downarrow B)\) -
+\(A \land B \equiv (A \downarrow A) \downarrow (B \downarrow B)\)
+
+Puisque le système de connecteurs \(\{\neg, \lor, \land\}\) est complet,
+le singleton \(\{\downarrow\}\) est également un système complet de
+connecteurs.
+\n
+\hypertarget{exercice-8-thuxe9oruxe8me-dinterpolation-de-craig}{%
+\section{Exercice 8 : Théorème d'interpolation de
+Craig}\label{exercice-8-thuxe9oruxe8me-dinterpolation-de-craig}}
+
+\hypertarget{uxe9noncuxe9}{%
+\subsection{Énoncé}\label{uxe9noncuxe9}}
+
+Le \textbf{théorème d'interpolation de Craig} est un résultat
+fondamental de la logique mathématique. Dans le cadre de la logique
+propositionnelle, il s'énonce ainsi : \textgreater{} Soient \(A\) et
+\(B\) deux formules telles que \(A \Rightarrow B\) est une tautologie
+(\(\models A \Rightarrow B\)). \textgreater{} Si \(A\) et \(B\)
+partagent au moins une variable propositionnelle commune, alors il
+existe une formule \(I\), appelée \textbf{interpolant de Craig}, telle
+que : \textgreater{} 1. \(\models A \Rightarrow I\) \textgreater{} 2.
+\(\models I \Rightarrow B\) \textgreater{} 3. Toutes les variables
+propositionnelles apparaissant dans \(I\) apparaissent à la fois dans
+\(A\) et dans \(B\).
+
+Considérons les deux formules propositionnelles suivantes : -
+\(A = P \land (\neg Q \lor R)\) -
+\(B = (P \land S) \lor (P \land \neg S \lor T)\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Démontrer que \(\models A \Rightarrow B\) en effectuant une
+  simplification sémantique de \(A\) et \(B\).
+\item
+  Déterminer l'ensemble \(\mathcal{V}_A\) des variables de \(A\),
+  l'ensemble \(\mathcal{V}_B\) des variables de \(B\), et leur
+  intersection \(\mathcal{V}_C = \mathcal{V}_A \cap \mathcal{V}_B\).
+\item
+  Proposer un interpolant de Craig \(I\) pour ce couple de formules et
+  prouver qu'il satisfait aux trois conditions du théorème.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{correction-duxe9tailluxe9e}{%
+\subsection{Correction Détaillée}\label{correction-duxe9tailluxe9e}}
+
+\hypertarget{question-1-preuve-de-la-tautologie-models-a-rightarrow-b}{%
+\subsubsection{\texorpdfstring{Question 1 : Preuve de la tautologie
+\(\models A \Rightarrow B\)}{Question 1 : Preuve de la tautologie \textbackslash models A \textbackslash Rightarrow B}}\label{question-1-preuve-de-la-tautologie-models-a-rightarrow-b}}
+
+Commençons par simplifier et analyser les conditions sous lesquelles les
+deux formules sont vraies.
+
+\begin{itemize}
+\item
+  \textbf{Analyse de \(A\) :} \[A = P \land (\neg Q \lor R)\] Pour que
+  \(v(A) = 1\), il faut et il suffit que :
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(v(P) = 1\)
+  \item
+    et \(v(\neg Q \lor R) = 1\). En particulier, toute valuation
+    satisfaisant \(A\) doit nécessairement affecter la valeur \(1\) à la
+    variable \(P\).
+  \end{itemize}
+\item
+  \textbf{Analyse de \(B\) :}
+  \[B = (P \land S) \lor (P \land \neg S \lor T)\] Grâce à la
+  commutativité et l'associativité de la disjonction, réécrivons \(B\) :
+  \[B \equiv (P \land S) \lor (P \land \neg S) \lor T\] Appliquons la
+  distributivité de la conjonction par rapport à la disjonction sur les
+  deux premiers termes :
+  \[(P \land S) \lor (P \land \neg S) \equiv P \land (S \lor \neg S)\]
+  Puisque \(S \lor \neg S \equiv 1\), nous avons :
+  \[P \land 1 \equiv P\] Substituons cela dans l'expression de \(B\) :
+  \[B \equiv P \lor T\]
+\item
+  \textbf{Analyse de l'implication \(A \Rightarrow B\) :} Remplaçons
+  \(B\) par sa forme simplifiée \(P \lor T\) :
+  \[A \Rightarrow B \equiv \big( P \land (\neg Q \lor R) \big) \Rightarrow (P \lor T)\]
+  Soit \(v\) une valuation telle que \(v(A) = 1\). D'après l'analyse de
+  \(A\), cela implique \(v(P) = 1\). Si \(v(P) = 1\), alors la
+  disjonction \(P \lor T\) est vraie :
+  \[v(P \lor T) = \max(v(P), v(T)) = \max(1, v(T)) = 1 \implies v(B) = 1\]
+  Ainsi, toute valuation qui rend \(A\) vraie rend également \(B\)
+  vraie. Par conséquent, \(A \Rightarrow B\) est une tautologie, notée
+  \(\models A \Rightarrow B\).
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{question-2-intersection-des-variables-propositionnelles}{%
+\subsubsection{Question 2 : Intersection des variables
+propositionnelles}\label{question-2-intersection-des-variables-propositionnelles}}
+
+Listons les variables propositionnelles contenues dans chaque formule :
+- Pour \(A = P \land (\neg Q \lor R)\), l'ensemble des variables est :
+\[\mathcal{V}_A = \{P, Q, R\}\] - Pour
+\(B = (P \land S) \lor (P \land \neg S \lor T)\), l'ensemble des
+variables est : \[\mathcal{V}_B = \{P, S, T\}\] - L'intersection des
+ensembles de variables est :
+\[\mathcal{V}_C = \mathcal{V}_A \cap \mathcal{V}_B = \{P\}\]
+
+L'unique variable commune aux deux formules est donc \(P\).
+L'interpolant de Craig \(I\) ne pourra contenir que la seule variable
+propositionnelle \(P\) (ou être une constante logique \(0\) ou \(1\)).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{question-3-duxe9termination-et-validation-de-linterpolant-i}{%
+\subsubsection{\texorpdfstring{Question 3 : Détermination et validation
+de l'interpolant
+\(I\)}{Question 3 : Détermination et validation de l'interpolant I}}\label{question-3-duxe9termination-et-validation-de-linterpolant-i}}
+
+Puisque le seul atome autorisé dans \(I\) est \(P\), les seuls choix
+possibles pour \(I\) (à équivalence logique près) sont \(P\),
+\(\neg P\), \(0\) ou \(1\).
+
+\begin{itemize}
+\tightlist
+\item
+  Testons la formule \textbf{\(I = P\)} :
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    \textbf{Condition 3 :} Les variables de \(I\) sont incluses dans
+    \(\mathcal{V}_C\). C'est le cas puisque
+    \(\text{Var}(I) = \{P\} \subseteq \{P\}\).
+  \item
+    \textbf{Condition 1 (\(\models A \Rightarrow I\)) :}
+    \[A \Rightarrow I \equiv \big( P \land (\neg Q \lor R) \big) \Rightarrow P\]
+    Soit \(v\) une valuation. Si \(v(A) = 1\), alors \(v(P) = 1\), donc
+    \(v(I) = 1\). L'implication est donc toujours vraie. C'est une
+    tautologie.
+  \item
+    \textbf{Condition 2 (\(\models I \Rightarrow B\)) :}
+    \[I \Rightarrow B \equiv P \Rightarrow (P \lor T)\] Soit \(v\) une
+    valuation. Si \(v(I) = 1\), alors \(v(P) = 1\), ce qui implique
+    \(v(P \lor T) = 1\), d'où \(v(B) = 1\). L'implication est donc
+    toujours vraie. C'est une tautologie.
+  \end{enumerate}
+\end{itemize}
+
+L'ensemble des trois conditions du théorème d'interpolation de Craig est
+satisfait par la formule : \[I = P\]
+
+\emph{Remarque constructive :} Pour construire l'interpolant
+sémantiquement dans le cas général pour une variable commune \(C\), on
+peut écrire \(I = A[C/1] \lor A[C/0]\) ou \(I = A[C/1] \land A[C/0]\)
+selon le sens de l'implication.
+\n
+\hypertarget{exercice-9-isomorphisme-de-stone-pour-les-alguxe8bres-de-boole-finies}{%
+\section{Exercice 9 : Isomorphisme de Stone pour les algèbres de Boole
+finies}\label{exercice-9-isomorphisme-de-stone-pour-les-alguxe8bres-de-boole-finies}}
+
+\hypertarget{uxe9noncuxe9}{%
+\subsection{Énoncé}\label{uxe9noncuxe9}}
+
+Soit \((B, \lor, \land, \neg, 0, 1)\) une \textbf{algèbre de Boole
+finie} (c'est-à-dire que le cardinal de l'ensemble \(B\) est fini). On
+munit \(B\) de sa relation d'ordre canonique \(\le\) définie par :
+\[\forall x, y \in B, \quad x \le y \iff x \land y = x \iff x \lor y = y\]
+
+On définit un \textbf{atom} de \(B\) comme un élément \(a \in B\) tel
+que \(a \neq 0\) et pour tout \(x \in B\) :
+\[\text{si } x \le a, \quad \text{alors } x = 0 \text{ ou } x = a\] On
+note \(\mathcal{A}t(B)\) l'ensemble de tous les atomes de \(B\).
+
+Considérons l'application suivante, notée \(\Phi\) :
+\[\Phi : \begin{cases} B \to \mathcal{P}(\mathcal{A}t(B)) \\ x \mapsto \{a \in \mathcal{A}t(B) \mid a \le x\} \end{cases}\]
+
+Le but de cet exercice est de démontrer le \textbf{théorème de
+représentation de Stone} dans le cas fini, à savoir que \(\Phi\) est un
+isomorphisme d'algèbres de Boole, prouvant que toute algèbre de Boole
+finie est isomorphe à l'algèbre des parties d'un ensemble.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Soit \(x \in B\). Démontrer que si \(x \neq 0\), alors il existe au
+  moins un atome \(a \in \mathcal{A}t(B)\) tel que \(a \le x\).
+\item
+  Démontrer que pour tout \(x \in B\), \(x = \bigvee_{a \in \Phi(x)} a\)
+  (tout élément est le suprémum des atomes qu'il contient).
+\item
+  Démontrer que \(\Phi\) est injective.
+\item
+  Démontrer que pour tous \(x, y \in B\) :
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(\Phi(x \land y) = \Phi(x) \cap \Phi(y)\)
+  \item
+    \(\Phi(x \lor y) = \Phi(x) \cup \Phi(y)\)
+  \item
+    \(\Phi(\neg x) = \mathcal{A}t(B) \setminus \Phi(x)\)
+  \end{itemize}
+\item
+  Conclure sur la nature de \(\Phi\) et en déduire le cardinal d'une
+  algèbre de Boole finie.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{correction-duxe9tailluxe9e}{%
+\subsection{Correction Détaillée}\label{correction-duxe9tailluxe9e}}
+
+\hypertarget{question-1-existence-dun-atome-infuxe9rieur}{%
+\subsubsection{Question 1 : Existence d'un atome
+inférieur}\label{question-1-existence-dun-atome-infuxe9rieur}}
+
+Soit \(x \in B\) tel que \(x \neq 0\). Considérons l'ensemble des
+éléments non nuls inférieurs ou égaux à \(x\) :
+\[E_x = \{y \in B \mid y \neq 0 \text{ et } y \le x\}\] - Cet ensemble
+est non vide car \(x \in E_x\) (puisque \(x \neq 0\) et \(x \le x\)). -
+Puisque l'ensemble \(B\) est fini, l'ensemble \(E_x\) est également
+fini. - Tout ensemble ordonné fini et non vide possède au moins un
+élément minimal. Soit \(a\) un élément minimal de \(E_x\).
+
+Montrons que \(a\) est un atome de \(B\) : - Par définition de \(E_x\),
+\(a \neq 0\). - Soit \(z \in B\) tel que \(z \le a\). Par transitivité
+de la relation d'ordre, puisque \(a \le x\), on a \(z \le x\). - Si
+\(z \neq 0\), alors \(z \in E_x\). Comme \(z \le a\) et que \(a\) est
+minimal dans \(E_x\), on a nécessairement \(z = a\). - Ainsi, pour tout
+\(z \le a\), \(z = 0\) ou \(z = a\). L'élément \(a\) est donc un atome
+de \(B\). Puisque \(a \in E_x\), on a \(a \le x\). Il existe donc un
+atome sous tout élément non nul.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{question-2-tout-uxe9luxe9ment-est-la-borne-supuxe9rieure-de-ses-atomes}{%
+\subsubsection{Question 2 : Tout élément est la borne supérieure de ses
+atomes}\label{question-2-tout-uxe9luxe9ment-est-la-borne-supuxe9rieure-de-ses-atomes}}
+
+Soit \(x \in B\). Définissons \(x' = \bigvee_{a \in \Phi(x)} a\). - Par
+définition de \(\Phi(x)\), pour tout \(a \in \Phi(x)\), nous avons
+\(a \le x\). Par définition de la borne supérieure, nous en déduisons :
+\[x' \le x\] - Montrons par l'absurde que \(x = x'\). Supposons que
+\(x \neq x'\). Alors, l'élément \(d = x \land \neg x'\) est non nul
+(sinon \(x \le x'\)). Puisque \(d \neq 0\), par le résultat de la
+question 1, il existe un atome \(a_0 \in \mathcal{A}t(B)\) tel que
+\(a_0 \le d\). - D'une part, \(a_0 \le d \le x\), donc
+\(a_0 \in \Phi(x)\). Par conséquent, \(a_0 \le x'\) (par définition de
+\(x'\)). - D'autre part, \(a_0 \le d \le \neg x'\), ce qui implique
+\(a_0 \land x' \le \neg x' \land x' = 0\). Donc \(a_0 \land x' = 0\). -
+Or, comme \(a_0 \le x'\), nous avons \(a_0 \land x' = a_0\). - Nous en
+déduisons \(a_0 = 0\), ce qui contredit le fait que \(a_0\) est un atome
+(donc non nul). L'hypothèse \(x \neq x'\) est donc absurde. On en
+conclut que \(x = \bigvee_{a \in \Phi(x)} a\).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{question-3-injectivituxe9-de-phi}{%
+\subsubsection{\texorpdfstring{Question 3 : Injectivité de
+\(\Phi\)}{Question 3 : Injectivité de \textbackslash Phi}}\label{question-3-injectivituxe9-de-phi}}
+
+Soient \(x, y \in B\) tels que \(\Phi(x) = \Phi(y)\). D'après le
+résultat de la question 2 :
+\[x = \bigvee_{a \in \Phi(x)} a \quad \text{et} \quad y = \bigvee_{a \in \Phi(y)} a\]
+Puisque \(\Phi(x) = \Phi(y)\), les deux suprémums portent sur le même
+ensemble d'atomes, d'où : \[x = y\] L'application \(\Phi\) est donc
+injective.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{question-4-pruxe9servation-des-opuxe9rations-logiques}{%
+\subsubsection{Question 4 : Préservation des opérations
+logiques}\label{question-4-pruxe9servation-des-opuxe9rations-logiques}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Intersection/Conjonction :
+  \(\Phi(x \land y) = \Phi(x) \cap \Phi(y)\)}
+  \[a \in \Phi(x \land y) \iff a \le x \land y \iff a \le x \text{ et } a \le y \iff a \in \Phi(x) \text{ et } a \in \Phi(y) \iff a \in \Phi(x) \cap \Phi(y)\]
+\item
+  \textbf{Union/Disjonction : \(\Phi(x \lor y) = \Phi(x) \cup \Phi(y)\)}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Si \(a \in \Phi(x) \cup \Phi(y)\), alors \(a \le x\) ou \(a \le y\).
+    Dans les deux cas, \(a \le x \lor y\), donc
+    \(a \in \Phi(x \lor y)\). D'où
+    \(\Phi(x) \cup \Phi(y) \subseteq \Phi(x \lor y)\).
+  \item
+    Réciproquement, soit \(a \in \Phi(x \lor y)\), donc
+    \(a \le x \lor y\). Alors
+    \(a = a \land (x \lor y) = (a \land x) \lor (a \land y)\). Puisque
+    \(a\) est un atome, les éléments \(a \land x\) et \(a \land y\) sont
+    soit \(0\), soit \(a\). Si les deux valaient \(0\), on aurait
+    \(a = 0 \lor 0 = 0\), ce qui est exclu. Donc, au moins l'un des deux
+    vaut \(a\). Si \(a \land x = a\), alors
+    \(a \le x \implies a \in \Phi(x)\). Si \(a \land y = a\), alors
+    \(a \le y \implies a \in \Phi(y)\). Dans tous les cas,
+    \(a \in \Phi(x) \cup \Phi(y)\). D'où l'égalité
+    \(\Phi(x \lor y) = \Phi(x) \cup \Phi(y)\).
+  \end{itemize}
+\item
+  \textbf{Complément :
+  \(\Phi(\neg x) = \mathcal{A}t(B) \setminus \Phi(x)\)}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Soit \(a \in \Phi(\neg x)\), donc \(a \le \neg x\). Si
+    \(a \in \Phi(x)\), on aurait également \(a \le x\), donc
+    \(a \le x \land \neg x = 0 \implies a = 0\), absurde. Donc
+    \(a \notin \Phi(x)\).
+  \item
+    Réciproquement, soit \(a \in \mathcal{A}t(B) \setminus \Phi(x)\).
+    Considérons \(a \land x\). Puisque \(a\) est un atome,
+    \(a \land x = 0\) ou \(a \land x = a\). Comme \(a \notin \Phi(x)\),
+    la deuxième option est exclue, donc \(a \land x = 0\). Alors
+    \(a = a \land 1 = a \land (x \lor \neg x) = (a \land x) \lor (a \land \neg x) = 0 \lor (a \land \neg x) = a \land \neg x\).
+    D'où \(a \le \neg x\), ce qui signifie \(a \in \Phi(\neg x)\).
+    L'égalité est établie.
+  \end{itemize}
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{question-5-conclusion-et-cardinalituxe9}{%
+\subsubsection{Question 5 : Conclusion et
+cardinalité}\label{question-5-conclusion-et-cardinalituxe9}}
+
+\begin{itemize}
+\tightlist
+\item
+  L'application \(\Phi\) est injective (Q3) et préserve la structure
+  d'algèbre de Boole (Q4).
+\item
+  De plus, pour tout sous-ensemble d'atomes
+  \(S \subseteq \mathcal{A}t(B)\), l'élément
+  \(x_S = \bigvee_{a \in S} a\) vérifie \(\Phi(x_S) = S\). L'application
+  \(\Phi\) est donc surjective.
+\item
+  Par conséquent, \(\Phi\) est un \textbf{isomorphisme d'algèbres de
+  Boole}.
+\item
+  Toute algèbre de Boole finie \(B\) est isomorphe à l'algèbre des
+  parties \(\mathcal{P}(\mathcal{A}t(B))\).
+\item
+  Comme l'ensemble \(\mathcal{A}t(B)\) est fini (soit \(n\) son
+  cardinal), le cardinal de \(\mathcal{P}(\mathcal{A}t(B))\) est égal à
+  \(2^n\).
+\end{itemize}
+
+On en déduit le théorème fondamental : \textbf{Le cardinal de toute
+algèbre de Boole finie est une puissance de \(2\)}.
+\n
+\hypertarget{exercice-10-thuxe9oruxe8me-de-compacituxe9-et-coloriage-de-graphes-infinis-niveau-ens}{%
+\section{Exercice 10 : Théorème de compacité et coloriage de graphes
+infinis (Niveau
+ENS)}\label{exercice-10-thuxe9oruxe8me-de-compacituxe9-et-coloriage-de-graphes-infinis-niveau-ens}}
+
+\hypertarget{uxe9noncuxe9}{%
+\subsection{Énoncé}\label{uxe9noncuxe9}}
+
+Soit \(G = (V, E)\) un graphe non orienté, où l'ensemble des sommets
+\(V\) est infini (dénombrable ou non) et
+\(E \subseteq \{\{u, v\} \mid u, v \in V, u \neq v\}\) est l'ensemble
+des arêtes. Soit \(k \ge 1\) un entier naturel. On rappelle qu'un
+\textbf{\(k\)-coloriage} propre de \(G\) est une application
+\(f : V \to \{1, \dots, k\}\) telle que pour toute arête
+\(\{u, v\} \in E\) : \[f(u) \neq f(v)\]
+
+On suppose que le graphe \(G\) vérifie la propriété locale suivante :
+\textgreater{} \textbf{Tout sous-graphe fini de \(G\) est
+\(k\)-colorable.}
+
+Le but de cet exercice est de démontrer, à l'aide du \textbf{théorème de
+compacité de la logique propositionnelle}, le \textbf{théorème de De
+Bruijn-Erdős} : \textgreater{} \textbf{Le graphe infini \(G\) est
+lui-même \(k\)-colorable.}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Modéliser le problème en définissant un ensemble de variables
+  propositionnelles approprié.
+\item
+  Écrire les formules logiques modélisant les trois contraintes
+  suivantes :
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Contrainte 1 : Tout sommet possède au moins une couleur.
+  \item
+    Contrainte 2 : Tout sommet possède au plus une couleur.
+  \item
+    Contrainte 3 : Deux sommets adjacents n'ont pas la même couleur. On
+    notera \(\Sigma\) l'ensemble de toutes ces clauses.
+  \end{itemize}
+\item
+  Soit \(\Sigma_0\) un sous-ensemble fini de \(\Sigma\). Démontrer que
+  \(\Sigma_0\) est satisfaisable.
+\item
+  Conclure par le théorème de compacité de la logique propositionnelle.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{correction-duxe9tailluxe9e}{%
+\subsection{Correction Détaillée}\label{correction-duxe9tailluxe9e}}
+
+\hypertarget{question-1-choix-des-variables-propositionnelles}{%
+\subsubsection{Question 1 : Choix des variables
+propositionnelles}\label{question-1-choix-des-variables-propositionnelles}}
+
+Pour chaque sommet \(i \in V\) et chaque couleur
+\(c \in \{1, \dots, k\}\), nous définissons la variable propositionnelle
+\(x_{i, c}\) dont la sémantique est :
+\[x_{i, c} \equiv \text{« Le sommet } i \text{ est coloré avec la couleur } c \text{ »}\]
+L'ensemble de nos variables propositionnelles est donc :
+\[\mathcal{P} = \{x_{i, c} \mid i \in V, c \in \{1, \dots, k\}\}\]
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{question-2-moduxe9lisation-des-contraintes-logiques}{%
+\subsubsection{Question 2 : Modélisation des contraintes
+logiques}\label{question-2-moduxe9lisation-des-contraintes-logiques}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Chaque sommet a au moins une couleur :} Pour tout sommet
+  \(i \in V\), la formule traduisant cette condition est une clause
+  disjonctive sur toutes les couleurs disponibles :
+  \[\Phi_i = \bigvee_{c=1}^k x_{i, c}\] Désignons par
+  \(\Sigma_1 = \{\Phi_i \mid i \in V\}\) l'ensemble de ces clauses.
+\item
+  \textbf{Chaque sommet a au plus une couleur :} Pour tout sommet
+  \(i \in V\) et pour chaque paire de couleurs distinctes
+  \(c_1 \neq c_2\), le sommet ne peut pas porter les deux couleurs
+  simultanément, ce qui s'écrit
+  \(\neg(x_{i, c_1} \land x_{i, c_2}) \equiv \neg x_{i, c_1} \lor \neg x_{i, c_2}\).
+  Désignons par \(\Sigma_2\) l'ensemble de toutes ces clauses
+  d'exclusion :
+  \[\Sigma_2 = \{\neg x_{i, c_1} \lor \neg x_{i, c_2} \mid i \in V, \quad 1 \le c_1 < c_2 \le k\}\]
+\item
+  \textbf{Les sommets adjacents ont des couleurs différentes :} Pour
+  chaque arête \(\{i, j\} \in E\) et chaque couleur
+  \(c \in \{1, \dots, k\}\), les sommets \(i\) et \(j\) ne peuvent pas
+  être colorés tous deux en \(c\), ce qui s'écrit
+  \(\neg(x_{i, c} \land x_{j, c}) \equiv \neg x_{i, c} \lor \neg x_{j, c}\).
+  Désignons par \(\Sigma_3\) l'ensemble de ces clauses de conflit :
+  \[\Sigma_3 = \{\neg x_{i, c} \lor \neg x_{j, c} \mid \{i, j\} \in E, \quad c \in \{1, \dots, k\}\}\]
+\end{enumerate}
+
+L'ensemble total de nos formules est
+\(\Sigma = \Sigma_1 \cup \Sigma_2 \cup \Sigma_3\). Une valuation \(v\)
+satisfaisant \(\Sigma\) correspond bijectivement à un \(k\)-coloriage
+propre de \(G\).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{question-3-satisfaisabilituxe9-de-tout-sous-ensemble-fini-sigma_0}{%
+\subsubsection{\texorpdfstring{Question 3 : Satisfaisabilité de tout
+sous-ensemble fini
+\(\Sigma_0\)}{Question 3 : Satisfaisabilité de tout sous-ensemble fini \textbackslash Sigma\_0}}\label{question-3-satisfaisabilituxe9-de-tout-sous-ensemble-fini-sigma_0}}
+
+Soit \(\Sigma_0 \subseteq \Sigma\) un sous-ensemble fini de clauses. -
+Puisque \(\Sigma_0\) est fini, il ne contient qu'un nombre fini de
+clauses. - Chaque clause de \(\Sigma_0\) ne fait intervenir qu'un nombre
+fini de sommets de \(V\). - Désignons par \(V_0 \subseteq V\) l'ensemble
+des sommets apparaissant dans les clauses de \(\Sigma_0\). Puisque
+\(\Sigma_0\) est fini et que chaque clause contient au plus \(k\)
+sommets (les clauses de \(\Sigma_1\) ont \(1\) sommet, \(\Sigma_2\) ont
+\(1\) sommet, et \(\Sigma_3\) ont \(2\) sommets), \(V_0\) est un
+\textbf{ensemble fini}. - Soit \(G_0 = (V_0, E_0)\) le sous-graphe fini
+de \(G\) induit par le sous-ensemble de sommets \(V_0\), où
+\(E_0 = \{\{i, j\} \in E \mid i, j \in V_0\}\).
+
+Par hypothèse de l'énoncé, le sous-graphe fini \(G_0\) est
+\(k\)-colorable. Il existe donc une fonction de coloriage propre
+\(f_0 : V_0 \to \{1, \dots, k\}\) sur ce sous-graphe. Définissons une
+valuation \(v_0\) pour les variables propositionnelles apparaissant dans
+\(\Sigma_0\) par :
+\[v_0(x_{i, c}) = 1 \iff i \in V_0 \text{ et } f_0(i) = c\]
+
+Vérifions que \(v_0\) satisfait toutes les clauses de \(\Sigma_0\) : -
+Si une clause \(C \in \Sigma_0\) provient de \(\Sigma_1\), elle est de
+la forme \(\bigvee_{c=1}^k x_{i, c}\) pour un certain \(i \in V_0\).
+Comme \(f_0(i) \in \{1, \dots, k\}\), il existe un unique \(c^*\) tel
+que \(f_0(i) = c^*\). Alors \(v_0(x_{i, c^*}) = 1\), la clause est donc
+satisfaite. - Si \(C \in \Sigma_0\) provient de \(\Sigma_2\), elle est
+de la forme \(\neg x_{i, c_1} \lor \neg x_{i, c_2}\) pour \(c_1 < c_2\).
+Comme \(f_0(i)\) ne peut pas être égal à la fois à \(c_1\) et \(c_2\),
+au moins l'une des variables \(x_{i, c_1}\) ou \(x_{i, c_2}\) est
+évaluée à \(0\) par \(v_0\). La disjonction des négations est donc
+évaluée à \(1\). La clause est satisfaite. - Si \(C \in \Sigma_0\)
+provient de \(\Sigma_3\), elle est de la forme
+\(\neg x_{i, c} \lor \neg x_{j, c}\) avec \(\{i, j\} \in E_0\). Puisque
+\(f_0\) est un coloriage propre de \(G_0\), \(f_0(i) \neq f_0(j)\). Donc
+\(i\) et \(j\) ne peuvent pas avoir tous deux la couleur \(c\). L'une
+des variables \(x_{i, c}\) ou \(x_{j, c}\) vaut nécessairement \(0\), ce
+qui satisfait la clause.
+
+Puisque toutes les clauses de \(\Sigma_0\) sont satisfaites par \(v_0\),
+le sous-ensemble fini \(\Sigma_0\) est \textbf{satisfaisable}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{question-4-conclusion-par-compacituxe9}{%
+\subsubsection{Question 4 : Conclusion par
+compacité}\label{question-4-conclusion-par-compacituxe9}}
+
+Nous venons de démontrer que pour tout sous-ensemble fini
+\(\Sigma_0 \subseteq \Sigma\), \(\Sigma_0\) est satisfaisable. Par le
+\textbf{théorème de compacité de la logique propositionnelle},
+l'ensemble infini complet \(\Sigma\) est satisfaisable.
+
+Il existe donc une valuation globale \(v^* : \mathcal{P} \to \{0, 1\}\)
+telle que pour toute clause \(C \in \Sigma\), \(v^*(C) = 1\).
+Définissons l'application de coloriage global
+\(f^* : V \to \{1, \dots, k\}\) par :
+\[f^*(i) = c \iff v^*(x_{i, c}) = 1\]
+
+Vérifions que \(f^*\) est bien définie et est un coloriage propre : -
+Les clauses de \(\Sigma_1\) garantissent que pour chaque \(i \in V\), il
+existe au moins un \(c\) tel que \(v^*(x_{i, c}) = 1\). - Les clauses de
+\(\Sigma_2\) garantissent que pour chaque \(i \in V\), il existe au plus
+un \(c\) tel que \(v^*(x_{i, c}) = 1\). - Donc, \(f^*\) est une
+application bien définie de \(V\) dans \(\{1, \dots, k\}\). - Les
+clauses de \(\Sigma_3\) garantissent que si \(\{i, j\} \in E\), alors
+pour tout \(c\), \(v^*(x_{i, c}) = 0\) ou \(v^*(x_{j, c}) = 0\). Donc
+\(f^*(i) \neq f^*(j)\). Le coloriage est propre.
+
+Le graphe infini \(G\) est donc \(k\)-colorable. \(\blacksquare\)
+\n
+
+
+\part{Travaux pratiques et simulations algorithmiques}
+\hypertarget{tp-1-arbre-syntaxique-abstrait-pour-formules-logiques}{%
+\section{TP 1 : Arbre syntaxique abstrait pour formules
+logiques}\label{tp-1-arbre-syntaxique-abstrait-pour-formules-logiques}}
+
+\hypertarget{objectif}{%
+\subsection{Objectif}\label{objectif}}
+
+L'objectif de ce TP est de concevoir et d'implémenter en Python une
+structure de données d'\textbf{Arbre Syntaxique Abstrait (AST)}
+permettant de modéliser, de représenter sous forme textuelle propre et
+d'évaluer sémantiquement n'importe quelle formule bien formée de la
+logique propositionnelle.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{conception-thuxe9orique}{%
+\subsection{Conception Théorique}\label{conception-thuxe9orique}}
+
+Pour modéliser une formule logique en programmation orientée objet, nous
+utilisons le patron de conception \textbf{Composite}. - Une classe de
+base abstraite \texttt{Formula} définit l'interface commune. - Les
+variables propositionnelles sont représentées par des nœuds feuilles
+(\texttt{Variable}). - Les connecteurs logiques correspondent à des
+nœuds internes unaires (\texttt{Not}) ou binaires (\texttt{And},
+\texttt{Or}, \texttt{Implies}, \texttt{Equiv}).
+
+Chaque classe doit implémenter trois opérations clés : 1.
+\texttt{\_\_str\_\_(self)} : retourne une représentation textuelle
+parenthésée de la formule. 2. \texttt{get\_variables(self)} : retourne
+l'ensemble (\texttt{set}) des variables propositionnelles présentes dans
+la formule. 3. \texttt{evaluate(self,\ valuation)} : évalue la valeur de
+vérité (\(True\) ou \(False\)) de la formule pour une valuation donnée
+sous forme de dictionnaire Python \texttt{\{nom\_variable:\ booléen\}}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{code-source-python-from-scratch}{%
+\subsection{Code Source Python (from
+scratch)}\label{code-source-python-from-scratch}}
+
+Voici l'implémentation complète des classes en Python :
+
+\begin{lstlisting}
+\ImportTok{from}\NormalTok{ abc }\ImportTok{import}\NormalTok{ ABC, abstractmethod}
+
+\KeywordTok{class}\NormalTok{ Formula(ABC):}
+    \CommentTok{"""Classe abstraite de base pour toutes les formules propositionnelles."""}
+
+    \AttributeTok{@abstractmethod}
+    \KeywordTok{def} \FunctionTok{\_\_str\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \CommentTok{"""Retourne la représentation textuelle sous forme de chaîne de caractères."""}
+        \ControlFlowTok{pass}
+
+    \AttributeTok{@abstractmethod}
+    \KeywordTok{def}\NormalTok{ get\_variables(}\VariableTok{self}\NormalTok{):}
+        \CommentTok{"""Retourne un ensemble (set) de toutes les variables propositionnelles de la formule."""}
+        \ControlFlowTok{pass}
+
+    \AttributeTok{@abstractmethod}
+    \KeywordTok{def}\NormalTok{ evaluate(}\VariableTok{self}\NormalTok{, valuation):}
+        \CommentTok{"""Évalue la formule pour une valuation donnée (dictionnaire de type dict[str, bool])."""}
+        \ControlFlowTok{pass}
+
+
+\KeywordTok{class}\NormalTok{ Variable(Formula):}
+    \CommentTok{"""Représente une variable propositionnelle (atome, feuille de l\textquotesingle{}arbre)."""}
+
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, name):}
+        \VariableTok{self}\NormalTok{.name }\OperatorTok{=}\NormalTok{ name}
+
+    \KeywordTok{def} \FunctionTok{\_\_str\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.name}
+
+    \KeywordTok{def}\NormalTok{ get\_variables(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return}\NormalTok{ \{}\VariableTok{self}\NormalTok{.name\}}
+
+    \KeywordTok{def}\NormalTok{ evaluate(}\VariableTok{self}\NormalTok{, valuation):}
+        \ControlFlowTok{if} \VariableTok{self}\NormalTok{.name }\KeywordTok{not} \KeywordTok{in}\NormalTok{ valuation:}
+            \ControlFlowTok{raise} \PreprocessorTok{ValueError}\NormalTok{(}\SpecialStringTok{f"La variable }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{name}\SpecialCharTok{\}}\SpecialStringTok{ n\textquotesingle{}est pas définie dans la valuation fournie."}\NormalTok{)}
+        \ControlFlowTok{return}\NormalTok{ valuation[}\VariableTok{self}\NormalTok{.name]}
+
+
+\KeywordTok{class}\NormalTok{ Not(Formula):}
+    \CommentTok{"""Représente le connecteur de négation (noeud interne unaire)."""}
+
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, child):}
+        \VariableTok{self}\NormalTok{.child }\OperatorTok{=}\NormalTok{ child}
+
+    \KeywordTok{def} \FunctionTok{\_\_str\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \SpecialStringTok{f"\textasciitilde{}(}\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{child}\SpecialCharTok{\}}\SpecialStringTok{)"}
+
+    \KeywordTok{def}\NormalTok{ get\_variables(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.child.get\_variables()}
+
+    \KeywordTok{def}\NormalTok{ evaluate(}\VariableTok{self}\NormalTok{, valuation):}
+        \ControlFlowTok{return} \KeywordTok{not} \VariableTok{self}\NormalTok{.child.evaluate(valuation)}
+
+
+\KeywordTok{class}\NormalTok{ BinaryOperator(Formula, ABC):}
+    \CommentTok{"""Classe intermédiaire pour les opérateurs binaires (conjonction, disjonction, etc.)."""}
+
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, left, right):}
+        \VariableTok{self}\NormalTok{.left }\OperatorTok{=}\NormalTok{ left}
+        \VariableTok{self}\NormalTok{.right }\OperatorTok{=}\NormalTok{ right}
+
+    \KeywordTok{def}\NormalTok{ get\_variables(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.left.get\_variables().union(}\VariableTok{self}\NormalTok{.right.get\_variables())}
+
+
+\KeywordTok{class}\NormalTok{ And(BinaryOperator):}
+    \CommentTok{"""Représente le connecteur de conjonction ET (noeud interne binaire)."""}
+
+    \KeywordTok{def} \FunctionTok{\_\_str\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \SpecialStringTok{f"(}\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{left}\SpecialCharTok{\}}\SpecialStringTok{ \& }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{right}\SpecialCharTok{\}}\SpecialStringTok{)"}
+
+    \KeywordTok{def}\NormalTok{ evaluate(}\VariableTok{self}\NormalTok{, valuation):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.left.evaluate(valuation) }\KeywordTok{and} \VariableTok{self}\NormalTok{.right.evaluate(valuation)}
+
+
+\KeywordTok{class}\NormalTok{ Or(BinaryOperator):}
+    \CommentTok{"""Représente le connecteur de disjonction OU (noeud interne binaire)."""}
+
+    \KeywordTok{def} \FunctionTok{\_\_str\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \SpecialStringTok{f"(}\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{left}\SpecialCharTok{\}}\SpecialStringTok{ | }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{right}\SpecialCharTok{\}}\SpecialStringTok{)"}
+
+    \KeywordTok{def}\NormalTok{ evaluate(}\VariableTok{self}\NormalTok{, valuation):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.left.evaluate(valuation) }\KeywordTok{or} \VariableTok{self}\NormalTok{.right.evaluate(valuation)}
+
+
+\KeywordTok{class}\NormalTok{ Implies(BinaryOperator):}
+    \CommentTok{"""Représente le connecteur d\textquotesingle{}implication (SI ... ALORS ...)."""}
+
+    \KeywordTok{def} \FunctionTok{\_\_str\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \SpecialStringTok{f"(}\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{left}\SpecialCharTok{\}}\SpecialStringTok{ =\textgreater{} }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{right}\SpecialCharTok{\}}\SpecialStringTok{)"}
+
+    \KeywordTok{def}\NormalTok{ evaluate(}\VariableTok{self}\NormalTok{, valuation):}
+        \CommentTok{\# A =\textgreater{} B est équivalent à (non A) ou B}
+        \ControlFlowTok{return}\NormalTok{ (}\KeywordTok{not} \VariableTok{self}\NormalTok{.left.evaluate(valuation)) }\KeywordTok{or} \VariableTok{self}\NormalTok{.right.evaluate(valuation)}
+
+
+\KeywordTok{class}\NormalTok{ Equiv(BinaryOperator):}
+    \CommentTok{"""Représente le connecteur d\textquotesingle{}équivalence équivalent (SI ET SEULEMENT SI)."""}
+
+    \KeywordTok{def} \FunctionTok{\_\_str\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \SpecialStringTok{f"(}\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{left}\SpecialCharTok{\}}\SpecialStringTok{ \textless{}=\textgreater{} }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{right}\SpecialCharTok{\}}\SpecialStringTok{)"}
+
+    \KeywordTok{def}\NormalTok{ evaluate(}\VariableTok{self}\NormalTok{, valuation):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.left.evaluate(valuation) }\OperatorTok{==} \VariableTok{self}\NormalTok{.right.evaluate(valuation)}
+\end{lstlisting}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{validation-et-exemple-dutilisation}{%
+\subsection{Validation et Exemple
+d'utilisation}\label{validation-et-exemple-dutilisation}}
+
+Ajoutons un script de test pour valider notre implémentation :
+
+\begin{lstlisting}
+\ControlFlowTok{if} \VariableTok{\_\_name\_\_} \OperatorTok{==} \StringTok{"\_\_main\_\_"}\NormalTok{:}
+    \CommentTok{\# Définition des variables}
+\NormalTok{    p }\OperatorTok{=}\NormalTok{ Variable(}\StringTok{"P"}\NormalTok{)}
+\NormalTok{    q }\OperatorTok{=}\NormalTok{ Variable(}\StringTok{"Q"}\NormalTok{)}
+\NormalTok{    r }\OperatorTok{=}\NormalTok{ Variable(}\StringTok{"R"}\NormalTok{)}
+
+    \CommentTok{\# Construction de la formule : (P \& Q) =\textgreater{} (R | \textasciitilde{}P)}
+\NormalTok{    formule }\OperatorTok{=}\NormalTok{ Implies(And(p, q), Or(r, Not(p)))}
+
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Formule logique générée :"}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(formule)  }\CommentTok{\# Doit afficher : ((P \& Q) =\textgreater{} (R | \textasciitilde{}(P)))}
+
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{Extraction des variables :"}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(formule.get\_variables())  }\CommentTok{\# Doit afficher : \{\textquotesingle{}P\textquotesingle{}, \textquotesingle{}Q\textquotesingle{}, \textquotesingle{}R\textquotesingle{}\}}
+
+    \CommentTok{\# Définition d\textquotesingle{}une valuation}
+\NormalTok{    valuation\_1 }\OperatorTok{=}\NormalTok{ \{}\StringTok{"P"}\NormalTok{: }\VariableTok{True}\NormalTok{, }\StringTok{"Q"}\NormalTok{: }\VariableTok{True}\NormalTok{, }\StringTok{"R"}\NormalTok{: }\VariableTok{False}\NormalTok{\}}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"}\CharTok{\textbackslash{}n}\SpecialStringTok{Évaluation avec la valuation }\SpecialCharTok{\{}\NormalTok{valuation\_1}\SpecialCharTok{\}}\SpecialStringTok{ :"}\NormalTok{)}
+\NormalTok{    res\_1 }\OperatorTok{=}\NormalTok{ formule.evaluate(valuation\_1)}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Résultat : }\SpecialCharTok{\{}\NormalTok{res\_1}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)  }\CommentTok{\# Doit afficher : False (car Vrai =\textgreater{} Faux est Faux)}
+
+\NormalTok{    valuation\_2 }\OperatorTok{=}\NormalTok{ \{}\StringTok{"P"}\NormalTok{: }\VariableTok{False}\NormalTok{, }\StringTok{"Q"}\NormalTok{: }\VariableTok{True}\NormalTok{, }\StringTok{"R"}\NormalTok{: }\VariableTok{False}\NormalTok{\}}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"}\CharTok{\textbackslash{}n}\SpecialStringTok{Évaluation avec la valuation }\SpecialCharTok{\{}\NormalTok{valuation\_2}\SpecialCharTok{\}}\SpecialStringTok{ :"}\NormalTok{)}
+\NormalTok{    res\_2 }\OperatorTok{=}\NormalTok{ formule.evaluate(valuation\_2)}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Résultat : }\SpecialCharTok{\{}\NormalTok{res\_2}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)  }\CommentTok{\# Doit afficher : True (car Faux =\textgreater{} Vrai est Vrai)}
+\end{lstlisting}
+\n
+\hypertarget{tp-2-guxe9nuxe9rateur-automatique-de-tables-de-vuxe9rituxe9}{%
+\section{TP 2 : Générateur automatique de tables de
+vérité}\label{tp-2-guxe9nuxe9rateur-automatique-de-tables-de-vuxe9rituxe9}}
+
+\hypertarget{objectif}{%
+\subsection{Objectif}\label{objectif}}
+
+L'objectif de ce TP est de concevoir un générateur automatique de tables
+de vérité en Python. À partir de n'importe quel arbre de formule logique
+implémenté au TP 1, le programme doit lister toutes les variables
+libres, générer les \(2^n\) combinaisons de valeurs de vérité possibles,
+évaluer la formule et imprimer la table de vérité finale proprement
+formatée en Markdown.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{algorithme-et-muxe9thode}{%
+\subsection{Algorithme et Méthode}\label{algorithme-et-muxe9thode}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Extraction et tri des variables :} On extrait l'ensemble des
+  variables propositionnelles libres de la formule en appelant
+  \texttt{formula.get\_variables()}. On convertit cet ensemble en une
+  liste ordonnée alphabétiquement afin de garantir un affichage
+  reproductible et cohérent des colonnes.
+\item
+  \textbf{Génération de l'espace des valuations \(\{0, 1\}^n\) :} On
+  utilise la récursion pour engendrer toutes les \(2^n\) configurations
+  de vérité sans utiliser de bibliothèque standard afin de rester
+  strictement ``from scratch''.
+\item
+  \textbf{Évaluation et formatage :} Pour chaque configuration
+  (valuation), on évalue la formule à l'aide de sa méthode
+  \texttt{.evaluate(valuation)}. On affiche chaque ligne avec des
+  symboles lisibles (par exemple \texttt{1} ou \texttt{T} pour True,
+  \texttt{0} ou \texttt{F} pour False) et on trace la grille de la table
+  au format Markdown.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{code-source-python}{%
+\subsection{Code Source Python}\label{code-source-python}}
+
+\begin{lstlisting}
+\CommentTok{\# Import des classes du TP 1}
+\CommentTok{\# On suppose les classes du TP 1 présentes dans le même fichier ou importées}
+\ImportTok{from}\NormalTok{ tp\_01\_ast }\ImportTok{import}\NormalTok{ Formula, Variable, Not, And, Or, Implies, Equiv}
+
+\KeywordTok{def}\NormalTok{ generate\_combinations(n):}
+    \CommentTok{"""Génère récursivement toutes les 2\^{}n combinaisons de valeurs de vérité de True à False."""}
+    \ControlFlowTok{if}\NormalTok{ n }\OperatorTok{==} \DecValTok{0}\NormalTok{:}
+        \ControlFlowTok{return}\NormalTok{ [()]}
+\NormalTok{    sub\_combinations }\OperatorTok{=}\NormalTok{ generate\_combinations(n }\OperatorTok{{-}} \DecValTok{1}\NormalTok{)}
+    \ControlFlowTok{return}\NormalTok{ [(}\VariableTok{True}\NormalTok{,) }\OperatorTok{+}\NormalTok{ combo }\ControlFlowTok{for}\NormalTok{ combo }\KeywordTok{in}\NormalTok{ sub\_combinations] }\OperatorTok{+}\NormalTok{ [(}\VariableTok{False}\NormalTok{,) }\OperatorTok{+}\NormalTok{ combo }\ControlFlowTok{for}\NormalTok{ combo }\KeywordTok{in}\NormalTok{ sub\_combinations]}
+
+\KeywordTok{def}\NormalTok{ generate\_truth\_table(formula: Formula):}
+    \CommentTok{"""Génère et affiche la table de vérité d\textquotesingle{}une formule au format Markdown."""}
+
+    \CommentTok{\# 1. Extraction et tri des variables propositionnelles}
+\NormalTok{    vars\_list }\OperatorTok{=} \BuiltInTok{sorted}\NormalTok{(}\BuiltInTok{list}\NormalTok{(formula.get\_variables()))}
+\NormalTok{    n }\OperatorTok{=} \BuiltInTok{len}\NormalTok{(vars\_list)}
+
+    \CommentTok{\# 2. Construction des en{-}têtes Markdown}
+\NormalTok{    headers }\OperatorTok{=}\NormalTok{ vars\_list }\OperatorTok{+}\NormalTok{ [}\BuiltInTok{str}\NormalTok{(formula)]}
+\NormalTok{    header\_line }\OperatorTok{=} \StringTok{" | "}\NormalTok{.join(headers)}
+\NormalTok{    separator\_line }\OperatorTok{=} \StringTok{" | "}\NormalTok{.join([}\StringTok{"{-}{-}{-}"}\NormalTok{] }\OperatorTok{*} \BuiltInTok{len}\NormalTok{(headers))}
+
+\NormalTok{    table\_lines }\OperatorTok{=}\NormalTok{ [header\_line, separator\_line]}
+
+    \CommentTok{\# 3. Génération de toutes les valuations possibles (2\^{}n)}
+\NormalTok{    combinations }\OperatorTok{=}\NormalTok{ generate\_combinations(n)}
+
+    \CommentTok{\# Pour respecter l\textquotesingle{}ordre traditionnel (Vrai en premier, c\textquotesingle{}est{-}à{-}dire 1 puis 0),}
+    \CommentTok{\# product avec [True, False] trie naturellement de True à False.}
+
+\NormalTok{    tautology }\OperatorTok{=} \VariableTok{True}
+\NormalTok{    contradiction }\OperatorTok{=} \VariableTok{True}
+
+    \ControlFlowTok{for}\NormalTok{ combo }\KeywordTok{in}\NormalTok{ combinations:}
+        \CommentTok{\# Création du dictionnaire de valuation}
+\NormalTok{        valuation }\OperatorTok{=}\NormalTok{ \{vars\_list[i]: combo[i] }\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n)\}}
+
+        \CommentTok{\# Évaluation de la formule pour cette valuation}
+\NormalTok{        result }\OperatorTok{=}\NormalTok{ formula.evaluate(valuation)}
+
+        \CommentTok{\# Suivi de la nature de la formule}
+        \ControlFlowTok{if}\NormalTok{ result:}
+\NormalTok{            contradiction }\OperatorTok{=} \VariableTok{False}
+        \ControlFlowTok{else}\NormalTok{:}
+\NormalTok{            tautology }\OperatorTok{=} \VariableTok{False}
+
+        \CommentTok{\# Conversion des valeurs booléennes en chaînes de caractères (\textquotesingle{}1\textquotesingle{} ou \textquotesingle{}0\textquotesingle{})}
+\NormalTok{        row\_values }\OperatorTok{=}\NormalTok{ [(}\StringTok{"1"} \ControlFlowTok{if}\NormalTok{ val }\ControlFlowTok{else} \StringTok{"0"}\NormalTok{) }\ControlFlowTok{for}\NormalTok{ val }\KeywordTok{in}\NormalTok{ combo] }\OperatorTok{+}\NormalTok{ [(}\StringTok{"1"} \ControlFlowTok{if}\NormalTok{ result }\ControlFlowTok{else} \StringTok{"0"}\NormalTok{)]}
+\NormalTok{        table\_lines.append(}\StringTok{" | "}\NormalTok{.join(row\_values))}
+
+    \CommentTok{\# Affichage de la table de vérité}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{.join(table\_lines))}
+
+    \CommentTok{\# 4. Diagnostic de la formule}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{{-}{-}{-}"}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"\#\#\# Diagnostic de la formule :"}\NormalTok{)}
+    \ControlFlowTok{if}\NormalTok{ tautology:}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{"La formule est une **Tautologie** (toujours vraie)."}\NormalTok{)}
+    \ControlFlowTok{elif}\NormalTok{ contradiction:}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{"La formule est une **Contradiction** (toujours fausse)."}\NormalTok{)}
+    \ControlFlowTok{else}\NormalTok{:}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{"La formule est **Contingente** (satisfaisable, possède au moins un modèle et un contre{-}modèle)."}\NormalTok{)}
+\end{lstlisting}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exemple-dexuxe9cution}{%
+\subsection{Exemple d'Exécution}\label{exemple-dexuxe9cution}}
+
+Modélisons la formule du tiers exclu et l'implication logique :
+
+\begin{lstlisting}
+\ControlFlowTok{if} \VariableTok{\_\_name\_\_} \OperatorTok{==} \StringTok{"\_\_main\_\_"}\NormalTok{:}
+    \CommentTok{\# Test 1 : Tiers exclu : P | \textasciitilde{}P}
+\NormalTok{    p }\OperatorTok{=}\NormalTok{ Variable(}\StringTok{"P"}\NormalTok{)}
+\NormalTok{    tiers\_exclu }\OperatorTok{=}\NormalTok{ Or(p, Not(p))}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"\#\#\# Table de vérité de la formule : P | \textasciitilde{}P"}\NormalTok{)}
+\NormalTok{    generate\_truth\_table(tiers\_exclu)}
+
+    \CommentTok{\# Test 2 : Formule contingente : (P \& Q) =\textgreater{} R}
+\NormalTok{    q }\OperatorTok{=}\NormalTok{ Variable(}\StringTok{"Q"}\NormalTok{)}
+\NormalTok{    r }\OperatorTok{=}\NormalTok{ Variable(}\StringTok{"R"}\NormalTok{)}
+\NormalTok{    contingence }\OperatorTok{=}\NormalTok{ Implies(And(p, q), r)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{\#\#\# Table de vérité de la formule : (P \& Q) =\textgreater{} R"}\NormalTok{)}
+\NormalTok{    generate\_truth\_table(contingence)}
+
+    \CommentTok{\# Test 3 : Loi de Peirce : ((P =\textgreater{} Q) =\textgreater{} P) =\textgreater{} P}
+\NormalTok{    peirce }\OperatorTok{=}\NormalTok{ Implies(Implies(Implies(p, q), p), p)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{\#\#\# Table de vérité de la Loi de Peirce : ((P =\textgreater{} Q) =\textgreater{} P) =\textgreater{} P"}\NormalTok{)}
+\NormalTok{    generate\_truth\_table(peirce)}
+\end{lstlisting}
+
+\hypertarget{rendu-attendu-en-console-pour-le-test-3-loi-de-peirce}{%
+\subsubsection{Rendu attendu en console pour le Test 3 (Loi de Peirce)
+:}\label{rendu-attendu-en-console-pour-le-test-3-loi-de-peirce}}
+
+\begin{lstlisting}
+\NormalTok{P | Q | (((P =\textgreater{} Q) =\textgreater{} P) =\textgreater{} P)}
+\NormalTok{{-}{-}{-} | {-}{-}{-} | {-}{-}{-}}
+\NormalTok{1 | 1 | 1}
+\NormalTok{1 | 0 | 1}
+\NormalTok{0 | 1 | 1}
+\NormalTok{0 | 0 | 1}
+
+\NormalTok{{-}{-}{-}}
+\FunctionTok{\#\#\# Diagnostic de la formule :}
+\NormalTok{La formule est une **Tautologie** (toujours vraie).}
+\end{lstlisting}
+\n
+\hypertarget{tp-3-transformation-de-tseitin-pour-la-mise-en-cnf-linuxe9aire}{%
+\section{TP 3 : Transformation de Tseitin pour la mise en CNF
+linéaire}\label{tp-3-transformation-de-tseitin-pour-la-mise-en-cnf-linuxe9aire}}
+
+\hypertarget{objectif}{%
+\subsection{Objectif}\label{objectif}}
+
+L'objectif de ce TP est d'implémenter la \textbf{transformation de
+Tseitin} en Python. La conversion naïve d'une formule en Forme Normale
+Conjonctive (CNF) par simple application des règles de distributivité
+peut conduire à une explosion exponentielle de la taille de la formule.
+La transformation de Tseitin contourne ce problème en introduisant des
+variables auxiliaires pour chaque sous-formule, permettant de générer
+une formule en CNF équisatisfiable de taille \textbf{linéaire} par
+rapport à la formule initiale.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{principes-thuxe9oriques-et-moduxe9lisation}{%
+\subsection{Principes Théoriques et
+Modélisation}\label{principes-thuxe9oriques-et-moduxe9lisation}}
+
+Pour chaque sous-formule (nœud interne ou feuille de notre AST), la
+transformation de Tseitin introduit une nouvelle variable
+propositionnelle \(x_i\). On ajoute ensuite des clauses qui forcent la
+variable \(x_i\) à être équivalente à l'application de l'opérateur
+logique sur ses enfants.
+
+\hypertarget{uxe9quivalences-logiques-en-cnf}{%
+\subsubsection{Équivalences logiques en CNF
+:}\label{uxe9quivalences-logiques-en-cnf}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Négation :} \(x_C \Leftrightarrow \neg x_A\)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Équivalent à : \((\neg x_C \lor \neg x_A) \land (x_C \lor x_A)\)
+  \end{itemize}
+\item
+  \textbf{Conjonction :} \(x_C \Leftrightarrow (x_A \land x_B)\)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Équivalent à :
+    \((\neg x_C \lor x_A) \land (\neg x_C \lor x_B) \land (\neg x_A \lor \neg x_B \lor x_C)\)
+  \end{itemize}
+\item
+  \textbf{Disjonction :} \(x_C \Leftrightarrow (x_A \lor x_B)\)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Équivalent à :
+    \((\neg x_C \lor x_A \lor x_B) \land (\neg x_A \lor x_C) \land (\neg x_B \lor x_C)\)
+  \end{itemize}
+\item
+  \textbf{Implication :} \(x_C \Leftrightarrow (x_A \Rightarrow x_B)\)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Équivalent à :
+    \((\neg x_C \lor \neg x_A \lor x_B) \land (x_A \lor x_C) \land (\neg x_B \lor x_C)\)
+  \end{itemize}
+\end{enumerate}
+
+La CNF finale est constituée de la conjonction de toutes ces contraintes
+de nœuds, à laquelle on ajoute la clause unitaire \((x_{root})\) qui
+force la formule générale à être vraie.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{code-source-python}{%
+\subsection{Code Source Python}\label{code-source-python}}
+
+Chaque clause sera représentée sous forme d'un ensemble de littéraux (un
+littéral étant une chaîne de caractères comme \texttt{"P"} ou
+\texttt{"\textasciitilde{}P"}). La CNF est une liste de clauses (liste
+de sets).
+
+\begin{lstlisting}
+\CommentTok{\# Import des classes du TP 1}
+\ImportTok{from}\NormalTok{ tp\_01\_ast }\ImportTok{import}\NormalTok{ Formula, Variable, Not, And, Or, Implies, Equiv}
+
+\KeywordTok{class}\NormalTok{ TseitinTransformer:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \VariableTok{self}\NormalTok{.counter }\OperatorTok{=} \DecValTok{0}
+        \VariableTok{self}\NormalTok{.clauses }\OperatorTok{=}\NormalTok{ []}
+
+    \KeywordTok{def}\NormalTok{ \_new\_variable(}\VariableTok{self}\NormalTok{):}
+        \CommentTok{"""Crée une variable auxiliaire unique (ex: \_t1, \_t2, ...)."""}
+        \VariableTok{self}\NormalTok{.counter }\OperatorTok{+=} \DecValTok{1}
+        \ControlFlowTok{return} \SpecialStringTok{f"\_t}\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{counter}\SpecialCharTok{\}}\SpecialStringTok{"}
+
+    \KeywordTok{def}\NormalTok{ transform(}\VariableTok{self}\NormalTok{, formula: Formula):}
+        \CommentTok{"""}
+\CommentTok{        Point d\textquotesingle{}entrée principal. }
+\CommentTok{        Retourne : (variable\_racine, liste\_de\_clauses\_CNF)}
+\CommentTok{        """}
+        \VariableTok{self}\NormalTok{.clauses }\OperatorTok{=}\NormalTok{ []}
+        \VariableTok{self}\NormalTok{.counter }\OperatorTok{=} \DecValTok{0}
+\NormalTok{        root\_var }\OperatorTok{=} \VariableTok{self}\NormalTok{.\_traverse(formula)}
+        \CommentTok{\# On force la racine à être Vraie en ajoutant la clause unitaire \{root\_var\}}
+        \VariableTok{self}\NormalTok{.clauses.append(\{root\_var\})}
+        \ControlFlowTok{return}\NormalTok{ root\_var, }\VariableTok{self}\NormalTok{.clauses}
+
+    \KeywordTok{def}\NormalTok{ \_traverse(}\VariableTok{self}\NormalTok{, node: Formula):}
+        \CommentTok{"""Parcours récursif de l\textquotesingle{}AST."""}
+        \ControlFlowTok{if} \BuiltInTok{isinstance}\NormalTok{(node, Variable):}
+            \ControlFlowTok{return}\NormalTok{ node.name}
+
+        \ControlFlowTok{elif} \BuiltInTok{isinstance}\NormalTok{(node, Not):}
+\NormalTok{            child\_var }\OperatorTok{=} \VariableTok{self}\NormalTok{.\_traverse(node.child)}
+\NormalTok{            fresh\_var }\OperatorTok{=} \VariableTok{self}\NormalTok{.\_new\_variable()}
+            \CommentTok{\# Contrainte : fresh\_var \textless{}=\textgreater{} \textasciitilde{}child\_var}
+            \CommentTok{\# (\textasciitilde{}fresh\_var v \textasciitilde{}child\_var) \& (fresh\_var v child\_var)}
+            \VariableTok{self}\NormalTok{.clauses.append(\{}\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{fresh\_var}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{, }\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{child\_var}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{\})}
+            \VariableTok{self}\NormalTok{.clauses.append(\{fresh\_var, child\_var\})}
+            \ControlFlowTok{return}\NormalTok{ fresh\_var}
+
+        \ControlFlowTok{elif} \BuiltInTok{isinstance}\NormalTok{(node, And):}
+\NormalTok{            left\_var }\OperatorTok{=} \VariableTok{self}\NormalTok{.\_traverse(node.left)}
+\NormalTok{            right\_var }\OperatorTok{=} \VariableTok{self}\NormalTok{.\_traverse(node.right)}
+\NormalTok{            fresh\_var }\OperatorTok{=} \VariableTok{self}\NormalTok{.\_new\_variable()}
+            \CommentTok{\# Contrainte : fresh\_var \textless{}=\textgreater{} (left\_var \& right\_var)}
+            \CommentTok{\# (\textasciitilde{}fresh\_var v left\_var) \& (\textasciitilde{}fresh\_var v right\_var) \& (\textasciitilde{}left\_var v \textasciitilde{}right\_var v fresh\_var)}
+            \VariableTok{self}\NormalTok{.clauses.append(\{}\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{fresh\_var}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{, left\_var\})}
+            \VariableTok{self}\NormalTok{.clauses.append(\{}\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{fresh\_var}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{, right\_var\})}
+            \VariableTok{self}\NormalTok{.clauses.append(\{}\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{left\_var}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{, }\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{right\_var}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{, fresh\_var\})}
+            \ControlFlowTok{return}\NormalTok{ fresh\_var}
+
+        \ControlFlowTok{elif} \BuiltInTok{isinstance}\NormalTok{(node, Or):}
+\NormalTok{            left\_var }\OperatorTok{=} \VariableTok{self}\NormalTok{.\_traverse(node.left)}
+\NormalTok{            right\_var }\OperatorTok{=} \VariableTok{self}\NormalTok{.\_traverse(node.right)}
+\NormalTok{            fresh\_var }\OperatorTok{=} \VariableTok{self}\NormalTok{.\_new\_variable()}
+            \CommentTok{\# Contrainte : fresh\_var \textless{}=\textgreater{} (left\_var | right\_var)}
+            \CommentTok{\# (\textasciitilde{}fresh\_var v left\_var v right\_var) \& (\textasciitilde{}left\_var v fresh\_var) \& (\textasciitilde{}right\_var v fresh\_var)}
+            \VariableTok{self}\NormalTok{.clauses.append(\{}\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{fresh\_var}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{, left\_var, right\_var\})}
+            \VariableTok{self}\NormalTok{.clauses.append(\{}\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{left\_var}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{, fresh\_var\})}
+            \VariableTok{self}\NormalTok{.clauses.append(\{}\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{right\_var}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{, fresh\_var\})}
+            \ControlFlowTok{return}\NormalTok{ fresh\_var}
+
+        \ControlFlowTok{elif} \BuiltInTok{isinstance}\NormalTok{(node, Implies):}
+\NormalTok{            left\_var }\OperatorTok{=} \VariableTok{self}\NormalTok{.\_traverse(node.left)}
+\NormalTok{            right\_var }\OperatorTok{=} \VariableTok{self}\NormalTok{.\_traverse(node.right)}
+\NormalTok{            fresh\_var }\OperatorTok{=} \VariableTok{self}\NormalTok{.\_new\_variable()}
+            \CommentTok{\# Contrainte : fresh\_var \textless{}=\textgreater{} (left\_var =\textgreater{} right\_var)}
+            \CommentTok{\# equivalent a : fresh\_var \textless{}=\textgreater{} (\textasciitilde{}left\_var | right\_var)}
+            \CommentTok{\# (\textasciitilde{}fresh\_var v \textasciitilde{}left\_var v right\_var) \& (left\_var v fresh\_var) \& (\textasciitilde{}right\_var v fresh\_var)}
+            \VariableTok{self}\NormalTok{.clauses.append(\{}\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{fresh\_var}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{, }\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{left\_var}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{, right\_var\})}
+            \VariableTok{self}\NormalTok{.clauses.append(\{left\_var, fresh\_var\})}
+            \VariableTok{self}\NormalTok{.clauses.append(\{}\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{right\_var}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{, fresh\_var\})}
+            \ControlFlowTok{return}\NormalTok{ fresh\_var}
+
+        \ControlFlowTok{else}\NormalTok{:}
+            \ControlFlowTok{raise} \PreprocessorTok{NotImplementedError}\NormalTok{(}\StringTok{"Type de noeud non pris en charge."}\NormalTok{)}
+
+\KeywordTok{def}\NormalTok{ print\_cnf(clauses):}
+    \CommentTok{"""Affiche de manière lisible la liste des clauses CNF."""}
+\NormalTok{    formatted\_clauses }\OperatorTok{=}\NormalTok{ []}
+    \ControlFlowTok{for}\NormalTok{ clause }\KeywordTok{in}\NormalTok{ clauses:}
+\NormalTok{        sorted\_literals }\OperatorTok{=} \BuiltInTok{sorted}\NormalTok{(}\BuiltInTok{list}\NormalTok{(clause), key}\OperatorTok{=}\KeywordTok{lambda}\NormalTok{ x: x.replace(}\StringTok{"\textasciitilde{}"}\NormalTok{, }\StringTok{""}\NormalTok{))}
+\NormalTok{        formatted\_clauses.append(}\StringTok{"("} \OperatorTok{+} \StringTok{" | "}\NormalTok{.join(sorted\_literals) }\OperatorTok{+} \StringTok{")"}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{" \& "}\NormalTok{.join(formatted\_clauses))}
+\end{lstlisting}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exemple-dutilisation}{%
+\subsection{Exemple d'Utilisation}\label{exemple-dutilisation}}
+
+Mettons sous CNF la formule \((P \land Q) \lor R\) :
+
+\begin{lstlisting}
+\ControlFlowTok{if} \VariableTok{\_\_name\_\_} \OperatorTok{==} \StringTok{"\_\_main\_\_"}\NormalTok{:}
+\NormalTok{    p }\OperatorTok{=}\NormalTok{ Variable(}\StringTok{"P"}\NormalTok{)}
+\NormalTok{    q }\OperatorTok{=}\NormalTok{ Variable(}\StringTok{"Q"}\NormalTok{)}
+\NormalTok{    r }\OperatorTok{=}\NormalTok{ Variable(}\StringTok{"R"}\NormalTok{)}
+
+    \CommentTok{\# Formule : (P \& Q) | R}
+\NormalTok{    formula }\OperatorTok{=}\NormalTok{ Or(And(p, q), r)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Formule de départ :"}\NormalTok{, formula)}
+
+\NormalTok{    transformer }\OperatorTok{=}\NormalTok{ TseitinTransformer()}
+\NormalTok{    root, clauses }\OperatorTok{=}\NormalTok{ transformer.transform(formula)}
+
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{Variable représentative de la racine :"}\NormalTok{, root)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{CNF équisatisfiable générée par Tseitin :"}\NormalTok{)}
+\NormalTok{    print\_cnf(clauses)}
+\end{lstlisting}
+
+\hypertarget{sortie-console-attendue}{%
+\subsubsection{Sortie console attendue
+:}\label{sortie-console-attendue}}
+
+\begin{lstlisting}
+\NormalTok{Formule de départ : ((P \& Q) | R)}
+
+\NormalTok{Variable représentative de la racine : \_t2}
+
+\NormalTok{CNF équisatisfiable générée par Tseitin :}
+\NormalTok{(\textasciitilde{}\_t1 | P) \& (\textasciitilde{}\_t1 | Q) \& (\textasciitilde{}P | \textasciitilde{}Q | \_t1) \& (\textasciitilde{}\_t2 | R | \_t1) \& (\textasciitilde{}\_t1 | \_t2) \& (\textasciitilde{}R | \_t2) \& (\_t2)}
+\end{lstlisting}
+
+Ce format est directement exploitable par les solveurs SAT standard.
+\n
+\hypertarget{tp-4-impluxe9mentation-dun-solveur-sat-dpll}{%
+\section{TP 4 : Implémentation d'un solveur SAT
+DPLL}\label{tp-4-impluxe9mentation-dun-solveur-sat-dpll}}
+
+\hypertarget{objectif}{%
+\subsection{Objectif}\label{objectif}}
+
+L'objectif de ce TP est de concevoir et de coder en Python pur un
+\textbf{solveur SAT} complet basé sur l'algorithme historique
+\textbf{DPLL} (Davis-Putnam-Logemann-Loveland) incorporant la technique
+de la \textbf{propagation unitaire}. Le programme prendra en entrée une
+formule sous forme de clauses CNF (comme celle générée au TP 3) et
+déterminera si la formule est satisfaisable, en fournissant une
+affectation valide des variables le cas échéant.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{moduxe9lisation-de-lalgorithme-dpll}{%
+\subsection{Modélisation de l'algorithme
+DPLL}\label{moduxe9lisation-de-lalgorithme-dpll}}
+
+L'algorithme DPLL est une recherche par séparation et évaluation
+(backtracking) dans l'arbre binaire des affectations de variables,
+optimisée par la propagation de contraintes forcées.
+
+\hypertarget{les-uxe9tapes-de-la-fonction-ruxe9cursive}{%
+\subsubsection{Les étapes de la fonction récursive
+:}\label{les-uxe9tapes-de-la-fonction-ruxe9cursive}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Propagation unitaire :} Si une clause est réduite à un seul
+  littéral \(\{L\}\) (clause unitaire), alors le littéral \(L\) doit
+  obligatoirement être évalué à Vrai pour satisfaire cette clause.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    On simplifie les clauses sous l'hypothèse \(L = True\).
+  \item
+    On répète cette étape jusqu'à ce qu'il n'y ait plus aucune clause
+    unitaire.
+  \end{itemize}
+\item
+  \textbf{Conditions d'arrêt :}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Si l'ensemble des clauses est vide, toutes les contraintes sont
+    satisfaites. La formule est \textbf{Satisfaisable}. On renvoie
+    \texttt{(True,\ affectation\_courante)}.
+  \item
+    Si l'ensemble contient une clause vide (un ensemble vide
+    \texttt{\{\}}), cela signifie qu'une contradiction a été atteinte.
+    La branche actuelle est \textbf{Insatisfaisable}. On renvoie
+    \texttt{(False,\ None)}.
+  \end{itemize}
+\item
+  \textbf{Branchement (Heuristique) :}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    On choisit une variable propositionnelle libre \(P\) (qui n'a pas
+    encore de valeur affectée).
+  \item
+    On tente de résoudre récursivement en posant \(P = True\).
+  \item
+    En cas d'échec (retourne \texttt{False}), on tente de résoudre en
+    posant \(P = False\).
+  \item
+    Si les deux branches échouent, on retourne \texttt{(False,\ None)}.
+  \end{itemize}
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{code-source-python}{%
+\subsection{Code Source Python}\label{code-source-python}}
+
+\begin{lstlisting}
+\KeywordTok{def}\NormalTok{ parse\_literal(literal):}
+    \CommentTok{"""Sépare le signe du nom de la variable. Retourne (nom, est\_negatif)."""}
+    \ControlFlowTok{if}\NormalTok{ literal.startswith(}\StringTok{"\textasciitilde{}"}\NormalTok{):}
+        \ControlFlowTok{return}\NormalTok{ literal[}\DecValTok{1}\NormalTok{:], }\VariableTok{True}
+    \ControlFlowTok{return}\NormalTok{ literal, }\VariableTok{False}
+
+\KeywordTok{def}\NormalTok{ negate\_literal(literal):}
+    \CommentTok{"""Retourne le littéral complémentaire."""}
+    \ControlFlowTok{if}\NormalTok{ literal.startswith(}\StringTok{"\textasciitilde{}"}\NormalTok{):}
+        \ControlFlowTok{return}\NormalTok{ literal[}\DecValTok{1}\NormalTok{:]}
+    \ControlFlowTok{return} \SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{literal}\SpecialCharTok{\}}\SpecialStringTok{"}
+
+\KeywordTok{def}\NormalTok{ simplify\_cnf(clauses, literal):}
+    \CommentTok{"""}
+\CommentTok{    Simplifie la CNF en supposant que \textquotesingle{}literal\textquotesingle{} est Vrai.}
+\CommentTok{    {-} Supprime toutes les clauses contenant \textquotesingle{}literal\textquotesingle{}.}
+\CommentTok{    {-} Supprime la négation de \textquotesingle{}literal\textquotesingle{} de toutes les clauses restantes.}
+\CommentTok{    """}
+\NormalTok{    neg\_lit }\OperatorTok{=}\NormalTok{ negate\_literal(literal)}
+\NormalTok{    new\_clauses }\OperatorTok{=}\NormalTok{ []}
+
+    \ControlFlowTok{for}\NormalTok{ clause }\KeywordTok{in}\NormalTok{ clauses:}
+        \ControlFlowTok{if}\NormalTok{ literal }\KeywordTok{in}\NormalTok{ clause:}
+            \CommentTok{\# La clause est satisfaite, on la supprime de l\textquotesingle{}ensemble}
+            \ControlFlowTok{continue}
+        \CommentTok{\# On crée une nouvelle clause en enlevant la négation du littéral}
+\NormalTok{        new\_clause }\OperatorTok{=}\NormalTok{ \{lit }\ControlFlowTok{for}\NormalTok{ lit }\KeywordTok{in}\NormalTok{ clause }\ControlFlowTok{if}\NormalTok{ lit }\OperatorTok{!=}\NormalTok{ neg\_lit\}}
+\NormalTok{        new\_clauses.append(new\_clause)}
+
+    \ControlFlowTok{return}\NormalTok{ new\_clauses}
+
+\KeywordTok{def}\NormalTok{ dpll(clauses, assignment):}
+    \CommentTok{"""}
+\CommentTok{    Fonction récursive principale de l\textquotesingle{}algorithme DPLL.}
+\CommentTok{    clauses : liste de sets (clauses CNF)}
+\CommentTok{    assignment : dictionnaire (variable {-}\textgreater{} bool)}
+\CommentTok{    """}
+    \CommentTok{\# 1. Propagation unitaire}
+\NormalTok{    unit\_clauses }\OperatorTok{=}\NormalTok{ [c }\ControlFlowTok{for}\NormalTok{ c }\KeywordTok{in}\NormalTok{ clauses }\ControlFlowTok{if} \BuiltInTok{len}\NormalTok{(c) }\OperatorTok{==} \DecValTok{1}\NormalTok{]}
+    \ControlFlowTok{while}\NormalTok{ unit\_clauses:}
+        \CommentTok{\# On extrait le littéral unique de la première clause unitaire}
+\NormalTok{        lit }\OperatorTok{=} \BuiltInTok{list}\NormalTok{(unit\_clauses[}\DecValTok{0}\NormalTok{])[}\DecValTok{0}\NormalTok{]}
+\NormalTok{        var, is\_neg }\OperatorTok{=}\NormalTok{ parse\_literal(lit)}
+
+        \CommentTok{\# Enregistrement de l\textquotesingle{}affectation forcée}
+\NormalTok{        assignment[var] }\OperatorTok{=} \KeywordTok{not}\NormalTok{ is\_neg}
+
+        \CommentTok{\# Simplification de la CNF}
+\NormalTok{        clauses }\OperatorTok{=}\NormalTok{ simplify\_cnf(clauses, lit)}
+
+        \CommentTok{\# Cas d\textquotesingle{}arrêt immédiat après simplification}
+        \ControlFlowTok{if} \BuiltInTok{len}\NormalTok{(clauses) }\OperatorTok{==} \DecValTok{0}\NormalTok{:}
+            \ControlFlowTok{return} \VariableTok{True}\NormalTok{, assignment}
+        \ControlFlowTok{if} \BuiltInTok{any}\NormalTok{(}\BuiltInTok{len}\NormalTok{(c) }\OperatorTok{==} \DecValTok{0} \ControlFlowTok{for}\NormalTok{ c }\KeywordTok{in}\NormalTok{ clauses):}
+            \ControlFlowTok{return} \VariableTok{False}\NormalTok{, }\VariableTok{None}
+
+\NormalTok{        unit\_clauses }\OperatorTok{=}\NormalTok{ [c }\ControlFlowTok{for}\NormalTok{ c }\KeywordTok{in}\NormalTok{ clauses }\ControlFlowTok{if} \BuiltInTok{len}\NormalTok{(c) }\OperatorTok{==} \DecValTok{1}\NormalTok{]}
+
+    \CommentTok{\# 2. Cas d\textquotesingle{}arrêt de base}
+    \ControlFlowTok{if} \BuiltInTok{len}\NormalTok{(clauses) }\OperatorTok{==} \DecValTok{0}\NormalTok{:}
+        \ControlFlowTok{return} \VariableTok{True}\NormalTok{, assignment}
+    \ControlFlowTok{if} \BuiltInTok{any}\NormalTok{(}\BuiltInTok{len}\NormalTok{(c) }\OperatorTok{==} \DecValTok{0} \ControlFlowTok{for}\NormalTok{ c }\KeywordTok{in}\NormalTok{ clauses):}
+        \ControlFlowTok{return} \VariableTok{False}\NormalTok{, }\VariableTok{None}
+
+    \CommentTok{\# 3. Branchement (Choix d\textquotesingle{}une variable non encore assignée)}
+    \CommentTok{\# On prend la première variable de la première clause restante}
+\NormalTok{    chosen\_lit }\OperatorTok{=} \BuiltInTok{list}\NormalTok{(clauses[}\DecValTok{0}\NormalTok{])[}\DecValTok{0}\NormalTok{]}
+\NormalTok{    chosen\_var, \_ }\OperatorTok{=}\NormalTok{ parse\_literal(chosen\_lit)}
+
+    \CommentTok{\# Tentative branche 1 : chosen\_var = True (littéral chosen\_var est vrai)}
+\NormalTok{    assignment\_true }\OperatorTok{=}\NormalTok{ assignment.copy()}
+\NormalTok{    assignment\_true[chosen\_var] }\OperatorTok{=} \VariableTok{True}
+\NormalTok{    clauses\_true }\OperatorTok{=}\NormalTok{ simplify\_cnf(clauses, chosen\_var)}
+\NormalTok{    success, res }\OperatorTok{=}\NormalTok{ dpll(clauses\_true, assignment\_true)}
+    \ControlFlowTok{if}\NormalTok{ success:}
+        \ControlFlowTok{return} \VariableTok{True}\NormalTok{, res}
+
+    \CommentTok{\# Tentative branche 2 : chosen\_var = False (littéral \textasciitilde{}chosen\_var est vrai)}
+\NormalTok{    assignment\_false }\OperatorTok{=}\NormalTok{ assignment.copy()}
+\NormalTok{    assignment\_false[chosen\_var] }\OperatorTok{=} \VariableTok{False}
+\NormalTok{    clauses\_false }\OperatorTok{=}\NormalTok{ simplify\_cnf(clauses, }\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{chosen\_var}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+    \ControlFlowTok{return}\NormalTok{ dpll(clauses\_false, assignment\_false)}
+
+\KeywordTok{def}\NormalTok{ solve\_sat(clauses):}
+    \CommentTok{"""Point d\textquotesingle{}entrée utilisateur pour résoudre une CNF."""}
+    \CommentTok{\# On s\textquotesingle{}assure d\textquotesingle{}éliminer les doublons et de travailler sur une liste de sets indépendants}
+\NormalTok{    cleaned\_clauses }\OperatorTok{=}\NormalTok{ [}\BuiltInTok{set}\NormalTok{(c) }\ControlFlowTok{for}\NormalTok{ c }\KeywordTok{in}\NormalTok{ clauses]}
+    \ControlFlowTok{return}\NormalTok{ dpll(cleaned\_clauses, \{\})}
+\end{lstlisting}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exemple-de-validation-et-test}{%
+\subsection{Exemple de Validation et
+Test}\label{exemple-de-validation-et-test}}
+
+Résolvons l'ensemble contradictoire du TP 2 et un cas satisfaisable :
+
+\begin{lstlisting}
+\ControlFlowTok{if} \VariableTok{\_\_name\_\_} \OperatorTok{==} \StringTok{"\_\_main\_\_"}\NormalTok{:}
+    \CommentTok{\# Test 1 : Base insatisfaisable du TP 2 :}
+    \CommentTok{\# (P v Q) \& (\textasciitilde{}P v Q) \& (P v \textasciitilde{}Q) \& (\textasciitilde{}P v \textasciitilde{}Q)}
+\NormalTok{    cnf\_contradiction }\OperatorTok{=}\NormalTok{ [}
+\NormalTok{        \{}\StringTok{"P"}\NormalTok{, }\StringTok{"Q"}\NormalTok{\},}
+\NormalTok{        \{}\StringTok{"\textasciitilde{}P"}\NormalTok{, }\StringTok{"Q"}\NormalTok{\},}
+\NormalTok{        \{}\StringTok{"P"}\NormalTok{, }\StringTok{"\textasciitilde{}Q"}\NormalTok{\},}
+\NormalTok{        \{}\StringTok{"\textasciitilde{}P"}\NormalTok{, }\StringTok{"\textasciitilde{}Q"}\NormalTok{\}}
+\NormalTok{    ]}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Résolution du Test 1 (Contradiction) :"}\NormalTok{)}
+\NormalTok{    sat, model }\OperatorTok{=}\NormalTok{ solve\_sat(cnf\_contradiction)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Satisfaisable :"}\NormalTok{, sat)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Modèle :"}\NormalTok{, model)}
+
+    \CommentTok{\# Test 2 : Base satisfaisable :}
+    \CommentTok{\# (\textasciitilde{}P v Q) \& (\textasciitilde{}Q v R) \& (\textasciitilde{}R v \textasciitilde{}P) \& (P)}
+    \CommentTok{\# Doit forcer P=True, ce qui force Q=True (propagation), ce qui force R=True (propagation),}
+    \CommentTok{\# ce qui rend la 3ème clause (\textasciitilde{}R v \textasciitilde{}P) fausse car \textasciitilde{}True v \textasciitilde{}True = Faux.}
+    \CommentTok{\# On s\textquotesingle{}attend à ce que cette formule soit déclarée insatisfaisable.}
+\NormalTok{    cnf\_test2 }\OperatorTok{=}\NormalTok{ [}
+\NormalTok{        \{}\StringTok{"\textasciitilde{}P"}\NormalTok{, }\StringTok{"Q"}\NormalTok{\},}
+\NormalTok{        \{}\StringTok{"\textasciitilde{}Q"}\NormalTok{, }\StringTok{"R"}\NormalTok{\},}
+\NormalTok{        \{}\StringTok{"\textasciitilde{}R"}\NormalTok{, }\StringTok{"\textasciitilde{}P"}\NormalTok{\},}
+\NormalTok{        \{}\StringTok{"P"}\NormalTok{\}}
+\NormalTok{    ]}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{Résolution du Test 2 (Propagation forcée menant à un échec) :"}\NormalTok{)}
+\NormalTok{    sat, model }\OperatorTok{=}\NormalTok{ solve\_sat(cnf\_test2)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Satisfaisable :"}\NormalTok{, sat)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Modèle :"}\NormalTok{, model)}
+
+    \CommentTok{\# Test 3 : Base satisfaisable :}
+    \CommentTok{\# (\textasciitilde{}P v Q) \& (\textasciitilde{}Q v R) \& (P)}
+    \CommentTok{\# Doit forcer P=True, Q=True, R=True}
+\NormalTok{    cnf\_satisfaisable }\OperatorTok{=}\NormalTok{ [}
+\NormalTok{        \{}\StringTok{"\textasciitilde{}P"}\NormalTok{, }\StringTok{"Q"}\NormalTok{\},}
+\NormalTok{        \{}\StringTok{"\textasciitilde{}Q"}\NormalTok{, }\StringTok{"R"}\NormalTok{\},}
+\NormalTok{        \{}\StringTok{"P"}\NormalTok{\}}
+\NormalTok{    ]}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{Résolution du Test 3 (Satisfaisable avec propagation) :"}\NormalTok{)}
+\NormalTok{    sat, model }\OperatorTok{=}\NormalTok{ solve\_sat(cnf\_satisfaisable)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Satisfaisable :"}\NormalTok{, sat)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Modèle :"}\NormalTok{, model)}
+\end{lstlisting}
+
+\hypertarget{sortie-attendue}{%
+\subsubsection{Sortie attendue :}\label{sortie-attendue}}
+
+\begin{lstlisting}
+\NormalTok{Résolution du Test 1 (Contradiction) :}
+\NormalTok{Satisfaisable : False}
+\NormalTok{Modèle : None}
+
+\NormalTok{Résolution du Test 2 (Propagation forcée menant à un échec) :}
+\NormalTok{Satisfaisable : False}
+\NormalTok{Modèle : None}
+
+\NormalTok{Résolution du Test 3 (Satisfaisable avec propagation) :}
+\NormalTok{Satisfaisable : True}
+\NormalTok{Modèle : \{\textquotesingle{}P\textquotesingle{}: True, \textquotesingle{}Q\textquotesingle{}: True, \textquotesingle{}R\textquotesingle{}: True\}}
+\end{lstlisting}
+
+Our SAT-solver is fully operational!
+\n
+\hypertarget{tp-5-ruxe9solution-du-probluxe8me-des-n-reines-par-ruxe9duction-sat}{%
+\section{TP 5 : Résolution du problème des N-Reines par réduction
+SAT}\label{tp-5-ruxe9solution-du-probluxe8me-des-n-reines-par-ruxe9duction-sat}}
+
+\hypertarget{objectif}{%
+\subsection{Objectif}\label{objectif}}
+
+L'objectif de ce TP est d'utiliser le solveur SAT DPLL développé au TP 4
+pour résoudre un problème combinatoire classique d'Intelligence
+Artificielle : \textbf{le problème des N-Reines} (placer \(N\) reines
+sur un échiquier de taille \(N \times N\) sans qu'elles ne se menacent
+mutuellement). Nous écrirons un script Python pour générer
+automatiquement les contraintes du problème sous forme de clauses CNF,
+les résoudrons avec notre solveur et afficherons la grille solution.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{moduxe9lisation-du-probluxe8me-des-n-reines-en-sat}{%
+\subsection{Modélisation du problème des N-Reines en
+SAT}\label{moduxe9lisation-du-probluxe8me-des-n-reines-en-sat}}
+
+Pour un échiquier de taille \(N \times N\), nous définissons \(N^2\)
+variables propositionnelles notées \texttt{Q\_i\_j} pour
+\(0 \le i, j < N\). - La variable \texttt{Q\_i\_j} est évaluée à Vrai si
+et seulement si une reine est placée à la ligne \(i\) et à la colonne
+\(j\).
+
+\hypertarget{les-contraintes-du-probluxe8me}{%
+\subsubsection{Les Contraintes du Problème
+:}\label{les-contraintes-du-probluxe8me}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Au moins une reine par ligne :} Pour chaque ligne \(i\) :
+  \[\bigvee_{j=0}^{N-1} Q_{i, j}\]
+\item
+  \textbf{Au plus une reine par ligne :} Pour chaque ligne \(i\), et
+  chaque paire de colonnes distinctes \(j_1 < j_2\) :
+  \[\neg Q_{i, j_1} \lor \neg Q_{i, j_2}\]
+\item
+  \textbf{Au plus une reine par colonne :} Pour chaque colonne \(j\), et
+  chaque paire de lignes distinctes \(i_1 < i_2\) :
+  \[\neg Q_{i_1, j} \lor \neg Q_{i_2, j}\]
+\item
+  \textbf{Au plus une reine par diagonale :} Deux reines sur une même
+  diagonale (descendante ou montante) se menacent si la valeur absolue
+  de la différence de leurs lignes est égale à celle de leurs colonnes.
+  Pour toute paire de cases \((i_1, j_1)\) et \((i_2, j_2)\) telles que
+  \(i_1 < i_2\) et \(|i_1 - i_2| = |j_1 - j_2|\) :
+  \[\neg Q_{i_1, j_1} \lor \neg Q_{i_2, j_2}\]
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{code-source-python}{%
+\subsection{Code Source Python}\label{code-source-python}}
+
+\begin{lstlisting}
+\CommentTok{\# Import du solveur du TP 4}
+\ImportTok{from}\NormalTok{ tp\_04\_dpll }\ImportTok{import}\NormalTok{ solve\_sat}
+
+\KeywordTok{def}\NormalTok{ get\_var\_name(i, j):}
+    \CommentTok{"""Retourne le nom de la variable propositionnelle pour la case (i, j)."""}
+    \ControlFlowTok{return} \SpecialStringTok{f"Q\_}\SpecialCharTok{\{}\NormalTok{i}\SpecialCharTok{\}}\SpecialStringTok{\_}\SpecialCharTok{\{}\NormalTok{j}\SpecialCharTok{\}}\SpecialStringTok{"}
+
+\KeywordTok{def}\NormalTok{ generate\_n\_queens\_cnf(n):}
+    \CommentTok{"""Génère la liste des clauses CNF pour le problème des N{-}Reines."""}
+\NormalTok{    clauses }\OperatorTok{=}\NormalTok{ []}
+
+    \CommentTok{\# 1. Au moins une reine par ligne}
+    \ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n):}
+\NormalTok{        clause }\OperatorTok{=}\NormalTok{ \{get\_var\_name(i, j) }\ControlFlowTok{for}\NormalTok{ j }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n)\}}
+\NormalTok{        clauses.append(clause)}
+
+    \CommentTok{\# 2. Au plus une reine par ligne}
+    \ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n):}
+        \ControlFlowTok{for}\NormalTok{ j1 }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n):}
+            \ControlFlowTok{for}\NormalTok{ j2 }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(j1 }\OperatorTok{+} \DecValTok{1}\NormalTok{, n):}
+\NormalTok{                clauses.append(\{}\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{get\_var\_name(i, j1)}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{, }\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{get\_var\_name(i, j2)}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{\})}
+
+    \CommentTok{\# 3. Au plus une reine par colonne}
+    \ControlFlowTok{for}\NormalTok{ j }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n):}
+        \ControlFlowTok{for}\NormalTok{ i1 }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n):}
+            \ControlFlowTok{for}\NormalTok{ i2 }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(i1 }\OperatorTok{+} \DecValTok{1}\NormalTok{, n):}
+\NormalTok{                clauses.append(\{}\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{get\_var\_name(i1, j)}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{, }\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{get\_var\_name(i2, j)}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{\})}
+
+    \CommentTok{\# 4. Au plus une reine par diagonale}
+    \ControlFlowTok{for}\NormalTok{ i1 }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n):}
+        \ControlFlowTok{for}\NormalTok{ j1 }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n):}
+            \ControlFlowTok{for}\NormalTok{ i2 }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(i1 }\OperatorTok{+} \DecValTok{1}\NormalTok{, n):}
+                \ControlFlowTok{for}\NormalTok{ j2 }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n):}
+                    \ControlFlowTok{if} \BuiltInTok{abs}\NormalTok{(i1 }\OperatorTok{{-}}\NormalTok{ i2) }\OperatorTok{==} \BuiltInTok{abs}\NormalTok{(j1 }\OperatorTok{{-}}\NormalTok{ j2):}
+\NormalTok{                        clauses.append(\{}\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{get\_var\_name(i1, j1)}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{, }\SpecialStringTok{f"\textasciitilde{}}\SpecialCharTok{\{}\NormalTok{get\_var\_name(i2, j2)}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{\})}
+
+    \ControlFlowTok{return}\NormalTok{ clauses}
+
+\KeywordTok{def}\NormalTok{ print\_board(n, model):}
+    \CommentTok{"""Affiche l\textquotesingle{}échiquier avec les reines placées."""}
+\NormalTok{    border }\OperatorTok{=} \StringTok{"+"} \OperatorTok{+} \StringTok{"{-}{-}{-}+"} \OperatorTok{*}\NormalTok{ n}
+    \BuiltInTok{print}\NormalTok{(border)}
+    \ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n):}
+\NormalTok{        row }\OperatorTok{=} \StringTok{"|"}
+        \ControlFlowTok{for}\NormalTok{ j }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n):}
+\NormalTok{            var }\OperatorTok{=}\NormalTok{ get\_var\_name(i, j)}
+            \CommentTok{\# Si la variable vaut True dans le modèle, on place une reine \textquotesingle{}R\textquotesingle{}}
+            \ControlFlowTok{if}\NormalTok{ model.get(var, }\VariableTok{False}\NormalTok{):}
+\NormalTok{                row }\OperatorTok{+=} \StringTok{" R |"}
+            \ControlFlowTok{else}\NormalTok{:}
+\NormalTok{                row }\OperatorTok{+=} \StringTok{" . |"}
+        \BuiltInTok{print}\NormalTok{(row)}
+        \BuiltInTok{print}\NormalTok{(border)}
+
+\KeywordTok{def}\NormalTok{ solve\_n\_queens(n):}
+    \CommentTok{"""Génère les contraintes, lance le solveur et affiche le résultat."""}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"{-}{-}{-} Résolution du problème des }\SpecialCharTok{\{}\NormalTok{n}\SpecialCharTok{\}}\SpecialStringTok{{-}Reines {-}{-}{-}"}\NormalTok{)}
+
+    \CommentTok{\# Génération des contraintes}
+\NormalTok{    clauses }\OperatorTok{=}\NormalTok{ generate\_n\_queens\_cnf(n)}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Nombre de clauses CNF générées : }\SpecialCharTok{\{}\BuiltInTok{len}\NormalTok{(clauses)}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+
+    \CommentTok{\# Résolution SAT}
+\NormalTok{    success, model }\OperatorTok{=}\NormalTok{ solve\_sat(clauses)}
+
+    \ControlFlowTok{if}\NormalTok{ success:}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{Solution trouvée :"}\NormalTok{)}
+\NormalTok{        print\_board(n, model)}
+    \ControlFlowTok{else}\NormalTok{:}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{Aucune solution n\textquotesingle{}existe pour cette taille d\textquotesingle{}échiquier."}\NormalTok{)}
+\end{lstlisting}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exemple-de-validation-et-test-n-4}{%
+\subsection{Exemple de Validation et Test (N =
+4)}\label{exemple-de-validation-et-test-n-4}}
+
+Placer 4 reines sur un échiquier de 4x4 :
+
+\begin{lstlisting}
+\ControlFlowTok{if} \VariableTok{\_\_name\_\_} \OperatorTok{==} \StringTok{"\_\_main\_\_"}\NormalTok{:}
+    \CommentTok{\# Résolution pour N = 4}
+\NormalTok{    solve\_n\_queens(}\DecValTok{4}\NormalTok{)}
+
+    \CommentTok{\# Résolution pour N = 3 (doit être déclarée impossible)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{    solve\_n\_queens(}\DecValTok{3}\NormalTok{)}
+\end{lstlisting}
+
+\hypertarget{rendu-console-attendu}{%
+\subsubsection{Rendu console attendu :}\label{rendu-console-attendu}}
+
+\begin{lstlisting}
+\NormalTok{{-}{-}{-} Résolution du problème des 4{-}Reines {-}{-}{-}}
+\NormalTok{Nombre de clauses CNF générées : 84}
+
+\NormalTok{Solution trouvée :}
+\NormalTok{+{-}{-}{-}+{-}{-}{-}+{-}{-}{-}+{-}{-}{-}+}
+\NormalTok{| . | R | . | . |}
+\NormalTok{+{-}{-}{-}+{-}{-}{-}+{-}{-}{-}+{-}{-}{-}+}
+\NormalTok{| . | . | . | R |}
+\NormalTok{+{-}{-}{-}+{-}{-}{-}+{-}{-}{-}+{-}{-}{-}+}
+\NormalTok{| R | . | . | . |}
+\NormalTok{+{-}{-}{-}+{-}{-}{-}+{-}{-}{-}+{-}{-}{-}+}
+\NormalTok{| . | . | R | . |}
+\NormalTok{+{-}{-}{-}+{-}{-}{-}+{-}{-}{-}+{-}{-}{-}+}
+
+
+\NormalTok{{-}{-}{-} Résolution du problème des 3{-}Reines {-}{-}{-}}
+\NormalTok{Nombre de clauses CNF générées : 26}
+
+\NormalTok{Aucune solution n\textquotesingle{}existe pour cette taille d\textquotesingle{}échiquier.}
+\end{lstlisting}
+
+Le placement des reines est correct, les diagonales, lignes et colonnes
+sont parfaitement préservées !
+\n
+
+
+\end{document}
