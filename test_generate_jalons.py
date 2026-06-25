@@ -1,5 +1,5 @@
 import unittest
-from generate_jalons import generate_concept_links, extract_short_title, parse_jalons
+from generate_jalons import generate_concept_links, extract_short_title, parse_jalons, get_custom_content
 
 class TestExtractShortTitle(unittest.TestCase):
 
@@ -118,6 +118,18 @@ Jalon 1 : Logique formelle, connecteurs.
     def test_empty_input(self):
         jalons = parse_jalons("")
         self.assertEqual(jalons, [])
+
+
+class TestGetCustomContent(unittest.TestCase):
+    def test_with_108(self):
+        expected = "Notions liées : [[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L^2)]] et [[Jalon 105 (Opérateurs adjoints)]]."
+        self.assertEqual(get_custom_content("Jalon 108"), expected)
+        self.assertEqual(get_custom_content("108"), expected)
+
+    def test_without_108(self):
+        self.assertEqual(get_custom_content("Jalon 107"), "")
+        self.assertEqual(get_custom_content("Jalon 109"), "")
+        self.assertEqual(get_custom_content("Jalon 1"), "")
 
 
 if __name__ == '__main__':

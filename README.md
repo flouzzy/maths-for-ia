@@ -319,6 +319,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-06-24] : Audit & Auto-correction du Jalon 4 - Théorie des ensembles. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - [2026-06-24] : Upsert du Jalon 10 - Changements de base. Status: Terminé.
 - [2026-06-18] : Audit & Auto-correction du Jalon 3 - Quantification. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 
@@ -346,3 +347,5 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-06-17] : Audit & Auto-correction du Jalon 2 - Méthodes de raisonnement. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - [2026-06-20] : Upsert du Jalon 8 - Applications linéaires. Status: Terminé.
 - [2026-06-22] : Upsert du Jalon 9 - Calcul matriciel. Status: Terminé.
+
+- [2026-06-25] : Upsert du Jalon 11 - Formes linéaires. Status: Terminé.
