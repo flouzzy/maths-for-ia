@@ -14,7 +14,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-8/Jalon-8.md|Jalon 8 : Applications linéaires]] : Applications linéaires, noyau ($\\ker$), image ($\\text{Im}$) et démonstration du théorème du rang.
 - [x] [[jalon-9/Jalon-9.md|Jalon 9 : Calcul matriciel]] : Calcul matriciel, opérations, inversibilité et représentations des applications linéaires.
 - [x] [[jalon-10/Jalon-10.md|Jalon 10 : Changements de base]] : Changements de base, matrices de passage et matrices par blocs.
-- [ ] [[jalon-11/Jalon 11 (Formes linéaires).md|Jalon 11 : Formes linéaires]] : Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie.
+- [x] [[jalon-11/Jalon-11.md|Jalon 11 : Formes linéaires]] : Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie.
 - [ ] [[jalon-12/Jalon 12 (Livrable IA).md|Jalon 12 : Livrable IA]] : Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X.
 ### Trimestre 2 : analyse réelle, suites et séries de fonctions
 - [ ] [[jalon-13/Jalon 13 (Structure de --mathbb{R}-).md|Jalon 13 : Structure de $\\mathbb{R}$]] : Structure de $\\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède.

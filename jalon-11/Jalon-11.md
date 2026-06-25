@@ -69,6 +69,27 @@ Soit $H$ un hyperplan de $E$ (dimension $n$). Montrons que $\dim H = n-1$.
 
 5. **Conclusion :** Tout hyperplan d'un espace de dimension $n$ possède une dimension égale à $n-1$.
 
+
+
+### C. Le Bidual
+L'espace bidual $E^{**}$ est l'espace dual de l'espace dual $E^*$.
+Pour tout vecteur $x \in E$, on peut définir l'application d'évaluation $\text{ev}_x : E^* \to \mathbb{K}$ par :
+$$\forall \phi \in E^*, \quad \text{ev}_x(\phi) = \phi(x)$$
+> **Théorème de l'isomorphisme canonique :**
+> Si $E$ est de dimension finie, l'application $\Psi : x \mapsto \text{ev}_x$ est un isomorphisme canonique (indépendant du choix d'une base) entre $E$ et $E^{**}$.
+
+### Démonstration de l'isomorphisme canonique $E \cong E^{**}$
+1. **Initialisation :** Montrons que l'application $\Psi : x \mapsto \text{ev}_x$ est linéaire et injective.
+2. **Linéarité :** Soient $x, y \in E$ et $\lambda, \mu \in \mathbb{K}$. Pour toute $\phi \in E^*$,
+   $$\Psi(\lambda x + \mu y)(\phi) = \phi(\lambda x + \mu y)$$
+   Par linéarité de $\phi$, on a :
+   $$\phi(\lambda x + \mu y) = \lambda \phi(x) + \mu \phi(y) = \lambda \Psi(x)(\phi) + \mu \Psi(y)(\phi)$$
+   Donc $\Psi(\lambda x + \mu y) = \lambda \Psi(x) + \mu \Psi(y)$.
+3. **Injectivité :** Cherchons le noyau de $\Psi$. Soit $x \in \ker \Psi$. Alors $\Psi(x) = 0_{E^{**}}$, c'est-à-dire que pour toute $\phi \in E^*$, $\phi(x) = 0$.
+   Si $x \neq 0$, on peut le compléter en une base $(x, e_2, \dots, e_n)$ de $E$. Considérons la forme coordonnée $e_1^*$ associée à cette base, qui vérifie $e_1^*(x) = 1$. Ceci contredit $\phi(x) = 0$ pour toute forme. Donc $x = 0$, et $\ker \Psi = \{0\}$. $\Psi$ est injective.
+4. **Conclusion :** Puisque $\dim E^{**} = \dim E^* = \dim E = n$ (la dimension finie est cruciale), et que $\Psi$ est une application linéaire injective entre deux espaces de même dimension, c'est un isomorphisme.
+
+
 ## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
