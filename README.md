@@ -346,3 +346,5 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-06-17] : Audit & Auto-correction du Jalon 2 - Méthodes de raisonnement. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - [2026-06-20] : Upsert du Jalon 8 - Applications linéaires. Status: Terminé.
 - [2026-06-22] : Upsert du Jalon 9 - Calcul matriciel. Status: Terminé.
+
+- [2026-06-25] : Upsert du Jalon 11 - Formes linéaires. Status: Terminé.
