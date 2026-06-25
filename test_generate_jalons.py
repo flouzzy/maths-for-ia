@@ -1,32 +1,5 @@
 import unittest
-from generate_jalons import generate_concept_links, extract_short_title, parse_jalons, generate_links
-
-class TestGenerateLinks(unittest.TestCase):
-
-    def setUp(self):
-        self.jalons_list = [
-            {'filename': 'Jalon-1.md'},
-            {'filename': 'Jalon-2.md'},
-            {'filename': 'Jalon-3.md'}
-        ]
-
-    def test_first_element(self):
-        result = generate_links(self.jalons_list[0], self.jalons_list, 0)
-        self.assertEqual(result, "**Suivant** : [[Jalon-2]]")
-
-    def test_middle_element(self):
-        result = generate_links(self.jalons_list[1], self.jalons_list, 1)
-        self.assertEqual(result, "**Précédent** : [[Jalon-1]] | **Suivant** : [[Jalon-3]]")
-
-    def test_last_element(self):
-        result = generate_links(self.jalons_list[2], self.jalons_list, 2)
-        self.assertEqual(result, "**Précédent** : [[Jalon-2]]")
-
-    def test_single_element(self):
-        single_list = [{'filename': 'Jalon-1.md'}]
-        result = generate_links(single_list[0], single_list, 0)
-        self.assertEqual(result, "")
-
+from generate_jalons import generate_concept_links, extract_short_title, parse_jalons, get_custom_content
 
 class TestExtractShortTitle(unittest.TestCase):
 
@@ -145,6 +118,18 @@ Jalon 1 : Logique formelle, connecteurs.
     def test_empty_input(self):
         jalons = parse_jalons("")
         self.assertEqual(jalons, [])
+
+
+class TestGetCustomContent(unittest.TestCase):
+    def test_with_108(self):
+        expected = "Notions liées : [[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L^2)]] et [[Jalon 105 (Opérateurs adjoints)]]."
+        self.assertEqual(get_custom_content("Jalon 108"), expected)
+        self.assertEqual(get_custom_content("108"), expected)
+
+    def test_without_108(self):
+        self.assertEqual(get_custom_content("Jalon 107"), "")
+        self.assertEqual(get_custom_content("Jalon 109"), "")
+        self.assertEqual(get_custom_content("Jalon 1"), "")
 
 
 if __name__ == '__main__':
