@@ -92,5 +92,38 @@ class TestEnrichJalonsGemini(unittest.TestCase):
         title = enrich_jalons_gemini.extract_clean_title("Just some content without title", "Jalon 7.md")
         self.assertEqual(title, "Jalon 7")
 
+    def test_extract_metadata(self):
+        # Case 1: All metadata present
+        content_all = """# Jalon 1
+**Année 2** > **Trimestre 3**
+**Précédent** : [[Jalon 10]]
+**Suivant** : [[Jalon 12]]
+"""
+        year, trim, prev, nxt = enrich_jalons_gemini.extract_metadata(content_all)
+        self.assertEqual(year, "2")
+        self.assertEqual(trim, "3")
+        self.assertEqual(prev, '"[[Jalon 10.md]]"')
+        self.assertEqual(nxt, '"[[Jalon 12.md]]"')
+
+        # Case 2: Partial metadata (only year and trimester)
+        content_partial = """# Jalon 2
+**Année 1** > **Trimestre 2**
+"""
+        year, trim, prev, nxt = enrich_jalons_gemini.extract_metadata(content_partial)
+        self.assertEqual(year, "1")
+        self.assertEqual(trim, "2")
+        self.assertEqual(prev, "")
+        self.assertEqual(nxt, "")
+
+        # Case 3: No metadata
+        content_none = """# Jalon 3
+Just some text without metadata.
+"""
+        year, trim, prev, nxt = enrich_jalons_gemini.extract_metadata(content_none)
+        self.assertEqual(year, "1")  # Default
+        self.assertEqual(trim, "1")  # Default
+        self.assertEqual(prev, "")
+        self.assertEqual(nxt, "")
+
 if __name__ == '__main__':
     unittest.main()
