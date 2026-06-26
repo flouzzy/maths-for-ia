@@ -35,7 +35,7 @@ Nous allons rappeler les définitions clés :
 *   **Injection :** Une application $f: E \to F$ est injective si et seulement si deux éléments distincts de $E$ ont toujours des images distinctes dans $F$. Formellement :
     Pour tout $x_1, x_2 \in E$, si $x_1 \neq x_2$, alors $f(x_1) \neq f(x_2)$.
     Une formulation équivalente, souvent plus pratique pour la démonstration, est la contraposée :
-    Pour tout $x_1, x_2 \in E$, si $f(x_1) = f(x_2)$, alors $x_1 = x_2$.
+    Pour tout $x_1, x_2 \in E$, la condition formelle exige que si $f(x_1) = f(x_2)$, alors nécessairement $x_1 = x_2$, ce qui démontre l'absence d'information perdue.
     En d'autres termes, chaque élément de l'ensemble d'arrivée $F$ possède au plus une pré-image dans $E$.
 
 *   **Surjection :** Une application $f: E \to F$ est surjective si et seulement si tout élément $y \in F$ possède au moins une pré-image $x \in E$. Formellement :

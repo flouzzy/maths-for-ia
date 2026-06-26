@@ -4,7 +4,7 @@
 
 ---
 
-### Énoncé de l'Exercice (Difficulté : ★★★☆☆)
+### Énoncé de l'Exercice (Difficulté : $\star$$\star$$\star$☆☆)
 
 Soient $E$, $F$ et $G$ trois ensembles non vides.
 Considérons deux fonctions :

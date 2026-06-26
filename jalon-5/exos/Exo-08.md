@@ -2,7 +2,7 @@
 
 ## Exercice 8/10 : Injectivité et existence d'une fonction inverse à gauche
 
-**Niveau de difficulté :** ★★★★☆
+**Niveau de difficulté :** $\star$$\star$$\star$$\star$☆
 
 ---
 
