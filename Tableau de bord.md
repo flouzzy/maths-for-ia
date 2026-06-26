@@ -163,3 +163,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-144/Jalon 144 (Le phénomène de double descente).md|Jalon 144 : Le phénomène de double descente]] : Le phénomène de double descente : analyse de la rupture de la théorie statistique classique (compromis biais-variance) dans le régime sur-paramétré.
 - [x] [[jalon-145-152/Jalons 145 à 152 (Rédaction d'un article de recherche théorique de synthèse analysant les garanties de généralisation PAC d'une couche d'attention multi-têtes.).md|Jalons 145 à 152 : Rédaction d'un article de recherche théorique de synthèse analysant les garanties de généralisation PAC d'une couche d'attention multi-têtes.]] : Rédaction d'un article de recherche théorique de synthèse analysant les garanties de généralisation PAC d'une couche d'attention multi-têtes.
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
+
+## Historique d'Audit
+### 2026-06-25-audit
+- [[#2026-06-25-audit|2026-06-25]] : [Audit & Weekly Compilation] - Jalon 5 - Applications, injections, surjections, bijections et composition de fonctions. Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.

@@ -2,7 +2,7 @@
 
 **Jalon 5 : Applications, injections, surjections, bijections et composition de fonctions**
 
-**Niveau de difficulté :** ★★★☆☆
+**Niveau de difficulté :** $\star$$\star$$\star$☆☆
 
 ---
 

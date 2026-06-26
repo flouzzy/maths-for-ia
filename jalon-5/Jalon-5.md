@@ -13,7 +13,7 @@ next: "[[Jalon-6.md]]"
 # Jalon 5 : Applications, injections, surjections, bijections et composition de fonctions
 
 ## 1. Présentation du concept clé
-*Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
+
 
 - **La Métaphore :** Imaginez un archer qui tire des flèches sur des cibles.
   - L'**Application**, c'est la règle du jeu : chaque flèche *doit* être tirée et atteindre *une seule* cible (on ne peut pas rater la cible, ni toucher deux cibles avec une seule flèche).
@@ -24,10 +24,10 @@ next: "[[Jalon-6.md]]"
 - **Visualisation :** Imaginez deux ensembles de points reliés par des fils. Si les fils ne s'emmêlent jamais sur le même point d'arrivée, c'est injectif. Si chaque point d'arrivée a au moins un fil qui lui arrive dessus, c'est surjectif.
 
 ## 2. Formalisation
-*Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
+
 
 ### A. Définitions Formelles
-Soient $E$ (ensemble de départ) et $F$ (ensemble d'arrivée) deux ensembles.
+Soient $E$ (ensemble de départ non vide) et $F$ (ensemble d'arrivée non vide) deux ensembles structurés.
 1. **Application ($f : E \to F$) :** Relation qui à chaque élément $x \in E$ associe un unique élément $y \in F$, noté $f(x)$.
 2. **Injection :** $f$ est injective si $\forall x, x' \in E, f(x) = f(x') \Rightarrow x = x'$.
 3. **Surjection :** $f$ est surjective si $\forall y \in F, \exists x \in E, y = f(x)$.
@@ -42,7 +42,7 @@ Soient $E$ (ensemble de départ) et $F$ (ensemble d'arrivée) deux ensembles.
 > Soit un ensemble de départ non vide $E \neq \emptyset$. Une application $f : E \to F$ est injective si et seulement s'il existe une application $g : F \to E$ telle que $g \circ f = \text{Id}_E$ (rétraction à gauche).
 
 ## 3. Démonstrations
-*Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
+
 
 ### Démonstration du Théorème Pivot : Injection de la composée $g \circ f$
 Soient $f : E \to F$ et $g : F \to G$. Montrons que si $f$ et $g$ sont injectives, alors $g \circ f$ est injective.
@@ -68,7 +68,7 @@ Soient $f : E \to F$ et $g : F \to G$. Montrons que si $f$ et $g$ sont injective
    L'application $g \circ f$ est donc injective. La démonstration est achevée.
 
 ## 4. Exercices d'Application
-*Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
+
 
 ### Exercice 1 : Application Directe (Fonction réelle)
 **Énoncé :** Soit $f : \mathbb{R} \to \mathbb{R}$ définie par $f(x) = 2x + 3$. Démontrer que $f$ est bijective et déterminer sa réciproque $f^{-1}$.
@@ -98,7 +98,7 @@ Soient $f : E \to F$ et $g : F \to G$. Montrons que si $f$ et $g$ sont injective
 * *Conclusion :* L'application $g$ est donc surjective. (Note : On ne peut rien conclure sur la surjectivité de $f$ sans information supplémentaire).
 
 ## 5. Application en Intelligence Artificielle
-*Démontrer la finalité technologique moderne de ce jalon théorique.*
+
 - **Le Pont Théorique :** Les réseaux de neurones sont des **compositions massives** de fonctions élémentaires (couches).
 - **Exemple Concret :** Dans les **Normalizing Flows** (modèles génératifs d'IA), on cherche à apprendre une suite de transformations $f_1, f_2, ..., f_n$ qui sont toutes des **bijections**. Pourquoi ? Parce qu'une bijection permet de transformer une distribution de probabilité simple (comme une Gaussienne) en une distribution complexe (une image), tout en étant capable de faire le calcul inverse (calculer la probabilité d'une image) de manière exacte. Si une couche n'est pas bijective, on perd de l'information et le modèle devient "aveugle" à certaines données.
 
