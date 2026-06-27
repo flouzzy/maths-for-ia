@@ -319,6 +319,8 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+### 2026-06-27-audit
+- [[#2026-06-27-audit|2026-06-27]] : [Audit & Weekly Compilation] - Jalon 6 : Relations d'équivalence. Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-06-25-audit
 - [[#2026-06-25-audit|2026-06-25]] : [Audit & Weekly Compilation] - Jalon 5 - Applications, injections, surjections, bijections et composition de fonctions. Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 - [2026-06-24] : Audit & Auto-correction du Jalon 4 - Théorie des ensembles. Statut : Validé et Fixé. Prêt pour le jalon suivant.
