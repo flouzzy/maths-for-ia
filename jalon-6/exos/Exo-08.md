@@ -21,7 +21,7 @@ Pour démontrer que $\mathcal{R}$ est une relation d'équivalence sur $E$, nous 
 
 *   **Réflexivité :** Pour toute fonction $f \in E$, nous devons montrer que $f \mathcal{R} f$.
     Par définition de la relation $\mathcal{R}$, $f \mathcal{R} f$ si et seulement si $f(0) = f(0)$ et $f'(0) = f'(0)$.
-    Ces deux égalités sont trivialement vraies pour toute fonction $f$.
+    Puisque $f(0)$ et $f'(0)$ sont des nombres réels bien définis, par la propriété de réflexivité de l'égalité sur $\mathbb{R}$, nous avons $f(0) = f(0)$ et $f'(0) = f'(0)$.
     Donc, la relation $\mathcal{R}$ est réflexive.
 
 *   **Symétrie :** Pour toutes fonctions $f, g \in E$, nous devons montrer que si $f \mathcal{R} g$, alors $g \mathcal{R} f$.
