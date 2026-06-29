@@ -1,7 +1,7 @@
 import unittest
 import re
 
-text = """
+text = r"""
 Année 1 : le socle des fondations
 Trimestre 1 : logique
 L'objectif est de réapprendre la langue.
