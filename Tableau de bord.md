@@ -15,7 +15,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-9/Jalon-9.md|Jalon 9 : Calcul matriciel]] : Calcul matriciel, opérations, inversibilité et représentations des applications linéaires.
 - [x] [[jalon-10/Jalon-10.md|Jalon 10 : Changements de base]] : Changements de base, matrices de passage et matrices par blocs.
 - [x] [[jalon-11/Jalon-11.md|Jalon 11 : Formes linéaires]] : Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie.
-- [ ] [[jalon-12/Jalon 12 (Livrable IA).md|Jalon 12 : Livrable IA]] : Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X.
+- [x] [[jalon-12/Jalon-12.md|Jalon 12 : Livrable IA]] : Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X.
 ### Trimestre 2 : analyse réelle, suites et séries de fonctions
 - [ ] [[jalon-13/Jalon 13 (Structure de --mathbb{R}-).md|Jalon 13 : Structure de $\\mathbb{R}$]] : Structure de $\\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède.
 - [ ] [[jalon-14/Jalon 14 (Suites réelles et complexes).md|Jalon 14 : Suites réelles et complexes]] : Suites réelles et complexes, définitions rigoureuses des limites ($\\epsilon, N$) et critères de convergence.
@@ -165,7 +165,10 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
-### 2026-06-26-audit
-- [[#2026-06-26-audit|2026-06-26]] : [Audit & Weekly Compilation] - Jalon 6 - Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base. Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+### 2026-06-27-audit
+- [[#2026-06-27-audit|2026-06-27]] : [Audit & Weekly Compilation] - Jalon 6 : Relations d'équivalence. Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-06-25-audit
 - [[#2026-06-25-audit|2026-06-25]] : [Audit & Weekly Compilation] - Jalon 5 - Applications, injections, surjections, bijections et composition de fonctions. Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+
+### 2026-06-28-audit
+- [[#2026-06-28-audit|2026-06-28]] : [Audit & Weekly Compilation] - Jalon 6 - Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps). Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
