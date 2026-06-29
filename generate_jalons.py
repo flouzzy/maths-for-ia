@@ -193,7 +193,7 @@ def parse_jalons(text_content):
 
     current_year = ""
     current_trimester = ""
-    trimester_context = ""
+    trimester_context = []
 
     jalons = []
 
@@ -207,7 +207,7 @@ def parse_jalons(text_content):
             current_year = line
         elif line.startswith("Trimestre"):
             current_trimester = line
-            trimester_context = ""
+            trimester_context = []
         elif line.startswith("Jalon ") or line.startswith("Jalons "):
             # Parse jalon number and title
             match = jalon_pattern.match(line)
@@ -222,18 +222,22 @@ def parse_jalons(text_content):
                 filename = f"{j_id} ({short_title}).md"
                 filename = INVALID_CHAR_PATTERN.sub('-', filename) # added $ to sanitize
                 filename = filename.replace('--', '-') # avoid double dashes
+
+                # Join the context lines and add a trailing space to match previous behavior
+                joined_context = " ".join(trimester_context) + " " if trimester_context else ""
+
                 jalons.append({
                     'id': j_id,
                     'desc': desc,
                     'full_line': line,
                     'year': current_year,
                     'trimester': current_trimester,
-                    'context': trimester_context,
+                    'context': joined_context,
                     'filename': filename
                 })
         elif line:
             if current_trimester and not line.startswith("Jalon"):
-                trimester_context += line + " "
+                trimester_context.append(line)
 
     return jalons
 
