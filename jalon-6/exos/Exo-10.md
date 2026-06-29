@@ -38,7 +38,7 @@ Une relation $\mathcal{R}$ est réflexive si pour tout élément $u \in E$, $u \
 Soit $u = (u_n)_{n \in \mathbb{N}}$ une suite arbitraire dans $E$.
 Nous devons montrer qu'il existe un entier naturel $N_0$ tel que pour tout $n \ge N_0$, $u_n = u_n$.
 Choisissons $N_0 = 0$.
-L'égalité dans $E$ (qui est $\mathbb{K}$) est réflexive. Ainsi, pour tout entier $n \ge 0$, l'identité $u_n = u_n$ est rigoureusement satisfaite.
+Alors, pour tout $n \ge 0$, l'égalité $u_n = u_n$ est vérifiée en vertu de la réflexivité de l'égalité dans $E$.
 Par conséquent, $u \mathcal{R} u$.
 La relation $\mathcal{R}$ est réflexive.
 
