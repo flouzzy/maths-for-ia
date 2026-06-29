@@ -228,10 +228,10 @@ Puisque tous les axiomes sont vérifiés, $(E/\mathcal{R}, +, \cdot)$ est un ann
 
 #### 4.1. L'anneau $E/\mathcal{R}$ est-il un anneau intègre ?
 
-Un anneau intègre est un anneau commutatif unitaire non trivial (c'est-à-dire $0 \neq 1$) qui n'a pas de diviseurs de zéro. Un élément $x \neq 0$ est un diviseur de zéro s'il existe $y \neq 0$ tel que $x \cdot y = 0$.
+Un anneau intègre est un anneau commutatif unitaire non réduit à l'élément nul (c'est-à-dire $0 \neq 1$) qui n'a pas de diviseurs de zéro. Un élément $x \neq 0$ est un diviseur de zéro s'il existe $y \neq 0$ tel que $x \cdot y = 0$.
 
 Nous avons déjà prouvé que $E/\mathcal{R}$ est un anneau commutatif unitaire.
-L'anneau $E/\mathcal{R}$ est non trivial car $\overline{0_E} \neq \overline{1_E}$. En effet, la suite nulle $(0)_{n \in \mathbb{N}}$ n'est pas éventuellement égale à la suite constante $(1)_{n \in \mathbb{N}}$ (aucun $N_0$ ne peut satisfaire $0_n = 1_n$ pour $n \ge N_0$).
+L'anneau $E/\mathcal{R}$ est non réduit à l'élément nul car $\overline{0_E} \neq \overline{1_E}$. En effet, la suite nulle $(0)_{n \in \mathbb{N}}$ n'est pas éventuellement égale à la suite constante $(1)_{n \in \mathbb{N}}$ (aucun $N_0$ ne peut satisfaire $0_n = 1_n$ pour $n \ge N_0$).
 
 Nous allons chercher des diviseurs de zéro dans $E/\mathcal{R}$.
 **Démonstration :**
