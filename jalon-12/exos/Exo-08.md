@@ -1,263 +1,126 @@
-Cher collègue et chers étudiants,
+# Exercice 08 (4 $\star$) : Optimisation de la Similarité Cosinus Quadratique et Géométrie des Espaces de Plongement
 
-Je vous propose aujourd'hui un exercice fondamental qui, je l'espère, éclairera les liens profonds entre l'algèbre linéaire classique et les fondements théoriques de l'intelligence artificielle moderne, en particulier la conception de moteurs de recherche sémantiques. Nous explorerons la dualité inhérente aux espaces d'intégration (embedding spaces) et la géométrie qui en découle, en mettant en lumière comment une approche rigoureuse peut enrichir notre compréhension des mécanismes de similarité.
+## Énoncé
+Soit $(E, \langle \cdot, \cdot \rangle)$ un espace vectoriel euclidien réel de dimension finie $m \ge 1$. On note $\|\cdot\|$ la norme associée à l'espace euclidien.
+Soit $S = \{v_1, v_2, \dots, v_N\}$ un ensemble fini de $N$ vecteurs non nuls de $E$, où $N \ge 1$. Ces vecteurs peuvent être interprétés comme des plongements (embeddings) sémantiques de documents ou de concepts.
+Nous cherchons à trouver un vecteur unitaire $x \in E$ (c'est-à-dire $\|x\|=1$) qui maximise la somme des carrés des similarités cosinus avec les vecteurs de l'ensemble $S$.
+La fonction objectif est définie par :
+$$ f(x) = \sum_{i=1}^N \left(\frac{\langle x, v_i \rangle}{\|x\| \|v_i\|}\right)^2 $$
 
----
+1.  Montrer que le problème de maximisation de $f(x)$ sous la contrainte $\|x\|=1$ est équivalent à la maximisation d'une forme quadratique $x^T M x$ pour une certaine matrice symétrique $M$. Définir explicitement la matrice $M$ et justifier ses propriétés (symétrie, semi-définie positive).
+2.  Caractériser le(s) vecteur(s) $x$ qui maximise(nt) $f(x)$ et déterminer la valeur maximale de $f(x)$.
+3.  Interpréter la matrice $M$ et le(s) vecteur(s) $x$ maximisant $f(x)$ en termes de géométrie de l'espace de plongement et du concept de "direction sémantique principale".
+4.  Soit $E^*$ le dual de l'espace $E$. Pour chaque $v_i \in E$, on définit le fonctionnel linéaire $\phi_i \in E^*$ par $\phi_i(y) = \langle v_i, y \rangle$ pour tout $y \in E$. Reformuler le problème de maximisation en termes de fonctionnels linéaires. Établir la connexion entre la matrice $M$ et la matrice de Gram des fonctionnels $\psi_i = \mathcal{R}(u_i)$ où $u_i = v_i/\|v_i\|$ et $\mathcal{R}: E \to E^*$ est l'isomorphisme de Riesz.
 
-### Exercice 8 (Difficulté : $\star \star \star \star$)
+## Correction Détaillée
+### Analyse et Stratégie
+Le problème nous demande de maximiser une fonction $f(x)$ qui est une somme de carrés de similarités cosinus, sous la contrainte que $x$ est un vecteur unitaire. La première étape consistera à simplifier l'expression de $f(x)$ en utilisant la contrainte $\|x\|=1$ et en normalisant les vecteurs $v_i$. Nous montrerons ensuite que cette expression se ramène à une forme quadratique $x^T M x$, où $M$ est une matrice symétrique. La maximisation d'une forme quadratique sous contrainte unitaire est un problème classique de l'algèbre linéaire, résolu par la théorie spectrale des matrices symétriques (valeurs propres et vecteurs propres).
 
-**Titre : DUALITÉ ET ORTHOGONALITÉ DANS LES ESPACES D'INTÉGRATION SÉMANTIQUE**
+Pour l'interprétation géométrique, nous analyserons la structure de $M$ et la signification des vecteurs propres principaux. Enfin, pour la partie sur la dualité, nous utiliserons l'isomorphisme de Riesz pour relier les vecteurs de $E$ à leurs fonctionnels linéaires correspondants dans $E^*$. Nous reformulerons l'objectif en termes de ces fonctionnels et établirons un lien avec la matrice de Gram, en exploitant la relation entre les matrices $A^T A$ et $A A^T$.
 
-**Contexte :**
-Dans la conception de moteurs de recherche sémantiques, les documents et les requêtes sont couramment représentés comme des vecteurs dans un espace euclidien de grande dimension, souvent appelé "espace d'intégration" (embedding space). La similarité cosinus est une métrique standard pour quantifier la pertinence sémantique entre un vecteur de requête et un vecteur de document. Cependant, une perspective plus abstraite peut considérer les requêtes non pas comme des vecteurs, mais comme des fonctionnelles linéaires qui attribuent un score aux documents. Cet exercice explore la dualité entre ces deux représentations et ses implications géométriques.
+### Résolution Pas-à-Pas
 
-**Hypothèses Fondamentales :**
-Nous formulons les hypothèses suivantes pour cet exercice :
-1.  $V$ est un espace vectoriel réel de dimension finie $n$, avec $n \ge 1$.
-2.  $V$ est muni d'un produit scalaire $\langle \cdot, \cdot \rangle$, ce qui en fait un espace euclidien.
-3.  La norme induite par ce produit scalaire sur $V$ est notée $\|\cdot\|_V$.
-4.  Tous les vecteurs et fonctionnelles considérés sont bien définis dans leurs espaces respectifs.
-5.  Les vecteurs nuls sont notés $0_V$ pour l'espace $V$ et $0_{V^*}$ pour l'espace $V^*$.
+#### 1. Transformation en forme quadratique
+Soit $f(x) = \sum_{i=1}^N \left(\frac{\langle x, v_i \rangle}{\|x\| \|v_i\|}\right)^2$.
+Puisque nous cherchons à maximiser $f(x)$ sous la contrainte $\|x\|=1$, l'expression de $f(x)$ se simplifie en :
+$$ f(x) = \sum_{i=1}^N \frac{\langle x, v_i \rangle^2}{\|v_i\|^2} $$
+Les vecteurs $v_i$ sont non nuls par hypothèse, donc $\|v_i\| \neq 0$.
+Définissons les vecteurs normalisés $u_i = \frac{v_i}{\|v_i\|}$ pour $i=1, \dots, N$. Ces vecteurs $u_i$ sont unitaires, c'est-à-dire $\|u_i\|=1$.
+L'expression de $f(x)$ devient alors :
+$$ f(x) = \sum_{i=1}^N \langle x, u_i \rangle^2 $$
+Soit $\{e_1, \dots, e_m\}$ une base orthonormée de $E$. Tout vecteur $x \in E$ peut être représenté par ses coordonnées $x = \sum_{j=1}^m x_j e_j$, et de même pour $u_i = \sum_{j=1}^m (u_i)_j e_j$.
+Dans cette base, le produit scalaire $\langle x, u_i \rangle$ s'écrit comme le produit matriciel $x^T u_i$, où $x$ et $u_i$ sont des vecteurs colonnes de leurs coordonnées.
+Alors $\langle x, u_i \rangle^2 = (x^T u_i)^2 = (x^T u_i)(u_i^T x)$.
+En substituant cela dans l'expression de $f(x)$ :
+$$ f(x) = \sum_{i=1}^N (x^T u_i)(u_i^T x) $$
+Par la linéarité de la somme et la distributivité du produit matriciel, nous pouvons réécrire ceci comme :
+$$ f(x) = x^T \left(\sum_{i=1}^N u_i u_i^T\right) x $$
+Nous définissons la matrice $M$ comme :
+$$ M = \sum_{i=1}^N u_i u_i^T $$
+Chaque terme $u_i u_i^T$ est une matrice de taille $m \times m$.
+La matrice $u_i u_i^T$ est symétrique, car $(u_i u_i^T)^T = (u_i^T)^T u_i^T = u_i u_i^T$.
+Puisque $M$ est une somme de matrices symétriques, $M$ est elle-même une matrice symétrique.
+De plus, pour tout vecteur $y \in E$, la forme quadratique associée à $M$ est :
+$$ y^T M y = y^T \left(\sum_{i=1}^N u_i u_i^T\right) y = \sum_{i=1}^N y^T u_i u_i^T y = \sum_{i=1}^N (y^T u_i)(u_i^T y) = \sum_{i=1}^N \langle y, u_i \rangle^2 $$
+Puisque $\langle y, u_i \rangle^2 \ge 0$ pour tout $i$, la somme $\sum_{i=1}^N \langle y, u_i \rangle^2$ est toujours supérieure ou égale à zéro.
+Donc, $y^T M y \ge 0$ pour tout $y \in E$. Cela signifie que $M$ est une matrice semi-définie positive.
 
-**Partie I : Dualité et l'Isomorphisme de Riesz**
+Le problème de maximisation de $f(x)$ sous la contrainte $\|x\|=1$ est donc équivalent à la maximisation de la forme quadratique $x^T M x$ sous la contrainte $\|x\|^2 = x^T x = 1$.
 
-1.  Définissez l'espace dual $V^*$ de $V$. Énoncez explicitement la nature de ses éléments et leurs propriétés fondamentales.
-2.  Énoncez le Théorème de Riesz de représentation pour les espaces euclidiens de dimension finie. Prouvez que l'application $R: V^* \to V$ qui à chaque $\phi \in V^*$ associe l'unique vecteur $v_\phi \in V$ tel que $\phi(x) = \langle v_\phi, x \rangle$ pour tout $x \in V$, est un isomorphisme d'espaces vectoriels.
-3.  En utilisant l'isomorphisme $R$, définissez un produit scalaire $\langle \cdot, \cdot \rangle_{V^*}$ sur $V^*$ tel que $V^*$ devienne également un espace euclidien. Vérifiez que cette définition satisfait les axiomes d'un produit scalaire.
-4.  Dérivez une expression pour la norme $\|\phi\|_{V^*}$ d'une fonctionnelle $\phi \in V^*$ en termes de $\phi$ elle-même, sans référence explicite à son représentant de Riesz $v_\phi$.
+#### 2. Caractérisation du(des) vecteur(s) maximisant(s) et valeur maximale
+Le problème de la maximisation d'une forme quadratique $x^T M x$ sous la contrainte $\|x\|^2=1$ pour une matrice symétrique $M$ est un résultat fondamental de la théorie spectrale.
+Soient $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_m$ les valeurs propres de $M$, ordonnées par ordre décroissant.
+Le théorème spectral pour les matrices symétriques garantit que toutes les valeurs propres sont réelles et qu'il existe une base orthonormée de $E$ composée de vecteurs propres de $M$.
+Pour tout vecteur $x$ unitaire, la valeur de $x^T M x$ est bornée par la plus grande et la plus petite valeur propre de $M$. Plus précisément :
+$$ \lambda_m \le x^T M x \le \lambda_1 $$
+La valeur maximale de $x^T M x$ est $\lambda_1$, la plus grande valeur propre de $M$.
+Le(s) vecteur(s) $x$ qui atteigne(nt) ce maximum sont les vecteurs propres unitaires associés à cette plus grande valeur propre $\lambda_1$.
+Si $\lambda_1$ est une valeur propre simple, alors il y a deux vecteurs unitaires qui maximisent $f(x)$, à savoir $e_1$ et $-e_1$, où $e_1$ est le vecteur propre unitaire associé à $\lambda_1$.
+Si $\lambda_1$ est une valeur propre de multiplicité $k > 1$, alors tout vecteur unitaire appartenant au sous-espace propre $E_{\lambda_1}$ (de dimension $k$) maximise $f(x)$.
 
-**Partie II : Similarité Cosinus dans les Espaces Duaux**
+En résumé :
+*   La valeur maximale de $f(x)$ est $\lambda_{\max}(M)$, la plus grande valeur propre de $M$.
+*   Le(s) vecteur(s) $x$ qui maximise(nt) $f(x)$ sont les vecteurs propres unitaires de $M$ associés à $\lambda_{\max}(M)$.
 
-1.  Pour un vecteur de document $d \in V \setminus \{0_V\}$ et une fonctionnelle de requête $\Phi \in V^* \setminus \{0_{V^*}\}$, définissez la "similarité cosinus" $\text{cos\_sim}(\Phi, d)$ en utilisant l'isomorphisme de Riesz. Fournissez une formule complètement explicite n'utilisant que $\Phi$, $d$, le produit scalaire sur $V$, et les normes $\|\cdot\|_V$ et $\|\cdot\|_{V^*}$.
-2.  Soient $d_1, d_2 \in V \setminus \{0_V\}$ deux vecteurs de document. Montrez que la similarité cosinus standard entre ces deux vecteurs, $\text{cos\_sim}(d_1, d_2)$, peut être exprimée en utilisant une fonctionnelle : $\text{cos\_sim}(d_1, d_2) = \text{cos\_sim}(R^{-1}(d_1), d_2)$. Cette démonstration établit un pont entre l'approche "requête-vecteur" et l'approche "requête-fonctionnelle".
+#### 3. Interprétation géométrique
+*   **Interprétation de la matrice $M$**:
+    La matrice $M = \sum_{i=1}^N u_i u_i^T$ est une somme de matrices de projection orthogonale. Chaque terme $u_i u_i^T$ est la matrice de projection orthogonale sur la droite vectorielle engendrée par le vecteur unitaire $u_i$.
+    $M$ peut être vue comme une matrice qui agrège les directions des vecteurs normalisés $u_i$. Elle capture la "variance" ou la "dispersion" des directions des documents dans l'espace de plongement. Si les vecteurs $u_i$ sont fortement alignés dans une certaine direction, $M$ aura une grande valeur propre dans cette direction.
+    Si l'on considère la matrice $A$ de taille $N \times m$ dont la $i$-ème ligne est le vecteur $u_i^T$ (transposé du vecteur colonne $u_i$), alors $M = A^T A$. Cette construction est similaire à celle de la matrice de covariance dans l'Analyse en Composantes Principales (PCA), mais appliquée aux directions des vecteurs plutôt qu'à leurs positions absolues (et sans centrage).
 
-**Partie III : Recherche par Sous-espaces de Requête (Problème de l'X)**
+*   **Interprétation du(des) vecteur(s) $x$ maximisant(s)**:
+    Le(s) vecteur(s) $x$ qui maximise(nt) $f(x)$ sont les vecteurs propres unitaires associés à la plus grande valeur propre de $M$. Cette direction $x$ est celle le long de laquelle la somme des carrés des projections des vecteurs $u_i$ est maximale.
+    En d'autres termes, $x$ représente la "direction principale" ou la "direction sémantique dominante" de l'ensemble des documents $S$. C'est la direction dans l'espace de plongement qui est la plus fortement alignée avec l'ensemble des documents normalisés.
+    Dans le contexte d'un moteur de recherche sémantique, ce vecteur $x$ pourrait être utilisé comme un "représentant" ou un "prototype" sémantique pour le groupe de documents $S$. Un nouveau document ou une nouvelle requête pourrait être comparé à $x$ pour évaluer sa similarité globale avec l'ensemble $S$.
 
-Considérons un scénario où les requêtes ne sont pas de simples fonctionnelles individuelles, mais sont plutôt caractérisées par un *sous-espace* de "types de requêtes pertinents".
-Soit $W^* \subseteq V^*$ un sous-espace vectoriel de fonctionnelles de dimension $k$, où $1 \le k < n$. Ce sous-espace $W^*$ représente un "domaine de requête" ou un "filtre sémantique" spécifique.
+#### 4. Dualité et connexion avec la matrice de Gram
+Soit $E^*$ le dual de $E$. Puisque $E$ est un espace euclidien de dimension finie, il existe un isomorphisme canonique entre $E$ et $E^*$, connu sous le nom d'isomorphisme de Riesz.
+L'isomorphisme de Riesz $\mathcal{R}: E \to E^*$ est défini par $\mathcal{R}(v)(y) = \langle v, y \rangle$ pour tout $v, y \in E$.
+Pour chaque $v_i \in E$, le fonctionnel $\phi_i \in E^*$ est donné par $\phi_i(y) = \langle v_i, y \rangle$.
+De même, pour les vecteurs normalisés $u_i = v_i/\|v_i\|$, nous définissons les fonctionnels $\psi_i = \mathcal{R}(u_i) \in E^*$, de sorte que $\psi_i(y) = \langle u_i, y \rangle$.
 
-1.  Définissez l'annihilateur $W^\perp_A \subseteq V$ du sous-espace $W^*$. Prouvez que $W^\perp_A$ est un sous-espace vectoriel de $V$ et déterminez sa dimension.
-2.  Supposons qu'un vecteur de document $d \in V$ soit donné. Nous voulons trouver la fonctionnelle $\Phi_d \in W^*$ qui "s'aligne" le mieux avec $d$ au sens de maximiser la similarité cosinus $\text{cos\_sim}(\Phi, d)$ pour toutes les fonctionnelles $\Phi \in W^* \setminus \{0_{V^*}\}$. Montrez qu'une telle fonctionnelle $\Phi_d$ existe et est unique à un facteur scalaire non nul près.
-    *Indice :* Considérez les représentants de Riesz.
-3.  Soit $R(W^*) \subseteq V$ l'image du sous-espace $W^*$ par l'isomorphisme de Riesz $R$. Soit $P_{R(W^*)}: V \to R(W^*)$ le projecteur orthogonal de $V$ sur le sous-espace $R(W^*)$. Montrez que l'ensemble des fonctionnelles qui maximisent $\text{cos\_sim}(\Phi, d)$ est précisément $\{\alpha R^{-1}(P_{R(W^*)}(d)) \mid \alpha \in \mathbb{R} \setminus \{0\}\}$.
-4.  Interprétez la signification géométrique de $W^\perp_A$ dans le contexte d'un moteur de recherche sémantique. Si un document $d \in W^\perp_A$, qu'est-ce que cela implique quant à sa pertinence par rapport à toute requête appartenant au sous-espace $W^*$ ?
+Le problème de maximisation est $f(x) = \sum_{i=1}^N \langle x, u_i \rangle^2$ sous la contrainte $\|x\|=1$.
+En utilisant la définition de $\psi_i$, nous pouvons réécrire l'objectif comme :
+$$ f(x) = \sum_{i=1}^N (\psi_i(x))^2 $$
+L'isomorphisme de Riesz permet également de définir un produit scalaire sur $E^*$. Pour $\chi, \zeta \in E^*$, on définit $\langle \chi, \zeta \rangle_{E^*} = \langle \mathcal{R}^{-1}(\chi), \mathcal{R}^{-1}(\zeta) \rangle_E$.
+La norme associée dans $E^*$ est $\|\chi\|_{E^*} = \|\mathcal{R}^{-1}(\chi)\|_E$.
+Ainsi, la contrainte $\|x\|=1$ est équivalente à $\|\mathcal{R}(x)\|_{E^*} = 1$.
+Soit $\chi = \mathcal{R}(x) \in E^*$. Alors $x = \mathcal{R}^{-1}(\chi)$.
+L'expression $\psi_i(x)$ peut être réécrite en utilisant le produit scalaire dans $E^*$:
+$$ \psi_i(x) = \langle u_i, x \rangle_E = \langle \mathcal{R}^{-1}(\psi_i), \mathcal{R}^{-1}(\chi) \rangle_E = \langle \psi_i, \chi \rangle_{E^*} $$
+Donc, le problème de maximisation peut être reformulé dans l'espace dual $E^*$ comme :
+Maximiser $\sum_{i=1}^N \langle \psi_i, \chi \rangle_{E^*}^2$ sous la contrainte $\|\chi\|_{E^*} = 1$.
+Ceci est exactement le même type de problème que celui initial, mais formulé dans l'espace dual $E^*$ avec les fonctionnels $\psi_i$ et la variable d'optimisation $\chi$.
 
----
+**Connexion entre $M$ et la matrice de Gram des fonctionnels $\psi_i$**:
+Soit $\{e_1, \dots, e_m\}$ une base orthonormée de $E$. Soit $A$ la matrice de taille $N \times m$ dont la $i$-ème ligne est le vecteur de coordonnées de $u_i$ dans cette base, c'est-à-dire $A_{ij} = (u_i)_j$.
+Alors, comme établi précédemment, $M = A^T A$.
 
-### Correction de l'Exercice 8
+La matrice de Gram $G$ des fonctionnels $\{\psi_1, \dots, \psi_N\}$ est une matrice de taille $N \times N$ dont les entrées sont $G_{jk} = \langle \psi_j, \psi_k \rangle_{E^*}$.
+En utilisant la définition du produit scalaire dans $E^*$ et l'isomorphisme de Riesz :
+$$ G_{jk} = \langle \mathcal{R}^{-1}(\psi_j), \mathcal{R}^{-1}(\psi_k) \rangle_E = \langle u_j, u_k \rangle_E $$
+Dans la base orthonormée, $\langle u_j, u_k \rangle_E = u_j^T u_k$.
+Considérons le produit matriciel $A A^T$:
+$$ (A A^T)_{jk} = \sum_{l=1}^m A_{jl} (A^T)_{lk} = \sum_{l=1}^m A_{jl} A_{kl} = \sum_{l=1}^m (u_j)_l (u_k)_l = u_j^T u_k $$
+Donc, la matrice de Gram $G$ des fonctionnels $\psi_i$ est $G = A A^T$.
 
-**Partie I : Dualité et l'Isomorphisme de Riesz**
+Nous avons $M = A^T A$ et $G = A A^T$. Il est un résultat connu de l'algèbre linéaire que les matrices $A^T A$ et $A A^T$ ont les mêmes valeurs propres non nulles.
+Par conséquent, la valeur maximale de $f(x)$, qui est $\lambda_{\max}(M)$, est également la plus grande valeur propre de la matrice de Gram $G$.
+Si $y \in \mathbb{R}^N$ est un vecteur propre de $G$ associé à la valeur propre $\lambda_{\max}(G)$, alors $G y = \lambda_{\max}(G) y$, ce qui signifie $A A^T y = \lambda_{\max}(G) y$.
+En multipliant par $A^T$ à gauche, on obtient $A^T A A^T y = \lambda_{\max}(G) A^T y$.
+Puisque $M = A^T A$, cela donne $M (A^T y) = \lambda_{\max}(G) (A^T y)$.
+Ainsi, $A^T y$ est un vecteur propre de $M$ associé à la valeur propre $\lambda_{\max}(G)$.
+Le vecteur $x$ qui maximise $f(x)$ est alors donné par la normalisation de $A^T y$:
+$$ x = \frac{A^T y}{\|A^T y\|} $$
+où $y$ est un vecteur propre unitaire de $G$ associé à sa plus grande valeur propre. Cette relation offre une méthode alternative pour trouver le vecteur $x$, potentiellement plus efficace si $N < m$ (car $G$ est de taille $N \times N$ tandis que $M$ est de taille $m \times m$).
 
-1.  **Définition de l'espace dual $V^*$ :**
-    L'espace dual $V^*$ de l'espace vectoriel $V$ est l'ensemble de toutes les applications linéaires de $V$ vers le corps des scalaires $\mathbb{R}$.
-    Les éléments de $V^*$ sont appelés des **fonctionnelles linéaires**.
-    Formellement, $V^* = \{ \phi : V \to \mathbb{R} \mid \phi \text{ est linéaire} \}$.
-    Les propriétés fondamentales des éléments de $V^*$ sont :
-    *   **Linéarité :** Pour tout $\phi \in V^*$, pour tous $x_1, x_2 \in V$ et tous $\alpha_1, \alpha_2 \in \mathbb{R}$, nous avons $\phi(\alpha_1 x_1 + \alpha_2 x_2) = \alpha_1 \phi(x_1) + \alpha_2 \phi(x_2)$.
-    *   **Structure d'espace vectoriel :** $V^*$ est lui-même un espace vectoriel sur $\mathbb{R}$. L'addition de fonctionnelles est définie par $(\phi_1 + \phi_2)(x) = \phi_1(x) + \phi_2(x)$ pour tous $\phi_1, \phi_2 \in V^*$ et $x \in V$. La multiplication par un scalaire est définie par $(\alpha \phi)(x) = \alpha \phi(x)$ pour tout $\alpha \in \mathbb{R}$, $\phi \in V^*$ et $x \in V$.
-    *   **Dimension :** Puisque $V$ est un espace vectoriel de dimension finie $n$, son espace dual $V^*$ est également de dimension finie $n$.
+### Conclusion
+Nous avons montré que le problème de maximisation de la somme des carrés des similarités cosinus d'un vecteur unitaire $x$ avec un ensemble de vecteurs de plongement $S = \{v_1, \dots, v_N\}$ se ramène à la maximisation d'une forme quadratique $x^T M x$ sous la contrainte $\|x\|=1$. La matrice $M = \sum_{i=1}^N u_i u_i^T$ (où $u_i = v_i/\|v_i\|$) est symétrique et semi-définie positive.
 
-2.  **Théorème de Riesz de représentation et preuve de l'isomorphisme $R$ :**
-    Le **Théorème de Riesz de représentation** pour les espaces euclidiens de dimension finie stipule que :
-    Pour toute fonctionnelle linéaire $\phi \in V^*$, il existe un unique vecteur $v_\phi \in V$ tel que $\phi(x) = \langle v_\phi, x \rangle$ pour tout $x \in V$.
+Le(s) vecteur(s) $x$ qui maximise(nt) cette fonction sont les vecteurs propres unitaires de $M$ associés à sa plus grande valeur propre $\lambda_{\max}(M)$. La valeur maximale de la fonction objectif est $\lambda_{\max}(M)$.
 
-    Prouvons que l'application $R: V^* \to V$, définie par $R(\phi) = v_\phi$, est un isomorphisme d'espaces vectoriels.
-    Nous devons montrer que $R$ est linéaire, injective et surjective.
+Géométriquement, la matrice $M$ agrège les directions des vecteurs de plongement normalisés, et le vecteur $x$ maximisant représente la "direction sémantique principale" de l'ensemble des documents, c'est-à-dire la direction qui capture le mieux l'orientation moyenne des plongements normalisés.
 
-    *   **Linéarité de $R$ :**
-        Soient $\phi_1, \phi_2 \in V^*$ et $\alpha_1, \alpha_2 \in \mathbb{R}$. Nous voulons montrer que $R(\alpha_1 \phi_1 + \alpha_2 \phi_2) = \alpha_1 R(\phi_1) + \alpha_2 R(\phi_2)$.
-        Par la définition de $R$, le vecteur $R(\alpha_1 \phi_1 + \alpha_2 \phi_2)$ est l'unique vecteur dans $V$ qui, pour tout $x \in V$, satisfait :
-        $$ (\alpha_1 \phi_1 + \alpha_2 \phi_2)(x) = \langle R(\alpha_1 \phi_1 + \alpha_2 \phi_2), x \rangle $$
-        Par la linéarité des fonctionnelles et les propriétés du produit scalaire, nous avons aussi :
-        $$ (\alpha_1 \phi_1 + \alpha_2 \phi_2)(x) = \alpha_1 \phi_1(x) + \alpha_2 \phi_2(x) $$
-        $$ = \alpha_1 \langle R(\phi_1), x \rangle + \alpha_2 \langle R(\phi_2), x \rangle $$
-        $$ = \langle \alpha_1 R(\phi_1), x \rangle + \langle \alpha_2 R(\phi_2), x \rangle $$
-        $$ = \langle \alpha_1 R(\phi_1) + \alpha_2 R(\phi_2), x \rangle $$
-        Ainsi, pour tout $x \in V$, nous avons $\langle R(\alpha_1 \phi_1 + \alpha_2 \phi_2), x \rangle = \langle \alpha_1 R(\phi_1) + \alpha_2 R(\phi_2), x \rangle$.
-        Cela signifie que $\langle R(\alpha_1 \phi_1 + \alpha_2 \phi_2) - (\alpha_1 R(\phi_1) + \alpha_2 R(\phi_2)), x \rangle = 0$ pour tout $x \in V$.
-        En particulier, en prenant $x = R(\alpha_1 \phi_1 + \alpha_2 \phi_2) - (\alpha_1 R(\phi_1) + \alpha_2 R(\phi_2))$, nous obtenons que la norme de ce vecteur est nulle, ce qui implique que le vecteur lui-même est le vecteur nul.
-        Donc, $R(\alpha_1 \phi_1 + \alpha_2 \phi_2) = \alpha_1 R(\phi_1) + \alpha_2 R(\phi_2)$. $R$ est linéaire.
+Enfin, en utilisant l'isomorphisme de Riesz, nous avons reformulé le problème dans l'espace dual $E^*$. La matrice $M$ est liée à la matrice de Gram $G = A A^T$ des fonctionnels $\psi_i = \mathcal{R}(u_i)$ par la relation $M = A^T A$, où $A$ est la matrice dont les lignes sont les coordonnées des $u_i$. Les matrices $M$ et $G$ partagent les mêmes valeurs propres non nulles, et le vecteur $x$ maximisant peut être obtenu à partir du vecteur propre principal de $G$.
 
-    *   **Injectivité de $R$ :**
-        Supposons $R(\phi) = 0_V$ pour une fonctionnelle $\phi \in V^*$.
-        Par définition de $R$, cela signifie que $v_\phi = 0_V$.
-        Alors, pour tout $x \in V$, $\phi(x) = \langle v_\phi, x \rangle = \langle 0_V, x \rangle = 0$.
-        Donc, $\phi$ est la fonctionnelle nulle $0_{V^*}$.
-        Par conséquent, le noyau de $R$ est $\ker(R) = \{0_{V^*}\}$, ce qui prouve que $R$ est injective.
-
-    *   **Surjectivité de $R$ :**
-        Puisque $V$ est de dimension finie $n$, nous savons que $V^*$ est également de dimension $n$.
-        $R$ est une application linéaire de $V^*$ vers $V$.
-        De l'injectivité de $R$, il découle que $\text{dim}(\ker(R)) = 0$.
-        Par le théorème du rang, $\text{dim}(V^*) = \text{dim}(\ker(R)) + \text{dim}(\text{Im}(R))$.
-        Donc, $n = 0 + \text{dim}(\text{Im}(R))$, ce qui implique $\text{dim}(\text{Im}(R)) = n$.
-        Puisque $\text{Im}(R)$ est un sous-espace vectoriel de $V$ et $\text{dim}(\text{Im}(R)) = \text{dim}(V) = n$, nous concluons que $\text{Im}(R) = V$.
-        Par conséquent, $R$ est surjective.
-
-    Puisque $R$ est linéaire, injective et surjective, c'est un isomorphisme d'espaces vectoriels.
-
-3.  **Définition d'un produit scalaire sur $V^*$ :**
-    Nous définissons le produit scalaire $\langle \cdot, \cdot \rangle_{V^*}$ sur $V^*$ pour $\phi_1, \phi_2 \in V^*$ comme suit :
-    $$ \langle \phi_1, \phi_2 \rangle_{V^*} = \langle R(\phi_1), R(\phi_2) \rangle $$
-    Vérifions les axiomes d'un produit scalaire :
-
-    *   **Linéarité par rapport à la première variable :**
-        Soient $\phi_1, \phi_2, \phi_3 \in V^*$ et $\alpha, \beta \in \mathbb{R}$.
-        $$ \langle \alpha \phi_1 + \beta \phi_2, \phi_3 \rangle_{V^*} = \langle R(\alpha \phi_1 + \beta \phi_2), R(\phi_3) \rangle $$
-        Par la linéarité de $R$, $R(\alpha \phi_1 + \beta \phi_2) = \alpha R(\phi_1) + \beta R(\phi_2)$.
-        $$ = \langle \alpha R(\phi_1) + \beta R(\phi_2), R(\phi_3) \rangle $$
-        Par la linéarité du produit scalaire sur $V$ par rapport à la première variable :
-        $$ = \alpha \langle R(\phi_1), R(\phi_3) \rangle + \beta \langle R(\phi_2), R(\phi_3) \rangle $$
-        Par la définition du produit scalaire sur $V^*$ :
-        $$ = \alpha \langle \phi_1, \phi_3 \rangle_{V^*} + \beta \langle \phi_2, \phi_3 \rangle_{V^*} $$
-        Donc, la linéarité est satisfaite.
-
-    *   **Symétrie :**
-        Soient $\phi_1, \phi_2 \in V^*$.
-        $$ \langle \phi_1, \phi_2 \rangle_{V^*} = \langle R(\phi_1), R(\phi_2) \rangle $$
-        Par la symétrie du produit scalaire sur $V$ :
-        $$ = \langle R(\phi_2), R(\phi_1) \rangle $$
-        Par la définition du produit scalaire sur $V^*$ :
-        $$ = \langle \phi_2, \phi_1 \rangle_{V^*} $$
-        Donc, la symétrie est satisfaite.
-
-    *   **Définition positive :**
-        Soit $\phi \in V^*$.
-        $$ \langle \phi, \phi \rangle_{V^*} = \langle R(\phi), R(\phi) \rangle $$
-        Par la définition positive du produit scalaire sur $V$, $\langle R(\phi), R(\phi) \rangle \ge 0$.
-        De plus, $\langle \phi, \phi \rangle_{V^*} = 0$ si et seulement si $\langle R(\phi), R(\phi) \rangle = 0$.
-        Cela implique $R(\phi) = 0_V$.
-        Comme $R$ est un isomorphisme, $R(\phi) = 0_V$ si et seulement si $\phi = 0_{V^*}$.
-        Donc, $\langle \phi, \phi \rangle_{V^*} = 0$ si et seulement si $\phi = 0_{V^*}$.
-        La définition positive est satisfaite.
-
-    Puisque toutes les propriétés sont vérifiées, $\langle \cdot, \cdot \rangle_{V^*}$ est bien un produit scalaire sur $V^*$, et $V^*$ est donc un espace euclidien.
-
-4.  **Expression de la norme $\|\phi\|_{V^*}$ :**
-    La norme $\|\phi\|_{V^*}$ est induite par le produit scalaire sur $V^*$.
-    $$ \|\phi\|_{V^*} = \sqrt{\langle \phi, \phi \rangle_{V^*}} $$
-    En utilisant la définition du produit scalaire sur $V^*$ :
-    $$ \|\phi\|_{V^*} = \sqrt{\langle R(\phi), R(\phi) \rangle} $$
-    Par la définition de la norme sur $V$ :
-    $$ \|\phi\|_{V^*} = \|R(\phi)\|_V $$
-    Maintenant, nous voulons exprimer cette norme en termes de $\phi$ elle-même, sans $R(\phi)$.
-    Nous savons que $\phi(x) = \langle R(\phi), x \rangle$ pour tout $x \in V$.
-    Prenons $x = R(\phi)$. Alors :
-    $$ \phi(R(\phi)) = \langle R(\phi), R(\phi) \rangle $$
-    $$ \phi(R(\phi)) = \|R(\phi)\|_V^2 $$
-    Donc, $\|R(\phi)\|_V = \sqrt{\phi(R(\phi))}$.
-    Substituant cela dans l'expression de $\|\phi\|_{V^*}$ :
-    $$ \|\phi\|_{V^*} = \sqrt{\phi(R(\phi))} $$
-    Ceci est une expression de la norme $\|\phi\|_{V^*}$ en termes de $\phi$ et de son représentant de Riesz. Pour éviter toute référence explicite à $R(\phi)$ dans l'expression *finale*, nous devons reconnaître que $R(\phi)$ est le vecteur $v_\phi$ tel que $\phi(v_\phi) = \|v_\phi\|_V^2$.
-    Donc, $R(\phi)$ est précisément le vecteur unique dans $V$ pour lequel $\phi$ prend une valeur égale au carré de sa norme. Si nous souhaitons une expression purement en termes de $\phi$ et de l'opérateur $\phi$ lui-même, la forme $\sqrt{\phi(v_\phi)}$ est la plus appropriée, sachant que $v_\phi$ est défini par le théorème de Riesz. Une forme alternative qui peut être utile est $\sup_{x \in V, x \neq 0_V} \frac{|\phi(x)|}{\|x\|_V}$, qui est la norme d'opérateur de $\phi$. Par le théorème de Riesz, cette norme d'opérateur est égale à $\|v_\phi\|_V$.
-    Donc, $\|\phi\|_{V^*} = \sup_{x \in V \setminus \{0_V\}} \frac{|\phi(x)|}{\|x\|_V}$.
-
-**Partie II : Similarité Cosinus dans les Espaces Duaux**
-
-1.  **Définition de $\text{cos\_sim}(\Phi, d)$ :**
-    La similarité cosinus entre deux vecteurs $u, v \in V \setminus \{0_V\}$ est définie comme $\text{cos\_sim}(u, v) = \frac{\langle u, v \rangle}{\|u\|_V \|v\|_V}$.
-    Pour un vecteur de document $d \in V \setminus \{0_V\}$ et une fonctionnelle de requête $\Phi \in V^* \setminus \{0_{V^*}\}$, nous utilisons l'isomorphisme de Riesz pour associer $\Phi$ à son représentant vectoriel $R(\Phi) \in V$.
-    Alors, la similarité cosinus entre $\Phi$ et $d$ est définie comme la similarité cosinus entre leurs représentants vectoriels respectifs dans $V$ (où $\Phi$ est représentée par $R(\Phi)$ et $d$ est déjà un vecteur).
-    $$ \text{cos\_sim}(\Phi, d) = \text{cos\_sim}(R(\Phi), d) $$
-    $$ = \frac{\langle R(\Phi), d \rangle}{\|R(\Phi)\|_V \|d\|_V} $$
-    Nous savons, par la définition de $R$, que $\Phi(d) = \langle R(\Phi), d \rangle$.
-    Nous avons également dérivé, en Partie I.4, que $\|R(\Phi)\|_V = \|\Phi\|_{V^*}$.
-    En substituant ces expressions dans la formule :
-    $$ \text{cos\_sim}(\Phi, d) = \frac{\Phi(d)}{\|\Phi\|_{V^*} \|d\|_V} $$
-    C'est la formule explicite demandée.
-
-2.  **Lien entre $\text{cos\_sim}(d_1, d_2)$ et $\text{cos\_sim}(R^{-1}(d_1), d_2)$ :**
-    Soient $d_1, d_2 \in V \setminus \{0_V\}$ deux vecteurs de document.
-    La similarité cosinus standard entre $d_1$ et $d_2$ est :
-    $$ \text{cos\_sim}(d_1, d_2) = \frac{\langle d_1, d_2 \rangle}{\|d_1\|_V \|d_2\|_V} $$
-    Considérons maintenant $\text{cos\_sim}(R^{-1}(d_1), d_2)$.
-    Ici, $R^{-1}(d_1)$ est la fonctionnelle $\Phi_1 \in V^*$ telle que $R(\Phi_1) = d_1$.
-    Par la formule dérivée en Partie II.1 :
-    $$ \text{cos\_sim}(R^{-1}(d_1), d_2) = \frac{(R^{-1}(d_1))(d_2)}{\|R^{-1}(d_1)\|_{V^*} \|d_2\|_V} $$
-    Nous savons que $R^{-1}(d_1)$ est la fonctionnelle $\Phi_1$ pour laquelle $R(\Phi_1) = d_1$.
-    Par la définition de $R$, $(R^{-1}(d_1))(d_2) = \langle R(R^{-1}(d_1)), d_2 \rangle = \langle d_1, d_2 \rangle$.
-    De plus, par la Partie I.4, $\|R^{-1}(d_1)\|_{V^*} = \|R(R^{-1}(d_1))\|_V = \|d_1\|_V$.
-    En substituant ces deux expressions :
-    $$ \text{cos\_sim}(R^{-1}(d_1), d_2) = \frac{\langle d_1, d_2 \rangle}{\|d_1\|_V \|d_2\|_V} $$
-    Nous voyons que :
-    $$ \text{cos\_sim}(d_1, d_2) = \text{cos\_sim}(R^{-1}(d_1), d_2) $$
-    Cette égalité démontre que considérer une requête comme un vecteur $d_1$ ou comme la fonctionnelle $R^{-1}(d_1)$ conduit à la même mesure de similarité cosinus avec un document $d_2$. Cela valide l'interchangeabilité de ces perspectives dans un espace euclidien, via l'isomorphisme de Riesz.
-
-**Partie III : Recherche par Sous-espaces de Requête (Problème de l'X)**
-
-1.  **Définition et dimension de l'annihilateur $W^\perp_A$ :**
-    L'annihilateur $W^\perp_A$ du sous-espace $W^* \subseteq V^*$ est défini comme l'ensemble des vecteurs de $V$ qui sont nuls pour toutes les fonctionnelles de $W^*$.
-    $$ W^\perp_A = \{ d \in V \mid \forall \Phi \in W^*, \Phi(d) = 0 \} $$
-    Prouvons que $W^\perp_A$ est un sous-espace vectoriel de $V$.
-    *   **$W^\perp_A$ contient le vecteur nul :** Pour toute $\Phi \in W^*$, $\Phi(0_V) = 0$ par linéarité. Donc $0_V \in W^\perp_A$. $W^\perp_A$ est non vide.
-    *   **Stabilité par combinaison linéaire :** Soient $d_1, d_2 \in W^\perp_A$ et $\alpha_1, \alpha_2 \in \mathbb{R}$.
-        Pour toute $\Phi \in W^*$, nous avons $\Phi(d_1) = 0$ et $\Phi(d_2) = 0$.
-        Alors, par la linéarité de $\Phi$ :
-        $$ \Phi(\alpha_1 d_1 + \alpha_2 d_2) = \alpha_1 \Phi(d_1) + \alpha_2 \Phi(d_2) = \alpha_1 \cdot 0 + \alpha_2 \cdot 0 = 0 $$
-        Ainsi, $\alpha_1 d_1 + \alpha_2 d_2 \in W^\perp_A$.
-    $W^\perp_A$ est un sous-espace vectoriel de $V$.
-
-    Déterminons sa dimension.
-    Nous avons l'isomorphisme de Riesz $R: V^* \to V$.
-    Soit $R(W^*) = \{ R(\Phi) \mid \Phi \in W^* \}$ l'image de $W^*$ dans $V$ par $R$.
-    Puisque $R$ est un isomorphisme, $R(W^*)$ est un sous-espace vectoriel de $V$, et $\text{dim}(R(W^*)) = \text{dim}(W^*) = k$.
-    Considérons un vecteur $d \in W^\perp_A$. Cela signifie que pour tout $\Phi \in W^*$, $\Phi(d) = 0$.
-    Par la définition de $R$, $\Phi(d) = \langle R(\Phi), d \rangle$.
-    Donc, $d \in W^\perp_A$ si et seulement si pour tout $\Phi \in W^*$, $\langle R(\Phi), d \rangle = 0$.
-    Cela signifie que $d$ est orthogonal à tous les vecteurs de $R(W^*)$.
-    Par conséquent, $W^\perp_A$ est le complément orthogonal de $R(W^*)$ dans $V$, que nous notons $R(W^*)^\perp$.
-    $$ W^\perp_A = R(W^*)^\perp $$
-    Puisque $V$ est un espace euclidien de dimension finie $n$, et $R(W^*)$ est un sous-espace de dimension $k$, la dimension de son complément orthogonal est :
-    $$ \text{dim}(W^\perp_A) = \text{dim}(R(W^*)^\perp) = \text{dim}(V) - \text{dim}(R(W^*)) = n - k $$
-
-2.  **Existence et unicité (à un scalaire près) de $\Phi_d$ :**
-    Nous cherchons $\Phi_d \in W^* \setminus \{0_{V^*}\}$ qui maximise $\text{cos\_sim}(\Phi, d)$ pour un $d \in V \setminus \{0_V\}$ donné.
-    La similarité cosinus est donnée par $\text{cos\_sim}(\Phi, d) = \frac{\Phi(d)}{\|\Phi\|_{V^*} \|d\|_V}$.
-    Puisque $\|d\|_V$ est une constante positive, maximiser $\text{cos\_sim}(\Phi, d)$ revient à maximiser $\frac{\Phi(d)}{\|\Phi\|_{V^*}}$.
-    Soit $v_\Phi = R(\Phi)$. Alors $\Phi(d) = \langle v_\Phi, d \rangle$ et $\|\Phi\|_{V^*} = \|v_\Phi\|_V$.
-    Le problème devient : trouver $v_{\Phi_d} \in R(W^*) \setminus \{0_V\}$ qui maximise $\frac{\langle v, d \rangle}{\|v\|_V}$.
-    Ceci est la maximisation de la similarité cosinus entre $d$ et un vecteur $v$ dans le sous-espace $R(W^*)$.
-    Par l'inégalité de Cauchy-Schwarz, $|\langle v, d \rangle| \le \|v\|_V \|d\|_V$.
-    Donc, $\frac{|\langle v, d \rangle|}{\|v\|_V \|d\|_V} \le 1$.
-    L'égalité est atteinte lorsque $v$ est colinéaire à $d$. Cependant, $v$ doit appartenir à $R(W^*)$.
-    Pour maximiser $\frac{\langle v, d \rangle}{\|v\|_V}$, nous voulons maximiser $\langle v, d \rangle$ tout en gardant $\|v\|_V$ constant, ou maximiser la projection de $d$ sur la droite engendrée par $v$.
-    Le vecteur $v \in R(W^*)$ qui maximise cette quantité est la projection orthogonale de $d$ sur $R(W^*)$, que nous notons $P_{R(W^*)}(d)$.
-    Plus précisément, pour $v \in R(W^*) \setminus \{0_V\}$, on peut écrire $d = P_{R(W^*)}(d) + d^\perp$, où $d^\perp \in R(W^*)^\perp$.
-    Alors $\langle v, d \rangle = \langle v, P_{R(W^*)}(d) + d^\perp \rangle = \langle v, P_{R(W^*)}(d) \rangle + \langle v, d^\perp \rangle$.
-    Puisque $v \in R(W^*)$ et $d^\perp \in R(W^*)^\perp$, $\langle v, d^\perp \rangle = 0$.
-    Donc $\langle v, d \rangle = \langle v, P_{R(W^*)}(d) \rangle$.
-    La quantité à maximiser est $\frac{\langle v, P_{R(W^*)}(d) \rangle}{\|v\|_V}$.
-    Par Cauchy-Schwarz appliqué à $v$ et $P_{R(W^*)}(d)$, nous avons $\langle v, P_{R(W^*)}(d) \rangle \le \|v\|_V \|P_{R(W^*)}(d)\|_V$.
-    Le maximum est atteint quand $v$ est colinéaire à $P_{R(W^*)}(d)$.
-    Si $P_{R(W^*)}(d) = 0_V$, alors $\langle v, P_{R(W^*)}(d) \rangle = 0$ pour tout $v$, donc la similarité cosinus est 0 pour tous les $\Phi$. Dans ce cas, n'importe quelle $\Phi \in W^*$ (non nulle) donne la même valeur 0, donc il n'y a pas de fonctionnelle unique maximisante au sens strict (car elles sont toutes "également nulles" pour $d$). Cependant, la question suppose $\Phi \in W^* \setminus \{0_{V^*}\}$.
-    Si $P_{R(W^*)}(d) \neq 0_V$, alors le maximum est atteint lorsque $v = \alpha P_{R(W^*)}(d)$ pour un scalaire $\alpha > 0$.
-    Ainsi, le représentant de Riesz $v_{\Phi_d}$ de la fonctionnelle maximisante $\Phi_d$ doit être colinéaire à $P_{R(W^*)}(d)$.
-    Donc $v_{\Phi_d} = \alpha P_{R(W^*)}(d)$ pour un $\alpha \in \mathbb{R} \setminus \{0\}$.
-    Puisque $\Phi_d = R^{-1}(v_{\Phi_d})$, il existe une telle fonctionnelle $\Phi_d$, et elle est unique à un facteur scalaire non nul près (puisque $R^{-1}$ est un isomorphisme).
-    La fonctionnelle $\Phi_d$ qui maximise $\text{cos\_sim}(\Phi, d)$ est $R^{-1}(P_{R(W^*)}(d))$.
-
-3.  **Lien avec le projecteur orthogonal $P_{R(W^*)}$ :**
-    D'après la question précédente, la maximisation de $\text{cos\_sim}(\Phi, d)$ pour $\Phi \in W^* \setminus \{0_{V^*}\}$ se produit lorsque le représentant de Riesz $v_\Phi = R(\Phi)$ est colinéaire au vecteur $P_{R(W^*)}(d)$.
-    Soit $v^* = P_{R(W^*)}(d)$. Si $v^* = 0_V$, alors toute $\Phi \in W^* \setminus \{0_{V^*}\}$ donne $\Phi(d) = \langle R(\Phi), d \rangle = \langle R(\Phi), P_{R(W^*)}(d) \rangle = \langle R(\Phi), 0_V \rangle = 0$, donc $\text{cos\_sim}(\Phi, d)=0$.
-    Si $v^* \neq 0_V$, alors le maximum est atteint pour $v_\Phi = \alpha v^*$ pour $\alpha > 0$.
-    La fonctionnelle correspondante est $\Phi = R^{-1}(v_\Phi) = R^{-1}(\alpha P_{R(W^*)}(d))$.
-    L'ensemble des fonctionnelles qui maximisent $\text{cos\_sim}(\Phi, d)$ est donc l'ensemble de toutes les fonctionnelles dont le représentant de Riesz est un multiple scalaire non nul de $P_{R(W^*)}(d)$.
-    $$ \{ \alpha R^{-1}(P_{R(W^*)}(d)) \mid \alpha \in \mathbb{R} \setminus \{0\} \} $$
-    Cela signifie que la "meilleure" fonctionnelle de requête (dans le sous-espace $W^*$) pour un document $d$ est celle dont le représentant de Riesz est la projection orthogonale de $d$ sur $R(W^*)$.
-
-4.  **Interprétation géométrique de $W^\perp_A$ :**
-    Nous avons établi que $W^\perp_A = R(W^*)^\perp$.
-    Si un document $d \in W^\perp_A$, cela signifie que $d$ est orthogonal à tous les vecteurs dans le sous-espace $R(W^*)$.
-    Puisque $R(W^*)$ est l'image des fonctionnelles de requête de $W^*$ sous l'isomorphisme de Riesz, cela signifie que $d$ est orthogonal aux représentants de Riesz de *toutes* les fonctionnelles de requête valides dans notre domaine $W^*$.
-    Pour tout $\Phi \in W^*$, nous avons $\Phi(d) = \langle R(\Phi), d \rangle$.
-    Si $d \in W^\perp_A$, alors $\langle R(\Phi), d \rangle = 0$ pour tout $R(\Phi) \in R(W^*)$.
-    Ainsi, $\Phi(d) = 0$ pour tout $\Phi \in W^*$.
-    La similarité cosinus $\text{cos\_sim}(\Phi, d) = \frac{\Phi(d)}{\|\Phi\|_{V^*} \|d\|_V}$ sera donc toujours nulle si $d \neq 0_V$ et $\Phi \neq 0_{V^*}$.
-    Dans le contexte d'un moteur de recherche sémantique, si un document $d$ appartient à l'annihilateur $W^\perp_A$, cela implique que $d$ n'a *aucune* pertinence sémantique (au sens de la similarité cosinus) pour *aucune* des requêtes définies dans le sous-espace $W^*$. Géométriquement, le vecteur de document $d$ est complètement orthogonal à l'ensemble de "concepts" ou "caractéristiques" représenté par le sous-espace de requête $R(W^*)$. Il se situe dans un espace sémantique complètement distinct et non pertinent par rapport au domaine de requête défini par $W^*$. C'est un document qui "échappe" entièrement à ce filtre sémantique spécifique.
-
----
-J'espère que cet exercice a su stimuler votre réflexion et approfondir votre compréhension de la structure mathématique sous-jacente aux systèmes d'IA. La beauté de ces approches réside souvent dans leur capacité à relier des concepts apparemment disparates, révélant une élégance unificatrice.
-
-Cordialement,
-
-Professeur Émérite de Mathématiques.
+Ce cadre mathématique fournit une base solide pour identifier des directions sémantiques dominantes dans des collections de plongements, ce qui est fondamental pour la conception de moteurs de recherche sémantiques et l'analyse de clusters de documents.

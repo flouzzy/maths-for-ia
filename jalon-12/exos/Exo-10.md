@@ -1,243 +1,252 @@
-Madame, Monsieur, chers étudiants,
+# Exercice 10 (5 $\star$) : Opérateur de Cohérence Sémantique et Dualité dans les Espaces de Plongement
 
-En ma qualité de Professeur Émérite de Mathématiques, j'ai l'honneur de vous présenter cet Exercice 10, de difficulté 5 étoiles, conçu pour approfondir votre compréhension des fondements mathématiques sous-jacents à la conception de moteurs de recherche sémantiques. Cet exercice se situe au cœur du Jalon 12 de votre parcours IA T1 et explore la dualité et la géométrie des espaces de plongement en lien avec la similarité cosinus. Il emprunte la rigueur et la structure d'un problème classique d'algèbre de l'École Polytechnique.
+## Énoncé
+Soit $(V, \langle \cdot, \cdot \rangle)$ un espace vectoriel euclidien de dimension finie $n \ge 1$. Soit $U = \{u_1, \dots, u_k\}$ un ensemble de $k$ vecteurs non nuls de $V$, représentant des "concepts sémantiques" ou des "points d'intérêt" dans un espace de plongement. On suppose, sans perte de généralité, que les vecteurs sont normalisés, c'est-à-dire $\|u_i\| = 1$ pour tout $i \in \{1, \dots, k\}$.
 
----
+On définit l'opérateur linéaire $T: V \to V$ par :
+$$ T(x) = \sum_{i=1}^k \langle x, u_i \rangle u_i $$
+Cet opérateur modélise la "cohérence sémantique" d'un vecteur $x$ par rapport à l'ensemble $U$.
 
-## Exercice 10 : Optimisation d'un Vecteur de Requête Sémantique par Dualité et Géométrie des Espaces de Plongement
+1.  Démontrer que $T$ est un opérateur auto-adjoint.
+2.  Caractériser le noyau $\text{Ker}(T)$ et l'image $\text{Im}(T)$ de $T$. Montrer que $\text{Im}(T) = \text{span}(u_1, \dots, u_k)$.
+3.  Soit $q \in V$ un vecteur non nul. On définit la "mesure de cohérence sémantique" de $q$ par rapport à $U$ comme $C(q) = \frac{\langle q, Tq \rangle}{\|q\|^2}$.
+    a.  Montrer que $C(q) = \sum_{i=1}^k \left( \frac{\langle q, u_i \rangle}{\|q\|} \right)^2$. Interpréter cette quantité en termes de similarité cosinus.
+    b.  Démontrer que les valeurs propres de $T$ sont réelles et que $0 \le \lambda \le k$ pour toute valeur propre $\lambda$ de $T$.
+    c.  Montrer que le maximum de $C(q)$ sur $V \setminus \{0\}$ est la plus grande valeur propre de $T$. Caractériser les vecteurs $q$ qui atteignent ce maximum.
+4.  Soit $V^*$ le dual de $V$. On rappelle que l'application de Riesz $\Phi: V \to V^*$ définie par $\Phi(y)(x) = \langle x, y \rangle$ est un isomorphisme d'espaces vectoriels.
+    a.  Pour chaque $u_j \in U$, on définit la forme linéaire $f_j = \Phi(u_j) \in V^*$. Montrer que $f_j(x) = \langle x, u_j \rangle$.
+    b.  On définit l'opérateur $T^*: V^* \to V^*$ par $T^*(f)(x) = f(T(x))$ pour tout $f \in V^*$ et $x \in V$. Montrer que $T^*$ est l'opérateur adjoint de $T$ au sens de la dualité.
+    c.  Exprimer $T^*(f_j)$ en fonction des $f_i$ et des coefficients de la matrice de Gram $G_{ij} = \langle u_i, u_j \rangle$.
+    d.  Montrer que $T^*$ est auto-adjoint par rapport à la forme bilinéaire canonique sur $V^* \times V^*$ définie par $\langle f, g \rangle_{V^*} = \langle \Phi^{-1}(f), \Phi^{-1}(g) \rangle_V$.
+    e.  Relier les valeurs propres et les vecteurs propres de $T^*$ à ceux de $T$.
 
-**Contexte :**
-Dans le domaine de l'intelligence artificielle, et plus particulièrement du traitement automatique du langage naturel (TALN), les mots, phrases ou documents sont souvent représentés par des vecteurs numériques dans des espaces de grande dimension, appelés "espaces de plongement" (embedding spaces). La "similarité sémantique" entre deux entités est alors fréquemment quantifiée par la similarité cosinus entre leurs vecteurs de plongement. Cet exercice vise à formaliser la notion d'un "vecteur de requête optimal" à partir d'exemples de documents jugés pertinents ou non pertinents, en explorant les liens fondamentaux entre la géométrie euclidienne et les concepts de dualité linéaire.
+## Correction Détaillée
+### Analyse et Stratégie
+Cet exercice explore les propriétés d'un opérateur linéaire défini à partir d'un ensemble de vecteurs dans un espace euclidien, en le reliant aux concepts de cohérence sémantique, de similarité cosinus et de dualité. La difficulté réside dans la rigueur des démonstrations et la manipulation des concepts abstraits de l'algèbre linéaire avancée.
 
----
+La première partie (question 1 et 2) se concentre sur les propriétés fondamentales de l'opérateur $T$: son auto-adjonction, son noyau et son image. L'auto-adjonction est cruciale car elle garantit la réalité des valeurs propres et l'existence d'une base orthonormée de vecteurs propres, simplifiant l'analyse spectrale. La caractérisation du noyau et de l'image permet de comprendre la structure de l'opérateur et sa relation avec le sous-espace engendré par les vecteurs $u_i$.
 
-### Énoncé Détaillé
+La deuxième partie (question 3) introduit une mesure de cohérence sémantique, qui est une forme quadratique associée à $T$. L'analyse de cette forme quadratique nous mènera naturellement aux valeurs propres de $T$. Le théorème variationnel de Rayleigh-Ritz sera implicitement utilisé pour relier le maximum de cette mesure à la plus grande valeur propre. L'interprétation en termes de similarité cosinus est directe et fondamentale pour le contexte de la recherche sémantique.
 
-Soit $E$ un $\mathbb{R}$-espace vectoriel de dimension finie $n \ge 1$. On munit $E$ d'un produit scalaire $\langle \cdot, \cdot \rangle : E \times E \to \mathbb{R}$, et de la norme euclidienne associée $\|x\| = \sqrt{\langle x, x \rangle}$ pour tout $x \in E$.
-On note $E^*$ l'espace dual de $E$, qui est l'ensemble des formes linéaires $f: E \to \mathbb{R}$.
+La troisième partie (question 4) aborde la dualité. Nous utiliserons l'isomorphisme de Riesz pour relier l'espace $V$ à son dual $V^*$. Nous définirons l'opérateur adjoint $T^*$ sur $V^*$ et étudierons ses propriétés, notamment son auto-adjonction par rapport à la forme bilinéaire induite sur $V^*$. Enfin, nous établirons la correspondance entre les valeurs propres et vecteurs propres de $T$ et $T^*$, démontrant ainsi une symétrie fondamentale entre l'opérateur et son dual. Chaque étape nécessitera une justification complète, sans aucune ellipse mathématique.
 
-**Partie I : Représentation Sémantique et Similarité Cosinus**
+### Résolution Pas-à-Pas
 
-1.  **Définition de l'Espace de Plongement et des Vecteurs Normalisés :**
-    Un document (ou une requête) est représenté par un vecteur $x \in E$. La "direction sémantique" est souvent plus importante que l'amplitude du vecteur.
-    On définit la sphère unité $S(E) = \{x \in E \mid \|x\|=1\}$.
-    Expliquer pourquoi, dans le contexte de la similarité cosinus, il est courant de normaliser les vecteurs, c'est-à-dire de les projeter sur $S(E)$. Préciser la formule de normalisation pour un vecteur non nul $x \in E$.
+1.  **Démontrer que $T$ est un opérateur auto-adjoint.**
+    Un opérateur $T: V \to V$ est auto-adjoint si $\langle T(x), y \rangle = \langle x, T(y) \rangle$ pour tous $x, y \in V$.
+    Calculons $\langle T(x), y \rangle$:
+    $$ \langle T(x), y \rangle = \left\langle \sum_{i=1}^k \langle x, u_i \rangle u_i, y \right\rangle $$
+    Par la linéarité du produit scalaire par rapport à sa première composante (pour des scalaires réels) :
+    $$ \langle T(x), y \rangle = \sum_{i=1}^k \langle x, u_i \rangle \langle u_i, y \rangle $$
+    Maintenant, calculons $\langle x, T(y) \rangle$:
+    $$ \langle x, T(y) \rangle = \left\langle x, \sum_{j=1}^k \langle y, u_j \rangle u_j \right\rangle $$
+    Par la linéarité du produit scalaire par rapport à sa seconde composante (pour des scalaires réels) :
+    $$ \langle x, T(y) \rangle = \sum_{j=1}^k \langle y, u_j \rangle \langle x, u_j \rangle $$
+    Puisque le produit scalaire est symétrique dans un espace euclidien (réel), $\langle y, u_j \rangle = \langle u_j, y \rangle$.
+    $$ \langle x, T(y) \rangle = \sum_{j=1}^k \langle u_j, y \rangle \langle x, u_j \rangle $$
+    En réordonnant les termes et en changeant l'indice de sommation de $j$ à $i$ (ce qui est permis car c'est un indice muet) :
+    $$ \langle x, T(y) \rangle = \sum_{i=1}^k \langle x, u_i \rangle \langle u_i, y \rangle $$
+    Nous avons donc $\langle T(x), y \rangle = \langle x, T(y) \rangle$ pour tous $x, y \in V$.
+    Par conséquent, $T$ est un opérateur auto-adjoint.
 
-2.  **Définition de la Similarité Cosinus :**
-    Soient $u$ et $v$ deux vecteurs non nuls de $E$.
-    Définir la similarité cosinus $\text{sim}_{\text{cos}}(u, v)$ entre $u$ et $v$.
-    Montrer que si $u'$ et $v'$ sont les versions normalisées de $u$ et $v$ respectivement, alors $\text{sim}_{\text{cos}}(u, v) = \langle u', v' \rangle$.
-    Interpréter géométriquement la similarité cosinus en termes d'angle. Préciser le domaine de valeurs de $\text{sim}_{\text{cos}}(u, v)$.
+2.  **Caractériser le noyau $\text{Ker}(T)$ et l'image $\text{Im}(T)$ de $T$. Montrer que $\text{Im}(T) = \text{span}(u_1, \dots, u_k)$.**
+    *   **Caractérisation de $\text{Ker}(T)$:**
+        Un vecteur $x \in V$ appartient au noyau de $T$, noté $\text{Ker}(T)$, si et seulement si $T(x) = 0_V$.
+        $$ T(x) = \sum_{i=1}^k \langle x, u_i \rangle u_i = 0_V $$
+        Prenons le produit scalaire de cette équation avec $x$:
+        $$ \left\langle \sum_{i=1}^k \langle x, u_i \rangle u_i, x \right\rangle = \langle 0_V, x \rangle $$
+        Par linéarité du produit scalaire :
+        $$ \sum_{i=1}^k \langle x, u_i \rangle \langle u_i, x \rangle = 0 $$
+        Puisque $\langle u_i, x \rangle = \langle x, u_i \rangle$ (symétrie du produit scalaire) :
+        $$ \sum_{i=1}^k (\langle x, u_i \rangle)^2 = 0 $$
+        Chaque terme $(\langle x, u_i \rangle)^2$ est le carré d'un nombre réel, donc il est non négatif. La somme de termes non négatifs est nulle si et seulement si chaque terme est nul.
+        $$ (\langle x, u_i \rangle)^2 = 0 \quad \text{pour tout } i \in \{1, \dots, k\} $$
+        Ceci implique $\langle x, u_i \rangle = 0$ pour tout $i \in \{1, \dots, k\}$.
+        Donc, $x \in \text{Ker}(T)$ si et seulement si $x$ est orthogonal à tous les vecteurs $u_i$.
+        Ceci signifie que $x$ appartient à l'orthogonal du sous-espace engendré par l'ensemble $U$.
+        Soit $L = \text{span}(u_1, \dots, u_k)$. Alors $\text{Ker}(T) = L^\perp$.
 
-**Partie II : Dualité et Requêtes Sémantiques**
+    *   **Caractérisation de $\text{Im}(T)$:**
+        L'image de $T$, notée $\text{Im}(T)$, est l'ensemble des vecteurs $y \in V$ tels que $y = T(x)$ pour un certain $x \in V$.
+        Par définition de $T(x)$:
+        $$ y = T(x) = \sum_{i=1}^k \langle x, u_i \rangle u_i $$
+        Cette expression montre que tout vecteur $y$ dans l'image de $T$ est une combinaison linéaire des vecteurs $u_1, \dots, u_k$ (avec les coefficients $\langle x, u_i \rangle$).
+        Par conséquent, $\text{Im}(T) \subseteq \text{span}(u_1, \dots, u_k)$.
+        Soit $L = \text{span}(u_1, \dots, u_k)$. Nous avons donc $\text{Im}(T) \subseteq L$.
 
-1.  **Isomorphisme de Riesz :**
-    Pour tout vecteur $v \in E$, on définit l'application $\phi_v : E \to \mathbb{R}$ par $\phi_v(x) = \langle v, x \rangle$ pour tout $x \in E$.
-    Montrer que $\phi_v$ est une forme linéaire, c'est-à-dire $\phi_v \in E^*$.
-    Montrer que l'application $\Phi : E \to E^*$ définie par $\Phi(v) = \phi_v$ est un isomorphisme d'espaces vectoriels. (C'est l'isomorphisme de Riesz en dimension finie).
+        Puisque $T$ est un opérateur linéaire sur un espace euclidien de dimension finie, et $T$ est auto-adjoint (démontré en question 1), nous savons que $\text{Im}(T) = (\text{Ker}(T))^\perp$.
+        En utilisant notre résultat pour $\text{Ker}(T)$:
+        $$ \text{Im}(T) = (L^\perp)^\perp $$
+        Dans un espace euclidien de dimension finie, pour tout sous-espace $L$, l'orthogonal de l'orthogonal de $L$ est $L$ lui-même, c'est-à-dire $(L^\perp)^\perp = L$.
+        Donc, $\text{Im}(T) = L = \text{span}(u_1, \dots, u_k)$.
 
-2.  **Requêtes comme Formes Linéaires :**
-    Dans un moteur de recherche sémantique, une requête peut être conçue comme un vecteur $q \in E$. Cependant, elle peut aussi être vue comme une "fonction d'évaluation" sur les documents.
-    En utilisant l'isomorphisme de Riesz, expliquer comment une requête $q \in E$ peut naturellement être interprétée comme une forme linéaire $\phi_q \in E^*$ qui évalue la pertinence d'un document $d \in E$.
-    Quel est le lien entre l'évaluation $\phi_q(d)$ et la similarité cosinus $\text{sim}_{\text{cos}}(q, d)$ si $q$ et $d$ sont normalisés ?
+3.  **Soit $q \in V$ un vecteur non nul. On définit la "mesure de cohérence sémantique" de $q$ par rapport à $U$ comme $C(q) = \frac{\langle q, Tq \rangle}{\|q\|^2}$.**
+    a.  **Montrer que $C(q) = \sum_{i=1}^k \left( \frac{\langle q, u_i \rangle}{\|q\|} \right)^2$. Interpréter cette quantité en termes de similarité cosinus.**
+        Par définition de $T$:
+        $$ \langle q, Tq \rangle = \left\langle q, \sum_{i=1}^k \langle q, u_i \rangle u_i \right\rangle $$
+        Par la linéarité du produit scalaire par rapport à sa seconde composante :
+        $$ \langle q, Tq \rangle = \sum_{i=1}^k \langle q, u_i \rangle \langle q, u_i \rangle = \sum_{i=1}^k (\langle q, u_i \rangle)^2 $$
+        En substituant cette expression dans la définition de $C(q)$:
+        $$ C(q) = \frac{\sum_{i=1}^k (\langle q, u_i \rangle)^2}{\|q\|^2} $$
+        Nous pouvons réécrire chaque terme de la somme en divisant par $\|q\|^2$:
+        $$ C(q) = \sum_{i=1}^k \frac{(\langle q, u_i \rangle)^2}{\|q\|^2} = \sum_{i=1}^k \left( \frac{\langle q, u_i \rangle}{\|q\|} \right)^2 $$
+        Interprétation en termes de similarité cosinus :
+        La similarité cosinus entre deux vecteurs non nuls $a$ et $b$ est définie par $\cos(\theta(a, b)) = \frac{\langle a, b \rangle}{\|a\| \|b\|}$.
+        Dans notre cas, les vecteurs $u_i$ sont normalisés, c'est-à-dire $\|u_i\|=1$.
+        Ainsi, la similarité cosinus entre $q$ et $u_i$ est $\cos(\theta(q, u_i)) = \frac{\langle q, u_i \rangle}{\|q\| \|u_i\|} = \frac{\langle q, u_i \rangle}{\|q\|}$.
+        Par conséquent, $C(q) = \sum_{i=1}^k (\cos(\theta(q, u_i)))^2$.
+        Cette quantité représente la somme des carrés des similarités cosinus entre le vecteur de requête $q$ et chacun des vecteurs de concept sémantique $u_i$. Une valeur élevée de $C(q)$ indique que $q$ est "cohérent" ou "pertinent" par rapport à l'ensemble des concepts $U$, car il a une forte similarité avec plusieurs d'entre eux.
 
-**Partie III : Optimisation d'un Vecteur de Requête à partir d'Exemples**
+    b.  **Démontrer que les valeurs propres de $T$ sont réelles et que $0 \le \lambda \le k$ pour toute valeur propre $\lambda$ de $T$.**
+        Puisque $T$ est un opérateur auto-adjoint sur un espace euclidien (réel) de dimension finie (démontré en question 1), toutes ses valeurs propres sont nécessairement réelles. C'est un théorème fondamental de la théorie spectrale des opérateurs auto-adjoints.
 
-Considérons deux ensembles finis non vides de vecteurs de documents normalisés sur $S(E)$:
-*   $P = \{p_1, p_2, \dots, p_k\} \subset S(E)$ est l'ensemble des "documents positifs" (jugés pertinents).
-*   $N = \{n_1, n_2, \dots, n_m\} \subset S(E)$ est l'ensemble des "documents négatifs" (jugés non pertinents).
-Un vecteur de requête optimal $q_0 \in S(E)$ est recherché tel qu'il maximise la différence moyenne de similarité cosinus entre les documents positifs et négatifs.
+        Soit $\lambda$ une valeur propre de $T$ et $q$ un vecteur propre associé, avec $q \neq 0_V$.
+        Par définition, $T(q) = \lambda q$.
+        En utilisant la définition de $C(q)$:
+        $$ C(q) = \frac{\langle q, Tq \rangle}{\|q\|^2} = \frac{\langle q, \lambda q \rangle}{\|q\|^2} $$
+        Par la propriété de linéarité du produit scalaire par rapport à sa seconde composante :
+        $$ C(q) = \frac{\lambda \langle q, q \rangle}{\|q\|^2} = \frac{\lambda \|q\|^2}{\|q\|^2} = \lambda $$
+        D'après la question 3.a, nous savons que $C(q) = \sum_{i=1}^k \left( \frac{\langle q, u_i \rangle}{\|q\|} \right)^2$.
+        Puisque chaque terme $\left( \frac{\langle q, u_i \rangle}{\|q\|} \right)^2$ est le carré d'un nombre réel, il est non négatif.
+        La somme de termes non négatifs est non négative. Donc $C(q) \ge 0$.
+        Par conséquent, $\lambda \ge 0$.
 
-1.  **Formulation du Problème d'Optimisation :**
-    On définit la fonction objectif $J: S(E) \to \mathbb{R}$ par :
-    $$J(q) = \left( \frac{1}{k} \sum_{i=1}^k \langle q, p_i \rangle \right) - \left( \frac{1}{m} \sum_{j=1}^m \langle q, n_j \rangle \right)$$
-    L'objectif est de trouver $q_0 \in S(E)$ tel que $J(q_0) = \sup_{q \in S(E)} J(q)$.
+        Pour la borne supérieure, nous utilisons l'inégalité de Cauchy-Schwarz : pour tous $x, y \in V$, $|\langle x, y \rangle| \le \|x\| \|y\|$.
+        Appliquons-la à $\langle q, u_i \rangle$: $|\langle q, u_i \rangle| \le \|q\| \|u_i\|$.
+        Puisque $\|u_i\|=1$ par hypothèse, nous avons $|\langle q, u_i \rangle| \le \|q\|$.
+        En élevant au carré : $(\langle q, u_i \rangle)^2 \le (\|q\|)^2$.
+        En divisant par $\|q\|^2$ (qui est non nul car $q \neq 0_V$):
+        $$ \left( \frac{\langle q, u_i \rangle}{\|q\|} \right)^2 \le 1 $$
+        En sommant sur $i$ de $1$ à $k$:
+        $$ C(q) = \sum_{i=1}^k \left( \frac{\langle q, u_i \rangle}{\|q\|} \right)^2 \le \sum_{i=1}^k 1 = k $$
+        Puisque $\lambda = C(q)$, nous avons $\lambda \le k$.
+        En combinant les deux inégalités, nous obtenons $0 \le \lambda \le k$ pour toute valeur propre $\lambda$ de $T$.
 
-    a.  **Simplification de $J(q)$ :**
-        On introduit les vecteurs centroïdes $c_P = \frac{1}{k} \sum_{i=1}^k p_i \in E$ et $c_N = \frac{1}{m} \sum_{j=1}^m n_j \in E$.
-        Montrer que $J(q)$ peut être réécrit sous la forme $J(q) = \langle q, c_P - c_N \rangle$.
+    c.  **Montrer que le maximum de $C(q)$ sur $V \setminus \{0\}$ est la plus grande valeur propre de $T$. Caractériser les vecteurs $q$ qui atteignent ce maximum.**
+        La quantité $C(q) = \frac{\langle q, Tq \rangle}{\|q\|^2}$ est le quotient de Rayleigh de l'opérateur $T$.
+        Pour un opérateur auto-adjoint $T$ sur un espace euclidien de dimension finie, le théorème variationnel de Rayleigh-Ritz stipule que le maximum du quotient de Rayleigh est égal à la plus grande valeur propre de $T$.
+        Soit $\lambda_{\text{max}}$ la plus grande valeur propre de $T$.
+        Alors $\max_{q \in V \setminus \{0\}} C(q) = \lambda_{\text{max}}$.
 
-    b.  **Existence et Unicité de $q_0$ :**
-        On pose $v = c_P - c_N \in E$.
-        On suppose dans un premier temps que $v \ne 0_E$ (où $0_E$ est le vecteur nul de $E$).
-        Montrer, en utilisant l'inégalité de Cauchy-Schwarz, que l'optimum $q_0$ existe et est unique.
-        Déterminer l'expression de $q_0$ en fonction de $v$.
+        Pour caractériser les vecteurs $q$ qui atteignent ce maximum, nous utilisons la décomposition spectrale.
+        Puisque $T$ est auto-adjoint, il existe une base orthonormée de vecteurs propres $\{e_1, \dots, e_n\}$ de $V$ telle que $T(e_j) = \lambda_j e_j$ pour chaque $j \in \{1, \dots, n\}$. Nous pouvons ordonner les valeurs propres de manière décroissante : $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_n$. Ainsi, $\lambda_{\text{max}} = \lambda_1$.
+        Tout vecteur $q \in V$ peut être écrit comme une combinaison linéaire de ces vecteurs propres : $q = \sum_{j=1}^n \alpha_j e_j$ pour des scalaires $\alpha_j \in \mathbb{R}$.
+        Alors $\|q\|^2 = \langle q, q \rangle = \left\langle \sum_{j=1}^n \alpha_j e_j, \sum_{l=1}^n \alpha_l e_l \right\rangle$.
+        Par bilinéarité du produit scalaire et orthonormalité de la base $\{e_j\}$ ($\langle e_j, e_l \rangle = \delta_{jl}$):
+        $$ \|q\|^2 = \sum_{j=1}^n \sum_{l=1}^n \alpha_j \alpha_l \langle e_j, e_l \rangle = \sum_{j=1}^n \alpha_j^2 $$
+        De même, $\langle q, Tq \rangle = \left\langle \sum_{j=1}^n \alpha_j e_j, T\left(\sum_{l=1}^n \alpha_l e_l\right) \right\rangle = \left\langle \sum_{j=1}^n \alpha_j e_j, \sum_{l=1}^n \alpha_l \lambda_l e_l \right\rangle$.
+        $$ \langle q, Tq \rangle = \sum_{j=1}^n \sum_{l=1}^n \alpha_j \alpha_l \lambda_l \langle e_j, e_l \rangle = \sum_{j=1}^n \alpha_j^2 \lambda_j $$
+        Donc, le quotient de Rayleigh est :
+        $$ C(q) = \frac{\sum_{j=1}^n \alpha_j^2 \lambda_j}{\sum_{j=1}^n \alpha_j^2} $$
+        Puisque $\lambda_j \le \lambda_1$ pour tout $j \in \{1, \dots, n\}$:
+        $$ \sum_{j=1}^n \alpha_j^2 \lambda_j \le \sum_{j=1}^n \alpha_j^2 \lambda_1 = \lambda_1 \sum_{j=1}^n \alpha_j^2 $$
+        Ainsi, $C(q) \le \frac{\lambda_1 \sum_{j=1}^n \alpha_j^2}{\sum_{j=1}^n \alpha_j^2} = \lambda_1$.
+        Le maximum de $C(q)$ est donc $\lambda_1 = \lambda_{\text{max}}$.
 
-    c.  **Cas $v = 0_E$ :**
-        Que se passe-t-il si $v = 0_E$? Dans ce cas, les centroïdes des documents positifs et négatifs sont identiques.
-        Quelle est la valeur de $J(q)$ pour tout $q \in S(E)$?
-        Le problème d'optimisation admet-il toujours un unique optimum $q_0$? Justifier rigoureusement.
+        Ce maximum est atteint lorsque l'égalité $\sum_{j=1}^n \alpha_j^2 \lambda_j = \lambda_1 \sum_{j=1}^n \alpha_j^2$ est vérifiée.
+        Ceci est équivalent à $\sum_{j=1}^n \alpha_j^2 (\lambda_1 - \lambda_j) = 0$.
+        Puisque $\lambda_1 - \lambda_j \ge 0$ et $\alpha_j^2 \ge 0$ pour tout $j$, cette somme est nulle si et seulement si chaque terme est nul : $\alpha_j^2 (\lambda_1 - \lambda_j) = 0$ pour tout $j$.
+        Cela signifie que si $\lambda_j < \lambda_1$, alors $\alpha_j$ doit être nul.
+        Par conséquent, $q$ doit être une combinaison linéaire des vecteurs propres associés à la valeur propre $\lambda_1$.
+        Autrement dit, $q$ doit appartenir au sous-espace propre $E_{\lambda_1} = \text{Ker}(T - \lambda_1 I)$.
+        Les vecteurs $q$ qui atteignent ce maximum sont les vecteurs propres non nuls de $T$ associés à la plus grande valeur propre $\lambda_{\text{max}}$.
 
-2.  **Interprétation Géométrique et Sémantique :**
-    Supposons que $v \ne 0_E$.
+4.  **Soit $V^*$ le dual de $V$. On rappelle que l'application de Riesz $\Phi: V \to V^*$ définie par $\Phi(y)(x) = \langle x, y \rangle$ est un isomorphisme d'espaces vectoriels.**
+    a.  **Pour chaque $u_j \in U$, on définit la forme linéaire $f_j = \Phi(u_j) \in V^*$. Montrer que $f_j(x) = \langle x, u_j \rangle$.**
+        Par définition de l'application de Riesz $\Phi$, pour tout vecteur $y \in V$, $\Phi(y)$ est la forme linéaire dans $V^*$ qui, appliquée à un vecteur $x \in V$, donne le produit scalaire $\langle x, y \rangle$.
+        En remplaçant $y$ par $u_j$, nous obtenons la forme linéaire $f_j = \Phi(u_j)$.
+        Donc, pour tout $x \in V$:
+        $$ f_j(x) = \Phi(u_j)(x) = \langle x, u_j \rangle $$
+        Ceci est la relation demandée.
 
-    a.  **Direction Optimale :**
-        Décrire géométriquement la direction du vecteur $q_0$ par rapport aux centroïdes $c_P$ et $c_N$.
-        Interpréter cette direction optimale $q_0$ dans le contexte de la recherche sémantique : pourquoi ce vecteur est-il un bon candidat pour une requête distinguant $P$ de $N$?
+    b.  **On définit l'opérateur $T^*: V^* \to V^*$ par $T^*(f)(x) = f(T(x))$ pour tout $f \in V^*$ et $x \in V$. Montrer que $T^*$ est l'opérateur adjoint de $T$ au sens de la dualité.**
+        L'opérateur adjoint (ou transposé) d'un opérateur linéaire $T: V \to V$ est traditionnellement noté $T^t$ ou $T^*$. Il est défini comme l'opérateur $T^*: V^* \to V^*$ tel que pour tout $f \in V^*$ et tout $x \in V$, l'évaluation de la forme linéaire $T^*(f)$ sur $x$ est égale à l'évaluation de la forme linéaire $f$ sur le vecteur $T(x)$.
+        La définition donnée dans l'énoncé, $(T^*(f))(x) = f(T(x))$, correspond précisément à cette définition standard de l'opérateur transposé (ou adjoint dual) de $T$.
+        Par conséquent, $T^*$ est bien l'opérateur adjoint de $T$ au sens de la dualité.
 
-    b.  **Hyperplan de Séparation :**
-        L'hyperplan $H = \{x \in E \mid \langle q_0, x \rangle = 0 \}$ sépare l'espace en deux demi-espaces.
-        Quelle est la signification de $\langle q_0, x \rangle$ pour un document $x \in S(E)$ par rapport à cet hyperplan?
-        Décrire la position relative des centroïdes $c_P$ et $c_N$ par rapport à cet hyperplan $H$.
-        Expliquer comment ce vecteur $q_0$ peut être utilisé pour classer un nouveau document $d_{nouveau} \in S(E)$ comme "positif" ou "négatif".
+    c.  **Exprimer $T^*(f_j)$ en fonction des $f_i$ et des coefficients de la matrice de Gram $G_{ij} = \langle u_i, u_j \rangle$.**
+        Nous voulons exprimer la forme linéaire $T^*(f_j)$. Par définition de $T^*$:
+        $$ (T^*(f_j))(x) = f_j(T(x)) \quad \text{pour tout } x \in V $$
+        Substituons l'expression de $T(x)$ :
+        $$ (T^*(f_j))(x) = f_j\left( \sum_{i=1}^k \langle x, u_i \rangle u_i \right) $$
+        Puisque $f_j$ est une forme linéaire, elle est linéaire. Nous pouvons sortir la somme et les scalaires $\langle x, u_i \rangle$:
+        $$ (T^*(f_j))(x) = \sum_{i=1}^k \langle x, u_i \rangle f_j(u_i) $$
+        D'après la question 4.a, $f_j(u_i) = \langle u_i, u_j \rangle$.
+        Nous reconnaissons $\langle u_i, u_j \rangle$ comme le coefficient $G_{ij}$ de la matrice de Gram $G$.
+        $$ (T^*(f_j))(x) = \sum_{i=1}^k \langle x, u_i \rangle G_{ij} $$
+        Nous savons également que $\langle x, u_i \rangle = f_i(x)$ d'après la question 4.a.
+        $$ (T^*(f_j))(x) = \sum_{i=1}^k G_{ij} f_i(x) $$
+        Puisque cette égalité est vraie pour tout $x \in V$, les formes linéaires sont égales :
+        $$ T^*(f_j) = \sum_{i=1}^k G_{ij} f_i $$
+        Ceci exprime $T^*(f_j)$ comme une combinaison linéaire des formes linéaires $f_i$, où les coefficients sont les éléments de la $j$-ième colonne de la matrice de Gram $G$.
 
-    c.  **Lien avec la Dualité :**
-        En utilisant l'isomorphisme de Riesz $\Phi$, quelle forme linéaire $\phi_{q_0} \in E^*$ correspond au vecteur de requête optimal $q_0$?
-        Comment l'évaluation $\phi_{q_0}(x)$ d'un document $x \in E$ peut-elle être interprétée comme un "score de pertinence" par rapport à cette requête optimale?
+    d.  **Montrer que $T^*$ est auto-adjoint par rapport à la forme bilinéaire canonique sur $V^* \times V^*$ définie par $\langle f, g \rangle_{V^*} = \langle \Phi^{-1}(f), \Phi^{-1}(g) \rangle_V$.**
+        Pour montrer que $T^*$ est auto-adjoint par rapport à la forme bilinéaire $\langle \cdot, \cdot \rangle_{V^*}$, nous devons montrer que $\langle T^*(f), g \rangle_{V^*} = \langle f, T^*(g) \rangle_{V^*}$ pour tous $f, g \in V^*$.
+        Soient $y_f = \Phi^{-1}(f)$ et $y_g = \Phi^{-1}(g)$. Puisque $\Phi$ est un isomorphisme, $y_f$ et $y_g$ sont des vecteurs uniques dans $V$.
+        Par définition de $\Phi$, nous avons $f(x) = \langle x, y_f \rangle$ et $g(x) = \langle x, y_g \rangle$ pour tout $x \in V$.
 
----
+        Calculons le membre de gauche de l'égalité à démontrer :
+        $$ \langle T^*(f), g \rangle_{V^*} = \langle \Phi^{-1}(T^*(f)), \Phi^{-1}(g) \rangle_V $$
+        Nous devons d'abord exprimer $\Phi^{-1}(T^*(f))$.
+        Par définition de $T^*(f)$, $(T^*(f))(x) = f(T(x))$.
+        En utilisant l'expression de $f(x) = \langle x, y_f \rangle$:
+        $$ (T^*(f))(x) = \langle T(x), y_f \rangle $$
+        Puisque $T$ est auto-adjoint (démontré en question 1), nous avons $\langle T(x), y_f \rangle = \langle x, T(y_f) \rangle$.
+        Donc, $(T^*(f))(x) = \langle x, T(y_f) \rangle$.
+        Par définition de l'application de Riesz $\Phi$, la forme linéaire $x \mapsto \langle x, T(y_f) \rangle$ est précisément $\Phi(T(y_f))$.
+        Ainsi, $T^*(f) = \Phi(T(y_f))$.
+        En appliquant l'isomorphisme inverse $\Phi^{-1}$ des deux côtés :
+        $$ \Phi^{-1}(T^*(f)) = T(y_f) $$
+        En substituant $y_f = \Phi^{-1}(f)$, nous obtenons :
+        $$ \Phi^{-1}(T^*(f)) = T(\Phi^{-1}(f)) $$
+        Maintenant, nous pouvons reprendre le calcul du membre de gauche :
+        $$ \langle T^*(f), g \rangle_{V^*} = \langle T(\Phi^{-1}(f)), \Phi^{-1}(g) \rangle_V $$
+        Puisque $T$ est auto-adjoint sur $V$, nous pouvons échanger les arguments du produit scalaire en appliquant $T$ à l'autre argument :
+        $$ \langle T(\Phi^{-1}(f)), \Phi^{-1}(g) \rangle_V = \langle \Phi^{-1}(f), T(\Phi^{-1}(g)) \rangle_V $$
+        En utilisant le même raisonnement que précédemment, $T(\Phi^{-1}(g)) = \Phi^{-1}(T^*(g))$.
+        $$ \langle \Phi^{-1}(f), T(\Phi^{-1}(g)) \rangle_V = \langle \Phi^{-1}(f), \Phi^{-1}(T^*(g)) \rangle_V $$
+        Par définition de la forme bilinéaire sur $V^*$:
+        $$ \langle \Phi^{-1}(f), \Phi^{-1}(T^*(g)) \rangle_V = \langle f, T^*(g) \rangle_{V^*} $$
+        Nous avons donc montré que $\langle T^*(f), g \rangle_{V^*} = \langle f, T^*(g) \rangle_{V^*}$ pour tous $f, g \in V^*$.
+        Par conséquent, $T^*$ est auto-adjoint par rapport à la forme bilinéaire canonique sur $V^*$.
 
-### Correction Détaillée
+    e.  **Relier les valeurs propres et les vecteurs propres de $T^*$ à ceux de $T$.**
+        Soit $\lambda$ une valeur propre de $T$ et $q$ un vecteur propre associé, tel que $T(q) = \lambda q$ avec $q \neq 0_V$.
+        Considérons la forme linéaire $f_q = \Phi(q) \in V^*$. Puisque $q \neq 0_V$ et $\Phi$ est un isomorphisme, $f_q$ est une forme linéaire non nulle dans $V^*$.
+        Appliquons l'opérateur $T^*$ à $f_q$:
+        $$ (T^*(f_q))(x) = f_q(T(x)) \quad \text{pour tout } x \in V $$
+        En utilisant la définition de $f_q(y) = \langle y, q \rangle$:
+        $$ (T^*(f_q))(x) = \langle T(x), q \rangle $$
+        Puisque $T$ est auto-adjoint (démontré en question 1), $\langle T(x), q \rangle = \langle x, T(q) \rangle$.
+        $$ (T^*(f_q))(x) = \langle x, T(q) \rangle $$
+        Nous savons que $T(q) = \lambda q$ (car $q$ est un vecteur propre de $T$ associé à $\lambda$):
+        $$ (T^*(f_q))(x) = \langle x, \lambda q \rangle $$
+        Par linéarité du produit scalaire par rapport à sa seconde composante :
+        $$ (T^*(f_q))(x) = \lambda \langle x, q \rangle $$
+        Et nous reconnaissons $\langle x, q \rangle = f_q(x)$.
+        $$ (T^*(f_q))(x) = \lambda f_q(x) $$
+        Puisque cette égalité est vraie pour tout $x \in V$, les formes linéaires sont égales :
+        $$ T^*(f_q) = \lambda f_q $$
+        Ceci montre que si $\lambda$ est une valeur propre de $T$, alors $\lambda$ est aussi une valeur propre de $T^*$.
+        De plus, si $q$ est un vecteur propre de $T$ associé à $\lambda$, alors $f_q = \Phi(q)$ est un vecteur propre de $T^*$ associé à la même valeur propre $\lambda$.
 
-**Partie I : Représentation Sémantique et Similarité Cosinus**
+        Réciproquement, soit $\mu$ une valeur propre de $T^*$ et $f \in V^*$ un vecteur propre associé, tel que $T^*(f) = \mu f$ avec $f \neq 0_{V^*}$.
+        Soit $y_f = \Phi^{-1}(f) \in V$. Puisque $f \neq 0_{V^*}$ et $\Phi^{-1}$ est un isomorphisme, $y_f$ est un vecteur non nul dans $V$.
+        Nous avons montré en question 4.d que $\Phi^{-1}(T^*(f)) = T(\Phi^{-1}(f))$.
+        Appliquons l'isomorphisme $\Phi^{-1}$ à l'équation $T^*(f) = \mu f$:
+        $$ \Phi^{-1}(T^*(f)) = \Phi^{-1}(\mu f) $$
+        Puisque $\Phi^{-1}$ est linéaire, $\Phi^{-1}(\mu f) = \mu \Phi^{-1}(f)$.
+        $$ T(\Phi^{-1}(f)) = \mu \Phi^{-1}(f) $$
+        En substituant $y_f = \Phi^{-1}(f)$:
+        $$ T(y_f) = \mu y_f $$
+        Ceci montre que si $\mu$ est une valeur propre de $T^*$, alors $\mu$ est aussi une valeur propre de $T$.
+        De plus, si $f$ est un vecteur propre de $T^*$ associé à $\mu$, alors $y_f = \Phi^{-1}(f)$ est un vecteur propre de $T$ associé à la même valeur propre $\mu$.
 
-1.  **Définition de l'Espace de Plongement et des Vecteurs Normalisés :**
-    Un vecteur $x \in E$ représente une entité sémantique. Dans le cadre de la similarité cosinus, l'orientation du vecteur dans l'espace est primordiale car elle encode le "sens" ou la "caractéristique" sémantique. La magnitude (norme) du vecteur est souvent considérée comme moins pertinente ou peut introduire un biais lié à la fréquence ou à la longueur du document plutôt qu'à son contenu intrinsèque. Normaliser les vecteurs permet de projeter tous les vecteurs non nuls sur la sphère unité $S(E)$, où la distance angulaire (et donc la similarité cosinus) devient la mesure unique de la proximité sémantique.
-    Pour un vecteur non nul $x \in E$, sa version normalisée $x' \in S(E)$ est donnée par :
-    $$x' = \frac{x}{\|x\|}$$
+        En conclusion, les opérateurs $T$ et $T^*$ ont le même ensemble de valeurs propres. De plus, l'isomorphisme de Riesz $\Phi$ établit une correspondance bijective entre les sous-espaces propres de $T$ et ceux de $T^*$: si $E_\lambda$ est le sous-espace propre de $T$ associé à la valeur propre $\lambda$, alors $\Phi(E_\lambda)$ est le sous-espace propre de $T^*$ associé à la même valeur propre $\lambda$.
 
-2.  **Définition de la Similarité Cosinus :**
-    Soient $u$ et $v$ deux vecteurs non nuls de $E$. La similarité cosinus $\text{sim}_{\text{cos}}(u, v)$ est définie par :
-    $$\text{sim}_{\text{cos}}(u, v) = \frac{\langle u, v \rangle}{\|u\| \|v\|}$$
-    Démontrons que si $u'$ et $v'$ sont les versions normalisées de $u$ et $v$ respectivement, alors $\text{sim}_{\text{cos}}(u, v) = \langle u', v' \rangle$.
-    Par définition, $u' = \frac{u}{\|u\|}$ et $v' = \frac{v}{\|v\|}$.
-    Alors :
-    $$\langle u', v' \rangle = \left\langle \frac{u}{\|u\|}, \frac{v}{\|v\|} \right\rangle$$
-    Par bilinéarité du produit scalaire :
-    $$\langle u', v' \rangle = \frac{1}{\|u\| \|v\|} \langle u, v \rangle$$
-    Ce qui est précisément la définition de $\text{sim}_{\text{cos}}(u, v)$.
-    Géométriquement, la similarité cosinus est le cosinus de l'angle $\theta$ entre les vecteurs $u$ et $v$, où $\theta \in [0, \pi]$. En effet, par définition de l'angle entre deux vecteurs dans un espace euclidien :
-    $$\cos(\theta) = \frac{\langle u, v \rangle}{\|u\| \|v\|}$$
-    Le domaine de valeurs de $\text{sim}_{\text{cos}}(u, v)$ est donc $[-1, 1]$.
-    *   Une valeur de $1$ indique que les vecteurs sont colinéaires et de même direction (angle de $0$).
-    *   Une valeur de $-1$ indique que les vecteurs sont colinéaires et de directions opposées (angle de $\pi$).
-    *   Une valeur de $0$ indique que les vecteurs sont orthogonaux (angle de $\pi/2$).
+### Conclusion
+Nous avons rigoureusement analysé les propriétés d'un opérateur de cohérence sémantique $T$ défini sur un espace euclidien $V$. Nous avons établi que $T$ est auto-adjoint, ce qui garantit la réalité de ses valeurs propres et l'existence d'une base orthonormée de vecteurs propres. Son noyau est l'orthogonal du sous-espace engendré par les vecteurs de concept $u_i$, et son image est précisément ce sous-espace.
 
-**Partie II : Dualité et Requêtes Sémantiques**
+La mesure de cohérence sémantique $C(q)$ a été explicitée comme la somme des carrés des similarités cosinus entre une requête $q$ et les concepts $u_i$. Nous avons démontré que les valeurs propres de $T$ sont bornées entre $0$ et $k$, et que le maximum de $C(q)$ est la plus grande valeur propre de $T$, atteinte par les vecteurs propres associés. Cela fournit une méthode pour trouver les requêtes "les plus cohérentes" avec un ensemble de concepts.
 
-1.  **Isomorphisme de Riesz :**
-    Pour tout vecteur $v \in E$, on a défini $\phi_v : E \to \mathbb{R}$ par $\phi_v(x) = \langle v, x \rangle$.
-    Montrons que $\phi_v$ est une forme linéaire. Pour cela, nous devons prouver la linéarité, c'est-à-dire que pour tout $x_1, x_2 \in E$ et tout $\alpha, \beta \in \mathbb{R}$ :
-    $$\phi_v(\alpha x_1 + \beta x_2) = \alpha \phi_v(x_1) + \beta \phi_v(x_2)$$
-    Par définition de $\phi_v$:
-    $$\phi_v(\alpha x_1 + \beta x_2) = \langle v, \alpha x_1 + \beta x_2 \rangle$$
-    Par la bilinéarité du produit scalaire (spécifiquement la linéarité par rapport au second argument) :
-    $$\langle v, \alpha x_1 + \beta x_2 \rangle = \alpha \langle v, x_1 \rangle + \beta \langle v, x_2 \rangle$$
-    Par définition de $\phi_v$:
-    $$\alpha \langle v, x_1 \rangle + \beta \langle v, x_2 \rangle = \alpha \phi_v(x_1) + \beta \phi_v(x_2)$$
-    Donc, $\phi_v$ est bien une forme linéaire, ce qui signifie $\phi_v \in E^*$.
-
-    Montrons que l'application $\Phi : E \to E^*$ définie par $\Phi(v) = \phi_v$ est un isomorphisme d'espaces vectoriels.
-    Nous devons prouver que $\Phi$ est linéaire, injective et surjective.
-
-    *   **Linéarité de $\Phi$ :**
-        Pour tout $v_1, v_2 \in E$ et tout $\alpha, \beta \in \mathbb{R}$, nous devons montrer que $\Phi(\alpha v_1 + \beta v_2) = \alpha \Phi(v_1) + \beta \Phi(v_2)$.
-        Cela signifie que pour tout $x \in E$:
-        $$(\Phi(\alpha v_1 + \beta v_2))(x) = (\alpha \Phi(v_1) + \beta \Phi(v_2))(x)$$
-        Par définition de $\Phi$:
-        $$(\Phi(\alpha v_1 + \beta v_2))(x) = \langle \alpha v_1 + \beta v_2, x \rangle$$
-        Par la bilinéarité du produit scalaire (spécifiquement la linéarité par rapport au premier argument) :
-        $$\langle \alpha v_1 + \beta v_2, x \rangle = \alpha \langle v_1, x \rangle + \beta \langle v_2, x \rangle$$
-        Par définition de $\phi_{v_1}$ et $\phi_{v_2}$:
-        $$\alpha \langle v_1, x \rangle + \beta \langle v_2, x \rangle = \alpha \phi_{v_1}(x) + \beta \phi_{v_2}(x)$$
-        Enfin, par définition de l'addition et de la multiplication scalaire dans $E^*$:
-        $$\alpha \phi_{v_1}(x) + \beta \phi_{v_2}(x) = (\alpha \phi_{v_1} + \beta \phi_{v_2})(x) = (\alpha \Phi(v_1) + \beta \Phi(v_2))(x)$$
-        Donc, $\Phi$ est linéaire.
-
-    *   **Injectivité de $\Phi$ :**
-        Nous devons montrer que $\ker(\Phi) = \{0_E\}$. Soit $v \in \ker(\Phi)$. Alors $\Phi(v) = 0_{E^*}$, ce qui signifie que $\phi_v$ est la forme linéaire nulle.
-        Ainsi, pour tout $x \in E$, $\phi_v(x) = \langle v, x \rangle = 0$.
-        En particulier, en prenant $x = v$, on a $\langle v, v \rangle = 0$, ce qui implique $\|v\|^2 = 0$.
-        Puisque la norme est définie positive, $\|v\| = 0$ implique $v = 0_E$.
-        Donc, $\ker(\Phi) = \{0_E\}$, et $\Phi$ est injective.
-
-    *   **Surjectivité de $\Phi$ :**
-        Puisque $E$ est un $\mathbb{R}$-espace vectoriel de dimension finie $n$, son espace dual $E^*$ a également pour dimension $n$.
-        Une application linéaire $\Phi: E \to E^*$ entre des espaces vectoriels de même dimension finie est surjective si et seulement si elle est injective.
-        Ayant déjà montré que $\Phi$ est injective, il s'ensuit que $\Phi$ est également surjective.
-
-    Puisque $\Phi$ est linéaire, injective et surjective, c'est un isomorphisme d'espaces vectoriels.
-
-2.  **Requêtes comme Formes Linéaires :**
-    Une requête $q \in E$ peut être naturellement interprétée comme une forme linéaire $\phi_q = \Phi(q) \in E^*$ via l'isomorphisme de Riesz. Cette forme linéaire $\phi_q$ prend en entrée un vecteur document $d \in E$ et renvoie une valeur numérique $\phi_q(d) = \langle q, d \rangle$.
-    Cette valeur $\langle q, d \rangle$ représente le "score de pertinence" du document $d$ par rapport à la requête $q$. Plus ce score est élevé, plus le document est jugé pertinent.
-
-    Si $q$ et $d$ sont normalisés (c'est-à-dire $q \in S(E)$ et $d \in S(E)$), alors leurs normes sont $\|q\|=1$ et $\|d\|=1$.
-    Dans ce cas, la similarité cosinus est $\text{sim}_{\text{cos}}(q, d) = \frac{\langle q, d \rangle}{\|q\| \|d\|} = \frac{\langle q, d \rangle}{1 \cdot 1} = \langle q, d \rangle$.
-    Le lien est donc direct : l'évaluation $\phi_q(d)$ de la forme linéaire $\phi_q$ sur le document normalisé $d$ est exactement la similarité cosinus entre $q$ et $d$.
-
-**Partie III : Optimisation d'un Vecteur de Requête à partir d'Exemples**
-
-1.  **Formulation du Problème d'Optimisation :**
-    On rappelle la fonction objectif $J: S(E) \to \mathbb{R}$ :
-    $$J(q) = \left( \frac{1}{k} \sum_{i=1}^k \langle q, p_i \rangle \right) - \left( \frac{1}{m} \sum_{j=1}^m \langle q, n_j \rangle \right)$$
-
-    a.  **Simplification de $J(q)$ :**
-        On a défini $c_P = \frac{1}{k} \sum_{i=1}^k p_i$ et $c_N = \frac{1}{m} \sum_{j=1}^m n_j$.
-        En utilisant la linéarité du produit scalaire par rapport à son second argument :
-        $$\frac{1}{k} \sum_{i=1}^k \langle q, p_i \rangle = \left\langle q, \frac{1}{k} \sum_{i=1}^k p_i \right\rangle = \langle q, c_P \rangle$$
-        De même :
-        $$\frac{1}{m} \sum_{j=1}^m \langle q, n_j \rangle = \left\langle q, \frac{1}{m} \sum_{j=1}^m n_j \right\rangle = \langle q, c_N \rangle$$
-        Donc, $J(q)$ peut être réécrit comme :
-        $$J(q) = \langle q, c_P \rangle - \langle q, c_N \rangle$$
-        Par la linéarité du produit scalaire par rapport à son second argument (ou la distributivité) :
-        $$J(q) = \langle q, c_P - c_N \rangle$$
-
-    b.  **Existence et Unicité de $q_0$ :**
-        On pose $v = c_P - c_N$. Nous cherchons à maximiser $J(q) = \langle q, v \rangle$ sous la contrainte $\|q\|=1$.
-        On suppose $v \ne 0_E$.
-        L'inégalité de Cauchy-Schwarz stipule que pour tout $q, v \in E$:
-        $$|\langle q, v \rangle| \le \|q\| \|v\|$$
-        Et l'égalité a lieu si et seulement si $q$ et $v$ sont colinéaires, c'est-à-dire s'il existe $\lambda \in \mathbb{R}$ tel que $q = \lambda v$.
-        Nous cherchons à maximiser $\langle q, v \rangle$, donc nous voulons que $\langle q, v \rangle$ soit positif et aussi grand que possible.
-        Ainsi, nous avons $\langle q, v \rangle \le \|q\| \|v\|$.
-        Comme $\|q\|=1$, on a $\langle q, v \rangle \le \|v\|$.
-        L'égalité $\langle q, v \rangle = \|v\|$ est atteinte lorsque $q$ est dans la même direction que $v$.
-        Puisque $q$ doit être un vecteur unitaire, l'unique vecteur $q_0 \in S(E)$ qui satisfait cette condition est :
-        $$q_0 = \frac{v}{\|v\|}$$
-        L'existence et l'unicité de $q_0$ sont garanties car $v \ne 0_E$ par hypothèse, ce qui assure que $\|v\| \ne 0$.
-        La valeur maximale de $J(q)$ est alors $J(q_0) = \left\langle \frac{v}{\|v\|}, v \right\rangle = \frac{1}{\|v\|} \langle v, v \rangle = \frac{\|v\|^2}{\|v\|} = \|v\|$.
-
-    c.  **Cas $v = 0_E$ :**
-        Si $v = 0_E$, cela signifie que $c_P - c_N = 0_E$, c'est-à-dire $c_P = c_N$. Les centroïdes des documents positifs et négatifs sont identiques.
-        Dans ce cas, $J(q) = \langle q, 0_E \rangle = 0$ pour tout $q \in S(E)$.
-        La fonction objectif $J(q)$ est constante et égale à $0$ sur $S(E)$.
-        Par conséquent, tout vecteur $q \in S(E)$ est un optimum, car $J(q)=0$ pour tous les $q \in S(E)$.
-        Le problème d'optimisation admet alors une infinité de solutions (tous les vecteurs sur la sphère unité $S(E)$), et l'optimum $q_0$ n'est pas unique. Cela indique que les ensembles $P$ et $N$ ne peuvent pas être distingués efficacement par cette méthode si leurs centroïdes coïncident.
-
-2.  **Interprétation Géométrique et Sémantique :**
-    Supposons que $v \ne 0_E$.
-
-    a.  **Direction Optimale :**
-        Le vecteur $q_0 = \frac{v}{\|v\|} = \frac{c_P - c_N}{\|c_P - c_N\|}$ pointe dans la direction du vecteur différence entre le centroïde des documents positifs et le centroïde des documents négatifs.
-        Géométriquement, $q_0$ est le vecteur unitaire qui va de $c_N$ vers $c_P$, si l'on imagine ces centroïdes comme des points dans l'espace.
-        Dans le contexte de la recherche sémantique, $q_0$ représente la "direction sémantique" qui discrimine le mieux les documents positifs des documents négatifs. Un document qui a une forte similarité cosinus avec $q_0$ (c'est-à-dire $\langle q_0, d \rangle$ élevé) sera sémantiquement proche de la tendance "positive" et éloigné de la tendance "négative". C'est un excellent candidat pour une requête sémantique qui cherche à retrouver des documents similaires aux exemples positifs tout en évitant ceux similaires aux exemples négatifs.
-
-    b.  **Hyperplan de Séparation :**
-        L'hyperplan $H = \{x \in E \mid \langle q_0, x \rangle = 0 \}$ est l'ensemble de tous les vecteurs orthogonaux à $q_0$. C'est un sous-espace vectoriel de dimension $n-1$.
-        Pour un document $x \in S(E)$, la valeur $\langle q_0, x \rangle$ est la similarité cosinus entre $q_0$ et $x$. Géométriquement, c'est la projection orthogonale de $x$ sur la droite vectorielle engendrée par $q_0$. Cette valeur représente une "mesure de pertinence" signée par rapport à la requête $q_0$.
-        *   Si $\langle q_0, x \rangle > 0$, le document $x$ est dans le même demi-espace que $q_0$ (et donc que $c_P$ relativement à $c_N$).
-        *   Si $\langle q_0, x \rangle < 0$, le document $x$ est dans le demi-espace opposé à $q_0$.
-        *   Si $\langle q_0, x \rangle = 0$, le document $x$ est sur l'hyperplan $H$.
-
-        Concernant les centroïdes $c_P$ et $c_N$:
-        Puisque $q_0 = \frac{c_P - c_N}{\|c_P - c_N\|}$, on a $c_P - c_N = \|c_P - c_N\| q_0$.
-        Alors $\langle q_0, c_P - c_N \rangle = \langle q_0, \|c_P - c_N\| q_0 \rangle = \|c_P - c_N\| \langle q_0, q_0 \rangle = \|c_P - c_N\| \|q_0\|^2 = \|c_P - c_N\|$.
-        Comme $\|c_P - c_N\| > 0$ (car $v \ne 0_E$), on a $\langle q_0, c_P - c_N \rangle > 0$.
-        Ceci implique $\langle q_0, c_P \rangle - \langle q_0, c_N \rangle > 0$, ou $\langle q_0, c_P \rangle > \langle q_0, c_N \rangle$.
-        Cela signifie que le centroïde $c_P$ se situe dans le demi-espace positif par rapport à $H$ (là où les valeurs $\langle q_0, x \rangle$ sont positives), et le centroïde $c_N$ se situe dans le demi-espace "moins positif" (potentiellement négatif) par rapport à $H$. L'hyperplan $H$ "sépare" ces deux centroïdes.
-
-        Pour classer un nouveau document $d_{nouveau} \in S(E)$:
-        On calcule le score $\text{score}(d_{nouveau}) = \langle q_0, d_{nouveau} \rangle$.
-        *   Si $\text{score}(d_{nouveau}) > 0$ (ou un seuil positif), le document est classé comme "positif".
-        *   Si $\text{score}(d_{nouveau}) < 0$ (ou un seuil négatif), le document est classé comme "négatif".
-        *   Si $\text{score}(d_{nouveau}) = 0$, le document est sur l'hyperplan et est considéré comme "neutre" ou "ambigu" par rapport à cette requête.
-
-    c.  **Lien avec la Dualité :**
-        En utilisant l'isomorphisme de Riesz $\Phi: E \to E^*$, le vecteur de requête optimal $q_0 \in E$ correspond à la forme linéaire $\phi_{q_0} = \Phi(q_0) \in E^*$.
-        Cette forme linéaire est définie par $\phi_{q_0}(x) = \langle q_0, x \rangle$ pour tout $x \in E$.
-        L'évaluation $\phi_{q_0}(x)$ d'un document $x \in E$ peut être interprétée directement comme un "score de pertinence" par rapport à la requête optimale $q_0$. Un score positif élevé indique une forte pertinence (similaire aux documents positifs), un score négatif indique une faible pertinence (similaire aux documents négatifs), et un score proche de zéro indique une pertinence neutre ou ambiguë. C'est précisément la valeur qui est maximisée pour les documents positifs et minimisée pour les documents négatifs en moyenne. Cette forme linéaire incarne le critère de distinction sémantique appris des exemples $P$ et $N$.
-
----
-
-Cet exercice a permis de solidifier votre compréhension des espaces vectoriels euclidiens, de la dualité, de la géométrie des hyperplans, et d'appliquer ces concepts à un problème concret d'optimisation en intelligence artificielle, montrant comment une requête sémantique peut être construite de manière rigoureuse.
+Enfin, nous avons exploré la dualité en caractérisant l'opérateur transposé $T^*$ sur le dual $V^*$. Nous avons montré que $T^*$ est également auto-adjoint par rapport à la forme bilinéaire induite sur $V^*$. Une correspondance bijective a été établie entre les valeurs propres et les vecteurs propres de $T$ et $T^*$ via l'isomorphisme de Riesz, soulignant la symétrie fondamentale entre un opérateur et son dual dans un espace euclidien. Ces résultats fournissent un cadre théorique solide pour la compréhension et l'optimisation des mécanismes de recherche sémantique basés sur la similarité cosinus dans des espaces de plongement.

@@ -1,344 +1,233 @@
-Cher Étudiant,
+# Exercice 07 (4 $\star$) : Optimisation de la Similarité Cosinus par Formes Linéaires Duales
 
-Nous voici au Jalon 12 de notre parcours, où la théorie des espaces de plongement et la dualité rencontrent l'ingénierie des moteurs de recherche sémantiques. L'exercice qui suit est conçu pour consolider votre compréhension de la géométrie vectorielle sous-jacente à la notion de similarité, et pour vous confronter à un problème d'algèbre linéaire de haut niveau, tel qu'il pourrait être posé aux Grandes Écoles.
+## Énoncé
+Soit $(V, \langle \cdot, \cdot \rangle)$ un espace vectoriel euclidien de dimension finie $n \ge 2$ sur $\mathbb{R}$. On note $\|\cdot\|$ la norme associée à ce produit scalaire, définie par $\|v\| = \sqrt{\langle v, v \rangle}$ pour tout $v \in V$. Soit $V^*$ son espace dual, c'est-à-dire l'ensemble des formes linéaires de $V$ dans $\mathbb{R}$.
 
-Préparons-nous à explorer les subtilités des métriques non euclidiennes et leur impact sur la projection orthogonale et la structure duale d'un espace.
+1.  Rappeler la définition de la similarité cosinus entre deux vecteurs non nuls $u, v \in V$.
+2.  Démontrer que l'application $\Phi: V \to V^*$ définie par $\Phi(v)(x) = \langle v, x \rangle$ pour tout $v, x \in V$ est un isomorphisme linéaire.
+3.  Montrer que l'espace dual $V^*$ peut être muni d'un produit scalaire $\langle \cdot, \cdot \rangle_{V^*}$ tel que pour tout $f, g \in V^*$, si $f = \Phi(u)$ et $g = \Phi(v)$ pour $u, v \in V$, alors $\langle f, g \rangle_{V^*} = \langle u, v \rangle$. En déduire la norme associée $\|\cdot\|_{V^*}$ sur $V^*$.
+4.  Soient $q \in V$ et $d \in V$ deux vecteurs non nuls et linéairement indépendants. On considère le problème d'optimisation suivant :
+    $$ \text{Maximiser } f(q) \text{ sous les contraintes } f \in V^*, f(d) = 0 \text{ et } \|f\|_{V^*} = 1. $$
+    On note $f_0$ une forme linéaire solution de ce problème.
+    a.  Justifier l'existence d'une solution $f_0$.
+    b.  Déterminer explicitement $f_0$ en fonction de $q$ et $d$.
+    c.  Calculer la valeur maximale $f_0(q)$.
+    d.  Interpréter géométriquement la forme linéaire $f_0$ et la valeur maximale $f_0(q)$ en relation avec la similarité cosinus.
 
----
+## Correction Détaillée
+### Analyse et Stratégie
+L'exercice explore la relation fondamentale entre la géométrie d'un espace euclidien de dimension finie, la notion de similarité cosinus, et la structure de son espace dual. La première partie de l'exercice vise à établir les fondations théoriques nécessaires : la définition de la similarité cosinus, la démonstration rigoureuse du théorème de représentation de Riesz (qui établit un isomorphisme canonique entre $V$ et $V^*$), et la construction du produit scalaire et de la norme induits sur l'espace dual $V^*$. Ces étapes sont cruciales pour poser un cadre mathématique solide pour le problème d'optimisation.
 
-## Exercice 7 : Géométrie Sémantique, Projection et Dualité dans les Espaces de Plongement
+La deuxième partie de l'exercice est un problème d'optimisation sous contraintes. La stratégie principale pour le résoudre consistera à traduire ce problème, initialement formulé dans l'espace dual $V^*$, vers l'espace vectoriel d'origine $V$ grâce à l'isomorphisme de Riesz. La contrainte $f(d)=0$ se transformera en une condition d'orthogonalité dans $V$. La contrainte de normalisation $\|f\|_{V^*}=1$ se traduira par une contrainte de normalisation de la norme dans $V$. Enfin, la fonction objectif $f(q)$ se reformulera comme un produit scalaire dans $V$. Une fois le problème entièrement reformulé dans $V$, il deviendra un problème classique de maximisation d'un produit scalaire sous des contraintes d'orthogonalité et de norme, qui se résout typiquement par l'utilisation de projections orthogonales. L'interprétation géométrique finale permettra de relier la solution obtenue au concept de similarité cosinus et de comprendre sa pertinence dans un contexte de recherche sémantique, où l'on cherche à caractériser des aspects distincts ou pertinents d'une requête par rapport à des documents.
 
-**Contexte :**
-Dans le domaine des moteurs de recherche sémantiques et du traitement du langage naturel, les entités (mots, phrases, documents) sont souvent représentées par des vecteurs dans des "espaces de plongement" (embedding spaces). La similarité entre ces entités est mesurée par la similarité cosinus. Habituellement, on utilise le produit scalaire euclidien standard. Cependant, il est parfois souhaitable d'introduire une métrique plus complexe, "sémantiquement informée", qui pondère différemment les dimensions de l'espace de plongement. Cette métrique peut être encodée par une matrice définie positive, modifiant ainsi la géométrie de l'espace.
+### Résolution Pas-à-Pas
 
-Cet exercice explore les propriétés d'un tel espace vectoriel muni d'un produit scalaire généralisé, la projection orthogonale sémantique sur un sous-espace, et les concepts de dualité associés.
+1.  **Définition de la similarité cosinus**
+    Soient $u, v \in V$ deux vecteurs non nuls. La similarité cosinus entre $u$ et $v$ est définie par le rapport du produit scalaire de $u$ et $v$ à la produit de leurs normes :
+    $$ \text{sim}(u,v) = \frac{\langle u, v \rangle}{\|u\| \|v\|} $$
+    Cette valeur représente le cosinus de l'angle $\theta$ entre les vecteurs $u$ et $v$, où $\theta \in [0, \pi]$. Par l'inégalité de Cauchy-Schwarz, nous savons que $|\langle u, v \rangle| \le \|u\| \|v\|$, ce qui implique que $-1 \le \text{sim}(u,v) \le 1$.
 
-**Hypothèses Fondamentales :**
-*   Soit $V$ un espace vectoriel réel de dimension finie $n \in \mathbb{N}^*$.
-*   Soit $B_E = (e_1, \ldots, e_n)$ une base orthonormée de $V$ pour le produit scalaire euclidien standard, noté $\langle \cdot, \cdot \rangle_E$. Pour tout $u = \sum_{i=1}^n u_i e_i$ et $v = \sum_{i=1}^n v_i e_i$ dans $V$, $\langle u, v \rangle_E = \sum_{i=1}^n u_i v_i$.
-*   Pour tout $v \in V$, $v$ peut être représenté par son vecteur de coordonnées $X_v = (v_1, \ldots, v_n)^T \in \mathbb{R}^n$ dans la base $B_E$. Ainsi, $\langle u, v \rangle_E = X_u^T X_v$.
-*   Soit $S \in \mathcal{M}_n(\mathbb{R})$ une matrice symétrique et définie positive.
+2.  **Isomorphisme de Riesz**
+    Démontrons que l'application $\Phi: V \to V^*$ définie par $\Phi(v)(x) = \langle v, x \rangle$ pour tout $v, x \in V$ est un isomorphisme linéaire.
 
----
+    *   **Linéarité de $\Phi$ :**
+        Pour montrer que $\Phi$ est linéaire, nous devons vérifier deux propriétés :
+        a.  $\Phi(v_1 + v_2) = \Phi(v_1) + \Phi(v_2)$ pour tout $v_1, v_2 \in V$.
+        b.  $\Phi(\lambda v_1) = \lambda \Phi(v_1)$ pour tout $v_1 \in V$ et $\lambda \in \mathbb{R}$.
 
-### Énoncé
+        Pour la propriété (a), évaluons $\Phi(v_1 + v_2)$ sur un vecteur arbitraire $x \in V$:
+        $$ \Phi(v_1 + v_2)(x) = \langle v_1 + v_2, x \rangle $$
+        Par la bilinéarité du produit scalaire, nous avons :
+        $$ \langle v_1 + v_2, x \rangle = \langle v_1, x \rangle + \langle v_2, x \rangle $$
+        Par la définition de $\Phi$, ceci est égal à :
+        $$ \langle v_1, x \rangle + \langle v_2, x \rangle = \Phi(v_1)(x) + \Phi(v_2)(x) $$
+        Par la définition de l'addition de formes linéaires, nous avons :
+        $$ \Phi(v_1)(x) + \Phi(v_2)(x) = (\Phi(v_1) + \Phi(v_2))(x) $$
+        Puisque cette égalité est vraie pour tout $x \in V$, nous avons $\Phi(v_1 + v_2) = \Phi(v_1) + \Phi(v_2)$.
 
-**Partie I : Introduction du Produit Scalaire Sémantique**
+        Pour la propriété (b), évaluons $\Phi(\lambda v_1)$ sur un vecteur arbitraire $x \in V$:
+        $$ \Phi(\lambda v_1)(x) = \langle \lambda v_1, x \rangle $$
+        Par la bilinéarité du produit scalaire, nous avons :
+        $$ \langle \lambda v_1, x \rangle = \lambda \langle v_1, x \rangle $$
+        Par la définition de $\Phi$, ceci est égal à :
+        $$ \lambda \langle v_1, x \rangle = \lambda \Phi(v_1)(x) $$
+        Par la définition de la multiplication d'une forme linéaire par un scalaire, nous avons :
+        $$ \lambda \Phi(v_1)(x) = (\lambda \Phi(v_1))(x) $$
+        Puisque cette égalité est vraie pour tout $x \in V$, nous avons $\Phi(\lambda v_1) = \lambda \Phi(v_1)$.
+        Ainsi, $\Phi$ est une application linéaire.
 
-Nous définissons une nouvelle forme bilinéaire $\langle \cdot, \cdot \rangle_S: V \times V \to \mathbb{R}$ pour tout $u, v \in V$ par :
-$$ \langle u, v \rangle_S = X_u^T S X_v $$
-où $X_u$ et $X_v$ sont les vecteurs de coordonnées de $u$ et $v$ dans la base $B_E$.
+    *   **Injectivité de $\Phi$ :**
+        Pour montrer que $\Phi$ est injective, nous devons montrer que son noyau est réduit au vecteur nul. C'est-à-dire, si $\Phi(v) = 0_{V^*}$ (la forme linéaire nulle), alors $v = 0_V$.
+        Si $\Phi(v) = 0_{V^*}$, cela signifie que pour tout $x \in V$, $\Phi(v)(x) = 0$.
+        Par la définition de $\Phi$, cela implique que $\langle v, x \rangle = 0$ pour tout $x \in V$.
+        En particulier, en choisissant $x = v$, nous obtenons $\langle v, v \rangle = 0$.
+        Puisque le produit scalaire est défini positif, $\langle v, v \rangle = 0$ implique que $v = 0_V$.
+        Donc, $\text{Ker}(\Phi) = \{0_V\}$, ce qui prouve que $\Phi$ est injective.
 
-1.  Démontrer que $\langle \cdot, \cdot \rangle_S$ est un produit scalaire sur $V$.
-2.  Nous définissons la norme sémantique associée $\|\cdot\|_S$ et la similarité cosinus sémantique $C_S(u,v)$ pour $u, v \in V \setminus \{0_V\}$.
-    Expliciter les définitions de $\|u\|_S$ et $C_S(u,v)$ en fonction de $X_u$, $X_v$ et $S$.
+    *   **Surjectivité de $\Phi$ :**
+        Puisque $V$ est un espace vectoriel de dimension finie $n$, son espace dual $V^*$ a également pour dimension $n$.
+        Nous avons $\dim(V) = n$ et $\dim(V^*) = n$.
+        Puisque $\Phi: V \to V^*$ est une application linéaire injective entre deux espaces de même dimension finie, elle est nécessairement surjective.
+        Pour être exhaustif, le théorème de représentation de Riesz pour les espaces euclidiens affirme que pour toute forme linéaire $f \in V^*$, il existe un unique vecteur $v \in V$ tel que $f(x) = \langle v, x \rangle$ pour tout $x \in V$.
+        Pour prouver ce théorème, soit $(e_1, \dots, e_n)$ une base orthonormée de $V$. Pour tout $x \in V$, $x = \sum_{i=1}^n \langle x, e_i \rangle e_i$.
+        Alors, pour toute forme linéaire $f \in V^*$, $f(x) = f\left(\sum_{i=1}^n \langle x, e_i \rangle e_i\right)$.
+        Par linéarité de $f$, $f(x) = \sum_{i=1}^n \langle x, e_i \rangle f(e_i)$.
+        Soit $v = \sum_{i=1}^n f(e_i) e_i$. Alors, en utilisant la bilinéarité du produit scalaire et l'orthonormalité de la base :
+        $$ \langle v, x \rangle = \left\langle \sum_{i=1}^n f(e_i) e_i, x \right\rangle = \sum_{i=1}^n f(e_i) \langle e_i, x \rangle $$
+        Puisque $\langle e_i, x \rangle = \langle x, e_i \rangle$ (symétrie du produit scalaire), nous avons :
+        $$ \langle v, x \rangle = \sum_{i=1}^n f(e_i) \langle x, e_i \rangle = f(x) $$
+        Ainsi, pour tout $f \in V^*$, il existe un $v \in V$ tel que $f = \Phi(v)$, ce qui prouve la surjectivité.
 
-**Partie II : Projection Orthogonale Sémantique**
+    En conclusion, $\Phi$ est un isomorphisme linéaire.
 
-Soit $W$ un sous-espace vectoriel de $V$ de dimension $k \in \{1, \ldots, n-1\}$. Soit $B_W = (w_1, \ldots, w_k)$ une base de $W$.
+3.  **Produit scalaire et norme sur $V^*$**
+    Nous voulons munir $V^*$ d'un produit scalaire $\langle \cdot, \cdot \rangle_{V^*}$ tel que pour tout $f, g \in V^*$, si $f = \Phi(u)$ et $g = \Phi(v)$ pour $u, v \in V$, alors $\langle f, g \rangle_{V^*} = \langle u, v \rangle$.
 
-1.  Définir l'orthogonal sémantique $W^{\perp_S}$ de $W$ par rapport au produit scalaire $\langle \cdot, \cdot \rangle_S$.
-2.  Démontrer que $W^{\perp_S}$ est un sous-espace vectoriel de $V$.
-3.  Démontrer que $V = W \oplus W^{\perp_S}$, c'est-à-dire que $W \cap W^{\perp_S} = \{0_V\}$ et $\dim(W) + \dim(W^{\perp_S}) = \dim(V)$.
-4.  Pour tout $v \in V$, il existe une unique décomposition $v = p + r$ où $p \in W$ et $r \in W^{\perp_S}$. $p$ est appelé la projection orthogonale sémantique de $v$ sur $W$, notée $P_S(v)$.
-    Soit $X_{w_j} \in \mathbb{R}^n$ le vecteur de coordonnées de $w_j$ pour $j=1, \ldots, k$. Soit $M_W \in \mathcal{M}_{n,k}(\mathbb{R})$ la matrice dont les colonnes sont les vecteurs $X_{w_1}, \ldots, X_{w_k}$.
-    Expliciter la matrice de Gram sémantique $G_S \in \mathcal{M}_k(\mathbb{R})$ associée à la base $B_W$ et au produit scalaire $\langle \cdot, \cdot \rangle_S$.
-    Démontrer que $G_S$ est inversible.
-5.  Pour un vecteur $v \in V$ donné, $P_S(v)$ peut s'écrire $P_S(v) = \sum_{i=1}^k \alpha_i w_i$ pour des coefficients $\alpha_i \in \mathbb{R}$.
-    Dériver une expression explicite pour le vecteur colonne des coefficients $\alpha = (\alpha_1, \ldots, \alpha_k)^T$ en fonction de $M_W$, $S$, et $X_v$.
-    En déduire une expression pour $P_S(v)$ dans la base $B_E$.
+    Puisque $\Phi$ est un isomorphisme, pour tout $f \in V^*$, il existe un unique $u \in V$ tel que $f = \Phi(u)$, ce qui signifie $u = \Phi^{-1}(f)$. De même pour $g \in V^*$, il existe un unique $v \in V$ tel que $g = \Phi(v)$, ce qui signifie $v = \Phi^{-1}(g)$.
+    Nous pouvons donc définir l'application $\langle \cdot, \cdot \rangle_{V^*}: V^* \times V^* \to \mathbb{R}$ par :
+    $$ \langle f, g \rangle_{V^*} = \langle \Phi^{-1}(f), \Phi^{-1}(g) \rangle $$
+    Vérifions que cette application est bien un produit scalaire sur $V^*$.
 
-**Partie III : Dualité et Annihilateur Sémantique**
+    *   **Symétrie :**
+        Pour tout $f, g \in V^*$,
+        $$ \langle f, g \rangle_{V^*} = \langle \Phi^{-1}(f), \Phi^{-1}(g) \rangle $$
+        Puisque $\langle \cdot, \cdot \rangle$ est symétrique sur $V$, nous avons $\langle \Phi^{-1}(f), \Phi^{-1}(g) \rangle = \langle \Phi^{-1}(g), \Phi^{-1}(f) \rangle$.
+        Donc, $\langle f, g \rangle_{V^*} = \langle g, f \rangle_{V^*}$.
 
-Soit $V^*$ le dual de $V$, c'est-à-dire l'espace des formes linéaires sur $V$.
+    *   **Linéarité par rapport à la première variable :**
+        Soient $f_1, f_2, g \in V^*$ et $\lambda \in \mathbb{R}$.
+        $$ \langle f_1 + f_2, g \rangle_{V^*} = \langle \Phi^{-1}(f_1 + f_2), \Phi^{-1}(g) \rangle $$
+        Puisque $\Phi$ est linéaire, son inverse $\Phi^{-1}$ est également linéaire. Donc $\Phi^{-1}(f_1 + f_2) = \Phi^{-1}(f_1) + \Phi^{-1}(f_2)$.
+        Ainsi,
+        $$ \langle f_1 + f_2, g \rangle_{V^*} = \langle \Phi^{-1}(f_1) + \Phi^{-1}(f_2), \Phi^{-1}(g) \rangle $$
+        Par la linéarité du produit scalaire sur $V$ par rapport à la première variable :
+        $$ \langle \Phi^{-1}(f_1) + \Phi^{-1}(f_2), \Phi^{-1}(g) \rangle = \langle \Phi^{-1}(f_1), \Phi^{-1}(g) \rangle + \langle \Phi^{-1}(f_2), \Phi^{-1}(g) \rangle $$
+        Par la définition de $\langle \cdot, \cdot \rangle_{V^*}$, ceci est égal à $\langle f_1, g \rangle_{V^*} + \langle f_2, g \rangle_{V^*}$.
+        De même,
+        $$ \langle \lambda f_1, g \rangle_{V^*} = \langle \Phi^{-1}(\lambda f_1), \Phi^{-1}(g) \rangle = \langle \lambda \Phi^{-1}(f_1), \Phi^{-1}(g) \rangle = \lambda \langle \Phi^{-1}(f_1), \Phi^{-1}(g) \rangle = \lambda \langle f_1, g \rangle_{V^*} $$
+        Donc, $\langle \cdot, \cdot \rangle_{V^*}$ est linéaire par rapport à la première variable.
 
-1.  Pour chaque $u \in V$, nous définissons une forme linéaire $\phi_u \in V^*$ par $\phi_u(v) = \langle u, v \rangle_S$ pour tout $v \in V$.
-    Démontrer que l'application $\Phi_S: V \to V^*$ définie par $\Phi_S(u) = \phi_u$ est un isomorphisme linéaire.
-2.  Soit $W^{\circ_S}$ l'annihilateur sémantique de $W$ dans $V^*$, défini comme $W^{\circ_S} = \{ f \in V^* \mid f(w) = 0 \text{ pour tout } w \in W \}$.
-    Démontrer que $W^{\circ_S}$ est un sous-espace vectoriel de $V^*$.
-    Déterminer la dimension de $W^{\circ_S}$.
-3.  Établir une relation précise entre $W^{\perp_S}$ et $W^{\circ_S}$ en utilisant l'isomorphisme $\Phi_S$. Démontrer cette relation.
+    *   **Définition positive :**
+        Pour tout $f \in V^*$,
+        $$ \langle f, f \rangle_{V^*} = \langle \Phi^{-1}(f), \Phi^{-1}(f) \rangle $$
+        Puisque $\langle \cdot, \cdot \rangle$ est défini positif sur $V$, $\langle \Phi^{-1}(f), \Phi^{-1}(f) \rangle \ge 0$.
+        De plus, $\langle f, f \rangle_{V^*} = 0$ si et seulement si $\langle \Phi^{-1}(f), \Phi^{-1}(f) \rangle = 0$.
+        Ceci implique $\Phi^{-1}(f) = 0_V$ (par la propriété de définition positive du produit scalaire sur $V$).
+        Puisque $\Phi^{-1}$ est un isomorphisme, $\Phi^{-1}(f) = 0_V$ si et seulement si $f = \Phi(0_V) = 0_{V^*}$.
+        Donc, $\langle \cdot, \cdot \rangle_{V^*}$ est défini positif.
 
----
+    Ainsi, $\langle \cdot, \cdot \rangle_{V^*}$ est bien un produit scalaire sur $V^*$.
 
-### Correction
+    La norme associée $\|\cdot\|_{V^*}$ sur $V^*$ est définie par $\|f\|_{V^*} = \sqrt{\langle f, f \rangle_{V^*}}$.
+    En utilisant la définition du produit scalaire sur $V^*$:
+    $$ \|f\|_{V^*} = \sqrt{\langle \Phi^{-1}(f), \Phi^{-1}(f) \rangle} = \|\Phi^{-1}(f)\| $$
+    Si $f = \Phi(u)$, alors $\Phi^{-1}(f) = u$. Donc, $\|f\|_{V^*} = \|u\|$.
+    Cette norme est également appelée la norme d'opérateur pour les formes linéaires, car pour $f \in V^*$, $\|f\|_{V^*} = \sup_{x \in V, x \neq 0} \frac{|f(x)|}{\|x\|}$.
+    Pour le prouver, soit $f = \Phi(u)$. Alors $f(x) = \langle u, x \rangle$.
+    Par l'inégalité de Cauchy-Schwarz, $|f(x)| = |\langle u, x \rangle| \le \|u\| \|x\|$.
+    Donc, pour $x \neq 0$, $\frac{|f(x)|}{\|x\|} \le \|u\|$.
+    Cette borne supérieure est atteinte lorsque $x$ est colinéaire à $u$. En prenant $x = u$ (si $u \neq 0$), on a $\frac{|f(u)|}{\|u\|} = \frac{|\langle u, u \rangle|}{\|u\|} = \frac{\|u\|^2}{\|u\|} = \|u\|$.
+    Donc, $\|f\|_{V^*} = \|u\| = \|\Phi^{-1}(f)\|$.
 
-**Typage Strict des Objets :**
-*   $V$: Espace vectoriel réel de dimension finie $n$.
-*   $n$: Entier naturel non nul, $\dim(V)$.
-*   $B_E = (e_1, \ldots, e_n)$: Base orthonormée de $V$ pour le produit scalaire euclidien.
-*   $\langle \cdot, \cdot \rangle_E$: Produit scalaire euclidien sur $V$.
-*   $u, v$: Vecteurs de $V$.
-*   $X_u, X_v$: Vecteurs colonnes de coordonnées dans $\mathbb{R}^n$ pour $u$ et $v$ respectivement. $X_u \in \mathbb{R}^n$, $X_v \in \mathbb{R}^n$.
-*   $S$: Matrice carrée de taille $n \times n$, $S \in \mathcal{M}_n(\mathbb{R})$. $S$ est symétrique ($S^T = S$) et définie positive ($X^T S X > 0$ pour tout $X \in \mathbb{R}^n \setminus \{0\}$).
-*   $\langle \cdot, \cdot \rangle_S$: Forme bilinéaire sur $V \times V$, qui sera démontrée être un produit scalaire.
-*   $\|\cdot\|_S$: Norme associée au produit scalaire $\langle \cdot, \cdot \rangle_S$.
-*   $C_S(\cdot, \cdot)$: Similarité cosinus associée au produit scalaire $\langle \cdot, \cdot \rangle_S$.
-*   $W$: Sous-espace vectoriel de $V$.
-*   $k$: Entier naturel, $\dim(W)$, $1 \le k \le n-1$.
-*   $B_W = (w_1, \ldots, w_k)$: Base de $W$. $w_j \in W \subset V$.
-*   $X_{w_j}$: Vecteur colonne de coordonnées de $w_j$ dans $B_E$, $X_{w_j} \in \mathbb{R}^n$.
-*   $M_W$: Matrice $n \times k$ dont les colonnes sont $X_{w_1}, \ldots, X_{w_k}$. $M_W \in \mathcal{M}_{n,k}(\mathbb{R})$.
-*   $G_S$: Matrice de Gram sémantique, $G_S \in \mathcal{M}_k(\mathbb{R})$.
-*   $P_S(v)$: Projection orthogonale sémantique de $v$ sur $W$. $P_S(v) \in W \subset V$.
-*   $p$: Vecteur de $W$.
-*   $r$: Vecteur de $W^{\perp_S}$.
-*   $\alpha = (\alpha_1, \ldots, \alpha_k)^T$: Vecteur colonne de coefficients dans $\mathbb{R}^k$.
-*   $V^*$: Espace dual de $V$, l'ensemble des formes linéaires $f: V \to \mathbb{R}$.
-*   $\phi_u$: Forme linéaire associée à $u \in V$. $\phi_u \in V^*$.
-*   $\Phi_S$: Application linéaire $V \to V^*$.
-*   $W^{\circ_S}$: Annihilateur sémantique de $W$ dans $V^*$. $W^{\circ_S} \subset V^*$.
+4.  **Problème d'optimisation**
+    Soient $q \in V$ et $d \in V$ deux vecteurs non nuls et linéairement indépendants.
+    On cherche à maximiser $f(q)$ sous les contraintes $f \in V^*$, $f(d) = 0$ et $\|f\|_{V^*} = 1$.
 
----
+    a.  **Justification de l'existence d'une solution $f_0$**
+        L'ensemble des formes linéaires $f \in V^*$ telles que $\|f\|_{V^*} = 1$ est la sphère unité de $V^*$, notée $S_{V^*} = \{f \in V^* \mid \|f\|_{V^*} = 1\}$.
+        Puisque $V^*$ est un espace vectoriel de dimension finie, $S_{V^*}$ est un ensemble fermé et borné, donc compact dans $V^*$.
+        La contrainte $f(d) = 0$ définit un sous-espace vectoriel de $V^*$, appelé l'annihilateur de $d$, noté $(\text{span}\{d\})^\perp$. C'est un sous-espace fermé de $V^*$.
+        L'ensemble des contraintes est donc l'intersection de la sphère unité $S_{V^*}$ et du sous-espace fermé $(\text{span}\{d\})^\perp$. Cette intersection est un ensemble fermé et borné, donc compact.
+        Puisque $d \neq 0$, $\text{span}\{d\}$ est un sous-espace de dimension 1. Son annihilateur $(\text{span}\{d\})^\perp$ est un sous-espace de $V^*$ de dimension $\dim(V^*) - \dim(\text{span}\{d\}) = n-1$. Puisque $n \ge 2$, $n-1 \ge 1$, donc $(\text{span}\{d\})^\perp$ est non vide et contient des vecteurs non nuls. Par conséquent, l'intersection $S_{V^*} \cap (\text{span}\{d\})^\perp$ est non vide.
+        La fonction objectif $J(f) = f(q)$ est une application linéaire de $V^*$ dans $\mathbb{R}$. Toute application linéaire sur un espace de dimension finie est continue.
+        Puisque nous maximisons une fonction continue sur un ensemble compact non vide, le théorème des valeurs extrêmes (théorème de Weierstrass) garantit l'existence d'une solution $f_0$.
 
-### Correction Détaillée
+    b.  **Détermination explicite de $f_0$}**
+        Nous allons traduire le problème dans l'espace $V$ via l'isomorphisme $\Phi$.
+        Soit $f \in V^*$. Il existe un unique $v \in V$ tel que $f = \Phi(v)$.
+        Les contraintes se traduisent comme suit :
+        *   $f(d) = 0 \implies \Phi(v)(d) = 0 \implies \langle v, d \rangle = 0$. Cela signifie que le vecteur $v$ doit appartenir à l'orthogonal de $d$, noté $d^\perp = \{x \in V \mid \langle x, d \rangle = 0\}$.
+        *   $\|f\|_{V^*} = 1 \implies \|\Phi(v)\|_{V^*} = 1$. D'après la question 3, cela implique $\|v\| = 1$.
+        L'objectif $f(q)$ se traduit par :
+        *   $f(q) = \Phi(v)(q) = \langle v, q \rangle$.
 
-**Partie I : Introduction du Produit Scalaire Sémantique**
+        Le problème d'optimisation devient donc :
+        $$ \text{Maximiser } \langle v, q \rangle \text{ sous les contraintes } v \in V, v \in d^\perp \text{ et } \|v\| = 1. $$
+        Nous cherchons un vecteur unitaire $v_0 \in d^\perp$ qui maximise $\langle v, q \rangle$.
+        Soit $P_{d^\perp}$ l'opérateur de projection orthogonale sur le sous-espace $d^\perp$.
+        Pour tout $v \in d^\perp$, nous avons $\langle v, q \rangle = \langle v, P_{d^\perp}(q) \rangle$. En effet, $q = P_{d^\perp}(q) + P_{\text{span}\{d\}}(q)$, et puisque $v \in d^\perp$, $\langle v, P_{\text{span}\{d\}}(q) \rangle = 0$.
+        Par l'inégalité de Cauchy-Schwarz, $|\langle v, P_{d^\perp}(q) \rangle| \le \|v\| \|P_{d^\perp}(q)\|$.
+        Puisque $\|v\|=1$, nous avons $|\langle v, q \rangle| \le \|P_{d^\perp}(q)\|$.
+        L'égalité est atteinte lorsque $v$ est colinéaire à $P_{d^\perp}(q)$ et dans la même direction.
+        Donc, le vecteur $v_0$ qui maximise $\langle v, q \rangle$ doit être :
+        $$ v_0 = \frac{P_{d^\perp}(q)}{\|P_{d^\perp}(q)\|} $$
+        Il est nécessaire de s'assurer que $P_{d^\perp}(q) \neq 0_V$.
+        Le sous-espace $d^\perp$ est l'orthogonal de la droite vectorielle engendrée par $d$.
+        La projection orthogonale de $q$ sur $d^\perp$ est donnée par $P_{d^\perp}(q) = q - P_{\text{span}\{d\}}(q)$.
+        La projection orthogonale de $q$ sur $\text{span}\{d\}$ est $P_{\text{span}\{d\}}(q) = \frac{\langle q, d \rangle}{\langle d, d \rangle} d = \frac{\langle q, d \rangle}{\|d\|^2} d$.
+        Donc, $P_{d^\perp}(q) = q - \frac{\langle q, d \rangle}{\|d\|^2} d$.
+        Si $P_{d^\perp}(q) = 0_V$, alors $q = \frac{\langle q, d \rangle}{\|d\|^2} d$. Cela signifie que $q$ est colinéaire à $d$.
+        Cependant, l'énoncé stipule que $q$ et $d$ sont linéairement indépendants. Par conséquent, $P_{d^\perp}(q) \neq 0_V$.
+        Ainsi, le vecteur $v_0$ est bien défini.
 
-1.  **Démonstration que $\langle \cdot, \cdot \rangle_S$ est un produit scalaire sur $V$.**
-    Pour que $\langle \cdot, \cdot \rangle_S$ soit un produit scalaire, il doit satisfaire les propriétés suivantes :
-    a.  **Bilinéarité :** Pour tous $u, v, w \in V$ et tout $\lambda \in \mathbb{R}$ :
-        *   **Linéarité par rapport à la première variable :**
-            $\langle u + \lambda v, w \rangle_S = X_{u+\lambda v}^T S X_w$.
-            Par la linéarité des coordonnées, $X_{u+\lambda v} = X_u + \lambda X_v$.
-            Donc, $\langle u + \lambda v, w \rangle_S = (X_u + \lambda X_v)^T S X_w$.
-            Par la distributivité de la transposition et du produit matriciel, $(X_u + \lambda X_v)^T = X_u^T + \lambda X_v^T$.
-            Ainsi, $\langle u + \lambda v, w \rangle_S = (X_u^T + \lambda X_v^T) S X_w$.
-            Par la distributivité du produit matriciel, $(X_u^T + \lambda X_v^T) S X_w = X_u^T S X_w + \lambda X_v^T S X_w$.
-            Ceci est égal à $\langle u, w \rangle_S + \lambda \langle v, w \rangle_S$.
-            La linéarité par rapport à la première variable est démontrée.
-        *   **Linéarité par rapport à la deuxième variable :**
-            $\langle u, v + \lambda w \rangle_S = X_u^T S X_{v+\lambda w}$.
-            Par la linéarité des coordonnées, $X_{v+\lambda w} = X_v + \lambda X_w$.
-            Donc, $\langle u, v + \lambda w \rangle_S = X_u^T S (X_v + \lambda X_w)$.
-            Par la distributivité du produit matriciel, $X_u^T S (X_v + \lambda X_w) = X_u^T S X_v + \lambda X_u^T S X_w$.
-            Ceci est égal à $\langle u, v \rangle_S + \lambda \langle u, w \rangle_S$.
-            La bilinéarité est démontrée.
+        La forme linéaire $f_0$ est alors $\Phi(v_0)$.
+        $$ f_0 = \Phi\left(\frac{q - \frac{\langle q, d \rangle}{\|d\|^2} d}{\left\|q - \frac{\langle q, d \rangle}{\|d\|^2} d\right\|}\right) $$
+        Pour tout $x \in V$, $f_0(x) = \left\langle \frac{q - \frac{\langle q, d \rangle}{\|d\|^2} d}{\left\|q - \frac{\langle q, d \rangle}{\|d\|^2} d\right\|}, x \right\rangle$.
 
-    b.  **Symétrie :** Pour tous $u, v \in V$ :
-        $\langle u, v \rangle_S = X_u^T S X_v$.
-        Puisque le résultat est un scalaire (un réel), il est égal à sa propre transposée :
-        $\langle u, v \rangle_S = (X_u^T S X_v)^T$.
-        Par la propriété $(AB)^T = B^T A^T$ appliquée aux matrices $X_u^T$, $S$, $X_v$ (considérées comme des matrices de tailles $1 \times n$, $n \times n$, $n \times 1$ respectivement) :
-        $(X_u^T S X_v)^T = X_v^T S^T (X_u^T)^T$.
-        Comme $S$ est symétrique, $S^T = S$. Et $(X_u^T)^T = X_u$.
-        Donc, $(X_u^T S X_v)^T = X_v^T S X_u$.
-        Ceci est la définition de $\langle v, u \rangle_S$.
-        Ainsi, $\langle u, v \rangle_S = \langle v, u \rangle_S$. La symétrie est démontrée.
+    c.  **Calcul de la valeur maximale $f_0(q)$**
+        La valeur maximale de $f(q)$ est $\langle v_0, q \rangle$.
+        $$ \langle v_0, q \rangle = \left\langle \frac{P_{d^\perp}(q)}{\|P_{d^\perp}(q)\|}, q \right\rangle $$
+        Puisque $P_{d^\perp}(q) \in d^\perp$, nous avons $\langle P_{d^\perp}(q), d \rangle = 0$.
+        De plus, nous pouvons décomposer $q$ en ses composantes orthogonales par rapport à $d^\perp$ et $\text{span}\{d\}$ : $q = P_{d^\perp}(q) + P_{\text{span}\{d\}}(q)$.
+        Donc,
+        $$ \langle v_0, q \rangle = \frac{1}{\|P_{d^\perp}(q)\|} \langle P_{d^\perp}(q), P_{d^\perp}(q) + P_{\text{span}\{d\}}(q) \rangle $$
+        Par l'orthogonalité de $P_{d^\perp}(q)$ et $P_{\text{span}\{d\}}(q)$, nous avons $\langle P_{d^\perp}(q), P_{\text{span}\{d\}}(q) \rangle = 0$.
+        Ainsi,
+        $$ \langle v_0, q \rangle = \frac{1}{\|P_{d^\perp}(q)\|} \langle P_{d^\perp}(q), P_{d^\perp}(q) \rangle = \frac{\|P_{d^\perp}(q)\|^2}{\|P_{d^\perp}(q)\|} = \|P_{d^\perp}(q)\| $$
+        Calculons $\|P_{d^\perp}(q)\|$:
+        $$ \|P_{d^\perp}(q)\|^2 = \left\|q - \frac{\langle q, d \rangle}{\|d\|^2} d\right\|^2 $$
+        En développant la norme au carré :
+        $$ \|P_{d^\perp}(q)\|^2 = \left\langle q - \frac{\langle q, d \rangle}{\|d\|^2} d, q - \frac{\langle q, d \rangle}{\|d\|^2} d \right\rangle $$
+        $$ = \langle q, q \rangle - 2 \left\langle q, \frac{\langle q, d \rangle}{\|d\|^2} d \right\rangle + \left\langle \frac{\langle q, d \rangle}{\|d\|^2} d, \frac{\langle q, d \rangle}{\|d\|^2} d \right\rangle $$
+        $$ = \|q\|^2 - 2 \frac{\langle q, d \rangle}{\|d\|^2} \langle q, d \rangle + \left(\frac{\langle q, d \rangle}{\|d\|^2}\right)^2 \langle d, d \rangle $$
+        $$ = \|q\|^2 - 2 \frac{(\langle q, d \rangle)^2}{\|d\|^2} + \frac{(\langle q, d \rangle)^2}{\|d\|^4} \|d\|^2 $$
+        $$ = \|q\|^2 - 2 \frac{(\langle q, d \rangle)^2}{\|d\|^2} + \frac{(\langle q, d \rangle)^2}{\|d\|^2} $$
+        $$ = \|q\|^2 - \frac{(\langle q, d \rangle)^2}{\|d\|^2} $$
+        Nous savons que la similarité cosinus entre $q$ et $d$ est $\text{sim}(q,d) = \frac{\langle q, d \rangle}{\|q\| \|d\|}$.
+        Donc, $\langle q, d \rangle = \|q\| \|d\| \text{sim}(q,d)$. Substituons cette expression :
+        $$ \|P_{d^\perp}(q)\|^2 = \|q\|^2 - \frac{(\|q\| \|d\| \text{sim}(q,d))^2}{\|d\|^2} $$
+        $$ = \|q\|^2 - \frac{\|q\|^2 \|d\|^2 (\text{sim}(q,d))^2}{\|d\|^2} $$
+        $$ = \|q\|^2 - \|q\|^2 (\text{sim}(q,d))^2 $$
+        $$ = \|q\|^2 (1 - (\text{sim}(q,d))^2) $$
+        Soit $\theta$ l'angle entre $q$ et $d$. Alors $\text{sim}(q,d) = \cos(\theta)$.
+        $$ \|P_{d^\perp}(q)\|^2 = \|q\|^2 (1 - \cos^2(\theta)) = \|q\|^2 \sin^2(\theta) $$
+        Puisque $q$ et $d$ sont linéairement indépendants, $\theta \neq 0$ et $\theta \neq \pi$. Par conséquent, $\sin(\theta) \neq 0$.
+        De plus, pour $\theta \in [0, \pi]$, $\sin(\theta) \ge 0$.
+        Donc, $\|P_{d^\perp}(q)\| = \sqrt{\|q\|^2 \sin^2(\theta)} = \|q\| \sin(\theta)$.
 
-    c.  **Définie-positivité :** Pour tout $u \in V$ :
-        $\langle u, u \rangle_S = X_u^T S X_u$.
-        Puisque $S$ est une matrice définie positive, par définition, pour tout vecteur colonne $X \in \mathbb{R}^n \setminus \{0\}$, $X^T S X > 0$.
-        Si $u \neq 0_V$, alors son vecteur de coordonnées $X_u \neq 0_{\mathbb{R}^n}$.
-        Donc, $X_u^T S X_u > 0$, ce qui signifie $\langle u, u \rangle_S > 0$.
-        Si $u = 0_V$, alors $X_u = 0_{\mathbb{R}^n}$. Donc $\langle 0_V, 0_V \rangle_S = X_{0_V}^T S X_{0_V} = 0^T S 0 = 0$.
-        La définie-positivité est démontrée.
+        La valeur maximale $f_0(q)$ est donc $\|q\| \sin(\theta)$, où $\theta$ est l'angle entre $q$ et $d$.
 
-    Ayant satisfait les trois propriétés, $\langle \cdot, \cdot \rangle_S$ est bien un produit scalaire sur $V$.
+    d.  **Interprétation géométrique et relation avec la similarité cosinus**
+        La forme linéaire $f_0 = \Phi(v_0)$ est associée au vecteur $v_0 = \frac{P_{d^\perp}(q)}{\|P_{d^\perp}(q)\|}$.
+        Ce vecteur $v_0$ est le vecteur unitaire dans $V$ qui est orthogonal à $d$ (car $v_0 \in d^\perp$) et qui est le plus "aligné" avec $q$ parmi tous les vecteurs unitaires orthogonaux à $d$.
+        Géométriquement, $P_{d^\perp}(q)$ est la composante de $q$ qui est orthogonale à $d$. C'est le vecteur qui reste de $q$ une fois que toute sa composante colinéaire à $d$ a été retirée.
+        La contrainte $f_0(d) = 0$ signifie que la forme linéaire $f_0$ "ignore" complètement le document $d$. Dans le contexte d'un moteur de recherche sémantique, cela pourrait signifier que $f_0$ représente une "caractéristique sémantique" ou un "concept" qui n'est pas présent ou n'est pas pertinent pour le document $d$.
+        La valeur maximale $f_0(q)$ est $\|P_{d^\perp}(q)\| = \|q\| \sin(\theta)$.
+        Nous avons établi que $\text{sim}(q,d) = \cos(\theta)$.
+        La valeur maximale $f_0(q)$ peut donc s'écrire $\|q\| \sqrt{1 - (\text{sim}(q,d))^2}$.
+        Cette valeur représente la "force" ou la "magnitude" de la composante de $q$ qui est orthogonalement distincte de $d$. C'est une mesure de la "nouveauté" ou de l'"information non redondante" de $q$ par rapport à $d$, vue à travers le prisme de l'espace dual.
+        *   Si $q$ et $d$ sont très similaires (c'est-à-dire $\text{sim}(q,d)$ est proche de 1, ce qui signifie que $\theta$ est proche de 0), alors $\sin(\theta)$ est proche de 0, et $f_0(q)$ est proche de 0. Cela indique qu'il est difficile de trouver une forme linéaire qui distingue $q$ de $d$ tout en étant orthogonale à $d$, car $q$ est presque colinéaire à $d$.
+        *   Si $q$ et $d$ sont orthogonaux (c'est-à-dire $\text{sim}(q,d) = 0$, ce qui signifie $\theta = \pi/2$), alors $\sin(\theta) = 1$, et $f_0(q) = \|q\|$. Dans ce cas, $P_{d^\perp}(q) = q$, et $v_0 = q/\|q\|$. La forme linéaire $f_0$ est alors $\Phi(q/\|q\|)$, et $f_0(q) = \langle q/\|q\|, q \rangle = \|q\|$. Cela signifie que la forme linéaire qui maximise $f(q)$ tout en étant orthogonale à $d$ est simplement la forme linéaire associée à la direction de $q$ lui-même, car $q$ est déjà orthogonal à $d$.
 
-2.  **Définitions de la norme sémantique $\|\cdot\|_S$ et de la similarité cosinus sémantique $C_S(u,v)$.**
-    *   La norme associée à un produit scalaire $\langle \cdot, \cdot \rangle_S$ est définie par $\|u\|_S = \sqrt{\langle u, u \rangle_S}$.
-        En utilisant l'expression du produit scalaire sémantique :
-        $$ \|u\|_S = \sqrt{X_u^T S X_u} $$
-    *   La similarité cosinus entre deux vecteurs non nuls $u, v \in V \setminus \{0_V\}$ est définie par $C_S(u,v) = \frac{\langle u, v \rangle_S}{\|u\|_S \|v\|_S}$.
-        En utilisant les expressions du produit scalaire et de la norme sémantiques :
-        $$ C_S(u,v) = \frac{X_u^T S X_v}{\sqrt{X_u^T S X_u} \sqrt{X_v^T S X_v}} $$
+        En résumé, $f_0$ est la forme linéaire duale du vecteur unitaire qui représente la composante de $q$ la plus "distincte" de $d$ en termes d'orthogonalité. La valeur maximale $f_0(q)$ quantifie cette "distinctivité" de $q$ par rapport à $d$ dans la direction orthogonale à $d$. Ce concept est pertinent pour la conception de moteurs de recherche sémantiques, où l'on pourrait vouloir identifier des aspects d'une requête qui sont uniques par rapport à des documents déjà connus ou jugés non pertinents, permettant ainsi une exploration plus fine de l'espace sémantique.
 
-**Partie II : Projection Orthogonale Sémantique**
+### Conclusion
+Nous avons démontré que l'espace dual $V^*$ d'un espace euclidien $V$ est lui-même un espace euclidien, isomorphe à $V$ via l'isomorphisme de Riesz $\Phi$. Ce cadre a permis de reformuler un problème d'optimisation dans $V^*$ en un problème équivalent dans $V$.
 
-1.  **Définition de l'orthogonal sémantique $W^{\perp_S}$.**
-    L'orthogonal sémantique de $W$ est l'ensemble des vecteurs de $V$ qui sont orthogonaux à tous les vecteurs de $W$ selon le produit scalaire $\langle \cdot, \cdot \rangle_S$.
-    $$ W^{\perp_S} = \{ v \in V \mid \langle v, w \rangle_S = 0 \text{ pour tout } w \in W \} $$
+Le problème d'optimisation consistant à maximiser $f(q)$ sous les contraintes $f(d)=0$ et $\|f\|_{V^*}=1$ a été résolu. La forme linéaire $f_0$ solution est donnée par :
+$$ f_0 = \Phi\left(\frac{q - \frac{\langle q, d \rangle}{\|d\|^2} d}{\left\|q - \frac{\langle q, d \rangle}{\|d\|^2} d\right\|}\right) $$
+La valeur maximale $f_0(q)$ est :
+$$ f_0(q) = \left\|q - \frac{\langle q, d \rangle}{\|d\|^2} d\right\| = \|q\| \sqrt{1 - \left(\frac{\langle q, d \rangle}{\|q\| \|d\|}\right)^2} = \|q\| \sin(\theta) $$
+où $\theta$ est l'angle entre les vecteurs $q$ et $d$.
 
-2.  **Démonstration que $W^{\perp_S}$ est un sous-espace vectoriel de $V$.**
-    Pour montrer que $W^{\perp_S}$ est un sous-espace vectoriel, il faut vérifier trois points :
-    a.  **$W^{\perp_S}$ n'est pas vide :** Le vecteur nul $0_V \in V$ appartient à $W^{\perp_S}$. En effet, pour tout $w \in W$, $\langle 0_V, w \rangle_S = X_{0_V}^T S X_w = 0^T S X_w = 0$. Donc $0_V \in W^{\perp_S}$.
-    b.  **Stabilité par addition :** Soient $v_1, v_2 \in W^{\perp_S}$. Cela signifie que pour tout $w \in W$, $\langle v_1, w \rangle_S = 0$ et $\langle v_2, w \rangle_S = 0$.
-        Considérons $v_1 + v_2$. Pour tout $w \in W$, par la linéarité du produit scalaire par rapport à la première variable :
-        $\langle v_1 + v_2, w \rangle_S = \langle v_1, w \rangle_S + \langle v_2, w \rangle_S = 0 + 0 = 0$.
-        Donc $v_1 + v_2 \in W^{\perp_S}$.
-    c.  **Stabilité par multiplication scalaire :** Soient $v \in W^{\perp_S}$ et $\lambda \in \mathbb{R}$. Cela signifie que pour tout $w \in W$, $\langle v, w \rangle_S = 0$.
-        Considérons $\lambda v$. Pour tout $w \in W$, par la linéarité du produit scalaire par rapport à la première variable :
-        $\langle \lambda v, w \rangle_S = \lambda \langle v, w \rangle_S = \lambda \cdot 0 = 0$.
-        Donc $\lambda v \in W^{\perp_S}$.
-    Ces trois points prouvent que $W^{\perp_S}$ est un sous-espace vectoriel de $V$.
-
-3.  **Démonstration que $V = W \oplus W^{\perp_S}$.**
-    Il s'agit de montrer que $W \cap W^{\perp_S} = \{0_V\}$ et que $\dim(W) + \dim(W^{\perp_S}) = \dim(V)$.
-
-    a.  **Démonstration de $W \cap W^{\perp_S} = \{0_V\}$ :**
-        Soit $v \in W \cap W^{\perp_S}$.
-        Puisque $v \in W^{\perp_S}$, par définition, $\langle v, w \rangle_S = 0$ pour tout $w \in W$.
-        Puisque $v \in W$, nous pouvons en particulier prendre $w = v$.
-        Donc, $\langle v, v \rangle_S = 0$.
-        Par la propriété de définie-positivité du produit scalaire $\langle \cdot, \cdot \rangle_S$ (démontrée en Partie I, question 1.c), $\langle v, v \rangle_S = 0$ implique que $v = 0_V$.
-        Ainsi, $W \cap W^{\perp_S} = \{0_V\}$.
-
-    b.  **Démonstration de $\dim(W) + \dim(W^{\perp_S}) = \dim(V)$ :**
-        Soit $B_W = (w_1, \ldots, w_k)$ une base de $W$.
-        Un vecteur $v \in V$ appartient à $W^{\perp_S}$ si et seulement si $\langle v, w_j \rangle_S = 0$ pour tout $j \in \{1, \ldots, k\}$.
-        Chaque condition $\langle v, w_j \rangle_S = 0$ est une équation linéaire homogène pour les coordonnées de $v$.
-        Exprimons ceci en termes matriciels. Soit $X_v$ le vecteur de coordonnées de $v$ dans $B_E$.
-        Les conditions sont $X_v^T S X_{w_j} = 0$ pour $j=1, \ldots, k$.
-        Ceci peut être réécrit comme $X_{w_j}^T S X_v = 0$ (par symétrie du produit scalaire).
-        Construisons la matrice $M_W \in \mathcal{M}_{n,k}(\mathbb{R})$ dont les colonnes sont $X_{w_1}, \ldots, X_{w_k}$.
-        Alors, l'ensemble des conditions peut s'écrire $M_W^T S X_v = 0_{\mathbb{R}^k}$.
-        C'est un système linéaire homogène de $k$ équations à $n$ inconnues ($X_v$).
-        L'espace $W^{\perp_S}$ est l'ensemble des vecteurs $v$ dont les coordonnées $X_v$ sont dans le noyau de l'application linéaire représentée par $M_W^T S$.
-        Ainsi, $\dim(W^{\perp_S}) = n - \mathrm{rang}(M_W^T S)$.
-        Puisque $S$ est une matrice symétrique définie positive, elle est inversible.
-        La matrice $M_W^T S$ est de taille $k \times n$.
-        Le rang de $M_W^T S$ est égal au rang de $M_W^T$ car $S$ est inversible et le produit par une matrice inversible ne change pas le rang : $\mathrm{rang}(M_W^T S) = \mathrm{rang}(M_W^T)$.
-        De plus, $\mathrm{rang}(M_W^T) = \mathrm{rang}(M_W)$.
-        Les colonnes de $M_W$ sont les vecteurs de coordonnées d'une base $(w_1, \ldots, w_k)$ de $W$. Puisque ces vecteurs sont linéairement indépendants, le rang de $M_W$ est $k$.
-        Donc, $\mathrm{rang}(M_W^T S) = k$.
-        Par le théorème du rang, $\dim(W^{\perp_S}) = n - k$.
-        Puisque $\dim(W) = k$, nous avons bien $\dim(W) + \dim(W^{\perp_S}) = k + (n-k) = n = \dim(V)$.
-
-    De $W \cap W^{\perp_S} = \{0_V\}$ et $\dim(W) + \dim(W^{\perp_S}) = \dim(V)$, il résulte que $V = W \oplus W^{\perp_S}$.
-
-4.  **Matrice de Gram sémantique $G_S$ et son inversibilité.**
-    La matrice de Gram sémantique $G_S \in \mathcal{M}_k(\mathbb{R})$ associée à la base $B_W = (w_1, \ldots, w_k)$ et au produit scalaire $\langle \cdot, \cdot \rangle_S$ a pour éléments $(G_S)_{ij} = \langle w_i, w_j \rangle_S$.
-    En utilisant la définition du produit scalaire sémantique :
-    $(G_S)_{ij} = X_{w_i}^T S X_{w_j}$.
-    La matrice $M_W$ a pour colonnes $X_{w_1}, \ldots, X_{w_k}$. Donc $M_W = (X_{w_1} | \ldots | X_{w_k})$.
-    Alors $M_W^T = \begin{pmatrix} X_{w_1}^T \\ \vdots \\ X_{w_k}^T \end{pmatrix}$.
-    Le produit matriciel $M_W^T S M_W$ est :
-    $$ M_W^T S M_W = \begin{pmatrix} X_{w_1}^T \\ \vdots \\ X_{w_k}^T \end{pmatrix} S (X_{w_1} | \ldots | X_{w_k}) = \begin{pmatrix} X_{w_1}^T S X_{w_1} & \ldots & X_{w_1}^T S X_{w_k} \\ \vdots & \ddots & \vdots \\ X_{w_k}^T S X_{w_1} & \ldots & X_{w_k}^T S X_{w_k} \end{pmatrix} $$
-    Ainsi, la matrice de Gram sémantique est $G_S = M_W^T S M_W$.
-
-    **Démonstration que $G_S$ est inversible :**
-    La matrice $G_S$ est une matrice de Gram pour le produit scalaire $\langle \cdot, \cdot \rangle_S$ et la base $B_W = (w_1, \ldots, w_k)$.
-    Puisque $B_W$ est une base de $W$, ses vecteurs sont linéairement indépendants.
-    Nous pouvons démontrer l'inversibilité en montrant que son noyau est trivial. Soit $\alpha = (\alpha_1, \ldots, \alpha_k)^T \in \mathbb{R}^k$ tel que $G_S \alpha = 0_{\mathbb{R}^k}$.
-    Cela signifie $\sum_{j=1}^k (G_S)_{ij} \alpha_j = 0$ pour tout $i=1, \ldots, k$.
-    C'est-à-dire $\sum_{j=1}^k \langle w_i, w_j \rangle_S \alpha_j = 0$ pour tout $i=1, \ldots, k$.
-    Considérons le vecteur $w = \sum_{j=1}^k \alpha_j w_j \in W$.
-    Alors pour tout $i \in \{1, \ldots, k\}$, $\langle w_i, w \rangle_S = \langle w_i, \sum_{j=1}^k \alpha_j w_j \rangle_S = \sum_{j=1}^k \alpha_j \langle w_i, w_j \rangle_S = 0$.
-    Puisque $w$ est orthogonal à tous les vecteurs de la base $B_W$ de $W$, il est orthogonal à tout vecteur de $W$. C'est-à-dire $w \in W^{\perp_S}$.
-    Puisque $w \in W$ par construction, nous avons $w \in W \cap W^{\perp_S}$.
-    D'après la question 3.a de cette partie, $W \cap W^{\perp_S} = \{0_V\}$.
-    Donc $w = 0_V$.
-    $w = \sum_{j=1}^k \alpha_j w_j = 0_V$.
-    Comme $B_W = (w_1, \ldots, w_k)$ est une base, les vecteurs $w_j$ sont linéairement indépendants.
-    Par conséquent, tous les coefficients $\alpha_j$ doivent être nuls : $\alpha_1 = \ldots = \alpha_k = 0$.
-    Le noyau de $G_S$ est donc trivial, ce qui signifie que $G_S$ est inversible.
-
-5.  **Dérivation de l'expression des coefficients $\alpha$ pour $P_S(v)$.**
-    Nous savons que $v = P_S(v) + r$, où $P_S(v) \in W$ et $r \in W^{\perp_S}$.
-    Soit $P_S(v) = p$. Puisque $p \in W$ et $B_W = (w_1, \ldots, w_k)$ est une base de $W$, $p$ s'écrit de manière unique comme $p = \sum_{i=1}^k \alpha_i w_i$ pour des coefficients $\alpha_i \in \mathbb{R}$.
-    Le fait que $r \in W^{\perp_S}$ signifie que $v - p \in W^{\perp_S}$.
-    Par définition de $W^{\perp_S}$, cela implique que $\langle v - p, w_j \rangle_S = 0$ pour tout $j \in \{1, \ldots, k\}$.
-    En substituant $p = \sum_{i=1}^k \alpha_i w_i$, nous obtenons :
-    $\langle v - \sum_{i=1}^k \alpha_i w_i, w_j \rangle_S = 0$ pour tout $j \in \{1, \ldots, k\}$.
-    Par linéarité du produit scalaire :
-    $\langle v, w_j \rangle_S - \langle \sum_{i=1}^k \alpha_i w_i, w_j \rangle_S = 0$.
-    $\langle v, w_j \rangle_S - \sum_{i=1}^k \alpha_i \langle w_i, w_j \rangle_S = 0$.
-    Ceci peut être réécrit comme :
-    $\sum_{i=1}^k \alpha_i \langle w_i, w_j \rangle_S = \langle v, w_j \rangle_S$ pour tout $j \in \{1, \ldots, k\}$.
-
-    Ceci est un système de $k$ équations linéaires pour les $k$ inconnues $\alpha_1, \ldots, \alpha_k$.
-    Identifions les composantes de ce système matriciel :
-    *   La matrice des coefficients est la matrice de Gram sémantique $G_S$, où $(G_S)_{ji} = \langle w_j, w_i \rangle_S$. (Notez l'ordre des indices pour correspondre à $G_S \alpha = b$).
-    *   Le vecteur des inconnues est $\alpha = (\alpha_1, \ldots, \alpha_k)^T$.
-    *   Le vecteur du second membre $b = (b_1, \ldots, b_k)^T$ est défini par $b_j = \langle v, w_j \rangle_S$.
-
-    En écriture matricielle, le système est :
-    $$ G_S \alpha = b $$
-    où $G_S = M_W^T S M_W$ (comme vu en question 4).
-    Le vecteur $b$ peut être écrit comme :
-    $b_j = \langle v, w_j \rangle_S = X_v^T S X_{w_j}$.
-    Donc $b = \begin{pmatrix} X_v^T S X_{w_1} \\ \vdots \\ X_v^T S X_{w_k} \end{pmatrix}$.
-    Ceci est équivalent à $b = \begin{pmatrix} X_{w_1}^T S X_v \\ \vdots \\ X_{w_k}^T S X_v \end{pmatrix} = M_W^T S X_v$.
-
-    Puisque nous avons démontré que $G_S$ est inversible (question 4), nous pouvons résoudre pour $\alpha$:
-    $$ \alpha = G_S^{-1} b $$
-    En substituant les expressions pour $G_S$ et $b$:
-    $$ \alpha = (M_W^T S M_W)^{-1} (M_W^T S X_v) $$
-    Cette expression donne le vecteur colonne des coefficients $\alpha_i$.
-
-    **Expression pour $P_S(v)$ dans la base $B_E$ :**
-    Nous avons $P_S(v) = \sum_{i=1}^k \alpha_i w_i$.
-    Le vecteur de coordonnées de $P_S(v)$ dans la base $B_E$ est $X_{P_S(v)}$.
-    Puisque $M_W$ est la matrice dont les colonnes sont les $X_{w_i}$, nous pouvons écrire $X_p = M_W \alpha$.
-    Donc, en substituant l'expression de $\alpha$:
-    $$ X_{P_S(v)} = M_W (M_W^T S M_W)^{-1} (M_W^T S X_v) $$
-    Cette formule fournit le vecteur de coordonnées de la projection orthogonale sémantique de $v$ sur $W$ dans la base $B_E$. Le vecteur $P_S(v)$ lui-même est la combinaison linéaire des $e_i$ avec ces coordonnées.
-
-**Partie III : Dualité et Annihilateur Sémantique**
-
-1.  **Démonstration que $\Phi_S: V \to V^*$ est un isomorphisme linéaire.**
-    L'application $\Phi_S(u) = \phi_u$ est définie par $\phi_u(v) = \langle u, v \rangle_S$.
-
-    a.  **Linéarité de $\Phi_S$ :** Pour tous $u_1, u_2 \in V$ et tout $\lambda \in \mathbb{R}$.
-        Nous devons montrer que $\Phi_S(u_1 + \lambda u_2) = \Phi_S(u_1) + \lambda \Phi_S(u_2)$.
-        Ceci signifie que pour tout $v \in V$, $(\Phi_S(u_1 + \lambda u_2))(v) = (\Phi_S(u_1) + \lambda \Phi_S(u_2))(v)$.
-        Le membre de gauche est $\phi_{u_1 + \lambda u_2}(v) = \langle u_1 + \lambda u_2, v \rangle_S$.
-        Par la linéarité du produit scalaire par rapport à la première variable :
-        $\langle u_1 + \lambda u_2, v \rangle_S = \langle u_1, v \rangle_S + \lambda \langle u_2, v \rangle_S$.
-        Le membre de droite est $(\Phi_S(u_1) + \lambda \Phi_S(u_2))(v) = \phi_{u_1}(v) + \lambda \phi_{u_2}(v)$.
-        Par définition de $\phi_u$: $\phi_{u_1}(v) + \lambda \phi_{u_2}(v) = \langle u_1, v \rangle_S + \lambda \langle u_2, v \rangle_S$.
-        Les deux membres sont égaux. Donc $\Phi_S$ est linéaire.
-
-    b.  **Injectivité de $\Phi_S$ :**
-        Soit $u \in V$ tel que $\Phi_S(u) = 0_{V^*}$ (la forme linéaire nulle).
-        Cela signifie que pour tout $v \in V$, $\phi_u(v) = 0$.
-        Donc, pour tout $v \in V$, $\langle u, v \rangle_S = 0$.
-        En particulier, en prenant $v=u$, nous avons $\langle u, u \rangle_S = 0$.
-        Par la définie-positivité du produit scalaire $\langle \cdot, \cdot \rangle_S$, ceci implique $u = 0_V$.
-        Le noyau de $\Phi_S$ est $\{0_V\}$, donc $\Phi_S$ est injective.
-
-    c.  **Surjectivité de $\Phi_S$ :**
-        Nous savons que $V$ est un espace vectoriel réel de dimension finie $n$.
-        Son dual $V^*$ est également un espace vectoriel réel de dimension finie.
-        Il est un théorème fondamental d'algèbre linéaire que $\dim(V^*) = \dim(V) = n$.
-        Puisque $\Phi_S$ est une application linéaire injective entre deux espaces de même dimension finie, elle est nécessairement surjective.
-        (Pour une preuve plus directe sans utiliser le théorème de la dimension du dual, on peut utiliser le théorème de représentation de Riesz, qui garantit l'existence d'un unique $u \in V$ pour chaque $f \in V^*$ tel que $f(v) = \langle u, v \rangle_S$ pour tout $v$. Cet $u$ est précisément $\Phi_S^{-1}(f)$).
-
-    Puisque $\Phi_S$ est linéaire, injective et surjective, c'est un isomorphisme linéaire.
-
-2.  **Démonstration que $W^{\circ_S}$ est un sous-espace vectoriel de $V^*$ et détermination de sa dimension.**
-    $W^{\circ_S} = \{ f \in V^* \mid f(w) = 0 \text{ pour tout } w \in W \}$.
-
-    a.  **$W^{\circ_S}$ est un sous-espace vectoriel de $V^*$ :**
-        *   **Non-vide :** La forme linéaire nulle $0_{V^*}$ est telle que $0_{V^*}(w) = 0$ pour tout $w \in W$. Donc $0_{V^*} \in W^{\circ_S}$.
-        *   **Stabilité par addition :** Soient $f_1, f_2 \in W^{\circ_S}$. Pour tout $w \in W$, $f_1(w) = 0$ et $f_2(w) = 0$.
-            Alors $(f_1 + f_2)(w) = f_1(w) + f_2(w) = 0 + 0 = 0$. Donc $f_1 + f_2 \in W^{\circ_S}$.
-        *   **Stabilité par multiplication scalaire :** Soient $f \in W^{\circ_S}$ et $\lambda \in \mathbb{R}$. Pour tout $w \in W$, $f(w) = 0$.
-            Alors $(\lambda f)(w) = \lambda f(w) = \lambda \cdot 0 = 0$. Donc $\lambda f \in W^{\circ_S}$.
-        Ces trois points prouvent que $W^{\circ_S}$ est un sous-espace vectoriel de $V^*$.
-
-    b.  **Détermination de la dimension de $W^{\circ_S}$ :**
-        Nous savons que pour un sous-espace $W$ d'un espace de dimension finie $V$, la dimension de son annihilateur $W^\circ$ (défini sans référence à un produit scalaire spécifique, i.e., $W^\circ = \{f \in V^* \mid f(w)=0 \text{ pour tout } w \in W\}$) est donnée par $\dim(W^\circ) = \dim(V) - \dim(W)$.
-        La définition de $W^{\circ_S}$ que nous avons donnée *est* la définition standard de l'annihilateur d'un sous-espace $W$ dans le dual $V^*$. Le "S" n'indique pas un changement dans la *définition* de l'annihilateur, mais plutôt une connexion future avec le produit scalaire sémantique.
-        Ainsi, $\dim(W^{\circ_S}) = \dim(V) - \dim(W) = n - k$.
-
-3.  **Relation précise entre $W^{\perp_S}$ et $W^{\circ_S}$ et démonstration de cette relation.**
-    Nous avons montré que $\Phi_S: V \to V^*$ est un isomorphisme linéaire. Nous pouvons l'utiliser pour relier les deux sous-espaces.
-    La relation est : $W^{\circ_S} = \Phi_S(W^{\perp_S})$.
-
-    **Démonstration :**
-    *   **$\Phi_S(W^{\perp_S}) \subseteq W^{\circ_S}$ :**
-        Soit $f \in \Phi_S(W^{\perp_S})$. Par définition, il existe un $u \in W^{\perp_S}$ tel que $f = \Phi_S(u)$.
-        Par définition de $\Phi_S$, $f(v) = \phi_u(v) = \langle u, v \rangle_S$ pour tout $v \in V$.
-        Puisque $u \in W^{\perp_S}$, par définition de $W^{\perp_S}$, $\langle u, w \rangle_S = 0$ pour tout $w \in W$.
-        Donc, pour tout $w \in W$, $f(w) = \langle u, w \rangle_S = 0$.
-        Par définition de $W^{\circ_S}$, ceci signifie que $f \in W^{\circ_S}$.
-        Par conséquent, $\Phi_S(W^{\perp_S}) \subseteq W^{\circ_S}$.
-
-    *   **$W^{\circ_S} \subseteq \Phi_S(W^{\perp_S})$ :**
-        Soit $f \in W^{\circ_S}$. Par définition, $f \in V^*$ et $f(w) = 0$ pour tout $w \in W$.
-        Puisque $\Phi_S$ est un isomorphisme (et donc surjectif), il existe un unique $u \in V$ tel que $f = \Phi_S(u)$.
-        Cela signifie que pour tout $v \in V$, $f(v) = \langle u, v \rangle_S$.
-        Puisque $f \in W^{\circ_S}$, nous savons que $f(w) = 0$ pour tout $w \in W$.
-        Donc, $\langle u, w \rangle_S = 0$ pour tout $w \in W$.
-        Par définition de $W^{\perp_S}$, ceci signifie que $u \in W^{\perp_S}$.
-        Puisque $f = \Phi_S(u)$ et $u \in W^{\perp_S}$, il s'ensuit que $f \in \Phi_S(W^{\perp_S})$.
-        Par conséquent, $W^{\circ_S} \subseteq \Phi_S(W^{\perp_S})$.
-
-    De l'inclusion mutuelle des deux ensembles, nous concluons que $W^{\circ_S} = \Phi_S(W^{\perp_S})$.
-    Cette relation est fondamentale et montre comment l'orthogonalité (géométrique, définie par le produit scalaire) et l'annihilation (algébrique, définie par les formes linéaires) sont intrinsèquement liées dans un espace de Hilbert de dimension finie via l'isomorphisme de Riesz (ici $\Phi_S$). Elle souligne que les "conditions d'orthogonalité sémantique" sont équivalentes aux "conditions d'annulation sémantique" dans le dual.
-
----
-
-J'espère que cet exercice vous aura permis d'apprécier la richesse de la géométrie des espaces vectoriels et le rôle crucial de la dualité, même dans des applications modernes comme la conception de moteurs de recherche sémantiques. L'X attend de ses élèves une maîtrise de ces concepts, non seulement dans leur application directe mais aussi dans leur démonstration rigoureuse.
+Géométriquement, $f_0$ est la forme linéaire associée au vecteur unitaire $v_0$ qui représente la direction de la projection orthogonale de $q$ sur l'orthogonal de $d$. La valeur maximale $f_0(q)$ est la norme de cette projection. Ce résultat quantifie la "partie" de la requête $q$ qui est sémantiquement distincte du document $d$, mesurée dans une direction orthogonale à $d$. Plus $q$ est orthogonal à $d$, plus cette "distinctivité" est grande, et plus $f_0(q)$ est élevé. Inversement, plus $q$ est similaire à $d$, plus $f_0(q)$ est faible, indiquant une faible "distinctivité" dans la direction orthogonale à $d$. Cette analyse est cruciale pour la conception de moteurs de recherche sémantiques, où l'on pourrait vouloir identifier des aspects d'une requête qui sont uniques par rapport à des documents déjà connus ou jugés non pertinents, permettant ainsi une exploration plus fine de l'espace sémantique.

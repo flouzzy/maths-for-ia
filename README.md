@@ -319,8 +319,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
-### 2026-06-27-audit
-- [[#2026-06-27-audit|2026-06-27]] : [Audit & Weekly Compilation] - Jalon 6 : Relations d'équivalence. Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+- [2026-06-29] : Upsert du Jalon 12 - Livrable IA. Status: Terminé.
 ### 2026-06-25-audit
 - [2026-06-27] : Upsert du Jalon 12 - Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X. Status: Terminé.
 - [[#2026-06-25-audit|2026-06-25]] : [Audit & Weekly Compilation] - Jalon 5 - Applications, injections, surjections, bijections et composition de fonctions. Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
