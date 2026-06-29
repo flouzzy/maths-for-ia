@@ -1,5 +1,3 @@
-En tant que Professeur Émérite de Mathématiques, je vous propose l'exercice suivant, conçu pour approfondir votre compréhension des relations d'équivalence, des ensembles quotients et des structures algébriques.
-
 ---
 
 # Exercice 6 : Structure Quotiente de l'Anneau des Polynômes par Évaluation

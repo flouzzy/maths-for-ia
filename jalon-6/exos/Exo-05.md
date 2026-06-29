@@ -1,5 +1,3 @@
-Je suis ravi de vous proposer l'exercice 5. Ce jalon est crucial pour asseoir une compréhension solide des structures fondamentales de l'algèbre moderne.
-
 ---
 
 # Exercice 5 : Anneau quotient de polynômes et irréductibilité

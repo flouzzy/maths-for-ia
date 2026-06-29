@@ -1,5 +1,3 @@
-En tant que Professeur de Mathématiques Émérite, je vous propose l'exercice suivant, qui explore la construction rigoureuse d'un corps bien connu à partir d'un anneau quotient.
-
 ---
 
 # Exercice 7 : Construction du Corps des Nombres Complexes comme Anneau Quotient

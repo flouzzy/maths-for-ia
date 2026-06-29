@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, mock_open
 import enrich_jalons_gemini
 
 class TestEnrichJalonsGemini(unittest.TestCase):
@@ -116,6 +116,35 @@ class TestEnrichJalonsGemini(unittest.TestCase):
         content_nav_both = "---\nuuid: 123\n---\n# Jalon 1\nMain text\n---\n**Précédent** : [[Jalon 0.md]]\n**Suivant** : [[Jalon 2.md]]"
         expected_nav_both = "---\nuuid: 123\n---\n# Jalon 1\nMain text"
         self.assertEqual(enrich_jalons_gemini.extract_main_content(content_nav_both), expected_nav_both)
+
+    @patch('builtins.open', new_callable=mock_open, read_data="mocked content")
+    @patch('enrich_jalons_gemini.extract_metadata')
+    @patch('enrich_jalons_gemini.extract_main_content')
+    @patch('enrich_jalons_gemini.extract_clean_title')
+    def test_parse_file_success(self, mock_extract_title, mock_extract_content, mock_extract_metadata, mock_file):
+        # Setup mocks
+        mock_extract_metadata.return_value = ("2023", "Trimestre 1", "prev.md", "next.md")
+        mock_extract_content.return_value = "Main content here"
+        mock_extract_title.return_value = "Clean Title"
+
+        # Call the function
+        result = enrich_jalons_gemini.parse_file("dummy_path.md")
+
+        # Asserts
+        mock_file.assert_called_once_with("dummy_path.md", 'r', encoding='utf-8')
+        mock_extract_metadata.assert_called_once_with("mocked content")
+        mock_extract_content.assert_called_once_with("mocked content")
+        mock_extract_title.assert_called_once_with("Main content here", "dummy_path.md")
+
+        self.assertEqual(
+            result,
+            ("Main content here", "Clean Title", "2023", "Trimestre 1", "prev.md", "next.md")
+        )
+
+    @patch('builtins.open', side_effect=FileNotFoundError)
+    def test_parse_file_file_not_found(self, mock_file):
+        with self.assertRaises(FileNotFoundError):
+            enrich_jalons_gemini.parse_file("missing_path.md")
 
 if __name__ == '__main__':
     unittest.main()
