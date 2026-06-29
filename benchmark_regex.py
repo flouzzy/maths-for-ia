@@ -1,10 +1,9 @@
 import timeit
+
+setup_uncached = r'''
 import re
 
-setup_uncached = """
-import re
-
-text = \"\"\"
+text = r"""
 Année 1 : le socle des fondations
 Trimestre 1 : logique
 L'objectif est de réapprendre la langue.
@@ -15,8 +14,8 @@ Jalon 13 : Structure de $\mathbb{R}$, axiome de la borne supérieure et proprié
 Trimestre 10 : géométrie différentielle et calcul des variations
 L'étude des espaces courbes, base mathématique des architectures de réseaux sur graphes.
 Jalon 109 : Topologie des sous-variétés de $\mathbb{R}^n$, définition par des cartes locales, des paramétrages ou des équations.
-\"\"\"
-lines = text.strip().split('\\n')
+"""
+lines = text.strip().split('\n')
 
 def run_uncached():
     for line in lines:
@@ -28,12 +27,12 @@ def run_uncached():
             match = re.search(r'Jalon(s)?\s+([\d à]+).*?:\s*(.*)', line)
             if match:
                 desc = re.sub(r'\[([^\]]+)\]\([^\)]+\)', r'\1', match.group(3))
-"""
+'''
 
-setup_cached = """
+setup_cached = r'''
 import re
 
-text = \"\"\"
+text = r"""
 Année 1 : le socle des fondations
 Trimestre 1 : logique
 L'objectif est de réapprendre la langue.
@@ -44,8 +43,8 @@ Jalon 13 : Structure de $\mathbb{R}$, axiome de la borne supérieure et proprié
 Trimestre 10 : géométrie différentielle et calcul des variations
 L'étude des espaces courbes, base mathématique des architectures de réseaux sur graphes.
 Jalon 109 : Topologie des sous-variétés de $\mathbb{R}^n$, définition par des cartes locales, des paramétrages ou des équations.
-\"\"\"
-lines = text.strip().split('\\n')
+"""
+lines = text.strip().split('\n')
 
 trimestre_num_pattern = re.compile(r'\*\*Trimestre (\d+).*?\*\*')
 trimestre_title_pattern = re.compile(r'\*\*Trimestre \d+\s*:\s*(.*?)\*\*')
@@ -62,7 +61,7 @@ def run_cached():
             match = jalon_detail_pattern.search(line)
             if match:
                 desc = md_link_pattern.sub(r'\1', match.group(3))
-"""
+'''
 
 stmt_uncached = "run_uncached()"
 stmt_cached = "run_cached()"

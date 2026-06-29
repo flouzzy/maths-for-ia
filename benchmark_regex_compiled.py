@@ -1,7 +1,6 @@
 import timeit
-import re
 
-setup = """
+setup = r'''
 from rename_files import clean_filename as clean_filename_old
 
 REPLACEMENTS = {
@@ -27,7 +26,7 @@ def clean_filename_old(filename):
     for bad, good in REPLACEMENTS.items():
         new_name = new_name.replace(bad, good)
     new_name = new_name.replace('$', '')
-    new_name = new_name.replace('\\\\', '')
+    new_name = new_name.replace('\\', '')
     return new_name
 
 import re
@@ -35,7 +34,7 @@ import re
 # Include $ and \\ for removal as well.
 replacements = dict(REPLACEMENTS)
 replacements['$'] = ''
-replacements['\\\\'] = ''
+replacements['\\'] = ''
 
 # Sort keys by length in descending order to avoid partial matches
 sorted_keys = sorted(replacements.keys(), key=len, reverse=True)
@@ -48,13 +47,13 @@ def clean_filename_new(filename):
     return pattern.sub(replacer, filename)
 
 filenames = [
-    "Jalon 1 - L'Ã©quation.md",
-    "Jalons Ã©tranges $-mathbb{R}^n$ et Ã§a $\\\\foo$.md",
-    "Normal file name.md",
-    "A long filename with lots of Ã© Ã¨ Ãª and Ã« and Ã§ and maybe $-mathbb{R}$ and \\\\$ things.md",
-    "Another completely normal filename without any weird chars.md"
+    r"Jalon 1 - L'Ã©quation.md",
+    r"Jalons Ã©tranges $-mathbb{R}^n$ et Ã§a \foo$.md",
+    r"Normal file name.md",
+    r"A long filename with lots of Ã© Ã¨ Ãª and Ã« and Ã§ and maybe $-mathbb{R}$ and \$ things.md",
+    r"Another completely normal filename without any weird chars.md"
 ] * 1000
-"""
+'''
 
 stmt_old = """
 for f in filenames:
