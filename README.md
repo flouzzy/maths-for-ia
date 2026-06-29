@@ -345,6 +345,8 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-06-10] : Audit & Auto-correction du Jalon 144 - Le phénomène de double descente. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - [2026-06-13] : Audit & Auto-correction du Jalon 145-152 - Rédaction d'un article de recherche théorique de synthèse analysant les garanties de généralisation PAC d'une couche d'attention multi-têtes. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - **Date de mise à jour** : 2026-06-13
+### 2026-06-28-audit
+- [[#2026-06-28-audit|2026-06-28]] : [Audit & Weekly Compilation] - Jalon 6 - Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps). Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 - [2026-06-10] : Upsert du Jalon 2 - Méthodes de raisonnement. Status: Terminé.
 - [2026-06-12] : Upsert du Jalon 3 - Quantification. Status: Terminé.
 - [2026-06-12] : Audit & Auto-correction du Jalon 1 - Logique formelle. Statut : Validé et Fixé. Prêt pour le jalon suivant.

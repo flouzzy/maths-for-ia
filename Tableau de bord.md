@@ -169,3 +169,6 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [[#2026-06-27-audit|2026-06-27]] : [Audit & Weekly Compilation] - Jalon 6 : Relations d'équivalence. Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-06-25-audit
 - [[#2026-06-25-audit|2026-06-25]] : [Audit & Weekly Compilation] - Jalon 5 - Applications, injections, surjections, bijections et composition de fonctions. Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+
+### 2026-06-28-audit
+- [[#2026-06-28-audit|2026-06-28]] : [Audit & Weekly Compilation] - Jalon 6 - Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps). Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
