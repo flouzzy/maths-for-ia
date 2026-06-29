@@ -165,5 +165,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
+### 2026-06-26-audit
+- [[#2026-06-26-audit|2026-06-26]] : [Audit & Weekly Compilation] - Jalon 6 - Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base. Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-06-25-audit
 - [[#2026-06-25-audit|2026-06-25]] : [Audit & Weekly Compilation] - Jalon 5 - Applications, injections, surjections, bijections et composition de fonctions. Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
