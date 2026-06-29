@@ -1,5 +1,3 @@
-import sys
-
 def chunk_file(filepath, chunk_size=30000):
     with open(filepath, 'r') as f:
         content = f.read()
