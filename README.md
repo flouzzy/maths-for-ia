@@ -319,6 +319,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-06-29] : Upsert du Jalon 13 - Structure de $\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède. Status: Terminé.
 ### 2026-06-27-audit
 - [[#2026-06-27-audit|2026-06-27]] : [Audit & Weekly Compilation] - Jalon 6 : Relations d'équivalence. Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-06-25-audit
