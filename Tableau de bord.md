@@ -18,7 +18,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-12/Jalon 12 (Livrable IA).md|Jalon 12 : Livrable IA]] : Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X.
 ### Trimestre 2 : analyse réelle, suites et séries de fonctions
 - [x] [[jalon-13/Jalon-13.md|Jalon 13 : Structure de $\\mathbb{R}$]] : Structure de $\\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède.
-- [ ] [[jalon-14/Jalon 14 (Suites réelles et complexes).md|Jalon 14 : Suites réelles et complexes]] : Suites réelles et complexes, définitions rigoureuses des limites ($\\epsilon, N$) et critères de convergence.
+- [x] [[jalon-14/Jalon-14.md|Jalon 14 : Suites réelles et complexes]] : Suites réelles et complexes, définitions rigoureuses des limites ($\\epsilon, N$) et critères de convergence.
 - [ ] [[jalon-15/Jalon 15 (Sous-suites).md|Jalon 15 : Sous-suites]] : Sous-suites, valeurs d'adhérence et preuve par séparation du théorème de Bolzano-Weierstrass.
 - [x] [[jalon-16/Jalon-16.md|Jalon 16 : Séries numériques à termes positifs]] : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy.
 - [ ] [[jalon-17/Jalon 17 (Séries absolument convergentes).md|Jalon 17 : Séries absolument convergentes]] : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries.

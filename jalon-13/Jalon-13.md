@@ -7,7 +7,7 @@ tags:
   - math/analyse
   - ia/continuite-numerique
 prev: "[[Jalon 12 (Livrable IA).md]]"
-next: "[[Jalon 14 (Suites réelles et complexes).md]]"
+next: "[[Jalon-14.md]]"
 ---
 # Jalon 13 : Structure de $\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède
 
