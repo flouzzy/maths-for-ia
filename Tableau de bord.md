@@ -18,7 +18,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-12/Jalon 12 (Livrable IA).md|Jalon 12 : Livrable IA]] : Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X.
 ### Trimestre 2 : analyse réelle, suites et séries de fonctions
 - [x] [[jalon-13/Jalon-13.md|Jalon 13 : Structure de $\\mathbb{R}$]] : Structure de $\\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède.
-- [ ] [[jalon-14/Jalon 14 (Suites réelles et complexes).md|Jalon 14 : Suites réelles et complexes]] : Suites réelles et complexes, définitions rigoureuses des limites ($\\epsilon, N$) et critères de convergence.
+- [x] [[jalon-14/Jalon-14.md|Jalon 14 : Suites réelles et complexes]] : Suites réelles et complexes, définitions rigoureuses des limites ($\\epsilon, N$) et critères de convergence.
 - [ ] [[jalon-15/Jalon 15 (Sous-suites).md|Jalon 15 : Sous-suites]] : Sous-suites, valeurs d'adhérence et preuve par séparation du théorème de Bolzano-Weierstrass.
 - [x] [[jalon-16/Jalon-16.md|Jalon 16 : Séries numériques à termes positifs]] : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy.
 - [ ] [[jalon-17/Jalon 17 (Séries absolument convergentes).md|Jalon 17 : Séries absolument convergentes]] : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries.
@@ -160,7 +160,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-141/Jalon-141.md|Jalon 141 : Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC.]] : Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC.
 - [x] [[jalon-142/Jalon-142.md|Jalon 142 : Processus de décision de Markov]] : Processus de décision de Markov (MDP) sur des espaces d'états continus, opérateurs de contraction de Bellman.
 - [x] [[jalon-143/Jalon-143.md|Jalon 143 : Théorie spectrale des graphes]] : Théorie spectrale des graphes, laplacien combinatoire, laplacien normalisé et étude des coupures optimales (Min-Cut).
-- [ ] [[jalon-144/Jalon 144 (Le phénomène de double descente).md|Jalon 144 : Le phénomène de double descente]] : Le phénomène de double descente : analyse de la rupture de la théorie statistique classique (compromis biais-variance) dans le régime sur-paramétré.
+- [x] [[jalon-144/Jalon 144 (Le phénomène de double descente).md|Jalon 144 : Le phénomène de double descente]] : Le phénomène de double descente : analyse de la rupture de la théorie statistique classique (compromis biais-variance) dans le régime sur-paramétré.
 - [x] [[jalon-145-152/Jalons 145 à 152 (Rédaction d'un article de recherche théorique de synthèse analysant les garanties de généralisation PAC d'une couche d'attention multi-têtes.).md|Jalons 145 à 152 : Rédaction d'un article de recherche théorique de synthèse analysant les garanties de généralisation PAC d'une couche d'attention multi-têtes.]] : Rédaction d'un article de recherche théorique de synthèse analysant les garanties de généralisation PAC d'une couche d'attention multi-têtes.
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 

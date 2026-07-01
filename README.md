@@ -88,7 +88,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 <br>
 
 - **[Jalon 13](jalon-13/Jalon%2013%20%28Structure%20de%20--mathbb%7BR%7D-%29.md)** : Structure de $\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède.
-- **[Jalon 14](jalon-14/Jalon%2014%20%28Suites%20r%C3%A9elles%20et%20complexes%29.md)** : Suites réelles et complexes, définitions rigoureuses des limites ($\epsilon, N$) et critères de convergence.
+- **[Jalon 14](jalon-14/Jalon-14.md)** : Suites réelles et complexes, définitions rigoureuses des limites ($\epsilon, N$) et critères de convergence. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 15](jalon-15/Jalon%2015%20%28Sous-suites%29.md)** : Sous-suites, valeurs d'adhérence et preuve par séparation du théorème de Bolzano-Weierstrass.
 - **[Jalon 16](jalon-16/Jalon-16.md)** : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 17](jalon-17/Jalon%2017%20%28S%C3%A9ries%20absolument%20convergentes%29.md)** : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries.
@@ -319,6 +319,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-07-01] : Upsert du Jalon 14 - Suites réelles et complexes. Status: Terminé.
 ### 2026-06-30-audit
 - [[#2026-06-30-audit|2026-06-30]] : [Audit & Weekly Compilation] - Jalon 7 - Espaces vectoriels abstraits. Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 - [2026-06-29] : Upsert du Jalon 13 - Structure de $\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède. Status: Terminé.
