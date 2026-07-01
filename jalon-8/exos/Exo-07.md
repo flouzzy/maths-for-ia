@@ -17,7 +17,7 @@ Soit $u \in \mathcal{L}(E)$ un endomorphisme de $E$ tel que $u \circ u = u$, c'e
 
 1.  **Démontrer que $E = \text{Ker}(u) \oplus \text{Im}(u)$.**
 
-    Pour établir qu'un espace vectoriel $E$ est la somme directe de deux sous-espaces vectoriels $F_1$ et $F_2$, il faut montrer que $F_1 \cap F_2 = \{0_E\}$ (l'intersection est triviale) et que $E = F_1 + F_2$ (la somme est génératrice).
+    Pour établir qu'un espace vectoriel $E$ est la somme directe de deux sous-espaces vectoriels $F_1$ et $F_2$, il faut montrer que $F_1 \cap F_2 = \{0_E\}$ (l'intersection est réduite au vecteur nul) et que $E = F_1 + F_2$ (la somme est génératrice).
 
     a) **Montrons que $\text{Ker}(u) \cap \text{Im}(u) = \{0_E\}$.**
     Soit $y$ un vecteur appartenant à l'intersection $\text{Ker}(u) \cap \text{Im}(u)$.

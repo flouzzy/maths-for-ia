@@ -319,6 +319,8 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+### 2026-07-02-audit
+- [[#2026-07-02-audit|2026-07-02]] : [Audit & Weekly Compilation] - Jalon 8 - Applications linéaires, noyau (ker), image (Im) et démonstration du théorème du rang. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 - [2026-07-01] : Upsert du Jalon 14 - Suites réelles et complexes. Status: Terminé.
 - [2026-06-29] : Upsert du Jalon 13 - Structure de $\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède. Status: Terminé.
 ### 2026-06-27-audit

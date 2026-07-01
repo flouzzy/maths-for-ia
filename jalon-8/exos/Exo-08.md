@@ -151,7 +151,7 @@ On définit l'application $f^0 = \text{Id}_E$ (l'application identité sur $E$),
         Ainsi, le seul élément de l'intersection de $\ker(f^{k_0})$ et $\text{Im}(f^{k_0})$ est le vecteur nul, donc $\ker(f^{k_0}) \cap \text{Im}(f^{k_0}) = \{0_E\}$.
 
     b.  Pour prouver que $E = \ker(f^{k_0}) \oplus \text{Im}(f^{k_0})$, il suffit de montrer deux conditions pour les sous-espaces vectoriels $U = \ker(f^{k_0})$ et $V = \text{Im}(f^{k_0})$ :
-        i.  Leur intersection est triviale : $U \cap V = \{0_E\}$. Cette condition a été démontrée à la question 4.a.
+        i.  Leur intersection est immédiate d'après la définition : $U \cap V = \{0_E\}$. Cette condition a été démontrée à la question 4.a.
         ii. La somme de leurs dimensions est égale à la dimension de l'espace ambiant : $\dim(U) + \dim(V) = \dim(E)$.
             Appliquons le théorème du rang à l'endomorphisme $f^{k_0} : E \to E$:
             $\dim(E) = \dim(\ker(f^{k_0})) + \dim(\text{Im}(f^{k_0}))$.
