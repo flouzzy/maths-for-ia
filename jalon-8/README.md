@@ -4,7 +4,7 @@ Au cœur de l'algèbre linéaire, les applications linéaires représentent le l
 
 Une application linéaire, au-delà d'une simple fonction, est une transformation qui respecte l'addition des vecteurs et la multiplication par un scalaire. Elles sont les briques essentielles pour l'étude des endomorphismes, des isomorphismes et de la diagonalisation.
 
-Le **noyau** (noté `ker f` ou `N(f)`) d'une application linéaire `f` est le sous-espace vectoriel de l'espace de départ constitué de tous les vecteurs que `f` transforme en le vecteur nul de l'espace d'arrivée. Il mesure, en quelque sorte, la "perte d'information" ou la "dégénérescence" de l'application : si le noyau est trivial (ne contient que le vecteur nul), l'application est injective.
+Le **noyau** (noté `ker f` ou `N(f)`) d'une application linéaire `f` est le sous-espace vectoriel de l'espace de départ constitué de tous les vecteurs que `f` transforme en le vecteur nul de l'espace d'arrivée. Il mesure, en quelque sorte, la "perte d'information" ou la "dégénérescence" de l'application : si le noyau est réduit au vecteur nul (ne contient que le vecteur nul), l'application est injective.
 
 L'**image** (notée `Im f` ou `R(f)`) est le sous-espace vectoriel de l'espace d'arrivée composé de tous les vecteurs qui sont l'image d'au moins un vecteur de l'espace de départ. Elle représente l'ensemble des vecteurs que l'application peut "atteindre". Si l'image coïncide avec l'espace d'arrivée, l'application est surjective.
 

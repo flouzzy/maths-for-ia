@@ -44,7 +44,7 @@ Par convention, $u^0 = \mathrm{id}_E$, donc $K_0 = \{0\}$ et $I_0 = E$.
         Puisque $K_{p_0} \subseteq K_{p_0+1}$ et qu'ils ont la même dimension, on en déduit que $K_{p_0} = K_{p_0+1}$.
         Soit $p$ le plus petit entier tel que $K_p = K_{p+1}$. Un tel $p$ existe car la suite stationne et $K_0 \subseteq K_1 \subseteq \dots \subseteq K_n = E$ est la chaîne maximale de sous-espaces strictement croissants. Si $K_i \subsetneq K_{i+1}$ pour tout $i$, alors on aurait $\mathrm{dim}(K_{i+1}) \ge \mathrm{dim}(K_i) + 1$, ce qui impliquerait $\mathrm{dim}(K_n) \ge \mathrm{dim}(K_0) + n = n$, atteignant la dimension de $E$ au plus en $n$ étapes.
         Nous allons montrer par récurrence que pour tout $k \ge p$, $K_k = K_p$.
-        L'initialisation ($k=p$) est triviale : $K_p = K_p$.
+        L'initialisation ($k=p$) est immédiate d'après la définition : $K_p = K_p$.
         L'étape de récurrence : Supposons que $K_k = K_p$ pour un $k \ge p$. Nous voulons montrer que $K_{k+1} = K_p$.
         Nous savons déjà que $K_p \subseteq K_{k+1}$ (car la suite est croissante).
         Il reste à montrer que $K_{k+1} \subseteq K_p$. Soit $x \in K_{k+1}$. Alors $u^{k+1}(x) = 0$.

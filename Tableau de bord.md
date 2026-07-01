@@ -165,8 +165,8 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
-### 2026-07-01-audit
-- [[#2026-07-01-audit|2026-07-01]] : [Audit & Weekly Compilation] - Jalon 8 - Applications linéaires, noyau (ker), image (Im) et démonstration du théorème du rang. Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+### 2026-07-02-audit
+- [[#2026-07-02-audit|2026-07-02]] : [Audit & Weekly Compilation] - Jalon 8 - Applications linéaires, noyau (ker), image (Im) et démonstration du théorème du rang. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-06-30-audit
 - [[#2026-06-30-audit|2026-06-30]] : [Audit & Weekly Compilation] - Jalon 7 - Espaces vectoriels abstraits. Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-06-27-audit
