@@ -92,5 +92,5 @@ Soient $f, g$ deux fonctions positives sur $[a, b[$.
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 37 (Intégrale de Riemann sur un segment).md]], [[Jalon 14 (Suites réelles et complexes).md]]
+- **Concepts Précédents requis :** [[Jalon 37 (Intégrale de Riemann sur un segment).md]], [[Jalon-14.md]]
 - **Concepts Futurs dépendants :** [[Jalon 40 (Intégrales dépendant d'un paramètre).md]], [[Jalon 80 (Transformée de Fourier dans L1).md]]

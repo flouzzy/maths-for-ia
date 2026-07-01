@@ -12,7 +12,6 @@ next: "[[Jalon-9.md]]"
 # Jalon 8 : Applications linéaires, noyau ($\ker$), image ($\text{Im}$) et démonstration du théorème du rang
 
 ## 1. Présentation du concept clé
-*Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
 - **La Métaphore :** Imaginez une machine à étirer ou à faire tourner de la pâte à modeler. 
   - L'**Application Linéaire**, c'est une machine respectueuse : si vous doublez la quantité de pâte au départ, vous aurez le double à l'arrivée. Si vous mettez deux morceaux de couleurs différentes, le résultat sera le même que si vous les aviez traités séparément puis mélangés.
@@ -23,7 +22,6 @@ next: "[[Jalon-9.md]]"
 - **Visualisation :** Imaginez projeter l'ombre d'un cube 3D sur une feuille 2D. L'ombre est l'**Image** (2D). La direction de la lumière qui "écrase" la profondeur est le **Noyau** (1D). $3 = 1 + 2$. C'est le théorème du rang !
 
 ## 2. Formalisation
-*Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
 Soient $E$ et $F$ deux $\mathbb{K}$-espaces vectoriels.
@@ -45,7 +43,6 @@ Soient $E$ et $F$ deux $\mathbb{K}$-espaces vectoriels.
 > $$\dim E = \dim(\ker f) + \text{rg}(f)$$
 
 ## 3. Démonstrations
-*Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : Théorème du Rang
 Soit $f \in \mathcal{L}(E, F)$ avec $\dim E = n$.
@@ -80,7 +77,6 @@ Soit $f \in \mathcal{L}(E, F)$ avec $\dim E = n$.
    Ainsi, $\text{rg}(f) = \dim E - \dim(\ker f)$.
 
 ## 4. Exercices d'Application
-*Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application Directe (Noyau et Image)
 **Énoncé :** Soit $f : \mathbb{R}^3 \to \mathbb{R}^2$ définie par $f(x,y,z) = (x+y, y+z)$. Déterminer $\ker f$ et $\text{rg } f$.
@@ -110,7 +106,7 @@ Soit $f \in \mathcal{L}(E, F)$ avec $\dim E = n$.
 **Conclusion :** $E = \ker p \oplus \text{Im } p$.
 
 ## 5. Application en Intelligence Artificielle
-*Démontrer la finalité technologique moderne de ce jalon théorique.*
+
 - **Le Pont Théorique :** Les couches denses (Dense Layers / Linear Layers) des réseaux de neurones sont des applications affines (Linéaire + Translation).
 - **Exemple Concret :** Dans la **réduction de dimension** et la **Compression de Réseaux**, on cherche à savoir si une couche linéaire a un gros **Noyau**. Si $\dim(\ker f)$ est grand, cela signifie que beaucoup de combinaisons d'entrées sont "oubliées" par le réseau. Le **Rang** de la matrice de poids d'une couche détermine la "capacité expressive" de cette couche. Un réseau "Low-Rank" est plus rapide à entraîner et moins sujet au sur-apprentissage (Overfitting).
 
