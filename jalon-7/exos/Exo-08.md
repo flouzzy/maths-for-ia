@@ -23,7 +23,7 @@ Donc $v = (0, 0, 0)$. Ainsi $P \cap D = \{0_E\}$.
 
 **Dimensions :**
 $D$ est engendrée par un vecteur non nul, donc $\dim(D) = 1$.
-$P$ est un hyperplan de $\mathbb{R}^3$ (équation linéaire unique non triviale), donc $\dim(P) = 3 - 1 = 2$.
+L'équation $x+y+z=0$ définit le noyau de la forme linéaire non nulle $\varphi(x,y,z) = x+y+z$ sur $\mathbb{R}^3$. L'image de $\varphi$ est $\mathbb{R}$ (de dimension 1). Par le théorème du rang, $\dim(P) = \dim(\mathbb{R}^3) - \dim(\text{Im}(\varphi)) = 3 - 1 = 2$.
 On a bien $\dim(P) + \dim(D) = 2 + 1 = 3 = \dim(\mathbb{R}^3)$.
 
 **Conclusion :**

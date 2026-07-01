@@ -16,7 +16,7 @@ next: "[[Jalon-8.md]]"
 
 - **La Métaphore :** Imaginez que vous êtes un cuisinier. Un **espace vectoriel**, c'est comme votre cuisine : vous avez des ingrédients de base et vous savez comment les mélanger (addition) ou comment multiplier les doses (multiplication par un scalaire). Une **famille génératrice**, c'est une liste de courses qui contient assez d'ingrédients pour préparer n'importe quel plat du menu. Une **famille libre**, c'est une liste où aucun ingrédient ne peut être fabriqué à partir des autres (pas de doublon inutile). Une **base**, c'est la liste de courses parfaite : le minimum vital d'ingrédients nécessaires pour tout cuisiner, sans aucun gaspillage.
 - **Le "Pourquoi on a inventé ça" :** Les mathématiciens ont réalisé que beaucoup de choses (les nombres, les fonctions, les images, les signaux audio) se manipulent de la même manière : on peut les additionner et les amplifier. En créant la théorie des espaces vectoriels, ils ont créé un langage unique pour traiter tous ces domaines d'un coup.
-- **Visualisation :** Pensez aux couleurs sur un écran (Rouge, Vert, Bleu). N'importe quelle couleur est un "vecteur" créé en mélangeant ces trois couleurs de base. Si vous enlevez le Bleu, vous ne pouvez plus tout créer : votre famille n'est plus génératrice. Si vous ajoutez une couleur "Bleu-Clair" déjà fabricable avec les autres, votre famille n'est plus libre.
+- **Visualisation :** Pensez aux couleurs sur un écran (Rouge, Vert, Bleu). N'importe quelle couleur est un "vecteur" créé en combinant linéairement ces trois composantes primaires. Si vous supprimez la composante Bleue, l'espace engendré se restreint à un plan chromatique, la famille n'est plus génératrice de l'espace des couleurs complet. Si vous introduisez une nuance "Bleu-Clair" exprimable comme combinaison linéaire des composantes existantes, la famille devient liée.
 
 ## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
@@ -73,7 +73,7 @@ Soit $\mathcal{B} = (e_1, ..., e_n)$ une base de $E$. Démontrons que pour tout 
 ## 4. Exercices d'Application
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
-### Exercice 1 : Application Directe (Liberté dans R^3)
+### Exercice 1 : Application Directe (Liberté dans $\mathbb{R}^3$)
 **Énoncé :** La famille $v_1 = (1, 0, 1)$, $v_2 = (1, 1, 0)$, $v_3 = (0, 1, 1)$ est-elle libre dans $\mathbb{R}^3$ ?
 **Correction Détaillée :**
 1. Cherchons $(\lambda, \mu, \gamma) \in \mathbb{R}^3$ tels que $\lambda v_1 + \mu v_2 + \gamma v_3 = (0, 0, 0)$.

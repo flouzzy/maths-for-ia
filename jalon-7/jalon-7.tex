@@ -1,0 +1,1115 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+
+\title{Espaces vectoriels abstraits, familles libres, familles génératrices et bases en dimension finie}
+\author{Charles EDOU NZE}
+\date{\today}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!60!black},
+    showstringspaces=false,
+    frame=single,
+    breaklines=true,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ç}{{\c c}}1 {ù}{{\`u}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1 {â}{{\^a}}1 {É}{{\'E}}1 {È}{{\`E}}1 {À}{{\`A}}1 {Ç}{{\c C}}1 {Ù}{{\`U}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1 {Â}{{\^A}}1
+}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\chapter*{Jalon 7 : Espaces vectoriels abstraits, familles libres, familles génératrices et bases en dimension finie}
+
+\section*{1. Présentation du concept clé}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.5]
+  % axes
+  \draw[->, thick] (0,0,0) -- (2,0,0) node[right] {$e_1$};
+  \draw[->, thick] (0,0,0) -- (0,2,0) node[above] {$e_2$};
+  \draw[->, thick] (0,0,0) -- (0,0,2) node[below left] {$e_3$};
+  % vector
+  \draw[->, ultra thick, blue] (0,0,0) -- (1.5,1.2,1) node[right] {$v$};
+  % projections
+  \draw[dashed] (1.5,1.2,1) -- (1.5,1.2,0);
+  \draw[dashed] (1.5,1.2,0) -- (1.5,0,0);
+  \draw[dashed] (1.5,1.2,0) -- (0,1.2,0);
+  \draw[dashed] (1.5,1.2,1) -- (0,0,1);
+\end{tikzpicture}
+\caption{Base $(e_1, e_2, e_3)$ dans un espace vectoriel abstrait}
+\end{figure}
+
+\textit{Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.}
+
+- \textbf{La Métaphore :} Imaginez que vous êtes un cuisinier. Un \textbf{espace vectoriel}, c'est comme votre cuisine : vous avez des ingrédients de base et vous savez comment les mélanger (addition) ou comment multiplier les doses (multiplication par un scalaire). Une \textbf{famille génératrice}, c'est une liste de courses qui contient assez d'ingrédients pour préparer n'importe quel plat du menu. Une \textbf{famille libre}, c'est une liste où aucun ingrédient ne peut être fabriqué à partir des autres (pas de doublon inutile). Une \textbf{base}, c'est la liste de courses parfaite : le minimum vital d'ingrédients nécessaires pour tout cuisiner, sans aucun gaspillage.
+- \textbf{Le "Pourquoi on a inventé ça" :} Les mathématiciens ont réalisé que beaucoup de choses (les nombres, les fonctions, les images, les signaux audio) se manipulent de la même manière : on peut les additionner et les amplifier. En créant la théorie des espaces vectoriels, ils ont créé un langage unique pour traiter tous ces domaines d'un coup.
+- \textbf{Visualisation :} Pensez aux couleurs sur un écran (Rouge, Vert, Bleu). N'importe quelle couleur est un "vecteur" créé en combinant linéairement ces trois composantes primaires. Si vous supprimez la composante Bleue, l'espace engendré se restreint à un plan chromatique, la famille n'est plus génératrice de l'espace des couleurs complet. Si vous introduisez une nuance "Bleu-Clair" exprimable comme combinaison linéaire des composantes existantes, la famille devient liée.
+
+\section*{2. Formalisation}
+\textit{Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.}
+
+\subsection*{A. Définitions Formelles}
+Soit $\mathbb{K}$ un corps (généralement $\mathbb{R}$ ou $\mathbb{C}$).
+1. \textbf{Espace Vectoriel ($E, +, \cdot$) :} Un ensemble $E$ muni d'une loi interne $+$ (groupe abélien) et d'une loi externe $\cdot$ de $\mathbb{K} \times E \to E$ vérifiant :
+   - $\forall \lambda \in \mathbb{K}, \forall x, y \in E, \lambda \cdot (x + y) = \lambda \cdot x + \lambda \cdot y$.
+   - $\forall \lambda, \mu \in \mathbb{K}, \forall x \in E, (\lambda + \mu) \cdot x = \lambda \cdot x + \mu \cdot x$.
+   - $\forall \lambda, \mu \in \mathbb{K}, \forall x \in E, \lambda \cdot (\mu \cdot x) = (\lambda \mu) \cdot x$.
+   - $\forall x \in E, 1_{\mathbb{K}} \cdot x = x$.
+
+2. \textbf{Combinaison Linéaire :} Un vecteur $v$ est combinaison linéaire d'une famille $(v_i)_{i \in I}$ s'il existe une famille de scalaires $(\lambda_i)_{i \in I}$ à support fini telle que $v = \sum \lambda_i v_i$.
+
+3. \textbf{Famille Libre :} Une famille $(v_1, ..., v_n)$ est libre si $\forall (\lambda_1, ..., \lambda_n) \in \mathbb{K}^n, \sum_{i=1}^n \lambda_i v_i = 0_E \Rightarrow \lambda_1 = ... = \lambda_n = 0$.
+
+4. \textbf{Famille Génératrice :} Une famille $(v_1, ..., v_n)$ est génératrice de $E$ si $\text{Vect}(v_1, ..., v_n) = E$.
+
+5. \textbf{Base :} Une famille à la fois libre et génératrice.
+
+\subsection*{B. Théorèmes, Propositions \& Lemmes}
+> \textbf{Théorème de la Base Incomplète :}
+> De toute famille génératrice d'un espace de dimension finie, on peut extraire une base. Toute famille libre peut être complétée en une base.
+
+> \textbf{Théorème de la Dimension :}
+> Toutes les bases d'un espace vectoriel de dimension finie ont le même nombre d'éléments, appelé \textbf{dimension} de $E$ (noté $\dim E$).
+
+\section*{3. Démonstrations}
+\textit{Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.}
+
+\subsection*{Démonstration du Théorème Pivot : Unicité de la décomposition dans une base}
+Soit $\mathcal{B} = (e_1, ..., e_n)$ une base de $E$. Démontrons que pour tout $x \in E$, il existe un unique $n$-uplet $(\lambda_1, ..., \lambda_n) \in \mathbb{K}^n$ tel que $x = \sum_{i=1}^n \lambda_i e_i$.
+
+1. \textbf{Initialisation / Cadre :} Soit $x \in E$.
+   - L'existence est garantie car $\mathcal{B}$ est une famille génératrice.
+   - Pour prouver l'unicité, supposons qu'il existe deux décompositions :
+     $x = \sum_{i=1}^n \lambda_i e_i$ et $x = \sum_{i=1}^n \mu_i e_i$.
+
+2. \textbf{Étape 1 : Soustraction des deux égalités}
+   $x - x = \left( \sum_{i=1}^n \lambda_i e_i \right) - \left( \sum_{i=1}^n \mu_i e_i \right)$
+   $0_E = \sum_{i=1}^n (\lambda_i - \mu_i) e_i$ (par linéarité de la loi externe et associativité de la loi interne).
+
+3. \textbf{Étape 2 : Utilisation de la liberté de la famille}
+   Par définition, $\mathcal{B}$ est une base, donc c'est une famille \textbf{libre}.
+   La définition d'une famille libre stipule que toute combinaison linéaire nulle de ses vecteurs implique la nullité de tous les coefficients.
+   Ici, les coefficients sont $(\lambda_i - \mu_i)$.
+   On a donc : $\forall i \in \{1, ..., n\}, \lambda_i - \mu_i = 0$.
+
+4. \textbf{Étape 3 : Conclusion sur les coefficients}
+   $\lambda_i - \mu_i = 0 \implies \lambda_i = \mu_i$ pour tout $i \in \{1, ..., n\}$.
+
+5. \textbf{Conclusion :} Les deux familles de scalaires sont identiques. La décomposition est donc unique.
+
+\section*{4. Exercices d'Application}
+\textit{Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.}
+
+\subsection*{Exercice 1 : Application Directe (Liberté dans $\mathbb{R}^3$)}
+\textbf{Énoncé :} La famille $v_1 = (1, 0, 1)$, $v_2 = (1, 1, 0)$, $v_3 = (0, 1, 1)$ est-elle libre dans $\mathbb{R}^3$ ?
+\textbf{Correction Détaillée :}
+1. Cherchons $(\lambda, \mu, \gamma) \in \mathbb{R}^3$ tels que $\lambda v_1 + \mu v_2 + \gamma v_3 = (0, 0, 0)$.
+2. Système d'équations :
+   - $\lambda + \mu = 0$ (L1)
+   - $\mu + \gamma = 0$ (L2)
+   - $\lambda + \gamma = 0$ (L3)
+3. De (L1), on tire $\mu = -\lambda$.
+4. Injectons dans (L2) : $-\lambda + \gamma = 0 \implies \gamma = \lambda$.
+5. Injectons dans (L3) : $\lambda + \lambda = 0 \implies 2\lambda = 0 \implies \lambda = 0$.
+6. On en déduit $\mu = -0 = 0$ et $\gamma = 0$.
+\textbf{Conclusion :} La seule solution est le triplet nul. La famille est donc libre.
+
+\subsection*{Exercice 2 : Niveau Avancé (Espace de fonctions)}
+\textbf{Énoncé :} Montrer que la famille de fonctions $f_n : x \mapsto x^n$ pour $n \in \{0, 1, 2\}$ est libre dans l'espace des fonctions de $\mathbb{R}$ vers $\mathbb{R}$.
+\textbf{Correction Détaillée :}
+1. Soient $a, b, c \in \mathbb{R}$ tels que $\forall x \in \mathbb{R}, a \cdot 1 + b \cdot x + c \cdot x^2 = 0$.
+2. Cette égalité doit être vraie pour TOUT $x$. Choisissons des valeurs particulières :
+   - Pour $x = 0 \implies a + 0 + 0 = 0 \implies a = 0$.
+   - Il reste $bx + cx^2 = 0$.
+   - Pour $x = 1 \implies b + c = 0$.
+   - Pour $x = -1 \implies -b + c = 0$.
+3. Sommons les deux dernières équations : $(b+c) + (-b+c) = 0 \implies 2c = 0 \implies c = 0$.
+4. Enfin, $b + 0 = 0 \implies b = 0$.
+\textbf{Conclusion :} $a=b=c=0$. La famille est libre. (Généralisation : toute famille de polynômes de degrés distincts est libre).
+
+\section*{5. Application en Intelligence Artificielle}
+\textit{Démontrer la finalité technologique moderne de ce jalon théorique.}
+- \textbf{Le Pont Théorique :} En IA, les données (mots, utilisateurs, images) sont projetées dans des \textbf{Espaces de Plongement} (Embedding Spaces). Ce sont des espaces vectoriels de grande dimension (ex: dimension 768 pour BERT).
+- \textbf{Exemple Concret :} Dans le \textbf{Traitement du Langage Naturel (NLP)}, si votre base de vecteurs de mots n'est pas "libre", cela signifie que vous avez des dimensions redondantes (du bruit). On cherche souvent à trouver une \textbf{base optimale} via des techniques comme l'\textbf{ACP (Analyse en Composantes Principales)} pour réduire la dimension tout en gardant une famille "presque génératrice" (qui capture l'essentiel de l'information).
+
+\section*{6. Liens Sémantiques}
+- \textbf{Concepts Précédents requis :} Jalon 6
+- \textbf{Concepts Futurs dépendants :} Jalon-8, Jalon 9 (Calcul matriciel), Jalon 26 (Espaces euclidiens)
+
+\newpage
+\chapter*{Exercices d\'Application}
+\addcontentsline{toc}{chapter}{Exercices d'Application}
+
+Nous allons explorer les fondements des espaces vectoriels abstraits à travers un exemple structurellement profond. L'objectif de cet exercice est de consolider votre compréhension des définitions clés telles que l'espace vectoriel, la famille libre, la famille génératrice, la base et la dimension, dans un cadre qui s'éloigne des espaces $\mathbb{R}^n$ habituels.
+
+Soit $\mathcal{M}_2(\mathbb{R})$ l'ensemble des matrices carrées d'ordre 2 à coefficients réels. Nous considérons l'ensemble $E$ défini comme suit :
+$$ E = \left\{ M \in \mathcal{M}_2(\mathbb{R}) \mid \text{Tr}(M) = 0 \right\} $$
+où $\text{Tr}(M)$ désigne la trace de la matrice $M$. Rappelons que pour une matrice $M = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \in \mathcal{M}_2(\mathbb{R})$, sa trace est donnée par $\text{Tr}(M) = a+d$.
+
+1.  Démontrez que $E$ est un sous-espace vectoriel de $\mathcal{M}_2(\mathbb{R})$. Précisez le corps de base et les opérations vectorielles considérées.
+2.  Considérons la famille de matrices $S = \{M_1, M_2, M_3\}$ où :
+    $$ M_1 = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}, \quad M_2 = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}, \quad M_3 = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix} $$
+    a.  Vérifiez que chaque matrice de la famille $S$ appartient bien à $E$.
+    b.  La famille $S$ est-elle une famille libre (linéairement indépendante) dans $E$ ? Justifiez rigoureusement votre réponse en détaillant chaque étape.
+    c.  La famille $S$ est-elle une famille génératrice de $E$ ? Justifiez rigoureusement votre réponse en détaillant chaque étape.
+    d.  La famille $S$ est-elle une base de $E$ ? Justifiez rigoureusement votre réponse.
+3.  Quelle est la dimension de l'espace vectoriel $E$ ? Justifiez votre réponse.
+
+---
+
+\subsection*{Correction Détaillée}
+
+Nous allons aborder chaque question avec la rigueur nécessaire, en explicitant chaque définition et chaque étape de raisonnement ou de calcul.
+
+\subsubsection*{1. Démonstration que $E$ est un sous-espace vectoriel de $\mathcal{M}_2(\mathbb{R})$}
+
+Pour démontrer que $E$ est un sous-espace vectoriel de $\mathcal{M}_2(\mathbb{R})$, nous devons vérifier trois conditions fondamentales, en considérant $\mathcal{M}_2(\mathbb{R})$ comme un espace vectoriel sur le corps $K = \mathbb{R}$ avec l'addition matricielle et la multiplication par un scalaire usuelles.
+
+\textbf{Condition 1 : L'ensemble $E$ est non vide.}
+Pour prouver que $E$ est non vide, il suffit de montrer qu'il contient au moins un élément. Le plus simple est de vérifier si la matrice nulle $\mathbf{0}_{2,2}$ de $\mathcal{M}_2(\mathbb{R})$ appartient à $E$.
+La matrice nulle est $\mathbf{0}_{2,2} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}$.
+Sa trace est $\text{Tr}(\mathbf{0}_{2,2}) = 0+0 = 0$.
+Puisque $\text{Tr}(\mathbf{0}_{2,2}) = 0$, la matrice nulle $\mathbf{0}_{2,2}$ appartient bien à $E$.
+Par conséquent, $E$ est un ensemble non vide.
+
+\textbf{Condition 2 : $E$ est stable par addition vectorielle.}
+Soient $M$ et $N$ deux matrices quelconques appartenant à $E$. Nous devons montrer que leur somme $M+N$ appartient également à $E$.
+Puisque $M \in E$, par définition de $E$, nous avons $\text{Tr}(M) = 0$.
+Puisque $N \in E$, par définition de $E$, nous avons $\text{Tr}(N) = 0$.
+Considérons la somme $M+N$. La trace de la somme de deux matrices est égale à la somme de leurs traces. C'est une propriété fondamentale de l'opérateur trace.
+Ainsi, $\text{Tr}(M+N) = \text{Tr}(M) + \text{Tr}(N)$.
+En substituant les valeurs des traces que nous connaissons :
+$\text{Tr}(M+N) = 0 + 0 = 0$.
+Puisque $\text{Tr}(M+N) = 0$, la matrice $M+N$ satisfait la condition d'appartenance à $E$.
+Par conséquent, $M+N \in E$. L'ensemble $E$ est stable par addition vectorielle.
+
+\textbf{Condition 3 : $E$ est stable par multiplication par un scalaire.}
+Soit $\lambda$ un scalaire réel (c'est-à-dire $\lambda \in \mathbb{R}$) et soit $M$ une matrice quelconque appartenant à $E$. Nous devons montrer que le produit scalaire $\lambda M$ appartient également à $E$.
+Puisque $M \in E$, par définition de $E$, nous avons $\text{Tr}(M) = 0$.
+Considérons le produit $\lambda M$. La trace d'une matrice multipliée par un scalaire est égale au scalaire multiplié par la trace de la matrice. C'est une autre propriété fondamentale de l'opérateur trace.
+Ainsi, $\text{Tr}(\lambda M) = \lambda \cdot \text{Tr}(M)$.
+En substituant la valeur de la trace de $M$ :
+$\text{Tr}(\lambda M) = \lambda \cdot 0 = 0$.
+Puisque $\text{Tr}(\lambda M) = 0$, la matrice $\lambda M$ satisfait la condition d'appartenance à $E$.
+Par conséquent, $\lambda M \in E$. L'ensemble $E$ est stable par multiplication par un scalaire.
+
+Les trois conditions étant vérifiées, nous pouvons conclure que $E$ est un sous-espace vectoriel de $\mathcal{M}_2(\mathbb{R})$. Le corps de base est $\mathbb{R}$, et les opérations vectorielles sont l'addition matricielle et la multiplication d'une matrice par un scalaire réel.
+
+\subsubsection*{2. Analyse de la famille $S = \{M_1, M_2, M_3\}$}
+
+\paragraph*{2.a. Vérification de l'appartenance des matrices de $S$ à $E$}
+
+Nous devons vérifier que chaque matrice de la famille $S$ a une trace nulle.
+
+*   Pour $M_1 = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$ :
+    $\text{Tr}(M_1) = 1 + (-1) = 0$.
+    Donc, $M_1 \in E$.
+
+*   Pour $M_2 = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}$ :
+    $\text{Tr}(M_2) = 0 + 0 = 0$.
+    Donc, $M_2 \in E$.
+
+*   Pour $M_3 = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}$ :
+    $\text{Tr}(M_3) = 0 + 0 = 0$.
+    Donc, $M_3 \in E$.
+
+Chaque matrice de la famille $S$ appartient bien à l'espace vectoriel $E$.
+
+\paragraph*{2.b. La famille $S$ est-elle une famille libre dans $E$ ?}
+
+Une famille de vecteurs $\{v_1, v_2, \dots, v_k\}$ d'un espace vectoriel $V$ est dite libre (ou linéairement indépendante) si la seule combinaison linéaire de ces vecteurs qui est égale au vecteur nul de $V$ est celle où tous les coefficients scalaires sont nuls.
+Dans notre cas, les vecteurs sont les matrices $M_1, M_2, M_3$ et le vecteur nul de $E$ (et de $\mathcal{M}_2(\mathbb{R})$) est la matrice nulle $\mathbf{0}_{2,2}$.
+Soient $\alpha_1, \alpha_2, \alpha_3$ des scalaires réels (c'est-à-dire $\alpha_1, \alpha_2, \alpha_3 \in \mathbb{R}$).
+Nous posons l'équation de combinaison linéaire égale au vecteur nul :
+$$ \alpha_1 M_1 + \alpha_2 M_2 + \alpha_3 M_3 = \mathbf{0}_{2,2} $$
+Substituons les matrices :
+$$ \alpha_1 \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} + \alpha_2 \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} + \alpha_3 \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} $$
+Effectuons la multiplication par les scalaires :
+$$ \begin{pmatrix} \alpha_1 & 0 \\ 0 & -\alpha_1 \end{pmatrix} + \begin{pmatrix} 0 & \alpha_2 \\ 0 & 0 \end{pmatrix} + \begin{pmatrix} 0 & 0 \\ \alpha_3 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} $$
+Effectuons l'addition des matrices :
+$$ \begin{pmatrix} \alpha_1 + 0 + 0 & 0 + \alpha_2 + 0 \\ 0 + 0 + \alpha_3 & -\alpha_1 + 0 + 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} $$
+Ce qui simplifie en :
+$$ \begin{pmatrix} \alpha_1 & \alpha_2 \\ \alpha_3 & -\alpha_1 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} $$
+Pour que deux matrices soient égales, leurs éléments correspondants doivent être égaux. Cela nous donne un système de quatre équations linéaires :
+1.  $\alpha_1 = 0$
+2.  $\alpha_2 = 0$
+3.  $\alpha_3 = 0$
+4.  $-\alpha_1 = 0$
+
+La première équation $\alpha_1 = 0$ et la quatrième équation $-\alpha_1 = 0$ sont cohérentes et impliquent toutes deux que $\alpha_1$ doit être nul.
+Les équations 2 et 3 nous donnent directement $\alpha_2 = 0$ et $\alpha_3 = 0$.
+Ainsi, la seule solution à l'équation de combinaison linéaire est $\alpha_1 = 0$, $\alpha_2 = 0$, et $\alpha_3 = 0$.
+Par conséquent, la famille $S = \{M_1, M_2, M_3\}$ est une famille libre dans $E$.
+
+\paragraph*{2.c. La famille $S$ est-elle une famille génératrice de $E$ ?}
+
+Une famille de vecteurs $S = \{v_1, v_2, \dots, v_k\}$ d'un espace vectoriel $V$ est dite génératrice de $V$ si tout vecteur de $V$ peut être exprimé comme une combinaison linéaire des vecteurs de $S$.
+Soit $M$ une matrice quelconque appartenant à $E$. Par définition de $E$, $M$ est une matrice $2 \times 2$ à coefficients réels dont la trace est nulle.
+Nous pouvons écrire $M$ sous la forme générale :
+$$ M = \begin{pmatrix} a & b \\ c & d \end{pmatrix} $$
+Puisque $M \in E$, nous savons que $\text{Tr}(M) = a+d = 0$. Cette condition implique que $d = -a$.
+Ainsi, toute matrice $M \in E$ peut être écrite sous la forme :
+$$ M = \begin{pmatrix} a & b \\ c & -a \end{pmatrix} $$
+Nous devons déterminer s'il existe des scalaires réels $\alpha_1, \alpha_2, \alpha_3$ tels que $M$ puisse être exprimée comme une combinaison linéaire des matrices de $S$ :
+$$ M = \alpha_1 M_1 + \alpha_2 M_2 + \alpha_3 M_3 $$
+Substituons les matrices de $S$ :
+$$ \begin{pmatrix} a & b \\ c & -a \end{pmatrix} = \alpha_1 \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} + \alpha_2 \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} + \alpha_3 \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix} $$
+Effectuons la combinaison linéaire des matrices de droite, comme nous l'avons fait à la question 2.b :
+$$ \begin{pmatrix} a & b \\ c & -a \end{pmatrix} = \begin{pmatrix} \alpha_1 & \alpha_2 \\ \alpha_3 & -\alpha_1 \end{pmatrix} $$
+En égalant les éléments correspondants des deux matrices, nous obtenons le système d'équations suivant :
+1.  $a = \alpha_1$
+2.  $b = \alpha_2$
+3.  $c = \alpha_3$
+4.  $-a = -\alpha_1$
+
+Les équations 1 et 4 sont cohérentes et nous donnent $\alpha_1 = a$.
+Les équations 2 et 3 nous donnent directement $\alpha_2 = b$ et $\alpha_3 = c$.
+Pour toute matrice $M = \begin{pmatrix} a & b \\ c & -a \end{pmatrix}$ dans $E$, nous avons trouvé des scalaires $\alpha_1 = a$, $\alpha_2 = b$, et $\alpha_3 = c$ qui permettent d'exprimer $M$ comme une combinaison linéaire des matrices de $S$. Ces scalaires sont uniques pour chaque matrice $M$.
+Puisque tout élément de $E$ peut être écrit comme une combinaison linéaire des éléments de $S$, la famille $S = \{M_1, M_2, M_3\}$ est une famille génératrice de $E$.
+
+\paragraph*{2.d. La famille $S$ est-elle une base de $E$ ?}
+
+Une famille de vecteurs est une base d'un espace vectoriel si et seulement si elle est à la fois une famille libre et une famille génératrice de cet espace.
+D'après la question 2.b, nous avons démontré que la famille $S$ est une famille libre dans $E$.
+D'après la question 2.c, nous avons démontré que la famille $S$ est une famille génératrice de $E$.
+Puisque la famille $S$ satisfait ces deux conditions, nous pouvons conclure que la famille $S = \{M_1, M_2, M_3\}$ est une base de l'espace vectoriel $E$.
+
+\subsubsection*{3. Dimension de l'espace vectoriel $E$}
+
+La dimension d'un espace vectoriel est définie comme le nombre de vecteurs dans n'importe laquelle de ses bases.
+D'après la question 2.d, nous avons établi que la famille $S = \{M_1, M_2, M_3\}$ est une base de l'espace vectoriel $E$.
+La famille $S$ contient exactement 3 vecteurs (qui sont des matrices dans ce contexte).
+Par conséquent, la dimension de l'espace vectoriel $E$ est 3.
+Nous pouvons écrire $\text{dim}(E) = 3$.
+
+\newpage
+
+Mes chers étudiants,
+
+Nous allons aujourd'hui consolider nos connaissances sur les fondements des espaces vectoriels abstraits. Cet exercice, de difficulté modérée, vous permettra de manipuler les définitions de famille libre, génératrice et de base dans un contexte polynomial. Il est crucial de bien comprendre ces concepts pour la suite de votre parcours en algèbre linéaire.
+
+\subsection*{Énoncé de l'exercice}
+
+Soit $E$ l'espace vectoriel réel des polynômes de degré au plus 1, noté $P_1(\mathbb{R})$. Les éléments de $E$ sont des polynômes de la forme $ax+b$, où $a$ et $b$ sont des nombres réels. L'addition vectorielle est l'addition usuelle des polynômes, et la multiplication par un scalaire est la multiplication usuelle d'un polynôme par un nombre réel.
+
+Considérons la famille de polynômes $S = \{P_1(x), P_2(x)\}$ où $P_1(x) = 2x+1$ et $P_2(x) = x-3$.
+
+1.  Démontrer que la famille $S$ est une famille libre dans $E$.
+2.  Démontrer que la famille $S$ est une famille génératrice de $E$.
+3.  En déduire si la famille $S$ constitue une base de $E$.
+
+\subsection*{Correction Détaillée}
+
+Nous allons aborder chaque question avec la rigueur nécessaire, en explicitant chaque étape du raisonnement et du calcul.
+
+\subsubsection*{1. Démontrer que la famille $S$ est une famille libre dans $E$.}
+
+\textbf{Définition :} Une famille de vecteurs $\{v_1, v_2, \ldots, v_n\}$ d'un $K$-espace vectoriel $E$ est dite \textbf{libre} (ou linéairement indépendante) si la seule combinaison linéaire de ces vecteurs qui est égale au vecteur nul de $E$ est celle où tous les coefficients scalaires sont nuls. Autrement dit, si pour des scalaires $a_1, a_2, \ldots, a_n \in K$, l'équation $a_1 v_1 + a_2 v_2 + \ldots + a_n v_n = 0_E$ implique nécessairement $a_1 = a_2 = \ldots = a_n = 0_K$.
+
+Dans notre cas, l'espace vectoriel est $E = P_1(\mathbb{R})$, le corps des scalaires est $K = \mathbb{R}$, et la famille est $S = \{P_1(x), P_2(x)\}$. Le vecteur nul de $E$, noté $0_E$, est le polynôme nul, c'est-à-dire le polynôme $Q(x) = 0$ pour tout $x \in \mathbb{R}$.
+
+Pour démontrer que $S$ est une famille libre, nous devons considérer une combinaison linéaire des polynômes $P_1(x)$ et $P_2(x)$ égale au polynôme nul, et montrer que les coefficients de cette combinaison linéaire sont nécessairement nuls.
+
+Soient $a_1$ et $a_2$ deux scalaires réels (c'est-à-dire $a_1, a_2 \in \mathbb{R}$).
+Considérons l'équation suivante dans $E$:
+$$a_1 P_1(x) + a_2 P_2(x) = 0_E$$
+
+Substituons les expressions des polynômes $P_1(x)$ et $P_2(x)$:
+$$a_1 (2x+1) + a_2 (x-3) = 0$$
+
+Développons cette expression en regroupant les termes selon les puissances de $x$:
+$$(2a_1 x + a_1) + (a_2 x - 3a_2) = 0$$
+$$(2a_1 + a_2)x + (a_1 - 3a_2) = 0$$
+
+Pour qu'un polynôme soit le polynôme nul, tous ses coefficients doivent être nuls. Par conséquent, nous obtenons un système d'équations linéaires avec $a_1$ et $a_2$ comme inconnues:
+1.  $2a_1 + a_2 = 0$
+2.  $a_1 - 3a_2 = 0$
+
+Nous allons résoudre ce système.
+De l'équation (1), nous pouvons exprimer $a_2$ en fonction de $a_1$:
+$$a_2 = -2a_1$$
+
+Substituons cette expression de $a_2$ dans l'équation (2):
+$$a_1 - 3(-2a_1) = 0$$
+$$a_1 + 6a_1 = 0$$
+$$7a_1 = 0$$
+
+Cette dernière équation implique directement que:
+$$a_1 = 0$$
+
+Maintenant, substituons la valeur de $a_1$ dans l'expression de $a_2$:
+$$a_2 = -2(0)$$
+$$a_2 = 0$$
+
+Nous avons trouvé que $a_1 = 0$ et $a_2 = 0$ est la seule solution au système d'équations.
+Puisque la seule combinaison linéaire des polynômes $P_1(x)$ et $P_2(x)$ qui donne le polynôme nul est celle où les coefficients sont tous nuls, nous pouvons conclure que la famille $S = \{P_1(x), P_2(x)\}$ est une famille libre dans $E$.
+
+\subsubsection*{2. Démontrer que la famille $S$ est une famille génératrice de $E$.}
+
+\textbf{Définition :} Une famille de vecteurs $\{v_1, v_2, \ldots, v_n\}$ d'un $K$-espace vectoriel $E$ est dite \textbf{génératrice} de $E$ si tout vecteur de $E$ peut être exprimé comme une combinaison linéaire de ces vecteurs. Autrement dit, pour tout vecteur $v \in E$, il existe des scalaires $a_1, a_2, \ldots, a_n \in K$ tels que $v = a_1 v_1 + a_2 v_2 + \ldots + a_n v_n$.
+
+Dans notre cas, l'espace vectoriel est $E = P_1(\mathbb{R})$. Un polynôme arbitraire $Q(x)$ dans $E$ peut s'écrire sous la forme $Q(x) = cx+d$, où $c$ et $d$ sont des nombres réels (c'est-à-dire $c, d \in \mathbb{R}$).
+
+Pour démontrer que $S$ est une famille génératrice de $E$, nous devons montrer que pour tout polynôme $Q(x) = cx+d \in E$, il existe des scalaires $a_1, a_2 \in \mathbb{R}$ tels que:
+$$Q(x) = a_1 P_1(x) + a_2 P_2(x)$$
+
+Substituons les expressions des polynômes $P_1(x)$ et $P_2(x)$ ainsi que $Q(x)$:
+$$cx+d = a_1 (2x+1) + a_2 (x-3)$$
+
+Développons le membre de droite et regroupons les termes selon les puissances de $x$:
+$$cx+d = (2a_1 x + a_1) + (a_2 x - 3a_2)$$
+$$cx+d = (2a_1 + a_2)x + (a_1 - 3a_2)$$
+
+Pour que deux polynômes soient égaux, leurs coefficients respectifs doivent être égaux. Cela nous conduit à un nouveau système d'équations linéaires, où $a_1$ et $a_2$ sont les inconnues, et $c$ et $d$ sont des paramètres réels:
+1.  $2a_1 + a_2 = c$
+2.  $a_1 - 3a_2 = d$
+
+Nous allons résoudre ce système pour exprimer $a_1$ et $a_2$ en fonction de $c$ et $d$.
+De l'équation (1), nous pouvons exprimer $a_2$ en fonction de $a_1$ et $c$:
+$$a_2 = c - 2a_1$$
+
+Substituons cette expression de $a_2$ dans l'équation (2):
+$$a_1 - 3(c - 2a_1) = d$$
+$$a_1 - 3c + 6a_1 = d$$
+$$7a_1 - 3c = d$$
+$$7a_1 = d + 3c$$
+
+Cette dernière équation nous donne la valeur de $a_1$:
+$$a_1 = \frac{d+3c}{7}$$
+
+Maintenant, substituons la valeur de $a_1$ dans l'expression de $a_2$:
+$$a_2 = c - 2\left(\frac{d+3c}{7}\right)$$
+$$a_2 = \frac{7c}{7} - \frac{2(d+3c)}{7}$$
+$$a_2 = \frac{7c - 2d - 6c}{7}$$
+$$a_2 = \frac{c-2d}{7}$$
+
+Nous avons trouvé des expressions explicites pour $a_1$ et $a_2$ en fonction de $c$ et $d$. Pour tout choix de $c, d \in \mathbb{R}$, nous pouvons calculer des valeurs réelles pour $a_1$ et $a_2$. Cela signifie que tout polynôme $Q(x) = cx+d$ dans $E$ peut être écrit comme une combinaison linéaire de $P_1(x)$ et $P_2(x)$.
+
+Par conséquent, la famille $S = \{P_1(x), P_2(x)\}$ est une famille génératrice de $E$.
+
+\subsubsection*{3. En déduire si la famille $S$ constitue une base de $E$.}
+
+\textbf{Définition :} Une famille de vecteurs est une \textbf{base} d'un $K$-espace vectoriel $E$ si elle est à la fois une famille libre et une famille génératrice de $E$.
+
+D'après la question 1, nous avons démontré que la famille $S = \{P_1(x), P_2(x)\}$ est une famille libre dans $E$.
+D'après la question 2, nous avons démontré que la famille $S = \{P_1(x), P_2(x)\}$ est une famille génératrice de $E$.
+
+Puisque la famille $S$ satisfait aux deux conditions (être libre et être génératrice), nous pouvons conclure qu'elle constitue une base de l'espace vectoriel $E = P_1(\mathbb{R})$.
+
+Ceci conclut l'exercice.
+
+\newpage
+
+
+Mes chers étudiants,
+
+Nous poursuivons notre exploration des fondements de l'algèbre linéaire avec cet exercice qui vous invite à manipuler les concepts d'espaces vectoriels abstraits, de familles libres, génératrices et de bases. La clarté et la rigueur de votre raisonnement seront primordiales.
+
+
+
+\subsection*{Correction Détaillée de l'Exercice 3}
+
+Nous allons aborder chaque question avec la plus grande précision, en explicitant chaque étape du raisonnement et de chaque calcul.
+
+\textbf{Nature des objets :}
+*   $\mathbb{R}$ est le corps des nombres réels.
+*   $\mathcal{M}_2(\mathbb{R})$ est l'ensemble des matrices carrées d'ordre 2 à coefficients dans $\mathbb{R}$.
+*   $E$ est un sous-ensemble de $\mathcal{M}_2(\mathbb{R})$.
+*   $M_1, M_2, M_3$ sont des matrices spécifiques appartenant à $\mathcal{M}_2(\mathbb{R})$.
+*   $S$ est une famille de matrices.
+
+
+
+\textbf{Question 2 : Analyse de la famille $S = \left\{ M_1, M_2, M_3 \right\}$.}
+
+Nous avons $M_1 = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$, $M_2 = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}$, $M_3 = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}$.
+Vérifions d'abord que ces matrices appartiennent bien à $E$ :
+*   $\text{Tr}(M_1) = 1 + (-1) = 0$. Donc $M_1 \in E$.
+*   $\text{Tr}(M_2) = 0 + 0 = 0$. Donc $M_2 \in E$.
+*   $\text{Tr}(M_3) = 0 + 0 = 0$. Donc $M_3 \in E$.
+La famille $S$ est donc bien une famille de vecteurs de $E$.
+
+\textbf{Question 2a) : La famille $S$ est-elle une famille génératrice de $E$ ?}
+
+Une famille $S = \{M_1, M_2, M_3\}$ est génératrice de $E$ si tout vecteur $M$ de $E$ peut s'écrire comme une combinaison linéaire des vecteurs de $S$.
+Soit $M$ une matrice quelconque appartenant à $E$. Par définition de $E$, $M$ est une matrice de $\mathcal{M}_2(\mathbb{R})$ dont la trace est nulle.
+Une matrice $M \in \mathcal{M}_2(\mathbb{R})$ s'écrit sous la forme :
+$$M = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$$
+La condition $\text{Tr}(M) = 0$ implique $a+d=0$, ce qui signifie $d = -a$.
+Ainsi, toute matrice $M \in E$ peut s'écécrire sous la forme :
+$$M = \begin{pmatrix} a & b \\ c & -a \end{pmatrix}$$
+où $a, b, c$ sont des nombres réels.
+
+Nous cherchons à savoir s'il existe des scalaires réels $\alpha, \beta, \gamma \in \mathbb{R}$ tels que $M = \alpha M_1 + \beta M_2 + \gamma M_3$.
+Substituons les expressions des matrices :
+$$\begin{pmatrix} a & b \\ c & -a \end{pmatrix} = \alpha \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} + \beta \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} + \gamma \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}$$
+Effectuons la multiplication par les scalaires :
+$$\begin{pmatrix} a & b \\ c & -a \end{pmatrix} = \begin{pmatrix} \alpha & 0 \\ 0 & -\alpha \end{pmatrix} + \begin{pmatrix} 0 & \beta \\ 0 & 0 \end{pmatrix} + \begin{pmatrix} 0 & 0 \\ \gamma & 0 \end{pmatrix}$$
+Effectuons l'addition des matrices :
+$$\begin{pmatrix} a & b \\ c & -a \end{pmatrix} = \begin{pmatrix} \alpha+0+0 & 0+\beta+0 \\ 0+0+\gamma & -\alpha+0+0 \end{pmatrix}$$
+$$\begin{pmatrix} a & b \\ c & -a \end{pmatrix} = \begin{pmatrix} \alpha & \beta \\ \gamma & -\alpha \end{pmatrix}$$
+Par identification des coefficients matriciels, nous obtenons le système d'équations suivant :
+1.  $a = \alpha$
+2.  $b = \beta$
+3.  $c = \gamma$
+4.  $-a = -\alpha$
+
+La quatrième équation, $-a = -\alpha$, est redondante car elle est équivalente à $a = \alpha$, qui est déjà donnée par la première équation.
+Ce système nous donne directement les valeurs des scalaires $\alpha, \beta, \gamma$ en fonction des coefficients $a, b, c$ de la matrice $M$.
+Pour toute matrice $M = \begin{pmatrix} a & b \\ c & -a \end{pmatrix}$ dans $E$, nous pouvons trouver les scalaires $\alpha=a$, $\beta=b$, $\gamma=c$ tels que $M = a M_1 + b M_2 + c M_3$.
+Puisque nous avons pu exprimer une matrice $M$ quelconque de $E$ comme une combinaison linéaire des matrices de $S$, la famille $S$ est une famille génératrice de $E$.
+
+\textbf{Conclusion de la Question 2a) :}
+Oui, la famille $S$ est une famille génératrice de $E$.
+
+
+
+\textbf{Question 2c) : La famille $S$ est-elle une base de $E$ ? Si oui, quelle est la dimension de $E$ ?}
+
+Une famille de vecteurs est une base d'un espace vectoriel si et seulement si elle est à la fois une famille génératrice de cet espace et une famille libre dans cet espace.
+D'après la Question 2a), nous avons démontré que la famille $S$ est une famille génératrice de $E$.
+D'après la Question 2b), nous avons démontré que la famille $S$ est une famille libre dans $E$.
+Puisque la famille $S$ satisfait ces deux conditions, elle est une base de $E$.
+
+La dimension d'un espace vectoriel est le nombre de vecteurs dans n'importe quelle base de cet espace.
+La famille $S$ contient 3 vecteurs ($M_1, M_2, M_3$).
+Par conséquent, la dimension de l'espace vectoriel $E$ est 3.
+
+\textbf{Conclusion de la Question 2c) :}
+Oui, la famille $S$ est une base de $E$. La dimension de $E$ est 3.
+
+---
+
+J'espère que cette correction détaillée vous aura permis de saisir toutes les nuances de cet exercice. La rigueur est la clé de la maîtrise de l'algèbre linéaire.
+
+\newpage
+
+
+Mes chers étudiants,
+
+Nous allons aujourd'hui explorer les concepts fondamentaux d'espaces vectoriels, de familles libres, génératrices et de bases à travers un exemple concret, mais suffisamment abstrait pour illustrer la généralité de ces notions. L'exercice que je vous propose porte sur un espace de suites réelles, un cadre qui vous est familier mais que nous allons analyser sous l'angle de l'algèbre linéaire.
+
+
+
+\subsection*{Correction de l'Exercice 4}
+
+Nous allons aborder chaque question avec la rigueur nécessaire, en détaillant chaque étape.
+
+\subsubsection*{Question 1 : Démontrer que $E$ est un $\mathbb{R}$-espace vectoriel.}
+
+Pour démontrer que $E$ est un $\mathbb{R}$-espace vectoriel, nous allons montrer qu'il s'agit d'un sous-espace vectoriel de l'espace vectoriel des suites réelles $\mathbb{R}^{\mathbb{N}}$. L'espace $\mathbb{R}^{\mathbb{N}}$ est l'ensemble de toutes les suites réelles, muni des opérations d'addition de suites et de multiplication par un scalaire réel définies dans l'énoncé. Nous savons que $\mathbb{R}^{\mathbb{N}}$ est un $\mathbb{R}$-espace vectoriel.
+
+Pour qu'un sous-ensemble $E$ d'un espace vectoriel $V$ soit lui-même un espace vectoriel (un sous-espace vectoriel), trois conditions doivent être satisfaites :
+1.  $E$ doit être non vide.
+2.  $E$ doit être fermé sous l'addition vectorielle.
+3.  $E$ doit être fermé sous la multiplication par un scalaire.
+
+Appliquons ces conditions à notre ensemble $E$:
+
+1.  \textbf{$E$ est non vide :}
+    Considérons la suite nulle, notée $(0)_{n \in \mathbb{N}}$, dont tous les termes sont égaux à 0. C'est-à-dire $u_n = 0$ pour tout $n \in \mathbb{N}$.
+    Vérifions si cette suite satisfait la relation de récurrence $u_{n+2} = u_{n+1} + u_n$.
+    Pour tout $n \in \mathbb{N}$, nous avons $0 = 0 + 0$.
+    Cette égalité est vraie. Par conséquent, la suite nulle appartient à $E$.
+    Puisque la suite nulle est un élément de $E$, l'ensemble $E$ n'est pas vide.
+
+2.  \textbf{$E$ est fermé sous l'addition vectorielle :}
+    Soient $(u_n)_{n \in \mathbb{N}}$ et $(v_n)_{n \in \mathbb{N}}$ deux suites quelconques appartenant à $E$.
+    Par définition, cela signifie que pour tout $n \in \mathbb{N}$:
+    *   $u_{n+2} = u_{n+1} + u_n$ (car $(u_n) \in E$)
+    *   $v_{n+2} = v_{n+1} + v_n$ (car $(v_n) \in E$)
+    Considérons la suite somme $(w_n)_{n \in \mathbb{N}} = (u_n)_{n \in \mathbb{N}} + (v_n)_{n \in \mathbb{N}}$. Par définition de l'addition de suites, chaque terme de $(w_n)$ est $w_n = u_n + v_n$.
+    Nous devons vérifier si $(w_n)$ satisfait la relation de récurrence. Calculons $w_{n+2}$:
+    $w_{n+2} = u_{n+2} + v_{n+2}$
+    En utilisant les relations de récurrence pour $(u_n)$ et $(v_n)$, nous substituons:
+    $w_{n+2} = (u_{n+1} + u_n) + (v_{n+1} + v_n)$
+    Par associativité et commutativité de l'addition des nombres réels, nous pouvons regrouper les termes:
+    $w_{n+2} = (u_{n+1} + v_{n+1}) + (u_n + v_n)$
+    En reconnaissant les termes de la suite $(w_n)$:
+    $w_{n+2} = w_{n+1} + w_n$
+    Cette égalité est vraie pour tout $n \in \mathbb{N}$. Par conséquent, la suite $(w_n)$ appartient à $E$.
+    L'ensemble $E$ est donc fermé sous l'addition vectorielle.
+
+3.  \textbf{$E$ est fermé sous la multiplication par un scalaire :}
+    Soit $(u_n)_{n \in \mathbb{N}}$ une suite quelconque appartenant à $E$, et soit $\lambda$ un scalaire réel quelconque ($\lambda \in \mathbb{R}$).
+    Par définition, $(u_n) \in E$ signifie que pour tout $n \in \mathbb{N}$, $u_{n+2} = u_{n+1} + u_n$.
+    Considérons la suite produit par un scalaire $(x_n)_{n \in \mathbb{N}} = \lambda (u_n)_{n \in \mathbb{N}}$. Par définition de la multiplication par un scalaire, chaque terme de $(x_n)$ est $x_n = \lambda u_n$.
+    Nous devons vérifier si $(x_n)$ satisfait la relation de récurrence. Calculons $x_{n+2}$:
+    $x_{n+2} = \lambda u_{n+2}$
+    En utilisant la relation de récurrence pour $(u_n)$, nous substituons:
+    $x_{n+2} = \lambda (u_{n+1} + u_n)$
+    Par distributivité de la multiplication sur l'addition dans $\mathbb{R}$:
+    $x_{n+2} = \lambda u_{n+1} + \lambda u_n$
+    En reconnaissant les termes de la suite $(x_n)$:
+    $x_{n+2} = x_{n+1} + x_n$
+    Cette égalité est vraie pour tout $n \in \mathbb{N}$. Par conséquent, la suite $(x_n)$ appartient à $E$.
+    L'ensemble $E$ est donc fermé sous la multiplication par un scalaire.
+
+Puisque les trois conditions sont satisfaites, nous pouvons conclure que $E$ est un sous-espace vectoriel de $\mathbb{R}^{\mathbb{N}}$. Par conséquent, $E$ est un $\mathbb{R}$-espace vectoriel.
+
+\subsubsection*{Question 2a : Vérifier que $F$ et $G$ sont des éléments de $E$.}
+
+Les suites $F = (\phi^n)_{n \in \mathbb{N}}$ et $G = ((1-\phi)^n)_{n \in \mathbb{N}}$ sont définies à partir des nombres $\phi = \frac{1+\sqrt{5}}{2}$ et $1-\phi = \frac{1-\sqrt{5}}{2}$.
+Ces deux nombres sont les racines de l'équation caractéristique associée à la relation de récurrence $r^2 - r - 1 = 0$.
+Cela signifie que $\phi^2 - \phi - 1 = 0$ et $(1-\phi)^2 - (1-\phi) - 1 = 0$.
+Ces équations peuvent être réécrites comme $\phi^2 = \phi + 1$ et $(1-\phi)^2 = (1-\phi) + 1$.
+
+1.  \textbf{Vérification pour la suite $F = (\phi^n)_{n \in \mathbb{N}}$ :}
+    Pour que $F$ appartienne à $E$, ses termes doivent satisfaire la relation de récurrence $u_{n+2} = u_{n+1} + u_n$.
+    Nous devons vérifier si $\phi^{n+2} = \phi^{n+1} + \phi^n$ pour tout $n \in \mathbb{N}$.
+    Puisque $\phi = \frac{1+\sqrt{5}}{2}$ est un nombre non nul, nous pouvons diviser l'équation par $\phi^n$ (pour $n \ge 0$).
+    L'équation devient $\phi^2 = \phi + 1$.
+    Nous savons que $\phi$ est une racine de $r^2 - r - 1 = 0$, donc $\phi^2 - \phi - 1 = 0$, ce qui est équivalent à $\phi^2 = \phi + 1$.
+    Cette égalité est vraie. Par conséquent, la suite $F$ appartient à $E$.
+
+2.  \textbf{Vérification pour la suite $G = ((1-\phi)^n)_{n \in \mathbb{N}}$ :}
+    Pour que $G$ appartienne à $E$, ses termes doivent satisfaire la relation de récurrence $u_{n+2} = u_{n+1} + u_n$.
+    Nous devons vérifier si $(1-\phi)^{n+2} = (1-\phi)^{n+1} + (1-\phi)^n$ pour tout $n \in \mathbb{N}$.
+    Puisque $1-\phi = \frac{1-\sqrt{5}}{2}$ est un nombre non nul, nous pouvons diviser l'équation par $(1-\phi)^n$ (pour $n \ge 0$).
+    L'équation devient $(1-\phi)^2 = (1-\phi) + 1$.
+    Nous savons que $1-\phi$ est l'autre racine de $r^2 - r - 1 = 0$, donc $(1-\phi)^2 - (1-\phi) - 1 = 0$, ce qui est équivalent à $(1-\phi)^2 = (1-\phi) + 1$.
+    Cette égalité est vraie. Par conséquent, la suite $G$ appartient à $E$.
+
+Nous avons vérifié que $F$ et $G$ sont bien des éléments de l'espace vectoriel $E$.
+
+\subsubsection*{Question 2b : Démontrer que la famille $\{F, G\}$ est une famille libre dans $E$.}
+
+Une famille de vecteurs $\{v_1, v_2, \dots, v_k\}$ d'un espace vectoriel est dite libre si la seule combinaison linéaire de ces vecteurs qui est égale au vecteur nul est celle où tous les coefficients scalaires sont nuls.
+Dans notre cas, les vecteurs sont les suites $F$ et $G$, et le vecteur nul est la suite nulle $(0)_{n \in \mathbb{N}}$.
+Soient $\alpha, \beta \in \mathbb{R}$ des scalaires tels que la combinaison linéaire $\alpha F + \beta G$ est égale à la suite nulle.
+Cela signifie que pour tout $n \in \mathbb{N}$, le $n$-ième terme de la suite $\alpha F + \beta G$ est égal à 0.
+Donc, pour tout $n \in \mathbb{N}$:
+$$\alpha \phi^n + \beta (1-\phi)^n = 0$$
+Nous allons utiliser cette égalité pour des valeurs spécifiques de $n$.
+
+1.  \textbf{Pour $n=0$ :}
+    $\alpha \phi^0 + \beta (1-\phi)^0 = 0$
+    Puisque $\phi^0 = 1$ et $(1-\phi)^0 = 1$:
+    $\alpha \cdot 1 + \beta \cdot 1 = 0$
+    $\alpha + \beta = 0$ (Équation 1)
+
+2.  \textbf{Pour $n=1$ :}
+    $\alpha \phi^1 + \beta (1-\phi)^1 = 0$
+    $\alpha \phi + \beta (1-\phi) = 0$ (Équation 2)
+
+Nous avons maintenant un système de deux équations linéaires avec deux inconnues $\alpha$ et $\beta$:
+$$ \begin{cases} \alpha + \beta = 0 \\ \alpha \phi + \beta (1-\phi) = 0 \end{cases} $$
+De l'Équation 1, nous pouvons exprimer $\beta$ en fonction de $\alpha$:
+$\beta = -\alpha$
+
+Substituons cette expression de $\beta$ dans l'Équation 2:
+$\alpha \phi + (-\alpha) (1-\phi) = 0$
+$\alpha \phi - \alpha (1-\phi) = 0$
+Factorisons $\alpha$:
+$\alpha (\phi - (1-\phi)) = 0$
+$\alpha (\phi - 1 + \phi) = 0$
+$\alpha (2\phi - 1) = 0$
+
+Calculons la valeur de $2\phi - 1$:
+$2\phi - 1 = 2 \left(\frac{1+\sqrt{5}}{2}\right) - 1 = (1+\sqrt{5}) - 1 = \sqrt{5}$
+
+L'équation devient donc:
+$\alpha \sqrt{5} = 0$
+Puisque $\sqrt{5}$ est un nombre réel non nul, nous devons avoir $\alpha = 0$.
+
+Maintenant, substituons $\alpha = 0$ dans l'expression de $\beta$:
+$\beta = -\alpha = -0 = 0$
+
+Nous avons trouvé que $\alpha = 0$ et $\beta = 0$ sont les seules solutions possibles pour que la combinaison linéaire $\alpha F + \beta G$ soit la suite nulle.
+Par conséquent, la famille $\{F, G\}$ est une famille libre dans $E$.
+
+\subsubsection*{Question 3 : Démontrer que la famille $\{F, G\}$ est une famille génératrice de $E$.}
+
+Une famille de vecteurs $\{v_1, v_2, \dots, v_k\}$ est dite génératrice d'un espace vectoriel $E$ si tout vecteur de $E$ peut être exprimé comme une combinaison linéaire de ces vecteurs.
+Dans notre cas, nous devons montrer que pour toute suite $U = (u_n)_{n \in \mathbb{N}}$ appartenant à $E$, il existe des scalaires $A, B \in \mathbb{R}$ tels que $U = A F + B G$.
+Cela signifie que pour tout $n \in \mathbb{N}$:
+$$u_n = A \phi^n + B (1-\phi)^n$$
+
+Une propriété fondamentale des suites définies par une relation de récurrence linéaire d'ordre 2 (comme celle de $E$) est qu'une suite est entièrement déterminée par ses deux premiers termes, $u_0$ et $u_1$. En effet, si $u_0$ et $u_1$ sont connus, alors $u_2 = u_1 + u_0$, $u_3 = u_2 + u_1$, et ainsi de suite, tous les termes suivants sont fixés de manière unique.
+
+Nous allons donc chercher à trouver des scalaires $A$ et $B$ tels que l'égalité $u_n = A \phi^n + B (1-\phi)^n$ soit satisfaite pour $n=0$ et $n=1$. Si nous trouvons de tels $A$ et $B$, alors la suite $A F + B G$ aura les mêmes termes $u_0$ et $u_1$ que la suite $U$. Puisque les deux suites appartiennent à $E$ et sont déterminées de manière unique par leurs deux premiers termes, elles doivent être identiques pour tous les $n$.
+
+1.  \textbf{Pour $n=0$ :}
+    $u_0 = A \phi^0 + B (1-\phi)^0$
+    $u_0 = A \cdot 1 + B \cdot 1$
+    $u_0 = A + B$ (Équation 3)
+
+2.  \textbf{Pour $n=1$ :}
+    $u_1 = A \phi^1 + B (1-\phi)^1$
+    $u_1 = A \phi + B (1-\phi)$ (Équation 4)
+
+Nous avons un système de deux équations linéaires avec deux inconnues $A$ et $B$:
+$$ \begin{cases} A + B = u_0 \\ A \phi + B (1-\phi) = u_1 \end{cases} $$
+De l'Équation 3, nous exprimons $B$ en fonction de $A$ et $u_0$:
+$B = u_0 - A$
+
+Substituons cette expression de $B$ dans l'Équation 4:
+$A \phi + (u_0 - A)(1-\phi) = u_1$
+Développons le terme $(u_0 - A)(1-\phi)$:
+$A \phi + u_0(1-\phi) - A(1-\phi) = u_1$
+Regroupons les termes contenant $A$:
+$A (\phi - (1-\phi)) + u_0(1-\phi) = u_1$
+Simplifions le coefficient de $A$:
+$\phi - (1-\phi) = \phi - 1 + \phi = 2\phi - 1$
+Comme nous l'avons calculé précédemment, $2\phi - 1 = \sqrt{5}$.
+Donc l'équation devient:
+$A \sqrt{5} + u_0(1-\phi) = u_1$
+Isolons $A$:
+$A \sqrt{5} = u_1 - u_0(1-\phi)$
+$A = \frac{u_1 - u_0(1-\phi)}{\sqrt{5}}$
+
+Maintenant, substituons la valeur de $A$ dans l'expression de $B = u_0 - A$:
+$B = u_0 - \frac{u_1 - u_0(1-\phi)}{\sqrt{5}}$
+Pour simplifier, mettons au même dénominateur:
+$B = \frac{u_0 \sqrt{5} - (u_1 - u_0(1-\phi))}{\sqrt{5}}$
+$B = \frac{u_0 \sqrt{5} - u_1 + u_0(1-\phi)}{\sqrt{5}}$
+$B = \frac{u_0 (\sqrt{5} + 1 - \phi) - u_1}{\sqrt{5}}$
+Rappelons que $\phi = \frac{1+\sqrt{5}}{2}$, donc $\sqrt{5} = 2\phi - 1$.
+Substituons $\sqrt{5}$ dans l'expression de $B$:
+$B = \frac{u_0 (2\phi - 1 + 1 - \phi) - u_1}{\sqrt{5}}$
+$B = \frac{u_0 \phi - u_1}{\sqrt{5}}$
+
+Puisque $\sqrt{5} \neq 0$, nous avons trouvé des valeurs uniques pour $A$ et $B$ pour n'importe quelle paire de termes initiaux $(u_0, u_1)$.
+Cela signifie que pour toute suite $U = (u_n)_{n \in \mathbb{N}}$ dans $E$, il existe une unique combinaison linéaire $A F + B G$ qui correspond à $U$.
+Par conséquent, la famille $\{F, G\}$ est une famille génératrice de $E$.
+
+\subsubsection*{Question 4 : En déduire une base de $E$ et sa dimension.}
+
+Une base d'un espace vectoriel est une famille de vecteurs qui est à la fois libre et génératrice de cet espace.
+1.  D'après la Question 2b, nous avons démontré que la famille $\{F, G\}$ est une famille libre dans $E$.
+2.  D'après la Question 3, nous avons démontré que la famille $\{F, G\}$ est une famille génératrice de $E$.
+
+Puisque la famille $\{F, G\}$ est à la fois libre et génératrice pour l'espace vectoriel $E$, elle constitue une base de $E$.
+
+La dimension d'un espace vectoriel est le nombre de vecteurs dans n'importe laquelle de ses bases.
+La base $\{F, G\}$ contient deux vecteurs distincts ($F$ et $G$).
+Par conséquent, la dimension de l'espace vectoriel $E$ est 2.
+Nous notons $\dim_{\mathbb{R}}(E) = 2$.
+
+---
+Ceci conclut l'exercice. J'espère que cette exploration détaillée vous a permis de solidifier votre compréhension des concepts fondamentaux des espaces vectoriels en dimension finie.
+
+\newpage
+
+
+\chapter*{Exercice 5 : Extraction de bases}
+
+\section*{Énoncé}
+Soit $E = \mathbb{R}^3$. On considère la famille de vecteurs :
+$v_1 = (1, 1, 0)$, $v_2 = (0, 1, 1)$, $v_3 = (1, 2, 1)$, $v_4 = (1, 0, -1)$.
+Extraire de cette famille une base de $E$.
+
+\section*{Correction}
+Il s'agit d'étudier le rang de cette famille.
+On remarque que $v_3 = v_1 + v_2$. La famille $(v_1, v_2, v_3, v_4)$ est donc liée, et $Vect(v_1, v_2, v_3, v_4) = Vect(v_1, v_2, v_4)$.
+Étudions la liberté de $(v_1, v_2, v_4)$.
+Soient $\lambda, \mu, \gamma \in \mathbb{R}$ tels que $\lambda v_1 + \mu v_2 + \gamma v_4 = 0_E$.
+Cela conduit au système :
+1. $\lambda + \gamma = 0$
+2. $\lambda + \mu = 0$
+3. $\mu - \gamma = 0$
+
+De (1), $\gamma = -\lambda$. De (2), $\mu = -\lambda$.
+En injectant dans (3) : $-\lambda - (-\lambda) = 0$, soit $0 = 0$.
+Le système admet une infinité de solutions (ex: $\lambda = 1, \mu = -1, \gamma = -1$).
+En effet, $v_1 - v_2 - v_4 = (1,1,0) - (0,1,1) - (1,0,-1) = (0,0,0)$.
+La famille est liée. On a $v_4 = v_1 - v_2$.
+L'espace engendré est donc de dimension 2 : $Vect(v_1, v_2)$.
+Comme $v_1$ et $v_2$ ne sont pas colinéaires (leurs coordonnées ne sont pas proportionnelles), ils forment une famille libre.
+La sous-famille $(v_1, v_2)$ est donc une base de l'espace engendré par les 4 vecteurs (qui est un plan de $\mathbb{R}^3$, pas $\mathbb{R}^3$ tout entier).
+
+\newpage
+
+
+\chapter*{Exercice 6 : Intersection et somme d'espaces vectoriels}
+
+\section*{Énoncé}
+Dans $E = \mathbb{R}^4$, on donne les espaces $F = Vect(e_1, e_2)$ et $G = Vect(e_3, e_4)$ où :
+$e_1 = (1, 2, 0, 1)$, $e_2 = (0, 1, 1, 1)$, $e_3 = (1, 3, 1, 2)$, $e_4 = (1, 1, -1, 0)$.
+Déterminer une base de $F \cap G$ et de $F + G$.
+
+\section*{Correction}
+\textbf{Pour $F+G$ :}
+$F+G = Vect(e_1, e_2, e_3, e_4)$.
+On cherche une relation de dépendance linéaire.
+Remarquons que $e_1 + e_2 = (1, 3, 1, 2) = e_3$.
+Et $e_1 - e_2 = (1, 1, -1, 0) = e_4$.
+Ainsi, $F+G = Vect(e_1, e_2)$ car $e_3, e_4 \in Vect(e_1, e_2)$.
+Puisque $e_1, e_2$ ne sont pas colinéaires, $(e_1, e_2)$ est une base de $F+G$, et $\dim(F+G) = 2$.
+
+\textbf{Pour $F \cap G$ :}
+Par la formule de Grassmann :
+$\dim(F+G) = \dim(F) + \dim(G) - \dim(F \cap G)$
+On sait que $\dim(F) = 2$ (base $e_1, e_2$) et $\dim(G) = 2$ (base $e_3, e_4$).
+Et on vient de trouver $\dim(F+G) = 2$.
+Donc $2 = 2 + 2 - \dim(F \cap G) \implies \dim(F \cap G) = 2$.
+Ainsi, $F \cap G = F = G$. Une base de $F \cap G$ est donc simplement $(e_1, e_2)$.
+
+\newpage
+
+
+\chapter*{Exercice 7 : Familles de polynômes}
+
+\section*{Énoncé}
+Dans l'espace $\mathbb{R}_2[X]$, on considère les polynômes :
+$P_1 = 1 + X + X^2$, $P_2 = 1 - X + X^2$, $P_3 = 1 + X - X^2$.
+Montrer que $(P_1, P_2, P_3)$ est une base de $\mathbb{R}_2[X]$ et trouver les coordonnées du polynôme $P = 1$ dans cette base.
+
+\section*{Correction}
+\textbf{Preuve de base :}
+L'espace $\mathbb{R}_2[X]$ est de dimension 3. La famille comportant 3 vecteurs, il suffit de montrer qu'elle est libre.
+Soient $a, b, c \in \mathbb{R}$ tels que $aP_1 + bP_2 + cP_3 = 0$.
+$a(1+X+X^2) + b(1-X+X^2) + c(1+X-X^2) = 0$
+En regroupant les termes :
+$(a+b+c) + (a-b+c)X + (a+b-c)X^2 = 0$
+Par identification des coefficients avec le polynôme nul :
+1. $a+b+c = 0$
+2. $a-b+c = 0$
+3. $a+b-c = 0$
+
+(1) - (2) donne $2b = 0 \implies b = 0$.
+(1) - (3) donne $2c = 0 \implies c = 0$.
+On déduit $a = 0$. La famille est libre, c'est donc une base.
+
+\textbf{Coordonnées de P=1 :}
+On cherche $x, y, z$ tels que $xP_1 + yP_2 + zP_3 = 1$.
+1. $x+y+z = 1$
+2. $x-y+z = 0$
+3. $x+y-z = 0$
+
+(1) - (2) $\implies 2y = 1 \implies y = 1/2$.
+(1) - (3) $\implies 2z = 1 \implies z = 1/2$.
+En reportant dans (1) : $x + 1/2 + 1/2 = 1 \implies x = 0$.
+Les coordonnées de $P$ dans la base $(P_1, P_2, P_3)$ sont $(0, 1/2, 1/2)$.
+
+\newpage
+
+
+\chapter*{Exercice 8 : Supplémentaires}
+
+\section*{Énoncé}
+Soit $E = \mathbb{R}^3$. On considère le plan $P$ d'équation $x+y+z=0$ et la droite $D$ engendrée par le vecteur $u = (1, 1, 1)$.
+Montrer que $P$ et $D$ sont supplémentaires dans $E$.
+
+\section*{Correction}
+Pour montrer que $E = P \oplus D$, on doit montrer deux choses :
+1. $P \cap D = \{0_E\}$
+2. $\dim(P) + \dim(D) = \dim(E)$
+
+\textbf{Intersection :}
+Soit $v \in P \cap D$.
+Puisque $v \in D$, il existe $\lambda \in \mathbb{R}$ tel que $v = \lambda(1, 1, 1) = (\lambda, \lambda, \lambda)$.
+Puisque $v \in P$, ses coordonnées vérifient l'équation de $P$ :
+$x + y + z = 0 \implies \lambda + \lambda + \lambda = 0 \implies 3\lambda = 0 \implies \lambda = 0$.
+Donc $v = (0, 0, 0)$. Ainsi $P \cap D = \{0_E\}$.
+
+\textbf{Dimensions :}
+$D$ est engendrée par un vecteur non nul, donc $\dim(D) = 1$.
+L'équation $x+y+z=0$ définit le noyau de la forme linéaire non nulle $\varphi(x,y,z) = x+y+z$ sur $\mathbb{R}^3$. L'image de $\varphi$ est $\mathbb{R}$ (de dimension 1). Par le théorème du rang, $\dim(P) = \dim(\mathbb{R}^3) - \dim(\text{Im}(\varphi)) = 3 - 1 = 2$.
+On a bien $\dim(P) + \dim(D) = 2 + 1 = 3 = \dim(\mathbb{R}^3)$.
+
+\textbf{Conclusion :}
+Les deux sous-espaces sont en somme directe et la somme de leurs dimensions vaut celle de l'espace total. Ils sont donc supplémentaires : $\mathbb{R}^3 = P \oplus D$.
+
+\newpage
+
+
+\chapter*{Exercice 9 : Espaces de suites}
+
+\section*{Énoncé}
+Soit $E$ l'espace des suites réelles. On considère l'ensemble $F$ des suites $(u_n)$ vérifiant la relation de récurrence :
+$\forall n \in \mathbb{N}, u_{n+2} = 5u_{n+1} - 6u_n$.
+Montrer que $F$ est un espace vectoriel et déterminer sa dimension.
+
+\section*{Correction}
+\textbf{Structure d'espace vectoriel :}
+La suite nulle vérifie la relation, donc $0_E \in F$.
+Soient $u, v \in F$ et $\lambda \in \mathbb{R}$. Posons $w = \lambda u + v$.
+$\forall n, w_{n+2} = \lambda u_{n+2} + v_{n+2}$
+$= \lambda(5u_{n+1} - 6u_n) + (5v_{n+1} - 6v_n)$
+$= 5(\lambda u_{n+1} + v_{n+1}) - 6(\lambda u_n + v_n)$
+$= 5w_{n+1} - 6w_n$.
+Donc $w \in F$. $F$ est un sous-espace vectoriel de $E$.
+
+\textbf{Dimension et base :}
+Il s'agit d'une récurrence linéaire d'ordre 2. Son équation caractéristique est :
+$r^2 - 5r + 6 = 0$.
+Les racines sont $r_1 = 2$ et $r_2 = 3$.
+On sait (théorie des suites récurrentes) que toute solution s'écrit sous la forme :
+$u_n = \lambda 2^n + \mu 3^n$ avec $\lambda, \mu \in \mathbb{R}$.
+Posons $e_1$ la suite définie par $e_{1,n} = 2^n$ et $e_2$ la suite $e_{2,n} = 3^n$.
+La formule montre que $(e_1, e_2)$ engendre $F$.
+Montrons qu'elle est libre. Soient $\lambda, \mu$ tels que $\lambda e_1 + \mu e_2 = 0$.
+Cela doit valoir 0 pour tout $n$.
+Pour $n=0$ : $\lambda + \mu = 0$
+Pour $n=1$ : $2\lambda + 3\mu = 0$
+La résolution de ce système s'effectue ainsi : de la première équation on déduit $\mu = -\lambda$. En substituant dans la seconde, on obtient $2\lambda - 3\lambda = 0$, soit $-\lambda = 0$ et donc $\lambda = 0$. Il s'ensuit rigoureusement que $\mu = 0$.
+La famille $(e_1, e_2)$ est une base de $F$, qui est donc de dimension 2.
+
+\newpage
+
+
+\chapter*{Exercice 10 : Lemme de l'échange de Steinitz (Preuve abstraite)}
+
+\section*{Énoncé}
+Soit $E$ un espace vectoriel engendré par une famille finie $G = (g_1, \dots, g_n)$. Soit $L = (v_1, \dots, v_p)$ une famille libre de $E$.
+Montrer que $p \le n$. (Théorème fondamental de la dimension).
+
+\section*{Correction}
+Nous allons procéder par récurrence sur $p$, le cardinal de la famille libre.
+
+\textbf{Initialisation ($p=1$) :}
+Si $L = (v_1)$ est libre, alors $v_1 \neq 0$. Puisque $G$ engendre $E$, on ne peut pas avoir $n=0$ (sinon $E=\{0\}$ et $v_1=0$). Donc $n \ge 1 = p$. L'initialisation est vérifiée.
+
+\textbf{Hérédité :}
+Supposons le théorème vrai pour toute famille libre de $p-1$ éléments.
+Considérons une famille libre $L = (v_1, \dots, v_p)$.
+La sous-famille $(v_1, \dots, v_{p-1})$ est libre. Par hypothèse de récurrence, $p-1 \le n$.
+De plus, par le lemme d'échange (ou par le fait qu'une base peut être formée en complétant $v_1, \dots, v_{p-1}$ avec des éléments de $G$), il existe des éléments de $G$ qui, ajoutés à $(v_1, \dots, v_{p-1})$, forment une famille génératrice de même cardinal $n$.
+Quitte à réindexer $G$, on peut supposer que $(v_1, \dots, v_{p-1}, g_p, \dots, g_n)$ engendre $E$.
+Maintenant, on exprime $v_p$ dans ce système générateur :
+$v_p = \lambda_1 v_1 + \dots + \lambda_{p-1} v_{p-1} + \mu_p g_p + \dots + \mu_n g_n$.
+Si on avait $p > n$, alors la liste des $g_i$ (de $p$ à $n$) serait vide.
+On aurait alors $v_p = \lambda_1 v_1 + \dots + \lambda_{p-1} v_{p-1}$.
+Cela s'écrit $\lambda_1 v_1 + \dots + \lambda_{p-1} v_{p-1} - v_p = 0$.
+Ceci est une combinaison linéaire nulle avec au moins un coefficient non nul (celui de $v_p$ qui vaut $-1$). Cela contredit la liberté de la famille $L$.
+Donc la liste des $g_i$ restants ne peut pas être vide, ce qui signifie qu'il reste au moins un élément d'indice $\ge p$. Donc $n \ge p$.
+
+\textbf{Conclusion :}
+Le théorème est vrai pour tout $p$. Une famille libre ne peut pas comporter plus d'éléments qu'une famille génératrice.
+
+\newpage
+\chapter*{Travaux Pratiques}
+\addcontentsline{toc}{chapter}{Travaux Pratiques}
+
+
+\chapter*{TP 1 : Espace Vectoriel $\mathbb{R}^n$ et Opérations de base}
+
+\section*{Objectif}
+Implémenter la structure de base d'un vecteur dans $\mathbb{R}^n$ en Python pur, avec l'addition et la multiplication par un scalaire, et vérifier les axiomes.
+
+\section*{Code Python}
+\begin{lstlisting}[language=Python]
+class Vector:
+    def __init__(self, *components):
+        self.coords = list(components)
+
+    def __add__(self, other):
+        assert len(self.coords) == len(other.coords), "Dimensions incompatibles"
+        return Vector(*[a + b for a, b in zip(self.coords, other.coords)])
+
+    def __rmul__(self, scalar):
+        return Vector(*[scalar * a for a in self.coords])
+
+    def __eq__(self, other):
+        return self.coords == other.coords
+
+# Validation mathématique des axiomes
+u = Vector(1.0, -2.0, 3.0)
+v = Vector(0.0, 5.0, -1.0)
+
+# Commutativité
+assert (u + v) == (v + u)
+
+# Distributivité
+assert (3 * (u + v)) == ((3 * u) + (3 * v))
+
+print("Tous les tests passent. La structure vectorielle de base est validée.")
+\end{lstlisting}
+
+\newpage
+
+
+\chapter*{TP 2 : Combinaisons Linéaires}
+
+\section*{Objectif}
+Créer une fonction qui calcule une combinaison linéaire arbitraire à partir d'une famille de vecteurs et d'une liste de scalaires.
+
+\section*{Code Python}
+\begin{lstlisting}[language=Python]
+def linear_combination(scalars, vectors):
+    assert len(scalars) == len(vectors), "Il faut autant de scalaires que de vecteurs"
+    assert len(vectors) > 0, "Famille vide"
+    dim = len(vectors[0])
+
+    result = [0.0] * dim
+
+    for scalar, vector in zip(scalars, vectors):
+        for i in range(dim):
+            result[i] += scalar * vector[i]
+
+    return result
+
+# Validation
+v1 = [1, 0, 0]
+v2 = [0, 1, 0]
+v3 = [0, 0, 1]
+
+# 2*v1 -3*v2 + 4*v3 doit donner [2, -3, 4]
+res = linear_combination([2, -3, 4], [v1, v2, v3])
+assert res == [2.0, -3.0, 4.0]
+
+print("Combinaison linéaire validée.")
+\end{lstlisting}
+
+\newpage
+
+
+\chapter*{TP 3 : Indépendance Linéaire (Pivot de Gauss Complet)}
+
+\section*{Objectif}
+Déterminer si une famille de vecteurs est libre en échelonnant la matrice associée (algorithme de Gauss).
+
+\section*{Code Python}
+\begin{lstlisting}[language=Python]
+def is_free_family(vectors):
+    if not vectors: return True
+    n_vectors = len(vectors)
+    dim = len(vectors[0])
+
+    if n_vectors > dim:
+        return False # Impossible d'avoir plus de vecteurs libres que la dimension
+
+    mat = [list(v) for v in vectors]
+
+    lead = 0
+    for r in range(n_vectors):
+        if lead >= dim: return False
+
+        # Recherche du pivot non nul
+        i = r
+        while mat[i][lead] == 0:
+            i += 1
+            if i == n_vectors:
+                i = r
+                lead += 1
+                if dim == lead: return False
+
+        # Echange des lignes
+        mat[i], mat[r] = mat[r], mat[i]
+
+        # Normalisation
+        lv = float(mat[r][lead])
+        mat[r] = [x / lv for x in mat[r]]
+
+        # Elimination
+        for i in range(n_vectors):
+            if i != r:
+                lv = mat[i][lead]
+                mat[i] = [iv - lv*rv for rv, iv in zip(mat[r], mat[i])]
+        lead += 1
+
+    # S'il y a une ligne de zéros, la famille est liée
+    for r in mat:
+        if all(abs(val) < 1e-9 for val in r):
+            return False
+
+    return True
+
+assert is_free_family([[1, 0, 0], [0, 1, 0], [0, 0, 1]]) == True
+assert is_free_family([[1, 1], [2, 2]]) == False
+print("Vérification de la liberté validée.")
+\end{lstlisting}
+
+\newpage
+
+
+\chapter*{TP 4 : Rang d'une Famille de Vecteurs}
+
+\section*{Objectif}
+Calculer la dimension du sous-espace engendré par une famille de vecteurs (le rang de la famille).
+
+\section*{Code Python}
+\begin{lstlisting}[language=Python]
+def matrix_rank(vectors):
+    if not vectors: return 0
+    mat = [list(v) for v in vectors]
+    rows = len(mat)
+    cols = len(mat[0])
+    rank = 0
+
+    visited_cols = []
+
+    for r in range(rows):
+        # Trouver un pivot non nul dans cette ligne
+        pivot_col = -1
+        for c in range(cols):
+            if c not in visited_cols and abs(mat[r][c]) > 1e-9:
+                pivot_col = c
+                break
+
+        if pivot_col != -1:
+            rank += 1
+            visited_cols.append(pivot_col)
+            # Elimination
+            for i in range(r + 1, rows):
+                factor = mat[i][pivot_col] / mat[r][pivot_col]
+                for c in range(cols):
+                    mat[i][c] -= factor * mat[r][c]
+
+    return rank
+
+assert matrix_rank([[1, 0, 0], [0, 1, 0]]) == 2
+assert matrix_rank([[1, 2], [2, 4], [3, 6]]) == 1
+print("Calcul du rang validé.")
+\end{lstlisting}
+
+\newpage
+
+
+\chapter*{TP 5 : Orthogonalisation de Gram-Schmidt}
+
+\section*{Objectif}
+Bien que l'orthogonalité arrive plus tard (Jalon 26), construire une famille de vecteurs orthogonaux à partir d'une base libre est fondamental. Implémentez Gram-Schmidt en Python pur.
+
+\section*{Code Python}
+\begin{lstlisting}[language=Python]
+def dot_product(v1, v2):
+    return sum(a * b for a, b in zip(v1, v2))
+
+def proj(u, v):
+    # Projette v sur u : ( (v.u) / (u.u) ) * u
+    scalar = dot_product(v, u) / dot_product(u, u)
+    return [scalar * x for x in u]
+
+def gram_schmidt(vectors):
+    u_list = []
+    for v in vectors:
+        u = list(v)
+        for ui in u_list:
+            p = proj(ui, v)
+            u = [a - b for a, b in zip(u, p)]
+        # Normalisation optionnelle, mais Gram-Schmidt de base ne nécessite que l'orthogonalisation
+        u_list.append(u)
+    return u_list
+
+v1 = [1, 1, 0]
+v2 = [1, 0, 1]
+
+ortho_basis = gram_schmidt([v1, v2])
+
+# Test de l'orthogonalité
+u1 = ortho_basis[0]
+u2 = ortho_basis[1]
+assert abs(dot_product(u1, u2)) < 1e-9
+
+print("Orthogonalisation de Gram-Schmidt validée.")
+\end{lstlisting}
+
+\newpage
+\end{document}
