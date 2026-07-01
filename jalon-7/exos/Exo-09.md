@@ -32,5 +32,5 @@ Montrons qu'elle est libre. Soient $\lambda, \mu$ tels que $\lambda e_1 + \mu e_
 Cela doit valoir 0 pour tout $n$.
 Pour $n=0$ : $\lambda + \mu = 0$
 Pour $n=1$ : $2\lambda + 3\mu = 0$
-Ce système donne facilement $\lambda = \mu = 0$.
+La résolution de ce système s'effectue ainsi : de la première équation on déduit $\mu = -\lambda$. En substituant dans la seconde, on obtient $2\lambda - 3\lambda = 0$, soit $-\lambda = 0$ et donc $\lambda = 0$. Il s'ensuit rigoureusement que $\mu = 0$.
 La famille $(e_1, e_2)$ est une base de $F$, qui est donc de dimension 2.
