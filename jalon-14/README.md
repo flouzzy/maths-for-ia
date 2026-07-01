@@ -1,16 +1,13 @@
----
-uuid: "jalon-14-readme"
-title: "README - Jalon 14"
-year: 1
-trimester: 2
-tags: [math/analyse]
----
-# Jalon 14 : Suites réelles et complexes
+# 📂 Jalon 14 : Suites réelles et complexes, définitions rigoureuses des limites (epsilon, N) et critères de convergence
 
-## Description
-Ce jalon traite des suites réelles et complexes, avec des définitions rigoureuses des limites ($\epsilon, N$) et les critères de convergence.
+Ce dossier contient l'intégralité du module d'apprentissage du Jalon 14.
 
-## Contenu
-- Cours principal complet
-- 10 Exercices avec corrections strictes (sans ellipse)
-- 5 Travaux Pratiques en Python pur
+## 📝 Contenu
+- `Jalon-14.md` : Cours théorique approfondi.
+- `exos/` : 10 exercices de difficulté progressive.
+- `tp/` : 5 travaux pratiques en Python pur.
+
+## 🚀 Statut
+- [x] Cours principal rédigé
+- [x] 10 Exercices générés
+- [x] 5 TP codés et validés
