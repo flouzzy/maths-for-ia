@@ -6,7 +6,7 @@ trimester: 2
 tags:
   - math/analyse
   - ia/compacite
-prev: "[[Jalon 14 (Suites réelles et complexes).md]]"
+prev: "[[Jalon-14.md]]"
 next: "[[Jalon-16.md]]"
 ---
 # Jalon 15 : Sous-suites, valeurs d'adhérence et preuve par séparation du théorème de Bolzano-Weierstrass
