@@ -1,114 +1,124 @@
----
-uuid: "jalon-9"
-title: "Calcul matriciel, opérations, inversibilité et représentations des applications linéaires"
-year: 1
-trimester: 1
-tags:
-  - math/algebre-lineaire
-  - ia/poids-reseaux
-prev: "[[Jalon-8.md]]"
-next: "[[Jalon 10 (Changements de base).md]]"
----
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{color}
+
+\geometry{margin=1in}
+
+\title{Calcul matriciel, opérations, inversibilité et représentations des applications linéaires}
+\author{Charles EDOU NZE}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter{Calcul Matriciel}
 
 # Jalon 9 : Calcul matriciel, opérations, inversibilité et représentations des applications linéaires
 
-## 1. Présentation du concept clé
-*Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
--   **La Genèse et la Nécessité Mathématique :** L'idée de la matrice, bien que formalisée au XIXe siècle par des mathématiciens comme Cayley, trouve ses racines dans la résolution de systèmes d'équations linéaires, une préoccupation millénaire. Dès l'Antiquité, les Chinois utilisaient des méthodes équivalentes à l'élimination de Gauss pour résoudre des problèmes pratiques. Cependant, ces méthodes étaient laborieuses et spécifiques à chaque système. Le besoin d'une notation compacte et d'un cadre algébrique pour manipuler ces systèmes est devenu pressant avec l'avènement de la géométrie analytique et la description des transformations dans l'espace.
+\section{Présentation du concept clé}
+
+-   \textbf{La Genèse et la Nécessité Mathématique :} L'idée de la matrice, bien que formalisée au XIXe siècle par des mathématiciens comme Cayley, trouve ses racines dans la résolution de systèmes d'équations linéaires, une préoccupation millénaire. Dès l'Antiquité, les Chinois utilisaient des méthodes équivalentes à l'élimination de Gauss pour résoudre des problèmes pratiques. Cependant, ces méthodes étaient laborieuses et spécifiques à chaque système. Le besoin d'une notation compacte et d'un cadre algébrique pour manipuler ces systèmes est devenu pressant avec l'avènement de la géométrie analytique et la description des transformations dans l'espace.
     Avant les matrices, décrire une transformation linéaire (comme une rotation, une mise à l'échelle, une projection) sur des vecteurs nécessitait d'écrire des systèmes d'équations complexes pour chaque composante. Pour des espaces de grande dimension, cela devenait ingérable, obscurcissant la structure sous-jacente de la transformation. Les matrices ont été inventées pour compacter toute cette information en un seul objet rectangulaire. Elles permettent de représenter des transformations complexes de manière concise et de calculer l'effet de transformations successives (composition) par une simple opération algébrique : le produit matriciel. C'est une révolution pour la concision, l'efficacité calculatoire et la compréhension structurelle des phénomènes linéaires. Elles ont transformé la manière dont nous abordons non seulement l'algèbre linéaire, mais aussi la physique, l'ingénierie et, plus récemment, l'intelligence artificielle.
 
--   **La Métaphore des Machines de Transformation :** Imaginez une série de machines dans une usine. Chaque machine prend des matières premières (des nombres, des "quantités") et les transforme en produits finis selon une recette fixe. Une **matrice** est précisément cette "recette" ou ce "plan de transformation" encodé dans un tableau de nombres. Elle décrit comment les entrées sont mélangées, pondérées et transformées pour produire les sorties.
-    -   Si vous avez une machine qui transforme des pigments bruts en couleurs primaires, et une autre machine qui transforme ces couleurs primaires en teintes spécifiques de peinture, la **multiplication de matrices** est l'équivalent de brancher ces deux machines l'une après l'autre. Le résultat est une seule "super-machine" qui va directement des pigments bruts aux teintes de peinture finales, encapsulant l'effet combiné des deux transformations.
-    -   L'**inversibilité** d'une matrice, c'est comme savoir si votre machine de transformation est réversible. Pouvez-vous, à partir du produit fini, retrouver exactement les matières premières d'origine, sans aucune perte d'information ? Si la machine est conçue de telle sorte qu'à chaque produit correspond une unique combinaison de matières premières, alors elle est inversible. Si, au contraire, elle écrase, mélange irréversiblement, ou perd des informations (par exemple, si plusieurs combinaisons de matières premières aboutissent au même produit, ou si certains produits ne peuvent pas être obtenus), alors elle n'est pas inversible.
+-   \textbf{La Métaphore des Machines de Transformation :} Imaginez une série de machines dans une usine. Chaque machine prend des matières premières (des nombres, des "quantités") et les transforme en produits finis selon une recette fixe. Une \textbf{matrice} est précisément cette "recette" ou ce "plan de transformation" encodé dans un tableau de nombres. Elle décrit comment les entrées sont mélangées, pondérées et transformées pour produire les sorties.
+    -   Si vous avez une machine qui transforme des pigments bruts en couleurs primaires, et une autre machine qui transforme ces couleurs primaires en teintes spécifiques de peinture, la \textbf{multiplication de matrices} est l'équivalent de brancher ces deux machines l'une après l'autre. Le résultat est une seule "super-machine" qui va directement des pigments bruts aux teintes de peinture finales, encapsulant l'effet combiné des deux transformations.
+    -   L'\textbf{inversibilité} d'une matrice, c'est comme savoir si votre machine de transformation est réversible. Pouvez-vous, à partir du produit fini, retrouver exactement les matières premières d'origine, sans aucune perte d'information ? Si la machine est conçue de telle sorte qu'à chaque produit correspond une unique combinaison de matières premières, alors elle est inversible. Si, au contraire, elle écrase, mélange irréversiblement, ou perd des informations (par exemple, si plusieurs combinaisons de matières premières aboutissent au même produit, ou si certains produits ne peuvent pas être obtenus), alors elle n'est pas inversible.
 
--   **Visualisation Géométrique :** Une matrice $2 \times 2$ peut être visualisée comme une transformation géométrique du plan. Elle prend le carré unité (défini par les vecteurs de base canonique $(1,0)$ et $(0,1)$) et le déforme en un parallélogramme. Les colonnes de la matrice sont les vecteurs où atterrissent $(1,0)$ et $(0,1)$ après la transformation.
+-   \textbf{Visualisation Géométrique :} Une matrice $2 \times 2$ peut être visualisée comme une transformation géométrique du plan. Elle prend le carré unité (défini par les vecteurs de base canonique $(1,0)$ et $(0,1)$) et le déforme en un parallélogramme. Les colonnes de la matrice sont les vecteurs où atterrissent $(1,0)$ et $(0,1)$ après la transformation.
     -   Si la matrice est inversible, le parallélogramme résultant a une aire non nulle : l'espace est étiré, compressé ou pivoté, mais aucune dimension n'est perdue. Vous pouvez "défaire" la transformation pour revenir à l'état initial.
     -   Si la matrice n'est pas inversible, le parallélogramme est "écrasé" en une ligne ou même un point (son aire est nulle). Cela signifie que la transformation a réduit la dimension de l'espace, rendant impossible de retrouver l'état initial : l'information a été irrémédiablement perdue.
 
-## 2. Formalisation & Rigueur Académique
-*Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
+\section{Formalisation et Rigueur Académique}
 
-### A. Définitions Formelles
+
+\subsection{A. Définitions Formelles}
 Soient $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$), et $n, p, q \in \mathbb{N}^*$ des entiers naturels non nuls.
 
-1.  **Matrice ($M \in \mathcal{M}_{n,p}(\mathbb{K})$) :** Un tableau rectangulaire de $n$ lignes et $p$ colonnes dont les éléments sont des scalaires du corps $\mathbb{K}$. Une matrice $A$ est notée $A = (a_{i,j})$ où $a_{i,j}$ est le coefficient situé à l'intersection de la $i$-ème ligne ($1 \le i \le n$) et de la $j$-ème colonne ($1 \le j \le p$). L'ensemble de toutes ces matrices est noté $\mathcal{M}_{n,p}(\mathbb{K})$. Si $n=p$, on parle de matrice carrée d'ordre $n$ et on note $\mathcal{M}_n(\mathbb{K})$.
+1.  \textbf{Matrice ($M \in \mathcal{M}_{n,p}(\mathbb{K})$) :} Un tableau rectangulaire de $n$ lignes et $p$ colonnes dont les éléments sont des scalaires du corps $\mathbb{K}$. Une matrice $A$ est notée $A = (a_{i,j})$ où $a_{i,j}$ est le coefficient situé à l'intersection de la $i$-ème ligne ($1 \le i \le n$) et de la $j$-ème colonne ($1 \le j \le p$). L'ensemble de toutes ces matrices est noté $\mathcal{M}_{n,p}(\mathbb{K})$. Si $n=p$, on parle de matrice carrée d'ordre $n$ et on note $\mathcal{M}_n(\mathbb{K})$.
     *Exemple :* La matrice $A = \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{pmatrix}$ est une matrice de $\mathcal{M}_{2,3}(\mathbb{R})$. Ici, $a_{1,1}=1$, $a_{1,2}=2$, $a_{2,3}=6$.
 
-2.  **Matrice Nulle ($0_{n,p}$) :** La matrice dont tous les coefficients sont nuls. $0_{n,p} = (0)_{i,j}$ pour tout $1 \le i \le n$ et $1 \le j \le p$.
+2.  \textbf{Matrice Nulle ($0_{n,p}$) :} La matrice dont tous les coefficients sont nuls. $0_{n,p} = (0)_{i,j}$ pour tout $1 \le i \le n$ et $1 \le j \le p$.
     *Exemple :* $0_{2,3} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}$.
 
-3.  **Matrice Identité ($I_n$) :** La matrice carrée d'ordre $n$ dont les coefficients diagonaux sont égaux à 1 et tous les autres sont nuls. $I_n = (\delta_{i,j})$ où $\delta_{i,j}$ est le symbole de Kronecker, défini par $\delta_{i,j}=1$ si $i=j$, et $\delta_{i,j}=0$ si $i \neq j$.
+3.  \textbf{Matrice Identité ($I_n$) :} La matrice carrée d'ordre $n$ dont les coefficients diagonaux sont égaux à 1 et tous les autres sont nuls. $I_n = (\delta_{i,j})$ où $\delta_{i,j}$ est le symbole de Kronecker, défini par $\delta_{i,j}=1$ si $i=j$, et $\delta_{i,j}=0$ si $i \neq j$.
     *Exemple :* $I_3 = \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix}$.
 
-4.  **Somme Matricielle :** Soient $A = (a_{i,j}) \in \mathcal{M}_{n,p}(\mathbb{K})$ et $B = (b_{i,j}) \in \mathcal{M}_{n,p}(\mathbb{K})$. Leur somme $C = A+B \in \mathcal{M}_{n,p}(\mathbb{K})$ est définie par l'addition de leurs coefficients correspondants :
+4.  \textbf{Somme Matricielle :} Soient $A = (a_{i,j}) \in \mathcal{M}_{n,p}(\mathbb{K})$ et $B = (b_{i,j}) \in \mathcal{M}_{n,p}(\mathbb{K})$. Leur somme $C = A+B \in \mathcal{M}_{n,p}(\mathbb{K})$ est définie par l'addition de leurs coefficients correspondants :
     $$c_{i,j} = a_{i,j} + b_{i,j} \quad \text{pour tout } 1 \le i \le n, 1 \le j \le p$$
     *Exemple :* $\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} + \begin{pmatrix} 5 & 6 \\ 7 & 8 \end{pmatrix} = \begin{pmatrix} 1+5 & 2+6 \\ 3+7 & 4+8 \end{pmatrix} = \begin{pmatrix} 6 & 8 \\ 10 & 12 \end{pmatrix}$.
 
-5.  **Multiplication par un Scalaire :** Soit $A = (a_{i,j}) \in \mathcal{M}_{n,p}(\mathbb{K})$ et $\lambda \in \mathbb{K}$. Le produit $\lambda A \in \mathcal{M}_{n,p}(\mathbb{K})$ est défini par la multiplication de chaque coefficient de $A$ par le scalaire $\lambda$ :
+5.  \textbf{Multiplication par un Scalaire :} Soit $A = (a_{i,j}) \in \mathcal{M}_{n,p}(\mathbb{K})$ et $\lambda \in \mathbb{K}$. Le produit $\lambda A \in \mathcal{M}_{n,p}(\mathbb{K})$ est défini par la multiplication de chaque coefficient de $A$ par le scalaire $\lambda$ :
     $$(\lambda A)_{i,j} = \lambda a_{i,j} \quad \text{pour tout } 1 \le i \le n, 1 \le j \le p$$
     *Exemple :* $3 \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} = \begin{pmatrix} 3 \times 1 & 3 \times 2 \\ 3 \times 3 & 3 \times 4 \end{pmatrix} = \begin{pmatrix} 3 & 6 \\ 9 & 12 \end{pmatrix}$.
 
-6.  **Produit Matriciel :** Soit $A = (a_{i,k}) \in \mathcal{M}_{n,p}(\mathbb{K})$ et $B = (b_{k,j}) \in \mathcal{M}_{p,q}(\mathbb{K})$. Le produit $C = AB \in \mathcal{M}_{n,q}(\mathbb{K})$ est défini par :
+6.  \textbf{Produit Matriciel :} Soit $A = (a_{i,k}) \in \mathcal{M}_{n,p}(\mathbb{K})$ et $B = (b_{k,j}) \in \mathcal{M}_{p,q}(\mathbb{K})$. Le produit $C = AB \in \mathcal{M}_{n,q}(\mathbb{K})$ est défini par :
     $$c_{i,j} = \sum_{k=1}^p a_{i,k} b_{k,j} \quad \text{pour tout } 1 \le i \le n, 1 \le j \le q$$
     Le nombre de colonnes de $A$ (qui est $p$) doit impérativement être égal au nombre de lignes de $B$ (qui est $p$). Le coefficient $c_{i,j}$ est obtenu en effectuant le produit scalaire de la $i$-ème ligne de $A$ par la $j$-ème colonne de $B$.
     *Exemple :* Soient $A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$ et $B = \begin{pmatrix} 5 & 6 \\ 7 & 8 \end{pmatrix}$.
     $C = AB = \begin{pmatrix} (1 \times 5) + (2 \times 7) & (1 \times 6) + (2 \times 8) \\ (3 \times 5) + (4 \times 7) & (3 \times 6) + (4 \times 8) \end{pmatrix} = \begin{pmatrix} 5+14 & 6+16 \\ 15+28 & 18+32 \end{pmatrix} = \begin{pmatrix} 19 & 22 \\ 43 & 50 \end{pmatrix}$.
 
-7.  **Matrice Inversible :** Une matrice carrée $A \in \mathcal{M}_n(\mathbb{K})$ est dite inversible (ou régulière) s'il existe une unique matrice $B \in \mathcal{M}_n(\mathbb{K})$ telle que $AB = BA = I_n$. La matrice $B$, si elle existe, est appelée l'inverse de $A$, et est notée $A^{-1}$.
+7.  \textbf{Matrice Inversible :} Une matrice carrée $A \in \mathcal{M}_n(\mathbb{K})$ est dite inversible (ou régulière) s'il existe une unique matrice $B \in \mathcal{M}_n(\mathbb{K})$ telle que $AB = BA = I_n$. La matrice $B$, si elle existe, est appelée l'inverse de $A$, et est notée $A^{-1}$.
     *Exemple :* La matrice $A = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}$ a pour inverse $A^{-1} = \begin{pmatrix} 1 & -1 \\ 0 & 1 \end{pmatrix}$.
     Vérification : $A A^{-1} = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} 1 & -1 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 1 \cdot 1 + 1 \cdot 0 & 1 \cdot (-1) + 1 \cdot 1 \\ 0 \cdot 1 + 1 \cdot 0 & 0 \cdot (-1) + 1 \cdot 1 \end{pmatrix} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = I_2$.
     De même, $A^{-1} A = \begin{pmatrix} 1 & -1 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 1 \cdot 1 + (-1) \cdot 0 & 1 \cdot 1 + (-1) \cdot 1 \\ 0 \cdot 1 + 1 \cdot 0 & 0 \cdot 1 + 1 \cdot 1 \end{pmatrix} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = I_2$.
 
-8.  **Représentation d'une application linéaire :** Soient $E$ et $F$ deux $\mathbb{K}$-espaces vectoriels de dimensions finies $p$ et $n$ respectivement. Soient $\mathcal{B}_E = (e_1, \dots, e_p)$ une base de $E$ et $\mathcal{B}_F = (f_1, \dots, f_n)$ une base de $F$. Pour toute application linéaire $f \in \mathcal{L}(E, F)$, la matrice de $f$ relativement aux bases $\mathcal{B}_E$ et $\mathcal{B}_F$, notée $\text{Mat}_{\mathcal{B}_E, \mathcal{B}_F}(f)$, est la matrice $A = (a_{i,j}) \in \mathcal{M}_{n,p}(\mathbb{K})$ dont la $j$-ème colonne est constituée des coordonnées du vecteur $f(e_j)$ dans la base $\mathcal{B}_F$. Autrement dit, pour chaque $j \in \{1, \dots, p\}$ :
+8.  \textbf{Représentation d'une application linéaire :} Soient $E$ et $F$ deux $\mathbb{K}$-espaces vectoriels de dimensions finies $p$ et $n$ respectivement. Soient $\mathcal{B}_E = (e_1, \dots, e_p)$ une base de $E$ et $\mathcal{B}_F = (f_1, \dots, f_n)$ une base de $F$. Pour toute application linéaire $f \in \mathcal{L}(E, F)$, la matrice de $f$ relativement aux bases $\mathcal{B}_E$ et $\mathcal{B}_F$, notée $\text{Mat}_{\mathcal{B}_E, \mathcal{B}_F}(f)$, est la matrice $A = (a_{i,j}) \in \mathcal{M}_{n,p}(\mathbb{K})$ dont la $j$-ème colonne est constituée des coordonnées du vecteur $f(e_j)$ dans la base $\mathcal{B}_F$. Autrement dit, pour chaque $j \in \{1, \dots, p\}$ :
     $$f(e_j) = \sum_{i=1}^n a_{i,j} f_i$$
     *Exemple :* Soit $f: \mathbb{R}^2 \to \mathbb{R}^2$ définie par $f(x,y) = (x+y, 2x-y)$. Soit $\mathcal{B} = (e_1, e_2)$ la base canonique de $\mathbb{R}^2$, avec $e_1=(1,0)$ et $e_2=(0,1)$.
     $f(e_1) = f(1,0) = (1+0, 2\cdot 1 - 0) = (1,2) = 1 \cdot e_1 + 2 \cdot e_2$.
     $f(e_2) = f(0,1) = (0+1, 2\cdot 0 - 1) = (1,-1) = 1 \cdot e_1 + (-1) \cdot e_2$.
     La matrice de $f$ dans la base canonique est donc $\text{Mat}_{\mathcal{B}, \mathcal{B}}(f) = \begin{pmatrix} 1 & 1 \\ 2 & -1 \end{pmatrix}$.
 
-9.  **Noyau d'une Matrice ($\ker A$) :** Pour une matrice $A \in \mathcal{M}_{n,p}(\mathbb{K})$, le noyau de $A$ est l'ensemble des vecteurs colonnes $X \in \mathcal{M}_{p,1}(\mathbb{K})$ tels que $AX = 0_{n,1}$. C'est un sous-espace vectoriel de $\mathbb{K}^p$. Il correspond au noyau de l'application linéaire $f_A: \mathbb{K}^p \to \mathbb{K}^n$ canoniquement associée à $A$.
+9.  \textbf{Noyau d'une Matrice ($\ker A$) :} Pour une matrice $A \in \mathcal{M}_{n,p}(\mathbb{K})$, le noyau de $A$ est l'ensemble des vecteurs colonnes $X \in \mathcal{M}_{p,1}(\mathbb{K})$ tels que $AX = 0_{n,1}$. C'est un sous-espace vectoriel de $\mathbb{K}^p$. Il correspond au noyau de l'application linéaire $f_A: \mathbb{K}^p \to \mathbb{K}^n$ canoniquement associée à $A$.
     $$\ker A = \{X \in \mathbb{K}^p \mid AX = 0\}$$
 
-10. **Image d'une Matrice ($\text{Im } A$) :** Pour une matrice $A \in \mathcal{M}_{n,p}(\mathbb{K})$, l'image de $A$ est l'ensemble des vecteurs colonnes $Y \in \mathcal{M}_{n,1}(\mathbb{K})$ qui peuvent être écrits comme $AX$ pour un certain $X \in \mathcal{M}_{p,1}(\mathbb{K})$. C'est un sous-espace vectoriel de $\mathbb{K}^n$, engendré par les colonnes de $A$. Il correspond à l'image de l'application linéaire $f_A: \mathbb{K}^p \to \mathbb{K}^n$ canoniquement associée à $A$.
+10. \textbf{Image d'une Matrice ($\text{Im } A$) :} Pour une matrice $A \in \mathcal{M}_{n,p}(\mathbb{K})$, l'image de $A$ est l'ensemble des vecteurs colonnes $Y \in \mathcal{M}_{n,1}(\mathbb{K})$ qui peuvent être écrits comme $AX$ pour un certain $X \in \mathcal{M}_{p,1}(\mathbb{K})$. C'est un sous-espace vectoriel de $\mathbb{K}^n$, engendré par les colonnes de $A$. Il correspond à l'image de l'application linéaire $f_A: \mathbb{K}^p \to \mathbb{K}^n$ canoniquement associée à $A$.
     $$\text{Im } A = \{AX \mid X \in \mathbb{K}^p\}$$
 
-11. **Rang d'une Matrice ($\text{rg } A$) :** Le rang d'une matrice $A$ est la dimension de son image, c'est-à-dire la dimension du sous-espace vectoriel engendré par ses colonnes. Il est équivalent à la dimension du sous-espace vectoriel engendré par ses lignes.
+11. \textbf{Rang d'une Matrice ($\text{rg } A$) :} Le rang d'une matrice $A$ est la dimension de son image, c'est-à-dire la dimension du sous-espace vectoriel engendré par ses colonnes. Il est équivalent à la dimension du sous-espace vectoriel engendré par ses lignes.
     $$\text{rg } A = \dim(\text{Im } A)$$
 
-### B. Théorèmes, Propositions & Lemmes
+\subsection{B. Théorèmes, Propositions & Lemmes}
 
-> **Proposition (Structure d'espace vectoriel de $\mathcal{M}_{n,p}(\mathbb{K})$) :**
+> \textbf{Proposition (Structure d'espace vectoriel de $\mathcal{M}_{n,p}(\mathbb{K})$) :}
 > L'ensemble $\mathcal{M}_{n,p}(\mathbb{K})$ muni de l'addition matricielle et de la multiplication par un scalaire est un $\mathbb{K}$-espace vectoriel de dimension $np$. La base canonique de cet espace est formée des matrices $E_{i,j}$ dont le coefficient à la position $(i,j)$ est 1 et tous les autres sont nuls.
 
-> **Théorème (Propriétés du Produit Matriciel) :**
+> \textbf{Théorème (Propriétés du Produit Matriciel) :}
 > Soient $A \in \mathcal{M}_{n,p}(\mathbb{K})$, $B \in \mathcal{M}_{p,q}(\mathbb{K})$, $C \in \mathcal{M}_{q,r}(\mathbb{K})$ et $D \in \mathcal{M}_{p,q}(\mathbb{K})$, $\lambda \in \mathbb{K}$.
-> 1.  **Associativité :** $(AB)C = A(BC)$. Le produit matriciel est associatif, ce qui signifie que l'ordre des parenthèses n'affecte pas le résultat pour une chaîne de multiplications.
-> 2.  **Distributivité :** $A(B+D) = AB + AD$ (si $A \in \mathcal{M}_{n,p}(\mathbb{K})$, $B, D \in \mathcal{M}_{p,q}(\mathbb{K})$) et $(A+B)C = AC + BC$ (si $A, B \in \mathcal{M}_{n,p}(\mathbb{K})$, $C \in \mathcal{M}_{p,q}(\mathbb{K})$). Le produit matriciel est distributif par rapport à l'addition matricielle.
-> 3.  **Homogénéité :** $\lambda(AB) = (\lambda A)B = A(\lambda B)$. La multiplication par un scalaire peut être déplacée dans un produit matriciel.
-> 4.  **Élément Neutre :** Pour toute matrice $A \in \mathcal{M}_{n,p}(\mathbb{K})$, $I_n A = A$ et $A I_p = A$. Les matrices identités jouent le rôle d'éléments neutres pour la multiplication matricielle.
-> 5.  **Non-commutativité :** En général, $AB \neq BA$. Le produit matriciel n'est pas commutatif.
+> 1.  \textbf{Associativité :} $(AB)C = A(BC)$. Le produit matriciel est associatif, ce qui signifie que l'ordre des parenthèses n'affecte pas le résultat pour une chaîne de multiplications.
+> 2.  \textbf{Distributivité :} $A(B+D) = AB + AD$ (si $A \in \mathcal{M}_{n,p}(\mathbb{K})$, $B, D \in \mathcal{M}_{p,q}(\mathbb{K})$) et $(A+B)C = AC + BC$ (si $A, B \in \mathcal{M}_{n,p}(\mathbb{K})$, $C \in \mathcal{M}_{p,q}(\mathbb{K})$). Le produit matriciel est distributif par rapport à l'addition matricielle.
+> 3.  \textbf{Homogénéité :} $\lambda(AB) = (\lambda A)B = A(\lambda B)$. La multiplication par un scalaire peut être déplacée dans un produit matriciel.
+> 4.  \textbf{Élément Neutre :} Pour toute matrice $A \in \mathcal{M}_{n,p}(\mathbb{K})$, $I_n A = A$ et $A I_p = A$. Les matrices identités jouent le rôle d'éléments neutres pour la multiplication matricielle.
+> 5.  \textbf{Non-commutativité :} En général, $AB \neq BA$. Le produit matriciel n'est pas commutatif.
     *Contre-exemple :* Soient $A = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}$ et $B = \begin{pmatrix} 1 & 0 \\ 1 & 1 \end{pmatrix}$.
     $AB = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} 1 & 0 \\ 1 & 1 \end{pmatrix} = \begin{pmatrix} 1 \cdot 1 + 1 \cdot 1 & 1 \cdot 0 + 1 \cdot 1 \\ 0 \cdot 1 + 1 \cdot 1 & 0 \cdot 0 + 1 \cdot 1 \end{pmatrix} = \begin{pmatrix} 2 & 1 \\ 1 & 1 \end{pmatrix}$.
     $BA = \begin{pmatrix} 1 & 0 \\ 1 & 1 \end{pmatrix} \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 1 \cdot 1 + 0 \cdot 0 & 1 \cdot 1 + 0 \cdot 1 \\ 1 \cdot 1 + 1 \cdot 0 & 1 \cdot 1 + 1 \cdot 1 \end{pmatrix} = \begin{pmatrix} 1 & 1 \\ 1 & 2 \end{pmatrix}$.
     Puisque $AB \neq BA$, le produit matriciel n'est pas commutatif.
 
-> **Théorème de l'Isomorphisme entre applications linéaires et matrices :**
+> \textbf{Théorème de l'Isomorphisme entre applications linéaires et matrices :}
 > Soient $E$ et $F$ des $\mathbb{K}$-espaces vectoriels de dimensions $p$ et $n$ respectivement, munis de bases $\mathcal{B}_E$ et $\mathcal{B}_F$. L'application $\Phi : \mathcal{L}(E, F) \to \mathcal{M}_{n,p}(\mathbb{K})$ définie par $\Phi(f) = \text{Mat}_{\mathcal{B}_E, \mathcal{B}_F}(f)$ est un isomorphisme d'espaces vectoriels. Cela signifie que l'ensemble des applications linéaires entre deux espaces vectoriels de dimension finie est structurellement identique à l'ensemble des matrices de dimensions correspondantes.
 
-> **Théorème Pivot (Matrice d'une composée et produit matriciel) :**
+> \textbf{Théorème Pivot (Matrice d'une composée et produit matriciel) :}
 > Soient $E, F, G$ des $\mathbb{K}$-espaces vectoriels de dimensions finies $q, p, n$ respectivement. Soient $\mathcal{B}_E, \mathcal{B}_F, \mathcal{B}_G$ des bases respectives de $E, F, G$.
 > Soient $f \in \mathcal{L}(E, F)$ et $g \in \mathcal{L}(F, G)$. Alors la matrice de l'application linéaire composée $g \circ f \in \mathcal{L}(E, G)$ est le produit des matrices de $g$ et $f$ :
 > $$\text{Mat}_{\mathcal{B}_E, \mathcal{B}_G}(g \circ f) = \text{Mat}_{\mathcal{B}_F, \mathcal{B}_G}(g) \times \text{Mat}_{\mathcal{B}_E, \mathcal{B}_F}(f)$$
 > Ce théorème est fondamental car il établit le lien profond entre la composition des applications linéaires et le produit matriciel, justifiant la définition complexe de ce dernier.
 
-> **Théorème du Rang (ou Théorème de la dimension) :**
+> \textbf{Théorème du Rang (ou Théorème de la dimension) :}
 > Soit $f \in \mathcal{L}(E, F)$ une application linéaire où $E$ est un espace vectoriel de dimension finie. Alors :
 > $$\dim E = \dim(\ker f) + \dim(\text{Im } f)$$
 > Pour une matrice $A \in \mathcal{M}_{n,p}(\mathbb{K})$, cela se traduit par :
 > $$p = \dim(\ker A) + \text{rg } A$$
 > où $p$ est le nombre de colonnes de $A$ (la dimension de l'espace de départ $\mathbb{K}^p$). Ce théorème est crucial pour comprendre la perte ou la conservation d'information lors d'une transformation linéaire.
 
-> **Théorème (Caractérisations de l'inversibilité) :**
+> \textbf{Théorème (Caractérisations de l'inversibilité) :}
 > Soit $A \in \mathcal{M}_n(\mathbb{K})$ une matrice carrée d'ordre $n$. Les propriétés suivantes sont équivalentes :
 > 1.  $A$ est inversible.
 > 2.  L'application linéaire $f_A: \mathbb{K}^n \to \mathbb{K}^n$ associée à $A$ (dans la base canonique) est un isomorphisme (c'est-à-dire bijective).
@@ -120,7 +130,7 @@ Soient $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}
 > 8.  Il existe $B \in \mathcal{M}_n(\mathbb{K})$ telle que $AB = I_n$. (L'existence d'un inverse à droite suffit pour garantir l'inversibilité).
 > 9.  Il existe $C \in \mathcal{M}_n(\mathbb{K})$ telle que $CA = I_n$. (L'existence d'un inverse à gauche suffit pour garantir l'inversibilité).
 
-> **Proposition (Propriétés de l'inverse) :**
+> \textbf{Proposition (Propriétés de l'inverse) :}
 > Soient $A, B \in \mathcal{M}_n(\mathbb{K})$ deux matrices inversibles. Alors :
 > 1.  L'inverse $A^{-1}$ est unique.
 > 2.  $A^{-1}$ est inversible et $(A^{-1})^{-1} = A$.
@@ -131,7 +141,7 @@ Soient $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}
 ## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
 *Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
-### Démonstration du Théorème Pivot : Matrice d'une composée et produit matriciel
+\subsection{Démonstration du Théorème Pivot : Matrice d'une composée et produit matriciel}
 Soient $f : E \to F$ et $g : F \to G$ deux applications linéaires.
 Soient $\mathcal{B}_E = (e_j)_{1 \le j \le q}$ une base de $E$ (de dimension $q$).
 Soient $\mathcal{B}_F = (f_k)_{1 \le k \le p}$ une base de $F$ (de dimension $p$).
@@ -139,7 +149,7 @@ Soient $\mathcal{B}_G = (g_i)_{1 \le i \le n}$ une base de $G$ (de dimension $n$
 
 Montrons que $\text{Mat}_{\mathcal{B}_E, \mathcal{B}_G}(g \circ f) = \text{Mat}_{\mathcal{B}_F, \mathcal{B}_G}(g) \times \text{Mat}_{\mathcal{B}_E, \mathcal{B}_F}(f)$.
 
-1.  **Initialisation / Cadre :**
+1.  \textbf{Initialisation / Cadre :}
     Nous allons calculer les coefficients de la matrice de l'application composée $g \circ f$ et montrer qu'ils correspondent à la définition du produit matriciel des matrices de $g$ et $f$.
     Soit $A = \text{Mat}_{\mathcal{B}_F, \mathcal{B}_G}(g) = (a_{i,k}) \in \mathcal{M}_{n,p}(\mathbb{K})$. Par définition de la matrice d'une application linéaire, pour tout vecteur de base $f_k \in \mathcal{B}_F$ (où $1 \le k \le p$), le vecteur $g(f_k)$ s'écrit dans la base $\mathcal{B}_G$ comme une combinaison linéaire des vecteurs de $\mathcal{B}_G$ dont les coefficients forment la $k$-ème colonne de $A$ :
     $$g(f_k) = \sum_{i=1}^n a_{i,k} g_i \quad (*)$$
@@ -149,47 +159,47 @@ Montrons que $\text{Mat}_{\mathcal{B}_E, \mathcal{B}_G}(g \circ f) = \text{Mat}_
     $$(g \circ f)(e_j) = \sum_{i=1}^n c_{i,j} g_i$$
     Notre objectif est de montrer que le coefficient $c_{i,j}$ est égal à $\sum_{k=1}^p a_{i,k} b_{k,j}$, ce qui est la définition du coefficient $(i,j)$ du produit matriciel $AB$.
 
-2.  **Étape 1 : Calcul de $(g \circ f)(e_j)$ en utilisant la définition de $f$**
+2.  \textbf{Étape 1 : Calcul de $(g \circ f)(e_j)$ en utilisant la définition de $f$}
     Nous commençons par l'expression de l'image du $j$-ème vecteur de base de $E$ par l'application composée $g \circ f$:
     $$(g \circ f)(e_j) = g(f(e_j))$$
     En utilisant l'expression de $f(e_j)$ donnée par l'équation $(**)$, nous substituons cette somme dans l'argument de $g$:
     $$(g \circ f)(e_j) = g\left(\sum_{k=1}^p b_{k,j} f_k\right)$$
 
-3.  **Étape 2 : Utilisation de la linéarité de $g$**
+3.  \textbf{Étape 2 : Utilisation de la linéarité de $g$}
     Puisque $g$ est une application linéaire, elle respecte l'addition vectorielle et la multiplication par un scalaire. Nous pouvons donc "sortir" les scalaires $b_{k,j}$ de l'application $g$ et décomposer la somme :
     $$(g \circ f)(e_j) = \sum_{k=1}^p g(b_{k,j} f_k)$$
     Par la propriété d'homogénéité de $g$ (multiplication par un scalaire) :
     $$(g \circ f)(e_j) = \sum_{k=1}^p b_{k,j} g(f_k)$$
 
-4.  **Étape 3 : Utilisation de la définition de $g$**
+4.  \textbf{Étape 3 : Utilisation de la définition de $g$}
     Maintenant, nous utilisons l'expression de $g(f_k)$ donnée par l'équation $(*)$ et nous la substituons dans la somme :
     $$(g \circ f)(e_j) = \sum_{k=1}^p b_{k,j} \left(\sum_{i=1}^n a_{i,k} g_i\right)$$
 
-5.  **Étape 4 : Réarrangement des sommes**
+5.  \textbf{Étape 4 : Réarrangement des sommes}
     Nous avons une somme de sommes. Nous pouvons intervertir l'ordre des sommations, car les sommes sont finies et les scalaires commutent :
     $$(g \circ f)(e_j) = \sum_{k=1}^p \sum_{i=1}^n (b_{k,j} a_{i,k}) g_i$$
     Pour regrouper les termes selon les vecteurs de base $g_i$, nous réorganisons la somme en plaçant la sommation sur $i$ à l'extérieur :
     $$(g \circ f)(e_j) = \sum_{i=1}^n \left(\sum_{k=1}^p a_{i,k} b_{k,j}\right) g_i$$
     Nous avons simplement réordonné les termes $b_{k,j} a_{i,k}$ en $a_{i,k} b_{k,j}$ par commutativité de la multiplication dans le corps $\mathbb{K}$.
 
-6.  **Conclusion :**
+6.  \textbf{Conclusion :}
     Par identification avec la définition de la matrice de $(g \circ f)$, qui est $(g \circ f)(e_j) = \sum_{i=1}^n c_{i,j} g_i$, nous obtenons que le coefficient $c_{i,j}$ de la matrice $\text{Mat}_{\mathcal{B}_E, \mathcal{B}_G}(g \circ f)$ est :
     $$c_{i,j} = \sum_{k=1}^p a_{i,k} b_{k,j}$$
     Cette expression est précisément la définition du coefficient $(i,j)$ du produit matriciel $AB$, où $A = (a_{i,k})$ et $B = (b_{k,j})$.
     Par conséquent, nous avons démontré que $\text{Mat}_{\mathcal{B}_E, \mathcal{B}_G}(g \circ f) = \text{Mat}_{\mathcal{B}_F, \mathcal{B}_G}(g) \times \text{Mat}_{\mathcal{B}_E, \mathcal{B}_F}(f)$.
 
-## 4. Exercices d'Application & Pratique de Concours
+\section{Exercices d'Application} & Pratique de Concours
 *Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
-### Exercice 1 : Application Directe (Inversion de matrice 2x2)
-**Énoncé :** Soit la matrice $A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} \in \mathcal{M}_2(\mathbb{R})$.
+\subsection{Exercice 1 : Application Directe (Inversion de matrice 2x2)}
+\textbf{Énoncé :} Soit la matrice $A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} \in \mathcal{M}_2(\mathbb{R})$.
 1.  Calculer le déterminant de $A$.
 2.  Déterminer si $A$ est inversible.
 3.  Si oui, calculer $A^{-1}$ en utilisant la méthode du pivot de Gauss (ou méthode de l'élimination de Gauss-Jordan).
-**Correction Détaillée :**
+\textbf{Correction Détaillée :}
 *   *Analyse de l'énoncé :* L'exercice demande de vérifier l'inversibilité d'une matrice $2 \times 2$ via son déterminant, puis de calculer son inverse en utilisant une méthode systématique d'algèbre linéaire.
 *   *Résolution pas-à-pas :*
-    1.  **Calcul du déterminant de $A$ :**
+    1.  \textbf{Calcul du déterminant de $A$ :}
         Pour une matrice $2 \times 2$ générique, $A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$, le déterminant est défini par la formule $\det A = ad - bc$.
         Pour la matrice donnée $A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$, nous identifions $a=1$, $b=2$, $c=3$, $d=4$.
         Nous substituons ces valeurs dans la formule du déterminant :
@@ -198,16 +208,16 @@ Montrons que $\text{Mat}_{\mathcal{B}_E, \mathcal{B}_G}(g \circ f) = \text{Mat}_
         $$\det A = 4 - 6$$
         Nous effectuons la soustraction :
         $$\det A = -2$$
-    2.  **Détermination de l'inversibilité de $A$ :**
+    2.  \textbf{Détermination de l'inversibilité de $A$ :}
         D'après le Théorème des Caractérisations de l'inversibilité (point 3), une matrice carrée $A$ est inversible si et seulement si son déterminant est non nul.
         Nous avons calculé $\det A = -2$.
         Puisque $-2 \neq 0$, la matrice $A$ est inversible.
-    3.  **Calcul de $A^{-1}$ par la méthode du pivot de Gauss (Gauss-Jordan) :**
+    3.  \textbf{Calcul de $A^{-1}$ par la méthode du pivot de Gauss (Gauss-Jordan) :}
         La méthode consiste à former une matrice augmentée $(A | I_n)$, où $I_n$ est la matrice identité de même ordre que $A$. Ensuite, nous appliquons une série d'opérations élémentaires sur les lignes de cette matrice augmentée pour transformer la partie gauche ($A$) en la matrice identité ($I_n$). Lorsque la partie gauche est devenue $I_n$, la partie droite sera l'inverse $A^{-1}$.
         Pour notre matrice $A \in \mathcal{M}_2(\mathbb{R})$, la matrice identité est $I_2 = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$.
         La matrice augmentée initiale est :
         $$\left( \begin{array}{cc|cc} 1 & 2 & 1 & 0 \\ 3 & 4 & 0 & 1 \end{array} \right)$$
-        *   **Étape 1 : Annuler le coefficient sous le pivot de la première colonne.**
+        *   \textbf{Étape 1 : Annuler le coefficient sous le pivot de la première colonne.}
             Le pivot de la première colonne est $a_{1,1}=1$. Nous voulons annuler le coefficient $a_{2,1}=3$.
             Nous effectuons l'opération élémentaire sur les lignes : $L_2 \leftarrow L_2 - 3L_1$.
             Calcul de la nouvelle ligne $L_2$:
@@ -217,7 +227,7 @@ Montrons que $\text{Mat}_{\mathcal{B}_E, \mathcal{B}_G}(g \circ f) = \text{Mat}_
             $$(L_2)_{4} = 1 - 3 \times (L_1)_{4} = 1 - 3 \times 0 = 1 - 0 = 1$$
             La nouvelle matrice augmentée est :
             $$\left( \begin{array}{cc|cc} 1 & 2 & 1 & 0 \\ 0 & -2 & -3 & 1 \end{array} \right)$$
-        *   **Étape 2 : Normaliser le pivot de la deuxième colonne.**
+        *   \textbf{Étape 2 : Normaliser le pivot de la deuxième colonne.}
             Le pivot de la deuxième colonne est $a_{2,2}=-2$. Nous voulons qu'il soit égal à 1.
             Nous effectuons l'opération élémentaire sur les lignes : $L_2 \leftarrow -\frac{1}{2} L_2$.
             Calcul de la nouvelle ligne $L_2$:
@@ -227,7 +237,7 @@ Montrons que $\text{Mat}_{\mathcal{B}_E, \mathcal{B}_G}(g \circ f) = \text{Mat}_
             $$(L_2)_{4} = -\frac{1}{2} \times 1 = -\frac{1}{2}$$
             La nouvelle matrice augmentée est :
             $$\left( \begin{array}{cc|cc} 1 & 2 & 1 & 0 \\ 0 & 1 & \frac{3}{2} & -\frac{1}{2} \end{array} \right)$$
-        *   **Étape 3 : Annuler le coefficient au-dessus du pivot de la deuxième colonne.**
+        *   \textbf{Étape 3 : Annuler le coefficient au-dessus du pivot de la deuxième colonne.}
             Le pivot de la deuxième colonne est $a_{2,2}=1$. Nous voulons annuler le coefficient $a_{1,2}=2$.
             Nous effectuons l'opération élémentaire sur les lignes : $L_1 \leftarrow L_1 - 2L_2$.
             Calcul de la nouvelle ligne $L_1$:
@@ -238,7 +248,7 @@ Montrons que $\text{Mat}_{\mathcal{B}_E, \mathcal{B}_G}(g \circ f) = \text{Mat}_
             La nouvelle matrice augmentée est :
             $$\left( \begin{array}{cc|cc} 1 & 0 & -2 & 1 \\ 0 & 1 & \frac{3}{2} & -\frac{1}{2} \end{array} \right)$$
         La partie gauche de la matrice augmentée est maintenant la matrice identité $I_2$. La partie droite est l'inverse de $A$.
-**Conclusion :** L'inverse de $A$ est $A^{-1} = \begin{pmatrix} -2 & 1 \\ \frac{3}{2} & -\frac{1}{2} \end{pmatrix}$.
+\textbf{Conclusion :} L'inverse de $A$ est $A^{-1} = \begin{pmatrix} -2 & 1 \\ \frac{3}{2} & -\frac{1}{2} \end{pmatrix}$.
 Pour vérifier ce résultat, nous calculons le produit $A A^{-1}$ :
 $$A A^{-1} = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} \begin{pmatrix} -2 & 1 \\ \frac{3}{2} & -\frac{1}{2} \end{pmatrix}$$
 $$A A^{-1} = \begin{pmatrix} (1)(-2) + (2)(\frac{3}{2}) & (1)(1) + (2)(-\frac{1}{2}) \\ (3)(-2) + (4)(\frac{3}{2}) & (3)(1) + (4)(-\frac{1}{2}) \end{pmatrix}$$
@@ -246,19 +256,19 @@ $$A A^{-1} = \begin{pmatrix} -2 + 3 & 1 - 1 \\ -6 + 6 & 3 - 2 \end{pmatrix}$$
 $$A A^{-1} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$$
 Le produit est bien la matrice identité $I_2$, ce qui confirme l'exactitude de notre calcul de $A^{-1}$.
 
-### Exercice 2 : Niveau Avancé (Noyau et Rang matriciel)
-**Énoncé :** Soit la matrice $M = \begin{pmatrix} 1 & 1 & 1 \\ 1 & 2 & 3 \\ 2 & 3 & 4 \end{pmatrix} \in \mathcal{M}_3(\mathbb{R})$.
+\subsection{Exercice 2 : Niveau Avancé (Noyau et Rang matriciel)}
+\textbf{Énoncé :} Soit la matrice $M = \begin{pmatrix} 1 & 1 & 1 \\ 1 & 2 & 3 \\ 2 & 3 & 4 \end{pmatrix} \in \mathcal{M}_3(\mathbb{R})$.
 1.  Déterminer le rang de $M$.
 2.  Déterminer une base du noyau de $M$.
 3.  Vérifier le théorème du rang pour cette matrice.
-**Correction Détaillée :**
+\textbf{Correction Détaillée :}
 *   *Analyse de l'énoncé :* Cet exercice demande de trouver le rang et le noyau d'une matrice $3 \times 3$. Le rang est la dimension de l'image de la transformation linéaire associée, et le noyau est l'ensemble des vecteurs qui sont transformés en vecteur nul. La méthode la plus efficace pour ces deux tâches est l'échelonnement de la matrice par des opérations élémentaires sur les lignes.
 *   *Résolution pas-à-pas :*
-    1.  **Détermination du rang de $M$ par échelonnement :**
+    1.  \textbf{Détermination du rang de $M$ par échelonnement :}
         Le rang d'une matrice est le nombre de pivots (éléments non nuls en début de ligne) dans sa forme échelonnée. Nous allons appliquer des opérations élémentaires sur les lignes de $M$ pour la transformer en une matrice échelonnée.
         La matrice initiale est :
         $$M = \begin{pmatrix} 1 & 1 & 1 \\ 1 & 2 & 3 \\ 2 & 3 & 4 \end{pmatrix}$$
-        *   **Étape 1 : Annuler les coefficients sous le premier pivot (1ère colonne, 1ère ligne).**
+        *   \textbf{Étape 1 : Annuler les coefficients sous le premier pivot (1ère colonne, 1ère ligne).}
             Le pivot est $M_{1,1}=1$. Nous voulons annuler $M_{2,1}=1$ et $M_{3,1}=2$.
             Opération pour $L_2$ : $L_2 \leftarrow L_2 - L_1$.
             $$(L_2)_{\text{nouvelle},1} = M_{2,1} - M_{1,1} = 1 - 1 = 0$$
@@ -270,7 +280,7 @@ Le produit est bien la matrice identité $I_2$, ce qui confirme l'exactitude de 
             $$(L_3)_{\text{nouvelle},3} = M_{3,3} - 2 \times M_{1,3} = 4 - 2 \times 1 = 4 - 2 = 2$$
             La matrice devient :
             $$\begin{pmatrix} 1 & 1 & 1 \\ 0 & 1 & 2 \\ 0 & 1 & 2 \end{pmatrix}$$
-        *   **Étape 2 : Annuler les coefficients sous le deuxième pivot (2ème colonne, 2ème ligne).**
+        *   \textbf{Étape 2 : Annuler les coefficients sous le deuxième pivot (2ème colonne, 2ème ligne).}
             Le pivot est $M_{2,2}=1$. Nous voulons annuler $M_{3,2}=1$.
             Opération pour $L_3$ : $L_3 \leftarrow L_3 - L_2$.
             $$(L_3)_{\text{nouvelle},1} = (L_3)_{\text{ancienne},1} - (L_2)_{\text{ancienne},1} = 0 - 0 = 0$$
@@ -281,7 +291,7 @@ Le produit est bien la matrice identité $I_2$, ce qui confirme l'exactitude de 
         Le nombre de lignes non nulles dans la matrice échelonnée $M'$ est 2 (les deux premières lignes). Les pivots sont 1 (en position (1,1)) et 1 (en position (2,2)).
         Donc, le rang de $M$ est $\text{rg } M = 2$.
 
-    2.  **Détermination d'une base du noyau de $M$ :**
+    2.  \textbf{Détermination d'une base du noyau de $M$ :}
         Le noyau de $M$, noté $\ker M$, est l'ensemble des vecteurs $X = \begin{pmatrix} x \\ y \\ z \end{pmatrix} \in \mathbb{R}^3$ tels que $MX = 0_{3,1}$.
         La résolution du système linéaire $MX=0_{3,1}$ est équivalente à la résolution du système $M'X=0_{3,1}$ (car les opérations élémentaires sur les lignes ne modifient pas l'ensemble des solutions du système).
         Le système $M'X=0_{3,1}$ s'écrit :
@@ -301,7 +311,7 @@ Le produit est bien la matrice identité $I_2$, ce qui confirme l'exactitude de 
         Le noyau de $M$ est l'ensemble de tous les multiples scalaires du vecteur $\begin{pmatrix} 1 \\ -2 \\ 1 \end{pmatrix}$.
         Par conséquent, une base du noyau de $M$ est le singleton $\left\{ \begin{pmatrix} 1 \\ -2 \\ 1 \end{pmatrix} \right\}$.
 
-    3.  **Vérification du théorème du rang :**
+    3.  \textbf{Vérification du théorème du rang :}
         Le théorème du rang stipule que pour une application linéaire $f: E \to F$ (ou une matrice $A \in \mathcal{M}_{n,p}(\mathbb{K})$), on a $\dim E = \dim(\ker f) + \dim(\text{Im } f)$.
         Dans notre cas, $M$ est une matrice $3 \times 3$, donc elle représente une application linéaire de $\mathbb{R}^3$ vers $\mathbb{R}^3$. La dimension de l'espace de départ $E = \mathbb{R}^3$ est $p=3$.
         Nous avons trouvé :
@@ -313,16 +323,16 @@ Le produit est bien la matrice identité $I_2$, ce qui confirme l'exactitude de 
         $$3 = 3$$
         L'égalité est vérifiée, ce qui confirme l'exactitude de nos calculs pour le rang et le noyau.
 
-## 5. Ancrage & Application en Intelligence Artificielle
-*Démontrer la finalité technologique moderne de ce jalon théorique.*
--   **Le Pont Théorique :** En Intelligence Artificielle, et plus particulièrement dans les réseaux de neurones profonds, le calcul matriciel est le cœur battant de toutes les opérations. Chaque couche d'un réseau de neurones effectue une transformation linéaire sur ses entrées, suivie d'une activation non linéaire. Ces transformations linéaires sont précisément représentées par des **matrices de poids**. Les "poids" et les "biais" d'un réseau de neurones sont des coefficients matriciels et vectoriels qui sont ajustés pendant l'entraînement. L'inférence (le processus de faire une prédiction avec un modèle entraîné) n'est rien d'autre qu'une succession de multiplications matricielles et d'additions vectorielles. La composition de ces transformations linéaires entre les couches est directement modélisée par le produit matriciel, comme le démontre le Théorème Pivot.
+\section{Application en Intelligence Artificielle}
 
--   **Exemple Concret :**
-    *   **Inférence et Entraînement dans les Réseaux de Neurones :** Considérons une couche dense (ou *fully connected*) d'un réseau de neurones. Si l'entrée est un vecteur $x \in \mathbb{R}^p$ (représentant par exemple les activations de la couche précédente ou les caractéristiques d'entrée) et la sortie est un vecteur $h \in \mathbb{R}^n$ (les activations de la couche actuelle avant l'activation non linéaire), la transformation linéaire est donnée par $h = Wx + b$, où $W \in \mathcal{M}_{n,p}(\mathbb{R})$ est la matrice des poids et $b \in \mathbb{R}^n$ est le vecteur de biais. La multiplication matricielle $Wx$ est l'opération fondamentale. Lors de l'entraînement, les gradients de la fonction de perte par rapport aux poids $W$ et aux biais $b$ sont calculés via la règle de la chaîne (rétropropagation), qui implique également des multiplications matricielles (ou des produits de Jacobi, qui sont des généralisations matricielles).
-    *   **Accélération GPU :** Les unités de traitement graphique (GPU) sont devenues absolument indispensables pour l'entraînement des modèles d'IA. Leur architecture massivement parallèle est spécifiquement optimisée pour effectuer des millions, voire des milliards, de multiplications matricielles en virgule flottante par seconde (FLOPS). Cette capacité à exécuter des opérations matricielles en parallèle est la raison principale de leur efficacité pour les calculs massifs requis par les réseaux de neurones, où des matrices de poids de très grande taille doivent être multipliées par des vecteurs d'entrée ou d'autres matrices de gradients.
-    *   **Optimisation des Grands Modèles de Langage (LLM) avec LoRA :** Les grands modèles de langage (LLM) comme GPT-3, Llama ou Mixtral possèdent des milliards de paramètres, principalement stockés dans d'énormes matrices de poids. Entraîner ou même ajuster (fine-tuner) ces modèles pour des tâches spécifiques est extrêmement coûteux en calcul et en mémoire. Des techniques d'optimisation comme **LoRA (Low-Rank Adaptation)** exploitent directement les concepts de rang et de produit matriciel. Au lieu de modifier directement la matrice de poids $W \in \mathcal{M}_{n,p}(\mathbb{R})$ d'origine (qui contient $n \times p$ paramètres), LoRA propose d'ajouter une petite matrice de "mise à jour" $\Delta W$ telle que la nouvelle matrice de poids effective soit $W' = W + \Delta W$. La clé est que $\Delta W$ est construite comme le produit de deux matrices de rang faible : $\Delta W = BA$, où $B \in \mathcal{M}_{n,r}(\mathbb{R})$ et $A \in \mathcal{M}_{r,p}(\mathbb{R})$ avec $r \ll \min(n,p)$. Le produit $BA$ est une matrice de rang au plus $r$. Au lieu d'apprendre $n \times p$ paramètres pour $W'$, on n'apprend que $n \times r + r \times p$ paramètres pour $B$ et $A$. Par exemple, si $n=p=1000$ et $r=4$, on passe de $1000 \times 1000 = 1\,000\,000$ paramètres à $1000 \times 4 + 4 \times 1000 = 8000$ paramètres. Cela réduit drastiquement le nombre de paramètres à entraîner et la mémoire requise, tout en conservant une grande partie de la performance du modèle. C'est une application directe et sophistiquée des concepts de rang et de produit matriciel pour rendre l'IA à grande échelle plus accessible et efficace.
+-   \textbf{Le Pont Théorique :} En Intelligence Artificielle, et plus particulièrement dans les réseaux de neurones profonds, le calcul matriciel est le cœur battant de toutes les opérations. Chaque couche d'un réseau de neurones effectue une transformation linéaire sur ses entrées, suivie d'une activation non linéaire. Ces transformations linéaires sont précisément représentées par des \textbf{matrices de poids}. Les "poids" et les "biais" d'un réseau de neurones sont des coefficients matriciels et vectoriels qui sont ajustés pendant l'entraînement. L'inférence (le processus de faire une prédiction avec un modèle entraîné) n'est rien d'autre qu'une succession de multiplications matricielles et d'additions vectorielles. La composition de ces transformations linéaires entre les couches est directement modélisée par le produit matriciel, comme le démontre le Théorème Pivot.
 
-## 6. Liens Sémantiques & Maillage Obsidian
--   **Concepts Précédents requis :** [[Jalon-7 (Espaces vectoriels abstraits)]], [[Jalon-8 (Applications linéaires)]]
--   **Concepts Futurs dépendants :** [[Jalon 10 (Changements de base)]], [[Jalon 29 (Éléments propres)]], [[Jalon 43 (Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.)]]
----
+-   \textbf{Exemple Concret :}
+    *   \textbf{Inférence et Entraînement dans les Réseaux de Neurones :} Considérons une couche dense (ou *fully connected*) d'un réseau de neurones. Si l'entrée est un vecteur $x \in \mathbb{R}^p$ (représentant par exemple les activations de la couche précédente ou les caractéristiques d'entrée) et la sortie est un vecteur $h \in \mathbb{R}^n$ (les activations de la couche actuelle avant l'activation non linéaire), la transformation linéaire est donnée par $h = Wx + b$, où $W \in \mathcal{M}_{n,p}(\mathbb{R})$ est la matrice des poids et $b \in \mathbb{R}^n$ est le vecteur de biais. La multiplication matricielle $Wx$ est l'opération fondamentale. Lors de l'entraînement, les gradients de la fonction de perte par rapport aux poids $W$ et aux biais $b$ sont calculés via la règle de la chaîne (rétropropagation), qui implique également des multiplications matricielles (ou des produits de Jacobi, qui sont des généralisations matricielles).
+    *   \textbf{Accélération GPU :} Les unités de traitement graphique (GPU) sont devenues absolument indispensables pour l'entraînement des modèles d'IA. Leur architecture massivement parallèle est spécifiquement optimisée pour effectuer des millions, voire des milliards, de multiplications matricielles en virgule flottante par seconde (FLOPS). Cette capacité à exécuter des opérations matricielles en parallèle est la raison principale de leur efficacité pour les calculs massifs requis par les réseaux de neurones, où des matrices de poids de très grande taille doivent être multipliées par des vecteurs d'entrée ou d'autres matrices de gradients.
+    *   \textbf{Optimisation des Grands Modèles de Langage (LLM) avec LoRA :} Les grands modèles de langage (LLM) comme GPT-3, Llama ou Mixtral possèdent des milliards de paramètres, principalement stockés dans d'énormes matrices de poids. Entraîner ou même ajuster (fine-tuner) ces modèles pour des tâches spécifiques est extrêmement coûteux en calcul et en mémoire. Des techniques d'optimisation comme \textbf{LoRA (Low-Rank Adaptation)} exploitent directement les concepts de rang et de produit matriciel. Au lieu de modifier directement la matrice de poids $W \in \mathcal{M}_{n,p}(\mathbb{R})$ d'origine (qui contient $n \times p$ paramètres), LoRA propose d'ajouter une petite matrice de "mise à jour" $\Delta W$ telle que la nouvelle matrice de poids effective soit $W' = W + \Delta W$. La clé est que $\Delta W$ est construite comme le produit de deux matrices de rang faible : $\Delta W = BA$, où $B \in \mathcal{M}_{n,r}(\mathbb{R})$ et $A \in \mathcal{M}_{r,p}(\mathbb{R})$ avec $r \ll \min(n,p)$. Le produit $BA$ est une matrice de rang au plus $r$. Au lieu d'apprendre $n \times p$ paramètres pour $W'$, on n'apprend que $n \times r + r \times p$ paramètres pour $B$ et $A$. Par exemple, si $n=p=1000$ et $r=4$, on passe de $1000 \times 1000 = 1\,000\,000$ paramètres à $1000 \times 4 + 4 \times 1000 = 8000$ paramètres. Cela réduit drastiquement le nombre de paramètres à entraîner et la mémoire requise, tout en conservant une grande partie de la performance du modèle. C'est une application directe et sophistiquée des concepts de rang et de produit matriciel pour rendre l'IA à grande échelle plus accessible et efficace.
+
+\section{Liens Sémantiques}
+-   \textbf{Concepts Précédents requis :} [[Jalon-7 (Espaces vectoriels abstraits)]], [[Jalon-8 (Applications linéaires)]]
+-   \textbf{Concepts Futurs dépendants :} [[Jalon 10 (Changements de base)]], [[Jalon 29 (Éléments propres)]], [[Jalon 43 (Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.)]]
+---\n\end{document}

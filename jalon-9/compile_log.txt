@@ -1,0 +1,1174 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./jalon-9.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-22>
+(/usr/share/texlive/texmf-dist/tex/latex/base/report.cls
+Document Class: report 2023/05/17 v1.4n Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo))
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty)
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
+(/usr/share/texlive/texmf-dist/tex/generic/babel/txtbabel.def)
+(/usr/share/texlive/texmf-dist/tex/generic/babel-french/french.ldf))
+(/usr/share/texlive/texmf-dist/tex/generic/babel/locale/fr/babel-french.tex)
+(/usr/share/texlive/texmf-dist/tex/latex/carlisle/scalefnt.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/amscls/amsthm.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty)))
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/pgf.revision.tex)))
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def)))
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfiltered
+.code.tex)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-pdftex.def
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf.de
+f)))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.
+tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.
+tex)) (/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/mathcolor.ltx))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code
+.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonomet
+ric.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.cod
+e.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison
+.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.
+tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code
+.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.
+tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerari
+thmetics.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfint.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.te
+x)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.
+code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code
+.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.te
+x)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.c
+ode.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformation
+s.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.t
+ex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathprocessing
+.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.te
+x)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.
+tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.te
+x)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.c
+ode.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.code.
+tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code.tex))
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
+)
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65
+.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18
+.sty)) (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgffor.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex))
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/math/pgfmath.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers
+.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarytopaths.code.tex)))
+(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def)
+(./jalon-9.aux)
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg))
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd) [1{/var/lib/texmf/fo
+nts/map/pdftex/updmap/pdftex.map}] (./jalon-9.toc) [1]
+Chapitre 1.
+[2]
+! Misplaced alignment tab character &.
+<argument> 2. Formalisation &
+                              Rigueur Académique
+l.36 ...on{2. Formalisation & Rigueur Académique}
+
+[3] [4]
+! Misplaced alignment tab character &.
+<argument> B. Théorèmes, Propositions &
+                                          Lemmes
+l.86 ...ion{B. Théorèmes, Propositions & Lemmes}
+
+
+Overfull \hbox (9.92218pt too wide) in paragraph at lines 88--90
+[]\T1/cmr/m/n/12 > \T1/cmr/bx/n/12 Pro-po-si-tion (Struc-ture d'es-pace vec-to-
+riel de $\OMS/cmsy/m/n/12 M[]\OT1/cmr/m/n/12 (\U/msb/m/n/12 K\OT1/cmr/m/n/12 )$
+\T1/cmr/bx/n/12 ) : \T1/cmr/m/n/12 > L'en-semble $\OMS/cmsy/m/n/12 M[]\OT1/cmr/
+m/n/12 (\U/msb/m/n/12 K\OT1/cmr/m/n/12 )$
+[5] [6] [7]
+! Misplaced alignment tab character &.
+<argument> 4. Exercices d'Application &
+                                        Pratique de Concours
+l.189 ...ces d'Application & Pratique de Concours}
+
+[8] [9] [10] [11]
+! Misplaced alignment tab character &.
+<argument> 5. Ancrage &
+                        Application en Intelligence Artificielle
+l.324 ...Application en Intelligence Artificielle}
+
+[12]
+! Misplaced alignment tab character &.
+<argument> 6. Liens Sémantiques &
+                                   Maillage Obsidian
+l.333 .... Liens Sémantiques & Maillage Obsidian}
+
+[13] [14]
+Chapitre 2.
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.339 \textbf{Difficulté :} $\star$☆
+                                       ☆☆☆
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.339 \textbf{Difficulté :} $\star$☆☆
+                                          ☆☆
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.339 \textbf{Difficulté :} $\star$☆☆☆
+                                             ☆
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.339 \textbf{Difficulté :} $\star$☆☆☆☆
+
+[15]
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.404 \textbf{Difficulté :} $\star$☆
+                                       ☆☆☆
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.404 \textbf{Difficulté :} $\star$☆☆
+                                          ☆☆
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.404 \textbf{Difficulté :} $\star$☆☆☆
+                                             ☆
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.404 \textbf{Difficulté :} $\star$☆☆☆☆
+
+[16]
+Overfull \hbox (6.17096pt too wide) in paragraph at lines 492--492
+[]\T1/cmr/bx/n/17.28 Exercice 3 : Pro-duit Ma-tri-ciel et Pro-pri\xe9t\xe9 de Trans-
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.493 \textbf{Difficulté :} $\star$$\star$☆
+                                              ☆☆
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.493 \textbf{Difficulté :} $\star$$\star$☆☆
+                                                 ☆
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.493 ...bf{Difficulté :} $\star$$\star$☆☆☆
+
+[17] [18]
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.599 \textbf{Difficulté :} $\star$$\star$☆
+                                              ☆☆
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.599 \textbf{Difficulté :} $\star$$\star$☆☆
+                                                 ☆
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.599 ...bf{Difficulté :} $\star$$\star$☆☆☆
+
+[19] [20]
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.653 ...f{Difficulté :} $\star$$\star$$\star$☆
+                                                  ☆
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.653 ...ifficulté :} $\star$$\star$$\star$☆☆
+
+[21] [22] [23]
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.749 ...f{Difficulté :} $\star$$\star$$\star$☆
+                                                  ☆
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.749 ...ifficulté :} $\star$$\star$$\star$☆☆
+
+[24] [25] [26] [27]
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.888 ...culté :} $\star$$\star$$\star$$\star$☆
+
+[28] [29] [30]
+Overfull \hbox (42.94994pt too wide) in paragraph at lines 1022--1032
+[]\T1/cmr/m/n/12 L'image $[]\OT1/cmr/m/n/12 (^^H[])$ \T1/cmr/m/n/12 est l'es-pa
+ce vec-to-riel en-gen-dr\xe9 par ces ma-trices : $[]\OT1/cmr/m/n/12 (^^H[]) = [](\
+OMS/cmsy/m/n/12 ^^@\OML/cmm/m/it/12 E[]; \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 ; E[
+] \OMS/cmsy/m/n/12 ^^@
+
+! LaTeX Error: Unicode character ☆ (U+2606)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...
+
+l.1051 ...ulté :} $\star$$\star$$\star$$\star$☆
+
+[31]
+Overfull \hbox (22.23836pt too wide) detected at line 1077
+\OML/cmm/m/it/12 P[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 X\OT1/cmr/m/n/12 ) = (4 \
+OMS/cmsy/m/n/12 ^^@ \OML/cmm/m/it/12 X\OT1/cmr/m/n/12 ) [] [] = (4 \OMS/cmsy/m/
+n/12 ^^@ \OML/cmm/m/it/12 X\OT1/cmr/m/n/12 ) [] []
+[32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44]
+Chapitre 3.
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd)
+Overfull \hbox (121.1669pt too wide) in paragraph at lines 1759--1759
+[]\T1/cmtt/m/n/12 \section{Definition d'un alias de type pour une matrice, faci
+litant la lecture et la typage.}[]
+
+Overfull \hbox (47.08499pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 Retourne les dimensions (nombre de lignes, nombre de colo
+nnes) d'une matrice.[]
+
+Overfull \hbox (53.25848pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 Une matrice vide ou une liste de listes vides est conside
+ree comme 0x0 ou Nx0.[]
+
+Overfull \hbox (53.25848pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 # Si la matrice n'est pas vide mais que la premiere ligne
+ est vide (ex: [[]]),[]
+[45]
+Overfull \hbox (158.20786pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert rows >= 0 and cols >= 0, "Les dimensions (lignes,
+colonnes) doivent etre non-negatives."[]
+
+Overfull \hbox (10.04404pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert is\_valid\_matrix(matrix\_a) and is\_valid\_matrix
+(matrix\_b), \[]
+
+Overfull \hbox (108.81992pt too wide) in paragraph at lines 1759--1759
+[]        \T1/cmtt/m/n/12 "Les entrees doivent etre des matrices valides (liste
+ de listes de meme longueur)."[]
+
+Overfull \hbox (380.45358pt too wide) in paragraph at lines 1759--1759
+[]        \T1/cmtt/m/n/12 f"Les matrices doivent avoir les memes dimensions pou
+r etre additionnees. Recu A: {rows\_a}x{cols\_a}, B: {rows\_b}x{cols\_b}."[]
+[46]
+Overfull \hbox (59.43198pt too wide) in paragraph at lines 1759--1759
+[]        \T1/cmtt/m/n/12 "L'entree doit etre une matrice valide (liste de list
+es de meme longueur)."[]
+
+Overfull \hbox (59.43198pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 Multiplie deux matrices. Pour que A * B soit valide, le n
+ombre de colonnes de A[]
+
+Overfull \hbox (10.04404pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert is\_valid\_matrix(matrix\_a) and is\_valid\_matrix
+(matrix\_b), \[]
+
+Overfull \hbox (108.81992pt too wide) in paragraph at lines 1759--1759
+[]        \T1/cmtt/m/n/12 "Les entrees doivent etre des matrices valides (liste
+ de listes de meme longueur)."[]
+
+Overfull \hbox (485.40295pt too wide) in paragraph at lines 1759--1759
+[]        \T1/cmtt/m/n/12 f"Le nombre de colonnes de la premiere matrice ({cols
+\_a}) doit etre egal au nombre de lignes de la seconde ({rows\_b}) pour la mult
+iplication."[]
+
+Overfull \hbox (34.738pt too wide) in paragraph at lines 1759--1759
+[]            \T1/cmtt/m/n/12 # L'element (i, j) de la matrice resultante est l
+e produit scalaire[]
+
+Overfull \hbox (47.08499pt too wide) in paragraph at lines 1759--1759
+[]            \T1/cmtt/m/n/12 # de la i-eme ligne de matrix\_a et de la j-eme c
+olonne de matrix\_b.[]
+
+Overfull \hbox (59.43198pt too wide) in paragraph at lines 1759--1759
+[]        \T1/cmtt/m/n/12 "L'entree doit etre une matrice valide (liste de list
+es de meme longueur)."[]
+[47]
+Overfull \hbox (22.39102pt too wide) in paragraph at lines 1759--1759
+[]\T1/cmtt/m/n/12 \section{--- Bloc de tests et d'assertions pour valider l'imp
+lementation ---}[]
+
+Overfull \hbox (127.3404pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 print("--- Demarrage des tests pour TP 1 : Operations Fon
+damentales sur les Matrices ---")[]
+
+Overfull \hbox (448.362pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 m\_invalid\_type: List[List[float]] = [[1.0, 2.0], [3.0,
+"4.0"]] # Type checking will catch this, but runtime check for structure is als
+o good[]
+
+Overfull \hbox (65.60547pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert get\_dimensions(m\_empty) == (0, 0), "Test get\_di
+mensions (vide) echoue"[]
+
+Overfull \hbox (47.08499pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert get\_dimensions(m\_1x1) == (1, 1), "Test get\_dime
+nsions (1x1) echoue"[]
+
+Overfull \hbox (47.08499pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert get\_dimensions(m\_2x3) == (2, 3), "Test get\_dime
+nsions (2x3) echoue"[]
+
+Overfull \hbox (77.95245pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert is\_valid\_matrix(m\_empty) is True, "Test is\_val
+id\_matrix (vide) echoue"[]
+
+Overfull \hbox (59.43198pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert is\_valid\_matrix(m\_1x1) is True, "Test is\_valid
+\_matrix (1x1) echoue"[]
+
+Overfull \hbox (59.43198pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert is\_valid\_matrix(m\_2x3) is True, "Test is\_valid
+\_matrix (2x3) echoue"[]
+
+Overfull \hbox (300.19818pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert is\_valid\_matrix(m\_invalid\_rows) is False, "Tes
+t is\_valid\_matrix (lignes de longueurs differentes) echoue"[]
+
+Overfull \hbox (331.06564pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert is\_valid\_matrix([[1.0], [2.0, 3.0]]) is False, "
+Test is\_valid\_matrix (lignes de longueurs differentes 2) echoue"[]
+
+Overfull \hbox (312.54517pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert is\_valid\_matrix([[], []]) is True, "Test is\_val
+id\_matrix (matrice 2x0) echoue" # Valide, 2 lignes, 0 colonnes[]
+
+Overfull \hbox (207.5958pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert create\_zero\_matrix(2, 2) == [[0.0, 0.0], [0.0, 0
+.0]], "Test create\_zero\_matrix (2x2) echoue"[]
+
+Overfull \hbox (164.38135pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert create\_zero\_matrix(1, 3) == [[0.0, 0.0, 0.0]], "
+Test create\_zero\_matrix (1x3) echoue"[]
+
+Overfull \hbox (71.77896pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert create\_zero\_matrix(0, 0) == [], "Test create\_ze
+ro\_matrix (0x0) echoue"[]
+
+Overfull \hbox (213.76929pt too wide) in paragraph at lines 1759--1759
+[]        \T1/cmtt/m/n/12 assert False, "create\_zero\_matrix devrait lever une
+ AssertionError pour des dimensions negatives."[]
+
+Overfull \hbox (40.9115pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert add\_matrices(A, B) == C\_expected, "Test add\_mat
+rices (2x2) echoue"[]
+
+Overfull \hbox (213.76929pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert add\_matrices(create\_zero\_matrix(2,2), A) == A,
+"Test add\_matrices (identite additive) echoue"[]
+
+Overfull \hbox (195.24881pt too wide) in paragraph at lines 1759--1759
+[]        \T1/cmtt/m/n/12 assert False, "add\_matrices devrait lever une Assert
+ionError pour des dimensions incompatibles."[]
+[48]
+Overfull \hbox (318.71866pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert scalar\_multiply\_matrix(A, 2.0) == [[2.0, 4.0], [
+6.0, 8.0]], "Test scalar\_multiply\_matrix (facteur 2.0) echoue"[]
+
+Overfull \hbox (318.71866pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert scalar\_multiply\_matrix(A, 0.0) == [[0.0, 0.0], [
+0.0, 0.0]], "Test scalar\_multiply\_matrix (facteur 0.0) echoue"[]
+
+Overfull \hbox (232.28976pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert scalar\_multiply\_matrix(m\_empty, 5.0) == [], "Te
+st scalar\_multiply\_matrix (matrice vide) echoue"[]
+
+Overfull \hbox (139.68738pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert multiply\_matrices(E, F) == G\_expected, "Test mul
+tiply\_matrices (2x2 * 2x2) echoue"[]
+
+Overfull \hbox (139.68738pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert multiply\_matrices(H, I) == J\_expected, "Test mul
+tiply\_matrices (2x3 * 3x2) echoue"[]
+
+Overfull \hbox (84.12595pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 # Propriete de la matrice identite (non implementee ici,
+mais utile pour les tests)[]
+
+Overfull \hbox (84.12595pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert multiply\_matrices(E, I\_2x2) == E, "Test multiply
+\_matrices (A * I) echoue"[]
+
+Overfull \hbox (84.12595pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert multiply\_matrices(I\_2x2, E) == E, "Test multiply
+\_matrices (I * A) echoue"[]
+
+Overfull \hbox (226.11627pt too wide) in paragraph at lines 1759--1759
+[]        \T1/cmtt/m/n/12 assert False, "multiply\_matrices devrait lever une A
+ssertionError pour des dimensions incompatibles."[]
+
+Overfull \hbox (90.29944pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert transpose\_matrix(K) == K\_T\_expected, "Test tran
+spose\_matrix (2x3) echoue"[]
+
+Overfull \hbox (90.29944pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert transpose\_matrix(L) == L\_T\_expected, "Test tran
+spose\_matrix (2x2) echoue"[]
+
+Overfull \hbox (176.72833pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert transpose\_matrix(transpose\_matrix(K)) == K, "Tes
+t transpose\_matrix ((A^T)^T = A) echoue"[]
+
+Overfull \hbox (114.99341pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert transpose\_matrix(m\_empty) == [], "Test transpose
+\_matrix (matrice vide) echoue"[]
+
+Overfull \hbox (133.51389pt too wide) in paragraph at lines 1759--1759
+[]    \T1/cmtt/m/n/12 assert transpose\_matrix([[5.0]]) == [[5.0]], "Test trans
+pose\_matrix (matrice 1x1) echoue"[]
+[49]
+! Missing $ inserted.
+<inserted text>
+                $
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Extra }, or forgotten $.
+<recently read> \egroup
+
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Extra }, or forgotten $.
+\textdef@ ...th {#1}\let \f@size #2\selectfont #3}
+                                                  }
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Extra }, or forgotten $.
+\textdef@ ...h {#1}\let \f@size #2\selectfont #3}}
+
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Extra }, or forgotten $.
+\text@ ...e {\textdef@ \displaystyle \f@size {#1}}
+                                                  {\textdef@ \textstyle \f@s...
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Extra }, or forgotten $.
+\textdef@ ...th {#1}\let \f@size #2\selectfont #3}
+                                                  }
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Extra }, or forgotten $.
+\textdef@ ...h {#1}\let \f@size #2\selectfont #3}}
+
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Extra }, or forgotten $.
+\text@ ...xtstyle \f@size {\firstchoice@false #1}}
+                                                  {\textdef@ \textstyle \sf@...
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Extra }, or forgotten $.
+\textdef@ ...th {#1}\let \f@size #2\selectfont #3}
+                                                  }
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Extra }, or forgotten $.
+\textdef@ ...h {#1}\let \f@size #2\selectfont #3}}
+
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Extra }, or forgotten $.
+\text@ ...tstyle \sf@size {\firstchoice@false #1}}
+                                                  {\textdef@ \textstyle \ssf...
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Extra }, or forgotten $.
+\textdef@ ...th {#1}\let \f@size #2\selectfont #3}
+                                                  }
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Extra }, or forgotten $.
+\textdef@ ...h {#1}\let \f@size #2\selectfont #3}}
+
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Extra }, or forgotten $.
+\text@ ...style \ssf@size {\firstchoice@false #1}}
+                                                  \check@mathfonts }
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Extra }, or forgotten $.
+\text@ ...firstchoice@false #1}}\check@mathfonts }
+
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Extra }, or forgotten $.
+<recently read> \egroup
+
+l.1767 ...nsions} et \texttt{is\\_valid\\_matrix}}
+                                                  : Ces fonctions sont cruci...
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1767 ...\xa9mentation. \texttt{is\\_valid\\_matrix}
+                                                   garantit que la structure...
+
+! Extra }, or forgotten $.
+\textdef@ ...th {#1}\let \f@size #2\selectfont #3}
+                                                  }
+l.1767 ...\xa9mentation. \texttt{is\\_valid\\_matrix}
+                                                   garantit que la structure...
+
+! Extra }, or forgotten $.
+\textdef@ ...h {#1}\let \f@size #2\selectfont #3}}
+
+l.1767 ...\xa9mentation. \texttt{is\\_valid\\_matrix}
+                                                   garantit que la structure...
+
+! Extra }, or forgotten $.
+\text@ ...e {\textdef@ \displaystyle \f@size {#1}}
+                                                  {\textdef@ \textstyle \f@s...
+l.1767 ...\xa9mentation. \texttt{is\\_valid\\_matrix}
+                                                   garantit que la structure...
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1767 ...\xa9mentation. \texttt{is\\_valid\\_matrix}
+                                                   garantit que la structure...
+
+! Extra }, or forgotten $.
+\textdef@ ...th {#1}\let \f@size #2\selectfont #3}
+                                                  }
+l.1767 ...\xa9mentation. \texttt{is\\_valid\\_matrix}
+                                                   garantit que la structure...
+
+! Extra }, or forgotten $.
+\textdef@ ...h {#1}\let \f@size #2\selectfont #3}}
+
+l.1767 ...\xa9mentation. \texttt{is\\_valid\\_matrix}
+                                                   garantit que la structure...
+
+! Extra }, or forgotten $.
+\text@ ...xtstyle \f@size {\firstchoice@false #1}}
+                                                  {\textdef@ \textstyle \sf@...
+l.1767 ...\xa9mentation. \texttt{is\\_valid\\_matrix}
+                                                   garantit que la structure...
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1767 ...\xa9mentation. \texttt{is\\_valid\\_matrix}
+                                                   garantit que la structure...
+
+! Extra }, or forgotten $.
+\textdef@ ...th {#1}\let \f@size #2\selectfont #3}
+                                                  }
+l.1767 ...\xa9mentation. \texttt{is\\_valid\\_matrix}
+                                                   garantit que la structure...
+
+! Extra }, or forgotten $.
+\textdef@ ...h {#1}\let \f@size #2\selectfont #3}}
+
+l.1767 ...\xa9mentation. \texttt{is\\_valid\\_matrix}
+                                                   garantit que la structure...
+
+! Extra }, or forgotten $.
+\text@ ...tstyle \sf@size {\firstchoice@false #1}}
+                                                  {\textdef@ \textstyle \ssf...
+l.1767 ...\xa9mentation. \texttt{is\\_valid\\_matrix}
+                                                   garantit que la structure...
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1767 ...\xa9mentation. \texttt{is\\_valid\\_matrix}
+                                                   garantit que la structure...
+
+! Extra }, or forgotten $.
+\textdef@ ...th {#1}\let \f@size #2\selectfont #3}
+                                                  }
+l.1767 ...\xa9mentation. \texttt{is\\_valid\\_matrix}
+                                                   garantit que la structure...
+
+! Extra }, or forgotten $.
+\textdef@ ...h {#1}\let \f@size #2\selectfont #3}}
+
+l.1767 ...\xa9mentation. \texttt{is\\_valid\\_matrix}
+                                                   garantit que la structure...
+
+! Extra }, or forgotten $.
+\text@ ...style \ssf@size {\firstchoice@false #1}}
+                                                  \check@mathfonts }
+l.1767 ...\xa9mentation. \texttt{is\\_valid\\_matrix}
+                                                   garantit que la structure...
+
+! Extra }, or forgotten $.
+\text@ ...firstchoice@false #1}}\check@mathfonts }
+
+l.1767 ...\xa9mentation. \texttt{is\\_valid\\_matrix}
+                                                   garantit que la structure...
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1767 ...\xaame longueur). \texttt{get\\_dimensions}
+                                                   fournit les dimensions n\xc3...
+
+! Extra }, or forgotten $.
+\textdef@ ...th {#1}\let \f@size #2\selectfont #3}
+                                                  }
+l.1767 ...\xaame longueur). \texttt{get\\_dimensions}
+                                                   fournit les dimensions n\xc3...
+
+! Extra }, or forgotten $.
+\textdef@ ...h {#1}\let \f@size #2\selectfont #3}}
+
+l.1767 ...\xaame longueur). \texttt{get\\_dimensions}
+                                                   fournit les dimensions n\xc3...
+
+! Extra }, or forgotten $.
+\text@ ...e {\textdef@ \displaystyle \f@size {#1}}
+                                                  {\textdef@ \textstyle \f@s...
+l.1767 ...\xaame longueur). \texttt{get\\_dimensions}
+                                                   fournit les dimensions n\xc3...
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1767 ...\xaame longueur). \texttt{get\\_dimensions}
+                                                   fournit les dimensions n\xc3...
+
+! Extra }, or forgotten $.
+\textdef@ ...th {#1}\let \f@size #2\selectfont #3}
+                                                  }
+l.1767 ...\xaame longueur). \texttt{get\\_dimensions}
+                                                   fournit les dimensions n\xc3...
+
+! Extra }, or forgotten $.
+\textdef@ ...h {#1}\let \f@size #2\selectfont #3}}
+
+l.1767 ...\xaame longueur). \texttt{get\\_dimensions}
+                                                   fournit les dimensions n\xc3...
+
+! Extra }, or forgotten $.
+\text@ ...xtstyle \f@size {\firstchoice@false #1}}
+                                                  {\textdef@ \textstyle \sf@...
+l.1767 ...\xaame longueur). \texttt{get\\_dimensions}
+                                                   fournit les dimensions n\xc3...
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1767 ...\xaame longueur). \texttt{get\\_dimensions}
+                                                   fournit les dimensions n\xc3...
+
+! Extra }, or forgotten $.
+\textdef@ ...th {#1}\let \f@size #2\selectfont #3}
+                                                  }
+l.1767 ...\xaame longueur). \texttt{get\\_dimensions}
+                                                   fournit les dimensions n\xc3...
+
+! Extra }, or forgotten $.
+\textdef@ ...h {#1}\let \f@size #2\selectfont #3}}
+
+l.1767 ...\xaame longueur). \texttt{get\\_dimensions}
+                                                   fournit les dimensions n\xc3...
+
+! Extra }, or forgotten $.
+\text@ ...tstyle \sf@size {\firstchoice@false #1}}
+                                                  {\textdef@ \textstyle \ssf...
+l.1767 ...\xaame longueur). \texttt{get\\_dimensions}
+                                                   fournit les dimensions n\xc3...
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1767 ...\xaame longueur). \texttt{get\\_dimensions}
+                                                   fournit les dimensions n\xc3...
+
+! Extra }, or forgotten $.
+\textdef@ ...th {#1}\let \f@size #2\selectfont #3}
+                                                  }
+l.1767 ...\xaame longueur). \texttt{get\\_dimensions}
+                                                   fournit les dimensions n\xc3...
+
+! Extra }, or forgotten $.
+\textdef@ ...h {#1}\let \f@size #2\selectfont #3}}
+
+l.1767 ...\xaame longueur). \texttt{get\\_dimensions}
+                                                   fournit les dimensions n\xc3...
+
+! Extra }, or forgotten $.
+\text@ ...style \ssf@size {\firstchoice@false #1}}
+                                                  \check@mathfonts }
+l.1767 ...\xaame longueur). \texttt{get\\_dimensions}
+                                                   fournit les dimensions n\xc3...
+
+! Extra }, or forgotten $.
+\text@ ...firstchoice@false #1}}\check@mathfonts }
+
+l.1767 ...\xaame longueur). \texttt{get\\_dimensions}
+                                                   fournit les dimensions n\xc3...
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1769
+
+Missing character: There is no \xe9 in font cmr5!
+Missing character: There is no \xe9 in font cmr5!
+Missing character: There is no \xe9 in font cmr5!
+Missing character: There is no \xe9 in font cmr5!
+Missing character: There is no \xe8 in font cmr5!
+Missing character: There is no \xe9 in font cmr5!
+Missing character: There is no \xe9 in font cmr5!
+Missing character: There is no \xe8 in font cmr5!
+Missing character: There is no \xe9 in font cmr5!
+Missing character: There is no \xe9 in font cmr5!
+Missing character: There is no \xe9 in font cmr5!
+Missing character: There is no \xe9 in font cmr5!
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing { inserted.
+<to be read again>
+                   $
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing { inserted.
+<to be read again>
+                   $
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing { inserted.
+<to be read again>
+                   $
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+Missing character: There is no \xea in font cmr5!
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing $ inserted.
+<inserted text>
+                $
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing { inserted.
+<to be read again>
+                   $
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing { inserted.
+<to be read again>
+                   $
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing { inserted.
+<to be read again>
+                   $
+l.1770 \subsubsection{Complexité Algorithmique}
+
+! Missing } inserted.
+<inserted text>
+                }
+l.1770 \subsubsection{Complexité Algorithmique}
+
+(That makes 100 errors; please try again.)
+!  ==> Fatal error occurred, no output PDF file produced!
+Transcript written on jalon-9.log.

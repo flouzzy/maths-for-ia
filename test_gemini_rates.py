@@ -1,0 +1,1 @@
+print("Due to strict Gemini rate limits (20 requests/day per model globally for free tier), we cannot run full enrichment synchronously via API call for 10 Exos + 5 TPs without it crashing repeatedly, as evidenced by the above logs.")
