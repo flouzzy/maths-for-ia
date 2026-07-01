@@ -89,5 +89,5 @@ D'où l'inégalité de Boole.
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 62 (Algèbres).md]], [[Jalon 14 (Suites réelles et complexes).md]]
+- **Concepts Précédents requis :** [[Jalon 62 (Algèbres).md]], [[Jalon-14.md]]
 - **Concepts Futurs dépendants :** [[Jalon 64 (Construction pas à pas de la mesure de Lebesgue sur Rn via la mesure extérieure.).md]], [[Jalon 85 (Axiomes de Kolmogorov).md]]
