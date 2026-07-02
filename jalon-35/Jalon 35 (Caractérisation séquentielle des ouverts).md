@@ -90,5 +90,5 @@ Donc $\|x - y\| = d$. Le minimum est atteint.
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 34 (Topologie élémentaire des espaces vectoriels normés).md]], [[Jalon 15 (Sous-suites).md]]
+- **Concepts Précédents requis :** [[Jalon 34 (Topologie élémentaire des espaces vectoriels normés).md]], [[Jalon-15.md]]
 - **Concepts Futurs dépendants :** [[Jalon 54 (Compacité générale).md]], [[Jalon 123 (Problèmes d'optimisation sous contraintes).md]]
