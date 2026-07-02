@@ -1,1 +1,264 @@
-{"main": {"id": "48a2690f0940ad4a", "type": "split", "children": [{"id": "bc1e7782e8dc77d0", "type": "tabs", "children": [{"id": "8ceda288c71f7e44", "type": "leaf", "state": {"type": "markdown", "state": {"file": "jalon-141/Jalon-141.md", "mode": "source", "source": false, "backlinks": true, "backlinkOpts": {"collapseAll": false, "extraContext": false, "sortOrder": "alphabetical", "showSearch": false, "searchQuery": "", "backlinkCollapsed": false, "unlinkedCollapsed": true}}, "icon": "lucide-file", "title": "Jalon-141"}}]}], "direction": "vertical"}, "left": {"id": "ad0d18a90fecf341", "type": "split", "children": [{"id": "864b721caea05c6c", "type": "tabs", "children": [{"id": "753729c1afd42e33", "type": "leaf", "state": {"type": "file-explorer", "state": {"sortOrder": "alphabetical", "autoReveal": false}, "icon": "lucide-folder-closed", "title": "Explorateur de fichiers"}}, {"id": "2d2dbd526b5dce7a", "type": "leaf", "state": {"type": "search", "state": {"query": "tag:math/fondations", "matchingCase": false, "explainSearch": false, "collapseAll": false, "extraContext": false, "sortOrder": "alphabetical"}, "icon": "lucide-search", "title": "Rechercher"}}, {"id": "bb87adc140193173", "type": "leaf", "state": {"type": "bookmarks", "state": {}, "icon": "lucide-bookmark", "title": "Signets"}}]}], "direction": "horizontal", "width": 300}, "right": {"id": "5824eb673a604ba4", "type": "split", "children": [{"id": "c8b02d60c7d5ad2f", "type": "tabs", "children": [{"id": "968f8176e1a5367a", "type": "leaf", "state": {"type": "backlink", "state": {"file": "README.md", "collapseAll": false, "extraContext": false, "sortOrder": "alphabetical", "showSearch": false, "searchQuery": "", "backlinkCollapsed": false, "unlinkedCollapsed": true}, "icon": "links-coming-in", "title": "R\u00e9trolien pour README"}}, {"id": "32cc30cf6870b854", "type": "leaf", "state": {"type": "outgoing-link", "state": {"file": "jalon-3/Jalon 3 (Quantification).md", "linksCollapsed": false, "unlinkedCollapsed": true}, "icon": "links-going-out", "title": "Liens sortants de Jalon 3 (Quantification)"}}, {"id": "e62fa12934a2e50c", "type": "leaf", "state": {"type": "tag", "state": {"sortOrder": "frequency", "useHierarchy": true, "showSearch": false, "searchQuery": ""}, "icon": "lucide-tags", "title": "Mots-cl\u00e9s"}}, {"id": "93836f5a4cc60b41", "type": "leaf", "state": {"type": "all-properties", "state": {"sortOrder": "frequency", "showSearch": false, "searchQuery": ""}, "icon": "lucide-archive", "title": "Toutes les propri\u00e9t\u00e9s"}}, {"id": "4cd27259677c54b2", "type": "leaf", "state": {"type": "outline", "state": {"file": "Jalon 13 (Structure de $-mathbb{R}$).md", "followCursor": false, "showSearch": false, "searchQuery": ""}, "icon": "lucide-list", "title": "Plan de Jalon 13 (Structure de $-mathbb{R}$)"}}, {"id": "83370cb1c349abad", "type": "leaf", "state": {"type": "file-properties", "state": {"file": "jalon-1/Jalon 1 (Logique formelle).md"}, "icon": "lucide-info", "title": "Propri\u00e9t\u00e9s du fichier pour Jalon 1 (Logique formelle)"}}, {"id": "18864fee124c4f40", "type": "leaf", "state": {"type": "git-view", "state": {}, "icon": "git-pull-request", "title": "Source Control"}}], "currentTab": 6}], "direction": "horizontal", "width": 300}, "left-ribbon": {"hiddenItems": {"switcher:Ouvrir le s\u00e9lecteur rapide": false, "graph:Ouvrir la vue graphique": false, "canvas:Cr\u00e9er une nouvelle toile": false, "daily-notes:Ouvrir la note quotidienne": false, "templates:Ins\u00e9rer le mod\u00e8le": false, "command-palette:Ouvrir la palette de commandes": false, "bases:Cr\u00e9er une nouvelle base": false, "obsidian-git:Open Git source control": false, "obsidian-excalidraw-plugin:New drawing": false, "workspaces:G\u00e9rer les espaces de travail": false, "publish:Publier les modifications": false}}, "active": "8ceda288c71f7e44", "lastOpenFiles": ["Tableau de bord.md", "Bienvenue.md", "README.md", "Sans titre.base", "Sans titre 1.base", "Sans titre.canvas", "Sans titre 1.canvas", "jalon-69/Jalon 69 (D\u00e9monstration compl\u00e8te du th\u00e9or\u00e8me de convergence domin\u00e9e de Lebesgue.).md", "jalon-16/Jalon-16.md", "jalon-15/Jalon-15.md", "jalon-14/Jalon-14.md", "jalon-13/Jalon-13.md", "jalon-12/Jalon-12.md", "jalon-11/Jalon 11 (Formes lin\u00e9aires).md", "jalon-10/Jalon-10.md", "jalon-9/Jalon-9.md", "jalon-8/Jalon-8.md", "jalon-7/Jalon 7 (Espaces vectoriels abstraits).md", "jalon-6/Jalon 6 (Relations d'\u00e9quivalence).md", "jalon-1/Jalon 1 (Logique formelle).md", "jalon-1/README.md", "jalon-141/Jalon-141.md", "jalon-142/Jalon-142.md", "jalon-143/Jalon-143.md", "jalon-143/README.md", "jalon-3/Jalon 3 (Quantification).md", "jalon-143/Jalon 143 (Th\u00e9orie spectrale des graphes).md", "generate_content.py", "jalon-5/Jalon 5 (Applications).md", "jalon-139/Jalon-139_Notion_de_stabilite_algorithmique.md", "jalon-141/Jalon 141 (Th\u00e9or\u00e8mes de Glivenko-Cantelli g\u00e9n\u00e9ralis\u00e9s pour les classes de fonctions VC.).md", "test_rename_files.py", "test_enrich_jalons_gemini.py", "prompt_template.txt", "benchmark_rename.py", "jalon-1/tp", "jalon-1/exos", "jalon-99"]}
+{
+  "main": {
+    "id": "48a2690f0940ad4a",
+    "type": "split",
+    "children": [
+      {
+        "id": "bc1e7782e8dc77d0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8ceda288c71f7e44",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "jalon-23/Jalon 23 (Séries entières).md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Jalon 23 (Séries entières)"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "ad0d18a90fecf341",
+    "type": "split",
+    "children": [
+      {
+        "id": "864b721caea05c6c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "753729c1afd42e33",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "byModifiedTime",
+                "autoReveal": true
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorateur de fichiers"
+            }
+          },
+          {
+            "id": "2d2dbd526b5dce7a",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:math/fondations",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Rechercher"
+            }
+          },
+          {
+            "id": "bb87adc140193173",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Signets"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "5824eb673a604ba4",
+    "type": "split",
+    "children": [
+      {
+        "id": "c8b02d60c7d5ad2f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "968f8176e1a5367a",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "README.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Rétrolien pour README"
+            }
+          },
+          {
+            "id": "32cc30cf6870b854",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "jalon-3/Jalon 3 (Quantification).md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Liens sortants de Jalon 3 (Quantification)"
+            }
+          },
+          {
+            "id": "e62fa12934a2e50c",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Mots-clés"
+            }
+          },
+          {
+            "id": "93836f5a4cc60b41",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Toutes les propriétés"
+            }
+          },
+          {
+            "id": "4cd27259677c54b2",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Jalon 13 (Structure de $-mathbb{R}$).md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Plan de Jalon 13 (Structure de $-mathbb{R}$)"
+            }
+          },
+          {
+            "id": "83370cb1c349abad",
+            "type": "leaf",
+            "state": {
+              "type": "file-properties",
+              "state": {
+                "file": "jalon-1/Jalon 1 (Logique formelle).md"
+              },
+              "icon": "lucide-info",
+              "title": "Propriétés du fichier pour Jalon 1 (Logique formelle)"
+            }
+          },
+          {
+            "id": "18864fee124c4f40",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
+          }
+        ],
+        "currentTab": 6
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Ouvrir le sélecteur rapide": false,
+      "graph:Ouvrir la vue graphique": false,
+      "canvas:Créer une nouvelle toile": false,
+      "daily-notes:Ouvrir la note quotidienne": false,
+      "templates:Insérer le modèle": false,
+      "command-palette:Ouvrir la palette de commandes": false,
+      "bases:Créer une nouvelle base": false,
+      "obsidian-git:Open Git source control": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "workspaces:Gérer les espaces de travail": false,
+      "publish:Publier les modifications": false,
+      "markdown-importer:Ouvrir l'importateur Markdown": false
+    }
+  },
+  "active": "753729c1afd42e33",
+  "lastOpenFiles": [
+    "generate_tex_final_v2.py",
+    "output_script.py",
+    "jalon-1.tex",
+    "test_generate_content.py",
+    "benchmark_regex_compiled.py",
+    "test_parse_jalons.py",
+    "benchmark_sanitize.py",
+    "benchmark_regex.py",
+    "jalon-17/Jalon 17 (Séries absolument convergentes).md",
+    "jalon-141/Jalon-141.md",
+    "Tableau de bord.md",
+    "Bienvenue.md",
+    "README.md",
+    "Sans titre.base",
+    "Sans titre 1.base",
+    "Sans titre.canvas",
+    "Sans titre 1.canvas",
+    "jalon-69/Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md",
+    "jalon-16/Jalon-16.md",
+    "jalon-15/Jalon 15 (Sous-suites).md",
+    "jalon-14/Jalon 14 (Suites réelles et complexes).md",
+    "jalon-13/Jalon 13 (Structure de --mathbb{R}-).md",
+    "jalon-12/Jalon 12 (Livrable IA).md",
+    "jalon-11/Jalon 11 (Formes linéaires).md",
+    "jalon-10/Jalon 10 (Changements de base).md",
+    "jalon-9/Jalon 9 (Calcul matriciel).md",
+    "jalon-8/Jalon 8 (Applications linéaires).md",
+    "jalon-7/Jalon 7 (Espaces vectoriels abstraits).md",
+    "jalon-6/Jalon 6 (Relations d'équivalence).md",
+    "jalon-1/Jalon 1 (Logique formelle).md",
+    "jalon-1/README.md",
+    "jalon-142/Jalon-142.md",
+    "jalon-143/Jalon-143.md",
+    "jalon-143/README.md",
+    "jalon-3/Jalon 3 (Quantification).md",
+    "jalon-143/Jalon 143 (Théorie spectrale des graphes).md",
+    "generate_content.py",
+    "jalon-5/Jalon 5 (Applications).md"
+  ]
+}
