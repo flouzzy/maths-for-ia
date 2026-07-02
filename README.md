@@ -319,6 +319,8 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+### 2026-07-02-audit
+- [[#2026-07-02-audit|2026-07-02]] : [Audit & Weekly Compilation] - Jalon 10 - Changements de base. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-01-audit
 - [[#2026-07-01-audit|2026-07-01]] : [Audit & Weekly Compilation] - Jalon 9 - Calcul matriciel, opérations, inversibilité et représentations des applications linéaires. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-02-audit

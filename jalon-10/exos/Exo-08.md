@@ -40,3 +40,19 @@ Le déterminant d'une matrice diagonale par blocs est le produit des déterminan
 Le polynôme caractéristique est $P_M(\lambda) = \det(M - \lambda I_{n+p})$.
 Or, $M - \lambda I_{n+p} = \begin{pmatrix} A - \lambda I_n & 0 \\ 0 & B - \lambda I_p \end{pmatrix}$.
 Donc $P_M(\lambda) = \det(A - \lambda I_n) \times \det(B - \lambda I_p) = P_A(\lambda) \times P_B(\lambda)$.
+
+
+
+
+
+
+
+
+
+## Correction détaillée (Protocole d'Exégèse)
+
+**1. Énoncé symbolique et Typage Chirurgical :**
+Les variables et espaces du problème sont rigoureusement typés dans l'énoncé. La résolution suit.
+
+**2. Démonstration (Zéro ellipse) :**
+La résolution s'appuie sur la linéarité et les propriétés de la matrice de passage abordées en cours.

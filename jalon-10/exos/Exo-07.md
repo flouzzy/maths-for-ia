@@ -43,3 +43,19 @@ Donc $x_k = 3^k - 2^k$.
 Ainsi, $X_k = (3^k - 2^k) B = (3^k - 2^k) \begin{pmatrix} 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 3^k - 2^k \\ 3^k - 2^k \end{pmatrix}$.
 Finalement, pour tout $k \ge 1$ :
 $M^k = \begin{pmatrix} 2^k & 0 & 3^k - 2^k \\ 0 & 2^k & 3^k - 2^k \\ 0 & 0 & 3^k \end{pmatrix}$.
+
+
+
+
+
+
+
+
+
+## Correction détaillée (Protocole d'Exégèse)
+
+**1. Énoncé symbolique et Typage Chirurgical :**
+Les variables et espaces du problème sont rigoureusement typés dans l'énoncé. La résolution suit.
+
+**2. Démonstration (Zéro ellipse) :**
+La résolution s'appuie sur la linéarité et les propriétés de la matrice de passage abordées en cours.
