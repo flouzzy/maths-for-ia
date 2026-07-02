@@ -7,7 +7,7 @@ tags:
   - math/analyse
   - ia/convergence
 prev: "[[Jalon 13 (Structure de R).md]]"
-next: "[[Jalon 15 (Sous-suites).md]]"
+next: "[[Jalon-15.md]]"
 ---
 # Jalon 14 : Suites réelles et complexes, définitions rigoureuses des limites ($\epsilon, N$) et critères de convergence
 
@@ -119,4 +119,4 @@ Supposons qu'une suite $(u_n)$ converge vers deux limites distinctes $l_1$ et $l
 
 ## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 13 (Structure de R)]]
-- **Concepts Futurs dépendants :** [[Jalon 15 (Sous-suites)]], [[Jalon-16]], [[Jalon 21 (Suites de fonctions)]], [[Jalon 56 (Espaces métriques complets)]]
+- **Concepts Futurs dépendants :** [[Jalon-15]], [[Jalon-16]], [[Jalon 21 (Suites de fonctions)]], [[Jalon 56 (Espaces métriques complets)]]

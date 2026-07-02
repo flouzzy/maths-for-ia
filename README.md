@@ -89,7 +89,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 
 - **[Jalon 13](jalon-13/Jalon%2013%20%28Structure%20de%20--mathbb%7BR%7D-%29.md)** : Structure de $\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède.
 - **[Jalon 14](jalon-14/Jalon-14.md)** : Suites réelles et complexes, définitions rigoureuses des limites ($\epsilon, N$) et critères de convergence. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 15](jalon-15/Jalon%2015%20%28Sous-suites%29.md)** : Sous-suites, valeurs d'adhérence et preuve par séparation du théorème de Bolzano-Weierstrass.
+- **[Jalon 15](jalon-15/Jalon%2015%20%28Sous-suites%29.md)** : Sous-suites, valeurs d'adhérence et preuve par séparation du théorème de Bolzano-Weierstrass. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 16](jalon-16/Jalon-16.md)** : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 17](jalon-17/Jalon%2017%20%28S%C3%A9ries%20absolument%20convergentes%29.md)** : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries.
 - **[Jalon 18](jalon-18/Jalon%2018%20%28Continuit%C3%A9%20des%20fonctions%20d%27une%20variable%20r%C3%A9elle%29.md)** : Continuité des fonctions d'une variable réelle, théorème des valeurs intermédiaires et compacité locale.
@@ -322,6 +322,7 @@ python3 -m unittest test_generate_jalons.py
 ### 2026-07-01-audit
 - [[#2026-07-01-audit|2026-07-01]] : [Audit & Weekly Compilation] - Jalon 9 - Calcul matriciel, opérations, inversibilité et représentations des applications linéaires. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-02-audit
+- [2026-07-02] : Upsert du Jalon 15 - Sous-suites. Status: Terminé.
 - [[#2026-07-02-audit|2026-07-02]] : [Audit & Weekly Compilation] - Jalon 8 - Applications linéaires, noyau (ker), image (Im) et démonstration du théorème du rang. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 - [2026-07-01] : Upsert du Jalon 14 - Suites réelles et complexes. Status: Terminé.
 ### 2026-06-30-audit

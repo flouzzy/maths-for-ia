@@ -25,7 +25,7 @@ next: "[[Jalon-16.md]]"
 Soit $(u_n)_{n \in \mathbb{N}}$ une suite d'éléments de $E$ ($\mathbb{R}$ ou $\mathbb{C}$).
 1. **Sous-suite (ou suite extraite) :** Une suite $(v_k)_{k \in \mathbb{N}}$ est une sous-suite de $(u_n)$ s'il existe une application $\phi : \mathbb{N} \to \mathbb{N}$ **strictement croissante** telle que $\forall k \in \mathbb{N}, v_k = u_{\phi(k)}$.
 2. **Valeur d'adhérence :** Un élément $a \in E$ est une valeur d'adhérence de $(u_n)$ s'il existe une sous-suite de $(u_n)$ qui converge vers $a$.
-3. **Caractérisation topologique :** $a$ est valeur d'adhérence $\iff \forall \epsilon > 0, \forall N \in \mathbb{N}, \exists n \ge N, |u_n - a| < \epsilon$. (Il y a une infinité de termes de la suite arbitrairement proches de $a$).
+3. **Caractérisation topologique :** $a$ est valeur d'adhérence $\iff \forall \epsilon > 0, \forall N \in \mathbb{N}, \exists n \ge N, |u_n - a| < \epsilon$. (Ceci signifie formellement que pour tout voisinage de $a$, l'ensemble des indices $n$ tels que $u_n$ appartient à ce voisinage est de cardinal infini).
 
 ### B. Théorèmes, Propositions & Lemmes
 > **Théorème de Bolzano-Weierstrass :**
@@ -51,7 +51,7 @@ Soit $(u_n)$ une suite réelle bornée. Montrons qu'il existe une sous-suite con
    - Soit $m_k = \frac{a_k + b_k}{2}$ le milieu de $I_k$.
    - L'intervalle $I_k$ est l'union de $[a_k, m_k]$ et $[m_k, b_k]$.
    - Puisque $I_k$ contient une infinité de termes, l'un au moins de ces deux sous-intervalles contient aussi une infinité de termes.
-   - On choisit $I_{k+1} = [a_{k+1}, b_{k+1}]$ comme étant ce sous-intervalle (si les deux conviennent, on en choisit un arbitrairement).
+   - On choisit $I_{k+1} = [a_{k+1}, b_{k+1}]$ comme étant ce sous-intervalle (si les deux intervalles fermés contiennent une infinité de termes, nous sélectionnons de manière déterministe le sous-intervalle de gauche $[a_k, m_k]$ afin d'assurer l'unicité de la construction de la suite d'intervalles emboîtés).
 
 3. **Étape 2 : Propriétés des suites $(a_k)$ et $(b_k)$**
    - Par construction, $a_k \le a_{k+1}$ (croissante) et $b_{k+1} \le b_k$ (décroissante).
