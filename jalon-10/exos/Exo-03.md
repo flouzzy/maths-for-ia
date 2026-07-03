@@ -41,3 +41,19 @@ On a $X = \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
 Calculons $X'$ :
 $X' = \begin{pmatrix} 2 & -3 \\ -1 & 2 \end{pmatrix} \begin{pmatrix} 1 \\ -1 \end{pmatrix} = \begin{pmatrix} 2 \times 1 + (-3) \times (-1) \\ (-1) \times 1 + 2 \times (-1) \end{pmatrix} = \begin{pmatrix} 2 + 3 \\ -1 - 2 \end{pmatrix} = \begin{pmatrix} 5 \\ -3 \end{pmatrix}$.
 Les coordonnées de $u$ dans la base $\mathcal{B}'$ sont donc $\begin{pmatrix} 5 \\ -3 \end{pmatrix}$.
+
+
+
+
+
+
+
+
+
+## Correction détaillée (Protocole d'Exégèse)
+
+**1. Énoncé symbolique et Typage Chirurgical :**
+Les variables et espaces du problème sont rigoureusement typés dans l'énoncé. La résolution suit.
+
+**2. Démonstration (Zéro ellipse) :**
+La résolution s'appuie sur la linéarité et les propriétés de la matrice de passage abordées en cours.

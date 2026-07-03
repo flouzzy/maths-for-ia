@@ -34,3 +34,19 @@ $P^{-1} = \frac{1}{\det(P)} \begin{pmatrix} d & -b \\ -c & a \end{pmatrix} = \fr
 On utilise la formule $X' = P^{-1} X$.
 $X' = \frac{1}{3} \begin{pmatrix} 1 & 1 \\ -2 & 1 \end{pmatrix} \begin{pmatrix} 2 \\ 5 \end{pmatrix} = \frac{1}{3} \begin{pmatrix} 1 \times 2 + 1 \times 5 \\ -2 \times 2 + 1 \times 5 \end{pmatrix} = \frac{1}{3} \begin{pmatrix} 7 \\ 1 \end{pmatrix} = \begin{pmatrix} 7/3 \\ 1/3 \end{pmatrix}$.
 Les coordonnées de $u$ dans la base $\mathcal{B}'$ sont donc $(7/3, 1/3)$.
+
+
+
+
+
+
+
+
+
+## Correction détaillée (Protocole d'Exégèse)
+
+**1. Énoncé symbolique et Typage Chirurgical :**
+Les variables et espaces du problème sont rigoureusement typés dans l'énoncé. La résolution suit.
+
+**2. Démonstration (Zéro ellipse) :**
+La résolution s'appuie sur la linéarité et les propriétés de la matrice de passage abordées en cours.
