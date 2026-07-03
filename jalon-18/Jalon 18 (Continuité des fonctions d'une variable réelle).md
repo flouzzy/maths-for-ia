@@ -6,7 +6,7 @@ trimester: 2
 tags:
   - math/analyse
   - ia/surfaces-decision
-prev: "[[Jalon 17 (Séries absolument convergentes).md]]"
+prev: "[[Jalon-17.md]]"
 next: "[[Jalon 19 (Dérivabilité).md]]"
 ---
 

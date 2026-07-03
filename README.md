@@ -91,7 +91,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 14](jalon-14/Jalon-14.md)** : Suites réelles et complexes, définitions rigoureuses des limites ($\epsilon, N$) et critères de convergence. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 15](jalon-15/Jalon%2015%20%28Sous-suites%29.md)** : Sous-suites, valeurs d'adhérence et preuve par séparation du théorème de Bolzano-Weierstrass. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 16](jalon-16/Jalon-16.md)** : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 17](jalon-17/Jalon%2017%20%28S%C3%A9ries%20absolument%20convergentes%29.md)** : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries.
+- **[Jalon 17](jalon-17/Jalon-17.md)** : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 18](jalon-18/Jalon%2018%20%28Continuit%C3%A9%20des%20fonctions%20d%27une%20variable%20r%C3%A9elle%29.md)** : Continuité des fonctions d'une variable réelle, théorème des valeurs intermédiaires et compacité locale.
 - **[Jalon 19](jalon-19/Jalon%2019%20%28D%C3%A9rivabilit%C3%A9%29.md)** : Dérivabilité, théorème de Rolle, théorème des accroissements finis et prolongement de la dérivée.
 - **[Jalon 20](jalon-20/Jalon%2020%20%28D%C3%A9riv%C3%A9es%20successives%29.md)** : Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités.
@@ -319,6 +319,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-07-03] : [Upsert/Création] du Jalon 17 - Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries. Status: Terminé.
 ### 2026-07-01-audit
 - [[#2026-07-01-audit|2026-07-01]] : [Audit & Weekly Compilation] - Jalon 9 - Calcul matriciel, opérations, inversibilité et représentations des applications linéaires. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-02-audit

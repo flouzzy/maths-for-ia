@@ -7,7 +7,7 @@ tags:
   - math/analyse
   - ia/sommation-infinie
 prev: "[[Jalon-15.md]]"
-next: "[[Jalon 17 (Séries absolument convergentes).md]]"
+next: "[[Jalon-17.md]]"
 ---
 # Jalon 16 : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy
 
