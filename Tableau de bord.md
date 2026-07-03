@@ -21,7 +21,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-14/Jalon-14.md|Jalon 14 : Suites réelles et complexes]] : Suites réelles et complexes, définitions rigoureuses des limites ($\\epsilon, N$) et critères de convergence.
 - [x] [[jalon-15/Jalon-15.md|Jalon 15 : Sous-suites]] : Sous-suites, valeurs d'adhérence et preuve par séparation du théorème de Bolzano-Weierstrass.
 - [x] [[jalon-16/Jalon-16.md|Jalon 16 : Séries numériques à termes positifs]] : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy.
-- [ ] [[jalon-17/Jalon 17 (Séries absolument convergentes).md|Jalon 17 : Séries absolument convergentes]] : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries.
+- [x] [[jalon-17/Jalon-17.md|Jalon 17 : Séries absolument convergentes]] : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries.
 - [ ] [[jalon-18/Jalon 18 (Continuité des fonctions d'une variable réelle).md|Jalon 18 : Continuité des fonctions d'une variable réelle]] : Continuité des fonctions d'une variable réelle, théorème des valeurs intermédiaires et compacité locale.
 - [ ] [[jalon-19/Jalon 19 (Dérivabilité).md|Jalon 19 : Dérivabilité]] : Dérivabilité, théorème de Rolle, théorème des accroissements finis et prolongement de la dérivée.
 - [ ] [[jalon-20/Jalon 20 (Dérivées successives).md|Jalon 20 : Dérivées successives]] : Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités.
