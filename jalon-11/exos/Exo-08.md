@@ -1,12 +1,38 @@
-# Exercice 8: Orthogonalité croisée (Difficulté 4/5)
+---
+uuid: "exo-11-08"
+title: "Exercice 8: Bidulalité et annulateur d'annulateur"
+---
+# Exercice 8: Bidulalité et annulateur d'annulateur (Difficulté $\star \star \star \star \star$)
+
 ## Énoncé
-Soient $F_1, F_2$ deux sous-espaces de $E$. Montrer que $(F_1 + F_2)^\perp = F_1^\perp \cap F_2^\perp$.
+Soit $E$ un espace vectoriel de dimension finie. Soit $F$ un sous-espace vectoriel de $E$. En utilisant l'isomorphisme canonique $\Psi : E \to E^{**}$, démontrer formellement la propriété d'involution orthogonale : $(F^\perp)^\circ = F$, où l'orthogonalité est prise dans le sens des espaces duaux.
 
 ## Correction détaillée
-1. **Étape 1 :** Soit $\phi \in (F_1 + F_2)^\perp$. Alors pour tout $x \in F_1 + F_2, \phi(x)=0$.
-   En particulier, pour tout $x_1 \in F_1$, $\phi(x_1)=0$ (car $F_1 \subset F_1+F_2$), donc $\phi \in F_1^\perp$.
-   De même $\phi \in F_2^\perp$. Ainsi $(F_1 + F_2)^\perp \subset F_1^\perp \cap F_2^\perp$.
-2. **Étape 2 :** Réciproquement, soit $\phi \in F_1^\perp \cap F_2^\perp$. Pour tout $x \in F_1+F_2$, on peut écrire $x = x_1 + x_2$ avec $x_1 \in F_1, x_2 \in F_2$.
-3. **Étape 3 :** On a par linéarité $\phi(x) = \phi(x_1+x_2) = \phi(x_1) + \phi(x_2)$.
-4. **Étape 4 :** Puisque $\phi \in F_1^\perp$, $\phi(x_1)=0$. Puisque $\phi \in F_2^\perp$, $\phi(x_2)=0$. Donc $\phi(x) = 0 + 0 = 0$. Ainsi $\phi \in (F_1+F_2)^\perp$. On a l'inclusion réciproque.
-5. **Conclusion:** Par double inclusion, l'égalité $(F_1 + F_2)^\perp = F_1^\perp \cap F_2^\perp$ est strictement démontrée.
+
+1. **Définition rigoureuse des espaces d'annulateurs :**
+   Rappelons les définitions :
+   - $F^\perp = \{ \phi \in E^* \mid \forall x \in F, \phi(x) = 0 \}$ (Annulateur dans $E^*$ du sous-espace $F \subset E$).
+   - Pour un sous-espace $G \subset E^*$, $G^\circ = \{ x \in E \mid \forall \phi \in G, \Psi(x)(\phi) = 0 \} = \{ x \in E \mid \forall \phi \in G, \phi(x) = 0 \}$.
+   Le but est de montrer $(F^\perp)^\circ = F$.
+
+2. **Démonstration de l'inclusion directe $F \subseteq (F^\perp)^\circ$ :**
+   Soit $x \in F$.
+   Pour prouver que $x \in (F^\perp)^\circ$, il faut vérifier que pour toute forme $\phi \in F^\perp$, l'évaluation donne $\phi(x) = 0$.
+   Or, si $\phi \in F^\perp$, par définition même, la forme $\phi$ annule tous les vecteurs de $F$. Comme $x \in F$, on a bien $\phi(x) = 0$.
+   Ceci prouve que l'action est réciproque. Donc $x \in (F^\perp)^\circ$.
+   L'inclusion $F \subseteq (F^\perp)^\circ$ est établie.
+
+3. **Démonstration de l'égalité par le théorème des dimensions :**
+   Appliquons les théorèmes de dimensions des orthogonaux en dimension finie.
+   Nous savons que $\dim(F^\perp) = \dim(E) - \dim(F)$.
+   De manière strictement analogue pour le sous-espace $G = F^\perp \subseteq E^*$, on a pour l'annulateur dans le primal :
+   $\dim(G^\circ) = \dim(E^*) - \dim(G)$.
+   En remplaçant :
+   $\dim((F^\perp)^\circ) = \dim(E) - \dim(F^\perp)$
+   $\dim((F^\perp)^\circ) = \dim(E) - (\dim(E) - \dim(F))$
+   $\dim((F^\perp)^\circ) = \dim(F)$.
+
+4. **Conclusion :**
+   Nous avons une inclusion vectorielle $F \subseteq (F^\perp)^\circ$ entre deux sous-espaces de même dimension finie.
+   Cette condition suffit à garantir l'égalité stricte des ensembles.
+   $(F^\perp)^\circ = F$.
