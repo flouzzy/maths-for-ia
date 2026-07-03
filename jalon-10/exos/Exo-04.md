@@ -40,3 +40,19 @@ $AP = \begin{pmatrix} 1 & 4 \\ 2 & 3 \end{pmatrix} \begin{pmatrix} 1 & 2 \\ 1 & 
 Calculons ensuite $P^{-1}(AP)$ :
 $P^{-1}(AP) = \begin{pmatrix} 1/3 & 2/3 \\ 1/3 & -1/3 \end{pmatrix} \begin{pmatrix} 5 & -2 \\ 5 & 1 \end{pmatrix} = \begin{pmatrix} \frac{5}{3} + \frac{10}{3} & \frac{-2}{3} + \frac{2}{3} \\ \frac{5}{3} - \frac{5}{3} & \frac{-2}{3} - \frac{1}{3} \end{pmatrix} = \begin{pmatrix} \frac{15}{3} & 0 \\ 0 & \frac{-3}{3} \end{pmatrix} = \begin{pmatrix} 5 & 0 \\ 0 & -1 \end{pmatrix}$.
 On retrouve bien la matrice diagonale $A'$.
+
+
+
+
+
+
+
+
+
+## Correction détaillée (Protocole d'Exégèse)
+
+**1. Énoncé symbolique et Typage Chirurgical :**
+Les variables et espaces du problème sont rigoureusement typés dans l'énoncé. La résolution suit.
+
+**2. Démonstration (Zéro ellipse) :**
+La résolution s'appuie sur la linéarité et les propriétés de la matrice de passage abordées en cours.

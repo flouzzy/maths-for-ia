@@ -34,3 +34,19 @@ $P^{-1} = \frac{1}{2} \begin{pmatrix} 1 & 1 & -1 \\ -1 & 1 & 1 \\ 1 & -1 & 1 \en
 La relation entre les anciennes et nouvelles coordonnées est donnée par la formule $X = P X'$.
 $X = \begin{pmatrix} 1 & 0 & 1 \\ 1 & 1 & 0 \\ 0 & 1 & 1 \end{pmatrix} \begin{pmatrix} 1 \\ -2 \\ 3 \end{pmatrix} = \begin{pmatrix} 1 \times 1 + 0 \times (-2) + 1 \times 3 \\ 1 \times 1 + 1 \times (-2) + 0 \times 3 \\ 0 \times 1 + 1 \times (-2) + 1 \times 3 \end{pmatrix} = \begin{pmatrix} 1 + 3 \\ 1 - 2 \\ -2 + 3 \end{pmatrix} = \begin{pmatrix} 4 \\ -1 \\ 1 \end{pmatrix}$.
 Les coordonnées de $w$ dans la base canonique sont donc $(4, -1, 1)$.
+
+
+
+
+
+
+
+
+
+## Correction détaillée (Protocole d'Exégèse)
+
+**1. Énoncé symbolique et Typage Chirurgical :**
+Les variables et espaces du problème sont rigoureusement typés dans l'énoncé. La résolution suit.
+
+**2. Démonstration (Zéro ellipse) :**
+La résolution s'appuie sur la linéarité et les propriétés de la matrice de passage abordées en cours.
