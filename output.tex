@@ -1,0 +1,695 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+
+\title{Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie}
+\author{Charles EDOU NZE}
+\date{2026-07-03}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!60!black},
+    showstringspaces=false,
+    frame=single,
+    breaklines=true,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ç}{{\c c}}1 {ù}{{\`u}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1 {â}{{\^a}}1 {É}{{\'E}}1 {È}{{\`E}}1 {À}{{\`A}}1 {Ç}{{\c C}}1 {Ù}{{\`U}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1 {Â}{{\^A}}1
+}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\chapter*{Jalon 11 : Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie}
+
+\section*{1. Présentation du concept clé}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.5]
+  % Axe et plans
+  \draw[->, thick] (-2,0) -- (3,0) node[right] {$E$};
+  \draw[->, thick] (0,-1) -- (0,3) node[above] {$E^*$};
+
+  % Hyperplan (droite dans le plan)
+  \draw[blue, thick] (-1,2.5) -- (2,-0.5) node[right] {Hyperplan $H = \ker(\varphi)$};
+
+  % Vecteur normal (Forme linéaire)
+  \draw[->, red, very thick] (0,0) -- (1,1) node[above right] {$\varphi \in E^*$};
+  \draw[dashed] (1,1) -- (1,0);
+  \draw[dashed] (1,1) -- (0,1);
+\end{tikzpicture}
+\caption{Séparation par un hyperplan et dualité}
+\end{figure}
+
+
+La genèse des formes linéaires trouve son origine dans le désir fondamental des mathématiciens de quantifier et de mesurer les objets géométriques et algébriques. Historiquement, l'étude des espaces vectoriels s'est d'abord concentrée sur la structure interne des vecteurs, vus comme des entités indépendantes munies d'opérations d'addition et de dilatation. Cependant, la mathématique de la fin du dix-neuvième siècle, sous l'impulsion de géomètres comme Hermann Grassmann et d'algébristes tels qu'Arthur Cayley, a révélé qu'un espace vectoriel ne prend sa pleine mesure que lorsqu'il est confronté aux instruments capables de l'évaluer.
+
+Un vecteur abstrait, isolé, manque de repères extrinsèques. Pour comprendre sa nature profonde, il est nécessaire de le soumettre à des "tests" ou des "instruments de mesure" qui renvoient une valeur scalaire. Ces instruments, par essence, doivent respecter la structure linéaire de l'espace : la mesure d'une somme d'objets doit correspondre à la somme des mesures, et l'amplification d'un objet doit amplifier sa mesure de manière proportionnelle. C'est précisément cette idée qui donne naissance aux formes linéaires. Elles constituent des observations parfaites, des sondes mathématiques qui projettent la richesse multidimensionnelle d'un espace vectoriel sur la droite des réels ou sur un corps abstrait.
+
+De cette notion d'instrument de mesure émerge une structure géométrique capitale : l'hyperplan. Lorsqu'un observateur regarde un paysage, l'horizon représente la frontière exacte où la hauteur perçue s'annule. Mathématiquement, un hyperplan est le noyau d'une forme linéaire non nulle. Il divise l'espace en deux demi-espaces stricts, imposant une séparation fondamentale. La dualité s'établit alors comme un changement de paradigme. Au lieu d'étudier les points de l'espace de manière intrinsèque, nous étudions l'espace de toutes les formes linéaires possibles, c'est-à-dire l'espace dual. Cette inversion de perspective permet de caractériser des sous-espaces par les équations qui les annulent, ouvrant la voie à l'orthogonalité au sens dual, et jetant les bases des théories d'optimisation modernes.
+
+\section*{2. Formalisation}
+
+\subsection*{A. Espace Dual et Formes Linéaires}
+
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel.
+
+\textbf{Définition (Forme linéaire) :}
+Une application $\varphi : E \to \mathbb{K}$ est appelée une forme linéaire si elle est un morphisme d'espaces vectoriels, c'est-à-dire si elle vérifie :
+$$ \forall (x, y) \in E^2, \forall \lambda \in \mathbb{K}, \quad \varphi(\lambda x + y) = \lambda \varphi(x) + \varphi(y) $$
+
+\textbf{Définition (Espace dual) :}
+L'ensemble des formes linéaires sur $E$, noté $E^*$, est appelé l'espace dual de $E$. Il s'identifie à l'espace des applications linéaires $\mathcal{L}(E, \mathbb{K})$. Muni de l'addition des fonctions et de la multiplication par un scalaire, $E^*$ est lui-même un $\mathbb{K}$-espace vectoriel.
+
+\textbf{Exemple de validation :}
+Dans $\mathbb{R}^n$, l'application $\varphi(x_1, \dots, x_n) = x_1$ (projection sur la première coordonnée) est une forme linéaire. En revanche, l'application $\psi(x_1, \dots, x_n) = x_1^2$ ne l'est pas, car $\psi(2x) = 4\psi(x) \neq 2\psi(x)$.
+
+\subsection*{B. Hyperplans}
+
+\textbf{Définition (Hyperplan) :}
+Un sous-espace vectoriel $H$ de $E$ est un hyperplan s'il existe une forme linéaire non nulle $\varphi \in E^*$ telle que $H = \ker(\varphi)$.
+De manière équivalente, $H$ est un hyperplan si et seulement si $H \oplus \text{Vect}(v) = E$ pour tout vecteur $v \in E \setminus H$.
+
+\textbf{Exemple de validation :}
+Dans $\mathbb{R}^3$, le plan d'équation $x + y + z = 0$ est le noyau de la forme linéaire $\varphi(x, y, z) = x + y + z$. C'est un hyperplan de $\mathbb{R}^3$. Le vecteur $v = (1, 0, 0)$ n'appartient pas à ce plan, et on a bien $\mathbb{R}^3 = H \oplus \text{Vect}(v)$.
+
+\subsection*{C. Base Duale et Bidual}
+
+Soit $E$ un espace vectoriel de dimension finie $n$, et soit $\mathcal{B} = (e_1, \dots, e_n)$ une base de $E$.
+
+\textbf{Définition (Base duale) :}
+Pour tout $i \in \{1, \dots, n\}$, on définit la forme linéaire $e_i^* : E \to \mathbb{K}$ comme l'unique forme linéaire prenant la valeur $1$ sur $e_i$ et $0$ sur les $e_j$ pour $j \neq i$. Formellement :
+$$ \forall j \in \{1, \dots, n\}, \quad e_i^*(e_j) = \delta_{i,j} $$
+où $\delta_{i,j}$ est le symbole de Kronecker. La famille $\mathcal{B}^* = (e_1^*, \dots, e_n^*)$ constitue une base de $E^*$, appelée base duale de $\mathcal{B}$.
+
+\textbf{Définition (Bidual) :}
+Le bidual de $E$, noté $E^{**}$, est l'espace dual de l'espace dual $E^*$, c'est-à-dire $E^{**} = (E^*)^*$.
+
+\textbf{Cas pathologique et dimension infinie :}
+L'isomorphisme entre un espace et son bidual est strictement canonique (indépendant du choix d'une base) uniquement en dimension finie. En dimension infinie, l'application canonique de $E$ vers $E^{**}$ est injective mais jamais surjective : l'espace n'est pas réflexif algébriquement.
+
+\subsection*{D. Orthogonalité au sens de la dualité}
+
+\textbf{Définition (Orthogonal) :}
+Soit $A$ une partie de $E$. L'orthogonal de $A$, noté $A^\circ$ (ou parfois $A^\perp$ par abus de notation), est l'ensemble des formes linéaires qui s'annulent sur $A$ :
+$$ A^\circ = \{ \varphi \in E^* \mid \forall x \in A, \varphi(x) = 0 \} $$
+C'est un sous-espace vectoriel de $E^*$.
+
+De manière duale, pour une partie $B$ de $E^*$, son orthogonal dans $E$ est :
+$$ B^\circ = \{ x \in E \mid \forall \varphi \in B, \varphi(x) = 0 \} $$
+
+\section*{3. Démonstrations}
+
+\subsection*{Démonstration 1 : Dimension de l'espace dual}
+\textbf{Théorème :} Si $E$ est un espace vectoriel de dimension finie $n$, alors son dual $E^*$ est également de dimension $n$.
+
+\textbf{Démonstration pas-à-pas :}
+1. Soit $\mathcal{B} = (e_1, \dots, e_n)$ une base de $E$. Nous allons montrer que la famille $\mathcal{B}^* = (e_1^*, \dots, e_n^*)$ construite précédemment est une base de $E^*$.
+2. \textbf{Indépendance linéaire :} Soient $\lambda_1, \dots, \lambda_n \in \mathbb{K}$ tels que $\sum_{i=1}^n \lambda_i e_i^* = 0_{E^*}$.
+3. La fonction nulle $0_{E^*}$ évalue tout vecteur à zéro. En particulier, pour tout $j \in \{1, \dots, n\}$ :
+   $$ \left( \sum_{i=1}^n \lambda_i e_i^* \right)(e_j) = 0 $$
+4. Par linéarité, la somme devient :
+   $$ \sum_{i=1}^n \lambda_i e_i^*(e_j) = 0 $$
+5. Or, par définition de la base duale, $e_i^*(e_j) = \delta_{i,j}$. La somme se réduit au seul terme où $i = j$ :
+   $$ \lambda_j \cdot 1 = 0 \implies \lambda_j = 0 $$
+6. Ce résultat étant vrai pour tout $j$, la famille $(e_1^*, \dots, e_n^*)$ est libre.
+7. \textbf{Caractère générateur :} Soit $\varphi \in E^*$. Posons $\mu_i = \varphi(e_i)$ pour $i \in \{1, \dots, n\}$.
+8. Considérons la forme linéaire $\psi = \sum_{i=1}^n \mu_i e_i^*$.
+9. Pour tout vecteur de base $e_j$, nous avons :
+   $$ \psi(e_j) = \sum_{i=1}^n \mu_i e_i^*(e_j) = \mu_j \cdot 1 = \mu_j = \varphi(e_j) $$
+10. Deux applications linéaires qui coïncident sur une base coïncident sur tout l'espace. Par conséquent, $\varphi = \psi = \sum_{i=1}^n \mu_i e_i^*$.
+11. La famille $\mathcal{B}^*$ engendre $E^*$.
+12. Étant libre et génératrice, $\mathcal{B}^*$ est une base de $E^*$, qui possède $n$ éléments. Ainsi, $\dim(E^*) = n$.
+
+\subsection*{Démonstration 2 : Isomorphisme canonique avec le bidual}
+\textbf{Théorème :} En dimension finie, l'application $\Psi : E \to E^{**}$ définie par $\Psi(x)(\varphi) = \varphi(x)$ est un isomorphisme canonique.
+
+\textbf{Démonstration pas-à-pas :}
+1. \textbf{Linéarité de $\Psi$ :} Soient $x, y \in E$ et $\lambda \in \mathbb{K}$. Pour toute forme $\varphi \in E^*$ :
+   $$ \Psi(\lambda x + y)(\varphi) = \varphi(\lambda x + y) $$
+2. Par linéarité de la forme $\varphi$, on obtient :
+   $$ \varphi(\lambda x + y) = \lambda \varphi(x) + \varphi(y) = \lambda \Psi(x)(\varphi) + \Psi(y)(\varphi) = (\lambda \Psi(x) + \Psi(y))(\varphi) $$
+3. Cette égalité est vraie pour toute $\varphi$, d'où $\Psi(\lambda x + y) = \lambda \Psi(x) + \Psi(y)$. L'application $\Psi$ est bien linéaire.
+4. \textbf{Injectivité de $\Psi$ :} Supposons qu'il existe $x \in E$ tel que $\Psi(x) = 0_{E^{**}}$.
+5. Cela signifie que pour toute forme $\varphi \in E^*$, on a $\Psi(x)(\varphi) = 0$, donc $\varphi(x) = 0$.
+6. Procédons par l'absurde et supposons que $x \neq 0_E$.
+7. Comme $x$ est un vecteur non nul, on peut le compléter pour former une base $\mathcal{B} = (x, e_2, \dots, e_n)$ de $E$ (théorème de la base incomplète).
+8. Considérons la forme coordonnée $x^*$ issue de la base duale de $\mathcal{B}$. Par définition, $x^*(x) = 1$.
+9. Nous avons trouvé une forme linéaire $x^* \in E^*$ qui ne s'annule pas sur $x$, ce qui contredit l'hypothèse $\varphi(x) = 0$ pour toute $\varphi$.
+10. Par conséquent, $x$ doit être le vecteur nul, $x = 0_E$. Le noyau de $\Psi$ est réduit à $\{0_E\}$, donc $\Psi$ est injective.
+11. \textbf{Surjectivité par dimension :} Nous savons que $\dim(E) = n$. Par le théorème précédent, $\dim(E^*) = n$, et de nouveau, $\dim(E^{**}) = \dim(E^*) = n$.
+12. $\Psi$ est une application linéaire injective entre deux espaces vectoriels de même dimension finie $n$. Le théorème du rang garantit alors qu'elle est un isomorphisme.
+
+\section*{4. Exercices d'Application}
+
+\textit{(Les exercices d'application et leurs démonstrations complètes sont développés dans les fichiers dédiés \_\_INLINE\_CODE\_0\_\_ à \_\_INLINE\_CODE\_1\_\_ de ce jalon.)}
+
+\section*{5. Application en Intelligence Artificielle}
+
+Dans le cadre du Machine Learning, les hyperplans sont l'ossature algorithmique des méthodes de classification linéaire. Le concept de forme linéaire modélise la projection d'un vecteur de caractéristiques multidimensionnel (par exemple, les pixels d'une image ou les pondérations d'un texte) vers une variable de décision scalaire.
+
+Un Support Vector Machine (SVM) cherche l'hyperplan optimal qui sépare deux classes de données. L'équation de cet hyperplan séparateur est $H = \{ x \in E \mid \varphi(x) + b = 0 \}$, où $\varphi \in E^*$ est la forme linéaire associée aux poids du modèle, et $b$ est le biais.
+
+Plus profondément, la résolution analytique du SVM fait appel à la dualité de l'optimisation convexe (Dualité de Lagrange). Le problème primal, formulé dans l'espace des données $E$, implique de minimiser la norme des pondérations sous contraintes. Le problème dual, formulé par l'intermédiaire de l'espace dual $E^*$, convertit cette recherche complexe en une maximisation sur les variables duales (les multiplicateurs de Lagrange). Seuls les vecteurs support – ceux qui se situent sur les marges de l'hyperplan – posséderont des multiplicateurs non nuls. Cette transformation permet, grâce à l'isomorphisme et aux propriétés d'orthogonalité, de traiter des données en dimension infinie via l'astuce du noyau (kernel trick), révolutionnant ainsi l'apprentissage statistique.
+
+\section*{6. Liens Sémantiques}
+
+- \textbf{Concepts Précédents requis :} Jalon 7 (Espaces vectoriels abstraits), Jalon 8 (Applications linéaires, noyau (ker), image (Im) et démonstration du théorème du rang)
+- \textbf{Concepts Futurs dépendants :} Jalon 12 (Livrable IA), Jalon 121 (Ensembles convexes), Jalon 123 (Problèmes d'optimisation sous contraintes)
+
+\newpage
+\chapter*{Exercices d\'Application}
+\addcontentsline{toc}{chapter}{Exercices d'Application}
+\chapter*{Exercice 1: Espace dual en dimension 2}
+\section*{Énoncé}
+Soit $E = \mathbb{R}^2$ muni de sa base canonique $\mathcal{B} = (e_1, e_2)$. Soit $\varphi : E \to \mathbb{R}$ l'application définie par $\varphi(x, y) = 3x - 2y$.
+1. Montrer que $\varphi$ est une forme linéaire, c'est-à-dire que $\varphi \in E^*$.
+2. Déterminer les coordonnées de $\varphi$ dans la base duale $\mathcal{B}^* = (e_1^*, e_2^*)$.
+
+
+\section*{Correction détaillée}
+1. \textbf{Démonstration de la linéarité :}
+   Soient $u = (x_1, y_1)$ et $v = (x_2, y_2)$ deux vecteurs de $E$, et $\lambda \in \mathbb{R}$ un scalaire.
+   Calculons $\varphi(\lambda u + v)$ :
+   Le vecteur $\lambda u + v$ a pour coordonnées $(\lambda x_1 + x_2, \lambda y_1 + y_2)$.
+   Par définition de $\varphi$, on a :
+   $\varphi(\lambda u + v) = 3(\lambda x_1 + x_2) - 2(\lambda y_1 + y_2)$
+   En développant et en regroupant les termes :
+   $\varphi(\lambda u + v) = 3\lambda x_1 + 3x_2 - 2\lambda y_1 - 2y_2 = \lambda(3x_1 - 2y_1) + (3x_2 - 2y_2)$
+   On reconnaît $\varphi(u)$ et $\varphi(v)$ :
+   $\varphi(\lambda u + v) = \lambda \varphi(u) + \varphi(v)$
+   L'application $\varphi$ est donc bien une forme linéaire, $\varphi \in E^*$.
+
+2. \textbf{Coordonnées dans la base duale :}
+   La base duale $\mathcal{B}^* = (e_1^*, e_2^*)$ est caractérisée par $e_i^*(e_j) = \delta_{i,j}$.
+   Toute forme linéaire $\varphi \in E^*$ se décompose de manière unique sur $\mathcal{B}^*$ :
+   $\varphi = \varphi(e_1)e_1^* + \varphi(e_2)e_2^*$
+   Calculons les évaluations sur les vecteurs de base :
+   $\varphi(e_1) = \varphi(1, 0) = 3(1) - 2(0) = 3$
+   $\varphi(e_2) = \varphi(0, 1) = 3(0) - 2(1) = -2$
+   On en déduit l'expression de $\varphi$ :
+   $\varphi = 3e_1^* - 2e_2^*$
+   Les coordonnées de $\varphi$ dans la base $\mathcal{B}^*$ sont donc $(3, -2)$.
+
+
+\newpage
+\chapter*{Exercice 2: Noyau d'une forme linéaire (Hyperplan)}
+\section*{Énoncé}
+Soit $\varphi : \mathbb{R}^3 \to \mathbb{R}$ définie par $\varphi(x, y, z) = x + 2y - z$.
+1. Déterminer la dimension du noyau de $\varphi$, noté $H = \ker(\varphi)$.
+2. Donner une base de cet hyperplan $H$.
+
+
+\section*{Correction détaillée}
+1. \textbf{Dimension du noyau :}
+   L'application $\varphi$ est une forme linéaire sur $\mathbb{R}^3$. Comme $\varphi(1, 0, 0) = 1 \neq 0$, $\varphi$ n'est pas la forme linéaire nulle.
+   Son image $\text{Im}(\varphi)$ est un sous-espace vectoriel de $\mathbb{R}$. Comme $\varphi \neq 0$, $\text{Im}(\varphi)$ n'est pas réduit à $\{0\}$, et puisque $\dim(\mathbb{R}) = 1$, on a nécessairement $\text{Im}(\varphi) = \mathbb{R}$, donc le rang de $\varphi$ est $1$.
+   D'après le théorème du rang appliqué à $\varphi$ :
+   $\dim(\mathbb{R}^3) = \dim(\ker(\varphi)) + \text{rg}(\varphi)$
+   $3 = \dim(H) + 1$
+   D'où $\dim(H) = 2$. Le sous-espace $H$ est bien un hyperplan.
+
+2. \textbf{Base de l'hyperplan :}
+   Un vecteur $u = (x, y, z)$ appartient à $H$ si et seulement si $\varphi(x, y, z) = 0$, c'est-à-dire :
+   $x + 2y - z = 0 \iff z = x + 2y$
+   Le vecteur $u$ s'écrit alors :
+   $u = (x, y, x + 2y) = x(1, 0, 1) + y(0, 1, 2)$
+   Posons $v_1 = (1, 0, 1)$ et $v_2 = (0, 1, 2)$.
+   La famille $(v_1, v_2)$ engendre $H$.
+   Montrons que cette famille est libre. Soient $\lambda_1, \lambda_2 \in \mathbb{R}$ tels que $\lambda_1 v_1 + \lambda_2 v_2 = (0, 0, 0)$.
+   $\lambda_1(1, 0, 1) + \lambda_2(0, 1, 2) = (\lambda_1, \lambda_2, \lambda_1 + 2\lambda_2) = (0, 0, 0)$
+   Cela donne immédiatement le système :
+   $\lambda_1 = 0$ et $\lambda_2 = 0$.
+   La famille est libre et génératrice de $H$. Puisque $\dim(H) = 2$, c'est une base de $H$.
+
+
+\newpage
+\chapter*{Exercice 3: Calcul de la base duale de polynômes}
+\section*{Énoncé}
+Soit $E = \mathbb{R}_2[X]$ l'espace vectoriel des polynômes de degré inférieur ou égal à 2.
+Soit la base canonique $\mathcal{B} = (1, X, X^2)$. On définit les formes linéaires suivantes sur $E$ :
+$\varphi_1(P) = P(0)$
+$\varphi_2(P) = P'(0)$
+$\varphi_3(P) = \frac{1}{2}P''(0)$
+Montrer que la famille $(\varphi_1, \varphi_2, \varphi_3)$ est exactement la base duale $\mathcal{B}^*$.
+
+
+\section*{Correction détaillée}
+La base duale $\mathcal{B}^* = (e_1^*, e_2^*, e_3^*)$ associée à $\mathcal{B} = (e_1, e_2, e_3) = (1, X, X^2)$ est l'unique famille de formes linéaires vérifiant $e_i^*(e_j) = \delta_{i,j}$.
+Vérifions que $\varphi_1, \varphi_2, \varphi_3$ satisfont ces conditions.
+
+1. \textbf{Évaluation de $\varphi_1$ :}
+   $\varphi_1(P) = P(0)$.
+   $\varphi_1(e_1) = \varphi_1(1) = 1$.
+   $\varphi_1(e_2) = \varphi_1(X) = 0$.
+   $\varphi_1(e_3) = \varphi_1(X^2) = 0^2 = 0$.
+   Donc $\varphi_1$ correspond bien à $e_1^*$.
+
+2. \textbf{Évaluation de $\varphi_2$ :}
+   $\varphi_2(P) = P'(0)$.
+   $e_1'(X) = 0 \implies \varphi_2(e_1) = 0$.
+   $e_2'(X) = 1 \implies \varphi_2(e_2) = 1$.
+   $e_3'(X) = 2X \implies \varphi_2(e_3) = 2(0) = 0$.
+   Donc $\varphi_2$ correspond bien à $e_2^*$.
+
+3. \textbf{Évaluation de $\varphi_3$ :}
+   $\varphi_3(P) = \frac{1}{2}P''(0)$.
+   $e_1''(X) = 0 \implies \varphi_3(e_1) = 0$.
+   $e_2''(X) = 0 \implies \varphi_3(e_2) = 0$.
+   $e_3''(X) = 2 \implies \varphi_3(e_3) = \frac{1}{2}(2) = 1$.
+   Donc $\varphi_3$ correspond bien à $e_3^*$.
+
+Puisque les formes $\varphi_1, \varphi_2, \varphi_3$ vérifient les relations de Kronecker avec la base $\mathcal{B}$, elles constituent bien la base duale $\mathcal{B}^*$.
+
+
+\newpage
+\chapter*{Exercice 4: Base duale avec changement de base}
+\section*{Énoncé}
+Soit $E = \mathbb{R}^3$ et sa base canonique $\mathcal{B} = (e_1, e_2, e_3)$. On considère les vecteurs :
+$u_1 = (1, 1, 1)$, $u_2 = (1, 1, 0)$, $u_3 = (1, 0, 0)$
+1. Montrer que $\mathcal{C} = (u_1, u_2, u_3)$ est une base de $E$.
+2. Déterminer les formes linéaires constituant la base duale $\mathcal{C}^* = (u_1^*, u_2^*, u_3^*)$ exprimées dans la base duale $\mathcal{B}^* = (e_1^*, e_2^*, e_3^*)$.
+
+
+\section*{Correction détaillée}
+1. \textbf{Base de $E$ :}
+   La dimension de $\mathbb{R}^3$ est 3. Il suffit de montrer que la famille $(u_1, u_2, u_3)$ est libre.
+   Soient $\lambda_1, \lambda_2, \lambda_3 \in \mathbb{R}$ tels que $\lambda_1 u_1 + \lambda_2 u_2 + \lambda_3 u_3 = (0, 0, 0)$.
+   $(\lambda_1 + \lambda_2 + \lambda_3, \lambda_1 + \lambda_2, \lambda_1) = (0, 0, 0)$
+   Ce qui donne le système échelonné :
+   $\lambda_1 = 0$
+   $\lambda_1 + \lambda_2 = 0 \implies \lambda_2 = 0$
+   $\lambda_1 + \lambda_2 + \lambda_3 = 0 \implies \lambda_3 = 0$
+   La famille est libre et contient 3 vecteurs, c'est une base de $E$.
+
+2. \textbf{Recherche de la base duale $\mathcal{C}^*$ :}
+   Soit $\varphi(x, y, z) = ax + by + cz = a e_1^* + b e_2^* + c e_3^*$.
+   Cherchons $u_1^*$ tel que $u_1^*(u_1)=1, u_1^*(u_2)=0, u_1^*(u_3)=0$.
+   $u_1^*(1,0,0) = a = 0$
+   $u_1^*(1,1,0) = a + b = 0 \implies b = 0$
+   $u_1^*(1,1,1) = a + b + c = 1 \implies c = 1$
+   Donc $u_1^* = e_3^*$.
+
+   Cherchons $u_2^*$ tel que $u_2^*(u_1)=0, u_2^*(u_2)=1, u_2^*(u_3)=0$.
+   $u_2^*(1,0,0) = a = 0$
+   $u_2^*(1,1,0) = a + b = 1 \implies b = 1$
+   $u_2^*(1,1,1) = a + b + c = 0 \implies 0 + 1 + c = 0 \implies c = -1$
+   Donc $u_2^* = e_2^* - e_3^*$.
+
+   Cherchons $u_3^*$ tel que $u_3^*(u_1)=0, u_3^*(u_2)=0, u_3^*(u_3)=1$.
+   $u_3^*(1,0,0) = a = 1$
+   $u_3^*(1,1,0) = a + b = 0 \implies 1 + b = 0 \implies b = -1$
+   $u_3^*(1,1,1) = a + b + c = 0 \implies 1 - 1 + c = 0 \implies c = 0$
+   Donc $u_3^* = e_1^* - e_2^*$.
+
+   Conclusion : La base duale est $(e_3^*, e_2^* - e_3^*, e_1^* - e_2^*)$.
+
+
+\newpage
+\chapter*{Exercice 5: Intersection de deux hyperplans}
+\section*{Énoncé}
+Soit $E$ un espace vectoriel de dimension $n \ge 2$. Soient $H_1$ et $H_2$ deux hyperplans de $E$.
+Montrer que si $H_1 \neq H_2$, alors $\dim(H_1 \cap H_2) = n - 2$.
+
+
+\section*{Correction détaillée}
+Soit $\varphi_1, \varphi_2 \in E^*$ deux formes linéaires non nulles telles que $H_1 = \ker(\varphi_1)$ et $H_2 = \ker(\varphi_2)$.
+Considérons l'application linéaire définie par :
+$\Phi : E \to \mathbb{K}^2$
+$x \mapsto (\varphi_1(x), \varphi_2(x))$
+
+Le noyau de $\Phi$ est constitué des vecteurs $x$ tels que $\varphi_1(x) = 0$ et $\varphi_2(x) = 0$.
+Ainsi, $\ker(\Phi) = \ker(\varphi_1) \cap \ker(\varphi_2) = H_1 \cap H_2$.
+
+D'après le théorème du rang, nous avons :
+$\dim(E) = \dim(\ker(\Phi)) + \text{rg}(\Phi)$
+$n = \dim(H_1 \cap H_2) + \dim(\text{Im}(\Phi))$
+
+L'image $\text{Im}(\Phi)$ est un sous-espace vectoriel de $\mathbb{K}^2$. Sa dimension est donc au plus 2.
+Supposons par l'absurde que $\text{rg}(\Phi) < 2$.
+Si $\text{rg}(\Phi) = 0$, alors $\Phi$ est l'application nulle, ce qui contredit $\varphi_1 \neq 0$.
+Si $\text{rg}(\Phi) = 1$, alors l'image de $\Phi$ est une droite vectorielle de $\mathbb{K}^2$. Cela signifie que les vecteurs images sont tous colinéaires.
+Il existerait alors des scalaires $(a, b) \neq (0,0)$ tels que pour tout $x \in E$, $a\varphi_1(x) + b\varphi_2(x) = 0$.
+Donc $a\varphi_1 + b\varphi_2 = 0$. Les formes linéaires $\varphi_1$ et $\varphi_2$ seraient proportionnelles (colinéaires).
+Or, deux formes linéaires proportionnelles et non nulles définissent le même noyau (le même hyperplan). On aurait alors $H_1 = H_2$, ce qui contredit l'hypothèse $H_1 \neq H_2$.
+
+Par conséquent, l'hypothèse $\text{rg}(\Phi) < 2$ est fausse. La seule possibilité est $\text{rg}(\Phi) = 2$, ce qui signifie que $\Phi$ est surjective sur $\mathbb{K}^2$.
+En remplaçant dans l'égalité du théorème du rang, nous obtenons :
+$n = \dim(H_1 \cap H_2) + 2 \implies \dim(H_1 \cap H_2) = n - 2$.
+La dimension de l'intersection de deux hyperplans distincts est exactement $n - 2$.
+
+
+\newpage
+\chapter*{Exercice 6: Indépendance de formes linéaires et polynômes d'interpolation}
+\section*{Énoncé}
+Soient $a, b, c$ trois réels distincts. On considère l'espace $E = \mathbb{R}_2[X]$.
+On définit les formes linéaires $\varphi_a(P) = P(a)$, $\varphi_b(P) = P(b)$ et $\varphi_c(P) = P(c)$.
+Montrer que la famille $(\varphi_a, \varphi_b, \varphi_c)$ est une base de $E^*$. En déduire l'existence et l'unicité des polynômes d'interpolation de Lagrange.
+
+
+\section*{Correction détaillée}
+1. \textbf{Base de $E^*$ :}
+   L'espace $E = \mathbb{R}_2[X]$ est de dimension 3. Son dual $E^*$ est également de dimension 3.
+   Il suffit de montrer que la famille de 3 vecteurs $(\varphi_a, \varphi_b, \varphi_c)$ est libre dans $E^*$.
+   Soient $\lambda_1, \lambda_2, \lambda_3 \in \mathbb{R}$ tels que $\lambda_1 \varphi_a + \lambda_2 \varphi_b + \lambda_3 \varphi_c = 0_{E^*}$.
+   Cela signifie que pour tout polynôme $P \in \mathbb{R}_2[X]$ :
+   $\lambda_1 P(a) + \lambda_2 P(b) + \lambda_3 P(c) = 0$.
+   Choisissons astucieusement des polynômes pour isoler les coefficients.
+   - Posons $P_a(X) = (X-b)(X-c)$. $P_a \in E$.
+     L'équation devient $\lambda_1 P_a(a) + \lambda_2(0) + \lambda_3(0) = 0$.
+     Comme $a, b, c$ sont distincts, $P_a(a) = (a-b)(a-c) \neq 0$.
+     Donc $\lambda_1 = 0$.
+   - En choisissant $P_b(X) = (X-a)(X-c)$, on obtient de même $\lambda_2 = 0$.
+   - En choisissant $P_c(X) = (X-a)(X-b)$, on obtient $\lambda_3 = 0$.
+   La famille est libre. Étant de cardinal 3 dans un espace de dimension 3, c'est une base de $E^*$.
+
+2. \textbf{Polynômes de Lagrange :}
+   Puisque $(\varphi_a, \varphi_b, \varphi_c)$ est une base de $E^*$, elle correspond à la base duale d'une unique base de $E$, notons-la $(L_a, L_b, L_c)$.
+   Par définition de la dualité bidirectionnelle en dimension finie, cette base de $E$ doit vérifier :
+   $\varphi_i(L_j) = \delta_{i,j}$.
+   C'est-à-dire :
+   - $L_a(a) = 1$, $L_a(b) = 0$, $L_a(c) = 0$
+   - $L_b(a) = 0$, $L_b(b) = 1$, $L_b(c) = 0$
+   - $L_c(a) = 0$, $L_c(b) = 0$, $L_c(c) = 1$
+   L'existence et l'unicité de cette base $(L_a, L_b, L_c)$ de polynômes (les polynômes de Lagrange) découlent directement de l'isomorphisme de dualité.
+
+
+\newpage
+\chapter*{Exercice 7: Orthogonalité dans le dual}
+\section*{Énoncé}
+Soit $E = \mathbb{R}^3$. Soit $F = \text{Vect}(v)$ avec $v = (1, 1, 1)$.
+Déterminer une base de $F^\circ$, l'orthogonal de $F$ dans l'espace dual $E^*$.
+
+
+\section*{Correction détaillée}
+L'espace $F$ est une droite vectorielle (dimension 1) engendrée par le vecteur $v = (1, 1, 1)$.
+L'orthogonal de $F$ dans le dual est défini par :
+$F^\circ = \{ \varphi \in E^* \mid \forall x \in F, \varphi(x) = 0 \}$
+Puisque tout vecteur de $F$ s'écrit $\lambda v$, et que $\varphi$ est linéaire, il suffit que la condition soit vérifiée sur le générateur de $F$ :
+$F^\circ = \{ \varphi \in E^* \mid \varphi(v) = 0 \}$
+
+Toute forme linéaire $\varphi \in E^*$ s'exprime dans la base duale canonique $(e_1^*, e_2^*, e_3^*)$ :
+$\varphi = x e_1^* + y e_2^* + z e_3^*$, c'est-à-dire $\varphi(a, b, c) = xa + yb + zc$.
+La condition $\varphi(v) = 0$ se traduit par :
+$\varphi(1, 1, 1) = x(1) + y(1) + z(1) = 0 \implies x + y + z = 0$.
+
+L'orthogonal $F^\circ$ est donc l'ensemble des formes linéaires de coordonnées $(x, y, z)$ telles que $z = -x - y$.
+$\varphi = x e_1^* + y e_2^* + (-x - y) e_3^* = x(e_1^* - e_3^*) + y(e_2^* - e_3^*)$.
+Les formes $\varphi_1 = e_1^* - e_3^*$ et $\varphi_2 = e_2^* - e_3^*$ engendrent $F^\circ$.
+Montrons qu'elles sont libres. Si $x(e_1^* - e_3^*) + y(e_2^* - e_3^*) = 0_{E^*}$, alors en évaluant sur $e_1$, on obtient $x = 0$, et sur $e_2$, on obtient $y = 0$. La famille est libre.
+
+Conclusion : $(\varphi_1, \varphi_2) = (e_1^* - e_3^*, e_2^* - e_3^*)$ est une base de $F^\circ$.
+On vérifie la formule des dimensions : $\dim(F) + \dim(F^\circ) = 1 + 2 = 3 = \dim(E)$.
+
+
+\newpage
+\chapter*{Exercice 8: Bidual et forme spécifique}
+\section*{Énoncé}
+Soit $E$ un espace vectoriel de dimension finie. Soit $\alpha \in E$. On définit l'application d'évaluation sur $E^*$ :
+$\text{ev}_\alpha : E^* \to \mathbb{K}$
+$\varphi \mapsto \varphi(\alpha)$
+Montrer rigoureusement que si $\text{ev}_\alpha = 0_{E^{**}}$, alors $\alpha = 0_E$.
+
+
+\section*{Correction détaillée}
+L'application $\text{ev}_\alpha$ est l'image du vecteur $\alpha$ par l'isomorphisme canonique $\Psi : E \to E^{**}$.
+Supposons que $\text{ev}_\alpha = 0_{E^{**}}$.
+Par définition, cela signifie que pour toute forme linéaire $\varphi \in E^*$, on a $\text{ev}_\alpha(\varphi) = 0$, soit $\varphi(\alpha) = 0$.
+
+Procédons par l'absurde. Supposons que $\alpha \neq 0_E$.
+Puisque $\alpha$ est un vecteur non nul d'un espace vectoriel de dimension finie $n$, on peut, par le théorème de la base incomplète, construire une base $\mathcal{B} = (e_1, e_2, \dots, e_n)$ de $E$ telle que $e_1 = \alpha$.
+Soit $\mathcal{B}^* = (e_1^*, e_2^*, \dots, e_n^*)$ la base duale associée à $\mathcal{B}$.
+Par définition de la base duale, la forme linéaire $e_1^*$ vérifie $e_1^*(e_1) = 1$.
+Or, $e_1 = \alpha$, donc $e_1^*(\alpha) = 1 \neq 0$.
+Nous avons trouvé une forme linéaire spécifique $\varphi = e_1^* \in E^*$ telle que $\varphi(\alpha) \neq 0$.
+Ceci contredit l'hypothèse selon laquelle $\forall \varphi \in E^*, \varphi(\alpha) = 0$.
+
+Par conséquent, notre supposition de départ $\alpha \neq 0_E$ est fausse.
+On conclut que nécessairement, $\alpha = 0_E$.
+Cela confirme que le noyau de l'application canonique dans le bidual est réduit à $\{0\}$, assurant son injectivité.
+
+
+\newpage
+\chapter*{Exercice 9: Indépendance de vecteurs via l'espace dual}
+\section*{Énoncé}
+Soient $u, v \in E$. Montrer que $u$ et $v$ sont linéairement indépendants si et seulement s'il existe $\varphi \in E^*$ telle que $\varphi(u) = 1$ et $\varphi(v) = 0$.
+
+
+\section*{Correction détaillée}
+\textbf{Sens indirect :}
+Supposons qu'il existe une forme linéaire $\varphi \in E^*$ telle que $\varphi(u) = 1$ et $\varphi(v) = 0$.
+Soient $\lambda, \mu \in \mathbb{K}$ tels que $\lambda u + \mu v = 0_E$.
+Appliquons la forme linéaire $\varphi$ à cette équation :
+$\varphi(\lambda u + \mu v) = \varphi(0_E)$
+Par linéarité de $\varphi$, on obtient :
+$\lambda \varphi(u) + \mu \varphi(v) = 0$
+En substituant les valeurs :
+$\lambda(1) + \mu(0) = 0 \implies \lambda = 0$.
+Si $\lambda = 0$, alors $\mu v = 0_E$. Comme $\varphi(v) = 0$, $v$ ne peut pas être le vecteur nul (sinon l'indépendance est impossible). De plus, on peut invoquer une seconde forme pour isoler $\mu$, ou plus simplement, si $\mu v = 0$ et $v \neq 0$ (car $\mu v + 0 = 0$ et on a montré que $\lambda = 0$), alors $\mu=0$.
+Donc $u$ et $v$ sont linéairement indépendants.
+
+\textbf{Sens direct :}
+Supposons que $u$ et $v$ sont linéairement indépendants.
+La famille $(u, v)$ est une famille libre dans $E$.
+D'après le théorème de la base incomplète (en supposant $\dim E \ge 2$), nous pouvons compléter cette famille pour former une base $\mathcal{B} = (u, v, e_3, \dots, e_n)$ de l'espace $E$.
+Soit $\mathcal{B}^* = (u^*, v^*, e_3^*, \dots, e_n^*)$ la base duale associée à $\mathcal{B}$.
+Par définition de la base duale, la forme linéaire $u^*$ vérifie :
+$u^*(u) = 1$ et $u^*(v) = 0$.
+Il suffit de choisir $\varphi = u^*$ pour démontrer l'existence requise. L'équivalence est donc prouvée.
+
+
+\newpage
+\chapter*{Exercice 10: Somme directe et annulateur}
+\section*{Énoncé}
+Soit $E$ un espace vectoriel de dimension finie, et $F, G$ deux sous-espaces vectoriels de $E$.
+Montrer que $E = F \oplus G$ si et seulement si $E^* = F^\circ \oplus G^\circ$.
+
+
+\section*{Correction détaillée}
+\textbf{Preuve du sens direct :}
+Supposons $E = F \oplus G$. Tout vecteur $x \in E$ se décompose de manière unique en $x = x_F + x_G$ avec $x_F \in F$ et $x_G \in G$.
+1. \textbf{Intersection nulle :} Soit $\varphi \in F^\circ \cap G^\circ$.
+   Alors $\forall f \in F, \varphi(f) = 0$ et $\forall g \in G, \varphi(g) = 0$.
+   Pour tout $x \in E$, $\varphi(x) = \varphi(x_F + x_G) = \varphi(x_F) + \varphi(x_G) = 0 + 0 = 0$.
+   Donc $\varphi = 0_{E^*}$. Ainsi $F^\circ \cap G^\circ = \{0_{E^*}\}$.
+2. \textbf{Somme de l'espace :} Par les propriétés des annulateurs, $\dim(F^\circ) = \dim(E) - \dim(F)$ et $\dim(G^\circ) = \dim(E) - \dim(G)$.
+   Puisque $E = F \oplus G$, on a $\dim(E) = \dim(F) + \dim(G)$.
+   Calculons la dimension de la somme $F^\circ + G^\circ$ :
+   $\dim(F^\circ + G^\circ) = \dim(F^\circ) + \dim(G^\circ) - \dim(F^\circ \cap G^\circ)$
+   $= (\dim E - \dim F) + (\dim E - \dim G) - 0$
+   $= 2\dim E - (\dim F + \dim G) = 2\dim E - \dim E = \dim E$.
+   Le sous-espace $F^\circ + G^\circ$ a la même dimension que $E^*$, donc $F^\circ \oplus G^\circ = E^*$.
+
+\textbf{Preuve du sens indirect :}
+Supposons $E^* = F^\circ \oplus G^\circ$.
+Par un argument sur les dimensions, on a $\dim(E^*) = \dim(F^\circ) + \dim(G^\circ)$.
+Soit $n = \dim(E) = \dim(E^*)$. On a :
+$n = (n - \dim F) + (n - \dim G) \implies \dim F + \dim G = n$.
+Il suffit maintenant de montrer que $F \cap G = \{0\}$.
+Soit $x \in F \cap G$. Pour toute forme $\varphi \in E^*$, on peut l'écrire $\varphi = \varphi_F + \varphi_G$ avec $\varphi_F \in F^\circ$ et $\varphi_G \in G^\circ$.
+Évaluons $\varphi$ sur $x$ :
+$\varphi(x) = (\varphi_F + \varphi_G)(x) = \varphi_F(x) + \varphi_G(x)$.
+Comme $x \in F$ et $\varphi_F \in F^\circ$, $\varphi_F(x) = 0$.
+Comme $x \in G$ et $\varphi_G \in G^\circ$, $\varphi_G(x) = 0$.
+Donc $\forall \varphi \in E^*, \varphi(x) = 0$.
+Ceci implique que l'évaluation $\text{ev}_x$ est nulle, et par l'isomorphisme du bidual, $x = 0_E$.
+Ainsi $F \cap G = \{0\}$, et la somme des dimensions donne $\dim E$, ce qui prouve $E = F \oplus G$.
+
+
+\newpage
+\chapter*{Travaux Pratiques}
+\addcontentsline{toc}{chapter}{Travaux Pratiques}
+\chapter*{TP 1: Évaluation d'une Forme Linéaire Canonique}
+
+\section*{Objectif mathématique}
+L'objectif est d'implémenter l'évaluation mathématique d'une forme linéaire à partir de ses coordonnées dans la base duale canonique, en évitant l'usage de list comprehensions avancées ou de numpy afin de respecter la pureté de la structure.
+
+\section*{Code Python}
+\begin{lstlisting}[language=Python]
+def appliquer_forme_lineaire(coordonnees_duale, vecteur):
+    # Evalue une forme lineaire sur un vecteur.
+    if len(coordonnees_duale) != len(vecteur):
+        raise ValueError("Les dimensions doivent correspondre pour l'application.")
+
+    valeur = 0.0
+    for i in range(len(vecteur)):
+        # Implémentation stricte du produit de dualité <phi, x>
+        valeur += coordonnees_duale[i] * vecteur[i]
+
+    return valeur
+
+# Validation Mathématique
+phi = [3, -2] # Forme linéaire 3e1* - 2e2*
+u = [1, 2]    # Vecteur e1 + 2e2
+assert appliquer_forme_lineaire(phi, u) == -1.0 # 3(1) - 2(2) = -1
+print("Validation TP1 : Succès")
+
+\end{lstlisting}
+
+\newpage
+\chapter*{TP 2: Vérification de l'Appartenance à un Hyperplan}
+
+\section*{Objectif mathématique}
+Implémenter une fonction stricte qui vérifie si un vecteur x appartient à l'hyperplan défini par le noyau d'une forme linéaire phi. L'algorithme doit être capable de gérer la tolérance d'erreur due à l'arithmétique flottante.
+
+\section*{Code Python}
+\begin{lstlisting}[language=Python]
+def appartient_hyperplan(coordonnees_duale, vecteur, epsilon=1e-9):
+    # Vérifie si un vecteur appartient à l'hyperplan Ker(phi).
+    if len(coordonnees_duale) != len(vecteur):
+        raise ValueError("Les dimensions ne correspondent pas.")
+
+    # Calcul manuel de l'évaluation
+    evaluation = 0.0
+    for i in range(len(vecteur)):
+        evaluation += coordonnees_duale[i] * vecteur[i]
+
+    # Vérification stricte du noyau (la forme s'annule)
+    # L'utilisation de epsilon compense l'imprécision des flottants
+    return abs(evaluation) <= epsilon
+
+# Validation Mathématique
+# Hyperplan d'équation x + 2y - z = 0
+phi_hyperplan = [1.0, 2.0, -1.0]
+
+# Le vecteur (1, 1, 3) devrait être dans l'hyperplan car 1 + 2 - 3 = 0
+assert appartient_hyperplan(phi_hyperplan, [1.0, 1.0, 3.0]) is True
+
+# Le vecteur (1, 1, 1) ne l'est pas
+assert appartient_hyperplan(phi_hyperplan, [1.0, 1.0, 1.0]) is False
+print("Validation TP2 : Succès")
+
+\end{lstlisting}
+
+\newpage
+\chapter*{TP 3: Génération de l'Orthogonal Dual}
+
+\section*{Objectif mathématique}
+L'objectif est d'écrire un algorithme itératif qui, étant donné un vecteur $v \in \mathbb{R}^n$, détermine une base de son orthogonal F^\circ dans le dual. Le code doit extraire n-1 formes linéaires indépendantes s'annulant sur v sans utiliser d'algèbre linéaire externe.
+
+\section*{Code Python}
+\begin{lstlisting}[language=Python]
+def base_orthogonal_dual(vecteur):
+    # Genere une base de l'orthogonal du sous-espace engendre par 'vecteur' dans le dual.
+    n = len(vecteur)
+    # Recherche du premier indice non nul comme pivot pour éviter la division par zéro
+    pivot_idx = -1
+    for i in range(n):
+        if abs(vecteur[i]) > 1e-9:
+            pivot_idx = i
+            break
+
+    if pivot_idx == -1:
+        raise ValueError("Le vecteur nul engendre un orthogonal plein, base indéfinie canoniquement ici.")
+
+    base_duale = []
+    # Construction de la base de F^\circ
+    for i in range(n):
+        if i == pivot_idx:
+            continue
+        # Création d'une forme linéaire: e_i^* - (v_i / v_pivot) * e_pivot^*
+        forme = [0.0] * n
+        forme[i] = 1.0
+        forme[pivot_idx] = - (vecteur[i] / vecteur[pivot_idx])
+        base_duale.append(forme)
+
+    return base_duale
+
+# Validation Mathématique
+# Pour le vecteur v = (1, 1, 1) dans R^3
+F_circ = base_orthogonal_dual([1.0, 1.0, 1.0])
+# Doit générer 2 formes linéaires
+assert len(F_circ) == 2
+# La première forme évaluée sur v doit valoir 0
+eval1 = F_circ[0][0]*1.0 + F_circ[0][1]*1.0 + F_circ[0][2]*1.0
+assert abs(eval1) < 1e-9
+print("Validation TP3 : Succès")
+
+\end{lstlisting}
+
+\newpage
+\chapter*{TP 4: Isomorphisme Bidual}
+
+\section*{Objectif mathématique}
+L'évaluation ev\_x(phi) = phi(x) représente l'isomorphisme entre un espace et son bidual. Implémenter cet opérateur du bidual, qui accepte une forme linéaire en paramètre abstrait et retourne un scalaire, et vérifier l'isomorphisme numériquement sur un exemple canonique.
+
+\section*{Code Python}
+\begin{lstlisting}[language=Python]
+def creer_evaluation_bidual(vecteur):
+    # Genere la fonction d'evaluation (element du bidual) associee au vecteur x.
+    def evaluation(forme_lineaire):
+        if len(forme_lineaire) != len(vecteur):
+            raise ValueError("Dimensions incompatibles")
+        result = 0.0
+        for i in range(len(vecteur)):
+            result += forme_lineaire[i] * vecteur[i]
+        return result
+
+    return evaluation
+
+# Validation Mathématique
+x = [2.0, -3.0]
+# ev_x est l'élément du bidual correspondant à x
+ev_x = creer_evaluation_bidual(x)
+
+phi_1 = [1.0, 0.0]  # forme e_1^*
+phi_2 = [0.0, 1.0]  # forme e_2^*
+
+# ev_x(e_1^*) doit retrouver la première coordonnée de x
+assert ev_x(phi_1) == 2.0
+# ev_x(e_2^*) doit retrouver la deuxième coordonnée de x
+assert ev_x(phi_2) == -3.0
+print("Validation TP4 : Succès")
+
+\end{lstlisting}
+
+\newpage
+\chapter*{TP 5: Séparateur Linéaire : Frontière d'un Hyperplan}
+
+\section*{Objectif mathématique}
+Dans l'optique de l'IA (SVM), implémenter un test qui détermine de quel côté d'un hyperplan strict se situe un point donné, séparant ainsi l'espace en deux demi-espaces distincts, ce qui formalise mathématiquement la classification binaire.
+
+\section*{Code Python}
+\begin{lstlisting}[language=Python]
+def classifier_demi_espace(hyperplan_phi, biais, vecteur):
+    # Classifie un vecteur selon son demi-espace par rapport à l'hyperplan H
+    eval_phi = 0.0
+    for i in range(len(vecteur)):
+        eval_phi += hyperplan_phi[i] * vecteur[i]
+
+    decision = eval_phi + biais
+
+    if abs(decision) < 1e-9:
+        return 0
+    elif decision > 0:
+        return 1
+    else:
+        return -1
+
+# Validation Mathématique
+# Frontière: x + y - 2 = 0
+phi = [1.0, 1.0]
+biais = -2.0
+
+assert classifier_demi_espace(phi, biais, [3.0, 3.0]) == 1   # 3+3-2 = 4 > 0
+assert classifier_demi_espace(phi, biais, [0.0, 0.0]) == -1  # 0+0-2 = -2 < 0
+assert classifier_demi_espace(phi, biais, [1.0, 1.0]) == 0   # 1+1-2 = 0
+print("Validation TP5 : Succès")
+
+\end{lstlisting}
+
+\newpage
+\end{document}

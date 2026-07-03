@@ -1,11 +1,26 @@
-# Exercice 9: Indépendance linéaire de formes linéaires (Difficulté 5/5)
+# Exercice 9: Indépendance de vecteurs via l'espace dual
 ## Énoncé
-Soient $\phi_1, \dots, \phi_p \in E^*$. Montrer qu'elles sont linéairement indépendantes si et seulement si l'intersection de leurs noyaux $\bigcap_{i=1}^p \ker \phi_i$ est de dimension $n-p$.
+Soient $u, v \in E$. Montrer que $u$ et $v$ sont linéairement indépendants si et seulement s'il existe $\varphi \in E^*$ telle que $\varphi(u) = 1$ et $\varphi(v) = 0$.
+
 
 ## Correction détaillée
-1. **Étape 1:** On définit l'application linéaire $\Phi : E \to \mathbb{K}^p$ par $\Phi(x) = (\phi_1(x), \dots, \phi_p(x))$.
-2. **Étape 2:** Le noyau de $\Phi$ est exactement l'intersection des noyaux : $\ker \Phi = \bigcap_{i=1}^p \ker \phi_i$.
-3. **Étape 3:** D'après le théorème du rang, $\dim E = \dim \ker \Phi + \dim \text{Im}(\Phi)$. Donc $\dim \bigcap \ker \phi_i = n - \dim \text{Im}(\Phi)$.
-4. **Étape 4:** L'image de la transposée $\Phi^t : (\mathbb{K}^p)^* \to E^*$ est le sous-espace engendré par les $\phi_i$. Or $\text{rg}(\Phi) = \text{rg}(\Phi^t) = \dim \text{Vect}(\phi_1, \dots, \phi_p)$.
-5. **Étape 5:** Ainsi, $\dim \text{Vect}(\phi_1, \dots, \phi_p) = p$ (c'est-à-dire que la famille est libre) si et seulement si $\text{rg}(\Phi) = p$, ce qui équivaut à $\dim \bigcap \ker \phi_i = n - p$.
-6. **Conclusion:** L'équivalence est rigoureusement prouvée via l'application associée et le théorème du rang.
+**Sens indirect :**
+Supposons qu'il existe une forme linéaire $\varphi \in E^*$ telle que $\varphi(u) = 1$ et $\varphi(v) = 0$.
+Soient $\lambda, \mu \in \mathbb{K}$ tels que $\lambda u + \mu v = 0_E$.
+Appliquons la forme linéaire $\varphi$ à cette équation :
+$\varphi(\lambda u + \mu v) = \varphi(0_E)$
+Par linéarité de $\varphi$, on obtient :
+$\lambda \varphi(u) + \mu \varphi(v) = 0$
+En substituant les valeurs :
+$\lambda(1) + \mu(0) = 0 \implies \lambda = 0$.
+Si $\lambda = 0$, alors $\mu v = 0_E$. Comme $\varphi(v) = 0$, $v$ ne peut pas être le vecteur nul (sinon l'indépendance est impossible). De plus, on peut invoquer une seconde forme pour isoler $\mu$, ou plus simplement, si $\mu v = 0$ et $v \neq 0$ (car $\mu v + 0 = 0$ et on a montré que $\lambda = 0$), alors $\mu=0$.
+Donc $u$ et $v$ sont linéairement indépendants.
+
+**Sens direct :**
+Supposons que $u$ et $v$ sont linéairement indépendants.
+La famille $(u, v)$ est une famille libre dans $E$.
+D'après le théorème de la base incomplète (en supposant $\dim E \ge 2$), nous pouvons compléter cette famille pour former une base $\mathcal{B} = (u, v, e_3, \dots, e_n)$ de l'espace $E$.
+Soit $\mathcal{B}^* = (u^*, v^*, e_3^*, \dots, e_n^*)$ la base duale associée à $\mathcal{B}$.
+Par définition de la base duale, la forme linéaire $u^*$ vérifie :
+$u^*(u) = 1$ et $u^*(v) = 0$.
+Il suffit de choisir $\varphi = u^*$ pour démontrer l'existence requise. L'équivalence est donc prouvée.

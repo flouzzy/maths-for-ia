@@ -1,9 +1,25 @@
-# Exercice 7: Trace comme forme linéaire (Difficulté 4/5)
+# Exercice 7: Orthogonalité dans le dual
 ## Énoncé
-L'application $\text{Tr} : M_n(\mathbb{K}) \to \mathbb{K}$ est une forme linéaire. Montrer que tout hyperplan $H$ de $M_n(\mathbb{K})$ contient au moins une matrice inversible (pour $n \ge 2$).
+Soit $E = \mathbb{R}^3$. Soit $F = \text{Vect}(v)$ avec $v = (1, 1, 1)$.
+Déterminer une base de $F^\circ$, l'orthogonal de $F$ dans l'espace dual $E^*$.
+
 
 ## Correction détaillée
-1. **Étape 1:** Un hyperplan de $M_n(\mathbb{K})$ est le noyau d'une forme linéaire non nulle $\phi$. Il est connu que toute forme linéaire sur $M_n(\mathbb{K})$ s'écrit $\phi(M) = \text{Tr}(AM)$ pour une unique matrice $A \in M_n(\mathbb{K})$. Ainsi, $H = \{ M \in M_n(\mathbb{K}) \mid \text{Tr}(AM) = 0 \}$.
-2. **Étape 2:** On cherche $M \in H$ telle que $\det(M) \neq 0$. Si $A=0$, $\phi=0$ ce qui est exclu. Supposons par l'absurde que $H$ ne contient aucune matrice inversible.
-3. **Étape 3:** L'hyperplan $H$ est un sous-espace vectoriel de dimension $n^2-1$. Si $H$ ne contient que des matrices singulières, on a une contradiction avec les résultats de la théorie des espaces de matrices de rang borné (théorème de Dieudonné), car la dimension maximale d'un sous-espace de matrices non-inversibles est $n(n-1)$, et pour $n \ge 2$, $n^2-1 > n(n-1)$.
-4. **Conclusion:** L'hypothèse de départ est fausse, donc on en déduit formellement qu'un hyperplan contient toujours des éléments inversibles.
+L'espace $F$ est une droite vectorielle (dimension 1) engendrée par le vecteur $v = (1, 1, 1)$.
+L'orthogonal de $F$ dans le dual est défini par :
+$F^\circ = \{ \varphi \in E^* \mid \forall x \in F, \varphi(x) = 0 \}$
+Puisque tout vecteur de $F$ s'écrit $\lambda v$, et que $\varphi$ est linéaire, il suffit que la condition soit vérifiée sur le générateur de $F$ :
+$F^\circ = \{ \varphi \in E^* \mid \varphi(v) = 0 \}$
+
+Toute forme linéaire $\varphi \in E^*$ s'exprime dans la base duale canonique $(e_1^*, e_2^*, e_3^*)$ :
+$\varphi = x e_1^* + y e_2^* + z e_3^*$, c'est-à-dire $\varphi(a, b, c) = xa + yb + zc$.
+La condition $\varphi(v) = 0$ se traduit par :
+$\varphi(1, 1, 1) = x(1) + y(1) + z(1) = 0 \implies x + y + z = 0$.
+
+L'orthogonal $F^\circ$ est donc l'ensemble des formes linéaires de coordonnées $(x, y, z)$ telles que $z = -x - y$.
+$\varphi = x e_1^* + y e_2^* + (-x - y) e_3^* = x(e_1^* - e_3^*) + y(e_2^* - e_3^*)$.
+Les formes $\varphi_1 = e_1^* - e_3^*$ et $\varphi_2 = e_2^* - e_3^*$ engendrent $F^\circ$.
+Montrons qu'elles sont libres. Si $x(e_1^* - e_3^*) + y(e_2^* - e_3^*) = 0_{E^*}$, alors en évaluant sur $e_1$, on obtient $x = 0$, et sur $e_2$, on obtient $y = 0$. La famille est libre.
+
+Conclusion : $(\varphi_1, \varphi_2) = (e_1^* - e_3^*, e_2^* - e_3^*)$ est une base de $F^\circ$.
+On vérifie la formule des dimensions : $\dim(F) + \dim(F^\circ) = 1 + 2 = 3 = \dim(E)$.

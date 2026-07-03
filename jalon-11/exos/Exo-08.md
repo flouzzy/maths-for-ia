@@ -1,12 +1,24 @@
-# Exercice 8: Orthogonalité croisée (Difficulté 4/5)
+# Exercice 8: Bidual et forme spécifique
 ## Énoncé
-Soient $F_1, F_2$ deux sous-espaces de $E$. Montrer que $(F_1 + F_2)^\perp = F_1^\perp \cap F_2^\perp$.
+Soit $E$ un espace vectoriel de dimension finie. Soit $\alpha \in E$. On définit l'application d'évaluation sur $E^*$ :
+$\text{ev}_\alpha : E^* \to \mathbb{K}$
+$\varphi \mapsto \varphi(\alpha)$
+Montrer rigoureusement que si $\text{ev}_\alpha = 0_{E^{**}}$, alors $\alpha = 0_E$.
+
 
 ## Correction détaillée
-1. **Étape 1 :** Soit $\phi \in (F_1 + F_2)^\perp$. Alors pour tout $x \in F_1 + F_2, \phi(x)=0$.
-   En particulier, pour tout $x_1 \in F_1$, $\phi(x_1)=0$ (car $F_1 \subset F_1+F_2$), donc $\phi \in F_1^\perp$.
-   De même $\phi \in F_2^\perp$. Ainsi $(F_1 + F_2)^\perp \subset F_1^\perp \cap F_2^\perp$.
-2. **Étape 2 :** Réciproquement, soit $\phi \in F_1^\perp \cap F_2^\perp$. Pour tout $x \in F_1+F_2$, on peut écrire $x = x_1 + x_2$ avec $x_1 \in F_1, x_2 \in F_2$.
-3. **Étape 3 :** On a par linéarité $\phi(x) = \phi(x_1+x_2) = \phi(x_1) + \phi(x_2)$.
-4. **Étape 4 :** Puisque $\phi \in F_1^\perp$, $\phi(x_1)=0$. Puisque $\phi \in F_2^\perp$, $\phi(x_2)=0$. Donc $\phi(x) = 0 + 0 = 0$. Ainsi $\phi \in (F_1+F_2)^\perp$. On a l'inclusion réciproque.
-5. **Conclusion:** Par double inclusion, l'égalité $(F_1 + F_2)^\perp = F_1^\perp \cap F_2^\perp$ est strictement démontrée.
+L'application $\text{ev}_\alpha$ est l'image du vecteur $\alpha$ par l'isomorphisme canonique $\Psi : E \to E^{**}$.
+Supposons que $\text{ev}_\alpha = 0_{E^{**}}$.
+Par définition, cela signifie que pour toute forme linéaire $\varphi \in E^*$, on a $\text{ev}_\alpha(\varphi) = 0$, soit $\varphi(\alpha) = 0$.
+
+Procédons par l'absurde. Supposons que $\alpha \neq 0_E$.
+Puisque $\alpha$ est un vecteur non nul d'un espace vectoriel de dimension finie $n$, on peut, par le théorème de la base incomplète, construire une base $\mathcal{B} = (e_1, e_2, \dots, e_n)$ de $E$ telle que $e_1 = \alpha$.
+Soit $\mathcal{B}^* = (e_1^*, e_2^*, \dots, e_n^*)$ la base duale associée à $\mathcal{B}$.
+Par définition de la base duale, la forme linéaire $e_1^*$ vérifie $e_1^*(e_1) = 1$.
+Or, $e_1 = \alpha$, donc $e_1^*(\alpha) = 1 \neq 0$.
+Nous avons trouvé une forme linéaire spécifique $\varphi = e_1^* \in E^*$ telle que $\varphi(\alpha) \neq 0$.
+Ceci contredit l'hypothèse selon laquelle $\forall \varphi \in E^*, \varphi(\alpha) = 0$.
+
+Par conséquent, notre supposition de départ $\alpha \neq 0_E$ est fausse.
+On conclut que nécessairement, $\alpha = 0_E$.
+Cela confirme que le noyau de l'application canonique dans le bidual est réduit à $\{0\}$, assurant son injectivité.
