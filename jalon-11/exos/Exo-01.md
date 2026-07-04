@@ -1,4 +1,4 @@
-# Exercice 1: Espace dual en dimension 2 (Difficulté 1/5)
+# Exercice 1: Espace dual en dimension 2
 ## Énoncé
 Soit $E = \mathbb{R}^2$. On considère la base canonique $(e_1, e_2)$. Déterminer la base duale $(e_1^*, e_2^*)$ et calculer $e_1^*(3e_1 - 2e_2)$.
 
@@ -13,3 +13,5 @@ Soit $E = \mathbb{R}^2$. On considère la base canonique $(e_1, e_2)$. Détermin
    $$= 3 \times 1 - 2 \times 0$$
    $$= 3$$
 5. **Conclusion :** La valeur de la forme linéaire $e_1^*$ sur le vecteur $3e_1 - 2e_2$ est $3$.
+
+$\blacksquare$
