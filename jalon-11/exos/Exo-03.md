@@ -1,4 +1,4 @@
-# Exercice 3: Orthogonal d'un sous-espace (Difficulté 2/5)
+# Exercice 3: Orthogonal d'un sous-espace
 ## Énoncé
 Soit $F$ un sous-espace vectoriel d'un $\mathbb{K}$-espace vectoriel $E$ de dimension finie $n$. Démontrer le théorème de la dimension de l'orthogonal : $\dim F + \dim F^\perp = n$.
 

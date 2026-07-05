@@ -1,4 +1,4 @@
-# Exercice 10: Polynômes de Lagrange et dualité (Difficulté 5/5)
+# Exercice 10: Polynômes de Lagrange et dualité
 ## Énoncé
 Dans $E = \mathbb{R}_{n-1}[X]$, on se donne $n$ scalaires distincts $a_1, \dots, a_n$. Montrer que les formes linéaires d'évaluation $\phi_i(P) = P(a_i)$ forment une base de $E^*$.
 

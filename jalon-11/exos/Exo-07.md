@@ -1,4 +1,4 @@
-# Exercice 7: Trace comme forme linéaire (Difficulté 4/5)
+# Exercice 7: Trace comme forme linéaire
 ## Énoncé
 L'application $\text{Tr} : M_n(\mathbb{K}) \to \mathbb{K}$ est une forme linéaire. Montrer que tout hyperplan $H$ de $M_n(\mathbb{K})$ contient au moins une matrice inversible (pour $n \ge 2$).
 
