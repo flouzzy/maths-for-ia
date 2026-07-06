@@ -13,14 +13,23 @@ next: "[[Jalon 12 (Livrable IA).md]]"
 # Jalon 11 : Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie
 
 ## 1. Présentation du concept clé
-
-La genèse des formes linéaires trouve ses racines dans le besoin inhérent à l'être humain de mesurer, quantifier et extraire une information scalaire (unidimensionnelle) à partir d'objets multidimensionnels complexes. Imaginez une vaste plaine topographique, où chaque position est déterminée par une multitude de coordonnées complexes. Un explorateur cherchant à quantifier l'altitude de son terrain de progression effectue sans le savoir une projection de ce monde multidimensionnel vers l'axe des réels : il applique une forme linéaire.
-
-Historiquement, cette idée d'associer un unique scalaire à un vecteur s'est cristallisée lorsque les mathématiciens ont cherché à comprendre la structure intime des espaces eux-mêmes, non pas à travers les vecteurs qui les composent, mais à travers le prisme de toutes les "mesures" possibles sur ces vecteurs. C'est l'essence de la dualité, une notion formellement structurée au début du XXe siècle par des figures comme Stefan Banach et David Hilbert. Si l'on considère un espace vectoriel $E$ comme un univers de points, l'espace dual $E^*$ représente l'univers de tous les instruments de mesure, ou observateurs, capables de scruter $E$. Un hyperplan, concept fondamental de séparation, émerge naturellement : il s'agit de l'horizon, la frontière parfaitement plate (de dimension $n-1$) où une mesure spécifique s'annule, séparant l'espace en deux demi-espaces stricts.
+L'essence du concept peut être approchée par l'analogie suivante :
+  - **Forme linéaire :** Imaginez que vous soyez un inspecteur de qualité. Un vecteur est un objet complexe (un produit avec poids, taille, prix). Une **forme linéaire**, c'est votre test : vous donnez une note unique (un nombre) à cet objet. Si vous testez deux produits ensemble, la note est la somme des notes. C'est un instrument de mesure simple et puissant.
+  - **Hyperplan :** C'est la frontière parfaite. En 2D, c'est une ligne qui sépare le plan en deux. En 3D, c'est une feuille de papier infinie qui sépare l'espace. Un hyperplan, c'est l'ensemble de tous les vecteurs qui reçoivent la note "zéro" par votre test.
+  - **Dualité :** C'est le monde des instruments de mesure. Si les vecteurs sont les "points", les formes linéaires sont les "regards" portés sur ces points.
+Nécessité historique et mathématique : Parfois, il est plus facile de décrire un objet par la manière dont il réagit à des tests (le dual) plutôt que par sa structure interne. C'est fondamental pour définir la notion de "perpendiculaire" ou pour séparer des données.
+Représentation géométrique : Imaginez une montagne. La hauteur en chaque point est une fonction (peut-être linéaire localement). L'hyperplan, c'est le "niveau de la mer" (altitude 0). L'espace dual, c'est l'ensemble de tous les plans inclinés possibles qui pourraient toucher la montagne.
 
 ## 2. Formalisation
-
-L'intuition de la mesure laisse place à une rigueur algébrique implacable. Nous posons ici les fondations algébriques de la dualité en dimension finie.
+### A. Définitions Formelles
+Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension $n$.
+1. **Forme linéaire :** Une application $\phi : E \to \mathbb{K}$ est une forme linéaire si elle est un morphisme de $\mathbb{K}$-espaces vectoriels. Le typage chirurgical est le suivant : l'espace de départ $E$ est le domaine des objets vectoriels abstraits, tandis que l'espace d'arrivée $\mathbb{K}$ (un corps commutatif, usuellement $\mathbb{R}$ ou $\mathbb{C}$) représente la quantification scalaire. Formellement :
+   $$\forall (x, y) \in E \times E, \forall (\lambda, \mu) \in \mathbb{K} \times \mathbb{K}, \quad \phi(\lambda x + \mu y) = \lambda \phi(x) + \mu \phi(y)$$
+2. **Espace Dual ($E^*$) :** L'espace vectoriel $\mathcal{L}(E, \mathbb{K})$ de toutes les formes linéaires sur $E$.
+3. **Hyperplan :** Un sous-espace vectoriel $H$ de $E$ est un hyperplan s'il existe une forme linéaire non nulle $\phi \in E^*$ telle que $H = \ker \phi$.
+4. **Base Duale :** Soit $\mathcal{B} = (e_1, ..., e_n)$ une base de $E$. La base duale $\mathcal{B}^* = (e^*_1, ..., e^*_n)$ est définie par :
+   $$e^*_i(e_j) = \delta_{i,j} \quad (\text{symbole de Kronecker})$$
+5. **Orthogonalité (au sens de la dualité) :** Soit $A \subseteq E$. On définit l'orthogonal de $A$ dans $E^*$ par $A^\perp = \{ \phi \in E^* \mid \forall x \in A, \phi(x) = 0 \}$.
 
 ### A. Anatomie et Typage Chirurgical
 
@@ -57,9 +66,14 @@ $$ \dim(E) < +\infty \implies \dim(E^*) = \dim(E) $$
 **Théorème 2 (Isomorphisme Canonique au Bidual) :**
 Le bidual est défini comme $E^{**} = (E^*)^*$. L'application d'évaluation $J : E \to E^{**}$ définie par $\forall x \in E, J(x)(\phi) = \phi(x)$ (souvent noté $\langle \phi, x \rangle$) est un isomorphisme canonique. Cet isomorphisme est naturel car il ne dépend d'aucun choix de base, contrairement aux isomorphismes entre $E$ et $E^*$.
 
-## 3. Démonstrations
 
-Nous détaillons ici intégralement la preuve de l'isomorphisme canonique entre l'espace $E$ et son bidual $E^{**}$, pierre angulaire de l'algèbre linéaire en dimension finie.
+### C. Exemples et Cas Pathologiques
+- **Exemple Trivial :** La forme linéaire nulle $\phi(x) = 0$ pour tout $x$. Son noyau est $E$ entier. L'image est $\{0\}$. Elle ne définit pas un hyperplan.
+- **Cas Limite (Dimension Infinie) :** Le théorème de la dimension du dual ($\dim E^* = \dim E$) est **absolument faux** en dimension infinie. Par exemple, l'espace des polynômes $\mathbb{R}[X]$ a une base dénombrable, mais son dual abstrait a une base de cardinalité indénombrable. L'isomorphisme canonique vers le bidual s'effondre (l'application $\Psi$ est seulement injective, plus surjective).
+
+## 3. Démonstrations
+### Démonstration du Théorème Pivot : Dimension d'un hyperplan
+Soit $H$ un hyperplan de $E$ (dimension $n$). Montrons que $\dim H = n-1$.
 
 **Théorème :** Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension finie $n$. L'application $J : E \to E^{**}$ définie par $\forall x \in E, \forall \phi \in E^*, J(x)(\phi) = \phi(x)$ est un isomorphisme de $\mathbb{K}$-espaces vectoriels.
 
@@ -102,16 +116,35 @@ Nous détaillons ici intégralement la preuve de l'isomorphisme canonique entre 
    La démonstration est achevée. $\blacksquare$
 
 ## 4. Exercices d'Application
+### Exercice 1 : Application Directe (Base Duale)
+**Énoncé :** Dans $\mathbb{R}^2$, soit $\mathcal{B} = (e_1, e_2)$ avec $e_1 = (1, 1)$ et $e_2 = (1, 0)$. Exprimer les formes linéaires $e^*_1$ et $e^*_2$ en fonction des coordonnées canoniques $(x, y)$.
+**Correction Détaillée :**
+1. Soit $\phi(x, y) = ax + by$ une forme linéaire.
+2. Pour $e^*_1$ :
+   - $e^*_1(e_1) = 1 \implies e^*_1(1, 1) = a+b = 1$
+   - $e^*_1(e_2) = 0 \implies e^*_1(1, 0) = a = 0$
+   - On en tire $a=0$ et $b=1$. Donc $e^*_1(x, y) = y$.
+3. Pour $e^*_2$ :
+   - $e^*_2(e_1) = 0 \implies e^*_2(1, 1) = a+b = 0$
+   - $e^*_2(e_2) = 1 \implies e^*_2(1, 0) = a = 1$
+   - On en tire $a=1$ et $b=-1$. Donc $e^*_2(x, y) = x - y$.
+**Conclusion :** $\mathcal{B}^* = (y, x-y)$.
 
-*(Les exercices et corrections exhaustives sont répartis dans le répertoire `exos/`.)*
+### Exercice 2 : Niveau Avancé (Intersection d'hyperplans)
+**Énoncé :** Montrer que l'intersection de deux hyperplans distincts $H_1$ et $H_2$ est un sous-espace de dimension $n-2$.
+**Correction Détaillée :**
+1. Soient $\phi_1, \phi_2$ les formes linéaires associées telles que $H_1 = \ker \phi_1$ et $H_2 = \ker \phi_2$.
+2. Définissons l'application $\Phi : E \to \mathbb{K}^2$ par $\Phi(x) = (\phi_1(x), \phi_2(x))$.
+3. Le noyau de $\Phi$ est $\ker \phi_1 \cap \ker \phi_2 = H_1 \cap H_2$.
+4. Par le théorème du rang : $\dim E = \dim(H_1 \cap H_2) + \text{rg}(\Phi)$.
+5. Comme $H_1$ et $H_2$ sont distincts, $\phi_1$ et $\phi_2$ ne sont pas proportionnelles. La famille $(\phi_1, \phi_2)$ est donc libre dans $E^*$.
+6. L'image de $\Phi$ est donc de dimension 2 (surjection sur $\mathbb{K}^2$).
+7. $\text{rg}(\Phi) = 2 \implies n = \dim(H_1 \cap H_2) + 2$.
+**Conclusion :** $\dim(H_1 \cap H_2) = n - 2$.
 
 ## 5. Application en Intelligence Artificielle
-
-La dualité n'est pas qu'une abstraction algébrique ; c'est le langage géométrique fondamental de la classification supervisée en apprentissage automatique. Dans l'algorithme des Séparateurs à Vaste Marge (Support Vector Machines - SVM), la séparation de données linéairement séparables dans $\mathbb{R}^n$ se formule précisément comme la recherche d'un hyperplan optimal.
-
-Un hyperplan de décision affine est défini par une équation de la forme $\phi(x) + b = 0$, où $x \in \mathbb{R}^n$ est le vecteur de caractéristiques, $\phi \in (\mathbb{R}^n)^*$ est une forme linéaire (qui, par le théorème de représentation de Riesz s'identifie au produit scalaire avec un vecteur normal $w$, $\phi(x) = \langle w, x \rangle$), et $b \in \mathbb{R}$ un biais.
-
-La phase d'apprentissage d'un SVM consiste à trouver la forme linéaire $\phi$ qui maximise la marge, c'est-à-dire la distance entre l'hyperplan $\ker(\phi) - b$ et les points d'entraînement les plus proches (les vecteurs de support). Le théorème d'isomorphisme dual est exploité lors de la transformation du problème d'optimisation primal complexe (minimisation de $\|w\|^2$ sous contraintes) vers sa formulation duale de Lagrange. C'est dans cet espace dual que le fameux "Kernel Trick" (astuce du noyau) opère, permettant d'évaluer indirectement des formes linéaires dans des espaces de Hilbert de dimension infinie sans jamais calculer explicitement les coordonnées des vecteurs dans ces espaces.
+- **Le Pont Théorique :** Les hyperplans sont les **Séparateurs Linéaires** fondamentaux de l'apprentissage automatique.
+- **Exemple Concret :** Dans les **SVM (Support Vector Machines)**, l'algorithme cherche l'hyperplan optimal qui sépare deux classes de données (ex: Spam vs Non-Spam). L'équation de l'hyperplan $\phi(x) + b = 0$ (où $\phi$ est une forme linéaire) définit la frontière de décision. La **Dualité de Lagrange**, utilisée pour résoudre ce problème d'optimisation, repose entièrement sur le passage de l'espace des données (primal) à l'espace des contraintes (dual).
 
 ## 6. Liens Sémantiques
 

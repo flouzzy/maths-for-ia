@@ -22,7 +22,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-15/Jalon-15.md|Jalon 15 : Sous-suites]] : Sous-suites, valeurs d'adhérence et preuve par séparation du théorème de Bolzano-Weierstrass.
 - [x] [[jalon-16/Jalon-16.md|Jalon 16 : Séries numériques à termes positifs]] : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy.
 - [x] [[jalon-17/Jalon-17.md|Jalon 17 : Séries absolument convergentes]] : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries.
-- [ ] [[jalon-18/Jalon 18 (Continuité des fonctions d'une variable réelle).md|Jalon 18 : Continuité des fonctions d'une variable réelle]] : Continuité des fonctions d'une variable réelle, théorème des valeurs intermédiaires et compacité locale.
+- [x] [[jalon-18/Jalon-18.md|Jalon 18 : Continuité des fonctions d'une variable réelle]] : Continuité des fonctions d'une variable réelle, théorème des valeurs intermédiaires et compacité locale.
 - [ ] [[jalon-19/Jalon 19 (Dérivabilité).md|Jalon 19 : Dérivabilité]] : Dérivabilité, théorème de Rolle, théorème des accroissements finis et prolongement de la dérivée.
 - [ ] [[jalon-20/Jalon 20 (Dérivées successives).md|Jalon 20 : Dérivées successives]] : Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités.
 - [ ] [[jalon-21/Jalon 21 (Suites de fonctions).md|Jalon 21 : Suites de fonctions]] : Suites de fonctions, étude de la convergence simple et de la convergence uniforme.
@@ -165,8 +165,8 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
-### 2026-07-04-audit
-- [[#2026-07-04-audit|2026-07-04]] : [Audit & Weekly Compilation] - Jalon 11 - Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+### 2026-07-03-audit
+- [[#2026-07-03-audit|2026-07-03]] : [Audit & Weekly Compilation] - Jalon 11 - Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-02-audit
 - [[#2026-07-02-audit|2026-07-02]] : [Audit & Weekly Compilation] - Jalon 10 - Changements de base. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-01-audit
