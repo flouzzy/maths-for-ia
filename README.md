@@ -319,7 +319,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
-- [2026-07-05] : [Upsert/Création] du Jalon 18 - Continuité des fonctions d'une variable réelle. Status: Terminé.
+- 2026-07-04 : [Upsert/Création] du Jalon 18 - Continuité des fonctions d'une variable réelle. Status: Terminé.
 - [2026-07-03] : [Upsert/Création] du Jalon 17 - Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries. Status: Terminé.
 ### 2026-07-01-audit
 - [[#2026-07-01-audit|2026-07-01]] : [Audit & Weekly Compilation] - Jalon 9 - Calcul matriciel, opérations, inversibilité et représentations des applications linéaires. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
