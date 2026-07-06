@@ -1,4 +1,4 @@
-# Exercice 5: Équation d'un hyperplan en dimension n (Difficulté 3/5)
+# Exercice 5: Équation d'un hyperplan en dimension n
 ## Énoncé
 Soit $E$ un espace vectoriel de dimension $n$ et $(e_1, \dots, e_n)$ une base de $E$. Montrer qu'un hyperplan $H$ est caractérisé par une équation cartésienne de la forme $\sum_{i=1}^n a_i x_i = 0$ où les $(a_i)$ ne sont pas tous nuls.
 

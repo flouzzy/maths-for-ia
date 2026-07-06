@@ -1,4 +1,4 @@
-# Exercice 4: Hyperplans et formes proportionnelles (Difficulté 2/5)
+# Exercice 4: Hyperplans et formes proportionnelles
 ## Énoncé
 Montrer que deux formes linéaires non nulles $\phi$ et $\psi$ ont le même noyau si et seulement si elles sont proportionnelles.
 

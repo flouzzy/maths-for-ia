@@ -1,4 +1,4 @@
-# Exercice 6: Bidual d'un espace vectoriel (Difficulté 3/5)
+# Exercice 6: Bidual d'un espace vectoriel
 ## Énoncé
 Pour tout $x \in E$, on définit l'application d'évaluation $\text{ev}_x : E^* \to \mathbb{K}$ par $\text{ev}_x(\phi) = \phi(x)$. Montrer que l'application $\Psi : x \mapsto \text{ev}_x$ est linéaire et injective.
 
