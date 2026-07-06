@@ -323,6 +323,8 @@ python3 -m unittest test_generate_jalons.py
 - [2026-07-03] : [Upsert/Création] du Jalon 17 - Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries. Status: Terminé.
 ### 2026-07-01-audit
 - [[#2026-07-01-audit|2026-07-01]] : [Audit & Weekly Compilation] - Jalon 9 - Calcul matriciel, opérations, inversibilité et représentations des applications linéaires. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+### 2026-07-03-audit
+- [[#2026-07-03-audit|2026-07-03]] : [Audit & Weekly Compilation] - Jalon 11 - Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-02-audit
 - [2026-07-02] : Upsert du Jalon 15 - Sous-suites. Status: Terminé.
 - [[#2026-07-02-audit|2026-07-02]] : [Audit & Weekly Compilation] - Jalon 8 - Applications linéaires, noyau (ker), image (Im) et démonstration du théorème du rang. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.

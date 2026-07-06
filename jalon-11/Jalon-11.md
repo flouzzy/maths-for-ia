@@ -130,17 +130,61 @@ Soit $H$ un hyperplan de $E$ (dimension $n$). Montrons que $\dim H = n-1$.
    - On en tire $a=1$ et $b=-1$. Donc $e^*_2(x, y) = x - y$.
 **Conclusion :** $\mathcal{B}^* = (y, x-y)$.
 
-### Exercice 2 : Niveau Avancé (Intersection d'hyperplans)
-**Énoncé :** Montrer que l'intersection de deux hyperplans distincts $H_1$ et $H_2$ est un sous-espace de dimension $n-2$.
-**Correction Détaillée :**
-1. Soient $\phi_1, \phi_2$ les formes linéaires associées telles que $H_1 = \ker \phi_1$ et $H_2 = \ker \phi_2$.
-2. Définissons l'application $\Phi : E \to \mathbb{K}^2$ par $\Phi(x) = (\phi_1(x), \phi_2(x))$.
-3. Le noyau de $\Phi$ est $\ker \phi_1 \cap \ker \phi_2 = H_1 \cap H_2$.
-4. Par le théorème du rang : $\dim E = \dim(H_1 \cap H_2) + \text{rg}(\Phi)$.
-5. Comme $H_1$ et $H_2$ sont distincts, $\phi_1$ et $\phi_2$ ne sont pas proportionnelles. La famille $(\phi_1, \phi_2)$ est donc libre dans $E^*$.
-6. L'image de $\Phi$ est donc de dimension 2 (surjection sur $\mathbb{K}^2$).
-7. $\text{rg}(\Phi) = 2 \implies n = \dim(H_1 \cap H_2) + 2$.
-**Conclusion :** $\dim(H_1 \cap H_2) = n - 2$.
+**Correction exhaustive :**
+1. **Démonstration de la nature de base de $\mathcal{B}$ :**
+   Il suffit de montrer que la famille est libre. Posons $\alpha_1 v_1 + \alpha_2 v_2 + \alpha_3 v_3 = 0$.
+   $\alpha_1(1, 1, 0) + \alpha_2(0, 1, 1) + \alpha_3(1, 0, 1) = (0, 0, 0)$
+   Cela induit le système :
+   (i) $\alpha_1 + \alpha_3 = 0$
+   (ii) $\alpha_1 + \alpha_2 = 0$
+   (iii) $\alpha_2 + \alpha_3 = 0$
+   De (i), $\alpha_3 = -\alpha_1$. De (ii), $\alpha_2 = -\alpha_1$. En remplaçant dans (iii) : $-\alpha_1 - \alpha_1 = 0 \implies -2\alpha_1 = 0 \implies \alpha_1 = 0$.
+   Par conséquent, $\alpha_1 = \alpha_2 = \alpha_3 = 0$. La famille est libre, et possédant 3 vecteurs en dimension 3, elle constitue une base de $E$.
+
+2. **Construction de $v_1^*$ :**
+   Cherchons $v_1^*$ sous la forme $v_1^*(x, y, z) = ax + by + cz$. Les relations de dualité exigent :
+   - $v_1^*(v_1) = 1 \implies a + b = 1$
+   - $v_1^*(v_2) = 0 \implies b + c = 0 \implies c = -b$
+   - $v_1^*(v_3) = 0 \implies a + c = 0 \implies a = -c = b$
+   En substituant $a = b$ dans la première équation : $b + b = 1 \implies b = \frac{1}{2}$. On tire $a = \frac{1}{2}$ et $c = -\frac{1}{2}$.
+   Ainsi, $v_1^*(x, y, z) = \frac{1}{2}x + \frac{1}{2}y - \frac{1}{2}z$.
+
+3. **Construction de $v_2^*$ :**
+   Cherchons $v_2^*(x, y, z) = a'x + b'y + c'z$.
+   - $v_2^*(v_1) = 0 \implies a' + b' = 0 \implies a' = -b'$
+   - $v_2^*(v_2) = 1 \implies b' + c' = 1$
+   - $v_2^*(v_3) = 0 \implies a' + c' = 0 \implies c' = -a' = b'$
+   Dans la deuxième : $b' + b' = 1 \implies b' = \frac{1}{2}$. D'où $c' = \frac{1}{2}$ et $a' = -\frac{1}{2}$.
+   Ainsi, $v_2^*(x, y, z) = -\frac{1}{2}x + \frac{1}{2}y + \frac{1}{2}z$.
+
+4. **Construction de $v_3^*$ :**
+   Cherchons $v_3^*(x, y, z) = a''x + b''y + c''z$.
+   - $v_3^*(v_1) = 0 \implies a'' + b'' = 0 \implies b'' = -a''$
+   - $v_3^*(v_2) = 0 \implies b'' + c'' = 0 \implies c'' = -b'' = a''$
+   - $v_3^*(v_3) = 1 \implies a'' + c'' = 1 \implies a'' + a'' = 1 \implies a'' = \frac{1}{2}$.
+   D'où $c'' = \frac{1}{2}$ et $b'' = -\frac{1}{2}$.
+   Ainsi, $v_3^*(x, y, z) = \frac{1}{2}x - \frac{1}{2}y + \frac{1}{2}z$.
+
+### Exercice 2 : Orthogonal d'un Sous-espace
+**Énoncé :**
+Soit $E$ un espace vectoriel de dimension $n$. Montrer que si $F$ et $G$ sont deux sous-espaces de $E$ tels que $F \subseteq G$, alors au sens de la dualité, $G^\perp \subseteq F^\perp$. Montrer ensuite que $\dim(F) + \dim(F^\perp) = n$.
+
+**Correction exhaustive :**
+1. **Inclusion des orthogonaux :**
+   Soit $\phi \in G^\perp$. Par la définition de l'orthogonal dans le dual, cela signifie que pour tout vecteur $x \in G$, nous avons $\phi(x) = 0$.
+   Puisque l'hypothèse garantit que $F \subseteq G$, tout vecteur $y \in F$ est aussi un élément de $G$.
+   Par conséquent, l'évaluation de $\phi$ sur tout vecteur de $F$ donne $\phi(y) = 0$.
+   Ceci certifie que $\phi$ annule entièrement $F$. Ainsi, $\phi \in F^\perp$. L'inclusion $G^\perp \subseteq F^\perp$ est rigoureusement prouvée.
+
+2. **Équation de dimension (Théorème d'isomorphisme canonique) :**
+   Considérons l'application de restriction $\rho : E^* \to F^*$ définie par $\rho(\phi) = \phi_{|F}$, qui à une forme linéaire sur $E$ associe sa restriction au sous-espace $F$.
+   L'application $\rho$ est clairement linéaire.
+   Identifions son noyau. Une forme $\phi$ appartient à $\ker \rho$ si et seulement si sa restriction à $F$ est l'application nulle, c'est-à-dire que pour tout $x \in F, \phi(x) = 0$. C'est l'exacte définition de $F^\perp$. Donc $\ker \rho = F^\perp$.
+   Démontrons la surjectivité de $\rho$. Soit $\psi \in F^*$ une forme linéaire définie uniquement sur $F$. Soit un supplémentaire $S$ de $F$ dans $E$ (tel que $E = F \oplus S$). Tout vecteur $x \in E$ se décompose de manière unique en $x = y + z$ avec $y \in F, z \in S$. On définit $\tilde{\psi} \in E^*$ par $\tilde{\psi}(x) = \psi(y) + 0$. Cette forme $\tilde{\psi}$ prolonge $\psi$ à l'espace total $E$, ce qui prouve que toute forme de $F^*$ admet un antécédent. L'application $\rho$ est donc surjective, et $\text{Im }\rho = F^*$.
+   Par l'application rigoureuse du théorème du rang à l'application $\rho$ :
+   $$\dim(E^*) = \dim(\ker \rho) + \dim(\text{Im }\rho)$$
+   Nous savons que $\dim(E^*) = n$ et $\dim(F^*) = \dim(F)$ (puisque la dimension du dual est égale à celle du primal).
+   En substituant : $n = \dim(F^\perp) + \dim(F)$.
 
 ## 5. Application en Intelligence Artificielle
 - **Le Pont Théorique :** Les hyperplans sont les **Séparateurs Linéaires** fondamentaux de l'apprentissage automatique.
