@@ -10,3 +10,5 @@ Dans $E = \mathbb{R}_{n-1}[X]$, on se donne $n$ scalaires distincts $a_1, \dots,
 5. **Étape 5:** Évaluons la combinaison linéaire nulle sur le polynôme $L_j$ :
    $$0 = \sum_{i=1}^n \lambda_i \phi_i(L_j) = \sum_{i=1}^n \lambda_i L_j(a_i) = \lambda_j$$
 6. **Conclusion:** Pour tout indice $j$, on obtient $\lambda_j = 0$. La famille est donc libre, et c'est par conséquent une base. Les polynômes $(L_j)$ forment précisément la base antéduale associée.
+
+$\blacksquare$

@@ -9,3 +9,5 @@ Soient $\phi_1, \dots, \phi_p \in E^*$. Montrer qu'elles sont linéairement ind�
 4. **Étape 4:** L'image de la transposée $\Phi^t : (\mathbb{K}^p)^* \to E^*$ est le sous-espace engendré par les $\phi_i$. Or $\text{rg}(\Phi) = \text{rg}(\Phi^t) = \dim \text{Vect}(\phi_1, \dots, \phi_p)$.
 5. **Étape 5:** Ainsi, $\dim \text{Vect}(\phi_1, \dots, \phi_p) = p$ (c'est-à-dire que la famille est libre) si et seulement si $\text{rg}(\Phi) = p$, ce qui équivaut à $\dim \bigcap \ker \phi_i = n - p$.
 6. **Conclusion:** L'équivalence est rigoureusement prouvée via l'application associée et le théorème du rang.
+
+$\blacksquare$

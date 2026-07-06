@@ -18,3 +18,5 @@ Montrer que deux formes linéaires non nulles $\phi$ et $\psi$ ont le même noya
    $$\psi(x - \phi(x)e_0) = 0 \implies \psi(x) - \phi(x)\psi(e_0) = 0 \implies \psi(x) = \psi(e_0)\phi(x)$$
    Ceci étant vrai pour tout $x \in E$, en posant $\lambda = \psi(e_0)$, on obtient l'égalité des formes linéaires $\psi = \lambda \phi$.
 7. **Conclusion :** Les deux formes linéaires sont proportionnelles.
+
+$\blacksquare$

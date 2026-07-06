@@ -1,45 +1,11 @@
-\documentclass[12pt, a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[french]{babel}
-\usepackage{amsmath, amssymb, amsthm}
-\usepackage{geometry}
-\geometry{hmargin=2.5cm, vmargin=2.5cm}
-\usepackage{listings}
-\usepackage{tikz}
-\usepackage{xcolor}
-\usepackage{hyperref}
-
-\lstset{
-    language=Python,
-    basicstyle=\ttfamily\small,
-    keywordstyle=\color{blue},
-    stringstyle=\color{red},
-    commentstyle=\color{green!60!black},
-    showstringspaces=false,
-    breaklines=true,
-    frame=single,
-    backgroundcolor=\color{gray!10}
-}
-
-\title{Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie}
-\author{Charles EDOU NZE}
-\date{\today}
-
-\begin{document}
-
-\maketitle
-\tableofcontents
-\newpage
-
-
+\hypertarget{jalon-11-formes-linuxe9aires-hyperplans-espace-dual-et-orthogonalituxe9-en-dimension-finie}{%
 \section{Jalon 11 : Formes linéaires, hyperplans, espace dual et
 orthogonalité en dimension
-finie}
+finie}\label{jalon-11-formes-linuxe9aires-hyperplans-espace-dual-et-orthogonalituxe9-en-dimension-finie}}
 
-
+\hypertarget{pruxe9sentation-du-concept-cluxe9}{%
 \subsection{1. Présentation du concept
-clé}
+clé}\label{pruxe9sentation-du-concept-cluxe9}}
 
 La genèse des formes linéaires trouve ses racines dans le besoin
 inhérent à l'être humain de mesurer, quantifier et extraire une
@@ -65,23 +31,23 @@ séparation, émerge naturellement : il s'agit de l'horizon, la frontière
 parfaitement plate (de dimension \(n-1\)) où une mesure spécifique
 s'annule, séparant l'espace en deux demi-espaces stricts.
 
-
-\subsection{2. Formalisation}
+\hypertarget{formalisation}{%
+\subsection{2. Formalisation}\label{formalisation}}
 
 L'intuition de la mesure laisse place à une rigueur algébrique
 implacable. Nous posons ici les fondations algébriques de la dualité en
 dimension finie.
 
-
+\hypertarget{a.-anatomie-et-typage-chirurgical}{%
 \subsubsection{A. Anatomie et Typage
-Chirurgical}
+Chirurgical}\label{a.-anatomie-et-typage-chirurgical}}
 
 Soit \(E\) un espace vectoriel sur un corps commutatif \(\mathbb{K}\)
 (typiquement \(\mathbb{R}\) ou \(\mathbb{C}\)), de dimension finie
 \(\dim(E) = n \in \mathbb{N}^*\).
 
 \begin{enumerate}
-
+\def\labelenumi{\arabic{enumi}.}
 \item
   \textbf{Forme linéaire :} Une forme linéaire est une application
   \(\phi : E \to \mathbb{K}\) satisfaisant la propriété de linéarité
@@ -118,9 +84,9 @@ Soit \(E\) un espace vectoriel sur un corps commutatif \(\mathbb{K}\)
   \(B^\circ = \{ x \in E \mid \forall \phi \in B, \phi(x) = 0_{\mathbb{K}} \}\).
 \end{enumerate}
 
-
+\hypertarget{b.-thuxe9oruxe8mes-fondamentaux}{%
 \subsubsection{B. Théorèmes
-Fondamentaux}
+Fondamentaux}\label{b.-thuxe9oruxe8mes-fondamentaux}}
 
 \textbf{Théorème 1 (Dimension de l'espace dual) :} Si \(E\) est de
 dimension finie, alors \(E\) et son dual \(E^*\) ont la même dimension :
@@ -134,8 +100,8 @@ défini comme \(E^{**} = (E^*)^*\). L'application d'évaluation
 isomorphisme est naturel car il ne dépend d'aucun choix de base,
 contrairement aux isomorphismes entre \(E\) et \(E^*\).
 
-
-\subsection{3. Démonstrations}
+\hypertarget{duxe9monstrations}{%
+\subsection{3. Démonstrations}\label{duxe9monstrations}}
 
 Nous détaillons ici intégralement la preuve de l'isomorphisme canonique
 entre l'espace \(E\) et son bidual \(E^{**}\), pierre angulaire de
@@ -149,7 +115,7 @@ isomorphisme de \(\mathbb{K}\)-espaces vectoriels.
 \textbf{Preuve pas-à-pas :}
 
 \begin{enumerate}
-
+\def\labelenumi{\arabic{enumi}.}
 \item
   \textbf{Typage et bonne définition de \(J\) :} Fixons \(x \in E\).
   L'application \(J(x)\) prend en argument une forme linéaire
@@ -206,15 +172,15 @@ isomorphisme de \(\mathbb{K}\)-espaces vectoriels.
   achevée. \(\blacksquare\)
 \end{enumerate}
 
-
-\subsection{4. Exercices d'Application}
+\hypertarget{exercices-dapplication}{%
+\subsection{4. Exercices d'Application}\label{exercices-dapplication}}
 
 \emph{(Les exercices et corrections exhaustives sont répartis dans le
 répertoire \texttt{exos/}.)}
 
-
+\hypertarget{application-en-intelligence-artificielle}{%
 \subsection{5. Application en Intelligence
-Artificielle}
+Artificielle}\label{application-en-intelligence-artificielle}}
 
 La dualité n'est pas qu'une abstraction algébrique ; c'est le langage
 géométrique fondamental de la classification supervisée en apprentissage
@@ -242,11 +208,11 @@ indirectement des formes linéaires dans des espaces de Hilbert de
 dimension infinie sans jamais calculer explicitement les coordonnées des
 vecteurs dans ces espaces.
 
-
-\subsection{6. Liens Sémantiques}
+\hypertarget{liens-suxe9mantiques}{%
+\subsection{6. Liens Sémantiques}\label{liens-suxe9mantiques}}
 
 \begin{itemize}
-
+\tightlist
 \item
   \textbf{Concepts Précédents requis :} {[}{[}Jalon-7.md\textbar Jalon 7
   (Espaces vectoriels abstraits){]}{]}, {[}{[}Jalon-8.md\textbar Jalon 8
@@ -259,26 +225,26 @@ vecteurs dans ces espaces.
   contraintes){]}{]}
 \end{itemize}
 
+\hypertarget{exercices-dapplication-1}{%
+\section{Exercices d'Application}\label{exercices-dapplication-1}}
 
-\section{Exercices d'Application}
-
-
+\hypertarget{exercice-1-espace-dual-en-dimension-2}{%
 \section{Exercice 1: Espace dual en dimension
-2}
+2}\label{exercice-1-espace-dual-en-dimension-2}}
 
-
-\subsection{Énoncé}
+\hypertarget{uxe9noncuxe9}{%
+\subsection{Énoncé}\label{uxe9noncuxe9}}
 
 Soit \(E = \mathbb{R}^2\). On considère la base canonique
 \((e_1, e_2)\). Déterminer la base duale \((e_1^*, e_2^*)\) et calculer
 \(e_1^*(3e_1 - 2e_2)\).
 
-
-\subsection{Correction détaillée}
+\hypertarget{correction-duxe9tailluxe9e}{%
+\subsection{Correction détaillée}\label{correction-duxe9tailluxe9e}}
 
 \begin{enumerate}
-
-
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   \textbf{Définition de la base duale :} Par définition, la base duale
   \((e_1^*, e_2^*)\) d'une base \((e_1, e_2)\) vérifie
@@ -287,7 +253,7 @@ Soit \(E = \mathbb{R}^2\). On considère la base canonique
   \textbf{Explicitation des formes linéaires :}
 
   \begin{itemize}
-
+  \tightlist
   \item
     \(e_1^*(x, y) = e_1^*(xe_1 + ye_2) = x e_1^*(e_1) + y e_1^*(e_2) = x \cdot 1 + y \cdot 0 = x\).
   \item
@@ -309,12 +275,12 @@ Soit \(E = \mathbb{R}^2\). On considère la base canonique
 Soit \(\phi : \mathbb{R}^3 \to \mathbb{R}\) définie par
 \(\phi(x, y, z) = 2x - y + 3z\). Déterminer une base de \(\ker \phi\).
 
-
-\subsection{Correction détaillée}
+\hypertarget{correction-duxe9tailluxe9e-1}{%
+\subsection{Correction détaillée}\label{correction-duxe9tailluxe9e-1}}
 
 \begin{enumerate}
-
-
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   \textbf{Définition du noyau :} Le noyau de \(\phi\) est l'ensemble des
   vecteurs sur lesquels la forme linéaire s'annule.
@@ -349,12 +315,12 @@ Soit \(F\) un sous-espace vectoriel d'un \(\mathbb{K}\)-espace vectoriel
 \(E\) de dimension finie \(n\). Démontrer le théorème de la dimension de
 l'orthogonal : \(\dim F + \dim F^\perp = n\).
 
-
-\subsection{Correction détaillée}
+\hypertarget{correction-duxe9tailluxe9e-2}{%
+\subsection{Correction détaillée}\label{correction-duxe9tailluxe9e-2}}
 
 \begin{enumerate}
-
-
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   \textbf{Définition de l'application restriction :} On considère
   l'application linéaire \(\rho : E^* \to F^*\) définie par
@@ -383,7 +349,7 @@ l'orthogonal : \(\dim F + \dim F^\perp = n\).
   \textbf{Substitutions des dimensions :}
 
   \begin{itemize}
-
+  \tightlist
   \item
     \(\dim E^* = \dim E = n\)
   \item
@@ -402,12 +368,12 @@ l'orthogonal : \(\dim F + \dim F^\perp = n\).
 \(\psi\) ont le même noyau si et seulement si elles sont
 proportionnelles.
 
-
-\subsection{Correction détaillée}
+\hypertarget{correction-duxe9tailluxe9e-3}{%
+\subsection{Correction détaillée}\label{correction-duxe9tailluxe9e-3}}
 
 \begin{enumerate}
-
-
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   \textbf{Sens direct (proportionnalité implique même noyau) :}
   Supposons qu'il existe un scalaire \(\lambda \neq 0\) tel que
@@ -450,12 +416,12 @@ proportionnelles.
 est caractérisé par une équation cartésienne de la forme
 \(\sum_{i=1}^n a_i x_i = 0\) où les \((a_i)\) ne sont pas tous nuls.
 
-
-\subsection{Correction détaillée}
+\hypertarget{correction-duxe9tailluxe9e-4}{%
+\subsection{Correction détaillée}\label{correction-duxe9tailluxe9e-4}}
 
 \begin{enumerate}
-
-
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   \textbf{Caractérisation par une forme linéaire :} Par définition, un
   hyperplan \(H\) est le noyau d'une forme linéaire non nulle, notons-la
@@ -491,12 +457,12 @@ Pour tout \(x \in E\), on définit l'application d'évaluation
 \(\text{ev}_x(\phi) = \phi(x)\). Montrer que l'application
 \(\Psi : x \mapsto \text{ev}_x\) est linéaire et injective.
 
-
-\subsection{Correction détaillée}
+\hypertarget{correction-duxe9tailluxe9e-5}{%
+\subsection{Correction détaillée}\label{correction-duxe9tailluxe9e-5}}
 
 \begin{enumerate}
-
-
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   \textbf{Étape 1:} \(\text{ev}_x\) est bien une forme linéaire sur
   \(E^*\) car
@@ -526,12 +492,12 @@ L'application \(\text{Tr} : M_n(\mathbb{K}) \to \mathbb{K}\) est une
 forme linéaire. Montrer que tout hyperplan \(H\) de \(M_n(\mathbb{K})\)
 contient au moins une matrice inversible (pour \(n \ge 2\)).
 
-
-\subsection{Correction détaillée}
+\hypertarget{correction-duxe9tailluxe9e-6}{%
+\subsection{Correction détaillée}\label{correction-duxe9tailluxe9e-6}}
 
 \begin{enumerate}
-
-
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   \textbf{Étape 1:} Un hyperplan de \(M_n(\mathbb{K})\) est le noyau
   d'une forme linéaire non nulle \(\phi\). Il est connu que toute forme
@@ -559,12 +525,12 @@ contient au moins une matrice inversible (pour \(n \ge 2\)).
 \(F_1, F_2\) deux sous-espaces de \(E\). Montrer que
 \((F_1 + F_2)^\perp = F_1^\perp \cap F_2^\perp\).
 
-
-\subsection{Correction détaillée}
+\hypertarget{correction-duxe9tailluxe9e-7}{%
+\subsection{Correction détaillée}\label{correction-duxe9tailluxe9e-7}}
 
 \begin{enumerate}
-
-
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   \textbf{Étape 1 :} Soit \(\phi \in (F_1 + F_2)^\perp\). Alors pour
   tout \(x \in F_1 + F_2, \phi(x)=0\). En particulier, pour tout
@@ -595,12 +561,12 @@ qu'elles sont linéairement indépendantes si et seulement si
 l'intersection de leurs noyaux \(\bigcap_{i=1}^p \ker \phi_i\) est de
 dimension \(n-p\).
 
-
-\subsection{Correction détaillée}
+\hypertarget{correction-duxe9tailluxe9e-8}{%
+\subsection{Correction détaillée}\label{correction-duxe9tailluxe9e-8}}
 
 \begin{enumerate}
-
-
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   \textbf{Étape 1:} On définit l'application linéaire
   \(\Phi : E \to \mathbb{K}^p\) par
@@ -632,12 +598,12 @@ dimension \(n-p\).
 distincts \(a_1, \dots, a_n\). Montrer que les formes linéaires
 d'évaluation \(\phi_i(P) = P(a_i)\) forment une base de \(E^*\).
 
-
-\subsection{Correction détaillée}
+\hypertarget{correction-duxe9tailluxe9e-9}{%
+\subsection{Correction détaillée}\label{correction-duxe9tailluxe9e-9}}
 
 \begin{enumerate}
-
-
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   \textbf{Étape 1:} La dimension de \(E\) est \(n\), donc
   \(\dim E^* = n\). Pour démontrer qu'une famille de \(n\) vecteurs
@@ -667,23 +633,23 @@ d'évaluation \(\phi_i(P) = P(a_i)\) forment une base de \(E^*\).
 
 \(\blacksquare\)
 
-
+\hypertarget{travaux-pratiques-et-simulations-algorithmiques}{%
 \section{Travaux Pratiques et Simulations
-Algorithmiques}
+Algorithmiques}\label{travaux-pratiques-et-simulations-algorithmiques}}
 
-
+\hypertarget{tp-1-impluxe9mentation-pure-python-dune-forme-linuxe9aire}{%
 \section{TP 1: Implémentation pure Python d'une forme
-linéaire}
+linéaire}\label{tp-1-impluxe9mentation-pure-python-dune-forme-linuxe9aire}}
 
-
-\subsection{Objectif mathématique}
+\hypertarget{objectif-mathuxe9matique}{%
+\subsection{Objectif mathématique}\label{objectif-mathuxe9matique}}
 
 Mise en pratique algorithmique de l'espace dual, de l'hyperplan et des
 notions fondamentales de l'algèbre linéaire, structurée en Python absolu
 sans bibliothèques de haut niveau.
 
-
-\subsection{Code Python}
+\hypertarget{code-python}{%
+\subsection{Code Python}\label{code-python}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -703,23 +669,23 @@ sans bibliothèques de haut niveau.
 \end{Highlighting}
 \end{Shaded}
 
-
-\subsection{Validation Rigoureuse}
+\hypertarget{validation-rigoureuse}{%
+\subsection{Validation Rigoureuse}\label{validation-rigoureuse}}
 
 Ce code vérifie le calcul algorithmique fondamental d'une forme linéaire
 \(\phi(x) = \sum a_i x_i\) par une boucle itérative stricte, sans
 artifice de bibliothèque externe. \# TP 2: Recherche de l'équation d'un
 hyperplan affine
 
-
-\subsection{Objectif mathématique}
+\hypertarget{objectif-mathuxe9matique-1}{%
+\subsection{Objectif mathématique}\label{objectif-mathuxe9matique-1}}
 
 Mise en pratique algorithmique de l'espace dual, de l'hyperplan et des
 notions fondamentales de l'algèbre linéaire, structurée en Python absolu
 sans bibliothèques de haut niveau.
 
-
-\subsection{Code Python}
+\hypertarget{code-python-1}{%
+\subsection{Code Python}\label{code-python-1}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -738,22 +704,22 @@ sans bibliothèques de haut niveau.
 \end{Highlighting}
 \end{Shaded}
 
-
-\subsection{Validation Rigoureuse}
+\hypertarget{validation-rigoureuse-1}{%
+\subsection{Validation Rigoureuse}\label{validation-rigoureuse-1}}
 
 Ce code calcule rigoureusement la constante affine \(d\) de l'hyperplan
 en traduisant l'égalité \(\phi(x_0) = d\) en Python pur. \# TP 3:
 Génération algorithmique d'une base de noyau (Dimension 3)
 
-
-\subsection{Objectif mathématique}
+\hypertarget{objectif-mathuxe9matique-2}{%
+\subsection{Objectif mathématique}\label{objectif-mathuxe9matique-2}}
 
 Mise en pratique algorithmique de l'espace dual, de l'hyperplan et des
 notions fondamentales de l'algèbre linéaire, structurée en Python absolu
 sans bibliothèques de haut niveau.
 
-
-\subsection{Code Python}
+\hypertarget{code-python-2}{%
+\subsection{Code Python}\label{code-python-2}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -777,22 +743,22 @@ sans bibliothèques de haut niveau.
 \end{Highlighting}
 \end{Shaded}
 
-
-\subsection{Validation Rigoureuse}
+\hypertarget{validation-rigoureuse-2}{%
+\subsection{Validation Rigoureuse}\label{validation-rigoureuse-2}}
 
 La fonction construit explicitement une famille génératrice libre pour
 le noyau (sous-espace de dimension \(n-1\)), validée par assertion. \#
 TP 4: Intersection analytique de deux hyperplans dans R\^{}2
 
-
-\subsection{Objectif mathématique}
+\hypertarget{objectif-mathuxe9matique-3}{%
+\subsection{Objectif mathématique}\label{objectif-mathuxe9matique-3}}
 
 Mise en pratique algorithmique de l'espace dual, de l'hyperplan et des
 notions fondamentales de l'algèbre linéaire, structurée en Python absolu
 sans bibliothèques de haut niveau.
 
-
-\subsection{Code Python}
+\hypertarget{code-python-3}{%
+\subsection{Code Python}\label{code-python-3}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -812,22 +778,22 @@ sans bibliothèques de haut niveau.
 \end{Highlighting}
 \end{Shaded}
 
-
-\subsection{Validation Rigoureuse}
+\hypertarget{validation-rigoureuse-3}{%
+\subsection{Validation Rigoureuse}\label{validation-rigoureuse-3}}
 
 L'intersection de deux hyperplans dans \(\mathbb{R}^2\) est résolue de
 manière algorithmique absolue par la formule de Cramer. \# TP 5: Dualité
 : Translation Vecteur-Forme (Théorème de Riesz discret)
 
-
-\subsection{Objectif mathématique}
+\hypertarget{objectif-mathuxe9matique-4}{%
+\subsection{Objectif mathématique}\label{objectif-mathuxe9matique-4}}
 
 Mise en pratique algorithmique de l'espace dual, de l'hyperplan et des
 notions fondamentales de l'algèbre linéaire, structurée en Python absolu
 sans bibliothèques de haut niveau.
 
-
-\subsection{Code Python}
+\hypertarget{code-python-4}{%
+\subsection{Code Python}\label{code-python-4}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -856,31 +822,9 @@ sans bibliothèques de haut niveau.
 \end{Highlighting}
 \end{Shaded}
 
-
-\subsection{Validation Rigoureuse}
+\hypertarget{validation-rigoureuse-4}{%
+\subsection{Validation Rigoureuse}\label{validation-rigoureuse-4}}
 
 Démontre en Python pur la construction de l'isomorphisme de Riesz :
 extraction rigoureuse du vecteur représentatif en évaluant la forme sur
 la base canonique.
-
-\vspace{1cm}
-\begin{center}
-\begin{tikzpicture}[scale=1.5]
-    % Axes
-    \draw[->] (-2,0) -- (3,0) node[right] {$x$};
-    \draw[->] (0,-1) -- (0,3) node[above] {$y$};
-
-    % Hyperplane (Line in 2D)
-    \draw[thick, blue] (-1.5, -0.5) -- (2.5, 2.166) node[above right] {$\ker(\phi)$ (Hyperplan $H$)};
-
-    % Normal vector
-    \draw[->, thick, red] (0.5, 0.833) -- (0.0, 1.583) node[above left] {Vecteur normal $w$};
-
-    % Point and projection
-    \filldraw[black] (2, 0.5) circle (1pt) node[below right] {$v$};
-
-    \node[align=center, below] at (0.5, -1.5) {Illustration de la dualité et séparation spatiale};
-\end{tikzpicture}
-\end{center}
-
-\end{document}

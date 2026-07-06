@@ -17,3 +17,5 @@ Soit $F$ un sous-espace vectoriel d'un $\mathbb{K}$-espace vectoriel $E$ de dime
    - $\dim \text{Im}(\rho) = \dim F^* = \dim F$
    On obtient : $n = \dim F^\perp + \dim F$.
 6. **Conclusion :** L'égalité $\dim F + \dim F^\perp = n$ est rigoureusement démontrée.
+
+$\blacksquare$
