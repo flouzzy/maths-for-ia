@@ -1,4 +1,4 @@
-# Exercice 9: Indépendance linéaire de formes linéaires (Difficulté 5/5)
+# Exercice 9: Indépendance linéaire de formes linéaires
 ## Énoncé
 Soient $\phi_1, \dots, \phi_p \in E^*$. Montrer qu'elles sont linéairement indépendantes si et seulement si l'intersection de leurs noyaux $\bigcap_{i=1}^p \ker \phi_i$ est de dimension $n-p$.
 

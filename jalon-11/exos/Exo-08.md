@@ -1,4 +1,4 @@
-# Exercice 8: Orthogonalité croisée (Difficulté 4/5)
+# Exercice 8: Orthogonalité croisée
 ## Énoncé
 Soient $F_1, F_2$ deux sous-espaces de $E$. Montrer que $(F_1 + F_2)^\perp = F_1^\perp \cap F_2^\perp$.
 

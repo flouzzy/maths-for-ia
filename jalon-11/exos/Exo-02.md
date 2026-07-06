@@ -1,4 +1,4 @@
-# Exercice 2: Noyau d'une forme linéaire (Difficulté 1/5)
+# Exercice 2: Noyau d'une forme linéaire
 ## Énoncé
 Soit $\phi : \mathbb{R}^3 \to \mathbb{R}$ définie par $\phi(x, y, z) = 2x - y + 3z$. Déterminer une base de $\ker \phi$.
 
