@@ -1,41 +1,26 @@
----
-uuid: "exo-11-04"
-title: "Exercice 4: Intersection d'hyperplans indépendants"
----
-# Exercice 4: Intersection d'hyperplans indépendants (Difficulté $\star \star \star$)
-
+# Exercice 4: Hyperplans et formes proportionnelles
 ## Énoncé
-Soit $E$ un espace vectoriel de dimension $n \ge 2$. Soient $H_1$ et $H_2$ deux hyperplans de $E$ dictés par les formes linéaires $\phi_1, \phi_2 \in E^*$. On suppose que $H_1 \neq H_2$. Démontrer avec la plus grande rigueur que la dimension de l'intersection $H_1 \cap H_2$ est égale à $n-2$.
+Soit $E = \mathbb{R}^3$ et sa base canonique $\mathcal{B} = (e_1, e_2, e_3)$. On considère les vecteurs :
+$u_1 = (1, 1, 1)$, $u_2 = (1, 1, 0)$, $u_3 = (1, 0, 0)$
+1. Montrer que $\mathcal{C} = (u_1, u_2, u_3)$ est une base de $E$.
+2. Déterminer les formes linéaires constituant la base duale $\mathcal{C}^* = (u_1^*, u_2^*, u_3^*)$ exprimées dans la base duale $\mathcal{B}^* = (e_1^*, e_2^*, e_3^*)$.
+
 
 ## Correction détaillée
+1. **Sens direct (proportionnalité implique même noyau) :**
+   Supposons qu'il existe un scalaire $\lambda \neq 0$ tel que $\phi = \lambda \psi$.
+   Soit $x \in \ker \phi$. Alors $\phi(x) = 0$, donc $\lambda \psi(x) = 0$. Comme $\lambda \neq 0$, on a $\psi(x) = 0$, donc $x \in \ker \psi$. Ainsi $\ker \phi \subset \ker \psi$.
+   Symétriquement, $\psi = \frac{1}{\lambda} \phi$, ce qui donne $\ker \psi \subset \ker \phi$. Donc $\ker \phi = \ker \psi$.
+2. **Sens réciproque (même noyau implique proportionnalité) :**
+   Supposons que $\ker \phi = \ker \psi = H$. Comme $\phi \neq 0$, il existe un vecteur $e_0 \in E$ tel que $\phi(e_0) \neq 0$. Quitte à diviser par $\phi(e_0)$, on peut choisir $e_0$ tel que $\phi(e_0) = 1$.
+3. **Décomposition d'un vecteur :** Soit $x \in E$ quelconque. Posons $x' = x - \phi(x)e_0$.
+4. **Évaluation de $x'$ :** Évaluons $\phi$ en $x'$ :
+   $$\phi(x') = \phi(x - \phi(x)e_0) = \phi(x) - \phi(x)\phi(e_0) = \phi(x) - \phi(x)(1) = 0$$
+   Donc $x' \in \ker \phi$.
+5. **Utilisation de l'égalité des noyaux :** Puisque $\ker \phi = \ker \psi$, on a nécessairement $x' \in \ker \psi$, ce qui implique $\psi(x') = 0$.
+6. **Relation de proportionnalité :**
+   $$\psi(x - \phi(x)e_0) = 0 \implies \psi(x) - \phi(x)\psi(e_0) = 0 \implies \psi(x) = \psi(e_0)\phi(x)$$
+   Ceci étant vrai pour tout $x \in E$, en posant $\lambda = \psi(e_0)$, on obtient l'égalité des formes linéaires $\psi = \lambda \phi$.
+7. **Conclusion :** Les deux formes linéaires sont proportionnelles.
 
-1. **Caractérisation de l'indépendance des formes :**
-   Les hyperplans sont donnés par $H_1 = \ker \phi_1$ et $H_2 = \ker \phi_2$.
-   Puisque les hyperplans sont distincts ($H_1 \neq H_2$), les formes linéaires $\phi_1$ et $\phi_2$ ne sont pas colinéaires. La famille $(\phi_1, \phi_2)$ est donc une famille libre dans l'espace dual $E^*$.
-
-2. **Construction de l'application conjointe :**
-   Définissons l'application linéaire $\Phi : E \to \mathbb{K}^2$ par $\Phi(x) = (\phi_1(x), \phi_2(x))$.
-   La linéarité de $\Phi$ découle directement de la linéarité de ses composantes.
-
-3. **Détermination du noyau de l'application conjointe :**
-   Le noyau de $\Phi$ est l'ensemble des vecteurs $x \in E$ tels que $\Phi(x) = (0, 0)$.
-   Cela signifie $\phi_1(x) = 0$ et $\phi_2(x) = 0$.
-   Donc $x \in \ker \phi_1 \cap \ker \phi_2$.
-   Par conséquent, $\ker \Phi = H_1 \cap H_2$.
-
-4. **Détermination du rang de l'application conjointe :**
-   L'image $\text{Im }\Phi$ est un sous-espace vectoriel de $\mathbb{K}^2$.
-   Supposons par l'absurde que $\text{Im }\Phi$ ne soit pas $\mathbb{K}^2$ tout entier. Alors sa dimension serait 0 ou 1.
-   Si $\dim(\text{Im }\Phi) = 1$, il existerait $(a, b) \in \mathbb{K}^2 \setminus \{(0,0)\}$ tel que pour tout $x \in E$, l'image soit orthogonale à $(a,b)$ au sens du produit scalaire canonique, soit $a\phi_1(x) + b\phi_2(x) = 0$.
-   Cela impliquerait que la combinaison linéaire $a\phi_1 + b\phi_2 = 0_{E^*}$, ce qui contredit formellement la liberté de la famille $(\phi_1, \phi_2)$.
-   L'hypothèse est donc absurde. $\Phi$ est surjective, et $\text{rg}(\Phi) = 2$.
-
-5. **Application du théorème du rang :**
-   Appliquons le théorème du rang à l'application $\Phi$ :
-   $$\dim(E) = \dim(\ker \Phi) + \text{rg}(\Phi)$$
-   En substituant les résultats établis :
-   $$n = \dim(H_1 \cap H_2) + 2$$
-   $$\dim(H_1 \cap H_2) = n - 2$$
-
-**Conclusion :**
-L'intersection de deux hyperplans distincts dans un espace de dimension $n$ crée structurellement un sous-espace de dimension $n-2$.
+$\blacksquare$

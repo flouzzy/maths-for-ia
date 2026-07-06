@@ -1,36 +1,27 @@
----
-uuid: "exo-11-03"
-title: "Exercice 3: Base duale d'une famille de polynômes"
----
-# Exercice 3: Base duale d'une famille de polynômes (Difficulté $\star \star \star$)
-
+# Exercice 3: Orthogonal d'un sous-espace
 ## Énoncé
-Dans l'espace vectoriel $E = \mathbb{R}_2[X]$ des polynômes de degré inférieur ou égal à 2, on considère la famille $\mathcal{B} = (P_0, P_1, P_2)$ où $P_0(X) = 1$, $P_1(X) = X-1$, et $P_2(X) = (X-1)^2$. Montrer que $\mathcal{B}$ est une base et déterminer la base duale $\mathcal{B}^* = (P_0^*, P_1^*, P_2^*)$.
+Soit $E = \mathbb{R}_2[X]$ l'espace vectoriel des polynômes de degré inférieur ou égal à 2.
+Soit la base canonique $\mathcal{B} = (1, X, X^2)$. On définit les formes linéaires suivantes sur $E$ :
+$\varphi_1(P) = P(0)$
+$\varphi_2(P) = P'(0)$
+$\varphi_3(P) = \frac{1}{2}P''(0)$
+Montrer que la famille $(\varphi_1, \varphi_2, \varphi_3)$ est exactement la base duale $\mathcal{B}^*$.
+
 
 ## Correction détaillée
+1. **Définition de l'application restriction :** On considère l'application linéaire $\rho : E^* \to F^*$ définie par $\rho(\phi) = \phi_{|F}$, c'est-à-dire que pour toute forme linéaire $\phi$ sur $E$, $\rho(\phi)$ est sa restriction au sous-espace $F$.
+2. **Étude du noyau de $\rho$ :** Par définition,
+   $$\ker \rho = \{ \phi \in E^* \mid \rho(\phi) = 0 \} = \{ \phi \in E^* \mid \forall x \in F, \phi(x) = 0 \}$$
+   Or, l'ensemble des formes linéaires qui s'annulent sur $F$ est exactement la définition de l'orthogonal $F^\perp$. Donc $\ker \rho = F^\perp$.
+3. **Étude de l'image de $\rho$ :** L'application $\rho$ est surjective. En effet, soit $\psi \in F^*$. On peut compléter une base $(e_1, \dots, e_p)$ de $F$ en une base $(e_1, \dots, e_p, e_{p+1}, \dots, e_n)$ de $E$. On définit alors une forme $\phi \in E^*$ par $\phi(e_i) = \psi(e_i)$ pour $1 \le i \le p$ et $\phi(e_i) = 0$ pour $i > p$. Ainsi $\phi_{|F} = \psi$.
+   Donc $\text{Im}(\rho) = F^*$.
+4. **Application du théorème du rang :** Le théorème du rang appliqué à $\rho : E^* \to F^*$ donne :
+   $$\dim E^* = \dim \ker \rho + \dim \text{Im}(\rho)$$
+5. **Substitutions des dimensions :**
+   - $\dim E^* = \dim E = n$
+   - $\dim \ker \rho = \dim F^\perp$
+   - $\dim \text{Im}(\rho) = \dim F^* = \dim F$
+   On obtient : $n = \dim F^\perp + \dim F$.
+6. **Conclusion :** L'égalité $\dim F + \dim F^\perp = n$ est rigoureusement démontrée.
 
-1. **Démonstration de la liberté de $\mathcal{B}$ :**
-   Soient $\lambda_0, \lambda_1, \lambda_2 \in \mathbb{R}$ tels que $\lambda_0 P_0 + \lambda_1 P_1 + \lambda_2 P_2 = 0_E$.
-   Cela signifie que pour tout réel $x$, le polynôme s'annule :
-   $$\lambda_0 + \lambda_1(x-1) + \lambda_2(x-1)^2 = 0$$
-   L'évaluation en $x=1$ donne : $\lambda_0 = 0$.
-   En dérivant l'expression polynomiale formellement, nous obtenons :
-   $$\lambda_1 + 2\lambda_2(x-1) = 0$$
-   L'évaluation en $x=1$ de la dérivée donne : $\lambda_1 = 0$.
-   En dérivant une seconde fois : $2\lambda_2 = 0 \implies \lambda_2 = 0$.
-   La famille est libre. De cardinal 3 dans un espace de dimension 3, elle constitue une base.
-
-2. **Recherche de la base duale via les évaluations (formule de Taylor) :**
-   Par la formule de Taylor pour les polynômes, tout polynôme $P \in \mathbb{R}_2[X]$ peut s'écrire autour du point $a=1$ :
-   $$P(X) = P(1) + P'(1)(X-1) + \frac{P''(1)}{2}(X-1)^2$$
-   Substituons avec les vecteurs de notre base :
-   $$P(X) = P(1) P_0(X) + P'(1) P_1(X) + \frac{P''(1)}{2} P_2(X)$$
-   Par identification avec la décomposition unique dans la base $\mathcal{B}$ : $P = P_0^*(P) P_0 + P_1^*(P) P_1 + P_2^*(P) P_2$, nous identifions les formes coordonnées.
-
-3. **Vérification de l'action des formes trouvées sur la base :**
-   - Soit $P_0^*(P) = P(1)$. On a $P_0^*(P_0) = 1$, $P_0^*(P_1) = 0$, $P_0^*(P_2) = 0$. C'est correct.
-   - Soit $P_1^*(P) = P'(1)$. On a $P_1^*(P_0) = 0$, $P_1^*(P_1) = 1$, $P_1^*(P_2) = 2 \times 0 = 0$. C'est correct.
-   - Soit $P_2^*(P) = \frac{1}{2}P''(1)$. On a $P_2^*(P_0) = 0$, $P_2^*(P_1) = 0$, $P_2^*(P_2) = \frac{1}{2} \times 2 = 1$. C'est correct.
-
-**Conclusion :**
-La base duale $(P_0^*, P_1^*, P_2^*)$ est formellement caractérisée par les applications : $P \mapsto P(1)$, $P \mapsto P'(1)$ et $P \mapsto \frac{P''(1)}{2}$.
+$\blacksquare$

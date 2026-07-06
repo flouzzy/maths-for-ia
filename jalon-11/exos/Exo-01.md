@@ -1,11 +1,9 @@
----
-uuid: "exo-11-01"
-title: "Exercice 1: Espace dual en dimension 2"
----
-# Exercice 1: Espace dual en dimension 2 (Difficulté $\star$)
-
+# Exercice 1: Espace dual en dimension 2
 ## Énoncé
-Soit $E = \mathbb{R}^2$. On considère la base canonique $(e_1, e_2)$. Déterminer la base duale $(e_1^*, e_2^*)$ et calculer l'évaluation de la forme linéaire $e_1^*$ sur le vecteur $v = 3e_1 - 2e_2$.
+Soit $E = \mathbb{R}^2$ muni de sa base canonique $\mathcal{B} = (e_1, e_2)$. Soit $\varphi : E \to \mathbb{R}$ l'application définie par $\varphi(x, y) = 3x - 2y$.
+1. Montrer que $\varphi$ est une forme linéaire, c'est-à-dire que $\varphi \in E^*$.
+2. Déterminer les coordonnées de $\varphi$ dans la base duale $\mathcal{B}^* = (e_1^*, e_2^*)$.
+
 
 ## Correction détaillée
 
@@ -26,8 +24,8 @@ Soit $E = \mathbb{R}^2$. On considère la base canonique $(e_1, e_2)$. Détermin
 3. **Calcul de l'évaluation spécifique :**
    Considérons le vecteur $v = 3e_1 - 2e_2$. Nous appliquons la linéarité de $e_1^*$ :
    $$e_1^*(3e_1 - 2e_2) = 3 e_1^*(e_1) - 2 e_1^*(e_2)$$
-   En remplaçant par les définitions :
-   $$e_1^*(3e_1 - 2e_2) = 3 \times 1 - 2 \times 0 = 3$$
+   $$= 3 \times 1 - 2 \times 0$$
+   $$= 3$$
+5. **Conclusion :** La valeur de la forme linéaire $e_1^*$ sur le vecteur $3e_1 - 2e_2$ est $3$.
 
-**Conclusion :**
-La valeur de l'évaluation est $3$. L'action de la forme coordonnée $e_1^*$ a parfaitement isolé la composante du vecteur $v$ sur le premier axe de base.
+$\blacksquare$
