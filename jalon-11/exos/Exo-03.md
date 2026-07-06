@@ -1,6 +1,12 @@
 # Exercice 3: Orthogonal d'un sous-espace
 ## Énoncé
-Soit $F$ un sous-espace vectoriel d'un $\mathbb{K}$-espace vectoriel $E$ de dimension finie $n$. Démontrer le théorème de la dimension de l'orthogonal : $\dim F + \dim F^\perp = n$.
+Soit $E = \mathbb{R}_2[X]$ l'espace vectoriel des polynômes de degré inférieur ou égal à 2.
+Soit la base canonique $\mathcal{B} = (1, X, X^2)$. On définit les formes linéaires suivantes sur $E$ :
+$\varphi_1(P) = P(0)$
+$\varphi_2(P) = P'(0)$
+$\varphi_3(P) = \frac{1}{2}P''(0)$
+Montrer que la famille $(\varphi_1, \varphi_2, \varphi_3)$ est exactement la base duale $\mathcal{B}^*$.
+
 
 ## Correction détaillée
 1. **Définition de l'application restriction :** On considère l'application linéaire $\rho : E^* \to F^*$ définie par $\rho(\phi) = \phi_{|F}$, c'est-à-dire que pour toute forme linéaire $\phi$ sur $E$, $\rho(\phi)$ est sa restriction au sous-espace $F$.

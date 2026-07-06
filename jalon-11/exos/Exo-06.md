@@ -1,6 +1,9 @@
 # Exercice 6: Bidual d'un espace vectoriel
 ## Énoncé
-Pour tout $x \in E$, on définit l'application d'évaluation $\text{ev}_x : E^* \to \mathbb{K}$ par $\text{ev}_x(\phi) = \phi(x)$. Montrer que l'application $\Psi : x \mapsto \text{ev}_x$ est linéaire et injective.
+Soient $a, b, c$ trois réels distincts. On considère l'espace $E = \mathbb{R}_2[X]$.
+On définit les formes linéaires $\varphi_a(P) = P(a)$, $\varphi_b(P) = P(b)$ et $\varphi_c(P) = P(c)$.
+Montrer que la famille $(\varphi_a, \varphi_b, \varphi_c)$ est une base de $E^*$. En déduire l'existence et l'unicité des polynômes d'interpolation de Lagrange.
+
 
 ## Correction détaillée
 1. **Étape 1:** $\text{ev}_x$ est bien une forme linéaire sur $E^*$ car $\text{ev}_x(\phi_1 + \lambda \phi_2) = (\phi_1 + \lambda \phi_2)(x) = \phi_1(x) + \lambda \phi_2(x) = \text{ev}_x(\phi_1) + \lambda \text{ev}_x(\phi_2)$.

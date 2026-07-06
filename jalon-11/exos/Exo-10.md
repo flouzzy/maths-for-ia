@@ -1,6 +1,8 @@
 # Exercice 10: Polynômes de Lagrange et dualité
 ## Énoncé
-Dans $E = \mathbb{R}_{n-1}[X]$, on se donne $n$ scalaires distincts $a_1, \dots, a_n$. Montrer que les formes linéaires d'évaluation $\phi_i(P) = P(a_i)$ forment une base de $E^*$.
+Soit $E$ un espace vectoriel de dimension finie, et $F, G$ deux sous-espaces vectoriels de $E$.
+Montrer que $E = F \oplus G$ si et seulement si $E^* = F^\circ \oplus G^\circ$.
+
 
 ## Correction détaillée
 1. **Étape 1:** La dimension de $E$ est $n$, donc $\dim E^* = n$. Pour démontrer qu'une famille de $n$ vecteurs forme une base, il suffit de montrer que la famille $(\phi_1, \dots, \phi_n)$ est libre.

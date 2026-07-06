@@ -1,6 +1,7 @@
 # Exercice 9: Indépendance linéaire de formes linéaires
 ## Énoncé
-Soient $\phi_1, \dots, \phi_p \in E^*$. Montrer qu'elles sont linéairement indépendantes si et seulement si l'intersection de leurs noyaux $\bigcap_{i=1}^p \ker \phi_i$ est de dimension $n-p$.
+Soient $u, v \in E$. Montrer que $u$ et $v$ sont linéairement indépendants si et seulement s'il existe $\varphi \in E^*$ telle que $\varphi(u) = 1$ et $\varphi(v) = 0$.
+
 
 ## Correction détaillée
 1. **Étape 1:** On définit l'application linéaire $\Phi : E \to \mathbb{K}^p$ par $\Phi(x) = (\phi_1(x), \dots, \phi_p(x))$.

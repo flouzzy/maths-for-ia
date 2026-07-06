@@ -1,6 +1,8 @@
 # Exercice 5: Équation d'un hyperplan en dimension n
 ## Énoncé
-Soit $E$ un espace vectoriel de dimension $n$ et $(e_1, \dots, e_n)$ une base de $E$. Montrer qu'un hyperplan $H$ est caractérisé par une équation cartésienne de la forme $\sum_{i=1}^n a_i x_i = 0$ où les $(a_i)$ ne sont pas tous nuls.
+Soit $E$ un espace vectoriel de dimension $n \ge 2$. Soient $H_1$ et $H_2$ deux hyperplans de $E$.
+Montrer que si $H_1 \neq H_2$, alors $\dim(H_1 \cap H_2) = n - 2$.
+
 
 ## Correction détaillée
 1. **Caractérisation par une forme linéaire :** Par définition, un hyperplan $H$ est le noyau d'une forme linéaire non nulle, notons-la $\phi : E \to \mathbb{K}$.

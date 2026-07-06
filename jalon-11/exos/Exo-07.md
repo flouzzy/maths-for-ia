@@ -1,6 +1,8 @@
 # Exercice 7: Trace comme forme linéaire
 ## Énoncé
-L'application $\text{Tr} : M_n(\mathbb{K}) \to \mathbb{K}$ est une forme linéaire. Montrer que tout hyperplan $H$ de $M_n(\mathbb{K})$ contient au moins une matrice inversible (pour $n \ge 2$).
+Soit $E = \mathbb{R}^3$. Soit $F = \text{Vect}(v)$ avec $v = (1, 1, 1)$.
+Déterminer une base de $F^\circ$, l'orthogonal de $F$ dans l'espace dual $E^*$.
+
 
 ## Correction détaillée
 1. **Étape 1:** Un hyperplan de $M_n(\mathbb{K})$ est le noyau d'une forme linéaire non nulle $\phi$. Il est connu que toute forme linéaire sur $M_n(\mathbb{K})$ s'écrit $\phi(M) = \text{Tr}(AM)$ pour une unique matrice $A \in M_n(\mathbb{K})$. Ainsi, $H = \{ M \in M_n(\mathbb{K}) \mid \text{Tr}(AM) = 0 \}$.

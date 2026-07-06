@@ -1,6 +1,10 @@
 # Exercice 8: Orthogonalité croisée
 ## Énoncé
-Soient $F_1, F_2$ deux sous-espaces de $E$. Montrer que $(F_1 + F_2)^\perp = F_1^\perp \cap F_2^\perp$.
+Soit $E$ un espace vectoriel de dimension finie. Soit $\alpha \in E$. On définit l'application d'évaluation sur $E^*$ :
+$\text{ev}_\alpha : E^* \to \mathbb{K}$
+$\varphi \mapsto \varphi(\alpha)$
+Montrer rigoureusement que si $\text{ev}_\alpha = 0_{E^{**}}$, alors $\alpha = 0_E$.
+
 
 ## Correction détaillée
 1. **Étape 1 :** Soit $\phi \in (F_1 + F_2)^\perp$. Alors pour tout $x \in F_1 + F_2, \phi(x)=0$.

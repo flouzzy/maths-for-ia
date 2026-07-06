@@ -1,6 +1,9 @@
 # Exercice 1: Espace dual en dimension 2
 ## Énoncé
-Soit $E = \mathbb{R}^2$. On considère la base canonique $(e_1, e_2)$. Déterminer la base duale $(e_1^*, e_2^*)$ et calculer $e_1^*(3e_1 - 2e_2)$.
+Soit $E = \mathbb{R}^2$ muni de sa base canonique $\mathcal{B} = (e_1, e_2)$. Soit $\varphi : E \to \mathbb{R}$ l'application définie par $\varphi(x, y) = 3x - 2y$.
+1. Montrer que $\varphi$ est une forme linéaire, c'est-à-dire que $\varphi \in E^*$.
+2. Déterminer les coordonnées de $\varphi$ dans la base duale $\mathcal{B}^* = (e_1^*, e_2^*)$.
+
 
 ## Correction détaillée
 1. **Définition de la base duale :** Par définition, la base duale $(e_1^*, e_2^*)$ d'une base $(e_1, e_2)$ vérifie $e_i^*(e_j) = \delta_{ij}$.
