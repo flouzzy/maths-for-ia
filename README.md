@@ -93,7 +93,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 16](jalon-16/Jalon-16.md)** : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 17](jalon-17/Jalon-17.md)** : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 18](jalon-18/Jalon-18.md)** : Continuité des fonctions d'une variable réelle, théorème des valeurs intermédiaires et compacité locale. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 19](jalon-19/Jalon%2019%20%28D%C3%A9rivabilit%C3%A9%29.md)** : Dérivabilité, théorème de Rolle, théorème des accroissements finis et prolongement de la dérivée.
+- **[Jalon 19](jalon-19/Jalon-19.md)** : Dérivabilité, théorème de Rolle, théorème des accroissements finis et prolongement de la dérivée. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 20](jalon-20/Jalon%2020%20%28D%C3%A9riv%C3%A9es%20successives%29.md)** : Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités.
 - **[Jalon 21](jalon-21/Jalon%2021%20%28Suites%20de%20fonctions%29.md)** : Suites de fonctions, étude de la convergence simple et de la convergence uniforme.
 - **[Jalon 22](jalon-22/Jalon%2022%20%28S%C3%A9ries%20de%20fonctions%29.md)** : Séries de fonctions, convergence normale, théorèmes d'interversion limite-intégrale et limite-dérivée.
@@ -319,6 +319,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-07-06] : [Upsert/Création] du Jalon 19 - Dérivabilité. Status: Terminé.
 - 2026-07-04 : [Upsert/Création] du Jalon 18 - Continuité des fonctions d'une variable réelle. Status: Terminé.
 - [2026-07-03] : [Upsert/Création] du Jalon 17 - Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries. Status: Terminé.
 ### 2026-07-01-audit
