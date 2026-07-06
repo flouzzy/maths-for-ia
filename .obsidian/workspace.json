@@ -220,8 +220,10 @@
       "markdown-importer:Ouvrir l'importateur Markdown": false
     }
   },
-  "active": "18864fee124c4f40",
+  "active": "753729c1afd42e33",
   "lastOpenFiles": [
+    "MathsForAI/Bienvenue.md",
+    "MathsForAI",
     "test_gemini_rates.py",
     "test_enrich.py",
     "test.py",
@@ -231,8 +233,6 @@
     "enrich_jalon.py",
     "compile_with_pandoc.sh",
     "generate_tex_final_v2.py",
-    "output_script.py",
-    "jalon-1.tex",
     "jalon-17/Jalon 17 (Séries absolument convergentes).md",
     "jalon-141/Jalon-141.md",
     "Tableau de bord.md",
