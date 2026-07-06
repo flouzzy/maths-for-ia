@@ -1,31 +1,22 @@
-# Exercice 5: Intersection de deux hyperplans
+# Exercice 5: Équation d'un hyperplan en dimension n
 ## Énoncé
 Soit $E$ un espace vectoriel de dimension $n \ge 2$. Soient $H_1$ et $H_2$ deux hyperplans de $E$.
 Montrer que si $H_1 \neq H_2$, alors $\dim(H_1 \cap H_2) = n - 2$.
 
 
 ## Correction détaillée
-Soit $\varphi_1, \varphi_2 \in E^*$ deux formes linéaires non nulles telles que $H_1 = \ker(\varphi_1)$ et $H_2 = \ker(\varphi_2)$.
-Considérons l'application linéaire définie par :
-$\Phi : E \to \mathbb{K}^2$
-$x \mapsto (\varphi_1(x), \varphi_2(x))$
+1. **Caractérisation par une forme linéaire :** Par définition, un hyperplan $H$ est le noyau d'une forme linéaire non nulle, notons-la $\phi : E \to \mathbb{K}$.
+   $$H = \{ x \in E \mid \phi(x) = 0 \}$$
+2. **Décomposition dans la base :** Soit un vecteur quelconque $x \in E$. Il admet une unique décomposition dans la base $(e_1, \dots, e_n)$ :
+   $$x = \sum_{i=1}^n x_i e_i$$
+   où les $x_i$ sont les coordonnées de $x$.
+3. **Application de la linéarité :** Appliquons $\phi$ au vecteur $x$ :
+   $$\phi(x) = \phi\left(\sum_{i=1}^n x_i e_i\right)$$
+   Par linéarité de $\phi$, la somme et les scalaires sortent :
+   $$\phi(x) = \sum_{i=1}^n x_i \phi(e_i)$$
+4. **Identification des coefficients :** Posons pour tout $i \in \{1, \dots, n\}$, $a_i = \phi(e_i)$. L'équation d'appartenance à $H$ devient alors :
+   $$\sum_{i=1}^n a_i x_i = 0$$
+5. **Non-nullité des coefficients :** Comme $\phi$ est une forme linéaire non nulle, il existe au moins un vecteur de base $e_{i_0}$ tel que $\phi(e_{i_0}) \neq 0$. Donc, il existe au moins un $a_i$ tel que $a_i \neq 0$.
+6. **Conclusion :** Tout hyperplan est rigoureusement caractérisé par une équation linéaire homogène dont les coefficients ne sont pas tous nuls.
 
-Le noyau de $\Phi$ est constitué des vecteurs $x$ tels que $\varphi_1(x) = 0$ et $\varphi_2(x) = 0$.
-Ainsi, $\ker(\Phi) = \ker(\varphi_1) \cap \ker(\varphi_2) = H_1 \cap H_2$.
-
-D'après le théorème du rang, nous avons :
-$\dim(E) = \dim(\ker(\Phi)) + \text{rg}(\Phi)$
-$n = \dim(H_1 \cap H_2) + \dim(\text{Im}(\Phi))$
-
-L'image $\text{Im}(\Phi)$ est un sous-espace vectoriel de $\mathbb{K}^2$. Sa dimension est donc au plus 2.
-Supposons par l'absurde que $\text{rg}(\Phi) < 2$.
-Si $\text{rg}(\Phi) = 0$, alors $\Phi$ est l'application nulle, ce qui contredit $\varphi_1 \neq 0$.
-Si $\text{rg}(\Phi) = 1$, alors l'image de $\Phi$ est une droite vectorielle de $\mathbb{K}^2$. Cela signifie que les vecteurs images sont tous colinéaires.
-Il existerait alors des scalaires $(a, b) \neq (0,0)$ tels que pour tout $x \in E$, $a\varphi_1(x) + b\varphi_2(x) = 0$.
-Donc $a\varphi_1 + b\varphi_2 = 0$. Les formes linéaires $\varphi_1$ et $\varphi_2$ seraient proportionnelles (colinéaires).
-Or, deux formes linéaires proportionnelles et non nulles définissent le même noyau (le même hyperplan). On aurait alors $H_1 = H_2$, ce qui contredit l'hypothèse $H_1 \neq H_2$.
-
-Par conséquent, l'hypothèse $\text{rg}(\Phi) < 2$ est fausse. La seule possibilité est $\text{rg}(\Phi) = 2$, ce qui signifie que $\Phi$ est surjective sur $\mathbb{K}^2$.
-En remplaçant dans l'égalité du théorème du rang, nous obtenons :
-$n = \dim(H_1 \cap H_2) + 2 \implies \dim(H_1 \cap H_2) = n - 2$.
-La dimension de l'intersection de deux hyperplans distincts est exactement $n - 2$.
+$\blacksquare$

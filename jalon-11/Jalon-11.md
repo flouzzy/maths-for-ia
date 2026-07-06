@@ -9,121 +9,144 @@ tags:
 prev: "[[Jalon 10 (Changements de base).md]]"
 next: "[[Jalon 12 (Livrable IA).md]]"
 ---
+
 # Jalon 11 : Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie
 
 ## 1. Présentation du concept clé
-
-La genèse des formes linéaires trouve son origine dans le désir fondamental des mathématiciens de quantifier et de mesurer les objets géométriques et algébriques. Historiquement, l'étude des espaces vectoriels s'est d'abord concentrée sur la structure interne des vecteurs, vus comme des entités indépendantes munies d'opérations d'addition et de dilatation. Cependant, la mathématique de la fin du dix-neuvième siècle, sous l'impulsion de géomètres comme Hermann Grassmann et d'algébristes tels qu'Arthur Cayley, a révélé qu'un espace vectoriel ne prend sa pleine mesure que lorsqu'il est confronté aux instruments capables de l'évaluer.
-
-Un vecteur abstrait, isolé, manque de repères extrinsèques. Pour comprendre sa nature profonde, il est nécessaire de le soumettre à des "tests" ou des "instruments de mesure" qui renvoient une valeur scalaire. Ces instruments, par essence, doivent respecter la structure linéaire de l'espace : la mesure d'une somme d'objets doit correspondre à la somme des mesures, et l'amplification d'un objet doit amplifier sa mesure de manière proportionnelle. C'est précisément cette idée qui donne naissance aux formes linéaires. Elles constituent des observations parfaites, des sondes mathématiques qui projettent la richesse multidimensionnelle d'un espace vectoriel sur la droite des réels ou sur un corps abstrait.
-
-De cette notion d'instrument de mesure émerge une structure géométrique capitale : l'hyperplan. Lorsqu'un observateur regarde un paysage, l'horizon représente la frontière exacte où la hauteur perçue s'annule. Mathématiquement, un hyperplan est le noyau d'une forme linéaire non nulle. Il divise l'espace en deux demi-espaces stricts, imposant une séparation fondamentale. La dualité s'établit alors comme un changement de paradigme. Au lieu d'étudier les points de l'espace de manière intrinsèque, nous étudions l'espace de toutes les formes linéaires possibles, c'est-à-dire l'espace dual. Cette inversion de perspective permet de caractériser des sous-espaces par les équations qui les annulent, ouvrant la voie à l'orthogonalité au sens dual, et jetant les bases des théories d'optimisation modernes.
+L'essence du concept peut être approchée par l'analogie suivante :
+  - **Forme linéaire :** Imaginez que vous soyez un inspecteur de qualité. Un vecteur est un objet complexe (un produit avec poids, taille, prix). Une **forme linéaire**, c'est votre test : vous donnez une note unique (un nombre) à cet objet. Si vous testez deux produits ensemble, la note est la somme des notes. C'est un instrument de mesure simple et puissant.
+  - **Hyperplan :** C'est la frontière parfaite. En 2D, c'est une ligne qui sépare le plan en deux. En 3D, c'est une feuille de papier infinie qui sépare l'espace. Un hyperplan, c'est l'ensemble de tous les vecteurs qui reçoivent la note "zéro" par votre test.
+  - **Dualité :** C'est le monde des instruments de mesure. Si les vecteurs sont les "points", les formes linéaires sont les "regards" portés sur ces points.
+Nécessité historique et mathématique : Parfois, il est plus facile de décrire un objet par la manière dont il réagit à des tests (le dual) plutôt que par sa structure interne. C'est fondamental pour définir la notion de "perpendiculaire" ou pour séparer des données.
+Représentation géométrique : Imaginez une montagne. La hauteur en chaque point est une fonction (peut-être linéaire localement). L'hyperplan, c'est le "niveau de la mer" (altitude 0). L'espace dual, c'est l'ensemble de tous les plans inclinés possibles qui pourraient toucher la montagne.
 
 ## 2. Formalisation
+### A. Définitions Formelles
+Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension $n$.
+1. **Forme linéaire :** Une application $\phi : E \to \mathbb{K}$ est une forme linéaire si elle est un morphisme de $\mathbb{K}$-espaces vectoriels. Le typage chirurgical est le suivant : l'espace de départ $E$ est le domaine des objets vectoriels abstraits, tandis que l'espace d'arrivée $\mathbb{K}$ (un corps commutatif, usuellement $\mathbb{R}$ ou $\mathbb{C}$) représente la quantification scalaire. Formellement :
+   $$\forall (x, y) \in E \times E, \forall (\lambda, \mu) \in \mathbb{K} \times \mathbb{K}, \quad \phi(\lambda x + \mu y) = \lambda \phi(x) + \mu \phi(y)$$
+2. **Espace Dual ($E^*$) :** L'espace vectoriel $\mathcal{L}(E, \mathbb{K})$ de toutes les formes linéaires sur $E$.
+3. **Hyperplan :** Un sous-espace vectoriel $H$ de $E$ est un hyperplan s'il existe une forme linéaire non nulle $\phi \in E^*$ telle que $H = \ker \phi$.
+4. **Base Duale :** Soit $\mathcal{B} = (e_1, ..., e_n)$ une base de $E$. La base duale $\mathcal{B}^* = (e^*_1, ..., e^*_n)$ est définie par :
+   $$e^*_i(e_j) = \delta_{i,j} \quad (\text{symbole de Kronecker})$$
+5. **Orthogonalité (au sens de la dualité) :** Soit $A \subseteq E$. On définit l'orthogonal de $A$ dans $E^*$ par $A^\perp = \{ \phi \in E^* \mid \forall x \in A, \phi(x) = 0 \}$.
 
-### A. Espace Dual et Formes Linéaires
+### A. Anatomie et Typage Chirurgical
 
-Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel.
+Soit $E$ un espace vectoriel sur un corps commutatif $\mathbb{K}$ (typiquement $\mathbb{R}$ ou $\mathbb{C}$), de dimension finie $\dim(E) = n \in \mathbb{N}^*$.
 
-**Définition (Forme linéaire) :**
-Une application $\varphi : E \to \mathbb{K}$ est appelée une forme linéaire si elle est un morphisme d'espaces vectoriels, c'est-à-dire si elle vérifie :
-$$ \forall (x, y) \in E^2, \forall \lambda \in \mathbb{K}, \quad \varphi(\lambda x + y) = \lambda \varphi(x) + \varphi(y) $$
+1. **Forme linéaire :**
+   Une forme linéaire est une application $\phi : E \to \mathbb{K}$ satisfaisant la propriété de linéarité stricte :
+   $$ \forall (x, y) \in E^2, \forall (\lambda, \mu) \in \mathbb{K}^2, \quad \phi(\lambda x + \mu y) = \lambda \phi(x) + \mu \phi(y) $$
+   Le typage est fondamental : la source est l'espace vectoriel $E$, et le but est le corps de base $\mathbb{K}$ (considéré lui-même comme un $\mathbb{K}$-espace vectoriel de dimension 1).
 
-**Définition (Espace dual) :**
-L'ensemble des formes linéaires sur $E$, noté $E^*$, est appelé l'espace dual de $E$. Il s'identifie à l'espace des applications linéaires $\mathcal{L}(E, \mathbb{K})$. Muni de l'addition des fonctions et de la multiplication par un scalaire, $E^*$ est lui-même un $\mathbb{K}$-espace vectoriel.
+2. **Espace Dual ($E^*$) :**
+   L'ensemble de toutes les formes linéaires sur $E$, noté $E^* = \mathcal{L}(E, \mathbb{K})$, est l'espace dual de $E$. Il hérite d'une structure naturelle de $\mathbb{K}$-espace vectoriel.
 
-**Exemple de validation :**
-Dans $\mathbb{R}^n$, l'application $\varphi(x_1, \dots, x_n) = x_1$ (projection sur la première coordonnée) est une forme linéaire. En revanche, l'application $\psi(x_1, \dots, x_n) = x_1^2$ ne l'est pas, car $\psi(2x) = 4\psi(x) \neq 2\psi(x)$.
+3. **Hyperplan :**
+   Un sous-espace vectoriel $H \subset E$ est appelé un hyperplan si et seulement s'il existe une forme linéaire **non nulle** $\phi \in E^* \setminus \{0_{E^*}\}$ telle que :
+   $$ H = \ker(\phi) = \{ x \in E \mid \phi(x) = 0_{\mathbb{K}} \} $$
+   L'exigence $\phi \neq 0_{E^*}$ est impérative pour exclure le cas trivial où $H = E$.
 
-### B. Hyperplans
+4. **Base Duale :**
+   Si l'on fixe une base $\mathcal{B} = (e_1, e_2, \dots, e_n)$ de l'espace vectoriel $E$, on définit l'unique base duale $\mathcal{B}^* = (e_1^*, e_2^*, \dots, e_n^*)$ de $E^*$ par la relation de dualité de Kronecker :
+   $$ \forall (i, j) \in \llbracket 1, n \rrbracket^2, \quad e_i^*(e_j) = \delta_{i,j} = \begin{cases} 1_{\mathbb{K}} & \text{si } i = j \\ 0_{\mathbb{K}} & \text{si } i \neq j \end{cases} $$
 
-**Définition (Hyperplan) :**
-Un sous-espace vectoriel $H$ de $E$ est un hyperplan s'il existe une forme linéaire non nulle $\varphi \in E^*$ telle que $H = \ker(\varphi)$.
-De manière équivalente, $H$ est un hyperplan si et seulement si $H \oplus \text{Vect}(v) = E$ pour tout vecteur $v \in E \setminus H$.
+5. **Orthogonalité Duale :**
+   Soit $A$ une partie non vide de $E$. Son orthogonal dans l'espace dual $E^*$ est le sous-espace :
+   $$ A^\perp = \{ \phi \in E^* \mid \forall x \in A, \phi(x) = 0_{\mathbb{K}} \} $$
+   Réciproquement, si $B \subset E^*$, son orthogonal prédual dans $E$ est $B^\circ = \{ x \in E \mid \forall \phi \in B, \phi(x) = 0_{\mathbb{K}} \}$.
 
-**Exemple de validation :**
-Dans $\mathbb{R}^3$, le plan d'équation $x + y + z = 0$ est le noyau de la forme linéaire $\varphi(x, y, z) = x + y + z$. C'est un hyperplan de $\mathbb{R}^3$. Le vecteur $v = (1, 0, 0)$ n'appartient pas à ce plan, et on a bien $\mathbb{R}^3 = H \oplus \text{Vect}(v)$.
+### B. Théorèmes Fondamentaux
 
-### C. Base Duale et Bidual
+**Théorème 1 (Dimension de l'espace dual) :**
+Si $E$ est de dimension finie, alors $E$ et son dual $E^*$ ont la même dimension :
+$$ \dim(E) < +\infty \implies \dim(E^*) = \dim(E) $$
 
-Soit $E$ un espace vectoriel de dimension finie $n$, et soit $\mathcal{B} = (e_1, \dots, e_n)$ une base de $E$.
+**Théorème 2 (Isomorphisme Canonique au Bidual) :**
+Le bidual est défini comme $E^{**} = (E^*)^*$. L'application d'évaluation $J : E \to E^{**}$ définie par $\forall x \in E, J(x)(\phi) = \phi(x)$ (souvent noté $\langle \phi, x \rangle$) est un isomorphisme canonique. Cet isomorphisme est naturel car il ne dépend d'aucun choix de base, contrairement aux isomorphismes entre $E$ et $E^*$.
 
-**Définition (Base duale) :**
-Pour tout $i \in \{1, \dots, n\}$, on définit la forme linéaire $e_i^* : E \to \mathbb{K}$ comme l'unique forme linéaire prenant la valeur $1$ sur $e_i$ et $0$ sur les $e_j$ pour $j \neq i$. Formellement :
-$$ \forall j \in \{1, \dots, n\}, \quad e_i^*(e_j) = \delta_{i,j} $$
-où $\delta_{i,j}$ est le symbole de Kronecker. La famille $\mathcal{B}^* = (e_1^*, \dots, e_n^*)$ constitue une base de $E^*$, appelée base duale de $\mathcal{B}$.
 
-**Définition (Bidual) :**
-Le bidual de $E$, noté $E^{**}$, est l'espace dual de l'espace dual $E^*$, c'est-à-dire $E^{**} = (E^*)^*$.
-
-**Cas pathologique et dimension infinie :**
-L'isomorphisme entre un espace et son bidual est strictement canonique (indépendant du choix d'une base) uniquement en dimension finie. En dimension infinie, l'application canonique de $E$ vers $E^{**}$ est injective mais jamais surjective : l'espace n'est pas réflexif algébriquement.
-
-### D. Orthogonalité au sens de la dualité
-
-**Définition (Orthogonal) :**
-Soit $A$ une partie de $E$. L'orthogonal de $A$, noté $A^\circ$ (ou parfois $A^\perp$ par abus de notation), est l'ensemble des formes linéaires qui s'annulent sur $A$ :
-$$ A^\circ = \{ \varphi \in E^* \mid \forall x \in A, \varphi(x) = 0 \} $$
-C'est un sous-espace vectoriel de $E^*$.
-
-De manière duale, pour une partie $B$ de $E^*$, son orthogonal dans $E$ est :
-$$ B^\circ = \{ x \in E \mid \forall \varphi \in B, \varphi(x) = 0 \} $$
+### C. Exemples et Cas Pathologiques
+- **Exemple Trivial :** La forme linéaire nulle $\phi(x) = 0$ pour tout $x$. Son noyau est $E$ entier. L'image est $\{0\}$. Elle ne définit pas un hyperplan.
+- **Cas Limite (Dimension Infinie) :** Le théorème de la dimension du dual ($\dim E^* = \dim E$) est **absolument faux** en dimension infinie. Par exemple, l'espace des polynômes $\mathbb{R}[X]$ a une base dénombrable, mais son dual abstrait a une base de cardinalité indénombrable. L'isomorphisme canonique vers le bidual s'effondre (l'application $\Psi$ est seulement injective, plus surjective).
 
 ## 3. Démonstrations
+### Démonstration du Théorème Pivot : Dimension d'un hyperplan
+Soit $H$ un hyperplan de $E$ (dimension $n$). Montrons que $\dim H = n-1$.
 
-### Démonstration 1 : Dimension de l'espace dual
-**Théorème :** Si $E$ est un espace vectoriel de dimension finie $n$, alors son dual $E^*$ est également de dimension $n$.
+**Théorème :** Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension finie $n$. L'application $J : E \to E^{**}$ définie par $\forall x \in E, \forall \phi \in E^*, J(x)(\phi) = \phi(x)$ est un isomorphisme de $\mathbb{K}$-espaces vectoriels.
 
-**Démonstration pas-à-pas :**
-1. Soit $\mathcal{B} = (e_1, \dots, e_n)$ une base de $E$. Nous allons montrer que la famille $\mathcal{B}^* = (e_1^*, \dots, e_n^*)$ construite précédemment est une base de $E^*$.
-2. **Indépendance linéaire :** Soient $\lambda_1, \dots, \lambda_n \in \mathbb{K}$ tels que $\sum_{i=1}^n \lambda_i e_i^* = 0_{E^*}$.
-3. La fonction nulle $0_{E^*}$ évalue tout vecteur à zéro. En particulier, pour tout $j \in \{1, \dots, n\}$ :
-   $$ \left( \sum_{i=1}^n \lambda_i e_i^* \right)(e_j) = 0 $$
-4. Par linéarité, la somme devient :
-   $$ \sum_{i=1}^n \lambda_i e_i^*(e_j) = 0 $$
-5. Or, par définition de la base duale, $e_i^*(e_j) = \delta_{i,j}$. La somme se réduit au seul terme où $i = j$ :
-   $$ \lambda_j \cdot 1 = 0 \implies \lambda_j = 0 $$
-6. Ce résultat étant vrai pour tout $j$, la famille $(e_1^*, \dots, e_n^*)$ est libre.
-7. **Caractère générateur :** Soit $\varphi \in E^*$. Posons $\mu_i = \varphi(e_i)$ pour $i \in \{1, \dots, n\}$.
-8. Considérons la forme linéaire $\psi = \sum_{i=1}^n \mu_i e_i^*$.
-9. Pour tout vecteur de base $e_j$, nous avons :
-   $$ \psi(e_j) = \sum_{i=1}^n \mu_i e_i^*(e_j) = \mu_j \cdot 1 = \mu_j = \varphi(e_j) $$
-10. Deux applications linéaires qui coïncident sur une base coïncident sur tout l'espace. Par conséquent, $\varphi = \psi = \sum_{i=1}^n \mu_i e_i^*$.
-11. La famille $\mathcal{B}^*$ engendre $E^*$.
-12. Étant libre et génératrice, $\mathcal{B}^*$ est une base de $E^*$, qui possède $n$ éléments. Ainsi, $\dim(E^*) = n$.
+**Preuve pas-à-pas :**
 
-### Démonstration 2 : Isomorphisme canonique avec le bidual
-**Théorème :** En dimension finie, l'application $\Psi : E \to E^{**}$ définie par $\Psi(x)(\varphi) = \varphi(x)$ est un isomorphisme canonique.
+1. **Typage et bonne définition de $J$ :**
+   Fixons $x \in E$. L'application $J(x)$ prend en argument une forme linéaire $\phi \in E^*$ et renvoie un scalaire $\phi(x) \in \mathbb{K}$.
+   Vérifions que $J(x)$ est linéaire (c'est-à-dire $J(x) \in E^{**}$). Soient $\phi, \psi \in E^*$ et $\lambda \in \mathbb{K}$ :
+   $$ J(x)(\lambda \phi + \psi) = (\lambda \phi + \psi)(x) $$
+   Par définition des opérations sur $\mathcal{L}(E, \mathbb{K})$ :
+   $$ (\lambda \phi + \psi)(x) = \lambda \phi(x) + \psi(x) = \lambda J(x)(\phi) + J(x)(\psi) $$
+   Donc $J(x)$ est bien une forme linéaire sur $E^*$. L'application globale $J$ est donc bien typée : $J : E \to E^{**}$.
 
-**Démonstration pas-à-pas :**
-1. **Linéarité de $\Psi$ :** Soient $x, y \in E$ et $\lambda \in \mathbb{K}$. Pour toute forme $\varphi \in E^*$ :
-   $$ \Psi(\lambda x + y)(\varphi) = \varphi(\lambda x + y) $$
-2. Par linéarité de la forme $\varphi$, on obtient :
-   $$ \varphi(\lambda x + y) = \lambda \varphi(x) + \varphi(y) = \lambda \Psi(x)(\varphi) + \Psi(y)(\varphi) = (\lambda \Psi(x) + \Psi(y))(\varphi) $$
-3. Cette égalité est vraie pour toute $\varphi$, d'où $\Psi(\lambda x + y) = \lambda \Psi(x) + \Psi(y)$. L'application $\Psi$ est bien linéaire.
-4. **Injectivité de $\Psi$ :** Supposons qu'il existe $x \in E$ tel que $\Psi(x) = 0_{E^{**}}$.
-5. Cela signifie que pour toute forme $\varphi \in E^*$, on a $\Psi(x)(\varphi) = 0$, donc $\varphi(x) = 0$.
-6. Procédons par l'absurde et supposons que $x \neq 0_E$.
-7. Comme $x$ est un vecteur non nul, on peut le compléter pour former une base $\mathcal{B} = (x, e_2, \dots, e_n)$ de $E$ (théorème de la base incomplète).
-8. Considérons la forme coordonnée $x^*$ issue de la base duale de $\mathcal{B}$. Par définition, $x^*(x) = 1$.
-9. Nous avons trouvé une forme linéaire $x^* \in E^*$ qui ne s'annule pas sur $x$, ce qui contredit l'hypothèse $\varphi(x) = 0$ pour toute $\varphi$.
-10. Par conséquent, $x$ doit être le vecteur nul, $x = 0_E$. Le noyau de $\Psi$ est réduit à $\{0_E\}$, donc $\Psi$ est injective.
-11. **Surjectivité par dimension :** Nous savons que $\dim(E) = n$. Par le théorème précédent, $\dim(E^*) = n$, et de nouveau, $\dim(E^{**}) = \dim(E^*) = n$.
-12. $\Psi$ est une application linéaire injective entre deux espaces vectoriels de même dimension finie $n$. Le théorème du rang garantit alors qu'elle est un isomorphisme.
+2. **Linéarité de $J$ :**
+   Montrons que $J$ est une application linéaire. Soient $x, y \in E$ et $\alpha \in \mathbb{K}$.
+   Il faut montrer l'égalité fonctionnelle dans $E^{**}$ : $J(\alpha x + y) = \alpha J(x) + J(y)$.
+   Pour toute forme $\phi \in E^*$, évaluons les deux membres :
+   $$ J(\alpha x + y)(\phi) = \phi(\alpha x + y) $$
+   Par linéarité de $\phi$ (car $\phi \in E^*$) :
+   $$ \phi(\alpha x + y) = \alpha \phi(x) + \phi(y) $$
+   D'autre part, la définition des opérations dans $E^{**}$ donne :
+   $$ (\alpha J(x) + J(y))(\phi) = \alpha J(x)(\phi) + J(y)(\phi) = \alpha \phi(x) + \phi(y) $$
+   L'égalité sur chaque $\phi \in E^*$ prouve que $J(\alpha x + y) = \alpha J(x) + J(y)$. L'application $J$ est donc linéaire.
+
+3. **Injectivité de $J$ :**
+   Étudions le noyau $\ker(J)$.
+   Soit $x \in \ker(J)$. Cela signifie que $J(x) = 0_{E^{**}}$, c'est-à-dire que pour toute $\phi \in E^*, J(x)(\phi) = 0_{\mathbb{K}}$.
+   Donc, $\forall \phi \in E^*, \phi(x) = 0_{\mathbb{K}}$.
+   Supposons par l'absurde que $x \neq 0_E$.
+   Puisque $x$ est un vecteur non nul d'un espace de dimension finie, le théorème de la base incomplète autorise à étendre le vecteur unique $(x)$ en une base de $E$ : $\mathcal{B} = (x, e_2, \dots, e_n)$.
+   Considérons alors la première forme linéaire coordonnée $e_1^*$ de la base duale $\mathcal{B}^*$. Par construction, $e_1^*(x) = 1_{\mathbb{K}}$.
+   Or, nous avions déduit que pour toute forme $\phi$, $\phi(x) = 0_{\mathbb{K}}$. En appliquant cela à $\phi = e_1^*$, on obtient $1_{\mathbb{K}} = 0_{\mathbb{K}}$, ce qui est une contradiction manifeste dans un corps.
+   L'hypothèse $x \neq 0_E$ est donc fausse. On en déduit que $x = 0_E$, d'où $\ker(J) = \{0_E\}$. $J$ est injective.
+
+4. **Bijectivité par argument dimensionnel :**
+   Nous savons que si $\dim(E) = n$, alors $\dim(E^*) = n$.
+   En appliquant ce même théorème à l'espace vectoriel $E^*$ (qui est aussi de dimension finie $n$), on obtient $\dim(E^{**}) = \dim((E^*)^*) = \dim(E^*) = n$.
+   Ainsi, $\dim(E) = \dim(E^{**}) = n$.
+   Puisque $J : E \to E^{**}$ est une application linéaire injective entre deux espaces de même dimension finie, c'est obligatoirement un isomorphisme.
+   La démonstration est achevée. $\blacksquare$
 
 ## 4. Exercices d'Application
+### Exercice 1 : Application Directe (Base Duale)
+**Énoncé :** Dans $\mathbb{R}^2$, soit $\mathcal{B} = (e_1, e_2)$ avec $e_1 = (1, 1)$ et $e_2 = (1, 0)$. Exprimer les formes linéaires $e^*_1$ et $e^*_2$ en fonction des coordonnées canoniques $(x, y)$.
+**Correction Détaillée :**
+1. Soit $\phi(x, y) = ax + by$ une forme linéaire.
+2. Pour $e^*_1$ :
+   - $e^*_1(e_1) = 1 \implies e^*_1(1, 1) = a+b = 1$
+   - $e^*_1(e_2) = 0 \implies e^*_1(1, 0) = a = 0$
+   - On en tire $a=0$ et $b=1$. Donc $e^*_1(x, y) = y$.
+3. Pour $e^*_2$ :
+   - $e^*_2(e_1) = 0 \implies e^*_2(1, 1) = a+b = 0$
+   - $e^*_2(e_2) = 1 \implies e^*_2(1, 0) = a = 1$
+   - On en tire $a=1$ et $b=-1$. Donc $e^*_2(x, y) = x - y$.
+**Conclusion :** $\mathcal{B}^* = (y, x-y)$.
 
-*(Les exercices d'application et leurs démonstrations complètes sont développés dans les fichiers dédiés `Exo-01.md` à `Exo-10.md` de ce jalon.)*
+### Exercice 2 : Niveau Avancé (Intersection d'hyperplans)
+**Énoncé :** Montrer que l'intersection de deux hyperplans distincts $H_1$ et $H_2$ est un sous-espace de dimension $n-2$.
+**Correction Détaillée :**
+1. Soient $\phi_1, \phi_2$ les formes linéaires associées telles que $H_1 = \ker \phi_1$ et $H_2 = \ker \phi_2$.
+2. Définissons l'application $\Phi : E \to \mathbb{K}^2$ par $\Phi(x) = (\phi_1(x), \phi_2(x))$.
+3. Le noyau de $\Phi$ est $\ker \phi_1 \cap \ker \phi_2 = H_1 \cap H_2$.
+4. Par le théorème du rang : $\dim E = \dim(H_1 \cap H_2) + \text{rg}(\Phi)$.
+5. Comme $H_1$ et $H_2$ sont distincts, $\phi_1$ et $\phi_2$ ne sont pas proportionnelles. La famille $(\phi_1, \phi_2)$ est donc libre dans $E^*$.
+6. L'image de $\Phi$ est donc de dimension 2 (surjection sur $\mathbb{K}^2$).
+7. $\text{rg}(\Phi) = 2 \implies n = \dim(H_1 \cap H_2) + 2$.
+**Conclusion :** $\dim(H_1 \cap H_2) = n - 2$.
 
 ## 5. Application en Intelligence Artificielle
-
-Dans le cadre du Machine Learning, les hyperplans sont l'ossature algorithmique des méthodes de classification linéaire. Le concept de forme linéaire modélise la projection d'un vecteur de caractéristiques multidimensionnel (par exemple, les pixels d'une image ou les pondérations d'un texte) vers une variable de décision scalaire.
-
-Un Support Vector Machine (SVM) cherche l'hyperplan optimal qui sépare deux classes de données. L'équation de cet hyperplan séparateur est $H = \{ x \in E \mid \varphi(x) + b = 0 \}$, où $\varphi \in E^*$ est la forme linéaire associée aux poids du modèle, et $b$ est le biais.
-
-Plus profondément, la résolution analytique du SVM fait appel à la dualité de l'optimisation convexe (Dualité de Lagrange). Le problème primal, formulé dans l'espace des données $E$, implique de minimiser la norme des pondérations sous contraintes. Le problème dual, formulé par l'intermédiaire de l'espace dual $E^*$, convertit cette recherche complexe en une maximisation sur les variables duales (les multiplicateurs de Lagrange). Seuls les vecteurs support – ceux qui se situent sur les marges de l'hyperplan – posséderont des multiplicateurs non nuls. Cette transformation permet, grâce à l'isomorphisme et aux propriétés d'orthogonalité, de traiter des données en dimension infinie via l'astuce du noyau (kernel trick), révolutionnant ainsi l'apprentissage statistique.
+- **Le Pont Théorique :** Les hyperplans sont les **Séparateurs Linéaires** fondamentaux de l'apprentissage automatique.
+- **Exemple Concret :** Dans les **SVM (Support Vector Machines)**, l'algorithme cherche l'hyperplan optimal qui sépare deux classes de données (ex: Spam vs Non-Spam). L'équation de l'hyperplan $\phi(x) + b = 0$ (où $\phi$ est une forme linéaire) définit la frontière de décision. La **Dualité de Lagrange**, utilisée pour résoudre ce problème d'optimisation, repose entièrement sur le passage de l'espace des données (primal) à l'espace des contraintes (dual).
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon 8 (Applications linéaires, noyau (ker), image (Im) et démonstration du théorème du rang)]]
-- **Concepts Futurs dépendants :** [[Jalon 12 (Livrable IA)]], [[Jalon 121 (Ensembles convexes)]], [[Jalon 123 (Problèmes d'optimisation sous contraintes)]]
+- **Concepts Précédents requis :** [[Jalon-7.md|Jalon 7 (Espaces vectoriels abstraits)]], [[Jalon-8.md|Jalon 8 (Applications linéaires)]]
+- **Concepts Futurs dépendants :** [[Jalon 12 (Livrable IA).md|Jalon 12 (Livrable IA)]], [[Jalon-25.md|Jalon 25 (Formes bilinéaires)]], [[Jalon-123.md|Jalon 123 (Problèmes d'optimisation sous contraintes)]]
