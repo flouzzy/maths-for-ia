@@ -1,6 +1,10 @@
-# Exercice 8: Orthogonalité croisée (Difficulté 4/5)
+# Exercice 8: Orthogonalité croisée
 ## Énoncé
-Soient $F_1, F_2$ deux sous-espaces de $E$. Montrer que $(F_1 + F_2)^\perp = F_1^\perp \cap F_2^\perp$.
+Soit $E$ un espace vectoriel de dimension finie. Soit $\alpha \in E$. On définit l'application d'évaluation sur $E^*$ :
+$\text{ev}_\alpha : E^* \to \mathbb{K}$
+$\varphi \mapsto \varphi(\alpha)$
+Montrer rigoureusement que si $\text{ev}_\alpha = 0_{E^{**}}$, alors $\alpha = 0_E$.
+
 
 ## Correction détaillée
 1. **Étape 1 :** Soit $\phi \in (F_1 + F_2)^\perp$. Alors pour tout $x \in F_1 + F_2, \phi(x)=0$.
@@ -10,3 +14,5 @@ Soient $F_1, F_2$ deux sous-espaces de $E$. Montrer que $(F_1 + F_2)^\perp = F_1
 3. **Étape 3 :** On a par linéarité $\phi(x) = \phi(x_1+x_2) = \phi(x_1) + \phi(x_2)$.
 4. **Étape 4 :** Puisque $\phi \in F_1^\perp$, $\phi(x_1)=0$. Puisque $\phi \in F_2^\perp$, $\phi(x_2)=0$. Donc $\phi(x) = 0 + 0 = 0$. Ainsi $\phi \in (F_1+F_2)^\perp$. On a l'inclusion réciproque.
 5. **Conclusion:** Par double inclusion, l'égalité $(F_1 + F_2)^\perp = F_1^\perp \cap F_2^\perp$ est strictement démontrée.
+
+$\blacksquare$

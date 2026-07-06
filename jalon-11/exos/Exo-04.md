@@ -1,6 +1,10 @@
-# Exercice 4: Hyperplans et formes proportionnelles (Difficulté 2/5)
+# Exercice 4: Hyperplans et formes proportionnelles
 ## Énoncé
-Montrer que deux formes linéaires non nulles $\phi$ et $\psi$ ont le même noyau si et seulement si elles sont proportionnelles.
+Soit $E = \mathbb{R}^3$ et sa base canonique $\mathcal{B} = (e_1, e_2, e_3)$. On considère les vecteurs :
+$u_1 = (1, 1, 1)$, $u_2 = (1, 1, 0)$, $u_3 = (1, 0, 0)$
+1. Montrer que $\mathcal{C} = (u_1, u_2, u_3)$ est une base de $E$.
+2. Déterminer les formes linéaires constituant la base duale $\mathcal{C}^* = (u_1^*, u_2^*, u_3^*)$ exprimées dans la base duale $\mathcal{B}^* = (e_1^*, e_2^*, e_3^*)$.
+
 
 ## Correction détaillée
 1. **Sens direct (proportionnalité implique même noyau) :**
@@ -18,3 +22,5 @@ Montrer que deux formes linéaires non nulles $\phi$ et $\psi$ ont le même noya
    $$\psi(x - \phi(x)e_0) = 0 \implies \psi(x) - \phi(x)\psi(e_0) = 0 \implies \psi(x) = \psi(e_0)\phi(x)$$
    Ceci étant vrai pour tout $x \in E$, en posant $\lambda = \psi(e_0)$, on obtient l'égalité des formes linéaires $\psi = \lambda \phi$.
 7. **Conclusion :** Les deux formes linéaires sont proportionnelles.
+
+$\blacksquare$

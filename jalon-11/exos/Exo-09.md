@@ -1,6 +1,7 @@
-# Exercice 9: Indépendance linéaire de formes linéaires (Difficulté 5/5)
+# Exercice 9: Indépendance linéaire de formes linéaires
 ## Énoncé
-Soient $\phi_1, \dots, \phi_p \in E^*$. Montrer qu'elles sont linéairement indépendantes si et seulement si l'intersection de leurs noyaux $\bigcap_{i=1}^p \ker \phi_i$ est de dimension $n-p$.
+Soient $u, v \in E$. Montrer que $u$ et $v$ sont linéairement indépendants si et seulement s'il existe $\varphi \in E^*$ telle que $\varphi(u) = 1$ et $\varphi(v) = 0$.
+
 
 ## Correction détaillée
 1. **Étape 1:** On définit l'application linéaire $\Phi : E \to \mathbb{K}^p$ par $\Phi(x) = (\phi_1(x), \dots, \phi_p(x))$.
@@ -9,3 +10,5 @@ Soient $\phi_1, \dots, \phi_p \in E^*$. Montrer qu'elles sont linéairement ind�
 4. **Étape 4:** L'image de la transposée $\Phi^t : (\mathbb{K}^p)^* \to E^*$ est le sous-espace engendré par les $\phi_i$. Or $\text{rg}(\Phi) = \text{rg}(\Phi^t) = \dim \text{Vect}(\phi_1, \dots, \phi_p)$.
 5. **Étape 5:** Ainsi, $\dim \text{Vect}(\phi_1, \dots, \phi_p) = p$ (c'est-à-dire que la famille est libre) si et seulement si $\text{rg}(\Phi) = p$, ce qui équivaut à $\dim \bigcap \ker \phi_i = n - p$.
 6. **Conclusion:** L'équivalence est rigoureusement prouvée via l'application associée et le théorème du rang.
+
+$\blacksquare$

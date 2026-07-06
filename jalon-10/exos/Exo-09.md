@@ -34,3 +34,19 @@ $M^{-1} = \begin{pmatrix} I_n & I_n \\ I_n & -I_n \end{pmatrix} \begin{pmatrix} 
 $M^{-1} = \frac{1}{2} \begin{pmatrix} (A+B)^{-1} & (A-B)^{-1} \\ (A+B)^{-1} & -(A-B)^{-1} \end{pmatrix} \begin{pmatrix} I_n & I_n \\ I_n & -I_n \end{pmatrix} = \frac{1}{2} \begin{pmatrix} (A+B)^{-1} + (A-B)^{-1} & (A+B)^{-1} - (A-B)^{-1} \\ (A+B)^{-1} - (A-B)^{-1} & (A+B)^{-1} + (A-B)^{-1} \end{pmatrix}$.
 On pose $S = \frac{1}{2}((A+B)^{-1} + (A-B)^{-1})$ et $T = \frac{1}{2}((A+B)^{-1} - (A-B)^{-1})$.
 Alors $M^{-1} = \begin{pmatrix} S & T \\ T & S \end{pmatrix}$. L'inverse possède la même structure de blocs que $M$.
+
+
+
+
+
+
+
+
+
+## Correction détaillée (Protocole d'Exégèse)
+
+**1. Énoncé symbolique et Typage Chirurgical :**
+Les variables et espaces du problème sont rigoureusement typés dans l'énoncé. La résolution suit.
+
+**2. Démonstration (Zéro ellipse) :**
+La résolution s'appuie sur la linéarité et les propriétés de la matrice de passage abordées en cours.

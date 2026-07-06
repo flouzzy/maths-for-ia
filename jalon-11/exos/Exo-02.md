@@ -1,6 +1,9 @@
-# Exercice 2: Noyau d'une forme linéaire (Difficulté 1/5)
+# Exercice 2: Noyau d'une forme linéaire
 ## Énoncé
-Soit $\phi : \mathbb{R}^3 \to \mathbb{R}$ définie par $\phi(x, y, z) = 2x - y + 3z$. Déterminer une base de $\ker \phi$.
+Soit $\varphi : \mathbb{R}^3 \to \mathbb{R}$ définie par $\varphi(x, y, z) = x + 2y - z$.
+1. Déterminer la dimension du noyau de $\varphi$, noté $H = \ker(\varphi)$.
+2. Donner une base de cet hyperplan $H$.
+
 
 ## Correction détaillée
 1. **Définition du noyau :** Le noyau de $\phi$ est l'ensemble des vecteurs sur lesquels la forme linéaire s'annule.
@@ -16,3 +19,5 @@ Soit $\phi : \mathbb{R}^3 \to \mathbb{R}$ définie par $\phi(x, y, z) = 2x - y +
    $$\lambda(1, 2, 0) + \mu(0, 3, 1) = (\lambda, 2\lambda+3\mu, \mu) = (0, 0, 0)$$
    On obtient immédiatement $\lambda = 0$ et $\mu = 0$. La famille $(u_1, u_2)$ est libre.
 7. **Conclusion :** La famille $((1,2,0), (0,3,1))$ est une base de $\ker \phi$, qui est bien un hyperplan (dimension $3 - 1 = 2$).
+
+$\blacksquare$

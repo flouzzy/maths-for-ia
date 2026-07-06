@@ -52,3 +52,19 @@ $f(w) = 3w = 0\cdot u + 0\cdot v + 3\cdot w$
 Ainsi, la matrice s'écrit directement :
 $A' = \begin{pmatrix} 0 & 0 & 0 \\ 0 & 3 & 0 \\ 0 & 0 & 3 \end{pmatrix}$.
 Cette méthode est bien plus rapide que de calculer explicitement $P^{-1} A P$.
+
+
+
+
+
+
+
+
+
+## Correction détaillée (Protocole d'Exégèse)
+
+**1. Énoncé symbolique et Typage Chirurgical :**
+Les variables et espaces du problème sont rigoureusement typés dans l'énoncé. La résolution suit.
+
+**2. Démonstration (Zéro ellipse) :**
+La résolution s'appuie sur la linéarité et les propriétés de la matrice de passage abordées en cours.

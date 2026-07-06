@@ -1,6 +1,8 @@
-# Exercice 10: Polynômes de Lagrange et dualité (Difficulté 5/5)
+# Exercice 10: Polynômes de Lagrange et dualité
 ## Énoncé
-Dans $E = \mathbb{R}_{n-1}[X]$, on se donne $n$ scalaires distincts $a_1, \dots, a_n$. Montrer que les formes linéaires d'évaluation $\phi_i(P) = P(a_i)$ forment une base de $E^*$.
+Soit $E$ un espace vectoriel de dimension finie, et $F, G$ deux sous-espaces vectoriels de $E$.
+Montrer que $E = F \oplus G$ si et seulement si $E^* = F^\circ \oplus G^\circ$.
+
 
 ## Correction détaillée
 1. **Étape 1:** La dimension de $E$ est $n$, donc $\dim E^* = n$. Pour démontrer qu'une famille de $n$ vecteurs forme une base, il suffit de montrer que la famille $(\phi_1, \dots, \phi_n)$ est libre.
@@ -10,3 +12,5 @@ Dans $E = \mathbb{R}_{n-1}[X]$, on se donne $n$ scalaires distincts $a_1, \dots,
 5. **Étape 5:** Évaluons la combinaison linéaire nulle sur le polynôme $L_j$ :
    $$0 = \sum_{i=1}^n \lambda_i \phi_i(L_j) = \sum_{i=1}^n \lambda_i L_j(a_i) = \lambda_j$$
 6. **Conclusion:** Pour tout indice $j$, on obtient $\lambda_j = 0$. La famille est donc libre, et c'est par conséquent une base. Les polynômes $(L_j)$ forment précisément la base antéduale associée.
+
+$\blacksquare$
