@@ -20,6 +20,10 @@ Cet opérateur modélise la "cohérence sémantique" d'un vecteur $x$ par rappor
     d.  Montrer que $T^*$ est auto-adjoint par rapport à la forme bilinéaire canonique sur $V^* \times V^*$ définie par $\langle f, g \rangle_{V^*} = \langle \Phi^{-1}(f), \Phi^{-1}(g) \rangle_V$.
     e.  Relier les valeurs propres et les vecteurs propres de $T^*$ à ceux de $T$.
 
+
+### Concentration de la Mesure en Haute Dimension
+Dans le cas où $d \to \infty$, le phénomène de concentration de la mesure stipule que deux vecteurs aléatoires générés uniformément sur la sphère unité $\mathbb{S}^{d-1}$ seront presque orthogonaux avec une très forte probabilité. La similarité cosinus espérée tendra vers 0, ce qui a des implications profondes pour la malédiction de la dimension dans les réseaux de neurones.
+
 ## Correction Détaillée
 ### Analyse et Stratégie
 Cet exercice explore les propriétés d'un opérateur linéaire défini à partir d'un ensemble de vecteurs dans un espace euclidien, en le reliant aux concepts de cohérence sémantique, de similarité cosinus et de dualité. La difficulté réside dans la rigueur des démonstrations et la manipulation des concepts abstraits de l'algèbre linéaire avancée.
@@ -28,7 +32,7 @@ La première partie (question 1 et 2) se concentre sur les propriétés fondamen
 
 La deuxième partie (question 3) introduit une mesure de cohérence sémantique, qui est une forme quadratique associée à $T$. L'analyse de cette forme quadratique nous mènera naturellement aux valeurs propres de $T$. Le théorème variationnel de Rayleigh-Ritz sera implicitement utilisé pour relier le maximum de cette mesure à la plus grande valeur propre. L'interprétation en termes de similarité cosinus est directe et fondamentale pour le contexte de la recherche sémantique.
 
-La troisième partie (question 4) aborde la dualité. Nous utiliserons l'isomorphisme de Riesz pour relier l'espace $V$ à son dual $V^*$. Nous définirons l'opérateur adjoint $T^*$ sur $V^*$ et étudierons ses propriétés, notamment son auto-adjonction par rapport à la forme bilinéaire induite sur $V^*$. Enfin, nous établirons la correspondance entre les valeurs propres et vecteurs propres de $T$ et $T^*$, démontrant ainsi une symétrie fondamentale entre l'opérateur et son dual. Chaque étape nécessitera une justification complète, sans aucune ellipse mathématique.
+La troisième partie (question 4) aborde la dualité. Nous utiliserons l'isomorphisme de Riesz pour relier l'espace $V$ à son dual $V^*$. Nous définirons l'opérateur adjoint $T^*$ sur $V^*$ et étudierons ses propriétés, notamment son auto-adjonction par rapport à la forme bilinéaire induite sur $V^*$. Enfin, nous établirons la correspondance entre les valeurs propres et vecteurs propres de $T$ et $T^*$, démontrant ainsi une symétrie fondamentale entre l'opérateur et son dual.
 
 ### Résolution Pas-à-Pas
 

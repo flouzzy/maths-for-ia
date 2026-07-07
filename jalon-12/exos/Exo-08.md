@@ -12,6 +12,10 @@ $$ f(x) = \sum_{i=1}^N \left(\frac{\langle x, v_i \rangle}{\|x\| \|v_i\|}\right)
 3.  Interpréter la matrice $M$ et le(s) vecteur(s) $x$ maximisant $f(x)$ en termes de géométrie de l'espace de plongement et du concept de "direction sémantique principale".
 4.  Soit $E^*$ le dual de l'espace $E$. Pour chaque $v_i \in E$, on définit le fonctionnel linéaire $\phi_i \in E^*$ par $\phi_i(y) = \langle v_i, y \rangle$ pour tout $y \in E$. Reformuler le problème de maximisation en termes de fonctionnels linéaires. Établir la connexion entre la matrice $M$ et la matrice de Gram des fonctionnels $\psi_i = \mathcal{R}(u_i)$ où $u_i = v_i/\|v_i\|$ et $\mathcal{R}: E \to E^*$ est l'isomorphisme de Riesz.
 
+
+### Isométries et Conservation des Angles
+Les opérateurs orthogonaux $Q \in O(d)$ préservent le produit scalaire par définition : $\langle Qu, Qv \rangle = \langle u, v \rangle$. De ce fait, ils préservent également les normes : $\|Qu\| = \|u\|$. Conséquemment, la similarité cosinus est un invariant absolu sous l'action du groupe orthogonal $O(d)$. Une rotation globale de l'espace de plongement ne modifie pas les relations sémantiques.
+
 ## Correction Détaillée
 ### Analyse et Stratégie
 Le problème nous demande de maximiser une fonction $f(x)$ qui est une somme de carrés de similarités cosinus, sous la contrainte que $x$ est un vecteur unitaire. La première étape consistera à simplifier l'expression de $f(x)$ en utilisant la contrainte $\|x\|=1$ et en normalisant les vecteurs $v_i$. Nous montrerons ensuite que cette expression se ramène à une forme quadratique $x^T M x$, où $M$ est une matrice symétrique. La maximisation d'une forme quadratique sous contrainte unitaire est un problème classique de l'algèbre linéaire, résolu par la théorie spectrale des matrices symétriques (valeurs propres et vecteurs propres).

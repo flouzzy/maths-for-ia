@@ -12,6 +12,10 @@ On considère les deux vecteurs $u = (3, 4)$ et $v = (5, 12)$ appartenant à $E$
     b. Vérifier que $\langle u, v \rangle = \phi_u(v)$ et que $\langle u, v \rangle = \phi_v(u)$.
     c. Exprimer la similarité cosinus entre $u$ et $v$ en utilisant les formes linéaires $\phi_u$, $\phi_v$ et les normes de $u$ et $v$.
 
+
+### Exégèse de l'Orthogonalité Sémantique
+Le concept d'orthogonalité transcende la géométrie pour devenir une condition d'indépendance sémantique absolue. Soient $u, v \in E$. Si $\langle u, v \rangle = 0$, la similarité cosinus est strictement nulle. Dans l'espace des plongements, cela implique que les représentations latentes n'ont aucune projection commune. La projection orthogonale de $v$ sur la droite engendrée par $u$ est $\text{proj}_u(v) = \frac{\langle u, v \rangle}{\|u\|^2} u = 0_E$.
+
 ## Correction Détaillée
 ### Analyse et Stratégie
 L'objectif de cet exercice est de renforcer la compréhension des concepts fondamentaux liés à la géométrie des espaces vectoriels euclidiens, notamment la norme, le produit scalaire, la similarité cosinus, et la dualité. Étant donné la difficulté de 1 étoile, la résolution s'appuiera sur l'application directe des définitions et des propriétés de base.

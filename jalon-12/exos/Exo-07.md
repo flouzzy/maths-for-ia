@@ -14,6 +14,10 @@ Soit $(V, \langle \cdot, \cdot \rangle)$ un espace vectoriel euclidien de dimens
     c.  Calculer la valeur maximale $f_0(q)$.
     d.  Interpréter géométriquement la forme linéaire $f_0$ et la valeur maximale $f_0(q)$ en relation avec la similarité cosinus.
 
+
+### Complétude et Espace de Hilbert
+L'utilisation de la similarité cosinus s'appuie implicitement sur le fait que $\mathbb{R}^d$ est un espace de Hilbert. Bien que la dimension soit finie, la complétude de l'espace nous garantit que les suites de Cauchy de vecteurs de plongement, générées par des algorithmes d'optimisation stochastique, convergent vers une limite bien définie dans l'espace.
+
 ## Correction Détaillée
 ### Analyse et Stratégie
 L'exercice explore la relation fondamentale entre la géométrie d'un espace euclidien de dimension finie, la notion de similarité cosinus, et la structure de son espace dual. La première partie de l'exercice vise à établir les fondations théoriques nécessaires : la définition de la similarité cosinus, la démonstration rigoureuse du théorème de représentation de Riesz (qui établit un isomorphisme canonique entre $V$ et $V^*$), et la construction du produit scalaire et de la norme induits sur l'espace dual $V^*$. Ces étapes sont cruciales pour poser un cadre mathématique solide pour le problème d'optimisation.

@@ -26,6 +26,10 @@ L'objectif de cet exercice est de déterminer le vecteur $x_0 \in F \setminus \{
     *   c) Calculer la valeur maximale $R_{max}$ de $R(x)$.
     *   d) Interpréter géométriquement $x_0$ et $R_{max}$ en termes de "proximité" dans l'espace $(E, (\cdot, \cdot)_A)$.
 
+
+### Matrice de Gram et Indépendance Linéaire
+Étant donné un ensemble de vecteurs $\{u_1, \dots, u_k\}$, leur matrice de Gram $G$ a pour coefficients $G_{i,j} = \langle u_i, u_j \rangle$. La normalisation de la matrice de Gram donne directement la matrice des similarités cosinus. Si $G$ est inversible, la famille est libre, prouvant que les concepts sémantiques correspondants ne sont pas colinéaires.
+
 ## Correction Détaillée
 ### Analyse et Stratégie
 Le problème nous demande de maximiser une fonction de pertinence $R(x)$ définie comme le rapport d'une forme quadratique (liée au produit scalaire standard) et d'une autre forme quadratique (liée à l'opérateur $A$). L'opérateur $A$ est auto-adjoint et positif défini, ce qui est une information cruciale.
@@ -48,7 +52,7 @@ La stratégie générale sera la suivante :
                 $B(\alpha u + w, v) = \alpha \langle u, Av \rangle + \langle w, Av \rangle = \alpha B(u,v) + B(w,v)$.
             La bilinéarité est donc vérifiée.
         *   **Symétrie :** Pour $u, v \in E$ :
-            $B(u,v) = \langle u, Av \rangle$. Puisque $A$ est auto-adjoint, par définition, $\langle u, Av \rangle = \langle Au, v \rangle$. Par symétrie du produit scalaire $\langle \cdot, \cdot \rangle$, on a $\langle Au, v \rangle = \langle v, Au \rangle$. Donc $B(u,v) = \langle v, Au \rangle = B(v,u)$.
+            $B(u,v) = \langle u, Av \rangle$. Puisque $A$ est auto-adjoint, par définition, $\langle u, Av \rangle = \langle Au, v \rangle$. Par symétrie de la forme bilinéaire du produit scalaire $\langle \cdot, \cdot \rangle$, on a $\langle Au, v \rangle = \langle v, Au \rangle$. Donc $B(u,v) = \langle v, Au \rangle = B(v,u)$.
             La symétrie est donc vérifiée.
         *   **Positivité définie :** Pour $u \in E$ :
             $B(u,u) = \langle u, Au \rangle$. Puisque $A$ est positif défini, par définition, $\langle u, Au \rangle > 0$ pour tout $u \neq 0$, et $\langle 0, A0 \rangle = 0$.
@@ -129,7 +133,7 @@ La stratégie générale sera la suivante :
         Considérons la forme linéaire $f_q: E \to \mathbb{R}$ définie par $f_q(x) = \langle q, x \rangle$.
         D'après le théorème de représentation de Riesz pour le produit scalaire $(\cdot, \cdot)_A$, il existe un unique vecteur $v_q \in E$ tel que $f_q(x) = (x, v_q)_A$ pour tout $x \in E$.
         C'est-à-dire $\langle q, x \rangle = \langle x, Av_q \rangle$.
-        Par symétrie du produit scalaire standard, $\langle q, x \rangle = \langle Av_q, x \rangle$.
+        Par symétrie de la forme bilinéaire du produit scalaire standard, $\langle q, x \rangle = \langle Av_q, x \rangle$.
         Puisque cette égalité doit être vraie pour tout $x \in E$, on doit avoir $q = Av_q$.
         Puisque $A$ est inversible (car positif défini), $v_q = A^{-1}q$.
         Ainsi, la fonction de pertinence peut s'écrire :

@@ -10,6 +10,10 @@ Pour deux vecteurs $u, v \in E \setminus \{0\}$, la similarité cosinus entre $u
 4.  Soit $u \in E$ un vecteur non nul fixé et $\alpha \in (-1, 1)$ un scalaire. Décrire géométriquement l'ensemble $H_{u, \alpha} = \{v \in E \setminus \{0\} \mid \text{sim}(u, v) = \alpha\}$.
 5.  Pour un vecteur $u \in E$ non nul, on définit la forme linéaire $f_u: E \to \mathbb{R}$ par $f_u(v) = \langle u, v \rangle$. Montrer que l'ensemble $H_{u, \alpha}$ (défini à la question 4) peut être caractérisé en termes de $f_u$ et de la norme de $v$.
 
+
+### Topologie de la Sphère Unité
+Il est crucial de noter que la distance cosinus $D_C(u,v) = 1 - S_C(u,v)$ n'est pas une distance au sens métrique du terme, car elle ne respecte pas systématiquement l'inégalité triangulaire. Toutefois, si l'on restreint le domaine d'étude à la sphère unité $\mathbb{S}^{d-1} = \{ x \in \mathbb{R}^d \mid \|x\| = 1 \}$, la distance euclidienne s'écrit $\|u - v\|^2 = \|u\|^2 + \|v\|^2 - 2\langle u, v \rangle = 2 - 2S_C(u,v) = 2 D_C(u,v)$. La distance cosinus induit donc la même topologie que la topologie induite par la norme euclidienne sur $\mathbb{S}^{d-1}$.
+
 ## Correction Détaillée
 ### Analyse et Stratégie
 Cet exercice explore la notion de similarité cosinus, un concept central dans la conception de moteurs de recherche sémantiques et l'analyse de données, en l'abordant sous l'angle de la géométrie des espaces euclidiens et de l'algèbre linéaire. La difficulté de 2 étoiles indique que les questions requièrent une application rigoureuse des définitions et des propriétés fondamentales des espaces vectoriels munis d'un produit scalaire, sans nécessiter de théorèmes particulièrement avancés ou de calculs excessivement complexes.

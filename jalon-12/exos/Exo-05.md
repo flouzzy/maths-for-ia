@@ -15,6 +15,10 @@ Dans le contexte des espaces de plongement (embedding spaces) pour la recherche 
     En vertu du théorème de représentation de Riesz pour les espaces euclidiens, il existe un unique vecteur $v' \in E$ tel que $L_v(u) = \langle u, v' \rangle$ pour tout $u \in E$.
     Exprimer $v'$ en fonction de $v$ et $A$. Interpréter ce résultat dans le contexte de la dualité entre le produit scalaire standard et le produit scalaire sémantiquement pondéré.
 
+
+### Exégèse de l'Inégalité de Cauchy-Schwarz
+L'inégalité fondamentale s'établit rigoureusement via le polynôme quadratique $P(\lambda) = \|u + \lambda v\|^2$. Par stricte positivité de la norme euclidienne, $P(\lambda) = \|u\|^2 + 2\lambda \langle u, v \rangle + \lambda^2 \|v\|^2 \ge 0$. Ce trinôme en $\lambda$ conserve un signe constant, son discriminant réduit est donc nécessairement négatif ou nul : $\Delta' = \langle u, v \rangle^2 - \|u\|^2 \|v\|^2 \le 0$, ce qui achève la formalisation.
+
 ## Correction Détaillée
 
 ### Analyse et Stratégie
