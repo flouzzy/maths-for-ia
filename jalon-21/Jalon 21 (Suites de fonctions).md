@@ -6,7 +6,7 @@ trimester: 2
 tags:
   - math/analyse
   - ia/convergence-algorithmique
-prev: "[[Jalon 20 (Dérivées successives).md]]"
+prev: "[[Jalon-20.md]]"
 next: "[[Jalon 22 (Séries de fonctions).md]]"
 ---
 
