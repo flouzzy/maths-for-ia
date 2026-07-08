@@ -8,6 +8,12 @@ Soient $u$ et $v$ deux vecteurs non nuls de $E$.
 2.  Soient $\alpha$ et $\beta$ deux scalaires réels strictement positifs, c'est-à-dire $\alpha \in \mathbb{R}^{+*}$ et $\beta \in \mathbb{R}^{+*}$. Démontrer que la similarité cosinus entre les vecteurs $u$ et $v$ est identique à la similarité cosinus entre les vecteurs $\alpha u$ et $\beta v$. C'est-à-dire, montrer que $\text{sim}(u, v) = \text{sim}(\alpha u, \beta v)$.
 3.  Expliquer en quoi cette propriété fondamentale est cruciale pour la conception et le fonctionnement des moteurs de recherche sémantiques basés sur des espaces de plongement (embedding spaces).
 
+
+### Analyse Topologique de l'Invariance
+Remarquons formellement que l'application $S_C : (E \setminus \{0_E\}) \times (E \setminus \{0_E\}) \to [-1, 1]$ est homogène de degré $0$. Soient $u, v \in E \setminus \{0_E\}$ et $\alpha, \beta \in \mathbb{R}^{+*}$. Par bilinéarité du produit scalaire, nous avons $\langle \alpha u, \beta v \rangle = \alpha \beta \langle u, v \rangle$. De même, par homogénéité absolue de la norme euclidienne, $\|\alpha u\| = |\alpha| \|u\| = \alpha \|u\|$ car $\alpha > 0$. L'évaluation donne alors :
+$$ S_C(\alpha u, \beta v) = \frac{\langle \alpha u, \beta v \rangle}{\|\alpha u\| \|\beta v\|} = \frac{\alpha \beta \langle u, v \rangle}{\alpha \beta \|u\| \|v\|} = \frac{\langle u, v \rangle}{\|u\| \|v\|} = S_C(u, v) $$
+La fonction est donc invariante par rapport au groupe des homothéties de rapport strictement positif.
+
 ## Correction Détaillée
 ### Analyse et Stratégie
 Le problème se décompose en trois parties distinctes. Premièrement, il s'agit de rappeler la définition formelle de la similarité cosinus, qui est une mesure de l'angle entre deux vecteurs dans un espace euclidien. Deuxièmement, nous devons prouver une propriété d'invariance de cette mesure lorsque les vecteurs sont mis à l'échelle par des scalaires strictement positifs. Enfin, la troisième partie demande une interprétation de cette propriété dans le contexte spécifique des moteurs de recherche sémantiques et des espaces de plongement.

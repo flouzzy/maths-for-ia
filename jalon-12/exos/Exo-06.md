@@ -11,6 +11,10 @@ Nous cherchons à déterminer un vecteur $\mathbf{x} \in E$, de norme unité (c'
 4.  Déterminer la valeur maximale de $f(\mathbf{x})$ et caractériser l'ensemble des vecteurs $\mathbf{x}$ qui atteignent ce maximum.
 5.  Dans le cas particulier où $E = \mathbb{R}^2$ muni du produit scalaire canonique, et les vecteurs normalisés sont $\mathbf{v}_1 = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$, $\mathbf{v}_2 = \begin{pmatrix} \frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} \end{pmatrix}$, $\mathbf{v}_3 = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$, calculer la matrice de $M$ dans la base canonique et trouver le vecteur $\mathbf{x}$ optimal (à un signe près).
 
+
+### Projection sur les Sous-espaces
+Le principe de similarité s'étend naturellement aux projections. Si $V$ est un sous-espace vectoriel fermé de $E$, la projection orthogonale $P_V(x)$ d'un vecteur $x$ sur $V$ minimise la distance $\|x - y\|$ pour $y \in V$. La similarité cosinus permet de quantifier l'angle entre un document et un "sujet" défini par un sous-espace entier, élargissant la recherche sémantique.
+
 ## Correction Détaillée
 ### Analyse et Stratégie
 Le problème nous demande de maximiser une somme de carrés de similarités cosinus. La similarité cosinus entre deux vecteurs $\mathbf{a}$ et $\mathbf{b}$ est définie par $\text{sim}(\mathbf{a}, \mathbf{b}) = \frac{\langle \mathbf{a}, \mathbf{b} \rangle}{\|\mathbf{a}\| \|\mathbf{b}\|}$. La contrainte $\|\mathbf{x}\|=1$ simplifiera considérablement l'expression de la fonction à maximiser.

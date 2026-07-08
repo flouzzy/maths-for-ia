@@ -319,7 +319,8 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
-- [2026-07-07] : [Upsert/Création] du Jalon 20 - Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités. Status: Terminé.
+### 2026-07-06-audit
+- [[#2026-07-06-audit|2026-07-06]] : [Audit & Weekly Compilation] - Jalon 12 - Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 - [2026-07-06] : [Upsert/Création] du Jalon 19 - Dérivabilité. Status: Terminé.
 - 2026-07-04 : [Upsert/Création] du Jalon 18 - Continuité des fonctions d'une variable réelle. Status: Terminé.
 - [2026-07-03] : [Upsert/Création] du Jalon 17 - Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries. Status: Terminé.

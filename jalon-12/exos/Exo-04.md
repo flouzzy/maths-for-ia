@@ -24,6 +24,10 @@ $v = (1, 0, 1)$
     b. Soit $w_2 = (0, 0, 1)$. Calculez $f_{w_2}(u)$ et $f_{w_2}(v)$.
     c. Interprétez les valeurs $f_{w_1}(u)$, $f_{w_1}(v)$, $f_{w_2}(u)$, $f_{w_2}(v)$ en termes de "caractéristiques sémantiques" si les vecteurs $u, v, w_1, w_2$ représentent des concepts dans un espace de plongement.
 
+
+### Formulation Rigoureuse de l'Espace Dual
+Dans l'étude des requêtes $q$, chaque vecteur peut être identifié à une forme linéaire $\varphi_q \in E^*$ telle que $\varphi_q(x) = \langle q, x \rangle$. La recherche sémantique s'assimile à la maximisation de $\varphi_q$ sur la sphère unité. Le théorème de représentation de Riesz assure l'isomorphisme isométrique entre $E$ et $E^*$, garantissant l'existence et l'unicité de ce prolongement.
+
 ## Correction Détaillée
 ### Analyse et Stratégie
 L'exercice vise à évaluer la compréhension des concepts fondamentaux de la géométrie des espaces vectoriels euclidiens, en particulier la similarité cosinus, l'effet des transformations linéaires (projections) sur cette similarité, et l'introduction des formes linéaires via le produit scalaire (dualité).
