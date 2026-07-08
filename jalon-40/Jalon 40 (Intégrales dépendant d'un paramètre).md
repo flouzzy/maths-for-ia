@@ -85,5 +85,5 @@ C'est un classique des concours. On montre par dérivation sous le signe $\int$ 
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 39 (Intégrales généralisées sur un intervalle quelconque et critères de convergence.).md]], [[Jalon 20 (Dérivées successives).md]]
+- **Concepts Précédents requis :** [[Jalon 39 (Intégrales généralisées sur un intervalle quelconque et critères de convergence.).md]], [[Jalon-20.md]]
 - **Concepts Futurs dépendants :** [[Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md]], [[Jalon 80 (Transformée de Fourier dans L1).md]]
