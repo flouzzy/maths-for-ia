@@ -25,7 +25,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-18/Jalon-18.md|Jalon 18 : Continuité des fonctions d'une variable réelle]] : Continuité des fonctions d'une variable réelle, théorème des valeurs intermédiaires et compacité locale.
 - [x] [[jalon-19/Jalon-19.md|Jalon 19 : Dérivabilité]] : Dérivabilité, théorème de Rolle, théorème des accroissements finis et prolongement de la dérivée.
 - [x] [[jalon-20/Jalon-20.md|Jalon 20 : Dérivées successives]] : Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités.
-- [ ] [[jalon-21/Jalon 21 (Suites de fonctions).md|Jalon 21 : Suites de fonctions]] : Suites de fonctions, étude de la convergence simple et de la convergence uniforme.
+- [x] [[jalon-21/Jalon-21.md|Jalon 21 : Suites de fonctions]] : Suites de fonctions, étude de la convergence simple et de la convergence uniforme.
 - [ ] [[jalon-22/Jalon 22 (Séries de fonctions).md|Jalon 22 : Séries de fonctions]] : Séries de fonctions, convergence normale, théorèmes d'interversion limite-intégrale et limite-dérivée.
 - [ ] [[jalon-23/Jalon 23 (Séries entières).md|Jalon 23 : Séries entières]] : Séries entières, calcul du rayon de convergence (règle de d'Alembert-Cauchy) et propriétés de la somme.
 - [ ] [[jalon-24/Jalon 24 (Livrable IA).md|Jalon 24 : Livrable IA]] : Livrable IA T2 : Analyse mathématique des critères de convergence d'une régression polynomiale et résolution d'un problème d'analyse de l'ENS sur les interversions de limites.
