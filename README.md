@@ -95,7 +95,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 18](jalon-18/Jalon-18.md)** : Continuité des fonctions d'une variable réelle, théorème des valeurs intermédiaires et compacité locale. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 19](jalon-19/Jalon-19.md)** : Dérivabilité, théorème de Rolle, théorème des accroissements finis et prolongement de la dérivée. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 20](jalon-20/Jalon-20.md)** : Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 21](jalon-21/Jalon%2021%20%28Suites%20de%20fonctions%29.md)** : Suites de fonctions, étude de la convergence simple et de la convergence uniforme.
+- **[Jalon 21](jalon-21/Jalon-21.md)** : Suites de fonctions, étude de la convergence simple et de la convergence uniforme. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 22](jalon-22/Jalon%2022%20%28S%C3%A9ries%20de%20fonctions%29.md)** : Séries de fonctions, convergence normale, théorèmes d'interversion limite-intégrale et limite-dérivée.
 - **[Jalon 23](jalon-23/Jalon%2023%20%28S%C3%A9ries%20enti%C3%A8res%29.md)** : Séries entières, calcul du rayon de convergence (règle de d'Alembert-Cauchy) et propriétés de la somme.
 - **[Jalon 24](jalon-24/Jalon%2024%20%28Livrable%20IA%29.md)** : Livrable IA T2 : Analyse mathématique des critères de convergence d'une régression polynomiale et résolution d'un problème d'analyse de l'ENS sur les interversions de limites.
@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 
 ## 📝 Historique & Avancement
 ### 2026-07-06-audit
+- [2026-07-08] : [Upsert/Création] du Jalon 21 - Suites de fonctions. Status: Terminé.
 - [[#2026-07-06-audit|2026-07-06]] : [Audit & Weekly Compilation] - Jalon 12 - Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 - [2026-07-06] : [Upsert/Création] du Jalon 19 - Dérivabilité. Status: Terminé.
 - 2026-07-04 : [Upsert/Création] du Jalon 18 - Continuité des fonctions d'une variable réelle. Status: Terminé.
