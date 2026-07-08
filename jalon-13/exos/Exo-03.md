@@ -16,9 +16,13 @@ Votre démonstration doit être entièrement rigoureuse, en invoquant les défin
 
 ### Définitions Rappelées :
 
-*   Un ensemble $S \subset \mathbb{R}$ est **minoré** si et seulement s'il existe un nombre réel $m$ tel que pour tout $s \in S$, $s \ge m$. Un tel $m$ est appelé un minorant de $S$.
-*   Un ensemble $S \subset \mathbb{R}$ est **majoré** si et seulement s'il existe un nombre réel $M$ tel que pour tout $s \in S$, $s \le M$. Un tel $M$ est appelé un majorant de $S$.
-*   La **borne inférieure** $i_0$ d'un ensemble $S \subset \mathbb{R}$ non vide et minoré est le plus grand des minorants de $S$.
-*   La **borne supérieure** $s_0$ d'un ensemble $S \subset \mathbb{R}$ non vide et majoré est le plus petit des majorants de $S$.
+
+* si et seulement s'il existe un nombre réel $m$ tel que pour tout $s \in S$, $s \ge m$. Un tel $m$ est appelé un minorant de $S$.
+
+* si et seulement s'il existe un nombre réel $M$ tel que pour tout $s \in S$, $s \le M$. Un tel $M$ est appelé un majorant de $S$.
+
+* $i_0$ d'un ensemble $S \subset \mathbb{R}$ non vide et minoré est le plus grand des minorants de $S$.
+
+* $s_0$ d'un ensemble $S \subset \mathbb{R}$ non vide et majoré est le plus petit des majorants de $S$.
 
 ---

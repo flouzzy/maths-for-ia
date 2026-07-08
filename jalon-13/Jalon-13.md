@@ -12,14 +12,12 @@ next: "[[Jalon-14.md]]"
 # Jalon 13 : Structure de $\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède
 
 ## 1. Présentation du concept clé
-*Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
-- **La Métaphore :** Imaginez une règle graduée infiniment longue. Si vous n'utilisez que des nombres entiers (1, 2, 3), il y a des trous géants entre les marques. Si vous utilisez des fractions (1/2, 2/3), la règle semble pleine, mais en fait, elle est encore pleine de micro-trous invisibles (comme $\sqrt{2}$ ou $\pi$). L'ensemble des nombres réels ($\mathbb{R}$), c'est la règle **parfaite** : il n'y a absolument aucun trou. C'est comme une ligne de soie continue. L'**axiome de la borne supérieure**, c'est la garantie que si vous essayez de monter un escalier de nombres sans fin, il y a toujours un plafond (une limite) que vous allez toucher ou frôler de très près.
-- **Le "Pourquoi on a inventé ça" :** Les Grecs ont découvert avec horreur que la diagonale d'un carré de côté 1 ne pouvait pas s'écrire comme une fraction. Il fallait inventer un nouveau monde de nombres pour que la géométrie et le calcul s'entendent. Sans $\mathbb{R}$, on ne pourrait pas définir la notion de "limite" ou de "courbe lisse".
-- **Visualisation :** Imaginez zoomer indéfiniment sur la droite numérique. Avec les fractions, vous finiriez par tomber dans le vide. Avec les réels, peu importe la puissance de votre microscope, vous verrez toujours une ligne pleine.
+L'appréhension de la continuité numérique constitue l'un des accomplissements majeurs de la pensée mathématique. Depuis l'Antiquité, les géomètres grecs, confrontés à l'incommensurabilité de la diagonale du carré de côté unité (révélant l'existence de $\sqrt{2}$), ont pressenti que le tissu rationnel $\mathbb{Q}$ était criblé de "trous" ou lacunes microscopiques. Imaginez une règle graduée infiniment longue. Si vous n'utilisez que des nombres entiers (1, 2, 3), il y a des trous géants entre les marques. Si vous utilisez des fractions (1/2, 2/3), la règle semble pleine, mais en fait, elle est encore pleine de micro-trous invisibles (comme $\sqrt{2}$ ou $\pi$). L'ensemble des nombres réels ($\mathbb{R}$), c'est la règle **parfaite** : il n'y a absolument aucun trou. C'est comme une ligne de soie parfaitement lisse et insécable, un continuum absolu où chaque coupure (au sens de Dedekind) détermine un unique élément de contact. L'**axiome de la borne supérieure**, c'est la garantie que si vous essayez de monter un escalier de nombres sans fin, il y a toujours un plafond (une limite) que vous allez toucher ou frôler de très près.
+Les Grecs ont découvert avec horreur que la diagonale d'un carré de côté 1 ne pouvait pas s'écrire comme une fraction. Il fallait inventer un nouveau monde de nombres pour que la géométrie et le calcul s'entendent. Sans $\mathbb{R}$, on ne pourrait pas définir la notion de "limite" ou de "courbe lisse".
+Imaginez zoomer indéfiniment sur la droite numérique. Avec les fractions, vous finiriez par tomber dans le vide. Avec les réels, peu importe la puissance de votre microscope, vous verrez toujours une ligne pleine.
 
 ## 2. Formalisation
-*Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
 1. **Corps Totalement Ordonné :** $\mathbb{R}$ est un corps muni d'une relation d'ordre total $\le$ compatible avec les opérations $+$ et $\times$.
@@ -38,7 +36,6 @@ next: "[[Jalon-14.md]]"
 > $$\forall x, y \in \mathbb{R}, x < y \Rightarrow \exists q \in \mathbb{Q}, x < q < y$$
 
 ## 3. Démonstrations
-*Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : La partie entière et le caractère archimédien
 Démontrons l'existence et l'unicité de la partie entière d'un réel $x$, notée $\lfloor x \rfloor$.
@@ -64,7 +61,7 @@ Théorème : $\forall x \in \mathbb{R}, \exists ! n \in \mathbb{Z}, n \le x < n+
    - Montrons que $n$ est le plus grand élément de $E$.
    - Supposons qu'il existe $k \in E$ tel que $k \ge n+1$.
    - Alors $k > S$ (car $n+1 > S$), ce qui contredit le fait que $S$ est un majorant de $E$.
-   - Donc $\forall k \in E, k \le n$. $n = \max E$.
+   - En effet, si $k \ge n+1$, alors $k \ge n+1 > S$, ce qui implique que $k$ serait un élément de $E$ strictement supérieur au plus petit des majorants $S$, une contradiction manifeste de la minimalité de $S$ parmi les majorants. Par suite, $\forall k \in E, k \le n$. On en déduit que $n = \max E$.
 
 5. **Conclusion :**
    - Puisque $n \in E$, $n \le x$.
@@ -72,7 +69,6 @@ Théorème : $\forall x \in \mathbb{R}, \exists ! n \in \mathbb{Z}, n \le x < n+
    - On a bien $n \le x < n+1$. L'unicité est immédiate par l'écart de 1 entre deux entiers distincts.
 
 ## 4. Exercices d'Application
-*Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Application Directe (Calcul de borne sup)
 **Énoncé :** Soit $A = \{ 1 - \frac{1}{n} \mid n \in \mathbb{N}^* \}$. Déterminer $\sup A$ et $\inf A$.
@@ -98,9 +94,8 @@ Théorème : $\forall x \in \mathbb{R}, \exists ! n \in \mathbb{Z}, n \le x < n+
 **Conclusion :** Par caractérisation, $\sup(A+B) = \sup A + \sup B$.
 
 ## 5. Application en Intelligence Artificielle
-*Démontrer la finalité technologique moderne de ce jalon théorique.*
-- **Le Pont Théorique :** Les algorithmes d'optimisation (comme la descente de gradient) reposent sur l'existence de bornes inférieures (le minimum de la fonction de perte). Sans la structure complète de $\mathbb{R}$, on ne pourrait jamais garantir qu'une suite de poids "converge" vers un nombre réel précis.
-- **Exemple Concret :** En **Deep Learning**, lors de la **Normalisation (Batch Norm / Layer Norm)**, on manipule des statistiques (moyenne, variance) qui sont des nombres réels. La stabilité numérique des calculs en virgule flottante (Float32/Float16) est une approximation informatique de la structure de $\mathbb{R}$. Comprendre que $\mathbb{R}$ n'a pas de "trous" permet de justifier l'utilisation du calcul différentiel pour ajuster les neurones de manière continue.
+Les algorithmes d'optimisation (comme la descente de gradient) reposent sur l'existence de bornes inférieures (le minimum de la fonction de perte). Sans la structure complète de $\mathbb{R}$, on ne pourrait jamais garantir qu'une suite de poids "converge" vers un nombre réel précis.
+En **Deep Learning**, lors de la **Normalisation (Batch Norm / Layer Norm)**, on manipule des statistiques (moyenne, variance) qui sont des nombres réels. La stabilité numérique des calculs en virgule flottante (Float32/Float16) est une approximation informatique de la structure de $\mathbb{R}$. Comprendre que $\mathbb{R}$ n'a pas de "trous" permet de justifier l'utilisation du calcul différentiel pour ajuster les neurones de manière continue.
 
 ## 6. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 3 (Quantification)]], [[Jalon-6.md|Jalon 6]]

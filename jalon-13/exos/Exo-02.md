@@ -13,8 +13,14 @@ Démontrer rigoureusement, en utilisant la définition formelle de la borne sup�
 
 ### Définition Rappelée :
 
-Un nombre réel $s_0$ est la **borne supérieure** d'un ensemble $S \subset \mathbb{R}$ non vide si et seulement si les deux conditions suivantes sont satisfaites :
-1.  **Condition de Majorant** : Pour tout élément $x$ de l'ensemble $S$, on a $x \le s_0$.
-2.  **Condition de Plus Petit Majorant** : Pour tout nombre réel $\varepsilon$ strictement positif ($\varepsilon > 0$), il existe au moins un élément $x_{\varepsilon}$ dans l'ensemble $S$ tel que $x_{\varepsilon} > s_0 - \varepsilon$.
+Un nombre réel $s_0$ est la
+borne supérieure
+ d'un ensemble $S \subset \mathbb{R}$ non vide si et seulement si les deux conditions suivantes sont satisfaites :
+1.
+Condition de Majorant
+ : Pour tout élément $x$ de l'ensemble $S$, on a $x \le s_0$.
+2.
+Condition de Plus Petit Majorant
+ : Pour tout nombre réel $\varepsilon$ strictement positif ($\varepsilon > 0$), il existe au moins un élément $x_{\varepsilon}$ dans l'ensemble $S$ tel que $x_{\varepsilon} > s_0 - \varepsilon$.
 
 ---
