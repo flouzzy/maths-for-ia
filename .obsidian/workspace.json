@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "jalon-23/Jalon 23 (Séries entières).md",
+                "file": "jalon-1/Jalon 1 (Logique formelle).md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Jalon 23 (Séries entières)"
+              "title": "Jalon 1 (Logique formelle)"
             }
           }
         ]
@@ -220,8 +220,13 @@
       "markdown-importer:Ouvrir l'importateur Markdown": false
     }
   },
-  "active": "18864fee124c4f40",
+  "active": "8ceda288c71f7e44",
   "lastOpenFiles": [
+    "jalon-13/jalon-13-polycopie.pdf",
+    "jalon-12/jalon-12.tex",
+    "jalon-12/jalon-12-polycopie/jalon-12-polycopie.pdf",
+    "jalon-12/jalon-12-polycopie",
+    "jalon-23/Jalon 23 (Séries entières).md",
     "tex_extractor.py",
     "output.tex",
     "jalon-11.tex",
@@ -230,10 +235,6 @@
     "MathsForAI/Bienvenue.md",
     "MathsForAI",
     "test_gemini_rates.py",
-    "test_enrich.py",
-    "test.py",
-    "latex_output.txt",
-    "get_tex.py",
     "jalon-17/Jalon 17 (Séries absolument convergentes).md",
     "jalon-141/Jalon-141.md",
     "Tableau de bord.md",
@@ -258,7 +259,6 @@
     "jalon-142/Jalon-142.md",
     "jalon-143/Jalon-143.md",
     "jalon-143/README.md",
-    "jalon-3/Jalon 3 (Quantification).md",
-    "jalon-143/Jalon 143 (Théorie spectrale des graphes).md"
+    "jalon-3/Jalon 3 (Quantification).md"
   ]
 }

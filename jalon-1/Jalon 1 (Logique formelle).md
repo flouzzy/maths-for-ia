@@ -41,7 +41,7 @@ En manipulant des symboles selon des règles strictes, sans même savoir ce qu'i
 
 ---
 
-## 2. Formalisation & Rigueur Académique
+## 2. Formalisation
 
 Pour structurer rigoureusement le calcul des propositions (ou logique propositionnelle classique), nous devons définir précisément sa syntaxe (l'ensemble des formules bien formées) et sa sémantique (l'évaluation de ces formules).
 
