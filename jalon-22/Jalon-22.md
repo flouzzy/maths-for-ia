@@ -21,7 +21,7 @@ Karl Weierstrass, plus tard dans le siècle, a introduit la notion cruciale de *
 
 La nécessité d'intervertir des limites, des sommes, des intégrales et des dérivées est primordiale en analyse. Par exemple, si vous avez un signal représenté par une série infinie d'harmoniques, et que vous souhaitez mesurer l'énergie totale (intégrer) ou la vitesse de variation (dériver), vous voudriez idéalement le faire harmonique par harmonique. Les théorèmes d'interversion justifient quand nous avons le "droit" d'échanger l'ordre de ces opérations limites, évitant ainsi des paradoxes mathématiques où l'intégrale de la somme infinie diffère de la somme infinie des intégrales.
 
-## 2. Protocole d'Exégèse Conceptuelle (Formalisation)
+## 2. Formalisation
 
 Soit $I \subset \mathbb{R}$ un intervalle, et $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions définies sur $I$ à valeurs dans $\mathbb{R}$ (ou $\mathbb{C}$).
 On s'intéresse à la série de fonctions $\sum_{n=0}^\infty f_n$. On note $S_n(x) = \sum_{k=0}^n f_k(x)$ la somme partielle d'ordre $n$.
