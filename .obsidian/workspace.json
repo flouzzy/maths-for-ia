@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "jalon-1/Jalon 1 (Logique formelle).md",
+                "file": "jalon-22/Jalon-22.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Jalon 1 (Logique formelle)"
+              "title": "Jalon-22"
             }
           }
         ]
@@ -222,6 +222,7 @@
   },
   "active": "8ceda288c71f7e44",
   "lastOpenFiles": [
+    "jalon-1/Jalon 1 (Logique formelle).md",
     "jalon-13/jalon-13-polycopie.pdf",
     "jalon-12/jalon-12.tex",
     "jalon-12/jalon-12-polycopie/jalon-12-polycopie.pdf",
@@ -234,7 +235,6 @@
     "fix_tex.py",
     "MathsForAI/Bienvenue.md",
     "MathsForAI",
-    "test_gemini_rates.py",
     "jalon-17/Jalon 17 (Séries absolument convergentes).md",
     "jalon-141/Jalon-141.md",
     "Tableau de bord.md",
@@ -254,7 +254,6 @@
     "jalon-8/Jalon 8 (Applications linéaires).md",
     "jalon-7/Jalon 7 (Espaces vectoriels abstraits).md",
     "jalon-6/Jalon 6 (Relations d'équivalence).md",
-    "jalon-1/Jalon 1 (Logique formelle).md",
     "jalon-1/README.md",
     "jalon-142/Jalon-142.md",
     "jalon-143/Jalon-143.md",

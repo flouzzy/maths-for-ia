@@ -9,7 +9,6 @@ tags:
 prev: "[[jalon-21/Jalon-21.md|Jalon 21 : Suites de fonctions]]"
 next: "[[jalon-23/Jalon 23 (Séries entières).md|Jalon 23 : Séries entières]]"
 ---
-
 # Jalon 22 : Séries de fonctions, convergence normale, théorèmes d'interversion limite-intégrale et limite-dérivée
 
 ## 1. L'Échafaudage Cognitif & Traçabilité Historique
