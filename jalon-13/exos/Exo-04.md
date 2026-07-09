@@ -14,8 +14,10 @@ Votre démonstration doit explicitement utiliser les définitions formelles du m
 
 ### Définitions Rappelées :
 
-*   Un nombre réel $M_A$ est le **maximum** de l'ensemble $A$ (noté $\max A$) si et seulement si $M_A \in A$ ET pour tout $x \in A$, $x \le M_A$.
-*   Un nombre réel $s_A$ est la **borne supérieure** de l'ensemble $A$ (notée $\sup A$) si et seulement si :
+
+* de l'ensemble $A$ (noté $\max A$) si et seulement si $M_A \in A$ ET pour tout $x \in A$, $x \le M_A$.
+
+* de l'ensemble $A$ (notée $\sup A$) si et seulement si :
     1.  Pour tout $x \in A$, $x \le s_A$ ($s_A$ est un majorant de $A$).
     2.  Pour tout $\varepsilon \in \mathbb{R}$ tel que $\varepsilon > 0$, il existe $x_{\varepsilon} \in A$ tel que $x_{\varepsilon} > s_A - \varepsilon$.
 

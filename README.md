@@ -87,7 +87,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 <summary><b>Trimestre 2 : analyse réelle, suites et séries de fonctions</b></summary>
 <br>
 
-- **[Jalon 13](jalon-13/Jalon%2013%20%28Structure%20de%20--mathbb%7BR%7D-%29.md)** : Structure de $\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède.
+- **[Jalon 13](jalon-13/Jalon%2013%20%28Structure%20de%20--mathbb%7BR%7D-%29.md)** : Structure de $\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 14](jalon-14/Jalon-14.md)** : Suites réelles et complexes, définitions rigoureuses des limites ($\epsilon, N$) et critères de convergence. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 15](jalon-15/Jalon%2015%20%28Sous-suites%29.md)** : Sous-suites, valeurs d'adhérence et preuve par séparation du théorème de Bolzano-Weierstrass. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 16](jalon-16/Jalon-16.md)** : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy. 🔥 **Enrichi** *(10 Exos + 5 TP)*
@@ -319,6 +319,8 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+### 2026-07-07-audit
+- [[#2026-07-07-audit|2026-07-07]] : [Audit & Weekly Compilation] - Jalon 13 - Structure de $\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-06-audit
 - [2026-07-08] : [Upsert/Création] du Jalon 21 - Suites de fonctions. Status: Terminé.
 - [[#2026-07-06-audit|2026-07-06]] : [Audit & Weekly Compilation] - Jalon 12 - Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
