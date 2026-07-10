@@ -97,7 +97,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 20](jalon-20/Jalon-20.md)** : Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 21](jalon-21/Jalon-21.md)** : Suites de fonctions, étude de la convergence simple et de la convergence uniforme. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 22](jalon-22/Jalon-22.md)** : Séries de fonctions, convergence normale, théorèmes d'interversion limite-intégrale et limite-dérivée. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 23](jalon-23/Jalon%2023%20%28S%C3%A9ries%20enti%C3%A8res%29.md)** : Séries entières, calcul du rayon de convergence (règle de d'Alembert-Cauchy) et propriétés de la somme.
+- **[Jalon 23](jalon-23/Jalon-23.md)** : Séries entières, calcul du rayon de convergence (règle de d'Alembert-Cauchy) et propriétés de la somme. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 24](jalon-24/Jalon%2024%20%28Livrable%20IA%29.md)** : Livrable IA T2 : Analyse mathématique des critères de convergence d'une régression polynomiale et résolution d'un problème d'analyse de l'ENS sur les interversions de limites.
 
 </details>
@@ -319,6 +319,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-07-10] : [Upsert/Création] du Jalon 23 - Séries entières. Status: Terminé.
 ### 2026-07-09-audit
 - [2026-07-09] : [Upsert/Création] du Jalon 22 - Séries de fonctions. Status: Terminé.
 ### 2026-07-07-audit
