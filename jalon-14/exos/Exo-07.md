@@ -5,7 +5,6 @@ tags: ["math/analyse", "suites", "exercice"]
 ---
 # Exercice 7 : Critère de Cauchy pour une suite contractante
 ## Énoncé
-Mes chers étudiants,
 
 Nous allons aujourd'hui explorer un aspect fondamental de la convergence des suites, à savoir le critère de Cauchy. Ce critère est d'une importance capitale car il permet de démontrer la convergence d'une suite sans avoir besoin de connaître sa limite a priori. Dans un espace complet comme $\mathbb{R}$ ou $\mathbb{C}$, une suite est convergente si et seulement si elle est de Cauchy.
 

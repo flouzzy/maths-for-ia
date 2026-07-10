@@ -5,16 +5,12 @@ tags: ["math/analyse", "suites", "exercice"]
 ---
 # Exercice 1 : Démonstration de la convergence de la suite inverse par la définition $\epsilon-N$
 ## Énoncé
-Chers étudiants,
-
-Nous allons aborder ensemble la première application concrète de la définition rigoureuse de la limite d'une suite. C'est un jalon fondamental dans votre compréhension de l'analyse.
 
 Soit la suite réelle $(u_n)_{n \in \mathbb{N}^*}$ définie pour tout entier $n \ge 1$ par $u_n = \frac{1}{n}$.
 
 En utilisant la définition formelle de la limite (dite "définition $\epsilon-N$"), démontrez rigoureusement que cette suite converge vers 0.
 
 ## Correction Détaillée
-Mes chers étudiants, abordons cette démonstration avec la rigueur et la précision qu'exige l'analyse mathématique. Chaque étape sera explicitée afin de construire une compréhension solide.
 
 **Étape 1 : Rappel de la définition formelle de la limite d'une suite.**
 Commençons par énoncer clairement la définition que nous allons utiliser.

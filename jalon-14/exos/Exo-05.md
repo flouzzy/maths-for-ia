@@ -7,8 +7,6 @@ tags: ["math/analyse", "suites", "exercice"]
 
 ## Énoncé
 
-Chers étudiants,
-
 Nous allons explorer la convergence d'une suite dont l'expression peut sembler un peu intimidante au premier abord, mais dont la limite est tout à fait accessible avec les outils appropriés. Cet exercice est conçu pour renforcer votre compréhension de la définition rigoureuse de la limite d'une suite.
 
 Considérons la suite réelle $(u_n)_{n \in \mathbb{N}}$ définie pour tout $n \ge 2$ par :
@@ -22,7 +20,7 @@ $$u_n = \frac{n^2 + n\sin(n) + 5}{2n^2 - 3n + 1}$$
 
 ## Correction Détaillée
 
-Chers étudiants, abordons cet exercice avec la rigueur et la clarté qui s'imposent.
+Abordons cet exercice avec la rigueur et la clarté qui s'imposent.
 
 ### Question 1 : Détermination intuitive de la limite
 
