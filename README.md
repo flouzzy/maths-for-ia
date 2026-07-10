@@ -319,7 +319,8 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
-- [2026-07-10] : [Upsert/Création] du Jalon 23 - Séries entières. Status: Terminé.
+### 2026-07-10-audit
+- [[#2026-07-10-audit|2026-07-10]] : [Audit & Weekly Compilation] - Jalon 14 - Suites réelles et complexes, définitions rigoureuses des limites (epsilon, N) et critères de convergence. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-09-audit
 - [2026-07-09] : [Upsert/Création] du Jalon 22 - Séries de fonctions. Status: Terminé.
 ### 2026-07-07-audit

@@ -13,7 +13,6 @@ $$u_n = \prod_{k=1}^n \left(1 + \frac{1}{k^2}\right)$$
 3.  En déduire, en justifiant chaque étape et en invoquant les propriétés fondamentales de l'analyse réelle, que la suite $(u_n)$ converge vers une limite finie.
 
 ## Correction Détaillée
-Nous allons aborder cet exercice en suivant scrupuleusement les définitions et théorèmes de l'analyse, sans aucune ellipse.
 
 ### Question 1 : Montrer que pour tout $n \in \mathbb{N}^*$, $u_n > 0$.
 
