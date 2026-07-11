@@ -6,7 +6,7 @@ trimester: 3
 tags:
   - math/algebre-lineaire
   - ia/similarite
-prev: "[[Jalon 24 (Livrable IA).md]]"
+prev: "[[Jalon-24.md]]"
 next: "[[Jalon 26 (Espaces euclidiens).md]]"
 ---
 
