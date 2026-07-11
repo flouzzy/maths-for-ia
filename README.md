@@ -319,6 +319,8 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+### 2026-07-11-audit
+- [[#2026-07-11-audit|2026-07-11]] : [Audit & Weekly Compilation] - Jalon 15 - Sous-suites, valeurs d'adhérence et preuve par séparation du théorème de Bolzano-Weierstrass. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-10-audit
 - [[#2026-07-10-audit|2026-07-10]] : [Audit & Weekly Compilation] - Jalon 14 - Suites réelles et complexes, définitions rigoureuses des limites (epsilon, N) et critères de convergence. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-09-audit
