@@ -95,7 +95,7 @@ def main():
 \usepackage{geometry}
 \geometry{a4paper, margin=2cm}
 
-\title{Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps)}
+\title{Sous-suites, valeurs d'adhérence et preuve par séparation du théorème de Bolzano-Weierstrass}
 \author{Charles EDOU NZE}
 \date{2026-06-26}
 
@@ -119,11 +119,11 @@ def main():
 
     tex_footer = r"""\end{document}"""
 
-    with open('jalon-6/jalon-6.tex', 'w', encoding='utf-8') as outfile:
+    with open('jalon-15/jalon-15.tex', 'w', encoding='utf-8') as outfile:
         outfile.write(tex_header)
 
-        # 1. Jalon-6.md
-        with open('jalon-6/Jalon-6.md', 'r', encoding='utf-8') as f:
+        # 1. Jalon-15.md
+        with open('jalon-15/Jalon-15.md', 'r', encoding='utf-8') as f:
             content = f.read()
 
         latex_content = process_markdown_to_latex(content)
@@ -133,16 +133,23 @@ def main():
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}
-  % Partition / Equivalence classes
-  \draw[thick] (0,0) ellipse (4cm and 2.5cm);
-  \draw[thick] (-2, -2.16) to[out=60,in=240] (-1, 2.4);
-  \draw[thick] (1, -2.4) to[out=120,in=300] (0.5, 2.48);
-  \node at (-2, 0) {$\dot{x}$};
-  \node at (0, 0) {$\dot{y}$};
-  \node at (2, 0) {$\dot{z}$};
-  \node at (0, -3) {Ensemble quotient $E/\mathcal{R}$};
+  \draw[->] (0,0) -- (10,0) node[right] {$n$};
+  \draw[->] (0,-2) -- (0,2) node[above] {$u_n$};
+
+  \foreach \x in {1, 2, 3, 4, 5, 6, 7, 8, 9} {
+    \pgfmathsetmacro\y{sin(\x*50) + 0.2*cos(\x*150)}
+    \filldraw[gray!50] (\x, \y) circle (1.5pt);
+  }
+
+  \foreach \x/\y in {1/-0.5, 3/0.2, 5/0.8, 7/0.95, 9/0.99} {
+    \filldraw[red] (\x, \y) circle (2.5pt);
+    \draw[red, dashed] (\x, \y) -- (\x, 0);
+  }
+
+  \draw[blue, dashed] (0, 1) -- (10, 1) node[right] {Valeur d'adherence $a=1$};
+  \node[red] at (5, -1) {Sous-suite convergente};
 \end{tikzpicture}
-\caption{Partition d'un ensemble par des classes d'équivalence}
+\caption{Extraction d'une sous-suite convergente à partir d'une suite bornée}
 \end{figure}
 """
         latex_content = latex_content.replace(r'\section*{1. Présentation du concept clé}', r'\section*{1. Présentation du concept clé}' + '\n' + tikz_figure)
@@ -151,7 +158,7 @@ def main():
         # 2. Exos
         outfile.write(r'\chapter*{Exercices d\'Application}' + '\n\\addcontentsline{toc}{chapter}{Exercices d\'Application}\n')
         for i in range(1, 11):
-            filename = f'jalon-6/exos/Exo-{i:02d}.md'
+            filename = f'jalon-15/exos/Exo-{i:02d}.md'
             with open(filename, 'r', encoding='utf-8') as f:
                 content = f.read()
             latex_content = process_markdown_to_latex(content)
@@ -159,8 +166,8 @@ def main():
 
         # 3. TP
         outfile.write(r'\chapter*{Travaux Pratiques}' + '\n\\addcontentsline{toc}{chapter}{Travaux Pratiques}\n')
-        for i in range(1, 6):
-            filename = f'jalon-6/tp/TP-{i:02d}.md'
+        for i in [1,2,3,5]:
+            filename = f'jalon-15/tp/TP-{i:02d}.md'
             with open(filename, 'r', encoding='utf-8') as f:
                 content = f.read()
             latex_content = process_markdown_to_latex(content)
