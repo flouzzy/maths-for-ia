@@ -319,6 +319,8 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+### 2026-07-12-audit
+- [[#2026-07-12-audit|2026-07-12]] : [Audit & Weekly Compilation] - Jalon 16 - Séries numériques à termes positifs. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 - [2026-07-11] : [Upsert/Création] du Jalon 24 - Livrable IA. Status: Terminé.
 ### 2026-07-10-audit
 - [[#2026-07-10-audit|2026-07-10]] : [Audit & Weekly Compilation] - Jalon 14 - Suites réelles et complexes, définitions rigoureuses des limites (epsilon, N) et critères de convergence. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.

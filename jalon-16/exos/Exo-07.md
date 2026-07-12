@@ -1,6 +1,4 @@
 # Exercice 07 : Séries de Bertrand
-**Niveau :** Avancé (L3)
-**Notion ciblée :** Les séries de Bertrand pour combler les limites de Riemann.
 
 ## Énoncé
 Étudier, selon les valeurs du réel $\beta$, la convergence de la série $\sum_{n \ge 2} \frac{1}{n (\ln n)^\beta}$.

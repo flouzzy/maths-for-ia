@@ -1,6 +1,4 @@
 # Exercice 08 : Un critère de condensation
-**Niveau :** Difficile (Prépa)
-**Notion ciblée :** Théorème de Cauchy de condensation pour des séries lentement décroissantes.
 
 ## Énoncé
 Soit $(u_n)$ une suite décroissante de réels positifs. Démontrer que la série $\sum_{n=1}^\infty u_n$ converge si et seulement si la série condensée $\sum_{k=0}^\infty 2^k u_{2^k}$ converge.

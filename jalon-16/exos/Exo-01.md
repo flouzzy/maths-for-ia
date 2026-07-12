@@ -1,6 +1,4 @@
 # Exercice 01 : Règle de d'Alembert
-**Niveau :** Application directe (L1)
-**Notion ciblée :** Critère de d'Alembert pour la convergence des séries à termes positifs.
 
 ## Énoncé
 Soit la suite $(u_n)_{n \in \mathbb{N}^*}$ définie par $u_n = \frac{n^3}{3^n}$.
