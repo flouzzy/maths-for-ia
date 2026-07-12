@@ -30,7 +30,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-23/Jalon-23.md|Jalon 23 : Séries entières]] : Séries entières, calcul du rayon de convergence (règle de d'Alembert-Cauchy) et propriétés de la somme.
 - [x] [[jalon-24/Jalon-24.md|Jalon 24 : Livrable IA]] : Livrable IA T2 : Analyse mathématique des critères de convergence d'une régression polynomiale et résolution d'un problème d'analyse de l'ENS sur les interversions de limites.
 ### Trimestre 3 : réduction des endomorphismes et espaces préhilbertiens
-- [ ] [[jalon-25/Jalon 25 (Formes bilinéaires).md|Jalon 25 : Formes bilinéaires]] : Formes bilinéaires, formes sesquilinieaires, produit scalaire et inégalité de Cauchy-Schwarz.
+- [x] [[jalon-25/Jalon-25.md|Jalon 25 : Formes bilinéaires]] : Formes bilinéaires, formes sesquilinieaires, produit scalaire et inégalité de Cauchy-Schwarz.
 - [ ] [[jalon-26/Jalon 26 (Espaces euclidiens).md|Jalon 26 : Espaces euclidiens]] : Espaces euclidiens, orthogonalité, théorème de la projection orthogonale et algorithme de Gram-Schmidt.
 - [ ] [[jalon-27/Jalon 27 (Endomorphismes symétriques).md|Jalon 27 : Endomorphismes symétriques]] : Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales.
 - [ ] [[jalon-28/Jalon 28 (Polynômes d'endomorphismes).md|Jalon 28 : Polynômes d'endomorphismes]] : Polynômes d'endomorphismes, idéaux annulateurs et démonstration du théorème de Cayley-Hamilton.
