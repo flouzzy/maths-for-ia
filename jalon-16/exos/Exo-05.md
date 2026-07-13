@@ -1,6 +1,4 @@
 # Exercice 05 : Factorielles et Règle de d'Alembert
-**Niveau :** Intermédiaire (L2)
-**Notion ciblée :** Critère de d'Alembert avec manipulations factorielles.
 
 ## Énoncé
 Soit la série de terme général $u_n = \frac{(2n)!}{(n!)^2 4^n}$ pour $n \ge 1$.

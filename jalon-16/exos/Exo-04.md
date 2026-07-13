@@ -1,6 +1,4 @@
 # Exercice 04 : Application combinée de théorèmes de croissances comparées
-**Niveau :** Intermédiaire (L2)
-**Notion ciblée :** Croissances comparées et règle de Riemann.
 
 ## Énoncé
 Soit $u_n = \frac{n^2 + \ln n}{e^n}$ pour $n \ge 1$.

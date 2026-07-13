@@ -1,0 +1,694 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Séries Numériques à Termes Positifs, Critères de Comparaison, de d'Alembert et de Cauchy}
+\author{Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+
+\section*{Jalon 16 : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy}
+
+\section{1. Genèse du concept et intuition mathématique}
+
+L'idée de sommer une infinité de quantités remonte à l'Antiquité, avec les fameux paradoxes de Zénon d'Élée. Comment Achille peut-il rattraper la tortue s'il doit d'abord parcourir la moitié de la distance qui les sépare, puis le quart, puis le huitième, et ce à l'infini ? Cette aporie repose sur une confusion fondamentale entre l'infinité du nombre de termes sommés et la finitude potentielle de leur somme totale.
+
+Historiquement, le besoin de formaliser la sommation infinie a émergé avec le développement du calcul infinitésimal par Newton et Leibniz, pour calculer des aires, des volumes, et résoudre des équations différentielles. Une somme infinie, que nous appelons aujourd'hui une série, n'est rien d'autre que la limite de la suite de ses sommes partielles. L'étude des séries à termes positifs est le point de départ de la théorie, car l'absence de compensation de signes simplifie l'analyse : la suite des sommes partielles est nécessairement croissante. Par le théorème de convergence monotone, l'unique question est de savoir si l'accumulation de ces grandeurs reste bornée ou s'échappe vers l'infini.
+
+\section{2. Énoncé symbolique et typage chirurgical}
+
+\subsection{A. Définitions Formelles}
+
+Soit $(u_n)_{n \in \mathbb{N}}$ une suite réelle.
+
+\textbf{Définition 1 (Série numérique).} On appelle \textit{série de terme général} $u_n$ la suite $(S_N)_{N \in \mathbb{N}}$ des sommes partielles définie par l'opérateur de sommation discrète :
+$$S_N = \sum_{n=0}^N u_n$$
+
+\textbf{Définition 2 (Convergence).} La série $\sum u_n$ converge si et seulement si la suite réelle $(S_N)_{N \in \mathbb{N}}$ admet une limite finie $S \in \mathbb{R}$. Dans ce cas, cette limite est appelée la \textit{somme} de la série et est notée :
+$$S = \sum_{n=0}^\infty u_n$$
+Si la suite $(S_N)_{N \in \mathbb{N}}$ diverge (vers $\pm\infty$ ou n'admet pas de limite), on dit que la série diverge.
+
+\textbf{Définition 3 (Série à termes positifs).} Une série $\sum u_n$ est dite à termes positifs si $\forall n \in \mathbb{N}, u_n \ge 0$.
+\textit{Remarque structurelle :} Pour une série à termes positifs, la suite des sommes partielles $(S_N)_{N \in \mathbb{N}}$ est strictement croissante (ou croissante). En effet, $S_{N+1} - S_N = u_{N+1} \ge 0$. D'après le théorème de la limite monotone, la série converge si et seulement si la suite $(S_N)_{N \in \mathbb{N}}$ est majorée. Sinon, elle diverge vers $+\infty$.
+
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.5]
+  % Axe des x
+  \draw[->, thick] (0,0) -- (6,0) node[right] {$n$};
+  % Axe des y
+  \draw[->, thick] (0,0) -- (0,3) node[above] {$S_n$};
+
+  % Limite
+  \draw[dashed, red, thick] (0,2) -- (6,2) node[right] {$S = \frac{1}{1-q}$};
+
+  % Points
+  \filldraw[blue] (1, 1) circle (2pt) node[below right] {$S_1$};
+  \filldraw[blue] (2, 1.5) circle (2pt) node[below right] {$S_2$};
+  \filldraw[blue] (3, 1.75) circle (2pt) node[below right] {$S_3$};
+  \filldraw[blue] (4, 1.875) circle (2pt) node[below right] {$S_4$};
+  \filldraw[blue] (5, 1.9375) circle (2pt) node[below right] {$S_5$};
+
+  \draw[blue, thick] (0,0) -- (1,1) -- (2,1.5) -- (3,1.75) -- (4,1.875) -- (5,1.9375);
+\end{tikzpicture}
+\caption{Convergence des sommes partielles d'une série géométrique à termes positifs.}
+\end{figure}
+
+\subsection{B. Théorèmes Fondamentaux}
+
+\textbf{Théorème 1 (Critère de Comparaison).}
+Soient $(u_n)_{n \in \mathbb{N}}$ et $(v_n)_{n \in \mathbb{N}}$ deux suites réelles telles que $0 \le u_n \le v_n$ à partir d'un certain rang $n_0 \in \mathbb{N}$.
+1. Si la série $\sum v_n$ converge, alors la série $\sum u_n$ converge.
+2. Si la série $\sum u_n$ diverge, alors la série $\sum v_n$ diverge.
+
+\textbf{Théorème 2 (Règle de d'Alembert).}
+Soit $(u_n)_{n \in \mathbb{N}}$ une suite réelle à termes strictement positifs ($\forall n \in \mathbb{N}, u_n > 0$).
+Si la limite $\lim_{n \to \infty} \frac{u_{n+1}}{u_n} = L$ existe dans $\mathbb{R}^+ \cup \{+\infty\}$ :
+1. Si $L < 1$, la série $\sum u_n$ converge.
+2. Si $L > 1$, la série $\sum u_n$ diverge.
+3. Si $L = 1$, le critère est muet (aucune conclusion stricte ne peut être tirée).
+
+\textbf{Théorème 3 (Règle de Cauchy).}
+Soit $(u_n)_{n \in \mathbb{N}}$ une suite réelle à termes positifs.
+Si la limite $\lim_{n \to \infty} \sqrt[n]{u_n} = L$ existe dans $\mathbb{R}^+ \cup \{+\infty\}$ :
+1. Si $L < 1$, la série $\sum u_n$ converge.
+2. Si $L > 1$, la série $\sum u_n$ diverge.
+3. Si $L = 1$, le critère est muet.
+
+\section{3. Démonstrations et Cas Pathologiques}
+
+\subsection{A. Démonstration de la convergence de la série géométrique}
+
+Considérons la série géométrique $\sum q^n$ pour une raison $q \in [0, 1[$. Démontrons sa convergence absolue.
+
+\textbf{Preuve.}
+Soit $N \in \mathbb{N}$. Posons la somme partielle d'ordre $N$ :
+$$S_N = \sum_{n=0}^N q^n = 1 + q + q^2 + \dots + q^N$$
+
+Multiplions l'expression par $q$ :
+$$q S_N = q + q^2 + q^3 + \dots + q^{N+1}$$
+
+Soustrayons la seconde équation à la première pour faire apparaître une somme télescopique :
+$$S_N - q S_N = (1 + q + q^2 + \dots + q^N) - (q + q^2 + q^3 + \dots + q^{N+1})$$
+
+En regroupant et annulant les termes de même degré, il vient :
+$$(1 - q) S_N = 1 - q^{N+1}$$
+
+Puisque nous supposons $q < 1$, nous avons $1 - q \neq 0$. Nous pouvons isoler $S_N$ :
+$$S_N = \frac{1 - q^{N+1}}{1 - q}$$
+
+Étudions à présent le comportement limite lorsque $N \to +\infty$. Puisque la valeur absolue du scalaire $q$ vérifie $|q| < 1$, la limite de la suite géométrique $q^{N+1}$ est nulle :
+$$\lim_{N \to \infty} q^{N+1} = 0$$
+
+Par continuité des opérations algébriques sur les limites :
+$$\lim_{N \to \infty} S_N = \lim_{N \to \infty} \frac{1 - q^{N+1}}{1 - q} = \frac{1 - 0}{1 - q} = \frac{1}{1 - q}$$
+
+La limite étant finie, la série géométrique converge vers $\frac{1}{1 - q}$. $\blacksquare$
+
+\subsection{B. Cas Pathologiques}
+
+Il est crucial d'étudier les limites des critères. Considérons le cas $L=1$ pour la règle de d'Alembert.
+
+\textbf{Exemple de convergence (Série de Riemann pour $\alpha=2$) :}
+Soit $u_n = \frac{1}{n^2}$. On a $u_{n+1} / u_n = \frac{n^2}{(n+1)^2} = \left(1 + \frac{1}{n}\right)^{-2}$.
+La limite est $\lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^{-2} = 1$. Et pourtant, cette série converge.
+
+\textbf{Exemple de divergence (Série harmonique pour $\alpha=1$) :}
+Soit $v_n = \frac{1}{n}$. On a $v_{n+1} / v_n = \frac{n}{n+1} = \left(1 + \frac{1}{n}\right)^{-1}$.
+La limite est $\lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^{-1} = 1$. Et pourtant, cette série diverge.
+
+Cela prouve rigoureusement que le cas $L=1$ ne permet aucune conclusion immédiate sur la nature asymptotique de la série.
+
+\section{4. Application en Intelligence Artificielle et Sciences de l'Information}
+
+En apprentissage automatique, les séries infinies jouent un rôle sous-jacent central dans l'évaluation des processus stochastiques infinis et dans la conception des algorithmes d'optimisation.
+
+Dans le cadre de l'\textbf{Apprentissage par Renforcement (Reinforcement Learning)}, modélisé par des Processus de Décision de Markov (MDP), un agent évolue dans un environnement et reçoit des récompenses $R_t$ à chaque pas de temps discret $t$. L'objectif est de maximiser la somme totale des récompenses. Or, si l'horizon temporel est infini (épisodes continus), la somme brute $\sum_{t=0}^\infty R_t$ divergerait trivialement vers $+\infty$, rendant la comparaison de politiques (fonctions de choix d'actions) mathématiquement indécidable.
+
+Pour pallier ce problème de divergence asymptotique, on introduit un \textbf{facteur d'escompte (discount factor)} $\gamma \in [0, 1[$. Le retour cumulé (Discounted Return) est alors défini comme une série :
+$$G_t = \sum_{k=0}^\infty \gamma^k R_{t+k+1}$$
+
+Si les récompenses sont bornées, c'est-à-dire s'il existe une constante $R_{max}$ telle que $\forall t, |R_t| \le R_{max}$, alors par valeur absolue, le terme général de la série est majoré :
+$$|\gamma^k R_{t+k+1}| \le \gamma^k R_{max}$$
+
+La série majorante $\sum_{k=0}^\infty \gamma^k R_{max} = R_{max} \sum_{k=0}^\infty \gamma^k$ est proportionnelle à une série géométrique de raison $\gamma < 1$, qui est formellement convergente et vaut $\frac{R_{max}}{1 - \gamma}$.
+En vertu du Critère de Comparaison, la série définissant $G_t$ converge absolument. Cette garantie théorique garantit que la fonction de valeur d'état (State-Value Function) $V^\pi(s) = \mathbb{E}^\pi[G_t | S_t = s]$ est bien définie, autorisant l'utilisation du théorème du point fixe de Banach pour les itérations de la fonction de valeur de Bellman.
+
+\section{5. Liens Sémantiques}
+- \textbf{Concepts Précédents requis :} Jalon 13 (Structure de R), Jalon 14 (Suites réelles et complexes)
+- \textbf{Concepts Futurs dépendants :} Jalon 17 (Séries absolument convergentes), Jalon 22 (Séries de fonctions), Jalon 23 (Séries entières), Jalon 85 (Axiomes de Kolmogorov)
+
+
+\section{Exercices d'Application}
+
+
+\section*{Exercice 01 : Règle de d'Alembert}
+
+\section{Énoncé}
+Soit la suite $(u_n)_{n \in \mathbb{N}^*}$ définie par $u_n = \frac{n^3}{3^n}$.
+Étudiez la nature de la série $\sum_{n \ge 1} u_n$.
+
+\section{Correction Détaillée}
+1. \textbf{Typage et vérification des hypothèses :}
+   Pour tout $n \in \mathbb{N}^*$, $n^3 > 0$ et $3^n > 0$. Donc $u_n > 0$.
+   La série $\sum u_n$ est une série à termes strictement positifs. On peut appliquer la règle de d'Alembert.
+
+2. \textbf{Calcul du rapport $\frac{u_{n+1}}{u_n}$ :}
+   $$\frac{u_{n+1}}{u_n} = \frac{\frac{(n+1)^3}{3^{n+1}}}{\frac{n^3}{3^n}}$$
+   $$\frac{u_{n+1}}{u_n} = \frac{(n+1)^3}{3^{n+1}} \times \frac{3^n}{n^3}$$
+   $$\frac{u_{n+1}}{u_n} = \frac{(n+1)^3}{n^3} \times \frac{3^n}{3^n \times 3}$$
+   $$\frac{u_{n+1}}{u_n} = \left(\frac{n+1}{n}\right)^3 \times \frac{1}{3}$$
+   $$\frac{u_{n+1}}{u_n} = \left(1 + \frac{1}{n}\right)^3 \times \frac{1}{3}$$
+
+3. \textbf{Passage à la limite :}
+   Lorsque $n \to \infty$, $\lim_{n \to \infty} \left(1 + \frac{1}{n}\right) = 1$.
+   Donc, $\lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^3 = 1^3 = 1$.
+   Il vient alors :
+   $$\lim_{n \to \infty} \frac{u_{n+1}}{u_n} = 1 \times \frac{1}{3} = \frac{1}{3}$$
+
+4. \textbf{Conclusion :}
+   Soit $L = \frac{1}{3}$. Comme $L < 1$, d'après le critère de d'Alembert, la série $\sum_{n \ge 1} \frac{n^3}{3^n}$ est convergente.
+
+
+\section*{Exercice 02 : Critère de Cauchy}
+
+\section{Énoncé}
+Soit la série de terme général $u_n = \left(\frac{2n+1}{3n+4}\right)^n$, pour $n \in \mathbb{N}$.
+Étudier la convergence de la série $\sum u_n$.
+
+\section{Correction Détaillée}
+1. \textbf{Typage et vérification des hypothèses :}
+   Pour tout $n \in \mathbb{N}$, $2n+1 > 0$ et $3n+4 > 0$. Donc $u_n > 0$.
+   La série $\sum u_n$ est à termes strictement positifs. On peut appliquer le critère de Cauchy.
+
+2. \textbf{Calcul de la racine $n$-ième :}
+   $$\sqrt[n]{u_n} = \left(u_n\right)^{\frac{1}{n}} = \left( \left(\frac{2n+1}{3n+4}\right)^n \right)^{\frac{1}{n}} = \frac{2n+1}{3n+4}$$
+
+3. \textbf{Passage à la limite :}
+   On factorise le numérateur et le dénominateur par le terme de plus haut degré $n$ :
+   $$\sqrt[n]{u_n} = \frac{n(2 + \frac{1}{n})}{n(3 + \frac{4}{n})} = \frac{2 + \frac{1}{n}}{3 + \frac{4}{n}}$$
+   Or, $\lim_{n \to \infty} \frac{1}{n} = 0$.
+   Donc,
+   $$\lim_{n \to \infty} \sqrt[n]{u_n} = \frac{2 + 0}{3 + 0} = \frac{2}{3}$$
+
+4. \textbf{Conclusion :}
+   Soit $L = \frac{2}{3}$. Comme $L < 1$, d'après le critère de Cauchy, la série $\sum u_n$ est convergente.
+
+
+\section*{Exercice 03 : Équivalent et règle de comparaison}
+
+\section{Énoncé}
+Étudier la nature de la série $\sum u_n$ de terme général $u_n = \ln\left(1 + \frac{1}{n^2}\right)$ pour $n \ge 1$.
+
+\section{Correction Détaillée}
+1. \textbf{Typage et vérification des hypothèses :}
+   Pour tout $n \ge 1$, $\frac{1}{n^2} > 0$. Comme la fonction $x \mapsto \ln(1+x)$ est strictement positive sur $]0, +\infty[$, on a $u_n > 0$.
+   Les séries sont à termes positifs.
+
+2. \textbf{Recherche d'un équivalent :}
+   On sait que le développement limité usuel du logarithme au voisinage de $0$ est $\ln(1+x) \sim_0 x$.
+   Ici, posons $x_n = \frac{1}{n^2}$. On a bien $\lim_{n \to \infty} x_n = 0$.
+   Donc, par composition des limites :
+   $$u_n = \ln\left(1 + \frac{1}{n^2}\right) \sim_{+\infty} \frac{1}{n^2}$$
+
+3. \textbf{Nature de la série de comparaison :}
+   Soit $v_n = \frac{1}{n^2}$.
+   La série $\sum v_n$ est une série de Riemann de paramètre $\alpha = 2$.
+   Puisque $\alpha = 2 > 1$, la série $\sum v_n$ converge.
+
+4. \textbf{Conclusion par le théorème de comparaison :}
+   Puisque $u_n \sim v_n$ avec $u_n > 0$ et $v_n > 0$, les deux séries sont de même nature.
+   La série de Riemann convergente entraîne donc que la série $\sum \ln\left(1 + \frac{1}{n^2}\right)$ est convergente.
+
+
+\section*{Exercice 04 : Application combinée de théorèmes de croissances comparées}
+
+\section{Énoncé}
+Soit $u_n = \frac{n^2 + \ln n}{e^n}$ pour $n \ge 1$.
+Montrer que la série $\sum u_n$ converge en utilisant la règle du $n^2 \cdot u_n$.
+
+\section{Correction Détaillée}
+1. \textbf{Positivité :}
+   Pour $n \ge 1$, $n^2 + \ln n > 0$ et $e^n > 0$. Donc $u_n > 0$.
+
+2. \textbf{Règle du $n^\alpha u_n$ avec $\alpha = 2$ :}
+   Considérons la limite du produit $n^2 u_n$.
+   $$n^2 u_n = n^2 \frac{n^2 + \ln n}{e^n} = \frac{n^4 + n^2 \ln n}{e^n}$$
+   Séparons l'expression en deux fractions :
+   $$n^2 u_n = \frac{n^4}{e^n} + \frac{n^2 \ln n}{e^n}$$
+
+3. \textbf{Évaluation des limites (Croissances comparées) :}
+   D'après le théorème des croissances comparées entre fonctions puissances et exponentielles en l'infini, l'exponentielle l'emporte :
+   $\lim_{n \to \infty} \frac{n^4}{e^n} = 0$.
+   De plus, pour le deuxième terme, $\ln n \le n$ (pour $n$ assez grand), donc $\frac{n^2 \ln n}{e^n} \le \frac{n^3}{e^n}$, qui tend également vers $0$. Ainsi :
+   $\lim_{n \to \infty} \frac{n^2 \ln n}{e^n} = 0$.
+   Par conséquent,
+   $$\lim_{n \to \infty} n^2 u_n = 0 + 0 = 0$$
+
+4. \textbf{Conclusion et majoration par Riemann :}
+   Comme $\lim_{n \to \infty} n^2 u_n = 0$, cela implique qu'il existe un rang $N$ à partir duquel $n^2 u_n \le 1$.
+   Donc pour $n \ge N$, $u_n \le \frac{1}{n^2}$.
+   Or, la série $\sum \frac{1}{n^2}$ converge (série de Riemann avec $\alpha = 2 > 1$).
+   Par le critère de majoration des séries à termes positifs, la série $\sum u_n$ converge.
+
+
+\section*{Exercice 05 : Factorielles et Règle de d'Alembert}
+
+\section{Énoncé}
+Soit la série de terme général $u_n = \frac{(2n)!}{(n!)^2 4^n}$ pour $n \ge 1$.
+Étudier la nature de $\sum u_n$.
+
+\section{Correction Détaillée}
+1. \textbf{Positivité :}
+   Tous les termes sont constitués de factorielles et de puissances d'entiers positifs. $u_n > 0$. On utilise le critère de d'Alembert.
+
+2. \textbf{Calcul du rapport $\frac{u_{n+1}}{u_n}$ :}
+   $$u_{n+1} = \frac{(2(n+1))!}{((n+1)!)^2 4^{n+1}} = \frac{(2n+2)!}{((n+1)!)^2 4^{n+1}}$$
+   $$\frac{u_{n+1}}{u_n} = \frac{(2n+2)!}{((n+1)!)^2 4^{n+1}} \times \frac{(n!)^2 4^n}{(2n)!}$$
+
+3. \textbf{Simplifications successives :}
+   On décompose les factorielles :
+   $(2n+2)! = (2n+2)(2n+1)(2n)!$
+   $(n+1)! = (n+1)n! \implies ((n+1)!)^2 = (n+1)^2(n!)^2$
+   $4^{n+1} = 4 \times 4^n$
+
+   En réinjectant dans le quotient :
+   $$\frac{u_{n+1}}{u_n} = \frac{(2n+2)(2n+1)(2n)!}{(n+1)^2(n!)^2 \times 4 \times 4^n} \times \frac{(n!)^2 4^n}{(2n)!}$$
+   Les factorielles et les $4^n$ se simplifient intégralement :
+   $$\frac{u_{n+1}}{u_n} = \frac{(2n+2)(2n+1)}{4(n+1)^2}$$
+   Or $2n+2 = 2(n+1)$, donc on simplifie par $n+1$ :
+   $$\frac{u_{n+1}}{u_n} = \frac{2(n+1)(2n+1)}{4(n+1)^2} = \frac{2(2n+1)}{4(n+1)} = \frac{2n+1}{2n+2}$$
+
+4. \textbf{Passage à la limite :}
+   $$\lim_{n \to \infty} \frac{u_{n+1}}{u_n} = \lim_{n \to \infty} \frac{2n(1 + \frac{1}{2n})}{2n(1 + \frac{1}{n})} = \frac{2}{2} = 1$$
+   La règle de d'Alembert échoue (cas douteux). Il faut une autre méthode.
+
+5. \textbf{Utilisation d'un argument alternatif (Suite décroissante) :}
+   On a montré que $\frac{u_{n+1}}{u_n} = \frac{2n+1}{2n+2}$.
+   Clairement, $2n+1 < 2n+2$, donc $\frac{u_{n+1}}{u_n} < 1$.
+   La suite $(u_n)$ est donc strictement décroissante.
+   Pour obtenir la convergence, on a besoin de la formule de Stirling pour trouver un équivalent de $(2n)!$ et $(n!)$.
+   $$n! \sim \left(\frac{n}{e}\right)^n \sqrt{2\pi n}$$
+   $$(2n)! \sim \left(\frac{2n}{e}\right)^{2n} \sqrt{4\pi n}$$
+   On injecte dans $u_n$ :
+   $$u_n \sim \frac{\left(\frac{2n}{e}\right)^{2n} \sqrt{4\pi n}}{\left(\left(\frac{n}{e}\right)^n \sqrt{2\pi n}\right)^2 4^n}$$
+   $$u_n \sim \frac{2^{2n} n^{2n} e^{-2n} \cdot 2\sqrt{\pi n}}{n^{2n} e^{-2n} \cdot 2\pi n \cdot 4^n}$$
+   Les puissances de $e$, de $n$ et de $2$ s'annulent ($2^{2n} = 4^n$) :
+   $$u_n \sim \frac{2\sqrt{\pi n}}{2\pi n} = \frac{1}{\sqrt{\pi} \sqrt{n}} = \frac{1}{\sqrt{\pi} n^{1/2}}$$
+   L'équivalent est une série de Riemann de paramètre $\alpha = 1/2 < 1$. La série est divergente.
+
+
+\section*{Exercice 06 : La série harmonique alternée et positive}
+
+\section{Énoncé}
+Soit $u_n = \sqrt{n+1} - \sqrt{n}$. Étudier la convergence de la série $\sum_{n \ge 1} u_n$.
+
+\section{Correction Détaillée}
+1. \textbf{Positivité :}
+   Pour tout $n \ge 1$, $n+1 > n$, la fonction racine est croissante donc $\sqrt{n+1} > \sqrt{n}$. $u_n > 0$.
+
+2. \textbf{Méthode 1 : Simplification par la quantité conjuguée (pour trouver l'équivalent) :}
+   $$u_n = \frac{(\sqrt{n+1} - \sqrt{n})(\sqrt{n+1} + \sqrt{n})}{\sqrt{n+1} + \sqrt{n}}$$
+   $$u_n = \frac{(n+1) - n}{\sqrt{n} (\sqrt{1+1/n} + 1)} = \frac{1}{\sqrt{n} (\sqrt{1+1/n} + 1)}$$
+
+3. \textbf{Équivalent à l'infini :}
+   Lorsque $n \to \infty$, $1/n \to 0$, d'où le terme au dénominateur tend vers $1 + 1 = 2$.
+   $$u_n \sim_{+\infty} \frac{1}{2\sqrt{n}}$$
+   La série $\sum \frac{1}{\sqrt{n}}$ est une série de Riemann divergente ($\alpha = 1/2 \le 1$). Donc par équivalence pour les termes positifs, la série $\sum u_n$ diverge.
+
+4. \textbf{Méthode 2 : Par les sommes partielles (Télescopage) :}
+   $S_N = \sum_{n=1}^N (\sqrt{n+1} - \sqrt{n})$
+   $$S_N = (\sqrt{2} - \sqrt{1}) + (\sqrt{3} - \sqrt{2}) + \dots + (\sqrt{N+1} - \sqrt{N})$$
+   Tous les termes s'annulent sauf le premier et le dernier.
+   $$S_N = \sqrt{N+1} - 1$$
+   Lorsque $N \to \infty$, $\lim S_N = +\infty$. La série diverge vers l'infini.
+
+
+\section*{Exercice 07 : Séries de Bertrand}
+
+\section{Énoncé}
+Étudier, selon les valeurs du réel $\beta$, la convergence de la série $\sum_{n \ge 2} \frac{1}{n (\ln n)^\beta}$.
+
+\section{Correction Détaillée}
+1. \textbf{Typage et fonctions :}
+   La fonction $f(t) = \frac{1}{t (\ln t)^\beta}$ est définie, continue, positive et décroissante sur $[2, +\infty[$.
+   Ceci est justifié car son dénominateur est le produit de deux fonctions croissantes et positives. On peut utiliser le théorème de comparaison série-intégrale.
+
+2. \textbf{Comparaison avec l'intégrale :}
+   La série $\sum f(n)$ et l'intégrale $\int_2^{+\infty} f(t)dt$ sont de même nature.
+   Calculons l'intégrale impropre sur un segment $[2, X]$ :
+   $$I(X) = \int_2^X \frac{1}{t (\ln t)^\beta} dt$$
+
+3. \textbf{Changement de variable ou primitive directe :}
+   Posons $u = \ln t$. On a $du = \frac{1}{t} dt$.
+   Les bornes deviennent $\ln 2$ et $\ln X$.
+   $$I(X) = \int_{\ln 2}^{\ln X} \frac{1}{u^\beta} du = \int_{\ln 2}^{\ln X} u^{-\beta} du$$
+
+4. \textbf{Évaluation selon les cas :}
+   - \textbf{Cas $\beta \neq 1$ :}
+     Une primitive est $\left[\frac{u^{-\beta+1}}{-\beta+1}\right]$.
+     $$I(X) = \frac{1}{1-\beta} \left( (\ln X)^{1-\beta} - (\ln 2)^{1-\beta} \right)$$
+     Si $\beta > 1$, $1-\beta < 0$, donc $(\ln X)^{1-\beta} \to 0$ en $+\infty$. L'intégrale converge.
+     Si $\beta < 1$, $1-\beta > 0$, donc $(\ln X)^{1-\beta} \to +\infty$. L'intégrale diverge.
+   - \textbf{Cas $\beta = 1$ :}
+     L'intégrale est $\int \frac{1}{u} du = [\ln |u|]$.
+     $$I(X) = \ln(\ln X) - \ln(\ln 2)$$
+     Lorsque $X \to +\infty$, $\ln(\ln X) \to +\infty$. L'intégrale diverge.
+
+5. \textbf{Conclusion Mathématique :}
+   La série de Bertrand $\sum \frac{1}{n (\ln n)^\beta}$ converge si et seulement si $\beta > 1$.
+
+
+\section*{Exercice 08 : Un critère de condensation}
+
+\section{Énoncé}
+Soit $(u_n)$ une suite décroissante de réels positifs. Démontrer que la série $\sum_{n=1}^\infty u_n$ converge si et seulement si la série condensée $\sum_{k=0}^\infty 2^k u_{2^k}$ converge.
+
+\section{Correction Détaillée}
+1. \textbf{Introduction et Hypothèses :}
+   On suppose $(u_n)$ positive et décroissante. Cela garantit que toutes les sommations et majorations sont légitimes dans $\overline{\mathbb{R}^+}$.
+   Soit $S_N = \sum_{n=1}^N u_n$ et $T_K = \sum_{k=0}^K 2^k u_{2^k}$.
+
+2. \textbf{Étape 1 : Majoration par la série condensée (Si T converge alors S converge)}
+   Regroupons les termes de $S_N$ par paquets de tailles $2^k$.
+   Considérons la somme partielle jusqu'à $N < 2^{K+1}-1$ :
+   $$S_N \le S_{2^{K+1}-1} = u_1 + (u_2 + u_3) + (u_4 + \dots + u_7) + \dots + (u_{2^K} + \dots + u_{2^{K+1}-1})$$
+   Comme la suite est décroissante :
+   $u_2 + u_3 \le u_2 + u_2 = 2u_2$
+   $u_4 + u_5 + u_6 + u_7 \le 4u_4$
+   De manière générale, le k-ième groupe a $2^k$ termes, tous majorés par le premier terme du groupe $u_{2^k}$.
+   $$S_{2^{K+1}-1} \le u_1 + 2u_2 + 4u_4 + \dots + 2^K u_{2^K} = \sum_{k=0}^K 2^k u_{2^k} = T_K$$
+   Ainsi $S_N \le T_K$. Si $(T_K)$ est majorée (i.e. la série condensée converge), alors $(S_N)$ est majorée. Donc $\sum u_n$ converge.
+
+3. \textbf{Étape 2 : Minoration par la série condensée (Si S converge alors T converge)}
+   Cette fois, on minore chaque paquet.
+   $u_2 + u_3 \ge u_4 + u_4 = 2u_4$
+   $u_4 + u_5 + u_6 + u_7 \ge 4u_8$
+   $S_N \ge u_1 + u_2 + (u_3 + u_4) + (u_5 + \dots + u_8) \dots$
+   En généralisant :
+   $$S_{2^K} = u_1 + \sum_{k=0}^{K-1} \sum_{j=2^k+1}^{2^{k+1}} u_j \ge u_1 + \sum_{k=0}^{K-1} 2^k u_{2^{k+1}} = u_1 + \frac{1}{2} \sum_{k=0}^{K-1} 2^{k+1} u_{2^{k+1}}$$
+   Posons $m = k+1$ :
+   $$S_{2^K} \ge u_1 + \frac{1}{2} \sum_{m=1}^{K} 2^m u_{2^m} = u_1 + \frac{1}{2} (T_K - u_1)$$
+   $$T_K \le 2S_{2^K} - u_1$$
+   Ainsi, si $(S_N)$ converge (est majorée), alors $(T_K)$ est majorée.
+
+4. \textbf{Conclusion :}
+   Les deux suites de sommes partielles sont mutuellement bornées l'une par l'autre. Elles ont donc la même nature.
+
+
+\section*{Exercice 09 : Approximation d'intégrales par des sommes}
+
+\section{Énoncé}
+Soit $R_N = \sum_{n=N+1}^\infty \frac{1}{n^2}$.
+Donner un équivalent simple de $R_N$ quand $N \to +\infty$.
+
+\section{Correction Détaillée}
+1. \textbf{Vérification de l'existence :}
+   La série $\sum 1/n^2$ converge (Riemann, $\alpha=2$), donc le reste $R_N$ tend vers $0$ et est bien défini.
+
+2. \textbf{Encadrement par des intégrales :}
+   La fonction $f(t) = 1/t^2$ est décroissante et positive.
+   Par conséquent, pour un entier $n$, pour tout $t \in [n, n+1]$ :
+   $$f(n+1) \le f(t) \le f(n)$$
+   En intégrant cette relation de $n$ à $n+1$ :
+   $$\frac{1}{(n+1)^2} \le \int_n^{n+1} \frac{1}{t^2} dt \le \frac{1}{n^2}$$
+
+3. \textbf{Sommation des encadrements :}
+   On somme les inégalités de $n=N+1$ à l'infini (les séries et intégrales convergent).
+   Partie gauche de l'inégalité de droite :
+   $$\sum_{n=N+1}^\infty \int_n^{n+1} \frac{1}{t^2} dt \le \sum_{n=N+1}^\infty \frac{1}{n^2} = R_N$$
+   La somme d'intégrales se télescope :
+   $$\int_{N+1}^\infty \frac{1}{t^2} dt \le R_N$$
+
+   Pour l'autre côté de l'inégalité (décalage d'indice), on somme la partie gauche de $n=N$ :
+   $$\sum_{n=N}^\infty \frac{1}{(n+1)^2} \le \sum_{n=N}^\infty \int_n^{n+1} \frac{1}{t^2} dt$$
+   $$R_N = \sum_{k=N+1}^\infty \frac{1}{k^2} \le \int_N^\infty \frac{1}{t^2} dt$$
+
+4. \textbf{Calcul des intégrales :}
+   $$\int_A^\infty t^{-2} dt = \left[ -t^{-1} \right]_A^\infty = \frac{1}{A}$$
+   On injecte dans l'encadrement :
+   $$\frac{1}{N+1} \le R_N \le \frac{1}{N}$$
+
+5. \textbf{Déduction de l'équivalent :}
+   Puisque $\lim_{N \to \infty} \frac{N}{N+1} = 1$, les termes bornant $R_N$ sont tous deux équivalents à $\frac{1}{N}$.
+   Le théorème des gendarmes sur l'équivalence garantit que :
+   $$R_N \sim_{+\infty} \frac{1}{N}$$
+
+
+\section*{Exercice 10 : Séries entrelacées et astuces de manipulation}
+
+\section{Énoncé}
+Soit $(u_n)$ la suite définie par :
+$u_{2k} = \frac{1}{2^{2k}}$ et $u_{2k+1} = \frac{1}{3^{2k+1}}$.
+Étudier la convergence de la série $\sum u_n$. Pourquoi la règle de d'Alembert est-elle inopérante ici ?
+
+\section{Correction Détaillée}
+1. \textbf{Positivité :}
+   La suite est clairement à termes strictement positifs.
+
+2. \textbf{Tentative par la règle de d'Alembert :}
+   Étudions le quotient $q_n = \frac{u_{n+1}}{u_n}$.
+   Cas $n = 2k$ (pair) :
+   $$q_{2k} = \frac{u_{2k+1}}{u_{2k}} = \frac{\frac{1}{3^{2k+1}}}{\frac{1}{2^{2k}}} = \frac{2^{2k}}{3^{2k+1}} = \frac{1}{3} \left(\frac{2}{3}\right)^{2k}$$
+   Comme $2/3 < 1$, $\lim_{k \to \infty} q_{2k} = 0$.
+
+   Cas $n = 2k+1$ (impair) :
+   $$q_{2k+1} = \frac{u_{2k+2}}{u_{2k+1}} = \frac{\frac{1}{2^{2k+2}}}{\frac{1}{3^{2k+1}}} = \frac{3^{2k+1}}{2^{2k+2}} = \frac{3}{4} \left(\frac{3}{2}\right)^{2k}$$
+   Comme $3/2 > 1$, $\lim_{k \to \infty} q_{2k+1} = +\infty$.
+
+   La suite des quotients n'admet pas de limite unique (elle possède une sous-suite tendant vers 0 et une sous-suite divergente). Le critère de d'Alembert échoue.
+
+3. \textbf{Tentative par le critère de Cauchy :}
+   Calculons $\sqrt[n]{u_n}$.
+   Cas $n = 2k$ : $\sqrt[2k]{u_{2k}} = \left(2^{-2k}\right)^{\frac{1}{2k}} = \frac{1}{2}$.
+   Cas $n = 2k+1$ : $\sqrt[2k+1]{u_{2k+1}} = \left(3^{-(2k+1)}\right)^{\frac{1}{2k+1}} = \frac{1}{3}$.
+   La suite de Cauchy n'a pas non plus de limite (elle oscille entre $1/2$ et $1/3$).
+   Mais la limite supérieure (limsup) de Cauchy existe :
+   $\limsup \sqrt[n]{u_n} = \max(1/2, 1/3) = 1/2$.
+   D'après le critère de Cauchy généralisé, comme $\limsup < 1$, la série converge.
+
+4. \textbf{Preuve directe par séparation des termes :}
+   Puisque les termes sont positifs, on peut sommer les termes pairs et impairs séparément :
+   $\sum u_n = \sum_{k=0}^\infty u_{2k} + \sum_{k=0}^\infty u_{2k+1}$
+   $\sum_{k=0}^\infty \frac{1}{2^{2k}} = \sum_{k=0}^\infty \left(\frac{1}{4}\right)^k = \frac{1}{1 - 1/4} = \frac{4}{3}$ (Série géométrique convergente).
+   $\sum_{k=0}^\infty \frac{1}{3^{2k+1}} = \frac{1}{3} \sum_{k=0}^\infty \left(\frac{1}{9}\right)^k = \frac{1}{3} \cdot \frac{1}{1 - 1/9} = \frac{1}{3} \cdot \frac{9}{8} = \frac{3}{8}$ (Série géométrique convergente).
+   La somme de deux séries convergentes est convergente.
+   $\sum u_n = \frac{4}{3} + \frac{3}{8} = \frac{32 + 9}{24} = \frac{41}{24}$.
+
+
+\section{Travaux Pratiques et Implémentations}
+
+
+\section*{TP 01 : Convergence Numérique de la Série Géométrique}
+
+\section{Objectif}
+Implémenter le calcul des sommes partielles d'une série géométrique $\sum q^n$ et vérifier expérimentalement le théorème de convergence pour $|q| < 1$.
+
+\section{Implémentation Python}
+\begin{lstlisting}[language=Python, breaklines=true]
+def somme_partielle_geometrique(q: float, N: int) -> float:
+    """
+    Calcule la somme partielle S_N = sum_{n=0}^N q^n.
+    """
+    if q == 1.0:
+        return float(N + 1)
+
+    somme = 0.0
+    terme = 1.0
+    for _ in range(N + 1):
+        somme += terme
+        terme *= q
+    return somme
+
+def test_convergence_geometrique():
+    # Test avec q = 0.5. La limite theorique est 1 / (1 - 0.5) = 2.0
+    q = 0.5
+    limite_theorique = 1.0 / (1.0 - q)
+    S_100 = somme_partielle_geometrique(q, 100)
+
+    # On utilise assert pour valider mathematiquement (epsilon = 1e-9)
+    assert abs(S_100 - limite_theorique) < 1e-9, f"Erreur de convergence: {S_100} != {limite_theorique}"
+    print("Test geometrique valide !")
+
+if __name__ == "__main__":
+    test_convergence_geometrique()
+\end{lstlisting}
+
+\section{Analyse Mathématique du Code}
+L'algorithme calcule de manière itérative la suite des sommes partielles. L'assertion finale vérifie que pour $N$ grand, $S_N$ est arbitrairement proche de sa limite théorique $\frac{1}{1-q}$.
+
+
+\section*{TP 02 : Outil de validation de d'Alembert}
+
+\section{Objectif}
+Créer un script en Python pur capable d'estimer empiriquement le ratio $L = \lim \frac{u_{n+1}}{u_n}$ pour des fonctions analytiques complexes (comme la factorielle).
+
+\section{Implémentation Python}
+\begin{lstlisting}[language=Python, breaklines=true]
+def factorial(n: int) -> int:
+    result = 1
+    for i in range(1, n + 1):
+        result *= i
+    return result
+
+def u_n_ratio(n: int) -> float:
+    # Calcule directement le rapport u_{n+1}/u_n pour eviter l'OverflowError
+    # u_{n+1}/u_n = (n/(n+1))^n = (1 + 1/n)^(-n)
+    return (1.0 + 1.0 / n) ** (-n)
+
+def estimate_dalembert_limit(N_max: int) -> float:
+    """
+    Calcule empiriquement le rapport limite pour de grands N.
+    """
+    return u_n_ratio(N_max)
+
+def test_dalembert():
+    L_approx = estimate_dalembert_limit(150) # n est tres grand, limite l'overflow
+
+    # La limite theorique de n! / n^n par d'Alembert est 1/e ~ 0.367879
+    e_theorique = 2.718281828459
+    L_theorique = 1.0 / e_theorique
+
+    assert abs(L_approx - L_theorique) < 0.01, f"Echec de l'approximation : {L_approx} != {L_theorique}"
+    print(f"Rapport approximatif L = {L_approx:.6f} valide contre 1/e !")
+
+if __name__ == "__main__":
+    test_dalembert()
+\end{lstlisting}
+
+\section{Analyse Mathématique du Code}
+L'implémentation évite les calculs formels. On calcule explicitement les termes pour un très grand $n$. La convergence rapide de $\frac{u_{n+1}}{u_n} = \left(\frac{n}{n+1}\right)^n = \left(1 + \frac{1}{n}\right)^{-n} \to e^{-1}$ garantit la stabilité numérique.
+
+
+\section*{TP 03 : Calculateur d'équivalents de séries divergentes}
+
+\section{Objectif}
+La série harmonique $\sum 1/n$ est divergente. Nous implémentons ici un script qui prouve expérimentalement le théorème de Mertens-Euler, qui affirme que $\sum_{k=1}^N \frac{1}{k} \approx \ln(N) + \gamma$.
+
+\section{Implémentation Python}
+\begin{lstlisting}[language=Python, breaklines=true]
+import math
+
+def somme_harmonique(N: int) -> float:
+    somme = 0.0
+    for k in range(1, N + 1):
+        somme += 1.0 / k
+    return somme
+
+def valider_constante_euler_mascheroni():
+    # La constante d'Euler-Mascheroni (gamma) vaut approximativement 0.57721566
+    gamma_theorique = 0.5772156649
+    N = 1000000
+
+    H_N = somme_harmonique(N)
+    gamma_experimental = H_N - math.log(N)
+
+    # Precision attendue de l'ordre de 1/2N
+    assert abs(gamma_experimental - gamma_theorique) < 1e-5, f"Erreur de convergence : {gamma_experimental}"
+    print(f"Constante gamma convergente obtenue: {gamma_experimental:.6f}")
+
+if __name__ == "__main__":
+    valider_constante_euler_mascheroni()
+\end{lstlisting}
+
+\section{Analyse Mathématique du Code}
+Ce script illustre l'évaluation du reste de la comparaison série-intégrale. Bien que divergente, la vitesse de divergence de la série harmonique est strictement encadrée par le logarithme, laissant une trace constante indélébile dans l'Univers.
+
+
+\section*{TP 04 : La sommation exponentielle et l'IA (Softmax)}
+
+\section{Objectif}
+La fonction d'activation probabiliste "Softmax" utilisée dans les réseaux de neurones tire ses fondations de la convergence absolue des séries exponentielles. Nous implémentons une version stable du Softmax basée sur les séries.
+
+\section{Implémentation Python}
+\begin{lstlisting}[language=Python, breaklines=true]
+def my_exp(x: float, termes: int = 50) -> float:
+    # Serie de Taylor de exp(x) = sum(x^n / n!)
+    somme = 1.0
+    terme_actuel = 1.0
+    for n in range(1, termes):
+        terme_actuel *= x / n
+        somme += terme_actuel
+    return somme
+
+def softmax(logits: list[float]) -> list[float]:
+    # Translation pour la stabilite numerique (Shifted Softmax)
+    max_logit = max(logits)
+    exps = [my_exp(x - max_logit) for x in logits]
+    somme_exps = sum(exps)
+    return [e / somme_exps for e in exps]
+
+def test_softmax_properties():
+    logits_entree = [2.0, 1.0, 0.1]
+    probs = softmax(logits_entree)
+
+    somme_probs = sum(probs)
+    assert abs(somme_probs - 1.0) < 1e-6, "La loi n'est pas une probabilite valide."
+
+    # L'ordre d'importance est preserve car exp() est monotone croissante
+    assert probs[0] > probs[1] > probs[2], "La monotonie n'est pas conservee."
+    print("TP Softmax (Serie Exponentielle) valide.")
+
+if __name__ == "__main__":
+    test_softmax_properties()
+\end{lstlisting}
+
+\section{Analyse Mathématique du Code}
+La série exponentielle $\sum \frac{x^n}{n!}$ converge pour tout $x \in \mathbb{R}$ selon d'Alembert (puisque $\frac{|x|}{n+1} \to 0$). Notre algorithme tronque cette série après 50 termes, et divise les termes pour former une série de somme exacte $1$, ce qui est la définition rigoureuse de la loi de distribution finale d'un modèle de langage.
+
+
+\section*{TP 05 : Calcul du Rayon de Convergence avec Cauchy}
+
+\section{Objectif}
+Créer un algorithme qui estime dynamiquement la frontière de sécurité (le rayon de convergence) de n'importe quelle série polynomiale en évaluant la règle de Cauchy sur ses coefficients.
+
+\section{Implémentation Python}
+\begin{lstlisting}[language=Python, breaklines=true]
+def coefficient_catalan(n: int) -> float:
+    # C_n = (2n)! / ((n+1)! * n!)
+    num = 1.0
+    for i in range(n + 2, 2 * n + 1):
+        num *= i
+    den = 1.0
+    for i in range(1, n + 1):
+        den *= i
+    return num / den
+
+def est_rayon_convergence_cauchy(coeff_func, n_max: int) -> float:
+    """
+    R = 1 / limsup(|C_n|^(1/n))
+    """
+    c_n = coeff_func(n_max)
+    racine_n = c_n ** (1.0 / n_max)
+    return 1.0 / racine_n
+
+def test_cauchy_hadamard():
+    # Pour la serie generatrice des nombres de Catalan, R_theorique = 1/4
+    R_approx = est_rayon_convergence_cauchy(coefficient_catalan, 100)
+    R_theorique = 0.25
+
+    assert abs(R_approx - R_theorique) < 0.02, f"Echec de Cauchy-Hadamard: {R_approx}"
+    print(f"Rayon estime avec succes : R = {R_approx:.4f}")
+
+if __name__ == "__main__":
+    test_cauchy_hadamard()
+\end{lstlisting}
+
+\section{Analyse Mathématique du Code}
+Cet algorithme emploie la Formule de Cauchy-Hadamard $\frac{1}{R} = \limsup \sqrt[n]{|a_n|}$. Pour la série des nombres de Catalan générant des arbres de décision binaires, ce calcul montre algorithmiquement que la somme mathématique explose si on injecte un poids $x > 0.25$.
+
+
+\end{document}

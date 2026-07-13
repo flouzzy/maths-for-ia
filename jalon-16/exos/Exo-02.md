@@ -1,6 +1,4 @@
 # Exercice 02 : Critère de Cauchy
-**Niveau :** Application directe (L1)
-**Notion ciblée :** Utilisation de la règle de Cauchy pour les termes généraux avec des puissances $n$-ièmes.
 
 ## Énoncé
 Soit la série de terme général $u_n = \left(\frac{2n+1}{3n+4}\right)^n$, pour $n \in \mathbb{N}$.

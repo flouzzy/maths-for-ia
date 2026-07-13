@@ -1,6 +1,4 @@
 # Exercice 09 : Approximation d'intégrales par des sommes
-**Niveau :** Très Difficile (Concours)
-**Notion ciblée :** Évaluation asymptotique du reste d'une série convergente.
 
 ## Énoncé
 Soit $R_N = \sum_{n=N+1}^\infty \frac{1}{n^2}$.
