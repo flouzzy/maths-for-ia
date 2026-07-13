@@ -106,7 +106,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 <summary><b>Trimestre 3 : réduction des endomorphismes et espaces préhilbertiens</b></summary>
 <br>
 
-- **[Jalon 25](jalon-25/Jalon%2025%20%28Formes%20bilin%C3%A9aires%29.md)** : Formes bilinéaires, formes sesquilinieaires, produit scalaire et inégalité de Cauchy-Schwarz.
+- **[Jalon 25](jalon-25/Jalon-25.md)** : Formes bilinéaires, formes sesquilinieaires, produit scalaire et inégalité de Cauchy-Schwarz. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 26](jalon-26/Jalon%2026%20%28Espaces%20euclidiens%29.md)** : Espaces euclidiens, orthogonalité, théorème de la projection orthogonale et algorithme de Gram-Schmidt.
 - **[Jalon 27](jalon-27/Jalon%2027%20%28Endomorphismes%20sym%C3%A9triques%29.md)** : Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales.
 - **[Jalon 28](jalon-28/Jalon%2028%20%28Polyn%C3%B4mes%20d%27endomorphismes%29.md)** : Polynômes d'endomorphismes, idéaux annulateurs et démonstration du théorème de Cayley-Hamilton.

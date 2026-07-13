@@ -13,16 +13,14 @@ next: "[[Jalon 26 (Espaces euclidiens).md]]"
 # Jalon 25 : Formes bilinéaires, formes sesquilinieaires, produit scalaire et inégalité de Cauchy-Schwarz
 
 ## 1. Présentation du concept clé
-*Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
 
-- **La Métaphore :** Imaginez que vous soyez un évaluateur de compatibilité pour un site de rencontre. Un vecteur $x$, c'est le profil d'une personne (ses goûts, son âge, etc.). Une **Forme Bilinéaire**, c'est une règle de calcul qui prend DEUX profils et qui donne un score de compatibilité (un nombre). 
+ Imaginez que vous soyez un évaluateur de compatibilité pour un site de rencontre. Un vecteur $x$, c'est le profil d'une personne (ses goûts, son âge, etc.). Une **Forme Bilinéaire**, c'est une règle de calcul qui prend DEUX profils et qui donne un score de compatibilité (un nombre).
   - Le **Produit Scalaire**, c'est le score parfait : il est positif si les gens se ressemblent, nul s'ils n'ont rien en commun, et maximal si c'est la même personne.
   - L'**Inégalité de Cauchy-Schwarz**, c'est la limite de la ressemblance : elle dit que le score de compatibilité entre deux personnes ne peut jamais dépasser le produit de leur "charisme" individuel (leur norme).
-- **Le "Pourquoi on a inventé ça" :** On a besoin de mesurer des angles et des longueurs dans des espaces qui ne sont pas forcément le monde réel en 3D. Le produit scalaire est l'outil universel pour définir la notion de "proximité" et de "direction" dans n'importe quel ensemble de données.
-- **Visualisation :** Imaginez projeter un vecteur sur un autre. La longueur de l'ombre portée dépend de la "ressemblance" des deux vecteurs. Le produit scalaire est la mesure de cette ombre.
+L'impasse historique : On a besoin de mesurer des angles et des longueurs dans des espaces qui ne sont pas forcément le monde réel en 3D. Le produit scalaire est l'outil universel pour définir la notion de "proximité" et de "direction" dans n'importe quel ensemble de données.
+Intuition Géométrique : Imaginez projeter un vecteur sur un autre. La longueur de l'ombre portée dépend de la "ressemblance" des deux vecteurs. Le produit scalaire est la mesure de cette ombre.
 
 ## 2. Formalisation
-*Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
 
 ### A. Définitions Formelles
 Soit $E$ un $\mathbb{K}$-espace vectoriel.
@@ -46,13 +44,13 @@ Soit $E$ un $\mathbb{K}$-espace vectoriel.
 > $$\|x + y\| \le \|x\| + \|y\|$$
 
 ## 3. Démonstrations
-*Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
 
 ### Démonstration du Théorème Pivot : L'Inégalité de Cauchy-Schwarz (Cas réel)
 Soit $\langle \cdot, \cdot \rangle$ un produit scalaire réel sur $E$.
 
 1. **Initialisation / Cadre :** Soient $x, y \in E$. 
-   - Si $y = 0$, l'inégalité $0 \le 0$ est triviale.
+   - Si $y = 0_E$, alors $\langle x, y \rangle = \langle x, 0_E \rangle = 0$. De même, $\|y\| = \sqrt{\langle 0_E, 0_E \rangle} = 0$.
+   Ainsi, l'inégalité devient $|0| \le \|x\| \cdot 0$, soit $0 \le 0$, ce qui est une proposition vraie.
    - Supposons $y \neq 0$. Considérons la fonction $P(\lambda)$ définie pour tout $\lambda \in \mathbb{R}$ par :
      $$P(\lambda) = \|x + \lambda y\|^2$$
 
@@ -87,7 +85,6 @@ Soit $\langle \cdot, \cdot \rangle$ un produit scalaire réel sur $E$.
 6. **Conclusion :** L'inégalité de Cauchy-Schwarz est démontrée.
 
 ## 4. Exercices d'Application
-*Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
 
 ### Exercice 1 : Produit scalaire de fonctions
 **Énoncé :** Sur $E = C([0, 1], \mathbb{R})$, on définit $\langle f, g \rangle = \int_0^1 f(t)g(t)dt$. Vérifier que c'est un produit scalaire.
@@ -117,7 +114,6 @@ Soit $\langle \cdot, \cdot \rangle$ un produit scalaire réel sur $E$.
 **Conclusion :** L'inégalité est démontrée.
 
 ## 5. Application en Intelligence Artificielle
-*Démontrer la finalité technologique moderne de ce jalon théorique.*
 - **Le Pont Théorique :** Le produit scalaire est l'opération de base qui définit la **Similarité** entre deux vecteurs de données.
 - **Exemple Concret :** Dans le **Mécanisme d'Attention (Transformers)** de GPT-4 ou BERT, on calcule des scores d'attention en faisant des produits scalaires entre des vecteurs de "Requête" (Query) et de "Clé" (Key) : $\text{Score} = Q \cdot K^T$. Plus le produit scalaire est élevé, plus le modèle "porte attention" à un mot spécifique dans une phrase. L'inégalité de Cauchy-Schwarz garantit que ces scores peuvent être normalisés (via Softmax) pour former une distribution de probabilité cohérente, évitant ainsi que certaines connexions ne dominent de manière aberrante.
 
