@@ -1072,7 +1072,7 @@ contenu.
 surjections, bijections et composition de
 fonctions}\label{exercice-410-jalon-5---applications-injections-surjections-bijections-et-composition-de-fonctions}
 
-\textbf{Niveau de difficulté :} \(\star\)\(\star\)☆☆☆
+\textbf{Niveau de difficulté :} \(\star\)\(\star\)$\circ$$\circ$$\circ$
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -1278,7 +1278,7 @@ et pour comprendre la structure des transformations.
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \subsubsection{\texorpdfstring{Énoncé de l'Exercice (Difficulté :
-\(\star\)\(\star\)\(\star\)☆☆)}{Énoncé de l'Exercice (Difficulté : \textbackslash star\textbackslash star\textbackslash star☆☆)}}\label{uxe9noncuxe9-de-lexercice-difficultuxe9-starstarstar}
+\(\star\)\(\star\)\(\star\)$\circ$$\circ$)}{Énoncé de l'Exercice (Difficulté : \textbackslash star\textbackslash star\textbackslash star$\circ$$\circ$)}}\label{uxe9noncuxe9-de-lexercice-difficultuxe9-starstarstar}
 
 Soient \(E\), \(F\) et \(G\) trois ensembles non vides. Considérons deux
 fonctions : * \(g: E \to F\) * \(f: F \to G\)
@@ -1556,7 +1556,7 @@ entre \(\mathbb{N}\) et
 \textbf{Jalon 5 : Applications, injections, surjections, bijections et
 composition de fonctions}
 
-\textbf{Niveau de difficulté :} \(\star\)\(\star\)\(\star\)☆☆
+\textbf{Niveau de difficulté :} \(\star\)\(\star\)\(\star\)$\circ$$\circ$
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -1817,7 +1817,7 @@ d'ensembles}\label{exercice-710-images-directes-et-images-ruxe9ciproques-densemb
 \textbf{Jalon 5 : Applications, injections, surjections, bijections et
 composition de fonctions}
 
-\textbf{Niveau de difficulté :} \(\star\)\(\star\)\(\star\)\(\star\)☆
+\textbf{Niveau de difficulté :} \(\star\)\(\star\)\(\star\)\(\star\)$\circ$
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -2122,7 +2122,7 @@ interpréter des informations de manière cohérente et prévisible.
 inverse à
 gauche}\label{exercice-810-injectivituxe9-et-existence-dune-fonction-inverse-uxe0-gauche}
 
-\textbf{Niveau de difficulté :} \(\star\)\(\star\)\(\star\)\(\star\)☆
+\textbf{Niveau de difficulté :} \(\star\)\(\star\)\(\star\)\(\star\)$\circ$
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -2174,7 +2174,7 @@ d'injectivité d'une fonction à l'existence d'une ``inverse à gauche''.
     \(g \circ f = \text{Id}_E\). Pour cette partie, nous devrons
     \emph{construire} explicitement une telle fonction \(g\).
   \item
-    \textbf{Implication 2 (\(\impliedesup\)) :} S'il existe une
+    \textbf{Implication 2 (\(\implies\)) :} S'il existe une
     application \(g: F \to E\) telle que \(g \circ f = \text{Id}_E\),
     alors \(f\) est injective. Pour cette partie, nous devrons utiliser
     la propriété de \(g\) pour démontrer l'injectivité de \(f\).
@@ -3147,44 +3147,44 @@ codomaine serait
 \passthrough{\lstinline!codomain\_set = \{'a', 'b', 'c', 'd'\}!}.
 
 \begin{lstlisting}[language=Python]
-# --- Partie 1 : Représentation d'une fonction ---
+# --- Partie 1 : Representation d'une fonction ---
 
 def get_domain(f_dict: dict) -> set:
     """
-    Extrait le domaine (ensemble de départ) d'une fonction représentée par un dictionnaire.
-    Le domaine est l'ensemble de toutes les clés du dictionnaire.
+    Extrait le domaine (ensemble de depart) d'une fonction representee par un dictionnaire.
+    Le domaine est l'ensemble de toutes les cles du dictionnaire.
 
     Args:
-        f_dict (dict): Dictionnaire représentant la fonction {x: f(x)}.
+        f_dict (dict): Dictionnaire representant la fonction {x: f(x)}.
 
     Returns:
-        set: L'ensemble des éléments du domaine.
+        set: L'ensemble des elements du domaine.
     """
     return set(f_dict.keys())
 
 def get_image(f_dict: dict) -> set:
     """
-    Extrait l'image (ensemble d'arrivée des valeurs réellement atteintes) d'une fonction.
+    Extrait l'image (ensemble d'arrivee des valeurs reellement atteintes) d'une fonction.
     L'image est l'ensemble de toutes les valeurs du dictionnaire.
 
     Args:
-        f_dict (dict): Dictionnaire représentant la fonction {x: f(x)}.
+        f_dict (dict): Dictionnaire representant la fonction {x: f(x)}.
 
     Returns:
-        set: L'ensemble des éléments de l'image.
+        set: L'ensemble des elements de l'image.
     """
     return set(f_dict.values())
 
 # Exemple de fonction
 f_example = {
     'pomme': 'fruit',
-    'carotte': 'légume',
+    'carotte': 'legume',
     'banane': 'fruit',
-    'brocoli': 'légume'
+    'brocoli': 'legume'
 }
 
-# Définition explicite du codomaine pour les tests de surjectivité
-codomain_example = {'fruit', 'légume', 'céréale'}
+# Definition explicite du codomaine pour les tests de surjectivite
+codomain_example = {'fruit', 'legume', 'cereale'}
 
 print(f"Fonction f_example: {f_example}")
 print(f"Domaine de f_example: {get_domain(f_example)}")
@@ -3193,8 +3193,8 @@ print(f"Codomaine explicite pour f_example: {codomain_example}")
 
 # Assertions pour valider les fonctions utilitaires
 assert get_domain(f_example) == {'pomme', 'carotte', 'banane', 'brocoli'}
-assert get_image(f_example) == {'fruit', 'légume'}
-print("\nAssertions pour les fonctions utilitaires passées avec succès.")
+assert get_image(f_example) == {'fruit', 'legume'}
+print("\nAssertions pour les fonctions utilitaires passees avec succes.")
 \end{lstlisting}
 
 \subsection{Partie 2 : Vérification de
@@ -3215,62 +3215,62 @@ suppression de doublons), alors la fonction est injective. Sinon, elle
 ne l'est pas.
 
 \begin{lstlisting}[language=Python]
-# --- Partie 2 : Vérification de l'injectivité ---
+# --- Partie 2 : Verification de l'injectivite ---
 
 def is_injective(f_dict: dict) -> bool:
     """
-    Vérifie si une fonction représentée par un dictionnaire est injective.
-    Une fonction est injective si chaque élément du codomaine est l'image
-    d'au plus un élément du domaine.
+    Verifie si une fonction representee par un dictionnaire est injective.
+    Une fonction est injective si chaque element du codomaine est l'image
+    d'au plus un element du domaine.
     Algorithmiquement, cela signifie que toutes les valeurs (images) dans le dictionnaire
-    doivent être uniques.
+    doivent etre uniques.
 
     Args:
-        f_dict (dict): Dictionnaire représentant la fonction {x: f(x)}.
+        f_dict (dict): Dictionnaire representant la fonction {x: f(x)}.
 
     Returns:
         bool: True si la fonction est injective, False sinon.
     """
-    # Étape 1: Obtenir toutes les valeurs (images) de la fonction.
+    # Etape 1: Obtenir toutes les valeurs (images) de la fonction.
     # Les valeurs peuvent contenir des doublons si la fonction n'est pas injective.
     values = list(f_dict.values())
 
-    # Étape 2: Créer un ensemble à partir de ces valeurs.
-    # Un ensemble élimine automatiquement les doublons.
+    # Etape 2: Creer un ensemble a partir de ces valeurs.
+    # Un ensemble elimine automatiquement les doublons.
     unique_values = set(values)
 
-    # Étape 3: Comparer la taille de la liste originale des valeurs avec la taille de l'ensemble.
-    # Si les tailles sont égales, cela signifie qu'il n'y avait pas de doublons,
-    # donc chaque élément du domaine a une image unique.
+    # Etape 3: Comparer la taille de la liste originale des valeurs avec la taille de l'ensemble.
+    # Si les tailles sont egales, cela signifie qu'il n'y avait pas de doublons,
+    # donc chaque element du domaine a une image unique.
     return len(values) == len(unique_values)
 
-# --- Tests et Assertions pour l'injectivité ---
+# --- Tests et Assertions pour l'injectivite ---
 
-print("\n--- Tests d'injectivité ---")
+print("\n--- Tests d'injectivite ---")
 
-# Fonction injective (chaque élément du domaine a une image unique)
+# Fonction injective (chaque element du domaine a une image unique)
 f_injective = {'a': 1, 'b': 2, 'c': 3}
-# Mathématiquement: f(a)=1, f(b)=2, f(c)=3. Toutes les images sont distinctes.
+# Mathematiquement: f(a)=1, f(b)=2, f(c)=3. Toutes les images sont distinctes.
 print(f"f_injective: {f_injective} est injective? {is_injective(f_injective)}")
-assert is_injective(f_injective) is True, "f_injective devrait être injective"
+assert is_injective(f_injective) is True, "f_injective devrait etre injective"
 
-# Fonction non injective (deux éléments du domaine ont la même image)
+# Fonction non injective (deux elements du domaine ont la meme image)
 f_not_injective = {'a': 1, 'b': 2, 'c': 1}
-# Mathématiquement: f(a)=1 et f(c)=1, mais a != c. Donc non injective.
+# Mathematiquement: f(a)=1 et f(c)=1, mais a != c. Donc non injective.
 print(f"f_not_injective: {f_not_injective} est injective? {is_injective(f_not_injective)}")
-assert is_injective(f_not_injective) is False, "f_not_injective ne devrait PAS être injective"
+assert is_injective(f_not_injective) is False, "f_not_injective ne devrait PAS etre injective"
 
-# Fonction avec un seul élément (toujours injective)
+# Fonction avec un seul element (toujours injective)
 f_single_element = {'x': 10}
 print(f"f_single_element: {f_single_element} est injective? {is_injective(f_single_element)}")
-assert is_injective(f_single_element) is True, "f_single_element devrait être injective"
+assert is_injective(f_single_element) is True, "f_single_element devrait etre injective"
 
-# Fonction vide (toujours injective par définition, car la condition n'est jamais violée)
+# Fonction vide (toujours injective par definition, car la condition n'est jamais violee)
 f_empty = {}
 print(f"f_empty: {f_empty} est injective? {is_injective(f_empty)}")
-assert is_injective(f_empty) is True, "f_empty devrait être injective"
+assert is_injective(f_empty) is True, "f_empty devrait etre injective"
 
-print("Assertions d'injectivité passées avec succès.")
+print("Assertions d'injectivite passees avec succes.")
 \end{lstlisting}
 
 \subsection{Partie 3 : Vérification de la
@@ -3289,73 +3289,73 @@ ensembles sont égaux, la fonction est surjective. Sinon, elle ne l'est
 pas.
 
 \begin{lstlisting}[language=Python]
-# --- Partie 3 : Vérification de la surjectivité ---
+# --- Partie 3 : Verification de la surjectivite ---
 
 def is_surjective(f_dict: dict, codomain_set: set) -> bool:
     """
-    Vérifie si une fonction représentée par un dictionnaire est surjective par rapport
-    à un codomaine donné.
-    Une fonction est surjective si chaque élément du codomaine est l'image
-    d'au moins un élément du domaine.
+    Verifie si une fonction representee par un dictionnaire est surjective par rapport
+    a un codomaine donne.
+    Une fonction est surjective si chaque element du codomaine est l'image
+    d'au moins un element du domaine.
     Algorithmiquement, cela signifie que l'ensemble des images de la fonction
-    doit être égal à l'ensemble du codomaine.
+    doit etre egal a l'ensemble du codomaine.
 
     Args:
-        f_dict (dict): Dictionnaire représentant la fonction {x: f(x)}.
+        f_dict (dict): Dictionnaire representant la fonction {x: f(x)}.
         codomain_set (set): L'ensemble explicite du codomaine B.
 
     Returns:
         bool: True si la fonction est surjective, False sinon.
     """
-    # Étape 1: Obtenir l'ensemble des images de la fonction.
-    # C'est l'ensemble de toutes les valeurs présentes dans le dictionnaire.
+    # Etape 1: Obtenir l'ensemble des images de la fonction.
+    # C'est l'ensemble de toutes les valeurs presentes dans le dictionnaire.
     image_set = set(f_dict.values())
 
-    # Étape 2: Comparer l'ensemble des images avec l'ensemble du codomaine.
-    # Si l'image est égale au codomaine, alors tous les éléments du codomaine
+    # Etape 2: Comparer l'ensemble des images avec l'ensemble du codomaine.
+    # Si l'image est egale au codomaine, alors tous les elements du codomaine
     # sont atteints par la fonction.
     return image_set == codomain_set
 
-# --- Tests et Assertions pour la surjectivité ---
+# --- Tests et Assertions pour la surjectivite ---
 
-print("\n--- Tests de surjectivité ---")
+print("\n--- Tests de surjectivite ---")
 
 # Fonction surjective (l'image couvre tout le codomaine)
 f_surjective = {'a': 1, 'b': 2, 'c': 3}
 codomain_123 = {1, 2, 3}
-# Mathématiquement: Im(f) = {1,2,3}. Codomaine = {1,2,3}. Im(f) == Codomaine. Surjective.
+# Mathematiquement: Im(f) = {1,2,3}. Codomaine = {1,2,3}. Im(f) == Codomaine. Surjective.
 print(f"f_surjective: {f_surjective}, Codomaine: {codomain_123} est surjective? {is_surjective(f_surjective, codomain_123)}")
-assert is_surjective(f_surjective, codomain_123) is True, "f_surjective devrait être surjective"
+assert is_surjective(f_surjective, codomain_123) is True, "f_surjective devrait etre surjective"
 
-# Fonction non surjective (le codomaine contient des éléments non atteints)
+# Fonction non surjective (le codomaine contient des elements non atteints)
 f_not_surjective = {'a': 1, 'b': 2, 'c': 2}
 codomain_123 = {1, 2, 3}
-# Mathématiquement: Im(f) = {1,2}. Codomaine = {1,2,3}. Im(f) != Codomaine (3 n'est pas atteint). Non surjective.
+# Mathematiquement: Im(f) = {1,2}. Codomaine = {1,2,3}. Im(f) != Codomaine (3 n'est pas atteint). Non surjective.
 print(f"f_not_surjective: {f_not_surjective}, Codomaine: {codomain_123} est surjective? {is_surjective(f_not_surjective, codomain_123)}")
-assert is_surjective(f_not_surjective, codomain_123) is False, "f_not_surjective ne devrait PAS être surjective"
+assert is_surjective(f_not_surjective, codomain_123) is False, "f_not_surjective ne devrait PAS etre surjective"
 
-# Fonction surjective (même si non injective)
+# Fonction surjective (meme si non injective)
 f_surjective_not_injective = {'a': 1, 'b': 2, 'c': 2, 'd': 1}
 codomain_12 = {1, 2}
-# Mathématiquement: Im(f) = {1,2}. Codomaine = {1,2}. Im(f) == Codomaine. Surjective.
+# Mathematiquement: Im(f) = {1,2}. Codomaine = {1,2}. Im(f) == Codomaine. Surjective.
 print(f"f_surjective_not_injective: {f_surjective_not_injective}, Codomaine: {codomain_12} est surjective? {is_surjective(f_surjective_not_injective, codomain_12)}")
-assert is_surjective(f_surjective_not_injective, codomain_12) is True, "f_surjective_not_injective devrait être surjective"
+assert is_surjective(f_surjective_not_injective, codomain_12) is True, "f_surjective_not_injective devrait etre surjective"
 
 # Fonction vide (non surjective si le codomaine n'est pas vide)
 f_empty = {}
 codomain_non_empty = {1}
-# Mathématiquement: Im(f) = {}. Codomaine = {1}. Im(f) != Codomaine. Non surjective.
+# Mathematiquement: Im(f) = {}. Codomaine = {1}. Im(f) != Codomaine. Non surjective.
 print(f"f_empty: {f_empty}, Codomaine: {codomain_non_empty} est surjective? {is_surjective(f_empty, codomain_non_empty)}")
-assert is_surjective(f_empty, codomain_non_empty) is False, "f_empty ne devrait PAS être surjective si codomaine non vide"
+assert is_surjective(f_empty, codomain_non_empty) is False, "f_empty ne devrait PAS etre surjective si codomaine non vide"
 
 # Fonction vide (surjective si le codomaine est vide)
 f_empty = {}
 codomain_empty = set()
-# Mathématiquement: Im(f) = {}. Codomaine = {}. Im(f) == Codomaine. Surjective.
+# Mathematiquement: Im(f) = {}. Codomaine = {}. Im(f) == Codomaine. Surjective.
 print(f"f_empty: {f_empty}, Codomaine: {codomain_empty} est surjective? {is_surjective(f_empty, codomain_empty)}")
-assert is_surjective(f_empty, codomain_empty) is True, "f_empty devrait être surjective si codomaine vide"
+assert is_surjective(f_empty, codomain_empty) is True, "f_empty devrait etre surjective si codomaine vide"
 
-print("Assertions de surjectivité passées avec succès.")
+print("Assertions de surjectivite passees avec succes.")
 \end{lstlisting}
 
 \subsection{Partie 4 : Vérification de la bijectivité
@@ -3366,15 +3366,15 @@ injective et surjective. L'implémentation est donc directe en utilisant
 les fonctions précédemment définies.
 
 \begin{lstlisting}[language=Python]
-# --- Partie 4 : Vérification de la bijectivité (Bonus) ---
+# --- Partie 4 : Verification de la bijectivite (Bonus) ---
 
 def is_bijective(f_dict: dict, codomain_set: set) -> bool:
     """
-    Vérifie si une fonction est bijective.
-    Une fonction est bijective si elle est à la fois injective et surjective.
+    Verifie si une fonction est bijective.
+    Une fonction est bijective si elle est a la fois injective et surjective.
 
     Args:
-        f_dict (dict): Dictionnaire représentant la fonction {x: f(x)}.
+        f_dict (dict): Dictionnaire representant la fonction {x: f(x)}.
         codomain_set (set): L'ensemble explicite du codomaine B.
 
     Returns:
@@ -3383,50 +3383,50 @@ def is_bijective(f_dict: dict, codomain_set: set) -> bool:
     # Une fonction est bijective si elle est injective ET surjective.
     return is_injective(f_dict) and is_surjective(f_dict, codomain_set)
 
-# --- Tests et Assertions pour la bijectivité ---
+# --- Tests et Assertions pour la bijectivite ---
 
-print("\n--- Tests de bijectivité ---")
+print("\n--- Tests de bijectivite ---")
 
 # Fonction bijective (injective et surjective)
 f_bijective = {'a': 1, 'b': 2, 'c': 3}
 codomain_123 = {1, 2, 3}
-# Mathématiquement: Injective (images distinctes), Surjective (Im(f) == Codomaine). Bijective.
+# Mathematiquement: Injective (images distinctes), Surjective (Im(f) == Codomaine). Bijective.
 print(f"f_bijective: {f_bijective}, Codomaine: {codomain_123} est bijective? {is_bijective(f_bijective, codomain_123)}")
-assert is_bijective(f_bijective, codomain_123) is True, "f_bijective devrait être bijective"
+assert is_bijective(f_bijective, codomain_123) is True, "f_bijective devrait etre bijective"
 
 # Fonction non bijective (non injective mais surjective)
 f_not_bijective_not_injective = {'a': 1, 'b': 2, 'c': 2}
 codomain_12 = {1, 2}
-# Mathématiquement: Non injective (f(b)=f(c)=2), Surjective (Im(f) == Codomaine). Non bijective.
+# Mathematiquement: Non injective (f(b)=f(c)=2), Surjective (Im(f) == Codomaine). Non bijective.
 print(f"f_not_bijective_not_injective: {f_not_bijective_not_injective}, Codomaine: {codomain_12} est bijective? {is_bijective(f_not_bijective_not_injective, codomain_12)}")
-assert is_bijective(f_not_bijective_not_injective, codomain_12) is False, "f_not_bijective_not_injective ne devrait PAS être bijective"
+assert is_bijective(f_not_bijective_not_injective, codomain_12) is False, "f_not_bijective_not_injective ne devrait PAS etre bijective"
 
 # Fonction non bijective (injective mais non surjective)
 f_not_bijective_not_surjective = {'a': 1, 'b': 2}
 codomain_123 = {1, 2, 3}
-# Mathématiquement: Injective (images distinctes), Non surjective (3 non atteint). Non bijective.
+# Mathematiquement: Injective (images distinctes), Non surjective (3 non atteint). Non bijective.
 print(f"f_not_bijective_not_surjective: {f_not_bijective_not_surjective}, Codomaine: {codomain_123} est bijective? {is_bijective(f_not_bijective_not_surjective, codomain_123)}")
-assert is_bijective(f_not_bijective_not_surjective, codomain_123) is False, "f_not_bijective_not_surjective ne devrait PAS être bijective"
+assert is_bijective(f_not_bijective_not_surjective, codomain_123) is False, "f_not_bijective_not_surjective ne devrait PAS etre bijective"
 
 # Fonction non bijective (ni injective ni surjective)
 f_neither = {'a': 1, 'b': 1, 'c': 2}
 codomain_123 = {1, 2, 3}
-# Mathématiquement: Non injective (f(a)=f(b)=1), Non surjective (3 non atteint). Non bijective.
+# Mathematiquement: Non injective (f(a)=f(b)=1), Non surjective (3 non atteint). Non bijective.
 print(f"f_neither: {f_neither}, Codomaine: {codomain_123} est bijective? {is_bijective(f_neither, codomain_123)}")
-assert is_bijective(f_neither, codomain_123) is False, "f_neither ne devrait PAS être bijective"
+assert is_bijective(f_neither, codomain_123) is False, "f_neither ne devrait PAS etre bijective"
 
 # Fonction vide (bijective si et seulement si le codomaine est vide)
 f_empty = {}
 codomain_empty = set()
 print(f"f_empty: {f_empty}, Codomaine: {codomain_empty} est bijective? {is_bijective(f_empty, codomain_empty)}")
-assert is_bijective(f_empty, codomain_empty) is True, "f_empty devrait être bijective si codomaine vide"
+assert is_bijective(f_empty, codomain_empty) is True, "f_empty devrait etre bijective si codomaine vide"
 
 f_empty_codomain_non_empty = {}
 codomain_non_empty = {1}
 print(f"f_empty: {f_empty_codomain_non_empty}, Codomaine: {codomain_non_empty} est bijective? {is_bijective(f_empty_codomain_non_empty, codomain_non_empty)}")
-assert is_bijective(f_empty_codomain_non_empty, codomain_non_empty) is False, "f_empty ne devrait PAS être bijective si codomaine non vide"
+assert is_bijective(f_empty_codomain_non_empty, codomain_non_empty) is False, "f_empty ne devrait PAS etre bijective si codomaine non vide"
 
-print("Assertions de bijectivité passées avec succès.")
+print("Assertions de bijectivite passees avec succes.")
 \end{lstlisting}
 
 \subsection{Conclusion}\label{conclusion}
@@ -3539,44 +3539,44 @@ sous-jacente.
 \begin{lstlisting}[language=Python]
 def compose(f, g):
     """
-    Implémente la composition de deux fonctions f et g.
-    Mathématiquement, cela correspond à (g o f)(x) = g(f(x)).
+    Implemente la composition de deux fonctions f et g.
+    Mathematiquement, cela correspond a (g o f)(x) = g(f(x)).
 
     Args:
-        f (callable): La première fonction à appliquer. Elle prend un argument
+        f (callable): La premiere fonction a appliquer. Elle prend un argument
                       et retourne une valeur.
-        g (callable): La seconde fonction à appliquer. Elle prend le résultat
+        g (callable): La seconde fonction a appliquer. Elle prend le resultat
                       de f comme argument et retourne une valeur.
 
     Returns:
-        callable: Une nouvelle fonction qui représente la composition (g o f).
+        callable: Une nouvelle fonction qui represente la composition (g o f).
                   Cette fonction prend un argument 'x' et retourne g(f(x)).
 
-    Préconditions (implicites en Python, mais importantes mathématiquement) :
-        - Le codomaine de f doit être compatible avec le domaine de g.
-          C'est-à-dire que le type et la nature de la valeur retournée par f(x)
-          doivent être acceptables comme argument pour g.
+    Preconditions (implicites en Python, mais importantes mathematiquement) :
+        - Le codomaine de f doit etre compatible avec le domaine de g.
+          C'est-a-dire que le type et la nature de la valeur retournee par f(x)
+          doivent etre acceptables comme argument pour g.
     """
     # La fonction 'compose' doit retourner une nouvelle fonction.
     # Nous utilisons une fonction interne (closure) pour capturer 'f' et 'g'
     # de l'environnement englobant.
     def composed_function(x):
         """
-        La fonction résultante de la composition (g o f).
-        Elle applique f à x en premier, puis applique g au résultat de f(x).
+        La fonction resultante de la composition (g o f).
+        Elle applique f a x en premier, puis applique g au resultat de f(x).
         """
-        # Étape 1 : Appliquer la première fonction 'f' à l'argument 'x'.
-        # Le résultat de cette opération est la valeur intermédiaire.
+        # Etape 1 : Appliquer la premiere fonction 'f' a l'argument 'x'.
+        # Le resultat de cette operation est la valeur intermediaire.
         result_f = f(x)
 
-        # Étape 2 : Appliquer la seconde fonction 'g' au résultat de 'f(x)'.
-        # C'est l'essence même de la définition (g o f)(x) = g(f(x)).
+        # Etape 2 : Appliquer la seconde fonction 'g' au resultat de 'f(x)'.
+        # C'est l'essence meme de la definition (g o f)(x) = g(f(x)).
         result_g_of_f = g(result_f)
 
-        # Retourner le résultat final de la composition.
+        # Retourner le resultat final de la composition.
         return result_g_of_f
 
-    # Retourner la fonction composée, pas son exécution.
+    # Retourner la fonction composee, pas son execution.
     return composed_function
 \end{lstlisting}
 
@@ -3605,7 +3605,7 @@ calcul manuel.
 Test}\label{exemple-de-structure-de-test}
 
 \begin{lstlisting}[language=Python]
-# --- Définition des fonctions de base ---
+# --- Definition des fonctions de base ---
 def add_one(x):
     return x + 1
 
@@ -3618,32 +3618,32 @@ def multiply_by_two(x):
 #                                                = 2 * (x + 1)
 #                                                = 2x + 2
 
-# Création de la fonction composée
+# Creation de la fonction composee
 h1 = compose(add_one, multiply_by_two)
 
-# Vérifications avec assert
+# Verifications avec assert
 print(f"Test 1: (multiply_by_two o add_one)(x) = 2x + 2")
 assert h1(0) == 2 * 0 + 2, f"Erreur pour x=0: Attendu {2*0+2}, Obtenu {h1(0)}"
 assert h1(1) == 2 * 1 + 2, f"Erreur pour x=1: Attendu {2*1+2}, Obtenu {h1(1)}"
 assert h1(5) == 2 * 5 + 2, f"Erreur pour x=5: Attendu {2*5+2}, Obtenu {h1(5)}"
 assert h1(-3) == 2 * (-3) + 2, f"Erreur pour x=-3: Attendu {2*(-3)+2}, Obtenu {h1(-3)}"
-print("  -> Test 1 réussi.")
+print("  -> Test 1 reussi.")
 
 # --- Test 2 : (add_one o multiply_by_two)(x) ---
 # Calcul manuel : (add_one o multiply_by_two)(x) = add_one(multiply_by_two(x))
 #                                                = add_one(2x)
 #                                                = 2x + 1
 
-# Création de la fonction composée
+# Creation de la fonction composee
 h2 = compose(multiply_by_two, add_one)
 
-# Vérifications avec assert
+# Verifications avec assert
 print(f"\nTest 2: (add_one o multiply_by_two)(x) = 2x + 1")
 assert h2(0) == 2 * 0 + 1, f"Erreur pour x=0: Attendu {2*0+1}, Obtenu {h2(0)}"
 assert h2(1) == 2 * 1 + 1, f"Erreur pour x=1: Attendu {2*1+1}, Obtenu {h2(1)}"
 assert h2(5) == 2 * 5 + 1, f"Erreur pour x=5: Attendu {2*5+1}, Obtenu {h2(5)}"
 assert h2(-3) == 2 * (-3) + 1, f"Erreur pour x=-3: Attendu {2*(-3)+1}, Obtenu {h2(-3)}"
-print("  -> Test 2 réussi.")
+print("  -> Test 2 reussi.")
 \end{lstlisting}
 
 \subsubsection{Exercices de
@@ -3666,7 +3666,7 @@ Testez les compositions suivantes : 1.
 # --- Exercice 3.1 : Fonctions polynomiales ---
 
 def square(x):
-    """Retourne le carré de x."""
+    """Retourne le carre de x."""
     return x ** 2
 
 def subtract_five(x):
@@ -3683,7 +3683,7 @@ assert h3_1(0) == 0**2 - 5, f"Erreur pour x=0: Attendu {0**2-5}, Obtenu {h3_1(0)
 assert h3_1(2) == 2**2 - 5, f"Erreur pour x=2: Attendu {2**2-5}, Obtenu {h3_1(2)}"
 assert h3_1(-2) == (-2)**2 - 5, f"Erreur pour x=-2: Attendu {(-2)**2-5}, Obtenu {h3_1(-2)}"
 assert h3_1(3) == 3**2 - 5, f"Erreur pour x=3: Attendu {3**2-5}, Obtenu {h3_1(3)}"
-print("  -> Exercice 3.1.1 réussi.")
+print("  -> Exercice 3.1.1 reussi.")
 
 
 # 2. Composition (square o subtract_five)(x)
@@ -3696,7 +3696,7 @@ assert h3_2(0) == (0 - 5)**2, f"Erreur pour x=0: Attendu {(0-5)**2}, Obtenu {h3_
 assert h3_2(5) == (5 - 5)**2, f"Erreur pour x=5: Attendu {(5-5)**2}, Obtenu {h3_2(5)}"
 assert h3_2(7) == (7 - 5)**2, f"Erreur pour x=7: Attendu {(7-5)**2}, Obtenu {h3_2(7)}"
 assert h3_2(-1) == (-1 - 5)**2, f"Erreur pour x=-1: Attendu {(-1-5)**2}, Obtenu {h3_2(-1)}"
-print("  -> Exercice 3.1.2 réussi.")
+print("  -> Exercice 3.1.2 reussi.")
 \end{lstlisting}
 
 \paragraph{Exercice 3.2 : Composition de trois fonctions
@@ -3722,7 +3722,7 @@ Vérifiez que \passthrough{\lstinline!h\_left(x)!} et
 \passthrough{\lstinline!h\_right(x)!} donnent les mêmes résultats.
 
 \begin{lstlisting}[language=Python]
-# --- Exercice 3.2 : Composition de trois fonctions (associativité) ---
+# --- Exercice 3.2 : Composition de trois fonctions (associativite) ---
 
 def f1(x):
     """Fonction f1(x) = x + 1."""
@@ -3742,37 +3742,37 @@ def f3(x):
 # f3(f2(f1(x))) = f3(2x + 2) = (2x + 2) - 3 = 2x - 1
 expected_result_expr = lambda x: 2 * x - 1
 
-# 1. Composition de gauche à droite : (f3 o f2) o f1
-# C'est-à-dire : compose(f1, compose(f2, f3))
-# compose(f2, f3) représente (f3 o f2)
-# compose(f1, (f3 o f2)) représente ((f3 o f2) o f1)
+# 1. Composition de gauche a droite : (f3 o f2) o f1
+# C'est-a-dire : compose(f1, compose(f2, f3))
+# compose(f2, f3) represente (f3 o f2)
+# compose(f1, (f3 o f2)) represente ((f3 o f2) o f1)
 h_left = compose(f1, compose(f2, f3))
 print(f"\nExercice 3.2.1: (f3 o f2 o f1)(x) via (f3 o f2) o f1 = 2x - 1")
 assert h_left(0) == expected_result_expr(0), f"Erreur pour x=0: Attendu {expected_result_expr(0)}, Obtenu {h_left(0)}"
 assert h_left(1) == expected_result_expr(1), f"Erreur pour x=1: Attendu {expected_result_expr(1)}, Obtenu {h_left(1)}"
 assert h_left(10) == expected_result_expr(10), f"Erreur pour x=10: Attendu {expected_result_expr(10)}, Obtenu {h_left(10)}"
 assert h_left(-5) == expected_result_expr(-5), f"Erreur pour x=-5: Attendu {expected_result_expr(-5)}, Obtenu {h_left(-5)}"
-print("  -> Exercice 3.2.1 réussi.")
+print("  -> Exercice 3.2.1 reussi.")
 
 
-# 2. Composition de droite à gauche : f3 o (f2 o f1)
-# C'est-à-dire : compose(compose(f1, f2), f3)
-# compose(f1, f2) représente (f2 o f1)
-# compose((f2 o f1), f3) représente (f3 o (f2 o f1))
+# 2. Composition de droite a gauche : f3 o (f2 o f1)
+# C'est-a-dire : compose(compose(f1, f2), f3)
+# compose(f1, f2) represente (f2 o f1)
+# compose((f2 o f1), f3) represente (f3 o (f2 o f1))
 h_right = compose(compose(f1, f2), f3)
 print(f"\nExercice 3.2.2: (f3 o f2 o f1)(x) via f3 o (f2 o f1) = 2x - 1")
 assert h_right(0) == expected_result_expr(0), f"Erreur pour x=0: Attendu {expected_result_expr(0)}, Obtenu {h_right(0)}"
 assert h_right(1) == expected_result_expr(1), f"Erreur pour x=1: Attendu {expected_result_expr(1)}, Obtenu {h_right(1)}"
 assert h_right(10) == expected_result_expr(10), f"Erreur pour x=10: Attendu {expected_result_expr(10)}, Obtenu {h_right(10)}"
 assert h_right(-5) == expected_result_expr(-5), f"Erreur pour x=-5: Attendu {expected_result_expr(-5)}, Obtenu {h_right(-5)}"
-print("  -> Exercice 3.2.2 réussi.")
+print("  -> Exercice 3.2.2 reussi.")
 
-# Vérification de l'associativité : les deux fonctions composées doivent donner le même résultat
-print(f"\nExercice 3.2.3: Vérification de l'associativité (h_left == h_right)")
+# Verification de l'associativite : les deux fonctions composees doivent donner le meme resultat
+print(f"\nExercice 3.2.3: Verification de l'associativite (h_left == h_right)")
 for x_val in [-10, -1, 0, 1, 10]:
     assert h_left(x_val) == h_right(x_val), \
-        f"Erreur d'associativité pour x={x_val}: h_left={h_left(x_val)}, h_right={h_right(x_val)}"
-print("  -> Exercice 3.2.3 (associativité) réussi : h_left et h_right donnent les mêmes résultats.")
+        f"Erreur d'associativite pour x={x_val}: h_left={h_left(x_val)}, h_right={h_right(x_val)}"
+print("  -> Exercice 3.2.3 (associativite) reussi : h_left et h_right donnent les memes resultats.")
 \end{lstlisting}
 
 \paragraph{Exercice 3.3 : Fonctions avec des types de données différents
@@ -3798,14 +3798,14 @@ Testez la composition
 \passthrough{\lstinline!(str\_len o num\_to\_str)(x)!}.
 
 \begin{lstlisting}[language=Python]
-# --- Exercice 3.3 : Fonctions avec des types de données différents ---
+# --- Exercice 3.3 : Fonctions avec des types de donnees differents ---
 
 def num_to_str(x):
-    """Convertit un nombre en chaîne de caractères et ajoute un '!'."""
+    """Convertit un nombre en chaine de caracteres et ajoute un '!'."""
     return str(x) + "!"
 
 def str_len(s):
-    """Retourne la longueur d'une chaîne de caractères."""
+    """Retourne la longueur d'une chaine de caracteres."""
     return len(s)
 
 # Composition (str_len o num_to_str)(x)
@@ -3819,7 +3819,7 @@ assert h4(0) == len(str(0) + "!"), f"Erreur pour x=0: Attendu {len(str(0)+'!')},
 assert h4(10) == len(str(10) + "!"), f"Erreur pour x=10: Attendu {len(str(10)+'!')}, Obtenu {h4(10)}"
 assert h4(123) == len(str(123) + "!"), f"Erreur pour x=123: Attendu {len(str(123)+'!')}, Obtenu {h4(123)}"
 assert h4(-5) == len(str(-5) + "!"), f"Erreur pour x=-5: Attendu {len(str(-5)+'!')}, Obtenu {h4(-5)}"
-print("  -> Exercice 3.3 réussi.")
+print("  -> Exercice 3.3 reussi.")
 \end{lstlisting}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
@@ -3953,42 +3953,42 @@ fonction Python standard (ou une lambda).
 \begin{lstlisting}[language=Python]
 def preimage(f, domain_A: set, subset_Y: set) -> set:
     """
-    Calcule l'image réciproque (pre-image) d'un sous-ensemble Y par une fonction f.
+    Calcule l'image reciproque (pre-image) d'un sous-ensemble Y par une fonction f.
 
     Soit f: A -> B une fonction, et Y un sous-ensemble de B.
-    L'image réciproque de Y par f est l'ensemble {x appartenant à A | f(x) appartient à Y}.
+    L'image reciproque de Y par f est l'ensemble {x appartenant a A | f(x) appartient a Y}.
 
     Args:
-        f (callable): La fonction mathématique f. Elle doit prendre un élément de domain_A
-                      et retourner un élément du codomaine B.
-        domain_A (set): L'ensemble de départ A de la fonction f. C'est un ensemble
-                        de tous les éléments possibles pour x.
+        f (callable): La fonction mathematique f. Elle doit prendre un element de domain_A
+                      et retourner un element du codomaine B.
+        domain_A (set): L'ensemble de depart A de la fonction f. C'est un ensemble
+                        de tous les elements possibles pour x.
         subset_Y (set): Le sous-ensemble Y du codomaine B dont on veut calculer
-                        l'image réciproque.
+                        l'image reciproque.
 
     Returns:
-        set: L'ensemble des éléments x de domain_A tels que f(x) est dans subset_Y.
+        set: L'ensemble des elements x de domain_A tels que f(x) est dans subset_Y.
              C'est f^-1(Y).
     """
-    # Initialisation d'un ensemble vide pour stocker les éléments de l'image réciproque.
+    # Initialisation d'un ensemble vide pour stocker les elements de l'image reciproque.
     # Cet ensemble sera notre f^-1(Y).
     preimage_set = set()
 
-    # Parcourir chaque élément 'x' de l'ensemble de départ 'domain_A'.
-    # C'est la première partie de la définition mathématique : {x appartenant à A ...}
+    # Parcourir chaque element 'x' de l'ensemble de depart 'domain_A'.
+    # C'est la premiere partie de la definition mathematique : {x appartenant a A ...}
     for x in domain_A:
         # Calculer l'image de 'x' par la fonction 'f'.
-        # C'est la partie f(x) de la définition.
+        # C'est la partie f(x) de la definition.
         image_of_x = f(x)
 
-        # Vérifier si l'image de 'x' appartient au sous-ensemble 'subset_Y'.
-        # C'est la deuxième partie de la définition : ... | f(x) appartient à Y}
+        # Verifier si l'image de 'x' appartient au sous-ensemble 'subset_Y'.
+        # C'est la deuxieme partie de la definition : ... | f(x) appartient a Y}
         if image_of_x in subset_Y:
-            # Si f(x) est dans Y, alors 'x' fait partie de l'image réciproque.
-            # Ajouter 'x' à notre ensemble résultat.
+            # Si f(x) est dans Y, alors 'x' fait partie de l'image reciproque.
+            # Ajouter 'x' a notre ensemble resultat.
             preimage_set.add(x)
 
-    # Retourner l'ensemble construit, qui est l'image réciproque f^-1(Y).
+    # Retourner l'ensemble construit, qui est l'image reciproque f^-1(Y).
     return preimage_set
 \end{lstlisting}
 
@@ -4014,32 +4014,32 @@ sous-ensemble \(Y = \{0, 1, 4\}\).
 
 \begin{lstlisting}[language=Python]
 # --- Exemple 1 ---
-print("--- Exemple 1 : Fonction carrée ---")
-# Définition de la fonction f(x) = x^2
+print("--- Exemple 1 : Fonction carree ---")
+# Definition de la fonction f(x) = x^2
 def square_function(x):
     return x * x
 
-# Définition du domaine A
+# Definition du domaine A
 domain_A_ex1 = {-3, -2, -1, 0, 1, 2, 3}
 
-# Définition du sous-ensemble Y
+# Definition du sous-ensemble Y
 subset_Y_ex1 = {0, 1, 4}
 
-# Calcul de l'image réciproque
+# Calcul de l'image reciproque
 result_ex1 = preimage(square_function, domain_A_ex1, subset_Y_ex1)
 
-# Résultat attendu : {-2, -1, 0, 1, 2}
+# Resultat attendu : {-2, -1, 0, 1, 2}
 expected_ex1 = {-2, -1, 0, 1, 2}
 
 print(f"Fonction f(x) = x^2")
 print(f"Domaine A : {domain_A_ex1}")
 print(f"Sous-ensemble Y : {subset_Y_ex1}")
-print(f"Image réciproque calculée : {result_ex1}")
-print(f"Image réciproque attendue : {expected_ex1}")
+print(f"Image reciproque calculee : {result_ex1}")
+print(f"Image reciproque attendue : {expected_ex1}")
 
-# Assertion pour valider le résultat
+# Assertion pour valider le resultat
 assert result_ex1 == expected_ex1, f"Erreur dans l'Exemple 1: Attendu {expected_ex1}, obtenu {result_ex1}"
-print("Assertion Exemple 1 passée avec succès.\n")
+print("Assertion Exemple 1 passee avec succes.\n")
 \end{lstlisting}
 
 \paragraph{Exemple 2 : Fonction linéaire et sous-ensemble
@@ -4057,32 +4057,32 @@ Considérons un domaine \(A = \{1, 2, 3, 4, 5\}\). Et un sous-ensemble
 
 \begin{lstlisting}[language=Python]
 # --- Exemple 2 ---
-print("--- Exemple 2 : Fonction linéaire et sous-ensemble vide ---")
-# Définition de la fonction f(x) = 2x + 1
+print("--- Exemple 2 : Fonction lineaire et sous-ensemble vide ---")
+# Definition de la fonction f(x) = 2x + 1
 def linear_function(x):
     return 2 * x + 1
 
-# Définition du domaine A
+# Definition du domaine A
 domain_A_ex2 = {1, 2, 3, 4, 5}
 
-# Définition du sous-ensemble Y (aucun élément de A ne devrait y être mappé)
+# Definition du sous-ensemble Y (aucun element de A ne devrait y etre mappe)
 subset_Y_ex2 = {10, 12}
 
-# Calcul de l'image réciproque
+# Calcul de l'image reciproque
 result_ex2 = preimage(linear_function, domain_A_ex2, subset_Y_ex2)
 
-# Résultat attendu : ensemble vide
+# Resultat attendu : ensemble vide
 expected_ex2 = set()
 
 print(f"Fonction f(x) = 2x + 1")
 print(f"Domaine A : {domain_A_ex2}")
 print(f"Sous-ensemble Y : {subset_Y_ex2}")
-print(f"Image réciproque calculée : {result_ex2}")
-print(f"Image réciproque attendue : {expected_ex2}")
+print(f"Image reciproque calculee : {result_ex2}")
+print(f"Image reciproque attendue : {expected_ex2}")
 
-# Assertion pour valider le résultat
+# Assertion pour valider le resultat
 assert result_ex2 == expected_ex2, f"Erreur dans l'Exemple 2: Attendu {expected_ex2}, obtenu {result_ex2}"
-print("Assertion Exemple 2 passée avec succès.\n")
+print("Assertion Exemple 2 passee avec succes.\n")
 \end{lstlisting}
 
 \paragraph{Exemple 3 : Fonction
@@ -4100,31 +4100,31 @@ sous-ensemble \(Y = \{1, 2\}\).
 \begin{lstlisting}[language=Python]
 # --- Exemple 3 ---
 print("--- Exemple 3 : Fonction constante ---")
-# Définition de la fonction f(x) = 2
+# Definition de la fonction f(x) = 2
 def constant_function(x):
     return 2
 
-# Définition du domaine A
+# Definition du domaine A
 domain_A_ex3 = {'a', 'b', 'c', 'd'}
 
-# Définition du sous-ensemble Y
+# Definition du sous-ensemble Y
 subset_Y_ex3 = {1, 2}
 
-# Calcul de l'image réciproque
+# Calcul de l'image reciproque
 result_ex3 = preimage(constant_function, domain_A_ex3, subset_Y_ex3)
 
-# Résultat attendu : {'a', 'b', 'c', 'd'}
+# Resultat attendu : {'a', 'b', 'c', 'd'}
 expected_ex3 = {'a', 'b', 'c', 'd'}
 
 print(f"Fonction f(x) = 2")
 print(f"Domaine A : {domain_A_ex3}")
 print(f"Sous-ensemble Y : {subset_Y_ex3}")
-print(f"Image réciproque calculée : {result_ex3}")
-print(f"Image réciproque attendue : {expected_ex3}")
+print(f"Image reciproque calculee : {result_ex3}")
+print(f"Image reciproque attendue : {expected_ex3}")
 
-# Assertion pour valider le résultat
+# Assertion pour valider le resultat
 assert result_ex3 == expected_ex3, f"Erreur dans l'Exemple 3: Attendu {expected_ex3}, obtenu {result_ex3}"
-print("Assertion Exemple 3 passée avec succès.\n")
+print("Assertion Exemple 3 passee avec succes.\n")
 \end{lstlisting}
 
 \paragraph{Exemple 4 : Sous-ensemble Y ne contenant aucune
@@ -4140,34 +4140,34 @@ Soit \(f: \{1, 2, 3\} \to \{'A', 'B', 'C'\}\) définie par
 \begin{lstlisting}[language=Python]
 # --- Exemple 4 ---
 print("--- Exemple 4 : Sous-ensemble Y sans intersection avec l'image de f ---")
-# Définition de la fonction f
+# Definition de la fonction f
 def map_letters(x):
     if x == 1: return 'A'
     if x == 2: return 'B'
     if x == 3: return 'C'
-    return None # Pour les cas non définis dans le domaine
+    return None # Pour les cas non definis dans le domaine
 
-# Définition du domaine A
+# Definition du domaine A
 domain_A_ex4 = {1, 2, 3}
 
-# Définition du sous-ensemble Y
+# Definition du sous-ensemble Y
 subset_Y_ex4 = {'X', 'Y'}
 
-# Calcul de l'image réciproque
+# Calcul de l'image reciproque
 result_ex4 = preimage(map_letters, domain_A_ex4, subset_Y_ex4)
 
-# Résultat attendu : ensemble vide
+# Resultat attendu : ensemble vide
 expected_ex4 = set()
 
 print(f"Fonction f(1)='A', f(2)='B', f(3)='C'")
 print(f"Domaine A : {domain_A_ex4}")
 print(f"Sous-ensemble Y : {subset_Y_ex4}")
-print(f"Image réciproque calculée : {result_ex4}")
-print(f"Image réciproque attendue : {expected_ex4}")
+print(f"Image reciproque calculee : {result_ex4}")
+print(f"Image reciproque attendue : {expected_ex4}")
 
-# Assertion pour valider le résultat
+# Assertion pour valider le resultat
 assert result_ex4 == expected_ex4, f"Erreur dans l'Exemple 4: Attendu {expected_ex4}, obtenu {result_ex4}"
-print("Assertion Exemple 4 passée avec succès.\n")
+print("Assertion Exemple 4 passee avec succes.\n")
 \end{lstlisting}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
@@ -4551,11 +4551,11 @@ implémenter}\label{muxe9thodes-uxe0-impluxe9menter}
 \begin{lstlisting}[language=Python]
 class InvertibleDict:
     """
-    Implémente un dictionnaire inversible qui garantit une bijection
-    entre les clés et les valeurs.
+    Implemente un dictionnaire inversible qui garantit une bijection
+    entre les cles et les valeurs.
 
-    Chaque clé est unique et chaque valeur est unique.
-    Les tentatives d'ajout de clés ou de valeurs dupliquées lèvent des erreurs.
+    Chaque cle est unique et chaque valeur est unique.
+    Les tentatives d'ajout de cles ou de valeurs dupliquees levent des erreurs.
     """
 
     def __init__(self, initial_data=None):
@@ -4563,60 +4563,60 @@ class InvertibleDict:
         Initialise le dictionnaire inversible.
 
         Args:
-            initial_data (dict ou list de tuple, optionnel): Données initiales
-                pour peupler le dictionnaire. Chaque paire (clé, valeur) sera
-                ajoutée avec la logique de vérification de bijection.
+            initial_data (dict ou list de tuple, optionnel): Donnees initiales
+                pour peupler le dictionnaire. Chaque paire (cle, valeur) sera
+                ajoutee avec la logique de verification de bijection.
         """
-        # Dictionnaire principal: clé -> valeur
+        # Dictionnaire principal: cle -> valeur
         self._key_to_value = {}
-        # Dictionnaire inverse: valeur -> clé
+        # Dictionnaire inverse: valeur -> cle
         self._value_to_key = {}
 
         if initial_data:
-            # Si des données initiales sont fournies, les ajouter une par une.
-            # Cela permet de valider la bijection dès l'initialisation.
+            # Si des donnees initiales sont fournies, les ajouter une par une.
+            # Cela permet de valider la bijection des l'initialisation.
             if isinstance(initial_data, dict):
                 items = initial_data.items()
             elif isinstance(initial_data, (list, tuple)):
                 items = initial_data
             else:
-                raise TypeError("initial_data doit être un dict ou une liste/tuple de paires.")
+                raise TypeError("initial_data doit etre un dict ou une liste/tuple de paires.")
 
             for key, value in items:
-                # Utilise la méthode __setitem__ pour garantir la logique de bijection
+                # Utilise la methode __setitem__ pour garantir la logique de bijection
                 # et la gestion des erreurs lors de l'initialisation.
                 self[key] = value
 
     def __setitem__(self, key, value):
         """
-        Ajoute ou modifie une paire (clé, valeur) dans le dictionnaire.
+        Ajoute ou modifie une paire (cle, valeur) dans le dictionnaire.
         Garantit que la bijection est maintenue.
 
         Args:
-            key: La clé à ajouter ou modifier.
-            value: La valeur associée à la clé.
+            key: La cle a ajouter ou modifier.
+            value: La valeur associee a la cle.
 
         Raises:
-            KeyError: Si la clé existe déjà et est associée à une valeur différente,
-                      ou si la clé est tentée d'être réassignée à une valeur déjà existante
-                      par une autre clé.
-            ValueError: Si la valeur existe déjà et est associée à une clé différente.
+            KeyError: Si la cle existe deja et est associee a une valeur differente,
+                      ou si la cle est tentee d'etre reassignee a une valeur deja existante
+                      par une autre cle.
+            ValueError: Si la valeur existe deja et est associee a une cle differente.
         """
-        # Cas 1: La clé existe déjà dans le dictionnaire
+        # Cas 1: La cle existe deja dans le dictionnaire
         if key in self._key_to_value:
             current_value = self._key_to_value[key]
 
-            # Si la clé est déjà associée à la même valeur, l'opération est idempotente.
+            # Si la cle est deja associee a la meme valeur, l'operation est idempotente.
             if current_value == value:
                 return
 
-            # Si la clé existe mais est associée à une valeur différente,
-            # nous devons vérifier la nouvelle valeur et potentiellement mettre à jour.
+            # Si la cle existe mais est associee a une valeur differente,
+            # nous devons verifier la nouvelle valeur et potentiellement mettre a jour.
 
-            # Vérifier si la nouvelle valeur existe déjà, mais est associée à une autre clé.
+            # Verifier si la nouvelle valeur existe deja, mais est associee a une autre cle.
             if value in self._value_to_key and self._value_to_key[value] != key:
-                raise ValueError(f"La valeur '{value}' est déjà associée à la clé '{self._value_to_key[value]}'. "
-                                 f"Impossible de l'associer à la clé '{key}' car cela briserait l'injection.")
+                raise ValueError(f"La valeur '{value}' est deja associee a la cle '{self._value_to_key[value]}'. "
+                                 f"Impossible de l'associer a la cle '{key}' car cela briserait l'injection.")
 
             # Supprimer l'ancienne paire des deux dictionnaires
             del self._key_to_value[key]
@@ -4626,12 +4626,12 @@ class InvertibleDict:
             self._key_to_value[key] = value
             self._value_to_key[value] = key
 
-        # Cas 2: La clé n'existe pas encore
+        # Cas 2: La cle n'existe pas encore
         else:
-            # Vérifier si la valeur existe déjà (pour garantir l'injection)
+            # Verifier si la valeur existe deja (pour garantir l'injection)
             if value in self._value_to_key:
-                raise ValueError(f"La valeur '{value}' est déjà associée à la clé '{self._value_to_key[value]}'. "
-                                 f"Impossible de l'associer à la nouvelle clé '{key}' car cela briserait l'injection.")
+                raise ValueError(f"La valeur '{value}' est deja associee a la cle '{self._value_to_key[value]}'. "
+                                 f"Impossible de l'associer a la nouvelle cle '{key}' car cela briserait l'injection.")
 
             # Si tout est bon, ajouter la nouvelle paire aux deux dictionnaires
             self._key_to_value[key] = value
@@ -4639,33 +4639,33 @@ class InvertibleDict:
 
     def __getitem__(self, key):
         """
-        Récupère la valeur associée à une clé.
+        Recupere la valeur associee a une cle.
 
         Args:
-            key: La clé dont on veut récupérer la valeur.
+            key: La cle dont on veut recuperer la valeur.
 
         Returns:
-            La valeur associée à la clé.
+            La valeur associee a la cle.
 
         Raises:
-            KeyError: Si la clé n'est pas trouvée dans le dictionnaire.
+            KeyError: Si la cle n'est pas trouvee dans le dictionnaire.
         """
         if key not in self._key_to_value:
-            raise KeyError(f"La clé '{key}' n'existe pas dans le dictionnaire.")
+            raise KeyError(f"La cle '{key}' n'existe pas dans le dictionnaire.")
         return self._key_to_value[key]
 
     def get_inverse(self, value):
         """
-        Récupère la clé associée à une valeur (fonction inverse).
+        Recupere la cle associee a une valeur (fonction inverse).
 
         Args:
-            value: La valeur dont on veut récupérer la clé.
+            value: La valeur dont on veut recuperer la cle.
 
         Returns:
-            La clé associée à la valeur.
+            La cle associee a la valeur.
 
         Raises:
-            ValueError: Si la valeur n'est pas trouvée dans le dictionnaire.
+            ValueError: Si la valeur n'est pas trouvee dans le dictionnaire.
         """
         if value not in self._value_to_key:
             # Utilisation de ValueError pour les recherches par valeur est une convention raisonnable.
@@ -4674,65 +4674,65 @@ class InvertibleDict:
 
     def __delitem__(self, key):
         """
-        Supprime une paire (clé, valeur) par sa clé.
+        Supprime une paire (cle, valeur) par sa cle.
 
         Args:
-            key: La clé de la paire à supprimer.
+            key: La cle de la paire a supprimer.
 
         Raises:
-            KeyError: Si la clé n'est pas trouvée dans le dictionnaire.
+            KeyError: Si la cle n'est pas trouvee dans le dictionnaire.
         """
         if key not in self._key_to_value:
-            raise KeyError(f"La clé '{key}' n'existe pas dans le dictionnaire.")
+            raise KeyError(f"La cle '{key}' n'existe pas dans le dictionnaire.")
 
         value_to_delete = self._key_to_value[key]
 
-        # Supprimer des deux dictionnaires pour maintenir la cohérence
+        # Supprimer des deux dictionnaires pour maintenir la coherence
         del self._key_to_value[key]
         del self._value_to_key[value_to_delete]
 
     def __len__(self):
         """
-        Retourne le nombre de paires (clé, valeur) dans le dictionnaire.
+        Retourne le nombre de paires (cle, valeur) dans le dictionnaire.
         """
-        # Les deux dictionnaires doivent toujours avoir la même taille
+        # Les deux dictionnaires doivent toujours avoir la meme taille
         assert len(self._key_to_value) == len(self._value_to_key), \
-            "Incohérence interne: les dictionnaires direct et inverse n'ont pas la même taille."
+            "Incoherence interne: les dictionnaires direct et inverse n'ont pas la meme taille."
         return len(self._key_to_value)
 
     def __contains__(self, key):
         """
-        Vérifie si une clé existe dans le dictionnaire.
+        Verifie si une cle existe dans le dictionnaire.
         """
         return key in self._key_to_value
 
     def keys(self):
         """
-        Retourne un itérateur sur les clés du dictionnaire.
+        Retourne un iterateur sur les cles du dictionnaire.
         """
         return self._key_to_value.keys()
 
     def values(self):
         """
-        Retourne un itérateur sur les valeurs du dictionnaire.
+        Retourne un iterateur sur les valeurs du dictionnaire.
         """
         return self._key_to_value.values()
 
     def items(self):
         """
-        Retourne un itérateur sur les paires (clé, valeur) du dictionnaire.
+        Retourne un iterateur sur les paires (cle, valeur) du dictionnaire.
         """
         return self._key_to_value.items()
 
     def __repr__(self):
         """
-        Représentation officielle de l'objet.
+        Representation officielle de l'objet.
         """
         return f"InvertibleDict({self._key_to_value})"
 
     def __str__(self):
         """
-        Représentation lisible de l'objet.
+        Representation lisible de l'objet.
         """
         return str(self._key_to_value)
 \end{lstlisting}
@@ -5015,12 +5015,12 @@ utiliser de bibliothèques comme \passthrough{\lstinline!numpy!} ou
 \passthrough{\lstinline!scikit-learn!}.
 
 \begin{lstlisting}[language=Python]
-import math # Pour la tolérance des flottants, si nécessaire, mais on peut faire sans pour ce TP.
+import math # Pour la tolerance des flottants, si necessaire, mais on peut faire sans pour ce TP.
 
 def find_min_max(data):
     """
-    Trouve les valeurs minimale et maximale dans une liste de données.
-    Implémentation manuelle pour respecter la contrainte "Python PUR from scratch".
+    Trouve les valeurs minimale et maximale dans une liste de donnees.
+    Implementation manuelle pour respecter la contrainte "Python PUR from scratch".
 
     Args:
         data (list): Une liste de nombres (int ou float).
@@ -5045,23 +5045,23 @@ def find_min_max(data):
 
 def normalize_min_max(value, data_min, data_max):
     """
-    Normalise une seule valeur en utilisant la méthode Min-Max.
-    La valeur est transformée pour être dans l'intervalle [0, 1].
+    Normalise une seule valeur en utilisant la methode Min-Max.
+    La valeur est transformee pour etre dans l'intervalle [0, 1].
 
     Args:
-        value (float or int): La valeur à normaliser.
-        data_min (float or int): La valeur minimale de l'ensemble de données original.
-        data_max (float or int): La valeur maximale de l'ensemble de données original.
+        value (float or int): La valeur a normaliser.
+        data_min (float or int): La valeur minimale de l'ensemble de donnees original.
+        data_max (float or int): La valeur maximale de l'ensemble de donnees original.
 
     Returns:
-        float: La valeur normalisée.
-               Retourne 0.5 si data_min == data_max pour éviter la division par zéro,
-               indiquant que toutes les valeurs étaient identiques.
+        float: La valeur normalisee.
+               Retourne 0.5 si data_min == data_max pour eviter la division par zero,
+               indiquant que toutes les valeurs etaient identiques.
     """
     if data_max == data_min:
         # Si toutes les valeurs sont identiques, la plage est nulle.
         # Par convention, on peut retourner 0.5 (milieu de [0,1]) ou 0.
-        # Ici, 0.5 est choisi pour représenter une "valeur moyenne" dans la plage normalisée.
+        # Ici, 0.5 est choisi pour representer une "valeur moyenne" dans la plage normalisee.
         return 0.5
 
     # Applique la formule de normalisation Min-Max
@@ -5070,50 +5070,50 @@ def normalize_min_max(value, data_min, data_max):
 
 def denormalize_min_max(normalized_value, data_min, data_max):
     """
-    Dénormalise une seule valeur (précédemment normalisée Min-Max) pour retrouver
+    Denormalise une seule valeur (precedemment normalisee Min-Max) pour retrouver
     sa plage originale.
 
     Args:
-        normalized_value (float): La valeur normalisée (attendue dans [0, 1]).
-        data_min (float or int): La valeur minimale de l'ensemble de données original.
-        data_max (float or int): La valeur maximale de l'ensemble de données original.
+        normalized_value (float): La valeur normalisee (attendue dans [0, 1]).
+        data_min (float or int): La valeur minimale de l'ensemble de donnees original.
+        data_max (float or int): La valeur maximale de l'ensemble de donnees original.
 
     Returns:
-        float: La valeur dénormalisée, correspondant à la valeur originale.
+        float: La valeur denormalisee, correspondant a la valeur originale.
                Retourne data_min si data_min == data_max, car toutes les valeurs
-               originales étaient égales à data_min.
+               originales etaient egales a data_min.
     """
     if data_max == data_min:
-        # Si toutes les valeurs étaient identiques, la dénormalisation ramène à cette valeur unique.
+        # Si toutes les valeurs etaient identiques, la denormalisation ramene a cette valeur unique.
         return data_min
 
-    # Applique la formule de dénormalisation (fonction inverse)
+    # Applique la formule de denormalisation (fonction inverse)
     original_value = normalized_value * (data_max - data_min) + data_min
     return original_value
 
 def apply_normalization(data):
     """
-    Applique la normalisation Min-Max à une liste entière de données.
+    Applique la normalisation Min-Max a une liste entiere de donnees.
 
     Args:
-        data (list): La liste des données à normaliser.
+        data (list): La liste des donnees a normaliser.
 
     Returns:
         tuple: Un tuple contenant (normalized_data, original_min, original_max).
-               normalized_data est la liste des valeurs normalisées.
+               normalized_data est la liste des valeurs normalisees.
                original_min et original_max sont les min/max de la liste originale,
-               nécessaires pour la dénormalisation.
+               necessaires pour la denormalisation.
     """
     if not data:
         return [], None, None
 
     original_min, original_max = find_min_max(data)
 
-    # Gérer le cas où toutes les valeurs sont identiques
+    # Gerer le cas ou toutes les valeurs sont identiques
     if original_min == original_max:
-        # Si toutes les valeurs sont les mêmes, toutes les valeurs normalisées seront 0.5
+        # Si toutes les valeurs sont les memes, toutes les valeurs normalisees seront 0.5
         # (selon notre convention dans normalize_min_max).
-        # On retourne une liste de 0.5 de la même taille que les données originales.
+        # On retourne une liste de 0.5 de la meme taille que les donnees originales.
         return [0.5] * len(data), original_min, original_max
 
     normalized_data = []
@@ -5124,15 +5124,15 @@ def apply_normalization(data):
 
 def apply_denormalization(normalized_data, original_min, original_max):
     """
-    Applique la dénormalisation Min-Max à une liste de données normalisées.
+    Applique la denormalisation Min-Max a une liste de donnees normalisees.
 
     Args:
-        normalized_data (list): La liste des valeurs normalisées.
-        original_min (float or int): La valeur minimale de l'ensemble de données original.
-        original_max (float or int): La valeur maximale de l'ensemble de données original.
+        normalized_data (list): La liste des valeurs normalisees.
+        original_min (float or int): La valeur minimale de l'ensemble de donnees original.
+        original_max (float or int): La valeur maximale de l'ensemble de donnees original.
 
     Returns:
-        list: La liste des valeurs dénormalisées.
+        list: La liste des valeurs denormalisees.
     """
     if not normalized_data:
         return []
@@ -5154,20 +5154,20 @@ propriétés mathématiques, notamment la bijectivité et la relation
 inverse.
 
 \begin{lstlisting}[language=Python]
-# --- Jeu de données de test ---
+# --- Jeu de donnees de test ---
 data_set_1 = [10, 20, 30, 40, 50]
 data_set_2 = [-5, 0, 5, 10, 15.5, 20]
 data_set_3 = [7.2, 1.1, 9.8, 3.5, 6.0]
-data_set_4_single_value = [100] # Cas où min == max
+data_set_4_single_value = [100] # Cas ou min == max
 data_set_5_empty = [] # Cas de liste vide
 data_set_6_negative = [-10, -5, -1, -0.5, 0]
 
-# --- Tolérance pour la comparaison des flottants ---
-# Les opérations en virgule flottante peuvent introduire de petites erreurs.
-# Nous utilisons une petite tolérance (epsilon) pour comparer les résultats.
+# --- Tolerance pour la comparaison des flottants ---
+# Les operations en virgule flottante peuvent introduire de petites erreurs.
+# Nous utilisons une petite tolerance (epsilon) pour comparer les resultats.
 EPSILON = 1e-9
 
-print("--- Début des tests de validation ---")
+print("--- Debut des tests de validation ---")
 
 # Test 1: find_min_max
 print("\nTest 1: find_min_max")
@@ -5189,32 +5189,32 @@ print(f"  Min/Max pour {data_set_5_empty}: ({min5}, {max5})")
 print("  find_min_max: OK")
 
 
-# Test 2: Normalisation et Dénormalisation d'une seule valeur
-print("\nTest 2: Normalisation/Dénormalisation d'une seule valeur")
+# Test 2: Normalisation et Denormalisation d'une seule valeur
+print("\nTest 2: Normalisation/Denormalisation d'une seule valeur")
 original_min_ds1, original_max_ds1 = find_min_max(data_set_1) # (10, 50)
 
 # Normalisation d'une valeur au milieu
 val_to_normalize = 30
 normalized_val = normalize_min_max(val_to_normalize, original_min_ds1, original_max_ds1)
 assert abs(normalized_val - 0.5) < EPSILON, f"Test 2.1 failed: Expected 0.5, got {normalized_val}"
-print(f"  {val_to_normalize} normalisé: {normalized_val}")
+print(f"  {val_to_normalize} normalise: {normalized_val}")
 
 # Normalisation de la valeur min
 normalized_min = normalize_min_max(original_min_ds1, original_min_ds1, original_max_ds1)
 assert abs(normalized_min - 0.0) < EPSILON, f"Test 2.2 failed: Expected 0.0, got {normalized_min}"
-print(f"  {original_min_ds1} normalisé: {normalized_min}")
+print(f"  {original_min_ds1} normalise: {normalized_min}")
 
 # Normalisation de la valeur max
 normalized_max = normalize_min_max(original_max_ds1, original_min_ds1, original_max_ds1)
 assert abs(normalized_max - 1.0) < EPSILON, f"Test 2.3 failed: Expected 1.0, got {normalized_max}"
-print(f"  {original_max_ds1} normalisé: {normalized_max}")
+print(f"  {original_max_ds1} normalise: {normalized_max}")
 
-# Dénormalisation de la valeur normalisée
+# Denormalisation de la valeur normalisee
 denormalized_val = denormalize_min_max(normalized_val, original_min_ds1, original_max_ds1)
 assert abs(denormalized_val - val_to_normalize) < EPSILON, f"Test 2.4 failed: Expected {val_to_normalize}, got {denormalized_val}"
-print(f"  {normalized_val} dénormalisé: {denormalized_val}")
+print(f"  {normalized_val} denormalise: {denormalized_val}")
 
-# Test de la propriété inverse f^-1(f(x)) = x
+# Test de la propriete inverse f^-1(f(x)) = x
 # On prend une valeur arbitraire de data_set_1
 test_val_inverse = 25
 normalized_test_val = normalize_min_max(test_val_inverse, original_min_ds1, original_max_ds1)
@@ -5227,74 +5227,74 @@ print(f"  f^-1(f({test_val_inverse})) = {denormalized_test_val} (attendu {test_v
 original_min_ds4, original_max_ds4 = find_min_max(data_set_4_single_value) # (100, 100)
 normalized_val_ds4 = normalize_min_max(100, original_min_ds4, original_max_ds4)
 assert abs(normalized_val_ds4 - 0.5) < EPSILON, f"Test 2.6 failed: Expected 0.5 for single value, got {normalized_val_ds4}"
-print(f"  {data_set_4_single_value[0]} normalisé (min=max): {normalized_val_ds4}")
+print(f"  {data_set_4_single_value[0]} normalise (min=max): {normalized_val_ds4}")
 denormalized_val_ds4 = denormalize_min_max(normalized_val_ds4, original_min_ds4, original_max_ds4)
 assert abs(denormalized_val_ds4 - 100) < EPSILON, f"Test 2.7 failed: Expected 100 for single value denormalization, got {denormalized_val_ds4}"
-print(f"  {normalized_val_ds4} dénormalisé (min=max): {denormalized_val_ds4}")
-print("  Normalisation/Dénormalisation d'une seule valeur: OK")
+print(f"  {normalized_val_ds4} denormalise (min=max): {denormalized_val_ds4}")
+print("  Normalisation/Denormalisation d'une seule valeur: OK")
 
 
-# Test 3: Normalisation et Dénormalisation de listes complètes
-print("\nTest 3: Normalisation/Dénormalisation de listes complètes")
+# Test 3: Normalisation et Denormalisation de listes completes
+print("\nTest 3: Normalisation/Denormalisation de listes completes")
 
 # Test avec data_set_1
 normalized_data_1, min_orig_1, max_orig_1 = apply_normalization(data_set_1)
 print(f"  Original: {data_set_1}")
-print(f"  Normalisé: {normalized_data_1}")
-# Vérifier que toutes les valeurs normalisées sont dans [0, 1]
+print(f"  Normalise: {normalized_data_1}")
+# Verifier que toutes les valeurs normalisees sont dans [0, 1]
 for val in normalized_data_1:
     assert 0.0 - EPSILON <= val <= 1.0 + EPSILON, f"Test 3.1 failed: Normalized value {val} out of [0, 1] range."
-# Vérifier les valeurs spécifiques
+# Verifier les valeurs specifiques
 assert abs(normalized_data_1[0] - 0.0) < EPSILON, "Test 3.2 failed: First value not 0.0"
 assert abs(normalized_data_1[2] - 0.5) < EPSILON, "Test 3.3 failed: Middle value not 0.5"
 assert abs(normalized_data_1[-1] - 1.0) < EPSILON, "Test 3.4 failed: Last value not 1.0"
 
 denormalized_data_1 = apply_denormalization(normalized_data_1, min_orig_1, max_orig_1)
-print(f"  Dénormalisé: {denormalized_data_1}")
-# Vérifier que les données dénormalisées sont (presque) identiques aux originales
+print(f"  Denormalise: {denormalized_data_1}")
+# Verifier que les donnees denormalisees sont (presque) identiques aux originales
 for i in range(len(data_set_1)):
     assert abs(denormalized_data_1[i] - data_set_1[i]) < EPSILON, \
-        f"Test 3.5 failed: Dénormalisation incorrecte pour l'élément {i}. Attendu {data_set_1[i]}, obtenu {denormalized_data_1[i]}"
-print("  Normalisation/Dénormalisation de data_set_1: OK")
+        f"Test 3.5 failed: Denormalisation incorrecte pour l'element {i}. Attendu {data_set_1[i]}, obtenu {denormalized_data_1[i]}"
+print("  Normalisation/Denormalisation de data_set_1: OK")
 
 # Test avec data_set_3 (flottants)
 normalized_data_3, min_orig_3, max_orig_3 = apply_normalization(data_set_3)
 print(f"\n  Original: {data_set_3}")
-print(f"  Normalisé: {normalized_data_3}")
+print(f"  Normalise: {normalized_data_3}")
 for val in normalized_data_3:
     assert 0.0 - EPSILON <= val <= 1.0 + EPSILON, f"Test 3.6 failed: Normalized value {val} out of [0, 1] range."
 
 denormalized_data_3 = apply_denormalization(normalized_data_3, min_orig_3, max_orig_3)
-print(f"  Dénormalisé: {denormalized_data_3}")
+print(f"  Denormalise: {denormalized_data_3}")
 for i in range(len(data_set_3)):
     assert abs(denormalized_data_3[i] - data_set_3[i]) < EPSILON, \
-        f"Test 3.7 failed: Dénormalisation incorrecte pour l'élément {i}. Attendu {data_set_3[i]}, obtenu {denormalized_data_3[i]}"
-print("  Normalisation/Dénormalisation de data_set_3: OK")
+        f"Test 3.7 failed: Denormalisation incorrecte pour l'element {i}. Attendu {data_set_3[i]}, obtenu {denormalized_data_3[i]}"
+print("  Normalisation/Denormalisation de data_set_3: OK")
 
 # Test avec data_set_4_single_value (min == max)
 normalized_data_4, min_orig_4, max_orig_4 = apply_normalization(data_set_4_single_value)
 print(f"\n  Original: {data_set_4_single_value}")
-print(f"  Normalisé: {normalized_data_4}")
+print(f"  Normalise: {normalized_data_4}")
 assert len(normalized_data_4) == 1 and abs(normalized_data_4[0] - 0.5) < EPSILON, \
     f"Test 3.8 failed: Expected [0.5] for single value list, got {normalized_data_4}"
 
 denormalized_data_4 = apply_denormalization(normalized_data_4, min_orig_4, max_orig_4)
-print(f"  Dénormalisé: {denormalized_data_4}")
+print(f"  Denormalise: {denormalized_data_4}")
 assert len(denormalized_data_4) == 1 and abs(denormalized_data_4[0] - data_set_4_single_value[0]) < EPSILON, \
     f"Test 3.9 failed: Expected {data_set_4_single_value} for single value list denormalization, got {denormalized_data_4}"
-print("  Normalisation/Dénormalisation de data_set_4_single_value: OK")
+print("  Normalisation/Denormalisation de data_set_4_single_value: OK")
 
 # Test avec data_set_5_empty (liste vide)
 normalized_data_5, min_orig_5, max_orig_5 = apply_normalization(data_set_5_empty)
 print(f"\n  Original: {data_set_5_empty}")
-print(f"  Normalisé: {normalized_data_5}")
+print(f"  Normalise: {normalized_data_5}")
 assert normalized_data_5 == [] and min_orig_5 is None and max_orig_5 is None, \
     f"Test 3.10 failed: Expected ([], None, None) for empty list, got ({normalized_data_5}, {min_orig_5}, {max_orig_5})"
-denormalized_data_5 = apply_denormalization([], None, None) # Simuler la dénormalisation d'une liste vide
+denormalized_data_5 = apply_denormalization([], None, None) # Simuler la denormalisation d'une liste vide
 assert denormalized_data_5 == [], f"Test 3.11 failed: Expected [] for empty list denormalization, got {denormalized_data_5}"
-print("  Normalisation/Dénormalisation de data_set_5_empty: OK")
+print("  Normalisation/Denormalisation de data_set_5_empty: OK")
 
-print("\n--- Tous les tests de validation ont réussi ! ---")
+print("\n--- Tous les tests de validation ont reussi ! ---")
 \end{lstlisting}
 
 \subsection{Conclusion et Réflexions}\label{conclusion-et-ruxe9flexions}
@@ -5335,6 +5335,26 @@ aux outliers.
 \newpage
 
 \chapter{Annexes: Représentations Visuelles (TikZ)}
+\section{Schéma d'une Application}
+\begin{center}
+\begin{tikzpicture}
+    \draw (0,0) ellipse (1cm and 2cm);
+    \draw (4,0) ellipse (1cm and 2cm);
+    \node at (0,2.3) {$E$};
+    \node at (4,2.3) {$F$};
+    \node (x1) at (0,1) {$\bullet$}; \node at (-0.3,1) {$x_1$};
+    \node (x2) at (0,0) {$\bullet$}; \node at (-0.3,0) {$x_2$};
+    \node (x3) at (0,-1) {$\bullet$}; \node at (-0.3,-1) {$x_3$};
+    \node (y1) at (4,1.5) {$\bullet$}; \node at (4.3,1.5) {$y_1$};
+    \node (y2) at (4,0.5) {$\bullet$}; \node at (4.3,0.5) {$y_2$};
+    \node (y3) at (4,-0.5) {$\bullet$}; \node at (4.3,-0.5) {$y_3$};
+    \node (y4) at (4,-1.5) {$\bullet$}; \node at (4.3,-1.5) {$y_4$};
+    \draw[->] (x1) -- (y1);
+    \draw[->] (x2) -- (y3);
+    \draw[->] (x3) -- (y3);
+\end{tikzpicture}
+\end{center}
+
 \section{Schéma d'une Injection}
 \begin{center}
 \begin{tikzpicture}
