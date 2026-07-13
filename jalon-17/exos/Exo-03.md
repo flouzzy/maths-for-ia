@@ -9,6 +9,7 @@ Soit la série harmonique alternée $\sum_{n=1}^\infty \frac{(-1)^{n+1}}{n}$, do
 En réarrangeant les termes pour prendre deux termes positifs puis un terme négatif ($1 + \frac{1}{3} - \frac{1}{2} + \frac{1}{5} + \frac{1}{7} - \frac{1}{4} + \dots$), démontrer rigoureusement que la nouvelle série converge vers une limite différente (précisément $\frac{3}{2}\ln(2)$).
 
 ## Correction
+
 Soit $S$ la somme de la série harmonique alternée : $S = 1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \frac{1}{5} - \frac{1}{6} + \dots = \ln(2)$.
 1. On considère la demi-série $S/2 = \frac{1}{2} - \frac{1}{4} + \frac{1}{6} - \frac{1}{8} + \frac{1}{10} - \frac{1}{12} + \dots$.
 2. On insère des zéros entre chaque terme de cette série modifiée : $0 + \frac{1}{2} + 0 - \frac{1}{4} + 0 + \frac{1}{6} + 0 - \frac{1}{8} + \dots$.

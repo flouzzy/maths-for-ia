@@ -8,6 +8,7 @@ difficulty: ★☆☆☆☆
 Étudier la convergence et la convergence absolue de la série harmonique alternée $\sum_{n=1}^\infty \frac{(-1)^n}{n}$.
 
 ## Correction
+
 1. **Convergence Absolue :** La série des valeurs absolues est $\sum |\frac{(-1)^n}{n}| = \sum \frac{1}{n}$.
    - C'est la série harmonique (Riemann $\alpha=1$). On sait que cette série diverge (minorée par une intégrale divergente, ou par regroupement de termes).
    - La série initiale ne converge donc **pas absolument**.

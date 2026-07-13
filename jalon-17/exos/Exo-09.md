@@ -8,6 +8,7 @@ difficulty: ★★★★★
 Montrer que la série $\sum_{n=2}^\infty \frac{1}{n^2 - 1}$ converge absolument et calculer sa somme.
 
 ## Correction
+
 1. **Convergence absolue :** Le terme général est $u_n = \frac{1}{n^2 - 1}$. Il est strictement positif pour $n \ge 2$. Au voisinage de l'infini, $u_n \sim \frac{1}{n^2}$.
 Par équivalence avec une série de Riemann convergente ($\alpha = 2 > 1$), la série $\sum u_n$ converge (donc absolument).
 2. **Décomposition en éléments simples :**

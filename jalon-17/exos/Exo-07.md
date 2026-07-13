@@ -8,6 +8,7 @@ difficulty: ★★★★☆
 Soit $\sum u_n$ une série à termes strictement positifs. Si $\frac{u_{n+1}}{u_n} = 1 - \frac{\alpha}{n} + o(\frac{1}{n})$ avec $\alpha > 1$, démontrer que la série $\sum u_n$ converge (absolument).
 
 ## Correction
+
 1. **Développement de $\ln(u_{n+1}/u_n)$ :**
    $\ln(\frac{u_{n+1}}{u_n}) = \ln(1 - \frac{\alpha}{n} + o(\frac{1}{n})) = -\frac{\alpha}{n} + o(\frac{1}{n})$.
 2. **Comparaison avec une série de Riemann :**

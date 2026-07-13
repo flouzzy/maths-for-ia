@@ -8,6 +8,7 @@ difficulty: ★★☆☆☆
 Montrer que la série de terme général $u_n = \frac{\sin(\sqrt{n})}{n}$ est convergente, bien qu'elle ne soit pas absolument convergente.
 
 ## Correction
+
 1. **Étude de la convergence absolue :** $|u_n| = \frac{|\sin(\sqrt{n})|}{n}$. On sait que $\sin^2(x) \le |\sin(x)|$. Ainsi, $|u_n| \ge \frac{\sin^2(\sqrt{n})}{n} = \frac{1 - \cos(2\sqrt{n})}{2n}$.
 La série $\sum \frac{1}{2n}$ diverge (série harmonique). La série $\sum \frac{\cos(2\sqrt{n})}{2n}$ est convergente (par transformation d'Abel ou comparaison intégrale). Ainsi, la somme $\sum |u_n|$ diverge. La série n'est pas absolument convergente.
 2. **Étude de la convergence simple :** Posons $f(t) = \frac{\sin(\sqrt{t})}{t}$ pour $t \ge 1$.

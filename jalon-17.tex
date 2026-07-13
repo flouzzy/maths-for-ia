@@ -1,0 +1,610 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{geometry}
+\usepackage{hyperref}
+\geometry{margin=2.5cm}
+
+\title{Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries}
+\author{Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\chapter{Jalon 17 : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries}
+
+
+\section{1. Intuition et genèse du concept}
+
+Au commencement, les mathématiciens manipulaient l'infini avec la hardiesse de l'innocence. Ils additionnaient des termes positifs et négatifs, permutant les signes comme s'il s'agissait de sommes finies, portés par l'intuition que l'algèbre de l'infini ne devait être que le prolongement naturel de l'algèbre du fini. Mais cette insouciance allait se heurter à un mur conceptuel.
+
+La genèse historique de la convergence absolue et de la semi-convergence trouve ses racines dans les paradoxes vertigineux rencontrés par les mathématiciens du XVIIIe siècle, notamment Euler et plus tard Cauchy et Riemann. À cette époque, on manipulait les séries infinies (des sommes ne s'arrêtant jamais) avec l'intuition naïve qu'elles se comportaient exactement comme des sommes finies. Or, lorsque les termes d'une série alternent entre des valeurs positives et négatives, l'édifice intuitif s'effondre.
+
+L'étude des séries a révélé une vérité mathématique d'une profondeur insoupçonnée : l'ordre dans lequel on additionne une infinité de termes n'est pas toujours invariant. C'est le choc de la semi-convergence. Une série peut converger vers une valeur, mais en réarrangeant simplement l'ordre de ses termes, elle peut diverger, ou converger vers n'importe quel autre réel, comme l'a magistralement démontré Bernhard Riemann.
+
+La convergence absolue est alors née non pas comme une contrainte artificielle, mais comme la condition de survie de la commutativité et de l'associativité à l'infini. Dire qu'une série converge absolument, c'est affirmer que l'accumulation de son "énergie" globale (la somme des valeurs absolues) est finie. Cette propriété garantit que la série est intrinsèquement stable. Ainsi, la distinction entre convergence simple et convergence absolue est la frontière entre ce qui est algébriquement robuste (les sommes inconditionnelles) et ce qui est infiniment fragile (les compensations miracles entre termes de signes opposés).
+
+Pour retrouver la sécurité des opérations algébriques classiques (réarranger les termes, multiplier deux séries entre elles), Cauchy a introduit le concept salvateur de convergence absolue. Une série est absolument convergente si elle continue de converger même lorsqu'on remplace tous ses termes négatifs par des termes positifs. Si elle passe ce test de robustesse extrême, alors elle se comporte comme une somme finie ordinaire.
+
+
+\section{2. Formalisation et structures algébriques}
+
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  % Axe des réels
+  \draw[->,thick] (-1,0) -- (5,0) node[right] {$\mathbb{R}$};
+  \draw (0,-0.1) -- (0,0.1) node[above] {$0$};
+
+  % Trajet d'une série absolument convergente
+  \draw[->, blue, thick] (0,-0.2) to[out=-45,in=-135] (1.5,-0.2);
+  \draw[->, blue, thick] (1.5,-0.2) to[out=-45,in=-135] (2.2,-0.2);
+  \draw[->, blue, thick] (2.2,-0.2) to[out=-45,in=-135] (2.6,-0.2);
+  \node[blue] at (2.6,-0.4) {$S_{abs}$};
+  \node[blue] at (1.5, -0.6) {Mouvements amortis garantis};
+
+  % Trajet d'une série semi-convergente (allers-retours compensatoires)
+  \draw[->, red, thick] (0,0.2) to[out=45,in=135] (4,0.2);
+  \draw[->, red, thick] (4,0.2) to[out=135,in=45] (1,0.2);
+  \draw[->, red, thick] (1,0.2) to[out=45,in=135] (3,0.2);
+  \draw[->, red, thick] (3,0.2) to[out=135,in=45] (1.5,0.2);
+  \draw[->, red, thick] (1.5,0.2) to[out=45,in=135] (2.5,0.2);
+  \node[red] at (2.5,0.6) {Compensations précaires $S_{semi}$};
+\end{tikzpicture}
+\end{center}
+
+
+
+\subsection{A. Énoncé Symbolique Strict}
+
+Soit $(u_n)_{n \in \mathbb{N}}$ une suite d'éléments à valeurs dans le corps $\mathbb{K}$ (où $\mathbb{K}$ désigne $\mathbb{R}$ ou $\mathbb{C}$).
+
+\textbf{Définition 1 : Convergence absolue}
+On dit que la série $\sum u_n$ est absolument convergente si la série des valeurs absolues (ou des modules) $\sum |u_n|$ est convergente dans $\mathbb{R}^+$.
+Symboliquement :
+$\sum_{n=0}^\infty |u_n| < +\infty \implies \sum u_n$ est absolument convergente.
+
+\textbf{Définition 2 : Semi-convergence}
+On dit que la série $\sum u_n$ est semi-convergente si :
+\begin{itemize}
+\item $\sum u_n$ est convergente dans $\mathbb{K}$.
+\item $\sum |u_n|$ est divergente dans $\mathbb{R}^+$.
+\end{itemize}
+
+\textbf{Définition 3 : Produit de Cauchy de deux séries}
+Soient $\sum a_n$ et $\sum b_n$ deux séries à termes dans $\mathbb{K}$. On définit la série produit de Cauchy, notée $\sum c_n$, par la suite de terme général $c_n$ définie pour tout $n \in \mathbb{N}$ par :
+$$c_n = \sum_{k=0}^n a_k b_{n-k}$$
+
+\subsection{B. Anatomie et Typage Chirurgical}
+
+\begin{itemize}
+\item $\mathbb{K}$ : Le corps de base. Il s'agit d'un espace de Banach complet. La notion de valeur absolue $| \cdot |$ correspond à la valeur absolue standard sur $\mathbb{R}$ ou au module usuel sur $\mathbb{C}$.
+\item $(u_n)$ : Suite indexée par $n \in \mathbb{N}$. Chaque terme $u_n$ possède un signe (ou une phase en complexe) qui peut fluctuer arbitrairement.
+\item $\sum |u_n|$ : Étant une série à termes réels positifs ou nuls, l'étude de la convergence absolue se ramène aux théorèmes du Jalon 16 (comparaison, équivalents, d'Alembert, Cauchy). Sa suite des sommes partielles est obligatoirement croissante.
+\item $c_n = \sum_{k=0}^n a_k b_{n-k}$ : Cette formule correspond exactement à la convolution discrète $(a \ast b)[n]$. L'indice $k$ parcourt l'ensemble des entiers de $0$ à $n$, assurant que la somme des indices dans les facteurs vaut toujours exactement $k + (n - k) = n$.
+\end{itemize}
+
+\subsection{C. Exemples de Validation}
+
+\textbf{Exemple trivial (Convergence Absolue) :}
+La série géométrique de terme général $u_n = \frac{(-1)^n}{2^n}$.
+On a $|u_n| = \frac{1}{2^n} = (\frac{1}{2})^n$. Puisque $1/2 < 1$, la série géométrique $\sum (1/2)^n$ converge (elle vaut $\frac{1}{1 - 1/2} = 2$). Par conséquent, la série $\sum u_n$ est absolument convergente.
+
+\textbf{Exemple complexe (Semi-convergence) :}
+La série harmonique alternée $u_n = \frac{(-1)^n}{n}$ pour $n \ge 1$.
+La série des valeurs absolues est $\sum \frac{1}{n}$, qui est la série harmonique (divergente vers $+\infty$). Elle ne converge donc pas absolument. Cependant, par le critère spécial des séries alternées (théorème de Leibniz, car $1/n \to 0$ en décroissant), la série $\sum \frac{(-1)^n}{n}$ converge vers $-\ln(2)$. Elle est donc strictement semi-convergente.
+
+\subsection{D. Cas Pathologiques et Contre-exemples}
+
+\textbf{Le piège de Mertens (Divergence du Produit de Cauchy de séries semi-convergentes) :}
+On pourrait naïvement espérer que si $\sum a_n$ converge et $\sum b_n$ converge, alors leur produit de Cauchy $\sum c_n$ converge vers le produit des sommes.
+C'est \textbf{faux}. Prenons $a_n = b_n = \frac{(-1)^n}{\sqrt{n+1}}$. Ces deux séries convergent (critère alterné). Pourtant, nous prouverons en exercice que le terme général de leur produit de Cauchy $c_n$ ne tend même pas vers 0 ! Ainsi, sans la convergence absolue, le produit de Cauchy n'a aucune garantie algébrique.
+
+\section{3. Démonstrations pas-à-pas}
+
+\subsection{A. Théorème 1 : La convergence absolue implique la convergence}
+
+\textbf{Énoncé :} Soit $(u_n)$ une suite à valeurs dans $\mathbb{K}$ (complet). Si $\sum |u_n|$ converge, alors $\sum u_n$ converge.
+
+\textbf{Démonstration détaillée  :}
+\begin{itemize}
+\item La complétude du corps $\mathbb{K}$ implique que pour prouver la convergence de la série $\sum u_n$, il suffit de démontrer que la suite de ses sommes partielles $S_N = \sum_{k=0}^N u_k$ est une suite de Cauchy.
+\item Soit $\epsilon \in \mathbb{R}_+^*$ fixé arbitrairement.
+\item Par hypothèse, la série $\sum |u_n|$ converge. Ses sommes partielles $T_N = \sum_{k=0}^N |u_k|$ forment donc une suite convergente.
+\item Toute suite convergente dans $\mathbb{R}$ est une suite de Cauchy. Par conséquent, pour la suite $(T_N)$, il existe un rang $N_0 \in \mathbb{N}$ tel que pour tous entiers $p \ge q \ge N_0$, on ait :
+   $$|T_p - T_{q-1}| = T_p - T_{q-1} = \sum_{k=q}^p |u_k| < \epsilon$$
+\item Considérons maintenant la différence des sommes partielles de la série d'origine $S_p - S_{q-1}$, pour ces mêmes $p \ge q \ge N_0$ :
+   $$|S_p - S_{q-1}| = \left| \sum_{k=q}^p u_k \right|$$
+\item D'après l'inégalité triangulaire généralisée dans $\mathbb{K}$, la norme (ou module) d'une somme est inférieure ou égale à la somme des normes :
+   $$\left| \sum_{k=q}^p u_k \right| \le \sum_{k=q}^p |u_k|$$
+\item En combinant les résultats de l'étape 4 et de l'étape 6, nous obtenons que pour tous $p \ge q \ge N_0$ :
+   $$|S_p - S_{q-1}| \le \sum_{k=q}^p |u_k| < \epsilon$$
+\item Ceci démontre rigoureusement que la suite $(S_N)$ vérifie le critère de Cauchy dans $\mathbb{K}$.
+\item Puisque $\mathbb{K}$ est un espace complet, toute suite de Cauchy y est convergente. Donc la série $\sum u_n$ converge. $\blacksquare$
+\end{itemize}
+
+\subsection{B. Théorème 2 : Théorème de Mertens sur le Produit de Cauchy}
+
+\textbf{Énoncé :} Soient $\sum a_n$ et $\sum b_n$ deux séries réelles ou complexes. Si $\sum a_n$ converge absolument et $\sum b_n$ converge, alors leur produit de Cauchy $\sum c_n$ (avec $c_n = \sum_{k=0}^n a_k b_{n-k}$) converge, et on a :
+$$\sum_{n=0}^\infty c_n = \left( \sum_{n=0}^\infty a_n \right) \times \left( \sum_{n=0}^\infty b_n \right)$$
+
+\textbf{Démonstration détaillée  :}
+\begin{itemize}
+\item Fixons les notations. Posons :
+   $A_N = \sum_{n=0}^N a_n$, $A = \lim_{N\to\infty} A_N$
+   $B_N = \sum_{n=0}^N b_n$, $B = \lim_{N\to\infty} B_N$
+   $C_N = \sum_{n=0}^N c_n$
+   Nous voulons prouver que $\lim_{N\to\infty} C_N = A \times B$.
+\item Exprimons $C_N$ en développant sa définition :
+   $C_N = \sum_{n=0}^N c_n = \sum_{n=0}^N \left( \sum_{k=0}^n a_k b_{n-k} \right)$.
+\item Réorganisons la double somme en sommant selon les colonnes (interversion de sommes finies, toujours licite). Le couple d'indices $(n, k)$ vérifie $0 \le n \le N$ et $0 \le k \le n$, ce qui est équivalent à $0 \le k \le N$ et $k \le n \le N$.
+   Ainsi, $C_N = \sum_{k=0}^N a_k \left( \sum_{n=k}^N b_{n-k} \right)$.
+\item Dans la somme intérieure, effectuons le changement d'indice $j = n-k$. Lorsque $n$ varie de $k$ à $N$, $j$ varie de $0$ à $N-k$.
+   $C_N = \sum_{k=0}^N a_k \left( \sum_{j=0}^{N-k} b_j \right) = \sum_{k=0}^N a_k B_{N-k}$.
+\item Introduisons le reste partiel de la suite $(B_N)$ par rapport à sa limite $B$. Définissons $\beta_m = B_m - B$. Par hypothèse, $\lim_{m\to\infty} \beta_m = 0$. On peut alors écrire $B_{N-k} = B + \beta_{N-k}$.
+\item Injectons cette décomposition dans $C_N$ :
+   $C_N = \sum_{k=0}^N a_k (B + \beta_{N-k}) = B \sum_{k=0}^N a_k + \sum_{k=0}^N a_k \beta_{N-k}$.
+   $C_N = B A_N + \sum_{k=0}^N a_k \beta_{N-k}$.
+\item Puisque $\lim_{N\to\infty} B A_N = B \times A$, il suffit de démontrer que le terme de reste $R_N = \sum_{k=0}^N a_k \beta_{N-k}$ tend vers $0$ lorsque $N \to \infty$.
+\item C'est ici que l'hypothèse de \textbf{convergence absolue} de $\sum a_n$ est fondamentale. Posons $M = \sum_{n=0}^\infty |a_n| < +\infty$.
+   De plus, la suite $(\beta_n)$ convergeant vers $0$, elle est bornée. Il existe $K \in \mathbb{R}^+$ tel que $|\beta_n| \le K$ pour tout $n \in \mathbb{N}$.
+\item Soit $\epsilon > 0$. Puisque $\lim_{n\to\infty} \beta_n = 0$, il existe un entier $N_1 \in \mathbb{N}$ tel que pour tout $n > N_1$, $|\beta_n| < \frac{\epsilon}{2M}$.
+   Puisque $\sum |a_n|$ converge, son reste tend vers $0$. Il existe un entier $N_2 \in \mathbb{N}$ tel que pour tout $N > N_2$, $\sum_{k=N_2+1}^N |a_k| < \frac{\epsilon}{2K}$.
+\item Prenons $N > N_1 + N_2$. Coupons la somme $R_N$ en deux parties (autour de l'indice $N - N_1$) :
+    $|R_N| = \left| \sum_{k=0}^N a_k \beta_{N-k} \right| \le \sum_{k=0}^N |a_k| |\beta_{N-k}|$.
+    $|R_N| \le \sum_{k=0}^{N-N_1-1} |a_k| |\beta_{N-k}| + \sum_{k=N-N_1}^N |a_k| |\beta_{N-k}|$.
+\item Dans la première somme, on a $k \le N - N_1 - 1$, donc $N - k \ge N_1 + 1 > N_1$. Ainsi, $|\beta_{N-k}| < \frac{\epsilon}{2M}$.
+    D'où : $\sum_{k=0}^{N-N_1-1} |a_k| |\beta_{N-k}| \le \frac{\epsilon}{2M} \sum_{k=0}^{N-N_1-1} |a_k| \le \frac{\epsilon}{2M} \sum_{k=0}^\infty |a_k| = \frac{\epsilon}{2M} M = \frac{\epsilon}{2}$.
+\item Dans la seconde somme, on majore grossièrement $|\beta_{N-k}|$ par $K$. De plus, comme $N > N_1 + N_2$, on a $N - N_1 > N_2$.
+    D'où : $\sum_{k=N-N_1}^N |a_k| |\beta_{N-k}| \le K \sum_{k=N-N_1}^N |a_k| \le K \sum_{k=N_2+1}^N |a_k| < K \frac{\epsilon}{2K} = \frac{\epsilon}{2}$.
+\item En additionnant, on obtient que pour tout $N > N_1 + N_2$, $|R_N| < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$.
+    Donc $\lim_{N\to\infty} R_N = 0$.
+\item Par conséquent, $\lim_{N\to\infty} C_N = A B + 0 = A B$. Le théorème de Mertens est démontré. $\blacksquare$
+\end{itemize}
+
+\section{4. Exercices d'application et de concours}
+
+
+\subsection{Exercice 1 : Série Alternée (Semi-convergence)}
+
+\subsubsection{Énoncé}
+Étudier la convergence et la convergence absolue de la série harmonique alternée $\sum_{n=1}^\infty \frac{(-1)^n}{n}$.
+
+\subsubsection{Correction}
+
+\begin{itemize}
+\item \textbf{Convergence Absolue :} La série des valeurs absolues est $\sum |\frac{(-1)^n}{n}| = \sum \frac{1}{n}$.
+   - C'est la série harmonique (Riemann $\alpha=1$). On sait que cette série diverge (minorée par une intégrale divergente, ou par regroupement de termes).
+   - La série initiale ne converge donc \textbf{pas absolument}.
+\item \textbf{Convergence Simple (Critère des séries alternées) :} Soit $u_n = \frac{(-1)^n}{n}$.
+   - Posons $a_n = |u_n| = 1/n$.
+   - La suite $(a_n)_{n\ge 1}$ est positive.
+   - Elle est décroissante : pour tout $n \ge 1$, $n+1 > n \implies \frac{1}{n+1} < \frac{1}{n} \implies a_{n+1} < a_n$.
+   - Elle converge vers 0 : $\lim_{n\to\infty} \frac{1}{n} = 0$.
+   - D'après le théorème de Leibniz (critère spécial des séries alternées), la série $\sum u_n$ converge.
+\textbf{Conclusion :} La série converge mais pas absolument, elle est donc \textbf{semi-convergente}.
+\end{itemize}
+
+
+\subsection{Exercice 2 : Produit de Cauchy de la série exponentielle}
+
+\subsubsection{Énoncé}
+Soit la série exponentielle définie par $E(x) = \sum_{n=0}^\infty \frac{x^n}{n!}$. Démontrer, à l'aide du produit de Cauchy, que pour tous réels $x, y$, on a $E(x)E(y) = E(x+y)$.
+
+\subsubsection{Correction}
+
+\begin{itemize}
+\item \textbf{Convergence Absolue :} Fixons $x \in \mathbb{R}$. Étudions la convergence de la série $\sum \frac{x^n}{n!}$. On applique la règle de d'Alembert pour la série des valeurs absolues :
+   $\lim_{n\to\infty} \frac{|x|^{n+1}/(n+1)!}{|x|^n/n!} = \lim_{n\to\infty} \frac{|x|}{n+1} = 0$.
+   Puisque $0 < 1$, la série converge absolument sur $\mathbb{R}$.
+\item \textbf{Calcul du produit de Cauchy :} Puisque les deux séries $E(x)$ et $E(y)$ convergent absolument, on peut appliquer le théorème de Mertens. Leur produit de Cauchy converge vers $E(x)E(y)$.
+   Le terme général $c_n$ de la série produit de Cauchy est donné par :
+   $$c_n = \sum_{k=0}^n a_k b_{n-k} = \sum_{k=0}^n \frac{x^k}{k!} \frac{y^{n-k}}{(n-k)!}$$
+\item \textbf{Utilisation de la formule du binôme :} On multiplie et divise par $n!$ pour faire apparaître un coefficient binomial :
+   $$c_n = \frac{1}{n!} \sum_{k=0}^n \frac{n!}{k!(n-k)!} x^k y^{n-k} = \frac{1}{n!} \sum_{k=0}^n \binom{n}{k} x^k y^{n-k}$$
+   D'après la formule du binôme de Newton, la somme de droite vaut $(x+y)^n$. Ainsi, $c_n = \frac{(x+y)^n}{n!}$.
+\item \textbf{Conclusion :} Le produit de Cauchy est la série $\sum c_n = \sum_{n=0}^\infty \frac{(x+y)^n}{n!}$. D'après le théorème de Mertens, cette série converge vers $E(x)E(y)$. Or par définition, c'est exactement $E(x+y)$. Donc $E(x)E(y) = E(x+y)$.
+\end{itemize}
+
+
+\subsection{Exercice 3 : Théorème de réarrangement de Riemann (cas particulier)}
+
+\subsubsection{Énoncé}
+Soit la série harmonique alternée $\sum_{n=1}^\infty \frac{(-1)^{n+1}}{n}$, dont on sait qu'elle converge vers $\ln(2)$.
+En réarrangeant les termes pour prendre deux termes positifs puis un terme négatif ($1 + \frac{1}{3} - \frac{1}{2} + \frac{1}{5} + \frac{1}{7} - \frac{1}{4} + \dots$), démontrer rigoureusement que la nouvelle série converge vers une limite différente (précisément $\frac{3}{2}\ln(2)$).
+
+\subsubsection{Correction}
+
+Soit $S$ la somme de la série harmonique alternée : $S = 1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \frac{1}{5} - \frac{1}{6} + \dots = \ln(2)$.
+\begin{itemize}
+\item On considère la demi-série $S/2 = \frac{1}{2} - \frac{1}{4} + \frac{1}{6} - \frac{1}{8} + \frac{1}{10} - \frac{1}{12} + \dots$.
+\item On insère des zéros entre chaque terme de cette série modifiée : $0 + \frac{1}{2} + 0 - \frac{1}{4} + 0 + \frac{1}{6} + 0 - \frac{1}{8} + \dots$.
+Cette nouvelle série converge évidemment vers $S/2 = \frac{1}{2}\ln(2)$.
+\item On additionne terme à terme la série harmonique alternée initiale et cette nouvelle série (ce qui est justifié puisque les deux convergent) :
+   Terme 1 : $1 + 0 = 1$
+   Terme 2 : $-\frac{1}{2} + \frac{1}{2} = 0$
+   Terme 3 : $\frac{1}{3} + 0 = \frac{1}{3}$
+   Terme 4 : $-\frac{1}{4} - \frac{1}{4} = -\frac{1}{2}$
+   Terme 5 : $\frac{1}{5} + 0 = \frac{1}{5}$
+   Terme 6 : $-\frac{1}{6} + \frac{1}{6} = 0$
+   Terme 7 : $\frac{1}{7} + 0 = \frac{1}{7}$
+   Terme 8 : $-\frac{1}{8} - \frac{1}{8} = -\frac{1}{4}$
+\item En omettant les zéros (ce qui ne change pas la convergence ni la limite), on obtient la série :
+   $1 + \frac{1}{3} - \frac{1}{2} + \frac{1}{5} + \frac{1}{7} - \frac{1}{4} + \dots$
+   qui est exactement le réarrangement de l'énoncé. La somme de cette nouvelle série est donc $S + S/2 = \frac{3}{2}S = \frac{3}{2}\ln(2)$.
+\item \textbf{Conclusion :} Un réarrangement des termes d'une série semi-convergente modifie sa somme (ou peut la faire diverger), illustrant que l'associativité et la commutativité infinies requièrent la convergence absolue.
+\end{itemize}
+
+
+\subsection{Exercice 4 : Comparaison série/intégrale pour une semi-convergence}
+
+\subsubsection{Énoncé}
+Montrer que la série de terme général $u_n = \frac{\sin(\sqrt{n})}{n}$ est convergente, bien qu'elle ne soit pas absolument convergente.
+
+\subsubsection{Correction}
+
+\begin{itemize}
+\item \textbf{Étude de la convergence absolue :} $|u_n| = \frac{|\sin(\sqrt{n})|}{n}$. On sait que $\sin^2(x) \le |\sin(x)|$. Ainsi, $|u_n| \ge \frac{\sin^2(\sqrt{n})}{n} = \frac{1 - \cos(2\sqrt{n})}{2n}$.
+La série $\sum \frac{1}{2n}$ diverge (série harmonique). La série $\sum \frac{\cos(2\sqrt{n})}{2n}$ est convergente (par transformation d'Abel ou comparaison intégrale). Ainsi, la somme $\sum |u_n|$ diverge. La série n'est pas absolument convergente.
+\item \textbf{Étude de la convergence simple :} Posons $f(t) = \frac{\sin(\sqrt{t})}{t}$ pour $t \ge 1$.
+On effectue un développement asymptotique par intégration par parties. Calculons $\int_1^X \frac{\sin(\sqrt{t})}{t} dt$. Changement de variable $u = \sqrt{t}$, $dt = 2u du$ :
+$= \int_1^{\sqrt{X}} \frac{\sin(u)}{u^2} 2u du = 2 \int_1^{\sqrt{X}} \frac{\sin(u)}{u} du$.
+L'intégrale de Dirichlet $\int_1^\infty \frac{\sin(u)}{u} du$ converge. Donc l'intégrale impropre $\int_1^\infty f(t) dt$ converge.
+\item \textbf{Lien avec la série :} Par la formule d'Euler-Maclaurin ou une simple comparaison série/intégrale, la série $\sum u_n$ a la même nature que l'intégrale $\int_1^\infty f(t) dt$ car l'erreur $\sum_{n=1}^N u_n - \int_1^N f(t) dt$ converge.
+La série $\sum u_n$ est donc semi-convergente.
+\end{itemize}
+
+
+\subsection{Exercice 5 : Produit de Cauchy de deux séries semi-convergentes}
+
+\subsubsection{Énoncé}
+Soit $a_n = b_n = \frac{(-1)^n}{\sqrt{n+1}}$. Montrer que le produit de Cauchy des séries $\sum a_n$ et $\sum b_n$ (qui sont semi-convergentes) est une série divergente.
+
+\subsubsection{Correction}
+
+\begin{itemize}
+\item \textbf{Convergence des séries initiales :} $\sum \frac{(-1)^n}{\sqrt{n+1}}$ est une série alternée dont le terme général tend vers 0 en décroissant en valeur absolue. Par le critère de Leibniz, elle converge. Elle ne converge pas absolument car $\sum \frac{1}{\sqrt{n+1}}$ diverge (série de Riemann avec $\alpha=1/2 \le 1$).
+\item \textbf{Calcul du terme général du produit de Cauchy :}
+   $c_n = \sum_{k=0}^n a_k b_{n-k} = \sum_{k=0}^n \frac{(-1)^k}{\sqrt{k+1}} \frac{(-1)^{n-k}}{\sqrt{n-k+1}} = (-1)^n \sum_{k=0}^n \frac{1}{\sqrt{(k+1)(n-k+1)}}$.
+\item \textbf{Minoration de $c_n$ :}
+   La fonction $f(x) = (x+1)(n-x+1)$ sur l'intervalle $[0, n]$ atteint son maximum en son milieu $x = n/2$.
+   On a donc pour tout $k \in \{0, \dots, n\}$ : $(k+1)(n-k+1) \le (\frac{n}{2} + 1)(\frac{n}{2} + 1) = \frac{(n+2)^2}{4}$.
+   Ainsi, $\frac{1}{\sqrt{(k+1)(n-k+1)}} \ge \frac{2}{n+2}$.
+   On en déduit que $|c_n| = \sum_{k=0}^n \frac{1}{\sqrt{(k+1)(n-k+1)}} \ge \sum_{k=0}^n \frac{2}{n+2} = \frac{2(n+1)}{n+2}$.
+\item \textbf{Conclusion :}
+   $\lim_{n\to\infty} |c_n| \ge \lim_{n\to\infty} \frac{2n+2}{n+2} = 2 \neq 0$.
+   Le terme général $c_n$ ne tend pas vers 0, la série produit $\sum c_n$ diverge grossièrement. Cela montre que le théorème de Mertens nécessite absolument la convergence absolue d'au moins l'une des deux séries.
+\end{itemize}
+
+
+\subsection{Exercice 6 : Transformation d'Abel}
+
+\subsubsection{Énoncé}
+Énoncer et démontrer la règle d'Abel (ou transformation d'Abel) pour les séries de la forme $\sum a_n b_n$, puis l'appliquer pour montrer la convergence de la série $\sum \frac{\cos(n\theta)}{n}$ pour $\theta \notin 2\pi\mathbb{Z}$.
+
+\subsubsection{Correction}
+
+\begin{itemize}
+\item \textbf{Règle d'Abel (Énoncé) :} Soient $(a_n)$ et $(b_n)$ deux suites telles que :
+   - $(a_n)$ est décroissante, positive, de limite nulle.
+   - Les sommes partielles $B_n = \sum_{k=0}^n b_k$ sont bornées (il existe $M > 0$ t.q. $|B_n| \le M \ \forall n$).
+   Alors la série $\sum a_n b_n$ converge.
+\item \textbf{Démonstration :} Posons $S_N = \sum_{n=1}^N a_n b_n$. Comme $b_n = B_n - B_{n-1}$ (avec $B_0=0$), on a par sommation par parties :
+   $S_N = \sum_{n=1}^N a_n (B_n - B_{n-1}) = \sum_{n=1}^N a_n B_n - \sum_{n=1}^N a_n B_{n-1} = \sum_{n=1}^N a_n B_n - \sum_{n=0}^{N-1} a_{n+1} B_n$
+   $S_N = a_N B_N + \sum_{n=1}^{N-1} (a_n - a_{n+1}) B_n$.
+   - Le terme de bord $a_N B_N$ tend vers 0 (car $a_N \to 0$ et $B_N$ est bornée).
+   - La série $\sum (a_n - a_{n+1}) B_n$ converge absolument : en effet, $|(a_n - a_{n+1}) B_n| \le M(a_n - a_{n+1})$ car $(a_n)$ est décroissante, et $\sum (a_n - a_{n+1}) = a_1 - a_N \to a_1$, donc cette somme télescopique converge.
+   La convergence absolue impliquant la convergence simple, $S_N$ admet une limite, d'où la convergence de la série.
+\item \textbf{Application :} Prenons $a_n = 1/n$ (qui tend vers 0 en décroissant) et $b_n = \cos(n\theta)$.
+   $B_n = \sum_{k=1}^n \cos(k\theta) = \text{Re}(\sum_{k=1}^n e^{ik\theta})$. C'est une somme géométrique de raison $e^{i\theta} \neq 1$.
+   $|B_n| = |\frac{e^{i\theta} - e^{i(n+1)\theta}}{1 - e^{i\theta}}| \le \frac{2}{|1 - e^{i\theta}|} = \frac{1}{|\sin(\theta/2)|}$.
+   La suite $(B_n)$ est bornée par une constante $M_\theta$. D'après la règle d'Abel, la série converge.
+\end{itemize}
+
+
+\subsection{Exercice 7 : Un critère de convergence absolue (Règle de Raabe-Duhamel)}
+
+\subsubsection{Énoncé}
+Soit $\sum u_n$ une série à termes strictement positifs. Si $\frac{u_{n+1}}{u_n} = 1 - \frac{\alpha}{n} + o(\frac{1}{n})$ avec $\alpha > 1$, démontrer que la série $\sum u_n$ converge (absolument).
+
+\subsubsection{Correction}
+
+\begin{itemize}
+\item \textbf{Développement de $\ln(u_{n+1}/u_n)$ :}
+   $\ln(\frac{u_{n+1}}{u_n}) = \ln(1 - \frac{\alpha}{n} + o(\frac{1}{n})) = -\frac{\alpha}{n} + o(\frac{1}{n})$.
+\item \textbf{Comparaison avec une série de Riemann :}
+   Soit $v_n = \frac{1}{n^\beta}$ avec $1 < \beta < \alpha$.
+   $\ln(\frac{v_{n+1}}{v_n}) = \ln((\frac{n}{n+1})^\beta) = -\beta \ln(1 + 1/n) = -\frac{\beta}{n} + o(\frac{1}{n})$.
+\item \textbf{Comparaison asymptotique :}
+   Ainsi, $\ln(\frac{u_{n+1}}{u_n}) - \ln(\frac{v_{n+1}}{v_n}) = \frac{\beta - \alpha}{n} + o(\frac{1}{n})$.
+   Comme $\beta < \alpha$, pour $n$ assez grand, $\ln(\frac{u_{n+1}}{u_n}) - \ln(\frac{v_{n+1}}{v_n}) < 0$, ce qui implique que $\ln(\frac{u_{n+1}/v_{n+1}}{u_n/v_n}) < 0$, ou encore $\frac{u_{n+1}}{v_{n+1}} < \frac{u_n}{v_n}$.
+\item \textbf{Conclusion :}
+   La suite $(u_n/v_n)$ est donc décroissante pour $n$ grand. Elle est minorée par 0, donc elle admet une limite, et par conséquent $u_n = O(v_n)$. Puisque la série $\sum v_n$ converge (Riemann, $\beta > 1$), par le théorème de comparaison, la série (positive donc convergente = absolument convergente) $\sum u_n$ converge.
+\end{itemize}
+
+
+\subsection{Exercice 8 : Convergence absolue vs Séries de Maclaurin}
+
+\subsubsection{Énoncé}
+Déterminer la nature de la série de terme général $u_n = \ln(1 + \frac{(-1)^n}{\sqrt{n}})$.
+
+\subsubsection{Correction}
+
+\begin{itemize}
+\item \textbf{Développement limité :}
+   On utilise le DL usuel de $\ln(1+x)$ au voisinage de 0 pour obtenir un développement asymptotique du terme général :
+   $u_n = \ln(1 + \frac{(-1)^n}{\sqrt{n}}) = \frac{(-1)^n}{\sqrt{n}} - \frac{1}{2}(\frac{(-1)^n}{\sqrt{n}})^2 + O(\frac{1}{n^{3/2}}) = \frac{(-1)^n}{\sqrt{n}} - \frac{1}{2n} + O(\frac{1}{n^{3/2}})$.
+\item \textbf{Analyse des termes :}
+   - La série $\sum \frac{(-1)^n}{\sqrt{n}}$ converge (critère des séries alternées).
+   - La série $\sum -\frac{1}{2n}$ diverge (proportionnelle à la série harmonique).
+   - La série $\sum O(\frac{1}{n^{3/2}})$ converge absolument (série de Riemann d'exposant $3/2 > 1$).
+\item \textbf{Conclusion :}
+   La série $\sum u_n$ s'écrit comme la somme d'une série convergente, d'une série divergente et d'une série convergente.
+   Par linéarité, la série $\sum u_n$ diverge vers $-\infty$.
+   \textit{(Remarque : cet exercice met en garde contre l'utilisation hâtive du critère des équivalents pour les séries dont les termes ne gardent pas un signe constant, car $u_n \sim \frac{(-1)^n}{\sqrt{n}}$ qui est le terme général d'une série convergente).}.
+\end{itemize}
+
+
+\subsection{Exercice 9 : Sommation d'une série absolument convergente}
+
+\subsubsection{Énoncé}
+Montrer que la série $\sum_{n=2}^\infty \frac{1}{n^2 - 1}$ converge absolument et calculer sa somme.
+
+\subsubsection{Correction}
+
+\begin{itemize}
+\item \textbf{Convergence absolue :} Le terme général est $u_n = \frac{1}{n^2 - 1}$. Il est strictement positif pour $n \ge 2$. Au voisinage de l'infini, $u_n \sim \frac{1}{n^2}$.
+Par équivalence avec une série de Riemann convergente ($\alpha = 2 > 1$), la série $\sum u_n$ converge (donc absolument).
+\item \textbf{Décomposition en éléments simples :}
+   $u_n = \frac{1}{(n-1)(n+1)} = \frac{A}{n-1} + \frac{B}{n+1}$.
+   On trouve $A = 1/2$ et $B = -1/2$, d'où $u_n = \frac{1}{2}(\frac{1}{n-1} - \frac{1}{n+1})$.
+\item \textbf{Calcul de la somme partielle par télescopage :}
+   $S_N = \sum_{n=2}^N \frac{1}{2}(\frac{1}{n-1} - \frac{1}{n+1}) = \frac{1}{2} [ (1 - 1/3) + (1/2 - 1/4) + (1/3 - 1/5) + ... + (\frac{1}{N-2} - \frac{1}{N}) + (\frac{1}{N-1} - \frac{1}{N+1}) ]$.
+   Presque tous les termes s'annulent. Il reste les premiers termes positifs et les derniers termes négatifs :
+   $S_N = \frac{1}{2} (1 + \frac{1}{2} - \frac{1}{N} - \frac{1}{N+1})$.
+\item \textbf{Passage à la limite :}
+   $\lim_{N\to\infty} S_N = \frac{1}{2} (1 + 1/2 - 0 - 0) = \frac{3}{4}$.
+   La somme de la série est $3/4$.
+\end{itemize}
+
+
+\subsection{Exercice 10 : Une curiosité sur la constante d'Euler (Niveau X/ENS)}
+
+\subsubsection{Énoncé}
+Démontrer que la série $\sum_{n=1}^\infty (\frac{1}{n} - \ln(1+\frac{1}{n}))$ converge, et exprimer sa limite en fonction de la constante d'Euler $\gamma$.
+
+\subsubsection{Correction}
+
+\begin{itemize}
+\item \textbf{Développement asymptotique du terme général :}
+   $u_n = \frac{1}{n} - \ln(1+\frac{1}{n}) = \frac{1}{n} - (\frac{1}{n} - \frac{1}{2n^2} + o(\frac{1}{n^2})) = \frac{1}{2n^2} + o(\frac{1}{n^2})$.
+\item \textbf{Convergence :}
+   $u_n \sim \frac{1}{2n^2}$. Comme la série de Riemann $\sum \frac{1}{n^2}$ converge, et que $u_n > 0$, la série $\sum u_n$ converge absolument.
+\item \textbf{Calcul de la somme partielle :}
+   $S_N = \sum_{n=1}^N (\frac{1}{n} - (\ln(n+1) - \ln(n)))$.
+   $S_N = (\sum_{n=1}^N \frac{1}{n}) - \sum_{n=1}^N (\ln(n+1) - \ln(n))$.
+   La deuxième somme est télescopique : $\sum_{n=1}^N (\ln(n+1) - \ln(n)) = \ln(N+1) - \ln(1) = \ln(N+1)$.
+   Donc $S_N = (\sum_{n=1}^N \frac{1}{n}) - \ln(N+1)$.
+\item \textbf{Lien avec la constante d'Euler :}
+   Par définition, la constante d'Euler-Mascheroni est $\gamma = \lim_{N\to\infty} ((\sum_{n=1}^N \frac{1}{n}) - \ln(N))$.
+   On remarque que $S_N = (\sum_{n=1}^N \frac{1}{n}) - \ln(N) + \ln(N) - \ln(N+1) = ((\sum_{n=1}^N \frac{1}{n}) - \ln(N)) - \ln(1 + 1/N)$.
+   Comme $\ln(1+1/N) \to 0$, la limite de $S_N$ est $\gamma - 0 = \gamma$.
+\item \textbf{Conclusion :} La série converge vers $\gamma$.
+\end{itemize}
+
+
+
+\section{5. Travaux pratiques et simulations algorithmiques}
+
+
+\subsection{TP 1 : Implémentation du produit de Cauchy de deux séries}
+
+\subsubsection{Objectif}
+
+Écrire un générateur Python qui prend deux suites finies de termes et calcule itérativement les termes de la série produit de Cauchy, avec assertions.
+
+\subsubsection{Code Python}
+\begin{lstlisting}[language=Python]
+def cauchy_product_terms(a, b):
+    """Genere les termes de la serie produit de Cauchy de a et b."""
+    n = max(len(a), len(b))
+    # on complete par des zeros si les longueurs different
+    a = a + [0] * (n - len(a))
+    b = b + [0] * (n - len(b))
+
+    for k in range(n):
+        ck = 0
+        for i in range(k + 1):
+            ck += a[i] * b[k - i]
+        yield ck
+
+def test_cauchy_product():
+    a = [1, 2, 3] # polynome 1 + 2x + 3x^2
+    b = [4, 5, 6] # polynome 4 + 5x + 6x^2
+    # Produit : (1+2x+3x^2)(4+5x+6x^2) = 4 + 13x + 28x^2 + 27x^3 + 18x^4
+    # En traitant comme series (tronquees a l'ordre 3, les termes manquants sont consideres 0):
+    result = list(cauchy_product_terms(a, b))
+    assert result == [4, 13, 28] # terms for n=0, 1, 2
+
+    print("TP1: Tests Cauchy Product passed.")
+
+if __name__ == "__main__":
+    test_cauchy_product()
+
+\end{lstlisting}
+
+
+\subsection{TP 2 : Convergence de la série harmonique alternée}
+
+\subsubsection{Objectif}
+
+Calculer numériquement la somme de la série harmonique alternée et vérifier l'encadrement du reste d'une série alternée.
+
+\subsubsection{Code Python}
+\begin{lstlisting}[language=Python]
+import math
+
+def somme_alternee(N):
+    somme = 0.0
+    for n in range(1, N + 1):
+        somme += ((-1)**(n - 1)) / n
+    return somme
+
+def test_convergence_alternee():
+    N = 1000
+    S_N = somme_alternee(N)
+    limite_theorique = math.log(2)
+
+    # Le theoreme des series alternees donne une borne sur l'erreur: R_N <= |u_{N+1}|
+    erreur_max_theorique = 1 / (N + 1)
+    erreur_reelle = abs(S_N - limite_theorique)
+
+    assert erreur_reelle <= erreur_max_theorique
+    print(f"TP2: Somme numerique={S_N:.5f}, Limite={limite_theorique:.5f}, Erreur reelle={erreur_reelle:.5e} <= Borne={erreur_max_theorique:.5e}")
+    print("Tests convergence alternee passed.")
+
+if __name__ == "__main__":
+    test_convergence_alternee()
+
+\end{lstlisting}
+
+
+\subsection{TP 3 : Le réarrangement de Riemann en code}
+
+\subsubsection{Objectif}
+
+Réarranger les termes de la série harmonique alternée (2 positifs, 1 négatif) et observer la convergence modifiée (3/2 * ln(2)).
+
+\subsubsection{Code Python}
+\begin{lstlisting}[language=Python]
+import math
+
+def somme_rearrangee(iterations):
+    somme = 0.0
+    pos_idx = 1 # termes positifs: 1, 3, 5, 7, ...
+    neg_idx = 2 # termes negatifs: 2, 4, 6, 8, ...
+
+    for _ in range(iterations):
+        # ajouter deux termes positifs
+        somme += 1.0 / pos_idx
+        pos_idx += 2
+        somme += 1.0 / pos_idx
+        pos_idx += 2
+
+        # ajouter un terme negatif
+        somme -= 1.0 / neg_idx
+        neg_idx += 2
+
+    return somme
+
+def test_rearrangement():
+    N = 1000
+    S_mod = somme_rearrangee(N)
+    limite_theorique = 1.5 * math.log(2)
+
+    # tolerance arbitraire pour ce test de convergence empirique
+    assert abs(S_mod - limite_theorique) < 1e-2
+    print(f"TP3: Somme modifiee={S_mod:.5f}, Limite attendue={limite_theorique:.5f}")
+    print("Tests rearrangement passed.")
+
+if __name__ == "__main__":
+    test_rearrangement()
+
+\end{lstlisting}
+
+
+\subsection{TP 4 : Constante d'Euler-Mascheroni par série absolue}
+
+\subsubsection{Objectif}
+
+Implémenter le calcul de gamma via la série absolue de l'Exercice 10 et vérifier empiriquement sa nature $O(1/n^2)$.
+
+\subsubsection{Code Python}
+\begin{lstlisting}[language=Python]
+def calcul_gamma_serie(N):
+    import math
+    somme = 0.0
+    for n in range(1, N + 1):
+        somme += 1.0/n - math.log(1 + 1.0/n)
+    return somme
+
+def test_gamma():
+    gamma = 0.5772156649
+    N = 1000
+    calcul = calcul_gamma_serie(N)
+
+    # La serie est en 1/2n^2, donc le reste d'ordre N est en 1/2N.
+    # On devrait etre a ~0.0005 de gamma pour N=1000.
+    assert abs(calcul - gamma) < 1e-3
+    print(f"TP4: Gamma calcule={calcul:.5f}, Gamma reel={gamma:.5f}")
+    print("Tests constante d'Euler passed.")
+
+if __name__ == "__main__":
+    test_gamma()
+
+\end{lstlisting}
+
+
+\subsection{TP 5 : Convolution discrète comme Produit de Cauchy}
+
+\subsubsection{Objectif}
+
+La convolution discrète d'une impulsion et d'un filtre IIR modélise exactement un produit de Cauchy.
+
+\subsubsection{Code Python}
+\begin{lstlisting}[language=Python]
+def convolution_discrete(signal, filtre):
+    """Convolue un signal causal fini par un filtre (implementation O(n^2))."""
+    n_sig = len(signal)
+    n_fil = len(filtre)
+    result_len = n_sig + n_fil - 1
+    resultat = [0.0] * result_len
+
+    for n in range(result_len):
+        for k in range(max(0, n - n_fil + 1), min(n + 1, n_sig)):
+            resultat[n] += signal[k] * filtre[n - k]
+    return resultat
+
+def test_convolution():
+    # Signal delta
+    x = [1, 0, 0, 0]
+    # Filtre exponentiel decroissant
+    h = [1, 0.5, 0.25, 0.125]
+
+    y = convolution_discrete(x, h)
+
+    # Le produit de Cauchy d'un signal impulsionnel par un filtre donne le filtre.
+    assert y[:4] == h
+    print("TP5: Convolution results:", y)
+    print("Tests convolution passed.")
+
+if __name__ == "__main__":
+    test_convolution()
+
+\end{lstlisting}
+
+
+\subsection{Convolution de Réseaux Neuronaux et Signaux}
+Dans l'architecture mathématique des réseaux de neurones (particulièrement les CNN - \textit{Convolutional Neural Networks} - pour l'audio 1D ou l'image 2D), l'opération clé est la convolution discrète entre le tenseur d'entrée et le noyau de convolution (le filtre d'apprentissage).
+
+La définition du produit de Cauchy $c_n = \sum_{k=0}^n a_k b_{n-k}$ est \textbf{l'exacte formulation mathématique} de la convolution discrète $(a \ast b)[n]$.
+
+La convergence de ce produit de Cauchy garantit un concept crucial en traitement du signal et en IA : le critère de stabilité \textbf{BIBO} (\textit{Bounded-Input Bounded-Output}). Un filtre $h$ est BIBO-stable si, pour toute entrée bornée $x$, la sortie $y = h \ast x$ est également bornée. La théorie des séries démontre qu'un système discret, linéaire et invariant dans le temps est BIBO-stable \textbf{si et seulement si} la réponse impulsionnelle du filtre $h_n$ forme une série \textbf{absolument convergente} (c'est-à-dire $\sum_{n=-\infty}^\infty |h_n| < \infty$).
+C'est précisément l'absolue convergence qui prévient les gradients explosifs dans les architectures de filtrage récursif ou les RNN de bas niveau.
+
+\section{6. Liens Sémantiques \& Maillage Obsidian}
+\begin{itemize}
+\item \textbf{Concepts Précédents requis :} Jalon 14 (Suites réelles et complexes), Jalon-16
+\item \textbf{Concepts Futurs dépendants :} Jalon 23 (Séries entières), Jalon 80 (Transformée de Fourier dans L$^1$), Jalon 126 (Noyaux définis positifs)
+\end{itemize}
+
+
+\end{document}

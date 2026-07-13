@@ -8,6 +8,7 @@ difficulty: ★★★★☆
 Déterminer la nature de la série de terme général $u_n = \ln(1 + \frac{(-1)^n}{\sqrt{n}})$.
 
 ## Correction
+
 1. **Développement limité :**
    On utilise le DL usuel de $\ln(1+x)$ au voisinage de 0 pour obtenir un développement asymptotique du terme général :
    $u_n = \ln(1 + \frac{(-1)^n}{\sqrt{n}}) = \frac{(-1)^n}{\sqrt{n}} - \frac{1}{2}(\frac{(-1)^n}{\sqrt{n}})^2 + O(\frac{1}{n^{3/2}}) = \frac{(-1)^n}{\sqrt{n}} - \frac{1}{2n} + O(\frac{1}{n^{3/2}})$.
