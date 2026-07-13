@@ -23,6 +23,98 @@ next: "[[Jalon-6.md]]"
 - **Le "Pourquoi on a inventé ça" :** Les mathématiques consistent souvent à transformer des objets en d'autres objets. Les fonctions sont les "machines à transformer". Comprendre si une machine est "réversible" (bijection) ou si elle "perd de l'information" (non injective) est crucial pour savoir si on peut revenir en arrière.
 - **Visualisation :** Imaginez deux ensembles de points reliés par des fils. Si les fils ne s'emmêlent jamais sur le même point d'arrivée, c'est injectif. Si chaque point d'arrivée a au moins un fil qui lui arrive dessus, c'est surjectif.
 
+### Représentations Visuelles (TikZ)
+
+
+**Schéma d'une Application :**
+```latex
+\begin{tikzpicture}
+    \draw (0,0) ellipse (1cm and 2cm);
+    \draw (4,0) ellipse (1cm and 2cm);
+    \node at (0,2.3) {$E$};
+    \node at (4,2.3) {$F$};
+    \node (x1) at (0,1) {$\bullet$}; \node at (-0.3,1) {$x_1$};
+    \node (x2) at (0,0) {$\bullet$}; \node at (-0.3,0) {$x_2$};
+    \node (x3) at (0,-1) {$\bullet$}; \node at (-0.3,-1) {$x_3$};
+    \node (y1) at (4,1.5) {$\bullet$}; \node at (4.3,1.5) {$y_1$};
+    \node (y2) at (4,0.5) {$\bullet$}; \node at (4.3,0.5) {$y_2$};
+    \node (y3) at (4,-0.5) {$\bullet$}; \node at (4.3,-0.5) {$y_3$};
+    \node (y4) at (4,-1.5) {$\bullet$}; \node at (4.3,-1.5) {$y_4$};
+    \draw[->] (x1) -- (y1);
+    \draw[->] (x2) -- (y3);
+    \draw[->] (x3) -- (y3);
+\end{tikzpicture}
+```
+*(Chaque élément de E a exactement une image dans F, mais y3 a deux antécédents, et y2/y4 n'en ont pas)*
+
+
+**Schéma d'une Injection :**
+```latex
+\begin{tikzpicture}
+    \draw (0,0) ellipse (1cm and 2cm);
+    \draw (4,0) ellipse (1cm and 2cm);
+    \node at (0,2.3) {$E$};
+    \node at (4,2.3) {$F$};
+    \node (x1) at (0,1) {$\bullet$}; \node at (-0.3,1) {$x_1$};
+    \node (x2) at (0,0) {$\bullet$}; \node at (-0.3,0) {$x_2$};
+    \node (x3) at (0,-1) {$\bullet$}; \node at (-0.3,-1) {$x_3$};
+    \node (y1) at (4,1.5) {$\bullet$}; \node at (4.3,1.5) {$y_1$};
+    \node (y2) at (4,0.5) {$\bullet$}; \node at (4.3,0.5) {$y_2$};
+    \node (y3) at (4,-0.5) {$\bullet$}; \node at (4.3,-0.5) {$y_3$};
+    \node (y4) at (4,-1.5) {$\bullet$}; \node at (4.3,-1.5) {$y_4$};
+    \draw[->] (x1) -- (y1);
+    \draw[->] (x2) -- (y3);
+    \draw[->] (x3) -- (y2);
+\end{tikzpicture}
+```
+*(Aucun élément de F n'est atteint plus d'une fois, mais certains comme y4 peuvent ne pas être atteints)*
+
+
+**Schéma d'une Surjection :**
+```latex
+\begin{tikzpicture}
+    \draw (0,0) ellipse (1cm and 2cm);
+    \draw (4,0) ellipse (1cm and 1.5cm);
+    \node at (0,2.3) {$E$};
+    \node at (4,1.8) {$F$};
+    \node (x1) at (0,1.5) {$\bullet$}; \node at (-0.3,1.5) {$x_1$};
+    \node (x2) at (0,0.5) {$\bullet$}; \node at (-0.3,0.5) {$x_2$};
+    \node (x3) at (0,-0.5) {$\bullet$}; \node at (-0.3,-0.5) {$x_3$};
+    \node (x4) at (0,-1.5) {$\bullet$}; \node at (-0.3,-1.5) {$x_4$};
+    \node (y1) at (4,1) {$\bullet$}; \node at (4.3,1) {$y_1$};
+    \node (y2) at (4,0) {$\bullet$}; \node at (4.3,0) {$y_2$};
+    \node (y3) at (4,-1) {$\bullet$}; \node at (4.3,-1) {$y_3$};
+    \draw[->] (x1) -- (y1);
+    \draw[->] (x2) -- (y2);
+    \draw[->] (x3) -- (y2);
+    \draw[->] (x4) -- (y3);
+\end{tikzpicture}
+```
+*(Tous les éléments de F sont atteints au moins une fois, mais certains peuvent être atteints plusieurs fois comme y2)*
+
+
+**Schéma d'une Bijection :**
+```latex
+\begin{tikzpicture}
+    \draw (0,0) ellipse (1cm and 1.5cm);
+    \draw (4,0) ellipse (1cm and 1.5cm);
+    \node at (0,1.8) {$E$};
+    \node at (4,1.8) {$F$};
+    \node (x1) at (0,1) {$\bullet$}; \node at (-0.3,1) {$x_1$};
+    \node (x2) at (0,0) {$\bullet$}; \node at (-0.3,0) {$x_2$};
+    \node (x3) at (0,-1) {$\bullet$}; \node at (-0.3,-1) {$x_3$};
+    \node (y1) at (4,1) {$\bullet$}; \node at (4.3,1) {$y_1$};
+    \node (y2) at (4,0) {$\bullet$}; \node at (4.3,0) {$y_2$};
+    \node (y3) at (4,-1) {$\bullet$}; \node at (4.3,-1) {$y_3$};
+    \draw[->] (x1) -- (y2);
+    \draw[->] (x2) -- (y1);
+    \draw[->] (x3) -- (y3);
+\end{tikzpicture}
+```
+*(Relation "un-pour-un" parfaite entre E et F)*
+
+
+
 ## 2. Formalisation
 
 
