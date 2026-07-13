@@ -1,6 +1,4 @@
 # Exercice 06 : La série harmonique alternée et positive
-**Niveau :** Avancé (L3)
-**Notion ciblée :** Test de comparaison par équivalents asymptotiques et développement en série de Taylor.
 
 ## Énoncé
 Soit $u_n = \sqrt{n+1} - \sqrt{n}$. Étudier la convergence de la série $\sum_{n \ge 1} u_n$.

@@ -1,6 +1,4 @@
 # Exercice 03 : Équivalent et règle de comparaison
-**Niveau :** Intermédiaire (L2)
-**Notion ciblée :** Critère d'équivalence pour des séries à termes positifs.
 
 ## Énoncé
 Étudier la nature de la série $\sum u_n$ de terme général $u_n = \ln\left(1 + \frac{1}{n^2}\right)$ pour $n \ge 1$.

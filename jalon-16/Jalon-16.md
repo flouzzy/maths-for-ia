@@ -11,103 +11,108 @@ next: "[[Jalon-17.md]]"
 ---
 # Jalon 16 : Séries numériques à termes positifs, critères de comparaison, de d'Alembert et de Cauchy
 
-## 1. Présentation du concept clé
-*Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
+## 1. Genèse du concept et intuition mathématique
 
-- **La Métaphore :** Imaginez que vous voulez construire une tour infiniment haute avec des briques de plus en plus fines. Si la première brique fait 1 mètre, la deuxième 50 cm, la troisième 25 cm, et ainsi de suite (on divise par 2 à chaque fois), votre tour ne dépassera jamais les 2 mètres de haut, même si vous ajoutez une infinité de briques ! C'est ce qu'on appelle une **série convergente**. Par contre, si vous ajoutez des briques de taille constante, ou même des briques qui diminuent trop lentement (comme 1/2, 1/3, 1/4...), votre tour finira par toucher les étoiles. C'est une **série divergente**.
-- **Le "Pourquoi on a inventé ça" :** On a souvent besoin d'additionner une infinité de petites contributions (en probabilités, en physique, ou pour calculer des aires). Les critères de convergence sont les "tests de sécurité" qui nous disent si le total final est un nombre bien précis ou s'il explose vers l'infini.
-- **Visualisation :** Imaginez un sablier. Si les grains de sable tombent de plus en plus lentement selon une règle mathématique précise, le tas de sable dans le réceptacle peut se stabiliser à une hauteur finie.
+L'idée de sommer une infinité de quantités remonte à l'Antiquité, avec les fameux paradoxes de Zénon d'Élée. Comment Achille peut-il rattraper la tortue s'il doit d'abord parcourir la moitié de la distance qui les sépare, puis le quart, puis le huitième, et ce à l'infini ? Cette aporie repose sur une confusion fondamentale entre l'infinité du nombre de termes sommés et la finitude potentielle de leur somme totale.
 
-## 2. Formalisation
-*Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
+Historiquement, le besoin de formaliser la sommation infinie a émergé avec le développement du calcul infinitésimal par Newton et Leibniz, pour calculer des aires, des volumes, et résoudre des équations différentielles. Une somme infinie, que nous appelons aujourd'hui une série, n'est rien d'autre que la limite de la suite de ses sommes partielles. L'étude des séries à termes positifs est le point de départ de la théorie, car l'absence de compensation de signes simplifie l'analyse : la suite des sommes partielles est nécessairement croissante. Par le théorème de convergence monotone, l'unique question est de savoir si l'accumulation de ces grandeurs reste bornée ou s'échappe vers l'infini.
+
+## 2. Énoncé symbolique et typage chirurgical
 
 ### A. Définitions Formelles
+
 Soit $(u_n)_{n \in \mathbb{N}}$ une suite réelle.
-1. **Série numérique :** On appelle série de terme général $u_n$ la suite $(S_N)_{N \in \mathbb{N}}$ des sommes partielles définie par $S_N = \sum_{n=0}^N u_n$.
-2. **Convergence :** La série $\sum u_n$ converge si la suite $(S_N)$ admet une limite finie $S = \sum_{n=0}^\infty u_n$.
-3. **Série à termes positifs :** $\forall n \in \mathbb{N}, u_n \ge 0$. Dans ce cas, la suite $(S_N)$ est croissante. Elle converge si et seulement si elle est majorée.
 
-### B. Théorèmes, Propositions & Lemmes
-> **Critère de Comparaison :**
-> Soient $0 \le u_n \le v_n$ à partir d'un certain rang.
-> - Si $\sum v_n$ converge, alors $\sum u_n$ converge.
-> - Si $\sum u_n$ diverge, alors $\sum v_n$ diverge.
+**Définition 1 (Série numérique).** On appelle *série de terme général* $u_n$ la suite $(S_N)_{N \in \mathbb{N}}$ des sommes partielles définie par l'opérateur de sommation discrète :
+$$S_N = \sum_{n=0}^N u_n$$
 
-> **Règle de d'Alembert :**
-> Soit $u_n > 0$. Si $\lim_{n \to \infty} \frac{u_{n+1}}{u_n} = L$ :
-> - Si $L < 1$, la série converge.
-> - Si $L > 1$, la série diverge.
-> - Si $L = 1$, on ne peut pas conclure.
+**Définition 2 (Convergence).** La série $\sum u_n$ converge si et seulement si la suite réelle $(S_N)_{N \in \mathbb{N}}$ admet une limite finie $S \in \mathbb{R}$. Dans ce cas, cette limite est appelée la *somme* de la série et est notée :
+$$S = \sum_{n=0}^\infty u_n$$
+Si la suite $(S_N)_{N \in \mathbb{N}}$ diverge (vers $\pm\infty$ ou n'admet pas de limite), on dit que la série diverge.
 
-> **Règle de Cauchy :**
-> Soit $u_n \ge 0$. Si $\lim_{n \to \infty} \sqrt[n]{u_n} = L$ :
-> - Si $L < 1$, la série converge.
-> - Si $L > 1$, la série diverge.
+**Définition 3 (Série à termes positifs).** Une série $\sum u_n$ est dite à termes positifs si $\forall n \in \mathbb{N}, u_n \ge 0$.
+*Remarque structurelle :* Pour une série à termes positifs, la suite des sommes partielles $(S_N)_{N \in \mathbb{N}}$ est strictement croissante (ou croissante). En effet, $S_{N+1} - S_N = u_{N+1} \ge 0$. D'après le théorème de la limite monotone, la série converge si et seulement si la suite $(S_N)_{N \in \mathbb{N}}$ est majorée. Sinon, elle diverge vers $+\infty$.
 
-## 3. Démonstrations
-*Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
+### B. Théorèmes Fondamentaux
 
-### Démonstration du Théorème Pivot : Convergence de la série géométrique $\sum q^n$ pour $0 \le q < 1$
-Démontrons que la somme partielle converge et calculons sa limite.
+**Théorème 1 (Critère de Comparaison).**
+Soient $(u_n)_{n \in \mathbb{N}}$ et $(v_n)_{n \in \mathbb{N}}$ deux suites réelles telles que $0 \le u_n \le v_n$ à partir d'un certain rang $n_0 \in \mathbb{N}$.
+1. Si la série $\sum v_n$ converge, alors la série $\sum u_n$ converge.
+2. Si la série $\sum u_n$ diverge, alors la série $\sum v_n$ diverge.
 
-1. **Initialisation / Cadre :** Soit $S_N = \sum_{n=0}^N q^n = 1 + q + q^2 + ... + q^N$.
-   Nous supposons $q \in [0, 1[$.
+**Théorème 2 (Règle de d'Alembert).**
+Soit $(u_n)_{n \in \mathbb{N}}$ une suite réelle à termes strictement positifs ($\forall n \in \mathbb{N}, u_n > 0$).
+Si la limite $\lim_{n \to \infty} \frac{u_{n+1}}{u_n} = L$ existe dans $\mathbb{R}^+ \cup \{+\infty\}$ :
+1. Si $L < 1$, la série $\sum u_n$ converge.
+2. Si $L > 1$, la série $\sum u_n$ diverge.
+3. Si $L = 1$, le critère est muet (aucune conclusion stricte ne peut être tirée).
 
-2. **Étape 1 : Astuce algébrique (télescopage)**
-   Calculons $S_N - q S_N$ :
-   $$S_N = 1 + q + q^2 + \dots + q^N$$
-   $$q S_N = q + q^2 + \dots + q^N + q^{N+1}$$
-   $$(1-q) S_N = (1 + q + \dots + q^N) - (q + q^2 + \dots + q^{N+1})$$
-   Tous les termes centraux s'annulent (somme télescopique) :
-   $$(1-q) S_N = 1 - q^{N+1}$$
+**Théorème 3 (Règle de Cauchy).**
+Soit $(u_n)_{n \in \mathbb{N}}$ une suite réelle à termes positifs.
+Si la limite $\lim_{n \to \infty} \sqrt[n]{u_n} = L$ existe dans $\mathbb{R}^+ \cup \{+\infty\}$ :
+1. Si $L < 1$, la série $\sum u_n$ converge.
+2. Si $L > 1$, la série $\sum u_n$ diverge.
+3. Si $L = 1$, le critère est muet.
 
-3. **Étape 2 : Expression de la somme partielle**
-   Puisque $q < 1$, alors $1-q \neq 0$. On peut diviser :
-   $$S_N = \frac{1 - q^{N+1}}{1 - q}$$
+## 3. Démonstrations et Cas Pathologiques
 
-4. **Étape 3 : Passage à la limite**
-   Étudions la limite de $q^{N+1}$ quand $N \to \infty$.
-   Comme $|q| < 1$, par les propriétés des suites géométriques, $\lim_{N \to \infty} q^{N+1} = 0$.
-   Ainsi :
-   $$\lim_{N \to \infty} S_N = \lim_{N \to \infty} \frac{1 - q^{N+1}}{1 - q} = \frac{1 - 0}{1 - q}$$
+### A. Démonstration de la convergence de la série géométrique
 
-5. **Conclusion :**
-   La série $\sum q^n$ converge et sa somme est :
-   $$\sum_{n=0}^\infty q^n = \frac{1}{1 - q}$$
+Considérons la série géométrique $\sum q^n$ pour une raison $q \in [0, 1[$. Démontrons sa convergence absolue.
 
-## 4. Exercices d'Application
-*Proposer au moins 2 exercices progressifs corrigés de façon exhaustive, sans aucune ellipse.*
+**Preuve.**
+Soit $N \in \mathbb{N}$. Posons la somme partielle d'ordre $N$ :
+$$S_N = \sum_{n=0}^N q^n = 1 + q + q^2 + \dots + q^N$$
 
-### Exercice 1 : Application de la règle de d'Alembert
-**Énoncé :** Étudier la convergence de la série $\sum \frac{n^2}{2^n}$.
-**Correction Détaillée :**
-1. Posons $u_n = \frac{n^2}{2^n}$. On a $u_n > 0$.
-2. Calculons le rapport $\frac{u_{n+1}}{u_n}$ :
-   $$\frac{u_{n+1}}{u_n} = \frac{(n+1)^2}{2^{n+1}} \times \frac{2^n}{n^2} = \frac{(n+1)^2}{n^2} \times \frac{2^n}{2^{n+1}} = \left( \frac{n+1}{n} \right)^2 \times \frac{1}{2}.$$
-3. $$\frac{u_{n+1}}{u_n} = \left( 1 + \frac{1}{n} \right)^2 \times \frac{1}{2}.$$
-4. Étudions la limite : $\lim_{n \to \infty} (1 + 1/n) = 1$, donc $\lim_{n \to \infty} (1 + 1/n)^2 = 1^2 = 1$.
-5. On en déduit $\lim_{n \to \infty} \frac{u_{n+1}}{u_n} = 1 \times \frac{1}{2} = \frac{1}{2}$.
-6. Comme $L = 1/2 < 1$, d'après le critère de d'Alembert, la série converge.
-**Conclusion :** La série $\sum \frac{n^2}{2^n}$ est convergente.
+Multiplions l'expression par $q$ :
+$$q S_N = q + q^2 + q^3 + \dots + q^{N+1}$$
 
-### Exercice 2 : Niveau Avancé (Série de Riemann et comparaison)
-**Énoncé :** Étudier la convergence de $\sum \frac{1}{n^2 + \sqrt{n}}$.
-**Correction Détaillée :**
-1. Terme général $u_n = \frac{1}{n^2 + \sqrt{n}}$. Il est positif.
-2. Cherchons un équivalent ou une majoration simple.
-3. Pour tout $n \ge 1$, $n^2 + \sqrt{n} > n^2$.
-4. En prenant l'inverse (la fonction $x \mapsto 1/x$ est décroissante sur $\mathbb{R}^{+*}$) :
-   $$0 < \frac{1}{n^2 + \sqrt{n}} < \frac{1}{n^2}.$$
-5. Or la série $\sum \frac{1}{n^2}$ est une série de Riemann de paramètre $\alpha = 2$.
-6. Comme $\alpha > 1$, la série $\sum \frac{1}{n^2}$ converge.
-7. Par le critère de comparaison des séries à termes positifs, la série $\sum u_n$ est majorée par une série convergente.
-**Conclusion :** La série $\sum \frac{1}{n^2 + \sqrt{n}}$ converge.
+Soustrayons la seconde équation à la première pour faire apparaître une somme télescopique :
+$$S_N - q S_N = (1 + q + q^2 + \dots + q^N) - (q + q^2 + q^3 + \dots + q^{N+1})$$
 
-## 5. Application en Intelligence Artificielle
-*Démontrer la finalité technologique moderne de ce jalon théorique.*
-- **Le Pont Théorique :** En IA, les séries numériques apparaissent dans le calcul des **Espérances** (moyennes pondérées) pour des variables aléatoires discrètes infinies (comme la loi de Poisson). Elles servent aussi à définir les **Fonctions d'Activation** par leurs développements en série (ex: Softmax, Sigmoïde).
-- **Exemple Concret :** Dans l'**Apprentissage par Renforcement (Reinforcement Learning)**, on calcule la "Récompense Totale Escomptée" (Discounted Return) : $G = \sum_{t=0}^\infty \gamma^t R_{t+1}$. Ici, $\gamma$ est un facteur d'escompte compris entre 0 et 1. C'est exactement une **série géométrique** pondérée par les récompenses $R_t$. La convergence de cette série (garantie par $\gamma < 1$) est ce qui permet à l'agent de ne pas avoir une récompense infinie, rendant ainsi le problème d'optimisation mathématiquement bien posé.
+En regroupant et annulant les termes de même degré, il vient :
+$$(1 - q) S_N = 1 - q^{N+1}$$
 
-## 6. Liens Sémantiques
+Puisque nous supposons $q < 1$, nous avons $1 - q \neq 0$. Nous pouvons isoler $S_N$ :
+$$S_N = \frac{1 - q^{N+1}}{1 - q}$$
+
+Étudions à présent le comportement limite lorsque $N \to +\infty$. Puisque la valeur absolue du scalaire $q$ vérifie $|q| < 1$, la limite de la suite géométrique $q^{N+1}$ est nulle :
+$$\lim_{N \to \infty} q^{N+1} = 0$$
+
+Par continuité des opérations algébriques sur les limites :
+$$\lim_{N \to \infty} S_N = \lim_{N \to \infty} \frac{1 - q^{N+1}}{1 - q} = \frac{1 - 0}{1 - q} = \frac{1}{1 - q}$$
+
+La limite étant finie, la série géométrique converge vers $\frac{1}{1 - q}$. $\blacksquare$
+
+### B. Cas Pathologiques
+
+Il est crucial d'étudier les limites des critères. Considérons le cas $L=1$ pour la règle de d'Alembert.
+
+**Exemple de convergence (Série de Riemann pour $\alpha=2$) :**
+Soit $u_n = \frac{1}{n^2}$. On a $u_{n+1} / u_n = \frac{n^2}{(n+1)^2} = \left(1 + \frac{1}{n}\right)^{-2}$.
+La limite est $\lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^{-2} = 1$. Et pourtant, cette série converge.
+
+**Exemple de divergence (Série harmonique pour $\alpha=1$) :**
+Soit $v_n = \frac{1}{n}$. On a $v_{n+1} / v_n = \frac{n}{n+1} = \left(1 + \frac{1}{n}\right)^{-1}$.
+La limite est $\lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^{-1} = 1$. Et pourtant, cette série diverge.
+
+Cela prouve rigoureusement que le cas $L=1$ ne permet aucune conclusion immédiate sur la nature asymptotique de la série.
+
+## 4. Application en Intelligence Artificielle et Sciences de l'Information
+
+En apprentissage automatique, les séries infinies jouent un rôle sous-jacent central dans l'évaluation des processus stochastiques infinis et dans la conception des algorithmes d'optimisation.
+
+Dans le cadre de l'**Apprentissage par Renforcement (Reinforcement Learning)**, modélisé par des Processus de Décision de Markov (MDP), un agent évolue dans un environnement et reçoit des récompenses $R_t$ à chaque pas de temps discret $t$. L'objectif est de maximiser la somme totale des récompenses. Or, si l'horizon temporel est infini (épisodes continus), la somme brute $\sum_{t=0}^\infty R_t$ divergerait trivialement vers $+\infty$, rendant la comparaison de politiques (fonctions de choix d'actions) mathématiquement indécidable.
+
+Pour pallier ce problème de divergence asymptotique, on introduit un **facteur d'escompte (discount factor)** $\gamma \in [0, 1[$. Le retour cumulé (Discounted Return) est alors défini comme une série :
+$$G_t = \sum_{k=0}^\infty \gamma^k R_{t+k+1}$$
+
+Si les récompenses sont bornées, c'est-à-dire s'il existe une constante $R_{max}$ telle que $\forall t, |R_t| \le R_{max}$, alors par valeur absolue, le terme général de la série est majoré :
+$$|\gamma^k R_{t+k+1}| \le \gamma^k R_{max}$$
+
+La série majorante $\sum_{k=0}^\infty \gamma^k R_{max} = R_{max} \sum_{k=0}^\infty \gamma^k$ est proportionnelle à une série géométrique de raison $\gamma < 1$, qui est formellement convergente et vaut $\frac{R_{max}}{1 - \gamma}$.
+En vertu du Critère de Comparaison, la série définissant $G_t$ converge absolument. Cette garantie théorique garantit que la fonction de valeur d'état (State-Value Function) $V^\pi(s) = \mathbb{E}^\pi[G_t | S_t = s]$ est bien définie, autorisant l'utilisation du théorème du point fixe de Banach pour les itérations de la fonction de valeur de Bellman.
+
+## 5. Liens Sémantiques
 - **Concepts Précédents requis :** [[Jalon 13 (Structure de R)]], [[Jalon 14 (Suites réelles et complexes)]]
 - **Concepts Futurs dépendants :** [[Jalon 17 (Séries absolument convergentes)]], [[Jalon 22 (Séries de fonctions)]], [[Jalon 23 (Séries entières)]], [[Jalon 85 (Axiomes de Kolmogorov)]]

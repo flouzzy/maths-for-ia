@@ -1,6 +1,4 @@
 # Exercice 10 : Séries entrelacées et astuces de manipulation
-**Niveau :** Extrême (ENS/X/MIT)
-**Notion ciblée :** Pièges de convergence avec les règles de d'Alembert et limites de sommes.
 
 ## Énoncé
 Soit $(u_n)$ la suite définie par :
