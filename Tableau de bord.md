@@ -32,7 +32,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 ### Trimestre 3 : réduction des endomorphismes et espaces préhilbertiens
 - [x] [[jalon-25/Jalon-25.md|Jalon 25 : Formes bilinéaires]] : Formes bilinéaires, formes sesquilinieaires, produit scalaire et inégalité de Cauchy-Schwarz.
 - [x] [[jalon-26/Jalon-26.md|Jalon 26 : Espaces euclidiens]] : Espaces euclidiens, orthogonalité, théorème de la projection orthogonale et algorithme de Gram-Schmidt.
-- [ ] [[jalon-27/Jalon 27 (Endomorphismes symétriques).md|Jalon 27 : Endomorphismes symétriques]] : Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales.
+- [x] [[jalon-27/Jalon-27.md|Jalon 27 : Endomorphismes symétriques]] : Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales.
 - [ ] [[jalon-28/Jalon 28 (Polynômes d'endomorphismes).md|Jalon 28 : Polynômes d'endomorphismes]] : Polynômes d'endomorphismes, idéaux annulateurs et démonstration du théorème de Cayley-Hamilton.
 - [ ] [[jalon-29/Jalon 29 (Éléments propres).md|Jalon 29 : Éléments propres]] : Éléments propres, polynôme caractéristique, sous-espaces propres et critères de diagonalisabilité.
 - [ ] [[jalon-30/Jalon 30 (Trigonalisation d'endomorphismes et décomposition de Dunford.).md|Jalon 30 : Trigonalisation d'endomorphismes et décomposition de Dunford.]] : Trigonalisation d'endomorphismes et décomposition de Dunford.
