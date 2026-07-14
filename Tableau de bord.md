@@ -165,6 +165,9 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
+
+### 2026-07-13-audit
+- [[#2026-07-13-audit|2026-07-13]] : [Audit & Weekly Compilation] - Jalon 17 - Séries absolument convergentes. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-12-audit
 - [[#2026-07-12-audit|2026-07-12]] : [Audit & Weekly Compilation] - Jalon 16 - Séries numériques à termes positifs. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-11-audit

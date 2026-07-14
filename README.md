@@ -320,6 +320,8 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+### 2026-07-13-audit
+- [[#2026-07-13-audit|2026-07-13]] : [Audit & Weekly Compilation] - Jalon 17 - Séries absolument convergentes. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 - [2026-07-13] : [Upsert/Création] du Jalon 26 - Espaces euclidiens, orthogonalité, théorème de la projection orthogonale et algorithme de Gram-Schmidt. Status: Terminé.
 ### 2026-07-12-audit
 - [[#2026-07-12-audit|2026-07-12]] : [Audit & Weekly Compilation] - Jalon 16 - Séries numériques à termes positifs. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.

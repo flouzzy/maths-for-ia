@@ -8,6 +8,7 @@ difficulty: ★★★☆☆
 Énoncer et démontrer la règle d'Abel (ou transformation d'Abel) pour les séries de la forme $\sum a_n b_n$, puis l'appliquer pour montrer la convergence de la série $\sum \frac{\cos(n\theta)}{n}$ pour $\theta \notin 2\pi\mathbb{Z}$.
 
 ## Correction
+
 1. **Règle d'Abel (Énoncé) :** Soient $(a_n)$ et $(b_n)$ deux suites telles que :
    - $(a_n)$ est décroissante, positive, de limite nulle.
    - Les sommes partielles $B_n = \sum_{k=0}^n b_k$ sont bornées (il existe $M > 0$ t.q. $|B_n| \le M \ \forall n$).

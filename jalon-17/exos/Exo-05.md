@@ -8,6 +8,7 @@ difficulty: ★★★☆☆
 Soit $a_n = b_n = \frac{(-1)^n}{\sqrt{n+1}}$. Montrer que le produit de Cauchy des séries $\sum a_n$ et $\sum b_n$ (qui sont semi-convergentes) est une série divergente.
 
 ## Correction
+
 1. **Convergence des séries initiales :** $\sum \frac{(-1)^n}{\sqrt{n+1}}$ est une série alternée dont le terme général tend vers 0 en décroissant en valeur absolue. Par le critère de Leibniz, elle converge. Elle ne converge pas absolument car $\sum \frac{1}{\sqrt{n+1}}$ diverge (série de Riemann avec $\alpha=1/2 \le 1$).
 2. **Calcul du terme général du produit de Cauchy :**
    $c_n = \sum_{k=0}^n a_k b_{n-k} = \sum_{k=0}^n \frac{(-1)^k}{\sqrt{k+1}} \frac{(-1)^{n-k}}{\sqrt{n-k+1}} = (-1)^n \sum_{k=0}^n \frac{1}{\sqrt{(k+1)(n-k+1)}}$.

@@ -8,6 +8,7 @@ difficulty: ★★★★★
 Démontrer que la série $\sum_{n=1}^\infty (\frac{1}{n} - \ln(1+\frac{1}{n}))$ converge, et exprimer sa limite en fonction de la constante d'Euler $\gamma$.
 
 ## Correction
+
 1. **Développement asymptotique du terme général :**
    $u_n = \frac{1}{n} - \ln(1+\frac{1}{n}) = \frac{1}{n} - (\frac{1}{n} - \frac{1}{2n^2} + o(\frac{1}{n^2})) = \frac{1}{2n^2} + o(\frac{1}{n^2})$.
 2. **Convergence :**

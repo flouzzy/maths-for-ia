@@ -8,6 +8,7 @@ difficulty: ★☆☆☆☆
 Soit la série exponentielle définie par $E(x) = \sum_{n=0}^\infty \frac{x^n}{n!}$. Démontrer, à l'aide du produit de Cauchy, que pour tous réels $x, y$, on a $E(x)E(y) = E(x+y)$.
 
 ## Correction
+
 1. **Convergence Absolue :** Fixons $x \in \mathbb{R}$. Étudions la convergence de la série $\sum \frac{x^n}{n!}$. On applique la règle de d'Alembert pour la série des valeurs absolues :
    $\lim_{n\to\infty} \frac{|x|^{n+1}/(n+1)!}{|x|^n/n!} = \lim_{n\to\infty} \frac{|x|}{n+1} = 0$.
    Puisque $0 < 1$, la série converge absolument sur $\mathbb{R}$.
