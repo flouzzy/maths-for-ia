@@ -166,6 +166,8 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 
 ## Historique d'Audit
 
+### 2026-07-14-audit
+- [[#2026-07-14-audit|2026-07-14]] : [Audit & Weekly Compilation] - Jalon 18 - Continuité des fonctions d'une variable réelle. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-13-audit
 - [[#2026-07-13-audit|2026-07-13]] : [Audit & Weekly Compilation] - Jalon 17 - Séries absolument convergentes. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-12-audit
