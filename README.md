@@ -109,7 +109,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 25](jalon-25/Jalon-25.md)** : Formes bilinéaires, formes sesquilinieaires, produit scalaire et inégalité de Cauchy-Schwarz. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 26](jalon-26/Jalon-26.md)** : Espaces euclidiens, orthogonalité, théorème de la projection orthogonale et algorithme de Gram-Schmidt. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 
-- **[Jalon 27](jalon-27/Jalon%2027%20%28Endomorphismes%20sym%C3%A9triques%29.md)** : Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales.
+- **[Jalon 27](jalon-27/Jalon%2027%20%28Endomorphismes%20sym%C3%A9triques%29.md)** : Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 28](jalon-28/Jalon%2028%20%28Polyn%C3%B4mes%20d%27endomorphismes%29.md)** : Polynômes d'endomorphismes, idéaux annulateurs et démonstration du théorème de Cayley-Hamilton.
 - **[Jalon 29](jalon-29/Jalon%2029%20%28%C3%89l%C3%A9ments%20propres%29.md)** : Éléments propres, polynôme caractéristique, sous-espaces propres et critères de diagonalisabilité.
 - **[Jalon 30](jalon-30/Jalon%2030%20%28Trigonalisation%20d%27endomorphismes%20et%20d%C3%A9composition%20de%20Dunford.%29.md)** : Trigonalisation d'endomorphismes et décomposition de Dunford.
@@ -386,3 +386,4 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-06-22] : Upsert du Jalon 9 - Calcul matriciel. Status: Terminé.
 
 - [2026-06-25] : Upsert du Jalon 11 - Formes linéaires. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-07-15] : Upsert du Jalon 27 - Endomorphismes symétriques. Status: Terminé.
