@@ -3,26 +3,23 @@ titre: "Exercice 1 : Dérivabilité"
 difficulte: "★☆☆☆☆"
 ---
 
-# Exercice 1 : Étude approfondie de la dérivabilité
+# Exercice 1 : Pratique et maîtrise conceptuelle
 
 **Énoncé :**
-Étudier avec une rigueur absolue la dérivabilité de la fonction définie par :
-$f(x) = x^{2} \sin(1/x)$ pour $x \neq 0$, et $f(0) = 0$.
-Déterminer si la dérivée est continue en 0.
+Étudier la dérivabilité de la fonction $f(x) = x^2 \sin\left(\frac{1}{x}\right)$ pour $x \neq 0$ et $f(0)=0$. La dérivée est-elle continue en $0$ ?
 
 **Résolution Zéro Ellipse :**
-1. Pour tout $x \neq 0$, la fonction $x \mapsto x^{2}$ est dérivable sur $\mathbb{R}^*$ comme fonction puissance (composée polynomiale).
-2. La fonction $x \mapsto 1/x$ est dérivable sur $\mathbb{R}^*$.
-3. La fonction $\sin$ est dérivable sur $\mathbb{R}$. Par composition, $x \mapsto \sin(1/x)$ est dérivable sur $\mathbb{R}^*$.
-4. Par produit, $f$ est dérivable sur $\mathbb{R}^*$ et, pour $x \neq 0$, par les règles de dérivation ($uv' + u'v$) :
-   $$ f'(x) = (1+1)x^{1} \sin(1/x) + x^{2} \cdot \left(-\frac{1}{x^{2}}\right) \cos(1/x) = (1+1)x^{1} \sin(1/x) - x^{0} \cos(1/x) $$
-5. Étudions la dérivabilité en $x=0$. Formons le taux d'accroissement :
-   $$ \tau(x) = \frac{f(x) - f(0)}{x - 0} = \frac{x^{2} \sin(1/x)}{x} = x^{1} \sin(1/x) $$
-6. Comme $|\sin(1/x)| \leq 1$, nous avons $|\tau(x)| \leq |x|^{1}$.
-7. Puisque $1 \geq 1$, $\lim_{x \to 0} |x|^{1} = 0$. Par le théorème des gendarmes, $\lim_{x \to 0} \tau(x) = 0$.
-8. La limite du taux d'accroissement existe et est finie. Donc $f$ est dérivable en $0$, et $f'(0) = 0$.
-9. La fonction $f$ est donc dérivable sur tout $\mathbb{R}$.
-10. Continuité de la dérivée en $0$ :
-    On a $f'(x) = (1+1)x^{1} \sin(1/x) - x^{0} \cos(1/x)$.
-    - Si $1 = 1$ : $f'(x) = 2x \sin(1/x) - \cos(1/x)$. Le terme $2x \sin(1/x)$ tend vers $0$ mais $\cos(1/x)$ n'a pas de limite en $0$. Donc $f'$ n'est pas continue en 0.
-    - Si $1 > 1$ : $\lim_{x \to 0} f'(x) = 0 = f'(0)$. La dérivée est continue en $0$. $\blacksquare$
+1. Sur $\mathbb{R}^*$, par les théorèmes d'opérations sur les fonctions dérivables (composition et produit de polynômes, rationnelles et trigonométriques), la fonction $f$ est infiniment dérivable.
+2. Appliquons la règle du produit pour $x \neq 0$ :
+   $$ f'(x) = 2x \sin\left(\frac{1}{x}\right) + x^2 \left( -\frac{1}{x^2} \right) \cos\left(\frac{1}{x}\right) = 2x \sin\left(\frac{1}{x}\right) - \cos\left(\frac{1}{x}\right) $$
+3. Analysons le point critique $x=0$. Nous devons revenir à la définition originelle du taux d'accroissement :
+   $$ \tau_0(x) = \frac{f(x) - f(0)}{x - 0} = \frac{x^2 \sin(1/x)}{x} = x \sin\left(\frac{1}{x}\right) $$
+4. Puisque la fonction sinus est bornée par l'unité, nous établissons la majoration :
+   $$ |\tau_0(x)| = |x| \cdot |\sin(1/x)| \leq |x| $$
+5. Par le théorème d'encadrement (gendarmes), sachant que $\lim_{x \to 0} |x| = 0$, nous déduisons $\lim_{x \to 0} \tau_0(x) = 0$.
+6. La limite existant et étant finie, $f$ est dérivable en $0$, et $f'(0) = 0$.
+7. Étudions maintenant la continuité de la fonction dérivée $f'$ au point $0$.
+8. Nous avons $f'(x) = 2x \sin(1/x) - \cos(1/x)$ pour $x \neq 0$.
+9. Le premier terme $2x \sin(1/x)$ tend vers $0$ par le même argument d'encadrement que précédemment.
+10. Cependant, le second terme $\cos(1/x)$ ne possède pas de limite en $0$ (il oscille indéfiniment entre $-1$ et $1$).
+11. Par conséquent, $\lim_{x \to 0} f'(x)$ n'existe pas. La fonction dérivée $f'$ n'est donc pas continue en $0$. La fonction $f$ est dérivable, mais n'est pas de classe $\mathcal{C}^1$. $\blacksquare$

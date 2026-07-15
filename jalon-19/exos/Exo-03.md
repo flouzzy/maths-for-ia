@@ -3,26 +3,22 @@ titre: "Exercice 3 : Dérivabilité"
 difficulte: "★★☆☆☆"
 ---
 
-# Exercice 3 : Étude approfondie de la dérivabilité
+# Exercice 3 : Pratique et maîtrise conceptuelle
 
 **Énoncé :**
-Étudier avec une rigueur absolue la dérivabilité de la fonction définie par :
-$f(x) = x^{4} \sin(1/x)$ pour $x \neq 0$, et $f(0) = 0$.
-Déterminer si la dérivée est continue en 0.
+Soit $f : \mathbb{R} \to \mathbb{R}$ dérivable telle que $\lim_{x \to +\infty} f(x) = \ell$ et $\lim_{x \to +\infty} f'(x) = m$. Montrer rigoureusement que $m = 0$.
 
 **Résolution Zéro Ellipse :**
-1. Pour tout $x \neq 0$, la fonction $x \mapsto x^{4}$ est dérivable sur $\mathbb{R}^*$ comme fonction puissance (composée polynomiale).
-2. La fonction $x \mapsto 1/x$ est dérivable sur $\mathbb{R}^*$.
-3. La fonction $\sin$ est dérivable sur $\mathbb{R}$. Par composition, $x \mapsto \sin(1/x)$ est dérivable sur $\mathbb{R}^*$.
-4. Par produit, $f$ est dérivable sur $\mathbb{R}^*$ et, pour $x \neq 0$, par les règles de dérivation ($uv' + u'v$) :
-   $$ f'(x) = (3+1)x^{3} \sin(1/x) + x^{4} \cdot \left(-\frac{1}{x^{2}}\right) \cos(1/x) = (3+1)x^{3} \sin(1/x) - x^{2} \cos(1/x) $$
-5. Étudions la dérivabilité en $x=0$. Formons le taux d'accroissement :
-   $$ \tau(x) = \frac{f(x) - f(0)}{x - 0} = \frac{x^{4} \sin(1/x)}{x} = x^{3} \sin(1/x) $$
-6. Comme $|\sin(1/x)| \leq 1$, nous avons $|\tau(x)| \leq |x|^{3}$.
-7. Puisque $3 \geq 1$, $\lim_{x \to 0} |x|^{3} = 0$. Par le théorème des gendarmes, $\lim_{x \to 0} \tau(x) = 0$.
-8. La limite du taux d'accroissement existe et est finie. Donc $f$ est dérivable en $0$, et $f'(0) = 0$.
-9. La fonction $f$ est donc dérivable sur tout $\mathbb{R}$.
-10. Continuité de la dérivée en $0$ :
-    On a $f'(x) = (3+1)x^{3} \sin(1/x) - x^{2} \cos(1/x)$.
-    - Si $3 = 1$ : $f'(x) = 2x \sin(1/x) - \cos(1/x)$. Le terme $2x \sin(1/x)$ tend vers $0$ mais $\cos(1/x)$ n'a pas de limite en $0$. Donc $f'$ n'est pas continue en 0.
-    - Si $3 > 1$ : $\lim_{x \to 0} f'(x) = 0 = f'(0)$. La dérivée est continue en $0$. $\blacksquare$
+1. La fonction $f$ possède une asymptote horizontale d'ordonnée $\ell$ en l'infini. Intuitivement, sa pente (sa dérivée) doit nécessairement s'annuler, faute de quoi la fonction divergerait. Formalisons ce fait avec le TAF.
+2. Soit $x \in \mathbb{R}$. La fonction $f$ satisfait les conditions du Théorème des Accroissements Finis sur l'intervalle $[x, x+1]$ (elle est continue et dérivable sur $\mathbb{R}$).
+3. Il existe donc un réel $c_x \in ]x, x+1[$ tel que :
+   $$ f(x+1) - f(x) = f'(c_x)((x+1) - x) = f'(c_x) $$
+4. Étudions le comportement à la limite lorsque $x$ tend vers $+\infty$.
+5. Par hypothèse, $\lim_{x \to +\infty} f(x) = \ell$. Par suite, $\lim_{x \to +\infty} f(x+1) = \ell$ par composition des limites avec la translation temporelle.
+6. Le membre de gauche de l'équation de l'étape 3 converge donc :
+   $$ \lim_{x \to +\infty} (f(x+1) - f(x)) = \ell - \ell = 0 $$
+7. Analysons le membre de droite. Puisque $c_x \in ]x, x+1[$, nous avons la double inégalité $x < c_x < x+1$.
+8. Par le théorème d'encadrement, lorsque $x \to +\infty$, le paramètre intermédiaire $c_x$ tend inexorablement vers $+\infty$.
+9. Par composition de limite, sachant par hypothèse que $\lim_{t \to +\infty} f'(t) = m$, nous déduisons :
+   $$ \lim_{x \to +\infty} f'(c_x) = m $$
+10. Par unicité de la limite, en identifiant les limites des deux membres de l'égalité de l'étape 3, nous concluons irréfutablement : $0 = m$. $\blacksquare$

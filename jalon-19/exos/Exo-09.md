@@ -3,26 +3,21 @@ titre: "Exercice 9 : Dérivabilité"
 difficulte: "★★★★★"
 ---
 
-# Exercice 9 : Étude approfondie de la dérivabilité
+# Exercice 9 : Pratique et maîtrise conceptuelle
 
 **Énoncé :**
-Étudier avec une rigueur absolue la dérivabilité de la fonction définie par :
-$f(x) = x^{10} \sin(1/x)$ pour $x \neq 0$, et $f(0) = 0$.
-Déterminer si la dérivée est continue en 0.
+Fonction de dérivée non Riemann-intégrable : Soit la fonction de Volterra $V(x)$. Construire formellement l'argument montrant qu'une fonction dérivable peut posséder une dérivée bornée non intégrable au sens de Riemann.
 
 **Résolution Zéro Ellipse :**
-1. Pour tout $x \neq 0$, la fonction $x \mapsto x^{10}$ est dérivable sur $\mathbb{R}^*$ comme fonction puissance (composée polynomiale).
-2. La fonction $x \mapsto 1/x$ est dérivable sur $\mathbb{R}^*$.
-3. La fonction $\sin$ est dérivable sur $\mathbb{R}$. Par composition, $x \mapsto \sin(1/x)$ est dérivable sur $\mathbb{R}^*$.
-4. Par produit, $f$ est dérivable sur $\mathbb{R}^*$ et, pour $x \neq 0$, par les règles de dérivation ($uv' + u'v$) :
-   $$ f'(x) = (9+1)x^{9} \sin(1/x) + x^{10} \cdot \left(-\frac{1}{x^2}\right) \cos(1/x) = (9+1)x^{9} \sin(1/x) - x^{8} \cos(1/x) $$
-5. Étudions la dérivabilité en $x=0$. Formons le taux d'accroissement :
-   $$ \tau(x) = \frac{f(x) - f(0)}{x - 0} = \frac{x^{10} \sin(1/x)}{x} = x^{9} \sin(1/x) $$
-6. Comme $|\sin(1/x)| \leq 1$, nous avons $|\tau(x)| \leq |x|^{9}$.
-7. Puisque $9 \geq 1$, $\lim_{x \to 0} |x|^{9} = 0$. Par le théorème des gendarmes, $\lim_{x \to 0} \tau(x) = 0$.
-8. La limite du taux d'accroissement existe et est finie. Donc $f$ est dérivable en $0$, et $f'(0) = 0$.
-9. La fonction $f$ est donc dérivable sur tout $\mathbb{R}$.
-10. Continuité de la dérivée en $0$ :
-    On a $f'(x) = (9+1)x^{9} \sin(1/x) - x^{8} \cos(1/x)$.
-    - Si $9 = 1$ : $f'(x) = 2x \sin(1/x) - \cos(1/x)$. Le terme $2x \sin(1/x)$ tend vers $0$ mais $\cos(1/x)$ n'a pas de limite en $0$. Donc $f'$ n'est pas continue en 0.
-    - Si $9 > 1$ : $\lim_{x \to 0} f'(x) = 0 = f'(0)$. La dérivée est continue en $0$. $\blacksquare$
+1. La construction canonique repose sur l'ensemble de Smith-Volterra-Cantor (un ensemble de Cantor de mesure de Lebesgue strictement positive).
+2. L'ensemble triadique classique de Cantor retire des intervalles ouverts de taille $\frac{1}{3}, \frac{2}{9}$, etc., conduisant à une mesure totale retirée de $1$, donc une mesure résiduelle nulle.
+3. Construisons un ensemble "gras" $K$ en retirant au milieu de chaque composante connexe, à l'étape $n$, un intervalle de longueur $\frac{1}{4^n}$.
+4. La somme des longueurs des intervalles retirés est $\sum_{n=1}^\infty 2^{n-1} \frac{1}{4^n} = \frac{1}{2} \sum (\frac{1}{2})^{n-1} = 1 \times \frac{1}{2} \times 2 = \frac{1}{2}$.
+5. La mesure de Lebesgue de l'ensemble résiduel compact $K$ est donc $1 - \frac{1}{2} = \frac{1}{2} > 0$. L'ensemble $K$ est de plus nulle part dense.
+6. Sur chaque intervalle ouvert retiré $]u, v[$, définissons une fonction dérivable oscillante semblable à $x^2 \sin(1/x)$, ajustée pour être nulle et de dérivée nulle aux bords $u$ et $v$.
+7. Soit $V(x)$ la fonction globale ainsi construite par recollement. $V$ est dérivable partout.
+8. Sur $K$, la dérivée s'annule par continuité des raccordements. La fonction dérivée $V'$ existe partout et est bornée.
+9. Cependant, $V'$ est discontinue sur les bords des intervalles retirés. L'ensemble des points de discontinuité de $V'$ contient le compact $K$.
+10. Le critère de Lebesgue-Vitali stipule qu'une fonction bornée est Riemann-intégrable si et seulement si l'ensemble de ses points de discontinuité est de mesure de Lebesgue nulle.
+11. Or, les points de discontinuité de $V'$ contiennent $K$ qui a une mesure $\frac{1}{2} > 0$.
+12. Par conséquent, la fonction $V'$, bien qu'étant l'exacte dérivée d'une fonction partout dérivable, n'est pas Riemann-intégrable. L'intégrale de Lebesgue supplantera l'intégrale de Riemann pour pallier cette défaillance de symétrie avec la dérivation. $\blacksquare$

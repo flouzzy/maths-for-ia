@@ -1,0 +1,697 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+\title{Jalon 19 : Dérivabilité, Théorème de Rolle et Accroissements Finis}
+\author{Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Intuition et genèse du concept}
+
+\section*{Jalon 19 : Dérivabilité, Théorème de Rolle et Accroissements Finis}
+
+
+
+La notion de dérivée émerge au carrefour de la cinématique (définir la vitesse instantanée d'un mobile) et de la géométrie (déterminer la tangente à une courbe en un point). Historiquement, Pierre de Fermat, puis Isaac Newton et Gottfried Wilhelm Leibniz, ont jeté les bases du calcul infinitésimal pour formaliser ces idées. Avant eux, la géométrie d'Euclide et d'Archimède permettait de tracer des tangentes à des cercles ou des paraboles, mais manquait d'un formalisme général.
+
+L'intuition fondamentale de la dérivabilité est celle de l'approximation linéaire locale. Si l'on observe une courbe régulière (non fractale, sans point anguleux) au microscope en zoomant indéfiniment autour d'un point, celle-ci apparaît indiscernable d'une droite : sa tangente. La dérivée quantifie cette pente locale. C'est l'essence même du développement limité d'ordre 1 : exprimer une fonction complexe comme une fonction affine à l'ordre principal, perturbée par une erreur évanescente.
+
+Ce changement de paradigme, consistant à passer du fini à l'infinitésimal, a nécessité des siècles de maturation pour être rendu rigoureux par Augustin-Louis Cauchy et Karl Weierstrass au XIXe siècle, à travers la formalisation des limites par la définition en $(\epsilon, \delta)$.
+
+
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.5]
+  % Axes
+  \draw[->] (-0.5,0) -- (4,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,3) node[above] {$f(x)$};
+
+  % Fonction f(x) = 0.2*x^2 + 0.5
+  \draw[thick, blue, domain=0:3.5] plot (\x, {0.2*\x*\x + 0.5});
+
+  % Point A (a, f(a)) avec a=1.5 -> f(1.5)=0.95
+  \filldraw[black] (1.5,0.95) circle (1.5pt) node[above left] {$A(a, f(a))$};
+  \draw[dashed] (1.5,0) node[below] {$a$} -- (1.5,0.95);
+
+  % Point B (x, f(x)) avec x=3 -> f(3)=2.3
+  \filldraw[black] (3,2.3) circle (1.5pt) node[above left] {$B(x, f(x))$};
+  \draw[dashed] (3,0) node[below] {$x$} -- (3,2.3);
+
+  % Sécante AB
+  \draw[red, domain=0.5:3.5] plot (\x, {0.9*\x - 0.4});
+
+  % Tangente en A (dérivée f'(1.5) = 0.6) -> y - 0.95 = 0.6(x - 1.5) -> y = 0.6x + 0.05
+  \draw[green!60!black, thick, domain=0.2:3.5] plot (\x, {0.6*\x + 0.05}) node[right] {Tangente};
+
+\end{tikzpicture}
+\caption{La sécante $(AB)$ converge vers la tangente en $A$ lorsque $x \to a$. La pente de la sécante est le taux d'accroissement, la pente de la tangente est le nombre dérivé.}
+\end{figure}
+
+\section{Formalisation et structures algébriques}
+
+
+\subsubsection*{A. Énoncé Symbolique Strict (Définition de la dérivabilité)}
+
+Soit $I$ un intervalle de $\mathbb{R}$ d'intérieur non vide. Soit $f : I \to \mathbb{R}$ une application. Soit $a \in I$.
+On dit que $f$ est dérivable en $a$ si la limite du taux d'accroissement de $f$ en $a$ existe et est finie. Formellement :
+\[  \lim_{x \to a, x \neq a} \frac{f(x) - f(a)}{x - a} = \ell \in \mathbb{R}  \]
+Si cette limite existe, elle est notée $f'(a)$ et est appelée le nombre dérivé de $f$ en $a$.
+
+De manière équivalente, par le changement de variable $h = x - a$, $f$ est dérivable en $a$ si et seulement si :
+\[  \lim_{h \to 0, h \neq 0} \frac{f(a+h) - f(a)}{h} = f'(a) \in \mathbb{R}  \]
+
+\textbf{Développement Limité d'Ordre 1 (DL1) :}
+La fonction $f$ est dérivable en $a$ si et seulement s'il existe un scalaire $L \in \mathbb{R}$ et une fonction $\epsilon : I \to \mathbb{R}$ tels que pour tout $x \in I$ :
+\[  f(x) = f(a) + L(x - a) + (x - a)\epsilon(x)  \]
+avec $\lim_{x \to a} \epsilon(x) = 0$. Dans ce cas, $L = f'(a)$.
+
+\subsubsection*{B. Anatomie et Typage Chirurgical}
+
+\begin{itemize}
+\item $I \subset \mathbb{R}$ : Un intervalle de la droite réelle. C'est la topologie usuelle induite par la valeur absolue qui est utilisée. Il garantit que le point $a$ n'est pas isolé.
+\item $f : I \to \mathbb{R}$ : L'application étudiée. L'espace d'arrivée est $\mathbb{R}$ muni de sa structure de corps complet.
+\item $a \in I$ : Le point d'évaluation. L'analyse est purement locale.
+\item $\tau_a(x) = \frac{f(x) - f(a)}{x - a}$ : Le taux d'accroissement, application définie sur $I \setminus \{a\}$.
+\item $f'(a) \in \mathbb{R}$ : Le scalaire réel représentant le coefficient directeur de l'approximation linéaire.
+\item $(x - a)\epsilon(x)$ : Le terme de reste (négligeable devant $x-a$, noté usuellement $o(x-a)$) qui mesure l'écart entre la fonction et son approximation affine.
+\end{itemize}
+
+\subsubsection*{C. Exemples de Validation}
+
+\textbf{Exemple d'application trivial : La fonction affine}
+Soit $f(x) = \alpha x + \beta$, avec $\alpha, \beta \in \mathbb{R}$.
+Pour tout $a \in \mathbb{R}$ et $x \neq a$ :
+\[  \frac{f(x) - f(a)}{x - a} = \frac{(\alpha x + \beta) - (\alpha a + \beta)}{x - a} = \frac{\alpha(x - a)}{x - a} = \alpha  \]
+La limite de ce rapport constant lorsque $x \to a$ est trivialement $\alpha$. Donc $f'(a) = \alpha$.
+
+\textbf{Exemple de validation complexe : La fonction puissance}
+Soit $f(x) = x^n$, avec $n \in \mathbb{N}^*$. Pour tout $a \in \mathbb{R}$ et $x \neq a$ :
+\[  \frac{x^n - a^n}{x - a} = \frac{(x-a)\sum_{k=0}^{n-1} x^k a^{n-1-k}}{x-a} = \sum_{k=0}^{n-1} x^k a^{n-1-k}  \]
+Par continuité des fonctions polynomiales, la limite lorsque $x \to a$ du membre de droite s'obtient par substitution :
+\[  \lim_{x \to a} \sum_{k=0}^{n-1} x^k a^{n-1-k} = \sum_{k=0}^{n-1} a^k a^{n-1-k} = \sum_{k=0}^{n-1} a^{n-1} = n a^{n-1}  \]
+
+\subsubsection*{D. Cas Pathologiques et Contre-exemples}
+
+\begin{itemize}
+\item \textbf{Point anguleux (Fonction valeur absolue) :} Soit $f(x) = |x|$. En $x = 0$, la limite du taux d'accroissement à droite est $\lim_{x \to 0^+} \frac{x - 0}{x} = 1$, tandis qu'à gauche elle est $\lim_{x \to 0^-} \frac{-x - 0}{x} = -1$. Les limites latérales diffèrent, donc la limite globale n'existe pas. $f$ n'est pas dérivable en $0$.
+\item \textbf{Tangente verticale (Fonction racine carrée) :} Soit $f(x) = \sqrt{x}$ définie sur $\mathbb{R}^+$. En $x = 0$, le taux d'accroissement $\frac{\sqrt{x} - 0}{x} = \frac{1}{\sqrt{x}}$ tend vers $+\infty$ lorsque $x \to 0^+$. La limite n'est pas finie, la fonction n'est pas dérivable en $0$.
+\item \textbf{Rupture complète (Fonction de Weierstrass) :} Il existe des fonctions continues sur tout $\mathbb{R}$ mais dérivables en aucun point, telles que $f(x) = \sum_{n=0}^{\infty} a^n \cos(b^n \pi x)$ avec $0 < a < 1$, $b$ entier impair et $ab > 1 + \frac{3}{2}\pi$.
+\end{itemize}
+
+
+
+\section{Démonstrations pas-à-pas}
+
+
+\subsubsection*{Lemme Fondamental : Continuité induite}
+\textbf{Énoncé :} Si $f : I \to \mathbb{R}$ est dérivable en $a \in I$, alors $f$ est continue en $a$.
+
+\textbf{Démonstration Exhaustive :}
+\begin{enumerate}
+\item Soit $f : I \to \mathbb{R}$ dérivable en $a \in I$.
+\item Par définition de la dérivabilité, le réel $L = f'(a)$ existe et $\lim_{x \to a, x \neq a} \frac{f(x) - f(a)}{x - a} = L$.
+\item Isolons $f(x)$. Pour tout $x \in I \setminus \{a\}$, nous pouvons écrire algébriquement :
+   \[  f(x) = f(a) + \left( \frac{f(x) - f(a)}{x - a} \right) \cdot (x - a)  \]
+\item Considérons la limite de cette expression lorsque $x$ tend vers $a$.
+\item Par les théorèmes d'opérations algébriques sur les limites (somme et produit), puisque la limite de chaque terme existe et est finie :
+   \[  \lim_{x \to a} f(x) = \lim_{x \to a} f(a) + \left( \lim_{x \to a} \frac{f(x) - f(a)}{x - a} \right) \cdot \left( \lim_{x \to a} (x - a) \right)  \]
+\item En évaluant ces limites individuelles :
+   \[  \lim_{x \to a} f(x) = f(a) + L \cdot 0 = f(a)  \]
+\item L'égalité $\lim_{x \to a} f(x) = f(a)$ constitue précisément l'axiome de continuité de la fonction $f$ au point $a$. La démonstration est achevée. $\blacksquare$
+\end{enumerate}
+
+\subsubsection*{Théorème de Rolle}
+\textbf{Énoncé :} Soient $a, b \in \mathbb{R}$ avec $a < b$. Soit $f : [a, b] \to \mathbb{R}$ une fonction telle que :
+(i) $f$ est continue sur le segment fermé $[a, b]$,
+(ii) $f$ est dérivable sur l'intervalle ouvert $]a, b[$,
+(iii) $f(a) = f(b)$.
+Alors, il existe au moins un point $c \in ]a, b[$ tel que $f'(c) = 0$.
+
+\textbf{Démonstration Exhaustive :}
+\begin{enumerate}
+\item L'hypothèse (i) affirme que $f$ est continue sur le compact $[a, b]$. D'après le théorème des bornes atteintes (théorème de Weierstrass), l'image $f([a, b])$ est un segment fermé et borné. Par conséquent, $f$ admet un minimum global $m$ et un maximum global $M$ sur $[a, b]$, et ces extrema sont atteints. Il existe donc $x_m, x_M \in [a, b]$ tels que $f(x_m) = m$ et $f(x_M) = M$.
+\item Discutons selon deux cas mutuellement exclusifs.
+\item \textbf{Cas 1 :} Supposons que $m = M$. Dans ce cas, pour tout $x \in [a, b]$, $m \leq f(x) \leq M \implies f(x) = m$. La fonction $f$ est donc constante sur $[a, b]$. Sa dérivée est identiquement nulle sur $]a, b[$. Tout point $c \in ]a, b[$ satisfait $f'(c) = 0$. Le théorème est vérifié.
+\item \textbf{Cas 2 :} Supposons que $m < M$. Par hypothèse (iii), $f(a) = f(b)$. Il est donc impossible que les deux extrema soient atteints uniquement aux bornes de l'intervalle (sinon on aurait $m = f(a) = f(b) = M$, contredisant $m < M$).
+\item Par conséquent, au moins l'un des deux extrema, disons le maximum $M$, est atteint en un point $c \in ]a, b[$ strictement à l'intérieur de l'intervalle (c'est-à-dire $c = x_M \neq a$ et $c = x_M \neq b$).
+\item Évaluons le comportement du taux d'accroissement de $f$ en ce point $c$. Puisque $c \in ]a, b[$, il existe un $\delta > 0$ tel que $]c-\delta, c+\delta[ \subset [a, b]$.
+\item Par définition du maximum, pour tout $h$ tel que $c+h \in [a, b]$ (et en particulier pour $|h| < \delta$), on a $f(c+h) \leq f(c)$, ce qui implique $f(c+h) - f(c) \leq 0$.
+\item Supposons $h > 0$. Alors le taux d'accroissement à droite vérifie :
+   \[  \frac{f(c+h) - f(c)}{h} \leq 0  \]
+   En passant à la limite quand $h \to 0^+$, la dérivée à droite $f'_d(c)$ vérifie $f'_d(c) \leq 0$.
+\item Supposons $h < 0$. Alors le taux d'accroissement à gauche vérifie (puisque le dénominateur est négatif) :
+   \[  \frac{f(c+h) - f(c)}{h} \geq 0  \]
+   En passant à la limite quand $h \to 0^-$, la dérivée à gauche $f'_g(c)$ vérifie $f'_g(c) \geq 0$.
+\item Par hypothèse (ii), $f$ est dérivable sur $]a, b[$. Puisque $c \in ]a, b[$, $f$ est dérivable au point $c$. Cela implique l'existence de la limite globale, et donc l'égalité des dérivées latérales : $f'(c) = f'_d(c) = f'_g(c)$.
+\item Les inégalités $f'(c) \leq 0$ et $f'(c) \geq 0$ imposent inéluctablement $f'(c) = 0$. La démonstration est achevée. $\blacksquare$
+\end{enumerate}
+
+\subsubsection*{Théorème des Accroissements Finis (Égalité de Lagrange)}
+\textbf{Énoncé :} Soient $a, b \in \mathbb{R}$ avec $a < b$. Soit $f : [a, b] \to \mathbb{R}$ une fonction continue sur $[a, b]$ et dérivable sur $]a, b[$. Alors il existe un point $c \in ]a, b[$ tel que $f(b) - f(a) = f'(c)(b - a)$.
+
+\textbf{Démonstration Exhaustive :}
+\begin{enumerate}
+\item L'objectif est d'appliquer le théorème de Rolle. Pour cela, nous construisons une fonction auxiliaire $\varphi$ mesurant l'écart entre la fonction $f$ et la corde reliant les points $(a, f(a))$ et $(b, f(b))$.
+\item La droite sécante passant par ces deux points a pour équation $y(x) = f(a) + \frac{f(b) - f(a)}{b - a}(x - a)$.
+\item Définissons la fonction $\varphi : [a, b] \to \mathbb{R}$ par :
+   \[  \varphi(x) = f(x) - \left( f(a) + \frac{f(b) - f(a)}{b - a}(x - a) \right)  \]
+\item Vérifions scrupuleusement les trois hypothèses du théorème de Rolle pour $\varphi$ :
+   - (i) $\varphi$ est continue sur $[a, b]$ en tant que somme de la fonction $f$ (continue par hypothèse) et d'un polynôme de degré 1 (continu sur $\mathbb{R}$).
+   - (ii) $\varphi$ est dérivable sur $]a, b[$ en tant que somme de fonctions dérivables. Sa dérivée s'exprime par :
+     \[  \forall x \in ]a, b[, \quad \varphi'(x) = f'(x) - \frac{f(b) - f(a)}{b - a}  \]
+   - (iii) Évaluons $\varphi$ aux bornes de l'intervalle :
+     \[  \varphi(a) = f(a) - \left( f(a) + \frac{f(b) - f(a)}{b - a}(a - a) \right) = f(a) - f(a) = 0  \]
+     \[  \varphi(b) = f(b) - \left( f(a) + \frac{f(b) - f(a)}{b - a}(b - a) \right) = f(b) - \left( f(a) + f(b) - f(a) \right) = 0  \]
+     Ainsi, $\varphi(a) = \varphi(b) = 0$.
+\item Les trois prémisses du théorème de Rolle étant satisfaites, il existe au moins un point $c \in ]a, b[$ tel que $\varphi'(c) = 0$.
+\item Substituons cette condition dans l'expression de la dérivée de $\varphi$ :
+   \[  \varphi'(c) = f'(c) - \frac{f(b) - f(a)}{b - a} = 0  \]
+\item L'équivalence algébrique mène immédiatement à :
+   \[  f'(c) = \frac{f(b) - f(a)}{b - a} \implies f(b) - f(a) = f'(c)(b - a)  \]
+   La démonstration est achevée. $\blacksquare$
+\end{enumerate}
+
+
+\newpage
+\section{Exercices d'application et de concours}
+
+\section*{Exercice 1 : Pratique et maîtrise conceptuelle}
+
+\textbf{Énoncé :}
+Étudier la dérivabilité de la fonction $f(x) = x^2 \sin\left(\frac{1}{x}\right)$ pour $x \neq 0$ et $f(0)=0$. La dérivée est-elle continue en $0$ ?
+
+\textbf{Résolution Zéro Ellipse :}
+\begin{enumerate}
+\item Sur $\mathbb{R}^*$, par les théorèmes d'opérations sur les fonctions dérivables (composition et produit de polynômes, rationnelles et trigonométriques), la fonction $f$ est infiniment dérivable.
+\item Appliquons la règle du produit pour $x \neq 0$ :
+   \[  f'(x) = 2x \sin\left(\frac{1}{x}\right) + x^2 \left( -\frac{1}{x^2} \right) \cos\left(\frac{1}{x}\right) = 2x \sin\left(\frac{1}{x}\right) - \cos\left(\frac{1}{x}\right)  \]
+\item Analysons le point critique $x=0$. Nous devons revenir à la définition originelle du taux d'accroissement :
+   \[  \tau_0(x) = \frac{f(x) - f(0)}{x - 0} = \frac{x^2 \sin(1/x)}{x} = x \sin\left(\frac{1}{x}\right)  \]
+\item Puisque la fonction sinus est bornée par l'unité, nous établissons la majoration :
+   \[  |\tau_0(x)| = |x| \cdot |\sin(1/x)| \leq |x|  \]
+\item Par le théorème d'encadrement (gendarmes), sachant que $\lim_{x \to 0} |x| = 0$, nous déduisons $\lim_{x \to 0} \tau_0(x) = 0$.
+\item La limite existant et étant finie, $f$ est dérivable en $0$, et $f'(0) = 0$.
+\item Étudions maintenant la continuité de la fonction dérivée $f'$ au point $0$.
+\item Nous avons $f'(x) = 2x \sin(1/x) - \cos(1/x)$ pour $x \neq 0$.
+\item Le premier terme $2x \sin(1/x)$ tend vers $0$ par le même argument d'encadrement que précédemment.
+\item Cependant, le second terme $\cos(1/x)$ ne possède pas de limite en $0$ (il oscille indéfiniment entre $-1$ et $1$).
+\item Par conséquent, $\lim_{x \to 0} f'(x)$ n'existe pas. La fonction dérivée $f'$ n'est donc pas continue en $0$. La fonction $f$ est dérivable, mais n'est pas de classe $\mathcal{C}^1$. $\blacksquare$
+\end{enumerate}
+
+
+\vspace{1em}
+
+\section*{Exercice 2 : Pratique et maîtrise conceptuelle}
+
+\textbf{Énoncé :}
+Démontrer l'inégalité de Taylor-Lagrange à l'ordre 1 : si $f \in \mathcal{C}^2([a,b])$, alors $|f(b) - f(a) - f'(a)(b-a)| \leq \frac{(b-a)^2}{2} \sup_{t \in [a,b]} |f''(t)|$.
+
+\textbf{Résolution Zéro Ellipse :}
+\begin{enumerate}
+\item Définissons la constante $M = \sup_{t \in [a,b]} |f''(t)|$. Ce supremum est atteint car $f''$ est continue (puisque $f \in \mathcal{C}^2$) sur le compact $[a,b]$.
+\item Considérons la fonction auxiliaire $\varphi : [a,b] \to \mathbb{R}$ définie par l'écart au développement de Taylor :
+   \[  \varphi(x) = f(x) - f(a) - f'(a)(x-a) - K(x-a)^2  \]
+   où la constante $K$ est choisie spécifiquement de sorte que $\varphi(b) = 0$.
+\item Cette contrainte $\varphi(b) = 0$ impose algébriquement la valeur de $K$ :
+   \[  K = \frac{f(b) - f(a) - f'(a)(b-a)}{(b-a)^2}  \]
+\item La fonction $\varphi$ vérifie par construction $\varphi(a) = 0$ (calcul direct) et $\varphi(b) = 0$.
+\item Par ailleurs, $\varphi$ est continue sur $[a,b]$ et dérivable sur $]a,b[$. Nous pouvons lui appliquer le théorème de Rolle.
+\item Il existe donc un réel $c \in ]a,b[$ tel que $\varphi'(c) = 0$.
+\item Explicitons la dérivée de $\varphi$ :
+   \[  \forall x \in [a,b], \quad \varphi'(x) = f'(x) - f'(a) - 2K(x-a)  \]
+\item Appliquée en $x=c$, la relation donne :
+   \[  \varphi'(c) = f'(c) - f'(a) - 2K(c-a) = 0 \implies 2K(c-a) = f'(c) - f'(a)  \]
+\item La fonction dérivée $f'$ est elle-même continue sur $[a,c]$ et dérivable sur $]a,c[$. Appliquons le Théorème des Accroissements Finis à $f'$ sur l'intervalle $[a,c]$.
+\item Il existe un réel $d \in ]a,c[$ tel que $f'(c) - f'(a) = f''(d)(c-a)$.
+\item En combinant les équations des étapes 8 et 10, nous obtenons :
+    \[  2K(c-a) = f''(d)(c-a)  \]
+\item Puisque $c \in ]a,b[$, nous avons $c - a > 0$. Nous pouvons simplifier par $(c-a)$ pour obtenir $K = \frac{f''(d)}{2}$.
+\item Remplaçons $K$ par son expression définie à l'étape 3 :
+    \[  \frac{f(b) - f(a) - f'(a)(b-a)}{(b-a)^2} = \frac{f''(d)}{2}  \]
+\item En passant à la valeur absolue et en multipliant par $(b-a)^2$, il vient :
+    \[  |f(b) - f(a) - f'(a)(b-a)| = \frac{(b-a)^2}{2} |f''(d)|  \]
+\item Puisque $d \in ]a,c[ \subset [a,b]$, $|f''(d)| \leq M$. L'inégalité est strictement établie. $\blacksquare$
+\end{enumerate}
+
+
+\vspace{1em}
+
+\section*{Exercice 3 : Pratique et maîtrise conceptuelle}
+
+\textbf{Énoncé :}
+Soit $f : \mathbb{R} \to \mathbb{R}$ dérivable telle que $\lim_{x \to +\infty} f(x) = \ell$ et $\lim_{x \to +\infty} f'(x) = m$. Montrer rigoureusement que $m = 0$.
+
+\textbf{Résolution Zéro Ellipse :}
+\begin{enumerate}
+\item La fonction $f$ possède une asymptote horizontale d'ordonnée $\ell$ en l'infini. Intuitivement, sa pente (sa dérivée) doit nécessairement s'annuler, faute de quoi la fonction divergerait. Formalisons ce fait avec le TAF.
+\item Soit $x \in \mathbb{R}$. La fonction $f$ satisfait les conditions du Théorème des Accroissements Finis sur l'intervalle $[x, x+1]$ (elle est continue et dérivable sur $\mathbb{R}$).
+\item Il existe donc un réel $c_x \in ]x, x+1[$ tel que :
+   \[  f(x+1) - f(x) = f'(c_x)((x+1) - x) = f'(c_x)  \]
+\item Étudions le comportement à la limite lorsque $x$ tend vers $+\infty$.
+\item Par hypothèse, $\lim_{x \to +\infty} f(x) = \ell$. Par suite, $\lim_{x \to +\infty} f(x+1) = \ell$ par composition des limites avec la translation temporelle.
+\item Le membre de gauche de l'équation de l'étape 3 converge donc :
+   \[  \lim_{x \to +\infty} (f(x+1) - f(x)) = \ell - \ell = 0  \]
+\item Analysons le membre de droite. Puisque $c_x \in ]x, x+1[$, nous avons la double inégalité $x < c_x < x+1$.
+\item Par le théorème d'encadrement, lorsque $x \to +\infty$, le paramètre intermédiaire $c_x$ tend inexorablement vers $+\infty$.
+\item Par composition de limite, sachant par hypothèse que $\lim_{t \to +\infty} f'(t) = m$, nous déduisons :
+   \[  \lim_{x \to +\infty} f'(c_x) = m  \]
+\item Par unicité de la limite, en identifiant les limites des deux membres de l'égalité de l'étape 3, nous concluons irréfutablement : $0 = m$. $\blacksquare$
+\end{enumerate}
+
+
+\vspace{1em}
+
+\section*{Exercice 4 : Pratique et maîtrise conceptuelle}
+
+\textbf{Énoncé :}
+Soit $f$ une fonction dérivable sur $[0,1]$ telle que $f(0)=0$ et $f(1)=1$. Montrer qu'il existe des points distincts $x_1, \dots, x_n$ dans $]0,1[$ tels que $\sum_{i=1}^n \frac{1}{f'(x_i)} = n$.
+
+\textbf{Résolution Zéro Ellipse :}
+\begin{enumerate}
+\item Subdivisons l'intervalle $[0,1]$ de l'axe des ordonnées en $n$ sous-intervalles de longueur égale $1/n$ : posons $y_k = \frac{k}{n}$ pour $k \in \mathopen{[\![} 0, n \mathclose{]\!]}$.
+\item Le théorème des valeurs intermédiaires (TVI), applicable car $f$ est dérivable donc continue, assure l'existence de points pré-images.
+\item Puisque $f(0) = 0$ et $f(1) = 1$, pour chaque $k \in \mathopen{[\![} 0, n \mathclose{]\!]}$, l'ensemble $f^{-1}(\{y_k\})$ est non vide.
+\item Pour garantir l'ordre et définir des intervalles de TAF, définissons $a_k = \inf \{ x \in [0,1] \mid f(x) = y_k \}$. Par continuité de $f$ et compacité de $[0,1]$, le minimum est atteint, donc $f(a_k) = y_k$.
+\item Par construction de la suite des valeurs cibles $y_k$, nous avons une séquence strictement croissante de valeurs : $f(a_0) < f(a_1) < \dots < f(a_n)$.
+\item Ce qui implique nécessairement $a_0 < a_1 < \dots < a_n$, définissant ainsi une subdivision canonique de l'intervalle source $[0,1]$.
+\item Sur chaque sous-intervalle $[a_{k-1}, a_k]$ (pour $k \in \mathopen{[\![} 1, n \mathclose{]\!]}$), $f$ est continue et dérivable sur l'ouvert correspondant.
+\item Le Théorème des Accroissements Finis s'applique : il existe au moins un point $x_k \in ]a_{k-1}, a_k[$ tel que :
+   \[  f(a_k) - f(a_{k-1}) = f'(x_k)(a_k - a_{k-1})  \]
+\item Or, par définition des cibles, l'incrément vertical est constant : $f(a_k) - f(a_{k-1}) = y_k - y_{k-1} = \frac{k}{n} - \frac{k-1}{n} = \frac{1}{n}$.
+\item Nous pouvons alors isoler la quantité d'intérêt (en supposant $f'(x_k) \neq 0$, ce qui est garanti par l'équation puisque l'incrément vertical est strictement positif) :
+    \[  \frac{1}{n} = f'(x_k)(a_k - a_{k-1}) \implies \frac{1}{f'(x_k)} = n(a_k - a_{k-1})  \]
+\item Sommons ces identités sur l'ensemble des intervalles $k$ de $1$ à $n$ :
+    \[  \sum_{k=1}^n \frac{1}{f'(x_k)} = \sum_{k=1}^n n(a_k - a_{k-1}) = n \sum_{k=1}^n (a_k - a_{k-1})  \]
+\item La somme résultante est une somme télescopique parfaite :
+    \[  \sum_{k=1}^n (a_k - a_{k-1}) = (a_n - a_{n-1}) + (a_{n-1} - a_{n-2}) + \dots + (a_1 - a_0) = a_n - a_0  \]
+\item Or, par définition des conditions aux limites, $a_0 = 0$ et $a_n = 1$. L'amplitude totale est donc $1$.
+\item Par substitution finale, l'identité devient $\sum_{k=1}^n \frac{1}{f'(x_k)} = n(1 - 0) = n$.
+\item Les points $x_k$ étant isolés dans des intervalles disjoints $]a_{k-1}, a_k[$, ils sont rigoureusement distincts. La proposition est démontrée. $\blacksquare$
+\end{enumerate}
+
+
+\vspace{1em}
+
+\section*{Exercice 5 : Pratique et maîtrise conceptuelle}
+
+\textbf{Énoncé :}
+La règle de l'Hôpital : Soient $f$ et $g$ dérivables au voisinage de $a$, s'annulant en $a$, avec $g'(x) \neq 0$ près de $a$. Montrer que si $\lim_{x \to a} \frac{f'(x)}{g'(x)} = \ell$, alors $\lim_{x \to a} \frac{f(x)}{g(x)} = \ell$.
+
+\textbf{Résolution Zéro Ellipse :}
+\begin{enumerate}
+\item La preuve repose sur le Théorème des Accroissements Finis Généralisé (Théorème de Cauchy).
+\item Énonçons d'abord le théorème de Cauchy : soient $f,g$ continues sur $[a,b]$ et dérivables sur $]a,b[$, avec $g'$ ne s'annulant pas. Alors il existe $c \in ]a,b[$ tel que $\frac{f(b)-f(a)}{g(b)-g(a)} = \frac{f'(c)}{g'(c)}$.
+\item Preuve du th. de Cauchy : On pose $h(x) = f(x) - \lambda g(x)$ avec $\lambda = \frac{f(b)-f(a)}{g(b)-g(a)}$. $h(a) = h(b)$, par Rolle, $\exists c, h'(c) = 0 \implies f'(c) = \lambda g'(c)$.
+\item Appliquons ce résultat à notre problème. Pour un $x$ proche de $a$, on applique Cauchy sur le segment $[a, x]$.
+\item Puisque $f(a) = 0$ et $g(a) = 0$, le rapport devient : $\frac{f(x)}{g(x)} = \frac{f(x)-f(a)}{g(x)-g(a)} = \frac{f'(c_x)}{g'(c_x)}$.
+\item Le point intermédiaire vérifie $c_x \in ]a, x[$ (ou $]x, a[$ si $x < a$). Par les gendarmes, $\lim_{x \to a} c_x = a$.
+\item Par composition de limites, la conclusion découle immédiatement. $\blacksquare$
+\end{enumerate}
+
+
+\vspace{1em}
+
+\section*{Exercice 6 : Pratique et maîtrise conceptuelle}
+
+\textbf{Énoncé :}
+Soit $f$ de classe $\mathcal{C}^2$ sur $\mathbb{R}$. Si $f$ et $f''$ sont bornées sur $\mathbb{R}$, montrer que $f'$ est bornée sur $\mathbb{R}$ (Inégalité de Landau-Kolmogorov : $\|f'\|_\infty \leq \sqrt{2 \|f\|_\infty \|f''\|_\infty}$).
+
+\textbf{Résolution Zéro Ellipse :}
+\begin{enumerate}
+\item Posons $M_0 = \sup_{\mathbb{R}} |f(x)|$ et $M_2 = \sup_{\mathbb{R}} |f''(x)|$.
+\item Écrivons le développement de Taylor-Lagrange à l'ordre 2 entre $x$ et un point perturbé $x+h$ ($h > 0$) :
+   $f(x+h) = f(x) + h f'(x) + \frac{h^2}{2} f''(c_1)$ avec $c_1 \in ]x, x+h[$.
+\item Écrivons-le symétriquement pour $x-h$ :
+   $f(x-h) = f(x) - h f'(x) + \frac{h^2}{2} f''(c_2)$ avec $c_2 \in ]x-h, x[$.
+\item Soustrayons les deux expressions pour isoler le terme linéaire $f'(x)$ :
+   $f(x+h) - f(x-h) = 2h f'(x) + \frac{h^2}{2} (f''(c_1) - f''(c_2))$.
+\item Isolons algébriquement $f'(x)$ :
+   $f'(x) = \frac{f(x+h) - f(x-h)}{2h} - \frac{h}{4} (f''(c_1) - f''(c_2))$.
+\item Appliquons l'inégalité triangulaire :
+   $|f'(x)| \leq \frac{|f(x+h)| + |f(x-h)|}{2h} + \frac{h}{4} (|f''(c_1)| + |f''(c_2)|)$.
+\item Les fonctions étant bornées, on majore uniformément :
+   $|f'(x)| \leq \frac{2M_0}{2h} + \frac{h}{4} (2M_2) = \frac{M_0}{h} + \frac{M_2}{2} h$.
+\item Cette majoration est valide pour tout $x \in \mathbb{R}$ et tout $h > 0$. Pour obtenir la borne la plus fine, minimisons la fonction de $h : \psi(h) = \frac{M_0}{h} + \frac{M_2}{2} h$.
+\item En annulant la dérivée $\psi'(h) = -\frac{M_0}{h^2} + \frac{M_2}{2} = 0$, on trouve le minimum pour $h_0 = \sqrt{2 \frac{M_0}{M_2}}$.
+\item En substituant $h_0$, on obtient la borne désirée $\sqrt{2 M_0 M_2}$. $\blacksquare$
+\end{enumerate}
+
+
+\vspace{1em}
+
+\section*{Exercice 7 : Pratique et maîtrise conceptuelle}
+
+\textbf{Énoncé :}
+Soit $f$ de classe $\mathcal{C}^1$ sur $[a,b]$. Démontrer le lemme de Riemann-Lebesgue pour une phase linéaire : $\lim_{\lambda \to \infty} \int_a^b f(t) \sin(\lambda t) dt = 0$.
+
+\textbf{Résolution Zéro Ellipse :}
+\begin{enumerate}
+\item La régularité $\mathcal{C}^1$ de $f$ incite naturellement à utiliser une intégration par parties.
+\item Posons $u(t) = f(t) \implies u'(t) = f'(t)$ et $v'(t) = \sin(\lambda t) \implies v(t) = -\frac{\cos(\lambda t)}{\lambda}$.
+\item Appliquons la formule d'intégration par parties :
+   $\int_a^b f(t) \sin(\lambda t) dt = \left[ -f(t) \frac{\cos(\lambda t)}{\lambda} \right]_a^b + \int_a^b f'(t) \frac{\cos(\lambda t)}{\lambda} dt$.
+\item Évaluons le terme tout intégré :
+   $\left[ -f(t) \frac{\cos(\lambda t)}{\lambda} \right]_a^b = \frac{f(a)\cos(\lambda a) - f(b)\cos(\lambda b)}{\lambda}$.
+\item Puisque $f$ est continue sur un compact, elle est bornée. Le numérateur est borné indépendamment de $\lambda$. Ainsi, ce terme tend vers $0$ lorsque $\lambda \to \infty$.
+\item Majorons le terme intégral restant en utilisant la valeur absolue :
+   $| \int_a^b f'(t) \frac{\cos(\lambda t)}{\lambda} dt | \leq \int_a^b \frac{|f'(t)| \cdot |\cos(\lambda t)|}{\lambda} dt \leq \frac{1}{\lambda} \int_a^b |f'(t)| dt$.
+\item Puisque $f \in \mathcal{C}^1$, sa dérivée $f'$ est continue, donc l'intégrale $\int_a^b |f'(t)| dt$ est une constante finie fixée $K$.
+\item La majoration devient $K / \lambda$, qui tend inexorablement vers $0$ lorsque $\lambda \to \infty$.
+\item La somme des limites nulles certifie le résultat. $\blacksquare$
+\end{enumerate}
+
+
+\vspace{1em}
+
+\section*{Exercice 8 : Pratique et maîtrise conceptuelle}
+
+\textbf{Énoncé :}
+Démontrer le théorème de Darboux : Si $f$ est dérivable sur un intervalle $I$, alors sa fonction dérivée $f'$ vérifie la propriété des valeurs intermédiaires.
+
+\textbf{Résolution Zéro Ellipse :}
+\begin{enumerate}
+\item Soient $a, b \in I$ avec $a < b$, et soit $y$ un réel strictement compris entre $f'(a)$ et $f'(b)$. Démontrons qu'il existe $c \in ]a,b[$ tel que $f'(c) = y$.
+\item Supposons sans perte de généralité que $f'(a) < y < f'(b)$. Considérons la fonction auxiliaire $g(x) = f(x) - y x$.
+\item La fonction $g$ est dérivable sur $I$, et $g'(x) = f'(x) - y$.
+\item Évaluons la dérivée de $g$ aux bornes : $g'(a) = f'(a) - y < 0$ et $g'(b) = f'(b) - y > 0$.
+\item Puisque $g$ est continue sur le compact $[a,b]$, elle y admet un minimum global en un point $c \in [a,b]$.
+\item Montrons que $c$ ne peut être situé sur la frontière.
+\item Comme $g'(a) < 0$, la limite du taux d'accroissement de $g$ en $a$ est strictement négative. Pour $x > a$ suffisamment proche, $g(x) - g(a) < 0 \implies g(x) < g(a)$. Le minimum n'est donc pas en $a$.
+\item De même, $g'(b) > 0$. Pour $x < b$ suffisamment proche, $g(b) - g(x) > 0 \implies g(x) < g(b)$. Le minimum n'est donc pas en $b$.
+\item Par conséquent, l'extremum $c$ est atteint à l'intérieur de l'ouvert $]a,b[$.
+\item D'après la condition nécessaire d'optimalité du premier ordre (qui est un corollaire direct de la preuve de Rolle), la dérivée d'une fonction en un extremum local situé à l'intérieur d'un ouvert est nécessairement nulle.
+\item Donc $g'(c) = 0$.
+\item Or $g'(c) = f'(c) - y = 0 \implies f'(c) = y$. La dérivée atteint bien toutes ses valeurs intermédiaires. $\blacksquare$
+\end{enumerate}
+
+
+\vspace{1em}
+
+\section*{Exercice 9 : Pratique et maîtrise conceptuelle}
+
+\textbf{Énoncé :}
+Fonction de dérivée non Riemann-intégrable : Soit la fonction de Volterra $V(x)$. Construire formellement l'argument montrant qu'une fonction dérivable peut posséder une dérivée bornée non intégrable au sens de Riemann.
+
+\textbf{Résolution Zéro Ellipse :}
+\begin{enumerate}
+\item La construction canonique repose sur l'ensemble de Smith-Volterra-Cantor (un ensemble de Cantor de mesure de Lebesgue strictement positive).
+\item L'ensemble triadique classique de Cantor retire des intervalles ouverts de taille $\frac{1}{3}, \frac{2}{9}$, etc., conduisant à une mesure totale retirée de $1$, donc une mesure résiduelle nulle.
+\item Construisons un ensemble "gras" $K$ en retirant au milieu de chaque composante connexe, à l'étape $n$, un intervalle de longueur $\frac{1}{4^n}$.
+\item La somme des longueurs des intervalles retirés est $\sum_{n=1}^\infty 2^{n-1} \frac{1}{4^n} = \frac{1}{2} \sum (\frac{1}{2})^{n-1} = 1 \times \frac{1}{2} \times 2 = \frac{1}{2}$.
+\item La mesure de Lebesgue de l'ensemble résiduel compact $K$ est donc $1 - \frac{1}{2} = \frac{1}{2} > 0$. L'ensemble $K$ est de plus nulle part dense.
+\item Sur chaque intervalle ouvert retiré $]u, v[$, définissons une fonction dérivable oscillante semblable à $x^2 \sin(1/x)$, ajustée pour être nulle et de dérivée nulle aux bords $u$ et $v$.
+\item Soit $V(x)$ la fonction globale ainsi construite par recollement. $V$ est dérivable partout.
+\item Sur $K$, la dérivée s'annule par continuité des raccordements. La fonction dérivée $V'$ existe partout et est bornée.
+\item Cependant, $V'$ est discontinue sur les bords des intervalles retirés. L'ensemble des points de discontinuité de $V'$ contient le compact $K$.
+\item Le critère de Lebesgue-Vitali stipule qu'une fonction bornée est Riemann-intégrable si et seulement si l'ensemble de ses points de discontinuité est de mesure de Lebesgue nulle.
+\item Or, les points de discontinuité de $V'$ contiennent $K$ qui a une mesure $\frac{1}{2} > 0$.
+\item Par conséquent, la fonction $V'$, bien qu'étant l'exacte dérivée d'une fonction partout dérivable, n'est pas Riemann-intégrable. L'intégrale de Lebesgue supplantera l'intégrale de Riemann pour pallier cette défaillance de symétrie avec la dérivation. $\blacksquare$
+\end{enumerate}
+
+
+\vspace{1em}
+
+\section*{Exercice 10 : Pratique et maîtrise conceptuelle}
+
+\textbf{Énoncé :}
+Étude de la dérivée de la fonction de Weierstrass : Soit $f(x) = \sum_{n=0}^{\infty} a^n \cos(b^n \pi x)$ avec $0 < a < 1$ et $b$ entier impair tel que $ab > 1 + \frac{3}{2}\pi$. Démontrer que $f$ est partout continue mais nulle part dérivable.
+
+\textbf{Résolution Zéro Ellipse :}
+\begin{enumerate}
+\item La continuité globale est assurée par le théorème de convergence normale. Le terme général est borné par $a^n$. Or $a \in ]0,1[$, donc la série géométrique $\sum a^n$ converge. La somme d'une série normalement convergente de fonctions continues est continue.
+\item Fixons un point d'étude arbitraire $x \in \mathbb{R}$.
+\item Pour chaque entier $m \in \mathbb{N}$, définissons un incrément scalaire $h_m$ tel que $b^m x = \alpha_m + \epsilon_m$, où $\alpha_m \in \mathbb{Z}$ est l'entier le plus proche de $b^m x$, et $\epsilon_m \in [-1/2, 1/2]$.
+\item Posons $h_m = \frac{1 - \epsilon_m}{b^m}$. Notez que $h_m \to 0$ lorsque $m \to \infty$.
+\item Analysons le taux d'accroissement partiel pour le terme d'indice $n$ de la série :
+   \[  \tau_{n,m} = a^n \frac{\cos(b^n \pi (x+h_m)) - \cos(b^n \pi x)}{h_m}  \]
+\item Pour la "queue" de la série ($n \geq m$), les hautes fréquences dominent. La différence de phase est $\pi b^{n-m} (1-\epsilon_m)$. Par l'arithmétique modulaire stricte, avec $b$ impair, on extrait un facteur $(-1)^{\alpha_m}$ qui met en évidence une oscillation amplifiée sans annulation. La somme de la queue s'avère minorée en valeur absolue par une constante proportionnelle à $(ab)^m$.
+\item Pour la "tête" de la série ($n < m$), les basses fréquences, le théorème des accroissements finis appliqué au cosinus garantit que le taux d'accroissement de chaque harmonique est borné par sa dérivée locale maximale, majorée par $a^n b^n \pi$. La somme géométrique de cette tête est alors majorée par l'intégrale correspondante, approximativement $\frac{\pi (ab)^m}{ab-1}$.
+\item Le rapport du taux d'accroissement global est la somme des deux contributions. Par l'inégalité triangulaire inversée :
+   \[  \left| \frac{f(x+h_m) - f(x)}{h_m} \right| \geq C_1 (ab)^m - C_2 \frac{\pi (ab)^m}{ab-1} = (ab)^m \left( C_1 - \frac{C_2 \pi}{ab-1} \right)  \]
+\item La condition fondamentale imposée par Weierstrass, $ab > 1 + \frac{3}{2}\pi$, a été calibrée chirurgicalement pour garantir que la quantité entre parenthèses soit strictement positive (notons-la $K > 0$).
+\item La minoration du taux d'accroissement s'écrit alors $| \tau(h_m) | \geq K (ab)^m$.
+\item Or, $a \cdot b > 1$ implique que $(ab)^m \to +\infty$ quand $m \to \infty$.
+\item Le taux d'accroissement diverge donc vers l'infini le long de la sous-suite $h_m \to 0$. La dérivée, définie comme une limite finie universelle pour tout chemin approchant 0, ne peut exister. L'argument est valide en tout point $x$. $\blacksquare$
+\end{enumerate}
+
+
+\vspace{1em}
+
+
+\newpage
+\section{Travaux pratiques et simulations algorithmiques}
+
+\section*{TP 1 : Dérivation Numérique Différences Finies}
+
+\textbf{Objectif :}
+Implémenter l'approximation par différences finies progressives, rétrogrades et centrées pour mesurer l'ordre de convergence.
+
+\textbf{Implémentation Pure Python :}
+
+
+\begin{lstlisting}[language=Python]
+def f(x: float) -> float:
+    # Fonction x^3 pour test analytique (derivee exacte: 3x^2)
+    return x**3
+
+def forward_diff(func, x: float, h: float) -> float:
+    return (func(x + h) - func(x)) / h
+
+def backward_diff(func, x: float, h: float) -> float:
+    return (func(x) - func(x - h)) / h
+
+def central_diff(func, x: float, h: float) -> float:
+    return (func(x + h) - func(x - h)) / (2 * h)
+
+if __name__ == '__main__':
+    x0 = 2.0
+    h = 0.01
+    exact = 12.0
+
+    df_fwd = forward_diff(f, x0, h)
+    df_bwd = backward_diff(f, x0, h)
+    df_cen = central_diff(f, x0, h)
+
+    print(f"Exacte : {exact}")
+    print(f"Progressive : {df_fwd:.6f} (Erreur O(h))")
+    print(f"Retrograde  : {df_bwd:.6f} (Erreur O(h))")
+    print(f"Centree     : {df_cen:.6f} (Erreur O(h^2))")
+
+    assert abs(df_cen - exact) < abs(df_fwd - exact), "Le schema centre doit etre plus precis."
+\end{lstlisting}
+
+\vspace{1em}
+
+\section*{TP 2 : Extrapolation de Richardson}
+
+\textbf{Objectif :}
+Améliorer drastiquement la précision de la dérivée numérique via l'extrapolation de Richardson pour annuler le terme d'erreur principal en $h^2$.
+
+\textbf{Implémentation Pure Python :}
+
+
+\begin{lstlisting}[language=Python]
+import math
+
+def f(x: float) -> float:
+    return math.sin(x)
+
+def central_diff(func, x: float, h: float) -> float:
+    return (func(x + h) - func(x - h)) / (2 * h)
+
+def richardson_extrapolation(func, x: float, h: float) -> float:
+    # Extrapolation combinant l'estimation avec h et h/2
+    D_h = central_diff(func, x, h)
+    D_h_half = central_diff(func, x, h / 2.0)
+    # L'erreur de central_diff est en C*h^2 + ...
+    # D_h_half a une erreur en C*(h/2)^2 = C/4 * h^2
+    # 4*D_h_half - D_h elimine le terme d'ordre 2.
+    return (4.0 * D_h_half - D_h) / 3.0
+
+if __name__ == '__main__':
+    x0 = math.pi / 4.0
+    h = 0.1
+    exact = math.cos(x0)
+
+    std_estimate = central_diff(f, x0, h)
+    rich_estimate = richardson_extrapolation(f, x0, h)
+
+    print(f"Erreur schema centre standard : {abs(std_estimate - exact):.2e}")
+    print(f"Erreur apres Richardson      : {abs(rich_estimate - exact):.2e}")
+    assert abs(rich_estimate - exact) < abs(std_estimate - exact)
+\end{lstlisting}
+
+\vspace{1em}
+
+\section*{TP 3 : Moteur de Différentiation Automatique}
+
+\textbf{Objectif :}
+Créer un moteur minimaliste de dual-numbers pour la différentiation algorithmique (Forward mode), calculant des dérivées exactes sans approximation numérique.
+
+\textbf{Implémentation Pure Python :}
+
+
+\begin{lstlisting}[language=Python]
+class Dual:
+    def __init__(self, real: float, dual: float = 0.0):
+        self.real = real
+        self.dual = dual # Represente le terme lie a epsilon (ou eps^2 = 0)
+
+    def __add__(self, other):
+        if isinstance(other, (int, float)):
+            other = Dual(other, 0.0)
+        return Dual(self.real + other.real, self.dual + other.dual)
+
+    def __radd__(self, other):
+        return self.__add__(other)
+
+    def __mul__(self, other):
+        if isinstance(other, (int, float)):
+            other = Dual(other, 0.0)
+        # (a + b eps) * (c + d eps) = ac + (ad + bc) eps + bd eps^2 (or eps^2 = 0)
+        return Dual(self.real * other.real, self.real * other.dual + self.dual * other.real)
+
+    def __pow__(self, power: int):
+        # (x + x' eps)^n = x^n + n x^{n-1} x' eps
+        return Dual(self.real ** power, power * (self.real ** (power - 1)) * self.dual)
+
+def poly_func(x):
+    # f(x) = x^3 + 2x^2 + 5x
+    return x**3 + x * x * 2 + x * 5
+
+if __name__ == '__main__':
+    x_val = 3.0
+    # On evalue f(x + 1 eps). La partie duale du resultat donnera f'(x) * 1
+    x_dual = Dual(x_val, 1.0)
+
+    result = poly_func(x_dual)
+
+    valeur_exacte = x_val**3 + 2*x_val**2 + 5*x_val
+    derivee_exacte = 3*x_val**2 + 4*x_val + 5
+
+    print(f"f({x_val}) = {result.real} (Attendu: {valeur_exacte})")
+    print(f"f'({x_val}) = {result.dual} (Attendu: {derivee_exacte})")
+
+    assert abs(result.real - valeur_exacte) < 1e-9
+    assert abs(result.dual - derivee_exacte) < 1e-9
+\end{lstlisting}
+
+\vspace{1em}
+
+\section*{TP 4 : Méthode de Newton-Raphson}
+
+\textbf{Objectif :}
+Utiliser le développement limité d'ordre 1 (la tangente) pour chercher les zéros d'une fonction récursivement.
+
+\textbf{Implémentation Pure Python :}
+
+
+\begin{lstlisting}[language=Python]
+def f(x: float) -> float:
+    # Recherche de sqrt(2) : zero de x^2 - 2
+    return x**2 - 2.0
+
+def df(x: float) -> float:
+    return 2.0 * x
+
+def newton_raphson(func, deriv_func, x0: float, tol: float = 1e-9, max_iter: int = 50) -> float:
+    x = x0
+    for i in range(max_iter):
+        fx = func(x)
+        dfx = deriv_func(x)
+        if abs(dfx) < 1e-12:
+            raise ValueError("Derivee nulle rencontree, echec de l'algorithme.")
+
+        x_new = x - fx / dfx
+
+        if abs(x_new - x) < tol:
+            print(f"Convergence atteinte en {i+1} iterations.")
+            return x_new
+        x = x_new
+    return x
+
+if __name__ == '__main__':
+    racine_2 = newton_raphson(f, df, x0=1.5)
+    erreur = abs(racine_2**2 - 2.0)
+    print(f"Approximation de sqrt(2) : {racine_2}")
+    print(f"Erreur residuelle : {erreur:.2e}")
+    assert erreur < 1e-8
+\end{lstlisting}
+
+\vspace{1em}
+
+\section*{TP 5 : Descente de Gradient (Application IA)}
+
+\textbf{Objectif :}
+Implémenter l'algorithme fondamental du Deep Learning minimisant une fonction de coût convexe par flot sur la dérivée.
+
+\textbf{Implémentation Pure Python :}
+
+
+\begin{lstlisting}[language=Python]
+def cout_L(x: float) -> float:
+    # Fonction convexe quadratique : L(x) = (x - 3)^2
+    return (x - 3.0)**2
+
+def grad_L(x: float) -> float:
+    return 2.0 * (x - 3.0)
+
+def descente_gradient(grad_func, x_init: float, eta: float = 0.1, iters: int = 100) -> float:
+    x = x_init
+    historique = [x]
+    for _ in range(iters):
+        # x_new = x - eta * grad(x)
+        x = x - eta * grad_func(x)
+        historique.append(x)
+    return x, historique
+
+if __name__ == '__main__':
+    x_optimal, trace = descente_gradient(grad_L, x_init=0.0, eta=0.15, iters=30)
+    print(f"Minimum localise en : {x_optimal:.6f} (Theorique: 3.0)")
+    assert abs(x_optimal - 3.0) < 1e-2, "Le gradient n'a pas converge"
+\end{lstlisting}
+
+\vspace{1em}
+
+
+\end{document}
