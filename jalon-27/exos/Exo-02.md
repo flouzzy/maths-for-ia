@@ -1,36 +1,22 @@
 ---
-title: "Exercice 2 : Noyau et image d'un adjoint"
-difficulty: "★★☆☆☆"
+uuid: "jalon-27-exo-02"
+title: "Exercice 02 : Adjoint et inverse"
 ---
-# Exercice 2 : Noyau et image d'un adjoint
+# Exercice 02 : Adjoint et inverse
+
+**Difficulté :** ★☆☆☆☆
 
 ## Énoncé
-Soit $E$ un espace euclidien et $f \in \mathcal{L}(E)$.
-Démontrer rigoureusement les relations fondamentales suivantes :
-1. $\text{Ker}(f^*) = (\text{Im}(f))^\perp$
-2. $\text{Im}(f^*) = (\text{Ker}(f))^\perp$
 
-## Correction Zéro Ellipse
-**1. Preuve de $\text{Ker}(f^*) = (\text{Im}(f))^\perp$**
-Soit $y \in E$.
-$y \in \text{Ker}(f^*) \iff f^*(y) = 0_E$.
-Le vecteur $f^*(y)$ est nul si et seulement si son produit scalaire avec tout vecteur $x \in E$ est nul.
-$\iff \forall x \in E, \langle x, f^*(y) \rangle = 0$.
-Par définition de l'adjoint, on peut transférer $f^*$ sur l'autre argument :
-$\iff \forall x \in E, \langle f(x), y \rangle = 0$.
-Or, l'ensemble des vecteurs de la forme $f(x)$ pour $x \in E$ constitue exactement l'image de $f$, notée $\text{Im}(f)$.
-Donc la proposition s'écrit :
-$\iff \forall z \in \text{Im}(f), \langle z, y \rangle = 0$.
-Par définition de l'orthogonal d'un sous-espace vectoriel, cela signifie exactement que $y \in (\text{Im}(f))^\perp$.
-Ainsi, l'équivalence est totale et $\text{Ker}(f^*) = (\text{Im}(f))^\perp$.
+Montrer que si un endomorphisme $f \in \mathcal{L}(E)$ est inversible, alors $f^*$ est inversible et $(f^*)^{-1} = (f^{-1})^*$.
 
-**2. Preuve de $\text{Im}(f^*) = (\text{Ker}(f))^\perp$**
-Nous pourrions faire une démonstration directe, mais il est plus élégant et rigoureux d'utiliser la propriété précédente.
-Appliquons le résultat 1. à l'endomorphisme $f^*$ au lieu de $f$ :
-$\text{Ker}((f^*)^*) = (\text{Im}(f^*))^\perp$.
-Or, l'adjoint de l'adjoint est l'opérateur lui-même : $(f^*)^* = f$. En effet, $\forall x,y, \langle f^*(x), y \rangle = \langle x, f(y) \rangle = \langle f(y), x \rangle$.
-Donc $\text{Ker}(f) = (\text{Im}(f^*))^\perp$.
-Prenons maintenant l'orthogonal des deux membres de cette égalité. Dans un espace euclidien (donc de dimension finie), pour tout sous-espace $F$, on a $(F^\perp)^\perp = F$.
-Ainsi :
-$(\text{Ker}(f))^\perp = ((\text{Im}(f^*))^\perp)^\perp = \text{Im}(f^*)$.
-Ce qui conclut la preuve.
+## Démonstration sans ellipse
+
+Soit $f$ inversible. On a $f \circ f^{-1} = f^{-1} \circ f = \operatorname{Id}_E$.
+En prenant l'adjoint de l'identité, on obtient :
+$$ \operatorname{Id}_E^* = \operatorname{Id}_E $$
+D'autre part, en utilisant la propriété $(g \circ h)^* = h^* \circ g^*$, on obtient :
+$$ (f \circ f^{-1})^* = (f^{-1})^* \circ f^* = \operatorname{Id}_E $$
+Et de même :
+$$ (f^{-1} \circ f)^* = f^* \circ (f^{-1})^* = \operatorname{Id}_E $$
+Ainsi, $f^*$ est inversible, et son inverse est $(f^{-1})^*$. $\blacksquare$
