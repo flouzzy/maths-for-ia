@@ -13,11 +13,9 @@ next: "[[Jalon 19 (Dérivabilité).md]]"
 # Jalon 18 : Continuité des fonctions d'une variable réelle, théorème des valeurs intermédiaires et compacité locale
 
 ## 1. Présentation du concept clé
-*Cette section doit rendre le concept physique, visuel ou métaphorique sans utiliser aucun formalisme mathématique complexe.*
-
-- **La Métaphore :** Imaginez que vous dessiniez une courbe avec un crayon sur une feuille de papier. La **Continuité**, c'est simplement la règle d'or : vous n'avez pas le droit de lever le crayon. Si vous devez passer de la gauche à la droite de la feuille, votre trait doit être ininterrompu. Le **Théorème des Valeurs Intermédiaires (TVI)**, c'est comme dire que si vous commencez à dessiner en bas de la feuille et que vous finissez en haut, votre crayon a forcément dû traverser la ligne du milieu à un moment donné. Vous ne pouvez pas vous téléporter !
+ Imaginez que vous dessiniez une courbe avec un crayon sur une feuille de papier. La **Continuité**, c'est simplement la règle d'or : vous n'avez pas le droit de lever le crayon. Si vous devez passer de la gauche à la droite de la feuille, votre trait doit être ininterrompu. Le **Théorème des Valeurs Intermédiaires (TVI)**, c'est comme dire que si vous commencez à dessiner en bas de la feuille et que vous finissez en haut, votre crayon a forcément dû traverser la ligne du milieu à un moment donné. Vous ne pouvez pas vous téléporter !
 - **Le "Pourquoi on a inventé ça" :** Dans la nature, peu de choses changent instantanément. La température, la position d'une voiture, ou la croissance d'une plante sont des phénomènes continus. Les mathématiciens ont eu besoin de définir cette notion pour garantir que si on cherche une solution (un point où une fonction vaut zéro), elle existe vraiment. C'est fondamental pour modéliser des systèmes physiques et pour l'analyse numérique.
-- **Visualisation :** Imaginez un élastique tendu. Si vous tirez sur un point, les points voisins suivent le mouvement. C'est la continuité : des causes proches produisent des effets proches. À l'inverse, une **discontinuité** serait une rupture nette de cet élastique, un "saut" ou un "trou" dans la courbe.
+ Imaginez un élastique tendu. Si vous tirez sur un point, les points voisins suivent le mouvement. C'est la continuité : des causes proches produisent des effets proches. À l'inverse, une **discontinuité** serait une rupture nette de cet élastique, un "saut" ou un "trou" dans la courbe.
 
 ## 2. Formalisation
 *Le niveau bascule ici instantanément dans l'exigence pure des mathématiques supérieures.*
@@ -107,8 +105,6 @@ Soit $I$ un intervalle de $\mathbb{R}$ et $f : I \to \mathbb{R}$ une fonction.
     *   **Typage chirurgical :** L'image $J$ est également un intervalle.
 
 ## 3. Démonstrations
-*Rappel : Écris CHAQUE ligne de calcul intermédiaire sans sauter aucune étape.*
-
 ### Démonstration du Théorème Pivot : Théorème des Valeurs Intermédiaires (par dichotomie)
 Nous allons démontrer le cas particulier du TVI où $f(a) < 0 < f(b)$, et montrer qu'il existe $c \in [a, b]$ tel que $f(c) = 0$. Le cas général du TVI s'en déduit facilement.
 
@@ -435,8 +431,6 @@ Nous devons montrer qu'il existe un $\epsilon_0 > 0$ tel que pour tout $\delta >
 **Conclusion :** La fonction $f(x) = \frac{1}{x}$ est continue sur $]0, 1]$ mais n'est pas uniformément continue sur cet intervalle. L'intuition est que la pente de la fonction devient arbitrairement grande à l'approche de 0, ce qui empêche de trouver un $\delta$ unique pour toutes les paires de points.
 
 ## 5. Application en Intelligence Artificielle
-*Démontrer la finalité technologique moderne de ce jalon théorique.*
-
 -   **Le Pont Théorique :** En Intelligence Artificielle, et plus particulièrement dans les réseaux de neurones profonds, les fonctions de transformation (activations, couches linéaires, convolutions) sont souvent choisies pour être continues, voire différentiables. La continuité garantit que de petites modifications des données d'entrée (par exemple, un léger bruit sur une image, une petite variation dans un texte) n'entraînent pas de changements brutaux et imprévisibles dans la prédiction ou la sortie du modèle. C'est la base de la **Robustesse** des modèles d'IA. Sans continuité, un modèle pourrait donner des résultats complètement différents pour des entrées presque identiques, le rendant inutilisable dans des applications critiques.
 
 -   **Exemple Concret 1 : Robustesse et Adversarial Examples :**
