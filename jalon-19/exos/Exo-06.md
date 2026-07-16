@@ -1,28 +1,27 @@
 ---
 titre: "Exercice 6 : Dérivabilité"
-difficulte: "★★★★☆"
+difficulte: "★★★☆☆"
 ---
 
-# Exercice 6 : Étude approfondie de la dérivabilité
+# Exercice 6 : Pratique et maîtrise conceptuelle
 
 **Énoncé :**
-Étudier avec une rigueur absolue la dérivabilité de la fonction définie par :
-$f(x) = x^{7} \sin(1/x)$ pour $x \neq 0$, et $f(0) = 0$.
-Déterminer si la dérivée est continue en 0.
+Soit $f$ de classe $\mathcal{C}^2$ sur $\mathbb{R}$. Si $f$ et $f''$ sont bornées sur $\mathbb{R}$, montrer que $f'$ est bornée sur $\mathbb{R}$ (Inégalité de Landau-Kolmogorov : $\|f'\|_\infty \leq \sqrt{2 \|f\|_\infty \|f''\|_\infty}$).
 
 **Résolution Zéro Ellipse :**
-1. Pour tout $x \neq 0$, la fonction $x \mapsto x^{7}$ est dérivable sur $\mathbb{R}^*$ comme fonction puissance (composée polynomiale).
-2. La fonction $x \mapsto 1/x$ est dérivable sur $\mathbb{R}^*$.
-3. La fonction $\sin$ est dérivable sur $\mathbb{R}$. Par composition, $x \mapsto \sin(1/x)$ est dérivable sur $\mathbb{R}^*$.
-4. Par produit, $f$ est dérivable sur $\mathbb{R}^*$ et, pour $x \neq 0$, par les règles de dérivation ($uv' + u'v$) :
-   $$ f'(x) = (6+1)x^{6} \sin(1/x) + x^{7} \cdot \left(-\frac{1}{x^2}\right) \cos(1/x) = (6+1)x^{6} \sin(1/x) - x^{5} \cos(1/x) $$
-5. Étudions la dérivabilité en $x=0$. Formons le taux d'accroissement :
-   $$ \tau(x) = \frac{f(x) - f(0)}{x - 0} = \frac{x^{7} \sin(1/x)}{x} = x^{6} \sin(1/x) $$
-6. Comme $|\sin(1/x)| \leq 1$, nous avons $|\tau(x)| \leq |x|^{6}$.
-7. Puisque $6 \geq 1$, $\lim_{x \to 0} |x|^{6} = 0$. Par le théorème des gendarmes, $\lim_{x \to 0} \tau(x) = 0$.
-8. La limite du taux d'accroissement existe et est finie. Donc $f$ est dérivable en $0$, et $f'(0) = 0$.
-9. La fonction $f$ est donc dérivable sur tout $\mathbb{R}$.
-10. Continuité de la dérivée en $0$ :
-    On a $f'(x) = (6+1)x^{6} \sin(1/x) - x^{5} \cos(1/x)$.
-    - Si $6 = 1$ : $f'(x) = 2x \sin(1/x) - \cos(1/x)$. Le terme $2x \sin(1/x)$ tend vers $0$ mais $\cos(1/x)$ n'a pas de limite en $0$. Donc $f'$ n'est pas continue en 0.
-    - Si $6 > 1$ : $\lim_{x \to 0} f'(x) = 0 = f'(0)$. La dérivée est continue en $0$. $\blacksquare$
+1. Posons $M_0 = \sup_{\mathbb{R}} |f(x)|$ et $M_2 = \sup_{\mathbb{R}} |f''(x)|$.
+2. Écrivons le développement de Taylor-Lagrange à l'ordre 2 entre $x$ et un point perturbé $x+h$ ($h > 0$) :
+   $f(x+h) = f(x) + h f'(x) + \frac{h^2}{2} f''(c_1)$ avec $c_1 \in ]x, x+h[$.
+3. Écrivons-le symétriquement pour $x-h$ :
+   $f(x-h) = f(x) - h f'(x) + \frac{h^2}{2} f''(c_2)$ avec $c_2 \in ]x-h, x[$.
+4. Soustrayons les deux expressions pour isoler le terme linéaire $f'(x)$ :
+   $f(x+h) - f(x-h) = 2h f'(x) + \frac{h^2}{2} (f''(c_1) - f''(c_2))$.
+5. Isolons algébriquement $f'(x)$ :
+   $f'(x) = \frac{f(x+h) - f(x-h)}{2h} - \frac{h}{4} (f''(c_1) - f''(c_2))$.
+6. Appliquons l'inégalité triangulaire :
+   $|f'(x)| \leq \frac{|f(x+h)| + |f(x-h)|}{2h} + \frac{h}{4} (|f''(c_1)| + |f''(c_2)|)$.
+7. Les fonctions étant bornées, on majore uniformément :
+   $|f'(x)| \leq \frac{2M_0}{2h} + \frac{h}{4} (2M_2) = \frac{M_0}{h} + \frac{M_2}{2} h$.
+8. Cette majoration est valide pour tout $x \in \mathbb{R}$ et tout $h > 0$. Pour obtenir la borne la plus fine, minimisons la fonction de $h : \psi(h) = \frac{M_0}{h} + \frac{M_2}{2} h$.
+9. En annulant la dérivée $\psi'(h) = -\frac{M_0}{h^2} + \frac{M_2}{2} = 0$, on trouve le minimum pour $h_0 = \sqrt{2 \frac{M_0}{M_2}}$.
+10. En substituant $h_0$, on obtient la borne désirée $\sqrt{2 M_0 M_2}$. $\blacksquare$

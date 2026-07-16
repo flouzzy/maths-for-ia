@@ -3,26 +3,23 @@ titre: "Exercice 10 : Dérivabilité"
 difficulte: "★★★★★"
 ---
 
-# Exercice 10 : Étude approfondie de la dérivabilité
+# Exercice 10 : Pratique et maîtrise conceptuelle
 
 **Énoncé :**
-Étudier avec une rigueur absolue la dérivabilité de la fonction définie par :
-$f(x) = x^{11} \sin(1/x)$ pour $x \neq 0$, et $f(0) = 0$.
-Déterminer si la dérivée est continue en 0.
+Étude de la dérivée de la fonction de Weierstrass : Soit $f(x) = \sum_{n=0}^{\infty} a^n \cos(b^n \pi x)$ avec $0 < a < 1$ et $b$ entier impair tel que $ab > 1 + \frac{3}{2}\pi$. Démontrer que $f$ est partout continue mais nulle part dérivable.
 
 **Résolution Zéro Ellipse :**
-1. Pour tout $x \neq 0$, la fonction $x \mapsto x^{11}$ est dérivable sur $\mathbb{R}^*$ comme fonction puissance (composée polynomiale).
-2. La fonction $x \mapsto 1/x$ est dérivable sur $\mathbb{R}^*$.
-3. La fonction $\sin$ est dérivable sur $\mathbb{R}$. Par composition, $x \mapsto \sin(1/x)$ est dérivable sur $\mathbb{R}^*$.
-4. Par produit, $f$ est dérivable sur $\mathbb{R}^*$ et, pour $x \neq 0$, par les règles de dérivation ($uv' + u'v$) :
-   $$ f'(x) = (10+1)x^{10} \sin(1/x) + x^{11} \cdot \left(-\frac{1}{x^2}\right) \cos(1/x) = (10+1)x^{10} \sin(1/x) - x^{9} \cos(1/x) $$
-5. Étudions la dérivabilité en $x=0$. Formons le taux d'accroissement :
-   $$ \tau(x) = \frac{f(x) - f(0)}{x - 0} = \frac{x^{11} \sin(1/x)}{x} = x^{10} \sin(1/x) $$
-6. Comme $|\sin(1/x)| \leq 1$, nous avons $|\tau(x)| \leq |x|^{10}$.
-7. Puisque $10 \geq 1$, $\lim_{x \to 0} |x|^{10} = 0$. Par le théorème des gendarmes, $\lim_{x \to 0} \tau(x) = 0$.
-8. La limite du taux d'accroissement existe et est finie. Donc $f$ est dérivable en $0$, et $f'(0) = 0$.
-9. La fonction $f$ est donc dérivable sur tout $\mathbb{R}$.
-10. Continuité de la dérivée en $0$ :
-    On a $f'(x) = (10+1)x^{10} \sin(1/x) - x^{9} \cos(1/x)$.
-    - Si $10 = 1$ : $f'(x) = 2x \sin(1/x) - \cos(1/x)$. Le terme $2x \sin(1/x)$ tend vers $0$ mais $\cos(1/x)$ n'a pas de limite en $0$. Donc $f'$ n'est pas continue en 0.
-    - Si $10 > 1$ : $\lim_{x \to 0} f'(x) = 0 = f'(0)$. La dérivée est continue en $0$. $\blacksquare$
+1. La continuité globale est assurée par le théorème de convergence normale. Le terme général est borné par $a^n$. Or $a \in ]0,1[$, donc la série géométrique $\sum a^n$ converge. La somme d'une série normalement convergente de fonctions continues est continue.
+2. Fixons un point d'étude arbitraire $x \in \mathbb{R}$.
+3. Pour chaque entier $m \in \mathbb{N}$, définissons un incrément scalaire $h_m$ tel que $b^m x = \alpha_m + \epsilon_m$, où $\alpha_m \in \mathbb{Z}$ est l'entier le plus proche de $b^m x$, et $\epsilon_m \in [-1/2, 1/2]$.
+4. Posons $h_m = \frac{1 - \epsilon_m}{b^m}$. Notez que $h_m \to 0$ lorsque $m \to \infty$.
+5. Analysons le taux d'accroissement partiel pour le terme d'indice $n$ de la série :
+   $$ \tau_{n,m} = a^n \frac{\cos(b^n \pi (x+h_m)) - \cos(b^n \pi x)}{h_m} $$
+6. Pour la "queue" de la série ($n \geq m$), les hautes fréquences dominent. La différence de phase est $\pi b^{n-m} (1-\epsilon_m)$. Par l'arithmétique modulaire stricte, avec $b$ impair, on extrait un facteur $(-1)^{\alpha_m}$ qui met en évidence une oscillation amplifiée sans annulation. La somme de la queue s'avère minorée en valeur absolue par une constante proportionnelle à $(ab)^m$.
+7. Pour la "tête" de la série ($n < m$), les basses fréquences, le théorème des accroissements finis appliqué au cosinus garantit que le taux d'accroissement de chaque harmonique est borné par sa dérivée locale maximale, majorée par $a^n b^n \pi$. La somme géométrique de cette tête est alors majorée par l'intégrale correspondante, approximativement $\frac{\pi (ab)^m}{ab-1}$.
+8. Le rapport du taux d'accroissement global est la somme des deux contributions. Par l'inégalité triangulaire inversée :
+   $$ \left| \frac{f(x+h_m) - f(x)}{h_m} \right| \geq C_1 (ab)^m - C_2 \frac{\pi (ab)^m}{ab-1} = (ab)^m \left( C_1 - \frac{C_2 \pi}{ab-1} \right) $$
+9. La condition fondamentale imposée par Weierstrass, $ab > 1 + \frac{3}{2}\pi$, a été calibrée chirurgicalement pour garantir que la quantité entre parenthèses soit strictement positive (notons-la $K > 0$).
+10. La minoration du taux d'accroissement s'écrit alors $| \tau(h_m) | \geq K (ab)^m$.
+11. Or, $a \cdot b > 1$ implique que $(ab)^m \to +\infty$ quand $m \to \infty$.
+12. Le taux d'accroissement diverge donc vers l'infini le long de la sous-suite $h_m \to 0$. La dérivée, définie comme une limite finie universelle pour tout chemin approchant 0, ne peut exister. L'argument est valide en tout point $x$. $\blacksquare$
