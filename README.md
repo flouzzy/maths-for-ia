@@ -388,3 +388,4 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 
 - [2026-06-25] : Upsert du Jalon 11 - Formes linéaires. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-07-15] : Upsert du Jalon 27 - Endomorphismes symétriques. Status: Terminé.
+- [2026-07-16] : Upsert du Jalon 28 - Polynômes d'endomorphismes. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
