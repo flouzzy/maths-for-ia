@@ -11,24 +11,12 @@
             "id": "8ceda288c71f7e44",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "jalon-22/Jalon-22.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
+                "file": "jalon-9/jalon-9-polycopie.pdf"
               },
-              "icon": "lucide-file",
-              "title": "Jalon-22"
+              "icon": "lucide-file-text",
+              "title": "jalon-9-polycopie"
             }
           }
         ]
@@ -222,18 +210,21 @@
   },
   "active": "8ceda288c71f7e44",
   "lastOpenFiles": [
+    "jalon-18/jalon-18.tex",
+    "jalon-18/jalon-18-polycopie.pdf",
+    "jalon-17/jalon-17-polycopie.pdf",
+    "jalon-17.tex",
+    "jalon-6/Jalon-6.md",
+    "jalon-6/jalon-6-polycopie.pdf",
+    "jalon-5/jalon-5-polycopie.pdf",
+    "jalon-26/Jalon-26.md",
+    "jalon-22/Jalon-22.md",
     "jalon-16/jalon-16.toc",
     "jalon-16/jalon-16.log",
     "jalon-16/jalon-16.aux",
     "jalon-16/jalon-16-polycopie.pdf",
     "jalon-16.tex",
-    "fix_latex3.py",
-    "fix_latex2.py",
-    "test_regex.py",
     "plan_review_15.md",
-    "jalon-15/jalon-15.tex",
-    "jalon-15/jalon-15-polycopie.pdf",
-    "fix_gen.py",
     "jalon-1/Jalon 1 (Logique formelle).md",
     "jalon-23/Jalon 23 (Séries entières).md",
     "MathsForAI/Bienvenue.md",
@@ -256,9 +247,6 @@
     "jalon-8/Jalon 8 (Applications linéaires).md",
     "jalon-7/Jalon 7 (Espaces vectoriels abstraits).md",
     "jalon-6/Jalon 6 (Relations d'équivalence).md",
-    "jalon-1/README.md",
-    "jalon-142/Jalon-142.md",
-    "jalon-143/Jalon-143.md",
-    "jalon-143/README.md"
+    "jalon-1/README.md"
   ]
 }
