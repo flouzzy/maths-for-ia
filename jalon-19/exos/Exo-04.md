@@ -1,28 +1,30 @@
 ---
 titre: "Exercice 4 : Dérivabilité"
-difficulte: "★★★☆☆"
+difficulte: "★★☆☆☆"
 ---
 
-# Exercice 4 : Étude approfondie de la dérivabilité
+# Exercice 4 : Pratique et maîtrise conceptuelle
 
 **Énoncé :**
-Étudier avec une rigueur absolue la dérivabilité de la fonction définie par :
-$f(x) = x^{5} \sin(1/x)$ pour $x \neq 0$, et $f(0) = 0$.
-Déterminer si la dérivée est continue en 0.
+Soit $f$ une fonction dérivable sur $[0,1]$ telle que $f(0)=0$ et $f(1)=1$. Montrer qu'il existe des points distincts $x_1, \dots, x_n$ dans $]0,1[$ tels que $\sum_{i=1}^n \frac{1}{f'(x_i)} = n$.
 
 **Résolution Zéro Ellipse :**
-1. Pour tout $x \neq 0$, la fonction $x \mapsto x^{5}$ est dérivable sur $\mathbb{R}^*$ comme fonction puissance (composée polynomiale).
-2. La fonction $x \mapsto 1/x$ est dérivable sur $\mathbb{R}^*$.
-3. La fonction $\sin$ est dérivable sur $\mathbb{R}$. Par composition, $x \mapsto \sin(1/x)$ est dérivable sur $\mathbb{R}^*$.
-4. Par produit, $f$ est dérivable sur $\mathbb{R}^*$ et, pour $x \neq 0$, par les règles de dérivation ($uv' + u'v$) :
-   $$ f'(x) = (4+1)x^{4} \sin(1/x) + x^{5} \cdot \left(-\frac{1}{x^2}\right) \cos(1/x) = (4+1)x^{4} \sin(1/x) - x^{3} \cos(1/x) $$
-5. Étudions la dérivabilité en $x=0$. Formons le taux d'accroissement :
-   $$ \tau(x) = \frac{f(x) - f(0)}{x - 0} = \frac{x^{5} \sin(1/x)}{x} = x^{4} \sin(1/x) $$
-6. Comme $|\sin(1/x)| \leq 1$, nous avons $|\tau(x)| \leq |x|^{4}$.
-7. Puisque $4 \geq 1$, $\lim_{x \to 0} |x|^{4} = 0$. Par le théorème des gendarmes, $\lim_{x \to 0} \tau(x) = 0$.
-8. La limite du taux d'accroissement existe et est finie. Donc $f$ est dérivable en $0$, et $f'(0) = 0$.
-9. La fonction $f$ est donc dérivable sur tout $\mathbb{R}$.
-10. Continuité de la dérivée en $0$ :
-    On a $f'(x) = (4+1)x^{4} \sin(1/x) - x^{3} \cos(1/x)$.
-    - Si $4 = 1$ : $f'(x) = 2x \sin(1/x) - \cos(1/x)$. Le terme $2x \sin(1/x)$ tend vers $0$ mais $\cos(1/x)$ n'a pas de limite en $0$. Donc $f'$ n'est pas continue en 0.
-    - Si $4 > 1$ : $\lim_{x \to 0} f'(x) = 0 = f'(0)$. La dérivée est continue en $0$. $\blacksquare$
+1. Subdivisons l'intervalle $[0,1]$ de l'axe des ordonnées en $n$ sous-intervalles de longueur égale $1/n$ : posons $y_k = \frac{k}{n}$ pour $k \in \llbracket 0, n \rrbracket$.
+2. Le théorème des valeurs intermédiaires (TVI), applicable car $f$ est dérivable donc continue, assure l'existence de points pré-images.
+3. Puisque $f(0) = 0$ et $f(1) = 1$, pour chaque $k \in \llbracket 0, n \rrbracket$, l'ensemble $f^{-1}(\{y_k\})$ est non vide.
+4. Pour garantir l'ordre et définir des intervalles de TAF, définissons $a_k = \inf \{ x \in [0,1] \mid f(x) = y_k \}$. Par continuité de $f$ et compacité de $[0,1]$, le minimum est atteint, donc $f(a_k) = y_k$.
+5. Par construction de la suite des valeurs cibles $y_k$, nous avons une séquence strictement croissante de valeurs : $f(a_0) < f(a_1) < \dots < f(a_n)$.
+6. Ce qui implique nécessairement $a_0 < a_1 < \dots < a_n$, définissant ainsi une subdivision canonique de l'intervalle source $[0,1]$.
+7. Sur chaque sous-intervalle $[a_{k-1}, a_k]$ (pour $k \in \llbracket 1, n \rrbracket$), $f$ est continue et dérivable sur l'ouvert correspondant.
+8. Le Théorème des Accroissements Finis s'applique : il existe au moins un point $x_k \in ]a_{k-1}, a_k[$ tel que :
+   $$ f(a_k) - f(a_{k-1}) = f'(x_k)(a_k - a_{k-1}) $$
+9. Or, par définition des cibles, l'incrément vertical est constant : $f(a_k) - f(a_{k-1}) = y_k - y_{k-1} = \frac{k}{n} - \frac{k-1}{n} = \frac{1}{n}$.
+10. Nous pouvons alors isoler la quantité d'intérêt (en supposant $f'(x_k) \neq 0$, ce qui est garanti par l'équation puisque l'incrément vertical est strictement positif) :
+    $$ \frac{1}{n} = f'(x_k)(a_k - a_{k-1}) \implies \frac{1}{f'(x_k)} = n(a_k - a_{k-1}) $$
+11. Sommons ces identités sur l'ensemble des intervalles $k$ de $1$ à $n$ :
+    $$ \sum_{k=1}^n \frac{1}{f'(x_k)} = \sum_{k=1}^n n(a_k - a_{k-1}) = n \sum_{k=1}^n (a_k - a_{k-1}) $$
+12. La somme résultante est une somme télescopique parfaite :
+    $$ \sum_{k=1}^n (a_k - a_{k-1}) = (a_n - a_{n-1}) + (a_{n-1} - a_{n-2}) + \dots + (a_1 - a_0) = a_n - a_0 $$
+13. Or, par définition des conditions aux limites, $a_0 = 0$ et $a_n = 1$. L'amplitude totale est donc $1$.
+14. Par substitution finale, l'identité devient $\sum_{k=1}^n \frac{1}{f'(x_k)} = n(1 - 0) = n$.
+15. Les points $x_k$ étant isolés dans des intervalles disjoints $]a_{k-1}, a_k[$, ils sont rigoureusement distincts. La proposition est démontrée. $\blacksquare$

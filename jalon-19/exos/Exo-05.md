@@ -3,26 +3,16 @@ titre: "Exercice 5 : Dérivabilité"
 difficulte: "★★★☆☆"
 ---
 
-# Exercice 5 : Étude approfondie de la dérivabilité
+# Exercice 5 : Pratique et maîtrise conceptuelle
 
 **Énoncé :**
-Étudier avec une rigueur absolue la dérivabilité de la fonction définie par :
-$f(x) = x^{6} \sin(1/x)$ pour $x \neq 0$, et $f(0) = 0$.
-Déterminer si la dérivée est continue en 0.
+La règle de l'Hôpital : Soient $f$ et $g$ dérivables au voisinage de $a$, s'annulant en $a$, avec $g'(x) \neq 0$ près de $a$. Montrer que si $\lim_{x \to a} \frac{f'(x)}{g'(x)} = \ell$, alors $\lim_{x \to a} \frac{f(x)}{g(x)} = \ell$.
 
 **Résolution Zéro Ellipse :**
-1. Pour tout $x \neq 0$, la fonction $x \mapsto x^{6}$ est dérivable sur $\mathbb{R}^*$ comme fonction puissance (composée polynomiale).
-2. La fonction $x \mapsto 1/x$ est dérivable sur $\mathbb{R}^*$.
-3. La fonction $\sin$ est dérivable sur $\mathbb{R}$. Par composition, $x \mapsto \sin(1/x)$ est dérivable sur $\mathbb{R}^*$.
-4. Par produit, $f$ est dérivable sur $\mathbb{R}^*$ et, pour $x \neq 0$, par les règles de dérivation ($uv' + u'v$) :
-   $$ f'(x) = (5+1)x^{5} \sin(1/x) + x^{6} \cdot \left(-\frac{1}{x^2}\right) \cos(1/x) = (5+1)x^{5} \sin(1/x) - x^{4} \cos(1/x) $$
-5. Étudions la dérivabilité en $x=0$. Formons le taux d'accroissement :
-   $$ \tau(x) = \frac{f(x) - f(0)}{x - 0} = \frac{x^{6} \sin(1/x)}{x} = x^{5} \sin(1/x) $$
-6. Comme $|\sin(1/x)| \leq 1$, nous avons $|\tau(x)| \leq |x|^{5}$.
-7. Puisque $5 \geq 1$, $\lim_{x \to 0} |x|^{5} = 0$. Par le théorème des gendarmes, $\lim_{x \to 0} \tau(x) = 0$.
-8. La limite du taux d'accroissement existe et est finie. Donc $f$ est dérivable en $0$, et $f'(0) = 0$.
-9. La fonction $f$ est donc dérivable sur tout $\mathbb{R}$.
-10. Continuité de la dérivée en $0$ :
-    On a $f'(x) = (5+1)x^{5} \sin(1/x) - x^{4} \cos(1/x)$.
-    - Si $5 = 1$ : $f'(x) = 2x \sin(1/x) - \cos(1/x)$. Le terme $2x \sin(1/x)$ tend vers $0$ mais $\cos(1/x)$ n'a pas de limite en $0$. Donc $f'$ n'est pas continue en 0.
-    - Si $5 > 1$ : $\lim_{x \to 0} f'(x) = 0 = f'(0)$. La dérivée est continue en $0$. $\blacksquare$
+1. La preuve repose sur le Théorème des Accroissements Finis Généralisé (Théorème de Cauchy).
+2. Énonçons d'abord le théorème de Cauchy : soient $f,g$ continues sur $[a,b]$ et dérivables sur $]a,b[$, avec $g'$ ne s'annulant pas. Alors il existe $c \in ]a,b[$ tel que $\frac{f(b)-f(a)}{g(b)-g(a)} = \frac{f'(c)}{g'(c)}$.
+3. Preuve du th. de Cauchy : On pose $h(x) = f(x) - \lambda g(x)$ avec $\lambda = \frac{f(b)-f(a)}{g(b)-g(a)}$. $h(a) = h(b)$, par Rolle, $\exists c, h'(c) = 0 \implies f'(c) = \lambda g'(c)$.
+4. Appliquons ce résultat à notre problème. Pour un $x$ proche de $a$, on applique Cauchy sur le segment $[a, x]$.
+5. Puisque $f(a) = 0$ et $g(a) = 0$, le rapport devient : $\frac{f(x)}{g(x)} = \frac{f(x)-f(a)}{g(x)-g(a)} = \frac{f'(c_x)}{g'(c_x)}$.
+6. Le point intermédiaire vérifie $c_x \in ]a, x[$ (ou $]x, a[$ si $x < a$). Par les gendarmes, $\lim_{x \to a} c_x = a$.
+7. Par composition de limites, la conclusion découle immédiatement. $\blacksquare$

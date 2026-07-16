@@ -1,28 +1,23 @@
 ---
 titre: "Exercice 8 : Dérivabilité"
-difficulte: "★★★★★"
+difficulte: "★★★★☆"
 ---
 
-# Exercice 8 : Étude approfondie de la dérivabilité
+# Exercice 8 : Pratique et maîtrise conceptuelle
 
 **Énoncé :**
-Étudier avec une rigueur absolue la dérivabilité de la fonction définie par :
-$f(x) = x^{9} \sin(1/x)$ pour $x \neq 0$, et $f(0) = 0$.
-Déterminer si la dérivée est continue en 0.
+Démontrer le théorème de Darboux : Si $f$ est dérivable sur un intervalle $I$, alors sa fonction dérivée $f'$ vérifie la propriété des valeurs intermédiaires.
 
 **Résolution Zéro Ellipse :**
-1. Pour tout $x \neq 0$, la fonction $x \mapsto x^{9}$ est dérivable sur $\mathbb{R}^*$ comme fonction puissance (composée polynomiale).
-2. La fonction $x \mapsto 1/x$ est dérivable sur $\mathbb{R}^*$.
-3. La fonction $\sin$ est dérivable sur $\mathbb{R}$. Par composition, $x \mapsto \sin(1/x)$ est dérivable sur $\mathbb{R}^*$.
-4. Par produit, $f$ est dérivable sur $\mathbb{R}^*$ et, pour $x \neq 0$, par les règles de dérivation ($uv' + u'v$) :
-   $$ f'(x) = (8+1)x^{8} \sin(1/x) + x^{9} \cdot \left(-\frac{1}{x^2}\right) \cos(1/x) = (8+1)x^{8} \sin(1/x) - x^{7} \cos(1/x) $$
-5. Étudions la dérivabilité en $x=0$. Formons le taux d'accroissement :
-   $$ \tau(x) = \frac{f(x) - f(0)}{x - 0} = \frac{x^{9} \sin(1/x)}{x} = x^{8} \sin(1/x) $$
-6. Comme $|\sin(1/x)| \leq 1$, nous avons $|\tau(x)| \leq |x|^{8}$.
-7. Puisque $8 \geq 1$, $\lim_{x \to 0} |x|^{8} = 0$. Par le théorème des gendarmes, $\lim_{x \to 0} \tau(x) = 0$.
-8. La limite du taux d'accroissement existe et est finie. Donc $f$ est dérivable en $0$, et $f'(0) = 0$.
-9. La fonction $f$ est donc dérivable sur tout $\mathbb{R}$.
-10. Continuité de la dérivée en $0$ :
-    On a $f'(x) = (8+1)x^{8} \sin(1/x) - x^{7} \cos(1/x)$.
-    - Si $8 = 1$ : $f'(x) = 2x \sin(1/x) - \cos(1/x)$. Le terme $2x \sin(1/x)$ tend vers $0$ mais $\cos(1/x)$ n'a pas de limite en $0$. Donc $f'$ n'est pas continue en 0.
-    - Si $8 > 1$ : $\lim_{x \to 0} f'(x) = 0 = f'(0)$. La dérivée est continue en $0$. $\blacksquare$
+1. Soient $a, b \in I$ avec $a < b$, et soit $y$ un réel strictement compris entre $f'(a)$ et $f'(b)$. Démontrons qu'il existe $c \in ]a,b[$ tel que $f'(c) = y$.
+2. Supposons sans perte de généralité que $f'(a) < y < f'(b)$. Considérons la fonction auxiliaire $g(x) = f(x) - y x$.
+3. La fonction $g$ est dérivable sur $I$, et $g'(x) = f'(x) - y$.
+4. Évaluons la dérivée de $g$ aux bornes : $g'(a) = f'(a) - y < 0$ et $g'(b) = f'(b) - y > 0$.
+5. Puisque $g$ est continue sur le compact $[a,b]$, elle y admet un minimum global en un point $c \in [a,b]$.
+6. Montrons que $c$ ne peut être situé sur la frontière.
+7. Comme $g'(a) < 0$, la limite du taux d'accroissement de $g$ en $a$ est strictement négative. Pour $x > a$ suffisamment proche, $g(x) - g(a) < 0 \implies g(x) < g(a)$. Le minimum n'est donc pas en $a$.
+8. De même, $g'(b) > 0$. Pour $x < b$ suffisamment proche, $g(b) - g(x) > 0 \implies g(x) < g(b)$. Le minimum n'est donc pas en $b$.
+9. Par conséquent, l'extremum $c$ est atteint à l'intérieur de l'ouvert $]a,b[$.
+10. D'après la condition nécessaire d'optimalité du premier ordre (qui est un corollaire direct de la preuve de Rolle), la dérivée d'une fonction en un extremum local situé à l'intérieur d'un ouvert est nécessairement nulle.
+11. Donc $g'(c) = 0$.
+12. Or $g'(c) = f'(c) - y = 0 \implies f'(c) = y$. La dérivée atteint bien toutes ses valeurs intermédiaires. $\blacksquare$

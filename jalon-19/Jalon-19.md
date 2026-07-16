@@ -5,150 +5,122 @@ statut: "Complet"
 tags: ["analyse", "dérivabilité", "accroissements-finis", "rolle"]
 ---
 
-# Jalon 19 : Dérivabilité, Théorème de Rolle, Accroissements Finis et Prolongement de la Dérivée
+# Jalon 19 : Dérivabilité, Théorème de Rolle et Accroissements Finis
 
-## 1. Présentation du concept clé (Échafaudage Cognitif)
+## 1. Intuition et Genèse du Concept
 
-L'étude de la continuité nous a permis de comprendre comment une fonction "ne saute pas", mais elle ne nous dit rien sur la "vitesse" à laquelle elle évolue. La dérivabilité naît du besoin historique et physique de mesurer des taux de variation instantanés : la vitesse d'un mobile (Newton, Leibniz) ou la pente de la tangente à une courbe (Fermat, Descartes).
+La notion de dérivée émerge au carrefour de la cinématique (définir la vitesse instantanée d'un mobile) et de la géométrie (déterminer la tangente à une courbe en un point). Historiquement, Pierre de Fermat, puis Isaac Newton et Gottfried Wilhelm Leibniz, ont jeté les bases du calcul infinitésimal pour formaliser ces idées. Avant eux, la géométrie d'Euclide et d'Archimède permettait de tracer des tangentes à des cercles ou des paraboles, mais manquait d'un formalisme général.
 
-Historiquement, la notion de tangente était géométrique et intuitive. Fermat fut l'un des premiers à formaliser cette idée en considérant des accroissements infiniment petits. Cependant, ce n'est qu'avec Cauchy et Weierstrass que la notion de dérivée a reçu une définition rigoureuse fondée sur la théorie des limites, balayant les paradoxes liés aux "infiniment petits". La dérivabilité d'une fonction en un point signifie localement que la fonction peut être approximée de manière optimale par une fonction affine : c'est la naissance de l'analyse locale.
+L'intuition fondamentale de la dérivabilité est celle de l'approximation linéaire locale. Si l'on observe une courbe régulière (non fractale, sans point anguleux) au microscope en zoomant indéfiniment autour d'un point, celle-ci apparaît indiscernable d'une droite : sa tangente. La dérivée quantifie cette pente locale. C'est l'essence même du développement limité d'ordre 1 : exprimer une fonction complexe comme une fonction affine à l'ordre principal, perturbée par une erreur évanescente.
 
-Cette approximation linéaire locale est le cœur battant de l'optimisation moderne, y compris dans la rétropropagation du gradient (backpropagation) en intelligence artificielle, où l'on cherche à minimiser une fonction de coût en suivant la direction de sa plus forte pente.
+Ce changement de paradigme, consistant à passer du fini à l'infinitésimal, a nécessité des siècles de maturation pour être rendu rigoureux par Augustin-Louis Cauchy et Karl Weierstrass au XIXe siècle, à travers la formalisation des limites par la définition en $(\epsilon, \delta)$.
 
-## 2. Formalisation (Protocole d'Exégèse Conceptuelle)
+## 2. Formalisation et Structures Algébriques
 
-### A. Énoncé Symbolique Strict
+### A. Énoncé Symbolique Strict (Définition de la dérivabilité)
 
-**Définition (Dérivabilité en un point) :**
-Soit $I$ un intervalle de $\mathbb{R}$ d'intérieur non vide. Soit $f : I \to \mathbb{R}$ une fonction et $a \in I$.
-On dit que $f$ est dérivable en $a$ si la limite suivante existe dans $\mathbb{R}$ (c'est-à-dire si elle est finie) :
-$$ \lim_{x \to a, x \neq a} \frac{f(x) - f(a)}{x - a} $$
-ou, de manière équivalente en posant $x = a + h$ :
-$$ \lim_{h \to 0, h \neq 0} \frac{f(a+h) - f(a)}{h} $$
+Soit $I$ un intervalle de $\mathbb{R}$ d'intérieur non vide. Soit $f : I \to \mathbb{R}$ une application. Soit $a \in I$.
+On dit que $f$ est dérivable en $a$ si la limite du taux d'accroissement de $f$ en $a$ existe et est finie. Formellement :
+$$ \lim_{x \to a, x \neq a} \frac{f(x) - f(a)}{x - a} = \ell \in \mathbb{R} $$
 Si cette limite existe, elle est notée $f'(a)$ et est appelée le nombre dérivé de $f$ en $a$.
 
-**Développement limité d'ordre 1 (DL1) :**
-$f$ est dérivable en $a$ si et seulement s'il existe un réel $L$ et une fonction $\epsilon : I \to \mathbb{R}$ tels que pour tout $x \in I$ :
+De manière équivalente, par le changement de variable $h = x - a$, $f$ est dérivable en $a$ si et seulement si :
+$$ \lim_{h \to 0, h \neq 0} \frac{f(a+h) - f(a)}{h} = f'(a) \in \mathbb{R} $$
+
+**Développement Limité d'Ordre 1 (DL1) :**
+La fonction $f$ est dérivable en $a$ si et seulement s'il existe un scalaire $L \in \mathbb{R}$ et une fonction $\epsilon : I \to \mathbb{R}$ tels que pour tout $x \in I$ :
 $$ f(x) = f(a) + L(x - a) + (x - a)\epsilon(x) $$
 avec $\lim_{x \to a} \epsilon(x) = 0$. Dans ce cas, $L = f'(a)$.
 
 ### B. Anatomie et Typage Chirurgical
 
-- $I \subset \mathbb{R}$ : Un intervalle qui garantit que l'on peut s'approcher de $a$ par des points de l'ensemble de définition.
-- $f : I \to \mathbb{R}$ : La fonction étudiée, à valeurs réelles.
-- $a \in I$ : Le point où l'on étudie le comportement local. Si $a$ est une borne de l'intervalle $I$ (par exemple $I=[a, b[$), la limite est une limite à droite (dérivabilité à droite).
-- Le rapport $\frac{f(x) - f(a)}{x - a}$ : Appelé taux d'accroissement de $f$ entre $a$ et $x$. Il représente la pente de la sécante passant par les points $(a, f(a))$ et $(x, f(x))$.
-- $f'(a) \in \mathbb{R}$ : Le nombre dérivé. C'est un scalaire réel pur.
-- $L(x - a)$ : La partie linéaire de l'accroissement.
-- $(x - a)\epsilon(x)$ : Le reste, qui est négligeable devant $(x - a)$ au voisinage de $a$ (noté $o(x-a)$).
+- $I \subset \mathbb{R}$ : Un intervalle de la droite réelle. C'est la topologie usuelle induite par la valeur absolue qui est utilisée. Il garantit que le point $a$ n'est pas isolé.
+- $f : I \to \mathbb{R}$ : L'application étudiée. L'espace d'arrivée est $\mathbb{R}$ muni de sa structure de corps complet.
+- $a \in I$ : Le point d'évaluation. L'analyse est purement locale.
+- $\tau_a(x) = \frac{f(x) - f(a)}{x - a}$ : Le taux d'accroissement, application définie sur $I \setminus \{a\}$.
+- $f'(a) \in \mathbb{R}$ : Le scalaire réel représentant le coefficient directeur de l'approximation linéaire.
+- $(x - a)\epsilon(x)$ : Le terme de reste (négligeable devant $x-a$, noté usuellement $o(x-a)$) qui mesure l'écart entre la fonction et son approximation affine.
 
 ### C. Exemples de Validation
 
-**Exemple trivial :** $f(x) = c$ (constante).
-$\forall x \neq a, \frac{f(x) - f(a)}{x - a} = \frac{c - c}{x - a} = 0$. Donc $f'(a) = \lim_{x \to a} 0 = 0$.
+**Exemple d'application trivial : La fonction affine**
+Soit $f(x) = \alpha x + \beta$, avec $\alpha, \beta \in \mathbb{R}$.
+Pour tout $a \in \mathbb{R}$ et $x \neq a$ :
+$$ \frac{f(x) - f(a)}{x - a} = \frac{(\alpha x + \beta) - (\alpha a + \beta)}{x - a} = \frac{\alpha(x - a)}{x - a} = \alpha $$
+La limite de ce rapport constant lorsque $x \to a$ est trivialement $\alpha$. Donc $f'(a) = \alpha$.
 
-**Exemple complexe :** $f(x) = x^n$ ($n \in \mathbb{N}^*$).
-Le taux d'accroissement en $a$ est :
+**Exemple de validation complexe : La fonction puissance**
+Soit $f(x) = x^n$, avec $n \in \mathbb{N}^*$. Pour tout $a \in \mathbb{R}$ et $x \neq a$ :
 $$ \frac{x^n - a^n}{x - a} = \frac{(x-a)\sum_{k=0}^{n-1} x^k a^{n-1-k}}{x-a} = \sum_{k=0}^{n-1} x^k a^{n-1-k} $$
-En passant à la limite quand $x \to a$, chaque terme $x^k a^{n-1-k}$ tend vers $a^k a^{n-1-k} = a^{n-1}$. Comme il y a $n$ termes, $\lim_{x \to a} \frac{x^n - a^n}{x - a} = n a^{n-1}$.
+Par continuité des fonctions polynomiales, la limite lorsque $x \to a$ du membre de droite s'obtient par substitution :
+$$ \lim_{x \to a} \sum_{k=0}^{n-1} x^k a^{n-1-k} = \sum_{k=0}^{n-1} a^k a^{n-1-k} = \sum_{k=0}^{n-1} a^{n-1} = n a^{n-1} $$
 
 ### D. Cas Pathologiques et Contre-exemples
 
-- **La fonction valeur absolue $f(x) = |x|$ en $0$.**
-  - Limite à droite ($x > 0$) : $\frac{|x| - |0|}{x - 0} = \frac{x}{x} = 1 \xrightarrow{x \to 0^+} 1$.
-  - Limite à gauche ($x < 0$) : $\frac{|x| - |0|}{x - 0} = \frac{-x}{x} = -1 \xrightarrow{x \to 0^-} -1$.
-  Les limites à droite et à gauche diffèrent. La fonction n'est pas dérivable en $0$ (point anguleux).
-- **La fonction $f(x) = \sqrt{x}$ en $0$ sur $\mathbb{R}_+$.**
-  $\frac{\sqrt{x} - 0}{x - 0} = \frac{1}{\sqrt{x}}$. La limite quand $x \to 0^+$ est $+\infty$. La limite n'est pas finie, la fonction n'est pas dérivable en 0 (tangente verticale).
-- **La fonction de Weierstrass.** Il existe des fonctions continues partout sur $\mathbb{R}$ mais dérivables nulle part. (Contre-exemple historique détruisant l'intuition que "continu implique dérivable sauf en des points isolés").
+- **Point anguleux (Fonction valeur absolue) :** Soit $f(x) = |x|$. En $x = 0$, la limite du taux d'accroissement à droite est $\lim_{x \to 0^+} \frac{x - 0}{x} = 1$, tandis qu'à gauche elle est $\lim_{x \to 0^-} \frac{-x - 0}{x} = -1$. Les limites latérales diffèrent, donc la limite globale n'existe pas. $f$ n'est pas dérivable en $0$.
+- **Tangente verticale (Fonction racine carrée) :** Soit $f(x) = \sqrt{x}$ définie sur $\mathbb{R}^+$. En $x = 0$, le taux d'accroissement $\frac{\sqrt{x} - 0}{x} = \frac{1}{\sqrt{x}}$ tend vers $+\infty$ lorsque $x \to 0^+$. La limite n'est pas finie, la fonction n'est pas dérivable en $0$.
+- **Rupture complète (Fonction de Weierstrass) :** Il existe des fonctions continues sur tout $\mathbb{R}$ mais dérivables en aucun point, telles que $f(x) = \sum_{n=0}^{\infty} a^n \cos(b^n \pi x)$ avec $0 < a < 1$, $b$ entier impair et $ab > 1 + \frac{3}{2}\pi$.
 
-## 3. Démonstrations (Zéro Ellipse)
+## 3. Démonstrations Pas-à-Pas (Zéro Ellipse)
 
-### Théorème (Continuité implique par la dérivabilité)
-Si $f$ est dérivable en $a$, alors $f$ est continue en $a$.
+### Lemme Fondamental : Continuité induite
+**Énoncé :** Si $f : I \to \mathbb{R}$ est dérivable en $a \in I$, alors $f$ est continue en $a$.
 
-**Démonstration :**
+**Démonstration Exhaustive :**
 1. Soit $f : I \to \mathbb{R}$ dérivable en $a \in I$.
-2. Par définition, il existe $L = f'(a) \in \mathbb{R}$ tel que $\lim_{x \to a, x \neq a} \frac{f(x) - f(a)}{x - a} = L$.
-3. Pour $x \in I \setminus \{a\}$, nous pouvons écrire :
-   $$ f(x) - f(a) = \frac{f(x) - f(a)}{x - a} \cdot (x - a) $$
-4. Calculons la limite de cette expression lorsque $x$ tend vers $a$ :
-   $$ \lim_{x \to a} (f(x) - f(a)) = \left( \lim_{x \to a} \frac{f(x) - f(a)}{x - a} \right) \cdot \left( \lim_{x \to a} (x - a) \right) $$
-5. Les deux limites du membre de droite existent et sont finies. Ainsi :
-   $$ \lim_{x \to a} (f(x) - f(a)) = f'(a) \cdot 0 = 0 $$
-6. On en déduit immédiatement que $\lim_{x \to a} f(x) = f(a)$.
-7. Cette égalité est exactement la définition de la continuity de $f$ en $a$. $\blacksquare$
+2. Par définition de la dérivabilité, le réel $L = f'(a)$ existe et $\lim_{x \to a, x \neq a} \frac{f(x) - f(a)}{x - a} = L$.
+3. Isolons $f(x)$. Pour tout $x \in I \setminus \{a\}$, nous pouvons écrire algébriquement :
+   $$ f(x) = f(a) + \left( \frac{f(x) - f(a)}{x - a} \right) \cdot (x - a) $$
+4. Considérons la limite de cette expression lorsque $x$ tend vers $a$.
+5. Par les théorèmes d'opérations algébriques sur les limites (somme et produit), puisque la limite de chaque terme existe et est finie :
+   $$ \lim_{x \to a} f(x) = \lim_{x \to a} f(a) + \left( \lim_{x \to a} \frac{f(x) - f(a)}{x - a} \right) \cdot \left( \lim_{x \to a} (x - a) \right) $$
+6. En évaluant ces limites individuelles :
+   $$ \lim_{x \to a} f(x) = f(a) + L \cdot 0 = f(a) $$
+7. L'égalité $\lim_{x \to a} f(x) = f(a)$ constitue précisément l'axiome de continuité de la fonction $f$ au point $a$. La démonstration est achevée. $\blacksquare$
 
 ### Théorème de Rolle
-Soient $a, b \in \mathbb{R}$ avec $a < b$. Soit $f : [a, b] \to \mathbb{R}$ une fonction vérifiant :
-- $f$ est continue sur le segment $[a, b]$,
-- $f$ est dérivable sur l'intervalle ouvert $]a, b[$,
-- $f(a) = f(b)$.
-Alors, il existe $c \in ]a, b[$ tel que $f'(c) = 0$.
+**Énoncé :** Soient $a, b \in \mathbb{R}$ avec $a < b$. Soit $f : [a, b] \to \mathbb{R}$ une fonction telle que :
+(i) $f$ est continue sur le segment fermé $[a, b]$,
+(ii) $f$ est dérivable sur l'intervalle ouvert $]a, b[$,
+(iii) $f(a) = f(b)$.
+Alors, il existe au moins un point $c \in ]a, b[$ tel que $f'(c) = 0$.
 
-**Démonstration :**
-1. La fonction $f$ est continue sur le segment $[a, b]$. D'après le théorème des bornes atteintes (théorème de Weierstrass), $f$ est bornée et atteint ses bornes. Il existe donc $x_m, x_M \in [a, b]$ tels que $f(x_m) = \inf_{x \in [a, b]} f(x)$ et $f(x_M) = \sup_{x \in [a, b]} f(x)$.
-2. **Premier cas :** Si $f(x_m) = f(x_M)$. Alors le minimum et le maximum de la fonction sont égaux. La fonction $f$ est donc constante sur $[a, b]$. Par conséquent, sa dérivée est nulle en tout point de $]a, b[$. N'importe quel $c \in ]a, b[$ convient.
-3. **Second cas :** Si $f(x_m) \neq f(x_M)$. Comme $f(a) = f(b)$, au moins l'une des deux bornes $f(x_m)$ ou $f(x_M)$ est différente de $f(a)$ (et donc de $f(b)$). Supposons par exemple que $f(x_M) > f(a)$.
-4. Puisque $f(x_M) \neq f(a)$ et $f(x_M) \neq f(b)$, le point $x_M$ où le maximum est atteint ne peut être ni $a$ ni $b$. Donc $x_M \in ]a, b[$.
-5. Posons $c = x_M$. Étudions le taux d'accroissement de $f$ en $c$. Pour tout $h$ tel que $c+h \in [a, b]$ :
-   $$ f(c+h) \leq f(c) $$ car $f(c)$ est le maximum global sur $[a,b]$.
-   Donc $f(c+h) - f(c) \leq 0$.
-6. Si $h > 0$, alors $\frac{f(c+h) - f(c)}{h} \leq 0$. Par passage à la limite, la dérivée à droite $f'_d(c) \leq 0$.
-7. Si $h < 0$, alors $\frac{f(c+h) - f(c)}{h} \geq 0$ (car le dénominateur est strictement négatif). Par passage à la limite, la dérivée à gauche $f'_g(c) \geq 0$.
-8. Puisque $f$ est dérivable sur $]a, b[$, et que $c \in ]a, b[$, $f$ est dérivable en $c$. Donc la dérivée à gauche et la dérivée à droite existent et sont égales à $f'(c)$.
-9. Ainsi, $f'(c) = f'_d(c) \leq 0$ et $f'(c) = f'_g(c) \geq 0$. La seule possibilité est $f'(c) = 0$. $\blacksquare$
+**Démonstration Exhaustive :**
+1. L'hypothèse (i) affirme que $f$ est continue sur le compact $[a, b]$. D'après le théorème des bornes atteintes (théorème de Weierstrass), l'image $f([a, b])$ est un segment fermé et borné. Par conséquent, $f$ admet un minimum global $m$ et un maximum global $M$ sur $[a, b]$, et ces extrema sont atteints. Il existe donc $x_m, x_M \in [a, b]$ tels que $f(x_m) = m$ et $f(x_M) = M$.
+2. Discutons selon deux cas mutuellement exclusifs.
+3. **Cas 1 :** Supposons que $m = M$. Dans ce cas, pour tout $x \in [a, b]$, $m \leq f(x) \leq M \implies f(x) = m$. La fonction $f$ est donc constante sur $[a, b]$. Sa dérivée est identiquement nulle sur $]a, b[$. Tout point $c \in ]a, b[$ satisfait $f'(c) = 0$. Le théorème est vérifié.
+4. **Cas 2 :** Supposons que $m < M$. Par hypothèse (iii), $f(a) = f(b)$. Il est donc impossible que les deux extrema soient atteints uniquement aux bornes de l'intervalle (sinon on aurait $m = f(a) = f(b) = M$, contredisant $m < M$).
+5. Par conséquent, au moins l'un des deux extrema, disons le maximum $M$, est atteint en un point $c \in ]a, b[$ strictement à l'intérieur de l'intervalle (c'est-à-dire $c = x_M \neq a$ et $c = x_M \neq b$).
+6. Évaluons le comportement du taux d'accroissement de $f$ en ce point $c$. Puisque $c \in ]a, b[$, il existe un $\delta > 0$ tel que $]c-\delta, c+\delta[ \subset [a, b]$.
+7. Par définition du maximum, pour tout $h$ tel que $c+h \in [a, b]$ (et en particulier pour $|h| < \delta$), on a $f(c+h) \leq f(c)$, ce qui implique $f(c+h) - f(c) \leq 0$.
+8. Supposons $h > 0$. Alors le taux d'accroissement à droite vérifie :
+   $$ \frac{f(c+h) - f(c)}{h} \leq 0 $$
+   En passant à la limite quand $h \to 0^+$, la dérivée à droite $f'_d(c)$ vérifie $f'_d(c) \leq 0$.
+9. Supposons $h < 0$. Alors le taux d'accroissement à gauche vérifie (puisque le dénominateur est négatif) :
+   $$ \frac{f(c+h) - f(c)}{h} \geq 0 $$
+   En passant à la limite quand $h \to 0^-$, la dérivée à gauche $f'_g(c)$ vérifie $f'_g(c) \geq 0$.
+10. Par hypothèse (ii), $f$ est dérivable sur $]a, b[$. Puisque $c \in ]a, b[$, $f$ est dérivable au point $c$. Cela implique l'existence de la limite globale, et donc l'égalité des dérivées latérales : $f'(c) = f'_d(c) = f'_g(c)$.
+11. Les inégalités $f'(c) \leq 0$ et $f'(c) \geq 0$ imposent inéluctablement $f'(c) = 0$. La démonstration est achevée. $\blacksquare$
 
-### Théorème des Accroissements Finis (TAF)
-Soient $a, b \in \mathbb{R}$ avec $a < b$. Soit $f : [a, b] \to \mathbb{R}$ une fonction vérifiant :
-- $f$ est continue sur $[a, b]$,
-- $f$ est dérivable sur $]a, b[$.
-Alors il existe au moins un point $c \in ]a, b[$ tel que $f(b) - f(a) = f'(c)(b - a)$.
+### Théorème des Accroissements Finis (Égalité de Lagrange)
+**Énoncé :** Soient $a, b \in \mathbb{R}$ avec $a < b$. Soit $f : [a, b] \to \mathbb{R}$ une fonction continue sur $[a, b]$ et dérivable sur $]a, b[$. Alors il existe un point $c \in ]a, b[$ tel que $f(b) - f(a) = f'(c)(b - a)$.
 
-**Démonstration :**
-1. L'idée est de se ramener au théorème de Rolle en soustrayant à $f$ l'équation de la droite sécante passant par $(a, f(a))$ et $(b, f(b))$.
-2. Introduisons la fonction auxiliaire $\varphi : [a, b] \to \mathbb{R}$ définie par :
+**Démonstration Exhaustive :**
+1. L'objectif est d'appliquer le théorème de Rolle. Pour cela, nous construisons une fonction auxiliaire $\varphi$ mesurant l'écart entre la fonction $f$ et la corde reliant les points $(a, f(a))$ et $(b, f(b))$.
+2. La droite sécante passant par ces deux points a pour équation $y(x) = f(a) + \frac{f(b) - f(a)}{b - a}(x - a)$.
+3. Définissons la fonction $\varphi : [a, b] \to \mathbb{R}$ par :
    $$ \varphi(x) = f(x) - \left( f(a) + \frac{f(b) - f(a)}{b - a}(x - a) \right) $$
-3. Vérifions les hypothèses de Rolle pour $\varphi$.
-   - $\varphi$ est continue sur $[a, b]$ comme somme de fonctions continues.
-   - $\varphi$ est dérivable sur $]a, b[$ comme somme de fonctions dérivables, et pour tout $x \in ]a, b[$,
-     $$ \varphi'(x) = f'(x) - \frac{f(b) - f(a)}{b - a} $$
-   - Calculons $\varphi(a)$ et $\varphi(b)$ :
+4. Vérifions scrupuleusement les trois hypothèses du théorème de Rolle pour $\varphi$ :
+   - (i) $\varphi$ est continue sur $[a, b]$ en tant que somme de la fonction $f$ (continue par hypothèse) et d'un polynôme de degré 1 (continu sur $\mathbb{R}$).
+   - (ii) $\varphi$ est dérivable sur $]a, b[$ en tant que somme de fonctions dérivables. Sa dérivée s'exprime par :
+     $$ \forall x \in ]a, b[, \quad \varphi'(x) = f'(x) - \frac{f(b) - f(a)}{b - a} $$
+   - (iii) Évaluons $\varphi$ aux bornes de l'intervalle :
      $$ \varphi(a) = f(a) - \left( f(a) + \frac{f(b) - f(a)}{b - a}(a - a) \right) = f(a) - f(a) = 0 $$
-     $$ \varphi(b) = f(b) - \left( f(a) + \frac{f(b) - f(a)}{b - a}(b - a) \right) = f(b) - (f(a) + f(b) - f(a)) = 0 $$
-4. Ainsi, $\varphi(a) = \varphi(b) = 0$.
-5. D'après le théorème de Rolle appliqué à $\varphi$, il existe $c \in ]a, b[$ tel que $\varphi'(c) = 0$.
-6. Or $\varphi'(c) = f'(c) - \frac{f(b) - f(a)}{b - a}$. Donc :
-   $$ f'(c) - \frac{f(b) - f(a)}{b - a} = 0 \iff f'(c) = \frac{f(b) - f(a)}{b - a} $$
-7. En multipliant par $(b-a)$, on obtient bien $f(b) - f(a) = f'(c)(b-a)$. $\blacksquare$
-
-### Théorème de Prolongement de la Dérivée
-Soit $f : I \to \mathbb{R}$ continue sur $I$ et $a \in I$. Si $f$ est dérivable sur $I \setminus \{a\}$ et si la limite $\lim_{x \to a, x \neq a} f'(x) = \ell$ existe (avec $\ell \in \mathbb{R}$), alors $f$ est dérivable en $a$ et $f'(a) = \ell$.
-
-**Démonstration :**
-1. Soit $x \in I \setminus \{a\}$. Plaçons-nous par exemple dans le cas $x > a$ (le cas $x < a$ est identique par symétrie de l'intervalle de travail).
-2. Considérons l'intervalle $[a, x]$. $f$ est continue sur $[a, x]$ (car continue sur $I$) et dérivable sur $]a, x[$ (car dérivable sur $I \setminus \{a\}$).
-3. D'après le Théorème des Accroissements Finis appliqué à $f$ sur $[a, x]$, il existe un réel $c_x \in ]a, x[$ tel que :
-   $$ f(x) - f(a) = f'(c_x)(x - a) \iff \frac{f(x) - f(a)}{x - a} = f'(c_x) $$
-4. Étudions la limite quand $x \to a$. Par le théorème d'encadrement (gendarmes), comme $a < c_x < x$, lorsque $x \to a^+$, on a nécessairement $c_x \to a^+$.
-5. Or l'hypothèse indique que $\lim_{t \to a} f'(t) = \ell$. Donc, en composant les limites, $\lim_{x \to a^+} f'(c_x) = \ell$.
-6. Par suite :
-   $$ \lim_{x \to a^+} \frac{f(x) - f(a)}{x - a} = \lim_{x \to a^+} f'(c_x) = \ell $$
-7. Le même raisonnement s'applique pour $x \to a^-$ (avec $c_x \in ]x, a[$), donnant $\lim_{x \to a^-} \frac{f(x) - f(a)}{x - a} = \ell$.
-8. La limite du taux d'accroissement en $a$ existe, est finie et vaut $\ell$. Donc $f$ est dérivable en $a$ et $f'(a) = \ell$. $\blacksquare$
-
-## 4. Exercices d'Application
-L'étudiant est invité à résoudre intégralement, avec une rigueur inébranlable, les 10 exercices présents dans le dossier `exos/`, triés par difficulté.
-
-## 5. Application en Intelligence Artificielle
-
-La dérivabilité est le fondement incontestable de l'optimisation continue, moteur de tout l'apprentissage profond (Deep Learning).
-Lorsqu'un réseau de neurones cherche à ajuster ses poids $W$ pour minimiser une fonction de coût $L(W)$ (par exemple, l'entropie croisée), il utilise l'algorithme de descente de gradient. Le gradient $\nabla L(W)$ est la généralisation en dimension supérieure de la dérivée.
-L'existence de cette dérivée (garantie presque partout grâce aux fonctions d'activation comme ReLU $f(x)=\max(0,x)$ qui sont Lipschitz continues) permet d'approximer localement le comportement de la perte :
-$$ L(W - \eta \nabla L(W)) \approx L(W) - \eta \|\nabla L(W)\|^2 < L(W) $$
-pour un pas d'apprentissage $\eta > 0$ suffisamment petit. C'est l'application directe du DL1.
-
-## 6. Liens Sémantiques
-- Continuité (Jalon 18) - Pré-requis de la dérivabilité.
-- Fonctions d'une variable - Cadre d'application.
-- Calcul différentiel multidimensionnel - Extension au gradient et à la matrice jacobienne.
+     $$ \varphi(b) = f(b) - \left( f(a) + \frac{f(b) - f(a)}{b - a}(b - a) \right) = f(b) - \left( f(a) + f(b) - f(a) \right) = 0 $$
+     Ainsi, $\varphi(a) = \varphi(b) = 0$.
+5. Les trois prémisses du théorème de Rolle étant satisfaites, il existe au moins un point $c \in ]a, b[$ tel que $\varphi'(c) = 0$.
+6. Substituons cette condition dans l'expression de la dérivée de $\varphi$ :
+   $$ \varphi'(c) = f'(c) - \frac{f(b) - f(a)}{b - a} = 0 $$
+7. L'équivalence algébrique mène immédiatement à :
+   $$ f'(c) = \frac{f(b) - f(a)}{b - a} \implies f(b) - f(a) = f'(c)(b - a) $$
+   La démonstration est achevée. $\blacksquare$

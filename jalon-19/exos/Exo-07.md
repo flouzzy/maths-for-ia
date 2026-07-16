@@ -3,26 +3,21 @@ titre: "Exercice 7 : Dérivabilité"
 difficulte: "★★★★☆"
 ---
 
-# Exercice 7 : Étude approfondie de la dérivabilité
+# Exercice 7 : Pratique et maîtrise conceptuelle
 
 **Énoncé :**
-Étudier avec une rigueur absolue la dérivabilité de la fonction définie par :
-$f(x) = x^{8} \sin(1/x)$ pour $x \neq 0$, et $f(0) = 0$.
-Déterminer si la dérivée est continue en 0.
+Soit $f$ de classe $\mathcal{C}^1$ sur $[a,b]$. Démontrer le lemme de Riemann-Lebesgue pour une phase linéaire : $\lim_{\lambda \to \infty} \int_a^b f(t) \sin(\lambda t) dt = 0$.
 
 **Résolution Zéro Ellipse :**
-1. Pour tout $x \neq 0$, la fonction $x \mapsto x^{8}$ est dérivable sur $\mathbb{R}^*$ comme fonction puissance (composée polynomiale).
-2. La fonction $x \mapsto 1/x$ est dérivable sur $\mathbb{R}^*$.
-3. La fonction $\sin$ est dérivable sur $\mathbb{R}$. Par composition, $x \mapsto \sin(1/x)$ est dérivable sur $\mathbb{R}^*$.
-4. Par produit, $f$ est dérivable sur $\mathbb{R}^*$ et, pour $x \neq 0$, par les règles de dérivation ($uv' + u'v$) :
-   $$ f'(x) = (7+1)x^{7} \sin(1/x) + x^{8} \cdot \left(-\frac{1}{x^2}\right) \cos(1/x) = (7+1)x^{7} \sin(1/x) - x^{6} \cos(1/x) $$
-5. Étudions la dérivabilité en $x=0$. Formons le taux d'accroissement :
-   $$ \tau(x) = \frac{f(x) - f(0)}{x - 0} = \frac{x^{8} \sin(1/x)}{x} = x^{7} \sin(1/x) $$
-6. Comme $|\sin(1/x)| \leq 1$, nous avons $|\tau(x)| \leq |x|^{7}$.
-7. Puisque $7 \geq 1$, $\lim_{x \to 0} |x|^{7} = 0$. Par le théorème des gendarmes, $\lim_{x \to 0} \tau(x) = 0$.
-8. La limite du taux d'accroissement existe et est finie. Donc $f$ est dérivable en $0$, et $f'(0) = 0$.
-9. La fonction $f$ est donc dérivable sur tout $\mathbb{R}$.
-10. Continuité de la dérivée en $0$ :
-    On a $f'(x) = (7+1)x^{7} \sin(1/x) - x^{6} \cos(1/x)$.
-    - Si $7 = 1$ : $f'(x) = 2x \sin(1/x) - \cos(1/x)$. Le terme $2x \sin(1/x)$ tend vers $0$ mais $\cos(1/x)$ n'a pas de limite en $0$. Donc $f'$ n'est pas continue en 0.
-    - Si $7 > 1$ : $\lim_{x \to 0} f'(x) = 0 = f'(0)$. La dérivée est continue en $0$. $\blacksquare$
+1. La régularité $\mathcal{C}^1$ de $f$ incite naturellement à utiliser une intégration par parties.
+2. Posons $u(t) = f(t) \implies u'(t) = f'(t)$ et $v'(t) = \sin(\lambda t) \implies v(t) = -\frac{\cos(\lambda t)}{\lambda}$.
+3. Appliquons la formule d'intégration par parties :
+   $\int_a^b f(t) \sin(\lambda t) dt = \left[ -f(t) \frac{\cos(\lambda t)}{\lambda} \right]_a^b + \int_a^b f'(t) \frac{\cos(\lambda t)}{\lambda} dt$.
+4. Évaluons le terme tout intégré :
+   $\left[ -f(t) \frac{\cos(\lambda t)}{\lambda} \right]_a^b = \frac{f(a)\cos(\lambda a) - f(b)\cos(\lambda b)}{\lambda}$.
+5. Puisque $f$ est continue sur un compact, elle est bornée. Le numérateur est borné indépendamment de $\lambda$. Ainsi, ce terme tend vers $0$ lorsque $\lambda \to \infty$.
+6. Majorons le terme intégral restant en utilisant la valeur absolue :
+   $| \int_a^b f'(t) \frac{\cos(\lambda t)}{\lambda} dt | \leq \int_a^b \frac{|f'(t)| \cdot |\cos(\lambda t)|}{\lambda} dt \leq \frac{1}{\lambda} \int_a^b |f'(t)| dt$.
+7. Puisque $f \in \mathcal{C}^1$, sa dérivée $f'$ est continue, donc l'intégrale $\int_a^b |f'(t)| dt$ est une constante finie fixée $K$.
+8. La majoration devient $K / \lambda$, qui tend inexorablement vers $0$ lorsque $\lambda \to \infty$.
+9. La somme des limites nulles certifie le résultat. $\blacksquare$
