@@ -14,9 +14,32 @@ next: "[[Jalon 21 (Suites de fonctions).md]]"
 
 ## 1. Présentation du concept clé
 
-La compréhension des variations d'une fonction à travers sa dérivée première est une avancée majeure du calcul différentiel. Cependant, cette simple information est souvent insuffisante pour capter la complexité globale de la trajectoire ou du comportement d'une fonction. Imaginez que vous observez le mouvement d'une particule : la position vous donne le lieu, la dérivée première vous donne la vitesse, mais pour comprendre comment la vitesse évolue, vous avez besoin de l'accélération, soit la dérivée seconde. Poursuivez ce raisonnement et vous touchez à l'essence des dérivées successives.
+Historiquement, la quête d'une approximation locale des fonctions transcendantes (comme l'exponentielle, le sinus ou le cosinus) a tourmenté les mathématiciens du XVIIème siècle. La dérivée première, introduite par Newton et Leibniz, offrait bien une "tangente", une approximation affine, mais cette approximation ne tenait qu'infiniment près du point de contact. Dès que l'on s'en éloignait, la droite tangente divergait irrémédiablement de la courbe réelle, incapable de capturer sa "courbure". C'est l'introduction des dérivées d'ordre supérieur qui a permis de comprendre que l'information locale d'une fonction réside dans la cascade de ses variations successives : la position, la vitesse, l'accélération, l'à-coup, etc.
+
+Brook Taylor, dans son *Methodus Incrementorum Directa et Inversa* de 1715, formalise cette intuition géniale : si une fonction est suffisamment "lisse", elle peut être remplacée, sur un petit voisinage, par la seule structure algébrique que nous sachions parfaitement manipuler, un polynôme. Ce passage du transcendantal à l'algébrique, via ce que nous appelons aujourd'hui les Développements Limités, est la pierre angulaire de toute l'analyse locale moderne et de l'optimisation non-linéaire.
 
 C'est ici qu'intervient le génie de Brook Taylor (et plus tard de Colin Maclaurin, Joseph-Louis Lagrange et Thomas Bayes) : si une fonction est suffisamment "lisse" (c'est-à-dire qu'elle possède de nombreuses dérivées successives), il est possible de l'approximer localement par un polynôme. Les polynômes sont les structures algébriques les plus simples et les plus stables à manipuler (sommes et produits). Les formules de Taylor fournissent la recette exacte pour construire le polynôme qui "épouse" au plus près la courbe de la fonction en un point donné. Plus on ajoute de termes (liés aux dérivées d'ordre supérieur), plus l'approximation devient précise et s'étend sur un voisinage plus large, jusqu'à se confondre avec la fonction elle-même sous certaines conditions analytiques. Ce passage du complexe transcendantal au polynomial est le cœur battant de l'analyse locale.
+
+```tikz
+\begin{tikzpicture}[scale=1.5]
+    % Axes
+    \draw[->] (-2.5,0) -- (2.5,0) node[right] {$x$};
+    \draw[->] (0,-1) -- (0,4.5) node[above] {$y$};
+
+    % Fonction exacte exp(x)
+    \draw[domain=-2:1.5, smooth, variable=\x, blue, thick] plot ({\x}, {exp(\x)}) node[right] {$e^x$};
+
+    % Approximation T1 (Tangente)
+    \draw[domain=-2:2, smooth, variable=\x, red, thick, dashed] plot ({\x}, {1 + \x}) node[right] {$T_1(x) = 1+x$};
+
+    % Approximation T2 (Parabole)
+    \draw[domain=-2:1.8, smooth, variable=\x, orange, thick, dashed] plot ({\x}, {1 + \x + 0.5*\x*\x}) node[right] {$T_2(x) = 1+x+\frac{x^2}{2}$};
+
+    % Point de contact
+    \fill (0,1) circle (1.5pt) node[above left] {$(0,1)$};
+
+\end{tikzpicture}
+```
 
 ## 2. Formalisation
 
@@ -44,12 +67,12 @@ Une fonction $f$ admet un développement limité d'ordre $n$ en $a$ s'il existe 
 
 ### B. Anatomie et Typage Chirurgical
 
-- $I$ : intervalle de $\mathbb{R}$, sous-ensemble connexe de la droite réelle.
-- $f : I \to \mathbb{R}$ : application à valeurs réelles.
-- $f^{(k)}(a)$ : scalaire réel, valeur de la $k$-ième dérivée évaluée en $a$. C'est le coefficient qui porte l'information de la variation d'ordre $k$.
-- $k!$ (factorielle) : scalaire entier $k(k-1)\dots 1$. C'est le facteur de normalisation issu des dérivées successives du monôme $(x-a)^k$.
-- $o((x-a)^n)$ : notation de Landau. Cela représente une fonction $\epsilon(x)$ telle que $\epsilon(x)/(x-a)^n \to 0$ quand $x \to a$. C'est le "petit reste" qui garantit que l'erreur de l'approximation décroît plus vite que $(x-a)^n$.
-- $\frac{f^{(n+1)}(c)}{(n+1)!} (x-a)^{n+1}$ : Reste de Lagrange. Contrairement au reste de Young, c'est une forme explicite de l'erreur globale sur l'intervalle $[a, x]$. Le point $c$ existe mais est généralement inconnu.
+- $I$ : Sous-ensemble connexe non vide de $\mathbb{R}$, appelé intervalle.
+- $f : I \to \mathbb{R}$ : Application à valeurs réelles, supposée de classe $C^n$ ou $C^{n+1}$.
+- $f^{(k)}(a) \in \mathbb{R}$ : La $k$-ième dérivée évaluée au point $a \in I$.
+- $k! \in \mathbb{N}^*$ : La factorielle de $k$, agissant comme facteur de normalisation.
+- $o((x-a)^n)$ : Notation de Landau pour une fonction $\epsilon(x)$ telle que $\lim_{x \to a} \frac{\epsilon(x)}{(x-a)^n} = 0$.
+- $\frac{f^{(n+1)}(c)}{(n+1)!} (x-a)^{n+1}$ : Reste de Lagrange global, avec $c \in \mathopen{]}\min(a,x), \max(a,x)\mathclose{[}$.
 
 ### C. Exemples de Validation
 

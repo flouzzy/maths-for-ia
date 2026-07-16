@@ -166,6 +166,9 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 
 ## Historique d'Audit
 
+### 2026-07-16-audit
+- [[#2026-07-16-audit|2026-07-16]] : [Audit & Weekly Compilation] - Jalon 20 - Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+
 ### 2026-07-15-audit
 - [[#2026-07-15-audit|2026-07-15]] : [Audit & Weekly Compilation] - Jalon 19 - Dérivabilité, Théorème de Rolle et Accroissements Finis. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-14-audit
