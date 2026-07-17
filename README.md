@@ -391,3 +391,9 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-06-25] : Upsert du Jalon 11 - Formes linéaires. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-07-15] : Upsert du Jalon 27 - Endomorphismes symétriques. Status: Terminé.
 - [2026-07-16] : Upsert du Jalon 28 - Polynômes d'endomorphismes. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+
+
+## Historique d'Audit
+
+### 2026-07-16-audit
+- [[#2026-07-16-audit|2026-07-16]] : [Audit & Weekly Compilation] - Jalon 20 - Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
