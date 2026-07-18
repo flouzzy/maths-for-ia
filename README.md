@@ -112,7 +112,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 27](jalon-27/Jalon-27.md)** : Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 28](jalon-28/Jalon%2028%20%28Polyn%C3%B4mes%20d%27endomorphismes%29.md)** : Polynômes d'endomorphismes, idéaux annulateurs et démonstration du théorème de Cayley-Hamilton.
 - **[Jalon 29](jalon-29/Jalon-29.md)** : Éléments propres, polynôme caractéristique, sous-espaces propres et critères de diagonalisabilité. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 30](jalon-30/Jalon%2030%20%28Trigonalisation%20d%27endomorphismes%20et%20d%C3%A9composition%20de%20Dunford.%29.md)** : Trigonalisation d'endomorphismes et décomposition de Dunford.
+- **[Jalon 30](jalon-30/Jalon-30.md)** : Trigonalisation d'endomorphismes et décomposition de Dunford. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 31](jalon-31/Jalon%2031%20%28Introduction%20%C3%A0%20la%20r%C3%A9duction%20de%20Jordan%20et%20structure%20des%20nilpotents.%29.md)** : Introduction à la réduction de Jordan et structure des nilpotents.
 - **[Jalon 32](jalon-32/Jalon%2032%20%28Preuve%20compl%C3%A8te%20du%20th%C3%A9or%C3%A8me%20spectral%20pour%20les%20endomorphismes%20sym%C3%A9triques.%29.md)** : Preuve complète du théorème spectral pour les endomorphismes symétriques.
 - **[Jalon 33](jalon-33/Jalon%2033%20%28Formes%20quadratiques%29.md)** : Formes quadratiques, réduction de Gauss, base orthogonale et loi d'inertie de Sylvester.
@@ -392,6 +392,8 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-15] : Upsert du Jalon 27 - Endomorphismes symétriques. Status: Terminé.
 - [2026-07-16] : Upsert du Jalon 28 - Polynômes d'endomorphismes. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 
+
+- [2026-07-18] : Upsert/Création du Jalon 30 - Trigonalisation d'endomorphismes et décomposition de Dunford. Status: Terminé.
 
 ## Historique d'Audit
 
