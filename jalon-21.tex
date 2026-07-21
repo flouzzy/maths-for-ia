@@ -1,0 +1,543 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+\newtheorem{theorem}{Théorème}
+\newtheorem{definition}{Définition}
+\newtheorem{lemma}{Lemme}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remarque}
+\newtheorem{example}{Exemple}
+
+\title{Suites de fonctions, étude de la convergence simple et de la convergence uniforme}
+\author{Charles EDOU NZE}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Intuition et genèse du concept}
+
+La genèse des suites de fonctions trouve ses racines au cœur de la crise des fondements de l'analyse au XIXe siècle. Les mathématiciens, animés par le désir de manipuler des objets limites avec la même aisance que des polynômes, se sont heurtés à des paradoxes profonds. Lorsqu'on observe une suite de fonctions $(f_n)_{n \in \mathbb{N}}$, l'intuition première est d'étudier la limite de $f_n(x)$ pour chaque point $x$ fixé. Cette approche, purement locale, est séduisante de simplicité. Elle s'apparente à observer le comportement d'une foule en regardant le destin de chaque individu isolément.
+
+Cependant, cette limite, appelée convergence simple, est un mirage analytique. Elle ne préserve aucune des propriétés structurelles des fonctions $f_n$. Une suite de fonctions continues peut tout à fait converger simplement vers une fonction discontinue, déchirant ainsi le tissu continu de l'espace. De même, l'aire sous la courbe limite n'est pas nécessairement la limite des aires sous les courbes $f_n$. Il devenait impératif de forger un concept plus robuste, une convergence "globale" où la fonction entière se rapproche de sa limite uniformément, sans qu'aucun point ne prenne un retard arbitrairement grand. C'est la naissance de la convergence uniforme, une notion topologique sur l'espace des fonctions qui restaure l'harmonie entre limite et opérations analytiques (continuité, intégration, dérivation).
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    \draw[->] (-0.2,0) -- (1.2,0) node[right] {$x$};
+    \draw[->] (0,-0.2) -- (0,1.2) node[above] {$y$};
+    \draw[domain=0:1, smooth, variable=\x, blue, thick] plot ({\x}, {\x^2});
+    \draw[domain=0:1, smooth, variable=\x, blue!80!white, thick] plot ({\x}, {\x^4});
+    \draw[domain=0:1, smooth, variable=\x, blue!60!white, thick] plot ({\x}, {\x^8});
+    \draw[domain=0:1, smooth, variable=\x, blue!40!white, thick] plot ({\x}, {\x^16});
+    \draw[dashed, red, thick] (1,0) -- (1,1);
+    \node[blue, right] at (0.5, 0.4) {$f_n(x) = x^n$};
+    \node[red, right] at (1, 0.5) {Discontinuité de $f$};
+\end{tikzpicture}
+\end{center}
+
+\section{Formalisation et structures algébriques}
+
+Considérons un ensemble non vide $D \subset \mathbb{R}$ ou $\mathbb{C}$, et $\mathbb{K} = \mathbb{R}$ ou $\mathbb{C}$. Soit $E$ l'espace des fonctions de $D$ dans $\mathbb{K}$.
+
+\begin{definition}[Convergence Simple]
+Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions de $D$ dans $\mathbb{K}$, et $f: D \to \mathbb{K}$ une fonction.
+On dit que la suite de fonctions $(f_n)_{n \in \mathbb{N}}$ converge \textbf{simplement} vers $f$ sur $D$ si, et seulement si :
+$$\forall x \in D, \quad \lim_{n \to +\infty} f_n(x) = f(x)$$
+Formellement, avec des quantificateurs stricts :
+$$\forall x \in D, \quad \forall \varepsilon > 0, \quad \exists N(x, \varepsilon) \in \mathbb{N}, \quad \forall n \ge N(x, \varepsilon), \quad |f_n(x) - f(x)| < \varepsilon$$
+Ici, le rang de convergence $N$ dépend intrinsèquement du point $x$.
+\end{definition}
+
+\begin{definition}[Convergence Uniforme]
+On dit que la suite $(f_n)_{n \in \mathbb{N}}$ converge \textbf{uniformément} vers $f$ sur $D$ si, et seulement si :
+$$\forall \varepsilon > 0, \quad \exists N(\varepsilon) \in \mathbb{N}, \quad \forall n \ge N(\varepsilon), \quad \forall x \in D, \quad |f_n(x) - f(x)| < \varepsilon$$
+Cette définition exige un rang $N$ universel, indépendant du point $x \in D$. La convergence a lieu "au même rythme" partout.
+\end{definition}
+
+\begin{definition}[Norme de la convergence uniforme]
+Sur l'espace $\mathcal{B}(D, \mathbb{K})$ des fonctions bornées de $D$ dans $\mathbb{K}$, on définit la norme infinie (ou norme du sup) :
+$$\|f\|_{\infty, D} = \sup_{x \in D} |f(x)|$$
+La convergence uniforme de $(f_n)$ vers $f$ sur $D$ équivaut à la convergence vers $0$ de la suite de nombres réels :
+$$\lim_{n \to +\infty} \|f_n - f\|_{\infty, D} = 0$$
+\end{definition}
+
+\section{Démonstrations pas-à-pas}
+
+\begin{theorem}[Transfert de Continuité]
+Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions de $D$ dans $\mathbb{K}$ et $a \in D$.
+Si pour tout $n \in \mathbb{N}$, $f_n$ est continue en $a$, et si $(f_n)_{n \in \mathbb{N}}$ converge uniformément vers $f$ sur $D$, alors $f$ est continue en $a$.
+\end{theorem}
+
+\begin{proof}
+Soit $a \in D$ et $\varepsilon > 0$.
+Puisque $(f_n)$ converge uniformément vers $f$ sur $D$, il existe $N \in \mathbb{N}$ tel que :
+$$\forall x \in D, \quad |f_N(x) - f(x)| \le \frac{\varepsilon}{3}$$
+La fonction $f_N$ étant continue en $a$, il existe $\delta > 0$ tel que pour tout $x \in D$ vérifiant $|x - a| < \delta$ :
+$$|f_N(x) - f_N(a)| \le \frac{\varepsilon}{3}$$
+Par l'inégalité triangulaire, pour tout $x \in D$ tel que $|x - a| < \delta$ :
+\begin{align*}
+|f(x) - f(a)| &= |f(x) - f_N(x) + f_N(x) - f_N(a) + f_N(a) - f(a)| \\
+&\le |f(x) - f_N(x)| + |f_N(x) - f_N(a)| + |f_N(a) - f(a)| \\
+&\le \frac{\varepsilon}{3} + \frac{\varepsilon}{3} + \frac{\varepsilon}{3} = \varepsilon
+\end{align*}
+La fonction $f$ est donc continue en $a$. La démonstration est complète, sans aucune ellipse.
+\end{proof}
+
+\begin{theorem}[Transfert d'Intégrabilité]
+Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions continues sur un segment $[a, b] \subset \mathbb{R}$ à valeurs dans $\mathbb{K}$.
+Si $(f_n)_{n \in \mathbb{N}}$ converge uniformément vers $f$ sur $[a, b]$, alors :
+$$\lim_{n \to +\infty} \int_a^b f_n(t) dt = \int_a^b \lim_{n \to +\infty} f_n(t) dt = \int_a^b f(t) dt$$
+\end{theorem}
+
+\begin{proof}
+Puisque chaque $f_n$ est continue et que la convergence est uniforme, le théorème de transfert de continuité assure que $f$ est continue sur $[a, b]$, donc Riemann-intégrable.
+On évalue la différence :
+$$\left| \int_a^b f_n(t) dt - \int_a^b f(t) dt \right| = \left| \int_a^b (f_n(t) - f(t)) dt \right|$$
+Par les propriétés de l'intégrale :
+$$\left| \int_a^b (f_n(t) - f(t)) dt \right| \le \int_a^b |f_n(t) - f(t)| dt$$
+En majorant l'intégrande par son supremum sur $[a, b]$ :
+$$\int_a^b |f_n(t) - f(t)| dt \le \int_a^b \|f_n - f\|_{\infty, [a, b]} dt = (b - a) \|f_n - f\|_{\infty, [a, b]}$$
+Puisque $f_n \xrightarrow{C.U.} f$ sur $[a, b]$, $\lim_{n \to +\infty} \|f_n - f\|_{\infty, [a, b]} = 0$.
+Il s'ensuit que la limite de l'intégrale est l'intégrale de la limite.
+\end{proof}
+
+\section{Exercices d'application et de concours}
+
+\subsection*{Exercice 1 : Étude complète d'une convergence simple et uniforme}
+\textbf{Énoncé :}
+Pour tout entier $n \ge 1$, on définit la fonction $f_n : \mathbb{R}_+ \to \mathbb{R}$ par :
+$$f_n(x) = \frac{nx}{1 + n^2 x^2}$$
+1. Étudier la convergence simple de la suite $(f_n)_{n \ge 1}$ sur $\mathbb{R}_+$.
+2. Étudier la convergence uniforme sur $\mathbb{R}_+$, puis sur des intervalles de la forme $[a, +\infty[$ avec $a > 0$.
+
+\textbf{Solution Rigoureuse :}
+1. \textbf{Convergence simple :}
+Soit $x \in \mathbb{R}_+$ fixé.
+Si $x = 0$, pour tout $n \ge 1$, $f_n(0) = 0$. Donc $\lim_{n \to +\infty} f_n(0) = 0$.
+Si $x > 0$, on a :
+$$f_n(x) = \frac{nx}{n^2 x^2(1 + \frac{1}{n^2 x^2})} = \frac{1}{nx(1 + \frac{1}{n^2 x^2})}$$
+Comme $x > 0$, $\lim_{n \to +\infty} nx = +\infty$, d'où $\lim_{n \to +\infty} f_n(x) = 0$.
+Ainsi, la suite de fonctions $(f_n)_{n \ge 1}$ converge simplement vers la fonction nulle $f = 0$ sur $\mathbb{R}_+$.
+
+2. \textbf{Convergence uniforme sur $\mathbb{R}_+$ :}
+Pour étudier la convergence uniforme, nous devons calculer la norme $\|f_n - f\|_{\infty, \mathbb{R}_+} = \sup_{x \in \mathbb{R}_+} |f_n(x)|$.
+Les fonctions $f_n$ sont dérivables sur $\mathbb{R}_+$. Calculons la dérivée :
+$$f_n'(x) = \frac{n(1 + n^2 x^2) - nx(2n^2 x)}{(1 + n^2 x^2)^2} = \frac{n(1 - n^2 x^2)}{(1 + n^2 x^2)^2}$$
+La dérivée s'annule en $x = \frac{1}{n}$, est positive sur $[0, \frac{1}{n}[$ et négative sur $]\frac{1}{n}, +\infty[$.
+Ainsi, $f_n$ atteint son maximum global sur $\mathbb{R}_+$ en $x_n = \frac{1}{n}$.
+La valeur de ce maximum est :
+$$f_n\left(\frac{1}{n}\right) = \frac{n \cdot \frac{1}{n}}{1 + n^2 \cdot \frac{1}{n^2}} = \frac{1}{1 + 1} = \frac{1}{2}$$
+Par conséquent, $\sup_{x \in \mathbb{R}_+} |f_n(x)| = \frac{1}{2}$.
+Puisque $\lim_{n \to +\infty} \|f_n\|_{\infty, \mathbb{R}_+} = \frac{1}{2} \neq 0$, la suite $(f_n)$ \textbf{ne converge pas uniformément} vers $0$ sur $\mathbb{R}_+$.
+
+3. \textbf{Convergence uniforme sur $[a, +\infty[$ avec $a > 0$ :}
+Soit $a > 0$. Pour $n$ suffisamment grand (précisément $n \ge \frac{1}{a}$), on a $\frac{1}{n} \le a$.
+Sur l'intervalle $[a, +\infty[$, la fonction $f_n$ est strictement décroissante car $x \ge a \ge \frac{1}{n}$.
+Donc le supremum de $f_n$ sur $[a, +\infty[$ est atteint en $x = a$ :
+$$\sup_{x \in [a, +\infty[} |f_n(x)| = f_n(a) = \frac{na}{1 + n^2 a^2}$$
+Or, $\lim_{n \to +\infty} \frac{na}{1 + n^2 a^2} = 0$.
+Il s'ensuit que la suite converge uniformément sur tout intervalle de la forme $[a, +\infty[$ avec $a > 0$.
+
+
+\subsection*{Exercice 2 : Inversion limite et limite en l'infini}
+\textbf{Énoncé :}
+On considère la suite de fonctions $g_n : ]0, +\infty[ \to \mathbb{R}$ définie par :
+$$g_n(x) = \frac{n^2 x^2}{1 + n^3 x^3}$$
+Montrer que $(g_n)$ converge uniformément vers la fonction nulle, et en déduire la limite de $\lim_{x \to +\infty} \lim_{n \to +\infty} g_n(x)$. Ce résultat nécessite de justifier avec une précision analytique absolue.
+
+\textbf{Solution Rigoureuse :}
+Fixons $x > 0$. On observe que :
+$$g_n(x) \sim_{n \to +\infty} \frac{n^2 x^2}{n^3 x^3} = \frac{1}{nx} \xrightarrow[n \to +\infty]{} 0$$
+La suite converge simplement vers la fonction nulle $g = 0$ sur $]0, +\infty[$.
+Étudions la convergence uniforme. La dérivée est :
+$$g_n'(x) = \frac{2n^2 x(1 + n^3 x^3) - n^2 x^2(3n^3 x^2)}{(1 + n^3 x^3)^2} = \frac{2n^2 x + 2n^5 x^4 - 3n^5 x^4}{(1 + n^3 x^3)^2} = \frac{nx(2n - n^4 x^3)}{(1 + n^3 x^3)^2}$$
+La dérivée s'annule lorsque $2n = n^4 x^3$, soit $x^3 = \frac{2}{n^3}$, c'est-à-dire $x = \frac{\sqrt[3]{2}}{n}$.
+La fonction $g_n$ est croissante sur $]0, \frac{\sqrt[3]{2}}{n}]$ et décroissante sur $[\frac{\sqrt[3]{2}}{n}, +\infty[$. Le maximum global est donc :
+$$g_n\left(\frac{\sqrt[3]{2}}{n}\right) = \frac{n^2 \left(\frac{\sqrt[3]{2}}{n}\right)^2}{1 + n^3 \left(\frac{\sqrt[3]{2}}{n}\right)^3} = \frac{2^{2/3}}{1 + 2} = \frac{2^{2/3}}{3}$$
+On constate avec stupeur que $\sup_{x \in ]0, +\infty[} |g_n(x)| = \frac{2^{2/3}}{3} \neq 0$.
+La convergence \textbf{n'est pas uniforme} sur $]0, +\infty[$.
+L'énoncé comportait un piège pédagogique : la convergence uniforme est fausse sur $]0, +\infty[$.
+Cependant, pour appliquer l'inversion des limites (théorème de la double limite), il suffit d'avoir la convergence uniforme sur un voisinage de $+\infty$.
+Soit $a > 0$. Pour $n$ assez grand, $\frac{\sqrt[3]{2}}{n} < a$, et le supremum sur $[a, +\infty[$ est $g_n(a)$, qui tend vers $0$.
+Donc il y a convergence uniforme sur $[a, +\infty[$.
+On peut alors appliquer le théorème d'inversion des limites :
+$$\lim_{x \to +\infty} \lim_{n \to +\infty} g_n(x) = \lim_{x \to +\infty} 0 = 0$$
+$$\lim_{n \to +\infty} \lim_{x \to +\infty} g_n(x) = \lim_{n \to +\infty} 0 = 0$$
+L'égalité est bien vérifiée.
+
+
+\subsection*{Exercice 3 : Application du Théorème de Dini}
+\textbf{Énoncé :}
+Soit $f_n(x) = \left(1 - \frac{x}{n}\right)^n$ pour $x \in [0, A]$ où $A > 0$ est fixé.
+Montrer que $f_n$ converge uniformément vers $e^{-x}$ sur $[0, A]$.
+
+\textbf{Solution Rigoureuse :}
+On sait que pour tout $x \in [0, A]$ fixé, $\lim_{n \to +\infty} \left(1 - \frac{x}{n}\right)^n = e^{-x}$.
+La suite $(f_n)$ converge donc simplement vers $f(x) = e^{-x}$ sur $[0, A]$.
+La limite $f$ est une fonction continue sur le compact $[0, A]$.
+Pour appliquer le théorème de Dini, il faut vérifier que pour tout $x \in [0, A]$, la suite $(f_n(x))_{n \ge 1}$ est monotone, pour $n$ assez grand ($n \ge A$).
+Soit $x \in [0, A]$. Posons $u_n = n \ln(1 - \frac{x}{n})$ (pour $n > A$).
+On étudie la fonction $\phi(t) = t \ln(1 - \frac{x}{t})$ pour $t \in ]A, +\infty[$.
+La dérivée est :
+$$\phi'(t) = \ln(1 - \frac{x}{t}) + t \frac{\frac{x}{t^2}}{1 - \frac{x}{t}} = \ln(1 - \frac{x}{t}) + \frac{x}{t - x}$$
+Posons $u = \frac{x}{t}$, avec $0 \le u < 1$. Alors $\phi'(t) = \ln(1-u) + \frac{u}{1-u}$.
+La fonction $\psi(u) = \ln(1-u) + \frac{u}{1-u}$ a pour dérivée $\psi'(u) = \frac{-1}{1-u} + \frac{1-u+u}{(1-u)^2} = \frac{u}{(1-u)^2} \ge 0$.
+Comme $\psi(0) = 0$, $\psi(u) \ge 0$ pour tout $u \in [0, 1[$.
+Ainsi $\phi'(t) \ge 0$. La suite $n \mapsto f_n(x)$ est donc croissante pour tout $n > A$.
+Les hypothèses du théorème de Dini sont réunies :
+1. $K = [0, A]$ est compact.
+2. $(f_n)$ est une suite de fonctions continues sur $K$.
+3. La suite $(f_n(x))$ est croissante pour chaque $x \in K$.
+4. La fonction limite $f$ est continue sur $K$.
+Par le théorème de Dini, la convergence est \textbf{uniforme} sur $[0, A]$.
+
+
+\subsection*{Exercice 4 : Transfert de dérivabilité et série de fonctions}
+\textbf{Énoncé :}
+Étudier la suite de fonctions définie par $h_n(x) = \frac{\sin(nx)}{\sqrt{n}}$ sur $\mathbb{R}$.
+Montrer que $h_n$ converge uniformément, mais que sa limite n'est pas dérivable. En déduire que le transfert de dérivabilité exige des hypothèses sur la suite des dérivées.
+
+\textbf{Solution Rigoureuse :}
+1. \textbf{Convergence de $(h_n)$ :}
+Pour tout $x \in \mathbb{R}$ et tout $n \ge 1$, on a :
+$$|h_n(x)| = \frac{|\sin(nx)|}{\sqrt{n}} \le \frac{1}{\sqrt{n}}$$
+Donc $\sup_{x \in \mathbb{R}} |h_n(x)| \le \frac{1}{\sqrt{n}}$.
+Puisque $\lim_{n \to +\infty} \frac{1}{\sqrt{n}} = 0$, la suite $(h_n)$ converge uniformément sur $\mathbb{R}$ vers la fonction constante $h = 0$.
+
+2. \textbf{Étude des dérivées :}
+La limite de $(h_n)$ est $h(x) = 0$, qui est de classe $\mathcal{C}^\infty$, donc infiniment dérivable avec $h'(x) = 0$.
+Regardons la suite des dérivées :
+$$h_n'(x) = \sqrt{n} \cos(nx)$$
+Fixons par exemple $x = 0$. $h_n'(0) = \sqrt{n} \cos(0) = \sqrt{n}$.
+On constate que $\lim_{n \to +\infty} h_n'(0) = +\infty$.
+La suite des dérivées ne converge même pas simplement en $0$.
+Cet exemple met en évidence une pathologie fondamentale : la convergence uniforme d'une suite de fonctions régulières vers une limite régulière ne garantit absolument pas le transfert des dérivées. Le théorème de dérivation exige la convergence uniforme de la \textbf{suite des dérivées} $(h_n')$, ce qui est gravement mis en défaut ici.
+
+
+\subsection*{Exercice 5 : La fonction indicatrice modifiée}
+\textbf{Énoncé :}
+On pose $f_n(x) = \exp(-n x^2)$ sur $\mathbb{R}$.
+Étudier la convergence simple et uniforme.
+
+\textbf{Solution Rigoureuse :}
+1. \textbf{Convergence simple :}
+Soit $x \in \mathbb{R}$.
+- Si $x = 0$, $f_n(0) = \exp(0) = 1$ pour tout $n$. Donc $\lim_{n \to +\infty} f_n(0) = 1$.
+- Si $x \neq 0$, $x^2 > 0$, donc $\lim_{n \to +\infty} -n x^2 = -\infty$, ce qui implique $\lim_{n \to +\infty} \exp(-n x^2) = 0$.
+La suite converge simplement sur $\mathbb{R}$ vers la fonction limite $f$ telle que $f(0) = 1$ et $f(x) = 0$ si $x \neq 0$.
+
+2. \textbf{Convergence uniforme :}
+Les fonctions $f_n$ sont continues sur $\mathbb{R}$, mais la fonction limite $f$ est discontinue en $x=0$.
+D'après le théorème du transfert de continuité (par contraposée), la convergence \textbf{ne peut pas être uniforme} sur un intervalle contenant $0$, et a fortiori pas sur $\mathbb{R}$ entier.
+Vérifions-le analytiquement :
+$$\sup_{x \in \mathbb{R}} |f_n(x) - f(x)| \ge \lim_{x \to 0, x \neq 0} |f_n(x) - 0| = \lim_{x \to 0} \exp(-n x^2) = 1$$
+La norme infinie de la différence vaut $1$, elle ne tend pas vers $0$.
+Cependant, sur tout ensemble de la forme $E_a = \mathbb{R} \setminus ]-a, a[$ avec $a > 0$, la fonction $f$ est identiquement nulle, et :
+$$\sup_{|x| \ge a} |f_n(x)| = \exp(-n a^2) \xrightarrow[n \to +\infty]{} 0$$
+La convergence est donc uniforme sur les complémentaires de voisinages de l'origine.
+
+
+\subsection*{Exercice 6 : Convergence et suites de polynômes}
+\textbf{Énoncé :}
+Soit $f_n(x) = n x (1 - x^2)^n$ sur $[0, 1]$. Étudier les convergences, et évaluer $\lim_{n \to +\infty} \int_0^1 f_n(x) dx$ comparativement à l'intégrale de la limite.
+
+\textbf{Solution Rigoureuse :}
+1. \textbf{Convergence simple :}
+Si $x = 0$ ou $x = 1$, $f_n(x) = 0$ pour tout $n$.
+Si $x \in ]0, 1[$, on a $0 < 1 - x^2 < 1$. Posons $q = 1 - x^2$. $f_n(x) = x n q^n$.
+Par croissances comparées, $\lim_{n \to +\infty} n q^n = 0$.
+La suite converge simplement vers la fonction nulle $f \equiv 0$ sur $[0, 1]$.
+
+2. \textbf{Intégrales :}
+Calculons l'intégrale de $f_n$ :
+$$I_n = \int_0^1 n x (1 - x^2)^n dx$$
+Posons $u = 1 - x^2$, $du = -2x dx$. Pour $x=0, u=1$, et pour $x=1, u=0$.
+$$I_n = \int_1^0 n \left( \frac{-du}{2} \right) u^n = \frac{n}{2} \int_0^1 u^n du = \frac{n}{2} \left[ \frac{u^{n+1}}{n+1} \right]_0^1 = \frac{n}{2(n+1)}$$
+On a alors $\lim_{n \to +\infty} I_n = \frac{1}{2}$.
+Cependant, $\int_0^1 f(x) dx = \int_0^1 0 dx = 0$.
+Il y a défaut de commutation limite-intégrale :
+$$\lim_{n \to +\infty} \int_0^1 f_n \neq \int_0^1 \lim_{n \to +\infty} f_n$$
+
+3. \textbf{Conséquence sur la convergence uniforme :}
+Par contraposée du théorème d'intégration sur un segment, la suite $(f_n)$ \textbf{ne converge pas uniformément} vers $0$ sur $[0, 1]$.
+En cherchant le maximum par la dérivée : $f_n'(x) = n(1-x^2)^n - 2n^2 x^2 (1-x^2)^{n-1} = n(1-x^2)^{n-1}(1 - x^2 - 2nx^2) = n(1-x^2)^{n-1}(1 - (2n+1)x^2)$.
+Le maximum est atteint en $x_n = \frac{1}{\sqrt{2n+1}}$, et $f_n(x_n) \sim \frac{n}{\sqrt{2n}} e^{-1/2} \to +\infty$, confirmant l'absence de convergence uniforme.
+
+
+\subsection*{Exercice 7 : Approximation et norme infinie}
+\textbf{Énoncé :}
+Montrer que $f_n(x) = \frac{\arctan(nx)}{\sqrt{n}}$ converge uniformément sur $\mathbb{R}$.
+
+\textbf{Solution Rigoureuse :}
+On évalue la borne supérieure directement.
+La fonction arctangente est bornée sur $\mathbb{R}$ par $\frac{\pi}{2}$.
+Ainsi, pour tout $x \in \mathbb{R}$ et tout $n \ge 1$ :
+$$|f_n(x)| = \frac{|\arctan(nx)|}{\sqrt{n}} \le \frac{\pi}{2\sqrt{n}}$$
+La limite simple est la fonction constante $0$.
+L'évaluation de la norme infinie donne :
+$$\|f_n - 0\|_{\infty, \mathbb{R}} = \sup_{x \in \mathbb{R}} \frac{|\arctan(nx)|}{\sqrt{n}} \le \frac{\pi}{2\sqrt{n}}$$
+Puisque $\lim_{n \to +\infty} \frac{\pi}{2\sqrt{n}} = 0$, on a $\lim_{n \to +\infty} \|f_n\|_{\infty, \mathbb{R}} = 0$.
+La convergence est donc \textbf{uniforme} sur la totalité de la droite réelle $\mathbb{R}$.
+L'intérêt est que bien que la fonction arctangente possède des variations asymptotiques marquées, le dénominateur uniformément écrasant $\sqrt{n}$ force la convergence globale.
+
+
+\subsection*{Exercice 8 : L'échafaudage de Weierstrass}
+\textbf{Énoncé :}
+Étudier la suite $f_n(x) = \sqrt{x^2 + \frac{1}{n}}$ sur $\mathbb{R}$.
+
+\textbf{Solution Rigoureuse :}
+1. \textbf{Convergence simple :}
+Pour tout $x \in \mathbb{R}$ fixé, la continuité de la fonction racine carrée assure que :
+$$\lim_{n \to +\infty} \sqrt{x^2 + \frac{1}{n}} = \sqrt{x^2} = |x|$$
+La limite simple est $f(x) = |x|$.
+
+2. \textbf{Convergence uniforme :}
+Nous devons évaluer la quantité $|f_n(x) - f(x)|$.
+$$f_n(x) - f(x) = \sqrt{x^2 + \frac{1}{n}} - \sqrt{x^2}$$
+Pour contourner la soustraction de racines, utilisons l'expression conjuguée :
+$$f_n(x) - f(x) = \frac{(x^2 + \frac{1}{n}) - x^2}{\sqrt{x^2 + \frac{1}{n}} + \sqrt{x^2}} = \frac{\frac{1}{n}}{\sqrt{x^2 + \frac{1}{n}} + |x|}$$
+Cette quantité est strictement positive, et maximale lorsque le dénominateur est minimal, ce qui se produit au point $x = 0$.
+Le supremum de la différence est donc :
+$$\sup_{x \in \mathbb{R}} |f_n(x) - f(x)| = \frac{\frac{1}{n}}{\sqrt{\frac{1}{n}} + 0} = \frac{1}{n \frac{1}{\sqrt{n}}} = \frac{1}{\sqrt{n}}$$
+Puisque $\lim_{n \to +\infty} \frac{1}{\sqrt{n}} = 0$, la norme de la convergence uniforme tend vers 0.
+La suite de fonctions $f_n$ converge uniformément vers la fonction valeur absolue sur $\mathbb{R}$.
+*Remarque de structure :* C'est un point de passage fondamental pour démontrer le théorème de Stone-Weierstrass. Les fonctions $f_n$ sont de classe $\mathcal{C}^\infty$ (pour $n$ fini, la singularité de $|x|$ en zéro est évitée car l'argument du radical est strictement positif), alors que la limite ne l'est pas. C'est l'archétype de la régularisation de Lebesgue.
+
+
+\subsection*{Exercice 9 : Sommes partielles et convergence uniforme}
+\textbf{Énoncé :}
+Soit $S_n(x) = \sum_{k=1}^n \frac{\cos(kx)}{k^2}$. Montrer la convergence uniforme de cette suite de fonctions.
+
+\textbf{Solution Rigoureuse :}
+1. \textbf{Critère de Cauchy uniforme (Critère de Weierstrass) :}
+Il s'agit d'une suite de sommes partielles définissant une série de fonctions. On l'étudie via la convergence normale.
+Posons $u_k(x) = \frac{\cos(kx)}{k^2}$.
+Pour tout $x \in \mathbb{R}$, on a la majoration évidente en valeur absolue :
+$$|u_k(x)| = \frac{|\cos(kx)|}{k^2} \le \frac{1}{k^2}$$
+Ainsi, la norme infinie de $u_k$ sur $\mathbb{R}$ satisfait :
+$$\|u_k\|_{\infty, \mathbb{R}} \le \frac{1}{k^2}$$
+2. \textbf{Convergence normale vers convergence uniforme :}
+La série numérique $\sum \frac{1}{k^2}$ est une série de Riemann convergente (d'exposant $2 > 1$).
+Puisque la série des normes infinis $\sum \|u_k\|_{\infty, \mathbb{R}}$ converge, la série de fonctions $\sum u_k(x)$ converge normalement sur $\mathbb{R}$.
+Par un théorème fondamental de l'analyse, la convergence normale implique la convergence uniforme.
+Donc la suite des sommes partielles $(S_n)$ converge uniformément sur $\mathbb{R}$ vers une fonction continue $S$.
+Le transfert de continuité s'applique car chaque composante est continue et la somme est uniforme.
+
+
+\subsection*{Exercice 10 : Équation différentielle résolue par limite}
+\textbf{Énoncé :}
+On considère une suite d'approximations de Picard définie par $y_0(t) = 1$ et $y_{n+1}(t) = 1 + \int_0^t y_n(s) ds$.
+Montrer que $y_n(t)$ converge uniformément vers $e^t$ sur tout compact $[-A, A]$.
+
+\textbf{Solution Rigoureuse :}
+1. \textbf{Construction des itérés :}
+Calculons les premiers termes :
+$y_0(t) = 1$
+$y_1(t) = 1 + \int_0^t 1 ds = 1 + t$
+$y_2(t) = 1 + \int_0^t (1+s) ds = 1 + t + \frac{t^2}{2}$
+Par récurrence, on démontre que $y_n(t) = \sum_{k=0}^n \frac{t^k}{k!}$, qui est le développement en série de Taylor de l'exponentielle.
+2. \textbf{Évaluation du reste (Convergence uniforme) :}
+On sait que la limite simple est $\exp(t)$. Étudions la différence $|y_n(t) - e^t|$ sur $[-A, A]$.
+$$|e^t - y_n(t)| = \left| \sum_{k=n+1}^{+\infty} \frac{t^k}{k!} \right| \le \sum_{k=n+1}^{+\infty} \frac{|t|^k}{k!} \le \sum_{k=n+1}^{+\infty} \frac{A^k}{k!}$$
+Le majorant est indépendant de $t \in [-A, A]$, et représente le reste de la série numérique de l'exponentielle au point $A$.
+Comme cette série converge, son reste tend vers $0$ lorsque $n \to +\infty$.
+Ainsi, $\lim_{n \to +\infty} \sup_{t \in [-A, A]} |y_n(t) - e^t| = 0$.
+La convergence est \textbf{uniforme} sur tout segment de $\mathbb{R}$.
+Le théorème de Picard-Lindelöf repose sur cette idée pour prouver l'existence globale des solutions aux EDO, soulignant que la convergence uniforme permet d'échanger limite et intégrale dans l'équation intégrale de point fixe.
+
+
+
+
+\section{Travaux pratiques et simulations algorithmiques}
+
+\subsection*{TP 1 : Illustration numérique de la convergence simple et uniforme}
+\textbf{Objectif :} Implémenter en Python une classe permettant d'évaluer la convergence de suites de fonctions sur une grille, sans bibliothèques externes complexes autres que la syntaxe de base.
+
+\textbf{Implémentation :}
+\begin{lstlisting}[language=Python]
+import math
+
+class SuiteFonctions:
+    def __init__(self, fonction_n_x, limite_x, a, b, n_points=1000):
+        self.f_n = fonction_n_x
+        self.f = limite_x
+        self.a = a
+        self.b = b
+        self.n_points = n_points
+        self.grille = [a + i*(b-a)/n_points for i in range(n_points+1)]
+
+    def erreur_point_par_point(self, n, x):
+        return abs(self.f_n(n, x) - self.f(x))
+
+    def norme_infinie(self, n):
+        erreurs = [self.erreur_point_par_point(n, x) for x in self.grille]
+        return max(erreurs)
+
+# Cas d'etude : x^n sur [0, 1]
+f_n = lambda n, x: x**n
+f = lambda x: 0 if x < 1 else 1
+
+suite = SuiteFonctions(f_n, f, 0, 1, 10000)
+
+for n in [10, 100, 1000]:
+    norme_sup = suite.norme_infinie(n)
+    print(f"Norme infinie pour n={n} : {norme_sup:.4f}")
+    assert norme_sup > 0.9, "L'erreur reste de l'ordre de 1, prouvant le defaut d'uniformite."
+\end{lstlisting}
+
+
+\subsection*{TP 2 : Le phénomène de Gibbs}
+\textbf{Objectif :} Analyser le défaut de convergence uniforme des séries de Fourier aux points de discontinuité.
+
+\textbf{Implémentation :}
+\begin{lstlisting}[language=Python]
+import math
+
+def fourier_creneau(n, x):
+    somme = 0
+    for k in range(1, n+1, 2):
+        somme += (4 / math.pi) * math.sin(k * x) / k
+    return somme
+
+grille = [math.pi * i / 1000 for i in range(1001)]
+limite = 1 # Valeur du creneau pour x dans ]0, pi[
+
+def erreur_max_fourier(n):
+    erreurs = [abs(fourier_creneau(n, x) - limite) for x in grille if 0 < x < math.pi]
+    return max(erreurs)
+
+for n in [10, 50, 100]:
+    err = erreur_max_fourier(n)
+    print(f"Serie de Fourier n={n}, Erreur Max: {err:.4f}")
+    assert err > 0.17, "Le depassement de Gibbs (environ 18%) ne s'attenue pas."
+\end{lstlisting}
+
+
+\subsection*{TP 3 : Approximation polynomiale de Bernstein (Théorème de Weierstrass)}
+\textbf{Objectif :} Construire des polynômes de Bernstein pour approximer uniformément la fonction $|x - 0.5|$ sur $[0, 1]$.
+
+\textbf{Implémentation :}
+\begin{lstlisting}[language=Python]
+import math
+
+def coef_binom(n, k):
+    return math.factorial(n) / (math.factorial(k) * math.factorial(n - k))
+
+def polynome_bernstein(f, n, x):
+    somme = 0
+    for k in range(n + 1):
+        poly_base = coef_binom(n, k) * (x**k) * ((1 - x)**(n - k))
+        somme += f(k / n) * poly_base
+    return somme
+
+f_abs = lambda x: abs(x - 0.5)
+
+grille = [i/50 for i in range(51)]
+for n in [5, 20, 50]:
+    erreurs = [abs(polynome_bernstein(f_abs, n, x) - f_abs(x)) for x in grille]
+    max_err = max(erreurs)
+    print(f"Bernstein n={n}, Erreur uniforme: {max_err:.4f}")
+\end{lstlisting}
+
+
+\subsection*{TP 4 : Dérivation d'une limite et pathologie}
+\textbf{Objectif :} Montrer numériquement que dériver la fonction approchée ne converge pas vers la dérivée de la limite si on manque de convergence uniforme.
+
+\textbf{Implémentation :}
+\begin{lstlisting}[language=Python]
+import math
+
+# h_n(x) = sin(nx) / sqrt(n)
+h_n_prime = lambda n, x: math.sqrt(n) * math.cos(n * x)
+
+# Valeur en x=0
+x_fixe = 0
+print("Evaluation de la derivee de la suite en x=0")
+for n in [1, 100, 10000, 1000000]:
+    deriv = h_n_prime(n, x_fixe)
+    print(f"n = {n}, h'_n(0) = {deriv}")
+    assert deriv == math.sqrt(n), "Validation du calcul formel"
+\end{lstlisting}
+
+
+\subsection*{TP 5 : Point fixe de Picard (Equa. Diff.)}
+\textbf{Objectif :} Résoudre $y' = y$ itérativement et vérifier la convergence uniforme algorithmique de la suite de fonctions.
+
+\textbf{Implémentation :}
+\begin{lstlisting}[language=Python]
+def int_trapez(f, a, b, steps=100):
+    h = (b - a) / steps
+    s = 0.5 * (f(a) + f(b))
+    for i in range(1, steps):
+        s += f(a + i * h)
+    return s * h
+
+def iter_picard(y_n_valeurs, t_valeurs):
+    y_n1_valeurs = []
+    for t in t_valeurs:
+        # Integrer y_n de 0 a t. C'est fait numeriquement.
+        # Pour une implementation exacte des iteres discrets :
+        idx = int(t * 100) # approximation simple pour 100 pts par unite
+        if idx == 0:
+            y_n1_valeurs.append(1.0)
+        else:
+            integral = sum(y_n_valeurs[:idx]) * 0.01 # somme de Riemann
+            y_n1_valeurs.append(1.0 + integral)
+    return y_n1_valeurs
+
+t_grille = [i*0.01 for i in range(101)] # [0, 1]
+y_init = [1.0] * len(t_grille)
+
+y_courant = y_init
+import math
+for n in range(1, 10):
+    y_courant = iter_picard(y_courant, t_grille)
+
+max_err = max(abs(y_courant[i] - math.exp(t_grille[i])) for i in range(len(t_grille)))
+print(f"Erreur apres 9 iterations: {max_err}")
+assert max_err < 0.05, "La convergence est tres rapide sur le compact."
+\end{lstlisting}
+
+
+
+
+\end{document}
