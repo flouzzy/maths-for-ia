@@ -4,19 +4,31 @@
     "type": "split",
     "children": [
       {
-        "id": "bc1e7782e8dc77d0",
+        "id": "b04753eb4860cfae",
         "type": "tabs",
         "children": [
           {
-            "id": "8ceda288c71f7e44",
+            "id": "028bc0b66da30b0b",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "jalon-9/jalon-9-polycopie.pdf"
+                "file": "jalon-1/Jalon 1 (Logique formelle).md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "lucide-file-text",
-              "title": "jalon-9-polycopie"
+              "icon": "lucide-file",
+              "title": "Jalon 1 (Logique formelle)"
             }
           }
         ]
@@ -208,22 +220,24 @@
       "markdown-importer:Ouvrir l'importateur Markdown": false
     }
   },
-  "active": "8ceda288c71f7e44",
+  "active": "18864fee124c4f40",
   "lastOpenFiles": [
+    "jalon-21/jalon-21.toc",
+    "jalon-21/jalon-21.log",
+    "jalon-21/jalon-21.aux",
+    "jalon-21/jalon-21-polycopie.pdf",
+    "jalon-21.tex",
+    "plan_review.md",
+    "jalon-20/jalon-20-polycopie.pdf",
+    "jalon-1/README.md",
+    "jalon-19/jalon-19.tex",
+    "jalon-19/jalon-19-polycopie.pdf",
     "jalon-18/jalon-18.tex",
     "jalon-18/jalon-18-polycopie.pdf",
     "jalon-17/jalon-17-polycopie.pdf",
-    "jalon-17.tex",
     "jalon-6/Jalon-6.md",
-    "jalon-6/jalon-6-polycopie.pdf",
-    "jalon-5/jalon-5-polycopie.pdf",
     "jalon-26/Jalon-26.md",
     "jalon-22/Jalon-22.md",
-    "jalon-16/jalon-16.toc",
-    "jalon-16/jalon-16.log",
-    "jalon-16/jalon-16.aux",
-    "jalon-16/jalon-16-polycopie.pdf",
-    "jalon-16.tex",
     "plan_review_15.md",
     "jalon-1/Jalon 1 (Logique formelle).md",
     "jalon-23/Jalon 23 (Séries entières).md",
@@ -245,8 +259,6 @@
     "jalon-10/Jalon 10 (Changements de base).md",
     "jalon-9/Jalon 9 (Calcul matriciel).md",
     "jalon-8/Jalon 8 (Applications linéaires).md",
-    "jalon-7/Jalon 7 (Espaces vectoriels abstraits).md",
-    "jalon-6/Jalon 6 (Relations d'équivalence).md",
-    "jalon-1/README.md"
+    "jalon-7/Jalon 7 (Espaces vectoriels abstraits).md"
   ]
 }
