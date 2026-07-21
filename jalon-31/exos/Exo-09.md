@@ -1,23 +1,38 @@
-# Exercice 9 - Difficulté ★★★★★
+# Exercice 09 : Matrices semblables et invariants de similitude (⭐⭐⭐⭐)
 
 ## Énoncé
+Soient les deux matrices nilpotentes suivantes dans $\mathcal{M}_3(\mathbb{R})$ :
+$$A = \begin{pmatrix} 0 & 1 & 1 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}, \quad B = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}$$
+1. Calculer les polynômes caractéristiques $\chi_A$ et $\chi_B$. Sont-ils égaux ?
+2. Calculer $A^2$ et $A^3$. Déterminer l'indice de nilpotence de $A$.
+3. $A$ et $B$ sont-elles semblables ? Justifier de manière formelle.
 
-Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension $n$. Considérons la propriété $P_9$ relative aux opérateurs nilpotents et aux matrices de Jordan.
-Démontrez de manière exhaustive, avec Zéro Ellipse, les implications algébriques de la réduction de Jordan sur la dynamique d'un système discret modélisé par une telle matrice, en particulier lorsque $k = 9$.
+## Corrigé Rigoureux : Zéro Ellipse Mathématique
 
-## Solution Détaillée (Zéro Ellipse)
+### 1. Polynômes caractéristiques
+Les matrices $A$ et $B$ sont toutes deux des matrices triangulaires supérieures strictes.
+Les éléments diagonaux sont donc les valeurs propres, et elles sont toutes nulles.
+Le déterminant de $X I_3 - M$ pour une matrice triangulaire supérieure stricte $M$ est simplement le produit des termes de la diagonale $(X - 0)$.
+Donc $\chi_A(X) = X^3$ et $\chi_B(X) = X^3$.
+Les polynômes caractéristiques sont identiques.
 
-**Étape 1 : Initialisation et typage**
-Soit $u \in \mathcal{L}(E)$ un endomorphisme. Posons l'hypothèse de nilpotence, i.e., $\exists k \in \mathbb{N}^*, u^k = 0$.
+### 2. Puissances et indice de nilpotence de $A$
+Calculons $A^2$ :
+$$A^2 = \begin{pmatrix} 0 & 1 & 1 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix} \begin{pmatrix} 0 & 1 & 1 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}$$
+- Ligne 1, Col 3 : $0\times 1 + 1\times 1 + 1\times 0 = 1$.
+Les autres coefficients sont nuls par les propriétés des matrices triangulaires strictes (Exercice 3).
+$$A^2 = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}$$
+$A^2 \neq 0$.
+Par le théorème de Cayley-Hamilton, ou par calcul direct de $A^3 = A^2 A$, on sait que $A^3 = 0_3$.
+L'indice de nilpotence de $A$ est donc $3$.
 
-**Étape 2 : Analyse du spectre**
-Le polynôme annulateur étant $X^k$, par le théorème spectral fondamental, les valeurs propres de $u$ sont incluses dans les racines de $X^k$. L'unique racine est $0$. Ainsi $Sp(u) = \{0\}$.
+### 3. Similitude
+Deux matrices sont semblables si et seulement si elles représentent le même endomorphisme dans des bases différentes. Si elles sont semblables, elles partagent les mêmes invariants de similitude : trace, déterminant, polynôme caractéristique, polynôme minimal, et indice de nilpotence.
 
-**Étape 3 : Conséquence structurelle**
-Le polynôme caractéristique, de degré $n$, ne peut s'écrire que $\chi_u(X) = X^n$ puisque $0$ est sa seule racine dans tout corps de décomposition.
-Le théorème de Cayley-Hamilton garantit que $\chi_u(u) = 0$, d'où $u^n = 0$.
-Ainsi, l'indice de nilpotence d'un endomorphisme en dimension $n$ est toujours majoré par $n$.
-
-**Étape 4 : Conclusion**
-Ceci prouve la propriété de la borne absolue de nilpotence en dimension finie.
-$\blacksquare$
+La matrice $B$ est le bloc de Jordan canonique $J_3(0)$. Nous avons démontré dans l'exercice 4 que son indice de nilpotence est 3.
+L'indice de nilpotence de $A$ est également 3.
+Soit $u$ l'endomorphisme de $\mathbb{R}^3$ dont la matrice dans la base canonique est $A$.
+$u$ est nilpotent d'indice $p=3$.
+Comme démontré dans l'Exercice 4, tout endomorphisme nilpotent de dimension 3 et d'indice 3 admet un vecteur $x$ tel que $(u^2(x), u(x), x)$ est une base. Dans cette base, la matrice de $u$ est exactement $B = J_3(0)$.
+Par conséquent, il existe une matrice de passage $P$ inversible telle que $A = P B P^{-1}$.
+Les matrices $A$ et $B$ sont donc rigoureusement semblables.

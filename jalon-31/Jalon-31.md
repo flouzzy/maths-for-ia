@@ -6,93 +6,141 @@ trimester: 3
 tags:
   - math/algebre-lineaire
   - ia/recherche-theorique
-prev: "[[Jalon-30.md]]"
-next: "[[Jalon-32.md]]"
+prev: "[[Jalon 30 (Trigonalisation d'endomorphismes et décomposition de Dunford.).md]]"
+next: "[[Jalon 32 (Preuve complète du théorème spectral pour les endomorphismes symétriques.).md]]"
 ---
 
 # Jalon 31 : Introduction à la réduction de Jordan et structure des nilpotents
 
-## 1. Genèse et Motivation (L'Échafaudage Cognitif)
+## 1. Échafaudage Cognitif & Genèse Historique
 
-L'algèbre linéaire classique, telle qu'introduite par la diagonalisation, propose un idéal séduisant : tout endomorphisme $u$ d'un espace vectoriel $E$ de dimension finie pourrait se réduire à de simples homothéties unidimensionnelles, si seulement l'on trouvait la "bonne" base de vecteurs propres. Dans ce monde parfait, la matrice représentative devient diagonale, et les calculs sur les puissances ou les exponentielles de matrices deviennent triviaux.
+L'algèbre linéaire commence souvent par une promesse séduisante : celle de la diagonalisation. L'idée que l'on puisse trouver un système de coordonnées – une base – dans lequel un endomorphisme complexe agit comme une simple dilatation indépendante le long de chaque axe. Cependant, très tôt, on découvre que cette promesse est fragile. Toutes les matrices ne sont pas diagonalisables. Que se passe-t-il alors lorsque l'espace refuse de se scinder en directions purement indépendantes ? Que faire des endomorphismes qui recèlent en eux une forme d'asymétrie structurelle, une "force de cisaillement" que de simples vecteurs propres ne peuvent capturer ?
 
-Mais cet idéal est fragile. Dès que le polynôme caractéristique possède des racines multiples dont l'ordre de multiplicité algébrique strictement supérieur à la dimension du sous-espace propre associé (multiplicité géométrique), la machine s'enraye. La diagonalisation échoue. L'espace vectoriel n'est plus la somme directe des sous-espaces propres. Que se passe-t-il alors dans les "trous" laissés par ce déficit de vecteurs propres ?
+C'est ici qu'intervient le concept de nilpotence, puis de réduction de Jordan. Historiquement, Camille Jordan, à la fin du XIXe siècle, cherchait à comprendre la structure fine des équations différentielles linéaires. Lorsqu'un système présente des racines multiples dans son polynôme caractéristique, la solution ne s'exprime plus seulement comme une somme d'exponentielles pures, mais fait apparaître des termes de la forme $t^k e^{\lambda t}$. Cet effet de "résonance" est la signature spectrale d'un bloc de Jordan.
 
-Historiquement, cette question obsédait Camille Jordan au XIXe siècle. Il comprit que l'échec de la diagonalisation n'est pas un chaos informe, mais obéit à une structure hiérarchique profonde. Au lieu de vecteurs totalement indépendants évoluant chacun sur leur propre axe, on découvre des vecteurs "enchaînés" : le premier est transformé par $u - \lambda \mathrm{id}$ en un multiple du second, qui lui-même se transforme dans le troisième, jusqu'à s'écraser sur le vecteur nul. C'est l'essence de la nilpotence. La réduction de Jordan montre que tout endomorphisme (sur un corps algébriquement clos, comme $\mathbb{C}$) peut être vu comme une somme de comportements diagonaux (étirements) et de comportements nilpotents (décalages successifs et annulations en cascade), offrant ainsi une classification structurelle absolue et exhaustive.
+Pour comprendre la réduction de Jordan, il faut visualiser l'endomorphisme non pas comme un ensemble de ressorts indépendants (cas diagonalisable), mais comme une cascade ou une chaîne de montage. Un opérateur nilpotent agit comme un broyeur : peu importe le vecteur que vous y insérez, si vous le passez assez de fois à travers la machine, il finira broyé et réduit au vecteur nul. Les vecteurs ne sont plus des entités autonomes mais forment des *chaînes de dépendance*, où chaque itération de l'endomorphisme pousse un vecteur vers le suivant, jusqu'à l'annihilation finale.
 
-## 2. Le Protocole d'Exégèse Conceptuelle
+La forme de Jordan est ainsi le compromis ultime : c'est la matrice "la plus diagonale possible". Elle révèle que tout opérateur se décompose en deux actions simultanées et qui commutent : une dilatation pure (la partie diagonalisable) et un cisaillement nilpotent (la partie de Jordan).
 
-### A. Énoncé Symbolique Strict
+## 2. Protocole d'Exégèse Conceptuelle
 
-**Définition (Opérateur Nilpotent) :**
-Soit $E$ un espace vectoriel sur un corps $\mathbb{K}$. Un endomorphisme $u \in \mathcal{L}(E)$ est dit **nilpotent** s'il existe un entier $k \in \mathbb{N}^*$ tel que $u^k = 0_{\mathcal{L}(E)}$. Le plus petit entier naturel non nul vérifiant cette propriété est appelé l'**indice de nilpotence** de $u$.
+### 2.1. Endomorphismes Nilpotents
 
-**Définition (Bloc de Jordan) :**
-Pour un scalaire $\lambda \in \mathbb{K}$ et un entier $k \ge 1$, le bloc de Jordan $J_k(\lambda) \in \mathcal{M}_k(\mathbb{K})$ est la matrice définie par :
-$$ J_k(\lambda) = \begin{pmatrix}
-\lambda & 1 & 0 & \cdots & 0 \\
-0 & \lambda & 1 & \ddots & \vdots \\
-0 & 0 & \ddots & \ddots & 0 \\
-\vdots & \ddots & \ddots & \lambda & 1 \\
-0 & \cdots & 0 & 0 & \lambda
-\end{pmatrix} = \lambda I_k + N_k $$
-où $N_k$ est la matrice nilpotente de taille $k \times k$ ayant des $1$ sur la surdiagonale principale, et $0$ partout ailleurs.
+#### A. Énoncé Symbolique Strict
+Soit $E$ un $\mathbb{K}$-espace vectoriel. Un endomorphisme $u \in \mathcal{L}(E)$ est dit **nilpotent** s'il existe un entier $k \in \mathbb{N}^*$ tel que $u^k = 0_{\mathcal{L}(E)}$. L'entier minimal $p \in \mathbb{N}^*$ vérifiant $u^p = 0_{\mathcal{L}(E)}$ est appelé l'**indice de nilpotence** de $u$.
 
-### B. Anatomie et Typage Chirurgical
+#### B. Anatomie et Typage Chirurgical
+- $E$ : Un espace vectoriel sur le corps $\mathbb{K}$ (souvent $\mathbb{R}$ ou $\mathbb{C}$).
+- $u \in \mathcal{L}(E)$ : Un opérateur linéaire de $E$ dans $E$.
+- $k \in \mathbb{N}^*$ : Un entier naturel non nul, représentant le nombre d'itérations.
+- $u^k = \underbrace{u \circ u \circ \dots \circ u}_{k \text{ fois}}$ : La composition de l'endomorphisme $u$ avec lui-même $k$ fois.
+- $0_{\mathcal{L}(E)}$ : L'endomorphisme nul, qui associe le vecteur nul $0_E$ à tout vecteur $x \in E$.
+- **L'indice $p$ :** Il vérifie $u^{p-1} \neq 0$ et $u^p = 0$. Il quantifie la "longueur maximale" de survie d'un vecteur sous l'action de $u$.
 
-- $E$ : Un $\mathbb{K}$-espace vectoriel, typiquement de dimension finie $n$.
-- $u$ : Endomorphisme de $E$, c'est-à-dire une application linéaire de $E$ dans $E$.
-- $u^k = u \circ u \circ \cdots \circ u$ ($k$ fois) : La composition itérée de l'endomorphisme.
-- $0_{\mathcal{L}(E)}$ : L'application nulle qui associe le vecteur nul $0_E$ à tout vecteur de $E$.
-- $J_k(\lambda)$ : Une matrice carrée d'ordre $k$ dont la diagonale principale est entièrement occupée par la valeur propre $\lambda$, et dont la première surdiagonale est remplie de $1$. Elle représente intrinsèquement la somme d'une homothétie et d'un "shift" (décalage) nilpotent de rang maximum.
+#### C. Exemples de Validation
+- **Exemple trivial :** L'endomorphisme nul $u = 0_{\mathcal{L}(E)}$. Son indice de nilpotence est $p=1$.
+- **Exemple complexe :** Dans l'espace des polynômes de degré au plus $n$, $E = \mathbb{R}_n[X]$, l'opérateur de dérivation $D(P) = P'$. Puisque chaque dérivation diminue le degré d'au moins 1, la dérivée $(n+1)$-ème d'un polynôme de degré $\leq n$ est nulle. Ainsi, $D^{n+1} = 0$. L'opérateur de dérivation est nilpotent d'indice $n+1$.
 
-### C. Exemples de Validation
+#### D. Cas Pathologiques et Contre-exemples
+- **Rotation de $\pi/2$ :** Dans $\mathbb{R}^2$, la rotation $R$ d'angle $\pi/2$ vérifie $R^4 = \text{Id}$. Elle n'est pas nilpotente car ses itérées forment une suite périodique, elles ne convergent pas et ne s'annulent jamais (sauf sur le vecteur nul).
+- **Dimension infinie :** L'opérateur de décalage à droite $S(x_0, x_1, x_2, \dots) = (0, x_0, x_1, \dots)$ sur l'espace des suites n'est pas nilpotent, bien que son opérateur adjoint, le décalage à gauche $L(x_0, x_1, x_2, \dots) = (x_1, x_2, x_3, \dots)$, soit tel que $L^k$ s'annule sur le sous-espace des suites nulles à partir du rang $k$. Sur l'espace entier, $L$ n'est pas nilpotent car aucune puissance globale n'annule l'espace entier.
 
-**Exemple 1 (Nilpotent trivial) :**
-Considérons la matrice $A = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}$.
-On a $A^2 = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}$.
-C'est une matrice nilpotente d'indice 2, et elle correspond exactement au bloc de Jordan $J_2(0)$.
+### 2.2. Caractérisation des Nilpotents
 
-**Exemple 2 (Dérivation sur les polynômes) :**
-Considérons l'espace vectoriel $\mathbb{R}_n[X]$ des polynômes de degré inférieur ou égal à $n$. L'opérateur de dérivation $D : P \mapsto P'$ est un endomorphisme de $\mathbb{R}_n[X]$. Comme la dérivation diminue le degré d'un polynôme non nul d'exactement 1, pour tout polynôme $P \in \mathbb{R}_n[X]$, on a $D^{n+1}(P) = 0$. Ainsi, $D^{n+1} = 0$, et l'opérateur de dérivation est nilpotent d'indice $n+1$. Dans la base canonique $(1, X, X^2/2!, \ldots, X^n/n!)$, la matrice de $D$ est exactement $J_{n+1}(0)$.
+#### A. Énoncé Symbolique Strict
+Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension finie $n$. Soit $u \in \mathcal{L}(E)$.
+Les propositions suivantes sont équivalentes :
+1. $u$ est nilpotent.
+2. Le polynôme caractéristique de $u$ est $\chi_u(X) = X^n$.
+3. La seule valeur propre de $u$ dans la clôture algébrique de $\mathbb{K}$ est $0$.
 
-### D. Cas Pathologiques et Contre-exemples
+#### B. Anatomie et Typage Chirurgical
+- $\dim(E) = n$ : La restriction à la dimension finie est cruciale pour que le polynôme caractéristique soit défini et de degré $n$.
+- $\chi_u(X) = \det(XI_n - U)$ : Le polynôme caractéristique, où $U$ est la matrice de $u$.
+- L'équivalence relie une propriété algébrico-dynamique ($u^k = 0$) à l'information purement spectrale du polynôme caractéristique.
 
-- **Dimension infinie :** La nilpotence est globale (il existe un $k$ fixe pour tous les vecteurs). Si l'on a un opérateur $u$ tel que pour chaque vecteur $x$, il existe $k_x$ avec $u^{k_x}(x) = 0$, mais que $\sup \{k_x\} = +\infty$, alors $u$ n'est pas nilpotent.
-- **Corps de base non algébriquement clos :** Si le polynôme caractéristique ne se scinde pas (par exemple $X^2+1$ sur $\mathbb{R}$), il est impossible d'obtenir une forme de Jordan classique. La théorie de Jordan suppose que toutes les racines du polynôme caractéristique appartiennent au corps de base.
+#### C. Exemples de Validation
+La matrice $U = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}$ vérifie $\chi_U(X) = X^3$. On calcule $U^2 = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}$ et $U^3 = 0_3$. $U$ est bien nilpotente.
 
-## 3. Zéro Ellipse : Théorème Fondamental des Nilpotents
+#### D. Cas Pathologiques et Contre-exemples
+L'équivalence $\chi_u(X) = X^n \iff u$ nilpotent repose sur la dimension finie. En dimension infinie, on ne peut pas utiliser le polynôme caractéristique.
 
-**Théorème :** Un endomorphisme $u \in \mathcal{L}(E)$ de dimension finie $n \ge 1$ est nilpotent si et seulement si son polynôme caractéristique est $\chi_u(X) = X^n$.
+### 2.3. Blocs de Jordan
 
-**Démonstration :**
+#### A. Énoncé Symbolique Strict
+Un **bloc de Jordan** de taille $k \in \mathbb{N}^*$ associé à la valeur propre $\lambda \in \mathbb{K}$ est une matrice carrée $J_k(\lambda) \in \mathcal{M}_k(\mathbb{K})$ de la forme :
+$$ J_k(\lambda) = \begin{pmatrix} \lambda & 1 & 0 & \dots & 0 \\ 0 & \lambda & 1 & \ddots & \vdots \\ \vdots & \ddots & \ddots & \ddots & 0 \\ \vdots & & \ddots & \lambda & 1 \\ 0 & \dots & \dots & 0 & \lambda \end{pmatrix} $$
+Autrement dit, $[J_k(\lambda)]_{i,j} = \lambda$ si $i=j$, $1$ si $j = i+1$, et $0$ sinon.
 
-**Sens $\impliedby$ :**
-Supposons que $\chi_u(X) = X^n$.
-Par le théorème de Cayley-Hamilton, tout endomorphisme annule son polynôme caractéristique.
-Ainsi, $\chi_u(u) = u^n = 0_{\mathcal{L}(E)}$.
-L'endomorphisme $u$ est donc nilpotent, d'indice inférieur ou égal à $n$.
+#### B. Anatomie et Typage Chirurgical
+- $k$ : La dimension du bloc.
+- $\lambda$ : Un scalaire sur la diagonale principale.
+- La sur-diagonale ne contient que des 1. C'est l'essence même du "cisaillement". Un bloc $J_k(\lambda)$ s'écrit $\lambda I_k + N_k$ où $N_k$ est le bloc de Jordan nilpotent canonique $J_k(0)$.
 
-**Sens $\implies$ :**
-Supposons que $u$ est nilpotent. Soit $k \in \mathbb{N}^*$ l'indice de nilpotence de $u$, donc $u^k = 0_{\mathcal{L}(E)}$.
-Soit $\lambda \in \mathbb{K}$ une valeur propre de $u$ dans un corps de décomposition de $\chi_u$, et $x \in E \setminus \{0_E\}$ un vecteur propre associé.
-On a $u(x) = \lambda x$.
-Par une récurrence immédiate, pour tout entier $m \ge 1$, $u^m(x) = \lambda^m x$.
-En particulier, pour $m = k$, nous obtenons :
-$u^k(x) = \lambda^k x$.
-Or, $u^k = 0_{\mathcal{L}(E)}$, donc $u^k(x) = 0_E$.
-Nous avons donc $\lambda^k x = 0_E$.
-Comme $x \neq 0_E$ (par définition d'un vecteur propre), il vient $\lambda^k = 0$.
-Le corps $\mathbb{K}$ étant intègre, la seule solution est $\lambda = 0$.
-L'unique valeur propre possible pour $u$ est $0$.
-Le polynôme caractéristique $\chi_u(X)$, de degré $n$ et de coefficient dominant $(-1)^n$ (ou $1$ selon les conventions), dont les racines sont exactement les valeurs propres, n'admet que $0$ pour racine.
-Ainsi, dans le corps de décomposition, $\chi_u(X) = X^n$. Comme les coefficients de $\chi_u$ sont intrinsèquement dans $\mathbb{K}$, cette factorisation vaut sur $\mathbb{K}$.
+#### C. Exemples de Validation
+$J_1(3) = \begin{pmatrix} 3 \end{pmatrix}$, $J_2(0) = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}$, $J_3(-2) = \begin{pmatrix} -2 & 1 & 0 \\ 0 & -2 & 1 \\ 0 & 0 & -2 \end{pmatrix}$.
 
-## 4. Introduction à la Réduction de Jordan
+#### D. Cas Pathologiques et Contre-exemples
+Une matrice avec des $\lambda$ sur la diagonale et des valeurs aléatoires au-dessus n'est pas un bloc de Jordan. La structure impose exactement des 1 sur la diagonale immédiatement supérieure, forçant une structure cyclique très stricte sur la base sous-jacente (chaîne de Jordan).
 
-**Théorème (Réduction de Jordan) :**
-Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension finie $n$. Soit $u \in \mathcal{L}(E)$ un endomorphisme dont le polynôme caractéristique est scindé sur $\mathbb{K}$.
-Alors, il existe une base de $E$ dans laquelle la matrice de $u$ est bloc-diagonale, constituée exclusivement de blocs de Jordan $J_k(\lambda)$, où les $\lambda$ sont les valeurs propres de $u$.
-Cette représentation est unique, à l'ordre des blocs près.
+## 3. Démonstrations : Zéro Ellipse Mathématique
 
-*La preuve détaillée, reposant sur le lemme des noyaux, les sous-espaces caractéristiques et la réduction des endomorphismes nilpotents, sera explorée dans les jalons ultérieurs. Ce résultat constitue le pinacle de la théorie de la réduction.*
+### Démonstration : Théorème de structure nilpotente $\iff \chi_u(X) = X^n$
+
+Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension $n \ge 1$ et $u \in \mathcal{L}(E)$.
+
+**Sens direct (1 $\implies$ 2) : Supposons $u$ nilpotent.**
+1. Par définition, il existe $k \in \mathbb{N}^*$ tel que $u^k = 0$.
+2. Soit $\lambda \in \mathbb{K}$ une valeur propre de $u$ et $x \in E \setminus \{0_E\}$ un vecteur propre associé. Ainsi $u(x) = \lambda x$.
+3. Montrons par récurrence sur $j$ que $u^j(x) = \lambda^j x$.
+   - **Initialisation ($j=1$) :** $u^1(x) = u(x) = \lambda x = \lambda^1 x$.
+   - **Hérédité :** Supposons la propriété vraie pour un $j \ge 1$. $u^{j+1}(x) = u(u^j(x)) = u(\lambda^j x) = \lambda^j u(x) = \lambda^j (\lambda x) = \lambda^{j+1} x$. La propriété est héréditaire.
+4. Appliquons ceci pour $j=k$ : $u^k(x) = \lambda^k x$.
+5. Or nous savons que $u^k = 0$, donc $u^k(x) = 0_E$.
+6. Ainsi, $\lambda^k x = 0_E$.
+7. Comme $x \neq 0_E$ (définition d'un vecteur propre), la nullité du produit scalaire par vecteur implique que $\lambda^k = 0$.
+8. Dans le corps $\mathbb{K}$, cela implique nécessairement $\lambda = 0$.
+9. Le polynôme caractéristique $\chi_u(X)$ de $u$ est de degré $n$. Il est un invariant de similitude dont les racines sont les valeurs propres de $u$.
+10. La seule racine possible dans tout corps de décomposition est $0$.
+11. Puisque le coefficient dominant de $\chi_u(X)$ est défini à $(-1)^n$ ou $1$ selon les conventions (utilisons le polynôme unitaire $\chi_u(X) = \det(XI_n - U)$), on déduit que $\chi_u(X) = X^n$.
+
+**Sens réciproque (2 $\implies$ 1) : Supposons $\chi_u(X) = X^n$.**
+1. D'après le théorème de Cayley-Hamilton, tout endomorphisme $u$ annule son polynôme caractéristique : $\chi_u(u) = 0_{\mathcal{L}(E)}$.
+2. Remplaçons $\chi_u$ par son expression : $\chi_u(u) = u^n = 0_{\mathcal{L}(E)}$.
+3. Par définition, $u$ est donc nilpotent, d'indice de nilpotence $p \le n$. $\blacksquare$
+
+### Démonstration : Indice de nilpotence et sous-espaces emboîtés
+
+Si $u$ est nilpotent d'indice $p$, alors la suite des noyaux vérifie :
+$\{0_E\} = \ker(u^0) \subsetneq \ker(u^1) \subsetneq \ker(u^2) \subsetneq \dots \subsetneq \ker(u^p) = E$.
+
+1. **Inclusion $\ker(u^i) \subseteq \ker(u^{i+1})$ :**
+   Soit $x \in \ker(u^i)$. Par définition, $u^i(x) = 0_E$.
+   Appliquons $u$ : $u(u^i(x)) = u(0_E) = 0_E$.
+   Donc $u^{i+1}(x) = 0_E$, ce qui signifie $x \in \ker(u^{i+1})$. L'inclusion est stricte ou égale.
+2. **Caractère strict des inclusions avant l'indice $p$ :**
+   Supposons qu'il existe un entier $k < p$ tel que $\ker(u^k) = \ker(u^{k+1})$.
+   Montrons par récurrence que pour tout $j \ge 0$, $\ker(u^{k+j}) = \ker(u^k)$.
+   - **Initialisation ($j=1$) :** C'est l'hypothèse de départ.
+   - **Hérédité :** Supposons $\ker(u^{k+j}) = \ker(u^k)$.
+     Soit $x \in \ker(u^{k+j+1})$. Alors $u(x) \in \ker(u^{k+j})$.
+     Par hypothèse de récurrence, $\ker(u^{k+j}) = \ker(u^k)$, donc $u(x) \in \ker(u^k)$.
+     Cela implique $u^k(u(x)) = 0_E$, soit $u^{k+1}(x) = 0_E$.
+     Or par l'hypothèse de départ $\ker(u^{k+1}) = \ker(u^k)$, donc $x \in \ker(u^k)$.
+     L'inclusion inverse est toujours vraie. Donc $\ker(u^{k+j+1}) = \ker(u^k)$.
+   La suite des noyaux stationne à partir du rang $k$.
+3. Comme $u$ est d'indice $p$, $\ker(u^p) = E$.
+4. Si la suite stationnait à $k < p$, on aurait $\ker(u^p) = \ker(u^k) = E$, ce qui signifierait que $u^k = 0$.
+5. Or $p$ est le **plus petit** entier annulant $u$, ce qui contredit $u^k=0$ pour $k < p$.
+6. Donc toutes les inclusions jusqu'à $p$ sont **strictes**. $\blacksquare$
+
+## 4. Ancrage & Application en IA : Dynamique des RNN et Gradient Disparu
+
+En intelligence artificielle, la théorie des endomorphismes nilpotents et de la forme de Jordan est fondamentale pour analyser la dynamique des Réseaux de Neurones Récurrents (RNN).
+
+Dans un RNN sans activation (modèle linéaire local), l'état caché évolue selon $h_t = W h_{t-1}$.
+L'analyse de la stabilité de cette dynamique sur de longues séquences dépend de $W^t$.
+
+Si $W$ n'est pas diagonalisable et possède des blocs de Jordan associés à des valeurs propres de module 1 (la limite de la stabilité), la matrice $J_k(1)^t$ génère des termes polynomiaux en $t$. Plus précisément, la composante sur la sur-diagonale du $j$-ème niveau croît en $\binom{t}{j} \approx t^j$.
+
+Cette croissance polynomiale d'un système qui paraissait spectralement stable (valeur propre de module 1) peut engendrer le phénomène d'explosion du gradient (Exploding Gradient) ou sa version nilpotente : un bloc de Jordan pour $\lambda=0$ agit comme un filtre FIR pur, anéantissant toute information du passé après exactement $k$ pas de temps, empêchant le réseau d'apprendre des dépendances à long terme. C'est l'essence même du problème que les architectures LSTM ont été conçues pour résoudre en court-circuitant cette multiplication matricielle itérée.

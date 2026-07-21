@@ -1,23 +1,31 @@
-# Exercice 1 - Difficulté ★☆☆☆☆
+# Exercice 01 : Nilpotence basique en dimension 2 (⭐)
 
 ## Énoncé
+Soit $N \in \mathcal{M}_2(\mathbb{R})$ la matrice définie par :
+$$N = \begin{pmatrix} 2 & -1 \\ 4 & -2 \end{pmatrix}$$
+1. Calculer $N^2$. Que peut-on en déduire sur l'endomorphisme canoniquement associé à $N$ ?
+2. Déterminer le polynôme caractéristique $\chi_N(X)$ de $N$ et vérifier le lien avec la nilpotence.
 
-Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension $n$. Considérons la propriété $P_1$ relative aux opérateurs nilpotents et aux matrices de Jordan.
-Démontrez de manière exhaustive, avec Zéro Ellipse, les implications algébriques de la réduction de Jordan sur la dynamique d'un système discret modélisé par une telle matrice, en particulier lorsque $k = 1$.
+## Corrigé Rigoureux : Zéro Ellipse Mathématique
 
-## Solution Détaillée (Zéro Ellipse)
+### 1. Calcul de $N^2$
+Posons $N = \begin{pmatrix} 2 & -1 \\ 4 & -2 \end{pmatrix}$.
+Nous calculons le produit matriciel $N \times N$ :
+$$N^2 = \begin{pmatrix} 2 & -1 \\ 4 & -2 \end{pmatrix} \begin{pmatrix} 2 & -1 \\ 4 & -2 \end{pmatrix}$$
+Calcul des coefficients de $N^2 = (c_{i,j})$ :
+- $c_{1,1} = 2 \times 2 + (-1) \times 4 = 4 - 4 = 0$
+- $c_{1,2} = 2 \times (-1) + (-1) \times (-2) = -2 + 2 = 0$
+- $c_{2,1} = 4 \times 2 + (-2) \times 4 = 8 - 8 = 0$
+- $c_{2,2} = 4 \times (-1) + (-2) \times (-2) = -4 + 4 = 0$
+Ainsi,
+$$N^2 = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} = 0_{\mathcal{M}_2(\mathbb{R})}$$
+L'endomorphisme canoniquement associé à $N$ s'annule pour la puissance $2$. Puisque $N \neq 0$, son indice de nilpotence est exactement $p = 2$. $N$ est une matrice nilpotente.
 
-**Étape 1 : Initialisation et typage**
-Soit $u \in \mathcal{L}(E)$ un endomorphisme. Posons l'hypothèse de nilpotence, i.e., $\exists k \in \mathbb{N}^*, u^k = 0$.
-
-**Étape 2 : Analyse du spectre**
-Le polynôme annulateur étant $X^k$, par le théorème spectral fondamental, les valeurs propres de $u$ sont incluses dans les racines de $X^k$. L'unique racine est $0$. Ainsi $Sp(u) = \{0\}$.
-
-**Étape 3 : Conséquence structurelle**
-Le polynôme caractéristique, de degré $n$, ne peut s'écrire que $\chi_u(X) = X^n$ puisque $0$ est sa seule racine dans tout corps de décomposition.
-Le théorème de Cayley-Hamilton garantit que $\chi_u(u) = 0$, d'où $u^n = 0$.
-Ainsi, l'indice de nilpotence d'un endomorphisme en dimension $n$ est toujours majoré par $n$.
-
-**Étape 4 : Conclusion**
-Ceci prouve la propriété de la borne absolue de nilpotence en dimension finie.
-$\blacksquare$
+### 2. Polynôme caractéristique
+Par définition, le polynôme caractéristique de $N$ est $\chi_N(X) = \det(X I_2 - N)$.
+$$\chi_N(X) = \det \begin{pmatrix} X - 2 & 1 \\ -4 & X + 2 \end{pmatrix}$$
+Calculons ce déterminant :
+$$\chi_N(X) = (X - 2)(X + 2) - (1 \times (-4))$$
+$$\chi_N(X) = (X^2 - 4) + 4$$
+$$\chi_N(X) = X^2$$
+Puisque le polynôme caractéristique est $\chi_N(X) = X^2$, le théorème de caractérisation spectrale des matrices nilpotentes en dimension $n=2$ s'applique : l'unique valeur propre de $N$ est $0$. Ceci est cohérent avec le fait que $N$ est nilpotente (et, réciproquement, en dimension finie, une unique valeur propre nulle implique la nilpotence par le théorème de Cayley-Hamilton qui donne $N^2 = 0$).
