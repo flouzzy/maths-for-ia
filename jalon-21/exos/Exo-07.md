@@ -12,7 +12,7 @@ difficulty: 4
 
 Étudier la convergence de $f_n(x) = \frac{1}{n}\arctan(nx)$ sur $\mathbb{R}$.
 
-## Démonstration et Solution (Zéro Ellipse)
+## Démonstration et Solution
 
 Considérons la suite de fonctions $f_n(x) = \frac{1}{n} \arctan(nx)$ sur $\mathbb{R}$.
 

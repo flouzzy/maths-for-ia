@@ -396,6 +396,8 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-18] : Upsert/Création du Jalon 30 - Trigonalisation d'endomorphismes et décomposition de Dunford. Status: Terminé.
 
 ## Historique d'Audit
+### 2026-07-18-audit
+- [[#2026-07-18-audit|2026-07-18]] : [Audit & Weekly Compilation] - Jalon 21 - Suites de fonctions. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 
 ### 2026-07-16-audit
 - [[#2026-07-16-audit|2026-07-16]] : [Audit & Weekly Compilation] - Jalon 20 - Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.

@@ -12,7 +12,7 @@ difficulty: 3
 
 Étudier la convergence de $f_n(x) = x^n$ sur $[0,1]$. La fonction limite est-elle continue ? Que peut-on dire de la convergence uniforme ?
 
-## Démonstration et Solution (Zéro Ellipse)
+## Démonstration et Solution
 
 **Étape 1 : Étude de la convergence simple**
 Nous avons démontré à l'Exercice 1 que la suite de fonctions $f_n(x) = x^n$ converge simplement sur $[0,1]$ vers la fonction limite $f$ définie par :

@@ -12,7 +12,7 @@ difficulty: 1
 
 Étudier la convergence simple de $f_n(x) = x^n$ sur $[0,1]$.
 
-## Démonstration et Solution (Zéro Ellipse)
+## Démonstration et Solution
 
 Pour étudier la convergence simple de la suite de fonctions $f_n(x) = x^n$ sur le segment $[0,1]$, nous devons fixer un réel $x \in [0,1]$ arbitraire et étudier la limite de la suite numérique $(f_n(x))_{n \in \mathbb{N}}$.
 

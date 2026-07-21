@@ -12,7 +12,7 @@ difficulty: 2
 
 Montrer que $f_n(x) = x/n$ ne converge pas uniformément sur $\mathbb{R}$.
 
-## Démonstration et Solution (Zéro Ellipse)
+## Démonstration et Solution
 
 D'après l'exercice précédent, la suite de fonctions $f_n(x) = \frac{x}{n}$ converge simplement vers la fonction nulle $f(x) = 0$ sur $\mathbb{R}$.
 Pour déterminer si cette convergence est uniforme sur $\mathbb{R}$, nous devons évaluer la norme de la convergence uniforme, c'est-à-dire le supremum de l'écart absolu entre les fonctions $f_n$ et la fonction limite $f$ sur l'ensemble du domaine de définition.

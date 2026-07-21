@@ -12,7 +12,7 @@ difficulty: 3
 
 Considérer $f_n(x) = n^2 x (1-x^2)^n$ sur $[0,1]$. Étudier la convergence simple. Comparer l'intégrale de la limite et la limite de l'intégrale.
 
-## Démonstration et Solution (Zéro Ellipse)
+## Démonstration et Solution
 
 **Étape 1 : Étude de la convergence simple**
 Soit $f_n(x) = n^2 x (1-x^2)^n$ sur $[0,1]$.

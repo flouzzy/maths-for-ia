@@ -1,0 +1,3 @@
+\babel@toc {french}{}\relax
+\contentsline {chapter}{Exercices d'Application}{7}{chapter*.12}%
+\contentsline {chapter}{Travaux Pratiques}{18}{chapter*.43}%
