@@ -336,7 +336,7 @@ python3 -m unittest test_generate_jalons.py
 ### 2026-07-07-audit
 - [[#2026-07-07-audit|2026-07-07]] : [Audit & Weekly Compilation] - Jalon 13 - Structure de $\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-06-audit
-- [2026-07-08] : [Upsert/Création] du Jalon 21 - Suites de fonctions. Status: Terminé.
+- [2026-07-08] : [Upsert/Création] du Jalon 21 - Suites de fonctions. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [[#2026-07-06-audit|2026-07-06]] : [Audit & Weekly Compilation] - Jalon 12 - Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 - [2026-07-06] : [Upsert/Création] du Jalon 19 - Dérivabilité. Status: Terminé.
 - 2026-07-04 : [Upsert/Création] du Jalon 18 - Continuité des fonctions d'une variable réelle. Status: Terminé.
@@ -394,10 +394,13 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 
 
 - [2026-07-18] : Upsert/Création du Jalon 30 - Trigonalisation d'endomorphismes et décomposition de Dunford. Status: Terminé.
+- [2026-07-19] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 ## Historique d'Audit
 
+### 2026-07-17-audit
+- [[#2026-07-17-audit|2026-07-17]] : [Audit & Weekly Compilation] - Jalon 21 - Suites de fonctions. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-16-audit
 - [[#2026-07-16-audit|2026-07-16]] : [Audit & Weekly Compilation] - Jalon 20 - Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 
