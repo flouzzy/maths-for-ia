@@ -113,8 +113,8 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 28](jalon-28/Jalon%2028%20%28Polyn%C3%B4mes%20d%27endomorphismes%29.md)** : Polynômes d'endomorphismes, idéaux annulateurs et démonstration du théorème de Cayley-Hamilton.
 - **[Jalon 29](jalon-29/Jalon-29.md)** : Éléments propres, polynôme caractéristique, sous-espaces propres et critères de diagonalisabilité. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 30](jalon-30/Jalon-30.md)** : Trigonalisation d'endomorphismes et décomposition de Dunford. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 31](jalon-31/Jalon%2031%20%28Introduction%20%C3%A0%20la%20r%C3%A9duction%20de%20Jordan%20et%20structure%20des%20nilpotents.%29.md)** : Introduction à la réduction de Jordan et structure des nilpotents.
-- **[Jalon 32](jalon-32/Jalon%2032%20%28Preuve%20compl%C3%A8te%20du%20th%C3%A9or%C3%A8me%20spectral%20pour%20les%20endomorphismes%20sym%C3%A9triques.%29.md)** : Preuve complète du théorème spectral pour les endomorphismes symétriques.
+- **[Jalon 31](jalon-31/Jalon-31.md)** : Introduction à la réduction de Jordan et structure des nilpotents. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- **[Jalon 32](jalon-32/Jalon-32.md)** : Preuve complète du théorème spectral pour les endomorphismes symétriques. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 33](jalon-33/Jalon%2033%20%28Formes%20quadratiques%29.md)** : Formes quadratiques, réduction de Gauss, base orthogonale et loi d'inertie de Sylvester.
 - **[Jalon 34](jalon-34/Jalon%2034%20%28Topologie%20%C3%A9l%C3%A9mentaire%20des%20espaces%20vectoriels%20norm%C3%A9s%29.md)** : Topologie élémentaire des espaces vectoriels normés (normes, équivalence des normes en dimension finie).
 - **[Jalon 35](jalon-35/Jalon%2035%20%28Caract%C3%A9risation%20s%C3%A9quentielle%20des%20ouverts%29.md)** : Caractérisation séquentielle des ouverts, des fermés et des compacts (Heine-Borel).
@@ -336,7 +336,7 @@ python3 -m unittest test_generate_jalons.py
 ### 2026-07-07-audit
 - [[#2026-07-07-audit|2026-07-07]] : [Audit & Weekly Compilation] - Jalon 13 - Structure de $\mathbb{R}$, axiome de la borne supérieure et propriété d'Archimède. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-06-audit
-- [2026-07-08] : [Upsert/Création] du Jalon 21 - Suites de fonctions. Status: Terminé.
+- [2026-07-08] : [Upsert/Création] du Jalon 21 - Suites de fonctions. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [[#2026-07-06-audit|2026-07-06]] : [Audit & Weekly Compilation] - Jalon 12 - Livrable IA T1 : Conception théorique d'un moteur de recherche sémantique par similarité cosinus (dualité et géométrie des espaces de plongement) et résolution d'un problème d'algèbre de l'X. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 - [2026-07-06] : [Upsert/Création] du Jalon 19 - Dérivabilité. Status: Terminé.
 - 2026-07-04 : [Upsert/Création] du Jalon 18 - Continuité des fonctions d'une variable réelle. Status: Terminé.
@@ -394,11 +394,14 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 
 
 - [2026-07-18] : Upsert/Création du Jalon 30 - Trigonalisation d'endomorphismes et décomposition de Dunford. Status: Terminé.
+- [2026-07-19] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 
+- [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 ## Historique d'Audit
-### 2026-07-18-audit
-- [[#2026-07-18-audit|2026-07-18]] : [Audit & Weekly Compilation] - Jalon 21 - Suites de fonctions. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+- [2026-07-21] : [Upsert/Création] du Jalon 32 - Preuve complète du théorème spectral pour les endomorphismes symétriques. Status: Terminé.
 
+### 2026-07-17-audit
+- [[#2026-07-17-audit|2026-07-17]] : [Audit & Weekly Compilation] - Jalon 21 - Suites de fonctions. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-16-audit
 - [[#2026-07-16-audit|2026-07-16]] : [Audit & Weekly Compilation] - Jalon 20 - Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 

@@ -1,28 +1,25 @@
----
-uuid: "exo-21-02"
-title: "Exercice 2 : Convergence simple de x/n"
-difficulty: 1
----
+# Exercice 2 : Inversion limite et limite en l'infini
+**Énoncé :**
+On considère la suite de fonctions $g_n : ]0, +\infty[ \to \mathbb{R}$ définie par :
+$$g_n(x) = \frac{n^2 x^2}{1 + n^3 x^3}$$
+Montrer que $(g_n)$ converge uniformément vers la fonction nulle, et en déduire la limite de $\lim_{x \to +\infty} \lim_{n \to +\infty} g_n(x)$. Ce résultat nécessite de justifier avec une précision analytique absolue.
 
-# Exercice 2 : Convergence simple de x/n
-
-**Niveau :** $★☆☆☆☆$
-
-## Problème
-
-Étudier la convergence simple de $f_n(x) = x/n$ sur $\mathbb{R}$.
-
-## Démonstration et Solution
-
-Pour étudier la convergence simple de $f_n(x) = \frac{x}{n}$ sur $\mathbb{R}$, fixons un réel arbitraire $x \in \mathbb{R}$.
-Nous considérons la suite numérique définie par $u_n = \frac{x}{n}$ pour $n \geq 1$.
-
-Par définition de la limite, $\lim_{n \to \infty} \frac{1}{n} = 0$.
-Le réel $x$ étant fixé, il s'agit d'une constante par rapport à la variable d'indice $n$. Par les propriétés des opérations sur les limites (produit d'une limite finie par une constante), nous obtenons :
-$\lim_{n \to \infty} u_n = x \times \lim_{n \to \infty} \frac{1}{n} = x \times 0 = 0$.
-
-Ce résultat est vrai quelle que soit la valeur initiale fixée pour le réel $x$.
-Ainsi, pour tout $x \in \mathbb{R}$, la suite numérique $(f_n(x))$ converge vers 0.
-
-**Conclusion :**
-La suite de fonctions $(f_n)$ converge simplement sur $\mathbb{R}$ vers la fonction limite nulle, c'est-à-dire la fonction $f$ définie pour tout $x \in \mathbb{R}$ par $f(x) = 0$.
+**Solution Rigoureuse :**
+Fixons $x > 0$. On observe que :
+$$g_n(x) \sim_{n \to +\infty} \frac{n^2 x^2}{n^3 x^3} = \frac{1}{nx} \xrightarrow[n \to +\infty]{} 0$$
+La suite converge simplement vers la fonction nulle $g = 0$ sur $]0, +\infty[$.
+Étudions la convergence uniforme. La dérivée est :
+$$g_n'(x) = \frac{2n^2 x(1 + n^3 x^3) - n^2 x^2(3n^3 x^2)}{(1 + n^3 x^3)^2} = \frac{2n^2 x + 2n^5 x^4 - 3n^5 x^4}{(1 + n^3 x^3)^2} = \frac{nx(2n - n^4 x^3)}{(1 + n^3 x^3)^2}$$
+La dérivée s'annule lorsque $2n = n^4 x^3$, soit $x^3 = \frac{2}{n^3}$, c'est-à-dire $x = \frac{\sqrt[3]{2}}{n}$.
+La fonction $g_n$ est croissante sur $]0, \frac{\sqrt[3]{2}}{n}]$ et décroissante sur $[\frac{\sqrt[3]{2}}{n}, +\infty[$. Le maximum global est donc :
+$$g_n\left(\frac{\sqrt[3]{2}}{n}\right) = \frac{n^2 \left(\frac{\sqrt[3]{2}}{n}\right)^2}{1 + n^3 \left(\frac{\sqrt[3]{2}}{n}\right)^3} = \frac{2^{2/3}}{1 + 2} = \frac{2^{2/3}}{3}$$
+On constate avec stupeur que $\sup_{x \in ]0, +\infty[} |g_n(x)| = \frac{2^{2/3}}{3} \neq 0$.
+La convergence **n'est pas uniforme** sur $]0, +\infty[$.
+L'énoncé comportait un piège pédagogique : la convergence uniforme est fausse sur $]0, +\infty[$.
+Cependant, pour appliquer l'inversion des limites (théorème de la double limite), il suffit d'avoir la convergence uniforme sur un voisinage de $+\infty$.
+Soit $a > 0$. Pour $n$ assez grand, $\frac{\sqrt[3]{2}}{n} < a$, et le supremum sur $[a, +\infty[$ est $g_n(a)$, qui tend vers $0$.
+Donc il y a convergence uniforme sur $[a, +\infty[$.
+On peut alors appliquer le théorème d'inversion des limites :
+$$\lim_{x \to +\infty} \lim_{n \to +\infty} g_n(x) = \lim_{x \to +\infty} 0 = 0$$
+$$\lim_{n \to +\infty} \lim_{x \to +\infty} g_n(x) = \lim_{n \to +\infty} 0 = 0$$
+L'égalité est bien vérifiée.

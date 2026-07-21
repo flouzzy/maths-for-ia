@@ -1,30 +1,24 @@
----
-uuid: "exo-21-03"
-title: "Exercice 3 : Convergence uniforme de x/n"
-difficulty: 2
----
+# Exercice 3 : Application du Théorème de Dini
+**Énoncé :**
+Soit $f_n(x) = \left(1 - \frac{x}{n}\right)^n$ pour $x \in [0, A]$ où $A > 0$ est fixé.
+Montrer que $f_n$ converge uniformément vers $e^{-x}$ sur $[0, A]$.
 
-# Exercice 3 : Convergence uniforme de x/n
-
-**Niveau :** $★★☆☆☆$
-
-## Problème
-
-Montrer que $f_n(x) = x/n$ ne converge pas uniformément sur $\mathbb{R}$.
-
-## Démonstration et Solution
-
-D'après l'exercice précédent, la suite de fonctions $f_n(x) = \frac{x}{n}$ converge simplement vers la fonction nulle $f(x) = 0$ sur $\mathbb{R}$.
-Pour déterminer si cette convergence est uniforme sur $\mathbb{R}$, nous devons évaluer la norme de la convergence uniforme, c'est-à-dire le supremum de l'écart absolu entre les fonctions $f_n$ et la fonction limite $f$ sur l'ensemble du domaine de définition.
-
-Posons la norme infinie de la différence :
-$\|f_n - f\|_\infty = \sup_{x \in \mathbb{R}} |f_n(x) - f(x)|$
-En remplaçant par nos fonctions :
-$\|f_n - f\|_\infty = \sup_{x \in \mathbb{R}} \left| \frac{x}{n} - 0 \right| = \sup_{x \in \mathbb{R}} \frac{|x|}{n}$
-
-Pour un entier $n \geq 1$ fixé, regardons le comportement de la fonction $x \mapsto \frac{|x|}{n}$ sur $\mathbb{R}$.
-Lorsque $x$ tend vers $+\infty$, la quantité $\frac{|x|}{n}$ tend vers $+\infty$.
-L'ensemble des valeurs $\left\{ \frac{|x|}{n} \mid x \in \mathbb{R} \right\}$ n'est donc pas majoré. Son supremum dans $\mathbb{R} \cup \{+\infty\}$ est donc infini.
-Par conséquent, pour tout $n \geq 1$, $\|f_n - f\|_\infty = +\infty$.
-
-Puisque la suite des normes $\|f_n - f\|_\infty$ ne tend pas vers 0 (elle est constante égale à $+\infty$), la convergence n'est par définition pas uniforme sur l'ensemble $\mathbb{R}$.
+**Solution Rigoureuse :**
+On sait que pour tout $x \in [0, A]$ fixé, $\lim_{n \to +\infty} \left(1 - \frac{x}{n}\right)^n = e^{-x}$.
+La suite $(f_n)$ converge donc simplement vers $f(x) = e^{-x}$ sur $[0, A]$.
+La limite $f$ est une fonction continue sur le compact $[0, A]$.
+Pour appliquer le théorème de Dini, il faut vérifier que pour tout $x \in [0, A]$, la suite $(f_n(x))_{n \ge 1}$ est monotone, pour $n$ assez grand ($n \ge A$).
+Soit $x \in [0, A]$. Posons $u_n = n \ln(1 - \frac{x}{n})$ (pour $n > A$).
+On étudie la fonction $\phi(t) = t \ln(1 - \frac{x}{t})$ pour $t \in ]A, +\infty[$.
+La dérivée est :
+$$\phi'(t) = \ln(1 - \frac{x}{t}) + t \frac{\frac{x}{t^2}}{1 - \frac{x}{t}} = \ln(1 - \frac{x}{t}) + \frac{x}{t - x}$$
+Posons $u = \frac{x}{t}$, avec $0 \le u < 1$. Alors $\phi'(t) = \ln(1-u) + \frac{u}{1-u}$.
+La fonction $\psi(u) = \ln(1-u) + \frac{u}{1-u}$ a pour dérivée $\psi'(u) = \frac{-1}{1-u} + \frac{1-u+u}{(1-u)^2} = \frac{u}{(1-u)^2} \ge 0$.
+Comme $\psi(0) = 0$, $\psi(u) \ge 0$ pour tout $u \in [0, 1[$.
+Ainsi $\phi'(t) \ge 0$. La suite $n \mapsto f_n(x)$ est donc croissante pour tout $n > A$.
+Les hypothèses du théorème de Dini sont réunies :
+1. $K = [0, A]$ est compact.
+2. $(f_n)$ est une suite de fonctions continues sur $K$.
+3. La suite $(f_n(x))$ est croissante pour chaque $x \in K$.
+4. La fonction limite $f$ est continue sur $K$.
+Par le théorème de Dini, la convergence est **uniforme** sur $[0, A]$.

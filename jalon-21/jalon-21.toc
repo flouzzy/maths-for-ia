@@ -1,3 +1,6 @@
 \babel@toc {french}{}\relax
-\contentsline {chapter}{Exercices d'Application}{7}{chapter*.12}%
-\contentsline {chapter}{Travaux Pratiques}{18}{chapter*.43}%
+\contentsline {section}{\numberline {1}Intuition et genèse du concept}{2}{}%
+\contentsline {section}{\numberline {2}Formalisation et structures algébriques}{2}{}%
+\contentsline {section}{\numberline {3}Démonstrations pas-à-pas}{3}{}%
+\contentsline {section}{\numberline {4}Exercices d'application et de concours}{3}{}%
+\contentsline {section}{\numberline {5}Travaux pratiques et simulations algorithmiques}{8}{}%

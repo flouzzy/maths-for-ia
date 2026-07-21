@@ -36,8 +36,8 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-28/Jalon-28.md|Jalon 28 : Polynômes d'endomorphismes]] : Polynômes d'endomorphismes, idéaux annulateurs et démonstration du théorème de Cayley-Hamilton.
 - [x] [[jalon-29/Jalon-29.md|Jalon 29 : Éléments propres]] : Éléments propres, polynôme caractéristique, sous-espaces propres et critères de diagonalisabilité.
 - [x] [[jalon-30/Jalon-30.md|Jalon 30 : Trigonalisation d'endomorphismes et décomposition de Dunford.]] : Trigonalisation d'endomorphismes et décomposition de Dunford.
-- [ ] [[jalon-31/Jalon 31 (Introduction à la réduction de Jordan et structure des nilpotents.).md|Jalon 31 : Introduction à la réduction de Jordan et structure des nilpotents.]] : Introduction à la réduction de Jordan et structure des nilpotents.
-- [ ] [[jalon-32/Jalon 32 (Preuve complète du théorème spectral pour les endomorphismes symétriques.).md|Jalon 32 : Preuve complète du théorème spectral pour les endomorphismes symétriques.]] : Preuve complète du théorème spectral pour les endomorphismes symétriques.
+- [x] [[jalon-31/Jalon-31.md|Jalon 31 : Introduction à la réduction de Jordan et structure des nilpotents.]] : Introduction à la réduction de Jordan et structure des nilpotents.
+- [x] [[jalon-32/Jalon-32.md|Jalon 32 : Preuve complète du théorème spectral pour les endomorphismes symétriques.]] : Preuve complète du théorème spectral pour les endomorphismes symétriques.
 - [ ] [[jalon-33/Jalon 33 (Formes quadratiques).md|Jalon 33 : Formes quadratiques]] : Formes quadratiques, réduction de Gauss, base orthogonale et loi d'inertie de Sylvester.
 - [ ] [[jalon-34/Jalon 34 (Topologie élémentaire des espaces vectoriels normés).md|Jalon 34 : Topologie élémentaire des espaces vectoriels normés]] : Topologie élémentaire des espaces vectoriels normés (normes, équivalence des normes en dimension finie).
 - [ ] [[jalon-35/Jalon 35 (Caractérisation séquentielle des ouverts).md|Jalon 35 : Caractérisation séquentielle des ouverts]] : Caractérisation séquentielle des ouverts, des fermés et des compacts (Heine-Borel).
@@ -165,6 +165,9 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
+
+### 2026-07-17-audit
+- [[#2026-07-17-audit|2026-07-17]] : [Audit & Weekly Compilation] - Jalon 21 - Suites de fonctions. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 
 ### 2026-07-16-audit
 - [[#2026-07-16-audit|2026-07-16]] : [Audit & Weekly Compilation] - Jalon 20 - Dérivées successives, formules de Taylor-Lagrange, Taylor-Young et développements limités. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
