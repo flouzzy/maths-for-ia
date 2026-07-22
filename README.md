@@ -320,6 +320,8 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+### 2026-07-21-audit
+- [[#2026-07-21-audit|2026-07-21]] : [Audit & Weekly Compilation] - Jalon 22 - Séries de fonctions, convergence normale, théorèmes d'interversion limite-intégrale et limite-dérivée. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-15-audit
 - [[#2026-07-15-audit|2026-07-15]] : [Audit & Weekly Compilation] - Jalon 19 - Dérivabilité, Théorème de Rolle et Accroissements Finis. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 - [2026-07-14] : [Upsert/Création] du Jalon 27 - Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales. Status: Terminé.
