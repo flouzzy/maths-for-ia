@@ -3,7 +3,7 @@
 **Énoncé :**
 Déterminer le rayon de convergence de la série $\sum a_n z^n$ où $a_{2k} = 2^k$ et $a_{2k+1} = 3^k$.
 
-**Démonstration à blanc :**
+**Correction détaillée :**
 On ne peut pas appliquer d'Alembert car le rapport $|a_{n+1}/a_n|$ oscille.
 Calculons la racine $n$-ième pour appliquer Cauchy-Hadamard.
 Pour $n = 2k$ (pair) :

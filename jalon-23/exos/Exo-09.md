@@ -3,7 +3,7 @@
 **Énoncé :**
 Soit $f(x) = \sum_{n=1}^{+\infty} \frac{(-1)^{n-1}}{n} x^n = \ln(1+x)$ pour $|x|<1$. Montrer que la série converge en $x=1$ et en déduire la somme de la série harmonique alternée.
 
-**Démonstration à blanc :**
+**Correction détaillée :**
 On évalue la série en $x=1$, ce qui donne la série numérique :
 $$ \sum_{n=1}^{+\infty} \frac{(-1)^{n-1}}{n} $$
 Cette série est la série harmonique alternée. Elle converge d'après le critère spécial des séries alternées : la suite $u_n = 1/n$ est décroissante, positive, et de limite nulle en $+\infty$.

@@ -400,6 +400,10 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 ## Historique d'Audit
+
+### 2026-07-22-audit
+- [[#2026-07-22-audit|2026-07-22]] : [Audit & Weekly Compilation] - Jalon 23 - Séries entières, calcul du rayon de convergence (règle de d'Alembert-Cauchy) et propriétés de la somme. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+
 - [2026-07-21] : [Upsert/Création] du Jalon 32 - Preuve complète du théorème spectral pour les endomorphismes symétriques. Status: Terminé.
 
 ### 2026-07-17-audit

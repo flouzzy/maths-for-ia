@@ -3,7 +3,7 @@
 **Énoncé :**
 Résoudre l'équation différentielle $(1-x)y' - y = 0$ par développement en série entière.
 
-**Démonstration à blanc :**
+**Correction détaillée :**
 On cherche une solution sous la forme d'une série entière $y(x) = \sum_{n=0}^{+\infty} a_n x^n$, de rayon de convergence $R>0$.
 Sur $]-R, R[$, on peut dériver terme à terme :
 $$ y'(x) = \sum_{n=1}^{+\infty} n a_n x^{n-1} $$

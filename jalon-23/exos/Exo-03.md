@@ -1,15 +1,20 @@
-# Exercice 3 : Critère de d'Alembert modifié
+# Exercice 3 : L'astuce du coefficient nul et le changement de variable
 
 **Énoncé :**
-Déterminer le rayon de convergence de $\sum_{n=1}^{+\infty} \frac{2^n}{n} z^{2n}$.
+Étudier la série entière $\sum_{n \geq 0} \frac{z^{2n}}{4^n}$. Déterminer son rayon de convergence $R$.
 
-**Démonstration à blanc :**
-Cette série ne possède que des puissances paires de $z$. Les coefficients $a_m$ devant $z^m$ sont nuls pour $m$ impair. On ne peut pas appliquer directement la règle de d'Alembert aux $a_m$.
-Posons $Z = z^2$. La série devient $\sum_{n=1}^{+\infty} \frac{2^n}{n} Z^n$.
-Posons $b_n = \frac{2^n}{n}$. Appliquons d'Alembert à la série en $Z$ :
-$$ \left| \frac{b_{n+1}}{b_n} \right| = \frac{\frac{2^{n+1}}{n+1}}{\frac{2^n}{n}} = \frac{2^{n+1} \cdot n}{2^n \cdot (n+1)} = 2 \frac{n}{n+1} $$
-Lorsque $n \to +\infty$, $\frac{n}{n+1} \to 1$, donc la limite est $L_Z = 2$.
-Le rayon de convergence pour la variable $Z$ est $R_Z = \frac{1}{2}$.
-Ainsi, la série converge absolument si $|Z| < \frac{1}{2}$ et diverge si $|Z| > \frac{1}{2}$.
-En revenant à $z$, on a $|z^2| < \frac{1}{2} \iff |z| < \frac{1}{\sqrt{2}}$.
-Le rayon de convergence de la série initiale en $z$ est donc $R = \frac{1}{\sqrt{2}} = \frac{\sqrt{2}}{2}$.
+**Correction détaillée :**
+Prudence ! Le terme général de la série ne se présente pas sous la forme canonique $\sum a_k z^k$ pour tous les entiers. En effet, en posant l'indice canonique $k$, les coefficients $a_k$ sont nuls pour tous les indices impairs $k$.
+La règle de d'Alembert n'est donc pas applicable directement à la suite $(a_k)$, puisque les quotients $a_{k+1}/a_k$ impliqueraient des divisions par zéro.
+Nous contournons la pathologie en posant un changement de variable formel.
+Soit $w = z^2$. La série de fonctions devient une nouvelle série entière de la variable $w$ :
+$$ S(w) = \sum_{n \geq 0} \frac{w^n}{4^n} $$
+Le coefficient général pour la variable $w$ est $b_n = \frac{1}{4^n}$. Ces coefficients sont non nuls, nous appliquons d'Alembert sur $b_n$.
+$$ \left| \frac{b_{n+1}}{b_n} \right| = \frac{1/4^{n+1}}{1/4^n} = \frac{4^n}{4^{n+1}} = \frac{1}{4} $$
+La limite est trivialement $L = 1/4$. Le rayon de convergence pour la variable $w$ est $R_w = 4$.
+La condition de convergence absolue s'écrit donc géométriquement :
+$$ |w| < 4 $$
+Revenons à la variable originale $z$. Sachant que $w = z^2$, nous obtenons l'inégalité équivalente :
+$$ |z^2| < 4 \iff |z|^2 < 4 \iff |z| < 2 $$
+Par définition du rayon de convergence sur la variable $z$, le suprémum des modules assurant la convergence absolue est bien 2.
+Le rayon de convergence de la série originale est par conséquent $R = 2$.

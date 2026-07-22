@@ -3,7 +3,7 @@
 **Énoncé :**
 En utilisant la formule de Cauchy-Hadamard, déterminer le rayon de convergence de $\sum_{n=1}^{+\infty} \left(1 + \frac{1}{n}\right)^{n^2} z^n$.
 
-**Démonstration à blanc :**
+**Correction détaillée :**
 La formule de Cauchy-Hadamard donne le rayon $R$ via :
 $$ \frac{1}{R} = \limsup_{n \to +\infty} \sqrt[n]{|a_n|} $$
 Ici, $a_n = \left(1 + \frac{1}{n}\right)^{n^2}$.

@@ -3,7 +3,7 @@
 **Énoncé :**
 Montrer que pour tout $x \in \mathbb{R}$, $e^x \cdot e^{-x} = 1$ en utilisant le produit de Cauchy des séries entières.
 
-**Démonstration à blanc :**
+**Correction détaillée :**
 La fonction exponentielle est définie par sa série entière de rayon infini :
 $$ e^x = \sum_{n=0}^{+\infty} \frac{x^n}{n!} $$
 $$ e^{-x} = \sum_{n=0}^{+\infty} \frac{(-x)^n}{n!} = \sum_{n=0}^{+\infty} \frac{(-1)^n}{n!} x^n $$
