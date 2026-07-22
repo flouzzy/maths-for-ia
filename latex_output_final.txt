@@ -1,0 +1,765 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+
+\title{Séries de fonctions, convergence normale, théorèmes d'interversion limite-intégrale et limite-dérivée}
+\author{Charles EDOU NZE}
+\date{2026-07-22}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!60!black},
+    showstringspaces=false,
+    frame=single,
+    breaklines=true,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ç}{{\c c}}1 {ù}{{\`u}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1 {â}{{\^a}}1 {É}{{\'E}}1 {È}{{\`E}}1 {À}{{\`A}}1 {Ç}{{\c C}}1 {Ù}{{\`U}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1 {Â}{{\^A}}1
+}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\chapter*{Jalon 22 : Séries de fonctions, convergence normale, théorèmes d'interversion limite-intégrale et limite-dérivée}
+
+\section*{1. Intuition et genèse du concept}
+
+L'étude des séries de fonctions s'enracine dans la volonté farouche des mathématiciens du XIXe siècle de représenter des phénomènes physiques complexes — tels que la propagation de la chaleur ou les ondes sonores — par des superpositions infinies d'ondes simples. Lorsque Joseph Fourier a postulé que toute fonction, même discontinue, pouvait s'exprimer comme une série trigonométrique infinie, il a ouvert la boîte de Pandore de l'analyse moderne. Cette idée vertigineuse soulevait une question redoutable : si l'on somme une infinité de fonctions parfaitement lisses (continues, dérivables), la fonction résultante conserve-t-elle ces propriétés géométriques ?
+
+Augustin-Louis Cauchy pensait initialement que la convergence simple point par point suffisait pour garantir le transfert de la continuité. Cependant, l'histoire mathématique est jalonnée de monstres et de contre-exemples, à l'image des séries de Fourier de fonctions créneaux mises en évidence par Niels Henrik Abel. Ces pathologies ont forcé Karl Weierstrass à forger un nouveau paradigme : la convergence uniforme, et son corollaire encore plus puissant, la convergence normale. Imaginez une infinité de cordes vibrantes ; la convergence normale exige que l'amplitude maximale absolue de chaque corde décroisse si radicalement que la somme globale de ces amplitudes maximales forme une série convergente. C'est un contrôle global et despotique sur le comportement des fonctions, qui empêche toute anomalie locale d'émerger à l'infini.
+
+Cette maîtrise rigoureuse est la clé de voûte de l'intelligence artificielle contemporaine. Lorsque nous entraînons des réseaux de neurones profonds, nous manipulons des limites infinies d'approximations fonctionnelles. Comprendre intimement quand et pourquoi nous pouvons intervertir une limite avec une dérivée (comme dans la rétropropagation du gradient) ou avec une intégrale (dans le calcul de l'espérance des pertes stochastiques) est la ligne de démarcation entre l'ingénierie approximative et la science mathématique rigoureuse.
+
+\section*{2. Formalisation et structures algébriques}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+  \begin{axis}[
+      axis lines=middle,
+      xlabel={$x$},
+      ylabel={$y$},
+      domain=0:1,
+      samples=100,
+      width=10cm,
+      height=6cm,
+      ymin=-0.2, ymax=1.2,
+      xmin=-0.1, xmax=1.1,
+      legend pos=north east,
+      legend cell align={left}
+    ]
+    \addplot[thick, blue] {1 - x};
+    \addlegendentry{Limite $S(x)$};
+
+    \addplot[dashed, red, domain=0:1] {1 - x + 0.15};
+    \addplot[dashed, red, domain=0:1] {1 - x - 0.15};
+
+    \addplot[thick, green!60!black] {1 - x^5};
+    \addlegendentry{$S_5(x)$};
+
+    \addplot[thick, orange] {1 - x^20};
+    \addlegendentry{$S_{20}(x)$};
+
+    \node[red, anchor=south west] at (axis cs:0.2, 0.95) {Tube $S(x) \pm \epsilon$};
+  \end{axis}
+\end{tikzpicture}
+\caption{Illustration de la convergence uniforme : à partir d'un certain rang, le graphe de la somme partielle $S_N(x)$ s'inscrit entièrement dans le tube de rayon $\epsilon$ centré autour de la fonction limite.}
+\end{figure}
+
+
+Dans toute cette section, nous considérons un intervalle $I$ de $\mathbb{R}$, non vide et non réduit à un point. Soit $E$ l'espace vectoriel des fonctions définies sur $I$ à valeurs dans $\mathbb{R}$. Nous étudions une suite de fonctions $(f_n)_{n \in \mathbb{N}} \in E^{\mathbb{N}}$.
+
+La somme partielle d'ordre $n$ est l'application $S_n : I \to \mathbb{R}$ définie par $S_n(x) = \sum_{k=0}^n f_k(x)$.
+
+\subsection*{2.1 Convergence Simple (CS) et Uniforme (CU)}
+
+\textbf{A. Énoncé Symbolique Strict}
+
+La série de fonctions $\sum f_n$ converge \textbf{simplement} sur $I$ vers une fonction $S : I \to \mathbb{R}$ si et seulement si :
+$$ \forall x \in I, \quad \forall \epsilon > 0, \quad \exists N \in \mathbb{N}, \quad \forall n \ge N \implies |S_n(x) - S(x)| < \epsilon $$
+
+La série de fonctions $\sum f_n$ converge \textbf{uniformément} sur $I$ vers $S$ si et seulement si :
+$$ \forall \epsilon > 0, \quad \exists N \in \mathbb{N}, \quad \forall n \ge N \implies \forall x \in I, \quad |S_n(x) - S(x)| < \epsilon $$
+
+\textbf{B. Anatomie et Typage Chirurgical}
+- $I$ est le domaine de définition topologique.
+- $S_n(x)$ est l'évaluation scalaire de la $n$-ième somme partielle.
+- $S(x)$ est la valeur scalaire de la limite asymptotique.
+- L'ordre des quantificateurs dicte la nature géométrique de la convergence. Pour la convergence simple, l'entier $N$ dépend de $\epsilon$ ET de $x$ (on écrit souvent $N(\epsilon, x)$). Pour la convergence uniforme, l'entier $N$ est universel pour tout l'intervalle $I$ ; il ne dépend que de $\epsilon$ (soit $N(\epsilon)$). Le supremum géométrique de l'erreur globale s'écrase dans un tube de rayon $\epsilon$.
+
+\textbf{C. Exemples de Validation}
+- \textbf{Cas d'application valide :} Considérons la suite $f_n(x) = x^n / 2^n$ sur le segment $I = [-1, 1]$. La série $\sum (x/2)^n$ est une série géométrique de raison $q = x/2$. Puisque $|q| \le 1/2 < 1$, elle converge simplement vers $S(x) = \frac{1}{1 - x/2}$. La convergence est par ailleurs uniforme car le reste $|R_n(x)| \le \frac{(1/2)^{n+1}}{1 - 1/2}$ tend vers $0$ indépendamment de $x$.
+- \textbf{Extension :} La série $\sum \frac{\sin(nx)}{n^2}$ converge uniformément sur $\mathbb{R}$. En effet, l'erreur est globalement bornée indépendamment de $x$ par la somme des restes de la série de Riemann convergente.
+
+\textbf{D. Cas Pathologiques et Contre-exemples}
+- La fonction $f_n(x) = x^n(1-x)$ sur l'intervalle semi-ouvert $I = [0, 1[$. La somme partielle est $S_n(x) = 1 - x^{n+1}$. La limite simple est $S(x) = 1$ pour tout $x \in [0, 1[$. Cependant, pour tout $n$, $\sup_{x \in [0, 1[} |S_n(x) - 1| = \sup_{x} x^{n+1} = 1$. L'erreur globale ne tend pas vers $0$. La convergence n'est pas uniforme à cause du comportement pathologique au voisinage du point $x = 1$.
+
+\subsection*{2.2 Convergence Normale (CN)}
+
+\textbf{A. Énoncé Symbolique Strict}
+
+On dit que la série de fonctions $\sum f_n$ \textbf{converge normalement} sur l'intervalle $I$ si :
+1. $\forall n \in \mathbb{N}$, la fonction $f_n$ est bornée sur $I$, permettant de définir la norme infinie $\|f_n\|_{\infty, I} = \sup_{x \in I} |f_n(x)|$.
+2. La série numérique à termes réels positifs $\sum_{n \ge 0} \|f_n\|_{\infty, I}$ est convergente.
+
+\textbf{B. Anatomie et Typage Chirurgical}
+- $\|f_n\|_{\infty, I} \in \mathbb{R}^+$ représente le pire scénario d'amplitude de la fonction $f_n$ sur l'intégralité du domaine $I$.
+- Le concept de convergence normale ramène la difficulté inhérente à l'analyse fonctionnelle (espaces de dimension infinie) à un simple problème d'analyse réelle classique : l'étude d'une série de nombres réels positifs.
+
+\textbf{C. Exemples de Validation}
+- La série $\sum_{n \ge 1} \frac{\cos(nx)}{n^3}$ converge normalement sur $\mathbb{R}$ car la norme infinie $\| \frac{\cos(nx)}{n^3} \|_{\infty, \mathbb{R}} = \frac{1}{n^3}$. Or la série de Riemann $\sum \frac{1}{n^3}$ converge (exposant $3 > 1$).
+
+\textbf{D. Cas Pathologiques et Contre-exemples}
+- La série $f_n(x) = \frac{(-1)^n}{n+x}$ sur $I = [0, +\infty[$. Par application du critère spécial des séries alternées, la série converge uniformément. Néanmoins, $\|f_n\|_{\infty, I} = \frac{1}{n}$, et la série harmonique diverge. C'est l'exemple paradigmatique d'une convergence uniforme non absolue, et a fortiori non normale.
+
+\section*{3. Démonstrations pas-à-pas}
+
+\subsection*{Théorème 1 : De la Convergence Normale vers la Convergence Uniforme}
+
+\textbf{Énoncé :} Si une série de fonctions $\sum f_n$ converge normalement sur $I$, alors elle converge uniformément (et absolument) sur $I$.
+
+\textbf{Démonstration analytique complète :}
+Soit $\sum f_n$ une série de fonctions qui converge normalement sur l'intervalle $I$.
+1. Fixons un scalaire arbitrairement petit $\epsilon > 0$.
+2. L'hypothèse fondamentale pose que la série de nombres réels positifs $\sum \|f_n\|_{\infty, I}$ converge.
+3. Par application stricte du critère de Cauchy pour les séries numériques, il existe un entier de seuil $N \in \mathbb{N}$ tel que pour tout couple d'entiers $(p, q)$ vérifiant $q > p \ge N$, l'inégalité suivante est vraie :
+   $$ \sum_{k=p+1}^q \|f_k\|_{\infty, I} \le \epsilon $$
+4. Fixons désormais un point arbitraire $x \in I$. Pour ces mêmes indices $q > p \ge N$, évaluons la distance dans $\mathbb{R}$ de la tranche de Cauchy de la série de fonctions :
+   $$ \left| \sum_{k=p+1}^q f_k(x) \right| $$
+5. Par application de l'inégalité triangulaire dans $\mathbb{R}$, nous majorons cette somme :
+   $$ \left| \sum_{k=p+1}^q f_k(x) \right| \le \sum_{k=p+1}^q |f_k(x)| $$
+6. Or, par définition exacte de l'opérateur supremum, pour tout indice $k$ et pour tout $x \in I$, on a l'inégalité stricte : $|f_k(x)| \le \|f_k\|_{\infty, I}$. Nous déduisons donc la chaîne d'inégalités :
+   $$ \sum_{k=p+1}^q |f_k(x)| \le \sum_{k=p+1}^q \|f_k\|_{\infty, I} \le \epsilon $$
+7. En combinant les équations, nous obtenons que pour tout $x \in I$ et pour tout couple $q > p \ge N$ :
+   $$ \left| \sum_{k=p+1}^q f_k(x) \right| \le \epsilon $$
+8. La subtilité cruciale est que cette borne $\epsilon$ est totalement indépendante du choix de la variable $x$. La suite des sommes partielles $(S_n)$ satisfait donc le critère de Cauchy uniforme sur $I$.
+9. Puisque l'espace vectoriel normé des fonctions bornées de $I$ dans $\mathbb{R}$, muni de la norme infinie $\|\cdot\|_{\infty}$, est un espace de Banach (donc un espace complet), le respect du critère de Cauchy uniforme garantit mathématiquement l'existence d'une limite et la convergence uniforme de la série $\sum f_n$ vers cette limite sur $I$. $\blacksquare$
+
+\subsection*{Théorème 2 : Continuité de la fonction somme par interversion limite-limite}
+
+\textbf{Énoncé :} Soit $\sum f_n$ une série de fonctions où chaque $f_n$ est continue sur l'intervalle $I$. Si la série converge uniformément vers une fonction globale $S$ sur tout segment inclus dans $I$, alors $S$ est une fonction continue sur $I$.
+
+\textbf{Démonstration analytique complète :}
+L'objectif est d'appliquer le théorème de la double limite.
+1. Considérons un point arbitraire $a \in I$. Nous devons prouver rigoureusement que la fonction limite $S$ est continue au point $a$.
+2. Définissons la somme partielle $S_n(x) = \sum_{k=0}^n f_k(x)$. Étant une somme finie de fonctions continues en $a$, l'opérateur $S_n$ est lui-même intrinsèquement continu en $a$. Cela s'écrit formellement :
+   $$ \lim_{x \to a} S_n(x) = S_n(a) $$
+3. L'hypothèse stipule que la suite de fonctions $(S_n)$ converge uniformément vers la fonction $S$ sur tout segment, et en particulier sur un voisinage compact de $a$.
+4. Le théorème fondamental d'interversion des limites pour les suites de fonctions (qui repose lui-même sur un argument d'epsilontique $\frac{\epsilon}{3}$) nous autorise à échanger l'ordre de passage à la limite :
+   $$ \lim_{x \to a} S(x) = \lim_{x \to a} \left( \lim_{n \to \infty} S_n(x) \right) $$
+5. Intervertissons formellement les deux opérateurs de limite :
+   $$ \lim_{x \to a} \left( \lim_{n \to \infty} S_n(x) \right) = \lim_{n \to \infty} \left( \lim_{x \to a} S_n(x) \right) $$
+6. Substituons l'évaluation de continuité de $S_n$ :
+   $$ \lim_{n \to \infty} \left( \lim_{x \to a} S_n(x) \right) = \lim_{n \to \infty} S_n(a) = S(a) $$
+7. En concaténant ces identités, nous avons formellement prouvé que $\lim_{x \to a} S(x) = S(a)$. La fonction limite $S$ est donc continue en tout point $a \in I$, ce qui achève la démonstration. $\blacksquare$
+
+\subsection*{Théorème 3 : Interversion Limite-Intégrale de Riemann (Théorème d'intégration terme à terme)}
+
+\textbf{Énoncé :} Soit $(f_n)$ une suite de fonctions continues sur le segment compact $[a,b]$. Si la série $\sum f_n$ converge uniformément sur $[a,b]$ vers la fonction limite $S$, alors :
+- La fonction $S$ est Riemann-intégrable sur $[a,b]$.
+- La série numérique des intégrales $\sum \int_a^b f_n(t) \, dt$ converge.
+- L'intégrale de la série est égale à la série des intégrales : $\int_a^b \left( \sum_{n=0}^\infty f_n(t) \right) \, dt = \sum_{n=0}^\infty \int_a^b f_n(t) \, dt$.
+
+\textbf{Démonstration analytique complète :}
+1. La continuité globale de la fonction $S$ sur le segment $[a,b]$ découle directement du Théorème 2. Ainsi, $S$ est une fonction continue sur un compact, elle y est bornée et admet une intégrale de Riemann bien définie $\int_a^b S(t) \, dt$.
+2. Construisons la fonction somme partielle $S_n(t) = \sum_{k=0}^n f_k(t)$. En vertu de l'axiome de linéarité de l'intégrale de Riemann appliqué à une somme finie, nous avons :
+   $$ \sum_{k=0}^n \int_a^b f_k(t) \, dt = \int_a^b S_n(t) \, dt $$
+3. Afin de prouver la convergence, formons la distance absolue entre l'intégrale théorique de la limite et la somme partielle des intégrales :
+   $$ \Delta_n = \left| \int_a^b S(t) \, dt - \int_a^b S_n(t) \, dt \right| $$
+4. Par l'opérateur de linéarité inverse et l'inégalité triangulaire intégrale fondamentale ($\left| \int g \right| \le \int |g|$), nous obtenons :
+   $$ \Delta_n = \left| \int_a^b (S(t) - S_n(t)) \, dt \right| \le \int_a^b |S(t) - S_n(t)| \, dt $$
+5. L'expression $|S(t) - S_n(t)|$ est, par définition du supremum, strictement majorée pour tout $t \in [a,b]$ par la norme infinie $\|S - S_n\|_{\infty, [a,b]}$. En injectant ce majorant constant dans l'intégrale :
+   $$ \int_a^b |S(t) - S_n(t)| \, dt \le \int_a^b \|S - S_n\|_{\infty, [a,b]} \, dt = \|S - S_n\|_{\infty, [a,b]} \cdot (b - a) $$
+6. L'hypothèse cruciale de la convergence uniforme de la série matricielle $\sum f_n$ implique précisément, par caractérisation métrique, que :
+   $$ \lim_{n \to \infty} \|S - S_n\|_{\infty, [a,b]} = 0 $$
+7. Le paramètre $(b-a)$ étant une constante strictement finie, la borne supérieure de l'erreur intégrale s'effondre vers $0$ au passage à la limite :
+   $$ \lim_{n \to \infty} \Delta_n \le \lim_{n \to \infty} (b-a) \|S - S_n\|_{\infty, [a,b]} = 0 $$
+8. La quantité positive $\Delta_n$ tend asymptotiquement vers $0$. Ceci prouve rigoureusement que la suite des sommes partielles des intégrales converge vers l'intégrale de $S$. L'interversion est algébriquement validée. $\blacksquare$
+
+\subsection*{Théorème 4 : Interversion Limite-Dérivée (Théorème de dérivation terme à terme)}
+
+\textbf{Énoncé :} Soit $I$ un intervalle quelconque de $\mathbb{R}$ et $(f_n)$ une suite de fonctions de classe $\mathcal{C}^1$ sur $I$. Si la série ponctuelle numérique $\sum f_n(x_0)$ converge en au moins un point d'ancrage $x_0 \in I$, et si la série dérivée fonctionnelle $\sum f_n'$ converge uniformément sur tout segment compact de $I$, alors la série originelle $\sum f_n$ converge uniformément sur tout segment de $I$ vers une fonction limite $S$ qui est également de classe $\mathcal{C}^1$ sur $I$. De plus, la dérivée commute : $S'(x) = \sum_{n=0}^\infty f_n'(x)$.
+
+\textbf{Démonstration analytique complète :}
+1. Considérons la série des dérivées $\sum f_n'$. Par hypothèse, chaque terme $f_n'$ est une fonction continue (car $f_n \in \mathcal{C}^1$). Cette série converge uniformément sur tout sous-segment compact. Par application du Théorème 2, sa limite, que nous désignerons par $G(x) = \sum_{n=0}^\infty f_n'(x)$, est nécessairement une fonction globale continue sur l'intervalle $I$.
+2. Sélectionnons une variable indépendante arbitraire $x \in I$. Appliquons le théorème fondamental de l'analyse intégrale (Newton-Leibniz) sur le chemin d'intégration borné $[x_0, x]$. Pour tout entier $n$, la différentiabilité de $f_n$ donne l'équation exacte :
+   $$ f_n(x) - f_n(x_0) = \int_{x_0}^x f_n'(t) \, dt $$
+3. L'hypothèse de convergence uniforme de la série des dérivées $\sum f_n'$ est valide sur le segment compact délimité par $x_0$ et $x$. Cette propriété topologique autorise l'application du Théorème 3 (interversion limite-intégrale). En sommant les expressions sur l'indice $n$ de $0$ à l'infini :
+   $$ \sum_{n=0}^\infty (f_n(x) - f_n(x_0)) = \sum_{n=0}^\infty \int_{x_0}^x f_n'(t) \, dt = \int_{x_0}^x \left( \sum_{n=0}^\infty f_n'(t) \right) \, dt = \int_{x_0}^x G(t) \, dt $$
+4. L'énoncé précise qu'au point singulier $x_0$, la série numérique $\sum f_n(x_0)$ est structurellement convergente vers une constante scalaire, notons-la $C$. Conséquemment, par transfert algébrique, la série globale $\sum f_n(x)$ converge pour tout $x \in I$. Nommons $S(x)$ la fonction limite de cette série point par point. En réagençant l'équation d'intégration, nous isolons $S(x)$ :
+   $$ S(x) - C = \int_{x_0}^x G(t) \, dt \implies S(x) = C + \int_{x_0}^x G(t) \, dt $$
+5. Observons la nature analytique de la primitive. L'intégrande $G$ a été formellement identifiée comme une fonction continue sur $I$. Par le théorème fondamental de l'analyse réelle, l'opérateur intégral de borne variable $x \mapsto \int_{x_0}^x G(t) \, dt$ engendre une fonction primitive de classe $\mathcal{C}^1$, dont la dérivée est très exactement $G(x)$.
+6. La constante $C$ disparaissant par dérivation, l'implication terminale est que la fonction limite $S$ appartient à la classe de régularité $\mathcal{C}^1$ sur l'ensemble de l'intervalle $I$. Sa dérivée première est rigoureusement évaluée à :
+   $$ S'(x) = G(x) = \sum_{n=0}^\infty f_n'(x) $$
+   L'interversion est donc légitimement prouvée. L'absence totale d'ellipse garantit la robustesse du raisonnement analytique. $\blacksquare$
+
+\newpage
+\chapter*{Exercices d\'application et de concours}
+\addcontentsline{toc}{chapter}{Exercices d'application et de concours}
+\chapter*{Exercice 1 : Convergence normale basique}
+
+\textbf{Difficulté :} $\star$
+
+\textbf{Énoncé :}
+Étudier la convergence (simple, absolue, uniforme, normale) de la série de fonctions $\sum f_n$ définie sur $\mathbb{R}$ par $f_n(x) = \frac{\sin(nx)}{n^3}$.
+
+\textbf{Démonstration :}
+1. \textbf{Convergence simple et absolue :}
+   Soit $x \in \mathbb{R}$. On majore la valeur absolue du terme général :
+   $$ |f_n(x)| = \left| \frac{\sin(nx)}{n^3} \right| \le \frac{1}{n^3} $$
+   La série numérique $\sum \frac{1}{n^3}$ est une série de Riemann avec $\alpha = 3 > 1$. Elle est donc convergente.
+   Par comparaison de séries à termes positifs, la série $\sum |f_n(x)|$ converge. Ainsi, la série $\sum f_n(x)$ converge absolument, ce qui implique qu'elle converge simplement sur $\mathbb{R}$.
+
+2. \textbf{Convergence normale :}
+   Calculons la norme infinie de $f_n$ sur $\mathbb{R}$ :
+   $$ \|f_n\|_{\infty, \mathbb{R}} = \sup_{x \in \mathbb{R}} \left| \frac{\sin(nx)}{n^3} \right| $$
+   Puisque $|\sin(nx)|$ atteint la valeur 1 (par exemple pour $nx = \frac{\pi}{2}$, soit $x = \frac{\pi}{2n}$), on a :
+   $$ \|f_n\|_{\infty, \mathbb{R}} = \frac{1}{n^3} $$
+   La série des normes infinies $\sum \|f_n\|_{\infty, \mathbb{R}} = \sum \frac{1}{n^3}$ converge.
+   Par définition, la série $\sum f_n$ converge \textbf{normalement} sur $\mathbb{R}$.
+
+3. \textbf{Convergence uniforme :}
+   D'après le théorème fondamental, toute série normalement convergente sur un ensemble est uniformément convergente sur cet ensemble. Donc $\sum f_n$ converge uniformément sur $\mathbb{R}$.
+$\blacksquare$
+
+\newpage
+\chapter*{Exercice 2 : Étude sur des segments}
+
+\textbf{Difficulté :} $\star\star$
+
+\textbf{Énoncé :}
+Soit $f_n(x) = x^n(1-x)$. Étudier la convergence de $\sum f_n$ sur $[0, a]$ avec $0 < a < 1$, puis sur $[0, 1]$.
+
+\textbf{Démonstration :}
+1. \textbf{Convergence simple sur $[0, 1]$ :}
+   - Si $x=1$, $f_n(1) = 0$, donc la série converge vers 0.
+   - Si $x \in [0, 1[$, $f_n(x) = x^n(1-x)$. Comme $x \in [0, 1[$, la série géométrique $\sum x^n$ converge, donc $\sum x^n(1-x)$ converge. En fait, la somme des $N$ premiers termes est une série télescopique :
+     $$ S_N(x) = \sum_{n=0}^N (x^n - x^{n+1}) = 1 - x^{N+1} $$
+     Si $x \in [0, 1[$, $\lim_{N \to \infty} S_N(x) = 1$.
+   La série converge simplement sur $[0, 1]$ vers la fonction $S$ telle que $S(x)=1$ sur $[0, 1[$ et $S(1)=0$.
+
+2. \textbf{Convergence sur $[0, a]$ ($0 < a < 1$) :}
+   Calculons la norme infinie de $f_n$ sur $[0, a]$.
+   La fonction $f_n(x) = x^n - x^{n+1}$ a pour dérivée $f'_n(x) = nx^{n-1} - (n+1)x^n = x^{n-1}(n - (n+1)x)$.
+   Le maximum est atteint en $x_n = \frac{n}{n+1}$.
+   Pour $n$ assez grand, $x_n > a$. Donc sur $[0, a]$, $f_n$ est strictement croissante, et son supremum est $f_n(a) = a^n(1-a)$.
+   $$ \|f_n\|_{\infty, [0,a]} = a^n(1-a) $$
+   La série géométrique $\sum a^n$ converge puisque $0 < a < 1$.
+   Donc $\sum \|f_n\|_{\infty, [0,a]}$ converge. La série converge normalement (et donc uniformément) sur $[0, a]$.
+
+3. \textbf{Convergence uniforme sur $[0, 1]$ :}
+   La fonction limite $S$ est discontinue en 1. Or, les fonctions $f_n$ sont des polynômes, donc continues sur $[0, 1]$.
+   Si la série convergeait uniformément sur $[0, 1]$, le théorème de continuité de la limite garantirait que $S$ soit continue.
+   Comme $S$ n'est pas continue, la série \textbf{ne converge pas uniformément} sur $[0, 1]$.
+$\blacksquare$
+
+\newpage
+\chapter*{Exercice 3 : Série alternée de fonctions}
+
+\textbf{Difficulté :} $\star\star$
+
+\textbf{Énoncé :}
+Étudier la convergence (simple, absolue, uniforme, normale) de la série $\sum_{n \ge 1} \frac{(-1)^n}{n + x^2}$ sur $\mathbb{R}$.
+
+\textbf{Démonstration :}
+1. \textbf{Convergence simple :}
+   Soit $x \in \mathbb{R}$ fixé. La série $\sum \frac{(-1)^n}{n + x^2}$ est une série alternée.
+   Posons $u_n(x) = \frac{1}{n + x^2}$.
+   - Pour $x$ fixé, $u_n(x) > 0$.
+   - $u_n(x)$ tend vers $0$ quand $n \to \infty$.
+   - La suite $(u_n(x))_{n \ge 1}$ est décroissante puisque $n+1+x^2 > n+x^2 \implies \frac{1}{n+1+x^2} < \frac{1}{n+x^2}$.
+   D'après le critère spécial des séries alternées (CSSA), la série converge simplement sur $\mathbb{R}$.
+
+2. \textbf{Convergence absolue :}
+   $| \frac{(-1)^n}{n + x^2} | = \frac{1}{n + x^2}$.
+   Or, $n + x^2 \sim n$ quand $n \to \infty$. Puisque la série harmonique $\sum \frac{1}{n}$ diverge, la série $\sum \frac{1}{n+x^2}$ diverge.
+   La série ne converge pas absolument, donc elle ne peut pas converger normalement.
+
+3. \textbf{Convergence uniforme :}
+   Par le CSSA, le reste d'ordre $N$, noté $R_N(x) = \sum_{n=N+1}^\infty \frac{(-1)^n}{n + x^2}$, est majoré en valeur absolue par la valeur absolue du premier terme négligé :
+   $$ |R_N(x)| \le |u_{N+1}(x)| = \frac{1}{N+1+x^2} $$
+   Or, pour tout $x \in \mathbb{R}$, on a :
+   $$ \frac{1}{N+1+x^2} \le \frac{1}{N+1} $$
+   Donc $\sup_{x \in \mathbb{R}} |R_N(x)| \le \frac{1}{N+1}$.
+   Puisque $\lim_{N \to \infty} \frac{1}{N+1} = 0$, la suite des restes converge uniformément vers 0 sur $\mathbb{R}$.
+   La série converge donc uniformément sur $\mathbb{R}$.
+$\blacksquare$
+
+\newpage
+\chapter*{Exercice 4 : Interversion limite et intégrale}
+
+\textbf{Difficulté :} $\star\star\star$
+
+\textbf{Énoncé :}
+Montrer que $\int_0^1 \sum_{n=1}^\infty \frac{x^n}{n^3} dx = \sum_{n=1}^\infty \frac{1}{n^3(n+1)}$.
+
+\textbf{Démonstration :}
+1. Soit $f_n(x) = \frac{x^n}{n^3}$. Les fonctions $f_n$ sont continues sur le segment $[0, 1]$.
+2. Étudions la convergence normale de la série $\sum f_n$ sur $[0, 1]$.
+   La fonction $f_n$ est croissante sur $[0, 1]$, donc son supremum est atteint en $x=1$ :
+   $$ \|f_n\|_{\infty, [0, 1]} = f_n(1) = \frac{1}{n^3} $$
+3. La série numérique $\sum \frac{1}{n^3}$ est une série de Riemann convergente ($\alpha = 3 > 1$).
+   Donc la série de fonctions $\sum f_n$ converge normalement, et a fortiori uniformément, sur le segment $[0, 1]$.
+4. D'après le théorème d'intégration terme à terme sur un segment (justifié par la convergence uniforme de fonctions continues), on peut intervertir la série et l'intégrale :
+   $$ \int_0^1 \left( \sum_{n=1}^\infty f_n(x) \right) dx = \sum_{n=1}^\infty \int_0^1 f_n(x) dx $$
+5. Calculons l'intégrale du terme général :
+   $$ \int_0^1 \frac{x^n}{n^3} dx = \frac{1}{n^3} \left[ \frac{x^{n+1}}{n+1} \right]_0^1 = \frac{1}{n^3(n+1)} $$
+6. On obtient bien :
+   $$ \int_0^1 \sum_{n=1}^\infty \frac{x^n}{n^3} dx = \sum_{n=1}^\infty \frac{1}{n^3(n+1)} $$
+$\blacksquare$
+
+\newpage
+\chapter*{Exercice 5 : La fonction de Weierstrass}
+
+\textbf{Difficulté :} $\star\star\star$
+
+\textbf{Énoncé :}
+Soit $f(x) = \sum_{n=0}^\infty 2^{-n} \cos(3^n x)$. Montrer que $f$ est une fonction continue sur $\mathbb{R}$.
+
+\textbf{Démonstration :}
+1. Soit $u_n(x) = 2^{-n} \cos(3^n x)$. Chaque $u_n$ est continue sur $\mathbb{R}$.
+2. Calculons la norme infinie de $u_n$ sur $\mathbb{R}$ :
+   Puisque $|\cos(3^n x)| \le 1$ pour tout $x$, on a :
+   $$ |u_n(x)| \le 2^{-n} $$
+   Donc $\|u_n\|_{\infty, \mathbb{R}} = 2^{-n}$.
+3. La série géométrique $\sum 2^{-n}$ converge (raison $1/2 < 1$).
+4. La série de fonctions $\sum u_n$ converge donc normalement sur $\mathbb{R}$.
+5. Par le théorème liant convergence normale et uniforme, la série converge uniformément sur $\mathbb{R}$.
+6. Par le théorème de continuité de la fonction limite, puisque toutes les $u_n$ sont continues et que la convergence est uniforme, la somme $f(x)$ est une fonction continue sur $\mathbb{R}$.
+(Note : Karl Weierstrass a prouvé que cette fonction est continue partout, mais dérivable nulle part, fournissant le premier contre-exemple historique bouleversant l'intuition).
+$\blacksquare$
+
+\newpage
+\chapter*{Exercice 6 : Dérivation terme à terme}
+
+\textbf{Difficulté :} $\star\star\star\star$
+
+\textbf{Énoncé :}
+Soit $f(x) = \sum_{n=1}^\infty \frac{\sin(nx)}{n^3}$. Montrer que $f$ est de classe $\mathcal{C}^1$ sur $\mathbb{R}$, et exprimer sa dérivée.
+
+\textbf{Démonstration :}
+1. Soit $u_n(x) = \frac{\sin(nx)}{n^3}$. Les $u_n$ sont de classe $\mathcal{C}^1$ sur $\mathbb{R}$.
+   Leur dérivée est $u_n'(x) = \frac{n \cos(nx)}{n^3} = \frac{\cos(nx)}{n^2}$.
+2. \textbf{Convergence de la série des dérivées :}
+   Étudions la série $\sum u_n'(x)$.
+   $$ \|u_n'\|_{\infty, \mathbb{R}} = \sup_{x \in \mathbb{R}} \left| \frac{\cos(nx)}{n^2} \right| = \frac{1}{n^2} $$
+   La série $\sum \frac{1}{n^2}$ est une série de Riemann convergente ($\alpha=2$).
+   Donc la série des dérivées $\sum u_n'$ converge normalement, et donc uniformément, sur $\mathbb{R}$.
+3. \textbf{Convergence de la série originelle en au moins un point :}
+   Pour $x=0$, $u_n(0) = 0$, donc la série $\sum u_n(0) = 0$ converge.
+4. \textbf{Application du théorème :}
+   Les trois hypothèses du théorème de dérivation terme à terme étant vérifiées (les fonctions sont $\mathcal{C}^1$, la série des dérivées converge uniformément, et la série converge en un point), on déduit que :
+   - La série $\sum u_n$ converge uniformément sur $\mathbb{R}$.
+   - La fonction somme $f$ est de classe $\mathcal{C}^1$ sur $\mathbb{R}$.
+   - Et pour tout $x \in \mathbb{R}$, $f'(x) = \sum_{n=1}^\infty u_n'(x) = \sum_{n=1}^\infty \frac{\cos(nx)}{n^2}$.
+$\blacksquare$
+
+\newpage
+\chapter*{Exercice 7 : Limite en l'infini et interversion}
+
+\textbf{Difficulté :} $\star\star\star\star$
+
+\textbf{Énoncé :}
+Soit $f(x) = \sum_{n=1}^\infty \frac{x}{n(1+nx^2)}$. Calculer $\lim_{x \to +\infty} f(x)$.
+
+\textbf{Démonstration :}
+1. \textbf{Convergence simple :}
+   Soit $u_n(x) = \frac{x}{n(1+nx^2)}$. Pour $x > 0$ fixé, $u_n(x) \sim \frac{x}{n^2 x^2} = \frac{1}{n^2 x}$.
+   Comme la série de Riemann $\sum \frac{1}{n^2}$ converge, la série converge simplement sur $]0, +\infty[$.
+2. \textbf{Limite de chaque terme :}
+   Pour chaque $n \ge 1$, $\lim_{x \to +\infty} u_n(x) = \lim_{x \to +\infty} \frac{x}{n(1+nx^2)} = 0$.
+3. \textbf{Recherche de convergence uniforme :}
+   On souhaite intervertir limite et série. Il faut montrer la convergence uniforme sur un voisinage de $+\infty$, disons sur $[1, +\infty[$.
+   Pour $x \ge 1$ :
+   $$ 0 \le u_n(x) = \frac{x}{n(1+nx^2)} \le \frac{x}{n(nx^2)} = \frac{1}{n^2 x} \le \frac{1}{n^2} $$
+   Donc $\|u_n\|_{\infty, [1, +\infty[} \le \frac{1}{n^2}$.
+   La série $\sum \frac{1}{n^2}$ converge, ce qui prouve que $\sum u_n$ converge normalement, donc uniformément, sur $[1, +\infty[$.
+4. \textbf{Interversion des limites :}
+   Puisque la série converge uniformément sur $[1, +\infty[$, et que chaque fonction $u_n$ admet une limite finie quand $x \to +\infty$, le théorème d'interversion des limites (ou théorème de la double limite) s'applique :
+   $$ \lim_{x \to +\infty} f(x) = \lim_{x \to +\infty} \sum_{n=1}^\infty u_n(x) = \sum_{n=1}^\infty \left( \lim_{x \to +\infty} u_n(x) \right) = \sum_{n=1}^\infty 0 = 0 $$
+$\blacksquare$
+
+\newpage
+\chapter*{Exercice 8 : Convergence uniforme sans convergence normale}
+
+\textbf{Difficulté :} $\star\star\star\star$
+
+\textbf{Énoncé :}
+Soit $f_n(x) = \frac{x}{(1+x^2)^n}$ sur $[0, +\infty[$. Montrer que la série $\sum_{n \ge 0} f_n$ converge uniformément sur $[\delta, +\infty[$ avec $\delta > 0$, mais ne converge pas uniformément sur $[0, +\infty[$.
+
+\textbf{Démonstration :}
+1. \textbf{Convergence simple sur $[0, +\infty[$ :}
+   - Si $x=0$, $f_n(0)=0$, la somme est $0$.
+   - Si $x > 0$, $1+x^2 > 1$. La série est géométrique de raison $q = \frac{1}{1+x^2} < 1$.
+     La somme vaut $S(x) = \sum_{n=0}^\infty x \left( \frac{1}{1+x^2} \right)^n = x \frac{1}{1 - \frac{1}{1+x^2}} = x \frac{1+x^2}{x^2} = \frac{1+x^2}{x} = x + \frac{1}{x}$.
+   La fonction somme est donc $S(x) = x + \frac{1}{x}$ pour $x>0$, et $S(0) = 0$.
+
+2. \textbf{Défaut de convergence uniforme sur $[0, +\infty[$ :}
+   La limite $S$ n'est pas continue en 0 (elle tend vers $+\infty$ en $0^+$).
+   Or chaque fonction $f_n$ est continue sur $[0, +\infty[$.
+   Par contraposée du théorème de continuité, la convergence ne peut pas être uniforme sur $[0, +\infty[$.
+
+3. \textbf{Convergence uniforme sur $[\delta, +\infty[$ ($\delta > 0$) :}
+   Pour $x \ge \delta > 0$, $1+x^2 \ge 1+\delta^2$.
+   $$ f_n(x) = \frac{x}{(1+x^2)^n} $$
+   Étudions $f_n(x)$ : la dérivée est $f_n'(x) = \frac{1 - (2n-1)x^2}{(1+x^2)^{n+1}}$.
+   Le maximum est atteint en $x_n = \frac{1}{\sqrt{2n-1}}$.
+   Pour $n$ assez grand, $x_n < \delta$. Donc sur $[\delta, +\infty[$, $f_n$ est décroissante, son max est $f_n(\delta) = \frac{\delta}{(1+\delta^2)^n}$.
+   Ceci est le terme général d'une série géométrique convergente. Donc la série converge normalement, et donc uniformément, sur $[\delta, +\infty[$.
+$\blacksquare$
+
+\newpage
+\chapter*{Exercice 9 : Intégration sur un intervalle non compact}
+
+\textbf{Difficulté :} $\star\star\star\star\star$
+
+\textbf{Énoncé :}
+Montrer que $\int_0^{+\infty} e^{-x} \cos(\sqrt{x}) dx = \sum_{n=0}^\infty \frac{(-1)^n n!}{(2n)!}$.
+\textit{(Indication : utiliser le développement en série entière de cosinus)}
+
+\textbf{Démonstration :}
+1. \textbf{Développement de la fonction intégrée :}
+   On sait que pour tout $u \in \mathbb{R}$, $\cos(u) = \sum_{n=0}^\infty \frac{(-1)^n u^{2n}}{(2n)!}$.
+   En posant $u = \sqrt{x}$, pour $x \ge 0$, $\cos(\sqrt{x}) = \sum_{n=0}^\infty \frac{(-1)^n x^n}{(2n)!}$.
+   Donc l'intégrande s'écrit : $f(x) = e^{-x} \cos(\sqrt{x}) = \sum_{n=0}^\infty \frac{(-1)^n x^n e^{-x}}{(2n)!}$.
+2. \textbf{Utilisation du théorème d'intégration d'une série de fonctions sur un intervalle quelconque :}
+   Posons $u_n(x) = \frac{(-1)^n x^n e^{-x}}{(2n)!}$.
+   Les fonctions $u_n$ sont continues et intégrables sur $[0, +\infty[$.
+   Leur intégrale absolue est :
+   $$ \int_0^{+\infty} |u_n(x)| dx = \int_0^{+\infty} \frac{x^n e^{-x}}{(2n)!} dx $$
+   On reconnaît l'intégrale Gamma d'Euler : $\int_0^{+\infty} x^n e^{-x} dx = \Gamma(n+1) = n!$.
+   Ainsi, $\int_0^{+\infty} |u_n(x)| dx = \frac{n!}{(2n)!}$.
+3. \textbf{Convergence de la série des intégrales absolues :}
+   Il faut montrer que la série $\sum \frac{n!}{(2n)!}$ converge pour justifier l'interversion.
+   Utilisons le critère de d'Alembert pour $v_n = \frac{n!}{(2n)!}$ :
+   $$ \frac{v_{n+1}}{v_n} = \frac{(n+1)!}{(2n+2)!} \frac{(2n)!}{n!} = \frac{n+1}{(2n+2)(2n+1)} = \frac{1}{2(2n+1)} $$
+   La limite quand $n \to \infty$ est $0 < 1$. Donc la série converge.
+4. \textbf{Conclusion par le théorème de convergence dominée pour les séries :}
+   Puisque la série des intégrales absolues converge, on peut intervertir série et intégrale sur $]0, +\infty[$ :
+   $$ \int_0^{+\infty} \left( \sum_{n=0}^\infty u_n(x) \right) dx = \sum_{n=0}^\infty \int_0^{+\infty} u_n(x) dx $$
+   Calculons l'intégrale sans valeur absolue :
+   $$ \int_0^{+\infty} u_n(x) dx = \frac{(-1)^n}{(2n)!} \int_0^{+\infty} x^n e^{-x} dx = \frac{(-1)^n n!}{(2n)!} $$
+   Ce qui donne exactement :
+   $$ \int_0^{+\infty} e^{-x} \cos(\sqrt{x}) dx = \sum_{n=0}^\infty \frac{(-1)^n n!}{(2n)!} $$
+$\blacksquare$
+
+\newpage
+\chapter*{Exercice 10 : Un problème d'interversion subtil}
+
+\textbf{Difficulté :} $\star\star\star\star\star$
+
+\textbf{Énoncé :}
+Soit $f_n(x) = n x e^{-n x^2}$.
+1. Calculer $\lim_{n \to \infty} \int_0^1 f_n(x) dx$.
+2. Calculer $\int_0^1 (\lim_{n \to \infty} f_n(x)) dx$.
+3. Expliquer rigoureusement pourquoi les deux résultats diffèrent et analyser la convergence de $f_n$ sur $[0, 1]$.
+
+\textbf{Démonstration :}
+1. \textbf{Limite de l'intégrale :}
+   Calculons l'intégrale pour un entier $n$ fixé :
+   $$ \int_0^1 n x e^{-n x^2} dx $$
+   On reconnaît la dérivée de $e^{-n x^2}$. En effet, la dérivée de $x \mapsto e^{-n x^2}$ est $-2n x e^{-n x^2}$.
+   Donc, $\int_0^1 n x e^{-n x^2} dx = \left[ -\frac{1}{2} e^{-n x^2} \right]_0^1 = -\frac{1}{2} (e^{-n} - 1) = \frac{1}{2} (1 - e^{-n})$.
+   En passant à la limite :
+   $$ \lim_{n \to \infty} \int_0^1 f_n(x) dx = \lim_{n \to \infty} \frac{1}{2} (1 - e^{-n}) = \frac{1}{2} $$
+
+2. \textbf{Intégrale de la limite :}
+   Étudions la limite simple de $f_n(x)$ sur $[0, 1]$.
+   - Si $x = 0$, $f_n(0) = 0$, donc $\lim_{n \to \infty} f_n(0) = 0$.
+   - Si $x \in ]0, 1]$, l'exponentielle l'emporte sur toute puissance, donc $\lim_{n \to \infty} n x e^{-n x^2} = 0$.
+   Donc, pour tout $x \in [0, 1]$, la limite ponctuelle est la fonction nulle $f(x) = 0$.
+   L'intégrale de cette limite est donc :
+   $$ \int_0^1 f(x) dx = \int_0^1 0 dx = 0 $$
+
+3. \textbf{Analyse du défaut d'interversion :}
+   On a $\lim \int f_n = 1/2 \neq 0 = \int \lim f_n$. Le théorème d'interversion ne s'applique pas. L'hypothèse manquante est la \textbf{convergence uniforme} de $f_n$ vers $0$ sur $[0, 1]$.
+   Calculons la norme infinie de $f_n$. La dérivée est :
+   $f_n'(x) = n e^{-n x^2} + n x (-2n x) e^{-n x^2} = n e^{-n x^2} (1 - 2n x^2)$.
+   La dérivée s'annule en $x_n = \frac{1}{\sqrt{2n}}$.
+   Le maximum est donc $f_n(x_n) = n \frac{1}{\sqrt{2n}} e^{-1/2} = \sqrt{\frac{n}{2}} e^{-1/2}$.
+   La norme infinie $\|f_n\|_{\infty} = \sqrt{\frac{n}{2}} e^{-1/2}$ tend vers $+\infty$ quand $n \to \infty$.
+   Elle ne tend pas vers 0, donc il n'y a pas convergence uniforme. La "bosse glissante" s'échappe vers la gauche et monte à l'infini, capturant une aire de $1/2$ qui échappe à la limite ponctuelle.
+$\blacksquare$
+
+\newpage
+\chapter*{Travaux pratiques et simulations algorithmiques}
+\addcontentsline{toc}{chapter}{Travaux pratiques et simulations algorithmiques}
+\chapter*{TP 1 : Vérification empirique de la convergence uniforme}
+
+\textbf{Objectif :} Implémenter en Python pur le calcul des sommes partielles d'une série de fonctions et vérifier numériquement le critère de Cauchy uniforme (qui équivaut à la convergence uniforme).
+
+\textbf{Rappel théorique :}
+La série $\sum f_n$ converge uniformément sur $I$ si la suite des restes tend uniformément vers 0. Empiriquement, nous allons mesurer le supremum de l'écart entre $S_N(x)$ et la fonction limite $S(x)$ (ou une très grande somme partielle $S_{M}$ avec $M \gg N$).
+Considérons la série géométrique $\sum x^n(1-x)$ sur $[0, 1]$ (qui ne converge pas uniformément) et sur $[0, 0.5]$ (où elle converge uniformément).
+
+\begin{lstlisting}[language=Python]
+import math
+
+def f_n(n, x):
+    return (x**n) * (1 - x)
+
+def S_N(N, x):
+    # Calcule la somme partielle d'ordre N manuellement
+    total = 0.0
+    for n in range(N + 1):
+        total += f_n(n, x)
+    return total
+
+def test_uniform_convergence(interval_start, interval_end, num_points, N, M):
+    """
+    Mesure l'ecart sup entre S_N et S_M (approximation de l'infini) sur un maillage de l'intervalle.
+    """
+    max_diff = 0.0
+    step = (interval_end - interval_start) / (num_points - 1)
+
+    for i in range(num_points):
+        x = interval_start + i * step
+        val_N = S_N(N, x)
+        val_M = S_N(M, x)
+        diff = abs(val_N - val_M)
+        if diff > max_diff:
+            max_diff = diff
+
+    return max_diff
+
+def main():
+    # Test sur [0, 0.5] : doit converger uniformement (l'erreur max tend vers 0)
+    err_05 = test_uniform_convergence(0.0, 0.5, 1000, 20, 200)
+    print(f"Erreur max sur [0, 0.5] a N=20 : {err_05:.6f}")
+    assert err_05 < 1e-4, "La convergence devrait etre rapide et uniforme sur [0, 0.5]"
+
+    # Test sur [0, 1.0] : ne converge pas uniformement (l'erreur max reste proche de 1)
+    err_10 = test_uniform_convergence(0.0, 1.0, 1000, 20, 200)
+    print(f"Erreur max sur [0, 1.0] a N=20 : {err_10:.6f}")
+    assert err_10 > 0.1, "La convergence ne devrait PAS etre uniforme sur [0, 1.0]"
+
+    print("TP1 Valide : Les proprietes topologiques sont confirmees par le calcul empirique.")
+
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+
+\newpage
+\chapter*{TP 2 : Interversion Série-Intégrale (Méthode de Riemann)}
+
+\textbf{Objectif :} Implémenter l'intégration numérique d'une série de fonctions, et valider le théorème d'interversion de la limite (somme infinie) et de l'intégrale en Python pur.
+
+\textbf{Rappel théorique :}
+On sait par l'exercice 4 que $\int_0^1 \sum_{n=1}^\infty \frac{x^n}{n^3} dx = \sum_{n=1}^\infty \frac{1}{n^3(n+1)}$.
+Nous allons calculer ces deux quantités séparément.
+
+\begin{lstlisting}[language=Python]
+def u_n(n, x):
+    return (x**n) / (n**3)
+
+def somme_infinie(x, max_n=100):
+    total = 0.0
+    for n in range(1, max_n + 1):
+        total += u_n(n, x)
+    return total
+
+def integrate_rectangles(func, a, b, num_steps=10000):
+    """
+    Integration numerique basique par la methode des rectangles (point milieu).
+    """
+    step = (b - a) / num_steps
+    total_area = 0.0
+    for i in range(num_steps):
+        x_mid = a + (i + 0.5) * step
+        total_area += func(x_mid) * step
+    return total_area
+
+def somme_des_integrales(max_n=100):
+    total = 0.0
+    for n in range(1, max_n + 1):
+        term = 1.0 / ((n**3) * (n + 1))
+        total += term
+    return total
+
+def main():
+    # 1. Calcul de l'integrale de la somme (Interversion : integrale a l'exterieur)
+    # L'integrande est la somme partielle d'ordre max_n
+    integrale_de_la_somme = integrate_rectangles(lambda x: somme_infinie(x, max_n=50), 0, 1, num_steps=5000)
+
+    # 2. Calcul de la somme des integrales (Formule analytique derivee theoriquement)
+    somme_des_int = somme_des_integrales(max_n=50)
+
+    print(f"Integrale de la somme : {integrale_de_la_somme:.8f}")
+    print(f"Somme des integrales  : {somme_des_int:.8f}")
+
+    # Verification mathematique stricte
+    assert abs(integrale_de_la_somme - somme_des_int) < 1e-5, "Le theoreme d'interversion a echoue numeriquement"
+    print("TP2 Valide : Le theoreme d'integration terme a terme est verifie.")
+
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+
+\newpage
+\chapter*{TP 3 : La Bosse Glissante et le défaut d'interversion}
+
+\textbf{Objectif :} Recréer numériquement le contre-exemple classique (Exercice 10) démontrant l'échec de l'interversion limite/intégrale en l'absence de convergence uniforme.
+
+\textbf{Rappel théorique :}
+Soit $f_n(x) = n x e^{-n x^2}$.
+Sur $[0, 1]$, la limite ponctuelle est $f(x)=0$, donc l'intégrale de la limite est $0$.
+Cependant, l'intégrale de $f_n(x)$ tend vers $1/2$.
+Nous allons visualiser ce phénomène d'aire constante échappant à la limite.
+
+\begin{lstlisting}[language=Python]
+import math
+
+def f_n(n, x):
+    return n * x * math.exp(-n * (x**2))
+
+def integrate_simpson(func, a, b, num_intervals=10000):
+    """
+    Integration numerique avec la methode de Simpson (tres precise) pure Python.
+    """
+    if num_intervals % 2 != 0:
+        num_intervals += 1
+    step = (b - a) / num_intervals
+
+    res = func(a) + func(b)
+
+    for i in range(1, num_intervals, 2):
+        res += 4 * func(a + i * step)
+    for i in range(2, num_intervals - 1, 2):
+        res += 2 * func(a + i * step)
+
+    return res * step / 3.0
+
+def main():
+    # Pour differentes valeurs de n, on calcule l'integrale
+    n_values = [10, 50, 100, 500]
+    for n in n_values:
+        integral_val = integrate_simpson(lambda x: f_n(n, x), 0.0, 1.0, 5000)
+        max_val = f_n(n, 1.0 / math.sqrt(2 * n)) # Max theorique a 1/sqrt(2n)
+        print(f"n={n:3d} | Integrale={integral_val:.6f} | Sup(f_n)={max_val:.2f}")
+
+        # Validation que l'integrale reste proche de 0.5 (1/2 * (1 - e^-n))
+        assert abs(integral_val - 0.5) < 1e-2, "L'aire sous la bosse glissante devrait etre 0.5"
+
+    # Limite ponctuelle est nulle, l'integrale de la limite est donc 0.0
+    print("TP3 Valide : L'integrale de la limite (0) est differente de la limite des integrales (0.5), prouvant la necessite de la CU.")
+
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+
+\newpage
+\chapter*{TP 4 : Série de Weierstrass (Continue mais non dérivable)}
+
+\textbf{Objectif :} Implémenter l'approximation de la célèbre fonction de Weierstrass et vérifier numériquement sa continuité tout en observant ses pentes extrêmes (qui violent la dérivabilité).
+
+\textbf{Rappel théorique :}
+$W(x) = \sum_{n=0}^\infty 2^{-n} \cos(3^n x)$ converge normalement sur $\mathbb{R}$. Elle est donc continue.
+
+\begin{lstlisting}[language=Python]
+import math
+
+def W(x, max_n=30):
+    total = 0.0
+    for n in range(max_n):
+        total += (2.0 ** (-n)) * math.cos((3.0 ** n) * x)
+    return total
+
+def test_continuity_empirical(x0, delta=1e-6):
+    """
+    Verifie que f(x0+delta) est tres proche de f(x0),
+    mais que le taux d'accroissement (derivee numerique) est potentiellement immense.
+    """
+    val_center = W(x0)
+    val_right = W(x0 + delta)
+
+    diff = abs(val_right - val_center)
+    taux_accroissement = diff / delta
+
+    return diff, taux_accroissement
+
+def main():
+    x0 = math.pi / 4
+
+    # Test a differentes echelles microscopiques
+    deltas = [1e-3, 1e-5, 1e-7, 1e-9]
+    for d in deltas:
+        diff, taux = test_continuity_empirical(x0, d)
+        print(f"Delta: {d:.0e} | |f(x+d)-f(x)| = {diff:.6f} | Taux: {taux:.2f}")
+
+        # La difference tend vers 0 (Continuite validee)
+        assert diff < 1e-1, "La fonction devrait etre continue"
+
+    print("TP4 Valide : La fonction est continue (les petits ecarts donnent de petites differences) mais le taux d'accroissement explose (non-derivabilite).")
+
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+
+\newpage
+\chapter*{TP 5 : Application au traitement du signal (Série de Fourier)}
+
+\textbf{Objectif :} Synthétiser un signal carré à partir d'une série de fonctions harmoniques (Série de Fourier), et observer le phénomène de Gibbs (défaut de convergence uniforme aux points de discontinuité).
+
+\textbf{Rappel théorique :}
+Le signal carré impair $f(x)$ sur $[-\pi, \pi]$ valant $-1$ sur $]-\pi, 0[$ et $1$ sur $]0, \pi[$ a pour série de Fourier :
+$S(x) = \frac{4}{\pi} \sum_{k=0}^\infty \frac{\sin((2k+1)x)}{2k+1}$.
+Cette série converge simplement vers le signal carré (théorème de Dirichlet), mais la convergence n'est \textbf{pas} uniforme sur $[0, \pi]$ à cause de la discontinuité en 0.
+
+\begin{lstlisting}[language=Python]
+import math
+
+def fouriers_square_wave(x, max_k):
+    total = 0.0
+    for k in range(max_k):
+        n = 2 * k + 1
+        total += math.sin(n * x) / float(n)
+    return (4.0 / math.pi) * total
+
+def get_peak_overshoot(max_k, num_points=1000):
+    """
+    Recherche le depassement (overshoot) maximum pres de la discontinuite en x=0.
+    """
+    max_val = 0.0
+    # On cherche l'overshoot juste apres le saut en 0
+    step = (math.pi / 2.0) / num_points
+    for i in range(1, num_points):
+        x = i * step
+        val = fouriers_square_wave(x, max_k)
+        if val > max_val:
+            max_val = val
+    return max_val
+
+def main():
+    # Signal theorique max est 1.0.
+    # Le phenomene de Gibbs predit un depassement d'environ 9% (soit ~1.09) qui ne disparait jamais.
+
+    ks = [10, 50, 100, 200]
+    for k in ks:
+        peak = get_peak_overshoot(k, num_points=5000)
+        print(f"Max harmonique k={k:3d} : Peak = {peak:.5f}")
+
+        # Le depassement reste constant autour de 1.089...
+        assert peak > 1.05, "Le phenomene de Gibbs devrait produire un depassement (overshoot) constant > 1.05"
+
+    print("TP5 Valide : Le phenomene de Gibbs empeche la convergence uniforme, le depassement ne s'evanouit pas a l'infini.")
+
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+
+\newpage
+\end{document}

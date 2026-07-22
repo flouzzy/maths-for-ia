@@ -9,7 +9,6 @@ Soit $f_n(x) = n x e^{-n x^2}$.
 3. Expliquer rigoureusement pourquoi les deux résultats diffèrent et analyser la convergence de $f_n$ sur $[0, 1]$.
 
 **Démonstration :**
-*Note : Ceci est une suite de fonctions, mais l'analyse du défaut d'interversion limite-intégrale est le pilier de la compréhension des séries de fonctions (via $S_n$).*
 1. **Limite de l'intégrale :**
    Calculons l'intégrale pour un entier $n$ fixé :
    $$ \int_0^1 n x e^{-n x^2} dx $$
