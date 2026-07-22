@@ -38,7 +38,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-30/Jalon-30.md|Jalon 30 : Trigonalisation d'endomorphismes et décomposition de Dunford.]] : Trigonalisation d'endomorphismes et décomposition de Dunford.
 - [x] [[jalon-31/Jalon-31.md|Jalon 31 : Introduction à la réduction de Jordan et structure des nilpotents.]] : Introduction à la réduction de Jordan et structure des nilpotents.
 - [x] [[jalon-32/Jalon-32.md|Jalon 32 : Preuve complète du théorème spectral pour les endomorphismes symétriques.]] : Preuve complète du théorème spectral pour les endomorphismes symétriques.
-- [ ] [[jalon-33/Jalon 33 (Formes quadratiques).md|Jalon 33 : Formes quadratiques]] : Formes quadratiques, réduction de Gauss, base orthogonale et loi d'inertie de Sylvester.
+- [x] [[jalon-33/Jalon-33.md|Jalon 33 : Formes quadratiques]] : Formes quadratiques, réduction de Gauss, base orthogonale et loi d'inertie de Sylvester.
 - [ ] [[jalon-34/Jalon 34 (Topologie élémentaire des espaces vectoriels normés).md|Jalon 34 : Topologie élémentaire des espaces vectoriels normés]] : Topologie élémentaire des espaces vectoriels normés (normes, équivalence des normes en dimension finie).
 - [ ] [[jalon-35/Jalon 35 (Caractérisation séquentielle des ouverts).md|Jalon 35 : Caractérisation séquentielle des ouverts]] : Caractérisation séquentielle des ouverts, des fermés et des compacts (Heine-Borel).
 - [ ] [[jalon-36/Jalon 36 (Livrable IA).md|Jalon 36 : Livrable IA]] : Livrable IA T3 : Écriture des équations de la décomposition en valeurs singulières (SVD) et application mathématique à la compression d'une matrice de pixels d'image.
