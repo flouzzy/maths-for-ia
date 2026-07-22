@@ -6,13 +6,12 @@ difficulty: 4
 
 # Exercice 8 : Suite de fonctions continues vers continue sans CU
 
-**Niveau :** $★★★★☆$
 
-## Problème
+## Énoncé
 
 Construire une suite de fonctions continues sur $[0,1]$ qui converge simplement vers $0$, mais dont la norme infinie vaut toujours $1$.
 
-## Démonstration et Solution (Zéro Ellipse)
+## Démonstration
 
 Pour répondre à la question, nous devons concevoir une suite de fonctions "chapeau" ou "pointe de tente" dont la hauteur reste constante égale à 1, mais dont la base se rétrécit vers 0 à mesure que $n$ augmente.
 

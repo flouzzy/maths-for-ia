@@ -6,13 +6,12 @@ difficulty: 2
 
 # Exercice 4 : Convergence uniforme sur segment
 
-**Niveau :** $★★☆☆☆$
 
-## Problème
+## Énoncé
 
 Montrer que $f_n(x) = x/n$ converge uniformément sur tout segment $[-M, M]$ avec $M > 0$.
 
-## Démonstration et Solution (Zéro Ellipse)
+## Démonstration
 
 Considérons le segment fini $[-M, M]$ où $M$ est un réel strictement positif.
 Nous savons que la suite $f_n(x) = \frac{x}{n}$ converge simplement vers la fonction nulle $f(x) = 0$ sur ce segment (puisque cela est vrai sur tout $\mathbb{R}$).

@@ -6,13 +6,12 @@ difficulty: 4
 
 # Exercice 7 : Convergence uniforme de arctan(nx)
 
-**Niveau :** $★★★★☆$
 
-## Problème
+## Énoncé
 
 Étudier la convergence de $f_n(x) = \frac{1}{n}\arctan(nx)$ sur $\mathbb{R}$.
 
-## Démonstration et Solution (Zéro Ellipse)
+## Démonstration
 
 Considérons la suite de fonctions $f_n(x) = \frac{1}{n} \arctan(nx)$ sur $\mathbb{R}$.
 

@@ -1,18 +1,17 @@
 ---
 uuid: "exo-21-01"
-title: "Exercice 1 : Convergence simple de x^n"
+title: "Exercice 1 : Convergence simple de $x^n$"
 difficulty: 1
 ---
 
-# Exercice 1 : Convergence simple de x^n
+# Exercice 1 : Convergence simple de $x^n$
 
-**Niveau :** $★☆☆☆☆$
 
-## Problème
+## Énoncé
 
 Étudier la convergence simple de $f_n(x) = x^n$ sur $[0,1]$.
 
-## Démonstration et Solution (Zéro Ellipse)
+## Démonstration
 
 Pour étudier la convergence simple de la suite de fonctions $f_n(x) = x^n$ sur le segment $[0,1]$, nous devons fixer un réel $x \in [0,1]$ arbitraire et étudier la limite de la suite numérique $(f_n(x))_{n \in \mathbb{N}}$.
 

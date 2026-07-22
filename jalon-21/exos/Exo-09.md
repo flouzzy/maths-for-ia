@@ -6,13 +6,12 @@ difficulty: 5
 
 # Exercice 9 : Théorème de Dini
 
-**Niveau :** $★★★★★$
 
-## Problème
+## Énoncé
 
 Démontrer le théorème de Dini : si une suite $(f_n)$ de fonctions continues réelles converge simplement sur un compact $K$ vers une fonction continue $f$, et si la suite $(f_n)$ est monotone croissante (resp. décroissante), alors la convergence est uniforme.
 
-## Démonstration et Solution (Zéro Ellipse)
+## Démonstration
 
 **Théorème de Dini :** Soit $K$ un espace compact (par exemple un segment fermé borné de $\mathbb{R}$). Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions continues de $K$ dans $\mathbb{R}$. Si $(f_n)$ converge simplement sur $K$ vers une fonction continue $f$, et si la suite $(f_n)$ est monotone en tout point (par exemple décroissante : $\forall x \in K, \forall n, f_{n+1}(x) \leq f_n(x)$), alors la convergence est uniforme sur $K$.
 

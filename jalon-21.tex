@@ -1,0 +1,824 @@
+\documentclass[a4paper,11pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    backgroundcolor=\color{gray!10},
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red}
+}
+
+\title{Suites de fonctions, étude de la convergence simple et de la convergence uniforme}
+\author{Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\part{Cours : Intuition, Formalisation et Preuves}
+
+\chapter{Jalon 21 : Suites de fonctions, étude de la convergence simple et de la convergence uniforme}
+
+\section{1. Présentation du concept clé : La danse des approximations}
+
+Imaginez que vous êtes un observateur attentif d'un phénomène complexe, par exemple l'évolution de la température le long d'une barre métallique chauffée. Chaque jour, vous effectuez des mesures, et ces mesures, prises à différents points de la barre, décrivent une certaine courbe de température. Appelons ces courbes $f_1(x)$, $f_2(x)$, $f_3(x)$, et ainsi de suite, où $x$ est la position le long de la barre et l'indice représente le jour. Vous obtenez ainsi une "suite" de fonctions.
+
+L'objectif est de comprendre si cette suite de fonctions "tend" vers une situation finale stable, une sorte de profil de température d'équilibre. Mais qu'est-ce que cela signifie, pour une suite de fonctions, de tendre vers une autre fonction ?
+
+Considérons une première approche : chaque jour, pour chaque point $x$ de la barre, la température $f_n(x)$ se rapproche de plus en plus de la température d'équilibre $f(x)$. C'est une convergence "point par point". Si je me fixe sur un point précis de la barre, disons son extrémité droite, et que je regarde la suite des températures à cet endroit ($f_1(x_0), f_2(x_0), \dots$), cette suite de nombres converge vers $f(x_0)$. Si cela est vrai pour *tous* les points de la barre, on parle de \textbf{convergence simple}. C'est une forme de rapprochement, certes, mais elle peut être trompeuse.
+
+Imaginons une rangée de musiciens qui accordent leurs instruments. La convergence simple, c'est comme si chaque musicien réussissait à accorder parfaitement son instrument. L'un après l'autre, ils trouvent la note juste. Cependant, il n'y a aucune garantie qu'ils soient tous accordés *en même temps*. Il se pourrait que lorsque le premier a fini, le dernier est encore loin du compte, et inversement. Le temps nécessaire pour que chaque musicien atteigne l'accord parfait pourrait dépendre du musicien lui-même.
+
+Maintenant, visualisez une seconde approche : non seulement chaque point de la barre voit sa température se stabiliser, mais l'écart maximum entre le profil de température du jour $n$ et le profil d'équilibre diminue globalement. Autrement dit, le "pire" désaccord sur l'ensemble de la barre devient de plus en plus petit à mesure que les jours passent. Ici, le rythme d'accordement n'est pas point par point, mais global. On exige qu'à partir d'un certain jour $N$, l'ensemble de la barre présente un écart de température partout inférieur à une petite marge $\epsilon$. C'est ce que l'on nomme la \textbf{convergence uniforme}.
+
+Pour reprendre l'analogie des musiciens : la convergence uniforme, c'est lorsque, à partir d'un certain moment, l'ensemble de l'orchestre est globalement accordé avec une précision donnée. Il n'y a pas un musicien plus en retard qu'un autre dans le processus global d'accordement. L'écart maximal de justesse de l'ensemble de l'orchestre diminue de manière coordonnée.
+
+La distinction est subtile mais capitale. La convergence simple nous assure que les choses s'améliorent localement, mais elle ne garantit rien sur la "qualité" globale de l'approximation à un instant donné. Elle peut entraîner des surprises désagréables, comme la perte de propriétés fondamentales : une suite de fonctions "lisses" (continues, par exemple) pourrait converger simplement vers une fonction qui ne l'est pas du tout. La convergence uniforme, en revanche, est le garde-fou qui préserve la "qualité" des fonctions dans le processus de passage à la limite. Elle est le prix à payer pour que les belles propriétés des fonctions initiales (continuité, intégrabilité) se transmettent à la fonction limite.
+
+La nécessité de formaliser rigoureusement ces concepts est née d'une crise historique en analyse au XIXe siècle. Avant les travaux de figures éminentes telles qu'Augustin-Louis Cauchy et Karl Weierstrass, les mathématiciens manipulaient les séries de fonctions et les limites avec une intuition souvent géométrique ou physique, pensant qu'une limite infinie de fonctions continues conserverait naturellement la continuité. Cauchy lui-même, en 1821, affirmait à tort qu'une série de fonctions continues convergente produisait nécessairement une somme continue, ce qui fut démenti par des contre-exemples de Fourier et d'Abel. C'est Weierstrass et Gudermann qui introduiront la distinction cruciale de la "convergence uniforme" pour sauver l'édifice de l'analyse, prouvant que cette rigueur globale était la clé pour préserver la continuité, l'intégrabilité, et la dérivabilité lors d'un passage à la limite.
+
+\section{2. Formalisation : Le Protocole d'Exégèse Conceptuelle}
+
+Nous allons maintenant décortiquer ces concepts avec la rigueur mathématique qui s'impose. Soit $I$ un intervalle de $\mathbb{R}$, et $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions définies de $I$ dans $\mathbb{R}$.
+
+\subsection{A. Énoncé des Définitions}
+
+\subsubsection{Définition 2.1 : Convergence Simple (ou Ponctuelle)}
+
+On dit que la suite de fonctions $(f_n)_{n \in \mathbb{N}}$ converge simplement vers une fonction $f: I \to \mathbb{R}$ sur $I$ si, pour chaque point $x \in I$, la suite numérique $(f_n(x))_{n \in \mathbb{N}}$ converge vers le nombre $f(x)$.
+
+Ceci s'écrit formellement :
+$$ \forall x \in I, \forall \epsilon > 0, \exists N \in \mathbb{N}, \text{ tel que } \forall n \ge N, |f_n(x) - f(x)| < \epsilon $$
+
+\subsubsection{Définition 2.2 : Convergence Uniforme}
+
+On dit que la suite de fonctions $(f_n)_{n \in \mathbb{N}}$ converge uniformément vers une fonction $f: I \to \mathbb{R}$ sur $I$ si, pour tout $\epsilon > 0$, il existe un entier $N \in \mathbb{N}$ tel que pour tout $n \ge N$, et pour tout $x \in I$, l'inégalité $|f_n(x) - f(x)| < \epsilon$ est vérifiée.
+
+Ceci s'écrit formellement :
+$$ \forall \epsilon > 0, \exists N \in \mathbb{N}, \text{ tel que } \forall n \ge N, \forall x \in I, |f_n(x) - f(x)| < \epsilon $$
+
+Alternativement, on peut exprimer la convergence uniforme en utilisant la norme de la convergence uniforme (ou norme sup) :
+La suite $(f_n)_{n \in \mathbb{N}}$ converge uniformément vers $f$ sur $I$ si et seulement si :
+$$ \lim_{n \to \infty} \sup_{x \in I} |f_n(x) - f(x)| = 0 $$
+
+\subsection{B. Anatomie des Concepts}
+
+L'essence de la distinction réside dans l'ordre des quantificateurs $\forall x$ et $\exists N$.
+
+*   \textbf{Convergence Simple :} $\forall x \in I, (\forall \epsilon > 0, \exists N \in \mathbb{N}, \forall n \ge N, |f_n(x) - f(x)| < \epsilon)$.
+    Ici, le choix de $N$ peut dépendre à la fois de $\epsilon$ *et* de $x$. Cela signifie que pour chaque point $x$, la convergence a lieu, mais elle peut être plus rapide à certains points et plus lente à d'autres. Le "temps d'attente" $N$ pour que l'écart soit inférieur à $\epsilon$ n'est pas nécessairement le même pour tous les $x$.
+
+*   \textbf{Convergence Uniforme :} $\forall \epsilon > 0, (\exists N \in \mathbb{N}, \forall n \ge N, \forall x \in I, |f_n(x) - f(x)| < \epsilon)$.
+    Ici, le choix de $N$ ne dépend que de $\epsilon$. C'est un $N$ "universel" (uniforme) qui fonctionne pour *tous* les $x \in I$ simultanément. Cela signifie que l'écart maximal entre $f_n$ et $f$ sur l'ensemble de l'intervalle $I$ tend vers zéro.
+
+Il est clair que la convergence uniforme est une condition plus forte que la convergence simple. Si une suite de fonctions converge uniformément, elle converge nécessairement simplement (il suffit de fixer $x$ et l'inégalité $|f_n(x) - f(x)| < \epsilon$ est satisfaite). La réciproque est cependant fausse, comme nous le verrons dans les exemples pathologiques.
+
+\subsection{C. Exemples Illustratifs}
+
+1.  \textbf{Exemple de convergence uniforme :}
+    Soit la suite de fonctions $f_n(x) = \frac{x}{n}$ sur l'intervalle \([0, 1]\).
+    *   \textbf{Convergence simple :} Pour tout $x \in [0, 1]$, $\lim_{n \to \infty} \frac{x}{n} = 0$. Donc, $f_n(x)$ converge simplement vers la fonction $f(x) = 0$ sur \([0, 1]\).
+    *   \textbf{Convergence uniforme :} Calculons $\sup_{x \in [0, 1]} |f_n(x) - f(x)| = \sup_{x \in [0, 1]} \left| \frac{x}{n} - 0 \right| = \sup_{x \in [0, 1]} \frac{x}{n}$.
+        Le maximum de $\frac{x}{n}$ sur \([0, 1]\) est atteint en $x=1$, et vaut $\frac{1}{n}$.
+        Donc, $\lim_{n \to \infty} \sup_{x \in [0, 1]} |f_n(x) - f(x)| = \lim_{n \to \infty} \frac{1}{n} = 0$.
+        La convergence est uniforme sur \([0, 1]\).
+
+2.  \textbf{Autre exemple de convergence uniforme :}
+    Soit $f_n(x) = \frac{1}{n} \sin(nx)$ sur $\mathbb{R}$.
+    *   \textbf{Convergence simple :} Pour tout $x \in \mathbb{R}$, $\lim_{n \to \infty} \frac{1}{n} \sin(nx) = 0$ car $-1 \le \sin(nx) \le 1$, donc $\frac{-1}{n} \le \frac{1}{n} \sin(nx) \le \frac{1}{n}$. La fonction limite est $f(x) = 0$.
+    *   \textbf{Convergence uniforme :} $\sup_{x \in \mathbb{R}} |f_n(x) - f(x)| = \sup_{x \in \mathbb{R}} \left| \frac{1}{n} \sin(nx) \right| = \frac{1}{n} \sup_{x \in \mathbb{R}} |\sin(nx)| = \frac{1}{n} \cdot 1 = \frac{1}{n}$.
+        Comme $\lim_{n \to \infty} \frac{1}{n} = 0$, la convergence est uniforme sur $\mathbb{R}$.
+
+\subsection{D. Cas Pathologiques (Simple mais pas Uniforme)}
+
+1.  \textbf{Perte de continuité :}
+    Soit la suite de fonctions $f_n(x) = x^n$ sur l'intervalle \([0, 1]\).
+    *   \textbf{Convergence simple :}
+        Si $x \in [0, 1)$, $\lim_{n \to \infty} x^n = 0$.
+        Si $x = 1$, $\lim_{n \to \infty} 1^n = 1$.
+        La fonction limite $f(x)$ est donc la fonction discontinue :
+        $$ f(x) = \begin{cases} 0 & \text{si } x \in [0, 1) \\ 1 & \text{si } x = 1 \end{cases} $$
+        Chaque $f_n(x) = x^n$ est continue sur \([0, 1]\). Cependant, la fonction limite $f(x)$ n'est pas continue en $x=1$.
+    *   \textbf{Convergence uniforme :}
+        Calculons $\sup_{x \in [0, 1]} |f_n(x) - f(x)|$.
+        Pour un $n$ donné, l'écart est $|x^n - 0|$ pour $x \in [0, 1)$ et $|1^n - 1|$ pour $x=1$.
+        L'écart est $0$ en $x=1$. Pour $x \in [0, 1)$, l'écart est $x^n$.
+        Le supremum de $x^n$ sur \([0, 1)$ est 1 (valeur non atteinte mais approchée pour $x\) proche de 1).
+        Donc, $\sup_{x \in [0, 1]} |f_n(x) - f(x)| = 1$ pour tout $n$.
+        Puisque $\lim_{n \to \infty} 1 = 1 \ne 0$, la convergence n'est pas uniforme.
+        Cet exemple illustre parfaitement pourquoi la convergence simple ne préserve pas la continuité.
+
+2.  \textbf{Perte d'interversion limite-intégrale :}
+    Soit la suite de fonctions $f_n(x) = n \cdot \mathbf{1}_{(0, 1/n]}(x)$ sur l'intervalle \([0, 1]\), où $\mathbf{1}$ est la fonction indicatrice. C'est-à-dire, $f_n(x) = n$ si $x \in (0, 1/n]$ et $f_n(x) = 0$ sinon.
+    *   \textbf{Convergence simple :}
+        Pour $x=0$, $f_n(0) = 0$ pour tout $n$, donc $\lim_{n \to \infty} f_n(0) = 0$.
+        Pour $x \in (0, 1]$, il existe un entier $N$ tel que pour tout $n > N$, $1/n < x$. Dans ce cas, $f_n(x) = 0$.
+        Donc, $\lim_{n \to \infty} f_n(x) = 0$ pour tout $x \in [0, 1]$. La fonction limite est $f(x) = 0$.
+    *   \textbf{Intégration :}
+        Calculons l'intégrale de $f_n(x)$ sur \([0, 1]\) :
+        $$ \int_0^1 f_n(x) dx = \int_0^{1/n} n dx + \int_{1/n}^1 0 dx = [nx]_0^{1/n} = n \left( \frac{1}{n} \right) - n(0) = 1 $$
+        Donc, $\lim_{n \to \infty} \int_0^1 f_n(x) dx = \lim_{n \to \infty} 1 = 1$.
+        Cependant, l'intégrale de la fonction limite est $\int_0^1 f(x) dx = \int_0^1 0 dx = 0$.
+        On constate que $\lim_{n \to \infty} \int_0^1 f_n(x) dx \ne \int_0^1 \lim_{n \to \infty} f_n(x) dx$.
+        La convergence n'est pas uniforme sur \([0, 1]\) (le $\sup |f_n(x) - f(x)|$ est $n$ en $x=1/n$, qui ne tend pas vers 0). La non-uniformité de la convergence explique l'échec de l'interversion.
+
+\section{3. Démonstrations : Zéro Ellipse}
+
+Ces démonstrations mettent en évidence la puissance de la convergence uniforme pour préserver les propriétés analytiques.
+
+\subsection{Théorème 3.1 : Continuité de la fonction limite}
+
+\textbf{Énoncé :} Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions continues sur un intervalle $I \subseteq \mathbb{R}$. Si la suite $(f_n)$ converge uniformément vers une fonction $f: I \to \mathbb{R}$ sur $I$, alors $f$ est continue sur $I$.
+
+\textbf{Démonstration :}
+Nous voulons montrer que $f$ est continue en tout point $a \in I$.
+Par définition, $f$ est continue en $a$ si pour tout $\epsilon > 0$, il existe $\delta > 0$ tel que pour tout $x \in I$, si $|x - a| < \delta$, alors $|f(x) - f(a)| < \epsilon$.
+
+Soit $\epsilon > 0$.
+Puisque la suite $(f_n)$ converge uniformément vers $f$ sur $I$, par définition, il existe un entier $N \in \mathbb{N}$ tel que pour tout $n \ge N$, et pour tout $x \in I$, on a :
+$$ |f_n(x) - f(x)| < \frac{\epsilon}{3} \quad (*)$$
+
+Choisissons un tel $N$. La fonction $f_N$ est continue sur $I$ (par hypothèse du théorème).
+Par conséquent, $f_N$ est continue en $a$. Donc, pour le $\epsilon/3$ donné, il existe un $\delta > 0$ tel que pour tout $x \in I$, si $|x - a| < \delta$, alors :
+$$ |f_N(x) - f_N(a)| < \frac{\epsilon}{3} \quad (**)$$
+
+Maintenant, considérons $|f(x) - f(a)|$. Nous utilisons l'inégalité triangulaire en introduisant $f_N(x)$ et $f_N(a)$:
+$$ |f(x) - f(a)| = |f(x) - f_N(x) + f_N(x) - f_N(a) + f_N(a) - f(a)| $$
+$$ |f(x) - f(a)| \le |f(x) - f_N(x)| + |f_N(x) - f_N(a)| + |f_N(a) - f(a)| $$
+
+En utilisant l'inégalité $(*)$ pour $f_N(x)$ et $f_N(a)$:
+$|f(x) - f_N(x)| < \frac{\epsilon}{3}$ (pour tout $x \in I$)
+$|f_N(a) - f(a)| < \frac{\epsilon}{3}$ (c'est l'inégalité $(*)$ appliquée au point $a$)
+
+Et en utilisant l'inégalité $(**)$ pour $|x-a| < \delta$:
+$|f_N(x) - f_N(a)| < \frac{\epsilon}{3}$
+
+En combinant ces trois inégalités, pour tout $x \in I$ tel que $|x - a| < \delta$, nous avons :
+$$ |f(x) - f(a)| < \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} = \epsilon $$
+
+Ceci prouve que $f$ est continue en $a$. Comme $a$ est un point arbitraire de $I$, $f$ est continue sur $I$.
+\textbf{C.Q.F.D.}
+
+\subsection{Théorème 3.2 : Interversion limite et intégrale}
+
+\textbf{Énoncé :} Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions Riemann-intégrables sur un segment \([a,b]\). Si la suite $(f_n)$ converge uniformément vers une fonction $f: [a,b] \to \mathbb{R}$ sur \([a,b]\), alors $f$ est Riemann-intégrable sur \([a,b]\) et l'on a :
+$$ \lim_{n \to \infty} \int_a^b f_n(x) dx = \int_a^b f(x) dx $$
+
+\textbf{Démonstration :}
+La démonstration se déroule en deux étapes : d'abord, montrer que la fonction limite $f$ est Riemann-intégrable, puis montrer l'interversion de la limite et de l'intégrale.
+
+\textbf{Étape 1 : $f$ est Riemann-intégrable.}
+Pour montrer que $f$ est Riemann-intégrable, nous devons prouver que pour tout $\epsilon > 0$, il existe une partition $P$ de \([a,b]\) telle que la différence entre la somme de Darboux supérieure et la somme de Darboux inférieure de $f$ est inférieure à $\epsilon$.
+$$ S(f,P) - s(f,P) < \epsilon $$
+
+Soit $\epsilon > 0$.
+Puisque $(f_n)$ converge uniformément vers $f$ sur \([a,b]\), il existe un entier $N \in \mathbb{N}$ tel que pour tout $n \ge N$, et pour tout $x \in [a,b]$:
+$$ |f_n(x) - f(x)| < \frac{\epsilon}{3(b-a)} \quad (*)$$
+Ceci implique, pour $n \ge N$:
+$$ f_n(x) - \frac{\epsilon}{3(b-a)} < f(x) < f_n(x) + \frac{\epsilon}{3(b-a)} $$
+
+Fixons un tel $N$. La fonction $f_N$ est Riemann-intégrable sur \([a,b]\) (par hypothèse).
+Par conséquent, pour le $\epsilon/3$ donné, il existe une partition $P = \{x_0, x_1, \dots, x_k\}$ de \([a,b]\) telle que :
+$$ S(f_N,P) - s(f_N,P) = \sum_{i=1}^k (M_i(f_N) - m_i(f_N)) \Delta x_i < \frac{\epsilon}{3} \quad (**)$$
+où $M_i(f_N) = \sup_{x \in [x_{i-1}, x_i]} f_N(x)$, $m_i(f_N) = \inf_{x \in [x_{i-1}, x_i]} f_N(x)$, et $\Delta x_i = x_i - x_{i-1}$.
+
+Pour chaque sous-intervalle \([x_{i-1}, x_i]\), l'inégalité $(*)$ appliquée à $f_N$ et $f$ implique :
+$ \sup_{x \in [x_{i-1}, x_i]} f(x) \le \sup_{x \in [x_{i-1}, x_i]} \left( f_N(x) + \frac{\epsilon}{3(b-a)} \right) = M_i(f_N) + \frac{\epsilon}{3(b-a)} $
+$ \inf_{x \in [x_{i-1}, x_i]} f(x) \ge \inf_{x \in [x_{i-1}, x_i]} \left( f_N(x) - \frac{\epsilon}{3(b-a)} \right) = m_i(f_N) - \frac{\epsilon}{3(b-a)} $
+Ainsi, pour chaque sous-intervalle, nous avons :
+$ M_i(f) - m_i(f) \le \left( M_i(f_N) + \frac{\epsilon}{3(b-a)} \right) - \left( m_i(f_N) - \frac{\epsilon}{3(b-a)} \right) $
+$ M_i(f) - m_i(f) \le M_i(f_N) - m_i(f_N) + \frac{2\epsilon}{3(b-a)} $
+
+Maintenant, calculons la différence des sommes de Darboux pour $f$ avec la partition $P$:
+$$ S(f,P) - s(f,P) = \sum_{i=1}^k (M_i(f) - m_i(f)) \Delta x_i $$
+$$ \le \sum_{i=1}^k \left( M_i(f_N) - m_i(f_N) + \frac{2\epsilon}{3(b-a)} \right) \Delta x_i $$
+$$ = \sum_{i=1}^k (M_i(f_N) - m_i(f_N)) \Delta x_i + \sum_{i=1}^k \frac{2\epsilon}{3(b-a)} \Delta x_i $$
+En utilisant l'inégalité $(**)$ pour le premier terme, et en notant que $\sum_{i=1}^k \Delta x_i = b-a$:
+$$ < \frac{\epsilon}{3} + \frac{2\epsilon}{3(b-a)} (b-a) = \frac{\epsilon}{3} + \frac{2\epsilon}{3} = \epsilon $$
+Par conséquent, $S(f,P) - s(f,P) < \epsilon$. La fonction $f$ est donc Riemann-intégrable sur \([a,b]\).
+
+\textbf{Étape 2 : Interversion de la limite et de l'intégrale.}
+Nous voulons montrer que $\lim_{n \to \infty} \int_a^b f_n(x) dx = \int_a^b f(x) dx$.
+Cela revient à montrer que pour tout $\epsilon > 0$, il existe un entier $N_0 \in \mathbb{N}$ tel que pour tout $n \ge N_0$:
+$$ \left| \int_a^b f_n(x) dx - \int_a^b f(x) dx \right| < \epsilon $$
+
+Soit $\epsilon > 0$.
+Puisque la suite $(f_n)$ converge uniformément vers $f$ sur \([a,b]\), par définition, il existe un entier $N_0 \in \mathbb{N}$ tel que pour tout $n \ge N_0$, et pour tout $x \in [a,b]$:
+$$ |f_n(x) - f(x)| < \frac{\epsilon}{b-a} \quad (***)$$
+(On peut toujours supposer $b-a > 0$; si $b=a$, l'intégrale est 0 et le théorème est trivialement vrai).
+
+Pour tout $n \ge N_0$, nous avons :
+$$ \left| \int_a^b f_n(x) dx - \int_a^b f(x) dx \right| = \left| \int_a^b (f_n(x) - f(x)) dx \right| $$
+En utilisant la propriété de l'intégrale selon laquelle $\left| \int_a^b g(x) dx \right| \le \int_a^b |g(x)| dx$ (pour $g$ Riemann-intégrable) :
+$$ \left| \int_a^b (f_n(x) - f(x)) dx \right| \le \int_a^b |f_n(x) - f(x)| dx $$
+
+Maintenant, en utilisant l'inégalité $(***)$:
+$$ \int_a^b |f_n(x) - f(x)| dx < \int_a^b \frac{\epsilon}{b-a} dx $$
+$$ = \frac{\epsilon}{b-a} \int_a^b 1 dx = \frac{\epsilon}{b-a} (b-a) = \epsilon $$
+
+Ainsi, pour tout $n \ge N_0$:
+$$ \left| \int_a^b f_n(x) dx - \int_a^b f(x) dx \right| < \epsilon $$
+Ceci prouve que $\lim_{n \to \infty} \int_a^b f_n(x) dx = \int_a^b f(x) dx$.
+\textbf{C.Q.F.D.}
+
+\section{4. Exercices d'Application}
+
+Ces exercices sont conçus pour approfondir la compréhension des concepts de convergence simple et uniforme.
+
+\textbf{Exercice 1 : Analyse de la convergence}
+Soit la suite de fonctions $f_n(x) = \frac{nx}{1+n^2x^2}$.
+1.  Étudier la convergence simple de $(f_n)$ sur $\mathbb{R}$. Déterminer la fonction limite $f(x)$.
+2.  Étudier la convergence uniforme de $(f_n)$ sur \([0, 1]\).
+3.  Étudier la convergence uniforme de $(f_n)$ sur un intervalle de la forme \([a, \infty)\) pour $a > 0$.
+
+\textbf{Exercice 2 : Convergence uniforme sur un compact}
+Soit la suite de fonctions $f_n(x) = \sin\left(\frac{x}{n}\right)$.
+1.  Montrer que $(f_n)$ converge simplement vers une fonction $f(x)$ sur $\mathbb{R}$.
+2.  Montrer que $(f_n)$ converge uniformément vers $f(x)$ sur tout segment \([a,b]\).
+3.  La convergence est-elle uniforme sur $\mathbb{R}$?
+
+\textbf{Exercice 3 : Comportement de la limite en 1}
+Soit la suite de fonctions $f_n(x) = \frac{x^n}{1+x^n}$.
+1.  Étudier la convergence simple de $(f_n)$ sur \([0, \infty)\).
+2.  La convergence est-elle uniforme sur \([0, \infty)\) ? Justifier.
+3.  La convergence est-elle uniforme sur \([0, a]\) pour tout $a < 1$ ?
+4.  La convergence est-elle uniforme sur \([a, \infty)\) pour tout $a > 1$ ?
+
+\textbf{Exercice 4 : Convergence des sommes partielles}
+Considérons la série de fonctions $\sum_{n=0}^\infty f_n(x)$, où $f_n(x) = x^n$. Soit $S_N(x) = \sum_{n=0}^N x^n$ la suite des sommes partielles.
+1.  Déterminer l'intervalle de convergence simple de la série. Quelle est la fonction limite $S(x)$?
+2.  La suite des sommes partielles $(S_N(x))$ converge-t-elle uniformément sur l'intervalle de convergence simple ?
+3.  La suite $(S_N(x))$ converge-t-elle uniformément sur tout intervalle \([-r, r]\) avec $0 < r < 1$ ?
+
+\section{5. Application en Intelligence Artificielle}
+
+Les concepts de convergence des suites de fonctions jouent un rôle discret mais fondamental dans le développement et l'analyse des algorithmes d'Intelligence Artificielle, en particulier dans l'apprentissage automatique.
+
+1.  \textbf{Apprentissage des Réseaux de Neurones :} Un réseau de neurones est essentiellement une fonction paramétrée, $h_{\theta}(x)$, où $\theta$ représente l'ensemble des poids et biais. Le processus d'entraînement consiste à ajuster ces paramètres $\theta$ de manière itérative (par exemple, via la descente de gradient stochastique) pour minimiser une fonction de coût. Chaque itération de l'entraînement produit un nouvel ensemble de paramètres $\theta_k$, et donc une nouvelle fonction $h_{\theta_k}(x)$. La "convergence" d'un modèle d'IA peut être interprétée comme la convergence de cette suite de fonctions $(h_{\theta_k}(x))$ vers une fonction optimale $h_{\theta^*}(x)$.
+    *   \textbf{Convergence simple (ou ponctuelle) :} Si, après un certain nombre d'époques, le réseau fournit des prédictions de plus en plus précises pour *chaque* exemple d'entraînement (ou de test) individuel, on peut parler de convergence simple. Cela garantit que l'erreur sur un point de donnée spécifique tend vers zéro.
+    *   \textbf{Convergence uniforme :} Ce qui est souvent désiré en IA, c'est que l'erreur du réseau diminue *uniformément* sur l'ensemble du jeu de données (entraînement, validation ou test). Cela signifie que le réseau ne s'améliore pas seulement sur certains exemples au détriment d'autres, mais que sa performance globale s'améliore, et que l'écart maximal entre ses prédictions et les vraies valeurs sur l'ensemble du jeu de données tend vers zéro. Des techniques comme la régularisation, le "batch normalization" ou le "dropout" visent implicitement à favoriser une convergence plus uniforme et une meilleure généralisation en évitant l'hyper-spécialisation sur des sous-ensembles de données.
+    *   Le risque d'une convergence simple sans convergence uniforme est le surapprentissage (overfitting), où le modèle "apprend par cœur" les données d'entraînement mais échoue à généraliser à de nouvelles données.
+
+2.  \textbf{Théorèmes d'Approximation Universelle :} Ces théorèmes sont fondamentaux pour justifier la capacité des réseaux de neurones à modéliser des fonctions complexes. Le théorème d'approximation universelle de Cybenko ou de Hornik stipule qu'un réseau de neurones feedforward avec une seule couche cachée et un nombre suffisant de neurones peut approximer n'importe quelle fonction continue sur un compact avec une précision arbitraire. Cette "précision arbitraire" est une formulation directe de la convergence uniforme : pour toute marge d'erreur $\epsilon > 0$, il existe un réseau (une fonction) qui s'approche uniformément de la fonction cible à moins de $\epsilon$.
+
+3.  \textbf{Analyse des Algorithmes d'Optimisation :} Les preuves de convergence des algorithmes d'optimisation (par exemple, pour le gradient descent, Adam, etc.) dans des espaces de fonctions peuvent parfois s'appuyer sur des notions de convergence uniforme, notamment lorsque l'on considère la convergence des fonctions de perte ou des politiques dans l'apprentissage par renforcement.
+
+4.  \textbf{Apprentissage Fonctionnel (Functional Learning) et Analyse de Données Fonctionnelles :} Dans les cas où les données elles-mêmes sont des fonctions (par exemple, des séries temporelles continues, des courbes de croissance, des signaux), l'analyse et la modélisation de ces données peuvent impliquer des suites de fonctions. Comparer des "fonctions apprenantes" ou évaluer la similarité entre des fonctions utilise souvent des métriques basées sur la norme sup, qui est au cœur de la convergence uniforme.
+
+En somme, bien que les termes "convergence simple" et "convergence uniforme" ne soient pas toujours explicitement cités dans la littérature d'IA, les propriétés qu'ils encapsulent sont essentielles pour comprendre la généralisation, la stabilité et les garanties théoriques des modèles d'apprentissage automatique. La convergence uniforme est souvent le graal recherché pour des modèles robustes et performants.
+
+\section{6. Liens Sémantiques}
+
+Les concepts de convergence simple et uniforme des suites de fonctions s'inscrivent dans un maillage plus vaste de l'analyse mathématique, établissant des ponts avec de nombreuses autres théories.
+
+*   \textbf{Séries de Fonctions :} Une série de fonctions, $\sum_{n=0}^\infty u_n(x)$, n'est autre qu'une suite de ses sommes partielles $S_N(x) = \sum_{n=0}^N u_n(x)$. Par conséquent, toutes les définitions et théorèmes relatifs aux suites de fonctions (convergence simple, uniforme) s'appliquent directement aux séries de fonctions. La notion de convergence normale d'une série de fonctions est une condition suffisante (mais non nécessaire) pour la convergence uniforme.
+
+*   \textbf{Espaces Fonctionnels (Analyse Fonctionnelle) :} La convergence uniforme est intrinsèquement liée à la topologie des espaces fonctionnels. L'espace des fonctions continues sur un compact \([a,b]\), noté $C([a,b])$, muni de la norme de la convergence uniforme (ou norme sup) $\|f\|_{\infty} = \sup_{x \in [a,b]} |f(x)|$, est un espace vectoriel normé complet, c'est-à-dire un \textbf{espace de Banach}. Dans cet espace, la convergence uniforme est simplement la convergence au sens de la norme.
+
+*   \textbf{Théorème de Dini :} Ce théorème remarquable établit une condition suffisante pour que la convergence simple implique la convergence uniforme. Si $(f_n)$ est une suite de fonctions continues sur un compact $K$, si $(f_n)$ converge simplement vers une fonction continue $f$ sur $K$, et si la suite est monotone (soit croissante, soit décroissante) pour chaque $x$, alors la convergence est uniforme sur $K$. Ce théorème est précieux pour identifier des situations où la convergence uniforme est garantie sans la vérifier directement par sa définition.
+
+*   \textbf{Théorèmes d'Ascoli-Arzela :} Ces théorèmes fournissent des conditions nécessaires et suffisantes pour qu'un ensemble de fonctions soit "précompact" dans l'espace des fonctions continues munies de la norme uniforme. Ils sont cruciaux pour prouver l'existence de sous-suites uniformément convergentes, notamment dans l'étude des équations différentielles ou des problèmes aux limites.
+
+*   \textbf{Théorème de Weierstrass d'Approximation Polynomiale :} Ce théorème fondamental affirme que toute fonction continue sur un segment \([a,b]\) peut être uniformément approchée par des polynômes. Autrement dit, pour toute fonction continue $f \in C([a,b])$ et tout $\epsilon > 0$, il existe un polynôme $P(x)$ tel que $\|f - P\|_{\infty} < \epsilon$. C'est une illustration majeure de la convergence uniforme et de son importance pratique.
+
+*   \textbf{Convergence en Mesure et Convergence $L_p$ :} Dans des cadres plus abstraits (théorie de la mesure, espaces de Lebesgue), d'autres types de convergence des fonctions existent (convergence presque partout, convergence en mesure, convergence dans les espaces $$L_p$$). La convergence uniforme, bien que puissante, est plus restrictive et n'est pas toujours le type de convergence le plus adapté à tous les contextes. Cependant, la convergence uniforme implique (sous certaines conditions) la convergence en mesure et la convergence dans les espaces $$L_p$$.
+
+Ces interconnexions soulignent la place centrale des notions de convergence des suites de fonctions dans l'architecture de l'analyse mathématique, offrant les outils nécessaires pour comprendre et manipuler des objets complexes tels que les fonctions et les opérateurs.
+
+\part{Exercices d'application et de concours}
+
+\chapter{Exercice 1 : Convergence simple de $x^n$}
+
+
+\section{Énoncé}
+
+Étudier la convergence simple de $f_n(x) = x^n$ sur $[0,1]$.
+
+\section{Démonstration}
+
+Pour étudier la convergence simple de la suite de fonctions $f_n(x) = x^n$ sur le segment $[0,1]$, nous devons fixer un réel $x \in [0,1]$ arbitraire et étudier la limite de la suite numérique $(f_n(x))_{n \in \mathbb{N}}$.
+
+Nous distinguons deux cas rigoureux :
+
+\textbf{Cas 1 : $x \in [0, 1[$}
+Si $x \in [0, 1[$, alors la valeur de $x$ est strictement inférieure à 1. La suite numérique $(x^n)_{n \in \mathbb{N}}$ est une suite géométrique de raison $q = x$. Puisque $0 \leq x < 1$, nous avons $|q| < 1$. D'après le théorème sur les limites des suites géométriques, si la raison appartient à l'intervalle ouvert $]-1, 1[$, la limite de $q^n$ lorsque $n$ tend vers l'infini est strictement égale à 0.
+Ainsi, pour tout $x \in [0, 1[$, $\lim_{n \to \infty} f_n(x) = \lim_{n \to \infty} x^n = 0$.
+
+\textbf{Cas 2 : $x = 1$}
+Si $x = 1$, alors pour tout entier naturel $n$, $f_n(1) = 1^n = 1$. La suite numérique considérée est donc la suite constante égale à 1. La limite d'une suite constante est sa valeur, donc :
+$\lim_{n \to \infty} f_n(1) = 1$.
+
+\textbf{Conclusion de l'étude de la convergence simple :}
+La suite de fonctions $(f_n)$ converge simplement sur $[0,1]$ vers une fonction limite $f$ définie par :
+$f(x) = 0$ si $x \in [0, 1[$
+$f(x) = 1$ si $x = 1$
+
+
+\vspace{1cm}
+
+
+\chapter{Exercice 2 : Convergence simple de x/n}
+
+
+\section{Énoncé}
+
+Étudier la convergence simple de $f_n(x) = x/n$ sur $\mathbb{R}$.
+
+\section{Démonstration}
+
+Pour étudier la convergence simple de $f_n(x) = \frac{x}{n}$ sur $\mathbb{R}$, fixons un réel arbitraire $x \in \mathbb{R}$.
+Nous considérons la suite numérique définie par $u_n = \frac{x}{n}$ pour $n \geq 1$.
+
+Par définition de la limite, $\lim_{n \to \infty} \frac{1}{n} = 0$.
+Le réel $x$ étant fixé, il s'agit d'une constante par rapport à la variable d'indice $n$. Par les propriétés des opérations sur les limites (produit d'une limite finie par une constante), nous obtenons :
+$\lim_{n \to \infty} u_n = x \times \lim_{n \to \infty} \frac{1}{n} = x \times 0 = 0$.
+
+Ce résultat est vrai quelle que soit la valeur initiale fixée pour le réel $x$.
+Ainsi, pour tout $x \in \mathbb{R}$, la suite numérique $(f_n(x))$ converge vers 0.
+
+\textbf{Conclusion :}
+La suite de fonctions $(f_n)$ converge simplement sur $\mathbb{R}$ vers la fonction limite nulle, c'est-à-dire la fonction $f$ définie pour tout $x \in \mathbb{R}$ par $f(x) = 0$.
+
+
+\vspace{1cm}
+
+
+\chapter{Exercice 3 : Convergence uniforme de x/n}
+
+
+\section{Énoncé}
+
+Montrer que $f_n(x) = x/n$ ne converge pas uniformément sur $\mathbb{R}$.
+
+\section{Démonstration}
+
+D'après l'exercice précédent, la suite de fonctions $f_n(x) = \frac{x}{n}$ converge simplement vers la fonction nulle $f(x) = 0$ sur $\mathbb{R}$.
+Pour déterminer si cette convergence est uniforme sur $\mathbb{R}$, nous devons évaluer la norme de la convergence uniforme, c'est-à-dire le supremum de l'écart absolu entre les fonctions $f_n$ et la fonction limite $f$ sur l'ensemble du domaine de définition.
+
+Posons la norme infinie de la différence :
+$\|f_n - f\|_\infty = \sup_{x \in \mathbb{R}} |f_n(x) - f(x)|$
+En remplaçant par nos fonctions :
+$\|f_n - f\|_\infty = \sup_{x \in \mathbb{R}} \left| \frac{x}{n} - 0 \right| = \sup_{x \in \mathbb{R}} \frac{|x|}{n}$
+
+Pour un entier $n \geq 1$ fixé, regardons le comportement de la fonction $x \mapsto \frac{|x|}{n}$ sur $\mathbb{R}$.
+Lorsque $x$ tend vers $+\infty$, la quantité $\frac{|x|}{n}$ tend vers $+\infty$.
+L'ensemble des valeurs $\left\{ \frac{|x|}{n} \mid x \in \mathbb{R} \right\}$ n'est donc pas majoré. Son supremum dans $\mathbb{R} \cup \{+\infty\}$ est donc infini.
+Par conséquent, pour tout $n \geq 1$, $\|f_n - f\|_\infty = +\infty$.
+
+Puisque la suite des normes $\|f_n - f\|_\infty$ ne tend pas vers 0 (elle est constante égale à $+\infty$), la convergence n'est par définition pas uniforme sur l'ensemble $\mathbb{R}$.
+
+
+\vspace{1cm}
+
+
+\chapter{Exercice 4 : Convergence uniforme sur segment}
+
+
+\section{Énoncé}
+
+Montrer que $f_n(x) = x/n$ converge uniformément sur tout segment $[-M, M]$ avec $M > 0$.
+
+\section{Démonstration}
+
+Considérons le segment fini $[-M, M]$ où $M$ est un réel strictement positif.
+Nous savons que la suite $f_n(x) = \frac{x}{n}$ converge simplement vers la fonction nulle $f(x) = 0$ sur ce segment (puisque cela est vrai sur tout $\mathbb{R}$).
+
+Évaluons maintenant la norme de la différence sur ce segment restreint :
+$\|f_n - f\|_{\infty, [-M,M]} = \sup_{x \in [-M, M]} |f_n(x) - f(x)| = \sup_{x \in [-M, M]} \frac{|x|}{n}$
+
+Pour tout $x \in [-M, M]$, nous avons l'inégalité stricte ou large : $|x| \leq M$.
+Par conséquent, en divisant par l'entier strictement positif $n$, nous obtenons pour tout $x \in [-M, M]$ :
+$\frac{|x|}{n} \leq \frac{M}{n}$
+Puisque la borne $M/n$ est atteinte en posant $x=M$ (ou $x=-M$), le supremum est exactement égal à cette valeur :
+$\|f_n - f\|_{\infty, [-M,M]} = \frac{M}{n}$
+
+Étudions la limite de cette suite de normes :
+$\lim_{n \to \infty} \|f_n - f\|_{\infty, [-M,M]} = \lim_{n \to \infty} \frac{M}{n} = M \times \lim_{n \to \infty} \frac{1}{n} = M \times 0 = 0$.
+
+\textbf{Conclusion :}
+La norme infinie de la différence entre $f_n$ et $f$ sur le segment $[-M, M]$ tend rigoureusement vers 0 lorsque $n$ tend vers l'infini. Par définition, cela signifie que la suite de fonctions $(f_n)$ converge uniformément vers la fonction nulle sur le segment $[-M, M]$.
+
+
+\vspace{1cm}
+
+
+\chapter{Exercice 5 : Fonction limite discontinue}
+
+
+\section{Énoncé}
+
+Étudier la convergence de $f_n(x) = x^n$ sur $[0,1]$. La fonction limite est-elle continue ? Que peut-on dire de la convergence uniforme ?
+
+\section{Démonstration}
+
+\textbf{Étape 1 : Étude de la convergence simple}
+Nous avons démontré à l'Exercice 1 que la suite de fonctions $f_n(x) = x^n$ converge simplement sur $[0,1]$ vers la fonction limite $f$ définie par :
+$f(x) = 0$ si $x \in [0, 1[$
+$f(x) = 1$ si $x = 1$.
+
+\textbf{Étape 2 : Continuité de la fonction limite}
+Pour tout entier $n \geq 1$, la fonction $f_n(x) = x^n$ est une fonction polynôme, elle est donc parfaitement continue sur l'intervalle compact $[0,1]$.
+Cependant, analysons la continuité de la fonction limite $f$ au point $x_0 = 1$.
+Calculons la limite à gauche de $f$ en 1 :
+Pour tout $x \in [0, 1[$, $f(x) = 0$. Donc, $\lim_{x \to 1^-} f(x) = \lim_{x \to 1^-} 0 = 0$.
+Or, la valeur de la fonction limite en 1 est $f(1) = 1$.
+Puisque $\lim_{x \to 1^-} f(x) \neq f(1)$, la fonction $f$ présente une discontinuité de première espèce au point $x=1$. Elle n'est donc pas continue sur $[0,1]$.
+
+\textbf{Étape 3 : Conséquence sur la convergence uniforme}
+Le théorème fondamental de la continuité des limites de suites de fonctions stipule que si une suite de fonctions continues $(f_n)$ converge uniformément vers une fonction $f$ sur un intervalle $I$, alors la fonction limite $f$ est obligatoirement continue sur cet intervalle $I$.
+Nous raisonnons ici par contraposée :
+Puisque toutes les fonctions de la suite $f_n$ sont continues sur $[0,1]$, et puisque la fonction limite $f$ \textbf{n'est pas} continue sur $[0,1]$, la convergence de la suite $(f_n)$ vers $f$ \textbf{ne peut absolument pas} être uniforme sur $[0,1]$.
+
+
+\vspace{1cm}
+
+
+\chapter{Exercice 6 : Théorème d'interversion limite-intégrale (Contre-exemple)}
+
+
+\section{Énoncé}
+
+Considérer $f_n(x) = n^2 x (1-x^2)^n$ sur $[0,1]$. Étudier la convergence simple. Comparer l'intégrale de la limite et la limite de l'intégrale.
+
+\section{Démonstration}
+
+\textbf{Étape 1 : Étude de la convergence simple}
+Soit $f_n(x) = n^2 x (1-x^2)^n$ sur $[0,1]$.
+Si $x = 0$, $f_n(0) = n^2 \times 0 \times 1^n = 0$. La limite est 0.
+Si $x = 1$, $f_n(1) = n^2 \times 1 \times 0^n = 0$. La limite est 0.
+Si $x \in ]0, 1[$, alors $1-x^2 \in ]0, 1[$. Posons $q = 1-x^2$, avec $0 < q < 1$.
+L'expression devient $f_n(x) = x \times n^2 q^n$.
+Puisque $0 < q < 1$, nous avons une forme indéterminée du type "+$\infty \times 0$". Par le théorème de croissance comparée entre les fonctions puissances et les exponentielles (ou en écrivant $q^n = e^{n \ln q}$ avec $\ln q < 0$), l'exponentielle l'emporte. Rigoureusement, $\lim_{n \to \infty} n^k q^n = 0$ pour tout $k > 0$ et $q \in ]0,1[$.
+Ainsi, $\lim_{n \to \infty} f_n(x) = x \times 0 = 0$.
+La suite converge simplement vers la fonction nulle $f(x)=0$ sur $[0,1]$.
+
+\textbf{Étape 2 : Intégrale de la limite}
+La fonction limite étant nulle partout, son intégrale sur le segment est nulle :
+$\int_0^1 f(x) dx = \int_0^1 0 dx = 0$.
+
+\textbf{Étape 3 : Limite de l'intégrale}
+Calculons l'intégrale de $f_n(x)$ sur $[0,1]$ pour un $n$ fixé :
+$I_n = \int_0^1 n^2 x (1-x^2)^n dx$
+Effectuons le changement de variable $u = 1-x^2$.
+Alors $du = -2x dx$, ce qui donne $x dx = -\frac{1}{2} du$.
+Les bornes deviennent : pour $x=0$, $u=1$ ; pour $x=1$, $u=0$.
+$I_n = \int_1^0 n^2 (u)^n \left(-\frac{1}{2}\right) du = \frac{n^2}{2} \int_0^1 u^n du = \frac{n^2}{2} \left[ \frac{u^{n+1}}{n+1} \right]_0^1 = \frac{n^2}{2(n+1)}$
+Calculons la limite de $I_n$ lorsque $n$ tend vers l'infini :
+$\lim_{n \to \infty} I_n = \lim_{n \to \infty} \frac{n^2}{2n+2} = \lim_{n \to \infty} \frac{n^2}{2n(1 + 1/n)} = \lim_{n \to \infty} \frac{n}{2(1+1/n)} = +\infty$.
+
+\textbf{Conclusion :}
+Nous observons que la limite des intégrales est $+\infty$, tandis que l'intégrale de la limite est $0$. Les deux quantités sont distinctes ($\lim \int f_n \neq \int \lim f_n$). Ceci prouve formellement, par l'absurde via le théorème d'interversion, que la convergence de $(f_n)$ vers $f$ n'est pas uniforme sur $[0,1]$.
+
+
+\vspace{1cm}
+
+
+\chapter{Exercice 7 : Convergence uniforme de arctan(nx)}
+
+
+\section{Énoncé}
+
+Étudier la convergence de $f_n(x) = \frac{1}{n}\arctan(nx)$ sur $\mathbb{R}$.
+
+\section{Démonstration}
+
+Considérons la suite de fonctions $f_n(x) = \frac{1}{n} \arctan(nx)$ sur $\mathbb{R}$.
+
+\textbf{Étape 1 : Convergence simple}
+Pour tout réel $x \in \mathbb{R}$, fixons $x$ et étudions la limite quand $n \to \infty$.
+Nous connaissons les bornes de la fonction arc tangente : pour tout réel $y$, $|\arctan(y)| < \frac{\pi}{2}$.
+Ainsi, pour tout réel $x$ et tout entier $n \geq 1$ :
+$|f_n(x)| = \left| \frac{1}{n} \arctan(nx) \right| = \frac{1}{n} |\arctan(nx)| < \frac{1}{n} \times \frac{\pi}{2}$
+Puisque $\lim_{n \to \infty} \frac{\pi}{2n} = 0$, le théorème des gendarmes implique que $\lim_{n \to \infty} f_n(x) = 0$.
+La suite converge simplement vers la fonction nulle $f(x)=0$ sur $\mathbb{R}$.
+
+\textbf{Étape 2 : Convergence uniforme}
+Pour étudier la convergence uniforme, déterminons la norme infinie de la différence $\|f_n - f\|_\infty$ sur $\mathbb{R}$.
+$\|f_n - f\|_\infty = \sup_{x \in \mathbb{R}} |f_n(x) - 0| = \sup_{x \in \mathbb{R}} \frac{|\arctan(nx)|}{n}$
+Nous savons que la fonction $x \mapsto \arctan(nx)$ est strictement croissante et impaire. Son supremum sur $\mathbb{R}$ est atteint asymptotiquement lorsque $x \to +\infty$.
+$\sup_{x \in \mathbb{R}} |\arctan(nx)| = \lim_{x \to +\infty} \arctan(nx) = \frac{\pi}{2}$
+Par conséquent, en divisant par la constante positive $n$, nous obtenons la valeur exacte de la norme infinie :
+$\|f_n - f\|_\infty = \frac{1}{n} \times \frac{\pi}{2} = \frac{\pi}{2n}$
+Étudions maintenant la limite de cette norme lorsque $n$ tend vers l'infini :
+$\lim_{n \to \infty} \|f_n - f\|_\infty = \lim_{n \to \infty} \frac{\pi}{2n} = 0$.
+Puisque la norme infinie de l'écart tend vers 0, la convergence est, par définition, uniforme sur l'ensemble $\mathbb{R}$.
+
+
+\vspace{1cm}
+
+
+\chapter{Exercice 8 : Suite de fonctions continues vers continue sans CU}
+
+
+\section{Énoncé}
+
+Construire une suite de fonctions continues sur $[0,1]$ qui converge simplement vers $0$, mais dont la norme infinie vaut toujours $1$.
+
+\section{Démonstration}
+
+Pour répondre à la question, nous devons concevoir une suite de fonctions "chapeau" ou "pointe de tente" dont la hauteur reste constante égale à 1, mais dont la base se rétrécit vers 0 à mesure que $n$ augmente.
+
+Définissons pour chaque entier $n \geq 2$ la fonction $f_n$ sur $[0,1]$ par des segments de droite reliant les points suivants :
+- Point $A : (0, 0)$
+- Point $B : (\frac{1}{2n}, 1)$
+- Point $C : (\frac{1}{n}, 0)$
+- Point $D : (1, 0)$
+Explicitement, cela s'écrit formellement par morceaux :
+$f_n(x) = 2nx$ si $x \in [0, \frac{1}{2n}[$
+$f_n(x) = -2nx + 2$ si $x \in [\frac{1}{2n}, \frac{1}{n}[$
+$f_n(x) = 0$ si $x \in [\frac{1}{n}, 1]$.
+Par construction (raccordement continu aux points de rupture), chaque fonction $f_n$ est continue sur le segment $[0,1]$.
+
+\textbf{Étape 1 : Convergence simple}
+Fixons $x \in [0,1]$.
+Si $x = 0$, $f_n(0) = 0$ pour tout $n$, donc la limite est 0.
+Si $x > 0$, alors selon la propriété d'Archimède, il existe un entier $N$ tel que $\frac{1}{N} < x$.
+Par conséquent, pour tout $n \geq N$, nous avons $\frac{1}{n} \leq \frac{1}{N} < x$.
+Selon la définition de notre fonction par morceaux, si $x > \frac{1}{n}$, alors $f_n(x) = 0$.
+Donc, pour un $x > 0$ fixé, la suite $f_n(x)$ est stationnaire à 0 à partir du rang $N$. Sa limite est donc 0.
+La suite $(f_n)$ converge simplement vers la fonction limite continue $f(x)=0$ sur $[0,1]$.
+
+\textbf{Étape 2 : Absence de convergence uniforme}
+Calculons la norme infinie $\|f_n - f\|_\infty$ sur $[0,1]$.
+Puisque $f(x)=0$, cela revient à trouver le supremum de $f_n$.
+Par construction, le sommet du "chapeau" est situé à l'abscisse $x = \frac{1}{2n}$, et la valeur de la fonction en ce point est exactement $1$.
+Donc, $\sup_{x \in [0,1]} |f_n(x) - 0| = f_n(\frac{1}{2n}) = 1$.
+Ainsi, pour tout $n \geq 2$, $\|f_n - f\|_\infty = 1$.
+La limite de la norme infinie est $\lim_{n \to \infty} 1 = 1 \neq 0$.
+La convergence n'est donc pas uniforme sur $[0,1]$, bien que la suite soit constituée de fonctions continues convergeant vers une fonction continue.
+
+
+\vspace{1cm}
+
+
+\chapter{Exercice 9 : Théorème de Dini}
+
+
+\section{Énoncé}
+
+Démontrer le théorème de Dini : si une suite $(f_n)$ de fonctions continues réelles converge simplement sur un compact $K$ vers une fonction continue $f$, et si la suite $(f_n)$ est monotone croissante (resp. décroissante), alors la convergence est uniforme.
+
+\section{Démonstration}
+
+\textbf{Théorème de Dini :} Soit $K$ un espace compact (par exemple un segment fermé borné de $\mathbb{R}$). Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions continues de $K$ dans $\mathbb{R}$. Si $(f_n)$ converge simplement sur $K$ vers une fonction continue $f$, et si la suite $(f_n)$ est monotone en tout point (par exemple décroissante : $\forall x \in K, \forall n, f_{n+1}(x) \leq f_n(x)$), alors la convergence est uniforme sur $K$.
+
+\textbf{Démonstration formelle (Cas décroissant) :}
+Définissons la suite de fonctions auxiliaire $g_n = f_n - f$.
+Puisque chaque $f_n$ est continue et $f$ est continue, par combinaison linéaire, chaque $g_n$ est une fonction continue sur le compact $K$.
+La suite $(f_n)$ étant décroissante vers $f$, nous avons pour tout $x \in K$ et tout entier $n$, $f_n(x) \geq f_{n+1}(x) \geq f(x)$.
+En soustrayant $f(x)$, cela implique $g_n(x) \geq g_{n+1}(x) \geq 0$. La suite $(g_n)$ est donc une suite de fonctions continues, positives et décroissante vers 0.
+Démontrer la convergence uniforme de $(f_n)$ vers $f$ équivaut à démontrer la convergence uniforme de $(g_n)$ vers la fonction nulle 0.
+Soit un réel arbitraire $\epsilon > 0$.
+Pour chaque entier $n \in \mathbb{N}$, définissons l'ensemble de niveau $O_n$ :
+$O_n = \{x \in K \mid g_n(x) < \epsilon\}$.
+Puisque la fonction $g_n$ est continue, et que l'intervalle $]-\infty, \epsilon[$ est un sous-ensemble ouvert de $\mathbb{R}$, l'image réciproque $O_n = g_n^{-1}(]-\infty, \epsilon[)$ est un ensemble ouvert de $K$.
+De plus, comme la suite $(g_n)$ est décroissante, si $g_n(x) < \epsilon$, alors a fortiori $g_{n+1}(x) \leq g_n(x) < \epsilon$. Cela implique rigoureusement l'inclusion ensembliste : $O_n \subset O_{n+1}$. La suite d'ouverts $(O_n)$ est croissante.
+Montrons que ces ouverts recouvrent $K$. Pour tout $x \in K$, par la convergence simple de $g_n$ vers 0, on a $\lim_{n \to \infty} g_n(x) = 0$. Donc, par définition de la limite, il existe un rang $N_x$ (qui dépend de $x$) tel que $g_{N_x}(x) < \epsilon$, ce qui signifie que $x \in O_{N_x}$.
+Ainsi, l'union infinie $\bigcup_{n \in \mathbb{N}} O_n$ couvre intégralement $K$.
+La famille $(O_n)_{n \in \mathbb{N}}$ constitue donc un recouvrement ouvert du compact $K$.
+Par la propriété fondamentale de Borel-Lebesgue (définition de la compacité), il est possible d'en extraire un sous-recouvrement fini. Il existe donc un ensemble fini d'indices $\{n_1, n_2, \dots, n_k\}$ tel que $K \subset O_{n_1} \cup O_{n_2} \cup \dots \cup O_{n_k}$.
+Posons $N = \max(n_1, n_2, \dots, n_k)$. Puisque la suite d'ouverts est emboîtée de manière croissante ($O_p \subset O_q$ pour $p < q$), l'union finie est égale à son plus grand élément : $O_{n_1} \cup \dots \cup O_{n_k} \subset O_N$.
+Nous obtenons alors $K \subset O_N$.
+Cela signifie que pour tout $x \in K$, on a $x \in O_N$, c'est-à-dire rigoureusement $0 \leq g_N(x) < \epsilon$.
+Enfin, par la décroissance de la suite $(g_n)$, pour tout $n \geq N$ et pour tout $x \in K$, on a $0 \leq g_n(x) \leq g_N(x) < \epsilon$.
+En passant au supremum, on obtient que pour tout $n \geq N$, $\sup_{x \in K} g_n(x) \leq \epsilon$.
+Ceci est la définition stricte de la limite uniforme de $(g_n)$ vers 0, prouvant le théorème.
+
+
+\vspace{1cm}
+
+
+\chapter{Exercice 10 : Équation différentielle et limite uniforme}
+
+
+\section{Énoncé}
+
+Montrer que si $(f_n)$ est une suite de fonctions $C^1$ sur $[a,b]$ convergeant au moins en un point $x_0 \in [a,b]$, et si la suite des dérivées $(f_n')$ converge uniformément vers une fonction $g$, alors $(f_n)$ converge uniformément vers une fonction $f$ différentiable de dérivée $g$.
+
+\section{Démonstration}
+
+\textbf{Théorème :} Soit $(f_n)$ une suite de fonctions de classe $C^1$ sur un segment $[a,b]$. Si la suite numérique $(f_n(x_0))$ converge pour au moins un point $x_0 \in [a,b]$, et si la suite des dérivées $(f_n')$ converge uniformément sur $[a,b]$ vers une fonction $g$, alors la suite $(f_n)$ converge uniformément sur $[a,b]$ vers une fonction $f$ qui est différentiable, et sa dérivée est exactement $f' = g$.
+
+\textbf{Démonstration formelle :}
+Puisque les fonctions $f_n$ sont de classe $C^1$, le Théorème Fondamental de l'Analyse nous permet d'écrire, pour tout point $x \in [a,b]$ et par rapport au point fixe $x_0$ :
+$f_n(x) = f_n(x_0) + \int_{x_0}^x f_n'(t) dt$
+La suite de fonctions $(f_n')$ converge uniformément vers la fonction limite $g$. Par le théorème de continuité des limites uniformes de suites de fonctions continues (les dérivées $f_n'$ sont continues car $f_n$ est $C^1$), la limite $g$ est elle-même une fonction continue sur $[a,b]$.
+Par conséquent, $g$ est Riemann-intégrable sur $[a,b]$.
+La convergence uniforme sur $[a,b]$ de $(f_n')$ vers $g$ nous autorise formellement à appliquer le théorème d'interversion de la limite et de l'intégrale sur le segment de bornes $x_0$ et $x$ (qui est inclus dans $[a,b]$).
+C'est-à-dire que pour tout $x \in [a,b]$ :
+$\lim_{n \to \infty} \int_{x_0}^x f_n'(t) dt = \int_{x_0}^x \lim_{n \to \infty} f_n'(t) dt = \int_{x_0}^x g(t) dt$
+De plus, par hypothèse de l'énoncé, la suite de nombres réels $(f_n(x_0))$ converge. Appelons $C$ sa limite : $\lim_{n \to \infty} f_n(x_0) = C$.
+En passant à la limite (simple, pour chaque $x$ fixé) dans l'équation intégrale initiale, nous obtenons :
+$\lim_{n \to \infty} f_n(x) = \lim_{n \to \infty} f_n(x_0) + \lim_{n \to \infty} \int_{x_0}^x f_n'(t) dt = C + \int_{x_0}^x g(t) dt$
+Posons alors la fonction limite $f$ définie sur $[a,b]$ par :
+$f(x) = C + \int_{x_0}^x g(t) dt$
+La fonction $f$ est ainsi la limite simple de la suite $(f_n)$.
+La fonction $g$ étant continue, son intégrale de Riemann $\int_{x_0}^x g(t) dt$ est, par le Théorème Fondamental de l'Analyse, l'unique primitive de $g$ qui s'annule en $x_0$.
+Cela implique immédiatement que $f$ est une fonction différentiable sur $[a,b]$ et que sa dérivée est $f'(x) = g(x)$.
+
+Il reste à démontrer que la convergence de $(f_n)$ vers $f$ est non seulement simple, mais bien uniforme.
+Calculons l'écart entre $f_n(x)$ et $f(x)$ en utilisant leurs formes intégrales respectives :
+$f_n(x) - f(x) = (f_n(x_0) - C) + \int_{x_0}^x (f_n'(t) - g(t)) dt$
+En appliquant l'inégalité triangulaire (la valeur absolue d'une somme est inférieure ou égale à la somme des valeurs absolues, et la valeur absolue d'une intégrale est inférieure ou égale à l'intégrale de la valeur absolue) :
+$|f_n(x) - f(x)| \leq |f_n(x_0) - C| + \left| \int_{x_0}^x |f_n'(t) - g(t)| dt \right|$
+Soit $\epsilon > 0$.
+Par la convergence uniforme de $(f_n')$ vers $g$ sur $[a,b]$, il existe un rang $N_1$ tel que pour tout $n \geq N_1$ et tout $t \in [a,b]$, $|f_n'(t) - g(t)| \leq \frac{\epsilon}{2(b-a)}$.
+Par la convergence numérique de $(f_n(x_0))$ vers $C$, il existe un rang $N_2$ tel que pour tout $n \geq N_2$, $|f_n(x_0) - C| \leq \frac{\epsilon}{2}$.
+Posons $N = \max(N_1, N_2)$. Pour tout $n \geq N$ et pour tout $x \in [a,b]$, majorons l'intégrale :
+$\left| \int_{x_0}^x |f_n'(t) - g(t)| dt \right| \leq \left| \int_{x_0}^x \frac{\epsilon}{2(b-a)} dt \right| = \frac{\epsilon}{2(b-a)} |x - x_0|$
+Puisque $x$ et $x_0$ appartiennent au segment $[a,b]$, la distance maximale entre eux est $|x - x_0| \leq b - a$.
+Donc, l'intégrale est majorée par $\frac{\epsilon}{2(b-a)} (b-a) = \frac{\epsilon}{2}$.
+En combinant les deux majorations pour l'inégalité globale :
+$|f_n(x) - f(x)| \leq \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$.
+Cette inégalité finale ne dépend d'aucun $x$ particulier. En passant au supremum sur le compact $[a,b]$ :
+$\sup_{x \in [a,b]} |f_n(x) - f(x)| \leq \epsilon$.
+Ceci étant vrai pour tout $\epsilon > 0$ et pour un $n$ suffisamment grand, cela constitue la définition exacte de la limite : $\lim_{n \to \infty} \|f_n - f\|_{\infty} = 0$. La convergence de $(f_n)$ vers $f$ est donc rigoureusement uniforme sur $[a,b]$.
+
+
+\vspace{1cm}
+
+
+
+\part{Travaux pratiques et simulations algorithmiques}
+
+\chapter{TP 1 : Visualisation de la convergence simple}
+
+\textbf{Objectif :} Implémenter une fonction Python pour évaluer $f_n(x) = x^n$ sur $[0,1]$ et vérifier la convergence simple point par point via des assertions pour différentes valeurs de $x$.
+
+\section{Implémentation Pure Python (Validation Mathématique)}
+
+\begin{lstlisting}[language=Python]
+def f_n(n, x):
+    return x ** n
+
+def limite_f(x):
+    return 0.0 if x < 1.0 else 1.0
+
+\chapter{Validation par assertions}
+assert abs(f_n(100, 0.5) - limite_f(0.5)) < 1e-5
+assert abs(f_n(10, 1.0) - limite_f(1.0)) < 1e-5
+print("Convergence simple verifiee aux points tests.")\end{lstlisting}
+
+
+\vspace{1cm}
+
+
+\chapter{TP 2 : Calcul de la norme infinie}
+
+\textbf{Objectif :} Créer un algorithme from scratch pour estimer $\sup_{x \in [0,1]} |f_n(x) - f(x)|$ en échantillonnant finement l'intervalle, afin d'observer la non-convergence uniforme de $x^n$.
+
+\section{Implémentation Pure Python (Validation Mathématique)}
+
+\begin{lstlisting}[language=Python]
+def f_n(n, x):
+    return x ** n
+
+def limite_f(x):
+    return 0.0 if x < 1.0 else 1.0
+
+def norme_infinie(n, points):
+    erreurs = [abs(f_n(n, x) - limite_f(x)) for x in points]
+    max_err = erreurs[0]
+    for e in erreurs:
+        if e > max_err: max_err = e
+    return max_err
+
+points = [i/1000.0 for i in range(1001)]
+n_test = 100
+err_max = norme_infinie(n_test, points)
+
+\chapter{L'erreur reste proche de 1 car pour x proche de 1, x^n approche 1 tandis que f(x)=0}
+assert err_max > 0.9
+print(f"L'erreur maximale pour n={n_test} est {err_max}, demontrant la NON-convergence uniforme.")\end{lstlisting}
+
+
+\vspace{1cm}
+
+
+\chapter{TP 3 : Convergence uniforme de $x/n$}
+
+\textbf{Objectif :} Vérifier empiriquement que $f_n(x) = x/n$ converge uniformément sur $[-10, 10]$ en calculant le max de l'erreur, et vérifier par assertions que cette erreur maximale tend vers $0$.
+
+\section{Implémentation Pure Python (Validation Mathématique)}
+
+\begin{lstlisting}[language=Python]
+def f_n(n, x):
+    return x / n
+
+def norme_infinie_segment(n, a, b, num_points=1000):
+    pas = (b - a) / num_points
+    points = [a + i*pas for i in range(num_points + 1)]
+    erreurs = [abs(f_n(n, x)) for x in points] # f(x) = 0
+    max_err = erreurs[0]
+    for e in erreurs:
+        if e > max_err: max_err = e
+    return max_err
+
+err_10 = norme_infinie_segment(10, -10, 10)
+err_100 = norme_infinie_segment(100, -10, 10)
+err_1000 = norme_infinie_segment(1000, -10, 10)
+
+assert err_10 > err_100 > err_1000
+assert err_1000 <= 10 / 1000
+print("La decroissance de la norme infinie vers 0 est verifiee.")\end{lstlisting}
+
+
+\vspace{1cm}
+
+
+\chapter{TP 4 : Le phénomène de Gibbs discret}
+
+\textbf{Objectif :} Modéliser une série de Fourier tronquée d'un signal créneau en Python pur et observer l'évolution de la norme infinie de l'erreur, illustrant l'absence de convergence uniforme près des discontinuités.
+
+\section{Implémentation Pure Python (Validation Mathématique)}
+
+\begin{lstlisting}[language=Python]
+import math
+
+def fourier_partiel(n, x):
+    somme = 0
+    for k in range(1, n+1, 2):
+        somme += (4 / (math.pi * k)) * math.sin(k * x)
+    return somme
+
+\chapter{f(x) = 1 sur ]0, pi[, -1 sur ]-pi, 0[}
+def norme_inf_erreur(n, num_points=500):
+    pas = math.pi / num_points
+    # On evalue sur ]0, pi[ pour eviter les bornes
+    points = [pas + i*pas for i in range(num_points - 1)]
+    erreurs = [abs(fourier_partiel(n, x) - 1.0) for x in points]
+    max_err = erreurs[0]
+    for e in erreurs:
+        if e > max_err: max_err = e
+    return max_err
+
+err_10 = norme_inf_erreur(10)
+err_50 = norme_inf_erreur(50)
+
+\chapter{Le pic d'erreur reste autour de 18% (phenomene de Gibbs)}
+assert err_10 > 0.15 and err_50 > 0.15
+print("Le phenomene de Gibbs empeche la convergence uniforme.")\end{lstlisting}
+
+
+\vspace{1cm}
+
+
+\chapter{TP 5 : Validation du théorème de Dini}
+
+\textbf{Objectif :} Implémenter une suite de fonctions continues décroissant vers une limite continue sur un maillage discret. Écrire un script pour trouver le $N$ tel que pour tout $n \geq N$, l'erreur maximale soit inférieure à $\epsilon$, validant la convergence uniforme.
+
+\section{Implémentation Pure Python (Validation Mathématique)}
+
+\begin{lstlisting}[language=Python]
+def f_n(n, x):
+    return 1 / (1 + n * x)
+
+\chapter{Sur [a, 1] avec a > 0, la suite converge uniformement vers 0.}
+\chapter{Verifions que pour eps > 0 donne, on peut trouver un N global.}
+def trouver_N_uniforme(eps, a, b, num_points=1000):
+    pas = (b - a) / num_points
+    points = [a + i*pas for i in range(num_points + 1)]
+
+    n = 1
+    while True:
+        max_err = 0
+        for x in points:
+            err = abs(f_n(n, x))
+            if err > max_err: max_err = err
+
+        if max_err < eps:
+            return n
+        n += 1
+
+a = 0.1
+b = 1.0
+eps = 0.05
+N_requis = trouver_N_uniforme(eps, a, b)
+
+\chapter{Validation : Pour n >= N_requis, max_err doit etre < eps}
+max_err_validation = 0
+pas = (b - a) / 100
+for i in range(101):
+    x = a + i*pas
+    err = abs(f_n(N_requis, x))
+    if err > max_err_validation: max_err_validation = err
+assert max_err_validation < eps
+print(f"Theoreme de Dini valide : N trouve = {N_requis}")\end{lstlisting}
+
+
+\vspace{1cm}
+
+
+\end{document}

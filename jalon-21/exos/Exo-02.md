@@ -6,13 +6,12 @@ difficulty: 1
 
 # Exercice 2 : Convergence simple de x/n
 
-**Niveau :** $★☆☆☆☆$
 
-## Problème
+## Énoncé
 
 Étudier la convergence simple de $f_n(x) = x/n$ sur $\mathbb{R}$.
 
-## Démonstration et Solution (Zéro Ellipse)
+## Démonstration
 
 Pour étudier la convergence simple de $f_n(x) = \frac{x}{n}$ sur $\mathbb{R}$, fixons un réel arbitraire $x \in \mathbb{R}$.
 Nous considérons la suite numérique définie par $u_n = \frac{x}{n}$ pour $n \geq 1$.

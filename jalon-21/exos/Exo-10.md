@@ -6,13 +6,12 @@ difficulty: 5
 
 # Exercice 10 : Équation différentielle et limite uniforme
 
-**Niveau :** $★★★★★$
 
-## Problème
+## Énoncé
 
 Montrer que si $(f_n)$ est une suite de fonctions $C^1$ sur $[a,b]$ convergeant au moins en un point $x_0 \in [a,b]$, et si la suite des dérivées $(f_n')$ converge uniformément vers une fonction $g$, alors $(f_n)$ converge uniformément vers une fonction $f$ différentiable de dérivée $g$.
 
-## Démonstration et Solution (Zéro Ellipse)
+## Démonstration
 
 **Théorème :** Soit $(f_n)$ une suite de fonctions de classe $C^1$ sur un segment $[a,b]$. Si la suite numérique $(f_n(x_0))$ converge pour au moins un point $x_0 \in [a,b]$, et si la suite des dérivées $(f_n')$ converge uniformément sur $[a,b]$ vers une fonction $g$, alors la suite $(f_n)$ converge uniformément sur $[a,b]$ vers une fonction $f$ qui est différentiable, et sa dérivée est exactement $f' = g$.
 
