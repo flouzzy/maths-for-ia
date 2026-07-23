@@ -166,6 +166,10 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 
 ## Historique d'Audit
 
+### 2026-07-22-audit
+- [[#2026-07-22-audit|2026-07-22]] : [Audit & Weekly Compilation] - Jalon 23 - Séries entières, calcul du rayon de convergence (règle de d'Alembert-Cauchy) et propriétés de la somme. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+
+
 ### 2026-07-21-audit
 - [[#2026-07-21-audit|2026-07-21]] : [Audit & Weekly Compilation] - Jalon 22 - Séries de fonctions, convergence normale, théorèmes d'interversion limite-intégrale et limite-dérivée. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 

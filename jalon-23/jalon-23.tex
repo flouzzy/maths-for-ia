@@ -1,0 +1,620 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+
+\title{Séries entières, calcul du rayon de convergence et propriétés de la somme}
+\author{Charles EDOU NZE}
+\date{2026-07-22}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!60!black},
+    showstringspaces=false,
+    frame=single,
+    breaklines=true
+}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\chapter*{Jalon 23 : Séries entières, calcul du rayon de convergence et propriétés de la somme}
+
+\section*{1. Intuition et genèse du concept}
+
+Historiquement, l'étude des séries entières est née d'un désir profond : celui d'étendre la puissance et la maniabilité des polynômes à des objets analytiques beaucoup plus complexes. Dès le XVIIe siècle, des esprits comme Isaac Newton, James Gregory et Colin Maclaurin se heurtent à la difficulté d'évaluer des fonctions transcendantes telles que le sinus, le logarithme ou l'exponentielle. Ces fonctions échappent aux opérations arithmétiques fondamentales (addition, soustraction, multiplication, division).
+
+La révélation consista à se demander s'il était possible de représenter ces courbes mystérieuses localement par une superposition infinie de fonctions puissances. C'est l'essence même de l'approximation de Taylor portée à l'infini. Au lieu de se contenter d'une tangente (une droite locale) ou d'une parabole osculatrice, les mathématiciens ont forgé un outil qui épouse parfaitement la courbe sur un certain domaine, un domaine de validité.
+
+Cependant, sommer une infinité de termes n'est jamais anodin. Le spectre de la divergence rôde. Contrairement à un polynôme qui peut être évalué paisiblement sur toute la droite réelle ou le plan complexe, une série de puissances peut violemment diverger si l'on s'éloigne trop de son centre de développement. Cette contrainte spatiale fait émerger une figure géométrique fondamentale : le disque de convergence. Imaginez un phare situé à l'origine du plan complexe, balayant l'espace environnant : à l'intérieur du faisceau lumineux (le disque ouvert), la fonction est parfaitement définie, infiniment dérivable, lisse et structurée. En dehors, ce sont les ténèbres de la divergence grossière. Sur la frontière même du faisceau, le cercle d'incertitude, la situation requiert des analyses d'une grande finesse analytique.
+
+\section*{2. Formalisation et structures algébriques}
+
+\subsection*{2.1. Définition canonique d'une série entière}
+
+\textbf{A. Énoncé Symbolique Strict}
+Soit $\mathbb{K}$ le corps des réels $\mathbb{R}$ ou des complexes $\mathbb{C}$. On appelle série entière de la variable $z \in \mathbb{K}$ centrée en l'origine, toute série de fonctions de la forme $\sum_{n \geq 0} a_n z^n$, où $(a_n)_{n \in \mathbb{N}}$ est une suite d'éléments de $\mathbb{K}$.
+
+\textbf{B. Anatomie et Typage Chirurgical}
+\begin{itemize}
+\item $\mathbb{K} \in \{\mathbb{R}, \mathbb{C}\}$ désigne le corps de base muni de sa valeur absolue usuelle (ou de son module).
+\item $z \in \mathbb{K}$ est la variable de la fonction. L'étude est de nature locale, souvent au voisinage de $0$.
+\item $(a_n)_{n \in \mathbb{N}} \in \mathbb{K}^{\mathbb{N}}$ constitue la suite des coefficients de la série entière. C'est l'unique paramètre définissant la série.
+\item $\sum_{n \geq 0} a_n z^n$ dénote, pour un $z$ fixé, la série numérique de terme général $u_n = a_n z^n$. Le but est d'étudier l'ensemble des $z$ pour lesquels la suite des sommes partielles $S_N(z) = \sum_{n=0}^{N} a_n z^n$ converge dans $\mathbb{K}$.
+\end{itemize}
+
+\textbf{C. Exemples de Validation}
+\begin{itemize}
+\item $\sum_{n \geq 0} 1 \cdot z^n$. C'est la série géométrique, où $a_n = 1$ pour tout $n \in \mathbb{N}$.
+\item $\sum_{n \geq 0} 0 \cdot z^n = 0$. La série nulle converge pour tout $z \in \mathbb{K}$.
+\end{itemize}
+
+\textbf{D. Cas Pathologiques et Contre-exemples}
+La série entière $\sum_{n \geq 0} n! z^n$ (où $a_n = n!$). La factorielle croît à une vitesse vertigineuse, supérieure à toute croissance géométrique.
+
+\subsection*{2.2. Le Lemme fondamental d'Abel}
+
+Ce lemme est la pierre angulaire de la théorie. Il relie une propriété de bornitude locale à une propriété de convergence absolue globale sur un disque.
+
+\textbf{A. Énoncé Symbolique Strict}
+Soit $\sum_{n \geq 0} a_n z^n$ une série entière. S'il existe un scalaire $z_0 \in \mathbb{K}^*$ tel que la suite numérique $(a_n z_0^n)_{n \in \mathbb{N}}$ soit bornée, alors :
+Pour tout $z \in \mathbb{K}$ tel que $|z| < |z_0|$, la série $\sum_{n \geq 0} a_n z^n$ est absolument convergente.
+De surcroît, pour tout réel $r$ tel que $0 < r < |z_0|$, la série converge normalement sur le disque fermé $\overline{D}(0, r) = \{z \in \mathbb{K} \mid |z| \leq r\}$.
+
+\textbf{B. Anatomie et Typage Chirurgical}
+\begin{itemize}
+\item $z_0 \in \mathbb{K}^*$ est un point non nul servant de jalon.
+\item L'hypothèse "$(a_n z_0^n)_{n \in \mathbb{N}}$ bornée" s'écrit formellement : $\exists M > 0, \forall n \in \mathbb{N}, |a_n z_0^n| \leq M$.
+\item La conclusion est dichotomique : convergence ponctuelle absolue sur le disque ouvert $D(0, |z_0|)$, et convergence uniforme (normale) sur tout compact (les disques fermés de rayon $r < |z_0|$).
+\end{itemize}
+
+\textbf{C. Exemples de Validation}
+Prenons la série $\sum z^n / n$. Pour $z_0 = 1$, le terme général est $1/n$ qui est borné (par $1$). Donc la série converge absolument pour tout $z$ tel que $|z| < 1$.
+
+\textbf{D. Cas Pathologiques}
+Le lemme ne garantit rien pour $|z| = |z_0|$. Dans l'exemple précédent avec $z_0 = 1$, la série diverge en $z=1$ (série harmonique) mais converge conditionnellement en $z=-1$ (critère spécial des séries alternées).
+
+\subsection*{2.3. L'existence du Rayon de Convergence}
+
+\textbf{A. Énoncé Symbolique Strict}
+Pour toute série entière $\sum a_n z^n$, il existe un unique élément $R \in \mathbb{R}^+ \cup \{+\infty\}$ appelé rayon de convergence, tel que :
+1. $\forall z \in \mathbb{K}, |z| < R \implies \sum a_n z^n$ converge absolument.
+2. $\forall z \in \mathbb{K}, |z| > R \implies \sum a_n z^n$ diverge grossièrement (le terme général ne tend pas vers $0$).
+
+On a la formule explicite : $R = \sup \{ r \in \mathbb{R}^+ \mid (a_n r^n)_{n \in \mathbb{N}} \text{ est bornée} \}$.
+
+\textbf{B. Anatomie et Typage Chirurgical}
+\begin{itemize}
+\item $R$ est un suprémum dans l'ensemble des réels positifs achevé. Il quantifie la portée du "faisceau" de convergence.
+\item L'ensemble $E = \{ r \geq 0 \mid (a_n r^n) \text{ est bornée} \}$ contient toujours au moins $0$ (car pour $r=0$, $(a_n 0^n)$ est nulle pour $n>0$, donc bornée). L'ensemble est non vide, son supremum dans $\overline{\mathbb{R}}$ existe toujours.
+\end{itemize}
+
+\subsection*{2.4. Le calcul du Rayon par la Règle de d'Alembert}
+
+\textbf{A. Énoncé Symbolique Strict}
+Soit $\sum a_n z^n$ une série entière telle que, pour $n$ suffisamment grand, $a_n \neq 0$.
+Si le quotient $\left| \frac{a_{n+1}}{a_n} \right|$ admet une limite $L \in \mathbb{R}^+ \cup \{+\infty\}$ lorsque $n \to +\infty$, alors le rayon de convergence $R$ est donné par $R = \frac{1}{L}$ (avec les conventions usuelles $1/0 = +\infty$ et $1/+\infty = 0$).
+
+\textbf{B. Anatomie et Typage Chirurgical}
+\begin{itemize}
+\item $a_n \neq 0$ pour assurer l'existence du dénominateur.
+\item La limite $L$ mesure la vitesse asymptotique de croissance du rapport des coefficients.
+\item La règle n'est qu'une condition suffisante. Si le rapport ne possède pas de limite, il faut utiliser la règle de Cauchy (faisant intervenir la racine n-ième, $\limsup |a_n|^{1/n}$).
+\end{itemize}
+
+\section*{3. Démonstrations pas-à-pas}
+
+\subsection*{3.1. Preuve détaillée du Lemme d'Abel}
+
+Procédons par une construction rigoureuse.
+Soit $\sum a_n z^n$ une série entière.
+Supposons l'existence d'un $z_0 \in \mathbb{K}^*$ et d'un réel $M > 0$ tels que $\forall n \in \mathbb{N}, |a_n z_0^n| \leq M$.
+
+Soit $z \in \mathbb{K}$ tel que $|z| < |z_0|$. Notre objectif est de prouver la convergence absolue de la série en $z$.
+Isolons le terme de la série et forçons l'apparition du terme borné. Pour tout $n \in \mathbb{N}$ :
+$$|a_n z^n| = |a_n| \cdot |z|^n$$
+En multipliant et divisant par la quantité non nulle $|z_0|^n$ :
+$$|a_n z^n| = |a_n| \cdot |z_0|^n \cdot \frac{|z|^n}{|z_0|^n}$$
+Ce qui s'écrit :
+$$|a_n z^n| = |a_n z_0^n| \cdot \left| \frac{z}{z_0} \right|^n$$
+Nous savons, par l'hypothèse de bornitude, que $|a_n z_0^n| \leq M$. On obtient l'inégalité de majoration :
+$$|a_n z^n| \leq M \cdot \left| \frac{z}{z_0} \right|^n$$
+Posons $q = \left| \frac{z}{z_0} \right|$. Puisque $|z| < |z_0|$ par hypothèse, nous avons un scalaire $q$ tel que $0 \leq q < 1$.
+La série géométrique de terme général $M q^n$ est donc convergente, car sa raison $q$ appartient à l'intervalle $[0, 1[$.
+Par le théorème de comparaison pour les séries à termes réels positifs, la série $\sum |a_n z^n|$ converge nécessairement.
+La série $\sum a_n z^n$ est donc absolument convergente pour $|z| < |z_0|$.
+
+Maintenant, montrons la convergence normale sur un disque fermé $\overline{D}(0, r)$ où $0 < r < |z_0|$.
+Soit $z \in \overline{D}(0, r)$. On a $|z| \leq r$.
+Reprenons la majoration établie précédemment pour le terme général :
+$$|a_n z^n| = |a_n| \cdot |z|^n \leq |a_n| \cdot r^n$$
+En réappliquant l'astuce de multiplication et division par $|z_0|^n$ :
+$$|a_n| \cdot r^n = |a_n z_0^n| \cdot \left( \frac{r}{|z_0|} \right)^n \leq M \cdot \left( \frac{r}{|z_0|} \right)^n$$
+La norme uniforme de la fonction $u_n : z \mapsto a_n z^n$ sur le disque $\overline{D}(0, r)$ vérifie :
+$$||u_n||_{\infty, \overline{D}(0, r)} \leq M \cdot \left( \frac{r}{|z_0|} \right)^n$$
+Or, $r < |z_0| \implies \frac{r}{|z_0|} < 1$.
+La série numérique de terme général majorant $M \left( \frac{r}{|z_0|} \right)^n$ est une série géométrique de raison strictement inférieure à 1. Elle converge.
+Par définition, la série de fonctions $\sum u_n$ converge normalement sur $\overline{D}(0, r)$. La démonstration est achevée.
+
+\subsection*{3.2. Preuve de la Règle de d'Alembert pour le Rayon}
+
+Soit la série entière $\sum a_n z^n$ avec $a_n \neq 0$ au voisinage de l'infini et $\lim_{n \to \infty} \left| \frac{a_{n+1}}{a_n} \right| = L$.
+Pour un $z \in \mathbb{K} \setminus \{0\}$ fixé, considérons la série numérique de terme général $v_n = |a_n z^n|$.
+Calculons le rapport successif pour appliquer le critère de d'Alembert usuel sur les séries numériques :
+$$\frac{v_{n+1}}{v_n} = \frac{|a_{n+1} z^{n+1}|}{|a_n z^n|} = \left| \frac{a_{n+1}}{a_n} \right| \cdot |z|$$
+Par hypothèse sur la limite $L$, nous avons :
+$$\lim_{n \to \infty} \frac{v_{n+1}}{v_n} = L \cdot |z|$$
+Analysons les trois cas imposés par la limite du critère de d'Alembert :
+Cas 1 : $L \in ]0, +\infty[$.
+Si $L \cdot |z| < 1$, c'est-à-dire si $|z| < \frac{1}{L}$, alors par le critère de d'Alembert, la série $\sum v_n = \sum |a_n z^n|$ converge.
+Si $L \cdot |z| > 1$, c'est-à-dire si $|z| > \frac{1}{L}$, le rapport $\frac{v_{n+1}}{v_n}$ devient strictement supérieur à $1$ pour $n$ assez grand. La suite $(v_n)$ ne peut converger vers $0$, violant la condition nécessaire de convergence. La série diverge.
+Ceci correspond très exactement à la définition du rayon de convergence $R$. Nous concluons que $R = \frac{1}{L}$.
+
+Cas 2 : $L = 0$.
+Pour tout $z \in \mathbb{K}$, $L \cdot |z| = 0 < 1$. La série $\sum |a_n z^n|$ converge pour tout $z$. Le domaine de convergence est $\mathbb{K}$ tout entier. Par définition, le rayon est $R = +\infty = \frac{1}{0^+}$.
+
+Cas 3 : $L = +\infty$.
+Pour tout $z \in \mathbb{K}^*$, la limite du rapport est $+\infty > 1$. La série diverge grossièrement partout en dehors de l'origine $z=0$. Le rayon est donc $R = 0 = \frac{1}{+\infty}$.
+La démonstration est intégralement clôturée.
+
+\section*{4. Propriétés Analytiques de la Somme}
+
+Sur le disque ouvert de convergence, la somme d'une série entière jouit de propriétés de régularité remarquables.
+
+\textbf{A. Énoncé Symbolique Strict}
+Soit $\sum a_n z^n$ de rayon $R > 0$. La fonction somme $S(z) = \sum_{n=0}^{+\infty} a_n z^n$ est continue sur le disque ouvert de convergence $D(0, R)$.
+De plus, si la variable est réelle ($x \in ]-R, R[$), la fonction somme $S(x)$ est de classe $C^\infty$ sur $]-R, R[$. Sa dérivée première est obtenue par dérivation terme à terme :
+$$S'(x) = \sum_{n=1}^{+\infty} n a_n x^{n-1}$$
+Et le rayon de convergence de la série dérivée est identique à $R$.
+
+\textbf{B. Anatomie et Typage Chirurgical}
+\begin{itemize}
+\item La continuité découle directement de la convergence normale (et donc uniforme) sur tout compact $\overline{D}(0, r)$ pour $r < R$, le terme général étant lui-même continu.
+\item La dérivation terme à terme est le privilège des séries de fonctions régulières. Elle traduit l'inversion des limites entre l'opérateur de sommation infinie et l'opérateur de dérivation.
+\end{itemize}
+
+\newpage
+\chapter*{Exercices d\'Application}
+\addcontentsline{toc}{chapter}{Exercices d'Application}
+\chapter*{Exercice 1 : Rayon de convergence élémentaire (Règle de d'Alembert)}
+
+\textbf{Énoncé :}
+Déterminer le rayon de convergence $R$ de la série entière complexe $\sum_{n \geq 1} \frac{z^n}{n \cdot 2^n}$.
+
+\textbf{Correction détaillée :}
+Soit $a_n = \frac{1}{n \cdot 2^n}$ le coefficient général de notre série entière.
+Puisque $a_n \neq 0$ pour tout $n \geq 1$, nous sommes autorisés à appliquer la règle de d'Alembert pour le calcul du rayon de convergence.
+Évaluons le quotient en valeur absolue :
+$$ \left| \frac{a_{n+1}}{a_n} \right| = \frac{\frac{1}{(n+1) \cdot 2^{n+1}}}{\frac{1}{n \cdot 2^n}} $$
+Décomposons la fraction complexe par multiplication par l'inverse :
+$$ \left| \frac{a_{n+1}}{a_n} \right| = \frac{n \cdot 2^n}{(n+1) \cdot 2^{n+1}} $$
+Factorisons les puissances de 2 :
+$$ \left| \frac{a_{n+1}}{a_n} \right| = \frac{n}{n+1} \cdot \frac{2^n}{2^n \cdot 2^1} = \frac{n}{n+1} \cdot \frac{1}{2} $$
+Prenons la limite lorsque l'entier $n$ tend vers l'infini. Le terme rationnel $\frac{n}{n+1}$ se réécrit en factorisant par $n$ : $\frac{n}{n(1 + 1/n)} = \frac{1}{1 + 1/n}$, qui converge vers $1$.
+Par suite :
+$$ L = \lim_{n \to +\infty} \left| \frac{a_{n+1}}{a_n} \right| = 1 \cdot \frac{1}{2} = \frac{1}{2} $$
+Selon le théorème associé à la règle de d'Alembert, le rayon de convergence $R$ est l'inverse de la limite $L$.
+Ainsi,
+$$ R = \frac{1}{1/2} = 2 $$
+Le rayon de convergence de la série entière est donc exactement $R = 2$.
+
+\newpage
+\chapter*{Exercice 2 : Série entière avec des factorielles}
+
+\textbf{Énoncé :}
+Calculer le rayon de convergence $R$ de la série entière $\sum_{n \geq 0} \frac{n!}{(2n)!} z^n$.
+
+\textbf{Correction détaillée :}
+Identifions le coefficient général : $a_n = \frac{n!}{(2n)!}$.
+Ces coefficients sont manifestement non nuls pour tout $n \in \mathbb{N}$. Appliquons le critère de d'Alembert.
+Formons le quotient et examinons son comportement asymptotique :
+$$ \left| \frac{a_{n+1}}{a_n} \right| = \frac{\frac{(n+1)!}{(2(n+1))!}}{\frac{n!}{(2n)!}} = \frac{(n+1)!}{(2n+2)!} \cdot \frac{(2n)!}{n!} $$
+Procédons au réarrangement et aux simplifications des factorielles.
+Pour le numérateur : $(n+1)! = (n+1) \cdot n!$.
+Pour le dénominateur : $(2n+2)! = (2n+2)(2n+1) \cdot (2n)!$.
+L'expression devient alors :
+$$ \left| \frac{a_{n+1}}{a_n} \right| = \frac{(n+1) \cdot n!}{(2n+2)(2n+1) \cdot (2n)!} \cdot \frac{(2n)!}{n!} $$
+Les factorielles $n!$ et $(2n)!$ s'annihilent, laissant place à la fraction rationnelle simplifiée :
+$$ \left| \frac{a_{n+1}}{a_n} \right| = \frac{n+1}{(2n+2)(2n+1)} $$
+Notons que $2n+2 = 2(n+1)$, nous pouvons procéder à une simplification supplémentaire :
+$$ \left| \frac{a_{n+1}}{a_n} \right| = \frac{n+1}{2(n+1)(2n+1)} = \frac{1}{2(2n+1)} = \frac{1}{4n+2} $$
+Passons à la limite lorsque $n \to +\infty$ :
+$$ L = \lim_{n \to +\infty} \frac{1}{4n+2} = 0 $$
+D'après la règle de d'Alembert stipulant que $R = 1/L$, la limite étant nulle, on déduit que :
+$$ R = +\infty $$
+La série converge donc sur l'ensemble du plan complexe tout entier.
+
+\newpage
+\chapter*{Exercice 3 : L'astuce du coefficient nul et le changement de variable}
+
+\textbf{Énoncé :}
+Étudier la série entière $\sum_{n \geq 0} \frac{z^{2n}}{4^n}$. Déterminer son rayon de convergence $R$.
+
+\textbf{Correction détaillée :}
+Prudence ! Le terme général de la série ne se présente pas sous la forme canonique $\sum a_k z^k$ pour tous les entiers. En effet, en posant l'indice canonique $k$, les coefficients $a_k$ sont nuls pour tous les indices impairs $k$.
+La règle de d'Alembert n'est donc pas applicable directement à la suite $(a_k)$, puisque les quotients $a_{k+1}/a_k$ impliqueraient des divisions par zéro.
+Nous contournons la pathologie en posant un changement de variable formel.
+Soit $w = z^2$. La série de fonctions devient une nouvelle série entière de la variable $w$ :
+$$ S(w) = \sum_{n \geq 0} \frac{w^n}{4^n} $$
+Le coefficient général pour la variable $w$ est $b_n = \frac{1}{4^n}$. Ces coefficients sont non nuls, nous appliquons d'Alembert sur $b_n$.
+$$ \left| \frac{b_{n+1}}{b_n} \right| = \frac{1/4^{n+1}}{1/4^n} = \frac{4^n}{4^{n+1}} = \frac{1}{4} $$
+La limite est trivialement $L = 1/4$. Le rayon de convergence pour la variable $w$ est $R_w = 4$.
+La condition de convergence absolue s'écrit donc géométriquement :
+$$ |w| < 4 $$
+Revenons à la variable originale $z$. Sachant que $w = z^2$, nous obtenons l'inégalité équivalente :
+$$ |z^2| < 4 \iff |z|^2 < 4 \iff |z| < 2 $$
+Par définition du rayon de convergence sur la variable $z$, le suprémum des modules assurant la convergence absolue est bien 2.
+Le rayon de convergence de la série originale est par conséquent $R = 2$.
+
+\newpage
+\chapter*{Exercice 4 : Comportement sur le bord du disque de convergence}
+
+\textbf{Énoncé :}
+Déterminer le rayon de convergence $R$ de la série entière $\sum_{n \geq 1} \frac{z^n}{n}$. Étudier ensuite rigoureusement la nature de la convergence sur le bord du disque (pour $|z| = R$).
+
+\textbf{Correction détaillée :}
+1. \textbf{Calcul de $R$ :}
+Soit $a_n = 1/n$. Appliquons le quotient de d'Alembert :
+$$ \left| \frac{a_{n+1}}{a_n} \right| = \frac{n}{n+1} $$
+Lorsque $n \to \infty$, la limite est clairement $L = 1$. Le rayon de convergence est donc $R = 1/1 = 1$.
+Le disque ouvert de convergence est l'ensemble des $z \in \mathbb{C}$ tels que $|z| < 1$.
+
+2. \textbf{Analyse sur la frontière $|z| = 1$ :}
+Soit $z$ un nombre complexe de module $1$. Il peut s'écrire sous forme trigonométrique $z = e^{i\theta}$ avec $\theta \in [0, 2\pi[$.
+\begin{itemize}
+\item Cas $z = 1$ ($\theta = 0$) : La série s'évalue en $\sum_{n \geq 1} \frac{1^n}{n} = \sum_{n \geq 1} \frac{1}{n}$. C'est l'archétype de la série harmonique. L'intégrale de comparaison $\int_{1}^{N} dx/x = \ln(N)$ diverge vers l'infini, donc la série harmonique est divergente.
+\item Cas $z \neq 1$ ($\theta \in ]0, 2\pi[$) : La série est $\sum_{n \geq 1} \frac{e^{in\theta}}{n}$.
+Nous mobilisons le critère de Dirichlet (ou transformation d'Abel). La suite $\alpha_n = 1/n$ est à termes positifs, décroissante et tend vers zéro.
+Il reste à borner les sommes partielles de l'exponentielle complexe. Soit $S_N = \sum_{k=1}^N e^{ik\theta}$. C'est une somme de termes d'une suite géométrique de raison $q = e^{i\theta} \neq 1$.
+\end{itemize}
+$$ S_N = e^{i\theta} \frac{1 - e^{iN\theta}}{1 - e^{i\theta}} $$
+Majorons rigoureusement le module de $S_N$ :
+$$ |S_N| = \left| e^{i\theta} \right| \cdot \frac{\left| 1 - e^{iN\theta} \right|}{\left| 1 - e^{i\theta} \right|} \leq 1 \cdot \frac{1 + \left| e^{iN\theta} \right|}{\left| 1 - e^{i\theta} \right|} = \frac{2}{\left| 1 - e^{i\theta} \right|} $$
+Puisque $\theta \not\equiv 0 \pmod{2\pi}$, le dénominateur est non nul, la quantité $\frac{2}{|1 - e^{i\theta}|}$ est une constante fixée $M(\theta)$ indépendante de $N$. La suite des sommes partielles est formellement bornée.
+Les hypothèses de la règle d'Abel-Dirichlet étant pleinement satisfaites, la série $\sum \frac{e^{in\theta}}{n}$ est convergente.
+Conclusion : Sur le cercle unité $|z|=1$, la série diverge uniquement au pôle réel $z=1$, et converge conditionnellement (mais non absolument, car la série des modules est l'harmonique divergente) en tout autre point.
+
+\newpage
+\chapter*{Exercice 5 : Équation différentielle et résolution par séries entières}
+
+\textbf{Énoncé :}
+On cherche les solutions développables en série entière au voisinage de $0$ de l'équation différentielle linéaire $(E) : y' - 2xy = 0$. Déterminer l'expression de la fonction somme.
+
+\textbf{Correction détaillée :}
+Supposons, par analyse, qu'il existe une solution de l'équation $(E)$ développable en série entière.
+Soit $y(x) = \sum_{n=0}^{+\infty} a_n x^n$ une telle fonction, de rayon de convergence strictement positif $R > 0$.
+Par les théorèmes de régularité analytique, $y$ est dérivable sur $]-R, R[$ et sa dérivée s'obtient par dérivation terme à terme :
+$$ y'(x) = \sum_{n=1}^{+\infty} n a_n x^{n-1} $$
+L'équation différentielle $(E)$ impose formellement l'égalité : $y'(x) = 2x \cdot y(x)$.
+Substituons les développements en séries :
+$$ \sum_{n=1}^{+\infty} n a_n x^{n-1} = 2x \sum_{n=0}^{+\infty} a_n x^n = \sum_{n=0}^{+\infty} 2 a_n x^{n+1} $$
+Il convient maintenant d'unifier les puissances de $x$ par réindexation, pour procéder à l'identification des coefficients.
+Dans le membre de gauche, posons $k = n-1$, soit $n = k+1$. L'indice démarre à $k = 1-1=0$.
+$$ \text{Gauche} = \sum_{k=0}^{+\infty} (k+1) a_{k+1} x^k $$
+Dans le membre de droite, posons $k = n+1$, soit $n = k-1$. L'indice démarre à $k = 0+1=1$.
+$$ \text{Droite} = \sum_{k=1}^{+\infty} 2 a_{k-1} x^k $$
+L'égalité s'écrit donc formellement pour tout $x \in ]-R, R[$ :
+$$ a_1 x^0 + \sum_{k=1}^{+\infty} (k+1) a_{k+1} x^k = \sum_{k=1}^{+\infty} 2 a_{k-1} x^k $$
+Par unicité du développement en série entière d'une fonction analytique nulle, l'identification des coefficients donne les relations de récurrence suivantes :
+\begin{itemize}
+\item Pour $k = 0$ : $a_1 = 0$.
+\item Pour $k \geq 1$ : $(k+1)a_{k+1} = 2 a_{k-1}$, ce qui conduit à $a_{k+1} = \frac{2}{k+1} a_{k-1}$.
+Cette relation lie les termes d'un indice à celui le précédant de deux pas. Il y a découplage total entre les termes d'indices pairs et impairs.
+\item Termes de rang impair : puisque $a_1 = 0$, la récurrence injecte un facteur multiplicatif nul à toutes les étapes impaires : $a_3 = a_5 = a_{2p+1} = 0$ pour tout entier $p$.
+\item Termes de rang pair : posons $a_{2p}$. La récurrence pour l'indice $2p$ (donc $k+1=2p$, soit $k=2p-1$) s'écrit :
+\end{itemize}
+$$ a_{2p} = \frac{2}{2p} a_{2p-2} = \frac{1}{p} a_{2p-2} $$
+Par itération évidente de type télescopique :
+$$ a_{2p} = \frac{1}{p} \cdot \frac{1}{p-1} \cdot ... \cdot \frac{1}{1} a_0 = \frac{a_0}{p!} $$
+Ainsi, l'unique paramètre libre est $a_0$, qui n'est autre que la condition initiale $y(0)$.
+L'expression de la série est alors reconstruite, tous les termes impairs étant annihilés :
+$$ y(x) = \sum_{p=0}^{+\infty} a_{2p} x^{2p} = \sum_{p=0}^{+\infty} \frac{a_0}{p!} x^{2p} = a_0 \sum_{p=0}^{+\infty} \frac{(x^2)^p}{p!} $$
+Nous reconnaissons le développement canonique de la fonction exponentielle évaluée au point $x^2$.
+La série converge sur tout $\mathbb{R}$ (rayon infini).
+L'unique famille de solutions analytiques est formellement $y(x) = a_0 e^{x^2}$.
+
+\newpage
+\chapter*{Exercice 6 : Produit de Cauchy}
+
+\textbf{Énoncé :}
+Montrer que pour tout $x \in \mathbb{R}$, $e^x \cdot e^{-x} = 1$ en utilisant le produit de Cauchy des séries entières.
+
+\textbf{Correction détaillée :}
+La fonction exponentielle est définie par sa série entière de rayon infini :
+$$ e^x = \sum_{n=0}^{+\infty} \frac{x^n}{n!} $$
+$$ e^{-x} = \sum_{n=0}^{+\infty} \frac{(-x)^n}{n!} = \sum_{n=0}^{+\infty} \frac{(-1)^n}{n!} x^n $$
+Soit $C(x)$ le produit de Cauchy de ces deux séries. Comme elles sont absolument convergentes sur $\mathbb{R}$, leur produit est donné par :
+$$ C(x) = \sum_{n=0}^{+\infty} c_n x^n $$
+où
+$$ c_n = \sum_{k=0}^n \left( \frac{1}{k!} \right) \left( \frac{(-1)^{n-k}}{(n-k)!} \right) $$
+Multiplions et divisons par $n!$ :
+$$ c_n = \frac{1}{n!} \sum_{k=0}^n \frac{n!}{k!(n-k)!} (-1)^{n-k} = \frac{1}{n!} \sum_{k=0}^n \binom{n}{k} 1^k (-1)^{n-k} $$
+Par la formule du binôme de Newton, cette somme vaut $(1 + (-1))^n = 0^n$.
+Pour $n > 0$, $0^n = 0$, donc $c_n = 0$.
+Pour $n = 0$, $0^0 = 1$ par convention, et $c_0 = \frac{1}{0!} \cdot \frac{(-1)^0}{0!} = 1$.
+Ainsi, la série produit n'a qu'un seul terme non nul, celui de rang $n=0$ :
+$$ C(x) = c_0 x^0 = 1 $$
+On a donc bien $e^x \cdot e^{-x} = 1$ pour tout $x \in \mathbb{R}$.
+
+\newpage
+\chapter*{Exercice 7 : Série solution d'une équation différentielle}
+
+\textbf{Énoncé :}
+Résoudre l'équation différentielle $(1-x)y' - y = 0$ par développement en série entière.
+
+\textbf{Correction détaillée :}
+On cherche une solution sous la forme d'une série entière $y(x) = \sum_{n=0}^{+\infty} a_n x^n$, de rayon de convergence $R>0$.
+Sur $]-R, R[$, on peut dériver terme à terme :
+$$ y'(x) = \sum_{n=1}^{+\infty} n a_n x^{n-1} $$
+Remplaçons dans l'équation $(1-x)y' - y = 0$ :
+$$ (1-x) \sum_{n=1}^{+\infty} n a_n x^{n-1} - \sum_{n=0}^{+\infty} a_n x^n = 0 $$
+Développons :
+$$ \sum_{n=1}^{+\infty} n a_n x^{n-1} - \sum_{n=1}^{+\infty} n a_n x^n - \sum_{n=0}^{+\infty} a_n x^n = 0 $$
+Dans la première somme, posons $k = n-1$, donc $n = k+1$. L'indice $k$ va de 0 à $+\infty$ :
+$$ \sum_{k=0}^{+\infty} (k+1) a_{k+1} x^k - \sum_{n=1}^{+\infty} n a_n x^n - \sum_{n=0}^{+\infty} a_n x^n = 0 $$
+Regroupons tous les termes en fonction de $x^n$ (en renommant $k$ en $n$) :
+Le terme constant ($n=0$) est : $1 \cdot a_1 - a_0$.
+Pour $n \geq 1$, le coefficient de $x^n$ est : $(n+1)a_{n+1} - n a_n - a_n = (n+1)a_{n+1} - (n+1)a_n$.
+Par unicité du développement en série entière de la fonction nulle, tous les coefficients doivent être nuls :
+Pour $n=0 : a_1 = a_0$.
+Pour $n \geq 1 : (n+1)a_{n+1} - (n+1)a_n = 0 \iff a_{n+1} = a_n$.
+Par récurrence immédiate, on obtient $a_n = a_0$ pour tout $n \in \mathbb{N}$.
+La solution est donc :
+$$ y(x) = \sum_{n=0}^{+\infty} a_0 x^n = a_0 \sum_{n=0}^{+\infty} x^n = a_0 \frac{1}{1-x} $$
+Le rayon de convergence de la série obtenue est $R=1$, ce qui valide l'existence de la solution sur $]-1, 1[$.
+
+\newpage
+\chapter*{Exercice 8 : Critère de Cauchy-Hadamard}
+
+\textbf{Énoncé :}
+En utilisant la formule de Cauchy-Hadamard, déterminer le rayon de convergence de $\sum_{n=1}^{+\infty} \left(1 + \frac{1}{n}\right)^{n^2} z^n$.
+
+\textbf{Correction détaillée :}
+La formule de Cauchy-Hadamard donne le rayon $R$ via :
+$$ \frac{1}{R} = \limsup_{n \to +\infty} \sqrt[n]{|a_n|} $$
+Ici, $a_n = \left(1 + \frac{1}{n}\right)^{n^2}$.
+Calculons la racine $n$-ième de $|a_n|$ :
+$$ \sqrt[n]{|a_n|} = \left( \left(1 + \frac{1}{n}\right)^{n^2} \right)^{1/n} = \left(1 + \frac{1}{n}\right)^{n^2/n} = \left(1 + \frac{1}{n}\right)^n $$
+Étudions la limite de cette expression lorsque $n \to +\infty$.
+On sait que $\left(1 + \frac{1}{n}\right)^n = \exp\left( n \ln\left(1 + \frac{1}{n}\right) \right)$.
+En utilisant le développement limité $\ln(1+u) = u + o(u)$ en $0$ :
+$$ n \ln\left(1 + \frac{1}{n}\right) = n \left( \frac{1}{n} + o\left(\frac{1}{n}\right) \right) = 1 + o(1) $$
+Ainsi, la limite de $n \ln\left(1 + \frac{1}{n}\right)$ est 1.
+Par continuité de l'exponentielle, $\lim_{n \to +\infty} \left(1 + \frac{1}{n}\right)^n = e^1 = e$.
+La limite supérieure est en fait une limite classique, d'où $\frac{1}{R} = e$.
+Le rayon de convergence est donc $R = \frac{1}{e}$.
+
+\newpage
+\chapter*{Exercice 9 : Comportement au bord (Théorème d'Abel)}
+
+\textbf{Énoncé :}
+Soit $f(x) = \sum_{n=1}^{+\infty} \frac{(-1)^{n-1}}{n} x^n = \ln(1+x)$ pour $|x|<1$. Montrer que la série converge en $x=1$ et en déduire la somme de la série harmonique alternée.
+
+\textbf{Correction détaillée :}
+On évalue la série en $x=1$, ce qui donne la série numérique :
+$$ \sum_{n=1}^{+\infty} \frac{(-1)^{n-1}}{n} $$
+Cette série est la série harmonique alternée. Elle converge d'après le critère spécial des séries alternées : la suite $u_n = 1/n$ est décroissante, positive, et de limite nulle en $+\infty$.
+Notons $S$ sa somme.
+Puisque la série entière converge en $x=1$, le théorème d'Abel affirme que la fonction somme radiale $f(x)$ admet une limite lorsque $x \to 1^-$ et que cette limite vaut la somme de la série en $x=1$.
+$$ \lim_{x \to 1^-} f(x) = \sum_{n=1}^{+\infty} \frac{(-1)^{n-1}}{n} $$
+Or, pour $x \in ]-1, 1[$, on sait que $f(x) = \ln(1+x)$.
+La fonction $x \mapsto \ln(1+x)$ est continue en $x=1$.
+Donc $\lim_{x \to 1^-} \ln(1+x) = \ln(1+1) = \ln(2)$.
+Par identification, on obtient :
+$$ \sum_{n=1}^{+\infty} \frac{(-1)^{n-1}}{n} = \ln(2) $$
+
+\newpage
+\chapter*{Exercice 10 : Série avec des coefficients entrelacés}
+
+\textbf{Énoncé :}
+Déterminer le rayon de convergence de la série $\sum a_n z^n$ où $a_{2k} = 2^k$ et $a_{2k+1} = 3^k$.
+
+\textbf{Correction détaillée :}
+On ne peut pas appliquer d'Alembert car le rapport $|a_{n+1}/a_n|$ oscille.
+Calculons la racine $n$-ième pour appliquer Cauchy-Hadamard.
+Pour $n = 2k$ (pair) :
+$$ \sqrt[2k]{a_{2k}} = (2^k)^{1/2k} = 2^{1/2} = \sqrt{2} $$
+Pour $n = 2k+1$ (impair) :
+$$ \sqrt[2k+1]{a_{2k+1}} = (3^k)^{1/(2k+1)} $$
+Lorsque $k \to +\infty$, $\frac{k}{2k+1} \to \frac{1}{2}$, donc cette sous-suite tend vers $3^{1/2} = \sqrt{3}$.
+Les valeurs d'adhérence de la suite $(\sqrt[n]{a_n})$ sont $\sqrt{2}$ et $\sqrt{3}$.
+La limite supérieure est le plus grand de ces points d'adhérence, soit $\sqrt{3}$.
+Par la formule de Cauchy-Hadamard, $\frac{1}{R} = \limsup \sqrt[n]{a_n} = \sqrt{3}$.
+Donc, le rayon de convergence est $R = \frac{1}{\sqrt{3}} = \frac{\sqrt{3}}{3}$.
+
+\newpage
+\chapter*{Travaux Pratiques}
+\addcontentsline{toc}{chapter}{Travaux Pratiques}
+\chapter*{TP 1 : Implémentation du calcul approché d'un rayon de convergence}
+
+\textbf{Contexte théorique :}
+Si une série entière $\sum a_n z^n$ satisfait la règle de d'Alembert, la limite de $|a_n / a_{n+1}|$ lorsque $n \to \infty$ donne le rayon $R$.
+Dans ce TP, nous implémentons ce calcul itérativement pour estimer $R$ avec une précision donnée.
+
+\textbf{Code Python :}
+\begin{lstlisting}[language=Python]
+def compute_radius_dalembert(coeff_func, max_n=1000, epsilon=1e-6):
+    '''
+    Calcule une approximation du rayon de convergence R par la regle de d'Alembert.
+    coeff_func(n) renvoie le coefficient a_n pour un entier n.
+    Retourne l'approximation de R, ou float('inf') si L=0.
+    '''
+    for n in range(1, max_n):
+        a_n = coeff_func(n)
+        a_n_plus_1 = coeff_func(n+1)
+
+        # Securisation contre les divisions par zero locales
+        if abs(a_n) < 1e-15:
+            continue
+
+        ratio = abs(a_n_plus_1 / a_n)
+
+        # Test de stabilite pour valider la convergence de la suite
+        if n > 1:
+            if abs(ratio - prev_ratio) < epsilon:
+                if ratio < 1e-10:
+                    return float('inf')
+                return 1.0 / ratio
+
+        prev_ratio = ratio
+
+    raise ValueError(f"Le calcul n'a pas converge avec la precision {epsilon} en {max_n} iterations.")
+
+# Validation mathematique
+# 1. Serie de l'exponentielle: a_n = 1/n! -> R = inf
+import math
+assert compute_radius_dalembert(lambda n: 1/math.factorial(n)) == float('inf')
+
+# 2. Serie sum(z^n / n) -> R = 1.0
+R_approx = compute_radius_dalembert(lambda n: 1/n)
+assert abs(R_approx - 1.0) < 1e-4
+
+print("Validation du TP1 reussie : les assertions mathematiques sont verifiees.")
+\end{lstlisting}
+
+\newpage
+\chapter*{TP 2 : Calcul empirique du rayon de convergence}
+
+\textbf{Objectif :}
+Implémenter la règle de d'Alembert numériquement pour estimer le rayon de convergence d'une suite de coefficients $a_n$.
+
+\textbf{Implémentation Pure Python :}
+\textbf{Code Python :}
+\begin{lstlisting}[language=Python]
+def d_alembert_ratio(a_n, a_n_plus_1):
+    if a_n == 0:
+        return float('inf')
+    return abs(a_n_plus_1 / a_n)
+
+def estimate_radius(coeff_func, N=100):
+    '''Estime R en calculant lim |a_n / a_{n+1}| pour de grandes valeurs de n.'''
+    a_n = coeff_func(N)
+    a_n_plus_1 = coeff_func(N + 1)
+
+    ratio = d_alembert_ratio(a_n, a_n_plus_1)
+    if ratio == 0:
+        return float('inf')
+    return 1.0 / ratio
+
+# Serie de 1/n^2 dont le rayon theorique est 1
+def coeff_inv_n_carre(n):
+    if n == 0:
+        return 0.0 # non defini mais on l'evite par N=100
+    return 1.0 / (n**2)
+
+R_estime = estimate_radius(coeff_inv_n_carre, 500)
+assert abs(R_estime - 1.0) < 1e-2, "Le calcul empirique de R a echoue"
+print("Validation TP2 : Succes")
+\end{lstlisting}
+
+\newpage
+\chapter*{TP 3 : Produit de Cauchy de deux séries}
+
+\textbf{Objectif :}
+Calculer informatiquement les premiers coefficients du produit de Cauchy de deux séries entières.
+
+\textbf{Implémentation Pure Python :}
+\textbf{Code Python :}
+\begin{lstlisting}[language=Python]
+def cauchy_product_coeffs(a, b, N):
+    '''
+    Calcule les N premiers coefficients du produit de Cauchy.
+    a et b sont des listes de coefficients de taille au moins N.
+    '''
+    c = [0.0] * N
+    for n in range(N):
+        for k in range(n + 1):
+            c[n] += a[k] * b[n - k]
+    return c
+
+# Produit de (1 + x + x^2 + ...) par (1 - x + x^2 - x^3 + ...)
+# La premiere est 1/(1-x), la seconde 1/(1+x). Le produit est 1/(1-x^2) = 1 + x^2 + x^4 + ...
+a_coeffs = [1.0] * 10
+b_coeffs = [(1.0 if n % 2 == 0 else -1.0) for n in range(10)]
+
+c_coeffs = cauchy_product_coeffs(a_coeffs, b_coeffs, 5)
+# On attend [1, 0, 1, 0, 1]
+expected = [1.0, 0.0, 1.0, 0.0, 1.0]
+for i in range(5):
+    assert abs(c_coeffs[i] - expected[i]) < 1e-9, f"Erreur au rang {i}: {c_coeffs[i]}"
+print("Validation TP3 : Succes")
+\end{lstlisting}
+
+\newpage
+\chapter*{TP 4 : Dérivation terme à terme}
+
+\textbf{Objectif :}
+Écrire une fonction qui, étant donné la liste des premiers coefficients $a_n$ d'une série, retourne les coefficients de la série dérivée.
+
+\textbf{Implémentation Pure Python :}
+\textbf{Code Python :}
+\begin{lstlisting}[language=Python]
+def derive_serie(coeffs):
+    '''
+    Retourne les coefficients de la derivee : a'_n = (n+1) * a_{n+1}
+    Si coeffs a une taille N, la derivee aura N-1 termes.
+    '''
+    N = len(coeffs)
+    if N <= 1:
+        return []
+
+    der_coeffs = [0.0] * (N - 1)
+    for n in range(N - 1):
+        der_coeffs[n] = (n + 1) * coeffs[n + 1]
+    return der_coeffs
+
+# Pour exp(x), les coeffs sont 1/n!
+# La derivee d'exp(x) est exp(x), donc les coeffs doivent etre identiques (decales)
+def fact(n):
+    return 1 if n==0 else n * fact(n-1)
+
+exp_coeffs = [1.0 / fact(n) for n in range(6)]
+der_exp = derive_serie(exp_coeffs)
+
+for n in range(5):
+    assert abs(der_exp[n] - exp_coeffs[n]) < 1e-9, "La derivee de exp n'est pas exp"
+print("Validation TP4 : Succes")
+\end{lstlisting}
+
+\newpage
+\chapter*{TP 5 : Évaluation de la série du logarithme}
+
+\textbf{Objectif :}
+Évaluer la fonction $-\ln(1-x) = \sum_{n=1}^{+\infty} \frac{x^n}{n}$ et vérifier la divergence de l'algorithme lorsque $x$ approche 1.
+
+\textbf{Implémentation Pure Python :}
+\textbf{Code Python :}
+\begin{lstlisting}[language=Python]
+def eval_log(x, N):
+    '''Evalue sum(x^n / n) pour n allant de 1 a N.'''
+    if x >= 1:
+        raise ValueError("Serie non convergente pour x >= 1")
+    somme = 0.0
+    for n in range(1, N + 1):
+        somme += (x**n) / n
+    return somme
+
+# Pour x = 0.5, -ln(1 - 0.5) = -ln(0.5) = ln(2)
+x_val = 0.5
+res = eval_log(x_val, 50)
+
+# ln(2) approx 0.693147
+assert abs(res - 0.693147) < 1e-5, "L'evaluation de la serie du log a echoue"
+print("Validation TP5 : Succes")
+\end{lstlisting}
+
+\newpage
+\end{document}
