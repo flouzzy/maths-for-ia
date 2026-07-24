@@ -117,7 +117,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 32](jalon-32/Jalon-32.md)** : Preuve complète du théorème spectral pour les endomorphismes symétriques. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 33](jalon-33/Jalon-33.md)** : Formes quadratiques, réduction de Gauss, base orthogonale et loi d'inertie de Sylvester. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 34](jalon-34/Jalon-34.md)** : Topologie élémentaire des espaces vectoriels normés (normes, équivalence des normes en dimension finie). 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 35](jalon-35/Jalon%2035%20%28Caract%C3%A9risation%20s%C3%A9quentielle%20des%20ouverts%29.md)** : Caractérisation séquentielle des ouverts, des fermés et des compacts (Heine-Borel).
+- **[Jalon 35](jalon-35/Jalon-35.md)** : Caractérisation séquentielle des ouverts, des fermés et des compacts (Heine-Borel). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 36](jalon-36/Jalon%2036%20%28Livrable%20IA%29.md)** : Livrable IA T3 : Écriture des équations de la décomposition en valeurs singulières (SVD) et application mathématique à la compression d'une matrice de pixels d'image.
 
 </details>
