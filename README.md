@@ -330,7 +330,7 @@ python3 -m unittest test_generate_jalons.py
 - [2026-07-13] : [Upsert/Création] du Jalon 26 - Espaces euclidiens, orthogonalité, théorème de la projection orthogonale et algorithme de Gram-Schmidt. Status: Terminé.
 ### 2026-07-12-audit
 - [[#2026-07-12-audit|2026-07-12]] : [Audit & Weekly Compilation] - Jalon 16 - Séries numériques à termes positifs. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
-- [2026-07-11] : [Upsert/Création] du Jalon 24 - Livrable IA. Status: Terminé.
+- [2026-07-11] : [Upsert/Création] du Jalon 24 - Livrable IA. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 ### 2026-07-10-audit
 - [[#2026-07-10-audit|2026-07-10]] : [Audit & Weekly Compilation] - Jalon 14 - Suites réelles et complexes, définitions rigoureuses des limites (epsilon, N) et critères de convergence. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-09-audit
@@ -400,6 +400,9 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 ## Historique d'Audit
+
+### 2026-07-24-audit
+- [[#2026-07-24-audit|2026-07-24]] : [Audit & Weekly Compilation] - Jalon 24 - Livrable IA T2 : Analyse mathématique des critères de convergence d'une régression polynomiale. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 
 ### 2026-07-22-audit
 - [[#2026-07-22-audit|2026-07-22]] : [Audit & Weekly Compilation] - Jalon 23 - Séries entières, calcul du rayon de convergence (règle de d'Alembert-Cauchy) et propriétés de la somme. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.

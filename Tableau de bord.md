@@ -28,7 +28,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-21/Jalon-21.md|Jalon 21 : Suites de fonctions]] : Suites de fonctions, étude de la convergence simple et de la convergence uniforme.
 - [x] [[jalon-22/Jalon-22.md|Jalon 22 : Séries de fonctions]] : Séries de fonctions, convergence normale, théorèmes d'interversion limite-intégrale et limite-dérivée.
 - [x] [[jalon-23/Jalon-23.md|Jalon 23 : Séries entières]] : Séries entières, calcul du rayon de convergence (règle de d'Alembert-Cauchy) et propriétés de la somme.
-- [x] [[jalon-24/Jalon-24.md|Jalon 24 : Livrable IA]] : Livrable IA T2 : Analyse mathématique des critères de convergence d'une régression polynomiale et résolution d'un problème d'analyse de l'ENS sur les interversions de limites.
+- [x] [[jalon-24/Jalon-24.md|Jalon 24 : Livrable IA]] : Livrable IA T2 : Analyse mathématique des critères de convergence d'une régression polynomiale et résolution d'un problème d'analyse de l'ENS sur les interversions de limites. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 ### Trimestre 3 : réduction des endomorphismes et espaces préhilbertiens
 - [x] [[jalon-25/Jalon-25.md|Jalon 25 : Formes bilinéaires]] : Formes bilinéaires, formes sesquilinieaires, produit scalaire et inégalité de Cauchy-Schwarz.
 - [x] [[jalon-26/Jalon-26.md|Jalon 26 : Espaces euclidiens]] : Espaces euclidiens, orthogonalité, théorème de la projection orthogonale et algorithme de Gram-Schmidt.
@@ -165,6 +165,9 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
+
+### 2026-07-24-audit
+- [[#2026-07-24-audit|2026-07-24]] : [Audit & Weekly Compilation] - Jalon 24 - Livrable IA T2 : Analyse mathématique des critères de convergence d'une régression polynomiale. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 
 ### 2026-07-22-audit
 - [[#2026-07-22-audit|2026-07-22]] : [Audit & Weekly Compilation] - Jalon 23 - Séries entières, calcul du rayon de convergence (règle de d'Alembert-Cauchy) et propriétés de la somme. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.

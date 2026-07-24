@@ -1,0 +1,591 @@
+\documentclass[11pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!60!black},
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{gray!10},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    frame=single,
+    tabsize=4,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=false,
+    escapeinside={\%*}{*)}
+}
+
+\title{Jalon 24 : Livrable IA T2 - Analyse mathematique des criteres de convergence d'une regression polynomiale}
+\author{Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{1. Intuition et genese du concept}
+
+La quete de la prediction parfaite a toujours ete au cœur des mathematiques appliquees et de l'intelligence artificielle. Historiquement, le besoin d'ajuster des modeles continus a des observations discretes et souvent bruitees a conduit Legendre et Gauss, independamment, a formuler la methode des moindres carres au debut du XIXe siecle pour predire les orbites cometaires. Mais au-dela de l'ajustement lineaire, la modelisation de phenomenes complexes necessite une expressivite superieure, souvent atteinte par la regression polynomiale.
+
+Cependant, augmenter le degre d'un polynome d'ajustement ne garantit nullement une meilleure generalisation. Au contraire, le mathematicien Carl Runge a demontre en 1901 un phenomene contre-intuitif et fondamental : pour certaines fonctions tres regulieres, l'interpolation polynomiale sur des nœuds equidistants diverge violemment aux bords de l'intervalle lorsque le degre augmente. Ce resultat theorique d'analyse met en lumiere la dichotomie entre l'erreur empirique (sur les donnees d'apprentissage) et l'erreur de generalisation. L'analyse des criteres de convergence d'une regression polynomiale exige ainsi une comprehension profonde des espaces de fonctions, de la geometrie euclidienne en dimension finie, et surtout des theoremes d'interversion de limites, sujets classiques des concours de l'Ecole Normale Superieure. L'optimisation moderne s'appuie sur ces fondations pour regulariser les modeles et contraindre la complexite de l'espace d'hypotheses, illustrant l'elegance de l'analyse au service de l'apprentissage statistique.
+
+\section{2. Formalisation et structures algebriques}
+
+Soit $\mathcal{D} = \{(x_i, y_i)\}_{1 \le i \le n} \subset \mathbb{R} \times \mathbb{R}$ un ensemble d'apprentissage constitue de $n \in \mathbb{N}^*$ couples de points avec $x_i \neq x_j$ pour $i \neq j$. L'espace d'hypotheses est l'espace vectoriel des polynomes a coefficients reels de degre au plus $d \in \mathbb{N}$, note $\mathcal{H} = \mathbb{R}_d[X]$.
+
+\textbf{Definition (Matrice de conception de Vandermonde) :}
+La matrice de conception $\mathbf{X} \in \mathcal{M}_{n, d+1}(\mathbb{R})$ est definie par ses coefficients $X_{i,j} = x_i^{j-1}$ pour $1 \le i \le n$ et $1 \le j \le d+1$. Le vecteur cible est $\mathbf{y} = (y_1, \dots, y_n)^\top \in \mathbb{R}^n$.
+
+\textbf{Definition (Probleme des moindres carres polynomiaux) :}
+Le vecteur des coefficients optimaux $\hat{\mathbf{a}} = (\hat{a}_0, \dots, \hat{a}_d)^\top \in \mathbb{R}^{d+1}$ est solution du probleme d'optimisation convexe :
+$$ \hat{\mathbf{a}} = \underset{\mathbf{a} \in \mathbb{R}^{d+1}}{\text{argmin}} \mathcal{L}(\mathbf{a}) \quad \text{ou} \quad \mathcal{L}(\mathbf{a}) = \|\mathbf{X}\mathbf{a} - \mathbf{y}\|_2^2 $$
+La fonction $\mathcal{L} : \mathbb{R}^{d+1} \to \mathbb{R}_+$ est de classe $\mathcal{C}^\infty$ et represente la somme des carres des residus. Le scalaire $\|\cdot\|_2$ designe la norme euclidienne standard sur $\mathbb{R}^n$.
+
+\textbf{Exemple :}
+Pour un ajustement quadratique ($d=2$) avec $n=5$ observations $\mathcal{D} = \{(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)\}$, l'espace de recherche est parametre par $\mathbf{a} = (a_0, a_1, a_2)^\top$. La matrice de Vandermonde associee est :
+$$ \mathbf{X} = \begin{pmatrix} 1 & -2 & 4 \\ 1 & -1 & 1 \\ 1 & 0 & 0 \\ 1 & 1 & 1 \\ 1 & 2 & 4 \end{pmatrix} $$
+Comme les $x_i$ sont distincts et $n > d$, le rang de $\mathbf{X}$ est maximal (egal a $d+1=3$).
+
+\textbf{Cas pathologique (Sur-parametrisation) :}
+Si $d \ge n$, la matrice de Vandermonde devient rectangulaire (ou carree si $d = n-1$) et le systeme $\mathbf{X}\mathbf{a} = \mathbf{y}$ possede au moins une solution exacte. Dans ce cas, $\mathcal{L}(\hat{\mathbf{a}}) = 0$. Cependant, $\mathbf{X}^\top\mathbf{X}$ n'est plus inversible si $d \ge n$, et le minimum n'est plus unique, entrainant une variance infinie des estimateurs hors de l'echantillon.
+
+\section{3. Demonstrations pas-a-pas}
+
+\textbf{Theoreme (Equations normales et unicite) :}
+Si les points d'apprentissage $(x_i)_{1 \le i \le n}$ sont deux a deux distincts et $n > d$, alors le probleme d'optimisation admet une unique solution globale donnee analytiquement par :
+$$ \hat{\mathbf{a}} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{y} $$
+
+\textbf{Demonstration :}
+La fonction $\mathcal{L}(\mathbf{a}) = \|\mathbf{X}\mathbf{a} - \mathbf{y}\|_2^2 = (\mathbf{X}\mathbf{a} - \mathbf{y})^\top(\mathbf{X}\mathbf{a} - \mathbf{y})$ est developpable par bilinearite du produit scalaire euclidien.
+$$ \mathcal{L}(\mathbf{a}) = \mathbf{a}^\top\mathbf{X}^\top\mathbf{X}\mathbf{a} - \mathbf{y}^\top\mathbf{X}\mathbf{a} - \mathbf{a}^\top\mathbf{X}^\top\mathbf{y} + \mathbf{y}^\top\mathbf{y} $$
+Puisque le produit matriciel $\mathbf{a}^\top\mathbf{X}^\top\mathbf{y}$ est un scalaire de dimension $1 \times 1$, il est egal a sa propre transposee, soit $\mathbf{y}^\top\mathbf{X}\mathbf{a}$. L'expression se simplifie en :
+$$ \mathcal{L}(\mathbf{a}) = \mathbf{a}^\top(\mathbf{X}^\top\mathbf{X})\mathbf{a} - 2\mathbf{a}^\top\mathbf{X}^\top\mathbf{y} + \mathbf{y}^\top\mathbf{y} $$
+Cette fonction est une forme quadratique affine en $\mathbf{a}$. Nous calculons son gradient par rapport au vecteur $\mathbf{a}$ en utilisant les regles de derivation matricielle. Pour une matrice symetrique $\mathbf{M} = \mathbf{X}^\top\mathbf{X}$, $\nabla_{\mathbf{a}} (\mathbf{a}^\top\mathbf{M}\mathbf{a}) = 2\mathbf{M}\mathbf{a}$. Pour un vecteur constant $\mathbf{c} = \mathbf{X}^\top\mathbf{y}$, $\nabla_{\mathbf{a}} (\mathbf{a}^\top\mathbf{c}) = \mathbf{c}$.
+$$ \nabla \mathcal{L}(\mathbf{a}) = 2\mathbf{X}^\top\mathbf{X}\mathbf{a} - 2\mathbf{X}^\top\mathbf{y} $$
+Une condition necessaire d'optimalite de premier ordre est l'annulation du gradient, ce qui fournit les equations normales :
+$$ \mathbf{X}^\top\mathbf{X}\mathbf{a} = \mathbf{X}^\top\mathbf{y} $$
+Pour etablir l'unicite de la solution, il est imperatif de prouver que la matrice carree $\mathbf{X}^\top\mathbf{X} \in \mathcal{M}_{d+1}(\mathbb{R})$ est inversible. Etudions son noyau.
+Soit $\mathbf{u} \in \mathbb{R}^{d+1}$ tel que $\mathbf{X}^\top\mathbf{X}\mathbf{u} = \mathbf{0}_{d+1}$.
+Multiplions a gauche par $\mathbf{u}^\top$ :
+$$ \mathbf{u}^\top\mathbf{X}^\top\mathbf{X}\mathbf{u} = 0 \iff (\mathbf{X}\mathbf{u})^\top(\mathbf{X}\mathbf{u}) = 0 \iff \|\mathbf{X}\mathbf{u}\|_2^2 = 0 \iff \mathbf{X}\mathbf{u} = \mathbf{0}_n $$
+L'equation vectorielle $\mathbf{X}\mathbf{u} = \mathbf{0}_n$ se traduit par le systeme suivant de $n$ equations :
+$$ \forall i \in \mathopen{[\![} 1, n \mathclose{]\!]}, \quad \sum_{j=0}^{d} u_j x_i^j = 0 $$
+Considerons le polynome $Q \in \mathbb{R}_d[X]$ defini par $Q(X) = \sum_{j=0}^{d} u_j X^j$. Le systeme precedent signifie exactement que les $n$ abscisses $x_i$ sont des racines de $Q$.
+Cependant, $Q$ est un polynome de degre inferieur ou egal a $d$. Comme les $x_i$ sont distincts par hypothese, $Q$ admet $n$ racines distinctes. Or, $n > d$. Par le theoreme fondamental de l'algebre (et ses consequences sur $\mathbb{R}$), le seul polynome de degre $\le d$ possedant strictement plus de $d$ racines est le polynome identiquement nul.
+Par consequent, tous les coefficients de $Q$ sont nuls, ce qui implique $\mathbf{u} = \mathbf{0}_{d+1}$.
+Le noyau de $\mathbf{X}^\top\mathbf{X}$ est reduit au vecteur nul. La matrice est donc injective, et puisqu'elle est carree de dimension finie, elle est inversible.
+En multipliant l'equation normale a gauche par l'inverse $(\mathbf{X}^\top\mathbf{X})^{-1}$, nous obtenons l'expression analytique unique :
+$$ \hat{\mathbf{a}} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{y} $$
+De plus, la Hessienne $\nabla^2 \mathcal{L}(\mathbf{a}) = 2\mathbf{X}^\top\mathbf{X}$ etant definie positive, la fonction objectif est strictement convexe, garantissant que ce point critique est l'unique minimum global. $\blacksquare$
+
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  % Axe X et Y
+  \draw[->,thick] (-2.5,0) -- (2.5,0) node[right] {$x$};
+  \draw[->,thick] (0,-1) -- (0,3) node[above] {$y$};
+
+  % Points de donnees
+  \foreach \Point in {(-1.5, 0.5), (-0.5, 1.2), (0.5, 1.8), (1.5, 0.9)}{
+    \filldraw[blue] \Point circle (1.5pt);
+  }
+
+  % Courbe lisse (ex: polynome ideal)
+  \draw[red, thick, domain=-2:2, samples=100] plot (\x, {-0.4*(\x)^2 + 1.6});
+  \node[red] at (1.8, 0.4) {$P_2(x)$};
+
+  % Courbe de surapprentissage (interpolation)
+  \draw[green!60!black, thick, densely dashed, domain=-1.8:1.8, samples=100] plot (\x, {0.2*(\x)^5 - 0.5*(\x)^3 - 0.4*(\x)^2 + 0.6*\x + 1.4});
+  \node[green!60!black] at (-1.8, 2.5) {$P_{10}(x)$ divergence};
+
+\end{tikzpicture}
+\end{center}
+
+\chapter{Exercices d'application et de concours}
+\section{Enonce}
+Soit un jeu de donnees de $n$ points $\mathcal{D} = \{(x_i, y_i)\}_{1 \le i \le n}$ ou les $x_i$ sont deux a deux distincts. On cherche a ajuster un polynome $P(X) = \sum_{k=0}^d a_k X^k$ de degre $d < n$.
+Demontrer rigoureusement que la matrice $\mathbf{X}^\top\mathbf{X}$ (ou $\mathbf{X}$ est la matrice de Vandermonde associee) est definie positive, et en deduire l'unicite de la solution.
+
+\section{Correction Detaillee}
+Soit $\mathbf{X} \in \mathcal{M}_{n, d+1}(\mathbb{R})$ definie par $X_{i,j} = x_i^{j-1}$.
+1. \textbf{Semi-definie positivite :} Soit $\mathbf{u} \in \mathbb{R}^{d+1}$.
+   $\mathbf{u}^\top(\mathbf{X}^\top\mathbf{X})\mathbf{u} = (\mathbf{X}\mathbf{u})^\top(\mathbf{X}\mathbf{u}) = \|\mathbf{X}\mathbf{u}\|_2^2 \ge 0$.
+   Donc $\mathbf{X}^\top\mathbf{X}$ est semi-definie positive.
+2. \textbf{Definie positivite :} Supposons qu'il existe $\mathbf{u}$ tel que $\mathbf{u}^\top(\mathbf{X}^\top\mathbf{X})\mathbf{u} = 0$.
+   Alors $\|\mathbf{X}\mathbf{u}\|_2^2 = 0$, d'ou $\mathbf{X}\mathbf{u} = \mathbf{0}_n$.
+   La $i$-eme coordonnee de ce vecteur est $\sum_{k=0}^d u_k x_i^k = Q(x_i) = 0$, ou $Q(X) = \sum_{k=0}^d u_k X^k$.
+   Ainsi, le polynome $Q$, de degre au plus $d$, possede $n$ racines distinctes (les $x_i$).
+   Puisque $n > d$, le seul polynome de degre $\le d$ ayant plus de $d$ racines est le polynome nul.
+   Donc $\forall k, u_k = 0$, c'est-a-dire $\mathbf{u} = \mathbf{0}$.
+   La matrice $\mathbf{X}^\top\mathbf{X}$ est donc definie positive, ce qui implique qu'elle est inversible.
+3. \textbf{Unicite :} Les equations normales s'ecrivent $(\mathbf{X}^\top\mathbf{X})\mathbf{a} = \mathbf{X}^\top\mathbf{y}$. L'inversibilite garantit une unique solution $\hat{\mathbf{a}} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{y}$.
+
+\section{Enonce}
+On suppose que les observations sont generees par $\mathbf{y} = \mathbf{X}\mathbf{a}^* + \boldsymbol{\epsilon}$, ou $\boldsymbol{\epsilon} \in \mathbb{R}^n$ est un vecteur aleatoire de bruit centre ($\mathbb{E}[\boldsymbol{\epsilon}] = \mathbf{0}$) et de matrice de covariance $\text{Var}(\boldsymbol{\epsilon}) = \sigma^2 \mathbf{I}_n$.
+Montrer que l'estimateur des moindres carres $\hat{\mathbf{a}} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{y}$ est sans biais et determiner sa matrice de covariance.
+
+\section{Correction Detaillee}
+1. \textbf{Calcul de l'esperance (Biais) :}
+   Par definition, $\hat{\mathbf{a}} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top(\mathbf{X}\mathbf{a}^* + \boldsymbol{\epsilon})$.
+   En developpant par linearite :
+   $\hat{\mathbf{a}} = (\mathbf{X}^\top\mathbf{X})^{-1}(\mathbf{X}^\top\mathbf{X})\mathbf{a}^* + (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\boldsymbol{\epsilon} = \mathbf{a}^* + (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\boldsymbol{\epsilon}$.
+   En prenant l'esperance, comme $\mathbf{X}$ est deterministe et $\mathbb{E}[\boldsymbol{\epsilon}] = \mathbf{0}$ :
+   $\mathbb{E}[\hat{\mathbf{a}}] = \mathbf{a}^* + (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbb{E}[\boldsymbol{\epsilon}] = \mathbf{a}^*$.
+   L'estimateur est donc \textbf{sans biais}.
+
+2. \textbf{Calcul de la covariance :}
+   La matrice de covariance est $\text{Var}(\hat{\mathbf{a}}) = \mathbb{E}[(\hat{\mathbf{a}} - \mathbf{a}^*)(\hat{\mathbf{a}} - \mathbf{a}^*)^\top]$.
+   D'apres le calcul precedent, $\hat{\mathbf{a}} - \mathbf{a}^* = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\boldsymbol{\epsilon}$.
+   Ainsi, $\text{Var}(\hat{\mathbf{a}}) = \mathbb{E}[((\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\boldsymbol{\epsilon})((\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\boldsymbol{\epsilon})^\top]$.
+   En utilisant la propriete de transposition $(AB)^\top = B^\top A^\top$ :
+   $\text{Var}(\hat{\mathbf{a}}) = \mathbb{E}[(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top \boldsymbol{\epsilon} \boldsymbol{\epsilon}^\top \mathbf{X}(\mathbf{X}^\top\mathbf{X})^{-1}]$.
+   Par linearite de l'esperance :
+   $\text{Var}(\hat{\mathbf{a}}) = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top \mathbb{E}[\boldsymbol{\epsilon} \boldsymbol{\epsilon}^\top] \mathbf{X}(\mathbf{X}^\top\mathbf{X})^{-1}$.
+   Comme $\mathbb{E}[\boldsymbol{\epsilon} \boldsymbol{\epsilon}^\top] = \sigma^2 \mathbf{I}_n$ :
+   $\text{Var}(\hat{\mathbf{a}}) = \sigma^2 (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top \mathbf{X}(\mathbf{X}^\top\mathbf{X})^{-1} = \sigma^2 (\mathbf{X}^\top\mathbf{X})^{-1}$.
+
+\section{Enonce}
+Pour pallier la multicolinearite (matrice $\mathbf{X}^\top\mathbf{X}$ mal conditionnee), on introduit une penalite : $\mathcal{L}_{Ridge}(\mathbf{a}) = \|\mathbf{X}\mathbf{a} - \mathbf{y}\|_2^2 + \lambda \|\mathbf{a}\|_2^2$, avec $\lambda > 0$.
+Montrer que l'estimateur Ridge $\hat{\mathbf{a}}_\lambda = (\mathbf{X}^\top\mathbf{X} + \lambda \mathbf{I})^{-1}\mathbf{X}^\top\mathbf{y}$ est toujours defini, et calculer son biais sous le modele $\mathbf{y} = \mathbf{X}\mathbf{a}^* + \boldsymbol{\epsilon}$.
+
+\section{Correction Detaillee}
+1. \textbf{Inversibilite de $\mathbf{X}^\top\mathbf{X} + \lambda \mathbf{I}$ :}
+   Soit $\mathbf{M} = \mathbf{X}^\top\mathbf{X} + \lambda \mathbf{I}$. Soit $\mathbf{u} \neq \mathbf{0}$.
+   $\mathbf{u}^\top\mathbf{M}\mathbf{u} = \mathbf{u}^\top\mathbf{X}^\top\mathbf{X}\mathbf{u} + \lambda \mathbf{u}^\top\mathbf{u} = \|\mathbf{X}\mathbf{u}\|_2^2 + \lambda \|\mathbf{u}\|_2^2$.
+   Comme $\lambda > 0$ et $\|\mathbf{u}\|_2 > 0$, la somme est strictement positive.
+   $\mathbf{M}$ est donc strictement definie positive, et par consequent inversible.
+
+2. \textbf{Calcul du biais de $\hat{\mathbf{a}}_\lambda$ :}
+   Substituons $\mathbf{y}$ par $\mathbf{X}\mathbf{a}^* + \boldsymbol{\epsilon}$ :
+   $\hat{\mathbf{a}}_\lambda = (\mathbf{X}^\top\mathbf{X} + \lambda \mathbf{I})^{-1}\mathbf{X}^\top(\mathbf{X}\mathbf{a}^* + \boldsymbol{\epsilon})$.
+   Prenons l'esperance :
+   $\mathbb{E}[\hat{\mathbf{a}}_\lambda] = (\mathbf{X}^\top\mathbf{X} + \lambda \mathbf{I})^{-1}(\mathbf{X}^\top\mathbf{X})\mathbf{a}^*$.
+   Remarquons que $\mathbf{X}^\top\mathbf{X} = (\mathbf{X}^\top\mathbf{X} + \lambda \mathbf{I}) - \lambda \mathbf{I}$.
+   Donc $\mathbb{E}[\hat{\mathbf{a}}_\lambda] = (\mathbf{X}^\top\mathbf{X} + \lambda \mathbf{I})^{-1}((\mathbf{X}^\top\mathbf{X} + \lambda \mathbf{I}) - \lambda \mathbf{I})\mathbf{a}^* = (\mathbf{I} - \lambda(\mathbf{X}^\top\mathbf{X} + \lambda \mathbf{I})^{-1})\mathbf{a}^*$.
+   Le biais est donc : $\text{Biais} = \mathbb{E}[\hat{\mathbf{a}}_\lambda] - \mathbf{a}^* = -\lambda(\mathbf{X}^\top\mathbf{X} + \lambda \mathbf{I})^{-1}\mathbf{a}^* \neq \mathbf{0}$.
+   L'estimateur Ridge est \textbf{biaise}. Le compromis consiste a accepter ce biais pour reduire drastiquement la variance.
+
+\section{Enonce}
+Soit la decomposition SVD de la matrice de conception : $\mathbf{X} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^\top$.
+Exprimer l'estimateur des moindres carres $\hat{\mathbf{a}}$ en fonction de $\mathbf{U}$, $\mathbf{\Sigma}$ et $\mathbf{V}$. Montrer comment la regularisation Ridge modifie les valeurs singulieres inversees.
+
+\section{Correction Detaillee}
+1. \textbf{Expression via SVD classique :}
+   $\mathbf{X}^\top\mathbf{X} = (\mathbf{V} \mathbf{\Sigma}^\top \mathbf{U}^\top)(\mathbf{U} \mathbf{\Sigma} \mathbf{V}^\top) = \mathbf{V} \mathbf{\Sigma}^\top \mathbf{\Sigma} \mathbf{V}^\top = \mathbf{V} \mathbf{\Sigma}^2 \mathbf{V}^\top$ (car $\mathbf{U}^\top\mathbf{U} = \mathbf{I}$).
+   Donc $(\mathbf{X}^\top\mathbf{X})^{-1} = \mathbf{V} \mathbf{\Sigma}^{-2} \mathbf{V}^\top$.
+   L'estimateur devient : $\hat{\mathbf{a}} = (\mathbf{V} \mathbf{\Sigma}^{-2} \mathbf{V}^\top) (\mathbf{V} \mathbf{\Sigma}^\top \mathbf{U}^\top) \mathbf{y} = \mathbf{V} \mathbf{\Sigma}^{-2} \mathbf{\Sigma} \mathbf{U}^\top \mathbf{y} = \mathbf{V} \mathbf{\Sigma}^{-1} \mathbf{U}^\top \mathbf{y}$.
+   Ceci correspond a multiplier $\mathbf{y}$ par la pseudo-inverse de Moore-Penrose $\mathbf{X}^+$.
+
+2. \textbf{Effet de la regularisation Ridge sur SVD :}
+   Pour l'estimateur Ridge :
+   $\mathbf{X}^\top\mathbf{X} + \lambda \mathbf{I} = \mathbf{V} \mathbf{\Sigma}^2 \mathbf{V}^\top + \lambda \mathbf{V} \mathbf{I} \mathbf{V}^\top = \mathbf{V} (\mathbf{\Sigma}^2 + \lambda \mathbf{I}) \mathbf{V}^\top$.
+   Donc $(\mathbf{X}^\top\mathbf{X} + \lambda \mathbf{I})^{-1} = \mathbf{V} (\mathbf{\Sigma}^2 + \lambda \mathbf{I})^{-1} \mathbf{V}^\top$.
+   L'estimateur devient : $\hat{\mathbf{a}}_\lambda = \mathbf{V} (\mathbf{\Sigma}^2 + \lambda \mathbf{I})^{-1} \mathbf{\Sigma} \mathbf{U}^\top \mathbf{y}$.
+   Pour la $j$-eme composante principale, la valeur singuliere inverse $\frac{1}{\sigma_j}$ est remplacee par $\frac{\sigma_j}{\sigma_j^2 + \lambda}$.
+   Si $\sigma_j$ est grand ($\sigma_j^2 \gg \lambda$), on retrouve $\approx \frac{1}{\sigma_j}$.
+   Si $\sigma_j$ est tres petit (colinearite), au lieu de diverger vers l'infini, la fraction tend vers 0. La regularisation etouffe l'amplification du bruit dans les directions de faible variance.
+
+\section{Enonce}
+On considere la fonction de Runge $f(x) = \frac{1}{1+x^2}$ sur $[-5, 5]$.
+Si on interpole cette fonction avec un polynome $P_n$ sur $n$ points equidistants, demontrer heuristiquement l'origine de la divergence pres des bornes en etudiant le comportement asymptotique du polynome d'erreur nodale $\omega_n(x) = \prod_{i=1}^n (x - x_i)$.
+
+\section{Correction Detaillee}
+L'erreur d'interpolation en un point $x$ est donnee par la formule de Cauchy :
+$f(x) - P_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \omega_{n+1}(x)$ ou $\xi \in ]-5, 5[$.
+1. \textbf{Croissance du polynome nodal $\omega_n(x)$ :}
+   Pour des points equidistants, la fonction $\omega_n(x)$ presente des oscillations tres asymetriques. Pres du centre (x=0), les amplitudes sont petites. Pres des bornes (x $\approx \pm 5$), la distance aux autres points est maximale, entrainant une croissance exponentielle de l'amplitude de $\omega_n(x)$ par rapport a $n$ : $\|\omega_n\|_\infty \sim C \left(\frac{10}{e}\right)^n$.
+2. \textbf{Derivees d'ordre superieur de la fonction de Runge :}
+   La fonction $f(z) = \frac{1}{1+z^2}$ admet des poles complexes en $z = \pm i$. Par analyse complexe, le domaine de convergence du developpement de Taylor ou d'interpolation est borne par la distance au pole le plus proche. Sur $[-5, 5]$, la distance au pole est largement inferieure a la demi-longueur de l'intervalle, forcant les derivees d'ordre $n$ a croitre extremement vite, compensant le $(n+1)!$ au denominateur.
+3. \textbf{Conclusion :}
+   Le produit de la croissance de $\omega_{n+1}(x)$ pres des bornes et des derivees massives de $f$ induit $\lim_{n \to \infty} \|f - P_n\|_\infty = \infty$. La regularisation ou le choix de nœuds de Tchebychev (qui minimisent $\|\omega_n\|_\infty$) est obligatoire pour forcer la convergence uniforme.
+
+\section{Enonce}
+Soit $\hat{\mathbf{y}} = \mathbf{X}\hat{\mathbf{a}}$ le vecteur des predictions (projection orthogonale).
+Demontrer que la somme totale des carres (SST) se decompose exactement en somme des carres expliques (SSR) et somme des carres residuels (SSE) : $\|\mathbf{y} - \bar{y}\mathbf{1}\|_2^2 = \|\hat{\mathbf{y}} - \bar{y}\mathbf{1}\|_2^2 + \|\mathbf{y} - \hat{\mathbf{y}}\|_2^2$, a condition que le modele contienne une ordonnee a l'origine.
+
+\section{Correction Detaillee}
+1. \textbf{Condition d'orthogonalite :}
+   Les residus sont $\mathbf{e} = \mathbf{y} - \hat{\mathbf{y}}$.
+   Puisque $\hat{\mathbf{y}}$ est la projection orthogonale de $\mathbf{y}$ sur l'image de $\mathbf{X}$, $\mathbf{e}$ est orthogonal a toutes les colonnes de $\mathbf{X}$.
+   Donc $\mathbf{X}^\top \mathbf{e} = \mathbf{0}$.
+2. \textbf{Propriete de l'ordonnee a l'origine :}
+   Si le modele inclut $a_0$, la premiere colonne de $\mathbf{X}$ est le vecteur $\mathbf{1} = (1, \dots, 1)^\top$.
+   Donc $\mathbf{1}^\top \mathbf{e} = 0 \implies \sum_{i=1}^n e_i = 0$.
+   La moyenne des residus est nulle, donc la moyenne des predictions egale la moyenne des observations : $\bar{\hat{y}} = \bar{y}$.
+3. \textbf{Decomposition de la variance (Pythagore) :}
+   Ecrivons $\mathbf{y} - \bar{y}\mathbf{1} = (\hat{\mathbf{y}} - \bar{y}\mathbf{1}) + (\mathbf{y} - \hat{\mathbf{y}})$.
+   Elevons a la norme au carre :
+   $\|\mathbf{y} - \bar{y}\mathbf{1}\|_2^2 = \|\hat{\mathbf{y}} - \bar{y}\mathbf{1}\|_2^2 + \|\mathbf{y} - \hat{\mathbf{y}}\|_2^2 + 2\langle \hat{\mathbf{y}} - \bar{y}\mathbf{1}, \mathbf{y} - \hat{\mathbf{y}} \rangle$.
+   Calculons le produit scalaire croise :
+   $\langle \hat{\mathbf{y}} - \bar{y}\mathbf{1}, \mathbf{e} \rangle = \hat{\mathbf{y}}^\top \mathbf{e} - \bar{y}\mathbf{1}^\top \mathbf{e}$.
+   Or $\hat{\mathbf{y}} \in \text{Im}(\mathbf{X})$, donc $\hat{\mathbf{y}}^\top \mathbf{e} = 0$.
+   Et d'apres l'etape 2, $\mathbf{1}^\top \mathbf{e} = 0$.
+   Le terme croise est donc strictement nul.
+   D'ou SST = SSR + SSE.
+
+\section{Enonce}
+Au lieu de l'inversion matricielle, on utilise la descente de gradient : $\mathbf{a}^{(t+1)} = \mathbf{a}^{(t)} - \eta \nabla \mathcal{L}(\mathbf{a}^{(t)})$.
+Determiner la condition stricte sur le pas d'apprentissage $\eta$ pour garantir la convergence globale de cet algorithme.
+
+\section{Correction Detaillee}
+1. \textbf{Expression de la recurrence :}
+   Le gradient est $\nabla \mathcal{L}(\mathbf{a}) = 2(\mathbf{X}^\top\mathbf{X}\mathbf{a} - \mathbf{X}^\top\mathbf{y})$.
+   Donc $\mathbf{a}^{(t+1)} = \mathbf{a}^{(t)} - 2\eta (\mathbf{X}^\top\mathbf{X}\mathbf{a}^{(t)} - \mathbf{X}^\top\mathbf{y})$.
+   $\mathbf{a}^{(t+1)} = (\mathbf{I} - 2\eta \mathbf{X}^\top\mathbf{X})\mathbf{a}^{(t)} + 2\eta\mathbf{X}^\top\mathbf{y}$.
+
+2. \textbf{Dynamique de l'erreur :}
+   Soit $\mathbf{a}^*$ le point fixe tel que $\mathbf{X}^\top\mathbf{X}\mathbf{a}^* = \mathbf{X}^\top\mathbf{y}$.
+   Soustraire $\mathbf{a}^*$ des deux cotes :
+   $\mathbf{a}^{(t+1)} - \mathbf{a}^* = (\mathbf{I} - 2\eta \mathbf{X}^\top\mathbf{X})(\mathbf{a}^{(t)} - \mathbf{a}^*)$.
+   L'erreur a l'iteration $t$ est donc multipliee par la matrice $\mathbf{I} - 2\eta \mathbf{X}^\top\mathbf{X}$.
+
+3. \textbf{Condition de convergence :}
+   Pour que $\lim_{t \to \infty} \mathbf{a}^{(t)} = \mathbf{a}^*$, il faut et il suffit que le rayon spectral de la matrice d'iteration soit strictement inferieur a 1 : $\rho(\mathbf{I} - 2\eta \mathbf{X}^\top\mathbf{X}) < 1$.
+   Soient $\lambda_i$ les valeurs propres de $\mathbf{X}^\top\mathbf{X}$. Comme elle est definie positive, $0 < \lambda_{\min} \le \dots \le \lambda_{\max}$.
+   Les valeurs propres de la matrice d'iteration sont $1 - 2\eta \lambda_i$.
+   La condition $|1 - 2\eta \lambda_i| < 1$ pour tout $i$ equivaut a :
+   $-1 < 1 - 2\eta \lambda_{\max} \implies 2\eta \lambda_{\max} < 2 \implies \eta < \frac{1}{\lambda_{\max}}$.
+   De plus, $\eta > 0$.
+   La condition stricte est donc $0 < \eta < \frac{1}{\lambda_{\max}}$, ou $\lambda_{\max}$ est la plus grande valeur singuliere de $\mathbf{X}$ au carre (la constante de Lipschitz du gradient).
+
+\section{Enonce}
+La "Hat Matrix" $\mathbf{H} = \mathbf{X}(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top$ projette les observations $\mathbf{y}$ sur les predictions $\hat{\mathbf{y}}$.
+Montrer que $\mathbf{H}$ est idempotente et symetrique. En deduire que la diagonale $h_{ii}$ verifie $0 \le h_{ii} \le 1$ et interpreter cette valeur vis-a-vis des points aberrants.
+
+\section{Correction Detaillee}
+1. \textbf{Symetrie :}
+   $\mathbf{H}^\top = (\mathbf{X}(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top)^\top = (\mathbf{X}^\top)^\top ((\mathbf{X}^\top\mathbf{X})^{-1})^\top \mathbf{X}^\top = \mathbf{X}(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top = \mathbf{H}$.
+2. \textbf{Idempotence :}
+   $\mathbf{H}^2 = (\mathbf{X}(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top)(\mathbf{X}(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top) = \mathbf{X}(\mathbf{X}^\top\mathbf{X})^{-1}(\mathbf{X}^\top\mathbf{X})(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top = \mathbf{X}(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top = \mathbf{H}$.
+3. \textbf{Encadrement de la diagonale :}
+   Soit $\mathbf{e}_i$ le $i$-eme vecteur de la base canonique. $h_{ii} = \mathbf{e}_i^\top \mathbf{H} \mathbf{e}_i$.
+   Comme $\mathbf{H}$ est idempotente et symetrique, $\mathbf{H} = \mathbf{H}^\top \mathbf{H}$.
+   Donc $h_{ii} = \mathbf{e}_i^\top \mathbf{H}^\top \mathbf{H} \mathbf{e}_i = \|\mathbf{H}\mathbf{e}_i\|_2^2 \ge 0$.
+   De plus, $\mathbf{I} - \mathbf{H}$ est aussi symetrique et idempotente.
+   Donc $1 - h_{ii} = \mathbf{e}_i^\top (\mathbf{I} - \mathbf{H}) \mathbf{e}_i = \|(\mathbf{I} - \mathbf{H})\mathbf{e}_i\|_2^2 \ge 0$, ce qui implique $h_{ii} \le 1$.
+   D'ou $0 \le h_{ii} \le 1$.
+4. \textbf{Interpretation :}
+   $h_{ii}$ est le "leverage" (effet de levier) de la $i$-eme observation. Comme $\hat{y}_i = \sum_j h_{ij} y_j = h_{ii} y_i + \sum_{j \neq i} h_{ij} y_j$, un point de donnees ayant $h_{ii} \approx 1$ dicte presque a lui seul sa propre prediction. Si ce point est aberrant, il va "tirer" le polynome vers lui violemment, detruisant l'ajustement global.
+
+\section{Enonce}
+Expliquer rigoureusement pourquoi utiliser la base canonique $\{1, X, X^2, \dots, X^d\}$ conduit a un systeme mal conditionne lorsque $d$ grandit.
+Montrer que si l'on utilise une base de polynomes orthogonaux $\{L_0, L_1, \dots, L_d\}$ tels que $\sum_{i=1}^n L_k(x_i)L_m(x_i) = \delta_{km}$, la matrice $\mathbf{X}^\top\mathbf{X}$ devient l'identite.
+
+\section{Correction Detaillee}
+1. \textbf{Mal-conditionnement de la base canonique :}
+   Pour des points $x_i \in [0, 1]$, les colonnes de $\mathbf{X}$ sont les vecteurs $c_k = (x_1^k, \dots, x_n^k)^\top$.
+   Pour $k$ grand, $x_i^k \to 0$ ou $1$, les vecteurs colonnes deviennent presque colineaires. Le determinant de $\mathbf{X}^\top\mathbf{X}$ (matrice de Hilbert pour la limite continue) tend vers $0$ exponentiellement vite, provoquant une explosion des erreurs d'arrondi lors de l'inversion numerique.
+2. \textbf{Utilisation de polynomes orthogonaux :}
+   Construisons une nouvelle matrice $\mathbf{\tilde{X}}$ ou $\tilde{X}_{i,k} = L_{k-1}(x_i)$.
+   L'element $(k, m)$ de la matrice $\mathbf{\tilde{X}}^\top\mathbf{\tilde{X}}$ est le produit scalaire des colonnes $k$ et $m$ :
+   $(\mathbf{\tilde{X}}^\top\mathbf{\tilde{X}})_{k,m} = \sum_{i=1}^n \tilde{X}_{i,k} \tilde{X}_{i,m} = \sum_{i=1}^n L_{k-1}(x_i) L_{m-1}(x_i)$.
+   Par definition de l'orthogonalite de cette base discrete, cela vaut $1$ si $k=m$ et $0$ sinon.
+   Donc $\mathbf{\tilde{X}}^\top\mathbf{\tilde{X}} = \mathbf{I}_{d+1}$.
+3. \textbf{Conclusion Numerique :}
+   L'inversion matricielle devient triviale, et les coefficients sont simplement $\hat{a}_k = \sum_{i=1}^n y_i L_k(x_i)$. Cette methode, souvent realisee via l'algorithme de Gram-Schmidt, immunise completement la regression polynomiale contre les instabilites de la matrice de Vandermonde.
+
+\section{Enonce}
+Prouver la formule magique du Leave-One-Out : on peut calculer l'erreur LOOCV sans re-entrainer le modele $n$ fois, via l'equation $y_i - \hat{y}_{i}^{(-i)} = \frac{y_i - \hat{y}_i}{1 - h_{ii}}$, ou $\hat{y}_{i}^{(-i)}$ est la prediction sur $x_i$ par le modele entraine sur toutes les donnees sauf la $i$-eme, et $h_{ii}$ l'effet de levier.
+
+\section{Correction Detaillee}
+1. \textbf{Definition de l'estimateur perturbe :}
+   Le modele retirant l'observation $i$ s'ecrit $\hat{\mathbf{a}}^{(-i)} = (\mathbf{X}_{(-i)}^\top \mathbf{X}_{(-i)})^{-1} \mathbf{X}_{(-i)}^\top \mathbf{y}_{(-i)}$.
+   Remarquons que $\mathbf{X}^\top\mathbf{X} = \mathbf{X}_{(-i)}^\top \mathbf{X}_{(-i)} + \mathbf{x}_i \mathbf{x}_i^\top$.
+2. \textbf{Lemme d'inversion matricielle (Sherman-Morrison) :}
+   $(\mathbf{A} - \mathbf{u}\mathbf{v}^\top)^{-1} = \mathbf{A}^{-1} + \frac{\mathbf{A}^{-1}\mathbf{u}\mathbf{v}^\top\mathbf{A}^{-1}}{1 - \mathbf{v}^\top\mathbf{A}^{-1}\mathbf{u}}$.
+   Applique avec $\mathbf{A} = \mathbf{X}^\top\mathbf{X}$ et $\mathbf{u}=\mathbf{v}=\mathbf{x}_i$ :
+   $(\mathbf{X}_{(-i)}^\top \mathbf{X}_{(-i)})^{-1} = (\mathbf{X}^\top\mathbf{X})^{-1} + \frac{(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{x}_i\mathbf{x}_i^\top(\mathbf{X}^\top\mathbf{X})^{-1}}{1 - \mathbf{x}_i^\top(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{x}_i}$.
+   Notons que $h_{ii} = \mathbf{x}_i^\top(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{x}_i$.
+3. \textbf{Calcul de la difference des predictions :}
+   En developpant $\hat{\mathbf{a}}^{(-i)}$ en fonction de $\hat{\mathbf{a}}$ et en multipliant par $\mathbf{x}_i^\top$, des simplifications algebriques massives se produisent. L'astuce consiste a ecrire $\mathbf{X}_{(-i)}^\top \mathbf{y}_{(-i)} = \mathbf{X}^\top\mathbf{y} - \mathbf{x}_i y_i$.
+   On obtient finalement $\hat{\mathbf{a}} - \hat{\mathbf{a}}^{(-i)} = \frac{(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{x}_i}{1 - h_{ii}} (y_i - \hat{y}_i)$.
+4. \textbf{Conclusion de l'erreur :}
+   Predisons sur le point retire : $\hat{y}_{i}^{(-i)} = \mathbf{x}_i^\top \hat{\mathbf{a}}^{(-i)} = \mathbf{x}_i^\top \hat{\mathbf{a}} - \frac{\mathbf{x}_i^\top(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{x}_i}{1 - h_{ii}} (y_i - \hat{y}_i)$.
+   $\hat{y}_{i}^{(-i)} = \hat{y}_i - \frac{h_{ii}}{1 - h_{ii}} (y_i - \hat{y}_i)$.
+   Calculons l'erreur : $y_i - \hat{y}_{i}^{(-i)} = y_i - \hat{y}_i + \frac{h_{ii}}{1 - h_{ii}} (y_i - \hat{y}_i) = (y_i - \hat{y}_i) \left(1 + \frac{h_{ii}}{1 - h_{ii}}\right) = \frac{y_i - \hat{y}_i}{1 - h_{ii}}$.
+   Cette formule fondamentale permet d'evaluer la generalisation du modele en un seul passage algorithmique !
+
+\chapter{Travaux pratiques et simulations algorithmiques}
+\section{Objectif}
+Coder en Python pur la creation de la matrice de Vandermonde, la multiplication matricielle, et utiliser une methode d'elimination de Gauss pour resoudre les equations normales de la regression polynomiale.
+
+\section{Code Python et Validation Mathematique}
+
+\begin{lstlisting}[language=Python]
+def transpose(M):
+    return [[M[j][i] for j in range(len(M))] for i in range(len(M[0]))]
+
+def matmul(A, B):
+    res = [[0]*len(B[0]) for _ in range(len(A))]
+    for i in range(len(A)):
+        for j in range(len(B[0])):
+            for k in range(len(B)):
+                res[i][j] += A[i][k] * B[k][j]
+    return res
+
+def gauss_jordan(A, b):
+    # Resolution de Ax = b par pivot de Gauss
+    n = len(A)
+    aug = [row[:] + [b[i][0]] for i, row in enumerate(A)]
+    for i in range(n):
+        pivot = aug[i][i]
+        for j in range(n + 1):
+            aug[i][j] /= pivot
+        for k in range(n):
+            if k != i:
+                factor = aug[k][i]
+                for j in range(n + 1):
+                    aug[k][j] -= factor * aug[i][j]
+    return [[aug[i][n]] for i in range(n)]
+
+def poly_fit(X_data, Y_data, degree):
+    # 1. Matrice de Vandermonde
+    n = len(X_data)
+    V = [[(x**j) for j in range(degree + 1)] for x in X_data]
+    Y_col = [[y] for y in Y_data]
+
+    # 2. Equations normales : (V^T V) a = V^T Y
+    Vt = transpose(V)
+    VtV = matmul(Vt, V)
+    VtY = matmul(Vt, Y_col)
+
+    # 3. Resolution
+    a_col = gauss_jordan(VtV, VtY)
+    return [a[0] for a in a_col]
+
+\section{Test Unitaire Mathematique}
+X = [0.0, 1.0, 2.0]
+Y = [1.0, 3.0, 7.0] # Fait par y = 1 + x + x^2
+coeffs = poly_fit(X, Y, 2)
+assert abs(coeffs[0] - 1.0) < 1e-6
+assert abs(coeffs[1] - 1.0) < 1e-6
+assert abs(coeffs[2] - 1.0) < 1e-6
+print("TP1 Valide : Interpolation exacte reussie.")
+\end{lstlisting}
+
+\section{Objectif}
+Demontrer empiriquement le phenomene de Runge. Interpoler une fonction sur un grand nombre de points reguliers et observer l'explosion de l'erreur aux bornes de l'intervalle avec l'augmentation du degre.
+
+\section{Code Python et Validation Mathematique}
+
+\begin{lstlisting}[language=Python]
+# Fonctions du TP1 (matmul, transpose, gauss_jordan, poly_fit) reprises implicitement
+# Implementation allegee pour se concentrer sur l'algorithme
+
+def runge_function(x):
+    return 1.0 / (1.0 + 25.0 * x**2)
+
+def eval_poly(coeffs, x):
+    res = 0.0
+    for i, c in enumerate(coeffs):
+        res += c * (x**i)
+    return res
+
+1. Generer points d'entrainement (equidistants)
+degree = 10
+n_train = degree + 1
+X_train = [-1.0 + (2.0 * i) / degree for i in range(n_train)]
+Y_train = [runge_function(x) for x in X_train]
+
+2. Entrainer le polynome (avec regularisation infime pour stabilite)
+(Supposons poly_fit_ridge implemente, similaire au TP1 avec + lambda sur diagonale)
+def poly_fit_ridge(X_data, Y_data, degree, lam=1e-8):
+    V = [[(x**j) for j in range(degree + 1)] for x in X_data]
+    Vt = [[V[j][i] for j in range(len(V))] for i in range(len(V[0]))]
+    VtV = [[sum(a*b for a,b in zip(X_row, Y_col)) for Y_col in zip(*V)] for X_row in Vt]
+    VtY = [[sum(a*b for a,b in zip(X_row, [y])) for y in Y_data] for X_row in Vt] # Simplified
+
+    # Real VtY
+    Y_col = [[y] for y in Y_data]
+    VtY = [[sum(Vt[i][k] * Y_col[k][0] for k in range(len(Y_col)))] for i in range(len(Vt))]
+
+    for i in range(len(VtV)): VtV[i][i] += lam
+    # Simplified Gauss
+    aug = [row[:] + [VtY[i][0]] for i, row in enumerate(VtV)]
+    n = len(VtV)
+    for i in range(n):
+        aug[i] = [val / aug[i][i] for val in aug[i]]
+        for j in range(n):
+            if i != j:
+                aug[j] = [aug[j][k] - aug[j][i]*aug[i][k] for k in range(n+1)]
+    return [aug[i][n] for i in range(n)]
+
+coeffs = poly_fit_ridge(X_train, Y_train, degree)
+
+3. Test de l'erreur aux bords vs au centre
+error_center = abs(runge_function(0.0) - eval_poly(coeffs, 0.0))
+error_edge = abs(runge_function(0.95) - eval_poly(coeffs, 0.95))
+
+assert error_edge > 5 * error_center, "L'erreur au bord doit exploser par rapport au centre (Runge)."
+print(f"TP2 Valide : Erreur centre = {error_center:.4f}, Erreur bord = {error_edge:.4f}")
+\end{lstlisting}
+
+\section{Objectif}
+Implementer la penalite $L_2$ au cœur des equations normales. Etudier son effet sur des donnees tres bruitees et comparer les coefficients avec et sans regularisation pour demontrer la reduction de variance (shrinkage).
+
+\section{Code Python et Validation Mathematique}
+
+\begin{lstlisting}[language=Python]
+def fit_ridge(X_data, Y_data, degree, lambda_reg):
+    V = [[(x**j) for j in range(degree + 1)] for x in X_data]
+    Vt = [[V[j][i] for j in range(len(V))] for i in range(len(V[0]))]
+
+    VtV = [[sum(Vt[i][k] * V[k][j] for k in range(len(V))) for j in range(len(V[0]))] for i in range(len(Vt))]
+
+    # Ajout de la penalite Ridge sur la diagonale (sauf biais)
+    for i in range(1, len(VtV)): # On ne regularise generalement pas le terme constant a_0
+        VtV[i][i] += lambda_reg
+
+    Y_col = [[y] for y in Y_data]
+    VtY = [[sum(Vt[i][k] * Y_col[k][0] for k in range(len(Y_col)))] for i in range(len(Vt))]
+
+    aug = [row[:] + [VtY[i][0]] for i, row in enumerate(VtV)]
+    n = len(VtV)
+    for i in range(n):
+        pivot = aug[i][i]
+        aug[i] = [val / pivot for val in aug[i]]
+        for j in range(n):
+            if i != j:
+                aug[j] = [aug[j][k] - aug[j][i]*aug[i][k] for k in range(n+1)]
+    return [aug[i][n] for i in range(n)]
+
+Donnees mal conditionnees (points tres proches)
+X_data = [1.0, 1.01, 1.02]
+Y_data = [2.0, 2.01, 2.02]
+
+coeffs_no_reg = fit_ridge(X_data, Y_data, 2, 0.0)
+coeffs_reg = fit_ridge(X_data, Y_data, 2, 1.0)
+
+norm_no_reg = sum(c**2 for c in coeffs_no_reg[1:])
+norm_reg = sum(c**2 for c in coeffs_reg[1:])
+
+assert norm_reg < norm_no_reg, "La regularisation Ridge doit reduire la norme des coefficients (Shrinkage)."
+print(f"TP3 Valide. Norme sans Ridge: {norm_no_reg:.2f} | Norme avec Ridge: {norm_reg:.2f}")
+\end{lstlisting}
+
+\section{Objectif}
+Implementer la descente de gradient par lots (Batch Gradient Descent) pour optimiser les coefficients sans jamais inverser de matrice. Illustrer la notion de pas d'apprentissage (learning rate) et d'epoques.
+
+\section{Code Python et Validation Mathematique}
+
+\begin{lstlisting}[language=Python]
+def eval_poly(coeffs, x):
+    return sum(c * (x**i) for i, c in enumerate(coeffs))
+
+def gradient_descent_poly(X_data, Y_data, degree, epochs=1000, lr=0.01):
+    # Initialisation des coefficients a 0
+    coeffs = [0.0] * (degree + 1)
+    n = len(X_data)
+
+    for epoch in range(epochs):
+        # Calcul du gradient
+        grads = [0.0] * (degree + 1)
+        for i in range(n):
+            x = X_data[i]
+            y_pred = eval_poly(coeffs, x)
+            error = y_pred - Y_data[i]
+
+            # dLoss/dcoeff_k = 2 * error * (d_y_pred/dcoeff_k) = 2 * error * x^k
+            for k in range(degree + 1):
+                grads[k] += 2.0 * error * (x**k)
+
+        # Mise a jour
+        for k in range(degree + 1):
+            coeffs[k] -= lr * (grads[k] / n) # Moyenne du gradient
+
+    return coeffs
+
+Test sur une droite
+X = [0.0, 1.0, 2.0]
+Y = [3.0, 5.0, 7.0] # y = 2x + 3
+
+final_coeffs = gradient_descent_poly(X, Y, 1, epochs=2000, lr=0.1)
+
+assert abs(final_coeffs[0] - 3.0) < 0.1, "Biais incorrect"
+assert abs(final_coeffs[1] - 2.0) < 0.1, "Pente incorrecte"
+print(f"TP4 Valide. Coefficients SGD trouves : {final_coeffs}")
+\end{lstlisting}
+
+\section{Objectif}
+Ecrire l'algorithme complet de Validation Croisee Leave-One-Out (sans la formule analytique pour prouver le concept informatique) afin de determiner le degre optimal d'un polynome pour un jeu de donnees. Le but est de trouver le point d'equilibre entre biais et variance.
+
+\section{Code Python et Validation Mathematique}
+
+\begin{lstlisting}[language=Python]
+Utilisation de la fonction fit_ridge du TP3
+def fit(X_data, Y_data, degree):
+    # Reprise du fit avec lambda tres faible
+    V = [[(x**j) for j in range(degree + 1)] for x in X_data]
+    Vt = [[V[j][i] for j in range(len(V))] for i in range(len(V[0]))]
+    VtV = [[sum(Vt[i][k] * V[k][j] for k in range(len(V))) for j in range(len(V[0]))] for i in range(len(Vt))]
+    for i in range(len(VtV)): VtV[i][i] += 1e-9
+    Y_col = [[y] for y in Y_data]
+    VtY = [[sum(Vt[i][k] * Y_col[k][0] for k in range(len(Y_col)))] for i in range(len(Vt))]
+    aug = [row[:] + [VtY[i][0]] for i, row in enumerate(VtV)]
+    n = len(VtV)
+    for i in range(n):
+        aug[i] = [val / aug[i][i] for val in aug[i]]
+        for j in range(n):
+            if i != j:
+                aug[j] = [aug[j][k] - aug[j][i]*aug[i][k] for k in range(n+1)]
+    return [aug[i][n] for i in range(n)]
+
+def eval_p(coeffs, x):
+    return sum(c * (x**i) for i, c in enumerate(coeffs))
+
+def loocv_error(X, Y, degree):
+    n = len(X)
+    total_error = 0.0
+    for i in range(n):
+        # Retrait de la i-eme donnee
+        X_train = X[:i] + X[i+1:]
+        Y_train = Y[:i] + Y[i+1:]
+
+        # Entrainement
+        coeffs = fit(X_train, Y_train, degree)
+
+        # Test sur la donnee laissee de cote
+        prediction = eval_p(coeffs, X[i])
+        total_error += (prediction - Y[i])**2
+
+    return total_error / n
+
+Donnees generees par une parabole bruitee
+X_data = [-2.0, -1.0, 0.0, 1.0, 2.0, 3.0]
+y = x^2 avec un peu de bruit
+Y_data = [4.1, 1.0, 0.1, 1.1, 3.9, 9.2]
+
+Testons les degres 1 a 4
+errors = []
+for d in range(1, 5):
+    err = loocv_error(X_data, Y_data, d)
+    errors.append(err)
+
+optimal_degree = errors.index(min(errors)) + 1
+
+Mathematiquement, le modele sous-jacent est de degre 2. Le LOOCV doit le trouver.
+assert optimal_degree == 2, f"Le LOOCV a echoue a identifier le vrai degre. Trouve: {optimal_degree}"
+print(f"TP5 Valide. Erreurs LOOCV : {errors}")
+print(f"Degre optimal selectionne : {optimal_degree}")
+\end{lstlisting}
+
+
+\end{document}
