@@ -40,7 +40,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-32/Jalon-32.md|Jalon 32 : Preuve complète du théorème spectral pour les endomorphismes symétriques.]] : Preuve complète du théorème spectral pour les endomorphismes symétriques.
 - [x] [[jalon-33/Jalon-33.md|Jalon 33 : Formes quadratiques]] : Formes quadratiques, réduction de Gauss, base orthogonale et loi d'inertie de Sylvester.
 - [x] [[jalon-34/Jalon-34.md|Jalon 34 : Topologie élémentaire des espaces vectoriels normés]] : Topologie élémentaire des espaces vectoriels normés (normes, équivalence des normes en dimension finie).
-- [ ] [[jalon-35/Jalon 35 (Caractérisation séquentielle des ouverts).md|Jalon 35 : Caractérisation séquentielle des ouverts]] : Caractérisation séquentielle des ouverts, des fermés et des compacts (Heine-Borel).
+- [x] [[jalon-35/Jalon-35.md|Jalon 35 : Caractérisation séquentielle des ouverts]] : Caractérisation séquentielle des ouverts, des fermés et des compacts (Heine-Borel).
 - [ ] [[jalon-36/Jalon 36 (Livrable IA).md|Jalon 36 : Livrable IA]] : Livrable IA T3 : Écriture des équations de la décomposition en valeurs singulières (SVD) et application mathématique à la compression d'une matrice de pixels d'image.
 ### Trimestre 4 : calcul différentiel et intégration de Riemann
 - [ ] [[jalon-37/Jalon 37 (Intégrale de Riemann sur un segment).md|Jalon 37 : Intégrale de Riemann sur un segment]] : Intégrale de Riemann sur un segment, fonctions en escalier et propriétés de l'intégrale.
