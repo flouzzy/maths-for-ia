@@ -10,7 +10,7 @@ prev: "[[Jalon-24.md]]"
 next: "[[Jalon 26 (Espaces euclidiens).md]]"
 ---
 
-# Jalon 25 : Formes bilinéaires, formes sesquilinieaires, produit scalaire et inégalité de Cauchy-Schwarz
+# Partie 1 : Intuition et Genèse
 
 ## 1. Présentation du concept clé
 L'histoire de l'algèbre linéaire est fondamentalement liée au désir de généraliser notre intuition géométrique de l'espace tridimensionnel physique à des espaces abstraits de dimension quelconque. Les vecteurs, conçus initialement comme des flèches dotées d'une longueur et d'une direction, ont évolué pour devenir de simples éléments d'un espace vectoriel, perdant au passage leurs attributs métriques immédiats. Le besoin de comparer ces objets abstraits, de mesurer leurs longueurs et de quantifier l'angle qui les sépare s'est alors imposé de manière impérieuse pour résoudre des problèmes de projection et d'optimisation.
@@ -45,7 +45,6 @@ Soit $E$ un espace vectoriel sur un corps $\mathbb{K}$, où $\mathbb{K} = \mathb
 > Pour tous vecteurs $x, y \in E$ :
 > $$\|x + y\| \le \|x\| + \|y\|$$
 
-## 3. Démonstrations
 
 ### Démonstration du Théorème Pivot : L'Inégalité de Cauchy-Schwarz (Cas réel)
 Soit $E$ un espace vectoriel sur le corps des réels, muni d'un produit scalaire $\langle \cdot, \cdot \rangle$. Considérons deux vecteurs quelconques $x, y \in E$.
