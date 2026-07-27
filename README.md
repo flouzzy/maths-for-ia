@@ -118,7 +118,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 33](jalon-33/Jalon-33.md)** : Formes quadratiques, réduction de Gauss, base orthogonale et loi d'inertie de Sylvester. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 34](jalon-34/Jalon-34.md)** : Topologie élémentaire des espaces vectoriels normés (normes, équivalence des normes en dimension finie). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 35](jalon-35/Jalon-35.md)** : Caractérisation séquentielle des ouverts, des fermés et des compacts (Heine-Borel). 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 36](jalon-36/Jalon%2036%20%28Livrable%20IA%29.md)** : Livrable IA T3 : Écriture des équations de la décomposition en valeurs singulières (SVD) et application mathématique à la compression d'une matrice de pixels d'image.
+- **[Jalon 36](jalon-36/Jalon-36.md)** : Livrable IA T3 : Écriture des équations de la décomposition en valeurs singulières (SVD) et application mathématique à la compression d'une matrice de pixels d'image. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 
 </details>
 
@@ -401,6 +401,10 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 ## Historique d'Audit
 
+### 2026-07-26-audit
+- [[#2026-07-26-audit|2026-07-26]] : [Audit & Weekly Compilation] - Jalon 25 - Formes bilinéaires, formes sesquilinieaires, produit scalaire et inégalité de Cauchy-Schwarz. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+
+
 ### 2026-07-24-audit
 - [[#2026-07-24-audit|2026-07-24]] : [Audit & Weekly Compilation] - Jalon 25 - Formes bilinéaires. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 
@@ -421,3 +425,4 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 
 - [2026-07-22] : [Upsert/Création] du Jalon 33 - Formes quadratiques. Status: Terminé.
 - [2026-07-23] : [Upsert/Création] du Jalon 34 - Topologie élémentaire des espaces vectoriels normés. Status: Terminé.
+- [2026-07-26] : [Upsert/Création] du Jalon 36 - Livrable IA T3 : Décomposition en valeurs singulières (SVD) et compression d'image. Status: Terminé.
