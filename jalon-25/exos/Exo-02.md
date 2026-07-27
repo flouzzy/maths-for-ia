@@ -3,52 +3,26 @@ title: "Exercice 2 : Forme bilinéaire symétrique et matrice associée"
 difficulty: 1
 ---
 
-## Énoncé Formel et Typage Rigoureux
-Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
-Soit $E = \mathbb{R}^2$. On définit l'application $B : E \times E \to \mathbb{R}$ par :
-$B(X, Y) = 2x_1y_1 - x_1y_2 - x_2y_1 + 3x_2y_2$, où $X = (x_1, x_2)$ et $Y = (y_1, y_2)$.
-1. Montrer que $B$ est une forme bilinéaire symétrique.
-2. Écrire la matrice $A$ associée à $B$ dans la base canonique de $\mathbb{R}^2$.
-3. $B$ est-elle un produit scalaire ?
+### Exercice 2 : Produit scalaire sur l'espace des fonctions continues
+**Niveau : \star \star**
 
-## Preuve Analytique Pas-à-Pas (Zéro Ellipse)
-La démarche déductive exige une formalisation intégrale sans ellipse.
-1. **Symétrie :**
-   Soient $X = (x_1, x_2)$ et $Y = (y_1, y_2)$ dans $\mathbb{R}^2$.
-   $B(Y, X) = 2y_1x_1 - y_1x_2 - y_2x_1 + 3y_2x_2$
-   Par commutativité de la multiplication dans $\mathbb{R}$ :
-   $B(Y, X) = 2x_1y_1 - x_2y_1 - x_1y_2 + 3x_2y_2 = B(X, Y)$.
-   Donc $B$ est symétrique.
-   **Bilinéarité :**
-   Puisque $B$ est symétrique, il suffit de prouver la linéarité par rapport à la première variable.
-   Soient $X = (x_1, x_2)$, $X' = (x'_1, x'_2)$, $Y = (y_1, y_2)$ et $\lambda \in \mathbb{R}$.
-   $B(\lambda X + X', Y) = 2(\lambda x_1 + x'_1)y_1 - (\lambda x_1 + x'_1)y_2 - (\lambda x_2 + x'_2)y_1 + 3(\lambda x_2 + x'_2)y_2$
-   $B(\lambda X + X', Y) = \lambda(2x_1y_1 - x_1y_2 - x_2y_1 + 3x_2y_2) + (2x'_1y_1 - x'_1y_2 - x'_2y_1 + 3x'_2y_2)$
-   $B(\lambda X + X', Y) = \lambda B(X, Y) + B(X', Y)$.
-   $B$ est bien une forme bilinéaire.
+**Énoncé :**
+Soit $E = \mathcal{C}([0, 1], \mathbb{R})$ l'espace vectoriel des fonctions continues de $[0, 1]$ dans $\mathbb{R}$. Pour $f, g \in E$, on pose :
+\[ \phi(f, g) = \int_0^1 f(t)g(t) dt \]
+1. Démontrer avec la plus stricte rigueur que $\phi$ est un produit scalaire sur $E$.
+2. En déduire que pour toute fonction $f \in E$, on a : $\left( \int_0^1 f(t) dt \right)^2 \le \int_0^1 f(t)^2 dt$.
 
-2. **Matrice associée :**
-   Soit $\mathcal{B} = (e_1, e_2)$ la base canonique, avec $e_1 = (1, 0)$ et $e_2 = (0, 1)$.
-   La matrice $A = (a_{i,j})$ est définie par $a_{i,j} = B(e_i, e_j)$.
-   $B(e_1, e_1) = 2(1)(1) - 0 - 0 + 0 = 2$
-   $B(e_1, e_2) = 0 - 1(1) - 0 + 0 = -1$
-   $B(e_2, e_1) = 0 - 0 - 1(1) + 0 = -1$ (cohérent avec la symétrie)
-   $B(e_2, e_2) = 0 - 0 - 0 + 3(1)(1) = 3$
-   Ainsi, $A = \begin{pmatrix} 2 & -1 \\ -1 & 3 \end{pmatrix}$.
-   On vérifie bien que $B(X, Y) = X^T A Y$.
-
-3. **Caractère défini positif (Produit scalaire) :**
-   $B$ est un produit scalaire si elle est définie positive. Evaluons $B(X, X)$ pour tout $X \in \mathbb{R}^2$ :
-   $B(X, X) = 2x_1^2 - 2x_1x_2 + 3x_2^2$
-   Utilisons la méthode de Gauss (complétion du carré) :
-   $B(X, X) = 2(x_1^2 - x_1x_2) + 3x_2^2$
-   $B(X, X) = 2( (x_1 - \frac{1}{2}x_2)^2 - \frac{1}{4}x_2^2 ) + 3x_2^2$
-   $B(X, X) = 2(x_1 - \frac{1}{2}x_2)^2 - \frac{1}{2}x_2^2 + 3x_2^2$
-   $B(X, X) = 2(x_1 - \frac{1}{2}x_2)^2 + \frac{5}{2}x_2^2$
-   - **Positivité :** C'est une somme de carrés pondérés par des coefficients strictement positifs (2 et 5/2), donc $B(X, X) \ge 0$ pour tout $X$.
-   - **Caractère défini :** Si $B(X, X) = 0$, alors chaque terme de la somme doit être nul car ils sont tous positifs ou nuls.
-     Donc $2(x_1 - \frac{1}{2}x_2)^2 = 0$ et $\frac{5}{2}x_2^2 = 0$.
-     La deuxième équation donne $x_2 = 0$.
-     En remplaçant dans la première, on obtient $2(x_1 - 0)^2 = 0 \implies x_1 = 0$.
-     Ainsi, $X = (0, 0) = 0_{\mathbb{R}^2}$.
-   $B$ est définie positive. C'est donc un produit scalaire sur $\mathbb{R}^2$.
+**Correction (Zéro Ellipse) :**
+1. Vérifions les axiomes du produit scalaire :
+   *   **Symétrie :** Pour tous $f, g \in E$, $\phi(f, g) = \int_0^1 f(t)g(t) dt$. Or la multiplication dans $\mathbb{R}$ est commutative, donc $f(t)g(t) = g(t)f(t)$. Par suite, $\phi(f, g) = \int_0^1 g(t)f(t) dt = \phi(g, f)$.
+   *   **Bilinéarité :** Par symétrie, il suffit de montrer la linéarité à gauche. Soient $f, g, h \in E$ et $\lambda \in \mathbb{R}$. Par linéarité de l'intégrale :
+       \[ \phi(\lambda f + g, h) = \int_0^1 (\lambda f(t) + g(t))h(t) dt = \lambda \int_0^1 f(t)h(t) dt + \int_0^1 g(t)h(t) dt = \lambda \phi(f, h) + \phi(g, h) \]
+   *   **Positivité :** Pour tout $f \in E$, $\phi(f, f) = \int_0^1 f(t)^2 dt$. Puisque $\forall t \in [0, 1], f(t)^2 \ge 0$, l'intégrale d'une fonction positive est positive. Donc $\phi(f, f) \ge 0$.
+   *   **Définie :** Soit $f \in E$ telle que $\phi(f, f) = 0$, c'est-à-dire $\int_0^1 f(t)^2 dt = 0$. La fonction $t \mapsto f(t)^2$ est continue sur $[0, 1]$ et positive. Si l'intégrale d'une fonction continue et positive sur un segment est nulle, alors cette fonction est identiquement nulle. Donc $\forall t \in [0, 1], f(t)^2 = 0$, ce qui implique $f(t) = 0$. Ainsi $f = 0_E$.
+Conclusion : $\phi$ est bien un produit scalaire.
+2. Appliquons l'inégalité de Cauchy-Schwarz avec les fonctions $f$ et la fonction constante $g(t) = 1$.
+On a $\phi(f, g) = \int_0^1 f(t) \times 1 dt = \int_0^1 f(t) dt$.
+Et $\|g\|^2 = \int_0^1 1^2 dt = 1 \implies \|g\| = 1$.
+Et $\|f\|^2 = \int_0^1 f(t)^2 dt$.
+L'inégalité $|\phi(f, g)| \le \|f\| \|g\|$ s'écrit $\left| \int_0^1 f(t) dt \right| \le \sqrt{\int_0^1 f(t)^2 dt} \times 1$.
+En élevant au carré de part et d'autre, on obtient l'inégalité demandée.

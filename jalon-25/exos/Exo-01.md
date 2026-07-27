@@ -3,34 +3,26 @@ title: "Exercice 1 : Produit scalaire canonique et inégalité triangulaire dans
 difficulty: 1
 ---
 
-## Énoncé Formel et Typage Rigoureux
-Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
-Soit $E = \mathbb{R}^n$ muni du produit scalaire canonique $\langle x, y \rangle = \sum_{i=1}^n x_i y_i$.
-1. Démontrer que pour tout $x, y \in E$, $\|x + y\|^2 = \|x\|^2 + 2\langle x, y \rangle + \|y\|^2$.
-2. En déduire, en utilisant l'inégalité de Cauchy-Schwarz, l'inégalité triangulaire : $\|x + y\| \le \|x\| + \|y\|$.
+### Exercice 1 : Produit scalaire canonique et propriétés fondamentales
+**Niveau : \star**
 
-## Preuve Analytique Pas-à-Pas (Zéro Ellipse)
-La démarche déductive exige une formalisation intégrale sans ellipse.
-1. **Développement de la norme au carré :**
-   Par définition de la norme associée au produit scalaire :
-   $$\|x + y\|^2 = \langle x + y, x + y \rangle$$
-   Par bilinéarité (linéarité à gauche puis à droite) :
-   $$\langle x + y, x + y \rangle = \langle x, x + y \rangle + \langle y, x + y \rangle$$
-   $$\langle x + y, x + y \rangle = \langle x, x \rangle + \langle x, y \rangle + \langle y, x \rangle + \langle y, y \rangle$$
-   Puisque le produit scalaire est symétrique (sur $\mathbb{R}$), $\langle y, x \rangle = \langle x, y \rangle$.
-   $$\|x + y\|^2 = \|x\|^2 + 2\langle x, y \rangle + \|y\|^2$$
+**Énoncé :**
+Soit $E = \mathbb{R}^3$. On considère les vecteurs $u = (1, -2, 3)$ et $v = (2, 1, -1)$.
+1. Calculer le produit scalaire canonique $\langle u, v \rangle$.
+2. Calculer les normes $\|u\|$ et $\|v\|$.
+3. Vérifier explicitement l'inégalité de Cauchy-Schwarz sur ces vecteurs.
 
-2. **Preuve de l'inégalité triangulaire :**
-   D'après la question 1, on a :
-   $$\|x + y\|^2 = \|x\|^2 + 2\langle x, y \rangle + \|y\|^2$$
-   Or, pour tout réel $a$, on a $a \le |a|$. Donc :
-   $$\langle x, y \rangle \le |\langle x, y \rangle|$$
-   Ce qui donne :
-   $$\|x + y\|^2 \le \|x\|^2 + 2|\langle x, y \rangle| + \|y\|^2$$
-   D'après l'inégalité de Cauchy-Schwarz, on sait que $|\langle x, y \rangle| \le \|x\| \cdot \|y\|$. On substitue :
-   $$\|x + y\|^2 \le \|x\|^2 + 2\|x\|\|y\| + \|y\|^2$$
-   Le membre de droite est un produit remarquable :
-   $$\|x + y\|^2 \le (\|x\| + \|y\|)^2$$
-   Puisque les normes sont des quantités positives, la fonction racine carrée, strictement croissante sur $\mathbb{R}^+$, conserve l'ordre. On obtient donc :
-   $$\|x + y\| \le \|x\| + \|y\|$$
-   Ce qui achève la démonstration.
+**Correction (Zéro Ellipse) :**
+1. Le produit scalaire canonique sur $\mathbb{R}^3$ est donné par $\langle x, y \rangle = x_1 y_1 + x_2 y_2 + x_3 y_3$.
+Ainsi :
+\[ \langle u, v \rangle = (1)(2) + (-2)(1) + (3)(-1) = 2 - 2 - 3 = -3 \]
+2. La norme est induite par le produit scalaire : $\|x\| = \sqrt{\langle x, x \rangle}$.
+Pour $u$ :
+\[ \|u\|^2 = 1^2 + (-2)^2 + 3^2 = 1 + 4 + 9 = 14 \implies \|u\| = \sqrt{14} \]
+Pour $v$ :
+\[ \|v\|^2 = 2^2 + 1^2 + (-1)^2 = 4 + 1 + 1 = 6 \implies \|v\| = \sqrt{6} \]
+3. Évaluons les termes de l'inégalité de Cauchy-Schwarz $| \langle u, v \rangle | \le \|u\| \|v\|$.
+D'une part, la valeur absolue du produit scalaire est $| -3 | = 3$.
+D'autre part, le produit des normes est $\sqrt{14} \sqrt{6} = \sqrt{84}$.
+Puisque $84 > 9$, la fonction racine carrée étant croissante, $\sqrt{84} > \sqrt{9} = 3$.
+On a bien $3 \le \sqrt{84}$, l'inégalité de Cauchy-Schwarz est numériquement confirmée de manière rigoureuse.
