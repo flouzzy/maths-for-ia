@@ -401,6 +401,10 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 ## Historique d'Audit
 
+### 2026-07-26-audit
+- [[#2026-07-26-audit|2026-07-26]] : [Audit & Weekly Compilation] - Jalon 25 - Formes bilinéaires, formes sesquilinieaires, produit scalaire et inégalité de Cauchy-Schwarz. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+
+
 ### 2026-07-24-audit
 - [[#2026-07-24-audit|2026-07-24]] : [Audit & Weekly Compilation] - Jalon 24 - Livrable IA T2 : Analyse mathématique des critères de convergence d'une régression polynomiale. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 
