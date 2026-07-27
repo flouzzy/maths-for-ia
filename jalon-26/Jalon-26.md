@@ -182,6 +182,34 @@ Soit $(e_1, \ldots, e_p)$ une famille libre de $E$. Il existe une unique famille
 
 C'est le théorème central pour l'approximation.
 
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.5]
+  % Sous-espace F (une droite)
+  \draw[thick, blue] (-2, -1) -- (4, 2) node[above right] {$F$};
+
+  % Vecteur x
+  \coordinate (O) at (0,0);
+  \coordinate (x) at (1, 2.5);
+  \draw[->, thick, red] (O) -- (x) node[above] {$x$};
+
+  % Projection p_F(x)
+  % Direction de F est (2, 1), norme = sqrt(5). Produit scalaire de x(1, 2.5) avec (2,1) = 2 + 2.5 = 4.5
+  % 4.5 / 5 * (2, 1) = (1.8, 0.9)
+  \coordinate (p) at (1.8, 0.9);
+  \draw[->, thick, violet] (O) -- (p) node[below right] {$p_F(x)$};
+
+  % Vecteur orthogonal x - p_F(x)
+  \draw[->, thick, orange] (p) -- (x) node[midway, left] {$x - p_F(x)$};
+
+  % Symbole angle droit
+  % Vecteur (1.8, 0.9) à (1.8-0.1, 0.9+0.2)
+  \draw (1.8, 0.9) ++(-0.2, 0.4) -- ++(-0.4, -0.2) -- ++(0.2, -0.4); % Approximate right angle
+\end{tikzpicture}
+\caption{Projection orthogonale d'un vecteur $x$ sur un sous-espace $F$}
+\end{figure}
+
+
 **Théorème** :
 Soit $E$ un espace préhilbertien et $F$ un sous-espace de dimension finie de $E$. Pour tout $x \in E$, il existe un unique vecteur de $F$, noté $p_F(x)$, tel que $x - p_F(x) \in F^\perp$.
 De plus, $p_F(x)$ réalise la distance minimale entre $x$ et $F$ :
