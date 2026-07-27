@@ -43,7 +43,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-35/Jalon-35.md|Jalon 35 : Caractérisation séquentielle des ouverts]] : Caractérisation séquentielle des ouverts, des fermés et des compacts (Heine-Borel).
 - [x] [[jalon-36/Jalon-36.md|Jalon 36 : Livrable IA T3 : Décomposition en valeurs singulières (SVD) et compression d'image]] : Livrable IA T3 : Écriture des équations de la décomposition en valeurs singulières (SVD) et application mathématique à la compression d'une matrice de pixels d'image.
 ### Trimestre 4 : calcul différentiel et intégration de Riemann
-- [ ] [[jalon-37/Jalon 37 (Intégrale de Riemann sur un segment).md|Jalon 37 : Intégrale de Riemann sur un segment]] : Intégrale de Riemann sur un segment, fonctions en escalier et propriétés de l'intégrale.
+- [x] [[jalon-37/Jalon-37.md|Jalon 37 : Intégrale de Riemann sur un segment]] : Intégrale de Riemann sur un segment, fonctions en escalier et propriétés de l'intégrale.
 - [ ] [[jalon-38/Jalon 38 (Théorème fondamental de l'analyse).md|Jalon 38 : Théorème fondamental de l'analyse]] : Théorème fondamental de l'analyse, primitives et techniques d'intégration (IPP, changement de variable).
 - [ ] [[jalon-39/Jalon 39 (Intégrales généralisées sur un intervalle quelconque et critères de convergence.).md|Jalon 39 : Intégrales généralisées sur un intervalle quelconque et critères de convergence.]] : Intégrales généralisées sur un intervalle quelconque et critères de convergence.
 - [ ] [[jalon-40/Jalon 40 (Intégrales dépendant d'un paramètre).md|Jalon 40 : Intégrales dépendant d'un paramètre]] : Intégrales dépendant d'un paramètre, théorèmes de continuité et de dérivation sous le signe $\\int$.
