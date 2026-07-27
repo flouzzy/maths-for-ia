@@ -167,6 +167,9 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 ## Historique d'Audit
 
 ### 2026-07-24-audit
+- [[#2026-07-24-audit|2026-07-24]] : [Audit & Weekly Compilation] - Jalon 25 - Formes bilinéaires. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+
+### 2026-07-24-audit
 - [[#2026-07-24-audit|2026-07-24]] : [Audit & Weekly Compilation] - Jalon 24 - Livrable IA T2 : Analyse mathématique des critères de convergence d'une régression polynomiale. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 
 ### 2026-07-22-audit

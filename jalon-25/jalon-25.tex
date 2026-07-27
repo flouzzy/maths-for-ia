@@ -1,0 +1,481 @@
+\documentclass[a4paper,11pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm, mathrsfs}
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{green!60!black},
+  stringstyle=\color{red},
+  showstringspaces=false,
+  breaklines=true,
+  literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ç}{{\c{c}}}1 {œ}{{\oe}}1 {ù}{{\`u}}1 {É}{{\'E}}1 {È}{{\`E}}1 {À}{{\`A}}1 {Ç}{{\c{C}}}1 {Î}{{\^I}}1 {î}{{\^i}}1 {â}{{\^a}}1 {ê}{{\^e}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+}
+
+\title{Formes Bilin\'eaires, Produit Scalaire et In\'egalit\'e de Cauchy-Schwarz}
+\author{Charles EDOU NZE}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter{Intuition et Gen\`ese du Concept}
+
+Historiquement, la notion de mesure, de distance et d'angle a d'abord émergé dans l'espace physique euclidien en dimension 2 et 3. Cependant, l'algèbre linéaire moderne, propulsée par les travaux de mathématiciens comme Peano et Banach, a nécessité une généralisation radicale : comment définir la "proximité" ou "l'orthogonalité" de deux objets abstraits, par exemple deux polynômes ou deux fonctions continues ? C'est ici qu'intervient la forme bilinéaire.
+En tant que concept, la forme bilinéaire agit comme une passerelle entre l'algèbre pure (la linéarité) et la géométrie (la métrique). Imaginez une machine qui absorbe deux vecteurs et crache un nombre scalaire mesurant leur "degré d'interaction". Si ce nombre est nul, les vecteurs s'ignorent totalement (ils sont orthogonaux). Si le nombre est maximal (relativement à leurs tailles respectives), ils sont intimement liés (colinéaires). Ce mécanisme universel permet de projeter n'importe quel espace vectoriel, si abstrait soit-il, dans notre intuition géométrique la plus primale.
+
+\begin{tikzpicture}[scale=1.5]
+  \coordinate (O) at (0,0);
+  \coordinate (U) at (3,1);
+  \coordinate (V) at (1,2.5);
+  \coordinate (P) at (1.5,0.5);
+
+  \draw[->, thick, blue] (O) -- (U) node[right] {$\vec{u}$};
+  \draw[->, thick, red] (O) -- (V) node[above left] {$\vec{v}$};
+  \draw[->, thick, dashed, purple] (O) -- (P) node[below right] {$P_{\vec{u}}(\vec{v})$};
+  \draw[dashed, thick, gray] (V) -- (P);
+
+  \tkzMarkRightAngle[size=0.2,fill=gray!20](V,P,O);
+\end{tikzpicture}
+
+La magie s'opère réellement avec l'Inégalité de Cauchy-Schwarz. Découverte initialement par Augustin-Louis Cauchy pour des sommes finies en 1821, puis étendue aux intégrales par Viktor Bunyakovsky en 1859 et enfin formulée pour les espaces préhilbertiens par Hermann Amandus Schwarz en 1885, cette inégalité borne la valeur absolue de cette interaction. Elle stipule, avec une rigueur implacable, que "l'ombre géométrique" (la projection) d'un vecteur sur un autre ne pourra jamais excéder la longueur intrinsèque de ce vecteur.
+
+
+\chapter{Formalisation et Structures Alg\'ebriques}
+
+Soit $\mathbb{K}$ un corps commutatif (généralement $\mathbb{R}$ ou $\mathbb{C}$). Soit $E$ un $\mathbb{K}$-espace vectoriel.
+
+Définition 1 : Forme bilinéaire
+Une application $\phi : E \times E \to \mathbb{K}$ est une forme bilinéaire si elle est linéaire par rapport à chacune de ses variables. C'est-à-dire, pour tout $x, y, z \in E$ et tout $\lambda, \mu \in \mathbb{K}$ :
+1. Linéarité à gauche : $\phi(\lambda x + \mu y, z) = \lambda \phi(x, z) + \mu \phi(y, z)$
+2. Linéarité à droite : $\phi(x, \lambda y + \mu z) = \lambda \phi(x, y) + \mu \phi(x, z)$
+
+*Exemple canonique :* Sur $E = \mathbb{R}^n$, l'application $\phi(x, y) = \sum_{i=1}^n x_i y_i$ est une forme bilinéaire.
+*Cas pathologique :* L'application nulle $\phi(x, y) = 0$ est bilinéaire, mais elle est complètement dégénérée et n'apporte aucune structure géométrique intéressante.
+
+Définition 2 : Forme symétrique et antisymétrique
+Une forme bilinéaire $\phi$ sur un $\mathbb{R}$-espace vectoriel est dite symétrique si $\forall (x, y) \in E^2, \phi(x, y) = \phi(y, x)$. Elle est dite antisymétrique si $\forall (x, y) \in E^2, \phi(x, y) = -\phi(y, x)$.
+
+Définition 3 : Forme sesquilinéaire (Cas complexe)
+Si $\mathbb{K} = \mathbb{C}$, on utilise des formes sesquilinéaires. L'application $\phi : E \times E \to \mathbb{C}$ est linéaire à droite et semi-linéaire à gauche :
+$\phi(\lambda x + \mu y, z) = \overline{\lambda} \phi(x, z) + \overline{\mu} \phi(y, z)$ (convention française, semi-linéarité à gauche).
+
+Définition 4 : Produit Scalaire (Cas Réel)
+Un produit scalaire sur un $\mathbb{R}$-espace vectoriel $E$ est une forme bilinéaire $\langle \cdot, \cdot \rangle$ qui est :
+1. Symétrique : $\langle x, y \rangle = \langle y, x \rangle$
+2. Positive : $\forall x \in E, \langle x, x \rangle \ge 0$
+3. Définie : $\forall x \in E, \langle x, x \rangle = 0 \implies x = 0_E$.
+
+Définition 5 : Espace Préhilbertien et Euclidien
+Un $\mathbb{R}$-espace vectoriel muni d'un produit scalaire est appelé un espace préhilbertien réel. S'il est de dimension finie, c'est un espace euclidien. S'il est de dimension infinie et complet pour la norme induite, c'est un espace de Hilbert.
+
+
+\chapter{D\'emonstrations Pas-\`a-Pas}
+
+Théorème (Inégalité de Cauchy-Schwarz)
+Soit $(E, \langle \cdot, \cdot \rangle)$ un espace préhilbertien réel. Pour tout $(x, y) \in E^2$, on a :
+\[ | \langle x, y \rangle | \le \sqrt{\langle x, x \rangle} \sqrt{\langle y, y \rangle} \]
+soit $| \langle x, y \rangle | \le \|x\| \|y\|$.
+L'égalité a lieu si et seulement si la famille $(x, y)$ est liée.
+
+Démonstration (Zéro Ellipse) :
+Fixons $x, y \in E$. Nous allons utiliser la positivité du produit scalaire sur des combinaisons linéaires de $x$ et $y$.
+Si $x = 0_E$, alors par bilinéarité $\langle 0_E, y \rangle = \langle 0 \cdot 0_E, y \rangle = 0 \cdot \langle 0_E, y \rangle = 0$. De même $\|x\| = 0$. On a donc $0 \le 0 \times \|y\|$, l'inégalité est vérifiée et la famille $(0_E, y)$ est bien liée.
+
+Supposons désormais $x \neq 0_E$. Considérons le vecteur paramétré $z(\lambda) = y - \lambda x$ pour un réel $\lambda \in \mathbb{R}$ quelconque.
+Par définition d'un produit scalaire, la forme est positive. Donc pour tout $\lambda \in \mathbb{R}$ :
+\[ \langle z(\lambda), z(\lambda) \rangle \ge 0 \]
+Développons cette expression en utilisant la bilinéarité et la symétrie :
+\[ \langle y - \lambda x, y - \lambda x \rangle = \langle y, y \rangle - \lambda \langle y, x \rangle - \lambda \langle x, y \rangle + \lambda^2 \langle x, x \rangle \]
+Puisque le produit scalaire est symétrique ($\langle x, y \rangle = \langle y, x \rangle$), on obtient :
+\[ \|x\|^2 \lambda^2 - 2 \langle x, y \rangle \lambda + \|y\|^2 \ge 0 \]
+Soit $P(\lambda) = a\lambda^2 + b\lambda + c$ avec $a = \|x\|^2$, $b = -2\langle x, y \rangle$ et $c = \|y\|^2$.
+Puisque $x \neq 0_E$, on a $a = \|x\|^2 > 0$ (car le produit scalaire est défini positif). $P(\lambda)$ est un trinôme du second degré à coefficients réels.
+Puisque ce trinôme est positif ou nul pour tout $\lambda \in \mathbb{R}$, il ne peut pas admettre deux racines réelles distinctes, sinon il changerait de signe (il serait négatif entre les racines puisque $a > 0$).
+Par conséquent, son discriminant réduit (ou discriminant classique) doit être inférieur ou égal à zéro.
+Calculons le discriminant :
+\[ \Delta = b^2 - 4ac = (-2\langle x, y \rangle)^2 - 4 \|x\|^2 \|y\|^2 \]
+\[ \Delta = 4 \langle x, y \rangle^2 - 4 \|x\|^2 \|y\|^2 \]
+Imposons $\Delta \le 0$ :
+\[ 4 \langle x, y \rangle^2 - 4 \|x\|^2 \|y\|^2 \le 0 \]
+En divisant par $4$ :
+\[ \langle x, y \rangle^2 \le \|x\|^2 \|y\|^2 \]
+Puisque la fonction racine carrée est croissante sur $\mathbb{R}_+$, on obtient :
+\[ | \langle x, y \rangle | \le \|x\| \|y\| \]
+Ceci achève la preuve de l'inégalité de Cauchy-Schwarz.
+
+Cas d'égalité :
+Supposons que l'égalité soit vérifiée : $| \langle x, y \rangle | = \|x\| \|y\|$. Alors $\Delta = 0$. Le trinôme $P(\lambda)$ admet une unique racine double $\lambda_0 \in \mathbb{R}$.
+Cela signifie qu'il existe un $\lambda_0$ tel que $P(\lambda_0) = 0$, c'est-à-dire $\langle y - \lambda_0 x, y - \lambda_0 x \rangle = 0$.
+Puisque le produit scalaire est défini, la seule façon qu'un vecteur ait une norme nulle est qu'il soit le vecteur nul :
+\[ y - \lambda_0 x = 0_E \implies y = \lambda_0 x \]
+Ceci démontre que la famille $(x, y)$ est liée, établissant complètement le théorème.
+
+
+\chapter{Exercices d'Application et de Concours}
+
+\subsection*{Exercice 1 : Produit scalaire canonique et propriétés fondamentales}
+Niveau : $\star$
+
+Énoncé :
+Soit $E = \mathbb{R}^3$. On considère les vecteurs $u = (1, -2, 3)$ et $v = (2, 1, -1)$.
+1. Calculer le produit scalaire canonique $\langle u, v \rangle$.
+2. Calculer les normes $\|u\|$ et $\|v\|$.
+3. Vérifier explicitement l'inégalité de Cauchy-Schwarz sur ces vecteurs.
+
+Correction (Zéro Ellipse) :
+1. Le produit scalaire canonique sur $\mathbb{R}^3$ est donné par $\langle x, y \rangle = x_1 y_1 + x_2 y_2 + x_3 y_3$.
+Ainsi :
+\[ \langle u, v \rangle = (1)(2) + (-2)(1) + (3)(-1) = 2 - 2 - 3 = -3 \]
+2. La norme est induite par le produit scalaire : $\|x\| = \sqrt{\langle x, x \rangle}$.
+Pour $u$ :
+\[ \|u\|^2 = 1^2 + (-2)^2 + 3^2 = 1 + 4 + 9 = 14 \implies \|u\| = \sqrt{14} \]
+Pour $v$ :
+\[ \|v\|^2 = 2^2 + 1^2 + (-1)^2 = 4 + 1 + 1 = 6 \implies \|v\| = \sqrt{6} \]
+3. Évaluons les termes de l'inégalité de Cauchy-Schwarz $| \langle u, v \rangle | \le \|u\| \|v\|$.
+D'une part, la valeur absolue du produit scalaire est $| -3 | = 3$.
+D'autre part, le produit des normes est $\sqrt{14} \sqrt{6} = \sqrt{84}$.
+Puisque $84 > 9$, la fonction racine carrée étant croissante, $\sqrt{84} > \sqrt{9} = 3$.
+On a bien $3 \le \sqrt{84}$, l'inégalité de Cauchy-Schwarz est numériquement confirmée de manière rigoureuse.
+
+\newpage
+
+\subsection*{Exercice 2 : Produit scalaire sur l'espace des fonctions continues}
+Niveau : $\star$ $\star$
+
+Énoncé :
+Soit $E = \mathcal{C}([0, 1], \mathbb{R})$ l'espace vectoriel des fonctions continues de $[0, 1]$ dans $\mathbb{R}$. Pour $f, g \in E$, on pose :
+\[ \phi(f, g) = \int_0^1 f(t)g(t) dt \]
+1. Démontrer avec la plus stricte rigueur que $\phi$ est un produit scalaire sur $E$.
+2. En déduire que pour toute fonction $f \in E$, on a : $\left( \int_0^1 f(t) dt \right)^2 \le \int_0^1 f(t)^2 dt$.
+
+Correction (Zéro Ellipse) :
+1. Vérifions les axiomes du produit scalaire :
+   *   Symétrie : Pour tous $f, g \in E$, $\phi(f, g) = \int_0^1 f(t)g(t) dt$. Or la multiplication dans $\mathbb{R}$ est commutative, donc $f(t)g(t) = g(t)f(t)$. Par suite, $\phi(f, g) = \int_0^1 g(t)f(t) dt = \phi(g, f)$.
+   *   Bilinéarité : Par symétrie, il suffit de montrer la linéarité à gauche. Soient $f, g, h \in E$ et $\lambda \in \mathbb{R}$. Par linéarité de l'intégrale :
+       \[ \phi(\lambda f + g, h) = \int_0^1 (\lambda f(t) + g(t))h(t) dt = \lambda \int_0^1 f(t)h(t) dt + \int_0^1 g(t)h(t) dt = \lambda \phi(f, h) + \phi(g, h) \]
+   *   Positivité : Pour tout $f \in E$, $\phi(f, f) = \int_0^1 f(t)^2 dt$. Puisque $\forall t \in [0, 1], f(t)^2 \ge 0$, l'intégrale d'une fonction positive est positive. Donc $\phi(f, f) \ge 0$.
+   *   Définie : Soit $f \in E$ telle que $\phi(f, f) = 0$, c'est-à-dire $\int_0^1 f(t)^2 dt = 0$. La fonction $t \mapsto f(t)^2$ est continue sur $[0, 1]$ et positive. Si l'intégrale d'une fonction continue et positive sur un segment est nulle, alors cette fonction est identiquement nulle. Donc $\forall t \in [0, 1], f(t)^2 = 0$, ce qui implique $f(t) = 0$. Ainsi $f = 0_E$.
+Conclusion : $\phi$ est bien un produit scalaire.
+2. Appliquons l'inégalité de Cauchy-Schwarz avec les fonctions $f$ et la fonction constante $g(t) = 1$.
+On a $\phi(f, g) = \int_0^1 f(t) \times 1 dt = \int_0^1 f(t) dt$.
+Et $\|g\|^2 = \int_0^1 1^2 dt = 1 \implies \|g\| = 1$.
+Et $\|f\|^2 = \int_0^1 f(t)^2 dt$.
+L'inégalité $|\phi(f, g)| \le \|f\| \|g\|$ s'écrit $\left| \int_0^1 f(t) dt \right| \le \sqrt{\int_0^1 f(t)^2 dt} \times 1$.
+En élevant au carré de part et d'autre, on obtient l'inégalité demandée.
+
+\newpage
+
+\subsection*{Exercice 3 : Matrices de Gram et indépendance linéaire}
+Niveau : $\star$ $\star$
+
+Énoncé :
+Soit $E$ un espace euclidien et $x_1, \ldots, x_n$ des vecteurs de $E$. La matrice de Gram $G(x_1, \ldots, x_n)$ est la matrice de terme général $G_{i,j} = \langle x_i, x_j \rangle$.
+Démontrer que la famille $(x_1, \ldots, x_n)$ est libre si et seulement si $\det(G) \neq 0$.
+
+Correction (Zéro Ellipse) :
+Soit $G \in M_n(\mathbb{R})$ définie par $G_{i,j} = \langle x_i, x_j \rangle$.
+Soit $U \in M_{n,1}(\mathbb{R})$ un vecteur colonne.
+Calculons la quantité matricielle $U^T G U$.
+Par définition du produit matriciel, le coefficient $i$ du vecteur $GU$ est $\sum_{j=1}^n G_{i,j} U_j = \sum_{j=1}^n \langle x_i, x_j \rangle U_j$.
+Puis $U^T (GU) = \sum_{i=1}^n U_i (\sum_{j=1}^n \langle x_i, x_j \rangle U_j) = \sum_{i=1}^n \sum_{j=1}^n U_i U_j \langle x_i, x_j \rangle$.
+Par bilinéarité du produit scalaire, ceci équivaut à :
+\[ U^T G U = \left\langle \sum_{i=1}^n U_i x_i, \sum_{j=1}^n U_j x_j \right\rangle = \left\| \sum_{i=1}^n U_i x_i \right\|^2 \]
+Supposons que la famille $(x_1, \ldots, x_n)$ est libre. Si $GU = 0$, alors $U^T G U = 0$, donc $\left\| \sum U_i x_i \right\|^2 = 0$. Le produit scalaire étant défini positif, $\sum_{i=1}^n U_i x_i = 0_E$. Comme la famille est libre, $\forall i, U_i = 0$, donc $U = 0$. Le noyau de $G$ est réduit à $\{0\}$, $G$ est inversible, d'où $\det(G) \neq 0$.
+Réciproquement, supposons $\det(G) \neq 0$. Si $\sum_{i=1}^n U_i x_i = 0_E$, alors pour tout $k \in \{1,\ldots,n\}$, $\langle x_k, \sum U_i x_i \rangle = 0$, ce qui se traduit par $\sum_{i=1}^n G_{k,i} U_i = 0$. Sous forme matricielle, $GU = 0$. Puisque $G$ est inversible, $U = 0$, donc $\forall i, U_i = 0$. La famille est bien libre.
+
+\newpage
+
+\subsection*{Exercice 4 : Identité du parallélogramme}
+Niveau : $\star$ $\star$
+
+Énoncé :
+Montrer que dans tout espace préhilbertien réel $(E, \langle \cdot, \cdot \rangle)$, pour tous $x, y \in E$, on a :
+\[ \|x + y\|^2 + \|x - y\|^2 = 2(\|x\|^2 + \|y\|^2) \]
+
+Correction (Zéro Ellipse) :
+Fixons $x, y \in E$. Développons le terme $\|x + y\|^2$ en utilisant la bilinéarité et la symétrie du produit scalaire :
+\[ \|x + y\|^2 = \langle x + y, x + y \rangle = \langle x, x \rangle + \langle x, y \rangle + \langle y, x \rangle + \langle y, y \rangle = \|x\|^2 + 2\langle x, y \rangle + \|y\|^2 \]
+Développons de la même manière le terme $\|x - y\|^2$ :
+\[ \|x - y\|^2 = \langle x - y, x - y \rangle = \langle x, x \rangle - \langle x, y \rangle - \langle y, x \rangle + \langle -y, -y \rangle = \|x\|^2 - 2\langle x, y \rangle + \|y\|^2 \]
+Sommons les deux identités rigoureusement établies :
+\[ \|x + y\|^2 + \|x - y\|^2 = (\|x\|^2 + 2\langle x, y \rangle + \|y\|^2) + (\|x\|^2 - 2\langle x, y \rangle + \|y\|^2) \]
+Les termes croisés $+2\langle x, y \rangle$ et $-2\langle x, y \rangle$ s'annulent exactement.
+Il reste donc :
+\[ \|x + y\|^2 + \|x - y\|^2 = 2\|x\|^2 + 2\|y\|^2 = 2(\|x\|^2 + \|y\|^2) \]
+Cette démonstration algébrique confirme l'identité géométrique classique liant les diagonales et les côtés d'un parallélogramme.
+
+\newpage
+
+\subsection*{Exercice 5 : Forme sesquilinéaire hermitienne}
+Niveau : $\star$ $\star$ $\star$
+
+Énoncé :
+Soit $E = \mathbb{C}^2$. On définit l'application $h(x, y) = x_1 \overline{y_1} + (1+i)x_1 \overline{y_2} + (1-i)x_2 \overline{y_1} + 3x_2 \overline{y_2}$.
+Démontrer que $h$ définit un produit scalaire hermitien sur $E$.
+
+Correction (Zéro Ellipse) :
+1. Linéarité à gauche et semi-linéarité à droite :
+   L'expression est une combinaison linéaire de termes de la forme $x_j \overline{y_k}$. Ces monômes sont linéaires en la variable $x$ et conjugués-linéaires en la variable $y$. La somme préserve ces propriétés, donc $h$ est une forme sesquilinéaire.
+2. Symétrie hermitienne :
+   Calculons $\overline{h(y, x)}$ :
+   \[ \overline{h(y, x)} = \overline{y_1 \overline{x_1} + (1+i)y_1 \overline{x_2} + (1-i)y_2 \overline{x_1} + 3y_2 \overline{x_2}} \]
+   \[ = \overline{y_1} x_1 + (1-i)\overline{y_1} x_2 + (1+i)\overline{y_2} x_1 + 3\overline{y_2} x_2 = h(x, y) \]
+   $h$ est bien hermitienne.
+3. Positivité :
+   Évaluons $h(x, x)$ :
+   \[ h(x, x) = |x_1|^2 + (1+i)x_1 \overline{x_2} + (1-i)x_2 \overline{x_1} + 3|x_2|^2 \]
+   Une approche algébrique par complétion de carrés donne :
+   \[ h(x, x) = |x_1 + (1-i)x_2|^2 - |(1-i)x_2|^2 + 3|x_2|^2 \]
+   Calculons $|1-i|^2 = 1^2 + (-1)^2 = 2$.
+   Donc $h(x, x) = |x_1 + (1-i)x_2|^2 - 2|x_2|^2 + 3|x_2|^2 = |x_1 + (1-i)x_2|^2 + |x_2|^2 \ge 0$.
+4. Définie :
+   Si $h(x, x) = 0$, la somme des carrés positifs est nulle :
+   $|x_1 + (1-i)x_2|^2 = 0$ et $|x_2|^2 = 0$.
+   La seconde équation donne $x_2 = 0$. En injectant dans la première, $|x_1|^2 = 0 \implies x_1 = 0$. Donc $x = 0_E$.
+Conclusion : $h$ est un produit scalaire hermitien.
+
+\newpage
+
+\subsection*{Exercice 6 : Forme bilinéaire associée à une trace matricielle}
+Niveau : $\star$ $\star$ $\star$
+
+Énoncé :
+Sur l'espace vectoriel $E = M_n(\mathbb{R})$, on pose $\phi(A, B) = \text{Tr}(A^T B)$. Démontrer que $\phi$ est un produit scalaire.
+
+Correction (Zéro Ellipse) :
+1. Symétrie :
+   $\phi(B, A) = \text{Tr}(B^T A)$. Sachant que la trace d'une matrice est égale à la trace de sa transposée :
+   $\text{Tr}(B^T A) = \text{Tr}((B^T A)^T) = \text{Tr}(A^T B) = \phi(A, B)$.
+2. Bilinéarité :
+   $\phi(\lambda A + B, C) = \text{Tr}((\lambda A + B)^T C) = \text{Tr}(\lambda A^T C + B^T C) = \lambda \text{Tr}(A^T C) + \text{Tr}(B^T C) = \lambda \phi(A, C) + \phi(B, C)$.
+3. Positivité :
+   $(A^T A)_{i,i} = \sum_{k=1}^n (A^T)_{i,k} A_{k,i} = \sum_{k=1}^n a_{k,i}^2$.
+   $\phi(A, A) = \text{Tr}(A^T A) = \sum_{i=1}^n \sum_{k=1}^n a_{k,i}^2 \ge 0$.
+4. Définie :
+   Si $\phi(A, A) = 0$, la somme des carrés est nulle, donc chaque terme est nul : $\forall i, k \in \{1,\ldots,n\}, a_{k,i}^2 = 0 \implies a_{k,i} = 0$. Donc la matrice $A$ est la matrice nulle $0_{M_n(\mathbb{R})}$.
+
+\newpage
+
+\subsection*{Exercice 7 : Inégalité de Cauchy-Schwarz pour les sommes doubles}
+Niveau : $\star$ $\star$ $\star$
+
+Énoncé :
+Prouver rigoureusement $\left( \sum_{i=1}^n a_i b_i \right)^2 \le (\sum_{i=1}^n a_i^2) (\sum_{i=1}^n b_i^2)$.
+
+Correction (Zéro Ellipse) :
+Soit le produit scalaire canonique $\langle x, y \rangle = \sum_{i=1}^n x_i y_i$ dans l'espace euclidien $\mathbb{R}^n$.
+Soient $A = (a_1, \dots, a_n)$ et $B = (b_1, \dots, b_n)$.
+L'inégalité de Cauchy-Schwarz énonce que $\langle A, B \rangle^2 \le \|A\|^2 \|B\|^2$.
+En remplaçant les normes et le produit scalaire par leurs définitions, nous obtenons instantanément :
+\[ \left( \sum_{i=1}^n a_i b_i \right)^2 \le \left( \sum_{i=1}^n a_i^2 \right) \left( \sum_{i=1}^n b_i^2 \right) \]
+C'est une application directe de l'abstraction vers l'algèbre concrète.
+
+\newpage
+
+\subsection*{Exercice 8 : Produit scalaire sur les polynômes}
+Niveau : $\star$ $\star$ $\star$ $\star$
+
+Énoncé :
+Sur $\mathbb{R}_2[X]$, on définit $\phi(P, Q) = P(-1)Q(-1) + P(0)Q(0) + P(1)Q(1)$.
+1. Prouver que $\phi$ est un produit scalaire.
+2. Trouver une base orthonormale de $\mathbb{R}_2[X]$ par Gram-Schmidt à partir de $(1, X, X^2)$.
+
+Correction (Zéro Ellipse) :
+1. Symétrie et bilinéarité évidentes. Positivité : $\phi(P, P) = P(-1)^2 + P(0)^2 + P(1)^2 \ge 0$.
+Définie : Si $\phi(P, P) = 0$, alors $P(-1)=0$, $P(0)=0$ et $P(1)=0$. Un polynôme de degré $\le 2$ admettant 3 racines distinctes est nul. Donc $P = 0$. $\phi$ est un produit scalaire.
+2. Procédé de Gram-Schmidt :
+   *   $e_1 = \frac{1}{\|1\|}$. On a $\|1\|^2 = 3$, donc $e_1 = \frac{1}{\sqrt{3}}$.
+   *   $u_2 = X - \langle X, e_1 \rangle e_1$. $\langle X, e_1 \rangle = (-1)\frac{1}{\sqrt{3}} + (0)\frac{1}{\sqrt{3}} + (1)\frac{1}{\sqrt{3}} = 0$. Donc $u_2 = X$. $\|X\|^2 = 2 \implies e_2 = \frac{X}{\sqrt{2}}$.
+   *   $u_3 = X^2 - \langle X^2, e_1 \rangle e_1 - \langle X^2, e_2 \rangle e_2$.
+       $\langle X^2, e_1 \rangle = \frac{2}{\sqrt{3}}$.
+       $\langle X^2, e_2 \rangle = 0$.
+       Donc $u_3 = X^2 - \frac{2}{3}$.
+       $\|u_3\|^2 = \frac{1}{9} + \frac{4}{9} + \frac{1}{9} = \frac{2}{3}$.
+       Alors $e_3 = \sqrt{\frac{3}{2}} (X^2 - \frac{2}{3})$.
+La base orthonormale est $( \frac{1}{\sqrt{3}}, \frac{X}{\sqrt{2}}, \sqrt{\frac{3}{2}}(X^2 - \frac{2}{3}) )$.
+
+\newpage
+
+\subsection*{Exercice 9 : Distance à un sous-espace vectoriel}
+Niveau : $\star$ $\star$ $\star$ $\star$
+
+Énoncé :
+Soit $E = \mathbb{R}^3$ muni du produit scalaire canonique. On note $F$ le plan d'équation $x + y + z = 0$.
+Déterminer par projection orthogonale la distance du point $A(1, 2, 3)$ au plan $F$.
+
+Correction (Zéro Ellipse) :
+La distance d'un point à un hyperplan $H$ d'équation $\langle n, X \rangle = 0$ (où $n$ est un vecteur normal) est donnée par $d = \frac{|\langle n, A \rangle|}{\|n\|}$.
+Ici, l'équation du plan est $\langle n, M \rangle = 0$ avec $n = (1, 1, 1)$ et $M = (x, y, z)$.
+Le vecteur $n$ est bien un vecteur normal à $F$.
+Calculons le produit scalaire : $\langle n, A \rangle = 1\times1 + 1\times2 + 1\times3 = 6$.
+Calculons la norme : $\|n\| = \sqrt{1^2 + 1^2 + 1^2} = \sqrt{3}$.
+La distance est donc $d = \frac{6}{\sqrt{3}} = 2\sqrt{3}$.
+
+\newpage
+
+\subsection*{Exercice 10 : Inégalité de Minkowski par Cauchy-Schwarz}
+Niveau : $\star$ $\star$ $\star$ $\star$ $\star$
+
+Énoncé :
+En n'utilisant strictement que l'inégalité de Cauchy-Schwarz, démontrer l'inégalité triangulaire de Minkowski pour la norme induite par un produit scalaire : $\|x + y\| \le \|x\| + \|y\|$.
+
+Correction (Zéro Ellipse) :
+Développons le carré de la norme de la somme :
+\[ \|x + y\|^2 = \langle x + y, x + y \rangle = \|x\|^2 + 2\langle x, y \rangle + \|y\|^2 \]
+Selon l'inégalité de Cauchy-Schwarz :
+\[ \langle x, y \rangle \le | \langle x, y \rangle | \le \|x\| \|y\| \]
+En substituant cette majoration :
+\[ \|x + y\|^2 \le \|x\|^2 + 2\|x\| \|y\| + \|y\|^2 = (\|x\| + \|y\|)^2 \]
+Puisque la fonction racine carrée est croissante et préserve l'ordre sur les nombres positifs, nous pouvons en déduire :
+\[ \sqrt{\|x + y\|^2} \le \sqrt{(\|x\| + \|y\|)^2} \]
+\[ \|x + y\| \le \|x\| + \|y\| \]
+La démonstration s'achève avec une rigueur absolue.
+
+
+\chapter{Travaux Pratiques et Simulations Algorithmiques}
+
+\subsection*{TP 1 : Implémentation matricielle du produit scalaire euclidien}
+L'objectif est d'implémenter rigoureusement le produit scalaire de deux vecteurs dans $\mathbb{R}^n$, uniquement via des structures de listes natives Python, garantissant la symétrie, la bilinéarité et la complétude du calcul scalaire.
+
+\begin{lstlisting}[language=Python]
+def produit_scalaire_canonique(u: list[float], v: list[float]) -> float:
+    # Calcule le produit scalaire canonique dans R^n avec validation de la dimension.
+    assert len(u) == len(v), "Typage strict : Les vecteurs doivent appartenir au meme espace E."
+
+    scalaire = 0.0
+    for i in range(len(u)):
+        scalaire += u[i] * v[i]
+
+    return scalaire
+
+def norme_euclidienne(u: list[float]) -> float:
+    # Calcule la norme induite.
+    import math
+    return math.sqrt(produit_scalaire_canonique(u, u))
+
+# Validation mathématique
+u_test = [1.0, 2.0, 3.0]
+v_test = [4.0, 5.0, 6.0]
+print(f"Produit scalaire : {produit_scalaire_canonique(u_test, v_test)}")
+\end{lstlisting}
+
+\newpage
+
+\subsection*{TP 2 : Vérification algorithmique de l'Inégalité de Cauchy-Schwarz}
+Ce script évalue numériquement l'inégalité sur un vaste ensemble de vecteurs générés aléatoirement pour observer la limite théorique sans bibliothèque tierce.
+
+\begin{lstlisting}[language=Python]
+import random
+
+def verifier_cauchy_schwarz(n_dim: int = 5, iterations: int = 1000):
+    for _ in range(iterations):
+        u = [random.uniform(-10, 10) for _ in range(n_dim)]
+        v = [random.uniform(-10, 10) for _ in range(n_dim)]
+
+        ps = produit_scalaire_canonique(u, v)
+        norme_u = norme_euclidienne(u)
+        norme_v = norme_euclidienne(v)
+
+        # Tolérance de flottant pour éviter l'échec artificiel
+        if abs(ps) > (norme_u * norme_v) + 1e-9:
+            raise AssertionError("Rupture de l'inégalité de Cauchy-Schwarz")
+
+    print("Inégalité vérifiée numériquement sur tout l'échantillon.")
+\end{lstlisting}
+
+\newpage
+
+\subsection*{TP 3 : La Matrice de Gram pour l'analyse de dépendance linéaire}
+Implémentation algorithmique de la matrice de Gram $G$ d'une famille de vecteurs. L'étude de son déterminant permet de valider la liberté de la famille.
+
+\begin{lstlisting}[language=Python]
+def construire_matrice_gram(famille: list[list[float]]) -> list[list[float]]:
+    # Construit la matrice de Gram G[i][j] = <v_i, v_j>
+    k = len(famille)
+    gram = [[0.0] * k for _ in range(k)]
+
+    for i in range(k):
+        for j in range(k):
+            # Optimisation par symétrie :
+            if i <= j:
+                ps = produit_scalaire_canonique(famille[i], famille[j])
+                gram[i][j] = ps
+                gram[j][i] = ps
+
+    return gram
+
+famille_libre = [[1.0, 0.0], [0.0, 1.0]]
+print(construire_matrice_gram(famille_libre))
+\end{lstlisting}
+
+\newpage
+
+\subsection*{TP 4 : Procédé d'Orthonormalisation de Gram-Schmidt }
+Le procédé théorique de Gram-Schmidt est l'algorithme par excellence de la projection de structures.
+
+\begin{lstlisting}[language=Python]
+def soustraction_vectorielle(u, v):
+    return [u_i - v_i for u_i, v_i in zip(u, v)]
+
+def multiplication_scalaire(lambd, u):
+    return [lambd * u_i for u_i in u]
+
+def gram_schmidt(famille: list[list[float]]) -> list[list[float]]:
+    base_orthonormale = []
+
+    for v in famille:
+        u = list(v) # copie par valeur
+        for e in base_orthonormale:
+            # Projection de v sur e
+            ps = produit_scalaire_canonique(v, e)
+            proj_e = multiplication_scalaire(ps, e)
+            u = soustraction_vectorielle(u, proj_e)
+
+        norme_u = norme_euclidienne(u)
+        if norme_u > 1e-9:
+            e_nouveau = multiplication_scalaire(1.0 / norme_u, u)
+            base_orthonormale.append(e_nouveau)
+
+    return base_orthonormale
+\end{lstlisting}
+
+\newpage
+
+\subsection*{TP 5 : Structure d'un Produit Scalaire Polynomial Intégral}
+Simuler l'espace de Hilbert $\mathcal{L}^2$ via la méthode d'intégration numérique des trapèzes pour évaluer l'orthogonalité de fonctions dans $C([0, 1], \mathbb{R})$.
+
+\begin{lstlisting}[language=Python]
+def integration_trapezes(f, g, a, b, n_steps=1000):
+    # Calcule le produit scalaire \int f(x)g(x)dx
+    pas = (b - a) / n_steps
+    integrale = 0.0
+    for i in range(n_steps):
+        x_g = a + i * pas
+        x_d = a + (i + 1) * pas
+        # Aire du trapèze : (pas / 2) * (F(x_g) + F(x_d)) avec F(x) = f(x)g(x)
+        y_g = f(x_g) * g(x_g)
+        y_d = f(x_d) * g(x_d)
+        integrale += (pas / 2.0) * (y_g + y_d)
+
+    return integrale
+
+# Orthogonalité asymptotique de cos(nx) et sin(nx) sur [0, 2pi]
+import math
+f1 = lambda x: math.cos(x)
+f2 = lambda x: math.sin(x)
+
+ps_ortho = integration_trapezes(f1, f2, 0, 2 * math.pi)
+print(f"Produit scalaire fonctionnel (doit être proche de 0) : {ps_ortho}")
+\end{lstlisting}
+
+
+\end{document}
