@@ -3,13 +3,15 @@ title: "Exercice 8 : Produit scalaire sur l'espace des matrices M_n(R)"
 difficulty: 4
 ---
 
-## Énoncé
+## Énoncé Formel et Typage Rigoureux
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
 Sur $E = M_n(\mathbb{R})$, on définit l'application $\varphi(A, B) = \text{Tr}(A^T B)$, où $\text{Tr}$ désigne la trace de la matrice et $A^T$ la transposée.
 1. Montrer que $\varphi$ définit un produit scalaire sur $E$.
 2. En déduire que pour toutes matrices $A, B \in M_n(\mathbb{R})$, $|\text{Tr}(A^T B)| \le \sqrt{\text{Tr}(A^T A)} \sqrt{\text{Tr}(B^T B)}$.
 3. Si $S$ est une matrice symétrique et $A$ une matrice antisymétrique, montrer que $\varphi(S, A) = 0$ (les espaces des matrices symétriques et antisymétriques sont orthogonaux pour ce produit scalaire).
 
-## Correction Détaillée
+## Preuve Analytique Pas-à-Pas (Zéro Ellipse)
+La démarche déductive exige une formalisation intégrale sans ellipse.
 **1. Validation du produit scalaire :**
 Soient $A, B, C \in M_n(\mathbb{R})$ et $\lambda \in \mathbb{R}$.
 - **Bilinéarité :** L'application trace et la transposition sont des opérateurs linéaires.

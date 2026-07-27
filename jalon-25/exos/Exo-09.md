@@ -3,14 +3,16 @@ title: "Exercice 9 : Optimisation sur l'hypercube via Cauchy-Schwarz"
 difficulty: 5
 ---
 
-## Énoncé
+## Énoncé Formel et Typage Rigoureux
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
 Dans $\mathbb{R}^n$, on considère l'hypercube $H_n = [-1, 1]^n$. Soit $v = (v_1, ..., v_n)$ un vecteur fixé de $\mathbb{R}^n$.
 On cherche à maximiser la fonction $f(x) = \langle v, x \rangle = \sum_{i=1}^n v_i x_i$ sur $H_n$.
 1. Utiliser l'inégalité de Cauchy-Schwarz pour trouver une borne supérieure $M_1$ de $f(x)$.
 2. Trouver, par une analyse coordonnée par coordonnée, la vraie valeur maximale $M_2$ de $f(x)$ sur $H_n$.
 3. L'inégalité de Cauchy-Schwarz est-elle optimale dans ce cas précis ?
 
-## Correction Détaillée
+## Preuve Analytique Pas-à-Pas (Zéro Ellipse)
+La démarche déductive exige une formalisation intégrale sans ellipse.
 **1. Borne via Cauchy-Schwarz :**
 Pour tout $x \in H_n$, on a $x = (x_1, ..., x_n)$ avec $x_i \in [-1, 1]$.
 Quelle est la norme maximale d'un tel vecteur ?

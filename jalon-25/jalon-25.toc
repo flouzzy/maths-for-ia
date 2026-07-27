@@ -1,0 +1,23 @@
+\babel@toc {french}{}\relax
+\contentsline {chapter}{\numberline {1}Intuition et genèse du concept}{2}{}%
+\contentsline {chapter}{\numberline {2}Formalisation et structures algébriques}{3}{}%
+\contentsline {chapter}{\numberline {3}Démonstrations pas-à-pas}{4}{}%
+\contentsline {section}{\numberline {3.1}L'Inégalité Fondamentale de Cauchy-Schwarz}{4}{}%
+\contentsline {section}{\numberline {3.2}L'Inégalité Triangulaire (Minkowski)}{4}{}%
+\contentsline {chapter}{\numberline {4}Exercices d'application et de concours}{5}{}%
+\contentsline {section}{\numberline {4.1}Exercice 1}{5}{}%
+\contentsline {section}{\numberline {4.2}Exercice 2}{6}{}%
+\contentsline {section}{\numberline {4.3}Exercice 3}{6}{}%
+\contentsline {section}{\numberline {4.4}Exercice 4}{7}{}%
+\contentsline {section}{\numberline {4.5}Exercice 5}{9}{}%
+\contentsline {section}{\numberline {4.6}Exercice 6}{9}{}%
+\contentsline {section}{\numberline {4.7}Exercice 7}{10}{}%
+\contentsline {section}{\numberline {4.8}Exercice 8}{11}{}%
+\contentsline {section}{\numberline {4.9}Exercice 9}{12}{}%
+\contentsline {section}{\numberline {4.10}Exercice 10}{13}{}%
+\contentsline {chapter}{\numberline {5}Travaux pratiques et simulations algorithmiques}{14}{}%
+\contentsline {section}{\numberline {5.1}Travaux Pratiques 1}{14}{}%
+\contentsline {section}{\numberline {5.2}Travaux Pratiques 2}{15}{}%
+\contentsline {section}{\numberline {5.3}Travaux Pratiques 3}{16}{}%
+\contentsline {section}{\numberline {5.4}Travaux Pratiques 4}{17}{}%
+\contentsline {section}{\numberline {5.5}Travaux Pratiques 5}{18}{}%

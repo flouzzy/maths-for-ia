@@ -3,14 +3,16 @@ title: "Exercice 6 : Espace des polynômes et produit scalaire avec dérivation"
 difficulty: 3
 ---
 
-## Énoncé
+## Énoncé Formel et Typage Rigoureux
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
 Soit $E = \mathbb{R}[X]$ l'espace vectoriel des polynômes à coefficients réels.
 Pour tout $P, Q \in E$, on pose :
 $$\langle P, Q \rangle = P(0)Q(0) + \int_0^1 P'(t)Q'(t) dt$$
 1. Démontrer que $\langle \cdot, \cdot \rangle$ définit un produit scalaire sur $E$.
 2. Soient $P_0(X) = 1$ et $P_1(X) = X$. Calculer $\langle P_0, P_1 \rangle$. Ces polynômes sont-ils orthogonaux ?
 
-## Correction Détaillée
+## Preuve Analytique Pas-à-Pas (Zéro Ellipse)
+La démarche déductive exige une formalisation intégrale sans ellipse.
 **1. Démonstration du produit scalaire :**
 Il faut vérifier que l'application est une forme bilinéaire symétrique définie positive.
 Soient $P, Q, R \in E$ et $\lambda \in \mathbb{R}$.

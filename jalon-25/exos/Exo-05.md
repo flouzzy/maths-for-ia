@@ -3,12 +3,14 @@ title: "Exercice 5 : Cas d'égalité dans Cauchy-Schwarz"
 difficulty: 3
 ---
 
-## Énoncé
+## Énoncé Formel et Typage Rigoureux
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
 Soit $E$ un espace préhilbertien réel avec son produit scalaire $\langle \cdot, \cdot \rangle$.
 L'inégalité de Cauchy-Schwarz stipule que $|\langle x, y \rangle| \le \|x\| \|y\|$.
 Démontrer que l'égalité $|\langle x, y \rangle| = \|x\| \|y\|$ se produit si et seulement si les vecteurs $x$ et $y$ sont colinéaires (c'est-à-dire que la famille $(x, y)$ est liée).
 
-## Correction Détaillée
+## Preuve Analytique Pas-à-Pas (Zéro Ellipse)
+La démarche déductive exige une formalisation intégrale sans ellipse.
 Soient $x, y \in E$. Nous devons prouver une équivalence ($A \iff B$).
 
 **Sens direct ($\implies$) : Supposons que l'égalité est vérifiée.**

@@ -3,14 +3,16 @@ title: "Exercice 2 : Forme bilinéaire symétrique et matrice associée"
 difficulty: 1
 ---
 
-## Énoncé
+## Énoncé Formel et Typage Rigoureux
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
 Soit $E = \mathbb{R}^2$. On définit l'application $B : E \times E \to \mathbb{R}$ par :
 $B(X, Y) = 2x_1y_1 - x_1y_2 - x_2y_1 + 3x_2y_2$, où $X = (x_1, x_2)$ et $Y = (y_1, y_2)$.
 1. Montrer que $B$ est une forme bilinéaire symétrique.
 2. Écrire la matrice $A$ associée à $B$ dans la base canonique de $\mathbb{R}^2$.
 3. $B$ est-elle un produit scalaire ?
 
-## Correction Détaillée
+## Preuve Analytique Pas-à-Pas (Zéro Ellipse)
+La démarche déductive exige une formalisation intégrale sans ellipse.
 1. **Symétrie :**
    Soient $X = (x_1, x_2)$ et $Y = (y_1, y_2)$ dans $\mathbb{R}^2$.
    $B(Y, X) = 2y_1x_1 - y_1x_2 - y_2x_1 + 3y_2x_2$

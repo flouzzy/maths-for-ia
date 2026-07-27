@@ -3,12 +3,14 @@ title: "Exercice 1 : Produit scalaire canonique et inégalité triangulaire dans
 difficulty: 1
 ---
 
-## Énoncé
+## Énoncé Formel et Typage Rigoureux
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
 Soit $E = \mathbb{R}^n$ muni du produit scalaire canonique $\langle x, y \rangle = \sum_{i=1}^n x_i y_i$.
 1. Démontrer que pour tout $x, y \in E$, $\|x + y\|^2 = \|x\|^2 + 2\langle x, y \rangle + \|y\|^2$.
 2. En déduire, en utilisant l'inégalité de Cauchy-Schwarz, l'inégalité triangulaire : $\|x + y\| \le \|x\| + \|y\|$.
 
-## Correction Détaillée
+## Preuve Analytique Pas-à-Pas (Zéro Ellipse)
+La démarche déductive exige une formalisation intégrale sans ellipse.
 1. **Développement de la norme au carré :**
    Par définition de la norme associée au produit scalaire :
    $$\|x + y\|^2 = \langle x + y, x + y \rangle$$

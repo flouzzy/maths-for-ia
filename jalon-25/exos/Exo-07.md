@@ -3,12 +3,14 @@ title: "Exercice 7 : L'inégalité de Cauchy-Schwarz pour les suites"
 difficulty: 4
 ---
 
-## Énoncé
+## Énoncé Formel et Typage Rigoureux
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
 L'espace $\ell^2(\mathbb{R})$ est l'ensemble des suites réelles $(u_n)_{n \in \mathbb{N}}$ telles que la série $\sum_{n=0}^\infty u_n^2$ converge.
 1. Montrer que si $(u_n)$ et $(v_n)$ sont dans $\ell^2(\mathbb{R})$, alors pour tout $N \in \mathbb{N}$, on a $\sum_{n=0}^N |u_n v_n| \le \sqrt{\sum_{n=0}^N u_n^2} \sqrt{\sum_{n=0}^N v_n^2}$.
 2. En déduire que la série $\sum u_n v_n$ converge absolument, et que $\ell^2(\mathbb{R})$ est bien un espace vectoriel.
 
-## Correction Détaillée
+## Preuve Analytique Pas-à-Pas (Zéro Ellipse)
+La démarche déductive exige une formalisation intégrale sans ellipse.
 **1. Inégalité sur sommes finies :**
 Pour un entier $N$ fixé, considérons l'espace vectoriel $\mathbb{R}^{N+1}$ muni de son produit scalaire canonique $\langle x, y \rangle = \sum_{n=0}^N x_n y_n$.
 Soient les vecteurs $U_N = (|u_0|, |u_1|, ..., |u_N|)$ et $V_N = (|v_0|, |v_1|, ..., |v_N|)$ dans cet espace.

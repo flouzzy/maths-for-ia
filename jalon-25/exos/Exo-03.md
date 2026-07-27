@@ -3,13 +3,15 @@ title: "Exercice 3 : Identité du parallélogramme"
 difficulty: 2
 ---
 
-## Énoncé
+## Énoncé Formel et Typage Rigoureux
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
 Soit $E$ un espace préhilbertien sur $\mathbb{R}$ ou $\mathbb{C}$, et $\| \cdot \|$ la norme induite par son produit scalaire $\langle \cdot, \cdot \rangle$.
 Démontrer l'identité du parallélogramme :
 $$\forall x, y \in E, \|x + y\|^2 + \|x - y\|^2 = 2(\|x\|^2 + \|y\|^2)$$
 Interpréter géométriquement ce résultat.
 
-## Correction Détaillée
+## Preuve Analytique Pas-à-Pas (Zéro Ellipse)
+La démarche déductive exige une formalisation intégrale sans ellipse.
 **Preuve algébrique :**
 Soient $x, y \in E$. Par définition de la norme :
 $$\|x + y\|^2 = \langle x + y, x + y \rangle$$

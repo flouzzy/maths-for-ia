@@ -1,0 +1,851 @@
+\documentclass[11pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!60!black}
+}
+
+\title{Formes Bilinéaires, Formes Sesquilinéaires, Produit Scalaire Et Inégalité De Cauchy-Schwarz}
+\author{Charles EDOU NZE}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\chapter{Intuition et genèse du concept}
+
+1. L'Aube d'une Géométrie Abstraite : Mesurer l'Invisible
+
+Avant d'aborder les structures formelles, il convient de s'imprégner de la genèse de ces concepts. Depuis les Grecs anciens, la notion de distance et d'angle était intrinsèquement liée à la géométrie euclidienne tridimensionnelle, régie par le théorème de Pythagore. Cependant, à mesure que l'algèbre linéaire s'est développée aux XIXe et XXe siècles, sous l'impulsion de mathématiciens comme Hermann Grassmann et David Hilbert, le besoin de généraliser ces notions géométriques à des espaces abstraits s'est fait sentir.
+
+Comment mesurer un "angle" entre deux fonctions continues ? Comment évaluer la "distance" entre deux matrices ? C'est ici qu'intervient la forme bilinéaire. Une forme bilinéaire agit comme une lentille mathématique qui, à partir de deux objets d'un espace vectoriel, produit un scalaire permettant d'évaluer leur corrélation. Le produit scalaire en est l'incarnation la plus pure, offrant une symétrie parfaite et une mesure de positivité définie. Ce concept fondamental transcende la simple géométrie : en intelligence artificielle, par exemple, la similarité cosinus, directement issue du produit scalaire abstrait, permet de quantifier la proximité sémantique entre deux textes plongés dans un espace latent de très grande dimension.
+
+
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.5]
+    \draw[->, gray!50] (-1,0) -- (4,0) node[right] {$x$};
+    \draw[->, gray!50] (0,-1) -- (0,3) node[above] {$y$};
+    \draw[->, thick, blue] (0,0) -- (3,1) node[midway, above left] {$\vec{u}$};
+    \draw[->, thick, red] (0,0) -- (2,2) node[midway, above left] {$\vec{v}$};
+    \draw[dashed, gray] (2,2) -- (1.8, 0.6);
+    \draw[->, thick, purple] (0,0) -- (1.8,0.6) node[midway, below right] {$\text{proj}_{\vec{u}}(\vec{v})$};
+    \draw (1.8,0.6) -- (1.7, 0.9) -- (1.9, 1.0);
+\end{tikzpicture}
+\caption{Projection orthogonale illustrant géométriquement le produit scalaire.}
+\end{figure}
+
+\chapter{Formalisation et structures algébriques}
+
+2. Définitions et Structures Algébriques
+
+\#
+
+\chapter{Démonstrations pas-à-pas}
+\section{L'Inégalité Fondamentale de Cauchy-Schwarz}
+
+2.1 Formes Bilinéaires et Sesquilinaires
+
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel.
+
+\textbf{Définition (Forme bilinéaire) :}
+Une application $B : E \times E \to \mathbb{K}$ est appelée forme bilinéaire si elle est linéaire par rapport à chacune de ses variables. Formellement, pour tout $x, y, z \in E$ et tout $\lambda \in \mathbb{K}$ :
+1. Linéarité à gauche : $B(\lambda x + y, z) = \lambda B(x, z) + B(y, z)$
+2. Linéarité à droite : $B(x, \lambda y + z) = \lambda B(x, y) + B(x, z)$
+
+\textbf{Définition (Forme symétrique et antisymétrique) :}
+- $B$ est symétrique si pour tout $x, y \in E$, $B(x, y) = B(y, x)$.
+- $B$ est antisymétrique si pour tout $x, y \in E$, $B(x, y) = -B(y, x)$.
+
+Lorsque le corps de base est $\mathbb{C}$, la stricte bilinéarité s'avère inadaptée pour définir des notions de distance (notamment pour garantir qu'un "carré" soit un réel positif). On introduit alors la notion de forme sesquilinéaire.
+
+\textbf{Définition (Forme sesquilinéaire) :}
+Une application $\phi : E \times E \to \mathbb{C}$ est sesquilinéaire si elle est linéaire à droite et semi-linéaire (ou antilinéaire) à gauche :
+1. $\phi(\lambda x + y, z) = \bar{\lambda} \phi(x, z) + \phi(y, z)$ pour tout $\lambda \in \mathbb{C}$
+2. $\phi(x, \lambda y + z) = \lambda \phi(x, y) + \phi(x, z)$ pour tout $\lambda \in \mathbb{C}$
+
+*(Note : Dans la littérature française, la convention peut être semi-linéaire à gauche, tandis que dans la littérature anglo-saxonne, elle est souvent semi-linéaire à droite.)*
+
+\textbf{Définition (Forme hermitienne) :}
+Une forme sesquilinéaire $\phi$ est dite hermitienne (ou à symétrie hermitienne) si pour tout $x, y \in E$, $\phi(x, y) = \overline{\phi(y, x)}$.
+
+\#
+\section{L'Inégalité Triangulaire (Minkowski)}
+
+2.2 Formes Quadratiques et Identité de Polarisation
+
+À toute forme bilinéaire symétrique $B$ sur $E$, on associe une forme quadratique $q : E \to \mathbb{K}$ définie par $q(x) = B(x, x)$.
+L'identité de polarisation permet, réciproquement, de retrouver la forme bilinéaire symétrique à partir de sa forme quadratique. Si la caractéristique de $\mathbb{K}$ est différente de $2$, on a :
+$$B(x, y) = \frac{1}{4} \left( q(x + y) - q(x - y) \right)$$
+Ou de manière équivalente :
+$$B(x, y) = \frac{1}{2} \left( q(x + y) - q(x) - q(y) \right)$$
+
+\#
+
+\chapter{Exercices d'application et de concours}
+\section{Exercice 1}
+
+
+\subsection*{Énoncé Formel et Typage Rigoureux}
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
+Soit $E = \mathbb{R}^n$ muni du produit scalaire canonique $\langle x, y \rangle = \sum_{i=1}^n x_i y_i$.
+1. Démontrer que pour tout $x, y \in E$, $\|x + y\|^2 = \|x\|^2 + 2\langle x, y \rangle + \|y\|^2$.
+2. En déduire, en utilisant l'inégalité de Cauchy-Schwarz, l'inégalité triangulaire : $\|x + y\| \le \|x\| + \|y\|$.
+
+\subsection*{Preuve Analytique Pas-à-Pas}
+La démarche déductive exige une formalisation intégrale sans ellipse.
+1. \textbf{Développement de la norme au carré :}
+   Par définition de la norme associée au produit scalaire :
+   $$\|x + y\|^2 = \langle x + y, x + y \rangle$$
+   Par bilinéarité (linéarité à gauche puis à droite) :
+   $$\langle x + y, x + y \rangle = \langle x, x + y \rangle + \langle y, x + y \rangle$$
+   $$\langle x + y, x + y \rangle = \langle x, x \rangle + \langle x, y \rangle + \langle y, x \rangle + \langle y, y \rangle$$
+   Puisque le produit scalaire est symétrique (sur $\mathbb{R}$), $\langle y, x \rangle = \langle x, y \rangle$.
+   $$\|x + y\|^2 = \|x\|^2 + 2\langle x, y \rangle + \|y\|^2$$
+
+2. \textbf{Preuve de l'inégalité triangulaire :}
+   D'après la question 1, on a :
+   $$\|x + y\|^2 = \|x\|^2 + 2\langle x, y \rangle + \|y\|^2$$
+   Or, pour tout réel $a$, on a $a \le |a|$. Donc :
+   $$\langle x, y \rangle \le |\langle x, y \rangle|$$
+   Ce qui donne :
+   $$\|x + y\|^2 \le \|x\|^2 + 2|\langle x, y \rangle| + \|y\|^2$$
+   D'après l'inégalité de Cauchy-Schwarz, on sait que $|\langle x, y \rangle| \le \|x\| \cdot \|y\|$. On substitue :
+   $$\|x + y\|^2 \le \|x\|^2 + 2\|x\|\|y\| + \|y\|^2$$
+   Le membre de droite est un produit remarquable :
+   $$\|x + y\|^2 \le (\|x\| + \|y\|)^2$$
+   Puisque les normes sont des quantités positives, la fonction racine carrée, strictement croissante sur $\mathbb{R}^+$, conserve l'ordre. On obtient donc :
+   $$\|x + y\| \le \|x\| + \|y\|$$
+   Ce qui achève la démonstration.
+
+
+\section{Exercice 2}
+
+
+\subsection*{Énoncé Formel et Typage Rigoureux}
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
+Soit $E = \mathbb{R}^2$. On définit l'application $B : E \times E \to \mathbb{R}$ par :
+$B(X, Y) = 2x_1y_1 - x_1y_2 - x_2y_1 + 3x_2y_2$, où $X = (x_1, x_2)$ et $Y = (y_1, y_2)$.
+1. Montrer que $B$ est une forme bilinéaire symétrique.
+2. Écrire la matrice $A$ associée à $B$ dans la base canonique de $\mathbb{R}^2$.
+3. $B$ est-elle un produit scalaire ?
+
+\subsection*{Preuve Analytique Pas-à-Pas}
+La démarche déductive exige une formalisation intégrale sans ellipse.
+1. \textbf{Symétrie :}
+   Soient $X = (x_1, x_2)$ et $Y = (y_1, y_2)$ dans $\mathbb{R}^2$.
+   $B(Y, X) = 2y_1x_1 - y_1x_2 - y_2x_1 + 3y_2x_2$
+   Par commutativité de la multiplication dans $\mathbb{R}$ :
+   $B(Y, X) = 2x_1y_1 - x_2y_1 - x_1y_2 + 3x_2y_2 = B(X, Y)$.
+   Donc $B$ est symétrique.
+   \textbf{Bilinéarité :}
+   Puisque $B$ est symétrique, il suffit de prouver la linéarité par rapport à la première variable.
+   Soient $X = (x_1, x_2)$, $X' = (x'_1, x'_2)$, $Y = (y_1, y_2)$ et $\lambda \in \mathbb{R}$.
+   $B(\lambda X + X', Y) = 2(\lambda x_1 + x'_1)y_1 - (\lambda x_1 + x'_1)y_2 - (\lambda x_2 + x'_2)y_1 + 3(\lambda x_2 + x'_2)y_2$
+   $B(\lambda X + X', Y) = \lambda(2x_1y_1 - x_1y_2 - x_2y_1 + 3x_2y_2) + (2x'_1y_1 - x'_1y_2 - x'_2y_1 + 3x'_2y_2)$
+   $B(\lambda X + X', Y) = \lambda B(X, Y) + B(X', Y)$.
+   $B$ est bien une forme bilinéaire.
+
+2. \textbf{Matrice associée :}
+   Soit $\mathcal{B} = (e_1, e_2)$ la base canonique, avec $e_1 = (1, 0)$ et $e_2 = (0, 1)$.
+   La matrice $A = (a_{i,j})$ est définie par $a_{i,j} = B(e_i, e_j)$.
+   $B(e_1, e_1) = 2(1)(1) - 0 - 0 + 0 = 2$
+   $B(e_1, e_2) = 0 - 1(1) - 0 + 0 = -1$
+   $B(e_2, e_1) = 0 - 0 - 1(1) + 0 = -1$ (cohérent avec la symétrie)
+   $B(e_2, e_2) = 0 - 0 - 0 + 3(1)(1) = 3$
+   Ainsi, $A = \begin{pmatrix} 2 & -1 \\ -1 & 3 \end{pmatrix}$.
+   On vérifie bien que $B(X, Y) = X^T A Y$.
+
+3. \textbf{Caractère défini positif (Produit scalaire) :}
+   $B$ est un produit scalaire si elle est définie positive. Evaluons $B(X, X)$ pour tout $X \in \mathbb{R}^2$ :
+   $B(X, X) = 2x_1^2 - 2x_1x_2 + 3x_2^2$
+   Utilisons la méthode de Gauss (complétion du carré) :
+   $B(X, X) = 2(x_1^2 - x_1x_2) + 3x_2^2$
+   $B(X, X) = 2( (x_1 - \frac{1}{2}x_2)^2 - \frac{1}{4}x_2^2 ) + 3x_2^2$
+   $B(X, X) = 2(x_1 - \frac{1}{2}x_2)^2 - \frac{1}{2}x_2^2 + 3x_2^2$
+   $B(X, X) = 2(x_1 - \frac{1}{2}x_2)^2 + \frac{5}{2}x_2^2$
+   - \textbf{Positivité :} C'est une somme de carrés pondérés par des coefficients strictement positifs (2 et 5/2), donc $B(X, X) \ge 0$ pour tout $X$.
+   - \textbf{Caractère défini :} Si $B(X, X) = 0$, alors chaque terme de la somme doit être nul car ils sont tous positifs ou nuls.
+     Donc $2(x_1 - \frac{1}{2}x_2)^2 = 0$ et $\frac{5}{2}x_2^2 = 0$.
+     La deuxième équation donne $x_2 = 0$.
+     En remplaçant dans la première, on obtient $2(x_1 - 0)^2 = 0 \implies x_1 = 0$.
+     Ainsi, $X = (0, 0) = 0_{\mathbb{R}^2}$.
+   $B$ est définie positive. C'est donc un produit scalaire sur $\mathbb{R}^2$.
+
+
+\section{Exercice 3}
+
+
+\subsection*{Énoncé Formel et Typage Rigoureux}
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
+Soit $E$ un espace préhilbertien sur $\mathbb{R}$ ou $\mathbb{C}$, et $\| \cdot \|$ la norme induite par son produit scalaire $\langle \cdot, \cdot \rangle$.
+Démontrer l'identité du parallélogramme :
+$$\forall x, y \in E, \|x + y\|^2 + \|x - y\|^2 = 2(\|x\|^2 + \|y\|^2)$$
+Interpréter géométriquement ce résultat.
+
+\subsection*{Preuve Analytique Pas-à-Pas}
+La démarche déductive exige une formalisation intégrale sans ellipse.
+\textbf{Preuve algébrique :}
+Soient $x, y \in E$. Par définition de la norme :
+$$\|x + y\|^2 = \langle x + y, x + y \rangle$$
+Par bilinéarité (ou sesquilinéarité si le corps est $\mathbb{C}$) :
+$$\|x + y\|^2 = \langle x, x \rangle + \langle x, y \rangle + \langle y, x \rangle + \langle y, y \rangle$$
+$$\|x + y\|^2 = \|x\|^2 + \langle x, y \rangle + \langle y, x \rangle + \|y\|^2$$
+De manière analogue pour $\|x - y\|^2$ :
+$$\|x - y\|^2 = \langle x - y, x - y \rangle$$
+$$\|x - y\|^2 = \langle x, x \rangle - \langle x, y \rangle - \langle y, x \rangle + \langle y, y \rangle$$
+(Attention ici : dans le cas complexe, $-\langle y, x \rangle$ vient de la combinaison de la linéarité à droite avec la semi-linéarité à gauche du signe $-$, car le produit de $-1$ avec la conjugaison de $-1$ reste $1$ pour le dernier terme).
+$$\|x - y\|^2 = \|x\|^2 - \langle x, y \rangle - \langle y, x \rangle + \|y\|^2$$
+
+Ajoutons les deux expressions membres à membres :
+$$\|x + y\|^2 + \|x - y\|^2 = (\|x\|^2 + \langle x, y \rangle + \langle y, x \rangle + \|y\|^2) + (\|x\|^2 - \langle x, y \rangle - \langle y, x \rangle + \|y\|^2)$$
+Les termes croisés $\langle x, y \rangle$ et $\langle y, x \rangle$ s'annulent :
+$$\|x + y\|^2 + \|x - y\|^2 = 2\|x\|^2 + 2\|y\|^2 = 2(\|x\|^2 + \|y\|^2)$$
+Ce qui achève la démonstration.
+
+\textbf{Interprétation géométrique :}
+Dans un parallélogramme défini par les vecteurs $x$ et $y$ :
+- Les longueurs des côtés sont $\|x\|$ et $\|y\|$.
+- Les vecteurs diagonaux sont $x+y$ et $x-y$.
+- Leurs longueurs (au carré) sont $\|x+y\|^2$ et $\|x-y\|^2$.
+L'identité stipule que la somme des carrés des longueurs des deux diagonales d'un parallélogramme est égale à la somme des carrés des longueurs de ses quatre côtés. C'est une caractérisation fondamentale des espaces de Hilbert par rapport aux espaces de Banach quelconques (théorème de Jordan-von Neumann).
+
+
+\section{Exercice 4}
+
+
+\subsection*{Énoncé Formel et Typage Rigoureux}
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
+Soit $E$ un espace vectoriel muni d'un produit scalaire $\langle \cdot, \cdot \rangle$ et $\| \cdot \|$ sa norme associée.
+1. Si $E$ est un espace vectoriel sur $\mathbb{R}$, exprimer $\langle x, y \rangle$ uniquement en fonction de la norme (Identité de polarisation).
+2. Même question si $E$ est un espace vectoriel sur $\mathbb{C}$.
+
+\subsection*{Preuve Analytique Pas-à-Pas}
+La démarche déductive exige une formalisation intégrale sans ellipse.
+\textbf{1. Cas Réel ($\mathbb{K} = \mathbb{R}$)}
+Soient $x, y \in E$. Nous connaissons le développement de la norme au carré de la somme :
+$$\|x + y\|^2 = \|x\|^2 + 2\langle x, y \rangle + \|y\|^2$$
+En isolant $\langle x, y \rangle$, on obtient la première forme de polarisation :
+$$\langle x, y \rangle = \frac{1}{2} \left( \|x + y\|^2 - \|x\|^2 - \|y\|^2 \right)$$
+Alternativement, on peut utiliser le développement de la différence :
+$$\|x - y\|^2 = \|x\|^2 - 2\langle x, y \rangle + \|y\|^2$$
+En soustrayant cette deuxième équation à la première :
+$$\|x + y\|^2 - \|x - y\|^2 = (\|x\|^2 + 2\langle x, y \rangle + \|y\|^2) - (\|x\|^2 - 2\langle x, y \rangle + \|y\|^2)$$
+$$\|x + y\|^2 - \|x - y\|^2 = 4\langle x, y \rangle$$
+Soit la forme la plus symétrique :
+$$\langle x, y \rangle = \frac{1}{4} \left( \|x + y\|^2 - \|x - y\|^2 \right)$$
+
+\textbf{2. Cas Complexe ($\mathbb{K} = \mathbb{C}$)}
+Le produit scalaire est sesquilinéaire (hermitien).
+$$\|x + y\|^2 = \langle x+y, x+y \rangle = \|x\|^2 + \langle x, y \rangle + \langle y, x \rangle + \|y\|^2$$
+Or $\langle y, x \rangle = \overline{\langle x, y \rangle}$. Donc $\langle x, y \rangle + \langle y, x \rangle = 2 \text{Re}(\langle x, y \rangle)$.
+Ainsi, $\|x + y\|^2 = \|x\|^2 + 2\text{Re}(\langle x, y \rangle) + \|y\|^2$.
+De même, $\|x - y\|^2 = \|x\|^2 - 2\text{Re}(\langle x, y \rangle) + \|y\|^2$.
+Par soustraction, on trouve la partie réelle :
+$$4\text{Re}(\langle x, y \rangle) = \|x + y\|^2 - \|x - y\|^2 \implies \text{Re}(\langle x, y \rangle) = \frac{1}{4} (\|x + y\|^2 - \|x - y\|^2)$$
+
+Pour obtenir la partie imaginaire, considérons les combinaisons avec $i$ :
+$$\|x + iy\|^2 = \langle x+iy, x+iy \rangle = \|x\|^2 + \langle x, iy \rangle + \langle iy, x \rangle + \|iy\|^2$$
+Comme la forme est linéaire à droite, $\langle x, iy \rangle = i\langle x, y \rangle$.
+Comme elle est antilinéaire à gauche, $\langle iy, x \rangle = -i\langle y, x \rangle$.
+De plus, $\|iy\|^2 = \langle iy, iy \rangle = -i \cdot i \langle y, y \rangle = (-i^2) \|y\|^2 = \|y\|^2$.
+$$\|x + iy\|^2 = \|x\|^2 + i\langle x, y \rangle - i\langle y, x \rangle + \|y\|^2$$
+$$i\langle x, y \rangle - i\langle y, x \rangle = i(\langle x, y \rangle - \overline{\langle x, y \rangle}) = i(2i \text{Im}(\langle x, y \rangle)) = -2\text{Im}(\langle x, y \rangle)$$
+Ainsi :
+$$\|x + iy\|^2 = \|x\|^2 - 2\text{Im}(\langle x, y \rangle) + \|y\|^2$$
+De même :
+$$\|x - iy\|^2 = \|x\|^2 + 2\text{Im}(\langle x, y \rangle) + \|y\|^2$$
+Par soustraction :
+$$\|x + iy\|^2 - \|x - iy\|^2 = -4\text{Im}(\langle x, y \rangle)$$
+$$\text{Im}(\langle x, y \rangle) = \frac{1}{4} (\|x - iy\|^2 - \|x + iy\|^2)$$
+
+Le produit scalaire est $\langle x, y \rangle = \text{Re}(\langle x, y \rangle) + i\text{Im}(\langle x, y \rangle)$. En substituant les deux parties :
+$$\langle x, y \rangle = \frac{1}{4} \left( \|x + y\|^2 - \|x - y\|^2 + i\|x - iy\|^2 - i\|x + iy\|^2 \right)$$
+Ce qui est l'identité de polarisation complexe.
+
+
+\section{Exercice 5}
+
+
+\subsection*{Énoncé Formel et Typage Rigoureux}
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
+Soit $E$ un espace préhilbertien réel avec son produit scalaire $\langle \cdot, \cdot \rangle$.
+L'inégalité de Cauchy-Schwarz stipule que $|\langle x, y \rangle| \le \|x\| \|y\|$.
+Démontrer que l'égalité $|\langle x, y \rangle| = \|x\| \|y\|$ se produit si et seulement si les vecteurs $x$ et $y$ sont colinéaires (c'est-à-dire que la famille $(x, y)$ est liée).
+
+\subsection*{Preuve Analytique Pas-à-Pas}
+La démarche déductive exige une formalisation intégrale sans ellipse.
+Soient $x, y \in E$. Nous devons prouver une équivalence ($A \iff B$).
+
+\textbf{Sens direct ($\implies$) : Supposons que l'égalité est vérifiée.}
+Hypothèse : $|\langle x, y \rangle| = \|x\| \|y\|$.
+Si $y = 0_E$, la famille $(x, 0_E)$ est liée (car $0 \cdot x + 1 \cdot 0_E = 0_E$ avec des coefficients non tous nuls).
+Supposons désormais $y \neq 0_E$. Considérons le polynôme défini dans la preuve classique :
+$$P(\lambda) = \|x + \lambda y\|^2 = \|x\|^2 + 2\lambda\langle x, y \rangle + \lambda^2\|y\|^2$$
+$P$ est un trinôme du second degré en $\lambda$. Son discriminant $\Delta$ est :
+$$\Delta = (2\langle x, y \rangle)^2 - 4\|y\|^2\|x\|^2 = 4(\langle x, y \rangle^2 - \|x\|^2\|y\|^2)$$
+Par hypothèse, $\langle x, y \rangle^2 = \|x\|^2\|y\|^2$, donc $\Delta = 0$.
+Puisque le discriminant est nul, le trinôme possède une racine double $\lambda_0 = -\frac{2\langle x, y \rangle}{2\|y\|^2} = -\frac{\langle x, y \rangle}{\|y\|^2} \in \mathbb{R}$.
+Pour cette valeur $\lambda_0$, le polynôme s'annule :
+$P(\lambda_0) = 0 \implies \|x + \lambda_0 y\|^2 = 0$.
+Par séparation de la norme, cela implique $x + \lambda_0 y = 0_E$, soit $x = -\lambda_0 y$.
+Ainsi, $x$ s'écrit comme un multiple scalaire de $y$. Les vecteurs $x$ et $y$ sont donc colinéaires, et la famille $(x, y)$ est liée.
+
+\textbf{Sens réciproque ($\impliedby$) : Supposons que $(x, y)$ est une famille liée.}
+Si la famille est liée, l'un des vecteurs s'écrit comme combinaison linéaire de l'autre.
+- Cas 1 : $y = 0_E$. L'égalité $|\langle x, 0_E \rangle| = |0| = 0$ et $\|x\|\|0_E\| = \|x\| \cdot 0 = 0$ est trivialement vérifiée.
+- Cas 2 : $y \neq 0_E$. Alors il existe $\alpha \in \mathbb{R}$ tel que $x = \alpha y$.
+Calculons séparément les deux membres de l'égalité :
+Membre de gauche :
+$|\langle x, y \rangle| = |\langle \alpha y, y \rangle|$
+Par linéarité à gauche :
+$|\langle x, y \rangle| = |\alpha \langle y, y \rangle| = |\alpha| \langle y, y \rangle = |\alpha| \|y\|^2$
+Membre de droite :
+$\|x\| \|y\| = \|\alpha y\| \|y\|$
+Par propriété d'homogénéité absolue de la norme :
+$\|x\| \|y\| = (|\alpha| \|y\|) \|y\| = |\alpha| \|y\|^2$
+Les deux membres sont strictement égaux pour tout scalaire $\alpha$.
+
+\textbf{Conclusion :}
+On a bien démontré l'équivalence. L'inégalité de Cauchy-Schwarz est une égalité si et seulement si les vecteurs sont colinéaires.
+
+
+\section{Exercice 6}
+
+
+\subsection*{Énoncé Formel et Typage Rigoureux}
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
+Soit $E = \mathbb{R}[X]$ l'espace vectoriel des polynômes à coefficients réels.
+Pour tout $P, Q \in E$, on pose :
+$$\langle P, Q \rangle = P(0)Q(0) + \int_0^1 P'(t)Q'(t) dt$$
+1. Démontrer que $\langle \cdot, \cdot \rangle$ définit un produit scalaire sur $E$.
+2. Soient $P_0(X) = 1$ et $P_1(X) = X$. Calculer $\langle P_0, P_1 \rangle$. Ces polynômes sont-ils orthogonaux ?
+
+\subsection*{Preuve Analytique Pas-à-Pas}
+La démarche déductive exige une formalisation intégrale sans ellipse.
+\textbf{1. Démonstration du produit scalaire :}
+Il faut vérifier que l'application est une forme bilinéaire symétrique définie positive.
+Soient $P, Q, R \in E$ et $\lambda \in \mathbb{R}$.
+
+\textbf{Symétrie :}
+$\langle Q, P \rangle = Q(0)P(0) + \int_0^1 Q'(t)P'(t) dt$
+Par commutativité du produit de réels :
+$\langle Q, P \rangle = P(0)Q(0) + \int_0^1 P'(t)Q'(t) dt = \langle P, Q \rangle$.
+L'application est bien symétrique.
+
+\textbf{Bilinéarité :}
+(Puisque c'est symétrique, on vérifie seulement la linéarité à gauche).
+$\langle \lambda P + R, Q \rangle = (\lambda P + R)(0)Q(0) + \int_0^1 (\lambda P + R)'(t)Q'(t) dt$
+Par linéarité de l'évaluation en 0 et de la dérivation :
+$\langle \lambda P + R, Q \rangle = (\lambda P(0) + R(0))Q(0) + \int_0^1 (\lambda P'(t) + R'(t))Q'(t) dt$
+$\langle \lambda P + R, Q \rangle = \lambda P(0)Q(0) + R(0)Q(0) + \int_0^1 (\lambda P'(t)Q'(t) + R'(t)Q'(t)) dt$
+Par linéarité de l'intégrale de Riemann :
+$\langle \lambda P + R, Q \rangle = \lambda P(0)Q(0) + R(0)Q(0) + \lambda \int_0^1 P'(t)Q'(t) dt + \int_0^1 R'(t)Q'(t) dt$
+En regroupant les termes en $\lambda$ :
+$\langle \lambda P + R, Q \rangle = \lambda \left[ P(0)Q(0) + \int_0^1 P'(t)Q'(t) dt \right] + \left[ R(0)Q(0) + \int_0^1 R'(t)Q'(t) dt \right]$
+$\langle \lambda P + R, Q \rangle = \lambda \langle P, Q \rangle + \langle R, Q \rangle$.
+L'application est une forme bilinéaire.
+
+\textbf{Positivité :}
+Pour tout $P \in E$ :
+$\langle P, P \rangle = (P(0))^2 + \int_0^1 (P'(t))^2 dt$
+Un carré dans $\mathbb{R}$ est toujours positif ou nul. De plus, l'intégrale d'une fonction continue et positive (ici $t \mapsto (P'(t))^2$) est positive ou nulle.
+Donc $\langle P, P \rangle \ge 0$. La forme est positive.
+
+\textbf{Caractère défini :}
+Supposons que $\langle P, P \rangle = 0$.
+Alors $(P(0))^2 + \int_0^1 (P'(t))^2 dt = 0$.
+Il s'agit d'une somme de deux termes positifs ou nuls. Pour que leur somme soit nulle, il est nécessaire que chaque terme soit nul :
+- $(P(0))^2 = 0 \implies P(0) = 0$.
+- $\int_0^1 (P'(t))^2 dt = 0$.
+La fonction $t \mapsto (P'(t))^2$ est continue sur $[0,1]$ (car tout polynôme est de classe $C^\infty$) et positive. Son intégrale est nulle, ce qui implique que la fonction est identiquement nulle sur $[0,1]$.
+Donc $\forall t \in [0, 1], (P'(t))^2 = 0 \implies P'(t) = 0$.
+Si $P'(t) = 0$ sur l'intervalle $[0, 1]$, puisque $P'$ est un polynôme, il possède une infinité de racines, donc $P'$ est le polynôme nul ($P' = 0$).
+Si la dérivée est le polynôme nul, alors le polynôme $P$ est une constante : $P(X) = C$.
+Comme on a déjà établi que $P(0) = 0$, on en déduit que $C = 0$.
+Finalement, $P(X) = 0$.
+La forme est définie positive, c'est donc bien un produit scalaire.
+
+\textbf{2. Calcul orthogonalité :}
+$P_0(X) = 1 \implies P_0(0) = 1, P_0'(X) = 0$.
+$P_1(X) = X \implies P_1(0) = 0, P_1'(X) = 1$.
+Calcul de $\langle P_0, P_1 \rangle$ :
+$\langle P_0, P_1 \rangle = P_0(0)P_1(0) + \int_0^1 P_0'(t)P_1'(t) dt$
+$\langle P_0, P_1 \rangle = (1)(0) + \int_0^1 (0)(1) dt = 0 + 0 = 0$.
+Leur produit scalaire est nul, donc \textbf{oui}, ces polynômes sont orthogonaux par rapport à ce produit scalaire.
+
+
+\section{Exercice 7}
+
+
+\subsection*{Énoncé Formel et Typage Rigoureux}
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
+L'espace $\ell^2(\mathbb{R})$ est l'ensemble des suites réelles $(u_n)_{n \in \mathbb{N}}$ telles que la série $\sum_{n=0}^\infty u_n^2$ converge.
+1. Montrer que si $(u_n)$ et $(v_n)$ sont dans $\ell^2(\mathbb{R})$, alors pour tout $N \in \mathbb{N}$, on a $\sum_{n=0}^N |u_n v_n| \le \sqrt{\sum_{n=0}^N u_n^2} \sqrt{\sum_{n=0}^N v_n^2}$.
+2. En déduire que la série $\sum u_n v_n$ converge absolument, et que $\ell^2(\mathbb{R})$ est bien un espace vectoriel.
+
+\subsection*{Preuve Analytique Pas-à-Pas}
+La démarche déductive exige une formalisation intégrale sans ellipse.
+\textbf{1. Inégalité sur sommes finies :}
+Pour un entier $N$ fixé, considérons l'espace vectoriel $\mathbb{R}^{N+1}$ muni de son produit scalaire canonique $\langle x, y \rangle = \sum_{n=0}^N x_n y_n$.
+Soient les vecteurs $U_N = (|u_0|, |u_1|, ..., |u_N|)$ et $V_N = (|v_0|, |v_1|, ..., |v_N|)$ dans cet espace.
+Appliquons l'inégalité de Cauchy-Schwarz de dimension finie à $U_N$ et $V_N$ :
+$\langle U_N, V_N \rangle \le \|U_N\| \cdot \|V_N\|$
+(On peut omettre les valeurs absolues autour du produit scalaire car tous les termes de $U_N$ et $V_N$ sont positifs).
+Explicitons chaque terme :
+$\langle U_N, V_N \rangle = \sum_{n=0}^N |u_n| |v_n| = \sum_{n=0}^N |u_n v_n|$
+$\|U_N\| = \sqrt{\sum_{n=0}^N |u_n|^2} = \sqrt{\sum_{n=0}^N u_n^2}$
+$\|V_N\| = \sqrt{\sum_{n=0}^N |v_n|^2} = \sqrt{\sum_{n=0}^N v_n^2}$
+On obtient donc directement l'inégalité demandée pour tout $N$ :
+$$\sum_{n=0}^N |u_n v_n| \le \sqrt{\sum_{n=0}^N u_n^2} \sqrt{\sum_{n=0}^N v_n^2}$$
+
+\textbf{2. Convergence absolue et structure d'espace vectoriel :}
+Puisque $(u_n), (v_n) \in \ell^2(\mathbb{R})$, les séries $\sum u_n^2$ et $\sum v_n^2$ convergent.
+Notons leurs sommes $S_u = \sum_{n=0}^\infty u_n^2$ et $S_v = \sum_{n=0}^\infty v_n^2$.
+Puisque les termes d'une série à termes positifs forment une suite de sommes partielles croissante, on a pour tout $N$ :
+$\sum_{n=0}^N u_n^2 \le S_u$ et $\sum_{n=0}^N v_n^2 \le S_v$.
+Par suite, en injectant cela dans l'inégalité de la question 1 :
+$\sum_{n=0}^N |u_n v_n| \le \sqrt{S_u} \sqrt{S_v}$ pour tout entier $N$.
+La série $\sum |u_n v_n|$ est une série à termes positifs dont les sommes partielles sont majorées par la constante $\sqrt{S_u S_v}$.
+D'après le théorème fondamental des séries à termes positifs, cela implique que la série converge.
+Ainsi, la série $\sum u_n v_n$ converge absolument. L'application bilinéaire $(u, v) \mapsto \sum_{n=0}^\infty u_n v_n$ est donc bien définie (et c'est un produit scalaire).
+
+Pour montrer que $\ell^2(\mathbb{R})$ est un sous-espace vectoriel de l'espace de toutes les suites réelles :
+- La suite nulle est clairement dans $\ell^2$.
+- Si $(u_n) \in \ell^2$ et $\lambda \in \mathbb{R}$, alors $\sum (\lambda u_n)^2 = \lambda^2 \sum u_n^2 < \infty$, donc $(\lambda u_n) \in \ell^2$. (Stabilité par multiplication externe).
+- Si $(u_n), (v_n) \in \ell^2$, il faut montrer que $(u_n + v_n) \in \ell^2$.
+  Calculons le terme général de la série de la somme :
+  $(u_n + v_n)^2 = u_n^2 + 2u_nv_n + v_n^2$.
+  - $\sum u_n^2$ converge (hypothèse).
+  - $\sum v_n^2$ converge (hypothèse).
+  - $\sum u_nv_n$ converge absolument d'après ce que nous venons de prouver, donc elle converge.
+  Par linéarité de la somme des séries convergentes, la série $\sum (u_n + v_n)^2$ converge.
+  Donc $(u_n + v_n) \in \ell^2$. (Stabilité par addition).
+$\ell^2(\mathbb{R})$ est donc bien un espace vectoriel.
+
+
+\section{Exercice 8}
+
+
+\subsection*{Énoncé Formel et Typage Rigoureux}
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
+Sur $E = M_n(\mathbb{R})$, on définit l'application $\varphi(A, B) = \text{Tr}(A^T B)$, où $\text{Tr}$ désigne la trace de la matrice et $A^T$ la transposée.
+1. Montrer que $\varphi$ définit un produit scalaire sur $E$.
+2. En déduire que pour toutes matrices $A, B \in M_n(\mathbb{R})$, $|\text{Tr}(A^T B)| \le \sqrt{\text{Tr}(A^T A)} \sqrt{\text{Tr}(B^T B)}$.
+3. Si $S$ est une matrice symétrique et $A$ une matrice antisymétrique, montrer que $\varphi(S, A) = 0$ (les espaces des matrices symétriques et antisymétriques sont orthogonaux pour ce produit scalaire).
+
+\subsection*{Preuve Analytique Pas-à-Pas}
+La démarche déductive exige une formalisation intégrale sans ellipse.
+\textbf{1. Validation du produit scalaire :}
+Soient $A, B, C \in M_n(\mathbb{R})$ et $\lambda \in \mathbb{R}$.
+- \textbf{Bilinéarité :} L'application trace et la transposition sont des opérateurs linéaires.
+  La linéarité à droite s'établit par :
+  $\varphi(A, \lambda B + C) = \text{Tr}(A^T(\lambda B + C)) = \text{Tr}(\lambda A^TB + A^TC)$
+  $= \lambda \text{Tr}(A^TB) + \text{Tr}(A^TC) = \lambda \varphi(A, B) + \varphi(A, C)$.
+- \textbf{Symétrie :} Propriété de la trace : pour toute matrice carrée $M$, $\text{Tr}(M) = \text{Tr}(M^T)$.
+  Donc $\varphi(B, A) = \text{Tr}(B^T A) = \text{Tr}((B^T A)^T) = \text{Tr}(A^T (B^T)^T) = \text{Tr}(A^T B) = \varphi(A, B)$.
+  L'application est symétrique (ce qui valide aussi la bilinéarité totale).
+- \textbf{Positivité et caractère défini :}
+  Soit $A \in M_n(\mathbb{R})$ avec des coefficients $A = (a_{ij})_{1\le i,j \le n}$.
+  Calculons la trace de $A^T A$. Soit $C = A^T A$. Par définition du produit matriciel :
+  $c_{ii} = \sum_{k=1}^n (A^T)_{ik} A_{ki} = \sum_{k=1}^n A_{ki} A_{ki} = \sum_{k=1}^n a_{ki}^2$.
+  La trace est la somme des éléments diagonaux :
+  $\varphi(A, A) = \text{Tr}(A^T A) = \sum_{i=1}^n c_{ii} = \sum_{i=1}^n \sum_{k=1}^n a_{ki}^2$.
+  - C'est la somme de tous les carrés des coefficients de la matrice $A$. C'est donc toujours $\ge 0$. (Positivité).
+  - Si $\varphi(A, A) = 0$, alors $\sum_{i,k} a_{ki}^2 = 0$. Étant une somme de termes positifs, chaque terme doit être nul, soit $a_{ki} = 0$ pour tous $i, k$. Donc $A$ est la matrice nulle. (Caractère défini).
+C'est donc bien un produit scalaire.
+
+\textbf{2. Application de l'inégalité de Cauchy-Schwarz :}
+Puisque $\varphi(A, B) = \text{Tr}(A^T B)$ est un produit scalaire, nous pouvons directement lui appliquer l'inégalité de Cauchy-Schwarz : $|\langle A, B \rangle| \le \|A\| \|B\|$.
+Ici, $\|A\| = \sqrt{\varphi(A, A)} = \sqrt{\text{Tr}(A^T A)}$.
+L'inégalité se réécrit donc exactement :
+$$|\text{Tr}(A^T B)| \le \sqrt{\text{Tr}(A^T A)} \sqrt{\text{Tr}(B^T B)}$$
+
+\textbf{3. Orthogonalité des symétriques et antisymétriques :}
+Soit $S$ une matrice symétrique (donc $S^T = S$) et $A$ une matrice antisymétrique (donc $A^T = -A$).
+Calculons leur produit scalaire $\varphi(S, A)$ :
+$\varphi(S, A) = \text{Tr}(S^T A)$.
+Puisque $S^T = S$, on a $\varphi(S, A) = \text{Tr}(SA)$.
+Utilisons la propriété de commutativité circulaire de la trace $\text{Tr}(MN) = \text{Tr}(NM)$ :
+$\text{Tr}(SA) = \text{Tr}(AS)$.
+Or, appliquons la transposition globale (car $\text{Tr}(M) = \text{Tr}(M^T)$) :
+$\text{Tr}(AS) = \text{Tr}((AS)^T) = \text{Tr}(S^T A^T)$.
+Puisque $S^T = S$ et $A^T = -A$, on substitue :
+$\text{Tr}(S^T A^T) = \text{Tr}(S(-A)) = -\text{Tr}(SA)$.
+Nous avons donc prouvé que $\text{Tr}(SA) = -\text{Tr}(SA)$.
+Ceci implique $2\text{Tr}(SA) = 0 \implies \text{Tr}(SA) = 0$.
+Donc $\varphi(S, A) = 0$. Les deux matrices sont orthogonales pour ce produit scalaire.
+
+
+\section{Exercice 9}
+
+
+\subsection*{Énoncé Formel et Typage Rigoureux}
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
+Dans $\mathbb{R}^n$, on considère l'hypercube $H_n = [-1, 1]^n$. Soit $v = (v_1, ..., v_n)$ un vecteur fixé de $\mathbb{R}^n$.
+On cherche à maximiser la fonction $f(x) = \langle v, x \rangle = \sum_{i=1}^n v_i x_i$ sur $H_n$.
+1. Utiliser l'inégalité de Cauchy-Schwarz pour trouver une borne supérieure $M_1$ de $f(x)$.
+2. Trouver, par une analyse coordonnée par coordonnée, la vraie valeur maximale $M_2$ de $f(x)$ sur $H_n$.
+3. L'inégalité de Cauchy-Schwarz est-elle optimale dans ce cas précis ?
+
+\subsection*{Preuve Analytique Pas-à-Pas}
+La démarche déductive exige une formalisation intégrale sans ellipse.
+\textbf{1. Borne via Cauchy-Schwarz :}
+Pour tout $x \in H_n$, on a $x = (x_1, ..., x_n)$ avec $x_i \in [-1, 1]$.
+Quelle est la norme maximale d'un tel vecteur ?
+$\|x\|^2 = \sum x_i^2 \le \sum 1^2 = n$. Donc $\|x\| \le \sqrt{n}$.
+Par l'inégalité de Cauchy-Schwarz, nous savons que :
+$f(x) = \langle v, x \rangle \le |\langle v, x \rangle| \le \|v\| \|x\|$.
+En utilisant notre borne sur $\|x\|$, nous obtenons une première majoration :
+$f(x) \le \|v\| \sqrt{n}$.
+Soit $M_1 = \|v\| \sqrt{n} = \sqrt{n \sum_{i=1}^n v_i^2}$.
+
+\textbf{2. Vraie valeur maximale (Analyse coordonnée par coordonnée) :}
+La fonction est une somme de termes indépendants : $f(x) = \sum_{i=1}^n v_i x_i$.
+Pour maximiser cette somme, il faut maximiser chaque terme $v_i x_i$ de manière indépendante, en choisissant $x_i \in [-1, 1]$.
+- Si $v_i > 0$, alors $v_i x_i$ est maximal pour $x_i = 1$ (et vaut $v_i$).
+- Si $v_i < 0$, alors $v_i x_i$ est maximal pour $x_i = -1$ (et vaut $-v_i$).
+- Si $v_i = 0$, toute valeur de $x_i$ donne $0$.
+De manière générale, le choix optimal est $x_i^* = \text{sgn}(v_i)$ (le signe de $v_i$).
+Dans ce cas, $v_i x_i^* = v_i \cdot \text{sgn}(v_i) = |v_i|$.
+Le maximum réel de la fonction est donc :
+$M_2 = \sum_{i=1}^n |v_i| = \|v\|_1$ (la norme $L^1$ de $v$).
+
+\textbf{3. Comparaison :}
+A-t-on $M_2 \le M_1$ ? (Heureusement, car $M_1$ est une borne supérieure mathématiquement prouvée).
+Vérifions-le analytiquement.
+On demande : $\sum_{i=1}^n |v_i| \le \sqrt{n \sum_{i=1}^n v_i^2}$.
+En élevant au carré (termes positifs) :
+$(\sum_{i=1}^n |v_i|)^2 \le n \sum_{i=1}^n v_i^2$.
+Ceci est une application directe de... l'inégalité de Cauchy-Schwarz !
+Prenons les vecteurs $U = (|v_1|, ..., |v_n|)$ et $W = (1, 1, ..., 1)$ dans $\mathbb{R}^n$.
+$\langle U, W \rangle^2 \le \|U\|^2 \|W\|^2$.
+$(\sum |v_i| \cdot 1)^2 \le (\sum |v_i|^2) (\sum 1^2)$.
+$(\sum |v_i|)^2 \le (\sum v_i^2) \cdot n$.
+Donc l'inégalité est bien vraie.
+\textbf{Cauchy-Schwarz est-elle optimale pour ce problème d'optimisation (c'est-à-dire $M_1$ est-il atteint) ?}
+$M_1$ est atteint si et seulement si l'inégalité de Cauchy-Schwarz sur $v$ et $x$ est une égalité, ce qui signifie (Exercice 5) que $x$ doit être colinéaire à $v$ : $x = \lambda v$.
+Or, la solution optimale que nous avons trouvée, $x^* = \text{sgn}(v)$, n'est colinéaire à $v$ que si $|v_1| = |v_2| = ... = |v_n|$ (toutes les coordonnées de $v$ ont même valeur absolue).
+Si $v$ est un vecteur arbitraire, par exemple $v = (1, 10, 0)$, $M_1$ est une très mauvaise approximation (trop lâche) par rapport au vrai maximum $M_2$. Cauchy-Schwarz donne une borne sûre, mais géométriquement, l'optimisation sur un hypercube (boule $L^\infty$) n'épouse pas naturellement la sphère Euclidienne (boule $L^2$) utilisée par Cauchy-Schwarz.
+
+
+\section{Exercice 10}
+
+
+\subsection*{Énoncé Formel et Typage Rigoureux}
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
+Soit $E$ un espace préhilbertien réel. Pour une famille de $k$ vecteurs $u_1, ..., u_k$ de $E$, on définit la Matrice de Gram $G(u_1, ..., u_k) \in M_k(\mathbb{R})$ par $G_{i,j} = \langle u_i, u_j \rangle$.
+1. Montrer que $G$ est une matrice symétrique.
+2. Pour tout vecteur $X = (x_1, ..., x_k)^T \in \mathbb{R}^k$, exprimer le produit $X^T G X$ sous la forme d'une norme au carré dans $E$.
+3. En déduire que la matrice de Gram $G$ est définie positive (c'est-à-dire $X^T G X > 0$ pour tout $X \neq 0$) si et seulement si la famille $(u_1, ..., u_k)$ est linéairement indépendante.
+
+\subsection*{Preuve Analytique Pas-à-Pas}
+La démarche déductive exige une formalisation intégrale sans ellipse.
+\textbf{1. Symétrie de la matrice :}
+L'élément général est $G_{i,j} = \langle u_i, u_j \rangle$.
+Puisque le produit scalaire sur un espace réel est symétrique, on a :
+$G_{j,i} = \langle u_j, u_i \rangle = \langle u_i, u_j \rangle = G_{i,j}$.
+Donc la matrice $G$ est bien symétrique ($G^T = G$).
+
+\textbf{2. Expression de la forme quadratique :}
+Soit $X = (x_1, ..., x_k)^T$ un vecteur colonne.
+Calculons $X^T G X$ par la formule explicite :
+$X^T G X = \sum_{i=1}^k \sum_{j=1}^k x_i G_{i,j} x_j$
+Substituons la définition de $G_{i,j}$ :
+$X^T G X = \sum_{i=1}^k \sum_{j=1}^k x_i \langle u_i, u_j \rangle x_j$
+Par bilinéarité du produit scalaire, nous pouvons faire entrer les scalaires $x_i$ et $x_j$ à l'intérieur :
+$X^T G X = \sum_{i=1}^k \sum_{j=1}^k \langle x_i u_i, x_j u_j \rangle$
+En sortant les sommes à l'intérieur du produit scalaire :
+$X^T G X = \langle \sum_{i=1}^k x_i u_i, \sum_{j=1}^k x_j u_j \rangle$
+Posons le vecteur $V = \sum_{i=1}^k x_i u_i \in E$. Alors l'expression est $\langle V, V \rangle$.
+Par définition de la norme induite :
+$X^T G X = \| \sum_{i=1}^k x_i u_i \|^2$.
+
+\textbf{3. Caractérisation de l'indépendance linéaire :}
+Nous devons prouver l'équivalence : $G$ est définie positive $\iff$ $(u_1, ..., u_k)$ est une famille libre.
+
+\textbf{Sens direct ($\implies$) : Supposons $G$ définie positive.}
+On a donc $X^T G X = 0 \implies X = 0$.
+Soit une combinaison linéaire nulle des vecteurs $u_i$ : $\sum_{i=1}^k x_i u_i = 0_E$.
+Alors la norme au carré de ce vecteur est nulle : $\| \sum_{i=1}^k x_i u_i \|^2 = 0$.
+D'après la question 2, cela équivaut à $X^T G X = 0$, où $X$ est le vecteur des coefficients $(x_i)$.
+Puisque $G$ est définie positive, cela implique obligatoirement $X = 0$, donc tous les coefficients $x_i$ sont nuls.
+La famille $(u_1, ..., u_k)$ est bien linéairement indépendante (libre).
+
+\textbf{Sens réciproque ($\impliedby$) : Supposons que $(u_1, ..., u_k)$ est une famille libre.}
+Soit $X \in \mathbb{R}^k$. D'après la question 2, $X^T G X = \| \sum_{i=1}^k x_i u_i \|^2$.
+Puisqu'une norme au carré est toujours positive, on a déjà $X^T G X \ge 0$.
+Si $X^T G X = 0$, alors $\| \sum_{i=1}^k x_i u_i \|^2 = 0$, ce qui implique que le vecteur est nul : $\sum_{i=1}^k x_i u_i = 0_E$.
+Or la famille est libre (hypothèse). La seule solution pour une combinaison linéaire nulle est d'avoir tous les coefficients nuls.
+Donc $x_1 = 0, ..., x_k = 0$, ce qui signifie $X = 0$.
+Ainsi, $X^T G X = 0 \implies X = 0$. Ceci, combiné à la positivité, montre que $G$ est définie positive.
+
+\textbf{Conclusion :} L'inversibilité (et le caractère défini positif) de la matrice de Gram est un test parfait, purement numérique, de l'indépendance linéaire d'une famille de vecteurs.
+
+
+
+
+\chapter{Travaux pratiques et simulations algorithmiques}
+\section{Travaux Pratiques 1}
+\textbf{Objectif mathématique :}
+Valider numériquement la définition du produit scalaire canonique dans $\mathbb{R}^n$ et vérifier la borne fondamentale imposée par l'inégalité de Cauchy-Schwarz ($|\langle x, y \rangle| \le \|x\| \|y\|$).
+
+\textbf{Règle stricte :} Code Python pur, aucune bibliothèque externe (ni numpy, ni math) hormis l'opération `** 0.5` pour la racine carrée.
+
+\begin{lstlisting}[language=Python]
+def produit_scalaire(x: list[float], y: list[float]) -> float:
+    \"\"\"
+    Calcule le produit scalaire canonique entre deux vecteurs x et y de R^n.
+    Formule mathematique : <x,y> = sum(x_i * y_i)
+    \"\"\"
+    assert len(x) == len(y), "Les vecteurs doivent etre de la meme dimension"
+
+    resultat = 0.0
+    for i in range(len(x)):
+        resultat += x[i] * y[i]
+    return resultat
+
+def norme(x: list[float]) -> float:
+    \"\"\"
+    Calcule la norme Euclidienne d'un vecteur, induite par le produit scalaire.
+    Formule mathematique : ||x|| = sqrt(<x,x>)
+    \"\"\"
+    return produit_scalaire(x, x) ** 0.5
+
+def test_cauchy_schwarz(x: list[float], y: list[float]) -> bool:
+    \"\"\"
+    Verifie l'inegalite de Cauchy-Schwarz : |<x,y>| <= ||x|| * ||y||
+    \"\"\"
+    ps = produit_scalaire(x, y)
+    valeur_absolue_ps = ps if ps >= 0 else -ps
+
+    norme_produit = norme(x) * norme(y)
+
+    # On utilise une tolerance d'erreur epsilon due a l'arithmetique flottante
+    epsilon = 1e-9
+    return valeur_absolue_ps <= norme_produit + epsilon
+
+# --- Validation Rigoureuse ---
+if __name__ == "__main__":
+    v1 = [1.0, 2.0, 3.0]
+    v2 = [4.0, 5.0, 6.0]
+
+    ps = produit_scalaire(v1, v2)
+    print(f"Produit scalaire <v1, v2> : {ps} (Attendu: 1*4 + 2*5 + 3*6 = 32.0)")
+
+    print(f"Cauchy-Schwarz respectee pour v1, v2 ? : {test_cauchy_schwarz(v1, v2)}")
+
+    # Test d'egalite de Cauchy-Schwarz (vecteurs colineaires)
+    v_colin = [2.0, 4.0, 6.0] # v_colin = 2 * v1
+    print(f"Cauchy-Schwarz respectee (cas limite egalite) ? : {test_cauchy_schwarz(v1, v_colin)}")
+\end{lstlisting}
+
+
+
+\section{Travaux Pratiques 2}
+\textbf{Objectif mathématique :}
+Implémenter le calcul matriciel sous-jacent à une forme bilinéaire arbitraire $B(x, y) = x^T A y$. Vérifier que le résultat est identique à l'évaluation polynomiale des termes croisés.
+
+\begin{lstlisting}[language=Python]
+def multiply_matrix_vector(matrix: list[list[float]], vector: list[float]) -> list[float]:
+    \"\"\"Calcule le produit A * y\"\"\"
+    n_rows = len(matrix)
+    n_cols = len(matrix[0])
+    assert len(vector) == n_cols, "Dimension mismatch"
+
+    result = [0.0] * n_rows
+    for i in range(n_rows):
+        for j in range(n_cols):
+            result[i] += matrix[i][j] * vector[j]
+    return result
+
+def forme_bilineaire(x: list[float], A: list[list[float]], y: list[float]) -> float:
+    \"\"\"
+    Evalue B(x, y) = x^T A y.
+    \"\"\"
+    # Etape 1 : Vecteur intermediaire z = A * y
+    z = multiply_matrix_vector(A, y)
+
+    # Etape 2 : Produit matriciel x^T * z (equivalent au produit scalaire canonique)
+    result = 0.0
+    for i in range(len(x)):
+        result += x[i] * z[i]
+    return result
+
+# --- Validation Rigoureuse ---
+if __name__ == "__main__":
+    # Matrice de l'exercice 2 du cours :
+    # B(X, Y) = 2x1y1 - x1y2 - x2y1 + 3x2y2
+    A = [
+        [2.0, -1.0],
+        [-1.0, 3.0]
+    ]
+    X = [1.0, 2.0]
+    Y = [3.0, 4.0]
+
+    # Calcul via la matrice : B(X, Y) = X^T A Y
+    resultat_matriciel = forme_bilineaire(X, A, Y)
+
+    # Calcul via la formule polynomiale directe
+    resultat_direct = (2 * X[0] * Y[0]) - (X[0] * Y[1]) - (X[1] * Y[0]) + (3 * X[1] * Y[1])
+
+    print(f"Calcul matriciel : {resultat_matriciel}")
+    print(f"Calcul algebrique: {resultat_direct}")
+    assert abs(resultat_matriciel - resultat_direct) < 1e-9, "Erreur de consistance mathematique"
+\end{lstlisting}
+
+
+
+\section{Travaux Pratiques 3}
+\textbf{Objectif mathématique :}
+En géométrie euclidienne, le produit scalaire s'exprime aussi par $\langle x, y \rangle = \|x\| \|y\| \cos(\theta)$. On va coder la métrique "Cosinus Similarité", fondamentale en IA pour comparer les vecteurs de plongement (embeddings) de mots ou documents.
+
+\begin{lstlisting}[language=Python]
+def produit_scalaire(x: list[float], y: list[float]) -> float:
+    return sum(x_i * y_i for x_i, y_i in zip(x, y))
+
+def norme(x: list[float]) -> float:
+    return produit_scalaire(x, x) ** 0.5
+
+def similarite_cosinus(x: list[float], y: list[float]) -> float:
+    \"\"\"
+    Calcule cos(theta) = <x,y> / (||x|| * ||y||).
+    Renvoie une valeur entre -1 (opposes) et 1 (colineaires et de meme sens).
+    \"\"\"
+    norm_x = norme(x)
+    norm_y = norme(y)
+
+    assert norm_x > 0 and norm_y > 0, "Les vecteurs ne doivent pas etre nuls"
+
+    return produit_scalaire(x, y) / (norm_x * norm_y)
+
+# --- Validation Rigoureuse ---
+if __name__ == "__main__":
+    # Supposons ces vecteurs comme etant les "embeddings" de trois phrases
+    doc1 = [1.0, 0.0, 1.0] # "Le chat mange"
+    doc2 = [0.8, 0.1, 0.9] # "Un felin se nourrit" (Tres semantiquement proche de doc1)
+    doc3 = [-1.0, 2.0, 0.0] # "Le concept de topologie" (Totalement different)
+
+    sim_1_2 = similarite_cosinus(doc1, doc2)
+    sim_1_3 = similarite_cosinus(doc1, doc3)
+
+    print(f"Similarite (doc1, doc2) : {sim_1_2:.4f} (Proches de 1, angle faible)")
+    print(f"Similarite (doc1, doc3) : {sim_1_3:.4f} (Plus faibles, voire negatif, angle grand)")
+
+    assert sim_1_2 > sim_1_3, "Echec : doc2 devrait etre plus proche de doc1 que doc3"
+\end{lstlisting}
+
+
+
+\section{Travaux Pratiques 4}
+\textbf{Objectif mathématique :}
+Construire en pur Python la matrice de Gram $G$ d'une famille de vecteurs. L'entrée $(i,j)$ de cette matrice est $\langle u_i, u_j \rangle$. Vérifier numériquement sa symétrie.
+
+\begin{lstlisting}[language=Python]
+def produit_scalaire(x: list[float], y: list[float]) -> float:
+    return sum(a * b for a, b in zip(x, y))
+
+def construire_matrice_gram(famille_vecteurs: list[list[float]]) -> list[list[float]]:
+    \"\"\"
+    Construit la matrice de Gram G telle que G[i][j] = <v_i, v_j>.
+    \"\"\"
+    k = len(famille_vecteurs) # Nombre de vecteurs
+    G = [[0.0] * k for _ in range(k)]
+
+    for i in range(k):
+        for j in range(k):
+            G[i][j] = produit_scalaire(famille_vecteurs[i], famille_vecteurs[j])
+
+    return G
+
+def verifier_symetrie(matrice: list[list[float]]) -> bool:
+    n = len(matrice)
+    for i in range(n):
+        for j in range(n):
+            if abs(matrice[i][j] - matrice[j][i]) > 1e-9:
+                return False
+    return True
+
+# --- Validation Rigoureuse ---
+if __name__ == "__main__":
+    v1 = [1.0, 1.0, 0.0]
+    v2 = [0.0, 1.0, 1.0]
+    v3 = [1.0, 0.0, 1.0]
+
+    famille = [v1, v2, v3]
+    G = construire_matrice_gram(famille)
+
+    print("Matrice de Gram :")
+    for ligne in G:
+        print([f"{val:.2f}" for val in ligne])
+
+    print(f"La matrice de Gram est-elle symetrique ? : {verifier_symetrie(G)}")
+    assert verifier_symetrie(G), "La matrice de Gram DOIT mathematiquement etre symetrique."
+\end{lstlisting}
+
+
+
+\section{Travaux Pratiques 5}
+\textbf{Objectif mathématique :}
+L'identité de polarisation affirme qu'une forme quadratique (la norme au carré) contient toute l'information du produit scalaire symétrique associé.
+On va implémenter la formule : $\langle x, y \rangle = \frac{1}{4} (\|x + y\|^2 - \|x - y\|^2)$ et vérifier qu'elle renvoie exactement le produit scalaire canonique classique.
+
+\begin{lstlisting}[language=Python]
+def somme_vect(x: list[float], y: list[float]) -> list[float]:
+    return [a + b for a, b in zip(x, y)]
+
+def diff_vect(x: list[float], y: list[float]) -> list[float]:
+    return [a - b for a, b in zip(x, y)]
+
+def norme_carre(x: list[float]) -> float:
+    # On simule qu'on ne connait la norme qu'a partir de la somme des carres
+    # (sans utiliser la fonction produit_scalaire pour eviter la triche)
+    return sum(a * a for a in x)
+
+def produit_scalaire_par_polarisation(x: list[float], y: list[float]) -> float:
+    \"\"\"
+    Reconstruit le produit scalaire uniquement en mesurant des longueurs (normes).
+    \"\"\"
+    norme_somme_carre = norme_carre(somme_vect(x, y))
+    norme_diff_carre = norme_carre(diff_vect(x, y))
+
+    return 0.25 * (norme_somme_carre - norme_diff_carre)
+
+def produit_scalaire_canonique(x: list[float], y: list[float]) -> float:
+    return sum(a * b for a, b in zip(x, y))
+
+# --- Validation Rigoureuse ---
+if __name__ == "__main__":
+    v_a = [3.0, 4.0, -1.0, 2.0]
+    v_b = [-2.0, 1.0, 0.0, 5.0]
+
+    ps_direct = produit_scalaire_canonique(v_a, v_b)
+    ps_polarise = produit_scalaire_par_polarisation(v_a, v_b)
+
+    print(f"PS direct      : {ps_direct}")
+    print(f"PS polarisation: {ps_polarise}")
+
+    assert abs(ps_direct - ps_polarise) < 1e-9, "L'identite de polarisation mathematique a echoue"
+    print("Succes mathematique absolu : La geometrie (normes) engendre l'algebre (produit scalaire).")
+\end{lstlisting}
+
+
+
+
+
+\end{document}

@@ -3,13 +3,15 @@ title: "Exercice 10 : Matrice de Gram et indépendance linéaire"
 difficulty: 5
 ---
 
-## Énoncé
+## Énoncé Formel et Typage Rigoureux
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
 Soit $E$ un espace préhilbertien réel. Pour une famille de $k$ vecteurs $u_1, ..., u_k$ de $E$, on définit la Matrice de Gram $G(u_1, ..., u_k) \in M_k(\mathbb{R})$ par $G_{i,j} = \langle u_i, u_j \rangle$.
 1. Montrer que $G$ est une matrice symétrique.
 2. Pour tout vecteur $X = (x_1, ..., x_k)^T \in \mathbb{R}^k$, exprimer le produit $X^T G X$ sous la forme d'une norme au carré dans $E$.
 3. En déduire que la matrice de Gram $G$ est définie positive (c'est-à-dire $X^T G X > 0$ pour tout $X \neq 0$) si et seulement si la famille $(u_1, ..., u_k)$ est linéairement indépendante.
 
-## Correction Détaillée
+## Preuve Analytique Pas-à-Pas (Zéro Ellipse)
+La démarche déductive exige une formalisation intégrale sans ellipse.
 **1. Symétrie de la matrice :**
 L'élément général est $G_{i,j} = \langle u_i, u_j \rangle$.
 Puisque le produit scalaire sur un espace réel est symétrique, on a :

@@ -3,12 +3,14 @@ title: "Exercice 4 : Identités de polarisation"
 difficulty: 2
 ---
 
-## Énoncé
+## Énoncé Formel et Typage Rigoureux
+Soit $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$) et $E$ un $\mathbb{K}$-espace vectoriel. L'enjeu est d'éprouver la consistance algébrique des formes bilinéaires.
 Soit $E$ un espace vectoriel muni d'un produit scalaire $\langle \cdot, \cdot \rangle$ et $\| \cdot \|$ sa norme associée.
 1. Si $E$ est un espace vectoriel sur $\mathbb{R}$, exprimer $\langle x, y \rangle$ uniquement en fonction de la norme (Identité de polarisation).
 2. Même question si $E$ est un espace vectoriel sur $\mathbb{C}$.
 
-## Correction Détaillée
+## Preuve Analytique Pas-à-Pas (Zéro Ellipse)
+La démarche déductive exige une formalisation intégrale sans ellipse.
 **1. Cas Réel ($\mathbb{K} = \mathbb{R}$)**
 Soient $x, y \in E$. Nous connaissons le développement de la norme au carré de la somme :
 $$\|x + y\|^2 = \|x\|^2 + 2\langle x, y \rangle + \|y\|^2$$
