@@ -1,6 +1,6 @@
 ---
 uuid: "jalon-25"
-title: "Formes bilinéaires, formes sesquilinieaires, produit scalaire et inégalité de Cauchy-Schwarz"
+title: "Formes bilinéaires, formes sesquilinéaires, produit scalaire et inégalité de Cauchy-Schwarz"
 year: 1
 trimester: 3
 tags:
