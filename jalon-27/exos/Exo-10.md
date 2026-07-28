@@ -2,25 +2,36 @@
 uuid: "jalon-27-exo-10"
 title: "Exercice 10 : Rayleigh quotient"
 ---
-# Exercice 10 : Rayleigh quotient
+# Exercice 10 : Décomposition polaire
 
 **Difficulté :** ★★★★★
 
 ## Énoncé
 
-Pour une matrice symétrique réelle $A$, montrer que le quotient de Rayleigh $R(x) = \frac{x^T A x}{x^T x}$ vérifie $\lambda_{\min} \leq R(x) \leq \lambda_{\max}$ où $\lambda_{\min}, \lambda_{\max}$ sont les valeurs propres extrêmes.
+Soit $A \in \mathcal{GL}_n(\mathbb{R})$ une matrice inversible. Démontrer le théorème de décomposition polaire : il existe un unique couple $(O, S)$ avec $O$ matrice orthogonale et $S$ matrice symétrique définie positive tel que $A = O S$.
 
 ## Démonstration sans ellipse
 
-Soit $A$ une matrice symétrique. D'après le théorème spectral, il existe une base orthonormée de vecteurs propres $(e_1, \dots, e_n)$ avec $Ae_i = \lambda_i e_i$.
-Toute valeur propre $\lambda_i$ vérifie $\lambda_{\min} \leq \lambda_i \leq \lambda_{\max}$.
-Soit $x \neq 0$. Décomposons $x$ dans la base $(e_i)$ : $x = \sum_{i=1}^n x_i e_i$.
-Alors $x^T x = \sum_{i=1}^n x_i^2$.
-Et $Ax = \sum_{i=1}^n x_i \lambda_i e_i$, donc $x^T A x = \sum_{i=1}^n \lambda_i x_i^2$.
-En minorant chaque $\lambda_i$ par $\lambda_{\min}$ :
-$$ x^T A x \geq \sum_{i=1}^n \lambda_{\min} x_i^2 = \lambda_{\min} \sum_{i=1}^n x_i^2 = \lambda_{\min} x^T x $$
-De même, en majorant :
-$$ x^T A x \leq \lambda_{\max} x^T x $$
-En divisant par $x^T x > 0$, on obtient bien :
-$$ \lambda_{\min} \leq \frac{x^T A x}{x^T x} \leq \lambda_{\max} $$
-L'égalité est atteinte pour les vecteurs propres correspondants. $\blacksquare$
+**Existence :**
+Considérons la matrice $M = A^T A$. $M$ est symétrique, car $M^T = (A^T A)^T = A^T (A^T)^T = A^T A = M$.
+De plus, $M$ est définie positive. Pour tout vecteur non nul $X \in \mathbb{R}^n$ :
+$$ X^T M X = X^T (A^T A) X = (AX)^T (AX) = \|AX\|^2 $$
+Puisque $A$ est inversible et $X \neq 0$, $AX \neq 0$, donc $\|AX\|^2 > 0$. Ainsi, $M$ est symétrique définie positive.
+D'après l'exercice 8, il existe une unique matrice $S$ symétrique définie positive telle que $S^2 = M = A^T A$.
+Puisque $S$ est définie positive, elle est inversible. Définissons $O = A S^{-1}$.
+Il reste à vérifier que $O$ est une matrice orthogonale.
+$$ O^T O = (A S^{-1})^T (A S^{-1}) = (S^{-1})^T A^T A S^{-1} $$
+Puisque $S$ est symétrique, $S^{-1}$ est aussi symétrique, donc $(S^{-1})^T = S^{-1}$.
+De plus, par construction, $A^T A = S^2$.
+$$ O^T O = S^{-1} S^2 S^{-1} = S^{-1} S S S^{-1} = I_n I_n = I_n $$
+La matrice $O$ est donc bien orthogonale. Nous avons $A = O S$ avec les propriétés requises.
+
+**Unicité :**
+Supposons que $A = O_1 S_1 = O_2 S_2$ soient deux décompositions polaires.
+Alors $A^T A = (O_1 S_1)^T (O_1 S_1) = S_1^T O_1^T O_1 S_1 = S_1 I_n S_1 = S_1^2$.
+De même, $A^T A = S_2^2$.
+Donc $S_1^2 = S_2^2 = A^T A$.
+Or, d'après l'exercice 8, la racine carrée symétrique définie positive d'une matrice symétrique définie positive est unique.
+Donc $S_1 = S_2$.
+En multipliant par $S_1^{-1}$ à droite, on obtient $O_1 = O_2$.
+L'unicité est prouvée. $\blacksquare$
