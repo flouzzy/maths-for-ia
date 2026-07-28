@@ -1,35 +1,54 @@
 ---
 uuid: "jalon-26-exo-02"
-title: "Famille de polynômes orthogonaux"
+title: "Produit scalaire sur l'espace des fonctions continues"
 difficulty: 2
 ---
 
-# Exercice 2 : Famille de polynômes orthogonaux (Difficulté ★★☆☆☆)
+# Exercice 2 : Produit scalaire sur l'espace des fonctions continues (Difficulté ★★☆☆☆)
 
-Soit $E = \mathbb{R}[X]$. On munit $E$ du produit scalaire $\langle P, Q \rangle = \int_{-1}^1 P(t)Q(t)dt$.
-1. Montrer qu'il s'agit bien d'un produit scalaire sur $E$.
-2. Appliquer l'algorithme de Gram-Schmidt à la famille $(1, X, X^2)$ pour trouver une base orthogonale de $\mathbb{R}_2[X]$. Ces polynômes sont proportionnels aux polynômes de Legendre.
+Soit $E = C([0, 1], \mathbb{R})$ l'espace vectoriel des fonctions continues de $[0, 1]$ dans $\mathbb{R}$. On munit $E$ de l'application $\langle f, g \rangle = \int_0^1 f(t)g(t)dt$.
+
+1. Démontrer avec la plus stricte rigueur que cette application définit bien un produit scalaire sur $E$. Vous porterez une attention particulière à l'axiome de définition positive, en justifiant précisément pourquoi $\langle f, f \rangle = 0 \implies f = 0_E$.
+2. En utilisant l'inégalité de Cauchy-Schwarz, démontrer que pour toute fonction $f \in E$ strictement positive, on a l'inégalité : $\left( \int_0^1 f(t) dt \right) \left( \int_0^1 \frac{1}{f(t)} dt \right) \ge 1$.
+3. Caractériser l'ensemble des fonctions $f$ pour lesquelles cette inégalité est une égalité.
 
 ## Démonstration Rigoureuse à Blanc
 
-1. Soit $\langle P, Q \rangle = \int_{-1}^1 P(t)Q(t)dt$.
-   - **Bilinéarité** : L'intégrale est linéaire par rapport à ses bornes et fonctions intégrées.
-     $$ \langle \lambda P_1 + P_2, Q \rangle = \int_{-1}^1 (\lambda P_1(t) + P_2(t))Q(t)dt = \lambda \int_{-1}^1 P_1(t)Q(t)dt + \int_{-1}^1 P_2(t)Q(t)dt = \lambda \langle P_1, Q \rangle + \langle P_2, Q \rangle $$
-   - **Symétrie** : $$ \langle P, Q \rangle = \int_{-1}^1 P(t)Q(t)dt = \int_{-1}^1 Q(t)P(t)dt = \langle Q, P \rangle $$
-   - **Définie positive** :
-     - Pour tout $P$, $\langle P, P \rangle = \int_{-1}^1 P(t)^2 dt$. L'intégrande $P(t)^2$ est positive ou nulle sur $[-1, 1]$, donc l'intégrale est positive ou nulle : $\langle P, P \rangle \ge 0$.
-     - Si $\langle P, P \rangle = \int_{-1}^1 P(t)^2 dt = 0$, puisque la fonction $t \mapsto P(t)^2$ est continue et positive, son intégrale nulle sur $[-1, 1]$ implique que la fonction est nulle sur $[-1, 1]$.
-     - Un polynôme $P$ ayant une infinité de racines (tout l'intervalle $[-1, 1]$) est nécessairement le polynôme nul. Donc $P = 0$.
+1. Vérifions méthodiquement les axiomes définissant un produit scalaire. Soient $f, g, h \in E$ et $\lambda \in \mathbb{R}$.
+   - **Symétrie :**
+     $$ \langle f, g \rangle = \int_0^1 f(t)g(t) dt = \int_0^1 g(t)f(t) dt = \langle g, f \rangle $$
+     La symétrie découle trivialement de la commutativité du produit dans $\mathbb{R}$.
+   - **Bilinéarité :** Par symétrie, il suffit de vérifier la linéarité par rapport à la première variable.
+     $$ \langle \lambda f + g, h \rangle = \int_0^1 (\lambda f(t) + g(t))h(t) dt = \int_0^1 (\lambda f(t)h(t) + g(t)h(t)) dt $$
+     Par linéarité de l'intégrale de Riemann sur le segment $[0, 1]$ :
+     $$ \langle \lambda f + g, h \rangle = \lambda \int_0^1 f(t)h(t) dt + \int_0^1 g(t)h(t) dt = \lambda \langle f, h \rangle + \langle g, h \rangle $$
+     La forme est donc bien bilinéaire symétrique.
+   - **Positivité :** Pour toute fonction $f \in E$, évaluons $\langle f, f \rangle$.
+     $$ \langle f, f \rangle = \int_0^1 f(t)^2 dt $$
+     Puisque la fonction $t \mapsto f(t)^2$ est positive ou nulle sur $[0, 1]$, et que les bornes d'intégration sont dans l'ordre croissant ($0 \le 1$), la positivité de l'intégrale garantit que $\langle f, f \rangle \ge 0$.
+   - **Caractère défini :** Supposons que $\langle f, f \rangle = 0$, soit $\int_0^1 f(t)^2 dt = 0$.
+     La fonction $h(t) = f(t)^2$ est continue sur le segment $[0, 1]$ et est partout positive ou nulle. Le théorème fondamental de l'intégration des fonctions continues de signe constant affirme que si l'intégrale d'une fonction continue et positive sur un segment d'intérieur non vide est nulle, alors cette fonction est identiquement nulle sur ce segment.
+     Ainsi, pour tout $t \in [0, 1]$, $f(t)^2 = 0$, ce qui implique $f(t) = 0$. La fonction $f$ est donc bien la fonction nulle, $f = 0_E$.
+   L'application est bilinéaire, symétrique et définie positive, c'est un produit scalaire sur $E$.
 
-2. Appliquons Gram-Schmidt pour trouver une base orthogonale (on ne demande pas de la normer ici, l'orthogonalité suffit). Notons $e_1 = 1$, $e_2 = X$, $e_3 = X^2$.
-   - **Étape 1** : On pose $v_1 = e_1 = 1$.
-   - **Étape 2** : $v_2 = e_2 - \frac{\langle e_2, v_1 \rangle}{\langle v_1, v_1 \rangle} v_1$.
-     $$ \langle e_2, v_1 \rangle = \int_{-1}^1 t \cdot 1 dt = [\frac{t^2}{2}]_{-1}^1 = 0 $$
-     Donc $v_2 = X$.
-   - **Étape 3** : $v_3 = e_3 - \frac{\langle e_3, v_1 \rangle}{\langle v_1, v_1 \rangle} v_1 - \frac{\langle e_3, v_2 \rangle}{\langle v_2, v_2 \rangle} v_2$.
-     $$ \langle e_3, v_1 \rangle = \int_{-1}^1 t^2 \cdot 1 dt = [\frac{t^3}{3}]_{-1}^1 = \frac{2}{3} $$
-     $$ \langle v_1, v_1 \rangle = \int_{-1}^1 1^2 dt = 2 $$
-     $$ \langle e_3, v_2 \rangle = \int_{-1}^1 t^2 \cdot t dt = \int_{-1}^1 t^3 dt = 0 $$
-     Donc $v_3 = X^2 - \frac{2/3}{2} \cdot 1 = X^2 - \frac{1}{3}$.
-   - La base orthogonale est $(1, X, X^2 - \frac{1}{3})$.
+2. Soit $f \in E$ une fonction strictement positive sur $[0, 1]$. Définissons deux nouvelles fonctions $u, v \in E$ astucieusement choisies pour faire apparaître les termes de l'inégalité demandée via leurs carrés :
+   $$ u(t) = \sqrt{f(t)} \quad \text{et} \quad v(t) = \frac{1}{\sqrt{f(t)}} $$
+   Ces fonctions sont bien continues sur $[0, 1]$ car $f$ est continue et ne s'annule pas (elle est strictement positive).
+   Calculons leur norme au carré :
+   $$ \|u\|^2 = \int_0^1 u(t)^2 dt = \int_0^1 f(t) dt $$
+   $$ \|v\|^2 = \int_0^1 v(t)^2 dt = \int_0^1 \frac{1}{f(t)} dt $$
+   Évaluons maintenant leur produit scalaire :
+   $$ \langle u, v \rangle = \int_0^1 u(t)v(t) dt = \int_0^1 \sqrt{f(t)} \frac{1}{\sqrt{f(t)}} dt = \int_0^1 1 dt = 1 $$
+   Appliquons l'inégalité de Cauchy-Schwarz à ces deux fonctions :
+   $$ \langle u, v \rangle^2 \le \|u\|^2 \|v\|^2 $$
+   En substituant les expressions calculées, nous obtenons instantanément :
+   $$ 1^2 \le \left( \int_0^1 f(t) dt \right) \left( \int_0^1 \frac{1}{f(t)} dt \right) $$
+   L'inégalité est démontrée.
+
+3. L'égalité dans Cauchy-Schwarz est vérifiée si et seulement si les fonctions $u$ et $v$ sont liées. Dans cet espace vectoriel fonctionnel, cela signifie qu'il existe un scalaire réel $\lambda$ tel que pour tout $t \in [0, 1]$, $u(t) = \lambda v(t)$.
+   Exprimons cette condition en fonction de $f$ :
+   $$ \sqrt{f(t)} = \lambda \frac{1}{\sqrt{f(t)}} $$
+   Puisque $f(t) > 0$, on peut multiplier par $\sqrt{f(t)}$ :
+   $$ f(t) = \lambda $$
+   Ainsi, la fonction $f$ doit être constante sur l'intervalle $[0, 1]$. Réciproquement, si $f(t) = c > 0$, l'intégrale de $f$ vaut $c$, et l'intégrale de $1/f$ vaut $1/c$. Leur produit donne bien $c \cdot (1/c) = 1$, ce qui confirme la validité de notre caractérisation.
    $\blacksquare$

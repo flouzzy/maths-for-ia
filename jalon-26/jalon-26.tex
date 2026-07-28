@@ -1,0 +1,902 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+
+\title{Espaces euclidiens, orthogonalité, théorème de la projection orthogonale et algorithme de Gram-Schmidt}
+\author{Charles EDOU NZE}
+\date{2026-07-28}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!60!black},
+    showstringspaces=false,
+    frame=single,
+    breaklines=true,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ç}{{\c c}}1 {ù}{{\`u}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1 {â}{{\^a}}1 {É}{{\'E}}1 {È}{{\`E}}1 {À}{{\`A}}1 {Ç}{{\c C}}1 {Ù}{{\`U}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1 {Â}{{\^A}}1
+}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+
+\chapter*{Jalon 26 : Espaces euclidiens, orthogonalité, théorème de la projection orthogonale et algorithme de Gram-Schmidt}
+
+\section*{1. Échafaudage Cognitif \& Genèse du Concept}
+
+L'algèbre linéaire, dans ses fondements les plus abstraits (espaces vectoriels, bases, applications linéaires), nous offre un cadre algébrique robuste, mais singulièrement dénué de propriétés métriques. Dans un espace vectoriel abstrait $E$, les notions de « longueur », d'« angle », ou de « proximité » n'existent tout simplement pas. On peut additionner des vecteurs et les multiplier par des scalaires, mais on ne peut pas mesurer la distance qui les sépare ni vérifier s'ils sont perpendiculaires.
+
+Pourtant, notre intuition du monde physique euclidien, formalisée dès l'Antiquité par Euclide, repose intrinsèquement sur ces grandeurs métriques. Le théorème de Pythagore, la plus célèbre des propriétés géométriques, exige une notion bien définie de l'angle droit. Le défi des mathématiciens du XIXe siècle, notamment Hermann Grassmann et Giuseppe Peano, fut de réintégrer cette géométrie riche au cœur de l'algèbre linéaire, sans en sacrifier la pureté axiomatique.
+
+La solution ne fut pas d'ajouter des longueurs et des angles comme des concepts primitifs, mais plutôt de doter l'espace vectoriel abstrait d'une structure algébrique supplémentaire : le \textbf{produit scalaire}. C'est cette forme bilinéaire symétrique définie positive qui induit naturellement une norme (mesurant les longueurs) et permet de définir rigoureusement l'orthogonalité (mesurant les angles).
+
+Un espace euclidien est ainsi la quintessence de la géométrie classique : un espace vectoriel réel de dimension finie, enrichi d'un produit scalaire. C'est dans ce cadre que la projection orthogonale trouve tout son sens, offrant une méthode optimale pour approximer un vecteur par des éléments d'un sous-espace donné. Cette idée d'approximation orthogonale est la clef de voûte de l'analyse de données moderne : de la régression des moindres carrés en apprentissage automatique aux décompositions spectaculaires comme l'ACP, toutes reposent sur le socle solide de la géométrie euclidienne.
+
+\chapter*{Partie 2 : Formalisation et structures algébriques}
+
+\subsection*{2.1 Espace préhilbertien réel et Espace Euclidien}
+
+\textbf{A. Énoncé Symbolique Strict}
+
+Soit $E$ un $\mathbb{R}$-espace vectoriel. Un \textbf{produit scalaire} sur $E$ est une application :
+$ \langle \cdot, \cdot \rangle : E \times E \to \mathbb{R} $
+qui est :
+1. \textbf{Bilinéaire} : Pour tous $x, y, z \in E$ et tout $\lambda \in \mathbb{R}$,
+   $ \langle \lambda x + y, z \rangle = \lambda \langle x, z \rangle + \langle y, z \rangle \quad \text{et} \quad \langle x, \lambda y + z \rangle = \lambda \langle x, y \rangle + \langle x, z \rangle $
+2. \textbf{Symétrique} : Pour tous $x, y \in E$,
+   $ \langle x, y \rangle = \langle y, x \rangle $
+3. \textbf{Définie positive} : Pour tout $x \in E$,
+   $ \langle x, x \rangle \ge 0 $
+   $ \langle x, x \rangle = 0 \iff x = 0_E $
+
+Un \textbf{espace préhilbertien réel} est un couple $(E, \langle \cdot, \cdot \rangle)$ où $E$ est un $\mathbb{R}$-espace vectoriel et $\langle \cdot, \cdot \rangle$ un produit scalaire sur $E$.
+Un \textbf{espace euclidien} est un espace préhilbertien réel de \textbf{dimension finie}.
+
+\textbf{B. Anatomie et Typage Chirurgical}
+- $E$ est un espace vectoriel sur le corps des réels $\mathbb{K} = \mathbb{R}$. La théorie sur $\mathbb{C}$ nécessiterait une forme sesquilinéaire (hermitienne), aboutissant aux espaces préhilbertiens complexes.
+- $\langle \cdot, \cdot \rangle$ est la forme bilinéaire. La notation à crochets est la plus répandue en analyse hilbertienne et en mécanique quantique (notation de Dirac).
+- La condition de symétrie (2) rend la bilinéarité (1) redondante d'un côté. Si l'application est linéaire à gauche et symétrique, elle est automatiquement linéaire à droite.
+- La positivité stipule que le scalaire $\langle x, x \rangle$ est toujours positif ou nul.
+- Le caractère "défini" est crucial : le seul vecteur de "carré scalaire" nul est le vecteur nul. C'est ce qui assurera que la norme induite est une véritable norme et pas seulement une semi-norme.
+
+\textbf{C. Exemples de Validation}
+- \textbf{Exemple 1 (Le produit scalaire canonique sur $\mathbb{R}^n$)} :
+  Pour $x = (x_1, \ldots, x_n)$ et $y = (y_1, \ldots, y_n)$ dans $\mathbb{R}^n$, l'application $\langle x, y \rangle = \sum_{i=1}^n x_i y_i$ est un produit scalaire. $(\mathbb{R}^n, \langle \cdot, \cdot \rangle)$ est l'archétype de l'espace euclidien.
+- \textbf{Exemple 2 (Espace de polynômes, préhilbertien mais non euclidien)} :
+  Sur $E = \mathbb{R}[X]$ (espace des polynômes à coefficients réels), l'application $\langle P, Q \rangle = \int_0^1 P(t)Q(t)dt$ est un produit scalaire. Cependant, $E$ étant de dimension infinie, cet espace est un espace préhilbertien réel, mais \textit{non} euclidien.
+
+\textbf{D. Cas Pathologiques et Contre-exemples}
+- \textbf{Forme indéfinie} : L'espace de Minkowski en relativité restreinte, modélisé par $\mathbb{R}^4$ avec la forme $\langle x, y \rangle = -x_0 y_0 + x_1 y_1 + x_2 y_2 + x_3 y_3$. Cette forme est bilinéaire et symétrique, mais pas positive. Un vecteur non nul $x = (1, 0, 0, 0)$ donne $\langle x, x \rangle = -1 < 0$. Ce n'est donc pas un produit scalaire, et la géométrie induite n'est pas euclidienne (géométrie lorentzienne).
+
+\subsection*{2.2 Norme induite et Inégalité de Cauchy-Schwarz}
+
+\textbf{A. Énoncé Symbolique Strict}
+
+Soit $(E, \langle \cdot, \cdot \rangle)$ un espace préhilbertien réel. On définit l'application norme :
+$ \|\cdot\| : E \to \mathbb{R}_+ $
+$ x \mapsto \sqrt{\langle x, x \rangle} $
+
+\textbf{Théorème (Inégalité de Cauchy-Schwarz)} :
+Pour tous $x, y \in E$, on a :
+$ |\langle x, y \rangle| \le \|x\| \cdot \|y\| $
+L'égalité a lieu si et seulement si la famille $(x, y)$ est liée (les vecteurs sont colinéaires).
+
+\textbf{B. Anatomie et Typage Chirurgical}
+- La racine carrée est bien définie car, par l'axiome de positivité, $\langle x, x \rangle \ge 0$.
+- $\|x\|$ représente la "longueur" euclidienne du vecteur $x$.
+- L'inégalité de Cauchy-Schwarz borne le produit scalaire par le produit des normes. Elle est la source fondamentale de toute l'analyse hilbertienne.
+
+\textbf{C. Exemples de Validation}
+- Dans $\mathbb{R}^n$, l'inégalité se traduit par $|\sum x_i y_i| \le \sqrt{\sum x_i^2} \sqrt{\sum y_i^2}$.
+- Dans $C([0,1], \mathbb{R})$, elle donne $|\int_0^1 f(t)g(t)dt| \le \sqrt{\int_0^1 f(t)^2 dt} \sqrt{\int_0^1 g(t)^2 dt}$.
+
+\subsection*{2.3 Orthogonalité et Bases Orthonormées}
+
+\textbf{A. Énoncé Symbolique Strict}
+
+Deux vecteurs $x, y \in E$ sont dits \textbf{orthogonaux} (noté $x \perp y$) si :
+$ \langle x, y \rangle = 0 $
+
+Un sous-espace $F$ et un vecteur $x$ sont orthogonaux ($x \perp F$) si $\forall y \in F, \langle x, y \rangle = 0$.
+Deux sous-espaces $F, G \subset E$ sont orthogonaux si $\forall x \in F, \forall y \in G, \langle x, y \rangle = 0$.
+
+L'\textbf{orthogonal} d'un sous-espace $F$, noté $F^\perp$, est défini par :
+$ F^\perp = \{x \in E \mid \forall y \in F, \langle x, y \rangle = 0\} $
+
+Une famille $(e_1, \ldots, e_p)$ de $E$ est dite \textbf{orthogonale} si $\forall i \neq j, \langle e_i, e_j \rangle = 0$.
+Elle est \textbf{orthonormée} si elle est orthogonale et si de plus, pour tout $i$, $\|e_i\| = 1$ (équivalent à $\langle e_i, e_j \rangle = \delta_{ij}$, où $\delta$ est le symbole de Kronecker).
+
+\textbf{B. Anatomie et Typage Chirurgical}
+- L'orthogonalité est la généralisation rigoureuse de la notion d'angle droit. Par l'inégalité de Cauchy-Schwarz, on peut définir l'angle $\theta$ entre deux vecteurs non nuls par $\cos(\theta) = \frac{\langle x, y \rangle}{\|x\| \|y\|}$. L'orthogonalité correspond au cas $\cos(\theta) = 0$, soit $\theta = \frac{\pi}{2} \pmod \pi$.
+- $F^\perp$ est un sous-espace vectoriel de $E$, même si $F$ n'est qu'un simple sous-ensemble non structuré.
+- Une base orthonormée (BON) est le repère optimal : la géométrie y est isométrique à celle de l'espace canonique $\mathbb{R}^n$.
+
+\chapter*{Partie 3 : Démonstrations pas-à-pas}
+
+\subsection*{3.1 Preuve du Théorème de Pythagore}
+
+\textbf{Théorème} :
+Soient $x, y \in E$. Si $x$ et $y$ sont orthogonaux, alors :
+$ \|x + y\|^2 = \|x\|^2 + \|y\|^2 $
+
+\textbf{Preuve, étape par étape :}
+1. Soient $x, y \in E$ tels que $\langle x, y \rangle = 0$.
+2. Développons $\|x + y\|^2$ en utilisant la définition de la norme induite :
+   $ \|x + y\|^2 = \langle x + y, x + y \rangle $
+3. Par bilinéarité du produit scalaire, nous distribuons les termes :
+   $ \langle x + y, x + y \rangle = \langle x, x \rangle + \langle x, y \rangle + \langle y, x \rangle + \langle y, y \rangle $
+4. Par symétrie du produit scalaire, $\langle y, x \rangle = \langle x, y \rangle$. Ainsi :
+   $ \|x + y\|^2 = \|x\|^2 + 2\langle x, y \rangle + \|y\|^2 $
+5. Puisque $x$ et $y$ sont orthogonaux par hypothèse, le terme $\langle x, y \rangle$ est nul.
+6. Il reste donc l'expression recherchée :
+   $ \|x + y\|^2 = \|x\|^2 + \|y\|^2 $
+   $\blacksquare$
+
+\subsection*{3.2 Preuve de l'inégalité de Cauchy-Schwarz}
+
+\textbf{Preuve, étape par étape :}
+1. Soient $x, y \in E$. Si $y = 0_E$, l'inégalité devient $|0| \le \|x\| \cdot 0$, ce qui est vrai et l'égalité est vérifiée. La famille $(x, 0_E)$ est liée. Supposons désormais $y \neq 0_E$.
+2. Considérons le polynôme réel du second degré en $\lambda \in \mathbb{R}$ défini par l'expression algébrique de la norme carrée d'une combinaison linéaire :
+   $ P(\lambda) = \|x + \lambda y\|^2 $
+3. Par l'axiome de positivité du produit scalaire, $P(\lambda) \ge 0$ pour tout réel $\lambda$.
+4. Développons l'expression de $P(\lambda)$ en utilisant la bilinéarité et la symétrie :
+   $ P(\lambda) = \langle x + \lambda y, x + \lambda y \rangle $
+   $ P(\lambda) = \langle x, x \rangle + \lambda \langle x, y \rangle + \lambda \langle y, x \rangle + \lambda^2 \langle y, y \rangle $
+   $ P(\lambda) = \|y\|^2 \lambda^2 + 2\langle x, y \rangle \lambda + \|x\|^2 $
+5. $P(\lambda)$ est un trinôme du second degré en $\lambda$ de la forme $a\lambda^2 + b\lambda + c$ avec $a = \|y\|^2 > 0$ (car $y \neq 0_E$), $b = 2\langle x, y \rangle$ et $c = \|x\|^2$.
+6. Puisque ce trinôme est toujours positif ou nul sur $\mathbb{R}$, il ne peut pas posséder deux racines réelles distinctes. Par conséquent, son discriminant réduit (ou son discriminant classique) est négatif ou nul :
+   $ \Delta = b^2 - 4ac \le 0 $
+   $ (2\langle x, y \rangle)^2 - 4\|y\|^2 \|x\|^2 \le 0 $
+   $ 4\langle x, y \rangle^2 \le 4\|y\|^2 \|x\|^2 $
+7. En divisant par 4 et en prenant la racine carrée (la fonction racine carrée étant croissante sur $\mathbb{R}_+$), on obtient :
+   $ |\langle x, y \rangle| \le \|x\| \cdot \|y\| $
+   Ceci établit l'inégalité.
+8. Étudions le cas d'égalité. L'égalité a lieu si et seulement si $\Delta = 0$.
+9. Si $\Delta = 0$, le trinôme possède une racine réelle double $\lambda_0$.
+   $ P(\lambda_0) = 0 \iff \|x + \lambda_0 y\|^2 = 0 $
+10. Par le caractère "défini" de la norme, ceci implique $x + \lambda_0 y = 0_E$, ce qui équivaut à $x = -\lambda_0 y$. Les vecteurs $x$ et $y$ sont donc colinéaires (liés). Réciproquement, s'ils sont liés, on vérifie trivialement que l'égalité est satisfaite.
+    $\blacksquare$
+
+\subsection*{3.3 L'algorithme d'orthonormalisation de Gram-Schmidt}
+
+L'algorithme de Gram-Schmidt prouve de manière constructive que tout sous-espace euclidien admet une base orthonormée.
+
+\textbf{Théorème} :
+Soit $(e_1, \ldots, e_p)$ une famille libre de $E$. Il existe une unique famille orthonormée $(u_1, \ldots, u_p)$ telle que :
+1. Pour tout $k \in \{1, \ldots, p\}$, $\text{Vect}(u_1, \ldots, u_k) = \text{Vect}(e_1, \ldots, e_k)$.
+2. Pour tout $k \in \{1, \ldots, p\}$, $\langle e_k, u_k \rangle > 0$.
+
+\textbf{Construction explicite étape par étape :}
+1. \textbf{Initialisation (k=1)} : On pose $v_1 = e_1$. Puisque la famille initiale est libre, $e_1 \neq 0_E$. On normalise pour obtenir $u_1$ :
+   $ u_1 = \frac{v_1}{\|v_1\|} = \frac{e_1}{\|e_1\|} $
+   Il est évident que $\text{Vect}(u_1) = \text{Vect}(e_1)$ et $\langle e_1, u_1 \rangle = \frac{\|e_1\|^2}{\|e_1\|} = \|e_1\| > 0$.
+
+2. \textbf{Étape k} : Supposons construite la famille orthonormée $(u_1, \ldots, u_{k-1})$ vérifiant les conditions jusqu'au rang $k-1$. On cherche $v_k$ en soustrayant de $e_k$ sa projection orthogonale sur le sous-espace $F_{k-1} = \text{Vect}(u_1, \ldots, u_{k-1})$ :
+   $ v_k = e_k - \sum_{i=1}^{k-1} \langle e_k, u_i \rangle u_i $
+3. \textbf{Vérification de l'orthogonalité} : Pour tout $j \in \{1, \ldots, k-1\}$, calculons $\langle v_k, u_j \rangle$ :
+   $ \langle v_k, u_j \rangle = \langle e_k - \sum_{i=1}^{k-1} \langle e_k, u_i \rangle u_i, u_j \rangle $
+   Par bilinéarité :
+   $ \langle v_k, u_j \rangle = \langle e_k, u_j \rangle - \sum_{i=1}^{k-1} \langle e_k, u_i \rangle \langle u_i, u_j \rangle $
+   Puisque la famille $(u_i)$ est orthonormée, $\langle u_i, u_j \rangle = \delta_{ij}$. La somme se réduit au seul terme pour $i=j$ :
+   $ \langle v_k, u_j \rangle = \langle e_k, u_j \rangle - \langle e_k, u_j \rangle \cdot 1 = 0 $
+   Donc $v_k$ est orthogonal à tous les $(u_1, \ldots, u_{k-1})$.
+
+4. \textbf{Vérification de non-nullité} : Si $v_k = 0_E$, alors $e_k = \sum_{i=1}^{k-1} \langle e_k, u_i \rangle u_i$. Or $u_i \in \text{Vect}(e_1, \ldots, e_{i}) \subset \text{Vect}(e_1, \ldots, e_{k-1})$. Cela impliquerait $e_k \in \text{Vect}(e_1, \ldots, e_{k-1})$, ce qui contredit l'hypothèse de liberté de la famille $(e_1, \ldots, e_p)$. Donc $v_k \neq 0_E$.
+
+5. \textbf{Normalisation} : On pose :
+   $ u_k = \frac{v_k}{\|v_k\|} $
+   Par construction, $(u_1, \ldots, u_k)$ est orthonormée, génère le même sous-espace que $(e_1, \ldots, e_k)$, et la positivité du produit scalaire final est garantie. Le processus se termine à $k=p$.
+   $\blacksquare$
+
+\subsection*{3.4 Le Théorème de la Projection Orthogonale}
+
+C'est le théorème central pour l'approximation.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.5]
+  % Sous-espace F (une droite)
+  \draw[thick, blue] (-2, -1) -- (4, 2) node[above right] {$F$};
+
+  % Vecteur x
+  \coordinate (O) at (0,0);
+  \coordinate (x) at (1, 2.5);
+  \draw[->, thick, red] (O) -- (x) node[above] {$x$};
+
+  % Projection p_F(x)
+  % Direction de F est (2, 1), norme = sqrt(5). Produit scalaire de x(1, 2.5) avec (2,1) = 2 + 2.5 = 4.5
+  % 4.5 / 5 * (2, 1) = (1.8, 0.9)
+  \coordinate (p) at (1.8, 0.9);
+  \draw[->, thick, violet] (O) -- (p) node[below right] {$p_F(x)$};
+
+  % Vecteur orthogonal x - p_F(x)
+  \draw[->, thick, orange] (p) -- (x) node[midway, left] {$x - p_F(x)$};
+
+  % Symbole angle droit
+  % Vecteur (1.8, 0.9) à (1.8-0.1, 0.9+0.2)
+  \draw (1.8, 0.9) ++(-0.2, 0.4) -- ++(-0.4, -0.2) -- ++(0.2, -0.4); % Approximate right angle
+\end{tikzpicture}
+\caption{Projection orthogonale d'un vecteur $x$ sur un sous-espace $F$}
+\end{figure}
+
+
+\textbf{Théorème} :
+Soit $E$ un espace préhilbertien et $F$ un sous-espace de dimension finie de $E$. Pour tout $x \in E$, il existe un unique vecteur de $F$, noté $p_F(x)$, tel que $x - p_F(x) \in F^\perp$.
+De plus, $p_F(x)$ réalise la distance minimale entre $x$ et $F$ :
+$ \|x - p_F(x)\| = \min_{y \in F} \|x - y\| = d(x, F) $
+
+\textbf{Preuve, étape par étape :}
+1. \textbf{Existence} : Puisque $F$ est de dimension finie, il admet une base orthonormée $(u_1, \ldots, u_r)$ (obtenue par Gram-Schmidt).
+2. Posons $p = \sum_{i=1}^r \langle x, u_i \rangle u_i$. Par définition, $p$ est une combinaison linéaire des $u_i$, donc $p \in F$.
+3. Vérifions que $x - p \in F^\perp$. Soit $j \in \{1, \ldots, r\}$.
+   $ \langle x - p, u_j \rangle = \langle x, u_j \rangle - \langle \sum_{i=1}^r \langle x, u_i \rangle u_i, u_j \rangle $
+   $ \langle x - p, u_j \rangle = \langle x, u_j \rangle - \sum_{i=1}^r \langle x, u_i \rangle \langle u_i, u_j \rangle $
+   $ \langle x - p, u_j \rangle = \langle x, u_j \rangle - \langle x, u_j \rangle \cdot 1 = 0 $
+   Le vecteur $x-p$ est orthogonal à tous les vecteurs de la base de $F$, il est donc orthogonal à $F$. L'existence de la projection est prouvée.
+4. \textbf{Unicité} : Supposons l'existence d'un autre vecteur $q \in F$ tel que $x - q \in F^\perp$.
+   Puisque $F^\perp$ est un sous-espace vectoriel, la différence $(x-q) - (x-p) = p - q$ appartient à $F^\perp$.
+   Cependant, puisque $p, q \in F$ et que $F$ est un sous-espace vectoriel, $p - q \in F$.
+   Le vecteur $p-q$ appartient à $F \cap F^\perp$. Or $\forall v \in F \cap F^\perp, \langle v, v \rangle = 0 \implies v = 0_E$.
+   Donc $p-q = 0_E$, ce qui implique $p=q$.
+5. \textbf{Propriété de minimisation de la distance} : Soit $y \in F$ un vecteur quelconque. Écrivons la différence $x-y$ :
+   $ x - y = (x - p_F(x)) + (p_F(x) - y) $
+6. Notons que le premier terme $(x - p_F(x)) \in F^\perp$.
+7. Le second terme $(p_F(x) - y)$ est la différence de deux éléments de $F$, donc il appartient à $F$.
+8. Les deux termes sont orthogonaux. Nous pouvons appliquer le théorème de Pythagore :
+   $ \|x - y\|^2 = \|x - p_F(x)\|^2 + \|p_F(x) - y\|^2 $
+9. Par la positivité de la norme, $\|p_F(x) - y\|^2 \ge 0$. Par conséquent :
+   $ \|x - y\|^2 \ge \|x - p_F(x)\|^2 $
+   $ \|x - y\| \ge \|x - p_F(x)\| $
+10. L'égalité n'est atteinte que si $\|p_F(x) - y\|^2 = 0$, ce qui implique $y = p_F(x)$. Ainsi, $p_F(x)$ est l'unique élément minimisant la distance.
+    $\blacksquare$
+
+\newpage
+\chapter*{Partie 4 : Exercices d\'application et de concours}
+\addcontentsline{toc}{chapter}{Partie 4 : Exercices d'application et de concours}
+
+
+\chapter*{Exercice 1 : Produit scalaire usuel et Cauchy-Schwarz (Difficulté $\star$$\circ$$\circ$$\circ$$\circ$)}
+
+L'espace vectoriel euclidien canonique par excellence est $E = \mathbb{R}^n$, muni de son produit scalaire usuel défini par $\langle x, y \rangle = \sum_{i=1}^n x_i y_i$ pour tous vecteurs $x = (x_1, \ldots, x_n)$ et $y = (y_1, \ldots, y_n)$. Cet exercice se propose de redémontrer de manière purement algébrique l'inégalité fondamentale de Cauchy-Schwarz, pilier de l'analyse fonctionnelle et de la géométrie, puis d'en déduire une inégalité entre la norme $L^1$ et la norme $L^2$ en dimension finie.
+
+1. Redémontrer rigoureusement l'inégalité de Cauchy-Schwarz dans ce cas particulier en étudiant le trinôme du second degré $P(t) = \sum_{i=1}^n (x_i + t y_i)^2$.
+2. En déduire que pour tout $x \in \mathbb{R}^n$, $\sum_{i=1}^n |x_i| \le \sqrt{n} \sqrt{\sum_{i=1}^n x_i^2}$.
+3. Discuter et caractériser géométriquement les vecteurs $x$ pour lesquels cette inégalité devient une égalité stricte.
+
+\section*{Démonstration Rigoureuse à Blanc}
+
+1. Fixons deux vecteurs quelconques $x, y \in \mathbb{R}^n$. Si $y = (0, \ldots, 0)$, l'inégalité de Cauchy-Schwarz s'écrit $0 \le 0$, ce qui est trivialement vérifié, et la famille $(x, y)$ est liée. Supposons à présent que $y \neq 0_{\mathbb{R}^n}$. Considérons l'expression de la norme au carré d'une combinaison linéaire de $x$ et $y$, ce qui définit naturellement un polynôme $P$ de la variable réelle $t$ :
+   $ P(t) = \sum_{i=1}^n (x_i + t y_i)^2 $
+   Par essence, cette somme de carrés de réels est toujours positive ou nulle. Ainsi, pour tout $t \in \mathbb{R}$, $P(t) \ge 0$. Développons algébriquement cette somme :
+   $ P(t) = \sum_{i=1}^n (x_i^2 + 2t x_i y_i + t^2 y_i^2) $
+   Par linéarité de la somme finie, nous pouvons regrouper les termes selon les puissances de $t$ :
+   $ P(t) = \left( \sum_{i=1}^n y_i^2 \right) t^2 + 2 \left( \sum_{i=1}^n x_i y_i \right) t + \left( \sum_{i=1}^n x_i^2 \right) $
+   Nous reconnaissons ici l'expression du produit scalaire canonique et de la norme euclidienne au carré. Posons $A = \sum_{i=1}^n y_i^2 = \|y\|^2 > 0$, $B = \sum_{i=1}^n x_i y_i = \langle x, y \rangle$ et $C = \sum_{i=1}^n x_i^2 = \|x\|^2$. Le polynôme s'écrit alors $P(t) = A t^2 + 2B t + C$.
+   Puisque $A > 0$ et $P(t) \ge 0$ pour tout $t \in \mathbb{R}$, le trinôme ne change jamais de signe (il reste dans le demi-plan supérieur). Cela implique géométriquement que la parabole représentative de $P$ ne coupe l'axe des abscisses qu'en au plus un point, ou jamais. Algébriquement, le discriminant réduit de ce trinôme doit être négatif ou nul :
+   $ \Delta' = B^2 - AC \le 0 $
+   Substituons les expressions initiales :
+   $ \left( \sum_{i=1}^n x_i y_i \right)^2 - \left( \sum_{i=1}^n y_i^2 \right) \left( \sum_{i=1}^n x_i^2 \right) \le 0 $
+   $ \langle x, y \rangle^2 \le \|x\|^2 \|y\|^2 $
+   En appliquant la fonction racine carrée, qui est strictement croissante sur $\mathbb{R}_+$, nous obtenons l'inégalité de Cauchy-Schwarz :
+   $ |\langle x, y \rangle| \le \|x\| \|y\| $
+
+2. Soit $x \in \mathbb{R}^n$. L'inégalité demandée fait intervenir la somme des valeurs absolues des coordonnées, ce qui évoque un produit scalaire particulier. Construisons un vecteur $y = (y_1, \ldots, y_n)$ qui fera apparaître cette somme. Définissons $y_i = 1$ si $x_i \ge 0$, et $y_i = -1$ si $x_i < 0$. Ainsi, pour tout $i$, le produit $x_i y_i$ correspond exactement à $|x_i|$. Le vecteur $y$ ainsi construit possède la propriété remarquable que $y_i^2 = 1$ pour tout $i \in \{1, \ldots, n\}$.
+   Le produit scalaire de $x$ et $y$ donne donc :
+   $ \langle x, y \rangle = \sum_{i=1}^n x_i y_i = \sum_{i=1}^n |x_i| $
+   La norme euclidienne au carré de $y$ est simplement :
+   $ \|y\|^2 = \sum_{i=1}^n y_i^2 = \sum_{i=1}^n 1 = n \implies \|y\| = \sqrt{n} $
+   Appliquons maintenant l'inégalité de Cauchy-Schwarz démontrée à la question précédente à ces deux vecteurs $x$ et $y$ :
+   $ |\langle x, y \rangle| \le \|x\| \|y\| $
+   $ \sum_{i=1}^n |x_i| \le \sqrt{\sum_{i=1}^n x_i^2} \sqrt{n} $
+   Ce qui démontre parfaitement l'inégalité recherchée.
+
+3. L'égalité dans l'inégalité de Cauchy-Schwarz est atteinte si et seulement si les vecteurs impliqués sont liés (colinéaires). Dans le cadre de la question 2, cela signifie qu'il doit exister un scalaire $\lambda \in \mathbb{R}$ tel que $x = \lambda y$, c'est-à-dire que pour tout indice $i$, $x_i = \lambda y_i$.
+   Puisque $y_i \in \{-1, 1\}$, en prenant la valeur absolue, nous obtenons :
+   $ |x_i| = |\lambda| |y_i| = |\lambda| $
+   Cela signifie que toutes les coordonnées du vecteur $x$ doivent avoir la même valeur absolue $|\lambda|$. Géométriquement, les vecteurs $x$ vérifiant l'égalité sont exactement ceux qui se situent sur les diagonales des "hypercubes" centrés à l'origine, où chaque composante $x_i$ vaut soit $c$, soit $-c$ pour une constante $c$ donnée.
+   $\blacksquare$
+
+\newpage
+
+
+\chapter*{Exercice 2 : Produit scalaire sur l'espace des fonctions continues (Difficulté $\star$$\star$$\circ$$\circ$$\circ$)}
+
+Soit $E = C([0, 1], \mathbb{R})$ l'espace vectoriel des fonctions continues de $[0, 1]$ dans $\mathbb{R}$. On munit $E$ de l'application $\langle f, g \rangle = \int_0^1 f(t)g(t)dt$.
+
+1. Démontrer avec la plus stricte rigueur que cette application définit bien un produit scalaire sur $E$. Vous porterez une attention particulière à l'axiome de définition positive, en justifiant précisément pourquoi $\langle f, f \rangle = 0 \implies f = 0_E$.
+2. En utilisant l'inégalité de Cauchy-Schwarz, démontrer que pour toute fonction $f \in E$ strictement positive, on a l'inégalité : $\left( \int_0^1 f(t) dt \right) \left( \int_0^1 \frac{1}{f(t)} dt \right) \ge 1$.
+3. Caractériser l'ensemble des fonctions $f$ pour lesquelles cette inégalité est une égalité.
+
+\section*{Démonstration Rigoureuse à Blanc}
+
+1. Vérifions méthodiquement les axiomes définissant un produit scalaire. Soient $f, g, h \in E$ et $\lambda \in \mathbb{R}$.
+   - \textbf{Symétrie :}
+     $ \langle f, g \rangle = \int_0^1 f(t)g(t) dt = \int_0^1 g(t)f(t) dt = \langle g, f \rangle $
+     La symétrie découle trivialement de la commutativité du produit dans $\mathbb{R}$.
+   - \textbf{Bilinéarité :} Par symétrie, il suffit de vérifier la linéarité par rapport à la première variable.
+     $ \langle \lambda f + g, h \rangle = \int_0^1 (\lambda f(t) + g(t))h(t) dt = \int_0^1 (\lambda f(t)h(t) + g(t)h(t)) dt $
+     Par linéarité de l'intégrale de Riemann sur le segment $[0, 1]$ :
+     $ \langle \lambda f + g, h \rangle = \lambda \int_0^1 f(t)h(t) dt + \int_0^1 g(t)h(t) dt = \lambda \langle f, h \rangle + \langle g, h \rangle $
+     La forme est donc bien bilinéaire symétrique.
+   - \textbf{Positivité :} Pour toute fonction $f \in E$, évaluons $\langle f, f \rangle$.
+     $ \langle f, f \rangle = \int_0^1 f(t)^2 dt $
+     Puisque la fonction $t \mapsto f(t)^2$ est positive ou nulle sur $[0, 1]$, et que les bornes d'intégration sont dans l'ordre croissant ($0 \le 1$), la positivité de l'intégrale garantit que $\langle f, f \rangle \ge 0$.
+   - \textbf{Caractère défini :} Supposons que $\langle f, f \rangle = 0$, soit $\int_0^1 f(t)^2 dt = 0$.
+     La fonction $h(t) = f(t)^2$ est continue sur le segment $[0, 1]$ et est partout positive ou nulle. Le théorème fondamental de l'intégration des fonctions continues de signe constant affirme que si l'intégrale d'une fonction continue et positive sur un segment d'intérieur non vide est nulle, alors cette fonction est identiquement nulle sur ce segment.
+     Ainsi, pour tout $t \in [0, 1]$, $f(t)^2 = 0$, ce qui implique $f(t) = 0$. La fonction $f$ est donc bien la fonction nulle, $f = 0_E$.
+   L'application est bilinéaire, symétrique et définie positive, c'est un produit scalaire sur $E$.
+
+2. Soit $f \in E$ une fonction strictement positive sur $[0, 1]$. Définissons deux nouvelles fonctions $u, v \in E$ astucieusement choisies pour faire apparaître les termes de l'inégalité demandée via leurs carrés :
+   $ u(t) = \sqrt{f(t)} \quad \text{et} \quad v(t) = \frac{1}{\sqrt{f(t)}} $
+   Ces fonctions sont bien continues sur $[0, 1]$ car $f$ est continue et ne s'annule pas (elle est strictement positive).
+   Calculons leur norme au carré :
+   $ \|u\|^2 = \int_0^1 u(t)^2 dt = \int_0^1 f(t) dt $
+   $ \|v\|^2 = \int_0^1 v(t)^2 dt = \int_0^1 \frac{1}{f(t)} dt $
+   Évaluons maintenant leur produit scalaire :
+   $ \langle u, v \rangle = \int_0^1 u(t)v(t) dt = \int_0^1 \sqrt{f(t)} \frac{1}{\sqrt{f(t)}} dt = \int_0^1 1 dt = 1 $
+   Appliquons l'inégalité de Cauchy-Schwarz à ces deux fonctions :
+   $ \langle u, v \rangle^2 \le \|u\|^2 \|v\|^2 $
+   En substituant les expressions calculées, nous obtenons instantanément :
+   $ 1^2 \le \left( \int_0^1 f(t) dt \right) \left( \int_0^1 \frac{1}{f(t)} dt \right) $
+   L'inégalité est démontrée.
+
+3. L'égalité dans Cauchy-Schwarz est vérifiée si et seulement si les fonctions $u$ et $v$ sont liées. Dans cet espace vectoriel fonctionnel, cela signifie qu'il existe un scalaire réel $\lambda$ tel que pour tout $t \in [0, 1]$, $u(t) = \lambda v(t)$.
+   Exprimons cette condition en fonction de $f$ :
+   $ \sqrt{f(t)} = \lambda \frac{1}{\sqrt{f(t)}} $
+   Puisque $f(t) > 0$, on peut multiplier par $\sqrt{f(t)}$ :
+   $ f(t) = \lambda $
+   Ainsi, la fonction $f$ doit être constante sur l'intervalle $[0, 1]$. Réciproquement, si $f(t) = c > 0$, l'intégrale de $f$ vaut $c$, et l'intégrale de $1/f$ vaut $1/c$. Leur produit donne bien $c \cdot (1/c) = 1$, ce qui confirme la validité de notre caractérisation.
+   $\blacksquare$
+
+\newpage
+
+
+\chapter*{Exercice 3 : Distance à un sous-espace (Difficulté $\star$$\star$$\circ$$\circ$$\circ$)}
+
+Dans l'espace euclidien $\mathbb{R}^4$ muni du produit scalaire canonique, on considère le sous-espace $F$ défini par le système d'équations :
+$ \begin{cases} x_1 + x_2 + x_3 + x_4 = 0 \\ x_1 - x_2 + x_3 - x_4 = 0 \end{cases} $
+1. Déterminer une base orthogonale de $F$.
+2. Calculer la distance du point $A(1, 2, 3, 4)$ au sous-espace $F$ en utilisant le théorème de la projection orthogonale.
+
+\section*{Démonstration Rigoureuse à Blanc}
+
+1. Commençons par trouver une base de $F$. Le système est :
+   $ \begin{cases} x_1 + x_3 = -(x_2 + x_4) \\ x_1 + x_3 = x_2 + x_4 \end{cases} $
+   En sommant et soustrayant, on obtient :
+   $ 2(x_1 + x_3) = 0 \implies x_3 = -x_1 $
+   $ 2(x_2 + x_4) = 0 \implies x_4 = -x_2 $
+   Un vecteur générique de $F$ s'écrit $x = (x_1, x_2, -x_1, -x_2) = x_1(1, 0, -1, 0) + x_2(0, 1, 0, -1)$.
+   Posons $v_1 = (1, 0, -1, 0)$ et $v_2 = (0, 1, 0, -1)$.
+   Calculons leur produit scalaire : $\langle v_1, v_2 \rangle = (1)(0) + (0)(1) + (-1)(0) + (0)(-1) = 0$.
+   Les vecteurs $v_1$ et $v_2$ sont déjà orthogonaux ! La famille $(v_1, v_2)$ est donc une base orthogonale de $F$.
+
+2. La distance de $x = (1, 2, 3, 4)$ à $F$ est donnée par $d(x, F) = \|x - p_F(x)\|$, où $p_F(x)$ est la projection orthogonale de $x$ sur $F$.
+   - Puisque $(v_1, v_2)$ est une base orthogonale de $F$, on a la formule :
+     $ p_F(x) = \frac{\langle x, v_1 \rangle}{\|v_1\|^2} v_1 + \frac{\langle x, v_2 \rangle}{\|v_2\|^2} v_2 $
+   - Calculons les termes :
+     $ \langle x, v_1 \rangle = (1)(1) + (2)(0) + (3)(-1) + (4)(0) = 1 - 3 = -2 $
+     $ \|v_1\|^2 = 1^2 + 0^2 + (-1)^2 + 0^2 = 2 $
+     $ \langle x, v_2 \rangle = (1)(0) + (2)(1) + (3)(0) + (4)(-1) = 2 - 4 = -2 $
+     $ \|v_2\|^2 = 0^2 + 1^2 + 0^2 + (-1)^2 = 2 $
+   - La projection est :
+     $ p_F(x) = \frac{-2}{2} (1, 0, -1, 0) + \frac{-2}{2} (0, 1, 0, -1) = -1(1, 0, -1, 0) - 1(0, 1, 0, -1) = (-1, -1, 1, 1) $
+   - Le vecteur différence est :
+     $ x - p_F(x) = (1, 2, 3, 4) - (-1, -1, 1, 1) = (2, 3, 2, 3) $
+   - La distance cherchée est la norme de ce vecteur :
+     $ d(x, F)^2 = \|x - p_F(x)\|^2 = 2^2 + 3^2 + 2^2 + 3^2 = 4 + 9 + 4 + 9 = 26 $
+     $ d(x, F) = \sqrt{26} $
+   $\blacksquare$
+
+\newpage
+
+
+\chapter*{Exercice 4 : Matrice de Gram et liberté (Difficulté $\star$$\star$$\star$$\circ$$\circ$)}
+
+Soit $(E, \langle \cdot, \cdot \rangle)$ un espace préhilbertien réel. Soit $(x_1, \ldots, x_p)$ une famille de $p$ vecteurs de $E$.
+On définit la matrice de Gram $G(x_1, \ldots, x_p) \in \mathcal{M}_p(\mathbb{R})$ par $G_{i,j} = \langle x_i, x_j \rangle$.
+1. Montrer que pour tout vecteur colonne $X \in \mathbb{R}^p$, $X^T G X = \|\sum_{i=1}^p X_i x_i\|^2$.
+2. En déduire que la matrice $G$ est symétrique définie positive si et seulement si la famille $(x_1, \ldots, x_p)$ est libre.
+3. Montrer que si la famille est liée, le déterminant de $G$ est nul.
+
+\section*{Démonstration Rigoureuse à Blanc}
+
+1. Soit $X = \begin{pmatrix} X_1 \\ \vdots \\ X_p \end{pmatrix}$. Le scalaire $X^T G X$ s'écrit :
+   $ X^T G X = \sum_{i=1}^p \sum_{j=1}^p X_i G_{i,j} X_j $
+   Puisque $G_{i,j} = \langle x_i, x_j \rangle$ :
+   $ X^T G X = \sum_{i=1}^p \sum_{j=1}^p X_i X_j \langle x_i, x_j \rangle $
+   En utilisant la bilinéarité du produit scalaire :
+   $ \sum_{i=1}^p \sum_{j=1}^p \langle X_i x_i, X_j x_j \rangle = \langle \sum_{i=1}^p X_i x_i, \sum_{j=1}^p X_j x_j \rangle $
+   Ce qui donne par définition de la norme :
+   $ X^T G X = \left\| \sum_{i=1}^p X_i x_i \right\|^2 $
+
+2. La matrice $G$ est symétrique car $G_{i,j} = \langle x_i, x_j \rangle = \langle x_j, x_i \rangle = G_{j,i}$.
+   - D'après la question 1, $X^T G X \ge 0$ pour tout $X$, donc $G$ est positive.
+   - $G$ est définie positive si et seulement si $X^T G X = 0 \implies X = 0$.
+   - Or, $X^T G X = 0 \iff \left\| \sum_{i=1}^p X_i x_i \right\|^2 = 0 \iff \sum_{i=1}^p X_i x_i = 0_E$.
+   - Dire que $\sum_{i=1}^p X_i x_i = 0_E \implies X_1 = X_2 = \ldots = X_p = 0$, c'est exactement la définition d'une famille $(x_1, \ldots, x_p)$ libre.
+   - Donc $G$ est définie positive si et seulement si la famille est libre.
+
+3. Si la famille est liée, il existe une combinaison linéaire non triviale qui s'annule, donc il existe $X \neq 0$ tel que $\sum_{i=1}^p X_i x_i = 0_E$.
+   - Alors $X^T G X = 0$.
+   - De plus, si $V = \sum_{i=1}^p X_i x_i = 0_E$, alors pour tout $k$, $\langle x_k, V \rangle = 0$.
+   - C'est-à-dire $\sum_{j=1}^p X_j \langle x_k, x_j \rangle = 0$, soit $\sum_{j=1}^p G_{k,j} X_j = 0$.
+   - Donc $GX = 0$ (avec $X \neq 0$). Le noyau de $G$ n'est pas réduit à $\{0\}$, ce qui implique que $G$ n'est pas inversible.
+   - Par conséquent, son déterminant est nul : $\det(G) = 0$.
+   $\blacksquare$
+
+\newpage
+
+
+\chapter*{Exercice 5 : Inégalité de Ptolémée (cas euclidien) (Difficulté $\star$$\star$$\star$$\circ$$\circ$)}
+
+Soit $(E, \langle \cdot, \cdot \rangle)$ un espace euclidien.
+1. Montrer que pour tous $x, y \in E \setminus \{0\}$, $\left\| \frac{x}{\|x\|^2} - \frac{y}{\|y\|^2} \right\| = \frac{\|x - y\|}{\|x\| \|y\|}$.
+2. En déduire, par l'inégalité triangulaire, l'inégalité de Ptolémée : pour tous $a, b, c, d \in E$,
+$ \|a - c\| \|b - d\| \le \|a - b\| \|c - d\| + \|b - c\| \|a - d\| $
+
+\section*{Démonstration Rigoureuse à Blanc}
+
+1. Calculons le carré de la norme demandée :
+   $ \left\| \frac{x}{\|x\|^2} - \frac{y}{\|y\|^2} \right\|^2 = \langle \frac{x}{\|x\|^2} - \frac{y}{\|y\|^2}, \frac{x}{\|x\|^2} - \frac{y}{\|y\|^2} \rangle $
+   Par bilinéarité :
+   $ = \frac{\langle x, x \rangle}{\|x\|^4} - 2 \frac{\langle x, y \rangle}{\|x\|^2 \|y\|^2} + \frac{\langle y, y \rangle}{\|y\|^4} $
+   Or $\langle x, x \rangle = \|x\|^2$ et $\langle y, y \rangle = \|y\|^2$, donc :
+   $ = \frac{\|x\|^2}{\|x\|^4} - 2 \frac{\langle x, y \rangle}{\|x\|^2 \|y\|^2} + \frac{\|y\|^2}{\|y\|^4} $
+   $ = \frac{1}{\|x\|^2} - 2 \frac{\langle x, y \rangle}{\|x\|^2 \|y\|^2} + \frac{1}{\|y\|^2} $
+   Mettons tout au même dénominateur $\|x\|^2 \|y\|^2$ :
+   $ = \frac{\|y\|^2 - 2\langle x, y \rangle + \|x\|^2}{\|x\|^2 \|y\|^2} $
+   Le numérateur est précisément le développement de $\|x - y\|^2$.
+   $ = \frac{\|x - y\|^2}{\|x\|^2 \|y\|^2} $
+   En prenant la racine carrée (quantités positives), on obtient le résultat :
+   $ \left\| \frac{x}{\|x\|^2} - \frac{y}{\|y\|^2} \right\| = \frac{\|x - y\|}{\|x\| \|y\|} $
+
+2. Soit $A, B, C, D$ quatre points. Posons l'origine en $D$, c'est-à-dire que nous travaillons avec les vecteurs $a = A-D$, $b = B-D$, $c = C-D$, et $d = 0_E$.
+   - Soit $i(x) = \frac{x}{\|x\|^2}$ l'inversion géométrique.
+   - Considérons les points inversés $a' = i(a)$, $b' = i(b)$, $c' = i(c)$.
+   - Appliquons l'inégalité triangulaire dans l'espace aux points $a', b', c'$ :
+     $ \|a' - c'\| \le \|a' - b'\| + \|b' - c'\| $
+   - D'après la question 1, $\|a' - c'\| = \frac{\|a - c\|}{\|a\| \|c\|}$.
+   - Remplaçons dans l'inégalité :
+     $ \frac{\|a - c\|}{\|a\| \|c\|} \le \frac{\|a - b\|}{\|a\| \|b\|} + \frac{\|b - c\|}{\|b\| \|c\|} $
+   - Multiplions le tout par $\|a\| \|b\| \|c\|$ (qui est strictement positif si les points sont non nuls et distincts) :
+     $ \|a - c\| \|b\| \le \|a - b\| \|c\| + \|b - c\| \|a\| $
+   - En revenant aux notations initiales, $\|a\| = \|a - 0_E\| = \|a - d\|$, $\|b\| = \|b - d\|$, etc.
+     $ \|a - c\| \|b - d\| \le \|a - b\| \|c - d\| + \|b - c\| \|a - d\| $
+   $\blacksquare$
+
+\newpage
+
+
+\chapter*{Exercice 6 : Espace $l^2$ des suites de carré sommable (Difficulté $\star$$\star$$\star$$\star$$\circ$)}
+
+Soit $l^2$ l'ensemble des suites réelles $(u_n)_{n \in \mathbb{N}}$ telles que la série $\sum u_n^2$ converge.
+1. Montrer que si $(u_n), (v_n) \in l^2$, alors la série $\sum u_n v_n$ est absolument convergente (utiliser Cauchy-Schwarz sur les sommes partielles).
+2. En déduire que $l^2$ est un sous-espace vectoriel de l'espace des suites réelles.
+3. Montrer que $\langle u, v \rangle = \sum_{n=0}^\infty u_n v_n$ définit un produit scalaire sur $l^2$.
+
+\section*{Démonstration Rigoureuse à Blanc}
+
+1. Soit $(u_n), (v_n) \in l^2$. Considérons la somme partielle $S_N = \sum_{n=0}^N |u_n v_n|$.
+   - Les vecteurs $(|u_0|, \ldots, |u_N|)$ et $(|v_0|, \ldots, |v_N|)$ appartiennent à l'espace euclidien $\mathbb{R}^{N+1}$.
+   - Appliquons l'inégalité de Cauchy-Schwarz canonique sur ces vecteurs :
+     $ \sum_{n=0}^N |u_n v_n| \le \sqrt{\sum_{n=0}^N u_n^2} \sqrt{\sum_{n=0}^N v_n^2} $
+   - Puisque les séries $\sum u_n^2$ et $\sum v_n^2$ convergent (hypothèse $(u_n), (v_n) \in l^2$), leurs sommes partielles sont majorées par leurs restes infinis :
+     $ \sqrt{\sum_{n=0}^N u_n^2} \le \sqrt{\sum_{n=0}^\infty u_n^2} \quad \text{et} \quad \sqrt{\sum_{n=0}^N v_n^2} \le \sqrt{\sum_{n=0}^\infty v_n^2} $
+   - Ainsi, pour tout $N$, la somme partielle des valeurs absolues est majorée par une constante indépendante de $N$ :
+     $ S_N \le \sqrt{\sum_{n=0}^\infty u_n^2} \sqrt{\sum_{n=0}^\infty v_n^2} = M $
+   - Une série à termes positifs dont les sommes partielles sont majorées est convergente. Donc la série $\sum |u_n v_n|$ converge. La série $\sum u_n v_n$ est donc absolument convergente.
+
+2. Pour montrer que $l^2$ est un sous-espace vectoriel :
+   - La suite nulle appartient évidemment à $l^2$ car $\sum 0^2 = 0$.
+   - Soit $\lambda \in \mathbb{R}$ et $u, v \in l^2$. Considérons la série $\sum (u_n + \lambda v_n)^2$.
+     $ (u_n + \lambda v_n)^2 = u_n^2 + 2\lambda u_n v_n + \lambda^2 v_n^2 $
+   - Or, la série $\sum u_n^2$ converge (car $u \in l^2$), la série $\sum v_n^2$ converge (car $v \in l^2$), et d'après la question 1, la série $\sum u_n v_n$ converge absolument (donc converge).
+   - Par linéarité, la série somme converge : $\sum (u_n + \lambda v_n)^2 < \infty$.
+   - Donc $u + \lambda v \in l^2$. $l^2$ est bien un sous-espace vectoriel.
+
+3. Vérifions les axiomes du produit scalaire pour $\langle u, v \rangle = \sum_{n=0}^\infty u_n v_n$.
+   - La forme est bien définie car la série converge absolument.
+   - \textbf{Bilinéarité} : Par linéarité de la somme de séries convergentes, $\sum (\lambda u_n + w_n)v_n = \lambda \sum u_n v_n + \sum w_n v_n$.
+   - \textbf{Symétrie} : Évidente, car $u_n v_n = v_n u_n$.
+   - \textbf{Définie positive} : $\langle u, u \rangle = \sum u_n^2 \ge 0$.
+   - Si $\sum u_n^2 = 0$, comme c'est une série de termes positifs ou nuls, chaque terme doit être nul. Donc pour tout $n$, $u_n^2 = 0$, soit $u_n = 0$. Donc $u = 0_{l^2}$.
+   $\blacksquare$
+
+\newpage
+
+
+\chapter*{Exercice 7 : Endomorphismes antisymétriques (Difficulté $\star$$\star$$\star$$\star$$\circ$)}
+
+Soit $E$ un espace euclidien. Un endomorphisme $u \in \mathcal{L}(E)$ est dit antisymétrique si pour tous $x, y \in E$, $\langle u(x), y \rangle = - \langle x, u(y) \rangle$.
+1. Montrer que $u$ est antisymétrique si et seulement si pour tout $x \in E$, $\langle u(x), x \rangle = 0$.
+2. Montrer que si $u$ est antisymétrique, $\ker(u)$ et $\text{Im}(u)$ sont supplémentaires orthogonaux dans $E$.
+3. Que dire des valeurs propres réelles de $u$ ?
+
+\section*{Démonstration Rigoureuse à Blanc}
+
+1. $\Rightarrow$ : Supposons $u$ antisymétrique. Pour tout $x \in E$, $\langle u(x), x \rangle = - \langle x, u(x) \rangle$.
+   - Par symétrie du produit scalaire, $\langle u(x), x \rangle = \langle x, u(x) \rangle$.
+   - Donc $2 \langle u(x), x \rangle = 0 \implies \langle u(x), x \rangle = 0$.
+   - $\Leftarrow$ : Supposons que pour tout $x$, $\langle u(x), x \rangle = 0$. Soient $x, y \in E$.
+   - Évaluons la forme sur $x+y$ : $\langle u(x+y), x+y \rangle = 0$.
+   - Par linéarité et bilinéarité : $\langle u(x) + u(y), x + y \rangle = \langle u(x), x \rangle + \langle u(x), y \rangle + \langle u(y), x \rangle + \langle u(y), y \rangle = 0$.
+   - Or $\langle u(x), x \rangle = 0$ et $\langle u(y), y \rangle = 0$. Il reste $\langle u(x), y \rangle + \langle u(y), x \rangle = 0$.
+   - Donc $\langle u(x), y \rangle = - \langle x, u(y) \rangle$ (par symétrie). $u$ est antisymétrique.
+
+2. On doit d'abord prouver que $\ker(u) \perp \text{Im}(u)$.
+   - Soit $x \in \ker(u)$ et $y \in \text{Im}(u)$. Alors $u(x) = 0$ et il existe $z \in E$ tel que $y = u(z)$.
+   - Calculons leur produit scalaire : $\langle x, y \rangle = \langle x, u(z) \rangle$.
+   - Puisque $u$ est antisymétrique, $\langle x, u(z) \rangle = -\langle u(x), z \rangle$.
+   - Or $x \in \ker(u)$, donc $u(x) = 0$. Ainsi $-\langle 0, z \rangle = 0$.
+   - Donc $\langle x, y \rangle = 0$, d'où $\ker(u) \subset (\text{Im}(u))^\perp$.
+   - Par le théorème du rang, $\dim(E) = \dim(\ker(u)) + \dim(\text{Im}(u))$.
+   - Dans un espace euclidien de dimension finie, $\dim((\text{Im}(u))^\perp) = \dim(E) - \dim(\text{Im}(u)) = \dim(\ker(u))$.
+   - Les deux espaces ont la même dimension et l'un est inclus dans l'autre, donc $\ker(u) = (\text{Im}(u))^\perp$. Ils sont supplémentaires orthogonaux.
+
+3. Soit $\lambda \in \mathbb{R}$ une valeur propre réelle de $u$, et $x \neq 0_E$ un vecteur propre associé.
+   - Par définition, $u(x) = \lambda x$.
+   - Calculons $\langle u(x), x \rangle$. D'après la question 1, puisque $u$ est antisymétrique, $\langle u(x), x \rangle = 0$.
+   - Mais on a aussi $\langle u(x), x \rangle = \langle \lambda x, x \rangle = \lambda \langle x, x \rangle = \lambda \|x\|^2$.
+   - Donc $\lambda \|x\|^2 = 0$.
+   - Comme $x$ est un vecteur propre, $x \neq 0_E$, donc $\|x\|^2 > 0$.
+   - Il s'ensuit que nécessairement $\lambda = 0$.
+   - Les seules valeurs propres réelles possibles d'un endomorphisme antisymétrique sont $0$.
+   $\blacksquare$
+
+\newpage
+
+
+\chapter*{Exercice 8 : Théorème de Riesz (cas fini) (Difficulté $\star$$\star$$\star$$\star$$\star$)}
+
+Soit $E$ un espace euclidien. On considère l'application $\Phi : E \to E^*$ (où $E^*$ est l'espace dual de $E$) définie par $\Phi(y)(x) = \langle y, x \rangle$.
+1. Montrer que $\Phi$ est une application linéaire.
+2. Déterminer le noyau de $\Phi$.
+3. En utilisant un argument de dimension, prouver le théorème de représentation de Riesz : pour toute forme linéaire $f \in E^*$, il existe un unique vecteur $y \in E$ tel que pour tout $x \in E$, $f(x) = \langle y, x \rangle$.
+
+\section*{Démonstration Rigoureuse à Blanc}
+
+1. Montrons que $\Phi$ est linéaire. Soient $y_1, y_2 \in E$ et $\lambda \in \mathbb{R}$.
+   - Pour tout $x \in E$, $\Phi(\lambda y_1 + y_2)(x) = \langle \lambda y_1 + y_2, x \rangle$.
+   - Par bilinéarité du produit scalaire : $= \lambda \langle y_1, x \rangle + \langle y_2, x \rangle$.
+   - Par définition de $\Phi$ : $= \lambda \Phi(y_1)(x) + \Phi(y_2)(x) = (\lambda \Phi(y_1) + \Phi(y_2))(x)$.
+   - Les deux fonctions sont égales sur $E$, donc $\Phi(\lambda y_1 + y_2) = \lambda \Phi(y_1) + \Phi(y_2)$. $\Phi$ est une application linéaire.
+
+2. Cherchons $\ker(\Phi)$.
+   - $y \in \ker(\Phi) \iff \Phi(y) = 0_{E^*} \iff \forall x \in E, \Phi(y)(x) = 0$.
+   - Soit $\forall x \in E, \langle y, x \rangle = 0$.
+   - Puisque cela est vrai pour tout $x$, choisissons $x = y$. On a alors $\langle y, y \rangle = 0$.
+   - L'axiome de définition positive du produit scalaire implique alors $y = 0_E$.
+   - Donc $\ker(\Phi) = \{0_E\}$. L'application $\Phi$ est injective.
+
+3. En dimension finie, on sait que l'espace dual $E^*$ a la même dimension que $E$.
+   - $\dim(E) = \dim(E^*)$.
+   - $\Phi$ est une application linéaire injective entre deux espaces de même dimension finie.
+   - D'après le théorème du rang, $\Phi$ est un isomorphisme, donc une bijection.
+   - La surjectivité de $\Phi$ signifie exactement que pour toute forme linéaire $f \in E^*$, il existe un vecteur $y \in E$ tel que $\Phi(y) = f$.
+   - C'est-à-dire, $\forall x \in E, \Phi(y)(x) = f(x)$, soit $\langle y, x \rangle = f(x)$.
+   - L'injectivité garantit que ce vecteur $y$ est unique.
+   - C'est la preuve complète du théorème de Riesz en dimension finie.
+   $\blacksquare$
+
+\newpage
+
+
+\chapter*{Exercice 9 : Séries de Fourier géométriques (Difficulté $\star$$\star$$\star$$\circ$$\circ$)}
+
+Soit $E = C([-\pi, \pi], \mathbb{R})$ muni du produit scalaire $\langle f, g \rangle = \frac{1}{\pi} \int_{-\pi}^\pi f(t)g(t)dt$.
+1. Montrer que la famille de fonctions $\mathcal{B} = (\frac{1}{\sqrt{2}}, \cos(t), \sin(t), \cos(2t), \sin(2t), \ldots, \cos(nt), \sin(nt))$ est orthonormée.
+2. Soit $f \in E$. Exprimer la projection orthogonale de $f$ sur le sous-espace engendré par $\mathcal{B}$ en fonction des coefficients de Fourier $a_k$ et $b_k$.
+3. Écrire l'inégalité de Bessel dans ce contexte.
+
+\section*{Démonstration Rigoureuse à Blanc}
+
+1. Posons $e_0(t) = \frac{1}{\sqrt{2}}$, $c_k(t) = \cos(kt)$, $s_k(t) = \sin(kt)$ pour $k \ge 1$.
+   - $\|e_0\|^2 = \frac{1}{\pi} \int_{-\pi}^\pi \frac{1}{2} dt = \frac{1}{2\pi} [t]_{-\pi}^\pi = \frac{2\pi}{2\pi} = 1$.
+   - $\|c_k\|^2 = \frac{1}{\pi} \int_{-\pi}^\pi \cos^2(kt) dt = \frac{1}{\pi} \int_{-\pi}^\pi \frac{1 + \cos(2kt)}{2} dt = \frac{1}{2\pi} [t + \frac{\sin(2kt)}{2k}]_{-\pi}^\pi = 1$.
+   - De même $\|s_k\|^2 = 1$. Tous les vecteurs sont normés.
+   - Orthogonalité : $\langle e_0, c_k \rangle = \frac{1}{\pi \sqrt{2}} \int_{-\pi}^\pi \cos(kt) dt = 0$.
+   - $\langle c_k, s_m \rangle = \frac{1}{\pi} \int_{-\pi}^\pi \cos(kt)\sin(mt) dt = 0$ (fonction impaire sur un intervalle symétrique).
+   - $\langle c_k, c_m \rangle$ avec $k \neq m$ :
+     $ = \frac{1}{\pi} \int_{-\pi}^\pi \frac{1}{2}(\cos((k+m)t) + \cos((k-m)t)) dt = 0 $.
+   - L'orthogonalité est prouvée, la famille est orthonormée.
+
+2. Soit $F_n = \text{Vect}(\mathcal{B}_n)$. Puisque $\mathcal{B}_n$ est orthonormée, la projection $S_n(f)$ s'écrit :
+   $ S_n(f) = \langle f, e_0 \rangle e_0 + \sum_{k=1}^n (\langle f, c_k \rangle c_k + \langle f, s_k \rangle s_k) $
+   - Or $\langle f, e_0 \rangle = \frac{1}{\pi} \int f(t)\frac{1}{\sqrt{2}} dt = \frac{a_0}{\sqrt{2}}$. Donc $\langle f, e_0 \rangle e_0 = \frac{a_0}{2}$.
+   - $\langle f, c_k \rangle = \frac{1}{\pi} \int f(t)\cos(kt) dt = a_k$.
+   - $\langle f, s_k \rangle = \frac{1}{\pi} \int f(t)\sin(kt) dt = b_k$.
+   - Finalement :
+     $ S_n(f)(t) = \frac{a_0}{2} + \sum_{k=1}^n (a_k \cos(kt) + b_k \sin(kt)) $
+   C'est la somme partielle de la série de Fourier.
+
+3. D'après le théorème de projection, le projeté a une norme inférieure ou égale à celle de $f$ :
+   $ \|S_n(f)\|^2 \le \|f\|^2 $
+   Or par le théorème de Pythagore sur la base orthonormée :
+   $ \|S_n(f)\|^2 = |\langle f, e_0 \rangle|^2 + \sum_{k=1}^n (\langle f, c_k \rangle^2 + \langle f, s_k \rangle^2) $
+   $ = \frac{a_0^2}{2} + \sum_{k=1}^n (a_k^2 + b_k^2) $
+   L'inégalité de Bessel s'écrit donc :
+   $ \frac{a_0^2}{2} + \sum_{k=1}^n (a_k^2 + b_k^2) \le \frac{1}{\pi} \int_{-\pi}^\pi f(t)^2 dt $
+   $\blacksquare$
+
+\newpage
+
+
+\chapter*{Exercice 10 : Moindres carrés (Difficulté $\star$$\star$$\star$$\star$$\circ$)}
+
+Soit $A \in \mathcal{M}_{m,n}(\mathbb{R})$ avec $m > n$ et de rang $n$. Soit $b \in \mathbb{R}^m$. Le système $Ax = b$ n'a en général pas de solution exacte.
+On cherche à minimiser la norme euclidienne $\|Ax - b\|^2$.
+1. Montrer que ce problème est équivalent à chercher la projection orthogonale de $b$ sur $\text{Im}(A)$.
+2. En déduire que le vecteur $x$ optimal est solution du système dit d'équations normales : $A^T A x = A^T b$.
+3. Montrer que la matrice $A^T A$ est inversible sous l'hypothèse que $A$ est de rang $n$.
+
+\section*{Démonstration Rigoureuse à Blanc}
+
+1. L'ensemble $\{Ax \mid x \in \mathbb{R}^n\}$ est par définition l'image de $A$, notée $\text{Im}(A)$, qui est un sous-espace vectoriel de $\mathbb{R}^m$.
+   - Le problème de minimisation $\min_{x \in \mathbb{R}^n} \|Ax - b\|$ s'écrit : trouver $y \in \text{Im}(A)$ tel que $\|y - b\|$ soit minimal.
+   - Par le théorème de la projection orthogonale, on sait que ce minimum est unique et est atteint exactement lorsque $y$ est la projection orthogonale de $b$ sur $\text{Im}(A)$, c'est-à-dire $y = p_{\text{Im}(A)}(b)$.
+   - Le problème équivaut donc à trouver $x$ tel que $Ax = p_{\text{Im}(A)}(b)$.
+
+2. Soit $x$ le vecteur optimal tel que $Ax = p_{\text{Im}(A)}(b)$.
+   - Par propriété de la projection, le résidu $b - Ax$ est orthogonal au sous-espace $\text{Im}(A)$.
+   - Cela signifie que pour tout $z \in \text{Im}(A)$, $\langle z, b - Ax \rangle = 0$.
+   - Or tout $z \in \text{Im}(A)$ s'écrit $z = Ay$ pour un $y \in \mathbb{R}^n$.
+   - Le produit scalaire canonique dans $\mathbb{R}^m$ est $\langle U, V \rangle = U^T V$.
+   - Donc $\forall y \in \mathbb{R}^n, (Ay)^T (b - Ax) = 0$.
+   - $y^T A^T (b - Ax) = 0$.
+   - Cette identité doit être vraie pour tout vecteur $y$, ce qui implique que le vecteur $A^T(b - Ax)$ est nul.
+   - $A^T(b - Ax) = 0 \iff A^T b - A^T A x = 0 \iff A^T A x = A^T b$.
+   - C'est l'équation normale de la méthode des moindres carrés.
+
+3. Montrons que $A^T A$ est inversible. Elle est inversible si et seulement si son noyau est réduit à $\{0\}$.
+   - Soit $x \in \ker(A^T A)$. Alors $A^T A x = 0$.
+   - Multiplions à gauche par $x^T$ : $x^T A^T A x = 0$.
+   - $(Ax)^T (Ax) = 0 \implies \|Ax\|^2 = 0 \implies Ax = 0$.
+   - Donc $x \in \ker(A)$.
+   - Or par hypothèse, le rang de $A$ (matrice $m \times n$) est $n$. Par le théorème du rang, la dimension du noyau de $A$ est $n - n = 0$.
+   - Donc $x = 0$.
+   - On a prouvé que $\ker(A^T A) = \{0\}$, la matrice $A^T A$ (qui est de taille $n \times n$) est donc inversible. Le système normal a une solution unique.
+   $\blacksquare$
+
+\newpage
+\chapter*{Partie 5 : Travaux pratiques et simulations algorithmiques}
+\addcontentsline{toc}{chapter}{Partie 5 : Travaux pratiques et simulations algorithmiques}
+
+
+\chapter*{TP 1 : Implémentation de l'algorithme de Gram-Schmidt}
+
+Dans ce TP, nous allons implémenter l'algorithme d'orthonormalisation de Gram-Schmidt en Python pur, sans utiliser de bibliothèques externes comme NumPy.
+
+\subsection*{Objectif Mathématique}
+Soit $(e_1, e_2, e_3)$ une base de $\mathbb{R}^3$. Le programme doit calculer la base orthonormée $(u_1, u_2, u_3)$ correspondante.
+
+\begin{lstlisting}[language=Python]
+import math
+
+def dot_product(v1, v2):
+    return sum(x*y for x,y in zip(v1, v2))
+
+def norm(v):
+    return math.sqrt(dot_product(v, v))
+
+def scalar_mult(scalar, v):
+    return [scalar * x for x in v]
+
+def vec_sub(v1, v2):
+    return [x - y for x,y in zip(v1, v2)]
+
+def vec_add(v1, v2):
+    return [x + y for x,y in zip(v1, v2)]
+
+def gram_schmidt(vectors):
+    u_vectors = []
+    for e in vectors:
+        v = e
+        for u in u_vectors:
+            proj_coef = dot_product(e, u)
+            proj = scalar_mult(proj_coef, u)
+            v = vec_sub(v, proj)
+
+        v_norm = norm(v)
+        assert v_norm > 1e-9, "La famille de vecteurs n'est pas libre."
+
+        u_new = scalar_mult(1.0 / v_norm, v)
+        u_vectors.append(u_new)
+    return u_vectors
+
+e1 = [1, 1, 0]
+e2 = [1, 0, 1]
+e3 = [0, 1, 1]
+
+u_base = gram_schmidt([e1, e2, e3])
+for i, u in enumerate(u_base):
+    print(f"u_{i+1} = {u}")
+
+for i in range(3):
+    for j in range(3):
+        val = dot_product(u_base[i], u_base[j])
+        expected = 1.0 if i == j else 0.0
+        assert math.isclose(val, expected, abs_tol=1e-9)
+print("Validation mathématique : La famille est bien orthonormée.")
+\end{lstlisting}
+
+\newpage
+
+
+\chapter*{TP 2 : Projection orthogonale sur un sous-espace}
+
+\subsection*{Objectif Mathématique}
+Implémenter le calcul de la projection orthogonale d'un vecteur sur un sous-espace défini par une base orthonormée.
+
+\begin{lstlisting}[language=Python]
+import math
+
+def dot_product(v1, v2):
+    return sum(x*y for x,y in zip(v1, v2))
+
+def scalar_mult(scalar, v):
+    return [scalar * x for x in v]
+
+def vec_add(v1, v2):
+    return [x + y for x,y in zip(v1, v2)]
+
+def vec_sub(v1, v2):
+    return [x - y for x,y in zip(v1, v2)]
+
+def project_onto_subspace(x, orthonormal_basis):
+    n = len(x)
+    projection = [0.0] * n
+    for u in orthonormal_basis:
+        coef = dot_product(x, u)
+        proj_u = scalar_mult(coef, u)
+        projection = vec_add(projection, proj_u)
+    return projection
+
+u1 = [1/math.sqrt(2), 1/math.sqrt(2), 0]
+u2 = [0, 0, 1]
+x = [2, 4, 3]
+
+p_x = project_onto_subspace(x, [u1, u2])
+print(f"Projection de x sur F : {p_x}")
+
+diff = vec_sub(x, p_x)
+assert math.isclose(dot_product(diff, u1), 0, abs_tol=1e-9)
+assert math.isclose(dot_product(diff, u2), 0, abs_tol=1e-9)
+print("Validation mathématique : x - p_F(x) est bien orthogonal à F.")
+\end{lstlisting}
+
+\newpage
+
+
+\chapter*{TP 3 : Calcul de la matrice de Gram}
+
+\subsection*{Objectif Mathématique}
+Écrire une fonction qui, étant donnée une famille de vecteurs, calcule sa matrice de Gram et vérifie si la famille est libre.
+
+\begin{lstlisting}[language=Python]
+import math
+
+def dot_product(v1, v2):
+    return sum(x*y for x,y in zip(v1, v2))
+
+def gram_matrix(vectors):
+    p = len(vectors)
+    G = [[0.0] * p for _ in range(p)]
+    for i in range(p):
+        for j in range(p):
+            G[i][j] = dot_product(vectors[i], vectors[j])
+    return G
+
+v1 = [1, 2, 3]
+v2 = [4, 5, 6]
+v3 = [7, 8, 9]
+
+G = gram_matrix([v1, v2, v3])
+print("Matrice de Gram G :")
+for row in G:
+    print(row)
+
+p = len(G)
+for i in range(p):
+    for j in range(p):
+        assert math.isclose(G[i][j], G[j][i], abs_tol=1e-9)
+print("Validation : G est symétrique.")
+\end{lstlisting}
+
+\newpage
+
+
+\chapter*{TP 4 : Polynômes orthogonaux approchés}
+
+\subsection*{Objectif Mathématique}
+Calculer le produit scalaire $\langle P, Q \rangle = \int_{-1}^1 P(t)Q(t)dt$ numériquement et vérifier l'orthogonalité des polynômes de Legendre.
+
+\begin{lstlisting}[language=Python]
+import math
+
+def integrate(f, a, b, n=10000):
+    h = (b - a) / n
+    s = 0.5 * (f(a) + f(b))
+    for i in range(1, n):
+        s += f(a + i * h)
+    return s * h
+
+def poly_dot_product(p1_func, p2_func):
+    return integrate(lambda t: p1_func(t) * p2_func(t), -1.0, 1.0)
+
+def P0(t): return 1.0
+def P1(t): return t
+def P2(t): return 0.5 * (3*t**2 - 1)
+
+val_01 = poly_dot_product(P0, P1)
+val_02 = poly_dot_product(P0, P2)
+val_12 = poly_dot_product(P1, P2)
+
+print(f"<P0, P1> = {val_01}")
+print(f"<P0, P2> = {val_02}")
+print(f"<P1, P2> = {val_12}")
+
+assert abs(val_01) < 1e-3
+assert abs(val_02) < 1e-3
+assert abs(val_12) < 1e-3
+print("Validation : Les polynômes sont bien orthogonaux pour ce produit scalaire.")
+\end{lstlisting}
+
+\newpage
+
+
+\chapter*{TP 5 : Régression linéaire par moindres carrés}
+
+\subsection*{Objectif Mathématique}
+Résoudre le système des équations normales $A^T A x = A^T b$ pour un problème de moindres carrés (sans bibliothèques externes).
+
+\begin{lstlisting}[language=Python]
+def transpose(mat):
+    return [[mat[j][i] for j in range(len(mat))] for i in range(len(mat[0]))]
+
+def mat_mult(A, B):
+    return [[sum(a*b for a,b in zip(A_row, B_col)) for B_col in transpose(B)] for A_row in A]
+
+def vec_to_mat(v):
+    return [[x] for x in v]
+
+def mat_to_vec(mat):
+    return [row[0] for row in mat]
+
+def invert_2x2(M):
+    det = M[0][0]*M[1][1] - M[0][1]*M[1][0]
+    assert abs(det) > 1e-9, "Matrice non inversible"
+    return [[M[1][1]/det, -M[0][1]/det],
+            [-M[1][0]/det, M[0][0]/det]]
+
+data = [(1, 2), (2, 3), (3, 5), (4, 4), (5, 6)]
+A = [[x, 1] for x, y in data]
+b = [y for x, y in data]
+b_mat = vec_to_mat(b)
+
+A_t = transpose(A)
+A_t_A = mat_mult(A_t, A)
+A_t_b = mat_mult(A_t, b_mat)
+
+inv_A_t_A = invert_2x2(A_t_A)
+x_opt_mat = mat_mult(inv_A_t_A, A_t_b)
+x_opt = mat_to_vec(x_opt_mat)
+
+print(f"Solution optimale (a, b) : {x_opt}")
+print(f"Droite trouvée : y = {x_opt[0]:.2f}x + {x_opt[1]:.2f}")
+\end{lstlisting}
+
+\newpage
+\end{document}
