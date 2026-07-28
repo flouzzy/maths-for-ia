@@ -127,7 +127,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 <br>
 
 - **[Jalon 37](jalon-37/Jalon%2037%20%28Int%C3%A9grale%20de%20Riemann%20sur%20un%20segment%29.md)** : Intégrale de Riemann sur un segment, fonctions en escalier et propriétés de l'intégrale.
-- **[Jalon 38](jalon-38/Jalon%2038%20%28Th%C3%A9or%C3%A8me%20fondamental%20de%20l%27analyse%29.md)** : Théorème fondamental de l'analyse, primitives et techniques d'intégration (IPP, changement de variable).
+- **[Jalon 38](jalon-38/Jalon-38.md)** : Théorème fondamental de l'analyse, primitives et techniques d'intégration (IPP, changement de variable). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 39](jalon-39/Jalon%2039%20%28Int%C3%A9grales%20g%C3%A9n%C3%A9ralis%C3%A9es%20sur%20un%20intervalle%20quelconque%20et%20crit%C3%A8res%20de%20convergence.%29.md)** : Intégrales généralisées sur un intervalle quelconque et critères de convergence.
 - **[Jalon 40](jalon-40/Jalon%2040%20%28Int%C3%A9grales%20d%C3%A9pendant%20d%27un%20param%C3%A8tre%29.md)** : Intégrales dépendant d'un paramètre, théorèmes de continuité et de dérivation sous le signe $\int$.
 - **[Jalon 41](jalon-41/Jalon%2041%20%28%C3%89quations%20diff%C3%A9rentielles%20lin%C3%A9aires%20du%20premier%20ordre%20et%20m%C3%A9thode%20de%20variation%20de%20la%20constante.%29.md)** : Équations différentielles linéaires du premier ordre et méthode de variation de la constante.
@@ -427,3 +427,5 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-22] : [Upsert/Création] du Jalon 33 - Formes quadratiques. Status: Terminé.
 - [2026-07-23] : [Upsert/Création] du Jalon 34 - Topologie élémentaire des espaces vectoriels normés. Status: Terminé.
 - [2026-07-26] : [Upsert/Création] du Jalon 36 - Livrable IA T3 : Décomposition en valeurs singulières (SVD) et compression d'image. Status: Terminé.
+
+- [2026-07-28] : [Upsert/Création] du Jalon 38 - Théorème fondamental de l'analyse. Status: Terminé.
