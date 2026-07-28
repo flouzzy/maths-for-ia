@@ -108,7 +108,7 @@ $$ \int_{\varphi(\alpha)}^{\varphi(\beta)} f(x) \, dx = \int_\alpha^\beta f(\var
 - L'intervalle image $\varphi([\alpha, \beta])$ doit être strictement inclus dans le domaine de définition (et de continuité) de $f$.
 - Cette formule traduit la règle de dérivation des fonctions composées $(F \circ \varphi)' = (F' \circ \varphi) \cdot \varphi'$ transposée au calcul intégral.
 
-## 3. Zéro Ellipse dans les Démonstrations à Blanc
+## 3. Démonstrations
 
 ### Démonstration de l'unicité des primitives à une constante près
 Soit un intervalle $I$ de $\mathbb{R}$. Soit $f : I \to \mathbb{R}$. Supposons que $F_1$ et $F_2$ soient deux primitives de $f$ sur $I$.
