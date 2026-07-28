@@ -402,6 +402,10 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 ## Historique d'Audit
 
+### 2026-07-29-audit
+- [[#2026-07-29-audit|2026-07-29]] : [Audit & Weekly Compilation] - Jalon 27 - Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+
+
 ### 2026-07-28-audit
 - [[#2026-07-28-audit|2026-07-28]] : [Audit & Weekly Compilation] - Jalon 26 - Espaces euclidiens, orthogonalité, théorème de la projection orthogonale et algorithme de Gram-Schmidt. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 
