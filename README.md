@@ -128,7 +128,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 
 - **[Jalon 37](jalon-37/Jalon%2037%20%28Int%C3%A9grale%20de%20Riemann%20sur%20un%20segment%29.md)** : Intégrale de Riemann sur un segment, fonctions en escalier et propriétés de l'intégrale.
 - **[Jalon 38](jalon-38/Jalon-38.md)** : Théorème fondamental de l'analyse, primitives et techniques d'intégration (IPP, changement de variable). 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 39](jalon-39/Jalon%2039%20%28Int%C3%A9grales%20g%C3%A9n%C3%A9ralis%C3%A9es%20sur%20un%20intervalle%20quelconque%20et%20crit%C3%A8res%20de%20convergence.%29.md)** : Intégrales généralisées sur un intervalle quelconque et critères de convergence.
+- **[Jalon 39](jalon-39/Jalon-39.md)** : Intégrales généralisées sur un intervalle quelconque et critères de convergence. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 40](jalon-40/Jalon%2040%20%28Int%C3%A9grales%20d%C3%A9pendant%20d%27un%20param%C3%A8tre%29.md)** : Intégrales dépendant d'un paramètre, théorèmes de continuité et de dérivation sous le signe $\int$.
 - **[Jalon 41](jalon-41/Jalon%2041%20%28%C3%89quations%20diff%C3%A9rentielles%20lin%C3%A9aires%20du%20premier%20ordre%20et%20m%C3%A9thode%20de%20variation%20de%20la%20constante.%29.md)** : Équations différentielles linéaires du premier ordre et méthode de variation de la constante.
 - **[Jalon 42](jalon-42/Jalon%2042%20%28%C3%89quations%20diff%C3%A9rentielles%20lin%C3%A9aires%20du%20second%20ordre%20%C3%A0%20coefficients%20constants.%29.md)** : Équations différentielles linéaires du second ordre à coefficients constants.
@@ -405,6 +405,9 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 ### 2026-07-29-audit
 - [[#2026-07-29-audit|2026-07-29]] : [Audit & Weekly Compilation] - Jalon 27 - Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 
+
+### 2026-07-29-audit
+- [2026-07-29] : [Upsert/Création] du Jalon 39 - Intégrales généralisées sur un intervalle quelconque. Status: Terminé.
 
 ### 2026-07-28-audit
 - [[#2026-07-28-audit|2026-07-28]] : [Audit & Weekly Compilation] - Jalon 26 - Espaces euclidiens, orthogonalité, théorème de la projection orthogonale et algorithme de Gram-Schmidt. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
