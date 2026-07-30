@@ -443,3 +443,4 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-26] : [Upsert/Création] du Jalon 36 - Livrable IA T3 : Décomposition en valeurs singulières (SVD) et compression d'image. Status: Terminé.
 
 - [2026-07-28] : [Upsert/Création] du Jalon 38 - Théorème fondamental de l'analyse. Status: Terminé.
+- [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
