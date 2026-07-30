@@ -1,18 +1,22 @@
 ---
-uuid: "jalon-40-exo-02"
-title: "Exercice 2 : Intégrale généralisée et domination locale"
-difficulty: "$\star\star\circ\circ\circ$"
+title: "Exercice 2 : Règle de Leibniz"
+difficulty: "$\star$$\star$$\circ$$\circ$$\circ$"
 ---
+# Exercice 2 : Règle de Leibniz ($\star$$\star$$\circ$$\circ$$\circ$)
 
-# Exercice 2 : Intégrale généralisée et domination locale ($\star\star\circ\circ\circ$)
+**Énoncé :**
+Soit $F(x) = \int_{0}^{+\infty} \frac{e^{-xt}}{1+t^2} dt$.
+Montrer que $F$ est de classe $\mathcal{C}^2$ sur $]0, +\infty[$ et trouver une relation différentielle liant $F$ et $F''$.
 
-Soit $F(x) = \int_0^{+\infty} \frac{\sin(t)}{t^x} \, \mathrm{d}t$.
-
-Déterminer le domaine de définition $\mathcal{D}$ de $F$.
-*(On montrera que l'intégrale converge si et seulement si $1 < x < 2$ pour l'intégrabilité absolue en $0$ ou avec convergence conditionnelle à l'infini, ou on adaptera selon le critère de convergence. Ici on considérera l'intégrale de Dirichlet modifiée)*.
-
-**Correction détaillée :**
-1. **Étude en 0 :** Posons $f_x(t) = \frac{\sin(t)}{t^x}$. En $0$, $\sin(t) \sim t$. Donc $f_x(t) \sim \frac{t}{t^x} = \frac{1}{t^{x-1}}$. Par le critère de Riemann en $0$, l'intégrale de $\frac{1}{t^{x-1}}$ converge absolument si et seulement si $x-1 < 1$, soit $x < 2$.
-2. **Étude en $+\infty$ :** Pour la convergence absolue, en $+\infty$, $\left| \frac{\sin(t)}{t^x} \right| \leq \frac{1}{t^x}$. L'intégrale de Riemann $\int_1^{+\infty} \frac{1}{t^x} \mathrm{d}t$ converge si $x > 1$.
-   La fonction est donc absolument intégrable sur $]0, +\infty[$ si et seulement si $1 < x < 2$. (Note: elle converge semi-absolument pour $0 < x \le 1$ grâce au critère de Dirichlet (ou d'Abel), mais pour ce formalisme strict, concentrons-nous sur l'absolue convergence $]1,2[$).
-   Ainsi, $F$ est bien définie sur $\mathcal{D} = ]1, 2[$.
+**Démonstration pas-à-pas :**
+Considérons la fonction $f(x,t) = \frac{e^{-xt}}{1+t^2}$ pour $x > 0$ et $t \ge 0$.
+1. L'application $(x,t) \mapsto f(x,t)$ est de classe $\mathcal{C}^2$ par rapport à $x$, avec :
+   $\frac{\partial f}{\partial x}(x,t) = \frac{-t e^{-xt}}{1+t^2}$ et $\frac{\partial^2 f}{\partial x^2}(x,t) = \frac{t^2 e^{-xt}}{1+t^2}$.
+2. Pour $x \ge a > 0$, on majore la dérivée seconde :
+   $\left| \frac{\partial^2 f}{\partial x^2}(x,t) \right| = \frac{t^2}{1+t^2} e^{-xt} \le 1 \cdot e^{-at}$.
+   La fonction $t \mapsto e^{-at}$ est intégrable sur $[0, +\infty[$.
+3. Par le théorème de dérivation de Leibniz itéré, $F \in \mathcal{C}^2(]0, +\infty[)$ et :
+   $F''(x) = \int_{0}^{+\infty} \frac{t^2 e^{-xt}}{1+t^2} dt$.
+4. Relation différentielle :
+   $F''(x) + F(x) = \int_{0}^{+\infty} \frac{t^2 e^{-xt} + e^{-xt}}{1+t^2} dt = \int_{0}^{+\infty} e^{-xt} \frac{t^2+1}{t^2+1} dt = \int_{0}^{+\infty} e^{-xt} dt = \left[ -\frac{1}{x} e^{-xt} \right]_0^{+\infty} = \frac{1}{x}$.
+Ainsi, $F''(x) + F(x) = \frac{1}{x}$.

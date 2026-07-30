@@ -1,20 +1,26 @@
 ---
-uuid: "jalon-40-exo-01"
-title: "Exercice 1 : Intégrale sur un segment fini"
-difficulty: "$\star\circ\circ\circ\circ$"
+title: "Exercice 1 : Intégrales à paramètres basique"
+difficulty: "$\star$$\circ$$\circ$$\circ$$\circ$"
 ---
+# Exercice 1 : Intégrales à paramètres basique ($\star$$\circ$$\circ$$\circ$$\circ$)
 
-# Exercice 1 : Intégrale sur un segment fini ($\star\circ\circ\circ\circ$)
+**Énoncé :**
+Soit $F(x) = \int_0^1 t^x dt$.
+1. Pour quelles valeurs de $x$ la fonction $F$ est-elle bien définie ?
+2. Calculer explicitement $F(x)$.
+3. Calculer la dérivée $F'(x)$ de deux manières différentes :
+   - En dérivant l'expression explicite trouvée à la question 2.
+   - En utilisant le théorème de dérivation sous le signe intégral.
 
-Soit la fonction $F(x) = \int_0^1 \frac{e^{-xt}}{1+t^2} \, \mathrm{d}t$, pour $x \in \mathbb{R}$.
-
-1. Montrer que $F$ est de classe $\mathcal{C}^1$ sur $\mathbb{R}$.
-2. Calculer sa dérivée $F'(x)$ sous forme d'une intégrale.
-3. Déterminer le signe de $F'(x)$ et en déduire le sens de variation de $F$.
-
-**Correction détaillée :**
-1. **Régularité et intégrabilité :** Posons $f(x,t) = \frac{e^{-xt}}{1+t^2}$. L'intervalle d'intégration $I = [0,1]$ est un segment fini. Pour tout $t \in [0,1]$, l'application $x \mapsto f(x,t)$ est de classe $\mathcal{C}^\infty$ sur $\mathbb{R}$, avec $\frac{\partial f}{\partial x}(x,t) = \frac{-t e^{-xt}}{1+t^2}$. Pour tout $x \in \mathbb{R}$, $t \mapsto f(x,t)$ et $t \mapsto \frac{\partial f}{\partial x}(x,t)$ sont continues sur $[0,1]$.
-   **Domination sur un segment compact :** Pour obtenir une majoration indépendante de $x$, fixons un intervalle borné $[-A, A]$. Pour tout $(x,t) \in [-A,A] \times [0,1]$, on a $\left| \frac{\partial f}{\partial x}(x,t) \right| \leq \frac{1 \cdot e^{A\cdot 1}}{1+0} = e^A$. La constante $\psi(t) = e^A$ est une fonction constante donc trivialement intégrable sur le segment fini $[0,1]$. Par application du théorème de Leibniz sur tout $[-A, A]$, $F$ est $\mathcal{C}^1$ sur $\mathbb{R}$.
-2. **Calcul de la dérivée :** Le théorème nous donne l'autorisation d'intervertir :
-   $$ F'(x) = \int_0^1 \frac{\partial}{\partial x} \left( \frac{e^{-xt}}{1+t^2} \right) \, \mathrm{d}t = \int_0^1 \frac{-t e^{-xt}}{1+t^2} \, \mathrm{d}t $$
-3. **Analyse du signe :** Sur $I = [0,1]$ (à part en $0$ où l'intégrande est nul), on a $t > 0$, $e^{-xt} > 0$ et $1+t^2 > 0$. Par positivité de l'intégrale d'une fonction strictement négative sur presque tout le segment, $F'(x) < 0$ pour tout $x \in \mathbb{R}$. Ainsi, $F$ est strictement décroissante sur $\mathbb{R}$.
+**Démonstration pas-à-pas :**
+1. L'intégrale $\int_0^1 t^x dt$ est convergente si et seulement si $x > -1$. En effet, pour $t \in ]0, 1]$, $t^x = e^{x \ln(t)}$. Si $x = -1$, on obtient $\int_0^1 \frac{1}{t} dt$ qui diverge. Si $x > -1$, la primitive $\frac{t^{x+1}}{x+1}$ admet une limite finie en $0$.
+2. Pour $x > -1$, $F(x) = \left[ \frac{t^{x+1}}{x+1} \right]_0^1 = \frac{1}{x+1}$.
+3. Première méthode : $F'(x) = \frac{d}{dx} \left( \frac{1}{x+1} \right) = -\frac{1}{(x+1)^2}$.
+   Deuxième méthode : Soit $f(x, t) = t^x = e^{x \ln(t)}$.
+   - Pour $t \in ]0, 1]$, $x \mapsto f(x,t)$ est de classe $\mathcal{C}^1$ et $\frac{\partial f}{\partial x}(x,t) = \ln(t) t^x$.
+   - Soit $K = [a, b] \subset ]-1, +\infty[$ avec $a > -1$. Pour tout $x \ge a$, on a $\left| \frac{\partial f}{\partial x}(x,t) \right| = -\ln(t) t^x \le -\ln(t) t^a$.
+   - La fonction $\psi(t) = -\ln(t) t^a$ est intégrable sur $]0, 1]$ (croissance comparée en $0$).
+   - Donc on peut dériver sous l'intégrale : $F'(x) = \int_0^1 \ln(t) t^x dt$.
+   Par intégration par parties ($u = \ln(t)$, $v' = t^x$) :
+   $F'(x) = \left[ \ln(t) \frac{t^{x+1}}{x+1} \right]_0^1 - \int_0^1 \frac{1}{t} \frac{t^{x+1}}{x+1} dt = 0 - \frac{1}{x+1} \int_0^1 t^x dt = -\frac{1}{x+1} \left[ \frac{t^{x+1}}{x+1} \right]_0^1 = -\frac{1}{(x+1)^2}$.
+   Les deux méthodes coïncident.

@@ -12,92 +12,89 @@ next: "[[Jalon 41 (Équations différentielles linéaires du premier ordre et m�
 
 # Jalon 40 : Intégrales dépendant d'un paramètre
 
-## 1. Origine et intuition géométrique
+## 1. Introduction et Origines Analytiques
 
-L'intégration classique permet de sommer de façon continue les valeurs d'une fonction $f(t)$ sur un intervalle $I$. Cependant, dans de nombreux problèmes physiques et probabilistes, la fonction que l'on intègre dépend également d'une variable externe $x$, appelée *paramètre*. L'intégrale définit alors une nouvelle fonction :
-$$ F(x) = \int_I f(x,t) \, \mathrm{d}t $$
+L'étude des intégrales dépendant d'un paramètre trouve son origine dans le besoin fondamental de la physique mathématique, notamment chez Euler et Laplace, de manipuler des expressions intégrales complexes représentant des phénomènes continus (comme le potentiel gravitationnel ou la diffusion de la chaleur). Lorsqu'une grandeur physique est exprimée sous forme d'intégrale, la question naturelle est d'étudier comment cette grandeur varie lorsque les conditions initiales ou les paramètres du système sont modifiés de manière infinitésimale.
 
-Géométriquement, considérons une surface $z = f(x,t)$ dans l'espace $\mathbb{R}^3$. Pour un $x_0$ fixé, la fonction $t \mapsto f(x_0, t)$ représente une courbe plane, intersection de la surface avec le plan d'équation $x = x_0$. L'intégrale $F(x_0)$ correspond à l'aire algébrique sous cette courbe. Faire varier le paramètre $x$ revient à translater ce plan d'intersection, et $F(x)$ mesure la variation continue de cette aire.
+L'enjeu algébrique sous-jacent consiste à justifier l'interversion de deux processus limites continus : l'intégration et le passage à la limite (ou la dérivation). De manière informelle, on souhaite pouvoir écrire :
+$$ \frac{d}{dx} \int_I f(x,t) dt = \int_I \frac{\partial f}{\partial x}(x,t) dt $$
+Cette interversion n'est pas trivialement acquise, particulièrement lorsque l'intervalle d'intégration est non borné (intégrales généralisées). La formalisation rigoureuse de ce cadre a nécessité le développement des théorèmes de continuité et de dérivation sous le signe intégral, qui préfigurent la puissance de la théorie de la mesure de Lebesgue et du théorème de convergence dominée.
 
-Historiquement, de nombreuses fonctions spéciales (comme la fonction Gamma d'Euler) ne peuvent s'exprimer par des combinaisons élémentaires, mais apparaissent naturellement sous forme d'intégrales dépendant d'un paramètre. L'enjeu analytique central est de déterminer sous quelles conditions on peut dériver ou intégrer $F(x)$ en intervertissant l'ordre des opérations limite et intégrale :
-$$ \frac{\mathrm{d}}{\mathrm{d}x} \int_I f(x,t) \, \mathrm{d}t \overset{?}{=} \int_I \frac{\partial f}{\partial x}(x,t) \, \mathrm{d}t $$
-Ces théorèmes d'interversion, initiés par Leibniz, nécessitent des hypothèses strictes de régularité (continuité) et de contrôle du comportement asymptotique (domination), afin d'éviter les singularités où l'aire divergerait brutalement.
+## 2. Continuité des Intégrales à Paramètre
 
-## 2. Théorèmes fondamentaux sur un intervalle quelconque
+### Théorème de Continuité sous le Signe Intégral
 
-Soit $I$ un intervalle de $\mathbb{R}$ (éventuellement non borné, par exemple $[a, +\infty[$) et $A$ une partie de $\mathbb{R}$ ou $\mathbb{C}$ (souvent un intervalle d'étude pour le paramètre).
-Soit $f : A \times I \to \mathbb{C}$ (ou $\mathbb{R}$) une fonction. L'intégrale à paramètre étudiée est :
-$$ F(x) = \int_I f(x,t) \, \mathrm{d}t \quad \text{pour } x \in A $$
+Soient $A$ un intervalle de $\mathbb{R}$, $I$ un intervalle d'intégration (borné ou non), et une fonction $f : A \times I \to \mathbb{R}$ ou $\mathbb{C}$. On définit la fonction $F$ sur l'ensemble $A$ par :
+$$ F(x) = \int_I f(x, t) dt $$
 
-### A. Continuité sous le signe intégral
+**Théorème.** Si les trois conditions suivantes sont satisfaites :
+1. $\forall t \in I$, l'application $x \mapsto f(x, t)$ est continue sur $A$.
+2. $\forall x \in A$, l'application $t \mapsto f(x, t)$ est continue par morceaux sur $I$.
+3. **Hypothèse de domination locale :** Pour tout segment $K \subset A$, il existe une fonction $\varphi_K : I \to \mathbb{R}^+$ continue par morceaux et intégrable sur $I$, telle que :
+   $$ \forall x \in K, \forall t \in I, \quad |f(x, t)| \le \varphi_K(t) $$
+Alors, l'application $F$ est définie et continue sur $A$.
 
-> **Théorème de continuité (Théorème de convergence dominée paramétrique)**
-> Soit $f : A \times I \to \mathbb{C}$ vérifiant :
-> 1. Pour tout $t \in I$, l'application $x \mapsto f(x,t)$ est continue sur $A$.
-> 2. Pour tout $x \in A$, l'application $t \mapsto f(x,t)$ est continue par morceaux sur $I$.
-> 3. (Hypothèse de domination) Il existe une fonction $\varphi : I \to \mathbb{R}_+$ intégrable sur $I$ (indépendante de $x$) telle que :
->    $$ \forall (x,t) \in A \times I, \quad |f(x,t)| \leq \varphi(t) $$
-> Alors $F : A \to \mathbb{C}$ est continue sur $A$.
+### Exemple Concret Immédiat : Étude d'une fonction Gamma incomplète
 
-**Exemple d'application immédiate : La transformée de Laplace**
-Considérons $F(x) = \int_0^{+\infty} e^{-xt} \frac{\sin(t)}{t} \, \mathrm{d}t$ pour $x \in A = ]0, +\infty[$.
-Soit $[a, +\infty[$ un intervalle fermé dans $A$ avec $a > 0$. Posons $f(x,t) = e^{-xt} \frac{\sin(t)}{t}$.
-- Pour $t > 0$ fixé, $x \mapsto e^{-xt} \frac{\sin(t)}{t}$ est continue sur $[a, +\infty[$.
-- Pour $x \geq a$ fixé, $t \mapsto e^{-xt} \frac{\sin(t)}{t}$ est continue sur $]0, +\infty[$ (prolongeable par continuité en $0$).
-- Domination : $\forall (x,t) \in [a, +\infty[ \times ]0, +\infty[, \quad |f(x,t)| \leq e^{-at}$.
-La fonction $\varphi(t) = e^{-at}$ est intégrable sur $]0, +\infty[$ car $a > 0$.
-Donc $F$ est continue sur tout intervalle $[a, +\infty[$, et donc sur $]0, +\infty[$.
+Considérons $F(x) = \int_0^{+\infty} e^{-xt} \frac{\sin(t)}{t} dt$ pour $x \in ]0, +\infty[$.
+Soit $f(x, t) = e^{-xt} \frac{\sin(t)}{t}$ prolongée par continuité en $t=0$ par $e^{-x \cdot 0} \cdot 1 = 1$.
+1. Pour $t \ge 0$ fixé, $x \mapsto f(x,t)$ est continue sur $]0, +\infty[$.
+2. Pour $x > 0$ fixé, $t \mapsto f(x,t)$ est continue sur $[0, +\infty[$.
+3. Fixons un segment $K = [a, b] \subset ]0, +\infty[$ avec $0 < a < b$. Pour $x \in K$ et $t \ge 0$, on a :
+   $$ |f(x,t)| = e^{-xt} \left|\frac{\sin(t)}{t}\right| \le e^{-xt} \le e^{-at} $$
+   Or, l'application $t \mapsto e^{-at}$ est intégrable sur $[0, +\infty[$ car $a > 0$.
+Par le théorème de continuité, $F$ est continue sur $]0, +\infty[$.
 
-### B. Dérivation sous le signe intégral (Règle de Leibniz)
+### Contre-exemple : Rupture de continuité
 
-> **Théorème de dérivation (Classe $\mathcal{C}^1$)**
-> Soit $I$ un intervalle de $\mathbb{R}$ et $A$ un intervalle ouvert de $\mathbb{R}$. Soit $f : A \times I \to \mathbb{C}$ vérifiant :
-> 1. Pour tout $t \in I$, la fonction $x \mapsto f(x,t)$ est dérivable sur $A$, et $\frac{\partial f}{\partial x}$ est définie sur $A \times I$.
-> 2. Pour tout $x \in A$, les fonctions $t \mapsto f(x,t)$ et $t \mapsto \frac{\partial f}{\partial x}(x,t)$ sont continues par morceaux sur $I$.
-> 3. (Hypothèse d'intégrabilité) Il existe $x_0 \in A$ tel que $t \mapsto f(x_0, t)$ est intégrable sur $I$.
-> 4. (Hypothèse de domination de la dérivée) Il existe une fonction $\psi : I \to \mathbb{R}_+$ intégrable sur $I$ telle que :
->    $$ \forall (x,t) \in A \times I, \quad \left| \frac{\partial f}{\partial x}(x,t) \right| \leq \psi(t) $$
-> Alors $F(x) = \int_I f(x,t) \, \mathrm{d}t$ est bien définie pour tout $x \in A$, elle est de classe $\mathcal{C}^1$ sur $A$, et :
-> $$ F'(x) = \int_I \frac{\partial f}{\partial x}(x,t) \, \mathrm{d}t $$
+Soit $f(x, t) = x e^{-xt^2}$ sur $A = \mathbb{R}^+$ et $I = [0, +\infty[$.
+Pour $x > 0$, $F(x) = \int_0^{+\infty} x e^{-xt^2} dt = \sqrt{x} \int_0^{+\infty} e^{-u^2} du = \sqrt{x} \frac{\sqrt{\pi}}{2}$.
+Cependant, pour $x = 0$, $F(0) = \int_0^{+\infty} 0 dt = 0$.
+Ici $F(x)$ ne présente pas de discontinuité, mais considérons un exemple classique de la littérature où l'interversion limite-intégrale échoue en l'absence de domination globale uniforme.
 
-### C. Cas des segments d'intégration finis (Généralisation faible)
+## 3. Dérivation et Règle de Leibniz
 
-Si $I = [a,b]$ est un segment fini, toute fonction continue sur $A \times [a,b]$ satisfait l'hypothèse de domination localement, puisque toute fonction continue sur un compact y est bornée. Les théorèmes s'appliquent donc systématiquement sans avoir besoin de rechercher activement une fonction de domination complexe pour des domaines locaux.
+### Théorème de Dérivation (Forme de Leibniz)
 
-## 3. Démonstration rigoureuse : La règle de Leibniz par les accroissements finis
+**Théorème.** Si les conditions suivantes sont satisfaites :
+1. $\forall t \in I$, l'application $x \mapsto f(x, t)$ est de classe $\mathcal{C}^1$ sur $A$.
+2. $\forall x \in A$, les applications $t \mapsto f(x, t)$ et $t \mapsto \frac{\partial f}{\partial x}(x, t)$ sont continues par morceaux et intégrables sur $I$.
+3. **Hypothèse de domination de la dérivée :** Pour tout segment $K \subset A$, il existe $\psi_K : I \to \mathbb{R}^+$ intégrable sur $I$ telle que :
+   $$ \forall x \in K, \forall t \in I, \quad \left| \frac{\partial f}{\partial x}(x, t) \right| \le \psi_K(t) $$
+Alors $F$ est de classe $\mathcal{C}^1$ sur $A$ et :
+$$ F'(x) = \int_I \frac{\partial f}{\partial x}(x, t) dt $$
 
-Nous allons démontrer le théorème de dérivation sur un intervalle quelconque en utilisant le théorème de convergence dominée séquentielle et l'inégalité des accroissements finis.
+### Démonstration Ligne par Ligne (Cas d'un segment compact)
 
-**Étape 1 : Initialisation et formalisation séquentielle**
-Soit $x \in A$. L'ouvert $A$ permet de choisir une suite $(h_n)_{n \in \mathbb{N}}$ de réels non nuls telle que $x+h_n \in A$ pour tout $n$, et $h_n \to 0$ lorsque $n \to +\infty$.
-On étudie le taux d'accroissement de $F$ :
-$$ \frac{F(x+h_n) - F(x)}{h_n} = \int_I \frac{f(x+h_n, t) - f(x,t)}{h_n} \, \mathrm{d}t $$
-Posons $g_n(t) = \frac{f(x+h_n, t) - f(x,t)}{h_n}$.
+Supposons $I = [a,b]$ compact et $f$ de classe $\mathcal{C}^1$ sur $A \times [a,b]$.
+Par le théorème des accroissements finis, pour $x, x+h \in A$ :
+$$ \frac{F(x+h) - F(x)}{h} = \int_a^b \frac{f(x+h, t) - f(x, t)}{h} dt = \int_a^b \frac{\partial f}{\partial x}(x + \theta h, t) dt $$
+avec $0 < \theta < 1$. Puisque $\frac{\partial f}{\partial x}$ est continue sur le compact $A \times [a,b]$, elle y est uniformément continue (théorème de Heine). Par conséquent :
+$$ \forall \epsilon > 0, \exists \delta > 0, |h| < \delta \implies \left| \frac{\partial f}{\partial x}(x+\theta h, t) - \frac{\partial f}{\partial x}(x, t) \right| < \epsilon $$
+Donc :
+$$ \left| \frac{F(x+h) - F(x)}{h} - \int_a^b \frac{\partial f}{\partial x}(x, t) dt \right| \le \int_a^b \epsilon dt = \epsilon (b-a) $$
+En faisant tendre $h \to 0$, on obtient exactement $F'(x) = \int_a^b \frac{\partial f}{\partial x}(x, t) dt$.
 
-**Étape 2 : Convergence ponctuelle**
-Par hypothèse, $x \mapsto f(x,t)$ est dérivable en $x$. Par définition du taux d'accroissement pour la dérivée partielle :
-$$ \forall t \in I, \quad \lim_{n \to +\infty} g_n(t) = \frac{\partial f}{\partial x}(x,t) $$
+### Exemple Concret Immédiat : Calcul de l'intégrale de Gauss paramétrée
 
-**Étape 3 : Domination par l'inégalité des accroissements finis**
-Pour $t \in I$ fixé, appliquons le théorème des accroissements finis (ou l'inégalité si la fonction est à valeurs complexes) à l'application $u \mapsto f(u,t)$ entre $x$ et $x+h_n$.
-Il existe un réel $\theta_n(t) \in ]x, x+h_n[$ (ou $]x+h_n, x[$ selon le signe de $h_n$) tel que :
-$$ |g_n(t)| = \left| \frac{f(x+h_n, t) - f(x,t)}{h_n} \right| \leq \sup_{u \in [x, x+h_n]} \left| \frac{\partial f}{\partial x}(u,t) \right| $$
-Or, l'hypothèse globale de domination de la dérivée impose :
-$$ \forall u \in A, \quad \left| \frac{\partial f}{\partial x}(u,t) \right| \leq \psi(t) $$
-Ainsi, pour tout $n \in \mathbb{N}$ et tout $t \in I$ :
-$$ |g_n(t)| \leq \psi(t) $$
-avec $\psi$ intégrable sur $I$.
+Soit $F(x) = \int_0^{+\infty} e^{-t^2} \cos(xt) dt$.
+Posons $f(x, t) = e^{-t^2} \cos(xt)$. La fonction $f$ vérifie :
+$\frac{\partial f}{\partial x}(x,t) = -t e^{-t^2} \sin(xt)$.
+Majoration : $\left| \frac{\partial f}{\partial x}(x,t) \right| \le t e^{-t^2}$.
+La fonction $\psi(t) = t e^{-t^2}$ est intégrable sur $[0, +\infty[$ (car primitive $- \frac{1}{2} e^{-t^2}$).
+Ainsi $F \in \mathcal{C}^1(\mathbb{R})$ et $F'(x) = \int_0^{+\infty} -t e^{-t^2} \sin(xt) dt$.
+Par intégration par parties : $u(t) = \sin(xt)$ et $v'(t) = -t e^{-t^2}$ (donc $v(t) = \frac{1}{2} e^{-t^2}$) :
+$F'(x) = \left[ \frac{1}{2} e^{-t^2} \sin(xt) \right]_0^{+\infty} - \frac{x}{2} \int_0^{+\infty} e^{-t^2} \cos(xt) dt = -\frac{x}{2} F(x)$.
+C'est une équation différentielle linéaire du premier ordre : $F'(x) + \frac{x}{2} F(x) = 0$.
+Solution : $F(x) = F(0) e^{-x^2/4}$. Sachant que $F(0) = \int_0^{+\infty} e^{-t^2} dt = \frac{\sqrt{\pi}}{2}$, on conclut que :
+$$ \int_0^{+\infty} e^{-t^2} \cos(xt) dt = \frac{\sqrt{\pi}}{2} e^{-x^2/4} $$
 
-**Étape 4 : Conclusion par convergence dominée**
-La suite de fonctions $(g_n)$ converge simplement vers $\frac{\partial f}{\partial x}(x,\cdot)$, et est dominée par la fonction intégrable $\psi$. Par le théorème de convergence dominée (séquentiel) de Lebesgue :
-$$ \lim_{n \to +\infty} \int_I g_n(t) \, \mathrm{d}t = \int_I \lim_{n \to +\infty} g_n(t) \, \mathrm{d}t = \int_I \frac{\partial f}{\partial x}(x,t) \, \mathrm{d}t $$
-Cette limite étant vraie pour toute suite $(h_n)$ tendant vers $0$, on conclut que la dérivée $F'(x)$ existe et vérifie la relation attendue. La continuité de la dérivée s'obtient similairement par le théorème de continuité, en appliquant les hypothèses de régularité supplémentaires sur la dérivée partielle.
+## 4. Applications en Théorie de l'Information et Intelligence Artificielle
 
-## 4. Lien fondamental avec l'Intelligence Artificielle
+### Estimation et Interversion du Gradient
 
-En apprentissage automatique (Machine Learning) probabiliste et en inférence variationnelle, on cherche souvent à optimiser une espérance par rapport aux paramètres d'une distribution.
-Soit une fonction de coût $C(z)$ dépendant d'une variable aléatoire continue $Z \sim p_\theta(z)$, où $\theta$ est le paramètre du modèle (par exemple, les poids d'un réseau de neurones). L'objectif est d'optimiser le risque espéré :
-$$ J(\theta) = \mathbb{E}_{Z \sim p_\theta}[C(Z)] = \int_{\mathcal{Z}} C(z) p_\theta(z) \, \mathrm{d}z $$
-Pour optimiser $J$ par descente de gradient, il faut calculer $\nabla_\theta J(\theta)$. Sous les conditions strictes de domination (souvent garanties par la régularité des lois de probabilité exponentielles utilisées, comme les lois normales), le théorème de dérivation sous le signe intégral autorise l'interversion :
-$$ \nabla_\theta J(\theta) = \int_{\mathcal{Z}} C(z) \nabla_\theta p_\theta(z) \, \mathrm{d}z $$
-C'est le fondement du gradient par l'astuce de REINFORCE (ou _score function estimator_), pivot pour l'apprentissage par renforcement et les Auto-Encodeurs Variationnels (VAE). Sans l'assise mathématique des intégrales à paramètre, la backpropagation stochastique n'aurait aucune validité théorique.
+En apprentissage statistique, le calcul du risque attendu est une intégrale dépendant du paramètre du modèle $\theta$ :
+$$ \mathcal{L}(\theta) = \int_{\mathcal{X} \times \mathcal{Y}} L(f_\theta(x), y) p(x, y) dx dy $$
+L'algorithme de descente de gradient stochastique (SGD) postule que le gradient de l'espérance est l'espérance du gradient :
+$$ \nabla_\theta \mathbb{E}[L] = \mathbb{E}[\nabla_\theta L] $$
+Cette égalité stricte repose entièrement sur l'application du théorème de Leibniz pour dériver sous le signe de la somme continue, validant mathématiquement l'architecture de rétropropagation à travers des couches dont les poids varient de manière infinitésimale.

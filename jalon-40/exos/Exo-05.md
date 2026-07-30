@@ -1,17 +1,22 @@
 ---
-uuid: "jalon-40-exo-05"
-title: "Exercice 5 : Étude d'une fonction Gamma modifiée"
-difficulty: "$\star\star\star\star\circ$"
+title: "Exercice 5 : Continuité délicate en une borne"
+difficulty: "$\star$$\star$$\star$$\circ$$\circ$"
 ---
+# Exercice 5 : Continuité délicate en une borne ($\star$$\star$$\star$$\circ$$\circ$)
 
-# Exercice 5 : Étude d'une fonction Gamma modifiée ($\star\star\star\star\circ$)
+**Énoncé :**
+Soit la fonction $F(x) = \int_0^{+\infty} \frac{\sin(xt)}{t(1+t^2)} dt$.
+1. Montrer que $F$ est bien définie et continue sur $\mathbb{R}$.
+2. Étudier la parité de $F$.
+3. Est-il possible d'appliquer le théorème de dérivation sous le signe intégral pour $F'(x)$ sur $\mathbb{R}$ entier ?
 
-Soit $\Gamma_1(x) = \int_0^{+\infty} t^{x-1} e^{-t} \mathrm{d}t$. Démontrer sa classe $\mathcal{C}^\infty$ sur $]0, +\infty[$.
-
-**Correction détaillée :**
-1. L'intégrande $f(x,t) = t^{x-1} e^{-t}$ est indéfiniment dérivable par rapport à $x$ sur $]0, +\infty[$. La dérivée $k$-ième est $\frac{\partial^k f}{\partial x^k}(x,t) = (\ln t)^k t^{x-1} e^{-t}$.
-2. Domination sur tout compact $[a,b] \subset ]0, +\infty[$ :
-   Soit $a \leq x \leq b$.
-   - Pour $t \in ]0, 1]$, $|\frac{\partial^k f}{\partial x^k}(x,t)| \leq |\ln t|^k t^{a-1}$. Cette fonction est intégrable en $0$ car $a > 0$ (les logarithmes sont absorbés par les puissances).
-   - Pour $t \in [1, +\infty[$, $|\frac{\partial^k f}{\partial x^k}(x,t)| \leq (\ln t)^k t^{b-1} e^{-t}$. Par croissances comparées, l'exponentielle écrase les puissances et log, donc intégrable en $+\infty$.
-3. En posant la fonction majorante (somme des deux domaines), la règle de Leibniz s'applique récursivement. Donc $\Gamma_1$ est $\mathcal{C}^\infty$ et $\Gamma_1^{(k)}(x) = \int_0^{+\infty} (\ln t)^k t^{x-1} e^{-t} \mathrm{d}t$.
+**Démonstration pas-à-pas :**
+1. Pour tout $x \in \mathbb{R}$, on a $|\frac{\sin(xt)}{t}| \le |x|$. En l'infini, $\frac{1}{t(1+t^2)} \sim \frac{1}{t^3}$. La fonction $f(x,t)$ est donc intégrable sur $]0, +\infty[$.
+   Pour la continuité, soit $K = [-a, a]$ un segment quelconque. Pour $x \in K$, on a :
+   Pour $t \in [0,1]$, $|f(x,t)| \le \frac{|x|t}{t(1+t^2)} \le a$.
+   Pour $t > 1$, $|f(x,t)| \le \frac{1}{t^3}$.
+   La fonction $\varphi(t) = a \mathbf{1}_{[0,1]} + \frac{1}{t^3} \mathbf{1}_{]1, +\infty[}$ est intégrable, ce qui assure la domination locale sur $\mathbb{R}$ et donc la continuité globale.
+2. $F(-x) = \int_0^{+\infty} \frac{\sin(-xt)}{t(1+t^2)} dt = - \int_0^{+\infty} \frac{\sin(xt)}{t(1+t^2)} dt = -F(x)$. $F$ est impaire.
+3. Si on dérive formellement sous l'intégrale : $\frac{\partial f}{\partial x} = \frac{\cos(xt)}{1+t^2}$.
+   On cherche à dominer $|\frac{\cos(xt)}{1+t^2}| \le \frac{1}{1+t^2}$. Or $\frac{1}{1+t^2}$ est intégrable sur $]0, +\infty[$.
+   La domination est même globale sur $\mathbb{R}$. On peut donc affirmer que $F$ est de classe $\mathcal{C}^1$ sur $\mathbb{R}$ entier et $F'(x) = \int_0^{+\infty} \frac{\cos(xt)}{1+t^2} dt$.

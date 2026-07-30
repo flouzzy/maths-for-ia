@@ -1,16 +1,18 @@
 ---
-uuid: "jalon-40-exo-08"
-title: "Exercice 8 : Calcul d'une intégrale délicate par paramètre"
-difficulty: "$\star\star\star\star\star$"
+title: "Exercice 8 : Transformation de Laplace"
+difficulty: "$\star$$\star$$\star$$\star$$\star$"
 ---
+# Exercice 8 : Transformation de Laplace ($\star$$\star$$\star$$\star$$\star$)
 
-# Exercice 8 : Calcul d'une intégrale délicate par paramètre ($\star\star\star\star\star$)
+**Énoncé :**
+Soit $F(p) = \int_0^{+\infty} e^{-pt} f(t) dt$.
+Si $f$ est continue et bornée par $M$ sur $\mathbb{R}^+$, montrer que $F$ est de classe $\mathcal{C}^\infty$ sur $]0, +\infty[$ et donner l'expression de $F^{(n)}(p)$.
 
-Calculer $\int_0^1 \frac{t-1}{\ln(t)} \mathrm{d}t$ en posant $F(x) = \int_0^1 \frac{t^x-1}{\ln(t)} \mathrm{d}t$.
-
-**Correction détaillée :**
-1. Identifions la régularité. Pour $x > -1$, on a justifié dans le cours que $F$ est bien définie et dérivable.
-2. $F'(x) = \int_0^1 t^x \mathrm{d}t = \frac{1}{x+1}$.
-3. Par intégration, $F(x) = \ln(x+1) + C$.
-4. L'évaluation en $x=0$ donne $F(0) = \int_0^1 0 \mathrm{d}t = 0$. Donc $C = 0$ et $F(x) = \ln(x+1)$.
-5. L'intégrale demandée correspond à la valeur pour $x=1$, soit $F(1) = \ln(2)$. La démonstration est totale, stricte, par dérivation sous le signe intégral avec théorème de Leibniz bien vérifié.
+**Démonstration pas-à-pas :**
+1. Notons $g(p,t) = e^{-pt} f(t)$.
+2. $g$ est indéfiniment dérivable par rapport à $p$, et $\frac{\partial^n g}{\partial p^n}(p,t) = (-t)^n e^{-pt} f(t)$.
+3. Soit $K = [a, +\infty[$ un segment avec $a > 0$. Pour $p \ge a$, on a :
+   $\left| \frac{\partial^n g}{\partial p^n}(p,t) \right| = t^n e^{-pt} |f(t)| \le M t^n e^{-at}$.
+4. La fonction $\psi_n(t) = M t^n e^{-at}$ est intégrable sur $]0, +\infty[$ car $e^{-at}$ l'emporte sur toute puissance de $t$.
+5. La domination étant vérifiée sur tout sous-intervalle $[a, +\infty[ \subset ]0, +\infty[$, on peut appliquer le théorème de Leibniz à l'ordre $n$.
+6. On conclut que $F$ est de classe $\mathcal{C}^\infty$ sur $]0, +\infty[$ et $F^{(n)}(p) = \int_0^{+\infty} (-t)^n e^{-pt} f(t) dt$.
