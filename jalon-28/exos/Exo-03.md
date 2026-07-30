@@ -9,6 +9,11 @@ difficulty: 2
 
 Soit $E$ un $\mathbb{K}$-espace vectoriel. Un endomorphisme $s \in \mathcal{L}(E)$ est appelé une symétrie si $s^2 = \text{id}_E$.
 Soit $s$ une symétrie non triviale (c'est-à-dire $s \neq \text{id}_E$ et $s \neq -\text{id}_E$).
+La définition axiomatique d'une symétrie vectorielle est que l'endomorphisme composé deux fois avec lui-même redonne l'identité :
+$$ s \circ s = s^2 = \text{id}_E $$
+Cette relation algébrique fondamentale se réécrit en passant tous les termes du même côté de l'égalité :
+$$ s^2 - \text{id}_E = 0_{\mathcal{L}(E)} $$
+
 Déterminer le polynôme minimal de $s$.
 
 ## Solution Rigoureuse

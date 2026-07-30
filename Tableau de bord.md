@@ -166,6 +166,10 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 
 ## Historique d'Audit
 
+### 2026-07-30-audit
+- [[#2026-07-30-audit|2026-07-30]] : [Audit & Weekly Compilation] - Jalon 28 - Polynômes d'endomorphismes, idéaux annulateurs et théorème de Cayley-Hamilton. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+
+
 ### 2026-07-29-audit
 - [[#2026-07-29-audit|2026-07-29]] : [Audit & Weekly Compilation] - Jalon 27 - Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 
