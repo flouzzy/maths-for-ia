@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "jalon-1/Jalon 1 (Logique formelle).md",
+                "file": "jalon-28/Jalon-28.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Jalon 1 (Logique formelle)"
+              "title": "Jalon-28"
             }
           }
         ]
@@ -220,26 +220,27 @@
       "markdown-importer:Ouvrir l'importateur Markdown": false
     }
   },
-  "active": "18864fee124c4f40",
+  "active": "028bc0b66da30b0b",
   "lastOpenFiles": [
-    "jalon-25/jalon-25.tex",
-    "jalon-25/jalon-25-polycopie.pdf",
-    "jalon-25.tex",
-    "jalon-24/jalon-24.tex",
-    "jalon-24/jalon-24-polycopie.pdf",
-    "jalon-23/jalon-23.tex",
-    "jalon-23/jalon-23-polycopie.pdf",
-    "latex_output_final.txt",
-    "jalon-22/jalon-22-polycopie.pdf",
-    "jalon-21/jalon-21.tex",
-    "jalon-21/jalon-21.out",
+    "jalon-28/jalon-28-polycopie.pdf",
+    "jalon-28.tex",
+    "jalon-27/jalon-27.tex",
+    "jalon-27/jalon-27-polycopie.pdf",
+    "jalon-25/Jalon-25.md",
+    "rewrite_exo4.py",
+    "rewrite_exo3.py",
+    "output_script.py",
+    "jalon-26/jalon-26.tex",
+    "jalon-26/jalon-26-polycopie.pdf",
+    "full_rewrite.py",
+    "jalon-25/jalon-25.toc",
+    "jalon-1/Jalon 1 (Logique formelle).md",
     "plan_review.md",
     "jalon-1/README.md",
     "jalon-6/Jalon-6.md",
     "jalon-26/Jalon-26.md",
     "jalon-22/Jalon-22.md",
     "plan_review_15.md",
-    "jalon-1/Jalon 1 (Logique formelle).md",
     "jalon-23/Jalon 23 (Séries entières).md",
     "MathsForAI/Bienvenue.md",
     "jalon-17/Jalon 17 (Séries absolument convergentes).md",
@@ -258,7 +259,6 @@
     "jalon-11/Jalon 11 (Formes linéaires).md",
     "jalon-10/Jalon 10 (Changements de base).md",
     "jalon-9/Jalon 9 (Calcul matriciel).md",
-    "jalon-8/Jalon 8 (Applications linéaires).md",
-    "jalon-7/Jalon 7 (Espaces vectoriels abstraits).md"
+    "jalon-8/Jalon 8 (Applications linéaires).md"
   ]
 }
