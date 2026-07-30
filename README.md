@@ -403,6 +403,9 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
 
+### 2026-07-31-audit
+- [[#2026-07-31-audit|2026-07-31]] : [Audit & Weekly Compilation] - Jalon 29 - Éléments propres, polynôme caractéristique, sous-espaces propres et critères de diagonalisabilité. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+
 ### 2026-07-30-audit
 - [[#2026-07-30-audit|2026-07-30]] : [Audit & Weekly Compilation] - Jalon 28 - Polynômes d'endomorphismes, idéaux annulateurs et théorème de Cayley-Hamilton. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 

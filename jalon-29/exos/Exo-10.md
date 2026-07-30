@@ -1,11 +1,11 @@
-# Exercice 10 - Difficulté ★★★★★
+# Exercice 10 - Difficulté \quad $\bigstar$$\bigstar$$\bigstar$$\bigstar$$\bigstar$
 
 ## Énoncé
 Soit $A = (a_{i,j}) \in \mathcal{M}_n(\mathbb{C})$. Le théorème de Gershgorin stipule que toutes les valeurs propres de $A$ sont situées dans l'union des disques de Gershgorin définis par :
 $$D_i = \left\{ z \in \mathbb{C} \ \Bigg| \ |z - a_{i,i}| \leq \sum_{j \neq i} |a_{i,j}| \right\}$$
 Démontrer rigoureusement ce théorème, et l'appliquer à la matrice $A = \begin{pmatrix} 10 & 0.1 & -0.2 \\ 0.5 & 3 & 0 \\ 0.1 & 0 & -2 \end{pmatrix}$ pour localiser ses valeurs propres.
 
-## Solution Complète (Zéro Ellipse)
+## Solution Complète
 
 **Étape 1 : Démonstration du Théorème de Gershgorin**
 Soit $\lambda \in \mathbb{C}$ une valeur propre de $A$. Par définition, il existe un vecteur propre non nul $x = (x_1, \dots, x_n)^T \in \mathbb{C}^n$ tel que $Ax = \lambda x$.

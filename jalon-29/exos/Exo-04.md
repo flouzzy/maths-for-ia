@@ -1,11 +1,11 @@
-# Exercice 4 - Difficulté ★★★☆☆
+# Exercice 4 - Difficulté \quad $\bigstar$$\bigstar$$\bigstar$$\star$$\star$
 
 ## Énoncé
 Soit la matrice $C \in \mathcal{M}_3(\mathbb{R})$ définie par :
 $$C = \begin{pmatrix} 1 & -1 & 0 \\ -1 & 2 & -1 \\ 0 & -1 & 1 \end{pmatrix}$$
 Sans calculer directement le polynôme caractéristique complet avec la règle de Sarrus, trouver une racine évidente, factoriser, puis trouver la matrice de passage $P$.
 
-## Solution Complète (Zéro Ellipse)
+## Solution Complète
 
 **Étape 1 : Racine évidente du polynôme caractéristique**
 Notons que la somme des colonnes de $C$ donne le vecteur nul.

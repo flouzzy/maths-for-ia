@@ -1,10 +1,10 @@
-# Exercice 7 - Difficulté ★★★★☆
+# Exercice 7 - Difficulté \quad $\bigstar$$\bigstar$$\bigstar$$\bigstar$$\star$
 
 ## Énoncé
 Soit $M = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$.
 Vérifier le théorème de Cayley-Hamilton sur cette matrice, et en déduire l'expression de $M^{-1}$ comme combinaison linéaire de $I$ et $M$.
 
-## Solution Complète (Zéro Ellipse)
+## Solution Complète
 
 **Étape 1 : Calcul du polynôme caractéristique**
 $\chi_M(X) = \det\begin{pmatrix} X-1 & -2 \\ -3 & X-4 \end{pmatrix} = (X-1)(X-4) - 6 = X^2 - 5X + 4 - 6 = X^2 - 5X - 2$.

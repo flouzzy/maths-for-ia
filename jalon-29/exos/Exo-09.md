@@ -1,4 +1,4 @@
-# Exercice 9 - Difficulté ★★★★★
+# Exercice 9 - Difficulté \quad $\bigstar$$\bigstar$$\bigstar$$\bigstar$$\bigstar$
 
 ## Énoncé
 Soit $E = \mathcal{M}_n(\mathbb{R})$ l'espace vectoriel des matrices carrées.
@@ -7,7 +7,7 @@ On considère l'endomorphisme $\phi : E \to E$ défini par $\phi(M) = M^T$.
 2. En déduire les valeurs propres possibles de $\phi$.
 3. Déterminer les sous-espaces propres associés et vérifier que $\phi$ est diagonalisable.
 
-## Solution Complète (Zéro Ellipse)
+## Solution Complète
 
 **Étape 1 : Composition de l'endomorphisme**
 Pour toute matrice $M \in \mathcal{M}_n(\mathbb{R})$ :

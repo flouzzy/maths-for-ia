@@ -11,7 +11,7 @@ next: "[[Jalon 30 (Trigonalisation d'endomorphismes et décomposition de Dunford
 ---
 # Jalon 29 : Éléments propres, polynôme caractéristique, sous-espaces propres et critères de diagonalisabilité
 
-## 1. Genèse et Motivation (Échafaudage Cognitif)
+## 1. Genèse et Motivation
 
 L'algèbre linéaire a forgé les outils permettant d'appréhender des transformations vectorielles complexes. Cependant, analyser l'action d'un endomorphisme $f$ sur un espace vectoriel $E$ de dimension $n$ en considérant toutes les directions possibles s'avère rapidement inextricable. La motivation historique derrière la théorie de la réduction des endomorphismes (initiée notamment par Augustin-Louis Cauchy et Karl Weierstrass) naît d'une question d'une élégante simplicité : *existe-t-il des directions privilégiées dans l'espace que la transformation $f$ laisse globalement invariantes, c'est-à-dire où elle se comporte comme une simple homothétie ?*
 
@@ -19,57 +19,81 @@ Imaginez déformer un objet élastique : bien que la plupart des points subissen
 
 L'objectif ultime de cette quête est la **diagonalisation** : trouver une base de l'espace entièrement constituée de ces vecteurs privilégiés. Dans une telle base, la matrice de l'endomorphisme devient diagonale, ce qui rend le calcul de ses puissances ou de son exponentielle (fondamental en dynamique des systèmes ou en IA, via les chaînes de Markov et l'analyse en composantes principales) immédiat.
 
-## 2. Formalisation : Le Protocole d'Exégèse Conceptuelle
+## 2. Formalisation
 
 ### 2.1 Valeurs Propres, Vecteurs Propres et Spectre
 
-**A. Énoncé Symbolique Strict**
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1.5, >=stealth]
+    % Axes
+    \draw[->, gray!50] (-2,0) -- (2,0) node[right] {$x$};
+    \draw[->, gray!50] (0,-1) -- (0,2) node[above] {$y$};
+
+    % Eigenvector 1
+    \draw[->, thick, blue] (0,0) -- (1,0.5) node[above right] {$v_1$};
+    \draw[->, dashed, blue] (0,0) -- (2,1) node[above right] {$\lambda_1 v_1$};
+
+    % Eigenvector 2
+    \draw[->, thick, red] (0,0) -- (-1,1) node[above left] {$v_2$};
+    \draw[->, dashed, red] (0,0) -- (-0.5,0.5) node[above left] {$\lambda_2 v_2$};
+
+    % Non-eigenvector
+    \draw[->, thick, green!70!black] (0,0) -- (1,1.5) node[right] {$w$};
+    \draw[->, dashed, green!70!black] (0,0) -- (-0.5,1.2) node[left] {$f(w)$};
+\end{tikzpicture}
+\caption{Action d'un endomorphisme sur des vecteurs propres ($v_1, v_2$) et un vecteur quelconque ($w$). Les vecteurs propres gardent leur direction.}
+\end{figure}
+
+
+**Énoncé**
 Soit $E$ un $\mathbb{K}$-espace vectoriel et $f \in \mathcal{L}(E)$.
 Un scalaire $\lambda \in \mathbb{K}$ est une **valeur propre** de $f$ s'il existe un vecteur $x \in E \setminus \{0_E\}$ tel que :
 $$f(x) = \lambda x$$
 Le vecteur $x$ est alors appelé **vecteur propre** de $f$ associé à la valeur propre $\lambda$.
 L'ensemble des valeurs propres de $f$ est appelé le **spectre** de $f$, noté $\text{Sp}(f)$.
 
-**B. Anatomie et Typage Chirurgical**
+**Description**
 - $E$ : Un espace vectoriel sur un corps $\mathbb{K}$ (typiquement $\mathbb{R}$ ou $\mathbb{C}$).
 - $f$ : Un endomorphisme de $E$, c'est-à-dire une application linéaire de $E$ dans $E$.
 - $\lambda \in \mathbb{K}$ : Un scalaire. Il représente le facteur d'homothétie. Remarquons que $\lambda$ peut être nul.
 - $x \in E \setminus \{0_E\}$ : Le vecteur propre. La condition $x \neq 0_E$ est **cruciale**. Si l'on acceptait le vecteur nul, l'équation $f(0_E) = \lambda 0_E$ serait vérifiée pour n'importe quel $\lambda \in \mathbb{K}$ (car $f(0_E)=0_E$), ce qui viderait le concept de tout intérêt.
 
-**C. Exemples de Validation**
+**Exemples**
 - *Exemple trivial* : Soit $f = \text{Id}_E$, l'application identité. Pour tout $x \neq 0_E$, $f(x) = x = 1 \cdot x$. Donc $1$ est la seule valeur propre, et tout vecteur non nul est vecteur propre. $\text{Sp}(f) = \{1\}$.
 - *Exemple complexe* : Dans $\mathbb{R}[X]$, soit $D : P \mapsto P'$ l'opérateur de dérivation. Si $D(P) = \lambda P$, alors $P' = \lambda P$. Les seules solutions polynomiales sont les polynômes constants si $\lambda = 0$, et aucune solution non nulle si $\lambda \neq 0$. Le spectre est $\text{Sp}(D) = \{0\}$, et les vecteurs propres sont les polynômes constants non nuls.
 
-**D. Cas Pathologiques et Contre-exemples**
+**Contre-exemples**
 Une matrice ou un endomorphisme peut n'avoir **aucune** valeur propre (spectre vide) si le corps de base n'est pas algébriquement clos. Par exemple, la matrice de rotation d'angle $\pi/2$ dans $\mathbb{R}^2$ : $R = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$. Son équation $R x = \lambda x$ n'a aucune solution non nulle dans $\mathbb{R}^2$. Ainsi, $\text{Sp}_{\mathbb{R}}(R) = \emptyset$. Cependant, si l'on se place dans $\mathbb{C}$, $\text{Sp}_{\mathbb{C}}(R) = \{i, -i\}$. Le choix du corps $\mathbb{K}$ est donc déterminant.
 
 ### 2.2 Sous-espaces Propres
 
-**A. Énoncé Symbolique Strict**
+**Énoncé**
 Soit $\lambda \in \text{Sp}(f)$. Le **sous-espace propre** associé à $\lambda$, noté $E_\lambda(f)$, est défini par :
 $$E_\lambda(f) = \ker(f - \lambda \text{Id}_E) = \{x \in E \mid f(x) = \lambda x\}$$
 
-**B. Anatomie et Typage Chirurgical**
+**Description**
 - $E_\lambda(f)$ : C'est l'ensemble constitué de tous les vecteurs propres associés à $\lambda$, **auquel on rajoute le vecteur nul** $0_E$.
 - $f - \lambda \text{Id}_E$ : Un endomorphisme de $E$. Le fait que $\lambda$ soit une valeur propre équivaut exactement à dire que cet endomorphisme n'est pas injectif (son noyau n'est pas réduit à $\{0_E\}$).
 
-**C. Propriétés Fondamentales (Théorème)**
+**Théorème**
 1. $E_\lambda(f)$ est un sous-espace vectoriel de $E$.
 2. $\dim(E_\lambda(f)) \geq 1$ (car $\lambda$ est valeur propre, donc $\exists x \neq 0, x \in E_\lambda(f)$).
 
 ### 2.3 Le Polynôme Caractéristique
 
-**A. Énoncé Symbolique Strict**
+**Énoncé**
 Pour $E$ de dimension finie $n$, soit $A$ la matrice de $f$ dans une base donnée. Le **polynôme caractéristique** de $f$, noté $\chi_f(X)$, est défini par :
 $$\chi_f(X) = \det(X I_n - A)$$
 
-**B. Anatomie et Typage Chirurgical**
+**Description**
 - $X$ : Une indéterminée. $\chi_f(X)$ est un polynôme de degré $n$ à coefficients dans $\mathbb{K}$.
 - $I_n$ : La matrice identité d'ordre $n$.
 - $\det$ : Le déterminant. Comme le déterminant de deux matrices semblables est identique, $\chi_f(X)$ ne dépend pas du choix de la base.
 - Racines : Les racines de $\chi_f$ dans $\mathbb{K}$ sont **exactement** les valeurs propres de $f$.
 
-**C. Multiplicité Algébrique et Géométrique**
+**Multiplicité**
 Soit $\lambda_0$ une racine de $\chi_f$.
 - **Multiplicité algébrique $m(\lambda_0)$** : C'est l'ordre de multiplicité de la racine $\lambda_0$ dans le polynôme $\chi_f(X)$.
 - **Multiplicité géométrique** : C'est la dimension du sous-espace propre associé, $\dim(E_{\lambda_0}(f))$.
@@ -77,15 +101,15 @@ Soit $\lambda_0$ une racine de $\chi_f$.
 
 ### 2.4 Critères de Diagonalisabilité
 
-**A. Énoncé Symbolique Strict**
+**Énoncé**
 Un endomorphisme $f \in \mathcal{L}(E)$ est **diagonalisable** s'il existe une base de $E$ formée de vecteurs propres de $f$.
 
-**B. Théorème Principal (Conditions nécessaires et suffisantes)**
+**Théorème Principal**
 Un endomorphisme $f$ de dimension finie est diagonalisable si et seulement si :
 1. Son polynôme caractéristique $\chi_f(X)$ est **scindé** sur $\mathbb{K}$ (c'est-à-dire qu'il se factorise complètement en produit de polynômes de degré 1).
 2. Pour chaque valeur propre $\lambda$, la dimension de son sous-espace propre est égale à sa multiplicité algébrique : $\dim(E_\lambda(f)) = m(\lambda)$.
 
-## 3. Zéro Ellipse : Preuve de l'Indépendance des Sous-espaces Propres
+## 3. Preuve de l'Indépendance des Sous-espaces Propres
 
 **Théorème :** Des vecteurs propres associés à des valeurs propres deux à deux distinctes forment une famille libre.
 
