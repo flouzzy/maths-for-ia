@@ -1,0 +1,1077 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c c}}1
+}
+\lstset{style=mystyle}
+
+\title{Polynômes d'endomorphismes, idéaux annulateurs et théorème de Cayley-Hamilton}
+\author{Charles EDOU NZE}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+
+\part{Jalon 28 : Polynômes d'endomorphismes, idéaux annulateurs et théorème de Cayley-Hamilton}
+
+\section{1. L'Échafaudage Cognitif : Genèse et Motivation}
+
+La réduction des endomorphismes constitue l'un des piliers centraux de l'algèbre linéaire, et sa formalisation repose intimement sur la théorie des polynômes. Pour comprendre pourquoi les mathématiciens ont eu besoin d'introduire la notion de "polynôme d'endomorphisme", il faut se replonger dans les problèmes de dynamique et de calcul itératif du XIXe siècle.
+
+Lorsqu'on étudie un système dynamique discret, modélisé par une relation de récurrence linéaire vectorielle $X_{n+1} = A X_n$ (où $A$ est une matrice carrée), la prédiction de l'état du système à l'instant $n$ requiert le calcul de $A^n$. Pour des matrices de grande taille, le calcul direct de $A^n$ par multiplications successives est numériquement instable et astronomiquement coûteux en termes de complexité. Les mathématiciens comme Arthur Cayley et William Rowan Hamilton se sont alors posé une question vertigineuse : existe-t-il une relation intrinsèque liant les différentes puissances d'une même matrice (ou d'un même endomorphisme) entre elles ? Autrement dit, peut-on exprimer $A^n$ comme une combinaison linéaire de puissances strictement inférieures ?
+
+L'intuition géniale a consisté à jeter un pont entre deux mondes algébriques a priori distincts : l'anneau des polynômes $\mathbb{K}[X]$ (construit sur une indéterminée formelle $X$) et l'algèbre des endomorphismes $\mathcal{L}(E)$ (ou l'algèbre des matrices $\mathcal{M}_n(\mathbb{K})$). Si l'on peut "évaluer" un polynôme scalaire $P(X) = a_0 + a_1 X + a_2 X^2$ en substituant $X$ par un scalaire $x \in \mathbb{K}$, ne pourrait-on pas évaluer ce même polynôme en substituant $X$ par un endomorphisme $u \in \mathcal{L}(E)$ ?
+
+Cette substitution, $P(u) = a_0 \text{id}_E + a_1 u + a_2 u^2$, dote l'espace vectoriel d'une structure de $\mathbb{K}[X]$-module. Dès lors, la recherche de relations de dépendance linéaire entre les puissances de $u$ se traduit par la recherche des polynômes $P$ tels que $P(u) = 0_{\mathcal{L}(E)}$. L'ensemble de ces "polynômes annulateurs" forme un idéal de $\mathbb{K}[X]$. Puisque $\mathbb{K}[X]$ est un anneau principal, cet idéal est engendré par un unique polynôme unitaire : le \textbf{polynôme minimal}.
+
+Le point d'orgue de cette théorie est le célèbre \textbf{Théorème de Cayley-Hamilton}, qui affirme que le polynôme caractéristique d'un endomorphisme est toujours un polynôme annulateur. Historiquement, ce résultat a d'abord été vérifié empiriquement par Hamilton pour les matrices $2 \times 2$ et $3 \times 3$ issues de ses travaux sur les quaternions, puis conjecturé pour la dimension $n$ par Cayley en 1858, qui écrivit : \textit{« Je n'ai pas cru nécessaire d'entreprendre une démonstration formelle du théorème dans le cas général d'une matrice de degré quelconque. »} La démonstration rigoureuse fut apportée plus tard par Frobenius. Ce théorème est d'une profondeur inouïe : il affirme que l'ADN spectral de la matrice (son polynôme caractéristique) contient en lui-même la clé pour annihiler l'opérateur tout entier.
+
+\section{2. Protocole d'Exégèse Conceptuelle et Formalisation}
+
+Dans toute cette section, on désigne par $\mathbb{K}$ un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$), $E$ un $\mathbb{K}$-espace vectoriel, et $u \in \mathcal{L}(E)$ un endomorphisme de $E$. On note $\mathbb{K}[X]$ l'anneau des polynômes à coefficients dans $\mathbb{K}$.
+
+\subsection{2.1 Polynômes d'endomorphismes et morphismes d'évaluation}
+
+\subsubsection{A. Énoncé Symbolique Strict}
+Soit $P \in \mathbb{K}[X]$ un polynôme tel que $P(X) = \sum_{k=0}^d a_k X^k$. On définit l'endomorphisme $P(u) \in \mathcal{L}(E)$ par :
+$$P(u) = \sum_{k=0}^d a_k u^k$$
+avec la convention $u^0 = \text{id}_E$.
+
+L'application d'évaluation $\Phi_u : \mathbb{K}[X] \to \mathcal{L}(E)$ définie par $\Phi_u(P) = P(u)$ est un morphisme d'algèbres.
+
+
+\begin{tikzpicture}[scale=1.5, auto, >=stealth']
+    \node (KX) at (0, 2) {$\mathbb{K}[X]$};
+    \node (LE) at (3, 2) {$\mathcal{L}(E)$};
+    \node (K) at (1.5, 0) {$\mathbb{K}$};
+    \draw[->, thick] (KX) -- node[above] {$\Phi_u$} (LE);
+    \draw[->, dashed, thick] (KX) -- node[below left] {$\text{évaluation en } \lambda$} (K);
+    \draw[->, dashed, thick] (K) -- node[below right] {$\lambda \mapsto \lambda \text{id}_E$} (LE);
+\end{tikzpicture}
+
+
+\subsubsection{B. Anatomie et Typage Chirurgical}
+\begin{itemize}
+\item $P \in \mathbb{K}[X]$ : $P$ est un objet algébrique abstrait, une suite de coefficients $(a_k)_{k \in \mathbb{N}}$ presque nulle.
+\item $u \in \mathcal{L}(E)$ : Un opérateur linéaire agissant sur les vecteurs de $E$.
+\item $u^k \in \mathcal{L}(E)$ : Désigne la composition itérée de $u$ avec lui-même $k$ fois ($u \circ u \circ \dots \circ u$). Ce n'est en aucun cas le produit scalaire ou vectoriel. L'opération sous-jacente est la composition des applications.
+\item $P(u) \in \mathcal{L}(E)$ : C'est un nouvel endomorphisme, obtenu par combinaison linéaire des itérés de $u$.
+\item $\Phi_u$ : Morphisme d'algèbres signifie qu'il préserve l'addition ($\Phi_u(P+Q) = \Phi_u(P) + \Phi_u(Q)$), la multiplication par un scalaire ($\Phi_u(\lambda P) = \lambda \Phi_u(P)$) et surtout le produit polynômial : $\Phi_u(PQ) = \Phi_u(P) \circ \Phi_u(Q) = P(u) \circ Q(u)$.
+\end{itemize}
+
+\textbf{Corollaire fondamental :} L'anneau $\mathbb{K}[X]$ étant commutatif, on en déduit que pour tous polynômes $P, Q \in \mathbb{K}[X]$, les endomorphismes $P(u)$ et $Q(u)$ commutent : $P(u) \circ Q(u) = Q(u) \circ P(u)$. En particulier, $P(u)$ commute avec $u$.
+
+\subsubsection{C. Exemples de Validation}
+\begin{itemize}
+\item \textbf{Exemple trivial :} Soit $P(X) = X^2 - 2X + 3$. Pour un endomorphisme $u$, $P(u) = u^2 - 2u + 3\text{id}_E$. Si $u = \text{id}_E$, alors $P(\text{id}_E) = \text{id}_E - 2\text{id}_E + 3\text{id}_E = 2\text{id}_E$.
+\item \textbf{Exemple matriciel :} Soit $A = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \in \mathcal{M}_2(\mathbb{R})$ (une symétrie) et $P(X) = X^2 - 1$. Alors $P(A) = A^2 - I_2 = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} - \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} = 0_{\mathcal{M}_2(\mathbb{R})}$.
+\end{itemize}
+
+\subsubsection{D. Cas Pathologiques}
+\begin{itemize}
+\item \textbf{Erreur de typage fatale :} Écrire $P(u) = a_0 + a_1 u + a_2 u^2$. C'est syntaxiquement incorrect en algèbre, car on additionne un scalaire $a_0$ avec des endomorphismes. Il faut impérativement écrire $a_0 \text{id}_E$ ou, en version matricielle, $a_0 I_n$.
+\end{itemize}
+
+\subsection{2.2 Idéal annulateur et polynôme minimal}
+
+\subsubsection{A. Énoncé Symbolique Strict}
+On appelle \textbf{idéal annulateur} de $u$, noté $\mathcal{I}_u$, le noyau du morphisme d'évaluation $\Phi_u$ :
+$$\mathcal{I}_u = \{ P \in \mathbb{K}[X] \mid P(u) = 0_{\mathcal{L}(E)} \}$$
+
+Si $E$ est de dimension finie $n \ge 1$, alors $\mathcal{I}_u \neq \{0\}$. De plus, $\mathbb{K}[X]$ étant un anneau principal, il existe un unique polynôme unitaire $\pi_u$ engendrant $\mathcal{I}_u$. On l'appelle le \textbf{polynôme minimal} de $u$ :
+$$\mathcal{I}_u = \pi_u \mathbb{K}[X] = \{ \pi_u Q \mid Q \in \mathbb{K}[X] \}$$
+
+\subsubsection{B. Anatomie et Typage Chirurgical}
+\begin{itemize}
+\item $\mathcal{I}_u \subset \mathbb{K}[X]$ : C'est un ensemble de polynômes. Par définition du noyau, c'est un sous-espace vectoriel de $\mathbb{K}[X]$, absorbant pour le produit ($P \in \mathcal{I}_u, Q \in \mathbb{K}[X] \implies PQ \in \mathcal{I}_u$).
+\item $0_{\mathcal{L}(E)}$ : L'endomorphisme nul, qui à tout vecteur associe $0_E$.
+\item Dimension finie : Si $\dim E = n$, la dimension de $\mathcal{L}(E)$ est $n^2$. La famille $(\text{id}_E, u, u^2, \dots, u^{n^2})$ comporte $n^2 + 1$ vecteurs dans un espace de dimension $n^2$. Elle est donc nécessairement liée. Il existe ainsi une combinaison linéaire non triviale nulle, ce qui fournit un polynôme annulateur non nul, prouvant que $\mathcal{I}_u \neq \{0\}$.
+\item Polynôme unitaire : Un polynôme dont le coefficient dominant est 1. Cette restriction garantit l'unicité du générateur de l'idéal.
+\item $\pi_u$ divise tout polynôme annulateur de $u$. C'est le polynôme annulateur non nul de plus bas degré.
+\end{itemize}
+
+\subsubsection{C. Exemples de Validation}
+\begin{itemize}
+\item \textbf{Projecteurs :} Soit $p$ un projecteur non trivial ($p \neq 0, p \neq \text{id}$). Par définition, $p^2 = p$, donc $p^2 - p = 0$. Le polynôme $P(X) = X^2 - X = X(X-1)$ est annulateur. Le polynôme minimal $\pi_p$ divise $X(X-1)$. Comme $p$ n'est ni l'identité ni l'application nulle, $\pi_p(X)$ ne peut être ni $X$ ni $X-1$. Donc $\pi_p(X) = X^2 - X$.
+\item \textbf{Symétries :} Soit $s$ une symétrie non triviale. $s^2 = \text{id}_E$, donc $X^2 - 1$ est annulateur. $\pi_s(X) = X^2 - 1$.
+\end{itemize}
+
+\subsubsection{D. Cas Pathologiques}
+\begin{itemize}
+\item \textbf{Dimension infinie :} Si $E = \mathbb{K}[X]$ et que $u$ est l'endomorphisme de dérivation $P \mapsto P'$, alors $u$ est nilpotent sur le sous-espace des polynômes de degré $\le n$ (ici $u^{n+1} = 0$), mais n'admet \textbf{aucun} polynôme annulateur non nul sur $E$ entier. L'idéal annulateur est réduit à $\{0\}$, et le polynôme minimal n'est pas défini (ou est par convention $0$).
+\end{itemize}
+
+\subsection{2.3 Le Théorème de Cayley-Hamilton}
+
+\subsubsection{A. Énoncé Symbolique Strict}
+Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension finie $n$. Soit $u \in \mathcal{L}(E)$.
+On note $\chi_u(X) = \det(X \text{id}_E - u)$ le polynôme caractéristique de $u$.
+Le théorème de Cayley-Hamilton affirme que $\chi_u$ est un polynôme annulateur de $u$ :
+$$\chi_u(u) = 0_{\mathcal{L}(E)}$$
+Autrement dit, $\chi_u \in \mathcal{I}_u$, ce qui équivaut à affirmer que le polynôme minimal $\pi_u$ divise le polynôme caractéristique $\chi_u$.
+
+\subsubsection{B. Anatomie et Typage Chirurgical}
+\begin{itemize}
+\item $\chi_u(X)$ : Polynôme unitaire de degré $n$, de la forme $X^n - \text{Tr}(u)X^{n-1} + \dots + (-1)^n \det(u)$.
+\item $\chi_u(u) = 0$ : Cela signifie que si l'on effectue la composition $u^n - \text{Tr}(u)u^{n-1} + \dots + (-1)^n \det(u)\text{id}_E$, l'opérateur résultant est l'opérateur nul.
+\item Attention suprême à la substitution de $X$ par $u$ dans la formule du déterminant : l'expression $\det(u \text{id}_E - u) = \det(0) = 0$ est un \textbf{non-sens algébrique}. La fonction déterminant prend en argument une matrice à coefficients dans un anneau commutatif, et retourne un élément de cet anneau. L'expression $X \text{id}_E - u$ a des coefficients dans $\mathbb{K}[X]$. Substituer formellement l'indéterminée scalaire $X$ par l'opérateur $u$ \textit{à l'intérieur} du déterminant n'a pas de sens mathématique (car $\mathcal{L}(E)$ n'est pas commutatif en général). L'évaluation se fait \textit{après} le calcul formel du polynôme $\chi_u$.
+\end{itemize}
+
+\section{3. Zéro Ellipse : Preuve du Théorème de Cayley-Hamilton}
+
+La preuve matricielle reposant sur la comatrice est canonique. Soit $A \in \mathcal{M}_n(\mathbb{K})$ une matrice carrée. Nous allons prouver que $\chi_A(A) = 0_{n}$.
+
+Considérons la matrice à coefficients dans l'anneau des polynômes $\mathbb{K}[X]$, définie par :
+$$M(X) = X I_n - A \in \mathcal{M}_n(\mathbb{K}[X])$$
+
+Son déterminant est, par définition, le polynôme caractéristique :
+$$\det(M(X)) = \chi_A(X)$$
+
+Soit $\widetilde{M}(X)$ la transposée de la comatrice de $M(X)$, communément appelée matrice adjointe (classique). La relation fondamentale liant une matrice et sa comatrice est valide pour toute matrice à coefficients dans un anneau commutatif (ici $\mathbb{K}[X]$) :
+$$M(X) \widetilde{M}(X) = \det(M(X)) I_n = \chi_A(X) I_n \quad \text{(*)}$$
+
+Les coefficients de $\widetilde{M}(X)$ sont des déterminants de sous-matrices de taille $(n-1) \times (n-1)$ de $M(X)$. Les coefficients de $M(X)$ étant des polynômes de degré au plus 1, les coefficients de $\widetilde{M}(X)$ sont des polynômes de degré au plus $n-1$.
+Nous pouvons donc exprimer $\widetilde{M}(X)$ comme un polynôme à coefficients matriciels. Il existe des matrices $B_0, B_1, \dots, B_{n-1} \in \mathcal{M}_n(\mathbb{K})$ telles que :
+$$\widetilde{M}(X) = \sum_{k=0}^{n-1} B_k X^k = B_0 + B_1 X + \dots + B_{n-1} X^{n-1}$$
+
+Écrivons formellement le polynôme caractéristique :
+$$\chi_A(X) = a_0 + a_1 X + \dots + a_n X^n \quad (\text{avec } a_n = 1)$$
+
+Substituons ces expressions de $\widetilde{M}(X)$ et de $\chi_A(X)$ dans la relation fondamentale (*) :
+$$(X I_n - A) \left( \sum_{k=0}^{n-1} B_k X^k \right) = \left( \sum_{k=0}^n a_k X^k \right) I_n$$
+
+Développons le membre de gauche de cette identité entre polynômes à coefficients matriciels :
+$$X I_n \left( \sum_{k=0}^{n-1} B_k X^k \right) - A \left( \sum_{k=0}^{n-1} B_k X^k \right) = \sum_{k=0}^{n-1} B_k X^{k+1} - \sum_{k=0}^{n-1} A B_k X^k$$
+
+Opérons un changement d'indice dans la première somme en posant $j = k+1$ (donc $k = j-1$) :
+$$ \sum_{j=1}^n B_{j-1} X^j - \sum_{k=0}^{n-1} A B_k X^k $$
+
+Réindexons la seconde somme avec $j$ :
+$$ \sum_{j=1}^n B_{j-1} X^j - \sum_{j=0}^{n-1} A B_j X^j $$
+
+Regroupons les termes de même puissance $X^j$ de part et d'autre de l'égalité. L'égalité polynomiale donne par identification des coefficients :
+\begin{itemize}
+\item Pour le degré 0 : $-A B_0 = a_0 I_n$
+\item Pour les degrés $1 \le j \le n-1$ : $B_{j-1} - A B_j = a_j I_n$
+\item Pour le degré $n$ : $B_{n-1} = a_n I_n$
+\end{itemize}
+
+Nous allons multiplier chacune de ces équations matricielles à gauche par $A^j$ :
+\begin{itemize}
+\item Pour $j=0$ : $A^0 (-A B_0) = a_0 A^0 \implies -A B_0 = a_0 I_n$
+\item Pour $1 \le j \le n-1$ : $A^j (B_{j-1} - A B_j) = a_j A^j \implies A^j B_{j-1} - A^{j+1} B_j = a_j A^j$
+\item Pour $j=n$ : $A^n B_{n-1} = a_n A^n$
+\end{itemize}
+
+Sommons toutes ces identités de $j=0$ à $j=n$ :
+$$\sum_{j=0}^n a_j A^j = (-A B_0) + \sum_{j=1}^{n-1} (A^j B_{j-1} - A^{j+1} B_j) + A^n B_{n-1}$$
+
+La somme du membre de droite est télescopique. Développons ses premiers termes pour l'observer :
+$$-A B_0 + (A B_0 - A^2 B_1) + (A^2 B_1 - A^3 B_2) + \dots + (A^{n-1} B_{n-2} - A^n B_{n-1}) + A^n B_{n-1}$$
+
+L'annulation en cascade de tous les termes successifs donne rigoureusement la matrice nulle :
+$$\sum_{j=0}^n a_j A^j = 0_n$$
+
+Or, le membre de gauche est par définition $\chi_A(A)$. Nous avons donc rigoureusement démontré que :
+$$\chi_A(A) = 0_n$$
+Ce qui achève la démonstration du théorème de Cayley-Hamilton. $\blacksquare$
+
+\part{Exercices d'application et de concours}
+
+
+\part{Exercice 1 : Calcul du polynôme annulateur d'une matrice nilpotente ($\star$$\circ$$\circ$$\circ$$\circ$)}
+
+\section{Énoncé}
+
+Soit la matrice $A = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix} \in \mathcal{M}_3(\mathbb{R})$.
+1. Calculer $A^2$ et $A^3$.
+2. En déduire le polynôme minimal $\pi_A(X)$ de $A$.
+3. Le théorème de Cayley-Hamilton est-il vérifié pour cette matrice ?
+
+\section{Solution Rigoureuse}
+
+\subsection{1. Calcul des puissances de A}
+Effectuons le produit matriciel $A^2 = A \times A$ :
+$$A^2 = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix} \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 \times 0 + 1 \times 0 + 0 \times 0 & 0 \times 1 + 1 \times 0 + 0 \times 0 & 0 \times 0 + 1 \times 1 + 0 \times 0 \\ 0 \times 0 + 0 \times 0 + 1 \times 0 & 0 \times 1 + 0 \times 0 + 1 \times 0 & 0 \times 0 + 0 \times 1 + 1 \times 0 \\ 0 \times 0 + 0 \times 0 + 0 \times 0 & 0 \times 1 + 0 \times 0 + 0 \times 0 & 0 \times 0 + 0 \times 1 + 0 \times 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}$$
+
+Calculons ensuite $A^3 = A^2 \times A$ :
+$$A^3 = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix} \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 \times 0 + 0 \times 0 + 1 \times 0 & 0 \times 1 + 0 \times 0 + 1 \times 0 & 0 \times 0 + 0 \times 1 + 1 \times 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix} = 0_3$$
+
+\subsection{2. Déduction du polynôme minimal}
+D'après ce qui précède, le polynôme $P(X) = X^3$ est un polynôme annulateur de $A$, car $P(A) = A^3 = 0_3$. Le polynôme minimal $\pi_A$ divise tout polynôme annulateur, donc $\pi_A$ divise $X^3$.
+Les diviseurs unitaires de $X^3$ sont $1, X, X^2, X^3$.
+\begin{itemize}
+\item Si $\pi_A(X) = 1$, alors $\pi_A(A) = I_3 \neq 0_3$.
+\item Si $\pi_A(X) = X$, alors $\pi_A(A) = A \neq 0_3$.
+\item Si $\pi_A(X) = X^2$, alors $\pi_A(A) = A^2 = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix} \neq 0_3$.
+\item Si $\pi_A(X) = X^3$, alors $\pi_A(A) = A^3 = 0_3$.
+\end{itemize}
+
+Donc le polynôme minimal de $A$ est rigoureusement $\pi_A(X) = X^3$.
+
+\subsection{3. Vérification de Cayley-Hamilton}
+Le polynôme caractéristique de $A$ est :
+$$\chi_A(X) = \det(X I_3 - A) = \begin{vmatrix} X & -1 & 0 \\ 0 & X & -1 \\ 0 & 0 & X \end{vmatrix}$$
+Le déterminant d'une matrice triangulaire supérieure est le produit de ses éléments diagonaux.
+Donc $\chi_A(X) = X \times X \times X = X^3$.
+On remarque que $\chi_A(A) = A^3 = 0_3$.
+Le théorème de Cayley-Hamilton est bien vérifié.
+
+
+
+
+\part{Exercice 2 : Inversion d'une matrice via Cayley-Hamilton ($\star$$\star$$\circ$$\circ$$\circ$)}
+
+\section{Énoncé}
+
+Soit $A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} \in \mathcal{M}_2(\mathbb{R})$.
+1. Calculer le polynôme caractéristique $\chi_A(X)$.
+2. En utilisant le théorème de Cayley-Hamilton, montrer que $A$ est inversible et exprimer $A^{-1}$ sous forme d'un polynôme en $A$.
+3. Calculer explicitement $A^{-1}$ avec cette formule.
+
+\section{Solution Rigoureuse}
+
+\subsection{1. Calcul du polynôme caractéristique}
+Par définition, $\chi_A(X) = \det(X I_2 - A)$.
+$$\chi_A(X) = \begin{vmatrix} X - 1 & -2 \\ -3 & X - 4 \end{vmatrix} = (X - 1)(X - 4) - (-2)(-3) = (X^2 - 4X - X + 4) - 6 = X^2 - 5X - 2$$
+
+\subsection{2. Expression de $A^{-1}$}
+D'après le théorème de Cayley-Hamilton, $\chi_A(A) = 0_2$.
+Donc, on a l'égalité matricielle :
+$$A^2 - 5A - 2I_2 = 0_2$$
+Isolons $2I_2$ :
+$$2I_2 = A^2 - 5A$$
+Factorisons par $A$ à gauche et à droite (rappelons que $A$ commute avec $A$ et avec $5I_2$) :
+$$2I_2 = A(A - 5I_2) = (A - 5I_2)A$$
+Divisons par 2 :
+$$I_2 = A \left( \frac{1}{2}(A - 5I_2) \right) = \left( \frac{1}{2}(A - 5I_2) \right) A$$
+Par définition de l'inverse, cela prouve que $A$ est inversible (son inverse à droite et à gauche coïncident) et que :
+$$A^{-1} = \frac{1}{2}(A - 5I_2)$$
+
+\subsection{3. Calcul explicite}
+Appliquons la formule :
+$$A^{-1} = \frac{1}{2} \left[ \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} - \begin{pmatrix} 5 & 0 \\ 0 & 5 \end{pmatrix} \right] = \frac{1}{2} \begin{pmatrix} 1 - 5 & 2 - 0 \\ 3 - 0 & 4 - 5 \end{pmatrix} = \frac{1}{2} \begin{pmatrix} -4 & 2 \\ 3 & -1 \end{pmatrix} = \begin{pmatrix} -2 & 1 \\ \frac{3}{2} & -\frac{1}{2} \end{pmatrix}$$
+\textit{(Vérification explicite et systématique : $\det(A) = 4 - 6 = -2 \neq 0$. La formule de l'inverse en dimension 2 donne $\frac{1}{-2} \begin{pmatrix} 4 & -2 \\ -3 & 1 \end{pmatrix}$, ce qui correspond exactement).}
+
+
+
+
+\part{Exercice 3 : Polynôme minimal d'une symétrie ($\star$$\star$$\circ$$\circ$$\circ$)}
+
+\section{Énoncé}
+
+Soit $E$ un $\mathbb{K}$-espace vectoriel. Un endomorphisme $s \in \mathcal{L}(E)$ est appelé une symétrie si $s^2 = \text{id}_E$.
+Soit $s$ une symétrie non triviale (c'est-à-dire $s \neq \text{id}_E$ et $s \neq -\text{id}_E$).
+La définition axiomatique d'une symétrie vectorielle est que l'endomorphisme composé deux fois avec lui-même redonne l'identité :
+$$ s \circ s = s^2 = \text{id}_E $$
+Cette relation algébrique fondamentale se réécrit en passant tous les termes du même côté de l'égalité :
+$$ s^2 - \text{id}_E = 0_{\mathcal{L}(E)} $$
+
+Déterminer le polynôme minimal de $s$.
+
+\section{Solution Rigoureuse}
+
+Par définition de la symétrie, nous avons $s^2 = \text{id}_E$, ce qui peut se réécrire sous la forme :
+$$s^2 - \text{id}_E = 0_{\mathcal{L}(E)}$$
+Considérons le polynôme $P(X) = X^2 - 1 \in \mathbb{K}[X]$. En évaluant ce polynôme en $s$, nous obtenons $P(s) = s^2 - \text{id}_E = 0_{\mathcal{L}(E)}$.
+Ainsi, $P$ est un polynôme annulateur de $s$.
+
+Le polynôme minimal $\pi_s$ engendre l'idéal annulateur de $s$. Par conséquent, $\pi_s$ divise tout polynôme annulateur de $s$. En particulier, $\pi_s$ divise $P(X) = X^2 - 1 = (X - 1)(X + 1)$.
+
+Puisque les polynômes unitaires qui divisent $(X-1)(X+1)$ sont exactement $1$, $X-1$, $X+1$, et $(X-1)(X+1)$, examinons chacun de ces cas :
+1. Si $\pi_s(X) = 1$, alors $\pi_s(s) = \text{id}_E$. Or $\text{id}_E \neq 0_{\mathcal{L}(E)}$ car $E$ n'est pas l'espace nul. Donc $\pi_s(X) \neq 1$.
+2. Si $\pi_s(X) = X - 1$, alors $\pi_s(s) = s - \text{id}_E = 0_{\mathcal{L}(E)}$, ce qui implique $s = \text{id}_E$. Or, l'énoncé stipule que $s$ est non triviale ($s \neq \text{id}_E$). Donc $\pi_s(X) \neq X - 1$.
+3. Si $\pi_s(X) = X + 1$, alors $\pi_s(s) = s + \text{id}_E = 0_{\mathcal{L}(E)}$, ce qui implique $s = -\text{id}_E$. Or, l'énoncé stipule que $s \neq -\text{id}_E$. Donc $\pi_s(X) \neq X + 1$.
+
+Puisque $\pi_s$ divise $(X-1)(X+1)$ et qu'il n'est égal à aucun de ses diviseurs stricts propres, il s'ensuit par élimination rigoureuse que le polynôme minimal de $s$ est le polynôme lui-même :
+$$\pi_s(X) = X^2 - 1$$
+
+
+
+
+\part{Exercice 4 : Idéal annulateur et somme directe ($\star$$\star$$\star$$\circ$$\circ$)}
+
+\section{Énoncé}
+
+Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension finie, et $u \in \mathcal{L}(E)$.
+On suppose que $P \in \mathbb{K}[X]$ est un polynôme annulateur de $u$, et que l'on peut écrire $P(X) = P_1(X) P_2(X)$, où $P_1$ et $P_2$ sont deux polynômes premiers entre eux.
+Démontrer rigoureusement (lemme des noyaux pour deux polynômes) que :
+$$E = \ker(P_1(u)) \oplus \ker(P_2(u))$$
+
+\section{Solution Rigoureuse}
+
+Nous devons démontrer deux choses :
+1. $\ker(P_1(u)) \cap \ker(P_2(u)) = \{0_E\}$ (la somme est directe)
+2. $\ker(P_1(u)) + \ker(P_2(u)) = E$ (la somme couvre tout l'espace)
+
+Puisque $P_1$ et $P_2$ sont premiers entre eux dans l'anneau principal $\mathbb{K}[X]$, le théorème de Bachet-Bézout garantit l'existence de deux polynômes $U, V \in \mathbb{K}[X]$ tels que :
+$$U(X) P_1(X) + V(X) P_2(X) = 1$$
+Appliquons le morphisme d'évaluation $\Phi_u$ (substitution de $X$ par l'endomorphisme $u$) à cette égalité polynomiale. Comme $\Phi_u$ préserve les opérations, nous obtenons dans $\mathcal{L}(E)$ :
+$$U(u) \circ P_1(u) + V(u) \circ P_2(u) = \text{id}_E$$
+C'est la relation fondamentale.
+
+\subsection{1. Intersection réduite au vecteur nul}
+Soit $x \in \ker(P_1(u)) \cap \ker(P_2(u))$.
+Par définition, $P_1(u)(x) = 0_E$ et $P_2(u)(x) = 0_E$.
+Évaluons la relation fondamentale en $x$ :
+$$x = \text{id}_E(x) = (U(u) \circ P_1(u))(x) + (V(u) \circ P_2(u))(x)$$
+$$x = U(u)(P_1(u)(x)) + V(u)(P_2(u)(x))$$
+$$x = U(u)(0_E) + V(u)(0_E)$$
+Comme les endomorphismes envoient le vecteur nul sur le vecteur nul, nous avons :
+$$x = 0_E + 0_E = 0_E$$
+Ainsi, l'intersection est bien $\ker(P_1(u)) \cap \ker(P_2(u)) = \{0_E\}$.
+
+\subsection{2. Somme génératrice}
+Soit $x \in E$. D'après la relation de Bézout évaluée, on peut écrire :
+$$x = \text{id}_E(x) = (U(u) \circ P_1(u))(x) + (V(u) \circ P_2(u))(x)$$
+Posons $x_1 = (V(u) \circ P_2(u))(x)$ et $x_2 = (U(u) \circ P_1(u))(x)$.
+De sorte que $x = x_1 + x_2$.
+
+Vérifions que $x_1 \in \ker(P_1(u))$ :
+Calculons $P_1(u)(x_1) = P_1(u) \circ V(u) \circ P_2(u) (x)$.
+Dans $\mathbb{K}[X]$, le produit est commutatif, donc $P_1 V P_2 = V P_1 P_2 = V P$.
+Par le morphisme $\Phi_u$, les endomorphismes commutent : $P_1(u) \circ V(u) \circ P_2(u) = V(u) \circ (P_1(u) \circ P_2(u)) = V(u) \circ P(u)$.
+Ainsi, $P_1(u)(x_1) = V(u)(P(u)(x))$.
+Or, par hypothèse de l'énoncé, $P$ est un polynôme annulateur de $u$, donc $P(u) = 0_{\mathcal{L}(E)}$.
+Il s'ensuit que $P(u)(x) = 0_E$, puis $V(u)(0_E) = 0_E$.
+Donc $x_1 \in \ker(P_1(u))$.
+
+Par un raisonnement rigoureusement symétrique, on vérifie que $x_2 \in \ker(P_2(u))$ :
+$P_2(u)(x_2) = P_2(u) \circ U(u) \circ P_1(u) (x) = U(u) \circ P(u)(x) = U(u)(0_E) = 0_E$.
+
+Nous avons décomposé tout vecteur $x \in E$ comme la somme d'un vecteur de $\ker(P_1(u))$ et d'un vecteur de $\ker(P_2(u))$.
+En conclusion :
+$$E = \ker(P_1(u)) \oplus \ker(P_2(u))$$
+La démonstration est complète.
+
+
+
+
+\part{Exercice 5 : Calcul des itérés d'une matrice via la division euclidienne polynomiale ($\star$$\star$$\star$$\circ$$\circ$)}
+
+\section{Énoncé}
+
+Soit $A = \begin{pmatrix} 0 & -1 \\ 1 & 2 \end{pmatrix} \in \mathcal{M}_2(\mathbb{R})$.
+On cherche à calculer $A^n$ pour tout $n \in \mathbb{N}$.
+1. Déterminer le polynôme caractéristique $\chi_A(X)$.
+2. En effectuant la division euclidienne du polynôme $X^n$ par $\chi_A(X)$, exprimer le reste $R_n(X)$ en fonction de $X$, $n$ et de constantes.
+3. En déduire une expression explicite de $A^n$.
+
+\section{Solution Rigoureuse}
+
+\subsection{1. Polynôme caractéristique}
+Calculons $\chi_A(X) = \det(X I_2 - A)$ :
+$$\chi_A(X) = \begin{vmatrix} X & 1 \\ -1 & X - 2 \end{vmatrix} = X(X - 2) - (-1)(1) = X^2 - 2X + 1 = (X - 1)^2$$
+On remarque que $\lambda = 1$ est la seule valeur propre, de multiplicité algébrique 2.
+D'après le théorème de Cayley-Hamilton, $\chi_A(A) = 0_2$, donc $(A - I_2)^2 = 0_2$.
+
+\subsection{2. Division euclidienne}
+Effectuons la division euclidienne polynomiale de $X^n$ par $\chi_A(X)$ dans $\mathbb{R}[X]$. Il existe d'uniques polynômes $Q_n(X)$ (quotient) et $R_n(X)$ (reste) tels que :
+$$X^n = Q_n(X) \chi_A(X) + R_n(X)$$
+avec $\deg(R_n) < \deg(\chi_A) = 2$.
+Ainsi, le reste est de degré au plus 1, on peut l'écrire sous la forme : $R_n(X) = a_n X + b_n$, avec $a_n, b_n \in \mathbb{R}$.
+La relation s'écrit :
+$$X^n = Q_n(X)(X - 1)^2 + a_n X + b_n$$
+Pour déterminer $a_n$ et $b_n$, nous allons évaluer cette égalité formelle en des points astucieux. Le point d'annulation de la racine double $(X-1)^2$ est $X=1$.
+Évaluation en $X=1$ :
+$$1^n = Q_n(1) \times 0 + a_n(1) + b_n \implies a_n + b_n = 1 \quad \text{(Éq. 1)}$$
+Puisque $(X-1)^2$ a une racine double, la dérivation formelle du polynôme donnera une équation indépendante. Dérivons l'égalité polynomiale par rapport à $X$ :
+$$n X^{n-1} = Q'_n(X)(X-1)^2 + Q_n(X) \cdot 2(X-1) + a_n$$
+Évaluons cette dérivée en $X=1$ :
+$$n \times 1^{n-1} = 0 + 0 + a_n \implies a_n = n$$
+Substituons $a_n = n$ dans l'Équation 1 :
+$$n + b_n = 1 \implies b_n = 1 - n$$
+Le reste de la division euclidienne est donc rigoureusement :
+$$R_n(X) = nX + (1 - n)$$
+
+\subsection{3. Expression de $A^n$}
+Nous partons de l'égalité polynomiale :
+$$X^n = Q_n(X)\chi_A(X) + nX + (1 - n)$$
+En appliquant le morphisme d'évaluation en la matrice $A$ (qui préserve les opérations polynomiales), nous obtenons dans $\mathcal{M}_2(\mathbb{R})$ :
+$$A^n = Q_n(A)\chi_A(A) + nA + (1 - n)I_2$$
+D'après le théorème de Cayley-Hamilton, $\chi_A(A) = 0_2$. Donc le premier terme s'annule totalement :
+$$A^n = nA + (1 - n)I_2$$
+
+Remplaçons $A$ et $I_2$ par leurs matrices pour le calcul explicite :
+$$A^n = n \begin{pmatrix} 0 & -1 \\ 1 & 2 \end{pmatrix} + (1 - n) \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$$
+$$A^n = \begin{pmatrix} 0 & -n \\ n & 2n \end{pmatrix} + \begin{pmatrix} 1 - n & 0 \\ 0 & 1 - n \end{pmatrix}$$
+$$A^n = \begin{pmatrix} 1 - n & -n \\ n & n + 1 \end{pmatrix}$$
+\textit{(Vérification : Pour n=1, on retrouve bien A. Pour n=0, on retrouve bien $I_2$).}
+
+
+
+
+\part{Exercice 6 : Dimension de l'espace des polynômes d'un endomorphisme ($\star$$\star$$\star$$\circ$$\circ$)}
+
+\section{Énoncé}
+
+Soit $E$ un espace vectoriel sur $\mathbb{K}$ de dimension finie $n$. Soit $u \in \mathcal{L}(E)$.
+Considérons la sous-algèbre $\mathbb{K}[u] = \{ P(u) \mid P \in \mathbb{K}[X] \}$ engendrée par $u$.
+On note $d$ le degré du polynôme minimal $\pi_u$ de $u$.
+1. Montrer que $\dim(\mathbb{K}[u]) = d$.
+2. En déduire que $1 \le \dim(\mathbb{K}[u]) \le n$.
+3. Donner un exemple matriciel pour lequel la borne supérieure est atteinte.
+
+\section{Solution Rigoureuse}
+
+\subsection{1. Dimension de la sous-algèbre $\mathbb{K}[u]$}
+Soit le morphisme d'évaluation $\Phi_u : \mathbb{K}[X] \to \mathcal{L}(E)$ défini par $\Phi_u(P) = P(u)$.
+Par définition, l'image de $\Phi_u$ est exactement $\mathbb{K}[u]$ : $\text{Im}(\Phi_u) = \mathbb{K}[u]$.
+Le noyau de $\Phi_u$ est, par définition, l'idéal annulateur $\mathcal{I}_u$. Puisque $\mathbb{K}[X]$ est un anneau principal, cet idéal est engendré par le polynôme minimal : $\ker(\Phi_u) = \pi_u \mathbb{K}[X]$.
+D'après le premier théorème d'isomorphisme pour les anneaux et algèbres, le morphisme induit :
+$$\overline{\Phi_u} : \mathbb{K}[X] / (\pi_u) \xrightarrow{\sim} \text{Im}(\Phi_u) = \mathbb{K}[u]$$
+est un isomorphisme d'algèbres (donc d'espaces vectoriels).
+Par conséquent, la dimension de $\mathbb{K}[u]$ est égale à la dimension de l'espace vectoriel quotient $\mathbb{K}[X] / (\pi_u)$.
+
+Or, par la division euclidienne dans $\mathbb{K}[X]$, tout polynôme $P$ s'écrit de manière unique $P = Q \pi_u + R$ avec $\deg(R) < \deg(\pi_u) = d$.
+Dans le quotient $\mathbb{K}[X] / (\pi_u)$, la classe de $P$ est égale à la classe de $R$. Ainsi, tout élément du quotient est représenté par un unique polynôme de degré strictement inférieur à $d$.
+La base canonique de ce quotient est la famille des classes $(\overline{1}, \overline{X}, \dots, \overline{X^{d-1}})$.
+Cette base compte exactement $d$ éléments.
+Donc, $\dim(\mathbb{K}[X] / (\pi_u)) = d$.
+Par isomorphisme, nous obtenons rigoureusement : $\dim(\mathbb{K}[u]) = d$.
+
+\subsection{2. Bornes sur la dimension}
+Le polynôme minimal $\pi_u$ n'est pas un polynôme constant (sinon, si $\pi_u = 1$, alors $\text{id}_E = 0$, absurde car $n \ge 1$). Donc $d = \deg(\pi_u) \ge 1$.
+De plus, d'après le théorème de Cayley-Hamilton, le polynôme caractéristique $\chi_u$ de $u$, qui est de degré $n$, est un polynôme annulateur. L'idéal annulateur étant engendré par le polynôme minimal, on a que $\pi_u$ divise $\chi_u$.
+Le degré d'un diviseur d'un polynôme non nul est au plus égal au degré de ce polynôme.
+Donc $d \le \deg(\chi_u) = n$.
+En conclusion, en combinant ces inégalités :
+$$1 \le \dim(\mathbb{K}[u]) \le n$$
+
+\subsection{3. Exemple où la borne supérieure est atteinte}
+Considérons la matrice compagnon associée au polynôme $P(X) = X^n$. C'est la matrice de taille $n \times n$ dont les éléments $(i+1, i)$ sont égaux à 1, et tous les autres à 0 :
+$$A = \begin{pmatrix} 0 & 0 & \dots & 0 & 0 \\ 1 & 0 & \dots & 0 & 0 \\ 0 & 1 & \dots & 0 & 0 \\ \vdots & \vdots & \ddots & \vdots & \vdots \\ 0 & 0 & \dots & 1 & 0 \end{pmatrix}$$
+Son polynôme caractéristique est $\chi_A(X) = \det(X I_n - A) = X^n$.
+L'application itérée $A^{n-1}$ transforme le premier vecteur de la base canonique en le dernier, elle n'est donc pas la matrice nulle. Ainsi, $A^{n-1} \neq 0$.
+Cela implique qu'aucun polynôme de degré strictement inférieur à $n$ ne peut annuler $A$. Le polynôme minimal de $A$ doit diviser $X^n$ et avoir un degré d'au moins $n$. L'unique possibilité est $\pi_A(X) = X^n$.
+Ainsi, $\deg(\pi_A) = n$, et donc $\dim(\mathbb{K}[A]) = n$. La borne est atteinte.
+
+
+
+
+\part{Exercice 7 : Endomorphisme nilpotent et trace ($\star$$\star$$\star$$\star$$\circ$)}
+
+\section{Énoncé}
+
+Soit $E$ un espace vectoriel complexe de dimension finie $n$. Soit $u \in \mathcal{L}(E)$.
+On rappelle que $u$ est nilpotent s'il existe un entier $k \ge 1$ tel que $u^k = 0_{\mathcal{L}(E)}$.
+1. Montrer que si $u$ est nilpotent, alors son unique valeur propre est 0.
+2. En déduire le polynôme caractéristique d'un endomorphisme nilpotent.
+3. Montrer que $\text{Tr}(u) = 0$.
+4. (Réciproque) Supposons que pour tout $k \in \{1, 2, \dots, n\}$, $\text{Tr}(u^k) = 0$. Montrer que $u$ est nilpotent.
+
+\section{Solution Rigoureuse}
+
+\subsection{1. Unique valeur propre d'un nilpotent}
+Soit $\lambda \in \mathbb{C}$ une valeur propre de $u$, et $x \in E \setminus \{0_E\}$ un vecteur propre associé, de sorte que $u(x) = \lambda x$.
+Par une récurrence immédiate, pour tout entier $m \ge 1$, on a $u^m(x) = \lambda^m x$.
+L'endomorphisme $u$ étant nilpotent, il existe $k \ge 1$ tel que $u^k = 0_{\mathcal{L}(E)}$.
+En appliquant cette propriété au vecteur $x$ :
+$$u^k(x) = \lambda^k x$$
+$$0_E = \lambda^k x$$
+Comme $x \neq 0_E$, il en découle nécessairement que la quantité scalaire $\lambda^k = 0$.
+Dans le corps $\mathbb{C}$ (intègre), cela implique $\lambda = 0$.
+La seule valeur propre possible pour un endomorphisme nilpotent est donc $0$.
+
+\subsection{2. Polynôme caractéristique}
+Sur le corps $\mathbb{C}$ algébriquement clos, tout polynôme caractéristique est scindé.
+Le polynôme caractéristique $\chi_u(X)$ de l'endomorphisme $u$ (qui est de degré $n$) s'écrit alors sous la forme :
+$$\chi_u(X) = \prod_{i=1}^n (X - \lambda_i)$$
+où les $\lambda_i$ sont les racines de $\chi_u$, c'est-à-dire les valeurs propres de $u$, comptées avec multiplicité.
+Or, nous avons établi à la question précédente que la seule valeur propre est 0. Donc pour tout $i$, $\lambda_i = 0$.
+Par substitution directe, le polynôme caractéristique est :
+$$\chi_u(X) = \prod_{i=1}^n (X - 0) = X^n$$
+
+\subsection{3. Nullité de la trace}
+La trace d'un endomorphisme (ou de toute matrice la représentant) est égale, de façon invariante, à la somme de ses valeurs propres comptées avec multiplicité (au signe près, c'est le coefficient de $X^{n-1}$ dans $\chi_u$).
+$$\text{Tr}(u) = \sum_{i=1}^n \lambda_i = \sum_{i=1}^n 0 = 0$$
+
+\subsection{4. Réciproque (Identités de Newton)}
+Supposons que pour tout $k \in \{1, \dots, n\}$, $\text{Tr}(u^k) = 0$.
+Nous sommes dans un espace complexe, donc le polynôme caractéristique $\chi_u$ est scindé de racines $\lambda_1, \dots, \lambda_n$.
+La matrice représentative $M$ de $u$ est trigonalisable dans $\mathbb{C}$. Les éléments diagonaux de la matrice triangulaire sont les valeurs propres $\lambda_1, \dots, \lambda_n$.
+La matrice $M^k$ est également triangulaire supérieure, et ses éléments diagonaux sont $\lambda_1^k, \dots, \lambda_n^k$.
+Par conséquent, la condition $\text{Tr}(u^k) = 0$ se traduit par le système d'équations (sommes de Newton) :
+$$\sum_{i=1}^n \lambda_i^k = 0 \quad \text{pour tout } k \in \{1, \dots, n\}$$
+Les formules de Newton (liant les fonctions symétriques élémentaires aux sommes de puissances) permettent d'exprimer les coefficients du polynôme caractéristique en fonction de ces sommes.
+Soit $\sigma_k$ la $k$-ème fonction symétrique élémentaire des racines. Les relations s'écrivent :
+$$k \sigma_k = S_k - \sigma_1 S_{k-1} + \sigma_2 S_{k-2} - \dots + (-1)^{k-1} \sigma_{k-1} S_1$$
+où $S_k = \sum \lambda_i^k$.
+Puisque $S_1 = S_2 = \dots = S_n = 0$, on obtient par récurrence sur $k$ (de 1 à $n$) :
+\begin{itemize}
+\item $1 \sigma_1 = S_1 = 0 \implies \sigma_1 = 0$
+\item $2 \sigma_2 = S_2 - \sigma_1 S_1 = 0 - 0 = 0 \implies \sigma_2 = 0$
+\item ...
+\item $n \sigma_n = 0 \implies \sigma_n = 0$
+\end{itemize}
+
+Ainsi, toutes les fonctions symétriques élémentaires des racines sont nulles.
+Or, le polynôme caractéristique s'écrit $\chi_u(X) = X^n - \sigma_1 X^{n-1} + \sigma_2 X^{n-2} + \dots + (-1)^n \sigma_n$.
+Donc $\chi_u(X) = X^n$.
+D'après le théorème de Cayley-Hamilton, $\chi_u(u) = 0_{\mathcal{L}(E)}$.
+Donc $u^n = 0_{\mathcal{L}(E)}$.
+Ceci démontre par définition que $u$ est nilpotent d'indice au plus $n$. $\blacksquare$
+
+
+
+
+\part{Exercice 8 : Décomposition d'un endomorphisme via Cayley-Hamilton ($\star$$\star$$\star$$\star$$\circ$)}
+
+\section{Énoncé}
+
+Soit $E$ un $\mathbb{R}$-espace vectoriel de dimension 3, et $u \in \mathcal{L}(E)$ un endomorphisme dont le polynôme caractéristique est :
+$$\chi_u(X) = (X - 2)^2 (X + 1)$$
+L'endomorphisme $u$ n'est pas supposé diagonalisable.
+Déterminer explicitement des polynômes $P_1, P_2 \in \mathbb{R}[X]$ tels que les endomorphismes $p_1 = P_1(u)$ et $p_2 = P_2(u)$ soient des projecteurs spectraux vérifiant :
+1. $p_1 + p_2 = \text{id}_E$
+2. $p_1 \circ p_2 = p_2 \circ p_1 = 0_{\mathcal{L}(E)}$
+3. $\text{Im}(p_1) = \ker((u - 2\text{id}_E)^2)$ et $\text{Im}(p_2) = \ker(u + \text{id}_E)$
+
+\section{Solution Rigoureuse}
+
+Nous allons exploiter le lemme des noyaux, rendu opérant par la relation de Bézout.
+Soit $Q_1(X) = (X-2)^2 = X^2 - 4X + 4$ et $Q_2(X) = X+1$.
+Par le théorème de Cayley-Hamilton, $\chi_u(u) = Q_1(u) \circ Q_2(u) = 0_{\mathcal{L}(E)}$.
+Les polynômes $Q_1$ et $Q_2$ sont premiers entre eux dans $\mathbb{R}[X]$ puisqu'ils n'ont aucune racine complexe commune.
+Cherchons la relation de Bézout : $U(X) Q_1(X) + V(X) Q_2(X) = 1$.
+Utilisons l'algorithme d'Euclide étendu, ou plus simplement, divisons $Q_1$ par $Q_2$.
+$$X^2 - 4X + 4 = (X-5)(X+1) + 9$$
+On réécrit le reste :
+$$9 = (X^2 - 4X + 4) - (X-5)(X+1)$$
+On divise par 9 :
+$$1 = \frac{1}{9}(X^2 - 4X + 4) - \frac{1}{9}(X-5)(X+1)$$
+Identifions les composantes de Bézout :
+$$1 = \left( \frac{1}{9} \right) Q_1(X) + \left( \frac{-X+5}{9} \right) Q_2(X)$$
+Posons donc les polynômes :
+$$P_2(X) = \frac{1}{9} Q_1(X) = \frac{1}{9}(X^2 - 4X + 4)$$
+$$P_1(X) = \frac{-X+5}{9} Q_2(X) = \frac{-X+5}{9}(X+1) = \frac{1}{9}(-X^2 + 4X + 5)$$
+
+Vérifions que $P_1(X) + P_2(X) = 1$ :
+$$P_1(X) + P_2(X) = \frac{1}{9}(-X^2 + 4X + 5 + X^2 - 4X + 4) = \frac{9}{9} = 1$$
+
+Évaluons l'identité de Bézout en l'endomorphisme $u$ :
+$$P_1(u) + P_2(u) = \text{id}_E$$
+Posons $p_1 = P_1(u)$ et $p_2 = P_2(u)$. La relation devient $p_1 + p_2 = \text{id}_E$ (propriété 1 vérifiée).
+
+Calculons le produit :
+$$P_1(X) P_2(X) = \left( \frac{-X+5}{9} Q_2(X) \right) \left( \frac{1}{9} Q_1(X) \right) = \frac{-X+5}{81} Q_1(X) Q_2(X) = \frac{-X+5}{81} \chi_u(X)$$
+En évaluant en $u$, par le théorème de Cayley-Hamilton, $\chi_u(u) = 0_{\mathcal{L}(E)}$. Donc :
+$$p_1 \circ p_2 = p_2 \circ p_1 = P_1(u) P_2(u) = \frac{-u+5\text{id}}{81} \circ \chi_u(u) = 0_{\mathcal{L}(E)}$$
+(Propriété 2 vérifiée).
+
+Montrons que $p_1$ et $p_2$ sont des projecteurs :
+On a $p_1 + p_2 = \text{id}_E$. En composant avec $p_1$ :
+$$p_1 \circ p_1 + p_2 \circ p_1 = p_1 \implies p_1^2 + 0 = p_1 \implies p_1^2 = p_1$$
+De même pour $p_2$. Ce sont bien des projecteurs.
+
+Montrons les images :
+Soit $x \in \text{Im}(p_1)$. Comme $p_1$ est un projecteur, $x = p_1(x)$.
+Calculons $Q_1(u)(x) = Q_1(u)(p_1(x)) = (Q_1(u) \circ P_1(u))(x)$.
+Or $Q_1(X) P_1(X) = Q_1(X) \frac{-X+5}{9} Q_2(X) = \frac{-X+5}{9} \chi_u(X)$.
+Donc $Q_1(u) \circ P_1(u) = \frac{-u+5\text{id}}{9} \chi_u(u) = 0_{\mathcal{L}(E)}$.
+Ainsi $Q_1(u)(x) = 0_E$. Or $Q_1(u) = (u - 2\text{id}_E)^2$. Donc $x \in \ker((u - 2\text{id}_E)^2)$.
+L'inclusion inverse se démontre classiquement avec la relation de Bézout, confirmant ainsi $\text{Im}(p_1) = \ker((u - 2\text{id}_E)^2)$.
+De même pour $p_2$.
+
+Les polynômes sont explicitement :
+$$P_1(X) = -\frac{1}{9}X^2 + \frac{4}{9}X + \frac{5}{9} \quad \text{et} \quad P_2(X) = \frac{1}{9}X^2 - \frac{4}{9}X + \frac{4}{9}$$
+
+
+
+
+\part{Exercice 9 : Matrices de rang 1 et polynôme minimal ($\star$$\star$$\star$$\star$$\star$)}
+
+\section{Énoncé}
+
+Soit $A \in \mathcal{M}_n(\mathbb{R})$ une matrice non nulle de rang 1.
+1. Montrer qu'il existe deux vecteurs colonnes non nuls $U, V \in \mathbb{R}^n$ tels que $A = U V^T$.
+2. En déduire que $A^2 = \text{Tr}(A) A$.
+3. Déterminer le polynôme minimal de $A$ en discutant selon la valeur de sa trace.
+4. Montrer que $A$ est diagonalisable si et seulement si $\text{Tr}(A) \neq 0$.
+
+\section{Solution Rigoureuse}
+
+\subsection{1. Factorisation d'une matrice de rang 1}
+L'image de $A$ (l'espace engendré par ses colonnes) est de dimension 1. Soit $U$ un vecteur non nul engendrant $\text{Im}(A)$.
+Puisque chaque colonne $C_j$ de $A$ appartient à $\text{Im}(A)$, il existe un scalaire $v_j \in \mathbb{R}$ tel que $C_j = v_j U$.
+La matrice $A$ s'écrit donc en blocs colonnes : $A = \begin{pmatrix} C_1 & C_2 & \dots & C_n \end{pmatrix} = \begin{pmatrix} v_1 U & v_2 U & \dots & v_n U \end{pmatrix}$.
+Ceci se factorise exactement sous la forme du produit d'une colonne par une ligne :
+$$A = U \begin{pmatrix} v_1 & v_2 & \dots & v_n \end{pmatrix} = U V^T$$
+où $V^T = (v_1, \dots, v_n)$. $V$ n'est pas nul car $A$ est non nulle.
+
+\subsection{2. Carré et Trace}
+Calculons $A^2$ en utilisant la factorisation :
+$$A^2 = (U V^T)(U V^T) = U (V^T U) V^T$$
+Le terme central $(V^T U)$ est le produit matriciel d'une ligne $1 \times n$ par une colonne $n \times 1$. C'est un scalaire de taille $1 \times 1$. Comme c'est un scalaire, il commute avec tout.
+$$A^2 = (V^T U) (U V^T) = (V^T U) A$$
+Il reste à identifier le scalaire $V^T U$.
+Par définition, la trace est linéaire et vérifie la propriété cyclique $\text{Tr}(AB) = \text{Tr}(BA)$.
+Ici, $A = U V^T$, donc $\text{Tr}(A) = \text{Tr}(U V^T) = \text{Tr}(V^T U)$.
+Or $V^T U$ est un scalaire, donc sa trace est lui-même. $\text{Tr}(A) = V^T U$.
+En substituant, on obtient rigoureusement :
+$$A^2 = \text{Tr}(A) A$$
+
+\subsection{3. Polynôme minimal}
+L'égalité précédente se réécrit $A^2 - \text{Tr}(A) A = 0_n$.
+Le polynôme $P(X) = X^2 - \text{Tr}(A) X = X(X - \text{Tr}(A))$ est donc un polynôme annulateur de $A$.
+Le polynôme minimal $\pi_A$ doit diviser ce polynôme $P(X)$.
+$A$ étant non nulle, son polynôme minimal ne peut pas être de degré 0 ni être $X$ (car si $\pi_A(X) = X$, alors $\pi_A(A) = A = 0_n$, absurde).
+Les diviseurs de $X(X - \text{Tr}(A))$ sont $X, X - \text{Tr}(A), X(X - \text{Tr}(A))$.
+Discutons selon la trace :
+\begin{itemize}
+\item \textbf{Cas 1 : $\text{Tr}(A) \neq 0$}
+\end{itemize}
+Les facteurs $X$ et $X - \text{Tr}(A)$ sont distincts.
+Si $\pi_A(X) = X - \text{Tr}(A)$, alors $A - \text{Tr}(A) I_n = 0_n \implies A = \text{Tr}(A) I_n$. Dans ce cas, le rang de $A$ serait $n$, or l'énoncé fixe un rang de 1. Pour $n \ge 2$, c'est absurde.
+Donc $\pi_A(X)$ ne peut être un diviseur de degré 1. Il doit être de degré 2 :
+$$\pi_A(X) = X(X - \text{Tr}(A))$$
+\begin{itemize}
+\item \textbf{Cas 2 : $\text{Tr}(A) = 0$}
+\end{itemize}
+L'équation $A^2 = \text{Tr}(A) A$ devient $A^2 = 0_n$. $A$ est nilpotente d'indice 2.
+Le polynôme annulateur se réduit à $P(X) = X^2$.
+Le polynôme minimal divise $X^2$. Ce ne peut être $X$ car $A \neq 0_n$. Donc :
+$$\pi_A(X) = X^2$$
+
+\subsection{4. Diagonalisabilité}
+Un endomorphisme est diagonalisable si et seulement si son polynôme minimal est scindé à racines simples (théorème de diagonalisation).
+\begin{itemize}
+\item Si $\text{Tr}(A) \neq 0$, le polynôme minimal $\pi_A(X) = X(X - \text{Tr}(A))$ a deux racines distinctes réelles : $0$ et $\text{Tr}(A)$. Il est scindé à racines simples. La matrice $A$ est diagonalisable.
+\item Si $\text{Tr}(A) = 0$, le polynôme minimal $\pi_A(X) = X^2$ admet 0 comme racine double. Il n'est pas à racines simples. La matrice $A$ n'est pas diagonalisable.
+\end{itemize}
+Ceci achève la démonstration complète de l'équivalence. $\blacksquare$
+
+
+
+
+\part{Exercice 10 : Lemme d'existence d'un vecteur et polynôme minimal ($\star$$\star$$\star$$\star$$\star$)}
+
+\section{Énoncé}
+
+Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension finie $n \ge 1$. Soit $u \in \mathcal{L}(E)$.
+Soit $\pi_u(X)$ le polynôme minimal de $u$.
+L'objectif est de démontrer qu'il existe un vecteur $x_0 \in E$ tel que le polynôme minimal local de $x_0$ par rapport à $u$ (c'est-à-dire le générateur unitaire de l'idéal $I_{x_0} = \{ P \in \mathbb{K}[X] \mid P(u)(x_0) = 0_E \}$) soit exactement égal à $\pi_u(X)$.
+
+\textit{On supposera ici, pour simplifier la preuve de ce théorème fondamental, que le polynôme minimal de $u$ est de la forme $\pi_u(X) = P_1(X)^{\alpha_1} P_2(X)^{\alpha_2}$ où $P_1, P_2$ sont irréductibles distincts (le cas général se déduit par récurrence sur le nombre de facteurs premiers).}
+
+\section{Solution Rigoureuse}
+
+Cet exercice est un classique d'algèbre exigeant une maîtrise parfaite des polynômes et du lemme des noyaux.
+Pour tout vecteur $x \in E$, on note $\pi_{x, u}$ le générateur unitaire de l'idéal $\{ P \mid P(u)(x) = 0_E \}$. Cet idéal contient $\pi_u$ car $\pi_u(u)(x) = 0_E(x) = 0_E$. Donc $\pi_{x, u}$ divise toujours $\pi_u$. L'enjeu est de trouver un vecteur où l'égalité est stricte.
+
+\subsection{Étape 1 : Vecteur maximal pour une puissance de polynôme irréductible}
+Supposons d'abord que $\pi_u(X) = P_1(X)^{\alpha_1}$.
+Par définition du polynôme minimal, il est le polynôme annulateur de degré minimal. Ainsi, le polynôme $P_1(X)^{\alpha_1 - 1}$ n'est PAS un polynôme annulateur de $u$.
+Cela signifie formellement qu'il existe un vecteur $y \in E$ tel que :
+$$P_1(u)^{\alpha_1 - 1}(y) \neq 0_E$$
+Considérons ce vecteur $y$. Son polynôme annulateur local $\pi_{y, u}$ doit diviser le polynôme minimal global $P_1(X)^{\alpha_1}$. Puisque $P_1$ est irréductible, les diviseurs unitaires sont exactement les $P_1(X)^k$ pour $0 \le k \le \alpha_1$.
+Or, $\pi_{y, u}$ ne peut pas diviser $P_1(X)^{\alpha_1 - 1}$, sinon on aurait $P_1(u)^{\alpha_1 - 1}(y) = 0_E$, ce qui contredit la définition de $y$.
+L'unique puissance possible pour $\pi_{y, u}$ est donc $\alpha_1$.
+Ainsi, il existe un vecteur $y$ tel que $\pi_{y, u} = P_1(X)^{\alpha_1}$.
+
+\subsection{Étape 2 : Construction par somme directe (Lemme des noyaux)}
+Revenons au cas $\pi_u(X) = P_1(X)^{\alpha_1} P_2(X)^{\alpha_2}$.
+D'après le théorème de décomposition des noyaux (Bézout), puisque $P_1^{\alpha_1}$ et $P_2^{\alpha_2}$ sont premiers entre eux, l'espace se décompose en somme directe :
+$$E = \ker(P_1(u)^{\alpha_1}) \oplus \ker(P_2(u)^{\alpha_2})$$
+Soit $E_1 = \ker(P_1(u)^{\alpha_1})$ et $E_2 = \ker(P_2(u)^{\alpha_2})$.
+L'endomorphisme induit $u_1 = u_{|E_1}$ a pour polynôme annulateur $P_1(X)^{\alpha_1}$. En réalité, c'est son polynôme minimal, car si c'était une puissance inférieure, ce facteur abaisserait le polynôme minimal global.
+Par l'Étape 1, appliquée à $u_1$ sur l'espace $E_1$, il existe $x_1 \in E_1$ tel que $\pi_{x_1, u_1} = P_1(X)^{\alpha_1}$.
+De même, il existe $x_2 \in E_2$ tel que $\pi_{x_2, u_2} = P_2(X)^{\alpha_2}$.
+
+\subsection{Étape 3 : Indépendance et produit}
+Considérons le vecteur défini par la somme $x_0 = x_1 + x_2$.
+Déterminons son polynôme minimal local $\pi_{x_0, u}$.
+Soit un polynôme $Q \in \mathbb{K}[X]$ tel que $Q(u)(x_0) = 0_E$.
+$$Q(u)(x_1 + x_2) = Q(u)(x_1) + Q(u)(x_2) = 0_E$$
+Comme $E_1$ et $E_2$ sont stables par $u$, ils sont stables par $Q(u)$. Donc $Q(u)(x_1) \in E_1$ et $Q(u)(x_2) \in E_2$.
+L'équation s'écrit comme la nullité d'une somme de deux vecteurs appartenant à des sous-espaces en somme directe. L'unique solution est que chaque composante soit nulle :
+$$Q(u)(x_1) = 0_E \quad \text{et} \quad Q(u)(x_2) = 0_E$$
+La première condition implique que le polynôme minimal local de $x_1$ divise $Q$. Donc $P_1^{\alpha_1}$ divise $Q$.
+La seconde condition implique que $P_2^{\alpha_2}$ divise $Q$.
+Puisque $P_1^{\alpha_1}$ et $P_2^{\alpha_2}$ sont premiers entre eux, leur produit divise $Q$.
+Donc $P_1^{\alpha_1} P_2^{\alpha_2}$ divise $Q$, ce qui signifie que $\pi_u$ divise $Q$.
+Puisque $\pi_u$ est lui-même annulateur de tout vecteur (dont $x_0$), le générateur unitaire de l'idéal est exactement $\pi_u$.
+On a rigoureusement construit un vecteur $x_0 = x_1 + x_2$ dont le polynôme minimal local est le polynôme minimal global. $\blacksquare$
+
+
+
+\part{Travaux pratiques et simulations algorithmiques}
+
+
+\part{TP 1 : Implémentation du morphisme d'évaluation matricielle}
+
+\section{Objectif Mathématique}
+L'objectif est d'implémenter rigoureusement le morphisme d'évaluation $\Phi_A : \mathbb{R}[X] \to \mathcal{M}_n(\mathbb{R})$ défini par $\Phi_A(P) = P(A)$.
+Un polynôme $P(X) = \sum_{k=0}^d a_k X^k$ sera représenté par la liste de ses coefficients $[a_0, a_1, \dots, a_d]$.
+Nous construirons ce TP en Python pur, sans aucune bibliothèque externe.
+
+\section{Code Python et Validation}
+
+\begin{lstlisting}[language=Python]
+def mat_mul(A, B):
+    # Multiplication de deux matrices carrees.
+    n = len(A)
+    C = [[0.0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            C[i][j] = sum(A[i][k] * B[k][j] for k in range(n))
+    return C
+
+def mat_add(A, B):
+    # Addition de deux matrices.
+    n = len(A)
+    return [[A[i][j] + B[i][j] for j in range(n)] for i in range(n)]
+
+def mat_scale(alpha, A):
+    # Multiplication par un scalaire.
+    n = len(A)
+    return [[alpha * A[i][j] for j in range(n)] for i in range(n)]
+
+def mat_id(n):
+    # Matrice identite de taille n.
+    return [[1.0 if i == j else 0.0 for j in range(n)] for i in range(n)]
+
+def evaluer_polynome(poly_coeffs, A):
+    """
+    Evalue le polynome P(A).
+    poly_coeffs : liste [a_0, a_1, ..., a_d] representant a_0 + a_1 X + ... + a_d X^d
+    """
+    n = len(A)
+    d = len(poly_coeffs) - 1
+
+    if d < 0:
+        return [[0.0]*n for _ in range(n)]
+
+    result = mat_scale(poly_coeffs[0], mat_id(n))
+    A_k = mat_id(n)
+
+    for k in range(1, d + 1):
+        A_k = mat_mul(A_k, A)
+        terme = mat_scale(poly_coeffs[k], A_k)
+        result = mat_add(result, terme)
+
+    return result
+
+# --- TESTS DE VALIDATION MATHEMATIQUE ---
+if __name__ == "__main__":
+    A = [[0, 1],
+         [1, 0]]
+    # P(X) = X^2 - 1 represente par [-1, 0, 1]
+    P = [-1, 0, 1]
+
+    P_A = evaluer_polynome(P, A)
+
+    # A^2 - I = 0 pour cette symetrie.
+    zero = [[0.0, 0.0], [0.0, 0.0]]
+    assert P_A == zero, "Erreur: Le morphisme d'evaluation a echoue sur P(X) = X^2 - 1."
+    print("TP 1 : Validation mathematique reussie.")
+\end{lstlisting}
+
+
+
+
+
+\part{TP 2 : Vérification empirique du théorème de Cayley-Hamilton}
+
+\section{Objectif Mathématique}
+Ce TP implémente le calcul du polynôme caractéristique (via la formule de la trace et du déterminant en dimension 2 et 3) et vérifie numériquement que $\chi_A(A) = 0_n$.
+
+\section{Code Python et Validation}
+
+\begin{lstlisting}[language=Python]
+from tp01 import mat_mul, mat_add, mat_scale, mat_id, evaluer_polynome
+
+def trace(A):
+    return sum(A[i][i] for i in range(len(A)))
+
+def determinant_2x2(A):
+    return A[0][0]*A[1][1] - A[0][1]*A[1][0]
+
+def determinant_3x3(A):
+    return (A[0][0]*(A[1][1]*A[2][2] - A[1][2]*A[2][1]) -
+            A[0][1]*(A[1][0]*A[2][2] - A[1][2]*A[2][0]) +
+            A[0][2]*(A[1][0]*A[2][1] - A[1][1]*A[2][0]))
+
+def polynome_caracteristique_2x2(A):
+    """Renvoie les coefficients [a_0, a_1, a_2] de X^2 - Tr(A)X + det(A)."""
+    return [determinant_2x2(A), -trace(A), 1]
+
+def polynome_caracteristique_3x3(A):
+    """
+    Formule: X^3 - Tr(A)X^2 + (1/2)(Tr(A)^2 - Tr(A^2))X - det(A)
+    """
+    tr_A = trace(A)
+    tr_A2 = trace(mat_mul(A, A))
+    c1 = 0.5 * (tr_A**2 - tr_A2)
+    c0 = -determinant_3x3(A)
+    return [c0, c1, -tr_A, 1]
+
+# --- TESTS DE VALIDATION MATHEMATIQUE ---
+if __name__ == "__main__":
+    A2 = [[1, 2], [3, 4]]
+    chi_A2 = polynome_caracteristique_2x2(A2)
+    res_A2 = evaluer_polynome(chi_A2, A2)
+
+    for i in range(2):
+        for j in range(2):
+            assert abs(res_A2[i][j]) < 1e-9, "Echec Cayley-Hamilton 2x2"
+
+    A3 = [[1, 2, 0], [-1, 3, 1], [0, 1, 2]]
+    chi_A3 = polynome_caracteristique_3x3(A3)
+    res_A3 = evaluer_polynome(chi_A3, A3)
+
+    for i in range(3):
+        for j in range(3):
+            assert abs(res_A3[i][j]) < 1e-9, "Echec Cayley-Hamilton 3x3"
+
+    print("TP 2 : Validation mathematique reussie. Cayley-Hamilton verifie.")
+\end{lstlisting}
+
+
+
+
+
+\part{TP 3 : Calcul de la matrice inverse par le polynôme caractéristique}
+
+\section{Objectif Mathématique}
+D'après Cayley-Hamilton, pour $A \in \mathcal{M}_2(\mathbb{R})$ inversible, $A^2 - \text{Tr}(A)A + \det(A)I_2 = 0_2$.
+On en déduit que $A^{-1} = \frac{1}{\det(A)} (\text{Tr}(A)I_2 - A)$.
+Ce TP implémente cette inversion algébrique.
+
+\section{Code Python et Validation}
+
+\begin{lstlisting}[language=Python]
+from tp01 import mat_add, mat_scale, mat_id
+from tp02 import trace, determinant_2x2
+
+def inverse_via_cayley_hamilton_2x2(A):
+    det = determinant_2x2(A)
+    if det == 0:
+        raise ValueError("Matrice non inversible.")
+
+    tr = trace(A)
+    term1 = mat_scale(tr, mat_id(2))
+    term2 = mat_scale(-1, A)
+
+    somme = mat_add(term1, term2)
+    return mat_scale(1.0 / det, somme)
+
+# --- TESTS DE VALIDATION MATHEMATIQUE ---
+if __name__ == "__main__":
+    A = [[4, 7],
+         [2, 6]]
+
+    inv_A = inverse_via_cayley_hamilton_2x2(A)
+
+    # Validation du produit A * A^-1 = I_2
+    from tp01 import mat_mul
+    prod = mat_mul(A, inv_A)
+
+    for i in range(2):
+        for j in range(2):
+            expected = 1.0 if i == j else 0.0
+            assert abs(prod[i][j] - expected) < 1e-9, "Erreur d'inversion."
+
+    print("TP 3 : Validation mathematique reussie. Inverse calcule formellement.")
+\end{lstlisting}
+
+
+
+
+
+\part{TP 4 : Recherche algorithmique du polynôme minimal}
+
+\section{Objectif Mathématique}
+En dimension finie $n$, la famille $(I, A, A^2, \dots, A^n)$ est toujours liée (par Cayley-Hamilton).
+Nous cherchons le plus petit degré $d \le n$ tel que $(I, A, \dots, A^d)$ soit liée.
+Les coefficients de la dépendance linéaire donneront le polynôme minimal.
+Nous utilisons une approche par pivot de Gauss vectorisé.
+
+\section{Code Python et Validation}
+
+\begin{lstlisting}[language=Python]
+from tp01 import mat_id, mat_mul
+
+def flatten(A):
+    return [x for row in A for x in row]
+
+def elimination_gauss(system):
+    # Resout un systeme d'equations par elimination de Gauss-Jordan basique.
+    n_eq = len(system)
+    n_var = len(system[0]) - 1
+
+    for i in range(min(n_eq, n_var)):
+        # Pivot
+        pivot_idx = i
+        for j in range(i+1, n_eq):
+            if abs(system[j][i]) > abs(system[pivot_idx][i]):
+                pivot_idx = j
+        system[i], system[pivot_idx] = system[pivot_idx], system[i]
+
+        if abs(system[i][i]) < 1e-9:
+            continue
+
+        pivot = system[i][i]
+        for j in range(i, n_var + 1):
+            system[i][j] /= pivot
+
+        for k in range(n_eq):
+            if k != i:
+                factor = system[k][i]
+                for j in range(i, n_var + 1):
+                    system[k][j] -= factor * system[i][j]
+    return system
+
+def trouver_polynome_minimal(A, max_deg=3):
+    n = len(A)
+    n2 = n * n
+
+    puissances = [flatten(mat_id(n))]
+    A_k = mat_id(n)
+
+    for d in range(1, max_deg + 1):
+        A_k = mat_mul(A_k, A)
+        flat_Ak = flatten(A_k)
+
+        # On teste si flat_Ak est combinaison lineaire des puissances precedentes.
+        # Resoudre: c0*I + c1*A + ... = -Ak  (pour avoir un poly unitaire)
+        system = []
+        for row in range(n2):
+            eq = [puissances[k][row] for k in range(d)] + [-flat_Ak[row]]
+            system.append(eq)
+
+        res = elimination_gauss(system)
+
+        # Verifions si le systeme a une solution exacte
+        is_solution = True
+        coeffs = []
+        for i in range(d):
+            coeffs.append(res[i][-1])
+
+        # Recalcul d'erreur
+        for row in range(n2):
+            eval_val = sum(coeffs[k] * system[row][k] for k in range(d))
+            if abs(eval_val - system[row][-1]) > 1e-7:
+                is_solution = False
+                break
+
+        if is_solution:
+            # On a trouve le polynome minimal !
+            poly = coeffs + [1.0] # Unitaire
+            return poly
+
+        puissances.append(flat_Ak)
+
+    return None # Si introuvable
+
+# --- TESTS DE VALIDATION MATHEMATIQUE ---
+if __name__ == "__main__":
+    # Matrice de projection P^2 = P, poly minimal: X^2 - X = 0 (coeffs [0, -1, 1])
+    P = [[0.5, 0.5],
+         [0.5, 0.5]]
+
+    pi_P = trouver_polynome_minimal(P, max_deg=2)
+    assert abs(pi_P[0] - 0.0) < 1e-7
+    assert abs(pi_P[1] - (-1.0)) < 1e-7
+    assert abs(pi_P[2] - 1.0) < 1e-7
+
+    print("TP 4 : Validation mathematique reussie. Polynome minimal identifie.")
+\end{lstlisting}
+
+
+
+
+
+\part{TP 5 : Division euclidienne polynomiale pour calculer $A^n$}
+
+\section{Objectif Mathématique}
+Pour calculer $A^n$ (pour $n$ grand), la division euclidienne $X^n = Q(X)\chi_A(X) + R(X)$ implique que $A^n = R(A)$.
+Si $\chi_A(X) = (X-\lambda)^2$, le reste s'écrit $R(X) = a X + b$.
+Nous implémentons la détermination analytique de $a$ et $b$ par évaluation en $\lambda$ et dérivation, puis calculons $A^n$.
+
+\section{Code Python et Validation}
+
+\begin{lstlisting}[language=Python]
+from tp01 import mat_add, mat_scale, mat_id
+
+def puissance_matrice_racine_double(A, lamb, n):
+    """
+    Calcule A^n sachant que le polynome caracteristique est (X - lamb)^2.
+    R(X) = a_n X + b_n
+    En X = lamb : lamb^n = a_n lamb + b_n
+    Derivee en X = lamb : n lamb^{n-1} = a_n
+    """
+    if n == 0:
+        return mat_id(len(A))
+
+    a_n = n * (lamb ** (n - 1))
+    b_n = (lamb ** n) - a_n * lamb
+
+    terme_A = mat_scale(a_n, A)
+    terme_I = mat_scale(b_n, mat_id(len(A)))
+
+    return mat_add(terme_A, terme_I)
+
+# --- TESTS DE VALIDATION MATHEMATIQUE ---
+if __name__ == "__main__":
+    # Matrice A de l'exercice 5 : chi_A = (X-1)^2 -> lamb=1
+    A = [[0, -1],
+         [1,  2]]
+    lamb = 1
+    n = 10
+
+    # Calcul via notre formule analytique du reste
+    A_n_analytique = puissance_matrice_racine_double(A, lamb, n)
+
+    # Calcul par multiplication naive pour comparer
+    from tp01 import mat_mul
+    A_n_naive = mat_id(2)
+    for _ in range(n):
+        A_n_naive = mat_mul(A_n_naive, A)
+
+    for i in range(2):
+        for j in range(2):
+            assert abs(A_n_analytique[i][j] - A_n_naive[i][j]) < 1e-9, "Divergence de calcul."
+
+    print("TP 5 : Validation mathematique reussie. Formule via division euclidienne exacte.")
+\end{lstlisting}
+
+
+
+\end{document}

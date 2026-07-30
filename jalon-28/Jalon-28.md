@@ -37,6 +37,17 @@ avec la convention $u^0 = \text{id}_E$.
 
 L'application d'évaluation $\Phi_u : \mathbb{K}[X] \to \mathcal{L}(E)$ définie par $\Phi_u(P) = P(u)$ est un morphisme d'algèbres.
 
+
+\begin{tikzpicture}[scale=1.5, auto, >=stealth']
+    \node (KX) at (0, 2) {$\mathbb{K}[X]$};
+    \node (LE) at (3, 2) {$\mathcal{L}(E)$};
+    \node (K) at (1.5, 0) {$\mathbb{K}$};
+    \draw[->, thick] (KX) -- node[above] {$\Phi_u$} (LE);
+    \draw[->, dashed, thick] (KX) -- node[below left] {$\text{évaluation en } \lambda$} (K);
+    \draw[->, dashed, thick] (K) -- node[below right] {$\lambda \mapsto \lambda \text{id}_E$} (LE);
+\end{tikzpicture}
+
+
 #### B. Anatomie et Typage Chirurgical
 - $P \in \mathbb{K}[X]$ : $P$ est un objet algébrique abstrait, une suite de coefficients $(a_k)_{k \in \mathbb{N}}$ presque nulle.
 - $u \in \mathcal{L}(E)$ : Un opérateur linéaire agissant sur les vecteurs de $E$.

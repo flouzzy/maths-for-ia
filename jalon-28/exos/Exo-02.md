@@ -34,4 +34,4 @@ $$A^{-1} = \frac{1}{2}(A - 5I_2)$$
 ### 3. Calcul explicite
 Appliquons la formule :
 $$A^{-1} = \frac{1}{2} \left[ \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} - \begin{pmatrix} 5 & 0 \\ 0 & 5 \end{pmatrix} \right] = \frac{1}{2} \begin{pmatrix} 1 - 5 & 2 - 0 \\ 3 - 0 & 4 - 5 \end{pmatrix} = \frac{1}{2} \begin{pmatrix} -4 & 2 \\ 3 & -1 \end{pmatrix} = \begin{pmatrix} -2 & 1 \\ \frac{3}{2} & -\frac{1}{2} \end{pmatrix}$$
-*(Vérification triviale : $\det(A) = 4 - 6 = -2 \neq 0$. La formule de l'inverse en dimension 2 donne $\frac{1}{-2} \begin{pmatrix} 4 & -2 \\ -3 & 1 \end{pmatrix}$, ce qui correspond exactement).*
+*(Vérification explicite et systématique : $\det(A) = 4 - 6 = -2 \neq 0$. La formule de l'inverse en dimension 2 donne $\frac{1}{-2} \begin{pmatrix} 4 & -2 \\ -3 & 1 \end{pmatrix}$, ce qui correspond exactement).*
