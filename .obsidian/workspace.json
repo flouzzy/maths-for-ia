@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "jalon-27/Jalon-27.md",
+                "file": "jalon-28/Jalon-28.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Jalon-27"
+              "title": "Jalon-28"
             }
           }
         ]
@@ -222,6 +222,7 @@
   },
   "active": "028bc0b66da30b0b",
   "lastOpenFiles": [
+    "jalon-27/Jalon-27.md",
     "jalon-26/Jalon-26.md",
     "jalon-25/Jalon-25.md",
     "jalon-22/Jalon-22.md",
@@ -257,7 +258,6 @@
     "output_script.py",
     "plan_review.md",
     "jalon-1/README.md",
-    "plan_review_15.md",
     "Sans titre.canvas",
     "Sans titre 1.canvas"
   ]

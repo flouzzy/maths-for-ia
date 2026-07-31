@@ -9,10 +9,9 @@ tags:
 prev: "[[Jalon 27 (Endomorphismes symétriques).md]]"
 next: "[[Jalon 29 (Éléments propres).md]]"
 ---
-
 # Jalon 28 : Polynômes d'endomorphismes, idéaux annulateurs et théorème de Cayley-Hamilton
 
-## 1. L'Échafaudage Cognitif : Genèse et Motivation
+## 1. Introduction
 
 La réduction des endomorphismes constitue l'un des piliers centraux de l'algèbre linéaire, et sa formalisation repose intimement sur la théorie des polynômes. Pour comprendre pourquoi les mathématiciens ont eu besoin d'introduire la notion de "polynôme d'endomorphisme", il faut se replonger dans les problèmes de dynamique et de calcul itératif du XIXe siècle.
 
