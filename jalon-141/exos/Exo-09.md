@@ -85,13 +85,13 @@ Pour tout $\epsilon \in \mathbb{R}_{>0}$,
 $$ \mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}} \left| P_n f - P f \right| > \epsilon \right) \le 2 \mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n \sigma_i f(X_i) \right| > \frac{\epsilon}{2} \right) $$
 
 **Preuve du Lemme I.1 :**
-Soit $A = \left\{ \sup_{f \in \mathcal{F}} \left| P_n f - P f \right| > \epsilon \right\}$.
+Soit $A = \left\lbrace \sup_{f \in \mathcal{F}} \left| P_n f - P f \right| > \epsilon \right\rbrace$.
 Soient $X_1', \dots, X_n'$ des copies i.i.d. des $X_i$, indépendantes des $X_i$.
 Conditionnellement aux $X_i$, la quantité $P f = \mathbb{E}_{\mathbb{P}}[f(X_1)]$ est une constante.
 Par conséquent, pour tout $f \in \mathcal{F}$, $\mathbb{E}_{X'}[f(X_1')] = P f$.
 On a :
 $$ \mathbb{P}_{\Omega}(A) = \mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n f(X_i) - \mathbb{E}_{\mathbb{P}}[f(X_1)] \right| > \epsilon \right) $$
-$$ = \mathbb{E}_{\Omega}\left[ \mathbf{1}_{\left\{ \sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n f(X_i) - \mathbb{E}_{\mathbb{P}}[f(X_1)] \right| > \epsilon \right\}} \right] $$
+$$ = \mathbb{E}_{\Omega}\left[ \mathbf{1}_{\left\lbrace \sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n f(X_i) - \mathbb{E}_{\mathbb{P}}[f(X_1)] \right| > \epsilon \right\rbrace} \right] $$
 En utilisant l'indépendance des $X_i'$ et le fait que $\mathbb{E}_{\mathbb{P}}[f(X_1)] = \mathbb{E}_{X'}[P_n' f]$ (où $P_n' f = \frac{1}{n} \sum_{i=1}^n f(X_i')$), nous pouvons écrire :
 $$ \mathbb{P}_{\Omega}(A) = \mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n (f(X_i) - \mathbb{E}_{X'}[f(X_i')]) \right| > \epsilon \right) $$
 Par l'inégalité de Markov (ou simplement en utilisant le fait que $\mathbb{E}[Z] \le \mathbb{E}[Z']$ si $Z \le Z'$), et en notant que $\mathbb{E}_{X'}[\cdot]$ est une espérance conditionnelle par rapport aux $X_i$:
@@ -110,7 +110,7 @@ $$ \mathbb{P}_{\Omega}(A) \le \mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}}
 Comme les $X_i$ et les $X_i'$ sont i.i.d., la distribution de $\sup_{f \in \mathcal{F}} |P_n f - P f|$ est la même que celle de $\sup_{f \in \mathcal{F}} |P_n' f - P f|$.
 Donc, $\mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}} \left| P_n' f - P f \right| > \frac{\epsilon}{2} \right) = \mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}} \left| P_n f - P f \right| > \frac{\epsilon}{2} \right)$.
 Ceci ne nous aide pas directement. L'argument correct est le suivant :
-Soit $A = \left\{ \sup_{f \in \mathcal{F}} \left| P_n f - P f \right| > \epsilon \right\}$.
+Soit $A = \left\lbrace \sup_{f \in \mathcal{F}} \left| P_n f - P f \right| > \epsilon \right\rbrace$.
 Pour tout $f \in \mathcal{F}$, $P f = \mathbb{E}_{X'}[f(X_1')]$.
 $$ \mathbb{P}_{\Omega}(A) = \mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n f(X_i) - \mathbb{E}_{X'}[f(X_i')] \right| > \epsilon \right) $$
 En conditionnant sur $X_1, \dots, X_n$, et en utilisant l'inégalité de Markov pour la variable aléatoire $\sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n f(X_i) - \mathbb{E}_{X'}[f(X_i')] \right|$ :
@@ -126,12 +126,12 @@ L'argument standard est le suivant :
 $$ \mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}} \left| P_n f - P f \right| > \epsilon \right) \le \mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}} \left| P_n f - P_n' f \right| > \frac{\epsilon}{2} \right) $$
 Ceci est justifié par le fait que si $\sup_{f \in \mathcal{F}} |P_n f - P f| > \epsilon$, alors il existe $f_0 \in \mathcal{F}$ tel que $|P_n f_0 - P f_0| > \epsilon$.
 Alors, $|P_n f_0 - P f_0| \le |P_n f_0 - P_n' f_0| + |P_n' f_0 - P f_0|$.
-Si l'événement $\left\{ \sup_{f \in \mathcal{F}} \left| P_n f - P_n' f \right| \le \frac{\epsilon}{2} \right\}$ se produit, alors pour tout $f \in \mathcal{F}$, $|P_n f - P_n' f| \le \frac{\epsilon}{2}$.
+Si l'événement $\left\lbrace \sup_{f \in \mathcal{F}} \left| P_n f - P_n' f \right| \le \frac{\epsilon}{2} \right\rbrace$ se produit, alors pour tout $f \in \mathcal{F}$, $|P_n f - P_n' f| \le \frac{\epsilon}{2}$.
 Dans ce cas, $|P_n f - P f| \le |P_n f - P_n' f| + |P_n' f - P f| \le \frac{\epsilon}{2} + |P_n' f - P f|$.
 Si $\sup_{f \in \mathcal{F}} |P_n f - P f| > \epsilon$, alors il existe $f_0$ tel que $|P_n f_0 - P f_0| > \epsilon$.
 Alors $\epsilon < |P_n f_0 - P f_0| \le |P_n f_0 - P_n' f_0| + |P_n' f_0 - P f_0|$.
 Si $\sup_{f \in \mathcal{F}} |P_n f - P_n' f| \le \epsilon/2$, alors $\epsilon < \epsilon/2 + |P_n' f_0 - P f_0|$, ce qui implique $|P_n' f_0 - P f_0| > \epsilon/2$.
-Donc, l'événement $\left\{ \sup_{f \in \mathcal{F}} \left| P_n f - P f \right| > \epsilon \right\}$ est inclus dans l'union des événements $\left\{ \sup_{f \in \mathcal{F}} \left| P_n f - P_n' f \right| > \frac{\epsilon}{2} \right\}$ et $\left\{ \sup_{f \in \mathcal{F}} \left| P_n' f - P f \right| > \frac{\epsilon}{2} \right\}$.
+Donc, l'événement $\left\lbrace \sup_{f \in \mathcal{F}} \left| P_n f - P f \right| > \epsilon \right\rbrace$ est inclus dans l'union des événements $\left\lbrace \sup_{f \in \mathcal{F}} \left| P_n f - P_n' f \right| > \frac{\epsilon}{2} \right\rbrace$ et $\left\lbrace \sup_{f \in \mathcal{F}} \left| P_n' f - P f \right| > \frac{\epsilon}{2} \right\rbrace$.
 $$ \mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}} \left| P_n f - P f \right| > \epsilon \right) \le \mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}} \left| P_n f - P_n' f \right| > \frac{\epsilon}{2} \right) + \mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}} \left| P_n' f - P f \right| > \frac{\epsilon}{2} \right) $$
 Par symétrie (les $X_i$ et $X_i'$ sont i.i.d.), $\mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}} \left| P_n' f - P f \right| > \frac{\epsilon}{2} \right) = \mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}} \left| P_n f - P f \right| > \frac{\epsilon}{2} \right)$.
 Ceci ne mène pas au résultat souhaité.
@@ -145,8 +145,8 @@ En effet, $f(X_i) - f(X_i')$ a la même distribution que $f(X_i') - f(X_i) = -(f
 Donc, la distribution de $(f(X_1) - f(X_1'), \dots, f(X_n) - f(X_n'))$ est la même que celle de $(\sigma_1(f(X_1) - f(X_1')), \dots, \sigma_n(f(X_n) - f(X_n')))$ pour des $\sigma_i$ fixés.
 Plus précisément, conditionnellement aux $X_i$ et $X_i'$, la distribution de $\sum_{i=1}^n (f(X_i) - f(X_i'))$ est la même que celle de $\sum_{i=1}^n \sigma_i (f(X_i) - f(X_i'))$.
 $$ \mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n (f(X_i) - f(X_i')) \right| > \frac{\epsilon}{2} \right) $$
-$$ = \mathbb{E}_{\Omega, X, X'}\left[ \mathbf{1}_{\left\{ \sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n (f(X_i) - f(X_i')) \right| > \frac{\epsilon}{2} \right\}} \right] $$
-$$ = \mathbb{E}_{\Omega, X, X'}\left[ \mathbb{E}_{\sigma}\left[ \mathbf{1}_{\left\{ \sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n \sigma_i (f(X_i) - f(X_i')) \right| > \frac{\epsilon}{2} \right\}} \right] \right] $$
+$$ = \mathbb{E}_{\Omega, X, X'}\left[ \mathbf{1}_{\left\lbrace \sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n (f(X_i) - f(X_i')) \right| > \frac{\epsilon}{2} \right\rbrace} \right] $$
+$$ = \mathbb{E}_{\Omega, X, X'}\left[ \mathbb{E}_{\sigma}\left[ \mathbf{1}_{\left\lbrace \sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n \sigma_i (f(X_i) - f(X_i')) \right| > \frac{\epsilon}{2} \right\rbrace} \right] \right] $$
 $$ = \mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n \sigma_i (f(X_i) - f(X_i')) \right| > \frac{\epsilon}{2} \right) $$
 Par l'inégalité du triangle, $\left| \frac{1}{n} \sum_{i=1}^n \sigma_i (f(X_i) - f(X_i')) \right| \le \left| \frac{1}{n} \sum_{i=1}^n \sigma_i f(X_i) \right| + \left| \frac{1}{n} \sum_{i=1}^n \sigma_i f(X_i') \right|$.
 Donc, si $\sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n \sigma_i (f(X_i) - f(X_i')) \right| > \frac{\epsilon}{2}$, alors soit $\sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n \sigma_i f(X_i) \right| > \frac{\epsilon}{4}$ ou $\sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n \sigma_i f(X_i') \right| > \frac{\epsilon}{4}$.
@@ -293,7 +293,7 @@ $$ \mathbb{P}_{\Omega}\left( \sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i
 *Note du Professeur Émérite :* La preuve de ce théorème est un résultat majeur en théorie des processus empiriques (souvent attribué à Talagrand, Massart, ou Vapnik et Chervonenkis eux-mêmes). Elle combine le lemme de Sauer-Shelah, les bornes sur les nombres de recouvrement, et des techniques de concentration avancées (comme la méthode de la "concentration de la mesure" ou des inégalités de Talagrand). Pour un exercice de niveau 9/10, nous allons *esquisser* la preuve en utilisant une combinaison de discrétisation et d'inégalités de Hoeffding, en reconnaissant que les détails fins de l'optimisation des bornes sont très complexes.
 
 **Esquisse de preuve du Théorème III.1 (pour atteindre le niveau 9/10) :**
-Soit $E = \left\{ \sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n \sigma_i f(X_i) \right| > \epsilon \right\}$.
+Soit $E = \left\lbrace \sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_{i=1}^n \sigma_i f(X_i) \right| > \epsilon \right\rbrace$.
 Nous voulons borner $\mathbb{P}_{\Omega}(E)$.
 Conditionnons sur $X_1, \dots, X_n$. Soit $P_n$ la mesure empirique.
 Pour un $\delta \in (0,1]$, soit $\mathcal{F}_\delta = \{f_1, \dots, f_M\}$ une $\delta$-net de $\mathcal{F}$ sous la métrique $d_{P_n}$, avec $M = N(\delta, \mathcal{F}, d_{P_n})$.
@@ -431,9 +431,9 @@ Puisque $\epsilon > 0$, $C_0 > 0$, $d > 0$, on a $\frac{\epsilon^2}{C_0 d} > 0$.
 Donc, $r = \exp\left( - \frac{\epsilon^2}{C_0 d} \right) < 1$.
 La série géométrique converge si $|r| < 1$. Ici, $0 < r < 1$, donc la série converge.
 $$ C_0 \sum_{n=1}^{\infty} r^n = C_0 \frac{r}{1-r} = C_0 \frac{\exp\left( - \frac{\epsilon^2}{C_0 d} \right)}{1 - \exp\left( - \frac{\epsilon^2}{C_0 d} \right)} < \infty $$
-Puisque la somme des probabilités des événements $\left\{ \sup_{f \in \mathcal{F}} \left| P_n f - P f \right| > \epsilon \right\}$ est finie pour tout $\epsilon > 0$, le Lemme de Borel-Cantelli implique que :
-$$ \mathbb{P}_{\Omega}\left( \limsup_{n \to \infty} \left\{ \sup_{f \in \mathcal{F}} \left| P_n f - P f \right| > \epsilon \right\} \right) = 0 $$
-Ceci signifie que pour tout $\epsilon > 0$, l'événement $\left\{ \sup_{f \in \mathcal{F}} \left| P_n f - P f \right| > \epsilon \right\}$ ne se produit qu'un nombre fini de fois presque sûrement.
+Puisque la somme des probabilités des événements $\left\lbrace \sup_{f \in \mathcal{F}} \left| P_n f - P f \right| > \epsilon \right\rbrace$ est finie pour tout $\epsilon > 0$, le Lemme de Borel-Cantelli implique que :
+$$ \mathbb{P}_{\Omega}\left( \limsup_{n \to \infty} \left\lbrace \sup_{f \in \mathcal{F}} \left| P_n f - P f \right| > \epsilon \right\rbrace \right) = 0 $$
+Ceci signifie que pour tout $\epsilon > 0$, l'événement $\left\lbrace \sup_{f \in \mathcal{F}} \left| P_n f - P f \right| > \epsilon \right\rbrace$ ne se produit qu'un nombre fini de fois presque sûrement.
 Par conséquent, $\sup_{f \in \mathcal{F}} \left| P_n f - P f \right| \xrightarrow{n \to \infty} 0$ presque sûrement.
 
 **Conclusion :**

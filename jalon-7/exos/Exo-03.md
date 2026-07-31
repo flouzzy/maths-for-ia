@@ -14,13 +14,13 @@ Nous poursuivons notre exploration des fondements de l'algèbre linéaire avec c
 Soit $\mathcal{M}_2(\mathbb{R})$ l'ensemble des matrices carrées d'ordre 2 à coefficients réels. Nous savons que $\mathcal{M}_2(\mathbb{R})$ est un $\mathbb{R}$-espace vectoriel muni de l'addition matricielle et de la multiplication par un scalaire réel.
 
 Considérons l'ensemble $E$ défini comme suit :
-$$E = \left\{ M \in \mathcal{M}_2(\mathbb{R}) \mid \text{Tr}(M) = 0 \right\}$$
+$$E = \left\lbrace M \in \mathcal{M}_2(\mathbb{R}) \mid \text{Tr}(M) = 0 \right\rbrace$$
 où $\text{Tr}(M)$ désigne la trace de la matrice $M$.
 
 **Question 1 :** Démontrer que $E$ est un sous-espace vectoriel de $\mathcal{M}_2(\mathbb{R})$.
 
 **Question 2 :** Soit $S$ la famille de matrices suivante :
-$$S = \left\{ M_1, M_2, M_3 \right\} = \left\{ \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}, \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}, \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix} \right\}$$
+$$S = \left\lbrace M_1, M_2, M_3 \right\rbrace = \left\lbrace \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}, \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}, \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix} \right\rbrace$$
 **a)** La famille $S$ est-elle une famille génératrice de $E$ ? Justifier votre réponse de manière exhaustive.
 **b)** La famille $S$ est-elle une famille libre dans $E$ ? Justifier votre réponse de manière exhaustive.
 **c)** La famille $S$ est-elle une base de $E$ ? Si oui, quelle est la dimension de $E$ ?
@@ -86,7 +86,7 @@ Puisque les trois conditions sont satisfaites, nous pouvons conclure que $E$ est
 
 ---
 
-**Question 2 : Analyse de la famille $S = \left\{ M_1, M_2, M_3 \right\}$.**
+**Question 2 : Analyse de la famille $S = \left\lbrace M_1, M_2, M_3 \right\rbrace$.**
 
 Nous avons $M_1 = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$, $M_2 = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}$, $M_3 = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}$.
 Vérifions d'abord que ces matrices appartiennent bien à $E$ :

@@ -6,7 +6,7 @@ tags: [Supremum, Infimum, Bornes, Nombres Réels]
 ## Énoncé de l'Exercice 01
 
 Soit l'ensemble $A$ défini par :
-$$ A = \left\{ (-1)^n \cdot \frac{n+1}{n} \mid n \in \mathbb{N}^* \right\} $$
+$$ A = \left\lbrace (-1)^n \cdot \frac{n+1}{n} \mid n \in \mathbb{N}^* \right\rbrace $$
 où $\mathbb{N}^* = \{1, 2, 3, \ldots\}$ désigne l'ensemble des entiers naturels non nuls.
 
 1.  Déterminer, si elles existent, la borne supérieure $\sup A$ et la borne inférieure $\inf A$ de l'ensemble $A$ dans $\mathbb{R}$.

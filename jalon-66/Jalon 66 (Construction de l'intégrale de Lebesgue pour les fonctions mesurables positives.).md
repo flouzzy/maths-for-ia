@@ -41,7 +41,7 @@ Soit $\mathcal{M}_+$ l'ensemble des fonctions mesurables de $X$ dans $[0, +\inft
 
 > **Définition 2 (Intégrale de Lebesgue) :**
 > Pour tout $f \in \mathcal{M}_+$, on définit :
-> $$\int_X f d\mu = \sup \left\{ \int_X s d\mu \mid s \in \mathcal{S}_+, 0 \le s \le f \right\}$$
+> $$\int_X f d\mu = \sup \left\lbrace \int_X s d\mu \mid s \in \mathcal{S}_+, 0 \le s \le f \right\rbrace$$
 > Cette valeur appartient à $[0, +\infty]$. Si elle est finie, on dit que $f$ est **intégrable**.
 
 ### C. Propriétés Immédiates

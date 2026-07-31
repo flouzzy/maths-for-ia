@@ -299,7 +299,7 @@ Le produit est bien la matrice identité $I_2$, ce qui confirme l'exactitude de 
         Nous pouvons factoriser le paramètre $z$ :
         $$X = z \begin{pmatrix} 1 \\ -2 \\ 1 \end{pmatrix}$$
         Le noyau de $M$ est l'ensemble de tous les multiples scalaires du vecteur $\begin{pmatrix} 1 \\ -2 \\ 1 \end{pmatrix}$.
-        Par conséquent, une base du noyau de $M$ est le singleton $\left\{ \begin{pmatrix} 1 \\ -2 \\ 1 \end{pmatrix} \right\}$.
+        Par conséquent, une base du noyau de $M$ est le singleton $\left\lbrace \begin{pmatrix} 1 \\ -2 \\ 1 \end{pmatrix} \right\rbrace$.
 
     3.  **Vérification du théorème du rang :**
         Le théorème du rang stipule que pour une application linéaire $f: E \to F$ (ou une matrice $A \in \mathcal{M}_{n,p}(\mathbb{K})$), on a $\dim E = \dim(\ker f) + \dim(\text{Im } f)$.

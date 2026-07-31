@@ -54,7 +54,7 @@ Les valeurs prises par $\cos\left(\frac{n\pi}{3}\right)$ dépendent de $n \pmod 
 *   Si $n = 6k+5$, alors $\cos\left(\frac{(6k+5)\pi}{3}\right) = \cos\left(2k\pi + \frac{5\pi}{3}\right) = \cos\left(\frac{5\pi}{3}\right) = \frac{1}{2}$.
 
 Les valeurs prises par $\cos\left(\frac{n\pi}{3}\right)$ sont donc cycliquement $1, \frac{1}{2}, -\frac{1}{2}, -1, -\frac{1}{2}, \frac{1}{2}, \dots$.
-L'ensemble des valeurs prises par $\cos\left(\frac{n\pi}{3}\right)$ est fini : $\left\{1, \frac{1}{2}, -\frac{1}{2}, -1\right\}$.
+L'ensemble des valeurs prises par $\cos\left(\frac{n\pi}{3}\right)$ est fini : $\left\lbrace1, \frac{1}{2}, -\frac{1}{2}, -1\right\rbrace$.
 
 Considérons maintenant le comportement du terme $\frac{n}{n+1}$ lorsque $n \to \infty$.
 Nous avons $\lim_{n \to \infty} \frac{n}{n+1} = \lim_{n \to \infty} \frac{1}{1 + \frac{1}{n}} = 1$.
@@ -103,13 +103,13 @@ Nous allons construire des sous-suites de $(u_n)$ en sélectionnant les indices 
     Donc, $\lim_{k \to \infty} u_{6k+5} = 1 \cdot \frac{1}{2} = \frac{1}{2}$.
     Cette valeur d'adhérence est déjà trouvée ($L_2$).
 
-L'ensemble des valeurs d'adhérence que nous avons identifiées est $\left\{1, \frac{1}{2}, -\frac{1}{2}, -1\right\}$.
+L'ensemble des valeurs d'adhérence que nous avons identifiées est $\left\lbrace1, \frac{1}{2}, -\frac{1}{2}, -1\right\rbrace$.
 
 Pour montrer que ce sont *toutes* les valeurs d'adhérence, considérons une sous-suite quelconque $(u_{\phi(k)})$ de $(u_n)$ qui converge vers une limite $L$.
 Nous avons $u_{\phi(k)} = \frac{\phi(k)}{\phi(k)+1} \cos\left(\frac{\phi(k)\pi}{3}\right)$.
 Puisque $\lim_{k \to \infty} \frac{\phi(k)}{\phi(k)+1} = 1$ (car $\phi(k) \to \infty$ lorsque $k \to \infty$), et que $\lim_{k \to \infty} u_{\phi(k)} = L$, il s'ensuit que la sous-suite $\left(\cos\left(\frac{\phi(k)\pi}{3}\right)\right)_{k \in \mathbb{N}}$ doit également converger vers $L$.
-Or, la suite $\left(\cos\left(\frac{n\pi}{3}\right)\right)_{n \in \mathbb{N}}$ ne prend qu'un nombre fini de valeurs : $\left\{1, \frac{1}{2}, -\frac{1}{2}, -1\right\}$.
+Or, la suite $\left(\cos\left(\frac{n\pi}{3}\right)\right)_{n \in \mathbb{N}}$ ne prend qu'un nombre fini de valeurs : $\left\lbrace1, \frac{1}{2}, -\frac{1}{2}, -1\right\rbrace$.
 Si une sous-suite d'une suite ne prenant qu'un nombre fini de valeurs converge, alors sa limite doit nécessairement être l'une de ces valeurs.
-Par conséquent, $L$ doit appartenir à l'ensemble $\left\{1, \frac{1}{2}, -\frac{1}{2}, -1\right\}$.
+Par conséquent, $L$ doit appartenir à l'ensemble $\left\lbrace1, \frac{1}{2}, -\frac{1}{2}, -1\right\rbrace$.
 
-L'ensemble de toutes les valeurs d'adhérence de la suite $(u_n)$ est donc exactement $\left\{1, \frac{1}{2}, -\frac{1}{2}, -1\right\}$.
+L'ensemble de toutes les valeurs d'adhérence de la suite $(u_n)$ est donc exactement $\left\lbrace1, \frac{1}{2}, -\frac{1}{2}, -1\right\rbrace$.

@@ -104,7 +104,7 @@ La probabilité du membre de droite de $(*)$ peut s'écrire comme $\mathbb{E}_{\
 
 Pour un $\mathbf{X}$ fixé, considérons la quantité $\sup_{C \in \mathcal{C}} \left|\frac{1}{n} \sum_{i=1}^n \epsilon_i \mathbf{1}_C(X_i)\right|$.
 Soit $\mathcal{C}_{\mathbf{X}}$ l'ensemble des vecteurs binaires induits par $\mathcal{C}$ sur les points $X_1, \dots, X_n$ :
-$$ \mathcal{C}_{\mathbf{X}} := \left\{ (\mathbf{1}_C(X_1), \dots, \mathbf{1}_C(X_n)) \in \{0,1\}^n : C \in \mathcal{C} \right\} $$
+$$ \mathcal{C}_{\mathbf{X}} := \left\lbrace (\mathbf{1}_C(X_1), \dots, \mathbf{1}_C(X_n)) \in \{0,1\}^n : C \in \mathcal{C} \right\rbrace $$
 Le supremum sur $C \in \mathcal{C}$ peut être remplacé par un maximum sur les vecteurs $v \in \mathcal{C}_{\mathbf{X}}$ :
 $$ \sup_{C \in \mathcal{C}} \left|\frac{1}{n} \sum_{i=1}^n \epsilon_i \mathbf{1}_C(X_i)\right| = \max_{v \in \mathcal{C}_{\mathbf{X}}} \left|\frac{1}{n} \sum_{i=1}^n \epsilon_i v_i\right| $$
 Nous utilisons l'inégalité d'union (union bound) :

@@ -32,7 +32,7 @@ La fonction de valeur optimale $V^*(s)$ est définie par $V^*(s) = \sup_\pi V^\p
 ### B. Théorèmes, Propositions & Lemmes
 > **Théorème de Contraction de Bellman :**
 > Soit $\mathcal{B}(\mathcal{S})$ l'espace de Banach des fonctions mesurables bornées de $\mathcal{S}$ dans $\mathbb{R}$, muni de la norme du supremum $\|V\|_\infty = \sup_{s \in \mathcal{S}} |V(s)|$. L'opérateur de Bellman optimal $T^* : \mathcal{B}(\mathcal{S}) \to \mathcal{B}(\mathcal{S})$ défini par :
-> $$ (T^*V)(s) = \sup_{a \in \mathcal{A}} \left\{ R(s, a) + \gamma \int_{\mathcal{S}} V(s') P(ds' | s, a) \right\} $$
+> $$ (T^*V)(s) = \sup_{a \in \mathcal{A}} \left\lbrace R(s, a) + \gamma \int_{\mathcal{S}} V(s') P(ds' | s, a) \right\rbrace $$
 > est une contraction stricte de rapport $\gamma$ pour la norme $\|\cdot\|_\infty$.
 
 ## 3. Le Noyau Dur : Démonstrations Pas-à-Pas

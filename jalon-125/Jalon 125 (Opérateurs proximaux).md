@@ -29,7 +29,7 @@ Soit $f : \mathbb{R}^n \to \mathbb{R}$ une fonction convexe, propre et inférieu
 
 > **Définition 1 (Opérateur Proximal) :**
 > Pour tout $\lambda > 0$, l'opérateur proximal de $f$ est l'application $prox_{\lambda f} : \mathbb{R}^n \to \mathbb{R}^n$ définie par :
-> $$prox_{\lambda f}(x) = \text{argmin}_{y \in \mathbb{R}^n} \left\{ f(y) + \frac{1}{2\lambda} \|y - x\|^2 \right\}$$
+> $$prox_{\lambda f}(x) = \text{argmin}_{y \in \mathbb{R}^n} \left\lbrace f(y) + \frac{1}{2\lambda} \|y - x\|^2 \right\rbrace$$
 > Le point $prox_{\lambda f}(x)$ est l'unique point qui réalise le meilleur compromis entre minimiser $f$ et rester proche de $x$.
 
 ### B. Propriétés Fondamentales

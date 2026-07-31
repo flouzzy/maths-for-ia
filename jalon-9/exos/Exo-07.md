@@ -154,8 +154,8 @@ Puisque $\dim(\text{Im}(\Phi_A)) = 2 \neq \dim(E) = 4$, l'application linéaire 
 Puisqu'elle n'est ni injective ni surjective, $\Phi_A$ n'est pas bijective.
 
 **Résumé des conclusions :**
-*   Le noyau de $\Phi_A$ est $\text{Ker}(\Phi_A) = \left\{ \begin{pmatrix} a & b \\ 0 & a \end{pmatrix} \mid a, b \in \mathbb{R} \right\}$, de dimension 2.
-*   L'image de $\Phi_A$ est $\text{Im}(\Phi_A) = \left\{ \begin{pmatrix} x & y \\ 0 & -x \end{pmatrix} \mid x, y \in \mathbb{R} \right\}$, de dimension 2.
+*   Le noyau de $\Phi_A$ est $\text{Ker}(\Phi_A) = \left\lbrace \begin{pmatrix} a & b \\ 0 & a \end{pmatrix} \mid a, b \in \mathbb{R} \right\rbrace$, de dimension 2.
+*   L'image de $\Phi_A$ est $\text{Im}(\Phi_A) = \left\lbrace \begin{pmatrix} x & y \\ 0 & -x \end{pmatrix} \mid x, y \in \mathbb{R} \right\rbrace$, de dimension 2.
 *   $\Phi_A$ n'est pas injective car $\text{Ker}(\Phi_A) \neq \{0\}$.
 *   $\Phi_A$ n'est pas surjective car $\text{Im}(\Phi_A) \neq E$.
 *   $\Phi_A$ n'est pas bijective.

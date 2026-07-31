@@ -136,9 +136,9 @@ $$ \sup_{f \in \mathcal{F}} \left( \mathbb{E}[f] - \mathbb{E}_n[f] \right) \leq 
   4. Ici, $a=0, b=1$. Donc pour la fonction $f_j$ fixe :
      $$ \mathbb{P}\left( \mathbb{E}[f_j] - \mathbb{E}_n[f_j] \geq \epsilon \right) \leq \exp(-2n\epsilon^2) $$
   5. Nous cherchons à évaluer la probabilité que le supremum sur toute la classe dépasse $\epsilon$. Le supremum dépasse $\epsilon$ si et seulement si *au moins une* fonction $f_j$ dépasse $\epsilon$.
-     $$ \mathbb{P}\left( \sup_{f \in \mathcal{F}} (\mathbb{E}[f] - \mathbb{E}_n[f]) \geq \epsilon \right) = \mathbb{P}\left( \bigcup_{j=1}^k \left\{ \mathbb{E}[f_j] - \mathbb{E}_n[f_j] \geq \epsilon \right\} \right) $$
+     $$ \mathbb{P}\left( \sup_{f \in \mathcal{F}} (\mathbb{E}[f] - \mathbb{E}_n[f]) \geq \epsilon \right) = \mathbb{P}\left( \bigcup_{j=1}^k \left\lbrace \mathbb{E}[f_j] - \mathbb{E}_n[f_j] \geq \epsilon \right\rbrace \right) $$
   6. Par l'inégalité de Boole (ou borne de l'union), la probabilité d'une union est majorée par la somme des probabilités :
-     $$ \mathbb{P}\left( \bigcup_{j=1}^k \left\{ \mathbb{E}[f_j] - \mathbb{E}_n[f_j] \geq \epsilon \right\} \right) \leq \sum_{j=1}^k \mathbb{P}\left( \mathbb{E}[f_j] - \mathbb{E}_n[f_j] \geq \epsilon \right) $$
+     $$ \mathbb{P}\left( \bigcup_{j=1}^k \left\lbrace \mathbb{E}[f_j] - \mathbb{E}_n[f_j] \geq \epsilon \right\rbrace \right) \leq \sum_{j=1}^k \mathbb{P}\left( \mathbb{E}[f_j] - \mathbb{E}_n[f_j] \geq \epsilon \right) $$
   7. En utilisant la majoration issue de Hoeffding pour chaque terme :
      $$ \mathbb{P}\left( \sup_{f \in \mathcal{F}} (\mathbb{E}[f] - \mathbb{E}_n[f]) \geq \epsilon \right) \leq \sum_{j=1}^k \exp(-2n\epsilon^2) = k \exp(-2n\epsilon^2) $$
   8. Nous voulons que cette probabilité d'échec soit inférieure à un seuil $\delta > 0$. Posons :
