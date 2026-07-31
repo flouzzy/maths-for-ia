@@ -2,7 +2,7 @@
 
 ## Énoncé
 Soit $A = (a_{i,j}) \in \mathcal{M}_n(\mathbb{C})$. Le théorème de Gershgorin stipule que toutes les valeurs propres de $A$ sont situées dans l'union des disques de Gershgorin définis par :
-$$D_i = \left\{ z \in \mathbb{C} \ \Bigg| \ |z - a_{i,i}| \leq \sum_{j \neq i} |a_{i,j}| \right\}$$
+$$D_i = \left\lbrace z \in \mathbb{C} \ \Bigg| \ |z - a_{i,i}| \leq \sum_{j \neq i} |a_{i,j}| \right\rbrace$$
 Démontrer rigoureusement ce théorème, et l'appliquer à la matrice $A = \begin{pmatrix} 10 & 0.1 & -0.2 \\ 0.5 & 3 & 0 \\ 0.1 & 0 & -2 \end{pmatrix}$ pour localiser ses valeurs propres.
 
 ## Solution Complète

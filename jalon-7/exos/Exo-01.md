@@ -5,7 +5,7 @@ title: "Exo 1 - Jalon 7"
 Nous allons explorer les fondements des espaces vectoriels abstraits à travers un exemple structurellement profond. L'objectif de cet exercice est de consolider votre compréhension des définitions clés telles que l'espace vectoriel, la famille libre, la famille génératrice, la base et la dimension, dans un cadre qui s'éloigne des espaces $\mathbb{R}^n$ habituels.
 
 Soit $\mathcal{M}_2(\mathbb{R})$ l'ensemble des matrices carrées d'ordre 2 à coefficients réels. Nous considérons l'ensemble $E$ défini comme suit :
-$$ E = \left\{ M \in \mathcal{M}_2(\mathbb{R}) \mid \text{Tr}(M) = 0 \right\} $$
+$$ E = \left\lbrace M \in \mathcal{M}_2(\mathbb{R}) \mid \text{Tr}(M) = 0 \right\rbrace $$
 où $\text{Tr}(M)$ désigne la trace de la matrice $M$. Rappelons que pour une matrice $M = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \in \mathcal{M}_2(\mathbb{R})$, sa trace est donnée par $\text{Tr}(M) = a+d$.
 
 1.  Démontrez que $E$ est un sous-espace vectoriel de $\mathcal{M}_2(\mathbb{R})$. Précisez le corps de base et les opérations vectorielles considérées.

@@ -85,7 +85,7 @@ $$ \begin{cases} \alpha = 0 \\ \beta = 0 \\ -\alpha - \beta = 0 \end{cases} $$
 Les deux premières équations impliquent directement $\alpha = 0$ et $\beta = 0$. La troisième équation est alors satisfaite : $-(0) - (0) = 0$.
 Puisque la seule combinaison linéaire de $v_1$ et $v_2$ qui donne le vecteur nul est celle où tous les scalaires sont nuls, les vecteurs $v_1$ et $v_2$ sont linéairement indépendants.
 
-Par conséquent, une base du noyau de $f_1$ est $\mathcal{B}_{\ker(f_1)} = \left\{ \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix}, \begin{pmatrix} 0 \\ 1 \\ -1 \end{pmatrix} \right\}$.
+Par conséquent, une base du noyau de $f_1$ est $\mathcal{B}_{\ker(f_1)} = \left\lbrace \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix}, \begin{pmatrix} 0 \\ 1 \\ -1 \end{pmatrix} \right\rbrace$.
 La dimension du noyau de $f_1$ est $\dim(\ker(f_1)) = 2$.
 
 #### Détermination d'une base de l'image $\text{Im}(f_1)$
@@ -101,7 +101,7 @@ $$ \text{Im}(f_1) = \text{Vect}\left(\begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix}\r
 Soit le vecteur $w_1 = \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix}$. Ce vecteur est non nul. Un ensemble constitué d'un unique vecteur non nul est toujours linéairement indépendant.
 Ainsi, le vecteur $w_1$ forme à lui seul une base de l'image de $f_1$.
 
-Par conséquent, une base de l'image de $f_1$ est $\mathcal{B}_{\text{Im}(f_1)} = \left\{ \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix} \right\}$.
+Par conséquent, une base de l'image de $f_1$ est $\mathcal{B}_{\text{Im}(f_1)} = \left\lbrace \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix} \right\rbrace$.
 La dimension de l'image de $f_1$ est $\dim(\text{Im}(f_1)) = 1$.
 
 ### Question 3 : Vérification du théorème du rang dans tous les cas

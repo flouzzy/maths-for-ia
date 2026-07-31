@@ -30,7 +30,7 @@ Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 
 > **Définition 1 (Espace $\mathcal{L}^p$) :**
 > Pour $1 \le p < +\infty$, on définit l'ensemble des fonctions mesurables dont la puissance $p$-ième est intégrable :
-> $$\mathcal{L}^p(\mu) = \left\{ f : X \to \mathbb{K} \mid f \text{ est mesurable et } \int_X |f|^p d\mu < +\infty \right\}$$
+> $$\mathcal{L}^p(\mu) = \left\lbrace f : X \to \mathbb{K} \mid f \text{ est mesurable et } \int_X |f|^p d\mu < +\infty \right\rbrace$$
 > On définit également $\|f\|_p = \left( \int_X |f|^p d\mu \right)^{1/p}$.
 
 > **Définition 2 (Espace $\mathcal{L}^\infty$) :**

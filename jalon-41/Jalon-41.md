@@ -39,7 +39,7 @@ $$(H) : \forall t \in I, \quad y'(t) + a(t)y(t) = 0$$
 **Théorème 1 (Espace des solutions de (H)) :**
 L'ensemble $\mathcal{S}_H$ des solutions de l'équation homogène $(H)$ sur $I$ est un $\mathbb{K}$-espace vectoriel de dimension 1.
 Explicitement, si $A : I \to \mathbb{K}$ est une primitive quelconque de la fonction continue $a$ sur $I$, alors :
-$$\mathcal{S}_H = \left\{ t \mapsto C e^{-A(t)} \mathrel{\Big|} C \in \mathbb{K} \right\}$$
+$$\mathcal{S}_H = \left\lbrace t \mapsto C e^{-A(t)} \mathrel{\Big|} C \in \mathbb{K} \right\rbrace$$
 
 **Exemple d'application immédiate :**
 Considérons l'équation $(H) : y'(t) + \frac{2t}{1+t^2} y(t) = 0$ sur $I = \mathbb{R}$.

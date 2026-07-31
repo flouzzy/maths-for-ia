@@ -70,7 +70,7 @@ Une suite périodique ne prend qu'un nombre fini de valeurs. L'ensemble des vale
 *   $n=11: u_{11} = \sin(11\pi/3) + \cos(11\pi/2) = \sin(5\pi/3) + \cos(3\pi/2) = -\frac{\sqrt{3}}{2} + 0 = -\frac{\sqrt{3}}{2}$. (Identique à $u_5$)
 
 L'ensemble des valeurs prises par la suite est donc :
-$$S = \left\{1, \frac{\sqrt{3}}{2}, \frac{\sqrt{3}}{2}-1, 0, -\frac{\sqrt{3}}{2}+1, -\frac{\sqrt{3}}{2}, -1, \frac{\sqrt{3}}{2}+1, -\frac{\sqrt{3}}{2}-1\right\}$$
+$$S = \left\lbrace1, \frac{\sqrt{3}}{2}, \frac{\sqrt{3}}{2}-1, 0, -\frac{\sqrt{3}}{2}+1, -\frac{\sqrt{3}}{2}, -1, \frac{\sqrt{3}}{2}+1, -\frac{\sqrt{3}}{2}-1\right\rbrace$$
 En ordonnant ces valeurs de manière croissante pour plus de clarté :
 *   $-\frac{\sqrt{3}}{2}-1 \approx -1.866$
 *   $-1$
@@ -83,13 +83,13 @@ En ordonnant ces valeurs de manière croissante pour plus de clarté :
 *   $\frac{\sqrt{3}}{2}+1 \approx 1.866$
 
 Toutes ces valeurs sont distinctes. L'ensemble $A$ des valeurs d'adhérence de la suite $(u_n)_{n \in \mathbb{N}}$ est donc :
-$$A = \left\{-\frac{\sqrt{3}}{2}-1, -1, -\frac{\sqrt{3}}{2}, \frac{\sqrt{3}}{2}-1, 0, -\frac{\sqrt{3}}{2}+1, \frac{\sqrt{3}}{2}, 1, \frac{\sqrt{3}}{2}+1\right\}$$
+$$A = \left\lbrace-\frac{\sqrt{3}}{2}-1, -1, -\frac{\sqrt{3}}{2}, \frac{\sqrt{3}}{2}-1, 0, -\frac{\sqrt{3}}{2}+1, \frac{\sqrt{3}}{2}, 1, \frac{\sqrt{3}}{2}+1\right\rbrace$$
 
 ### Question 3 : Déterminer $\limsup_{n \to \infty} u_n$ et $\liminf_{n \to \infty} u_n$.
 
 Pour une suite bornée, la limite supérieure est la plus grande des valeurs d'adhérence, et la limite inférieure est la plus petite des valeurs d'adhérence.
 D'après la question précédente, l'ensemble $A$ des valeurs d'adhérence est :
-$$A = \left\{-\frac{\sqrt{3}}{2}-1, -1, -\frac{\sqrt{3}}{2}, \frac{\sqrt{3}}{2}-1, 0, -\frac{\sqrt{3}}{2}+1, \frac{\sqrt{3}}{2}, 1, \frac{\sqrt{3}}{2}+1\right\}$$
+$$A = \left\lbrace-\frac{\sqrt{3}}{2}-1, -1, -\frac{\sqrt{3}}{2}, \frac{\sqrt{3}}{2}-1, 0, -\frac{\sqrt{3}}{2}+1, \frac{\sqrt{3}}{2}, 1, \frac{\sqrt{3}}{2}+1\right\rbrace$$
 La plus grande valeur dans cet ensemble est $\frac{\sqrt{3}}{2}+1$.
 La plus petite valeur dans cet ensemble est $-\frac{\sqrt{3}}{2}-1$.
 

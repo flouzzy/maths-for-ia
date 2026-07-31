@@ -101,7 +101,7 @@ Ceci montre que chaque élément de $S_u$ est une valeur d'adhérence de $(x_n)$
 Par conséquent, $S_u \subseteq A$.
 
 En combinant les deux inclusions ($A \subseteq S_u$ et $S_u \subseteq A$), nous concluons que l'ensemble des valeurs d'adhérence de $(x_n)$ est $A = S_u$.
-$$A = \left\{1, \frac{1}{2}, -\frac{1}{2}, -1\right\}$$
+$$A = \left\lbrace1, \frac{1}{2}, -\frac{1}{2}, -1\right\rbrace$$
 
 ## Question 3 : La suite $(x_n)$ converge-t-elle ?
 

@@ -6,7 +6,7 @@ tags: [Supremum, Définition, Nombres Réels]
 ## Énoncé de l'Exercice 02
 
 Soit l'ensemble $A$ défini par :
-$$ A = \left\{ 1 - \frac{1}{n} \mid n \in \mathbb{N}^* \right\} $$
+$$ A = \left\lbrace 1 - \frac{1}{n} \mid n \in \mathbb{N}^* \right\rbrace $$
 où $\mathbb{N}^* = \{1, 2, 3, \ldots\}$ désigne l'ensemble des entiers naturels non nuls.
 
 Démontrer rigoureusement, en utilisant la définition formelle de la borne supérieure, que $\sup A = 1$.

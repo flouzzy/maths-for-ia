@@ -163,7 +163,7 @@ La suite $(z_n)$ est la suite constante $(\beta, \beta, \beta, \dots)$.
 L'ensemble des valeurs d'adhérence de $(z_n)$ est $S_z = \{\beta\}$.
 
 L'ensemble des valeurs d'adhérence de $(x_n)$ est $S = S_y \cup S_z = \{\alpha, \beta\}$.
-Soit $S = \left\{ \frac{\sqrt{5}-1}{2}, \frac{3-\sqrt{5}}{2} \right\}$.
+Soit $S = \left\lbrace \frac{\sqrt{5}-1}{2}, \frac{3-\sqrt{5}}{2} \right\rbrace$.
 
 ##### c. Pour $x_0 = 0$, déterminer l'ensemble $S$. Justifier rigoureusement.
 

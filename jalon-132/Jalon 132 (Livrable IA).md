@@ -54,7 +54,7 @@ $$ \mathcal{L}(x, \mu, \nu) = f(x) + \sum_{i=1}^m \mu_i c_i(x) + \sum_{j=1}^p \n
 
 **Opérateur proximal :**
 Pour un paramètre de pas $\gamma > 0$, l'opérateur proximal associé à la fonction non-lisse $g$ est l'application $\text{prox}_{\gamma g} : \mathbb{R}^d \to \mathbb{R}^d$ définie par le problème d'optimisation strictement convexe :
-$$ \text{prox}_{\gamma g}(v) = \arg\min_{x \in \mathbb{R}^d} \left\{ g(x) + \frac{1}{2\gamma} \|x - v\|_2^2 \right\} $$
+$$ \text{prox}_{\gamma g}(v) = \arg\min_{x \in \mathbb{R}^d} \left\lbrace g(x) + \frac{1}{2\gamma} \|x - v\|_2^2 \right\rbrace $$
 
 ### B. Théorèmes, Propositions & Lemmes
 
@@ -118,7 +118,7 @@ Démontrer que l'opérateur proximal associé à la fonction $g(x) = \lambda \|x
 * *Analyse de l'énoncé :* La fonction $g(x) = \lambda \sum_{i=1}^d |x_i|$ est séparable. L'opérateur proximal se découple donc sur chaque dimension $i$. Nous nous ramenons à la dimension 1 : on cherche $\text{prox}_{\gamma \lambda |\cdot|}(v_i)$ pour $v_i \in \mathbb{R}$.
 * *Résolution pas-à-pas :*
 Le problème 1D s'écrit :
-$$ x_i^* = \arg\min_{x_i \in \mathbb{R}} \left\{ \lambda |x_i| + \frac{1}{2\gamma} (x_i - v_i)^2 \right\} $$
+$$ x_i^* = \arg\min_{x_i \in \mathbb{R}} \left\lbrace \lambda |x_i| + \frac{1}{2\gamma} (x_i - v_i)^2 \right\rbrace $$
 La fonctionnelle à minimiser, notons-la $J(x_i)$, est strictement convexe et coercive, elle admet donc un unique minimum caractérisé par $0 \in \partial J(x_i^*)$.
 Calculons ce sous-différentiel :
 $$ \partial J(x_i) = \lambda \partial |x_i| + \frac{1}{\gamma} (x_i - v_i) $$

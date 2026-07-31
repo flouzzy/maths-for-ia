@@ -29,7 +29,7 @@ Soit $\mathcal{P}(\mathbb{R})$ l'ensemble de toutes les parties de $\mathbb{R}$.
 
 > **Définition 1 (Mesure extérieure de Lebesgue) :**
 > Pour toute partie $A \subset \mathbb{R}$, on définit $\lambda^*(A)$ par :
-> $$\lambda^*(A) = \inf \left\{ \sum_{n=1}^\infty \ell(I_n) \mid A \subset \bigcup_{n=1}^\infty I_n \right\}$$
+> $$\lambda^*(A) = \inf \left\lbrace \sum_{n=1}^\infty \ell(I_n) \mid A \subset \bigcup_{n=1}^\infty I_n \right\rbrace$$
 > où les $I_n = ]a_n, b_n[$ sont des intervalles ouverts et $\ell(I_n) = b_n - a_n$.
 
 $\lambda^*$ est définie sur TOUT $\mathcal{P}(\mathbb{R})$, mais elle n'est pas $\sigma$-additive sur tout $\mathcal{P}(\mathbb{R})$. On doit restreindre son domaine.
