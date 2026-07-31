@@ -17,7 +17,7 @@ Si certains sont multiples, l'idée est de les "perturber" légèrement pour for
 Pour tout entier $k \in \mathbb{N}^*$, on construit une matrice $T_k$ triangulaire supérieure telle que :
 - Les éléments strictement au-dessus de la diagonale de $T_k$ sont les mêmes que ceux de $T$.
 - Les éléments diagonaux de $T_k$ sont notés $\lambda_{1}^{(k)}, \ldots, \lambda_{n}^{(k)}$, choisis de sorte que :
-  1. $\forall i \in \llbracket 1, n \rrbracket, \lim_{k \to +\infty} \lambda_{i}^{(k)} = \lambda_i$
+  1. $\forall i \in \mathopen{[\![} 1, n \mathclose{]\!]}, \lim_{k \to +\infty} \lambda_{i}^{(k)} = \lambda_i$
   2. $\forall k \in \mathbb{N}^*, \forall i \neq j, \lambda_{i}^{(k)} \neq \lambda_{j}^{(k)}$
 
 Un tel choix est toujours possible. Par exemple, on peut poser $\lambda_{i}^{(k)} = \lambda_i + \frac{\epsilon_i}{k}$, où les $\epsilon_i \in \mathbb{C}$ sont choisis de manière astucieuse pour éviter toute coïncidence (l'ensemble des coïncidences est un nombre fini de droites dans $\mathbb{C}$, on peut s'y soustraire).

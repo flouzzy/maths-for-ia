@@ -320,6 +320,8 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+### 2026-07-31-audit
+- [[#2026-07-31-audit|2026-07-31]] : [Audit & Weekly Compilation] - Jalon 30 - Trigonalisation d'endomorphismes et décomposition de Dunford. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-21-audit
 - [[#2026-07-21-audit|2026-07-21]] : [Audit & Weekly Compilation] - Jalon 22 - Séries de fonctions, convergence normale, théorèmes d'interversion limite-intégrale et limite-dérivée. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-15-audit
