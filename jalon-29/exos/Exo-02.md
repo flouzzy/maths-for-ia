@@ -1,10 +1,10 @@
-# Exercice 2 - Difficulté ★★☆☆☆
+# Exercice 2 - Difficulté \quad $\bigstar$$\bigstar$$\star$$\star$$\star$
 
 ## Énoncé
 On reprend la matrice $A = \begin{pmatrix} 4 & 1 \\ 2 & 3 \end{pmatrix}$ de l'exercice précédent, dont le spectre est $\text{Sp}(A) = \{2, 5\}$.
 Déterminer une base pour chacun des sous-espaces propres $E_2(A)$ et $E_5(A)$.
 
-## Solution Complète (Zéro Ellipse)
+## Solution Complète
 
 **Étape 1 : Sous-espace propre associé à $\lambda = 2$**
 Par définition, $E_2(A) = \ker(A - 2I_2)$.

@@ -1,11 +1,11 @@
-# Exercice 3 - Difficulté ★★☆☆☆
+# Exercice 3 - Difficulté \quad $\bigstar$$\bigstar$$\star$$\star$$\star$
 
 ## Énoncé
 Soit la matrice $B$ définie par :
 $$B = \begin{pmatrix} 2 & 1 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 3 \end{pmatrix}$$
 Déterminer si la matrice $B$ est diagonalisable en justifiant rigoureusement chaque étape.
 
-## Solution Complète (Zéro Ellipse)
+## Solution Complète
 
 **Étape 1 : Calcul du polynôme caractéristique**
 Par définition, $\chi_B(X) = \det(X I_3 - B)$.

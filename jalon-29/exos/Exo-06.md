@@ -1,10 +1,10 @@
-# Exercice 6 - Difficulté ★★★★☆
+# Exercice 6 - Difficulté \quad $\bigstar$$\bigstar$$\bigstar$$\bigstar$$\star$
 
 ## Énoncé
 Soit la matrice $A = \begin{pmatrix} 5 & -4 \\ 2 & -1 \end{pmatrix}$.
 Calculer $A^n$ pour tout $n \in \mathbb{N}$ à l'aide de sa diagonalisation.
 
-## Solution Complète (Zéro Ellipse)
+## Solution Complète
 
 **Étape 1 : Éléments propres**
 $\chi_A(X) = \det\begin{pmatrix} X-5 & 4 \\ -2 & X+1 \end{pmatrix} = (X-5)(X+1) - (-8) = X^2 - 4X - 5 + 8 = X^2 - 4X + 3$.

@@ -1,11 +1,11 @@
-# Exercice 1 - Difficulté ★☆☆☆☆
+# Exercice 1 - Difficulté \quad $\bigstar$$\star$$\star$$\star$$\star$
 
 ## Énoncé
 Soit la matrice $A$ définie dans $\mathcal{M}_2(\mathbb{R})$ par :
 $$A = \begin{pmatrix} 4 & 1 \\ 2 & 3 \end{pmatrix}$$
 Déterminer le polynôme caractéristique de $A$, ses valeurs propres, et en déduire si elle est diagonalisable.
 
-## Solution Complète (Zéro Ellipse)
+## Solution Complète
 
 **Étape 1 : Calcul du polynôme caractéristique**
 Par définition, $\chi_A(X) = \det(X I_2 - A)$.

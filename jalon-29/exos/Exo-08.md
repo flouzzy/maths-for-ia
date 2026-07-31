@@ -1,10 +1,10 @@
-# Exercice 8 - Difficulté ★★★★★
+# Exercice 8 - Difficulté \quad $\bigstar$$\bigstar$$\bigstar$$\bigstar$$\bigstar$
 
 ## Énoncé
 Soient $A, B \in \mathcal{M}_n(\mathbb{R})$ deux matrices diagonalisables qui commutent (i.e. $AB = BA$).
 Démontrer que tout sous-espace propre de $A$ est stable par $B$. En déduire, en supposant que les valeurs propres de $A$ sont simples, qu'il existe une base de vecteurs propres communs, rendant $A$ et $B$ simultanément diagonalisables.
 
-## Solution Complète (Zéro Ellipse)
+## Solution Complète
 
 **Étape 1 : Stabilité des sous-espaces propres**
 Soit $\lambda$ une valeur propre de $A$, et $E_\lambda = \ker(A - \lambda I)$ le sous-espace propre associé.

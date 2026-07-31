@@ -1,11 +1,11 @@
-# Exercice 5 - Difficulté ★★★☆☆
+# Exercice 5 - Difficulté \quad $\bigstar$$\bigstar$$\bigstar$$\star$$\star$
 
 ## Énoncé
 Soit la matrice de rotation d'angle $\pi/2$ :
 $$R = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$$
 Montrer que $R$ n'est pas diagonalisable sur $\mathbb{R}$, mais qu'elle l'est sur $\mathbb{C}$. Déterminer ses éléments propres dans $\mathbb{C}$.
 
-## Solution Complète (Zéro Ellipse)
+## Solution Complète
 
 **Étape 1 : Polynôme caractéristique**
 $\chi_R(X) = \det\begin{pmatrix} X & 1 \\ -1 & X \end{pmatrix} = X^2 - (-1)(1) = X^2 + 1$.

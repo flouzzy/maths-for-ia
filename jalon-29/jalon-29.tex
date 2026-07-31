@@ -1,0 +1,732 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1 {ù}{{\`u}}1 {ç}{{\c{c}}}1
+}
+
+\title{\Huge ÉLÉMENTS PROPRES, POLYNÔME CARACTÉRISTIQUE, SOUS-ESPACES PROPRES ET CRITÈRES DE DIAGONALISABILITÉ \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+\section{Genèse et Motivation}
+
+L'algèbre linéaire a forgé les outils permettant d'appréhender des transformations vectorielles complexes. Cependant, analyser l'action d'un endomorphisme $f$ sur un espace vectoriel $E$ de dimension $n$ en considérant toutes les directions possibles s'avère rapidement inextricable. La motivation historique derrière la théorie de la réduction des endomorphismes (initiée notamment par Augustin-Louis Cauchy et Karl Weierstrass) naît d'une question d'une élégante simplicité : *existe-t-il des directions privilégiées dans l'espace que la transformation $f$ laisse globalement invariantes, c'est-à-dire où elle se comporte comme une simple homothétie ?*
+
+Imaginez déformer un objet élastique : bien que la plupart des points subissent des rotations et des cisaillements complexes, certaines directions fondamentales (les axes principaux de déformation) sont simplement étirées ou contractées. Les vecteurs non nuls portés par ces axes sont appelés \textbf{vecteurs propres}, et le facteur d'étirement associé est la \textbf{valeur propre}.
+
+L'objectif ultime de cette quête est la \textbf{diagonalisation} : trouver une base de l'espace entièrement constituée de ces vecteurs privilégiés. Dans une telle base, la matrice de l'endomorphisme devient diagonale, ce qui rend le calcul de ses puissances ou de son exponentielle (fondamental en dynamique des systèmes ou en IA, via les chaînes de Markov et l'analyse en composantes principales) immédiat.
+
+\section{Formalisation}
+
+\subsection{Valeurs Propres, Vecteurs Propres et Spectre}
+
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1.5, >=stealth]
+    % Axes
+    \draw[->, gray!50] (-2,0) -- (2,0) node[right] {$x$};
+    \draw[->, gray!50] (0,-1) -- (0,2) node[above] {$y$};
+
+    % Eigenvector 1
+    \draw[->, thick, blue] (0,0) -- (1,0.5) node[above right] {$v_1$};
+    \draw[->, dashed, blue] (0,0) -- (2,1) node[above right] {$\lambda_1 v_1$};
+
+    % Eigenvector 2
+    \draw[->, thick, red] (0,0) -- (-1,1) node[above left] {$v_2$};
+    \draw[->, dashed, red] (0,0) -- (-0.5,0.5) node[above left] {$\lambda_2 v_2$};
+
+    % Non-eigenvector
+    \draw[->, thick, green!70!black] (0,0) -- (1,1.5) node[right] {$w$};
+    \draw[->, dashed, green!70!black] (0,0) -- (-0.5,1.2) node[left] {$f(w)$};
+\end{tikzpicture}
+\caption{Action d'un endomorphisme sur des vecteurs propres ($v_1, v_2$) et un vecteur quelconque ($w$). Les vecteurs propres gardent leur direction.}
+\end{figure}
+
+
+\textbf{Énoncé}
+Soit $E$ un $\mathbb{K}$-espace vectoriel et $f \in \mathcal{L}(E)$.
+Un scalaire $\lambda \in \mathbb{K}$ est une \textbf{valeur propre} de $f$ s'il existe un vecteur $x \in E \setminus \{0_E\}$ tel que :
+$$f(x) = \lambda x$$
+Le vecteur $x$ est alors appelé \textbf{vecteur propre} de $f$ associé à la valeur propre $\lambda$.
+L'ensemble des valeurs propres de $f$ est appelé le \textbf{spectre} de $f$, noté $\text{Sp}(f)$.
+
+\textbf{Description}
+\begin{itemize}
+\item $E$ : Un espace vectoriel sur un corps $\mathbb{K}$ (typiquement $\mathbb{R}$ ou $\mathbb{C}$).
+\item $f$ : Un endomorphisme de $E$, c'est-à-dire une application linéaire de $E$ dans $E$.
+\item $\lambda \in \mathbb{K}$ : Un scalaire. Il représente le facteur d'homothétie. Remarquons que $\lambda$ peut être nul.
+\item $x \in E \setminus \{0_E\}$ : Le vecteur propre. La condition $x \neq 0_E$ est \textbf{cruciale}. Si l'on acceptait le vecteur nul, l'équation $f(0_E) = \lambda 0_E$ serait vérifiée pour n'importe quel $\lambda \in \mathbb{K}$ (car $f(0_E)=0_E$), ce qui viderait le concept de tout intérêt.
+\end{itemize}
+\textbf{Exemples}
+\begin{itemize}
+\item *Exemple trivial* : Soit $f = \text{Id}_E$, l'application identité. Pour tout $x \neq 0_E$, $f(x) = x = 1 \cdot x$. Donc $1$ est la seule valeur propre, et tout vecteur non nul est vecteur propre. $\text{Sp}(f) = \{1\}$.
+\item *Exemple complexe* : Dans $\mathbb{R}[X]$, soit $D : P \mapsto P'$ l'opérateur de dérivation. Si $D(P) = \lambda P$, alors $P' = \lambda P$. Les seules solutions polynomiales sont les polynômes constants si $\lambda = 0$, et aucune solution non nulle si $\lambda \neq 0$. Le spectre est $\text{Sp}(D) = \{0\}$, et les vecteurs propres sont les polynômes constants non nuls.
+\end{itemize}
+\textbf{Contre-exemples}
+Une matrice ou un endomorphisme peut n'avoir \textbf{aucune} valeur propre (spectre vide) si le corps de base n'est pas algébriquement clos. Par exemple, la matrice de rotation d'angle $\pi/2$ dans $\mathbb{R}^2$ : $R = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$. Son équation $R x = \lambda x$ n'a aucune solution non nulle dans $\mathbb{R}^2$. Ainsi, $\text{Sp}_{\mathbb{R}}(R) = \emptyset$. Cependant, si l'on se place dans $\mathbb{C}$, $\text{Sp}_{\mathbb{C}}(R) = \{i, -i\}$. Le choix du corps $\mathbb{K}$ est donc déterminant.
+
+\subsection{Sous-espaces Propres}
+
+\textbf{Énoncé}
+Soit $\lambda \in \text{Sp}(f)$. Le \textbf{sous-espace propre} associé à $\lambda$, noté $E_\lambda(f)$, est défini par :
+$$E_\lambda(f) = \ker(f - \lambda \text{Id}_E) = \{x \in E \mid f(x) = \lambda x\}$$
+
+\textbf{Description}
+\begin{itemize}
+\item $E_\lambda(f)$ : C'est l'ensemble constitué de tous les vecteurs propres associés à $\lambda$, \textbf{auquel on rajoute le vecteur nul} $0_E$.
+\item $f - \lambda \text{Id}_E$ : Un endomorphisme de $E$. Le fait que $\lambda$ soit une valeur propre équivaut exactement à dire que cet endomorphisme n'est pas injectif (son noyau n'est pas réduit à $\{0_E\}$).
+\end{itemize}
+\textbf{Théorème}
+1. $E_\lambda(f)$ est un sous-espace vectoriel de $E$.
+2. $\dim(E_\lambda(f)) \geq 1$ (car $\lambda$ est valeur propre, donc $\exists x \neq 0, x \in E_\lambda(f)$).
+
+\subsection{Le Polynôme Caractéristique}
+
+\textbf{Énoncé}
+Pour $E$ de dimension finie $n$, soit $A$ la matrice de $f$ dans une base donnée. Le \textbf{polynôme caractéristique} de $f$, noté $\chi_f(X)$, est défini par :
+$$\chi_f(X) = \det(X I_n - A)$$
+
+\textbf{Description}
+\begin{itemize}
+\item $X$ : Une indéterminée. $\chi_f(X)$ est un polynôme de degré $n$ à coefficients dans $\mathbb{K}$.
+\item $I_n$ : La matrice identité d'ordre $n$.
+\item $\det$ : Le déterminant. Comme le déterminant de deux matrices semblables est identique, $\chi_f(X)$ ne dépend pas du choix de la base.
+\item Racines : Les racines de $\chi_f$ dans $\mathbb{K}$ sont \textbf{exactement} les valeurs propres de $f$.
+\end{itemize}
+\textbf{Multiplicité}
+Soit $\lambda_0$ une racine de $\chi_f$.
+\begin{itemize}
+\item \textbf{Multiplicité algébrique $m(\lambda_0)$} : C'est l'ordre de multiplicité de la racine $\lambda_0$ dans le polynôme $\chi_f(X)$.
+\item \textbf{Multiplicité géométrique} : C'est la dimension du sous-espace propre associé, $\dim(E_{\lambda_0}(f))$.
+\item \textbf{Théorème fondamental} : $1 \leq \dim(E_{\lambda_0}(f)) \leq m(\lambda_0)$.
+\end{itemize}
+\subsection{Critères de Diagonalisabilité}
+
+\textbf{Énoncé}
+Un endomorphisme $f \in \mathcal{L}(E)$ est \textbf{diagonalisable} s'il existe une base de $E$ formée de vecteurs propres de $f$.
+
+\textbf{Théorème Principal}
+Un endomorphisme $f$ de dimension finie est diagonalisable si et seulement si :
+1. Son polynôme caractéristique $\chi_f(X)$ est \textbf{scindé} sur $\mathbb{K}$ (c'est-à-dire qu'il se factorise complètement en produit de polynômes de degré 1).
+2. Pour chaque valeur propre $\lambda$, la dimension de son sous-espace propre est égale à sa multiplicité algébrique : $\dim(E_\lambda(f)) = m(\lambda)$.
+
+\section{Preuve de l'Indépendance des Sous-espaces Propres}
+
+\textbf{Théorème :} Des vecteurs propres associés à des valeurs propres deux à deux distinctes forment une famille libre.
+
+\textbf{Démonstration (par récurrence sur la taille de la famille) :}
+Soit $f \in \mathcal{L}(E)$.
+Montrons par récurrence sur $k \in \mathbb{N}^*$ la proposition $\mathcal{P}(k)$ : "Toute famille $(x_1, \dots, x_k)$ de vecteurs propres de $f$ associés à des valeurs propres $(\lambda_1, \dots, \lambda_k)$ deux à deux distinctes est libre."
+
+\textbf{Initialisation ($k=1$) :}
+Soit $x_1$ un vecteur propre associé à $\lambda_1$. Par définition d'un vecteur propre, $x_1 \neq 0_E$.
+Toute famille constituée d'un seul vecteur non nul est libre.
+Donc $\mathcal{P}(1)$ est vraie.
+
+\textbf{Hérédité :}
+Soit $k \geq 1$. Supposons $\mathcal{P}(k)$ vraie.
+Soit $(x_1, \dots, x_{k+1})$ une famille de vecteurs propres associés à des valeurs propres $(\lambda_1, \dots, \lambda_{k+1})$ deux à deux distinctes.
+Montrons que cette famille est libre.
+Soient $\alpha_1, \dots, \alpha_{k+1} \in \mathbb{K}$ tels que :
+$(1) \quad \sum_{i=1}^{k+1} \alpha_i x_i = 0_E$
+
+Appliquons l'endomorphisme $f$ à l'équation $(1)$ :
+$f\left(\sum_{i=1}^{k+1} \alpha_i x_i\right) = f(0_E)$
+Par linéarité de $f$ :
+$\sum_{i=1}^{k+1} \alpha_i f(x_i) = 0_E$
+Comme $x_i$ est vecteur propre pour $\lambda_i$, on a $f(x_i) = \lambda_i x_i$. Ainsi :
+$(2) \quad \sum_{i=1}^{k+1} \alpha_i \lambda_i x_i = 0_E$
+
+Multiplions maintenant l'équation $(1)$ par $\lambda_{k+1}$ :
+$(3) \quad \sum_{i=1}^{k+1} \alpha_i \lambda_{k+1} x_i = 0_E$
+
+Soustrayons l'équation $(3)$ à l'équation $(2)$ :
+$\sum_{i=1}^{k+1} \alpha_i \lambda_i x_i - \sum_{i=1}^{k+1} \alpha_i \lambda_{k+1} x_i = 0_E$
+En factorisant par $\alpha_i x_i$, on obtient :
+$\sum_{i=1}^{k+1} \alpha_i (\lambda_i - \lambda_{k+1}) x_i = 0_E$
+
+Séparons le terme pour $i=k+1$ :
+$\sum_{i=1}^{k} \alpha_i (\lambda_i - \lambda_{k+1}) x_i + \alpha_{k+1}(\lambda_{k+1} - \lambda_{k+1})x_{k+1} = 0_E$
+Ce qui donne :
+$\sum_{i=1}^{k} \alpha_i (\lambda_i - \lambda_{k+1}) x_i = 0_E$
+
+Or, par hypothèse de récurrence $\mathcal{P}(k)$, la famille $(x_1, \dots, x_k)$ est libre.
+Par conséquent, tous les coefficients de cette combinaison linéaire sont nuls :
+$\forall i \in \{1, \dots, k\}, \quad \alpha_i (\lambda_i - \lambda_{k+1}) = 0$
+
+Comme les valeurs propres sont deux à deux distinctes, $\forall i \in \{1, \dots, k\}, \lambda_i \neq \lambda_{k+1}$, ce qui implique $\lambda_i - \lambda_{k+1} \neq 0$.
+Dans le corps $\mathbb{K}$ (sans diviseur de zéro), on en déduit immédiatement que :
+$\forall i \in \{1, \dots, k\}, \quad \alpha_i = 0$
+
+On remplace ces valeurs nulles dans l'équation initiale $(1)$ :
+$\sum_{i=1}^{k} 0 \cdot x_i + \alpha_{k+1} x_{k+1} = 0_E$
+Soit $\alpha_{k+1} x_{k+1} = 0_E$.
+Comme $x_{k+1}$ est un vecteur propre, il est non nul ($x_{k+1} \neq 0_E$).
+On en conclut que $\alpha_{k+1} = 0$.
+
+Puisque $\alpha_1 = \dots = \alpha_k = \alpha_{k+1} = 0$, la famille $(x_1, \dots, x_{k+1})$ est libre.
+La proposition $\mathcal{P}(k+1)$ est vraie.
+
+\textbf{Conclusion :} Par le principe de récurrence, pour tout $k \geq 1$, toute famille de $k$ vecteurs propres associés à des valeurs propres distinctes est libre.
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 - Difficulté \quad $\bigstar$$\star$$\star$$\star$$\star$}
+
+\subsubsection*{Énoncé}
+Soit la matrice $A$ définie dans $\mathcal{M}_2(\mathbb{R})$ par :
+$$A = \begin{pmatrix} 4 & 1 \\ 2 & 3 \end{pmatrix}$$
+Déterminer le polynôme caractéristique de $A$, ses valeurs propres, et en déduire si elle est diagonalisable.
+
+\subsubsection*{Solution Complète}
+
+\textbf{Étape 1 : Calcul du polynôme caractéristique}
+Par définition, $\chi_A(X) = \det(X I_2 - A)$.
+$$\chi_A(X) = \det\begin{pmatrix} X - 4 & -1 \\ -2 & X - 3 \end{pmatrix}$$
+$$\chi_A(X) = (X-4)(X-3) - (-1)(-2)$$
+$$\chi_A(X) = X^2 - 7X + 12 - 2 = X^2 - 7X + 10$$
+
+\textbf{Étape 2 : Détermination des valeurs propres}
+Cherchons les racines de $\chi_A(X) = 0$.
+Le discriminant est $\Delta = (-7)^2 - 4 \times 1 \times 10 = 49 - 40 = 9$.
+Les racines sont :
+$$\lambda_1 = \frac{7 - 3}{2} = 2 \quad \text{et} \quad \lambda_2 = \frac{7 + 3}{2} = 5$$
+Les valeurs propres sont donc $\text{Sp}(A) = \{2, 5\}$.
+
+\textbf{Étape 3 : Conclusion sur la diagonalisabilité}
+La matrice $A$ est de taille $2 \times 2$. Son polynôme caractéristique est scindé et possède exactement $2$ racines distinctes (les valeurs propres sont simples, de multiplicité algébrique $1$).
+D'après le cours, un endomorphisme en dimension $n$ admettant $n$ valeurs propres distinctes est diagonalisable. Donc $A$ est diagonalisable.
+
+
+\subsection*{Exercice 2 - Difficulté \quad $\bigstar$$\bigstar$$\star$$\star$$\star$}
+
+\subsubsection*{Énoncé}
+On reprend la matrice $A = \begin{pmatrix} 4 & 1 \\ 2 & 3 \end{pmatrix}$ de l'exercice précédent, dont le spectre est $\text{Sp}(A) = \{2, 5\}$.
+Déterminer une base pour chacun des sous-espaces propres $E_2(A)$ et $E_5(A)$.
+
+\subsubsection*{Solution Complète}
+
+\textbf{Étape 1 : Sous-espace propre associé à $\lambda = 2$}
+Par définition, $E_2(A) = \ker(A - 2I_2)$.
+Soit $U = \begin{pmatrix} x \\ y \end{pmatrix} \in \ker(A - 2I_2)$.
+$$(A - 2I_2)U = 0 \iff \begin{pmatrix} 2 & 1 \\ 2 & 1 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}$$
+Ce qui donne l'unique équation (les deux lignes sont colinéaires) :
+$$2x + y = 0 \iff y = -2x$$
+Ainsi, les vecteurs de $E_2(A)$ s'écrivent $\begin{pmatrix} x \\ -2x \end{pmatrix} = x \begin{pmatrix} 1 \\ -2 \end{pmatrix}$.
+Une base de $E_2(A)$ est donc formée par le vecteur $v_1 = \begin{pmatrix} 1 \\ -2 \end{pmatrix}$. La dimension de $E_2(A)$ est $1$.
+
+\textbf{Étape 2 : Sous-espace propre associé à $\lambda = 5$}
+Par définition, $E_5(A) = \ker(A - 5I_2)$.
+Soit $U = \begin{pmatrix} x \\ y \end{pmatrix} \in \ker(A - 5I_2)$.
+$$(A - 5I_2)U = 0 \iff \begin{pmatrix} -1 & 1 \\ 2 & -2 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}$$
+Ce qui donne l'équation (la seconde ligne est $-2$ fois la première) :
+$$-x + y = 0 \iff y = x$$
+Ainsi, les vecteurs de $E_5(A)$ s'écrivent $\begin{pmatrix} x \\ x \end{pmatrix} = x \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+Une base de $E_5(A)$ est donc formée par le vecteur $v_2 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$. La dimension de $E_5(A)$ est $1$.
+
+
+\subsection*{Exercice 3 - Difficulté \quad $\bigstar$$\bigstar$$\star$$\star$$\star$}
+
+\subsubsection*{Énoncé}
+Soit la matrice $B$ définie par :
+$$B = \begin{pmatrix} 2 & 1 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 3 \end{pmatrix}$$
+Déterminer si la matrice $B$ est diagonalisable en justifiant rigoureusement chaque étape.
+
+\subsubsection*{Solution Complète}
+
+\textbf{Étape 1 : Calcul du polynôme caractéristique}
+Par définition, $\chi_B(X) = \det(X I_3 - B)$.
+$$\chi_B(X) = \det\begin{pmatrix} X - 2 & -1 & 0 \\ 0 & X - 2 & 0 \\ 0 & 0 & X - 3 \end{pmatrix}$$
+La matrice est triangulaire supérieure, le déterminant est donc égal au produit de ses éléments diagonaux :
+$$\chi_B(X) = (X-2)^2(X-3)$$
+
+\textbf{Étape 2 : Spectres et multiplicités algébriques}
+Le polynôme caractéristique est scindé. Les racines sont :
+\begin{itemize}
+\item $\lambda_1 = 2$, avec une multiplicité algébrique $m(2) = 2$.
+\item $\lambda_2 = 3$, avec une multiplicité algébrique $m(3) = 1$.
+\end{itemize}
+Le spectre est $\text{Sp}(B) = \{2, 3\}$.
+
+\textbf{Étape 3 : Dimension des sous-espaces propres}
+Pour qu'une matrice soit diagonalisable, il faut que la dimension de chaque sous-espace propre soit égale à la multiplicité algébrique de la valeur propre associée.
+Pour la valeur propre simple $\lambda_2 = 3$, on sait que $\dim(E_3(B)) = 1$ car $1 \leq \dim(E_3(B)) \leq m(3) = 1$.
+Il faut donc vérifier la dimension de $E_2(B) = \ker(B - 2I_3)$.
+Soit $U = \begin{pmatrix} x \\ y \\ z \end{pmatrix} \in \ker(B - 2I_3)$.
+$$(B - 2I_3)U = 0 \iff \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}$$
+Ce qui équivaut au système :
+$$\begin{cases} y = 0 \\ z = 0 \end{cases}$$
+La variable $x$ est libre. Les vecteurs de $E_2(B)$ s'écrivent donc $U = \begin{pmatrix} x \\ 0 \\ 0 \end{pmatrix} = x \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}$.
+Ainsi, $E_2(B) = \text{Vect}\left(\begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}\right)$.
+La dimension du sous-espace propre associé à la valeur propre $2$ est $\dim(E_2(B)) = 1$.
+
+\textbf{Étape 4 : Conclusion}
+Puisque $\dim(E_2(B)) = 1 \neq 2 = m(2)$, la multiplicité géométrique est strictement inférieure à la multiplicité algébrique.
+Par conséquent, la matrice $B$ \textbf{n'est pas diagonalisable}.
+
+
+\subsection*{Exercice 4 - Difficulté \quad $\bigstar$$\bigstar$$\bigstar$$\star$$\star$}
+
+\subsubsection*{Énoncé}
+Soit la matrice $C \in \mathcal{M}_3(\mathbb{R})$ définie par :
+$$C = \begin{pmatrix} 1 & -1 & 0 \\ -1 & 2 & -1 \\ 0 & -1 & 1 \end{pmatrix}$$
+Sans calculer directement le polynôme caractéristique complet avec la règle de Sarrus, trouver une racine évidente, factoriser, puis trouver la matrice de passage $P$.
+
+\subsubsection*{Solution Complète}
+
+\textbf{Étape 1 : Racine évidente du polynôme caractéristique}
+Notons que la somme des colonnes de $C$ donne le vecteur nul.
+$\begin{pmatrix} 1 \\ -1 \\ 0 \end{pmatrix} + \begin{pmatrix} -1 \\ 2 \\ -1 \end{pmatrix} + \begin{pmatrix} 0 \\ -1 \\ 1 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}$
+Cela signifie que $C \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix} = 0 \cdot \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix}$.
+Ainsi, $0$ est une valeur propre de $C$ et le vecteur $v_1 = (1, 1, 1)^T$ est un vecteur propre associé.
+
+\textbf{Étape 2 : Calcul complet de $\chi_C(X)$}
+On a $\chi_C(X) = \det(X I_3 - C)$.
+$$\chi_C(X) = \det\begin{pmatrix} X-1 & 1 & 0 \\ 1 & X-2 & 1 \\ 0 & 1 & X-1 \end{pmatrix}$$
+Comme on sait que $0$ est racine, $\chi_C(X)$ est divisible par $X$. Développons par rapport à la première colonne :
+$$\chi_C(X) = (X-1) \det\begin{pmatrix} X-2 & 1 \\ 1 & X-1 \end{pmatrix} - 1 \det\begin{pmatrix} 1 & 0 \\ 1 & X-1 \end{pmatrix} + 0$$
+$$\chi_C(X) = (X-1) [ (X-2)(X-1) - 1 ] - 1 [ 1(X-1) - 0 ]$$
+$$\chi_C(X) = (X-1)[(X^2 - 3X + 2 - 1) - 1]$$
+$$\chi_C(X) = (X-1)[X^2 - 3X] = X(X-1)(X-3)$$
+Les valeurs propres sont simples : $\text{Sp}(C) = \{0, 1, 3\}$. La matrice est diagonalisable.
+
+\textbf{Étape 3 : Calcul des autres sous-espaces propres}
+\begin{itemize}
+\item Pour $\lambda = 1$ : on cherche $u = (x,y,z)^T$ tel que $(C-I)u = 0$.
+\end{itemize}
+$\begin{pmatrix} 0 & -1 & 0 \\ -1 & 1 & -1 \\ 0 & -1 & 0 \end{pmatrix} \begin{pmatrix} x \\ y \\ z \end{pmatrix} = 0 \implies y = 0 \text{ et } -x - z = 0 \implies z = -x$.
+$v_2 = \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix}$.
+
+\begin{itemize}
+\item Pour $\lambda = 3$ : on cherche $u = (x,y,z)^T$ tel que $(C-3I)u = 0$.
+\end{itemize}
+$\begin{pmatrix} -2 & -1 & 0 \\ -1 & -1 & -1 \\ 0 & -1 & -2 \end{pmatrix} \begin{pmatrix} x \\ y \\ z \end{pmatrix} = 0 \implies -2x = y \text{ et } -2z = y \implies x = z$.
+Si $x=1$, alors $z=1$ et $y=-2$.
+$v_3 = \begin{pmatrix} 1 \\ -2 \\ 1 \end{pmatrix}$.
+
+\textbf{Étape 4 : Matrice de passage}
+La matrice de passage, dont les colonnes sont les vecteurs propres, est :
+$$P = \begin{pmatrix} 1 & 1 & 1 \\ 1 & 0 & -2 \\ 1 & -1 & 1 \end{pmatrix}$$
+On a alors $C = P \begin{pmatrix} 0 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 3 \end{pmatrix} P^{-1}$.
+
+
+\subsection*{Exercice 5 - Difficulté \quad $\bigstar$$\bigstar$$\bigstar$$\star$$\star$}
+
+\subsubsection*{Énoncé}
+Soit la matrice de rotation d'angle $\pi/2$ :
+$$R = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$$
+Montrer que $R$ n'est pas diagonalisable sur $\mathbb{R}$, mais qu'elle l'est sur $\mathbb{C}$. Déterminer ses éléments propres dans $\mathbb{C}$.
+
+\subsubsection*{Solution Complète}
+
+\textbf{Étape 1 : Polynôme caractéristique}
+$\chi_R(X) = \det\begin{pmatrix} X & 1 \\ -1 & X \end{pmatrix} = X^2 - (-1)(1) = X^2 + 1$.
+
+\textbf{Étape 2 : Étude sur le corps $\mathbb{R}$}
+Le polynôme $X^2 + 1$ n'admet aucune racine réelle.
+$\forall X \in \mathbb{R}, X^2 + 1 > 0$.
+Ainsi, $\text{Sp}_{\mathbb{R}}(R) = \emptyset$.
+Comme le polynôme caractéristique n'est pas scindé sur $\mathbb{R}$, la matrice $R$ \textbf{n'est pas diagonalisable sur $\mathbb{R}$}.
+
+\textbf{Étape 3 : Étude sur le corps $\mathbb{C}$}
+Dans $\mathbb{C}$, le polynôme se factorise : $X^2 + 1 = (X - i)(X + i)$.
+Le polynôme caractéristique est scindé à racines simples. Les valeurs propres sont $i$ et $-i$.
+Donc $R$ est \textbf{diagonalisable sur $\mathbb{C}$}.
+
+\textbf{Étape 4 : Calcul des vecteurs propres complexes}
+\begin{itemize}
+\item Pour $\lambda_1 = i$ : $\ker(R - iI_2)$.
+\end{itemize}
+$\begin{pmatrix} -i & -1 \\ 1 & -i \end{pmatrix} \begin{pmatrix} z_1 \\ z_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \implies -i z_1 - z_2 = 0 \implies z_2 = -i z_1$.
+Un vecteur propre est $v_1 = \begin{pmatrix} 1 \\ -i \end{pmatrix}$.
+
+\begin{itemize}
+\item Pour $\lambda_2 = -i$ : $\ker(R + iI_2)$.
+\end{itemize}
+$\begin{pmatrix} i & -1 \\ 1 & i \end{pmatrix} \begin{pmatrix} z_1 \\ z_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \implies i z_1 - z_2 = 0 \implies z_2 = i z_1$.
+Un vecteur propre est $v_2 = \begin{pmatrix} 1 \\ i \end{pmatrix}$.
+
+\textbf{Étape 5 : Matrice de passage complexe}
+On a $P = \begin{pmatrix} 1 & 1 \\ -i & i \end{pmatrix}$ telle que $P^{-1} R P = \begin{pmatrix} i & 0 \\ 0 & -i \end{pmatrix}$.
+
+
+\subsection*{Exercice 6 - Difficulté \quad $\bigstar$$\bigstar$$\bigstar$$\bigstar$$\star$}
+
+\subsubsection*{Énoncé}
+Soit la matrice $A = \begin{pmatrix} 5 & -4 \\ 2 & -1 \end{pmatrix}$.
+Calculer $A^n$ pour tout $n \in \mathbb{N}$ à l'aide de sa diagonalisation.
+
+\subsubsection*{Solution Complète}
+
+\textbf{Étape 1 : Éléments propres}
+$\chi_A(X) = \det\begin{pmatrix} X-5 & 4 \\ -2 & X+1 \end{pmatrix} = (X-5)(X+1) - (-8) = X^2 - 4X - 5 + 8 = X^2 - 4X + 3$.
+Les racines de $X^2 - 4X + 3 = 0$ sont $1$ et $3$. (Car $\Delta = 16 - 12 = 4$).
+Valeurs propres : $\lambda_1 = 1$, $\lambda_2 = 3$. La matrice est diagonalisable.
+
+\begin{itemize}
+\item Vecteur propre pour $\lambda_1 = 1$ : $(A - I)u = 0 \implies \begin{pmatrix} 4 & -4 \\ 2 & -2 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = 0 \implies x = y$. $v_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+\item Vecteur propre pour $\lambda_2 = 3$ : $(A - 3I)u = 0 \implies \begin{pmatrix} 2 & -4 \\ 2 & -4 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = 0 \implies x = 2y$. $v_2 = \begin{pmatrix} 2 \\ 1 \end{pmatrix}$.
+\end{itemize}
+\textbf{Étape 2 : Matrices de passage}
+$P = \begin{pmatrix} 1 & 2 \\ 1 & 1 \end{pmatrix}$.
+Le déterminant de $P$ est $\det(P) = 1(1) - 2(1) = -1$.
+L'inverse est $P^{-1} = \frac{1}{-1} \begin{pmatrix} 1 & -2 \\ -1 & 1 \end{pmatrix} = \begin{pmatrix} -1 & 2 \\ 1 & -1 \end{pmatrix}$.
+La matrice diagonale est $D = \begin{pmatrix} 1 & 0 \\ 0 & 3 \end{pmatrix}$.
+On a bien $A = P D P^{-1}$.
+
+\textbf{Étape 3 : Calcul de $A^n$}
+On sait par récurrence que $A^n = P D^n P^{-1}$.
+$$D^n = \begin{pmatrix} 1^n & 0 \\ 0 & 3^n \end{pmatrix} = \begin{pmatrix} 1 & 0 \\ 0 & 3^n \end{pmatrix}$$
+On effectue le produit matriciel :
+$$A^n = \begin{pmatrix} 1 & 2 \\ 1 & 1 \end{pmatrix} \begin{pmatrix} 1 & 0 \\ 0 & 3^n \end{pmatrix} \begin{pmatrix} -1 & 2 \\ 1 & -1 \end{pmatrix}$$
+$$A^n = \begin{pmatrix} 1 & 2 \cdot 3^n \\ 1 & 3^n \end{pmatrix} \begin{pmatrix} -1 & 2 \\ 1 & -1 \end{pmatrix}$$
+$$A^n = \begin{pmatrix} -1 + 2 \cdot 3^n & 2 - 2 \cdot 3^n \\ -1 + 3^n & 2 - 3^n \end{pmatrix}$$
+
+Cette expression est valable pour tout $n \in \mathbb{N}$, donnant un accès instantané à n'importe quelle puissance de l'opérateur sans itération algorithmique coûteuse.
+
+
+\subsection*{Exercice 7 - Difficulté \quad $\bigstar$$\bigstar$$\bigstar$$\bigstar$$\star$}
+
+\subsubsection*{Énoncé}
+Soit $M = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$.
+Vérifier le théorème de Cayley-Hamilton sur cette matrice, et en déduire l'expression de $M^{-1}$ comme combinaison linéaire de $I$ et $M$.
+
+\subsubsection*{Solution Complète}
+
+\textbf{Étape 1 : Calcul du polynôme caractéristique}
+$\chi_M(X) = \det\begin{pmatrix} X-1 & -2 \\ -3 & X-4 \end{pmatrix} = (X-1)(X-4) - 6 = X^2 - 5X + 4 - 6 = X^2 - 5X - 2$.
+
+\textbf{Étape 2 : Vérification du théorème de Cayley-Hamilton}
+Le théorème stipule que pour toute matrice, son polynôme caractéristique est un polynôme annulateur : $\chi_M(M) = 0_{2\times2}$, c'est-à-dire $M^2 - 5M - 2I = 0$.
+Calculons $M^2$ :
+$$M^2 = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} = \begin{pmatrix} 1+6 & 2+8 \\ 3+12 & 6+16 \end{pmatrix} = \begin{pmatrix} 7 & 10 \\ 15 & 22 \end{pmatrix}$$
+Calculons $5M$ :
+$$5M = \begin{pmatrix} 5 & 10 \\ 15 & 20 \end{pmatrix}$$
+Effectuons la somme $M^2 - 5M - 2I$ :
+$$\begin{pmatrix} 7 & 10 \\ 15 & 22 \end{pmatrix} - \begin{pmatrix} 5 & 10 \\ 15 & 20 \end{pmatrix} - \begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix} = \begin{pmatrix} 7-5-2 & 10-10-0 \\ 15-15-0 & 22-20-2 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}$$
+Le théorème de Cayley-Hamilton est bien vérifié.
+
+\textbf{Étape 3 : Déduction de l'inverse}
+Puisque $M^2 - 5M - 2I = 0$, on peut isoler $I$ :
+$$2I = M^2 - 5M = M(M - 5I)$$
+Donc :
+$$I = M \left( \frac{1}{2}(M - 5I) \right)$$
+Par définition de l'inverse, cela prouve que $M$ est inversible et que son inverse est :
+$$M^{-1} = \frac{1}{2}M - \frac{5}{2}I$$
+Vérifions numériquement :
+$$M^{-1} = \frac{1}{2} \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} - \begin{pmatrix} \frac{5}{2} & 0 \\ 0 & \frac{5}{2} \end{pmatrix} = \begin{pmatrix} \frac{1-5}{2} & 1 \\ \frac{3}{2} & \frac{4-5}{2} \end{pmatrix} = \begin{pmatrix} -2 & 1 \\ \frac{3}{2} & -\frac{1}{2} \end{pmatrix}$$
+C'est bien l'inverse classique, obtenu élégamment par la théorie des polynômes d'endomorphismes.
+
+
+\subsection*{Exercice 8 - Difficulté \quad $\bigstar$$\bigstar$$\bigstar$$\bigstar$$\bigstar$}
+
+\subsubsection*{Énoncé}
+Soient $A, B \in \mathcal{M}_n(\mathbb{R})$ deux matrices diagonalisables qui commutent (i.e. $AB = BA$).
+Démontrer que tout sous-espace propre de $A$ est stable par $B$. En déduire, en supposant que les valeurs propres de $A$ sont simples, qu'il existe une base de vecteurs propres communs, rendant $A$ et $B$ simultanément diagonalisables.
+
+\subsubsection*{Solution Complète}
+
+\textbf{Étape 1 : Stabilité des sous-espaces propres}
+Soit $\lambda$ une valeur propre de $A$, et $E_\lambda = \ker(A - \lambda I)$ le sous-espace propre associé.
+Prenons un vecteur $x \in E_\lambda$. Par définition, $Ax = \lambda x$.
+Calculons $A(Bx)$. Puisque $A$ et $B$ commutent :
+$$A(Bx) = (AB)x = (BA)x = B(Ax)$$
+Or $Ax = \lambda x$. Par linéarité de $B$ :
+$$A(Bx) = B(\lambda x) = \lambda (Bx)$$
+Cette égalité signifie que le vecteur $(Bx)$ appartient également à $\ker(A - \lambda I)$, donc $Bx \in E_\lambda$.
+Par conséquent, on a bien démontré que $B(E_\lambda) \subset E_\lambda$. L'espace propre de $A$ est \textbf{stable par l'action de B}.
+
+\textbf{Étape 2 : Conséquence avec des valeurs propres simples}
+Supposons que toutes les valeurs propres de $A$ sont simples (chacune a une multiplicité algébrique de $1$).
+Dans ce cas, $\dim(E_\lambda) = 1$ pour chaque valeur propre $\lambda$.
+Soit $x_\lambda$ un vecteur directeur de $E_\lambda$.
+D'après l'étape 1, $B x_\lambda \in E_\lambda$.
+Puisque $E_\lambda$ est de dimension $1$ et engendré par $x_\lambda$, tout vecteur de cet espace est colinéaire à $x_\lambda$.
+Donc, il existe un scalaire $\mu \in \mathbb{R}$ tel que :
+$$B x_\lambda = \mu x_\lambda$$
+Cette équation est exactement la définition d'un vecteur propre !
+Le vecteur $x_\lambda$, qui était déjà vecteur propre de $A$, est \textbf{aussi} un vecteur propre de $B$.
+La valeur propre associée dans la matrice $B$ est $\mu$.
+
+\textbf{Étape 3 : Conclusion globale}
+Comme les valeurs propres de $A$ sont simples, $A$ admet une base complète constituée de ses vecteurs propres $x_{\lambda_1}, \dots, x_{\lambda_n}$.
+Or nous venons de montrer que chacun de ces vecteurs est également un vecteur propre de $B$.
+Ainsi, la même matrice de passage $P$ composée de ces vecteurs diagonisera $A$ (donnant $P^{-1}AP = D_A$) et diagonalisera $B$ (donnant $P^{-1}BP = D_B$).
+Les matrices $A$ et $B$ sont dites \textbf{simultanément diagonalisables}.
+
+
+\subsection*{Exercice 9 - Difficulté \quad $\bigstar$$\bigstar$$\bigstar$$\bigstar$$\bigstar$}
+
+\subsubsection*{Énoncé}
+Soit $E = \mathcal{M}_n(\mathbb{R})$ l'espace vectoriel des matrices carrées.
+On considère l'endomorphisme $\phi : E \to E$ défini par $\phi(M) = M^T$.
+1. Calculer $\phi \circ \phi$.
+2. En déduire les valeurs propres possibles de $\phi$.
+3. Déterminer les sous-espaces propres associés et vérifier que $\phi$ est diagonalisable.
+
+\subsubsection*{Solution Complète}
+
+\textbf{Étape 1 : Composition de l'endomorphisme}
+Pour toute matrice $M \in \mathcal{M}_n(\mathbb{R})$ :
+$$(\phi \circ \phi)(M) = \phi(\phi(M)) = \phi(M^T) = (M^T)^T = M$$
+Ainsi, $\phi \circ \phi = \text{Id}_E$.
+L'endomorphisme $\phi$ est donc une involution (ou symétrie).
+
+\textbf{Étape 2 : Valeurs propres possibles}
+Le polynôme $P(X) = X^2 - 1$ est un polynôme annulateur de $\phi$ puisque $P(\phi) = \phi^2 - \text{Id}_E = 0$.
+D'après le cours sur la réduction des endomorphismes, les valeurs propres de $\phi$ sont nécessairement des racines d'un de ses polynômes annulateurs.
+Les racines de $X^2 - 1 = 0$ sont $1$ et $-1$.
+Le spectre de $\phi$ est donc inclus dans $\{-1, 1\}$.
+
+\textbf{Étape 3 : Sous-espaces propres}
+Cherchons les sous-espaces propres.
+\begin{itemize}
+\item Pour $\lambda = 1$ : $E_1 = \ker(\phi - \text{Id}_E)$. C'est l'ensemble des matrices telles que $\phi(M) = M$, soit $M^T = M$. C'est l'ensemble $\mathcal{S}_n(\mathbb{R})$ des matrices symétriques. La dimension de cet espace est $\frac{n(n+1)}{2}$.
+\item Pour $\lambda = -1$ : $E_{-1} = \ker(\phi + \text{Id}_E)$. C'est l'ensemble des matrices telles que $\phi(M) = -M$, soit $M^T = -M$. C'est l'ensemble $\mathcal{A}_n(\mathbb{R})$ des matrices antisymétriques. La dimension de cet espace est $\frac{n(n-1)}{2}$.
+\end{itemize}
+\textbf{Étape 4 : Conclusion sur la diagonalisabilité}
+Faisons la somme des dimensions des sous-espaces propres :
+$$\dim(E_1) + \dim(E_{-1}) = \frac{n^2 + n}{2} + \frac{n^2 - n}{2} = \frac{2n^2}{2} = n^2$$
+Or la dimension de l'espace total $E = \mathcal{M}_n(\mathbb{R})$ est exactement $n^2$.
+Puisque la somme des dimensions des sous-espaces propres est égale à la dimension de l'espace global, l'espace $E$ est la somme directe de ces sous-espaces propres : $E = \mathcal{S}_n(\mathbb{R}) \oplus \mathcal{A}_n(\mathbb{R})$.
+L'endomorphisme $\phi$ possède donc une base complète de vecteurs propres, il est \textbf{diagonalisable}.
+
+
+\subsection*{Exercice 10 - Difficulté \quad $\bigstar$$\bigstar$$\bigstar$$\bigstar$$\bigstar$}
+
+\subsubsection*{Énoncé}
+Soit $A = (a_{i,j}) \in \mathcal{M}_n(\mathbb{C})$. Le théorème de Gershgorin stipule que toutes les valeurs propres de $A$ sont situées dans l'union des disques de Gershgorin définis par :
+$$D_i = \left\{ z \in \mathbb{C} \ \Bigg| \ |z - a_{i,i}| \leq \sum_{j \neq i} |a_{i,j}| \right\}$$
+Démontrer rigoureusement ce théorème, et l'appliquer à la matrice $A = \begin{pmatrix} 10 & 0.1 & -0.2 \\ 0.5 & 3 & 0 \\ 0.1 & 0 & -2 \end{pmatrix}$ pour localiser ses valeurs propres.
+
+\subsubsection*{Solution Complète}
+
+\textbf{Étape 1 : Démonstration du Théorème de Gershgorin}
+Soit $\lambda \in \mathbb{C}$ une valeur propre de $A$. Par définition, il existe un vecteur propre non nul $x = (x_1, \dots, x_n)^T \in \mathbb{C}^n$ tel que $Ax = \lambda x$.
+Le vecteur $x$ étant non nul, il possède au moins une coordonnée non nulle. Soit $i \in \{1, \dots, n\}$ l'indice correspondant à la coordonnée de module maximal :
+$$\forall j \in \{1, \dots, n\}, \ |x_j| \leq |x_i| \quad \text{et} \quad |x_i| > 0$$
+Considérons la $i$-ème équation du système linéaire $Ax = \lambda x$ :
+$$\sum_{j=1}^n a_{i,j} x_j = \lambda x_i$$
+Isolons le terme diagonal :
+$$a_{i,i} x_i + \sum_{j \neq i} a_{i,j} x_j = \lambda x_i$$
+$$\lambda x_i - a_{i,i} x_i = \sum_{j \neq i} a_{i,j} x_j$$
+$$(\lambda - a_{i,i}) x_i = \sum_{j \neq i} a_{i,j} x_j$$
+En appliquant le module et l'inégalité triangulaire :
+$$|\lambda - a_{i,i}| |x_i| = \left| \sum_{j \neq i} a_{i,j} x_j \right| \leq \sum_{j \neq i} |a_{i,j}| |x_j|$$
+Puisque pour tout $j$, $|x_j| \leq |x_i|$, on peut majorer :
+$$|\lambda - a_{i,i}| |x_i| \leq \sum_{j \neq i} |a_{i,j}| |x_i|$$
+Comme $|x_i| > 0$, on peut diviser par $|x_i|$ de chaque côté :
+$$|\lambda - a_{i,i}| \leq \sum_{j \neq i} |a_{i,j}|$$
+Cette inégalité prouve exactement que la valeur propre $\lambda$ appartient au disque $D_i$.
+Donc, toute valeur propre appartient à l'union des disques. Q.E.D.
+
+\textbf{Étape 2 : Application à la matrice donnée}
+Calculons les rayons pour chaque ligne de la matrice $A$ :
+\begin{itemize}
+\item Ligne 1 : Centre $c_1 = 10$, rayon $R_1 = |0.1| + |-0.2| = 0.3$. Donc $D_1 = \{ z \in \mathbb{C} \mid |z - 10| \leq 0.3 \}$.
+\item Ligne 2 : Centre $c_2 = 3$, rayon $R_2 = |0.5| + |0| = 0.5$. Donc $D_2 = \{ z \in \mathbb{C} \mid |z - 3| \leq 0.5 \}$.
+\item Ligne 3 : Centre $c_3 = -2$, rayon $R_3 = |0.1| + |0| = 0.1$. Donc $D_3 = \{ z \in \mathbb{C} \mid |z - (-2)| \leq 0.1 \}$.
+\end{itemize}
+Le spectre complet de la matrice est contenu dans l'union $D_1 \cup D_2 \cup D_3$.
+Ces disques étant disjoints, un corollaire garantit qu'il y a exactement une valeur propre par disque.
+
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Algorithme de la puissance itérée classique}
+
+\subsubsection*{Objectif}
+Implémenter la méthode de la puissance itérée pure pour isoler la valeur propre dominante d'une matrice symétrique.
+
+\subsubsection*{Code Python}
+\begin{lstlisting}
+def dot_prod(u, v): return sum(x*y for x, y in zip(u, v))
+def mat_vec(A, v): return [dot_prod(row, v) for row in A]
+def norm_2(v): return sum(x**2 for x in v)**0.5
+
+def power_iteration(A, num_iter=1000):
+    n = len(A)
+    v = [1.0/n**0.5]*n
+
+    for _ in range(num_iter):
+        w = mat_vec(A, v)
+        v = [x/norm_2(w) for x in w]
+
+    eigenvalue = dot_prod(v, mat_vec(A, v))
+    return eigenvalue, v
+
+def test_power():
+    A = [[3, 2], [2, 6]]
+    val, vec = power_iteration(A)
+    assert abs(val - 7.0) < 1e-4, "La valeur dominante theorique est 7."
+    print("TP1 Reussi : Val=", val)
+
+if __name__ == '__main__': test_power()
+\end{lstlisting}
+\subsubsection*{Explication}
+Cette méthode s'aligne de force sur la direction du vecteur propre associé à la plus grande valeur propre en valeur absolue.
+
+
+\subsection*{TP 2 : Calcul algébrique du polynôme caractéristique}
+
+\subsubsection*{Objectif}
+Calculer de manière algorithmique le polynôme caractéristique d'une matrice $2 \times 2$.
+
+\subsubsection*{Code Python}
+\begin{lstlisting}
+def trace_2x2(A): return A[0][0] + A[1][1]
+def det_2x2(A): return A[0][0]*A[1][1] - A[0][1]*A[1][0]
+
+def char_polynomial_2x2(A):
+    # chi(X) = X^2 - Tr(A)X + det(A)
+    tr = trace_2x2(A)
+    dt = det_2x2(A)
+    return (1, -tr, dt)
+
+def test_char_poly():
+    A = [[4, 1], [2, 3]]
+    coeffs = char_polynomial_2x2(A)
+    # coeffs representent (X^2, X^1, X^0)
+    assert coeffs == (1, -7, 10), "Le polynome theorique est X^2 - 7X + 10"
+    print("TP2 Reussi : Coeffs=", coeffs)
+
+if __name__ == '__main__': test_char_poly()
+\end{lstlisting}
+\subsubsection*{Explication}
+La théorie garantit qu'en dimension 2, l'expression de $\chi_A$ dépend invariablement de la trace et du déterminant de la matrice.
+
+
+\subsection*{TP 3 : Vérification de vecteurs propres}
+
+\subsubsection*{Objectif}
+Créer une fonction validant mathématiquement si un vecteur donné est vecteur propre, et renvoyer la valeur propre associée.
+
+\subsubsection*{Code Python}
+\begin{lstlisting}
+def is_eigenvector(A, v, tol=1e-7):
+    # w = A*v
+    n = len(A)
+    w = [sum(A[i][j]*v[j] for j in range(n)) for i in range(n)]
+
+    # On cherche le ratio w_i / v_i (sans division par zero)
+    ratio = None
+    for i in range(n):
+        if abs(v[i]) > tol:
+            current_ratio = w[i] / v[i]
+            if ratio is None:
+                ratio = current_ratio
+            elif abs(ratio - current_ratio) > tol:
+                return False, None
+    return True, ratio
+
+def test_is_eigen():
+    A = [[2, 0], [0, 3]]
+    v1 = [1, 0]
+    is_eigen, val = is_eigenvector(A, v1)
+    assert is_eigen and val == 2.0, "V1 est vecteur propre avec val 2."
+
+    v2 = [1, 1]
+    is_eigen, val = is_eigenvector(A, v2)
+    assert not is_eigen, "V2 ne doit pas etre vecteur propre."
+    print("TP3 Reussi.")
+
+if __name__ == '__main__': test_is_eigen()
+\end{lstlisting}
+\subsubsection*{Explication}
+La définition stricte implique $Av = \lambda v$, donc la proportionnalité composante par composante. L'algorithme vérifie que la constante de proportionnalité $\lambda$ est uniforme.
+
+
+\subsection*{TP 4 : Méthode du Quotient de Rayleigh}
+
+\subsubsection*{Objectif}
+Estimer rapidement une valeur propre connaissant une bonne approximation de son vecteur propre.
+
+\subsubsection*{Code Python}
+\begin{lstlisting}
+def rayleigh_quotient(A, v):
+    # R(A, v) = (v^T A v) / (v^T v)
+    n = len(A)
+    Av = [sum(A[i][j]*v[j] for j in range(n)) for i in range(n)]
+    num = sum(v[i]*Av[i] for i in range(n))
+    den = sum(v[i]**2 for i in range(n))
+    return num / den
+
+def test_rayleigh():
+    A = [[1.5, 0.5], [0.5, 1.5]]
+    # Vecteur propre reel est (1,1) avec val propre 2.0
+    v_approx = [1.01, 0.99]
+    val = rayleigh_quotient(A, v_approx)
+
+    # Rayleigh donne une tres bonne precision meme si V est approximatif
+    assert abs(val - 2.0) < 1e-3, "Le quotient de Rayleigh doit approcher 2."
+    print("TP4 Reussi. Estimation=", val)
+
+if __name__ == '__main__': test_rayleigh()
+\end{lstlisting}
+\subsubsection*{Explication}
+Le quotient de Rayleigh présente l'extraordinaire propriété mathématique d'une précision au second ordre : l'erreur sur la valeur propre est proportionnelle au carré de l'erreur sur le vecteur propre.
+
+
+\subsection*{TP 5 : Invariants de similitude (Trace)}
+
+\subsubsection*{Objectif}
+Vérifier algorithmiquement que la somme des valeurs propres est strictement égale à la trace de la matrice.
+
+\subsubsection*{Code Python}
+\begin{lstlisting}
+def get_trace(A):
+    return sum(A[i][i] for i in range(len(A)))
+
+def solve_quadratic(a, b, c):
+    delta = b**2 - 4*a*c
+    return ((-b - delta**0.5)/(2*a), (-b + delta**0.5)/(2*a))
+
+def test_trace_invariant():
+    A = [[4, 1], [2, 3]]
+    tr = get_trace(A)
+    # A = [[4,1],[2,3]]. char_poly: X^2 - 7X + 10. Roots: 2, 5.
+    roots = solve_quadratic(1, -7, 10)
+    sum_roots = sum(roots)
+
+    assert abs(tr - sum_roots) < 1e-6, "La trace doit egaler la somme des VP."
+    print("TP5 Reussi. Trace=", tr, " Somme=", sum_roots)
+
+if __name__ == '__main__': test_trace_invariant()
+\end{lstlisting}
+\subsubsection*{Explication}
+La trace, étant un coefficient du polynôme caractéristique (au signe près), constitue l'un des invariants fondamentaux prouvant que l'opérateur est intrinsèque, indépendamment de la base choisie.
+
+
+
+
+\end{document}
