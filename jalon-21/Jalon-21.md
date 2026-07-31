@@ -7,13 +7,13 @@ description: "Ce cours explore les concepts fondamentaux de convergence simple e
 ---
 # Jalon 21 : Suites de fonctions, étude de la convergence simple et de la convergence uniforme
 
-## 1. Genèse et Intuition : Le mirage de la limite point par point
+## 1. Le mirage de la limite point par point
 
 La genèse des suites de fonctions trouve ses racines au cœur de la crise des fondements de l'analyse au XIXe siècle. Les mathématiciens, animés par le désir de manipuler des objets limites avec la même aisance que des polynômes, se sont heurtés à des paradoxes profonds. Lorsqu'on observe une suite de fonctions $(f_n)_{n \in \mathbb{N}}$, l'intuition première est d'étudier la limite de $f_n(x)$ pour chaque point $x$ fixé. Cette approche, purement locale, est séduisante de simplicité. Elle s'apparente à observer le comportement d'une foule en regardant le destin de chaque individu isolément.
 
 Cependant, cette limite, appelée convergence simple, est un mirage analytique. Elle ne préserve aucune des propriétés structurelles des fonctions $f_n$. Une suite de fonctions continues peut tout à fait converger simplement vers une fonction discontinue, déchirant ainsi le tissu continu de l'espace. De même, l'aire sous la courbe limite n'est pas nécessairement la limite des aires sous les courbes $f_n$. Il devenait impératif de forger un concept plus robuste, une convergence "globale" où la fonction entière se rapproche de sa limite uniformément, sans qu'aucun point ne prenne un retard arbitrairement grand. C'est la naissance de la convergence uniforme, une notion topologique sur l'espace des fonctions qui restaure l'harmonie entre limite et opérations analytiques (continuité, intégration, dérivation).
 
-## 2. Anatomie et Typage Chirurgical : Convergence Simple et Uniforme
+## 2. Convergence Simple et Uniforme
 
 Considérons un ensemble non vide $D \subset \mathbb{R}$ ou $\mathbb{C}$, et $\mathbb{K} = \mathbb{R}$ ou $\mathbb{C}$. Soit $E$ l'espace des fonctions de $D$ dans $\mathbb{K}$.
 
@@ -76,7 +76,7 @@ Il s'ensuit que la limite de l'intégrale est l'intégrale de la limite.
 Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions continues d'un espace métrique compact $K$ dans $\mathbb{R}$.
 Si $(f_n)$ converge simplement vers une fonction $f$ continue sur $K$, et si pour tout $x \in K$, la suite $(f_n(x))_{n \in \mathbb{N}}$ est monotone (par exemple, croissante), alors la convergence est uniforme sur $K$.
 
-## 4. Exemples et Contre-exemples Pathologiques
+## 4. Exemples et Contre-exemples
 
 **Exemple de convergence simple mais non uniforme (Le drame de la continuité brisée) :**
 Soit $f_n : [0, 1] \to \mathbb{R}$ définie par $f_n(x) = x^n$.

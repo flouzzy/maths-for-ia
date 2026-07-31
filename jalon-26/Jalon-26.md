@@ -9,10 +9,9 @@ tags:
 prev: "[[Jalon 25 (Formes bilinéaires).md]]"
 next: "[[Jalon 27 (Endomorphismes symétriques).md]]"
 ---
-
 # Jalon 26 : Espaces euclidiens, orthogonalité, théorème de la projection orthogonale et algorithme de Gram-Schmidt
 
-## 1. Échafaudage Cognitif & Genèse du Concept
+## 1. Introduction
 
 L'algèbre linéaire, dans ses fondements les plus abstraits (espaces vectoriels, bases, applications linéaires), nous offre un cadre algébrique robuste, mais singulièrement dénué de propriétés métriques. Dans un espace vectoriel abstrait $E$, les notions de « longueur », d'« angle », ou de « proximité » n'existent tout simplement pas. On peut additionner des vecteurs et les multiplier par des scalaires, mais on ne peut pas mesurer la distance qui les sépare ni vérifier s'ils sont perpendiculaires.
 
@@ -22,7 +21,7 @@ La solution ne fut pas d'ajouter des longueurs et des angles comme des concepts 
 
 Un espace euclidien est ainsi la quintessence de la géométrie classique : un espace vectoriel réel de dimension finie, enrichi d'un produit scalaire. C'est dans ce cadre que la projection orthogonale trouve tout son sens, offrant une méthode optimale pour approximer un vecteur par des éléments d'un sous-espace donné. Cette idée d'approximation orthogonale est la clef de voûte de l'analyse de données moderne : de la régression des moindres carrés en apprentissage automatique aux décompositions spectaculaires comme l'ACP, toutes reposent sur le socle solide de la géométrie euclidienne.
 
-## 2. Protocole d'Exégèse Conceptuelle : Définitions et Structures
+## 2. Définitions et Structures
 
 ### 2.1 Espace préhilbertien réel et Espace Euclidien
 
@@ -101,7 +100,7 @@ Elle est **orthonormée** si elle est orthogonale et si de plus, pour tout $i$, 
 - $F^\perp$ est un sous-espace vectoriel de $E$, même si $F$ n'est qu'un simple sous-ensemble non structuré.
 - Une base orthonormée (BON) est le repère optimal : la géométrie y est isométrique à celle de l'espace canonique $\mathbb{R}^n$.
 
-## 3. Démonstrations Complètes à Blanc (Zéro Ellipse)
+## 3. Démonstrations
 
 ### 3.1 Preuve du Théorème de Pythagore
 

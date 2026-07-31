@@ -9,7 +9,6 @@ tags:
 prev: "[[Jalon 10 (Changements de base).md]]"
 next: "[[Jalon 12 (Livrable IA).md]]"
 ---
-
 # Jalon 11 : Formes linéaires, hyperplans, espace dual et orthogonalité en dimension finie
 
 ## 1. Présentation du concept clé

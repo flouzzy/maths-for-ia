@@ -9,7 +9,6 @@ tags:
 prev: "[[Jalon-16.md]]"
 next: "[[Jalon 18 (Continuité des fonctions d'une variable réelle).md]]"
 ---
-
 # Jalon 17 : Séries absolument convergentes, semi-convergentes et produit de Cauchy de deux séries
 
 

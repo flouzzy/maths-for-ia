@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "jalon-10/Jalon-10.md",
+                "file": "jalon-26/Jalon-26.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Jalon-10"
+              "title": "Jalon-26"
             }
           }
         ]
@@ -222,6 +222,18 @@
   },
   "active": "028bc0b66da30b0b",
   "lastOpenFiles": [
+    "jalon-25/Jalon-25.md",
+    "jalon-22/Jalon-22.md",
+    "jalon-21/Jalon-21.md",
+    "jalon-17/jalon-17-polycopie.pdf",
+    "jalon-16/Jalon-16.md",
+    "jalon-17/Jalon-17.md",
+    "jalon-15/Jalon-15.md",
+    "jalon-14/Jalon-14.md",
+    "jalon-13/Jalon-13.md",
+    "jalon-12/Jalon-12.md",
+    "jalon-11/Jalon-11.md",
+    "jalon-10/Jalon-10.md",
     "jalon-9/Jalon-9.md",
     "jalon-8/Jalon-8.md",
     "jalon-7/Jalon-7.md",
@@ -239,26 +251,14 @@
     "jalon-28.tex",
     "jalon-27/jalon-27.tex",
     "jalon-27/jalon-27-polycopie.pdf",
-    "jalon-25/Jalon-25.md",
     "rewrite_exo4.py",
     "rewrite_exo3.py",
     "output_script.py",
-    "jalon-26/jalon-26.tex",
     "plan_review.md",
     "jalon-1/README.md",
     "jalon-26/Jalon-26.md",
-    "jalon-22/Jalon-22.md",
     "plan_review_15.md",
-    "jalon-23/Jalon 23 (Séries entières).md",
-    "MathsForAI/Bienvenue.md",
-    "jalon-17/Jalon 17 (Séries absolument convergentes).md",
-    "jalon-141/Jalon-141.md",
-    "Tableau de bord.md",
-    "Bienvenue.md",
-    "README.md",
     "Sans titre.canvas",
-    "Sans titre 1.canvas",
-    "jalon-69/Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md",
-    "jalon-16/Jalon-16.md"
+    "Sans titre 1.canvas"
   ]
 }
