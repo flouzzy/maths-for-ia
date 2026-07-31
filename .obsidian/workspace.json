@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "jalon-28/Jalon-28.md",
+                "file": "jalon-9/Jalon-9.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Jalon-28"
+              "title": "Jalon-9"
             }
           }
         ]
@@ -222,6 +222,18 @@
   },
   "active": "028bc0b66da30b0b",
   "lastOpenFiles": [
+    "jalon-8/Jalon-8.md",
+    "jalon-7/Jalon-7.md",
+    "jalon-6/Jalon-6.md",
+    "jalon-5/Jalon-5.md",
+    "jalon-4/Jalon-4.md",
+    "jalon-3/Jalon-3.md",
+    "jalon-2/Jalon-2.md",
+    "jalon-1/Jalon 1 (Logique formelle).md",
+    "jalon-40/Jalon-40.md",
+    "jalon-29/jalon-29.tex",
+    "jalon-29/jalon-29-polycopie.pdf",
+    "jalon-28/Jalon-28.md",
     "jalon-28/jalon-28-polycopie.pdf",
     "jalon-28.tex",
     "jalon-27/jalon-27.tex",
@@ -231,13 +243,8 @@
     "rewrite_exo3.py",
     "output_script.py",
     "jalon-26/jalon-26.tex",
-    "jalon-26/jalon-26-polycopie.pdf",
-    "full_rewrite.py",
-    "jalon-25/jalon-25.toc",
-    "jalon-1/Jalon 1 (Logique formelle).md",
     "plan_review.md",
     "jalon-1/README.md",
-    "jalon-6/Jalon-6.md",
     "jalon-26/Jalon-26.md",
     "jalon-22/Jalon-22.md",
     "plan_review_15.md",
@@ -252,13 +259,6 @@
     "Sans titre 1.canvas",
     "jalon-69/Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md",
     "jalon-16/Jalon-16.md",
-    "jalon-15/Jalon 15 (Sous-suites).md",
-    "jalon-14/Jalon 14 (Suites réelles et complexes).md",
-    "jalon-13/Jalon 13 (Structure de --mathbb{R}-).md",
-    "jalon-12/Jalon 12 (Livrable IA).md",
-    "jalon-11/Jalon 11 (Formes linéaires).md",
-    "jalon-10/Jalon 10 (Changements de base).md",
-    "jalon-9/Jalon 9 (Calcul matriciel).md",
-    "jalon-8/Jalon 8 (Applications linéaires).md"
+    "jalon-15/Jalon 15 (Sous-suites).md"
   ]
 }
