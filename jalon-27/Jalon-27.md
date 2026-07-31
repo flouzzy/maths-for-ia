@@ -11,7 +11,7 @@ next: "[[Jalon 28 (Polynômes d'endomorphismes).md]]"
 ---
 # Jalon 27 : Endomorphismes symétriques, adjoint d'un opérateur et matrices orthogonales
 
-## 1. Échafaudage Cognitif & Traçabilité Historique
+## 1. Introduction
 
 L'algèbre linéaire a longtemps été considérée comme l'étude des transformations de l'espace abstrait. Mais lorsque l'on munit cet espace d'une géométrie stricte par le biais d'un produit scalaire (une "métrique"), de nouvelles questions vertigineuses émergent. Si je dispose d'une transformation (un endomorphisme) qui déforme l'espace, comment cette déformation interagit-elle avec la géométrie sous-jacente ? Existe-t-il des transformations qui "respectent" parfaitement l'angle et la distance, ou qui se déforment d'une manière si harmonieuse qu'elles conservent des directions privilégiées immuables ?
 
@@ -19,7 +19,7 @@ Historiquement, l'étude des endomorphismes symétriques trouve ses racines dans
 
 Pour y parvenir, les mathématiciens ont dû inventer un concept miroir : l'adjoint d'un opérateur. L'adjoint, souvent noté $f^*$, est une construction intellectuelle fascinante. Imaginez que vous appliquez une transformation $f$ à un vecteur $x$, puis que vous mesurez sa "projection" (produit scalaire) sur un vecteur test $y$. L'opérateur adjoint $f^*$ est la machine qui vous permet d'obtenir *exactement le même résultat de mesure* en laissant $x$ tranquille, mais en appliquant au préalable $f^*$ à $y$. C'est une dualité fondamentale. Un opérateur "symétrique" est simplement un opérateur qui est son propre miroir : l'effet qu'il a sur le monde est indiscernable de l'effet que le monde a sur lui. En Intelligence Artificielle, cette symétrie se retrouve partout, des matrices de covariance dans l'Analyse en Composantes Principales (PCA) aux matrices hessiennes de la fonction de coût, régissant la courbure de l'espace d'optimisation.
 
-## 2. Protocole d'Exégèse Conceptuelle
+## 2. Définitions
 
 ### 2.1. L'Adjoint d'un Opérateur (Endomorphisme)
 
@@ -83,7 +83,7 @@ $$ O^T O = O O^T = I_n $$
 **D. Cas Pathologiques et Contre-exemples**
 - Matrice orthogonale vs matrice symétrique : Attention à ne pas confondre. $R_{\pi/2}$ est orthogonale mais pas symétrique. Inversement, $2I_n$ est symétrique mais pas orthogonale (elle étire les vecteurs). Les matrices à la fois symétriques et orthogonales sont les symétries orthogonales ($s^2 = Id$ et $s^* = s$).
 
-## 3. Zéro Ellipse : Preuves Exhaustives
+## 3. Démonstrations
 
 ### 3.1. Théorème d'existence et unicité de l'adjoint
 
