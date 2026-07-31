@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "jalon-9/Jalon-9.md",
+                "file": "jalon-10/Jalon-10.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Jalon-9"
+              "title": "Jalon-10"
             }
           }
         ]
@@ -222,6 +222,7 @@
   },
   "active": "028bc0b66da30b0b",
   "lastOpenFiles": [
+    "jalon-9/Jalon-9.md",
     "jalon-8/Jalon-8.md",
     "jalon-7/Jalon-7.md",
     "jalon-6/Jalon-6.md",
@@ -258,7 +259,6 @@
     "Sans titre.canvas",
     "Sans titre 1.canvas",
     "jalon-69/Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md",
-    "jalon-16/Jalon-16.md",
-    "jalon-15/Jalon 15 (Sous-suites).md"
+    "jalon-16/Jalon-16.md"
   ]
 }
