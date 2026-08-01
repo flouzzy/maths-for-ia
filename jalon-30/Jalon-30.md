@@ -12,7 +12,7 @@ next: "[[Jalon 31 (Introduction à la réduction de Jordan et structure des nilp
 
 # Jalon 30 : Trigonalisation d'endomorphismes et décomposition de Dunford
 
-## 1. Genèse et Motivation (Échafaudage Cognitif)
+## Genèse et Motivation
 
 La réduction des endomorphismes constitue l'un des piliers centraux de l'algèbre linéaire, permettant de simplifier drastiquement l'étude des opérateurs sur des espaces de dimension finie. Le jalon précédent a mis en lumière la puissance de la diagonalisation, qui offre une représentation diagonale parfaitement découplée de l'opérateur. Cependant, l'univers mathématique est jonché d'obstacles : tous les endomorphismes ne sont pas diagonalisables. Que se passe-t-il lorsque le polynôme caractéristique d'un opérateur ne se scinde pas en racines simples, ou lorsque la dimension des sous-espaces propres est strictement inférieure à la multiplicité algébrique des valeurs propres correspondantes ?
 
@@ -24,31 +24,64 @@ Mais la trigonalisation laisse une structure encore trop couplée pour de nombre
 
 Le génie de cette décomposition réside dans le fait que ces deux composantes **commutent**. Cette commutativité est la clé de voûte : elle autorise l'utilisation de la formule du binôme de Newton ou des propriétés de morphisme de l'exponentielle, rendant le calcul explicite des puissances et de l'exponentielle de l'endomorphisme non seulement possible, mais algorithmiquement traitable. La décomposition de Dunford est ainsi le pont indispensable entre l'algèbre abstraite et l'analyse fonctionnelle, avec des répercussions immenses dans la théorie du contrôle, l'étude des systèmes dynamiques en Intelligence Artificielle (comme la stabilité des Réseaux de Neurones Récurrents, RNN) et la mécanique quantique.
 
-## 2. Trigonalisation des endomorphismes (Protocole d'Exégèse Conceptuelle)
+## Trigonalisation des endomorphismes
 
-### A. Énoncé Symbolique Strict
+### Énoncé formel
 
 Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension finie $n \geq 1$.
 Soit $f \in \mathcal{L}(E)$ un endomorphisme.
 
-L'endomorphisme $f$ est dit **trigonalisable** s'il existe une base $\mathcal{B}$ de $E$ telle que la matrice représentative de $f$ dans la base $\mathcal{B}$, notée $T = \text{Mat}_{\mathcal{B}}(f)$, soit triangulaire supérieure. C'est-à-dire que pour tout $j \in \llbracket 1, n \rrbracket$, les coefficients $t_{i,j}$ de $T$ vérifient $t_{i,j} = 0$ pour tout $i > j$.
+L'endomorphisme $f$ est dit **trigonalisable** s'il existe une base $\mathcal{B}$ de $E$ telle que la matrice représentative de $f$ dans la base $\mathcal{B}$, notée $T = \text{Mat}_{\mathcal{B}}(f)$, soit triangulaire supérieure. C'est-à-dire que pour tout $j \in \mathopen{[\![} 1, n \mathclose{]\!]}$, les coefficients $t_{i,j}$ de $T$ vérifient $t_{i,j} = 0$ pour tout $i > j$.
 
 **Théorème de trigonalisation :**
 $f \in \mathcal{L}(E)$ est trigonalisable si, et seulement si, son polynôme caractéristique $\chi_f$ est scindé sur le corps $\mathbb{K}$.
 $$ f \text{ est trigonalisable } \iff \exists (\lambda_1, \ldots, \lambda_n) \in \mathbb{K}^n, \quad \chi_f(X) = (-1)^n \prod_{i=1}^n (X - \lambda_i) $$
 
-### B. Anatomie et Typage Chirurgical
+### Analyse détaillée
 
 - **$\mathbb{K}$** : Désigne un corps commutatif (typiquement $\mathbb{R}$ ou $\mathbb{C}$).
 - **$E$** : Un espace vectoriel sur le corps $\mathbb{K}$ de dimension strictement positive et finie $n$.
 - **$f \in \mathcal{L}(E)$** : Un endomorphisme de l'espace vectoriel $E$.
-- **$\mathcal{B} = (e_1, e_2, \ldots, e_n)$** : Une famille libre et génératrice de $E$ (une base). La condition que la matrice soit triangulaire supérieure se traduit vectoriellement par : $\forall j \in \llbracket 1, n \rrbracket, \quad f(e_j) \in \text{Vect}(e_1, \ldots, e_j)$. On dit que la suite des sous-espaces $F_j = \text{Vect}(e_1, \ldots, e_j)$ forme un **drapeau** de $E$ stable par $f$.
+- **$\mathcal{B} = (e_1, e_2, \ldots, e_n)$** : Une famille libre et génératrice de $E$ (une base). La condition que la matrice soit triangulaire supérieure se traduit vectoriellement par : $\forall j \in \mathopen{[\![} 1, n \mathclose{]\!]}, \quad f(e_j) \in \text{Vect}(e_1, \ldots, e_j)$. On dit que la suite des sous-espaces $F_j = \text{Vect}(e_1, \ldots, e_j)$ forme un **drapeau** de $E$ stable par $f$.
 - **$\chi_f(X)$** : Le polynôme caractéristique de $f$, défini par $\det(XI_n - \text{Mat}(f))$, élément de l'anneau des polynômes $\mathbb{K}[X]$.
 - **"Scindé"** : Un polynôme est scindé sur $\mathbb{K}$ s'il peut s'écrire comme le produit de polynômes de degré 1 à coefficients dans $\mathbb{K}$.
 
 Une conséquence immédiate est que **sur le corps des complexes $\mathbb{C}$, tout polynôme étant scindé d'après le théorème de d'Alembert-Gauss, tout endomorphisme d'un $\mathbb{C}$-espace vectoriel de dimension finie est trigonalisable.**
 
-### C. Exemples de Validation
+### Exemples de Validation
+### Représentation Géométrique de la Décomposition
+
+L'intuition de la décomposition de Dunford peut s'illustrer par un schéma représentant l'action de $d$ (qui étire selon des axes propres) et $n$ (qui crée un cisaillement).
+
+```latex
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.5]
+  % Axes
+  \draw[->, thick, gray] (-0.5,0) -- (3,0) node[right, black] {$e_1$ (propre)};
+  \draw[->, thick, gray] (0,-0.5) -- (0,3) node[above, black] {$e_2$ (généralisé)};
+
+  % Vecteur initial
+  \draw[->, thick, blue] (0,0) -- (1,1) node[above right] {$v$};
+
+  % Action de d (diagonalisable)
+  \draw[->, thick, red, dashed] (0,0) -- (2,1) node[right] {$d(v)$};
+
+  % Action de n (nilpotente - cisaillement)
+  \draw[->, thick, green!70!black, dashed] (2,1) -- (2.5,1) node[right] {$+ n(v)$};
+
+  % Vecteur final
+  \draw[->, ultra thick, purple] (0,0) -- (2.5,1) node[above left] {$f(v) = d(v) + n(v)$};
+
+  % Explications
+  \node[anchor=north west] at (3.5, 2.5) {\textbf{Décomposition de l'opérateur $f$}};
+  \node[anchor=north west] at (3.5, 2.0) {\textcolor{red}{$d$ : homothétie sur les sous-espaces}};
+  \node[anchor=north west] at (3.5, 1.5) {\textcolor{green!70!black}{$n$ : cisaillement nilpotent (couplage)}};
+  \node[anchor=north west] at (3.5, 1.0) {\textcolor{purple}{$f = d + n$ : composition additive}};
+\end{tikzpicture}
+\caption{Visualisation de l'action conjointe de la partie diagonalisable et de la partie nilpotente d'un endomorphisme}
+\end{figure}
+```
 
 **Exemple Trivial :**
 Soit l'endomorphisme $f$ de $\mathbb{R}^2$ canoniquement associé à la matrice $A = \begin{pmatrix} 2 & 1 \\ 0 & 3 \end{pmatrix}$.
@@ -62,7 +95,7 @@ On remarque que $2$ est racine : $2^3 - 7(4) + 16(2) - 12 = 8 - 28 + 32 - 12 = 0
 Par division euclidienne, on trouve $\chi_M(X) = (X-2)^2(X-3)$.
 Le polynôme caractéristique est scindé sur $\mathbb{R}$. Par conséquent, $M$ est trigonalisable dans $\mathbb{R}$. (Note : La dimension du sous-espace propre associé à la valeur propre $2$ n'est que de $1$, donc $M$ n'est pas diagonalisable, mais elle est bien trigonalisable).
 
-### D. Cas Pathologiques et Contre-exemples
+### Cas Pathologiques et Contre-exemples
 
 **Contre-exemple (Le défaut de scindage sur $\mathbb{R}$) :**
 Soit $r$ la rotation d'angle $\theta = \frac{\pi}{2}$ dans $\mathbb{R}^2$. Sa matrice dans la base canonique est $R = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$.
@@ -70,9 +103,9 @@ Le polynôme caractéristique est $\chi_R(X) = X^2 + 1$.
 Sur le corps $\mathbb{R}$, le polynôme $X^2 + 1$ n'a aucune racine, il est irréductible et donc non scindé.
 Par conséquent, $R$ **n'est pas trigonalisable sur $\mathbb{R}$**. Il n'y a aucune droite vectorielle réelle stable par cette rotation. Cependant, si l'on considère cet endomorphisme sur $\mathbb{C}^2$, alors $\chi_R(X) = (X-i)(X+i)$ est scindé, et $R$ devient diagonalisable (donc trigonalisable) sur $\mathbb{C}$.
 
-## 3. Décomposition de Dunford (Protocole d'Exégèse Conceptuelle)
+## Décomposition de Dunford
 
-### A. Énoncé Symbolique Strict
+### Énoncé formel
 
 Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension finie $n$.
 Soit $f \in \mathcal{L}(E)$ un endomorphisme dont le polynôme caractéristique $\chi_f$ est scindé sur $\mathbb{K}$.
@@ -85,7 +118,7 @@ Alors il existe un **unique** couple $(d, n)$ d'endomorphismes de $E$ vérifiant
 
 De plus, $d$ et $n$ sont des polynômes en $f$, c'est-à-dire qu'il existe $P, Q \in \mathbb{K}[X]$ tels que $d = P(f)$ et $n = Q(f)$.
 
-### B. Anatomie et Typage Chirurgical
+### Analyse détaillée
 
 - **$f = d + n$** : Décomposition additive explicite. L'opérateur complet est la superposition de deux comportements orthogonaux de point de vue de leur nature algébrique.
 - **$d$ diagonalisable** : Il existe une base où $d$ se représente par une matrice diagonale. $d$ encapsule les valeurs propres de $f$.
@@ -93,7 +126,40 @@ De plus, $d$ et $n$ sont des polynômes en $f$, c'est-à-dire qu'il existe $P, Q
 - **$d \circ n = n \circ d$** : Condition sine qua non de l'unicité et de l'utilité pratique. Elle garantit que la base qui diagonalise $d$ est fortement compatible avec $n$. Sans cette commutativité, on pourrait trouver une infinité de décompositions triviales et inutilisables.
 - **$d = P(f)$ et $n = Q(f)$** : En tant que polynômes en $f$, ils commutent non seulement entre eux, mais aussi avec tout endomorphisme qui commute avec $f$. Cette propriété d'appartenance à l'algèbre engendrée par $f$, notée $\mathbb{K}[f]$, est primordiale.
 
-### C. Exemples de Validation
+### Exemples de Validation
+### Représentation Géométrique de la Décomposition
+
+L'intuition de la décomposition de Dunford peut s'illustrer par un schéma représentant l'action de $d$ (qui étire selon des axes propres) et $n$ (qui crée un cisaillement).
+
+```latex
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.5]
+  % Axes
+  \draw[->, thick, gray] (-0.5,0) -- (3,0) node[right, black] {$e_1$ (propre)};
+  \draw[->, thick, gray] (0,-0.5) -- (0,3) node[above, black] {$e_2$ (généralisé)};
+
+  % Vecteur initial
+  \draw[->, thick, blue] (0,0) -- (1,1) node[above right] {$v$};
+
+  % Action de d (diagonalisable)
+  \draw[->, thick, red, dashed] (0,0) -- (2,1) node[right] {$d(v)$};
+
+  % Action de n (nilpotente - cisaillement)
+  \draw[->, thick, green!70!black, dashed] (2,1) -- (2.5,1) node[right] {$+ n(v)$};
+
+  % Vecteur final
+  \draw[->, ultra thick, purple] (0,0) -- (2.5,1) node[above left] {$f(v) = d(v) + n(v)$};
+
+  % Explications
+  \node[anchor=north west] at (3.5, 2.5) {\textbf{Décomposition de l'opérateur $f$}};
+  \node[anchor=north west] at (3.5, 2.0) {\textcolor{red}{$d$ : homothétie sur les sous-espaces}};
+  \node[anchor=north west] at (3.5, 1.5) {\textcolor{green!70!black}{$n$ : cisaillement nilpotent (couplage)}};
+  \node[anchor=north west] at (3.5, 1.0) {\textcolor{purple}{$f = d + n$ : composition additive}};
+\end{tikzpicture}
+\caption{Visualisation de l'action conjointe de la partie diagonalisable et de la partie nilpotente d'un endomorphisme}
+\end{figure}
+```
 
 **Exemple de Décomposition Directe :**
 Soit $M = \begin{pmatrix} 2 & 1 \\ 0 & 2 \end{pmatrix}$.
@@ -104,7 +170,7 @@ On a bien $M = D + N$.
 - $DN = (2I_2)N = 2N = N(2I_2) = ND$, ils commutent.
 Par l'unicité garantie par le théorème de Dunford, le couple $(D, N)$ est **l'unique** décomposition de Dunford de $M$.
 
-### D. Cas Pathologiques et Contre-exemples
+### Cas Pathologiques et Contre-exemples
 
 **Le Piège de la Non-Commutativité :**
 Considérons $A = \begin{pmatrix} 1 & 2 \\ 0 & 2 \end{pmatrix}$.
@@ -116,7 +182,7 @@ $N'D' = \begin{pmatrix} 0 & 2 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} 1 & 0 \\ 0 
 Puisque $D'N' \neq N'D'$, le couple $(D', N')$ **n'est pas** la décomposition de Dunford de $A$.
 En réalité, $A$ admet deux valeurs propres distinctes ($1$ et $2$) et est donc diagonalisable. Sa vraie décomposition de Dunford est triviale : $A = A + 0$ (où $d=A$ et $n=0$).
 
-## 4. Zéro Ellipse dans les Démonstrations à Blanc
+## Démonstrations détaillées
 
 ### Démonstration 1 : Existence de la base de Trigonalisation (par récurrence)
 

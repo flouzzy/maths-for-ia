@@ -169,6 +169,9 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [2026-08-01] : [Upsert/Création] du Jalon 42 - Équations différentielles linéaires du second ordre. Status: Terminé.
 
 ### 2026-07-31-audit
+- [[#2026-07-31-audit|2026-07-31]] : [Audit & Weekly Compilation] - Jalon 30 - Trigonalisation d'endomorphismes et décomposition de Dunford. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+
+### 2026-07-31-audit
 - [[#2026-07-31-audit|2026-07-31]] : [Audit & Weekly Compilation] - Jalon 29 - Éléments propres, polynôme caractéristique, sous-espaces propres et critères de diagonalisabilité. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 
 ### 2026-07-30-audit
