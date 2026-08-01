@@ -48,7 +48,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-39/Jalon-39.md|Jalon 39 : Intégrales généralisées sur un intervalle quelconque et critères de convergence.]] : Intégrales généralisées sur un intervalle quelconque et critères de convergence. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-40/Jalon-40.md|Jalon 40 : Intégrales dépendant d'un paramètre]] : Intégrales dépendant d'un paramètre, théorèmes de continuité et de dérivation sous le signe $\int$. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-41/Jalon-41.md|Jalon 41 : Équations différentielles linéaires du premier ordre et méthode de variation de la constante.]] : Équations différentielles linéaires du premier ordre et méthode de variation de la constante.
-- [ ] [[jalon-42/Jalon 42 (Équations différentielles linéaires du second ordre à coefficients constants.).md|Jalon 42 : Équations différentielles linéaires du second ordre à coefficients constants.]] : Équations différentielles linéaires du second ordre à coefficients constants.
+- [x] [[jalon-42/Jalon-42.md|Jalon 42 : Équations différentielles linéaires du second ordre à coefficients constants.]] : Équations différentielles linéaires du second ordre à coefficients constants.
 - [ ] [[jalon-43/Jalon 43 (Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.).md|Jalon 43 : Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.]] : Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.
 - [ ] [[jalon-44/Jalon 44 (Fonctions de plusieurs variables).md|Jalon 44 : Fonctions de plusieurs variables]] : Fonctions de plusieurs variables, limites, continuité et topologie de $\\mathbb{R}^n$.
 - [ ] [[jalon-45/Jalon 45 (Différentiabilité).md|Jalon 45 : Différentiabilité]] : Différentiabilité, différentielle totale, dérivées partielles et gradient.
@@ -165,6 +165,8 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
+
+- [2026-08-01] : [Upsert/Création] du Jalon 42 - Équations différentielles linéaires du second ordre. Status: Terminé.
 
 ### 2026-07-31-audit
 - [[#2026-07-31-audit|2026-07-31]] : [Audit & Weekly Compilation] - Jalon 29 - Éléments propres, polynôme caractéristique, sous-espaces propres et critères de diagonalisabilité. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
