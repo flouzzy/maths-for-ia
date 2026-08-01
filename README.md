@@ -131,7 +131,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 39](jalon-39/Jalon-39.md)** : Intégrales généralisées sur un intervalle quelconque et critères de convergence. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 40](jalon-40/Jalon-40.md)** : Intégrales dépendant d'un paramètre, théorèmes de continuité et de dérivation sous le signe $\int$. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 41](jalon-41/Jalon-41.md)** : Équations différentielles linéaires du premier ordre et méthode de variation de la constante.
-- **[Jalon 42](jalon-42/Jalon%2042%20%28%C3%89quations%20diff%C3%A9rentielles%20lin%C3%A9aires%20du%20second%20ordre%20%C3%A0%20coefficients%20constants.%29.md)** : Équations différentielles linéaires du second ordre à coefficients constants.
+- **[Jalon 42](jalon-42/Jalon-42.md)** : Équations différentielles linéaires du second ordre à coefficients constants. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 43](jalon-43/Jalon%2043%20%28Syst%C3%A8mes%20diff%C3%A9rentiels%20lin%C3%A9aires%20d%27ordre%201%20et%20calcul%20de%20l%27exponentielle%20de%20matrice.%29.md)** : Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.
 - **[Jalon 44](jalon-44/Jalon%2044%20%28Fonctions%20de%20plusieurs%20variables%29.md)** : Fonctions de plusieurs variables, limites, continuité et topologie de $\mathbb{R}^n$.
 - **[Jalon 45](jalon-45/Jalon%2045%20%28Diff%C3%A9rentiabilit%C3%A9%29.md)** : Différentiabilité, différentielle totale, dérivées partielles et gradient.
@@ -403,6 +403,8 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
 
+### 2026-08-01-audit
+- [2026-08-01] : [Upsert/Création] du Jalon 42 - Équations différentielles linéaires du second ordre. Status: Terminé.
 ### 2026-07-31-audit
 - [[#2026-07-31-audit|2026-07-31]] : [Audit & Weekly Compilation] - Jalon 29 - Éléments propres, polynôme caractéristique, sous-espaces propres et critères de diagonalisabilité. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 
