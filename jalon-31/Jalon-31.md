@@ -12,7 +12,7 @@ next: "[[Jalon 32 (Preuve complète du théorème spectral pour les endomorphism
 
 # Jalon 31 : Introduction à la réduction de Jordan et structure des nilpotents
 
-## 1. Échafaudage Cognitif & Genèse Historique
+## 1. Genèse Historique et Intuition
 
 L'algèbre linéaire commence souvent par une promesse séduisante : celle de la diagonalisation. L'idée que l'on puisse trouver un système de coordonnées – une base – dans lequel un endomorphisme complexe agit comme une simple dilatation indépendante le long de chaque axe. Cependant, très tôt, on découvre que cette promesse est fragile. Toutes les matrices ne sont pas diagonalisables. Que se passe-t-il alors lorsque l'espace refuse de se scinder en directions purement indépendantes ? Que faire des endomorphismes qui recèlent en eux une forme d'asymétrie structurelle, une "force de cisaillement" que de simples vecteurs propres ne peuvent capturer ?
 
@@ -22,14 +22,14 @@ Pour comprendre la réduction de Jordan, il faut visualiser l'endomorphisme non 
 
 La forme de Jordan est ainsi le compromis ultime : c'est la matrice "la plus diagonale possible". Elle révèle que tout opérateur se décompose en deux actions simultanées et qui commutent : une dilatation pure (la partie diagonalisable) et un cisaillement nilpotent (la partie de Jordan).
 
-## 2. Protocole d'Exégèse Conceptuelle
+## 2. Définitions et Théorèmes
 
 ### 2.1. Endomorphismes Nilpotents
 
-#### A. Énoncé Symbolique Strict
+#### Définition Formelle
 Soit $E$ un $\mathbb{K}$-espace vectoriel. Un endomorphisme $u \in \mathcal{L}(E)$ est dit **nilpotent** s'il existe un entier $k \in \mathbb{N}^*$ tel que $u^k = 0_{\mathcal{L}(E)}$. L'entier minimal $p \in \mathbb{N}^*$ vérifiant $u^p = 0_{\mathcal{L}(E)}$ est appelé l'**indice de nilpotence** de $u$.
 
-#### B. Anatomie et Typage Chirurgical
+#### Analyse des Variables
 - $E$ : Un espace vectoriel sur le corps $\mathbb{K}$ (souvent $\mathbb{R}$ ou $\mathbb{C}$).
 - $u \in \mathcal{L}(E)$ : Un opérateur linéaire de $E$ dans $E$.
 - $k \in \mathbb{N}^*$ : Un entier naturel non nul, représentant le nombre d'itérations.
@@ -37,53 +37,72 @@ Soit $E$ un $\mathbb{K}$-espace vectoriel. Un endomorphisme $u \in \mathcal{L}(E
 - $0_{\mathcal{L}(E)}$ : L'endomorphisme nul, qui associe le vecteur nul $0_E$ à tout vecteur $x \in E$.
 - **L'indice $p$ :** Il vérifie $u^{p-1} \neq 0$ et $u^p = 0$. Il quantifie la "longueur maximale" de survie d'un vecteur sous l'action de $u$.
 
-#### C. Exemples de Validation
+#### Exemples de Validation
 - **Exemple trivial :** L'endomorphisme nul $u = 0_{\mathcal{L}(E)}$. Son indice de nilpotence est $p=1$.
 - **Exemple complexe :** Dans l'espace des polynômes de degré au plus $n$, $E = \mathbb{R}_n[X]$, l'opérateur de dérivation $D(P) = P'$. Puisque chaque dérivation diminue le degré d'au moins 1, la dérivée $(n+1)$-ème d'un polynôme de degré $\leq n$ est nulle. Ainsi, $D^{n+1} = 0$. L'opérateur de dérivation est nilpotent d'indice $n+1$.
 
-#### D. Cas Pathologiques et Contre-exemples
+#### Cas Pathologiques et Contre-exemples
 - **Rotation de $\pi/2$ :** Dans $\mathbb{R}^2$, la rotation $R$ d'angle $\pi/2$ vérifie $R^4 = \text{Id}$. Elle n'est pas nilpotente car ses itérées forment une suite périodique, elles ne convergent pas et ne s'annulent jamais (sauf sur le vecteur nul).
 - **Dimension infinie :** L'opérateur de décalage à droite $S(x_0, x_1, x_2, \dots) = (0, x_0, x_1, \dots)$ sur l'espace des suites n'est pas nilpotent, bien que son opérateur adjoint, le décalage à gauche $L(x_0, x_1, x_2, \dots) = (x_1, x_2, x_3, \dots)$, soit tel que $L^k$ s'annule sur le sous-espace des suites nulles à partir du rang $k$. Sur l'espace entier, $L$ n'est pas nilpotent car aucune puissance globale n'annule l'espace entier.
 
+
+\begin{center}
+\begin{tikzpicture}[node distance=2cm, auto, thick]
+  \node[circle, draw, minimum size=1cm] (1) {$e_k$};
+  \node[circle, draw, minimum size=1cm, right of=1] (2) {$e_{k-1}$};
+  \node[right of=2] (dots) {$\dots$};
+  \node[circle, draw, minimum size=1cm, right of=dots] (k) {$e_1$};
+  \node[circle, draw, minimum size=1cm, right of=k, dashed] (0) {$0$};
+
+  \draw[->] (1) -- node {$u$} (2);
+  \draw[->] (2) -- node {$u$} (dots);
+  \draw[->] (dots) -- node {$u$} (k);
+  \draw[->] (k) -- node {$u$} (0);
+
+  \node[above=0.5cm of 1] {Générateur};
+  \node[above=0.5cm of k] {Vecteur propre};
+\end{tikzpicture}
+\end{center}
+
 ### 2.2. Caractérisation des Nilpotents
 
-#### A. Énoncé Symbolique Strict
+#### Définition Formelle
 Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension finie $n$. Soit $u \in \mathcal{L}(E)$.
 Les propositions suivantes sont équivalentes :
 1. $u$ est nilpotent.
 2. Le polynôme caractéristique de $u$ est $\chi_u(X) = X^n$.
 3. La seule valeur propre de $u$ dans la clôture algébrique de $\mathbb{K}$ est $0$.
 
-#### B. Anatomie et Typage Chirurgical
+#### Analyse des Variables
 - $\dim(E) = n$ : La restriction à la dimension finie est cruciale pour que le polynôme caractéristique soit défini et de degré $n$.
 - $\chi_u(X) = \det(XI_n - U)$ : Le polynôme caractéristique, où $U$ est la matrice de $u$.
 - L'équivalence relie une propriété algébrico-dynamique ($u^k = 0$) à l'information purement spectrale du polynôme caractéristique.
 
-#### C. Exemples de Validation
+#### Exemples de Validation
 La matrice $U = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}$ vérifie $\chi_U(X) = X^3$. On calcule $U^2 = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}$ et $U^3 = 0_3$. $U$ est bien nilpotente.
 
-#### D. Cas Pathologiques et Contre-exemples
+#### Cas Pathologiques et Contre-exemples
 L'équivalence $\chi_u(X) = X^n \iff u$ nilpotent repose sur la dimension finie. En dimension infinie, on ne peut pas utiliser le polynôme caractéristique.
 
 ### 2.3. Blocs de Jordan
 
-#### A. Énoncé Symbolique Strict
+#### Définition Formelle
 Un **bloc de Jordan** de taille $k \in \mathbb{N}^*$ associé à la valeur propre $\lambda \in \mathbb{K}$ est une matrice carrée $J_k(\lambda) \in \mathcal{M}_k(\mathbb{K})$ de la forme :
 $$ J_k(\lambda) = \begin{pmatrix} \lambda & 1 & 0 & \dots & 0 \\ 0 & \lambda & 1 & \ddots & \vdots \\ \vdots & \ddots & \ddots & \ddots & 0 \\ \vdots & & \ddots & \lambda & 1 \\ 0 & \dots & \dots & 0 & \lambda \end{pmatrix} $$
 Autrement dit, $[J_k(\lambda)]_{i,j} = \lambda$ si $i=j$, $1$ si $j = i+1$, et $0$ sinon.
 
-#### B. Anatomie et Typage Chirurgical
+#### Analyse des Variables
 - $k$ : La dimension du bloc.
 - $\lambda$ : Un scalaire sur la diagonale principale.
 - La sur-diagonale ne contient que des 1. C'est l'essence même du "cisaillement". Un bloc $J_k(\lambda)$ s'écrit $\lambda I_k + N_k$ où $N_k$ est le bloc de Jordan nilpotent canonique $J_k(0)$.
 
-#### C. Exemples de Validation
+#### Exemples de Validation
 $J_1(3) = \begin{pmatrix} 3 \end{pmatrix}$, $J_2(0) = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}$, $J_3(-2) = \begin{pmatrix} -2 & 1 & 0 \\ 0 & -2 & 1 \\ 0 & 0 & -2 \end{pmatrix}$.
 
-#### D. Cas Pathologiques et Contre-exemples
+#### Cas Pathologiques et Contre-exemples
 Une matrice avec des $\lambda$ sur la diagonale et des valeurs aléatoires au-dessus n'est pas un bloc de Jordan. La structure impose exactement des 1 sur la diagonale immédiatement supérieure, forçant une structure cyclique très stricte sur la base sous-jacente (chaîne de Jordan).
 
-## 3. Démonstrations : Zéro Ellipse Mathématique
+## 3. Démonstrations Pas-à-Pas
 
 ### Démonstration : Théorème de structure nilpotente $\iff \chi_u(X) = X^n$
 

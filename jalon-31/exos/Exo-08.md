@@ -1,4 +1,4 @@
-# Exercice 08 : Décomposition d'un noyau itéré et stabilité (⭐⭐⭐⭐)
+# Décomposition d'un noyau itéré et stabilité (⭐⭐⭐⭐)
 
 ## Énoncé
 Soit $E$ un espace vectoriel de dimension finie, et $u \in \mathcal{L}(E)$ nilpotent d'indice $p$.
@@ -8,7 +8,7 @@ Pour $1 \le k \le p$, on définit les sous-espaces $N_k = \ker(u^k)$ et $I_k = \
 3. Démontrer que si $F$ est un sous-espace vectoriel de $E$ supplémentaire de $N_{p-1}$ dans $N_p$ (soit $N_p = N_{p-1} \oplus F$), alors l'application restreinte $u : F \to u(F)$ est un isomorphisme.
 4. En déduire que $u(F) \cap N_{p-2} = \{0_E\}$.
 
-## Corrigé Rigoureux : Zéro Ellipse Mathématique
+## Corrigé Détaillé
 
 ### 1. $E = N_p$
 Par définition de l'indice de nilpotence, $p$ est l'entier tel que $u^p = 0_{\mathcal{L}(E)}$.

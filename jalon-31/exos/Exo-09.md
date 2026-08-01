@@ -1,4 +1,4 @@
-# Exercice 09 : Matrices semblables et invariants de similitude (⭐⭐⭐⭐)
+# Matrices semblables et invariants de similitude (⭐⭐⭐⭐)
 
 ## Énoncé
 Soient les deux matrices nilpotentes suivantes dans $\mathcal{M}_3(\mathbb{R})$ :
@@ -7,7 +7,7 @@ $$A = \begin{pmatrix} 0 & 1 & 1 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}, \quad B
 2. Calculer $A^2$ et $A^3$. Déterminer l'indice de nilpotence de $A$.
 3. $A$ et $B$ sont-elles semblables ? Justifier de manière formelle.
 
-## Corrigé Rigoureux : Zéro Ellipse Mathématique
+## Corrigé Détaillé
 
 ### 1. Polynômes caractéristiques
 Les matrices $A$ et $B$ sont toutes deux des matrices triangulaires supérieures strictes.
