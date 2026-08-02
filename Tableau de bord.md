@@ -165,6 +165,8 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
+### 2026-08-02-audit
+- [[#2026-08-02-audit|2026-08-02]] : [Audit & Weekly Compilation] - Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 
 - [2026-08-01] : [Upsert/Création] du Jalon 42 - Équations différentielles linéaires du second ordre. Status: Terminé.
 

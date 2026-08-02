@@ -9,7 +9,7 @@ Soit $N \in \mathcal{M}_3(\mathbb{R})$ une matrice telle que $N^3 = 0$ et $N^2 \
 3. Démontrer qu'il existe un vecteur $x \in \mathbb{R}^3$ tel que la famille $\mathcal{B} = (N^2 x, Nx, x)$ est une base de $\mathbb{R}^3$.
 4. Quelle est la matrice de l'endomorphisme associé à $N$ dans cette base $\mathcal{B}$ ? Conclure.
 
-## Corrigé Rigoureux : Zéro Ellipse Mathématique
+## Corrigé Rigoureux : Démonstration Complète
 
 ### 1. Puissances de $J$
 $$J = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}$$

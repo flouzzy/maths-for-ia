@@ -6,7 +6,7 @@ Soit $C(J_n) = \{ M \in \mathcal{M}_n(\mathbb{R}) \mid M J_n = J_n M \}$ le comm
 1. Démontrer que si $M$ commute avec $J_n$, alors $M$ est un polynôme en $J_n$. (Indice : évaluer les relations de commutation sur les coefficients de la matrice).
 2. En déduire la dimension de l'espace vectoriel $C(J_n)$.
 
-## Corrigé Rigoureux : Zéro Ellipse Mathématique
+## Corrigé Rigoureux : Démonstration Complète
 
 ### 1. Analyse de la commutation
 Soit $M = (m_{i,j})_{1 \le i,j \le n}$ une matrice.

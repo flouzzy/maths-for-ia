@@ -6,7 +6,7 @@ $$N = \begin{pmatrix} 2 & -1 \\ 4 & -2 \end{pmatrix}$$
 1. Calculer $N^2$. Que peut-on en déduire sur l'endomorphisme canoniquement associé à $N$ ?
 2. Déterminer le polynôme caractéristique $\chi_N(X)$ de $N$ et vérifier le lien avec la nilpotence.
 
-## Corrigé Rigoureux : Zéro Ellipse Mathématique
+## Corrigé Rigoureux : Démonstration Complète
 
 ### 1. Calcul de $N^2$
 Posons $N = \begin{pmatrix} 2 & -1 \\ 4 & -2 \end{pmatrix}$.

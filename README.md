@@ -404,6 +404,8 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
+### 2026-08-02-audit
+- [[#2026-08-02-audit|2026-08-02]] : [Audit & Weekly Compilation] - Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 
 ### 2026-08-01-audit
 - [2026-08-01] : [Upsert/Création] du Jalon 42 - Équations différentielles linéaires du second ordre. Status: Terminé.

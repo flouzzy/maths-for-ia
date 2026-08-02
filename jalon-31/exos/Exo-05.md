@@ -6,7 +6,7 @@ On suppose que $\mathbb{K}$ est un corps de caractéristique nulle (ex: $\mathbb
 1. Si $u$ est nilpotent, montrer que pour tout entier $k \ge 1$, $\text{Tr}(u^k) = 0$.
 2. (Réciproque partielle) On suppose que pour tout $k \in \{1, 2, \dots, n\}$, $\text{Tr}(u^k) = 0$. En utilisant les identités de Newton (admises), montrer que $u$ est nilpotent.
 
-## Corrigé Rigoureux : Zéro Ellipse Mathématique
+## Corrigé Rigoureux : Démonstration Complète
 
 ### 1. Condition nécessaire
 Si $u$ est nilpotent, alors son polynôme caractéristique est $\chi_u(X) = X^n$ (Théorème vu en cours).
