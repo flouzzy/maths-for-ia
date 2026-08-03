@@ -1,4 +1,4 @@
-# Exercice 01 : Nilpotence basique en dimension 2 (⭐)
+# Nilpotence basique en dimension 2 (⭐)
 
 ## Énoncé
 Soit $N \in \mathcal{M}_2(\mathbb{R})$ la matrice définie par :
@@ -6,7 +6,7 @@ $$N = \begin{pmatrix} 2 & -1 \\ 4 & -2 \end{pmatrix}$$
 1. Calculer $N^2$. Que peut-on en déduire sur l'endomorphisme canoniquement associé à $N$ ?
 2. Déterminer le polynôme caractéristique $\chi_N(X)$ de $N$ et vérifier le lien avec la nilpotence.
 
-## Corrigé Rigoureux : Démonstration Complète
+## Corrigé Détaillé
 
 ### 1. Calcul de $N^2$
 Posons $N = \begin{pmatrix} 2 & -1 \\ 4 & -2 \end{pmatrix}$.

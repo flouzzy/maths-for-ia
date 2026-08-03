@@ -1,4 +1,4 @@
-# Exercice 02 : Indice de nilpotence d'un opérateur de dérivation (⭐⭐)
+# Indice de nilpotence d'un opérateur de dérivation (⭐⭐)
 
 ## Énoncé
 Soit $E = \mathbb{R}_3[X]$ l'espace vectoriel des polynômes à coefficients réels de degré au plus 3.
@@ -7,7 +7,7 @@ Soit $u \in \mathcal{L}(E)$ l'endomorphisme de dérivation : $\forall P \in E, u
 2. Démontrer que $u$ est nilpotent et déterminer son indice de nilpotence $p$.
 3. Calculer $\ker(u^k)$ pour $k \in \{1, 2, 3, 4\}$ et vérifier les inclusions strictes.
 
-## Corrigé Rigoureux : Démonstration Complète
+## Corrigé Détaillé
 
 ### 1. Matrice de $u$ dans la base canonique
 La base canonique est $\mathcal{B} = (e_0, e_1, e_2, e_3) = (1, X, X^2, X^3)$. La dimension de $E$ est $n=4$.

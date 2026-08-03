@@ -1,4 +1,4 @@
-# Exercice 07 : Inverse d'un bloc diagonalisable + nilpotent (⭐⭐⭐⭐)
+# Inverse d'un bloc diagonalisable + nilpotent (⭐⭐⭐⭐)
 
 ## Énoncé
 Soit $A \in \mathcal{M}_n(\mathbb{R})$ inversible.
@@ -7,7 +7,7 @@ Supposons que $A = \lambda I_n - N$, où $\lambda \in \mathbb{R}^*$ et $N$ est u
 2. Utiliser ce développement pour exprimer $A^{-1}$ comme un polynôme en $N$.
 3. Application : Soit le bloc de Jordan inversible $J_{\lambda} = \lambda I_3 + J$ (où $J$ est le bloc nilpotent usuel de taille 3, $\lambda \neq 0$). Calculer l'inverse exact de $J_{\lambda}$.
 
-## Corrigé Rigoureux : Démonstration Complète
+## Corrigé Détaillé
 
 ### 1. Développement formel
 Pour un réel $x$ tel que $|x| < 1$, on a le développement géométrique classique :

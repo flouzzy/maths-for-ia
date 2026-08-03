@@ -132,7 +132,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 40](jalon-40/Jalon-40.md)** : Intégrales dépendant d'un paramètre, théorèmes de continuité et de dérivation sous le signe $\int$. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 41](jalon-41/Jalon-41.md)** : Équations différentielles linéaires du premier ordre et méthode de variation de la constante.
 - **[Jalon 42](jalon-42/Jalon-42.md)** : Équations différentielles linéaires du second ordre à coefficients constants. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 43](jalon-43/Jalon%2043%20%28Syst%C3%A8mes%20diff%C3%A9rentiels%20lin%C3%A9aires%20d%27ordre%201%20et%20calcul%20de%20l%27exponentielle%20de%20matrice.%29.md)** : Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.
+- **[Jalon 43](jalon-43/Jalon-43.md)** : Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 44](jalon-44/Jalon%2044%20%28Fonctions%20de%20plusieurs%20variables%29.md)** : Fonctions de plusieurs variables, limites, continuité et topologie de $\mathbb{R}^n$.
 - **[Jalon 45](jalon-45/Jalon%2045%20%28Diff%C3%A9rentiabilit%C3%A9%29.md)** : Différentiabilité, différentielle totale, dérivées partielles et gradient.
 - **[Jalon 46](jalon-46/Jalon%2046%20%28Matrice%20jacobienne%29.md)** : Matrice jacobienne, théorème de dérivation des fonctions composées (Chain Rule généralisée).
@@ -320,6 +320,8 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+### 2026-08-02-audit
+- [[#2026-08-02-audit|2026-08-02]] : [Audit & Weekly Compilation] - Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-31-audit
 - [[#2026-07-31-audit|2026-07-31]] : [Audit & Weekly Compilation] - Jalon 30 - Trigonalisation d'endomorphismes et décomposition de Dunford. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-21-audit
@@ -404,8 +406,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
-### 2026-08-02-audit
-- [[#2026-08-02-audit|2026-08-02]] : [Audit & Weekly Compilation] - Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+- [2026-08-02] : [Upsert/Création] du Jalon 43 - Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice. Status: Terminé.
 
 ### 2026-08-01-audit
 - [2026-08-01] : [Upsert/Création] du Jalon 42 - Équations différentielles linéaires du second ordre. Status: Terminé.

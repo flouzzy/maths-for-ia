@@ -1,4 +1,4 @@
-# Exercice 10 : Construction explicite de la base de Jordan (⭐⭐⭐⭐⭐)
+# Construction explicite de la base de Jordan (⭐⭐⭐⭐⭐)
 
 ## Énoncé
 Considérons l'endomorphisme $u$ de $\mathbb{R}^3$ dont la matrice dans la base canonique est :
@@ -8,7 +8,7 @@ $$A = \begin{pmatrix} 2 & -1 & 2 \\ 5 & -3 & 3 \\ -1 & 0 & -2 \end{pmatrix}$$
 3. Déterminer l'indice de nilpotence $p$ de $N$ et la suite des noyaux $\ker(N^k)$.
 4. Construire explicitement une base de Jordan $\mathcal{B}$ pour $N$, et donner la matrice de passage $P$.
 
-## Corrigé Rigoureux : Démonstration Complète
+## Corrigé Détaillé
 
 ### 1. Polynôme caractéristique
 Calculons $\chi_A(X) = \det(X I_3 - A)$.

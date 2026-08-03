@@ -20,10 +20,10 @@
     breaklines=true,
     frame=single,
     showstringspaces=false,
-    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1 {ù}{{\`u}}1 {ç}{{\c{c}}}1 {É}{{\'E}}1 {È}{{\`E}}1 {Ê}{{\^E}}1
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
 }
 
-\title{\Huge INTRODUCTION À LA RÉDUCTION DE JORDAN ET STRUCTURE DES NILPOTENTS \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\title{\Huge JALON 31 : INTRODUCTION A LA REDUCTION DE JORDAN ET STRUCTURE DES NILPOTENTS \\ \large Cours magistral, exercices corrigés et travaux pratiques}
 \author{\Large Charles EDOU NZE}
 \date{\today}
 
@@ -34,167 +34,187 @@
 
 \part{Cours Magistral}
 
-\section{Introduction à la réduction de Jordan et structure des nilpotents}
-\subsection{Introduction}
-L'algèbre linéaire commence souvent par une promesse séduisante : celle de la diagonalisation. L'idée que l'on puisse trouver un système de coordonnées dans lequel un endomorphisme complexe agit comme une simple dilatation indépendante le long de chaque axe. Cependant, très tôt, on découvre que cette promesse est fragile. Toutes les matrices ne sont pas diagonalisables. Que se passe-t-il alors lorsque l'espace refuse de se scinder en directions purement indépendantes ? Que faire des endomorphismes qui recèlent en eux une forme d'asymétrie structurelle, une force de cisaillement que de simples vecteurs propres ne peuvent capturer ?
+\section{Jalon 31 : Introduction à la réduction de Jordan et structure des nilpotents}
 
-C'est ici qu'intervient le concept de nilpotence, puis de réduction de Jordan. Historiquement, Camille Jordan, à la fin du XIXe siècle, cherchait à comprendre la structure fine des équations différentielles linéaires. Lorsqu'un système présente des racines multiples dans son polynôme caractéristique, la solution ne s'exprime plus seulement comme une somme d'exponentielles pures, mais fait apparaître des termes de la forme $t^k e^{\lambda t}$. Cet effet de résonance est la signature spectrale d'un bloc de Jordan.
+\section{Genèse Historique et Intuition}
 
-Pour comprendre la réduction de Jordan, il faut visualiser l'endomorphisme non pas comme un ensemble de ressorts indépendants, mais comme une cascade ou une chaîne de montage. Un opérateur nilpotent agit comme un broyeur : peu importe le vecteur que vous y insérez, si vous le passez assez de fois à travers la machine, il finira broyé et réduit au vecteur nul. Les vecteurs ne sont plus des entités autonomes mais forment des chaînes de dépendance, où chaque itération de l'endomorphisme pousse un vecteur vers le suivant, jusqu'à l'annihilation finale.
+L'algèbre linéaire commence souvent par une promesse séduisante : celle de la diagonalisation. L'idée que l'on puisse trouver un système de coordonnées – une base – dans lequel un endomorphisme complexe agit comme une simple dilatation indépendante le long de chaque axe. Cependant, très tôt, on découvre que cette promesse est fragile. Toutes les matrices ne sont pas diagonalisables. Que se passe-t-il alors lorsque l'espace refuse de se scinder en directions purement indépendantes ? Que faire des endomorphismes qui recèlent en eux une forme d'asymétrie structurelle, une "force de cisaillement" que de simples vecteurs propres ne peuvent capturer ?
 
-La forme de Jordan est ainsi le compromis ultime : c'est la matrice la plus diagonale possible. Elle révèle que tout opérateur se décompose en deux actions simultanées et qui commutent : une dilatation pure et un cisaillement nilpotent.
+C'est ici qu'intervient le concept de nilpotence, puis de réduction de Jordan. Historiquement, Camille Jordan, à la fin du XIXe siècle, cherchait à comprendre la structure fine des équations différentielles linéaires. Lorsqu'un système présente des racines multiples dans son polynôme caractéristique, la solution ne s'exprime plus seulement comme une somme d'exponentielles pures, mais fait apparaître des termes de la forme $t^k e^{\lambda t}$. Cet effet de "résonance" est la signature spectrale d'un bloc de Jordan.
 
-\subsection{Définitions, Théorèmes et Exemples}
-\subsubsection{Endomorphismes Nilpotents}
-Soit $E$ un $\mathbb{K}$-espace vectoriel. Un endomorphisme $u \in \mathcal{L}(E)$ est dit nilpotent s'il existe un entier $k \in \mathbb{N}^*$ tel que $u^k = 0_{\mathcal{L}(E)}$. L'entier minimal $p \in \mathbb{N}^*$ vérifiant $u^p = 0_{\mathcal{L}(E)}$ est appelé l'indice de nilpotence de $u$.
+Pour comprendre la réduction de Jordan, il faut visualiser l'endomorphisme non pas comme un ensemble de ressorts indépendants (cas diagonalisable), mais comme une cascade ou une chaîne de montage. Un opérateur nilpotent agit comme un broyeur : peu importe le vecteur que vous y insérez, si vous le passez assez de fois à travers la machine, il finira broyé et réduit au vecteur nul. Les vecteurs ne sont plus des entités autonomes mais forment des *chaînes de dépendance*, où chaque itération de l'endomorphisme pousse un vecteur vers le suivant, jusqu'à l'annihilation finale.
 
-\begin{itemize}
-\item $E$ : Un espace vectoriel sur le corps $\mathbb{K}$.
-\item $u \in \mathcal{L}(E)$ : Un opérateur linéaire de $E$ dans $E$.
-\item $k \in \mathbb{N}^*$ : Un entier naturel non nul, représentant le nombre d'itérations.
-\item $u^k = u \circ u \circ \dots \circ u$ : La composition de l'endomorphisme $u$ avec lui-même $k$ fois.
-\item $0_{\mathcal{L}(E)}$ : L'endomorphisme nul.
-\item L'indice $p$ : Il vérifie $u^{p-1} \neq 0$ et $u^p = 0$. Il quantifie la longueur maximale de survie d'un vecteur sous l'action de $u$.
-\end{itemize}
+La forme de Jordan est ainsi le compromis ultime : c'est la matrice "la plus diagonale possible". Elle révèle que tout opérateur se décompose en deux actions simultanées et qui commutent : une dilatation pure (la partie diagonalisable) et un cisaillement nilpotent (la partie de Jordan).
 
-Exemple trivial : L'endomorphisme nul $u = 0_{\mathcal{L}(E)}$. Son indice de nilpotence est $p=1$.
+\section{Définitions et Théorèmes}
 
-Exemple complexe : Dans l'espace des polynômes de degré au plus $n$, $E = \mathbb{R}_n[X]$, l'opérateur de dérivation $D(P) = P'$. Puisque chaque dérivation diminue le degré d'au moins 1, la dérivée $(n+1)$-ème d'un polynôme de degré $\leq n$ est nulle. Ainsi, $D^{n+1} = 0$. L'opérateur de dérivation est nilpotent d'indice $n+1$.
+\subsection{Endomorphismes Nilpotents}
 
-Rotation de $\pi/2$ : Dans $\mathbb{R}^2$, la rotation $R$ d'angle $\pi/2$ vérifie $R^4 = \text{Id}$. Elle n'est pas nilpotente car ses itérées forment une suite périodique.
+\subsubsection{Définition Formelle}
+Soit $E$ un $\mathbb{K}$-espace vectoriel. Un endomorphisme $u \in \mathcal{L}(E)$ est dit **nilpotent** s'il existe un entier $k \in \mathbb{N}^*$ tel que $u^k = 0_{\mathcal{L}(E)}$. L'entier minimal $p \in \mathbb{N}^*$ vérifiant $u^p = 0_{\mathcal{L}(E)}$ est appelé l'**indice de nilpotence** de $u$.
 
-Dimension infinie : L'opérateur de décalage à droite $S(x_0, x_1, x_2, \dots) = (0, x_0, x_1, \dots)$ sur l'espace des suites n'est pas nilpotent, bien que son opérateur adjoint, le décalage à gauche $L(x_0, x_1, x_2, \dots) = (x_1, x_2, x_3, \dots)$, soit tel que $L^k$ s'annule sur le sous-espace des suites nulles à partir du rang $k$.
+\subsubsection{Analyse des Variables}
+- $E$ : Un espace vectoriel sur le corps $\mathbb{K}$ (souvent $\mathbb{R}$ ou $\mathbb{C}$).
+- $u \in \mathcal{L}(E)$ : Un opérateur linéaire de $E$ dans $E$.
+- $k \in \mathbb{N}^*$ : Un entier naturel non nul, représentant le nombre d'itérations.
+- $u^k = \underbrace{u \circ u \circ \dots \circ u}_{k \text{ fois}}$ : La composition de l'endomorphisme $u$ avec lui-même $k$ fois.
+- $0_{\mathcal{L}(E)}$ : L'endomorphisme nul, qui associe le vecteur nul $0_E$ à tout vecteur $x \in E$.
+- **L'indice $p$ :** Il vérifie $u^{p-1} \neq 0$ et $u^p = 0$. Il quantifie la "longueur maximale" de survie d'un vecteur sous l'action de $u$.
+
+\subsubsection{Exemples de Validation}
+- **Exemple trivial :** L'endomorphisme nul $u = 0_{\mathcal{L}(E)}$. Son indice de nilpotence est $p=1$.
+- **Exemple complexe :** Dans l'espace des polynômes de degré au plus $n$, $E = \mathbb{R}_n[X]$, l'opérateur de dérivation $D(P) = P'$. Puisque chaque dérivation diminue le degré d'au moins 1, la dérivée $(n+1)$-ème d'un polynôme de degré $\leq n$ est nulle. Ainsi, $D^{n+1} = 0$. L'opérateur de dérivation est nilpotent d'indice $n+1$.
+
+\subsubsection{Cas Pathologiques et Contre-exemples}
+- **Rotation de $\pi/2$ :** Dans $\mathbb{R}^2$, la rotation $R$ d'angle $\pi/2$ vérifie $R^4 = \text{Id}$. Elle n'est pas nilpotente car ses itérées forment une suite périodique, elles ne convergent pas et ne s'annulent jamais (sauf sur le vecteur nul).
+- **Dimension infinie :** L'opérateur de décalage à droite $S(x_0, x_1, x_2, \dots) = (0, x_0, x_1, \dots)$ sur l'espace des suites n'est pas nilpotent, bien que son opérateur adjoint, le décalage à gauche $L(x_0, x_1, x_2, \dots) = (x_1, x_2, x_3, \dots)$, soit tel que $L^k$ s'annule sur le sous-espace des suites nulles à partir du rang $k$. Sur l'espace entier, $L$ n'est pas nilpotent car aucune puissance globale n'annule l'espace entier.
+
 
 \begin{center}
-\begin{tikzpicture}[>=stealth, auto, node distance=2cm, main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
-  \node[main node] (1) {$x$};
-  \node[main node] (2) [right of=1] {$u(x)$};
-  \node[main node] (3) [right of=2] {$u^2(x)$};
-  \node (4) [right of=3] {$\dots$};
-  \node[main node] (5) [right of=4] {$0$};
-  \draw[->] (1) edge node {$u$} (2);
-  \draw[->] (2) edge node {$u$} (3);
-  \draw[->] (3) edge node {$u$} (4);
-  \draw[->] (4) edge node {$u$} (5);
+\begin{tikzpicture}[node distance=2cm, auto, thick]
+  \node[circle, draw, minimum size=1cm] (1) {$e_k$};
+  \node[circle, draw, minimum size=1cm, right of=1] (2) {$e_{k-1}$};
+  \node[right of=2] (dots) {$\dots$};
+  \node[circle, draw, minimum size=1cm, right of=dots] (k) {$e_1$};
+  \node[circle, draw, minimum size=1cm, right of=k, dashed] (0) {$0$};
+
+  \draw[->] (1) -- node {$u$} (2);
+  \draw[->] (2) -- node {$u$} (dots);
+  \draw[->] (dots) -- node {$u$} (k);
+  \draw[->] (k) -- node {$u$} (0);
+
+  \node[above=0.5cm of 1] {Générateur};
+  \node[above=0.5cm of k] {Vecteur propre};
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Caractérisation des Nilpotents}
+\subsection{Caractérisation des Nilpotents}
+
+\subsubsection{Définition Formelle}
 Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension finie $n$. Soit $u \in \mathcal{L}(E)$.
 Les propositions suivantes sont équivalentes :
-\begin{enumerate}
-\item $u$ est nilpotent.
-\item Le polynôme caractéristique de $u$ est $\chi_u(X) = X^n$.
-\item La seule valeur propre de $u$ dans la clôture algébrique de $\mathbb{K}$ est $0$.
-\end{enumerate}
+1. $u$ est nilpotent.
+2. Le polynôme caractéristique de $u$ est $\chi_u(X) = X^n$.
+3. La seule valeur propre de $u$ dans la clôture algébrique de $\mathbb{K}$ est $0$.
 
+\subsubsection{Analyse des Variables}
+- $\dim(E) = n$ : La restriction à la dimension finie est cruciale pour que le polynôme caractéristique soit défini et de degré $n$.
+- $\chi_u(X) = \det(XI_n - U)$ : Le polynôme caractéristique, où $U$ est la matrice de $u$.
+- L'équivalence relie une propriété algébrico-dynamique ($u^k = 0$) à l'information purement spectrale du polynôme caractéristique.
+
+\subsubsection{Exemples de Validation}
 La matrice $U = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}$ vérifie $\chi_U(X) = X^3$. On calcule $U^2 = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}$ et $U^3 = 0_3$. $U$ est bien nilpotente.
 
+\subsubsection{Cas Pathologiques et Contre-exemples}
 L'équivalence $\chi_u(X) = X^n \iff u$ nilpotent repose sur la dimension finie. En dimension infinie, on ne peut pas utiliser le polynôme caractéristique.
 
-\subsubsection{Blocs de Jordan}
-Un bloc de Jordan de taille $k \in \mathbb{N}^*$ associé à la valeur propre $\lambda \in \mathbb{K}$ est une matrice carrée $J_k(\lambda) \in \mathcal{M}_k(\mathbb{K})$ de la forme :
+\subsection{Blocs de Jordan}
+
+\subsubsection{Définition Formelle}
+Un **bloc de Jordan** de taille $k \in \mathbb{N}^*$ associé à la valeur propre $\lambda \in \mathbb{K}$ est une matrice carrée $J_k(\lambda) \in \mathcal{M}_k(\mathbb{K})$ de la forme :
 $$ J_k(\lambda) = \begin{pmatrix} \lambda & 1 & 0 & \dots & 0 \\ 0 & \lambda & 1 & \ddots & \vdots \\ \vdots & \ddots & \ddots & \ddots & 0 \\ \vdots & & \ddots & \lambda & 1 \\ 0 & \dots & \dots & 0 & \lambda \end{pmatrix} $$
 Autrement dit, $[J_k(\lambda)]_{i,j} = \lambda$ si $i=j$, $1$ si $j = i+1$, et $0$ sinon.
 
+\subsubsection{Analyse des Variables}
+- $k$ : La dimension du bloc.
+- $\lambda$ : Un scalaire sur la diagonale principale.
+- La sur-diagonale ne contient que des 1. C'est l'essence même du "cisaillement". Un bloc $J_k(\lambda)$ s'écrit $\lambda I_k + N_k$ où $N_k$ est le bloc de Jordan nilpotent canonique $J_k(0)$.
+
+\subsubsection{Exemples de Validation}
 $J_1(3) = \begin{pmatrix} 3 \end{pmatrix}$, $J_2(0) = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}$, $J_3(-2) = \begin{pmatrix} -2 & 1 & 0 \\ 0 & -2 & 1 \\ 0 & 0 & -2 \end{pmatrix}$.
 
-\begin{center}
-\begin{tikzpicture}
-    \node (O) at (0,0) {};
-    \node (X) at (3,0) {};
-    \node (Y) at (0,3) {};
-    \draw[->, thick] (O) -- (X) node[right] {$e_1$};
-    \draw[->, thick] (O) -- (Y) node[above] {$e_2$};
-    \draw[->, dashed, red, thick] (1, 1) -- (1, 0) node[midway, right] {$N(e_2)=e_1$};
-    \draw[->, dashed, red, thick] (2, 2) -- (2, 0);
-    \node at (2.5, 1) {Cisaillement nilpotent};
-\end{tikzpicture}
-\end{center}
+\subsubsection{Cas Pathologiques et Contre-exemples}
+Une matrice avec des $\lambda$ sur la diagonale et des valeurs aléatoires au-dessus n'est pas un bloc de Jordan. La structure impose exactement des 1 sur la diagonale immédiatement supérieure, forçant une structure cyclique très stricte sur la base sous-jacente (chaîne de Jordan).
 
-\subsection{Démonstrations}
-\subsubsection{Théorème de structure nilpotente et polynôme caractéristique}
+\section{Démonstrations Pas-à-Pas}
+
+\subsection{Démonstration : Théorème de structure nilpotente $\iff \chi_u(X) = X^n$}
+
 Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension $n \ge 1$ et $u \in \mathcal{L}(E)$.
 
-Sens direct : Supposons $u$ nilpotent.
-\begin{enumerate}
-\item Par définition, il existe $k \in \mathbb{N}^*$ tel que $u^k = 0$.
-\item Soit $\lambda \in \mathbb{K}$ une valeur propre de $u$ et $x \in E \setminus \{0_E\}$ un vecteur propre associé. Ainsi $u(x) = \lambda x$.
-\item Montrons par récurrence sur $j$ que $u^j(x) = \lambda^j x$.
-\item Appliquons ceci pour $j=k$ : $u^k(x) = \lambda^k x$.
-\item Or nous savons que $u^k = 0$, donc $u^k(x) = 0_E$.
-\item Ainsi, $\lambda^k x = 0_E$.
-\item Comme $x \neq 0_E$, la nullité implique que $\lambda^k = 0$.
-\item Dans le corps $\mathbb{K}$, cela implique nécessairement $\lambda = 0$.
-\item Le polynôme caractéristique $\chi_u(X)$ de $u$ est de degré $n$.
-\item La seule racine possible dans tout corps de décomposition est $0$.
-\item On déduit que $\chi_u(X) = X^n$.
-\end{enumerate}
+**Sens direct (1 $\implies$ 2) : Supposons $u$ nilpotent.**
+1. Par définition, il existe $k \in \mathbb{N}^*$ tel que $u^k = 0$.
+2. Soit $\lambda \in \mathbb{K}$ une valeur propre de $u$ et $x \in E \setminus \{0_E\}$ un vecteur propre associé. Ainsi $u(x) = \lambda x$.
+3. Montrons par récurrence sur $j$ que $u^j(x) = \lambda^j x$.
+   - **Initialisation ($j=1$) :** $u^1(x) = u(x) = \lambda x = \lambda^1 x$.
+   - **Hérédité :** Supposons la propriété vraie pour un $j \ge 1$. $u^{j+1}(x) = u(u^j(x)) = u(\lambda^j x) = \lambda^j u(x) = \lambda^j (\lambda x) = \lambda^{j+1} x$. La propriété est héréditaire.
+4. Appliquons ceci pour $j=k$ : $u^k(x) = \lambda^k x$.
+5. Or nous savons que $u^k = 0$, donc $u^k(x) = 0_E$.
+6. Ainsi, $\lambda^k x = 0_E$.
+7. Comme $x \neq 0_E$ (définition d'un vecteur propre), la nullité du produit scalaire par vecteur implique que $\lambda^k = 0$.
+8. Dans le corps $\mathbb{K}$, cela implique nécessairement $\lambda = 0$.
+9. Le polynôme caractéristique $\chi_u(X)$ de $u$ est de degré $n$. Il est un invariant de similitude dont les racines sont les valeurs propres de $u$.
+10. La seule racine possible dans tout corps de décomposition est $0$.
+11. Puisque le coefficient dominant de $\chi_u(X)$ est défini à $(-1)^n$ ou $1$ selon les conventions (utilisons le polynôme unitaire $\chi_u(X) = \det(XI_n - U)$), on déduit que $\chi_u(X) = X^n$.
 
-Sens réciproque : Supposons $\chi_u(X) = X^n$.
-\begin{enumerate}
-\item D'après le théorème de Cayley-Hamilton, tout endomorphisme $u$ annule son polynôme caractéristique : $\chi_u(u) = 0_{\mathcal{L}(E)}$.
-\item Remplaçons $\chi_u$ par son expression : $\chi_u(u) = u^n = 0_{\mathcal{L}(E)}$.
-\item Par définition, $u$ est donc nilpotent, d'indice de nilpotence $p \le n$.
-\end{enumerate}
+**Sens réciproque (2 $\implies$ 1) : Supposons $\chi_u(X) = X^n$.**
+1. D'après le théorème de Cayley-Hamilton, tout endomorphisme $u$ annule son polynôme caractéristique : $\chi_u(u) = 0_{\mathcal{L}(E)}$.
+2. Remplaçons $\chi_u$ par son expression : $\chi_u(u) = u^n = 0_{\mathcal{L}(E)}$.
+3. Par définition, $u$ est donc nilpotent, d'indice de nilpotence $p \le n$. $\blacksquare$
 
-\subsubsection{Indice de nilpotence et sous-espaces emboîtés}
+\subsection{Démonstration : Indice de nilpotence et sous-espaces emboîtés}
+
 Si $u$ est nilpotent d'indice $p$, alors la suite des noyaux vérifie :
 $\{0_E\} = \ker(u^0) \subsetneq \ker(u^1) \subsetneq \ker(u^2) \subsetneq \dots \subsetneq \ker(u^p) = E$.
 
-\begin{enumerate}
-\item Inclusion $\ker(u^i) \subseteq \ker(u^{i+1})$ :
+1. **Inclusion $\ker(u^i) \subseteq \ker(u^{i+1})$ :**
    Soit $x \in \ker(u^i)$. Par définition, $u^i(x) = 0_E$.
    Appliquons $u$ : $u(u^i(x)) = u(0_E) = 0_E$.
-   Donc $u^{i+1}(x) = 0_E$, ce qui signifie $x \in \ker(u^{i+1})$.
-\item Caractère strict des inclusions avant l'indice $p$ :
+   Donc $u^{i+1}(x) = 0_E$, ce qui signifie $x \in \ker(u^{i+1})$. L'inclusion est stricte ou égale.
+2. **Caractère strict des inclusions avant l'indice $p$ :**
    Supposons qu'il existe un entier $k < p$ tel que $\ker(u^k) = \ker(u^{k+1})$.
+   Montrons par récurrence que pour tout $j \ge 0$, $\ker(u^{k+j}) = \ker(u^k)$.
+   - **Initialisation ($j=1$) :** C'est l'hypothèse de départ.
+   - **Hérédité :** Supposons $\ker(u^{k+j}) = \ker(u^k)$.
+     Soit $x \in \ker(u^{k+j+1})$. Alors $u(x) \in \ker(u^{k+j})$.
+     Par hypothèse de récurrence, $\ker(u^{k+j}) = \ker(u^k)$, donc $u(x) \in \ker(u^k)$.
+     Cela implique $u^k(u(x)) = 0_E$, soit $u^{k+1}(x) = 0_E$.
+     Or par l'hypothèse de départ $\ker(u^{k+1}) = \ker(u^k)$, donc $x \in \ker(u^k)$.
+     L'inclusion inverse est toujours vraie. Donc $\ker(u^{k+j+1}) = \ker(u^k)$.
    La suite des noyaux stationne à partir du rang $k$.
-\item Comme $u$ est d'indice $p$, $\ker(u^p) = E$.
-\item Si la suite stationnait à $k < p$, on aurait $\ker(u^p) = \ker(u^k) = E$, ce qui signifierait que $u^k = 0$.
-\item Or $p$ est le plus petit entier annulant $u$, ce qui contredit $u^k=0$ pour $k < p$.
-\item Donc toutes les inclusions jusqu'à $p$ sont strictes.
-\end{enumerate}
+3. Comme $u$ est d'indice $p$, $\ker(u^p) = E$.
+4. Si la suite stationnait à $k < p$, on aurait $\ker(u^p) = \ker(u^k) = E$, ce qui signifierait que $u^k = 0$.
+5. Or $p$ est le **plus petit** entier annulant $u$, ce qui contredit $u^k=0$ pour $k < p$.
+6. Donc toutes les inclusions jusqu'à $p$ sont **strictes**. $\blacksquare$
 
-\subsection{Applications}
+\section{Ancrage \& Application en IA : Dynamique des RNN et Gradient Disparu}
+
 En intelligence artificielle, la théorie des endomorphismes nilpotents et de la forme de Jordan est fondamentale pour analyser la dynamique des Réseaux de Neurones Récurrents (RNN).
 
-Dans un RNN sans activation, l'état caché évolue selon $h_t = W h_{t-1}$.
+Dans un RNN sans activation (modèle linéaire local), l'état caché évolue selon $h_t = W h_{t-1}$.
 L'analyse de la stabilité de cette dynamique sur de longues séquences dépend de $W^t$.
 
-Si $W$ n'est pas diagonalisable et possède des blocs de Jordan associés à des valeurs propres de module 1, la matrice $J_k(1)^t$ génère des termes polynomiaux en $t$. Plus précisément, la composante sur la sur-diagonale du $j$-ème niveau croît en $\approx t^j$.
+Si $W$ n'est pas diagonalisable et possède des blocs de Jordan associés à des valeurs propres de module 1 (la limite de la stabilité), la matrice $J_k(1)^t$ génère des termes polynomiaux en $t$. Plus précisément, la composante sur la sur-diagonale du $j$-ème niveau croît en $\binom{t}{j} \approx t^j$.
 
-Cette croissance polynomiale d'un système qui paraissait spectralement stable peut engendrer le phénomène d'explosion du gradient ou sa version nilpotente : un bloc de Jordan pour $\lambda=0$ agit comme un filtre FIR pur, anéantissant toute information du passé après exactement $k$ pas de temps, empêchant le réseau d'apprendre des dépendances à long terme. C'est l'essence même du problème que les architectures LSTM ont été conçues pour résoudre en court-circuitant cette multiplication matricielle itérée.
+Cette croissance polynomiale d'un système qui paraissait spectralement stable (valeur propre de module 1) peut engendrer le phénomène d'explosion du gradient (Exploding Gradient) ou sa version nilpotente : un bloc de Jordan pour $\lambda=0$ agit comme un filtre FIR pur, anéantissant toute information du passé après exactement $k$ pas de temps, empêchant le réseau d'apprendre des dépendances à long terme. C'est l'essence même du problème que les architectures LSTM ont été conçues pour résoudre en court-circuitant cette multiplication matricielle itérée.
 
 
-\newpage
 \part{Exercices d'Application et de Concours}
-\subsection*{Exercice 01 : Nilpotence basique en dimension 2 \quad $\bigstar\star\star\star\star$}
-\subsubsection{Énoncé}
+
+\section{Nilpotence basique en dimension 2 ($\bigstar$)}
+
+\section{Énoncé}
 Soit $N \in \mathcal{M}_2(\mathbb{R})$ la matrice définie par :
 $$N = \begin{pmatrix} 2 & -1 \\ 4 & -2 \end{pmatrix}$$
-\begin{enumerate}
-\item Calculer $N^2$. Que peut-on en déduire sur l'endomorphisme canoniquement associé à $N$ ?
-\item Déterminer le polynôme caractéristique $\chi_N(X)$ de $N$ et vérifier le lien avec la nilpotence.
-\end{enumerate}
+1. Calculer $N^2$. Que peut-on en déduire sur l'endomorphisme canoniquement associé à $N$ ?
+2. Déterminer le polynôme caractéristique $\chi_N(X)$ de $N$ et vérifier le lien avec la nilpotence.
 
-\subsubsection{Corrigé Rigoureux : Démonstration Complète}
-\subsubsection{Calcul de $N^2$}
+\section{Corrigé Détaillé}
+
+\subsection{Calcul de $N^2$}
 Posons $N = \begin{pmatrix} 2 & -1 \\ 4 & -2 \end{pmatrix}$.
 Nous calculons le produit matriciel $N \times N$ :
 $$N^2 = \begin{pmatrix} 2 & -1 \\ 4 & -2 \end{pmatrix} \begin{pmatrix} 2 & -1 \\ 4 & -2 \end{pmatrix}$$
 Calcul des coefficients de $N^2 = (c_{i,j})$ :
-\begin{itemize}
-\item $c_{1,1} = 2 \times 2 + (-1) \times 4 = 4 - 4 = 0$
-\item $c_{1,2} = 2 \times (-1) + (-1) \times (-2) = -2 + 2 = 0$
-\item $c_{2,1} = 4 \times 2 + (-2) \times 4 = 8 - 8 = 0$
-\item $c_{2,2} = 4 \times (-1) + (-2) \times (-2) = -4 + 4 = 0$
+- $c_{1,1} = 2 \times 2 + (-1) \times 4 = 4 - 4 = 0$
+- $c_{1,2} = 2 \times (-1) + (-1) \times (-2) = -2 + 2 = 0$
+- $c_{2,1} = 4 \times 2 + (-2) \times 4 = 8 - 8 = 0$
+- $c_{2,2} = 4 \times (-1) + (-2) \times (-2) = -4 + 4 = 0$
 Ainsi,
 $$N^2 = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} = 0_{\mathcal{M}_2(\mathbb{R})}$$
 L'endomorphisme canoniquement associé à $N$ s'annule pour la puissance $2$. Puisque $N \neq 0$, son indice de nilpotence est exactement $p = 2$. $N$ est une matrice nilpotente.
-\end{itemize}
 
-\subsubsection{Polynôme caractéristique}
+\subsection{Polynôme caractéristique}
 Par définition, le polynôme caractéristique de $N$ est $\chi_N(X) = \det(X I_2 - N)$.
 $$\chi_N(X) = \det \begin{pmatrix} X - 2 & 1 \\ -4 & X + 2 \end{pmatrix}$$
 Calculons ce déterminant :
@@ -204,72 +224,68 @@ $$\chi_N(X) = X^2$$
 Puisque le polynôme caractéristique est $\chi_N(X) = X^2$, le théorème de caractérisation spectrale des matrices nilpotentes en dimension $n=2$ s'applique : l'unique valeur propre de $N$ est $0$. Ceci est cohérent avec le fait que $N$ est nilpotente (et, réciproquement, en dimension finie, une unique valeur propre nulle implique la nilpotence par le théorème de Cayley-Hamilton qui donne $N^2 = 0$).
 
 
-\subsection*{Exercice 02 : Indice de nilpotence d'un opérateur de dérivation \quad $\bigstar\bigstar\star\star\star$}
-\subsubsection{Énoncé}
+\section{Indice de nilpotence d'un opérateur de dérivation ($\bigstar$$\bigstar$)}
+
+\section{Énoncé}
 Soit $E = \mathbb{R}_3[X]$ l'espace vectoriel des polynômes à coefficients réels de degré au plus 3.
 Soit $u \in \mathcal{L}(E)$ l'endomorphisme de dérivation : $\forall P \in E, u(P) = P'$.
-\begin{enumerate}
-\item Écrire la matrice de $u$ dans la base canonique $\mathcal{B} = (1, X, X^2, X^3)$.
-\item Démontrer que $u$ est nilpotent et déterminer son indice de nilpotence $p$.
-\item Calculer $\ker(u^k)$ pour $k \in \{1, 2, 3, 4\}$ et vérifier les inclusions strictes.
-\end{enumerate}
+1. Écrire la matrice de $u$ dans la base canonique $\mathcal{B} = (1, X, X^2, X^3)$.
+2. Démontrer que $u$ est nilpotent et déterminer son indice de nilpotence $p$.
+3. Calculer $\ker(u^k)$ pour $k \in \{1, 2, 3, 4\}$ et vérifier les inclusions strictes.
 
-\subsubsection{Corrigé Rigoureux : Démonstration Complète}
-\subsubsection{Matrice de $u$ dans la base canonique}
+\section{Corrigé Détaillé}
+
+\subsection{Matrice de $u$ dans la base canonique}
 La base canonique est $\mathcal{B} = (e_0, e_1, e_2, e_3) = (1, X, X^2, X^3)$. La dimension de $E$ est $n=4$.
 Calculons l'image par $u$ de chaque vecteur de base :
-\begin{itemize}
-\item $u(e_0) = u(1) = 0 = 0 \cdot e_0 + 0 \cdot e_1 + 0 \cdot e_2 + 0 \cdot e_3$
-\item $u(e_1) = u(X) = 1 = 1 \cdot e_0 + 0 \cdot e_1 + 0 \cdot e_2 + 0 \cdot e_3$
-\item $u(e_2) = u(X^2) = 2X = 0 \cdot e_0 + 2 \cdot e_1 + 0 \cdot e_2 + 0 \cdot e_3$
-\item $u(e_3) = u(X^3) = 3X^2 = 0 \cdot e_0 + 0 \cdot e_1 + 3 \cdot e_2 + 0 \cdot e_3$
-\end{itemize}
+- $u(e_0) = u(1) = 0 = 0 \cdot e_0 + 0 \cdot e_1 + 0 \cdot e_2 + 0 \cdot e_3$
+- $u(e_1) = u(X) = 1 = 1 \cdot e_0 + 0 \cdot e_1 + 0 \cdot e_2 + 0 \cdot e_3$
+- $u(e_2) = u(X^2) = 2X = 0 \cdot e_0 + 2 \cdot e_1 + 0 \cdot e_2 + 0 \cdot e_3$
+- $u(e_3) = u(X^3) = 3X^2 = 0 \cdot e_0 + 0 \cdot e_1 + 3 \cdot e_2 + 0 \cdot e_3$
 
 La matrice $M = \text{Mat}_{\mathcal{B}}(u)$ s'écrit en disposant ces coordonnées en colonnes :
 $$M = \begin{pmatrix} 0 & 1 & 0 & 0 \\ 0 & 0 & 2 & 0 \\ 0 & 0 & 0 & 3 \\ 0 & 0 & 0 & 0 \end{pmatrix}$$
 
-\subsubsection{Nilpotence et indice}
+\subsection{Nilpotence et indice}
 Calculons les puissances successives de $u$ (ou de $M$) :
-\begin{itemize}
-\item Pour tout $P = a_0 + a_1 X + a_2 X^2 + a_3 X^3$,
-\item $u(P) = P' = a_1 + 2a_2 X + 3a_3 X^2$ (degré $\le 2$)
-\item $u^2(P) = P'' = 2a_2 + 6a_3 X$ (degré $\le 1$)
-\item $u^3(P) = P''' = 6a_3$ (degré $0$, constante)
-\item $u^4(P) = P^{(4)} = 0$ (polynôme nul)
+- Pour tout $P = a_0 + a_1 X + a_2 X^2 + a_3 X^3$,
+- $u(P) = P' = a_1 + 2a_2 X + 3a_3 X^2$ (degré $\le 2$)
+- $u^2(P) = P'' = 2a_2 + 6a_3 X$ (degré $\le 1$)
+- $u^3(P) = P''' = 6a_3$ (degré $0$, constante)
+- $u^4(P) = P^{(4)} = 0$ (polynôme nul)
 Puisque $u^4(P) = 0$ pour tout $P \in E$, on a $u^4 = 0_{\mathcal{L}(E)}$. L'endomorphisme $u$ est donc nilpotent.
 L'indice de nilpotence est le plus petit entier $p$ tel que $u^p = 0$.
 Ici, $u^3(X^3) = 6 \neq 0$, donc $u^3 \neq 0_{\mathcal{L}(E)}$.
 Ainsi, l'indice de nilpotence de $u$ est exactement $p = 4$.
-\end{itemize}
 
-\subsubsection{Étude des noyaux itérés}
+\subsection{Étude des noyaux itérés}
 Nous devons trouver l'ensemble des polynômes $P$ tels que $u^k(P) = 0$.
-\begin{itemize}
-\item $\ker(u^1) = \{ P \in E \mid P' = 0 \}$. Ce sont les polynômes constants. $\ker(u^1) = \text{Vect}(1) = \mathbb{R}_0[X]$.
-\item $\ker(u^2) = \{ P \in E \mid P'' = 0 \}$. En intégrant deux fois, on trouve les polynômes de degré $\le 1$. $\ker(u^2) = \text{Vect}(1, X) = \mathbb{R}_1[X]$.
-\item $\ker(u^3) = \{ P \in E \mid P''' = 0 \}$. Les polynômes de degré $\le 2$. $\ker(u^3) = \text{Vect}(1, X, X^2) = \mathbb{R}_2[X]$.
-\item $\ker(u^4) = \{ P \in E \mid P^{(4)} = 0 \}$. L'espace $E$ tout entier. $\ker(u^4) = \mathbb{R}_3[X] = E$.
+- $\ker(u^1) = \{ P \in E \mid P' = 0 \}$. Ce sont les polynômes constants. $\ker(u^1) = \text{Vect}(1) = \mathbb{R}_0[X]$.
+- $\ker(u^2) = \{ P \in E \mid P'' = 0 \}$. En intégrant deux fois, on trouve les polynômes de degré $\le 1$. $\ker(u^2) = \text{Vect}(1, X) = \mathbb{R}_1[X]$.
+- $\ker(u^3) = \{ P \in E \mid P''' = 0 \}$. Les polynômes de degré $\le 2$. $\ker(u^3) = \text{Vect}(1, X, X^2) = \mathbb{R}_2[X]$.
+- $\ker(u^4) = \{ P \in E \mid P^{(4)} = 0 \}$. L'espace $E$ tout entier. $\ker(u^4) = \mathbb{R}_3[X] = E$.
 On vérifie la suite strictement croissante d'inclusions (jusqu'à $k=p=4$) :
 $$\{0\} \subsetneq \text{Vect}(1) \subsetneq \text{Vect}(1, X) \subsetneq \text{Vect}(1, X, X^2) \subsetneq \mathbb{R}_3[X]$$
 Les dimensions croissent strictement de 1 à chaque étape (1, 2, 3, 4).
-\end{itemize}
 
 
-\subsection*{Exercice 03 : Matrices triangulaires strictes \quad $\bigstar\bigstar\star\star\star$}
-\subsubsection{Énoncé}
+\section{Matrices triangulaires strictes ($\bigstar$$\bigstar$)}
+
+\section{Énoncé}
 Soit $T_n(\mathbb{K})$ l'ensemble des matrices triangulaires supérieures strictes de taille $n \times n$ (matrices dont tous les coefficients diagonaux et sous-diagonaux sont nuls).
 Démontrer rigoureusement par récurrence que le produit de $k$ matrices triangulaires strictes est une matrice dont les $k$ premières sur-diagonales sont nulles. En déduire que toute matrice triangulaire stricte de taille $n$ est nilpotente d'indice au plus $n$.
 
-\subsubsection{Corrigé Rigoureux : Démonstration Complète}
-\subsubsection{Structure du produit de matrices triangulaires strictes}
+\section{Corrigé Détaillé}
+
+\subsection{Structure du produit de matrices triangulaires strictes}
 Soit $A = (a_{i,j})_{1 \le i,j \le n}$ une matrice triangulaire supérieure stricte.
 Par définition, $a_{i,j} = 0$ si $j \le i$. (En d'autres termes, $a_{i,j} \neq 0 \implies j > i \implies j \ge i+1$).
 Considérons la propriété $\mathcal{P}(k)$ : "Le produit de $k$ matrices triangulaires supérieures strictes $A^{(1)} A^{(2)} \dots A^{(k)}$ est une matrice $M = (m_{i,j})$ telle que $m_{i,j} = 0$ pour $j < i + k$."
 
-\textbf{Initialisation ($k=1$) :}
+**Initialisation ($k=1$) :**
 Pour une seule matrice $M = A^{(1)}$, l'hypothèse est que $M$ est triangulaire stricte. Donc $m_{i,j} = 0$ pour $j \le i$, soit $j < i + 1$. La propriété $\mathcal{P}(1)$ est vraie.
 
-\textbf{Hérédité :}
+**Hérédité :**
 Supposons $\mathcal{P}(k)$ vraie pour un entier $k \ge 1$.
 Soit $M = A^{(1)} \dots A^{(k)}$, avec $m_{i,j} = 0$ si $j < i + k$.
 Soit $B = A^{(k+1)}$ une matrice triangulaire stricte, avec $b_{i,j} = 0$ si $j \le i$.
@@ -277,18 +293,16 @@ Calculons le produit $C = M B$. Ses coefficients sont $c_{i,j} = \sum_{\ell=1}^n
 Nous voulons montrer que $c_{i,j} = 0$ si $j < i + k + 1$.
 Analysons les termes de la somme : $m_{i,\ell} b_{\ell,j}$.
 Pour qu'un terme soit non nul, il faut simultanément :
-\begin{enumerate}
-\item $m_{i,\ell} \neq 0 \implies \ell \ge i + k$ (d'après $\mathcal{P}(k)$).
-\item $b_{\ell,j} \neq 0 \implies j \ge \ell + 1$ (car $B$ est triangulaire stricte).
+1. $m_{i,\ell} \neq 0 \implies \ell \ge i + k$ (d'après $\mathcal{P}(k)$).
+2. $b_{\ell,j} \neq 0 \implies j \ge \ell + 1$ (car $B$ est triangulaire stricte).
 En combinant ces deux inégalités strictes :
 $j \ge \ell + 1 \ge (i + k) + 1 = i + k + 1$.
 Ainsi, si $j < i + k + 1$, alors pour tout $\ell \in \{1, \dots, n\}$, soit $m_{i,\ell} = 0$, soit $b_{\ell,j} = 0$.
 Par conséquent, la somme est nulle : $c_{i,j} = 0$.
 La propriété $\mathcal{P}(k+1)$ est donc vérifiée.
 Par principe de récurrence, $\mathcal{P}(k)$ est vraie pour tout $k \ge 1$.
-\end{enumerate}
 
-\subsubsection{Nilpotence}
+\subsection{Nilpotence}
 Appliquons $\mathcal{P}(n)$ en choisissant $A^{(1)} = A^{(2)} = \dots = A^{(n)} = A$.
 La matrice $M = A^n$ vérifie $m_{i,j} = 0$ si $j < i + n$.
 Or, les indices des lignes $i$ et des colonnes $j$ varient entre $1$ et $n$.
@@ -299,20 +313,20 @@ Par conséquent, tous les coefficients de $A^n$ sont nuls : $A^n = 0_{\mathcal{M
 Toute matrice triangulaire stricte de taille $n$ est donc nilpotente, d'indice de nilpotence au plus $n$.
 
 
-\subsection*{Exercice 04 : Bloc de Jordan fondamental \quad $\bigstar\bigstar\bigstar\star\star$}
-\subsubsection{Énoncé}
+\section{Bloc de Jordan fondamental ($\bigstar$$\bigstar$$\bigstar$)}
+
+\section{Énoncé}
 Soit $J \in \mathcal{M}_3(\mathbb{R})$ le bloc de Jordan nilpotent canonique :
 $$J = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}$$
 Soit $N \in \mathcal{M}_3(\mathbb{R})$ une matrice telle que $N^3 = 0$ et $N^2 \neq 0$.
-\begin{enumerate}
-\item Calculer les puissances successives de $J$.
-\item Montrer que $\ker(N)$ est de dimension 1.
-\item Démontrer qu'il existe un vecteur $x \in \mathbb{R}^3$ tel que la famille $\mathcal{B} = (N^2 x, Nx, x)$ est une base de $\mathbb{R}^3$.
-\item Quelle est la matrice de l'endomorphisme associé à $N$ dans cette base $\mathcal{B}$ ? Conclure.
-\end{enumerate}
+1. Calculer les puissances successives de $J$.
+2. Montrer que $\ker(N)$ est de dimension 1.
+3. Démontrer qu'il existe un vecteur $x \in \mathbb{R}^3$ tel que la famille $\mathcal{B} = (N^2 x, Nx, x)$ est une base de $\mathbb{R}^3$.
+4. Quelle est la matrice de l'endomorphisme associé à $N$ dans cette base $\mathcal{B}$ ? Conclure.
 
-\subsubsection{Corrigé Rigoureux : Démonstration Complète}
-\subsubsection{Puissances de $J$}
+\section{Corrigé Détaillé}
+
+\subsection{Puissances de $J$}
 $$J = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}$$
 On calcule $J^2$ :
 $$J^2 = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix} \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}$$
@@ -320,7 +334,7 @@ On calcule $J^3$ :
 $$J^3 = J^2 J = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix} \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}$$
 L'indice de nilpotence de $J$ est exactement 3.
 
-\subsubsection{Dimension du noyau}
+\subsection{Dimension du noyau}
 Soit $u$ l'endomorphisme canoniquement associé à $N$. $u$ est nilpotent d'indice 3.
 Nous avons la suite stricte des noyaux :
 $\{0\} \subsetneq \ker(u) \subsetneq \ker(u^2) \subsetneq \ker(u^3) = \mathbb{R}^3$
@@ -330,7 +344,7 @@ Puisque les inclusions sont strictes, les dimensions sautent d'au moins 1 à cha
 Il faut faire 3 sauts pour passer de 0 à 3, donc $d_k = k$ pour tout $k \in \{0, 1, 2, 3\}$.
 En particulier, $\dim(\ker(u)) = 1$.
 
-\subsubsection{Construction de la base}
+\subsection{Construction de la base}
 Puisque $u^2 \neq 0$, il existe au moins un vecteur $x \in \mathbb{R}^3$ tel que $u^2(x) \neq 0$.
 Considérons la famille $\mathcal{B} = (u^2(x), u(x), x)$.
 Montrons qu'elle est libre.
@@ -347,37 +361,35 @@ L'équation se réduit à $a u^2(x) = 0$, donc $a = 0$.
 La famille $\mathcal{B}$ est libre.
 Puisque son cardinal est 3 et $\dim(\mathbb{R}^3) = 3$, c'est une base de $\mathbb{R}^3$.
 
-\subsubsection{Matrice dans la base $\mathcal{B}$}
+\subsection{Matrice dans la base $\mathcal{B}$}
 Posons $e_1 = u^2(x)$, $e_2 = u(x)$, $e_3 = x$.
 Calculons l'image par $u$ des vecteurs de cette base :
-\begin{itemize}
-\item $u(e_1) = u(u^2(x)) = u^3(x) = 0 = 0 \cdot e_1 + 0 \cdot e_2 + 0 \cdot e_3$
-\item $u(e_2) = u(u(x)) = u^2(x) = e_1 = 1 \cdot e_1 + 0 \cdot e_2 + 0 \cdot e_3$
-\item $u(e_3) = u(x) = e_2 = 0 \cdot e_1 + 1 \cdot e_2 + 0 \cdot e_3$
+- $u(e_1) = u(u^2(x)) = u^3(x) = 0 = 0 \cdot e_1 + 0 \cdot e_2 + 0 \cdot e_3$
+- $u(e_2) = u(u(x)) = u^2(x) = e_1 = 1 \cdot e_1 + 0 \cdot e_2 + 0 \cdot e_3$
+- $u(e_3) = u(x) = e_2 = 0 \cdot e_1 + 1 \cdot e_2 + 0 \cdot e_3$
 La matrice de $u$ dans la base $\mathcal{B}$ est donc :
 $$M = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix} = J$$
-\textbf{Conclusion :} Tout endomorphisme nilpotent d'indice 3 en dimension 3 est semblable au bloc de Jordan canonique $J_3(0)$. Ce processus (choisir un vecteur qui ne s'annule qu'à la puissance maximale et construire la famille de ses images) s'appelle la construction d'une chaîne de Jordan.
-\end{itemize}
+**Conclusion :** Tout endomorphisme nilpotent d'indice 3 en dimension 3 est semblable au bloc de Jordan canonique $J_3(0)$. Ce processus (choisir un vecteur qui ne s'annule qu'à la puissance maximale et construire la famille de ses images) s'appelle la construction d'une chaîne de Jordan.
 
 
-\subsection*{Exercice 05 : Nilpotence et trace \quad $\bigstar\bigstar\bigstar\star\star$}
-\subsubsection{Énoncé}
+\section{Nilpotence et trace ($\bigstar$$\bigstar$$\bigstar$)}
+
+\section{Énoncé}
 Soit $E$ un $\mathbb{K}$-espace vectoriel de dimension $n$. Soit $u \in \mathcal{L}(E)$.
 On suppose que $\mathbb{K}$ est un corps de caractéristique nulle (ex: $\mathbb{R}$ ou $\mathbb{C}$).
-\begin{enumerate}
-\item Si $u$ est nilpotent, montrer que pour tout entier $k \ge 1$, $\text{Tr}(u^k) = 0$.
-\item (Réciproque partielle) On suppose que pour tout $k \in \{1, 2, \dots, n\}$, $\text{Tr}(u^k) = 0$. En utilisant les identités de Newton (admises), montrer que $u$ est nilpotent.
-\end{enumerate}
+1. Si $u$ est nilpotent, montrer que pour tout entier $k \ge 1$, $\text{Tr}(u^k) = 0$.
+2. (Réciproque partielle) On suppose que pour tout $k \in \{1, 2, \dots, n\}$, $\text{Tr}(u^k) = 0$. En utilisant les identités de Newton (admises), montrer que $u$ est nilpotent.
 
-\subsubsection{Corrigé Rigoureux : Démonstration Complète}
-\subsubsection{Condition nécessaire}
+\section{Corrigé Détaillé}
+
+\subsection{Condition nécessaire}
 Si $u$ est nilpotent, alors son polynôme caractéristique est $\chi_u(X) = X^n$ (Théorème vu en cours).
 Cela signifie que dans la clôture algébrique de $\mathbb{K}$ (ou dans $\mathbb{C}$ si on travaille sur $\mathbb{R}$), toutes les valeurs propres de $u$ sont nulles.
 $u$ est trigonalisable dans $\mathbb{C}$, donc il existe une base dans laquelle sa matrice $T$ est triangulaire supérieure avec des zéros sur la diagonale.
 Pour tout entier $k \ge 1$, la matrice $T^k$ est également triangulaire supérieure, et ses éléments diagonaux sont les éléments diagonaux de $T$ élevés à la puissance $k$, donc des zéros.
 La trace étant invariante par changement de base et égale à la somme des éléments diagonaux de $T^k$, on a $\text{Tr}(u^k) = 0$ pour tout $k \ge 1$.
 
-\subsubsection{Condition suffisante via Newton}
+\subsection{Condition suffisante via Newton}
 Soient $\lambda_1, \lambda_2, \dots, \lambda_n$ les racines complexes (valeurs propres) du polynôme caractéristique de $u$, répétées avec leur multiplicité.
 On sait que $\text{Tr}(u^k) = \sum_{i=1}^n \lambda_i^k$.
 Par hypothèse, $S_k = \sum_{i=1}^n \lambda_i^k = 0$ pour tout $k \in \{1, \dots, n\}$.
@@ -387,10 +399,9 @@ où les $e_k$ sont les fonctions symétriques élémentaires des racines.
 Les identités de Newton relient les sommes de puissances $S_k$ aux $e_k$ par la relation récursive (pour $k \le n$) :
 $k e_k = \sum_{i=1}^k (-1)^{i-1} e_{k-i} S_i \quad (\text{avec } e_0 = 1)$
 Appliquons ceci itérativement :
-\begin{itemize}
-\item Pour $k=1$ : $1 e_1 = S_1$. Puisque $S_1 = 0$, on a $e_1 = 0$.
-\item Pour $k=2$ : $2 e_2 = e_1 S_1 - S_2 = 0 \times 0 - 0 = 0$. Comme la caractéristique du corps est nulle, $2 \neq 0$, donc $e_2 = 0$.
-\item Par récurrence forte, si $e_1 = e_2 = \dots = e_{k-1} = 0$,
+- Pour $k=1$ : $1 e_1 = S_1$. Puisque $S_1 = 0$, on a $e_1 = 0$.
+- Pour $k=2$ : $2 e_2 = e_1 S_1 - S_2 = 0 \times 0 - 0 = 0$. Comme la caractéristique du corps est nulle, $2 \neq 0$, donc $e_2 = 0$.
+- Par récurrence forte, si $e_1 = e_2 = \dots = e_{k-1} = 0$,
   alors $k e_k = S_k - e_1 S_{k-1} + \dots = 0$.
   La division par $k$ (possible en caractéristique nulle) donne $e_k = 0$.
 Ainsi, pour tout $k \in \{1, \dots, n\}$, $e_k = 0$.
@@ -398,20 +409,19 @@ Le polynôme caractéristique de $u$ est donc simplement :
 $\chi_u(X) = X^n$
 D'après le théorème de Cayley-Hamilton, $u^n = \chi_u(u) = 0_{\mathcal{L}(E)}$.
 L'endomorphisme $u$ est donc nilpotent.
-\end{itemize}
 
 
-\subsection*{Exercice 06 : Commutant d'un bloc de Jordan \quad $\bigstar\bigstar\bigstar\star\star$}
-\subsubsection{Énoncé}
+\section{Commutant d'un bloc de Jordan ($\bigstar$$\bigstar$$\bigstar$)}
+
+\section{Énoncé}
 Soit $J_n \in \mathcal{M}_n(\mathbb{R})$ le bloc de Jordan nilpotent canonique (des 1 sur la sur-diagonale, 0 ailleurs).
 Soit $C(J_n) = \{ M \in \mathcal{M}_n(\mathbb{R}) \mid M J_n = J_n M \}$ le commutant de $J_n$.
-\begin{enumerate}
-\item Démontrer que si $M$ commute avec $J_n$, alors $M$ est un polynôme en $J_n$. (Indice : évaluer les relations de commutation sur les coefficients de la matrice).
-\item En déduire la dimension de l'espace vectoriel $C(J_n)$.
-\end{enumerate}
+1. Démontrer que si $M$ commute avec $J_n$, alors $M$ est un polynôme en $J_n$. (Indice : évaluer les relations de commutation sur les coefficients de la matrice).
+2. En déduire la dimension de l'espace vectoriel $C(J_n)$.
 
-\subsubsection{Corrigé Rigoureux : Démonstration Complète}
-\subsubsection{Analyse de la commutation}
+\section{Corrigé Détaillé}
+
+\subsection{Analyse de la commutation}
 Soit $M = (m_{i,j})_{1 \le i,j \le n}$ une matrice.
 Le produit $J_n M$ est la matrice dont la $i$-ème ligne est la $(i+1)$-ème ligne de $M$ pour $i<n$, et la dernière ligne est nulle.
 $(J_n M)_{i,j} = m_{i+1, j} \quad (\text{avec } m_{n+1, j} = 0)$
@@ -420,10 +430,9 @@ $(M J_n)_{i,j} = m_{i, j-1} \quad (\text{avec } m_{i, 0} = 0)$
 
 L'égalité $M J_n = J_n M$ s'écrit composante par composante :
 Pour tout $1 \le i \le n$ et $1 \le j \le n$, $m_{i, j-1} = m_{i+1, j}$.
-\begin{itemize}
-\item Pour $j=1$ : $m_{i+1, 1} = m_{i, 0} = 0$. Donc la première colonne de $M$ (sauf $m_{1,1}$) est nulle : $m_{2,1} = m_{3,1} = \dots = m_{n,1} = 0$.
-\item Pour $i=n$ : $m_{n, j-1} = m_{n+1, j} = 0$. Donc la dernière ligne de $M$ (sauf $m_{n,n}$) est nulle : $m_{n,1} = m_{n,2} = \dots = m_{n,n-1} = 0$.
-\item Par la relation $m_{i, j-1} = m_{i+1, j}$, la matrice $M$ est constante sur chaque diagonale parallèle à la diagonale principale. Une telle matrice s'appelle une matrice de Toeplitz.
+- Pour $j=1$ : $m_{i+1, 1} = m_{i, 0} = 0$. Donc la première colonne de $M$ (sauf $m_{1,1}$) est nulle : $m_{2,1} = m_{3,1} = \dots = m_{n,1} = 0$.
+- Pour $i=n$ : $m_{n, j-1} = m_{n+1, j} = 0$. Donc la dernière ligne de $M$ (sauf $m_{n,n}$) est nulle : $m_{n,1} = m_{n,2} = \dots = m_{n,n-1} = 0$.
+- Par la relation $m_{i, j-1} = m_{i+1, j}$, la matrice $M$ est constante sur chaque diagonale parallèle à la diagonale principale. Une telle matrice s'appelle une matrice de Toeplitz.
 Les coefficients sous-diagonaux sont nuls (car égaux aux éléments de la première colonne qui sont nuls).
 Il ne reste que des valeurs arbitraires sur la diagonale principale ($a_0$) et les sur-diagonales ($a_1, a_2, \dots, a_{n-1}$).
 $M$ a donc la forme :
@@ -433,9 +442,8 @@ Par convention, $(J_n)^0 = I_n$.
 Ainsi, $M$ s'écrit de manière unique comme combinaison linéaire des puissances de $J_n$ :
 $M = a_0 I_n + a_1 J_n + a_2 (J_n)^2 + \dots + a_{n-1} (J_n)^{n-1}$.
 Cela montre que $M$ est un polynôme en $J_n$ : $M \in \mathbb{R}[J_n]$.
-\end{itemize}
 
-\subsubsection{Dimension du commutant}
+\subsection{Dimension du commutant}
 Nous avons montré que $C(J_n) \subseteq \text{Vect}(I_n, J_n, (J_n)^2, \dots, (J_n)^{n-1})$.
 Réciproquement, tout polynôme en $J_n$ commute évidemment avec $J_n$ (car les puissances commutent entre elles).
 Donc $C(J_n) = \text{Vect}(I_n, J_n, (J_n)^2, \dots, (J_n)^{n-1})$.
@@ -446,22 +454,22 @@ La famille est donc une base de $C(J_n)$.
 La dimension du commutant est donc le nombre d'éléments de cette base, soit $n$.
 
 
-\subsection*{Exercice 07 : Inverse d'un bloc diagonalisable + nilpotent \quad $\bigstar\bigstar\bigstar\bigstar\star$}
-\subsubsection{Énoncé}
+\section{Inverse d'un bloc diagonalisable + nilpotent ($\bigstar$$\bigstar$$\bigstar$$\bigstar$)}
+
+\section{Énoncé}
 Soit $A \in \mathcal{M}_n(\mathbb{R})$ inversible.
 Supposons que $A = \lambda I_n - N$, où $\lambda \in \mathbb{R}^*$ et $N$ est une matrice nilpotente d'indice $p$.
-\begin{enumerate}
-\item Rappeler le développement en série entière formelle de $(1 - x)^{-1}$.
-\item Utiliser ce développement pour exprimer $A^{-1}$ comme un polynôme en $N$.
-\item Application : Soit le bloc de Jordan inversible $J_{\lambda} = \lambda I_3 + J$ (où $J$ est le bloc nilpotent usuel de taille 3, $\lambda \neq 0$). Calculer l'inverse exact de $J_{\lambda}$.
-\end{enumerate}
+1. Rappeler le développement en série entière formelle de $(1 - x)^{-1}$.
+2. Utiliser ce développement pour exprimer $A^{-1}$ comme un polynôme en $N$.
+3. Application : Soit le bloc de Jordan inversible $J_{\lambda} = \lambda I_3 + J$ (où $J$ est le bloc nilpotent usuel de taille 3, $\lambda \neq 0$). Calculer l'inverse exact de $J_{\lambda}$.
 
-\subsubsection{Corrigé Rigoureux : Démonstration Complète}
-\subsubsection{Développement formel}
+\section{Corrigé Détaillé}
+
+\subsection{Développement formel}
 Pour un réel $x$ tel que $|x| < 1$, on a le développement géométrique classique :
 $\frac{1}{1 - x} = \sum_{k=0}^{+\infty} x^k = 1 + x + x^2 + x^3 + \dots$
 
-\subsubsection{Expression de $A^{-1}$}
+\subsection{Expression de $A^{-1}$}
 Factorisons $A$ :
 $A = \lambda I_n - N = \lambda (I_n - \frac{1}{\lambda} N)$.
 Nous cherchons un inverse $B$ tel que $A B = I_n$, soit $\lambda (I_n - \frac{1}{\lambda} N) B = I_n$.
@@ -482,39 +490,37 @@ Ainsi, $(I_n - \frac{1}{\lambda} N)^{-1} = \sum_{k=0}^{p-1} \frac{1}{\lambda^k} 
 On en déduit que $A^{-1} = \frac{1}{\lambda} (I_n - \frac{1}{\lambda} N)^{-1} = \sum_{k=0}^{p-1} \frac{1}{\lambda^{k+1}} N^k$.
 L'inverse $A^{-1}$ est bien un polynôme en $N$.
 
-\subsubsection{Application au bloc de Jordan}
+\subsection{Application au bloc de Jordan}
 Soit $J_{\lambda} = \lambda I_3 + J$, avec $J = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}$.
 Ici $A = \lambda I_3 - (-J)$. Donc on applique la formule avec $N = -J$ et $p=3$.
 $A^{-1} = \frac{1}{\lambda} I_3 + \frac{1}{\lambda^2} (-J) + \frac{1}{\lambda^3} (-J)^2$.
 Calculons les termes :
-\begin{itemize}
-\item $J = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}$
-\item $J^2 = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}$
+- $J = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}$
+- $J^2 = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}$
 Ainsi, l'inverse est :
 $$J_{\lambda}^{-1} = \begin{pmatrix} \frac{1}{\lambda} & -\frac{1}{\lambda^2} & \frac{1}{\lambda^3} \\ 0 & \frac{1}{\lambda} & -\frac{1}{\lambda^2} \\ 0 & 0 & \frac{1}{\lambda} \end{pmatrix}$$
 Ce résultat illustre parfaitement comment inverser explicitement des blocs diagonaux non diagonalisables.
-\end{itemize}
 
 
-\subsection*{Exercice 08 : Décomposition d'un noyau itéré et stabilité \quad $\bigstar\bigstar\bigstar\bigstar\star$}
-\subsubsection{Énoncé}
+\section{Décomposition d'un noyau itéré et stabilité ($\bigstar$$\bigstar$$\bigstar$$\bigstar$)}
+
+\section{Énoncé}
 Soit $E$ un espace vectoriel de dimension finie, et $u \in \mathcal{L}(E)$ nilpotent d'indice $p$.
 Pour $1 \le k \le p$, on définit les sous-espaces $N_k = \ker(u^k)$ et $I_k = \text{Im}(u^k)$.
-\begin{enumerate}
-\item Montrer que $E = N_p$.
-\item Démontrer que $u(N_{k}) \subseteq N_{k-1}$ pour tout $1 \le k \le p$.
-\item Démontrer que si $F$ est un sous-espace vectoriel de $E$ supplémentaire de $N_{p-1}$ dans $N_p$ (soit $N_p = N_{p-1} \oplus F$), alors l'application restreinte $u : F \to u(F)$ est un isomorphisme.
-\item En déduire que $u(F) \cap N_{p-2} = \{0_E\}$.
-\end{enumerate}
+1. Montrer que $E = N_p$.
+2. Démontrer que $u(N_{k}) \subseteq N_{k-1}$ pour tout $1 \le k \le p$.
+3. Démontrer que si $F$ est un sous-espace vectoriel de $E$ supplémentaire de $N_{p-1}$ dans $N_p$ (soit $N_p = N_{p-1} \oplus F$), alors l'application restreinte $u : F \to u(F)$ est un isomorphisme.
+4. En déduire que $u(F) \cap N_{p-2} = \{0_E\}$.
 
-\subsubsection{Corrigé Rigoureux : Démonstration Complète}
-\subsubsection{$E = N_p$}
+\section{Corrigé Détaillé}
+
+\subsection{$E = N_p$}
 Par définition de l'indice de nilpotence, $p$ est l'entier tel que $u^p = 0_{\mathcal{L}(E)}$.
 Pour tout $x \in E$, on a $u^p(x) = 0_E$.
 Donc par définition du noyau, $x \in \ker(u^p) = N_p$. Ainsi $E \subseteq N_p$.
 Comme $N_p \subseteq E$ trivialement, $E = N_p$.
 
-\subsubsection{Stabilité descendante}
+\subsection{Stabilité descendante}
 Soit $k \in \{1, \dots, p\}$. Soit $y \in u(N_k)$.
 Par définition de l'image directe, il existe $x \in N_k$ tel que $y = u(x)$.
 Comme $x \in N_k$, on a $u^k(x) = 0_E$.
@@ -523,7 +529,7 @@ $u^{k-1}(y) = u^{k-1}(u(x)) = u^k(x) = 0_E$.
 Donc par définition, $y \in \ker(u^{k-1}) = N_{k-1}$.
 L'inclusion $u(N_k) \subseteq N_{k-1}$ est démontrée.
 
-\subsubsection{Isomorphisme de restriction}
+\subsection{Isomorphisme de restriction}
 Soit $F$ tel que $N_p = N_{p-1} \oplus F$.
 L'application $u_F : F \to u(F)$ définie par $x \mapsto u(x)$ est trivialement surjective par définition de son espace d'arrivée.
 Montrons qu'elle est injective. Soit $x \in F$ tel que $u_F(x) = 0_E$.
@@ -535,7 +541,7 @@ Par définition de la somme directe $N_{p-1} \oplus F$, l'intersection est rédu
 Donc $x = 0_E$.
 L'application $u_F$ est linéaire, surjective et injective, c'est donc un isomorphisme d'espaces vectoriels. On en déduit notamment que $\dim(u(F)) = \dim(F)$.
 
-\subsubsection{Intersection avec $N_{p-2}$}
+\subsection{Intersection avec $N_{p-2}$}
 Soit $y \in u(F) \cap N_{p-2}$.
 Puisque $y \in u(F)$, il existe un unique $x \in F$ tel que $y = u(x)$.
 Puisque $y \in N_{p-2}$, on a $u^{p-2}(y) = 0_E$.
@@ -545,40 +551,38 @@ Or, nous savons que $x \in F$.
 Donc $x \in N_{p-1} \cap F = \{0_E\}$ par la somme directe.
 Ainsi, $x = 0_E$, ce qui implique $y = u(0_E) = 0_E$.
 L'intersection est donc bien réduite au vecteur nul : $u(F) \cap N_{p-2} = \{0_E\}$.
-\textit{(Ce résultat est fondamental pour construire la base de Jordan "du haut vers le bas").}
+*(Ce résultat est fondamental pour construire la base de Jordan "du haut vers le bas").*
 
 
-\subsection*{Exercice 09 : Matrices semblables et invariants de similitude \quad $\bigstar\bigstar\bigstar\bigstar\star$}
-\subsubsection{Énoncé}
+\section{Matrices semblables et invariants de similitude ($\bigstar$$\bigstar$$\bigstar$$\bigstar$)}
+
+\section{Énoncé}
 Soient les deux matrices nilpotentes suivantes dans $\mathcal{M}_3(\mathbb{R})$ :
 $$A = \begin{pmatrix} 0 & 1 & 1 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}, \quad B = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}$$
-\begin{enumerate}
-\item Calculer les polynômes caractéristiques $\chi_A$ et $\chi_B$. Sont-ils égaux ?
-\item Calculer $A^2$ et $A^3$. Déterminer l'indice de nilpotence de $A$.
-\item $A$ et $B$ sont-elles semblables ? Justifier de manière formelle.
-\end{enumerate}
+1. Calculer les polynômes caractéristiques $\chi_A$ et $\chi_B$. Sont-ils égaux ?
+2. Calculer $A^2$ et $A^3$. Déterminer l'indice de nilpotence de $A$.
+3. $A$ et $B$ sont-elles semblables ? Justifier de manière formelle.
 
-\subsubsection{Corrigé Rigoureux : Démonstration Complète}
-\subsubsection{Polynômes caractéristiques}
+\section{Corrigé Détaillé}
+
+\subsection{Polynômes caractéristiques}
 Les matrices $A$ et $B$ sont toutes deux des matrices triangulaires supérieures strictes.
 Les éléments diagonaux sont donc les valeurs propres, et elles sont toutes nulles.
 Le déterminant de $X I_3 - M$ pour une matrice triangulaire supérieure stricte $M$ est simplement le produit des termes de la diagonale $(X - 0)$.
 Donc $\chi_A(X) = X^3$ et $\chi_B(X) = X^3$.
 Les polynômes caractéristiques sont identiques.
 
-\subsubsection{Puissances et indice de nilpotence de $A$}
+\subsection{Puissances et indice de nilpotence de $A$}
 Calculons $A^2$ :
 $$A^2 = \begin{pmatrix} 0 & 1 & 1 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix} \begin{pmatrix} 0 & 1 & 1 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}$$
-\begin{itemize}
-\item Ligne 1, Col 3 : $0\times 1 + 1\times 1 + 1\times 0 = 1$.
+- Ligne 1, Col 3 : $0\times 1 + 1\times 1 + 1\times 0 = 1$.
 Les autres coefficients sont nuls par les propriétés des matrices triangulaires strictes (Exercice 3).
 $$A^2 = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}$$
 $A^2 \neq 0$.
 Par le théorème de Cayley-Hamilton, ou par calcul direct de $A^3 = A^2 A$, on sait que $A^3 = 0_3$.
 L'indice de nilpotence de $A$ est donc $3$.
-\end{itemize}
 
-\subsubsection{Similitude}
+\subsection{Similitude}
 Deux matrices sont semblables si et seulement si elles représentent le même endomorphisme dans des bases différentes. Si elles sont semblables, elles partagent les mêmes invariants de similitude : trace, déterminant, polynôme caractéristique, polynôme minimal, et indice de nilpotence.
 
 La matrice $B$ est le bloc de Jordan canonique $J_3(0)$. Nous avons démontré dans l'exercice 4 que son indice de nilpotence est 3.
@@ -590,19 +594,19 @@ Par conséquent, il existe une matrice de passage $P$ inversible telle que $A = 
 Les matrices $A$ et $B$ sont donc rigoureusement semblables.
 
 
-\subsection*{Exercice 10 : Construction explicite de la base de Jordan \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
-\subsubsection{Énoncé}
+\section{Construction explicite de la base de Jordan ($\bigstar$$\bigstar$$\bigstar$$\bigstar$$\bigstar$)}
+
+\section{Énoncé}
 Considérons l'endomorphisme $u$ de $\mathbb{R}^3$ dont la matrice dans la base canonique est :
 $$A = \begin{pmatrix} 2 & -1 & 2 \\ 5 & -3 & 3 \\ -1 & 0 & -2 \end{pmatrix}$$
-\begin{enumerate}
-\item Calculer le polynôme caractéristique de $A$ et vérifier qu'il s'écrit $\chi_A(X) = (X+1)^3$.
-\item En déduire que la matrice $N = A + I_3$ est nilpotente.
-\item Déterminer l'indice de nilpotence $p$ de $N$ et la suite des noyaux $\ker(N^k)$.
-\item Construire explicitement une base de Jordan $\mathcal{B}$ pour $N$, et donner la matrice de passage $P$.
-\end{enumerate}
+1. Calculer le polynôme caractéristique de $A$ et vérifier qu'il s'écrit $\chi_A(X) = (X+1)^3$.
+2. En déduire que la matrice $N = A + I_3$ est nilpotente.
+3. Déterminer l'indice de nilpotence $p$ de $N$ et la suite des noyaux $\ker(N^k)$.
+4. Construire explicitement une base de Jordan $\mathcal{B}$ pour $N$, et donner la matrice de passage $P$.
 
-\subsubsection{Corrigé Rigoureux : Démonstration Complète}
-\subsubsection{Polynôme caractéristique}
+\section{Corrigé Détaillé}
+
+\subsection{Polynôme caractéristique}
 Calculons $\chi_A(X) = \det(X I_3 - A)$.
 $$\chi_A(X) = \det \begin{pmatrix} X - 2 & 1 & -2 \\ -5 & X + 3 & -3 \\ 1 & 0 & X + 2 \end{pmatrix}$$
 Développons par rapport à la dernière ligne :
@@ -614,13 +618,13 @@ $= 2X + 3 + (X^3 + X^2 - X + 2X^2 + 2X - 2)$
 $= X^3 + 3X^2 + 3X + 1$
 On reconnaît l'identité remarquable du cube : $\chi_A(X) = (X + 1)^3$.
 
-\subsubsection{Nilpotence de $N$}
+\subsection{Nilpotence de $N$}
 Posons $N = A - (-1)I_3 = A + I_3$.
 L'unique valeur propre de $A$ est $-1$.
 La matrice $N$ a pour polynôme caractéristique $\chi_N(X) = \chi_A(X - 1) = ((X-1)+1)^3 = X^3$.
 D'après le théorème de Cayley-Hamilton, $N^3 = 0$. $N$ est donc nilpotente.
 
-\subsubsection{Indice de nilpotence et noyaux}
+\subsection{Indice de nilpotence et noyaux}
 Calculons $N$ :
 $$N = A + I_3 = \begin{pmatrix} 3 & -1 & 2 \\ 5 & -2 & 3 \\ -1 & 0 & -1 \end{pmatrix}$$
 Calculons $N^2$ :
@@ -628,24 +632,20 @@ $$N^2 = \begin{pmatrix} 3 & -1 & 2 \\ 5 & -2 & 3 \\ -1 & 0 & -1 \end{pmatrix} \b
 On voit que $N^2 \neq 0_3$. Comme on sait que $N^3 = 0_3$, l'indice de nilpotence de $N$ est $p=3$.
 Les dimensions des noyaux successifs sont $d_1 = 1$, $d_2 = 2$, $d_3 = 3$ (car la suite est strictement croissante).
 
-\subsubsection{Construction de la base de Jordan}
+\subsection{Construction de la base de Jordan}
 L'indice de nilpotence étant $p=3$ en dimension 3, il n'y a qu'un seul bloc de Jordan $J_3(0)$ pour $N$.
 Nous devons trouver un vecteur $x$ tel que $N^2 x \neq 0$.
 Au vu de $N^2$, choisissons le vecteur de la base canonique $e_1 = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}$.
 On a $N^2 e_1 = \text{première colonne de } N^2 = \begin{pmatrix} 2 \\ 2 \\ -2 \end{pmatrix}$. Il est bien non nul.
 Construisons la chaîne de Jordan ascendante (pour avoir des 1 sur la sur-diagonale) :
-\begin{itemize}
-\item $v_1 = N^2 e_1 = \begin{pmatrix} 2 \\ 2 \\ -2 \end{pmatrix}$
-\item $v_2 = N e_1 = \text{première colonne de } N = \begin{pmatrix} 3 \\ 5 \\ -1 \end{pmatrix}$
-\item $v_3 = e_1 = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}$
-\end{itemize}
+- $v_1 = N^2 e_1 = \begin{pmatrix} 2 \\ 2 \\ -2 \end{pmatrix}$
+- $v_2 = N e_1 = \text{première colonne de } N = \begin{pmatrix} 3 \\ 5 \\ -1 \end{pmatrix}$
+- $v_3 = e_1 = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}$
 
 Vérifions l'action de $N$ sur cette base $\mathcal{B} = (v_1, v_2, v_3)$ :
-\begin{itemize}
-\item $N(v_1) = N^3 e_1 = 0 = 0 v_1 + 0 v_2 + 0 v_3$
-\item $N(v_2) = N^2 e_1 = v_1 = 1 v_1 + 0 v_2 + 0 v_3$
-\item $N(v_3) = N e_1 = v_2 = 0 v_1 + 1 v_2 + 0 v_3$
-\end{itemize}
+- $N(v_1) = N^3 e_1 = 0 = 0 v_1 + 0 v_2 + 0 v_3$
+- $N(v_2) = N^2 e_1 = v_1 = 1 v_1 + 0 v_2 + 0 v_3$
+- $N(v_3) = N e_1 = v_2 = 0 v_1 + 1 v_2 + 0 v_3$
 
 Dans cette base, la matrice de $N$ est exactement le bloc de Jordan $J_3(0)$.
 La matrice de passage de la base canonique vers $\mathcal{B}$ est la concaténation en colonnes :
@@ -657,16 +657,19 @@ La matrice $A$ est donc réductible à la forme de Jordan $J = \begin{pmatrix} -
 
 
 
-\newpage
 \part{Travaux Pratiques et Simulations Algorithmiques}
-\subsection{TP 01 : Opérations matricielles basiques et test de nilpotence}
-\subsubsection{Objectif}
+
+\section{Opérations matricielles basiques et test de nilpotence}
+
+\section{Objectif}
 Implémenter la multiplication matricielle purement en Python, sans aucune bibliothèque externe.
 Utiliser cette fonction pour écrire un algorithme capable de déterminer si une matrice est nilpotente et, le cas échéant, de trouver son indice de nilpotence.
 
-\subsubsection{Implémentation et Validation Mathématique}
+\section{Implémentation et Validation Mathématique}
+
 \begin{lstlisting}
-# --- IMPLÉMENTATION PURE PYTHON ---
+
+# --- IMPLEMENTATION PURE PYTHON ---
 
 def matrix_multiply(A, B):
     """
@@ -717,7 +720,7 @@ def find_nilpotence_index(A, max_iter=100):
 
     return None
 
-# --- VALIDATION ET ASSERTIONS MATHÉMATIQUES ---
+# --- VALIDATION ET ASSERTIONS MATHEMATIQUES ---
 
 if __name__ == "__main__":
     # Test 1 : Matrice nilpotente d'indice 3
@@ -750,17 +753,21 @@ if __name__ == "__main__":
     idx3 = find_nilpotence_index(I3)
     assert idx3 is None, f"Erreur: I3 ne devrait pas être nilpotente."
     print("Test 3 passé : Identité non nilpotente identifiée.")
+
 \end{lstlisting}
 
 
-\subsection{TP 02 : Trace itérée et condition de nilpotence}
-\subsubsection{Objectif}
+\section{Trace itérée et condition de nilpotence}
+
+\section{Objectif}
 L'exercice 5 montre que sur un corps de caractéristique nulle, $u$ est nilpotent si et seulement si $\text{Tr}(u^k) = 0$ pour tout $k \in \{1, \dots, n\}$.
 Implémenter le calcul de la trace et vérifier cette équivalence algorithmiquement sur des matrices données.
 
-\subsubsection{Implémentation et Validation Mathématique}
+\section{Implémentation et Validation Mathématique}
+
 \begin{lstlisting}
-# --- IMPLÉMENTATION PURE PYTHON ---
+
+# --- IMPLEMENTATION PURE PYTHON ---
 
 def matrix_multiply(A, B):
     n = len(A)
@@ -790,7 +797,7 @@ def check_nilpotence_via_trace(A, tol=1e-9):
             current_power = matrix_multiply(current_power, A)
     return True
 
-# --- VALIDATION ET ASSERTIONS MATHÉMATIQUES ---
+# --- VALIDATION ET ASSERTIONS MATHEMATIQUES ---
 
 if __name__ == "__main__":
     # Test 1 : Matrice nilpotente complexe
@@ -815,17 +822,21 @@ if __name__ == "__main__":
     is_nilp2 = check_nilpotence_via_trace(R)
     assert is_nilp2 == False, "Erreur: La rotation n'est pas nilpotente."
     print("Test 2 passé : Matrice de rotation rejetée (Tr(R^2) != 0).")
+
 \end{lstlisting}
 
 
-\subsection{TP 03 : Calcul du commutant d'une matrice}
-\subsubsection{Objectif}
-L'exercice 6 étudie le commutant d'un bloc de Jordan. Nous allons implémenter un algorithme qui, pour une matrice $A$ donnée, construit un système d'équations linéaires pour trouver toutes les matrices $M$ telles que $A M - M A = 0$.
-\textit{(On se limitera à construire la matrice du système linéaire $L(M) = AM - MA$ vue comme un vecteur aplati).}
+\section{Calcul du commutant d'une matrice}
 
-\subsubsection{Implémentation et Validation Mathématique}
+\section{Objectif}
+L'exercice 6 étudie le commutant d'un bloc de Jordan. Nous allons implémenter un algorithme qui, pour une matrice $A$ donnée, construit un système d'équations linéaires pour trouver toutes les matrices $M$ telles que $A M - M A = 0$.
+*(On se limitera à construire la matrice du système linéaire $L(M) = AM - MA$ vue comme un vecteur aplati).*
+
+\section{Implémentation et Validation Mathématique}
+
 \begin{lstlisting}
-# --- IMPLÉMENTATION PURE PYTHON ---
+
+# --- IMPLEMENTATION PURE PYTHON ---
 
 def kronecker_product_system(A):
     """
@@ -860,7 +871,7 @@ def trace_matrix(L):
     for row in L:
         print([round(v, 2) for v in row])
 
-# --- VALIDATION ET ASSERTIONS MATHÉMATIQUES ---
+# --- VALIDATION ET ASSERTIONS MATHEMATIQUES ---
 
 if __name__ == "__main__":
     # Test avec J2(0)
@@ -888,17 +899,21 @@ if __name__ == "__main__":
 
     assert L == expected_L, "Erreur dans la construction du système de commutation pour J2."
     print("Test 1 passé : La matrice du système linéaire de commutation (Kronecker) est exacte.")
+
 \end{lstlisting}
 
 
-\subsection{TP 04 : Algorithme de recherche d'une chaîne de Jordan (Dimension 3)}
-\subsubsection{Objectif}
+\section{Algorithme de recherche d'une chaîne de Jordan (Dimension 3)}
+
+\section{Objectif}
 Implémenter l'algorithme construit dans l'Exercice 10 : étant donné une matrice nilpotente d'indice $p=3$ en dimension 3, trouver un vecteur $x$ tel que $N^2 x \neq 0$, puis générer la base $\mathcal{B} = (N^2 x, Nx, x)$.
 Construire la matrice de passage $P$ et valider que $P^{-1} N P = J_3(0)$.
 
-\subsubsection{Implémentation et Validation Mathématique}
+\section{Implémentation et Validation Mathématique}
+
 \begin{lstlisting}
-# --- IMPLÉMENTATION PURE PYTHON ---
+
+# --- IMPLEMENTATION PURE PYTHON ---
 
 def mat_vec_mult(A, x):
     """Multiplie une matrice A par un vecteur colonne x."""
@@ -983,7 +998,7 @@ def build_jordan_basis(N):
     ]
     return P
 
-# --- VALIDATION ET ASSERTIONS MATHÉMATIQUES ---
+# --- VALIDATION ET ASSERTIONS MATHEMATIQUES ---
 
 if __name__ == "__main__":
     # Matrice N de l'exercice 10
@@ -1012,17 +1027,21 @@ if __name__ == "__main__":
             assert abs(Jordan_form[i][j] - expected_J3[i][j]) < 1e-9, f"Erreur coef ({i},{j})"
 
     print("Test passé : Chaîne de Jordan construite, changement de base validé mathématiquement (P^{-1}NP = J3).")
+
 \end{lstlisting}
 
 
-\subsection{TP 05 : Calcul de l'inverse via série formelle de Neumann}
-\subsubsection{Objectif}
+\section{Calcul de l'inverse via série formelle de Neumann}
+
+\section{Objectif}
 L'exercice 7 établit que si $A = \lambda I_n - N$ avec $N$ nilpotente d'indice $p$, alors $A^{-1} = \sum_{k=0}^{p-1} \frac{1}{\lambda^{k+1}} N^k$.
 Écrire un algorithme qui inverse un tel bloc de Jordan de manière exacte (sans pivot de Gauss) en utilisant cette série finie.
 
-\subsubsection{Implémentation et Validation Mathématique}
+\section{Implémentation et Validation Mathématique}
+
 \begin{lstlisting}
-# --- IMPLÉMENTATION PURE PYTHON ---
+
+# --- IMPLEMENTATION PURE PYTHON ---
 
 def matrix_add(A, B):
     n = len(A)
@@ -1064,7 +1083,7 @@ def invert_jordan_block_neumann(lmbda, N, p):
 
     return inverse
 
-# --- VALIDATION ET ASSERTIONS MATHÉMATIQUES ---
+# --- VALIDATION ET ASSERTIONS MATHEMATIQUES ---
 
 if __name__ == "__main__":
     # Test avec J_lambda = lambda I + J_nilp pour n=3
@@ -1099,8 +1118,8 @@ if __name__ == "__main__":
             assert abs(Prod[i][j] - I3[i][j]) < 1e-9, f"Erreur d'inversion coef ({i},{j})"
 
     print("Test passé : Inversion d'un bloc de Jordan non-diagonalisable par série de Neumann exacte (sans Gauss).")
-\end{lstlisting}
 
+\end{lstlisting}
 
 
 

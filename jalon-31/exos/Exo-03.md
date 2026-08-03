@@ -1,10 +1,10 @@
-# Exercice 03 : Matrices triangulaires strictes (⭐⭐)
+# Matrices triangulaires strictes (⭐⭐)
 
 ## Énoncé
 Soit $T_n(\mathbb{K})$ l'ensemble des matrices triangulaires supérieures strictes de taille $n \times n$ (matrices dont tous les coefficients diagonaux et sous-diagonaux sont nuls).
 Démontrer rigoureusement par récurrence que le produit de $k$ matrices triangulaires strictes est une matrice dont les $k$ premières sur-diagonales sont nulles. En déduire que toute matrice triangulaire stricte de taille $n$ est nilpotente d'indice au plus $n$.
 
-## Corrigé Rigoureux : Démonstration Complète
+## Corrigé Détaillé
 
 ### 1. Structure du produit de matrices triangulaires strictes
 Soit $A = (a_{i,j})_{1 \le i,j \le n}$ une matrice triangulaire supérieure stricte.
