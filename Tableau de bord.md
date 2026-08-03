@@ -49,7 +49,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-40/Jalon-40.md|Jalon 40 : Intégrales dépendant d'un paramètre]] : Intégrales dépendant d'un paramètre, théorèmes de continuité et de dérivation sous le signe $\int$. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-41/Jalon-41.md|Jalon 41 : Équations différentielles linéaires du premier ordre et méthode de variation de la constante.]] : Équations différentielles linéaires du premier ordre et méthode de variation de la constante.
 - [x] [[jalon-42/Jalon-42.md|Jalon 42 : Équations différentielles linéaires du second ordre à coefficients constants.]] : Équations différentielles linéaires du second ordre à coefficients constants.
-- [ ] [[jalon-43/Jalon 43 (Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.).md|Jalon 43 : Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.]] : Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.
+- [x] [[jalon-43/Jalon-43.md|Jalon 43 : Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.]] : Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-44/Jalon 44 (Fonctions de plusieurs variables).md|Jalon 44 : Fonctions de plusieurs variables]] : Fonctions de plusieurs variables, limites, continuité et topologie de $\\mathbb{R}^n$.
 - [ ] [[jalon-45/Jalon 45 (Différentiabilité).md|Jalon 45 : Différentiabilité]] : Différentiabilité, différentielle totale, dérivées partielles et gradient.
 - [ ] [[jalon-46/Jalon 46 (Matrice jacobienne).md|Jalon 46 : Matrice jacobienne]] : Matrice jacobienne, théorème de dérivation des fonctions composées (Chain Rule généralisée).
@@ -165,6 +165,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
+- [2026-08-02] : [Upsert/Création] du Jalon 43 - Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice. Status: Terminé.
 
 ### 2026-08-02-audit
 - [[#2026-08-02-audit|2026-08-02]] : [Audit & Weekly Compilation] - Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
