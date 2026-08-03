@@ -133,7 +133,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 41](jalon-41/Jalon-41.md)** : Équations différentielles linéaires du premier ordre et méthode de variation de la constante.
 - **[Jalon 42](jalon-42/Jalon-42.md)** : Équations différentielles linéaires du second ordre à coefficients constants. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 43](jalon-43/Jalon-43.md)** : Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 44](jalon-44/Jalon%2044%20%28Fonctions%20de%20plusieurs%20variables%29.md)** : Fonctions de plusieurs variables, limites, continuité et topologie de $\mathbb{R}^n$.
+- **[Jalon 44](jalon-44/Jalon-44.md)** : Fonctions de plusieurs variables, limites, continuité et topologie de $\mathbb{R}^n$.
 - **[Jalon 45](jalon-45/Jalon%2045%20%28Diff%C3%A9rentiabilit%C3%A9%29.md)** : Différentiabilité, différentielle totale, dérivées partielles et gradient.
 - **[Jalon 46](jalon-46/Jalon%2046%20%28Matrice%20jacobienne%29.md)** : Matrice jacobienne, théorème de dérivation des fonctions composées (Chain Rule généralisée).
 - **[Jalon 47](jalon-47/Jalon%2047%20%28D%C3%A9riv%C3%A9es%20partielles%20d%27ordre%20deux%29.md)** : Dérivées partielles d'ordre deux, matrice hessienne et lemme de Schwarz.
@@ -456,3 +456,4 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-28] : [Upsert/Création] du Jalon 38 - Théorème fondamental de l'analyse. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-07-31] : [Upsert/Création] du Jalon 41 - Équations différentielles linéaires du premier ordre. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-08-03] : [Upsert/Création] du Jalon 44 - Fonctions de plusieurs variables. Status: Terminé.
