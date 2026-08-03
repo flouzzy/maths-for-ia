@@ -10,24 +10,24 @@ prev: "[[Jalon 31 (Introduction à la réduction de Jordan et structure des nilp
 next: "[[Jalon 33 (Formes quadratiques).md]]"
 ---
 
-# Jalon 32 : Preuve complète du théorème spectral pour les endomorphismes symétriques
+# Preuve complète du théorème spectral pour les endomorphismes symétriques
 
-## 1. L'Échafaudage Cognitif & Traçabilité Historique
+## Genèse et historique
 
 L'algèbre linéaire classique, avec ses matrices et ses changements de base, permet de comprendre les transformations de l'espace. Cependant, lorsqu'on munit l'espace d'une structure euclidienne (un produit scalaire, permettant de mesurer des angles et des distances), on s'intéresse à des transformations qui "respectent" cette géométrie de manière particulière.
 Le théorème spectral est sans doute le résultat le plus profond et le plus appliqué de l'algèbre linéaire en dimension finie. Historiquement, la genèse de ce concept provient de la mécanique céleste et de l'étude des axes principaux d'inertie des solides (Euler), ainsi que de l'étude des formes quadratiques et des surfaces du second degré (Cauchy). Cauchy, en 1829, a démontré que l'équation séculaire (le polynôme caractéristique) d'une matrice symétrique n'a que des racines réelles.
 
 Pourquoi une telle importance ? En apprentissage automatique et en analyse de données (comme la PCA - Principal Component Analysis), on manipule des matrices de covariance qui sont intrinsèquement symétriques. Le théorème spectral garantit que l'on peut toujours trouver une base "parfaite", orthogonale, dans laquelle l'action de cette matrice se résume à de simples étirements sur des axes indépendants. Cela signifie qu'un problème complexe et couplé peut toujours être découplé en problèmes unidimensionnels complètement indépendants, pour peu que l'opérateur soit symétrique. C'est une simplification radicale de la réalité qui permet la compression de données et l'optimisation stochastique à grande échelle.
 
-## 2. Protocole d'Exégèse Conceptuelle : Endomorphisme Symétrique
+## Définitions et théorèmes
 
-### A. Énoncé Symbolique Strict
+### Énoncé formel
 
 Soit $E$ un espace vectoriel euclidien (donc de dimension finie sur le corps $\mathbb{R}$, muni d'un produit scalaire $\langle \cdot, \cdot \rangle$).
 Un endomorphisme $u \in \mathcal{L}(E)$ est dit **symétrique** (ou auto-adjoint) si et seulement si :
 $$\forall (x, y) \in E \times E, \quad \langle u(x), y \rangle = \langle x, u(y) \rangle$$
 
-### B. Anatomie et Typage Chirurgical
+### Typage et variables
 
 - $E$ : Un espace vectoriel sur le corps des réels $\mathbb{R}$, de dimension finie $n \in \mathbb{N}^*$.
 - $\langle \cdot, \cdot \rangle$ : Une forme bilinéaire symétrique définie positive sur $E \times E$.
@@ -36,7 +36,7 @@ $$\forall (x, y) \in E \times E, \quad \langle u(x), y \rangle = \langle x, u(y)
 
 L'égalité $\langle u(x), y \rangle = \langle x, u(y) \rangle$ exprime que l'opérateur $u$ peut "traverser" le produit scalaire d'un argument à l'autre sans en altérer la valeur. En termes de matrices, dans une base orthonormée de $E$, la matrice $A$ de $u$ est symétrique, i.e., $A = A^\top$.
 
-### C. Exemples de Validation
+### Exemples immédiats
 
 **Exemple trivial :** L'identité $\text{Id}_E$. Pour tout $x, y$, $\langle \text{Id}_E(x), y \rangle = \langle x, y \rangle = \langle x, \text{Id}_E(y) \rangle$. Son spectre est $\{1\}$ et n'importe quelle base orthonormée la diagonalise.
 
@@ -44,12 +44,46 @@ L'égalité $\langle u(x), y \rangle = \langle x, u(y) \rangle$ exprime que l'op
 $\langle p(x), y \rangle = \langle x_F, y_F + y_{F^\perp} \rangle = \langle x_F, y_F \rangle$.
 D'autre part, $\langle x, p(y) \rangle = \langle x_F + x_{F^\perp}, y_F \rangle = \langle x_F, y_F \rangle$. L'égalité est vérifiée, $p$ est symétrique.
 
-### D. Cas Pathologiques et Contre-exemples
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1.5]
+  % Axes
+  \draw[->,thick] (-1,0) -- (3,0) node[right] {$x$};
+  \draw[->,thick] (0,-1) -- (0,3) node[above] {$y$};
+
+  % Sous-espace propre (axe des abscisses par exemple pour P)
+  \draw[thick, blue] (-1,0) -- (2.5,0) node[above right] {$E_{\lambda=1} = F$};
+
+  % Vecteur x
+  \coordinate (X) at (1.5, 2);
+  \draw[->, thick, red] (0,0) -- (X) node[above right] {$x$};
+
+  % Projection orthogonale p(x)
+  \coordinate (PX) at (1.5, 0);
+  \draw[->, thick, violet] (0,0) -- (PX) node[below] {$p(x)$};
+
+  % Ligne de projection
+  \draw[dashed] (X) -- (PX);
+
+  % Angle droit
+  \draw (1.5, 0.2) -- (1.3, 0.2) -- (1.3, 0);
+
+  % Composante orthogonale
+  \draw[->, thick, orange] (0,0) -- (0, 2) node[left] {$x_{F^\perp}$};
+  \draw[dashed] (X) -- (0,2);
+
+\end{tikzpicture}
+\caption{Projection orthogonale : un exemple fondamental d'endomorphisme symétrique. L'espace est somme directe orthogonale de $F$ et $F^\perp$.}
+\end{figure}
+
+
+
+### Cas pathologiques
 
 - **Espace non euclidien :** Si la forme bilinéaire n'est pas définie positive (par exemple un espace de Minkowski), la notion d'adjoint et le théorème spectral standard s'effondrent.
 - **Base non orthonormée :** Si l'on choisit une base quelconque (non orthonormée), un endomorphisme symétrique peut être représenté par une matrice qui *n'est pas* symétrique. C'est un piège classique !
 
-## 3. Le Théorème Spectral : Démonstration Zéro Ellipse
+## Démonstration du théorème spectral
 
 ### Énoncé du Théorème Spectral
 

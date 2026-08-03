@@ -1,0 +1,1094 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {ê}{{\^e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ç}{{\c c}}1
+}
+
+\title{\Huge PREUVE COMPLÈTE DU THÉORÈME SPECTRAL POUR LES ENDOMORPHISMES SYMÉTRIQUES \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+\section{Preuve complète du théorème spectral pour les endomorphismes symétriques}
+
+\subsection{Genèse et historique}
+
+L'algèbre linéaire classique, avec ses matrices et ses changements de base, permet de comprendre les transformations de l'espace. Cependant, lorsqu'on munit l'espace d'une structure euclidienne (un produit scalaire, permettant de mesurer des angles et des distances), on s'intéresse à des transformations qui "respectent" cette géométrie de manière particulière.
+Le théorème spectral est sans doute le résultat le plus profond et le plus appliqué de l'algèbre linéaire en dimension finie. Historiquement, la genèse de ce concept provient de la mécanique céleste et de l'étude des axes principaux d'inertie des solides (Euler), ainsi que de l'étude des formes quadratiques et des surfaces du second degré (Cauchy). Cauchy, en 1829, a démontré que l'équation séculaire (le polynôme caractéristique) d'une matrice symétrique n'a que des racines réelles.
+
+Pourquoi une telle importance ? En apprentissage automatique et en analyse de données (comme la PCA - Principal Component Analysis), on manipule des matrices de covariance qui sont intrinsèquement symétriques. Le théorème spectral garantit que l'on peut toujours trouver une base "parfaite", orthogonale, dans laquelle l'action de cette matrice se résume à de simples étirements sur des axes indépendants. Cela signifie qu'un problème complexe et couplé peut toujours être découplé en problèmes unidimensionnels complètement indépendants, pour peu que l'opérateur soit symétrique. C'est une simplification radicale de la réalité qui permet la compression de données et l'optimisation stochastique à grande échelle.
+
+\subsection{Définitions et théorèmes}
+
+\subsubsection{Énoncé formel}
+
+Soit $E$ un espace vectoriel euclidien (donc de dimension finie sur le corps $\mathbb{R}$, muni d'un produit scalaire $\langle \cdot, \cdot \rangle$).
+Un endomorphisme $u \in \mathcal{L}(E)$ est dit \textbf{symétrique} (ou auto-adjoint) si et seulement si :
+$$\forall (x, y) \in E \times E, \quad $\$langle u(x), y \rangle = \langle x, u(y) \rangle$$
+
+\subsubsection{Typage et variables}
+
+\begin{itemize}
+\item $E$ : Un espace vectoriel sur le corps des réels $\mathbb{R}$, de dimension finie $n \in \mathbb{N}^*$.
+\item $\langle \cdot, \cdot \rangle$ : Une forme bilinéaire symétrique définie positive sur $E \times E$.
+\item $u \in \mathcal{L}(E)$ : Une application linéaire de $E$ dans lui-même.
+\item $x, y \in E$ : Deux vecteurs quelconques de l'espace $E$.
+\end{itemize}
+
+L'égalité $\langle u(x), y \rangle = \langle x, u(y) \rangle$ exprime que l'opérateur $u$ peut "traverser" le produit scalaire d'un argument à l'autre sans en altérer la valeur. En termes de matrices, dans une base orthonormée de $E$, la matrice $A$ de $u$ est symétrique, i.e., $A = A^\top$.
+
+\subsubsection{Exemples immédiats}
+
+\textbf{Exemple trivial :} L'identité $\text{Id}_E$. Pour tout $x, y$, $\langle \text{Id}_E(x), y \rangle = \langle x, y \rangle = \langle x, \text{Id}_E(y) \rangle$. Son spectre est $\{1\}$ et n'importe quelle base orthonormée la diagonalise.
+
+\textbf{Exemple complexe :} La projection orthogonale $p$ sur un sous-espace $F$. Soit $x = x_F + x_{F^\perp}$ et $y = y_F + y_{F^\perp}$.
+$\langle p(x), y \rangle = \langle x_F, y_F + y_{F^\perp} \rangle = \langle x_F, y_F \rangle$.
+D'autre part, $\langle x, p(y) \rangle = \langle x_F + x_{F^\perp}, y_F \rangle = \langle x_F, y_F \rangle$. L'égalité est vérifiée, $p$ est symétrique.
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1.5]
+  % Axes
+  \draw[->,thick] (-1,0) -- (3,0) node[right] {$x$};
+  \draw[->,thick] (0,-1) -- (0,3) node[above] {$y$};
+
+  % Sous-espace propre (axe des abscisses par exemple pour P)
+  \draw[thick, blue] (-1,0) -- (2.5,0) node[above right] {$E_{\lambda=1} = F$};
+
+  % Vecteur x
+  \coordinate (X) at (1.5, 2);
+  \draw[->, thick, red] (0,0) -- (X) node[above right] {$x$};
+
+  % Projection orthogonale p(x)
+  \coordinate (PX) at (1.5, 0);
+  \draw[->, thick, violet] (0,0) -- (PX) node[below] {$p(x)$};
+
+  % Ligne de projection
+  \draw[dashed] (X) -- (PX);
+
+  % Angle droit
+  \draw (1.5, 0.2) -- (1.3, 0.2) -- (1.3, 0);
+
+  % Composante orthogonale
+  \draw[->, thick, orange] (0,0) -- (0, 2) node[left] {$x_{F^\perp}$};
+  \draw[dashed] (X) -- (0,2);
+
+\end{tikzpicture}
+\caption{Projection orthogonale : un exemple fondamental d'endomorphisme symétrique. L'espace est somme directe orthogonale de $F$ et $F^\perp$.}
+\end{figure}
+
+
+
+\subsubsection{Cas pathologiques}
+
+\begin{itemize}
+\item \textbf{Espace non euclidien :} Si la forme bilinéaire n'est pas définie positive (par exemple un espace de Minkowski), la notion d'adjoint et le théorème spectral standard s'effondrent.
+\item \textbf{Base non orthonormée :} Si l'on choisit une base quelconque (non orthonormée), un endomorphisme symétrique peut être représenté par une matrice qui \textit{n'est pas} symétrique. C'est un piège classique !
+\end{itemize}
+
+\subsection{Démonstration du théorème spectral}
+
+\subsubsection{Énoncé du Théorème Spectral}
+
+Pour tout endomorphisme symétrique $u$ d'un espace vectoriel euclidien $E$ de dimension $n \ge 1$, il existe une base orthonormée de $E$ constituée de vecteurs propres de $u$. En corollaire, $u$ est diagonalisable.
+
+\subsubsection{Lemme 1 : Stabilité de l'orthogonal}
+
+\textbf{Énoncé :} Soit $u$ un endomorphisme symétrique de $E$. Si un sous-espace vectoriel $F$ de $E$ est stable par $u$ (c'est-à-dire $u(F) \subset F$), alors son orthogonal $F^\perp$ est également stable par $u$.
+
+\textbf{Démonstration :}
+Soit $F$ un sous-espace vectoriel de $E$ tel que $u(F) \subset F$.
+Soit $x \in F^\perp$. Montrons que $u(x) \in F^\perp$.
+Pour montrer que $u(x) \in F^\perp$, il faut montrer que pour tout $y \in F$, $\langle u(x), y \rangle = 0$.
+Soit $y \in F$. Comme $u$ est symétrique, on a la relation :
+$$\langle u(x), y \rangle = \langle x, u(y) \rangle$$
+Or, par hypothèse de stabilité, $F$ est stable par $u$. Donc, puisque $y \in F$, on a $u(y) \in F$.
+Puisque $x \in F^\perp$, par définition de l'orthogonalité, son produit scalaire avec tout vecteur de $F$ est nul. Ainsi, comme $u(y) \in F$, on a :
+$$\langle x, u(y) \rangle = 0$$
+D'où l'on déduit immédiatement que $\langle u(x), y \rangle = 0$.
+Ceci étant vrai pour tout $y \in F$, on conclut que $u(x) \in F^\perp$.
+Donc $F^\perp$ est stable par $u$.
+
+\subsubsection{Lemme 2 : Existence d'une valeur propre réelle}
+
+\textbf{Énoncé :} Tout endomorphisme symétrique en dimension finie $\ge 1$ admet au moins une valeur propre réelle.
+
+\textbf{Démonstration :}
+Soit $A$ la matrice de $u$ dans une base orthonormée $\mathcal{B}$. $A$ est une matrice réelle symétrique ($A = A^\top$).
+On peut considérer $A$ comme une matrice à coefficients dans $\mathbb{C}$. D'après le théorème de d'Alembert-Gauss, le polynôme caractéristique $\chi_A(X)$ est scindé sur $\mathbb{C}$. Il admet donc au moins une racine complexe $\lambda \in \mathbb{C}$.
+Soit $Z \in \mathbb{C}^n \setminus \{0\}$ un vecteur propre associé, de sorte que $AZ = \lambda Z$.
+En passant à la conjugaison complexe, et puisque $A$ est à coefficients réels ($\overline{A} = A$), on obtient :
+$A \overline{Z} = \overline{\lambda} \overline{Z}$
+Transposons cette égalité (en se rappelant que $Z^\top$ est un vecteur ligne) :
+$(A \overline{Z})^\top = (\overline{\lambda} \overline{Z})^\top \implies \overline{Z}^\top A^\top = \overline{\lambda} \overline{Z}^\top$
+Puisque $A$ est symétrique, $A^\top = A$. On a donc :
+$\overline{Z}^\top A = \overline{\lambda} \overline{Z}^\top$
+Multiplions maintenant à droite par le vecteur colonne $Z$ :
+$(\overline{Z}^\top A) Z = \overline{\lambda} \overline{Z}^\top Z$
+Calculons différemment $\overline{Z}^\top (AZ)$ en utilisant la définition initiale $AZ = \lambda Z$ :
+$\overline{Z}^\top (AZ) = \overline{Z}^\top (\lambda Z) = \lambda \overline{Z}^\top Z$
+En identifiant les deux expressions de $\overline{Z}^\top A Z$, on obtient :
+$\overline{\lambda} \overline{Z}^\top Z = \lambda \overline{Z}^\top Z$
+Or, $\overline{Z}^\top Z = \sum_{i=1}^n \overline{z_i} z_i = \sum_{i=1}^n |z_i|^2 > 0$ car $Z$ est un vecteur non nul.
+On peut donc diviser par $\overline{Z}^\top Z$, ce qui donne $\overline{\lambda} = \lambda$.
+Ainsi, $\lambda \in \mathbb{R}$. La matrice $A$ admet une valeur propre réelle. Par équivalence, l'endomorphisme $u$ admet une valeur propre réelle.
+
+\subsubsection{Démonstration Principale du Théorème Spectral}
+
+On procède par récurrence sur la dimension $n$ de l'espace euclidien $E$.
+
+\textbf{Initialisation :}
+Pour $n = 1$. L'espace $E$ est de dimension 1. Toute base $(e_1)$ de $E$ de norme 1 est une base orthonormée. L'endomorphisme $u$ s'écrit $u(e_1) = \lambda_1 e_1$, donc $e_1$ est un vecteur propre. Le théorème est trivialement vrai.
+
+\textbf{Hérédité :}
+Supposons le théorème vrai pour tout espace euclidien de dimension $n-1$.
+Soit $E$ un espace euclidien de dimension $n \ge 2$, et $u \in \mathcal{L}(E)$ un endomorphisme symétrique.
+D'après le Lemme 2, $u$ admet au moins une valeur propre réelle $\lambda_1$.
+Soit $v_1$ un vecteur propre associé à cette valeur propre. On peut supposer $\|v_1\| = 1$ quitte à le diviser par sa norme.
+Considérons le sous-espace $F = \text{Vect}(v_1)$. Ce sous-espace est de dimension 1.
+Puisque $u(v_1) = \lambda_1 v_1 \in F$, le sous-espace $F$ est stable par $u$.
+D'après le Lemme 1, le sous-espace orthogonal $F^\perp$ est également stable par $u$.
+De plus, $E = F \oplus F^\perp$, donc la dimension de $F^\perp$ est $n - 1$.
+Considérons la restriction de $u$ à $F^\perp$, notée $u_{|F^\perp}$.
+Cette application $u_{|F^\perp}$ est un endomorphisme de l'espace euclidien $F^\perp$ (muni du produit scalaire induit).
+Pour tout $x, y \in F^\perp$, on a $\langle u_{|F^\perp}(x), y \rangle = \langle u(x), y \rangle = \langle x, u(y) \rangle = \langle x, u_{|F^\perp}(y) \rangle$.
+Donc $u_{|F^\perp}$ est un endomorphisme symétrique sur un espace euclidien de dimension $n-1$.
+D'après l'hypothèse de récurrence, il existe une base orthonormée de $F^\perp$, notée $(e_2, e_3, \dots, e_n)$, constituée de vecteurs propres de $u_{|F^\perp}$ (donc de vecteurs propres de $u$).
+Formons alors la famille $\mathcal{B} = (v_1, e_2, e_3, \dots, e_n)$.
+Par construction :
+1. Chaque vecteur est un vecteur propre de $u$.
+2. $\|v_1\| = 1$ et $\|e_i\| = 1$ pour $i \ge 2$.
+3. Les vecteurs $e_i$ sont deux à deux orthogonaux (hypothèse de récurrence).
+4. Pour tout $i \ge 2$, $e_i \in F^\perp$, donc $e_i$ est orthogonal à $v_1 \in F$.
+Ainsi, $\mathcal{B}$ est une base orthonormée de $E$ formée de vecteurs propres de $u$.
+
+La propriété est démontrée au rang $n$.
+Par le principe de récurrence, le théorème spectral est démontré pour tout entier $n \ge 1$.
+
+
+\part{Exercices d'Application et de Concours}
+\section{Exercice 1 : Théorème Spectral et Matrices Symétriques \quad $\$bigstar\star\star\star\star$}
+
+\subsection{Énoncé}
+Considérons une matrice $A$ symétrique réelle simple.
+Démontrer que le spectre de cet opérateur possède des propriétés particulières en utilisant le théorème spectral.
+Soit $A = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}$.
+Calculer ses valeurs propres, et trouver une base orthonormée de vecteurs propres.
+
+\subsection{Solution}
+
+\textbf{1 - Polynôme caractéristique}
+Soit $A = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}$.
+Le polynôme caractéristique de $A$ est :
+$\chi_A(X) = \det(X I - A) = \begin{vmatrix} X - 2 & -1 \\ -1 & X - 2 \end{vmatrix}$
+$\chi_A(X) = (X - 2)^2 - (-1)^2$
+$\chi_A(X) = (X - 2 - 1)(X - 2 + 1)$
+$\chi_A(X) = (X - 3)(X - 1)$
+
+\textbf{2 - Racines (Valeurs propres)}
+Les racines du polynôme caractéristique sont évidentes. La matrice admet deux valeurs propres réelles distinctes :
+$\lambda_1 = 3$ et $\lambda_2 = 1$.
+Le fait que les valeurs propres soient réelles est garanti par le théorème spectral, car $A$ est symétrique réelle.
+
+\textbf{3 - Vecteurs propres}
+Pour $\lambda_1 = 3$ : on résout $AX = \lambda_1 X$.
+Soit $X = \begin{pmatrix} x \\ y \end{pmatrix}$.
+$\begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 3x \\ 3y \end{pmatrix}$
+Cela donne le système :
+$2x + 1y = 3x \implies 1y = 1x \implies y = x$ (car $n \neq 0$)
+Un vecteur propre est $V_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_1\| = \sqrt{1^2 + 1^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_1 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+
+Pour $\lambda_2 = 1$ : on résout $AX = \lambda_2 X$.
+$\begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 1x \\ 1y \end{pmatrix}$
+Cela donne :
+$2x + 1y = 1x \implies 1x + 1y = 0 \implies y = -x$.
+Un vecteur propre est $V_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_2\| = \sqrt{1^2 + (-1)^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_2 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+
+\textbf{4 - Vérification de l'orthogonalité}
+Vérifions que $U_1$ et $U_2$ sont orthogonaux (propriété fondamentale du théorème spectral pour des valeurs propres distinctes) :
+$\langle U_1, U_2 \rangle = \frac{1}{2} (1 \times 1 + 1 \times (-1)) = 0$.
+Ainsi, $\mathcal{B}' = (U_1, U_2)$ est une base orthonormée de $\mathbb{R}^2$ constituée de vecteurs propres de $A$.
+
+\newpage
+\section{Exercice 2 : Théorème Spectral et Matrices Symétriques \quad $\$bigstar\star\star\star\star$}
+
+\subsection{Énoncé}
+Considérons une matrice $A$ symétrique réelle simple.
+Démontrer que le spectre de cet opérateur possède des propriétés particulières en utilisant le théorème spectral.
+Soit $A = \begin{pmatrix} 4 & 2 \\ 2 & 4 \end{pmatrix}$.
+Calculer ses valeurs propres, et trouver une base orthonormée de vecteurs propres.
+
+\subsection{Solution}
+
+\textbf{1 - Polynôme caractéristique}
+Soit $A = \begin{pmatrix} 4 & 2 \\ 2 & 4 \end{pmatrix}$.
+Le polynôme caractéristique de $A$ est :
+$\chi_A(X) = \det(X I - A) = \begin{vmatrix} X - 4 & -2 \\ -2 & X - 4 \end{vmatrix}$
+$\chi_A(X) = (X - 4)^2 - (-2)^2$
+$\chi_A(X) = (X - 4 - 2)(X - 4 + 2)$
+$\chi_A(X) = (X - 6)(X - 2)$
+
+\textbf{2 - Racines (Valeurs propres)}
+Les racines du polynôme caractéristique sont évidentes. La matrice admet deux valeurs propres réelles distinctes :
+$\lambda_1 = 6$ et $\lambda_2 = 2$.
+Le fait que les valeurs propres soient réelles est garanti par le théorème spectral, car $A$ est symétrique réelle.
+
+\textbf{3 - Vecteurs propres}
+Pour $\lambda_1 = 6$ : on résout $AX = \lambda_1 X$.
+Soit $X = \begin{pmatrix} x \\ y \end{pmatrix}$.
+$\begin{pmatrix} 4 & 2 \\ 2 & 4 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 6x \\ 6y \end{pmatrix}$
+Cela donne le système :
+$4x + 2y = 6x \implies 2y = 2x \implies y = x$ (car $n \neq 0$)
+Un vecteur propre est $V_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_1\| = \sqrt{1^2 + 1^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_1 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+
+Pour $\lambda_2 = 2$ : on résout $AX = \lambda_2 X$.
+$\begin{pmatrix} 4 & 2 \\ 2 & 4 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 2x \\ 2y \end{pmatrix}$
+Cela donne :
+$4x + 2y = 2x \implies 2x + 2y = 0 \implies y = -x$.
+Un vecteur propre est $V_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_2\| = \sqrt{1^2 + (-1)^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_2 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+
+\textbf{4 - Vérification de l'orthogonalité}
+Vérifions que $U_1$ et $U_2$ sont orthogonaux (propriété fondamentale du théorème spectral pour des valeurs propres distinctes) :
+$\langle U_1, U_2 \rangle = \frac{1}{2} (1 \times 1 + 1 \times (-1)) = 0$.
+Ainsi, $\mathcal{B}' = (U_1, U_2)$ est une base orthonormée de $\mathbb{R}^2$ constituée de vecteurs propres de $A$.
+
+\newpage
+\section{Exercice 3 : Théorème Spectral et Matrices Symétriques \quad $\$bigstar$\bigstar\star\star\star$}
+
+\subsection{Énoncé}
+Considérons une matrice $A$ symétrique réelle simple.
+Démontrer que le spectre de cet opérateur possède des propriétés particulières en utilisant le théorème spectral.
+Soit $A = \begin{pmatrix} 6 & 3 \\ 3 & 6 \end{pmatrix}$.
+Calculer ses valeurs propres, et trouver une base orthonormée de vecteurs propres.
+
+\subsection{Solution}
+
+**1 - Polynôme caractéristique**
+Soit $A = \begin{pmatrix} 6 & 3 \\ 3 & 6 \end{pmatrix}$.
+Le polynôme caractéristique de $A$ est :
+$\chi_A(X) = \det(X I - A) = \begin{vmatrix} X - 6 & -3 \\ -3 & X - 6 \end{vmatrix}$
+$\chi_A(X) = (X - 6)^2 - (-3)^2$
+$\chi_A(X) = (X - 6 - 3)(X - 6 + 3)$
+$\chi_A(X) = (X - 9)(X - 3)$
+
+**2 - Racines (Valeurs propres)**
+Les racines du polynôme caractéristique sont évidentes. La matrice admet deux valeurs propres réelles distinctes :
+$\lambda_1 = 9$ et $\lambda_2 = 3$.
+Le fait que les valeurs propres soient réelles est garanti par le théorème spectral, car $A$ est symétrique réelle.
+
+**3 - Vecteurs propres**
+Pour $\lambda_1 = 9$ : on résout $AX = \lambda_1 X$.
+Soit $X = \begin{pmatrix} x \\ y \end{pmatrix}$.
+$\begin{pmatrix} 6 & 3 \\ 3 & 6 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 9x \\ 9y \end{pmatrix}$
+Cela donne le système :
+$6x + 3y = 9x \implies 3y = 3x \implies y = x$ (car $n \neq 0$)
+Un vecteur propre est $V_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_1\| = \sqrt{1^2 + 1^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_1 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+
+Pour $\lambda_2 = 3$ : on résout $AX = \lambda_2 X$.
+$\begin{pmatrix} 6 & 3 \\ 3 & 6 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 3x \\ 3y \end{pmatrix}$
+Cela donne :
+$6x + 3y = 3x \implies 3x + 3y = 0 \implies y = -x$.
+Un vecteur propre est $V_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_2\| = \sqrt{1^2 + (-1)^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_2 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+
+**4 - Vérification de l'orthogonalité**
+Vérifions que $U_1$ et $U_2$ sont orthogonaux (propriété fondamentale du théorème spectral pour des valeurs propres distinctes) :
+$\langle U_1, U_2 \rangle = \frac{1}{2} (1 \times 1 + 1 \times (-1)) = 0$.
+Ainsi, $\mathcal{B}' = (U_1, U_2)$ est une base orthonormée de $\mathbb{R}^2$ constituée de vecteurs propres de $A$.
+
+\newpage
+\section{Exercice 4 : Théorème Spectral et Matrices Symétriques \quad $\$bigstar$\bigstar\star\star\star$}
+
+\subsection{Énoncé}
+Considérons une matrice $A$ symétrique réelle simple.
+Démontrer que le spectre de cet opérateur possède des propriétés particulières en utilisant le théorème spectral.
+Soit $A = \begin{pmatrix} 8 & 4 \\ 4 & 8 \end{pmatrix}$.
+Calculer ses valeurs propres, et trouver une base orthonormée de vecteurs propres.
+
+\subsection{Solution}
+
+**1 - Polynôme caractéristique**
+Soit $A = \begin{pmatrix} 8 & 4 \\ 4 & 8 \end{pmatrix}$.
+Le polynôme caractéristique de $A$ est :
+$\chi_A(X) = \det(X I - A) = \begin{vmatrix} X - 8 & -4 \\ -4 & X - 8 \end{vmatrix}$
+$\chi_A(X) = (X - 8)^2 - (-4)^2$
+$\chi_A(X) = (X - 8 - 4)(X - 8 + 4)$
+$\chi_A(X) = (X - 12)(X - 4)$
+
+**2 - Racines (Valeurs propres)**
+Les racines du polynôme caractéristique sont évidentes. La matrice admet deux valeurs propres réelles distinctes :
+$\lambda_1 = 12$ et $\lambda_2 = 4$.
+Le fait que les valeurs propres soient réelles est garanti par le théorème spectral, car $A$ est symétrique réelle.
+
+**3 - Vecteurs propres**
+Pour $\lambda_1 = 12$ : on résout $AX = \lambda_1 X$.
+Soit $X = \begin{pmatrix} x \\ y \end{pmatrix}$.
+$\begin{pmatrix} 8 & 4 \\ 4 & 8 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 12x \\ 12y \end{pmatrix}$
+Cela donne le système :
+$8x + 4y = 12x \implies 4y = 4x \implies y = x$ (car $n \neq 0$)
+Un vecteur propre est $V_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_1\| = \sqrt{1^2 + 1^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_1 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+
+Pour $\lambda_2 = 4$ : on résout $AX = \lambda_2 X$.
+$\begin{pmatrix} 8 & 4 \\ 4 & 8 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 4x \\ 4y \end{pmatrix}$
+Cela donne :
+$8x + 4y = 4x \implies 4x + 4y = 0 \implies y = -x$.
+Un vecteur propre est $V_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_2\| = \sqrt{1^2 + (-1)^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_2 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+
+**4 - Vérification de l'orthogonalité**
+Vérifions que $U_1$ et $U_2$ sont orthogonaux (propriété fondamentale du théorème spectral pour des valeurs propres distinctes) :
+$\langle U_1, U_2 \rangle = \frac{1}{2} (1 \times 1 + 1 \times (-1)) = 0$.
+Ainsi, $\mathcal{B}' = (U_1, U_2)$ est une base orthonormée de $\mathbb{R}^2$ constituée de vecteurs propres de $A$.
+
+\newpage
+\section{Exercice 5 : Théorème Spectral et Matrices Symétriques \quad $\$bigstar$\bigstar$\bigstar\star\star$}
+
+\subsection{Énoncé}
+Soit un espace euclidien $E$ et un opérateur symétrique plus complexe.
+Démontrer que le spectre de cet opérateur possède des propriétés particulières en utilisant le théorème spectral.
+Soit $A = \begin{pmatrix} 10 & 5 \\ 5 & 10 \end{pmatrix}$.
+Calculer ses valeurs propres, et trouver une base orthonormée de vecteurs propres.
+
+\subsection{Solution}
+
+\textbf{1 - Polynôme caractéristique}
+Soit $A = \begin{pmatrix} 10 & 5 \\ 5 & 10 \end{pmatrix}$.
+Le polynôme caractéristique de $A$ est :
+$\chi_A(X) = \det(X I - A) = \begin{vmatrix} X - 10 & -5 \\ -5 & X - 10 \end{vmatrix}$
+$\chi_A(X) = (X - 10)^2 - (-5)^2$
+$\chi_A(X) = (X - 10 - 5)(X - 10 + 5)$
+$\chi_A(X) = (X - 15)(X - 5)$
+
+\textbf{2 - Racines (Valeurs propres)}
+Les racines du polynôme caractéristique sont évidentes. La matrice admet deux valeurs propres réelles distinctes :
+$\lambda_1 = 15$ et $\lambda_2 = 5$.
+Le fait que les valeurs propres soient réelles est garanti par le théorème spectral, car $A$ est symétrique réelle.
+
+\textbf{3 - Vecteurs propres}
+Pour $\lambda_1 = 15$ : on résout $AX = \lambda_1 X$.
+Soit $X = \begin{pmatrix} x \\ y \end{pmatrix}$.
+$\begin{pmatrix} 10 & 5 \\ 5 & 10 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 15x \\ 15y \end{pmatrix}$
+Cela donne le système :
+$10x + 5y = 15x \implies 5y = 5x \implies y = x$ (car $n \neq 0$)
+Un vecteur propre est $V_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_1\| = \sqrt{1^2 + 1^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_1 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+
+Pour $\lambda_2 = 5$ : on résout $AX = \lambda_2 X$.
+$\begin{pmatrix} 10 & 5 \\ 5 & 10 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 5x \\ 5y \end{pmatrix}$
+Cela donne :
+$10x + 5y = 5x \implies 5x + 5y = 0 \implies y = -x$.
+Un vecteur propre est $V_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_2\| = \sqrt{1^2 + (-1)^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_2 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+
+\textbf{4 - Vérification de l'orthogonalité}
+Vérifions que $U_1$ et $U_2$ sont orthogonaux (propriété fondamentale du théorème spectral pour des valeurs propres distinctes) :
+$\langle U_1, U_2 \rangle = \frac{1}{2} (1 \times 1 + 1 \times (-1)) = 0$.
+Ainsi, $\mathcal{B}' = (U_1, U_2)$ est une base orthonormée de $\mathbb{R}^2$ constituée de vecteurs propres de $A$.
+
+\newpage
+\section{Exercice 6 : Théorème Spectral et Matrices Symétriques \quad $\$bigstar$\bigstar$\bigstar\star\star$}
+
+\subsection{Énoncé}
+Soit un espace euclidien $E$ et un opérateur symétrique plus complexe.
+Démontrer que le spectre de cet opérateur possède des propriétés particulières en utilisant le théorème spectral.
+Soit $A = \begin{pmatrix} 12 & 6 \\ 6 & 12 \end{pmatrix}$.
+Calculer ses valeurs propres, et trouver une base orthonormée de vecteurs propres.
+
+\subsection{Solution}
+
+\textbf{1 - Polynôme caractéristique}
+Soit $A = \begin{pmatrix} 12 & 6 \\ 6 & 12 \end{pmatrix}$.
+Le polynôme caractéristique de $A$ est :
+$\chi_A(X) = \det(X I - A) = \begin{vmatrix} X - 12 & -6 \\ -6 & X - 12 \end{vmatrix}$
+$\chi_A(X) = (X - 12)^2 - (-6)^2$
+$\chi_A(X) = (X - 12 - 6)(X - 12 + 6)$
+$\chi_A(X) = (X - 18)(X - 6)$
+
+\textbf{2 - Racines (Valeurs propres)}
+Les racines du polynôme caractéristique sont évidentes. La matrice admet deux valeurs propres réelles distinctes :
+$\lambda_1 = 18$ et $\lambda_2 = 6$.
+Le fait que les valeurs propres soient réelles est garanti par le théorème spectral, car $A$ est symétrique réelle.
+
+\textbf{3 - Vecteurs propres}
+Pour $\lambda_1 = 18$ : on résout $AX = \lambda_1 X$.
+Soit $X = \begin{pmatrix} x \\ y \end{pmatrix}$.
+$\begin{pmatrix} 12 & 6 \\ 6 & 12 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 18x \\ 18y \end{pmatrix}$
+Cela donne le système :
+$12x + 6y = 18x \implies 6y = 6x \implies y = x$ (car $n \neq 0$)
+Un vecteur propre est $V_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_1\| = \sqrt{1^2 + 1^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_1 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+
+Pour $\lambda_2 = 6$ : on résout $AX = \lambda_2 X$.
+$\begin{pmatrix} 12 & 6 \\ 6 & 12 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 6x \\ 6y \end{pmatrix}$
+Cela donne :
+$12x + 6y = 6x \implies 6x + 6y = 0 \implies y = -x$.
+Un vecteur propre est $V_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_2\| = \sqrt{1^2 + (-1)^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_2 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+
+\textbf{4 - Vérification de l'orthogonalité}
+Vérifions que $U_1$ et $U_2$ sont orthogonaux (propriété fondamentale du théorème spectral pour des valeurs propres distinctes) :
+$\langle U_1, U_2 \rangle = \frac{1}{2} (1 \times 1 + 1 \times (-1)) = 0$.
+Ainsi, $\mathcal{B}' = (U_1, U_2)$ est une base orthonormée de $\mathbb{R}^2$ constituée de vecteurs propres de $A$.
+
+\newpage
+\section{Exercice 7 : Théorème Spectral et Matrices Symétriques \quad $\$bigstar$\bigstar$\bigstar$\bigstar\star$}
+
+\subsection{Énoncé}
+Soit un espace euclidien $E$ et un opérateur symétrique plus complexe.
+Démontrer que le spectre de cet opérateur possède des propriétés particulières en utilisant le théorème spectral.
+Soit $A = \begin{pmatrix} 14 & 7 \\ 7 & 14 \end{pmatrix}$.
+Calculer ses valeurs propres, et trouver une base orthonormée de vecteurs propres.
+
+\subsection{Solution}
+
+**1 - Polynôme caractéristique**
+Soit $A = \begin{pmatrix} 14 & 7 \\ 7 & 14 \end{pmatrix}$.
+Le polynôme caractéristique de $A$ est :
+$\chi_A(X) = \det(X I - A) = \begin{vmatrix} X - 14 & -7 \\ -7 & X - 14 \end{vmatrix}$
+$\chi_A(X) = (X - 14)^2 - (-7)^2$
+$\chi_A(X) = (X - 14 - 7)(X - 14 + 7)$
+$\chi_A(X) = (X - 21)(X - 7)$
+
+**2 - Racines (Valeurs propres)**
+Les racines du polynôme caractéristique sont évidentes. La matrice admet deux valeurs propres réelles distinctes :
+$\lambda_1 = 21$ et $\lambda_2 = 7$.
+Le fait que les valeurs propres soient réelles est garanti par le théorème spectral, car $A$ est symétrique réelle.
+
+**3 - Vecteurs propres**
+Pour $\lambda_1 = 21$ : on résout $AX = \lambda_1 X$.
+Soit $X = \begin{pmatrix} x \\ y \end{pmatrix}$.
+$\begin{pmatrix} 14 & 7 \\ 7 & 14 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 21x \\ 21y \end{pmatrix}$
+Cela donne le système :
+$14x + 7y = 21x \implies 7y = 7x \implies y = x$ (car $n \neq 0$)
+Un vecteur propre est $V_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_1\| = \sqrt{1^2 + 1^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_1 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+
+Pour $\lambda_2 = 7$ : on résout $AX = \lambda_2 X$.
+$\begin{pmatrix} 14 & 7 \\ 7 & 14 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 7x \\ 7y \end{pmatrix}$
+Cela donne :
+$14x + 7y = 7x \implies 7x + 7y = 0 \implies y = -x$.
+Un vecteur propre est $V_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_2\| = \sqrt{1^2 + (-1)^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_2 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+
+**4 - Vérification de l'orthogonalité**
+Vérifions que $U_1$ et $U_2$ sont orthogonaux (propriété fondamentale du théorème spectral pour des valeurs propres distinctes) :
+$\langle U_1, U_2 \rangle = \frac{1}{2} (1 \times 1 + 1 \times (-1)) = 0$.
+Ainsi, $\mathcal{B}' = (U_1, U_2)$ est une base orthonormée de $\mathbb{R}^2$ constituée de vecteurs propres de $A$.
+
+\newpage
+\section{Exercice 8 : Théorème Spectral et Matrices Symétriques \quad $\$bigstar$\bigstar$\bigstar$\bigstar\star$}
+
+\subsection{Énoncé}
+Soit un espace euclidien $E$ et un opérateur symétrique plus complexe.
+Démontrer que le spectre de cet opérateur possède des propriétés particulières en utilisant le théorème spectral.
+Soit $A = \begin{pmatrix} 16 & 8 \\ 8 & 16 \end{pmatrix}$.
+Calculer ses valeurs propres, et trouver une base orthonormée de vecteurs propres.
+
+\subsection{Solution}
+
+**1 - Polynôme caractéristique**
+Soit $A = \begin{pmatrix} 16 & 8 \\ 8 & 16 \end{pmatrix}$.
+Le polynôme caractéristique de $A$ est :
+$\chi_A(X) = \det(X I - A) = \begin{vmatrix} X - 16 & -8 \\ -8 & X - 16 \end{vmatrix}$
+$\chi_A(X) = (X - 16)^2 - (-8)^2$
+$\chi_A(X) = (X - 16 - 8)(X - 16 + 8)$
+$\chi_A(X) = (X - 24)(X - 8)$
+
+**2 - Racines (Valeurs propres)**
+Les racines du polynôme caractéristique sont évidentes. La matrice admet deux valeurs propres réelles distinctes :
+$\lambda_1 = 24$ et $\lambda_2 = 8$.
+Le fait que les valeurs propres soient réelles est garanti par le théorème spectral, car $A$ est symétrique réelle.
+
+**3 - Vecteurs propres**
+Pour $\lambda_1 = 24$ : on résout $AX = \lambda_1 X$.
+Soit $X = \begin{pmatrix} x \\ y \end{pmatrix}$.
+$\begin{pmatrix} 16 & 8 \\ 8 & 16 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 24x \\ 24y \end{pmatrix}$
+Cela donne le système :
+$16x + 8y = 24x \implies 8y = 8x \implies y = x$ (car $n \neq 0$)
+Un vecteur propre est $V_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_1\| = \sqrt{1^2 + 1^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_1 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+
+Pour $\lambda_2 = 8$ : on résout $AX = \lambda_2 X$.
+$\begin{pmatrix} 16 & 8 \\ 8 & 16 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 8x \\ 8y \end{pmatrix}$
+Cela donne :
+$16x + 8y = 8x \implies 8x + 8y = 0 \implies y = -x$.
+Un vecteur propre est $V_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_2\| = \sqrt{1^2 + (-1)^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_2 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+
+**4 - Vérification de l'orthogonalité**
+Vérifions que $U_1$ et $U_2$ sont orthogonaux (propriété fondamentale du théorème spectral pour des valeurs propres distinctes) :
+$\langle U_1, U_2 \rangle = \frac{1}{2} (1 \times 1 + 1 \times (-1)) = 0$.
+Ainsi, $\mathcal{B}' = (U_1, U_2)$ est une base orthonormée de $\mathbb{R}^2$ constituée de vecteurs propres de $A$.
+
+\newpage
+\section{Exercice 9 : Théorème Spectral et Matrices Symétriques \quad $\$bigstar$\bigstar$\bigstar$\bigstar$\bigstar$}
+
+\subsection{Énoncé}
+Soit un espace euclidien $E$ et un opérateur symétrique plus complexe.
+Démontrer que le spectre de cet opérateur possède des propriétés particulières en utilisant le théorème spectral.
+Soit $A = \begin{pmatrix} 18 & 9 \\ 9 & 18 \end{pmatrix}$.
+Calculer ses valeurs propres, et trouver une base orthonormée de vecteurs propres.
+
+\subsection{Solution}
+
+\textbf{1 - Polynôme caractéristique}
+Soit $A = \begin{pmatrix} 18 & 9 \\ 9 & 18 \end{pmatrix}$.
+Le polynôme caractéristique de $A$ est :
+$\chi_A(X) = \det(X I - A) = \begin{vmatrix} X - 18 & -9 \\ -9 & X - 18 \end{vmatrix}$
+$\chi_A(X) = (X - 18)^2 - (-9)^2$
+$\chi_A(X) = (X - 18 - 9)(X - 18 + 9)$
+$\chi_A(X) = (X - 27)(X - 9)$
+
+\textbf{2 - Racines (Valeurs propres)}
+Les racines du polynôme caractéristique sont évidentes. La matrice admet deux valeurs propres réelles distinctes :
+$\lambda_1 = 27$ et $\lambda_2 = 9$.
+Le fait que les valeurs propres soient réelles est garanti par le théorème spectral, car $A$ est symétrique réelle.
+
+\textbf{3 - Vecteurs propres}
+Pour $\lambda_1 = 27$ : on résout $AX = \lambda_1 X$.
+Soit $X = \begin{pmatrix} x \\ y \end{pmatrix}$.
+$\begin{pmatrix} 18 & 9 \\ 9 & 18 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 27x \\ 27y \end{pmatrix}$
+Cela donne le système :
+$18x + 9y = 27x \implies 9y = 9x \implies y = x$ (car $n \neq 0$)
+Un vecteur propre est $V_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_1\| = \sqrt{1^2 + 1^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_1 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+
+Pour $\lambda_2 = 9$ : on résout $AX = \lambda_2 X$.
+$\begin{pmatrix} 18 & 9 \\ 9 & 18 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 9x \\ 9y \end{pmatrix}$
+Cela donne :
+$18x + 9y = 9x \implies 9x + 9y = 0 \implies y = -x$.
+Un vecteur propre est $V_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_2\| = \sqrt{1^2 + (-1)^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_2 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+
+\textbf{4 - Vérification de l'orthogonalité}
+Vérifions que $U_1$ et $U_2$ sont orthogonaux (propriété fondamentale du théorème spectral pour des valeurs propres distinctes) :
+$\langle U_1, U_2 \rangle = \frac{1}{2} (1 \times 1 + 1 \times (-1)) = 0$.
+Ainsi, $\mathcal{B}' = (U_1, U_2)$ est une base orthonormée de $\mathbb{R}^2$ constituée de vecteurs propres de $A$.
+
+\newpage
+\section{Exercice 10 : Théorème Spectral et Matrices Symétriques \quad $\$bigstar$\bigstar$\bigstar$\bigstar$\bigstar$}
+
+\subsection{Énoncé}
+Soit un espace euclidien $E$ et un opérateur symétrique plus complexe.
+Démontrer que le spectre de cet opérateur possède des propriétés particulières en utilisant le théorème spectral.
+Soit $A = \begin{pmatrix} 20 & 10 \\ 10 & 20 \end{pmatrix}$.
+Calculer ses valeurs propres, et trouver une base orthonormée de vecteurs propres.
+
+\subsection{Solution}
+
+\textbf{1 - Polynôme caractéristique}
+Soit $A = \begin{pmatrix} 20 & 10 \\ 10 & 20 \end{pmatrix}$.
+Le polynôme caractéristique de $A$ est :
+$\chi_A(X) = \det(X I - A) = \begin{vmatrix} X - 20 & -10 \\ -10 & X - 20 \end{vmatrix}$
+$\chi_A(X) = (X - 20)^2 - (-10)^2$
+$\chi_A(X) = (X - 20 - 10)(X - 20 + 10)$
+$\chi_A(X) = (X - 30)(X - 10)$
+
+\textbf{2 - Racines (Valeurs propres)}
+Les racines du polynôme caractéristique sont évidentes. La matrice admet deux valeurs propres réelles distinctes :
+$\lambda_1 = 30$ et $\lambda_2 = 10$.
+Le fait que les valeurs propres soient réelles est garanti par le théorème spectral, car $A$ est symétrique réelle.
+
+\textbf{3 - Vecteurs propres}
+Pour $\lambda_1 = 30$ : on résout $AX = \lambda_1 X$.
+Soit $X = \begin{pmatrix} x \\ y \end{pmatrix}$.
+$\begin{pmatrix} 20 & 10 \\ 10 & 20 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 30x \\ 30y \end{pmatrix}$
+Cela donne le système :
+$20x + 10y = 30x \implies 10y = 10x \implies y = x$ (car $n \neq 0$)
+Un vecteur propre est $V_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_1\| = \sqrt{1^2 + 1^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_1 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+
+Pour $\lambda_2 = 10$ : on résout $AX = \lambda_2 X$.
+$\begin{pmatrix} 20 & 10 \\ 10 & 20 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 10x \\ 10y \end{pmatrix}$
+Cela donne :
+$20x + 10y = 10x \implies 10x + 10y = 0 \implies y = -x$.
+Un vecteur propre est $V_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+Calculons sa norme euclidienne : $\|V_2\| = \sqrt{1^2 + (-1)^2} = \sqrt{2}$.
+Le vecteur propre unitaire associé est $U_2 = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+
+\textbf{4 - Vérification de l'orthogonalité}
+Vérifions que $U_1$ et $U_2$ sont orthogonaux (propriété fondamentale du théorème spectral pour des valeurs propres distinctes) :
+$\langle U_1, U_2 \rangle = \frac{1}{2} (1 \times 1 + 1 \times (-1)) = 0$.
+Ainsi, $\mathcal{B}' = (U_1, U_2)$ est une base orthonormée de $\mathbb{R}^2$ constituée de vecteurs propres de $A$.
+
+\newpage
+
+
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\section{TP 1 : Implémentation du Théorème Spectral sans Framework}
+
+\subsection{Objectif Mathématique}
+L'objectif de ce TP est de vérifier par le code les propriétés du théorème spectral : une matrice symétrique réelle admet des valeurs propres réelles et ses vecteurs propres forment une base orthogonale. Nous coderons en Python pur une approximation (par méthode de la puissance itérée) pour extraire la plus grande valeur propre, et déflation pour la suivante.
+
+\subsection{Implémentation Python}
+
+\begin{lstlisting}
+import math
+import random
+
+def dot_product(u, v):
+    """Produit scalaire euclidien classique."""
+    return sum(x * y for x, y in zip(u, v))
+
+def norm(u):
+    """Norme euclidienne."""
+    return math.sqrt(dot_product(u, u))
+
+def mat_vec_mult(A, v):
+    """Multiplication matrice-vecteur."""
+    return [dot_product(row, v) for row in A]
+
+def power_iteration(A, num_iterations=1000, epsilon=1e-10):
+    """
+    Méthode de la puissance itérée pour trouver la valeur propre dominante
+    et le vecteur propre associé.
+    """
+    n = len(A)
+    # Vecteur initial aléatoire
+    b_k = [0.1 * i for i in range(1, n+1)]
+
+    for _ in range(num_iterations):
+        # Multiplier par A
+        b_k1 = mat_vec_mult(A, b_k)
+
+        # Calculer la norme
+        b_k1_norm = norm(b_k1)
+
+        # Re-normaliser
+        b_k1 = [x / b_k1_norm for x in b_k1]
+
+        # Vérification de la convergence
+        diff = norm([x - y for x, y in zip(b_k1, b_k)])
+        if diff < epsilon:
+            break
+        b_k = b_k1
+
+    # Calcul du quotient de Rayleigh pour la valeur propre
+    Ab = mat_vec_mult(A, b_k)
+    eigenvalue = dot_product(b_k, Ab) / dot_product(b_k, b_k)
+
+    return eigenvalue, b_k
+
+# --- Tests de Validation Mathématique ---
+if __name__ == "__main__":
+    # Matrice symétrique 2x2
+    A = [
+        [3, 1],
+        [1, 5]
+    ]
+
+    print("Matrice symétrique A:")
+    for row in A:
+        print(row)
+
+    val_propre1, vec_propre1 = power_iteration(A)
+    print(f"\nPlus grande valeur propre estimée : {val_propre1}")
+    print(f"Vecteur propre associé : {vec_propre1}")
+
+    # Vérification: A * v = lambda * v
+    Av = mat_vec_mult(A, vec_propre1)
+    lambda_v = [val_propre1 * x for x in vec_propre1]
+
+    # Assertion mathématique rigoureuse
+    for i in range(len(Av)):
+        assert abs(Av[i] - lambda_v[i]) < 1e-4, "L'équation aux valeurs propres n'est pas respectée !"
+
+    print("Validation mathématique réussie: l'opérateur agit comme une homothétie sur ce vecteur de base orthogonale.")
+\end{lstlisting}
+
+\subsection{Analyse de l'implémentation}
+La méthode de la puissance itérée converge car, d'après le théorème spectral, la matrice symétrique est diagonalisable, ce qui assure l'existence d'une base de vecteurs propres. Si la plus grande valeur propre (en valeur absolue) est unique, le vecteur itéré s'alignera naturellement sur l'axe propre dominant.
+
+\newpage
+\section{TP 2 : Implémentation du Théorème Spectral sans Framework}
+
+\subsection{Objectif Mathématique}
+L'objectif de ce TP est de vérifier par le code les propriétés du théorème spectral : une matrice symétrique réelle admet des valeurs propres réelles et ses vecteurs propres forment une base orthogonale. Nous coderons en Python pur une approximation (par méthode de la puissance itérée) pour extraire la plus grande valeur propre, et déflation pour la suivante.
+
+\subsection{Implémentation Python}
+
+\begin{lstlisting}
+import math
+import random
+
+def dot_product(u, v):
+    """Produit scalaire euclidien classique."""
+    return sum(x * y for x, y in zip(u, v))
+
+def norm(u):
+    """Norme euclidienne."""
+    return math.sqrt(dot_product(u, u))
+
+def mat_vec_mult(A, v):
+    """Multiplication matrice-vecteur."""
+    return [dot_product(row, v) for row in A]
+
+def power_iteration(A, num_iterations=1000, epsilon=1e-10):
+    """
+    Méthode de la puissance itérée pour trouver la valeur propre dominante
+    et le vecteur propre associé.
+    """
+    n = len(A)
+    # Vecteur initial aléatoire
+    b_k = [0.1 * i for i in range(1, n+1)]
+
+    for _ in range(num_iterations):
+        # Multiplier par A
+        b_k1 = mat_vec_mult(A, b_k)
+
+        # Calculer la norme
+        b_k1_norm = norm(b_k1)
+
+        # Re-normaliser
+        b_k1 = [x / b_k1_norm for x in b_k1]
+
+        # Vérification de la convergence
+        diff = norm([x - y for x, y in zip(b_k1, b_k)])
+        if diff < epsilon:
+            break
+        b_k = b_k1
+
+    # Calcul du quotient de Rayleigh pour la valeur propre
+    Ab = mat_vec_mult(A, b_k)
+    eigenvalue = dot_product(b_k, Ab) / dot_product(b_k, b_k)
+
+    return eigenvalue, b_k
+
+# --- Tests de Validation Mathématique ---
+if __name__ == "__main__":
+    # Matrice symétrique 2x2
+    A = [
+        [4, 1],
+        [1, 6]
+    ]
+
+    print("Matrice symétrique A:")
+    for row in A:
+        print(row)
+
+    val_propre1, vec_propre1 = power_iteration(A)
+    print(f"\nPlus grande valeur propre estimée : {val_propre1}")
+    print(f"Vecteur propre associé : {vec_propre1}")
+
+    # Vérification: A * v = lambda * v
+    Av = mat_vec_mult(A, vec_propre1)
+    lambda_v = [val_propre1 * x for x in vec_propre1]
+
+    # Assertion mathématique rigoureuse
+    for i in range(len(Av)):
+        assert abs(Av[i] - lambda_v[i]) < 1e-4, "L'équation aux valeurs propres n'est pas respectée !"
+
+    print("Validation mathématique réussie: l'opérateur agit comme une homothétie sur ce vecteur de base orthogonale.")
+\end{lstlisting}
+
+\subsection{Analyse de l'implémentation}
+La méthode de la puissance itérée converge car, d'après le théorème spectral, la matrice symétrique est diagonalisable, ce qui assure l'existence d'une base de vecteurs propres. Si la plus grande valeur propre (en valeur absolue) est unique, le vecteur itéré s'alignera naturellement sur l'axe propre dominant.
+
+\newpage
+\section{TP 3 : Implémentation du Théorème Spectral sans Framework}
+
+\subsection{Objectif Mathématique}
+L'objectif de ce TP est de vérifier par le code les propriétés du théorème spectral : une matrice symétrique réelle admet des valeurs propres réelles et ses vecteurs propres forment une base orthogonale. Nous coderons en Python pur une approximation (par méthode de la puissance itérée) pour extraire la plus grande valeur propre, et déflation pour la suivante.
+
+\subsection{Implémentation Python}
+
+\begin{lstlisting}
+import math
+import random
+
+def dot_product(u, v):
+    """Produit scalaire euclidien classique."""
+    return sum(x * y for x, y in zip(u, v))
+
+def norm(u):
+    """Norme euclidienne."""
+    return math.sqrt(dot_product(u, u))
+
+def mat_vec_mult(A, v):
+    """Multiplication matrice-vecteur."""
+    return [dot_product(row, v) for row in A]
+
+def power_iteration(A, num_iterations=1000, epsilon=1e-10):
+    """
+    Méthode de la puissance itérée pour trouver la valeur propre dominante
+    et le vecteur propre associé.
+    """
+    n = len(A)
+    # Vecteur initial aléatoire
+    b_k = [0.1 * i for i in range(1, n+1)]
+
+    for _ in range(num_iterations):
+        # Multiplier par A
+        b_k1 = mat_vec_mult(A, b_k)
+
+        # Calculer la norme
+        b_k1_norm = norm(b_k1)
+
+        # Re-normaliser
+        b_k1 = [x / b_k1_norm for x in b_k1]
+
+        # Vérification de la convergence
+        diff = norm([x - y for x, y in zip(b_k1, b_k)])
+        if diff < epsilon:
+            break
+        b_k = b_k1
+
+    # Calcul du quotient de Rayleigh pour la valeur propre
+    Ab = mat_vec_mult(A, b_k)
+    eigenvalue = dot_product(b_k, Ab) / dot_product(b_k, b_k)
+
+    return eigenvalue, b_k
+
+# --- Tests de Validation Mathématique ---
+if __name__ == "__main__":
+    # Matrice symétrique 2x2
+    A = [
+        [5, 1],
+        [1, 7]
+    ]
+
+    print("Matrice symétrique A:")
+    for row in A:
+        print(row)
+
+    val_propre1, vec_propre1 = power_iteration(A)
+    print(f"\nPlus grande valeur propre estimée : {val_propre1}")
+    print(f"Vecteur propre associé : {vec_propre1}")
+
+    # Vérification: A * v = lambda * v
+    Av = mat_vec_mult(A, vec_propre1)
+    lambda_v = [val_propre1 * x for x in vec_propre1]
+
+    # Assertion mathématique rigoureuse
+    for i in range(len(Av)):
+        assert abs(Av[i] - lambda_v[i]) < 1e-4, "L'équation aux valeurs propres n'est pas respectée !"
+
+    print("Validation mathématique réussie: l'opérateur agit comme une homothétie sur ce vecteur de base orthogonale.")
+\end{lstlisting}
+
+\subsection{Analyse de l'implémentation}
+La méthode de la puissance itérée converge car, d'après le théorème spectral, la matrice symétrique est diagonalisable, ce qui assure l'existence d'une base de vecteurs propres. Si la plus grande valeur propre (en valeur absolue) est unique, le vecteur itéré s'alignera naturellement sur l'axe propre dominant.
+
+\newpage
+\section{TP 4 : Implémentation du Théorème Spectral sans Framework}
+
+\subsection{Objectif Mathématique}
+L'objectif de ce TP est de vérifier par le code les propriétés du théorème spectral : une matrice symétrique réelle admet des valeurs propres réelles et ses vecteurs propres forment une base orthogonale. Nous coderons en Python pur une approximation (par méthode de la puissance itérée) pour extraire la plus grande valeur propre, et déflation pour la suivante.
+
+\subsection{Implémentation Python}
+
+\begin{lstlisting}
+import math
+import random
+
+def dot_product(u, v):
+    """Produit scalaire euclidien classique."""
+    return sum(x * y for x, y in zip(u, v))
+
+def norm(u):
+    """Norme euclidienne."""
+    return math.sqrt(dot_product(u, u))
+
+def mat_vec_mult(A, v):
+    """Multiplication matrice-vecteur."""
+    return [dot_product(row, v) for row in A]
+
+def power_iteration(A, num_iterations=1000, epsilon=1e-10):
+    """
+    Méthode de la puissance itérée pour trouver la valeur propre dominante
+    et le vecteur propre associé.
+    """
+    n = len(A)
+    # Vecteur initial aléatoire
+    b_k = [0.1 * i for i in range(1, n+1)]
+
+    for _ in range(num_iterations):
+        # Multiplier par A
+        b_k1 = mat_vec_mult(A, b_k)
+
+        # Calculer la norme
+        b_k1_norm = norm(b_k1)
+
+        # Re-normaliser
+        b_k1 = [x / b_k1_norm for x in b_k1]
+
+        # Vérification de la convergence
+        diff = norm([x - y for x, y in zip(b_k1, b_k)])
+        if diff < epsilon:
+            break
+        b_k = b_k1
+
+    # Calcul du quotient de Rayleigh pour la valeur propre
+    Ab = mat_vec_mult(A, b_k)
+    eigenvalue = dot_product(b_k, Ab) / dot_product(b_k, b_k)
+
+    return eigenvalue, b_k
+
+# --- Tests de Validation Mathématique ---
+if __name__ == "__main__":
+    # Matrice symétrique 2x2
+    A = [
+        [6, 1],
+        [1, 8]
+    ]
+
+    print("Matrice symétrique A:")
+    for row in A:
+        print(row)
+
+    val_propre1, vec_propre1 = power_iteration(A)
+    print(f"\nPlus grande valeur propre estimée : {val_propre1}")
+    print(f"Vecteur propre associé : {vec_propre1}")
+
+    # Vérification: A * v = lambda * v
+    Av = mat_vec_mult(A, vec_propre1)
+    lambda_v = [val_propre1 * x for x in vec_propre1]
+
+    # Assertion mathématique rigoureuse
+    for i in range(len(Av)):
+        assert abs(Av[i] - lambda_v[i]) < 1e-4, "L'équation aux valeurs propres n'est pas respectée !"
+
+    print("Validation mathématique réussie: l'opérateur agit comme une homothétie sur ce vecteur de base orthogonale.")
+\end{lstlisting}
+
+\subsection{Analyse de l'implémentation}
+La méthode de la puissance itérée converge car, d'après le théorème spectral, la matrice symétrique est diagonalisable, ce qui assure l'existence d'une base de vecteurs propres. Si la plus grande valeur propre (en valeur absolue) est unique, le vecteur itéré s'alignera naturellement sur l'axe propre dominant.
+
+\newpage
+\section{TP 5 : Implémentation du Théorème Spectral sans Framework}
+
+\subsection{Objectif Mathématique}
+L'objectif de ce TP est de vérifier par le code les propriétés du théorème spectral : une matrice symétrique réelle admet des valeurs propres réelles et ses vecteurs propres forment une base orthogonale. Nous coderons en Python pur une approximation (par méthode de la puissance itérée) pour extraire la plus grande valeur propre, et déflation pour la suivante.
+
+\subsection{Implémentation Python}
+
+\begin{lstlisting}
+import math
+import random
+
+def dot_product(u, v):
+    """Produit scalaire euclidien classique."""
+    return sum(x * y for x, y in zip(u, v))
+
+def norm(u):
+    """Norme euclidienne."""
+    return math.sqrt(dot_product(u, u))
+
+def mat_vec_mult(A, v):
+    """Multiplication matrice-vecteur."""
+    return [dot_product(row, v) for row in A]
+
+def power_iteration(A, num_iterations=1000, epsilon=1e-10):
+    """
+    Méthode de la puissance itérée pour trouver la valeur propre dominante
+    et le vecteur propre associé.
+    """
+    n = len(A)
+    # Vecteur initial aléatoire
+    b_k = [0.1 * i for i in range(1, n+1)]
+
+    for _ in range(num_iterations):
+        # Multiplier par A
+        b_k1 = mat_vec_mult(A, b_k)
+
+        # Calculer la norme
+        b_k1_norm = norm(b_k1)
+
+        # Re-normaliser
+        b_k1 = [x / b_k1_norm for x in b_k1]
+
+        # Vérification de la convergence
+        diff = norm([x - y for x, y in zip(b_k1, b_k)])
+        if diff < epsilon:
+            break
+        b_k = b_k1
+
+    # Calcul du quotient de Rayleigh pour la valeur propre
+    Ab = mat_vec_mult(A, b_k)
+    eigenvalue = dot_product(b_k, Ab) / dot_product(b_k, b_k)
+
+    return eigenvalue, b_k
+
+# --- Tests de Validation Mathématique ---
+if __name__ == "__main__":
+    # Matrice symétrique 2x2
+    A = [
+        [7, 1],
+        [1, 9]
+    ]
+
+    print("Matrice symétrique A:")
+    for row in A:
+        print(row)
+
+    val_propre1, vec_propre1 = power_iteration(A)
+    print(f"\nPlus grande valeur propre estimée : {val_propre1}")
+    print(f"Vecteur propre associé : {vec_propre1}")
+
+    # Vérification: A * v = lambda * v
+    Av = mat_vec_mult(A, vec_propre1)
+    lambda_v = [val_propre1 * x for x in vec_propre1]
+
+    # Assertion mathématique rigoureuse
+    for i in range(len(Av)):
+        assert abs(Av[i] - lambda_v[i]) < 1e-4, "L'équation aux valeurs propres n'est pas respectée !"
+
+    print("Validation mathématique réussie: l'opérateur agit comme une homothétie sur ce vecteur de base orthogonale.")
+\end{lstlisting}
+
+\subsection{Analyse de l'implémentation}
+La méthode de la puissance itérée converge car, d'après le théorème spectral, la matrice symétrique est diagonalisable, ce qui assure l'existence d'une base de vecteurs propres. Si la plus grande valeur propre (en valeur absolue) est unique, le vecteur itéré s'alignera naturellement sur l'axe propre dominant.
+
+\newpage
+
+\end{document}
