@@ -1,0 +1,100 @@
+\babel@toc {french}{}\relax
+\contentsline {part}{I\hspace {1em}Cours Magistral}{5}{}%
+\contentsline {section}{\numberline {1}Jalon 31 : Introduction à la réduction de Jordan et structure des nilpotents}{5}{}%
+\contentsline {section}{\numberline {2}Genèse Historique et Intuition}{5}{}%
+\contentsline {section}{\numberline {3}Définitions et Théorèmes}{5}{}%
+\contentsline {subsection}{\numberline {3.1}Endomorphismes Nilpotents}{5}{}%
+\contentsline {subsubsection}{\numberline {3.1.1}Définition Formelle}{5}{}%
+\contentsline {subsubsection}{\numberline {3.1.2}Analyse des Variables}{5}{}%
+\contentsline {subsubsection}{\numberline {3.1.3}Exemples de Validation}{6}{}%
+\contentsline {subsubsection}{\numberline {3.1.4}Cas Pathologiques et Contre-exemples}{6}{}%
+\contentsline {subsection}{\numberline {3.2}Caractérisation des Nilpotents}{6}{}%
+\contentsline {subsubsection}{\numberline {3.2.1}Définition Formelle}{6}{}%
+\contentsline {subsubsection}{\numberline {3.2.2}Analyse des Variables}{6}{}%
+\contentsline {subsubsection}{\numberline {3.2.3}Exemples de Validation}{6}{}%
+\contentsline {subsubsection}{\numberline {3.2.4}Cas Pathologiques et Contre-exemples}{7}{}%
+\contentsline {subsection}{\numberline {3.3}Blocs de Jordan}{7}{}%
+\contentsline {subsubsection}{\numberline {3.3.1}Définition Formelle}{7}{}%
+\contentsline {subsubsection}{\numberline {3.3.2}Analyse des Variables}{7}{}%
+\contentsline {subsubsection}{\numberline {3.3.3}Exemples de Validation}{7}{}%
+\contentsline {subsubsection}{\numberline {3.3.4}Cas Pathologiques et Contre-exemples}{7}{}%
+\contentsline {section}{\numberline {4}Démonstrations Pas-à-Pas}{7}{}%
+\contentsline {subsection}{\numberline {4.1}Démonstration : Théorème de structure nilpotente $\DOTSB \tmspace +\thickmuskip {.2777em}\DOTSB \Leftarrow \joinrel \Rightarrow \tmspace +\thickmuskip {.2777em}\chi _u(X) = X^n$}{7}{}%
+\contentsline {subsection}{\numberline {4.2}Démonstration : Indice de nilpotence et sous-espaces emboîtés}{8}{}%
+\contentsline {section}{\numberline {5}Ancrage \& Application en IA : Dynamique des RNN et Gradient Disparu}{8}{}%
+\contentsline {part}{II\hspace {1em}Exercices d'Application et de Concours}{8}{}%
+\contentsline {section}{\numberline {6}Nilpotence basique en dimension 2 ($\bigstar $)}{9}{}%
+\contentsline {section}{\numberline {7}Énoncé}{9}{}%
+\contentsline {section}{\numberline {8}Corrigé Détaillé}{9}{}%
+\contentsline {subsection}{\numberline {8.1}Calcul de $N^2$}{9}{}%
+\contentsline {subsection}{\numberline {8.2}Polynôme caractéristique}{9}{}%
+\contentsline {section}{\numberline {9}Indice de nilpotence d'un opérateur de dérivation ($\bigstar $$\bigstar $)}{10}{}%
+\contentsline {section}{\numberline {10}Énoncé}{10}{}%
+\contentsline {section}{\numberline {11}Corrigé Détaillé}{10}{}%
+\contentsline {subsection}{\numberline {11.1}Matrice de $u$ dans la base canonique}{10}{}%
+\contentsline {subsection}{\numberline {11.2}Nilpotence et indice}{10}{}%
+\contentsline {subsection}{\numberline {11.3}Étude des noyaux itérés}{10}{}%
+\contentsline {section}{\numberline {12}Matrices triangulaires strictes ($\bigstar $$\bigstar $)}{10}{}%
+\contentsline {section}{\numberline {13}Énoncé}{10}{}%
+\contentsline {section}{\numberline {14}Corrigé Détaillé}{11}{}%
+\contentsline {subsection}{\numberline {14.1}Structure du produit de matrices triangulaires strictes}{11}{}%
+\contentsline {subsection}{\numberline {14.2}Nilpotence}{11}{}%
+\contentsline {section}{\numberline {15}Bloc de Jordan fondamental ($\bigstar $$\bigstar $$\bigstar $)}{11}{}%
+\contentsline {section}{\numberline {16}Énoncé}{11}{}%
+\contentsline {section}{\numberline {17}Corrigé Détaillé}{12}{}%
+\contentsline {subsection}{\numberline {17.1}Puissances de $J$}{12}{}%
+\contentsline {subsection}{\numberline {17.2}Dimension du noyau}{12}{}%
+\contentsline {subsection}{\numberline {17.3}Construction de la base}{12}{}%
+\contentsline {subsection}{\numberline {17.4}Matrice dans la base $\mathcal {B}$}{12}{}%
+\contentsline {section}{\numberline {18}Nilpotence et trace ($\bigstar $$\bigstar $$\bigstar $)}{13}{}%
+\contentsline {section}{\numberline {19}Énoncé}{13}{}%
+\contentsline {section}{\numberline {20}Corrigé Détaillé}{13}{}%
+\contentsline {subsection}{\numberline {20.1}Condition nécessaire}{13}{}%
+\contentsline {subsection}{\numberline {20.2}Condition suffisante via Newton}{13}{}%
+\contentsline {section}{\numberline {21}Commutant d'un bloc de Jordan ($\bigstar $$\bigstar $$\bigstar $)}{13}{}%
+\contentsline {section}{\numberline {22}Énoncé}{13}{}%
+\contentsline {section}{\numberline {23}Corrigé Détaillé}{14}{}%
+\contentsline {subsection}{\numberline {23.1}Analyse de la commutation}{14}{}%
+\contentsline {subsection}{\numberline {23.2}Dimension du commutant}{14}{}%
+\contentsline {section}{\numberline {24}Inverse d'un bloc diagonalisable + nilpotent ($\bigstar $$\bigstar $$\bigstar $$\bigstar $)}{14}{}%
+\contentsline {section}{\numberline {25}Énoncé}{14}{}%
+\contentsline {section}{\numberline {26}Corrigé Détaillé}{15}{}%
+\contentsline {subsection}{\numberline {26.1}Développement formel}{15}{}%
+\contentsline {subsection}{\numberline {26.2}Expression de $A^{-1}$}{15}{}%
+\contentsline {subsection}{\numberline {26.3}Application au bloc de Jordan}{15}{}%
+\contentsline {section}{\numberline {27}Décomposition d'un noyau itéré et stabilité ($\bigstar $$\bigstar $$\bigstar $$\bigstar $)}{15}{}%
+\contentsline {section}{\numberline {28}Énoncé}{15}{}%
+\contentsline {section}{\numberline {29}Corrigé Détaillé}{16}{}%
+\contentsline {subsection}{\numberline {29.1}$E = N_p$}{16}{}%
+\contentsline {subsection}{\numberline {29.2}Stabilité descendante}{16}{}%
+\contentsline {subsection}{\numberline {29.3}Isomorphisme de restriction}{16}{}%
+\contentsline {subsection}{\numberline {29.4}Intersection avec $N_{p-2}$}{16}{}%
+\contentsline {section}{\numberline {30}Matrices semblables et invariants de similitude ($\bigstar $$\bigstar $$\bigstar $$\bigstar $)}{16}{}%
+\contentsline {section}{\numberline {31}Énoncé}{16}{}%
+\contentsline {section}{\numberline {32}Corrigé Détaillé}{17}{}%
+\contentsline {subsection}{\numberline {32.1}Polynômes caractéristiques}{17}{}%
+\contentsline {subsection}{\numberline {32.2}Puissances et indice de nilpotence de $A$}{17}{}%
+\contentsline {subsection}{\numberline {32.3}Similitude}{17}{}%
+\contentsline {section}{\numberline {33}Construction explicite de la base de Jordan ($\bigstar $$\bigstar $$\bigstar $$\bigstar $$\bigstar $)}{17}{}%
+\contentsline {section}{\numberline {34}Énoncé}{17}{}%
+\contentsline {section}{\numberline {35}Corrigé Détaillé}{18}{}%
+\contentsline {subsection}{\numberline {35.1}Polynôme caractéristique}{18}{}%
+\contentsline {subsection}{\numberline {35.2}Nilpotence de $N$}{18}{}%
+\contentsline {subsection}{\numberline {35.3}Indice de nilpotence et noyaux}{18}{}%
+\contentsline {subsection}{\numberline {35.4}Construction de la base de Jordan}{18}{}%
+\contentsline {part}{III\hspace {1em}Travaux Pratiques et Simulations Algorithmiques}{19}{}%
+\contentsline {section}{\numberline {36}Opérations matricielles basiques et test de nilpotence}{19}{}%
+\contentsline {section}{\numberline {37}Objectif}{19}{}%
+\contentsline {section}{\numberline {38}Implémentation et Validation Mathématique}{19}{}%
+\contentsline {section}{\numberline {39}Trace itérée et condition de nilpotence}{21}{}%
+\contentsline {section}{\numberline {40}Objectif}{21}{}%
+\contentsline {section}{\numberline {41}Implémentation et Validation Mathématique}{21}{}%
+\contentsline {section}{\numberline {42}Calcul du commutant d'une matrice}{22}{}%
+\contentsline {section}{\numberline {43}Objectif}{22}{}%
+\contentsline {section}{\numberline {44}Implémentation et Validation Mathématique}{22}{}%
+\contentsline {section}{\numberline {45}Algorithme de recherche d'une chaîne de Jordan (Dimension 3)}{24}{}%
+\contentsline {section}{\numberline {46}Objectif}{24}{}%
+\contentsline {section}{\numberline {47}Implémentation et Validation Mathématique}{24}{}%
+\contentsline {section}{\numberline {48}Calcul de l'inverse via série formelle de Neumann}{26}{}%
+\contentsline {section}{\numberline {49}Objectif}{26}{}%
+\contentsline {section}{\numberline {50}Implémentation et Validation Mathématique}{26}{}%
