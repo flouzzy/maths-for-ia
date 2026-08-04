@@ -406,6 +406,9 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
+### 2026-08-03-audit
+- [[#2026-08-03-audit|2026-08-03]] : [Audit & Weekly Compilation] - Jalon 32 - Preuve complète du théorème spectral pour les endomorphismes symétriques. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+
 - [2026-08-02] : [Upsert/Création] du Jalon 43 - Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice. Status: Terminé.
 
 ### 2026-08-01-audit

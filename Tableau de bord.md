@@ -165,6 +165,9 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
+### 2026-08-03-audit
+- [[#2026-08-03-audit|2026-08-03]] : [Audit & Weekly Compilation] - Jalon 32 - Preuve complète du théorème spectral pour les endomorphismes symétriques. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
+
 - [2026-08-02] : [Upsert/Création] du Jalon 43 - Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice. Status: Terminé.
 
 ### 2026-08-02-audit
