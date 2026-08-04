@@ -134,7 +134,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 42](jalon-42/Jalon-42.md)** : Équations différentielles linéaires du second ordre à coefficients constants. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 43](jalon-43/Jalon-43.md)** : Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 44](jalon-44/Jalon-44.md)** : Fonctions de plusieurs variables, limites, continuité et topologie de $\mathbb{R}^n$.
-- **[Jalon 45](jalon-45/Jalon%2045%20%28Diff%C3%A9rentiabilit%C3%A9%29.md)** : Différentiabilité, différentielle totale, dérivées partielles et gradient.
+- **[Jalon 45](jalon-45/Jalon-45.md)** : Différentiabilité, différentielle totale, dérivées partielles et gradient.
 - **[Jalon 46](jalon-46/Jalon%2046%20%28Matrice%20jacobienne%29.md)** : Matrice jacobienne, théorème de dérivation des fonctions composées (Chain Rule généralisée).
 - **[Jalon 47](jalon-47/Jalon%2047%20%28D%C3%A9riv%C3%A9es%20partielles%20d%27ordre%20deux%29.md)** : Dérivées partielles d'ordre deux, matrice hessienne et lemme de Schwarz.
 - **[Jalon 48](jalon-48/Jalon%2048%20%28Livrable%20IA%29.md)** : Livrable IA T4 : Formalisation mathématique complète de la rétropropagation (Backpropagation) d'un réseau de neurones profond sous forme de produits de matrices jacobiennes.
@@ -320,6 +320,8 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-08-04] : [Upsert/Création] du Jalon 45 - Différentiabilité. Status: Terminé.
+
 ### 2026-08-02-audit
 - [[#2026-08-02-audit|2026-08-02]] : [Audit & Weekly Compilation] - Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 ### 2026-07-31-audit

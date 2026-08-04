@@ -51,7 +51,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-42/Jalon-42.md|Jalon 42 : Équations différentielles linéaires du second ordre à coefficients constants.]] : Équations différentielles linéaires du second ordre à coefficients constants.
 - [x] [[jalon-43/Jalon-43.md|Jalon 43 : Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice.]] : Systèmes différentiels linéaires d'ordre 1 et calcul de l'exponentielle de matrice. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-44/Jalon-44.md|Jalon 44 : Fonctions de plusieurs variables]] : Fonctions de plusieurs variables, limites, continuité et topologie de $\\mathbb{R}^n$.
-- [ ] [[jalon-45/Jalon 45 (Différentiabilité).md|Jalon 45 : Différentiabilité]] : Différentiabilité, différentielle totale, dérivées partielles et gradient.
+- [x] [[jalon-45/Jalon-45.md|Jalon 45 : Différentiabilité]] : Différentiabilité, différentielle totale, dérivées partielles et gradient.
 - [ ] [[jalon-46/Jalon 46 (Matrice jacobienne).md|Jalon 46 : Matrice jacobienne]] : Matrice jacobienne, théorème de dérivation des fonctions composées (Chain Rule généralisée).
 - [ ] [[jalon-47/Jalon 47 (Dérivées partielles d'ordre deux).md|Jalon 47 : Dérivées partielles d'ordre deux]] : Dérivées partielles d'ordre deux, matrice hessienne et lemme de Schwarz.
 - [ ] [[jalon-48/Jalon 48 (Livrable IA).md|Jalon 48 : Livrable IA]] : Livrable IA T4 : Formalisation mathématique complète de la rétropropagation (Backpropagation) d'un réseau de neurones profond sous forme de produits de matrices jacobiennes.
@@ -165,6 +165,8 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
+- [2026-08-04] : [Upsert/Création] du Jalon 45 - Différentiabilité. Status: Terminé.
+
 ### 2026-08-03-audit
 - [[#2026-08-03-audit|2026-08-03]] : [Audit & Weekly Compilation] - Jalon 32 - Preuve complète du théorème spectral pour les endomorphismes symétriques. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 
