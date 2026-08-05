@@ -54,7 +54,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-45/Jalon-45.md|Jalon 45 : Différentiabilité]] : Différentiabilité, différentielle totale, dérivées partielles et gradient.
 - [x] [[jalon-46/Jalon-46.md|Jalon 46 : Matrice jacobienne]] : Matrice jacobienne, théorème de dérivation des fonctions composées (Chain Rule généralisée). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-47/Jalon-47.md|Jalon 47 : Dérivées partielles d'ordre deux]] : Dérivées partielles d'ordre deux, matrice hessienne et lemme de Schwarz. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [ ] [[jalon-48/Jalon 48 (Livrable IA).md|Jalon 48 : Livrable IA]] : Livrable IA T4 : Formalisation mathématique complète de la rétropropagation (Backpropagation) d'un réseau de neurones profond sous forme de produits de matrices jacobiennes.
+- [x] [[jalon-48/Jalon-48.md|Jalon 48 : Livrable IA]] : Livrable IA T4 : Formalisation mathématique complète de la rétropropagation (Backpropagation) d'un réseau de neurones profond sous forme de produits de matrices jacobiennes. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 ## Année 2 : l'abstraction topologique et la théorie de la mesure
 ### Trimestre 5 : topologie générale et espaces métriques
 - [ ] [[jalon-49/Jalon 49 (Espaces topologiques généraux).md|Jalon 49 : Espaces topologiques généraux]] : Espaces topologiques généraux, définition par les ouverts, les fermés et les voisinages.
@@ -165,6 +165,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
+- [2026-08-05] : [Upsert/Création] du Jalon 48 - Livrable IA T4 : Formalisation mathématique de la Rétropropagation. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-04] : [Upsert/Création] du Jalon 46 - Matrice jacobienne. Status: Terminé.
 - [2026-08-04] : [Upsert/Création] du Jalon 45 - Différentiabilité. Status: Terminé.
 
