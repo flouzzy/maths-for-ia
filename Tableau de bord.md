@@ -53,7 +53,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-44/Jalon-44.md|Jalon 44 : Fonctions de plusieurs variables]] : Fonctions de plusieurs variables, limites, continuité et topologie de $\\mathbb{R}^n$.
 - [x] [[jalon-45/Jalon-45.md|Jalon 45 : Différentiabilité]] : Différentiabilité, différentielle totale, dérivées partielles et gradient.
 - [x] [[jalon-46/Jalon-46.md|Jalon 46 : Matrice jacobienne]] : Matrice jacobienne, théorème de dérivation des fonctions composées (Chain Rule généralisée). 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [ ] [[jalon-47/Jalon 47 (Dérivées partielles d'ordre deux).md|Jalon 47 : Dérivées partielles d'ordre deux]] : Dérivées partielles d'ordre deux, matrice hessienne et lemme de Schwarz.
+- [x] [[jalon-47/Jalon-47.md|Jalon 47 : Dérivées partielles d'ordre deux]] : Dérivées partielles d'ordre deux, matrice hessienne et lemme de Schwarz. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-48/Jalon 48 (Livrable IA).md|Jalon 48 : Livrable IA]] : Livrable IA T4 : Formalisation mathématique complète de la rétropropagation (Backpropagation) d'un réseau de neurones profond sous forme de produits de matrices jacobiennes.
 ## Année 2 : l'abstraction topologique et la théorie de la mesure
 ### Trimestre 5 : topologie générale et espaces métriques

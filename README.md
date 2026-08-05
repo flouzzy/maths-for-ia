@@ -463,3 +463,5 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-07-31] : [Upsert/Création] du Jalon 41 - Équations différentielles linéaires du premier ordre. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-03] : [Upsert/Création] du Jalon 44 - Fonctions de plusieurs variables. Status: Terminé.
+
+- [2026-08-05] : [Upsert/Création] du Jalon 47 - Dérivées partielles d'ordre deux et Hessienne. Status: Terminé.
