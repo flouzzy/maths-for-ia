@@ -1,0 +1,634 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ç}{{\c c}}1 {ù}{{\`u}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1 {â}{{\^a}}1
+}
+
+\title{\Huge MATRICE JACOBIENNE \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+\section{Jalon 46 : Matrice jacobienne et Règle de la chaîne}
+
+\subsection{Genèse et Intuition Géométrique}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+  \node (rn) at (0,0) {$\mathbb{R}^n$};
+  \node (rm) at (4,2) {$\mathbb{R}^m$};
+  \node (rp) at (8,0) {$\mathbb{R}^p$};
+
+  \draw[->, thick, blue] (rn) -- (rm) node[midway, above left] {$f$};
+  \draw[->, thick, blue] (rm) -- (rp) node[midway, above right] {$g$};
+  \draw[->, thick, red, dashed] (rn) -- (rp) node[midway, below] {$g \circ f$};
+
+  \node at (2, 2.5) {$J_f$};
+  \node at (6, 2.5) {$J_g$};
+  \node[red] at (4, -1) {$J_{g \circ f} = (J_g \circ f) \times J_f$};
+\end{tikzpicture}
+\caption{Règle de la chaîne pour les différentielles et Jacobiennes}
+\end{figure}
+
+
+La matrice jacobienne généralise la notion de dérivée aux fonctions vectorielles de plusieurs variables. Historiquement, Carl Gustav Jacob Jacobi a formalisé ce concept au XIXe siècle pour étudier les changements de variables dans les intégrales multiples et les équations différentielles.
+
+Si l'on considère une transformation $f : \mathbb{R}^n \to \mathbb{R}^m$, elle déforme un domaine de l'espace de départ. Localement, au voisinage d'un point $a$, cette déformation non-linéaire peut être approchée par une transformation affine. La partie linéaire de cette transformation est précisément représentée par la matrice jacobienne $J_f(a)$. Elle indique comment une petite perturbation $\delta x$ autour de $a$ se traduit par une perturbation $\delta y \approx J_f(a) \delta x$ autour de $f(a)$.
+
+En apprentissage profond (Deep Learning), la règle de la chaîne (Chain Rule) est le cœur du calcul du gradient par rétropropagation (backpropagation). Un réseau de neurones n'est autre qu'une gigantesque composition de fonctions, et la dérivée de cette composition requiert le produit ordonné des matrices jacobiennes de chaque couche.
+
+\subsection{Définitions et Théorèmes}
+
+\subsubsection{La Matrice Jacobienne}
+
+Soit $U$ un ouvert de $\mathbb{R}^n$ et $f : U \to \mathbb{R}^m$ une application différentiable en un point $a \in U$.
+On note les composantes de $f$ par $f(x) = (f_1(x), \dots, f_m(x))^T$, où chaque $f_i : U \to \mathbb{R}$.
+
+\textbf{Définition} : La matrice jacobienne de $f$ en $a$, notée $J_f(a)$ ou $\mathrm{Mat}(df_a)$, est la matrice de taille $m \times n$ dont le coefficient à la $i$-ème ligne et $j$-ème colonne est la dérivée partielle de $f_i$ par rapport à $x_j$, évaluée en $a$ :
+$$
+J_f(a) = \begin{pmatrix}
+\frac{\partial f_1}{\partial x_1}(a) & \frac{\partial f_1}{\partial x_2}(a) & \dots & \frac{\partial f_1}{\partial x_n}(a) \\
+\frac{\partial f_2}{\partial x_1}(a) & \frac{\partial f_2}{\partial x_2}(a) & \dots & \frac{\partial f_2}{\partial x_n}(a) \\
+\vdots & \vdots & \ddots & \vdots \\
+\frac{\partial f_m}{\partial x_1}(a) & \frac{\partial f_m}{\partial x_2}(a) & \dots & \frac{\partial f_m}{\partial x_n}(a)
+\end{pmatrix}
+$$
+
+\textbf{Notations et Précisions} :
+- \textbf{$m$} : dimension de l'espace d'arrivée (nombre de lignes).
+- \textbf{$n$} : dimension de l'espace de départ (nombre de colonnes).
+- La ligne $i$ correspond au vecteur gradient $\nabla f_i(a)^T$.
+
+\textbf{Exemples} :
+Soit $f: \mathbb{R}^2 \to \mathbb{R}^3$ définie par $f(x,y) = (x^2y, \sin(x+y), e^{xy})^T$.
+$$
+J_f(x,y) = \begin{pmatrix}
+2xy & x^2 \\
+\cos(x+y) & \cos(x+y) \\
+y e^{xy} & x e^{xy}
+\end{pmatrix}
+$$
+En $a = (0, \pi)$, $J_f(0, \pi) = \begin{pmatrix} 0 & 0 \\ -1 & -1 \\ \pi & 0 \end{pmatrix}$.
+
+\subsubsection{Règle de la Chaîne (Chain Rule)}
+
+Soit $U$ un ouvert de $\mathbb{R}^n$, $V$ un ouvert de $\mathbb{R}^p$.
+Soit $f : U \to V$ et $g : V \to \mathbb{R}^m$.
+
+\textbf{Théorème} : Si $f$ est différentiable en $a \in U$ et $g$ est différentiable en $f(a) \in V$, alors la fonction composée $h = g \circ f$ est différentiable en $a$. De plus, sa différentielle est la composition des différentielles :
+$$ d(g \circ f)_a = dg_{f(a)} \circ df_a $$
+Matriciellement, cela se traduit par le produit des matrices jacobiennes :
+$$ J_{g \circ f}(a) = J_g(f(a)) \times J_f(a) $$
+
+\textbf{Notations et Précisions} :
+- \textbf{Compatibilité des tailles} : $J_g(f(a))$ est de taille $m \times p$ et $J_f(a)$ est de taille $p \times n$. Le produit est bien de taille $m \times n$, ce qui correspond à la matrice jacobienne de $h : \mathbb{R}^n \to \mathbb{R}^m$.
+- L'ordre de multiplication est strictement de la gauche vers la droite par rapport à la composition (de l'extérieur vers l'intérieur).
+
+\textbf{Exemples} :
+Si $f(t) = (t, t^2)^T$ (courbe de $\mathbb{R} \to \mathbb{R}^2$) et $g(x,y) = x^2 + y^2$ (fonction de $\mathbb{R}^2 \to \mathbb{R}$).
+$J_f(t) = \begin{pmatrix} 1 \\ 2t \end{pmatrix}$. $J_g(x,y) = \begin{pmatrix} 2x & 2y \end{pmatrix}$.
+Alors $J_{g \circ f}(t) = J_g(t, t^2) J_f(t) = \begin{pmatrix} 2t & 2t^2 \end{pmatrix} \begin{pmatrix} 1 \\ 2t \end{pmatrix} = 2t + 4t^3$.
+On vérifie : $h(t) = t^2 + t^4$, d'où $h'(t) = 2t + 4t^3$.
+
+\textbf{Cas particuliers et contre-exemples} :
+Si $f$ ou $g$ admet des dérivées partielles mais n'est pas différentiable, la formule de la chaîne peut tomber en défaut. La différentiabilité (existence d'un plan tangent approchant) est cruciale, la simple dérivabilité directionnelle ne suffit pas.
+
+\subsection{Démonstrations}
+
+\subsubsection{Preuve de la Règle de la Chaîne}
+
+\textbf{Objectif} : Démontrer que $d(g \circ f)_a = dg_{f(a)} \circ df_a$.
+
+\textbf{Preuve pas-à-pas} :
+1. Par définition de la différentiabilité de $f$ en $a$ :
+   Pour tout accroissement $h \in \mathbb{R}^n$,
+   $$ f(a+h) = f(a) + df_a(h) + \|h\|\epsilon_1(h) $$
+   avec $\lim_{h \to 0} \epsilon_1(h) = 0$.
+   Posons $k(h) = df_a(h) + \|h\|\epsilon_1(h)$. Notons que $f(a+h) = f(a) + k(h)$ et que $k(h) \to 0$ lorsque $h \to 0$.
+
+2. Par définition de la différentiabilité de $g$ en $b = f(a)$ :
+   Pour tout accroissement $k \in \mathbb{R}^p$,
+   $$ g(b+k) = g(b) + dg_b(k) + \|k\|\epsilon_2(k) $$
+   avec $\lim_{k \to 0} \epsilon_2(k) = 0$. On pose conventionnellement $\epsilon_2(0) = 0$ pour prolonger par continuité.
+
+3. Substituons $k(h)$ dans le développement de $g$ :
+   $$ (g \circ f)(a+h) = g(f(a+h)) = g(f(a) + k(h)) $$
+   $$ (g \circ f)(a+h) = g(f(a)) + dg_{f(a)}(k(h)) + \|k(h)\|\epsilon_2(k(h)) $$
+
+4. Exploitons la linéarité de $dg_{f(a)}$ pour développer $dg_{f(a)}(k(h))$ :
+   $$ dg_{f(a)}(k(h)) = dg_{f(a)}(df_a(h) + \|h\|\epsilon_1(h)) = dg_{f(a)}(df_a(h)) + \|h\| dg_{f(a)}(\epsilon_1(h)) $$
+
+5. Regroupons les termes pour former le développement limité de $g \circ f$ :
+   $$ (g \circ f)(a+h) = (g \circ f)(a) + (dg_{f(a)} \circ df_a)(h) + R(h) $$
+   où le reste est $R(h) = \|h\| dg_{f(a)}(\epsilon_1(h)) + \|k(h)\|\epsilon_2(k(h))$.
+
+6. Montrons que $R(h) = o(\|h\|)$ (c'est-à-dire $\lim_{h \to 0} \frac{R(h)}{\|h\|} = 0$) :
+   $$ \frac{R(h)}{\|h\|} = dg_{f(a)}(\epsilon_1(h)) + \frac{\|k(h)\|}{\|h\|} \epsilon_2(k(h)) $$
+   - Comme $\epsilon_1(h) \to 0$ et que l'application linéaire $dg_{f(a)}$ est continue (en dimension finie), $dg_{f(a)}(\epsilon_1(h)) \to 0$.
+   - Majorons la norme de l'accroissement $k(h)$ :
+     $$ \|k(h)\| = \|df_a(h) + \|h\|\epsilon_1(h)\| \le \|df_a\| \cdot \|h\| + \|h\| \|\epsilon_1(h)\| = \|h\| (\|df_a\| + \|\epsilon_1(h)\|) $$
+     Ainsi, le ratio $\frac{\|k(h)\|}{\|h\|}$ est borné au voisinage de $0$.
+   - Puisque $k(h) \to 0$ lorsque $h \to 0$, on a $\epsilon_2(k(h)) \to 0$.
+   Le produit d'une fonction bornée et d'une fonction tendant vers 0 tend vers 0.
+
+7. Conclusion :
+   $$ (g \circ f)(a+h) = (g \circ f)(a) + (dg_{f(a)} \circ df_a)(h) + o(\|h\|) $$
+   L'application $L = dg_{f(a)} \circ df_a$ est linéaire continue (composée de deux linéaires continues), elle satisfait l'équation de différentiabilité. Par unicité, la différentielle de la composée est la composée des différentielles. $\blacksquare$
+
+\subsection{Application en IA : Rétropropagation}
+
+La Rétropropagation (Backpropagation) repose fondamentalement sur le calcul vectoriel de la Règle de la Chaîne. Un réseau de neurones multicouche est une fonction :
+$$ F(x) = (\sigma_L \circ W_L \circ \sigma_{L-1} \circ W_{L-1} \dots \circ \sigma_1 \circ W_1)(x) $$
+Où $W_l$ est l'application linéaire (poids de la couche) et $\sigma_l$ la fonction d'activation non linéaire.
+
+Pour optimiser les poids $W_l$, on doit évaluer le gradient de la fonction de perte $L(F(x), y)$ par rapport à ces paramètres. La Jacobienne totale s'écrirait comme un immense produit matriciel de Jacobiennes locales. Pour éviter de calculer et stocker des matrices géantes, l'algorithme procède à des \textbf{Vecteur-Jacobian Products (VJP)}. On commence par la fin (la perte est un scalaire, son gradient est un vecteur) et on multiplie itérativement ce vecteur par la transposée de la jacobienne de la couche précédente :
+$$ \delta_l = \left( J_{\sigma_l} \right)^T \cdot W_{l+1}^T \cdot \delta_{l+1} $$
+L'élégance de cette propagation arrière des erreurs tient entièrement à l'associativité du produit matriciel issu de la différentielle des fonctions composées.
+
+\newpage
+\part{Exercices d\'Application et de Concours}
+\section*{Exercice 1 : Calcul de Jacobienne basique}
+\subsection*{Énoncé}
+Soit la fonction $f : \mathbb{R}^2 \to \mathbb{R}^3$ définie par :
+$$ f(x,y) = \begin{pmatrix} x^2 y \\ e^{x+y} \\ \cos(xy) \end{pmatrix} $$
+Calculer la matrice jacobienne $J_f(x,y)$ en tout point $(x,y) \in \mathbb{R}^2$.
+\subsection*{Correction Détaillée}
+Soient les composantes $f_1(x,y) = x^2 y$, $f_2(x,y) = e^{x+y}$ et $f_3(x,y) = \cos(xy)$.
+Les dérivées partielles par rapport à $x$ (première colonne) :
+- $\frac{\partial f_1}{\partial x} = 2xy$
+- $\frac{\partial f_2}{\partial x} = e^{x+y}$
+- $\frac{\partial f_3}{\partial x} = -y\sin(xy)$
+
+Les dérivées partielles par rapport à $y$ (deuxième colonne) :
+- $\frac{\partial f_1}{\partial y} = x^2$
+- $\frac{\partial f_2}{\partial y} = e^{x+y}$
+- $\frac{\partial f_3}{\partial y} = -x\sin(xy)$
+
+La matrice jacobienne est donc de dimension $3 \times 2$ :
+$$ J_f(x,y) = \begin{pmatrix} 2xy & x^2 \\ e^{x+y} & e^{x+y} \\ -y\sin(xy) & -x\sin(xy) \end{pmatrix} $$
+$\blacksquare$
+
+\newpage
+\section*{Exercice 2 : Jacobienne du changement de coordonnées cylindriques $\quad \bigstar$}
+\subsection*{Énoncé}
+Soit la fonction de changement en coordonnées cylindriques $f : \mathbb{R}^+ \times [0, 2\pi[ \times \mathbb{R} \to \mathbb{R}^3$ :
+$$ f(r, \theta, z) = \begin{pmatrix} r \cos \theta \\ r \sin \theta \\ z \end{pmatrix} $$
+Calculer $J_f(r, \theta, z)$ et son déterminant.
+\subsection*{Correction Détaillée}
+1. \textbf{Dérivées partielles :}
+   - Par rapport à $r$ : $\cos \theta$, $\sin \theta$, $0$
+   - Par rapport à $\theta$ : $-r \sin \theta$, $r \cos \theta$, $0$
+   - Par rapport à $z$ : $0$, $0$, $1$
+
+2. \textbf{Matrice Jacobienne :}
+   $$ J_f(r, \theta, z) = \begin{pmatrix} \cos \theta & -r \sin \theta & 0 \\ \sin \theta & r \cos \theta & 0 \\ 0 & 0 & 1 \end{pmatrix} $$
+
+3. \textbf{Déterminant (Le Jacobien) :}
+   En développant par rapport à la dernière ligne :
+   $$ \det(J_f) = 1 \cdot \det \begin{pmatrix} \cos \theta & -r \sin \theta \\ \sin \theta & r \cos \theta \end{pmatrix} $$
+   $$ \det(J_f) = r \cos^2 \theta - (-r \sin^2 \theta) = r(\cos^2 \theta + \sin^2 \theta) = r $$
+$\blacksquare$
+
+\newpage
+\section*{Exercice 3 : Jacobienne du changement de coordonnées sphériques $\quad \bigstar\bigstar$}
+\subsection*{Énoncé}
+Soit la fonction $f : \mathbb{R}^+ \times [0, 2\pi[ \times [0, \pi] \to \mathbb{R}^3$ :
+$$ f(r, \theta, \phi) = \begin{pmatrix} r \cos \theta \sin \phi \\ r \sin \theta \sin \phi \\ r \cos \phi \end{pmatrix} $$
+Calculer le déterminant jacobien de $f$.
+\subsection*{Correction Détaillée}
+1. \textbf{Construction de la matrice :}
+   $$ J_f = \begin{pmatrix}
+   \cos\theta\sin\phi & -r\sin\theta\sin\phi & r\cos\theta\cos\phi \\
+   \sin\theta\sin\phi & r\cos\theta\sin\phi & r\sin\theta\cos\phi \\
+   \cos\phi & 0 & -r\sin\phi
+   \end{pmatrix} $$
+
+2. \textbf{Calcul du déterminant :}
+   Développons par rapport à la deuxième colonne (ou troisième ligne) :
+   $\det(J_f) = \cos\phi (-r\sin\theta\sin\phi \cdot r\sin\theta\cos\phi - r\cos\theta\sin\phi \cdot r\cos\theta\cos\phi) - r\sin\phi (\cos\theta\sin\phi \cdot r\cos\theta\sin\phi - (-r\sin\theta\sin\phi) \cdot \sin\theta\sin\phi)$
+   Simplifions :
+   $\det(J_f) = \cos\phi (-r^2 \sin\phi \cos\phi (\sin^2\theta + \cos^2\theta)) - r\sin\phi (r\sin^2\phi(\cos^2\theta + \sin^2\theta))$
+   $\det(J_f) = -r^2 \sin\phi \cos^2\phi - r^2 \sin^3\phi$
+   $\det(J_f) = -r^2 \sin\phi (\cos^2\phi + \sin^2\phi) = -r^2 \sin\phi$.
+   \textit{Remarque : la valeur absolue donne $r^2 \sin\phi$, l'élément de volume standard en géométrie.}
+$\blacksquare$
+
+\newpage
+\section*{Exercice 4 : Règle de la chaîne dimension 1 $\to$ 2 $\to$ 1 $\quad \bigstar\bigstar$}
+\subsection*{Énoncé}
+Soit $f : \mathbb{R} \to \mathbb{R}^2$ définie par $f(t) = (t^2, e^t)^T$ et $g : \mathbb{R}^2 \to \mathbb{R}$ définie par $g(x,y) = x y^2$.
+Soit $h = g \circ f$. Calculer $h'(t)$ de deux manières différentes :
+1) Par composition explicite puis dérivation classique.
+2) En utilisant le produit des matrices jacobiennes.
+\subsection*{Correction Détaillée}
+\textbf{Méthode 1 : Composition explicite}
+$h(t) = g(f(t)) = g(t^2, e^t) = (t^2)(e^t)^2 = t^2 e^{2t}$.
+La dérivée (produit) : $h'(t) = 2t e^{2t} + t^2(2e^{2t}) = 2t e^{2t}(1+t)$.
+
+\textbf{Méthode 2 : Produit des Jacobiennes}
+- $J_f(t) = \begin{pmatrix} 2t \\ e^t \end{pmatrix}$
+- $J_g(x,y) = \begin{pmatrix} y^2 & 2xy \end{pmatrix}$
+La matrice $J_{g \circ f}(t) = J_g(f(t)) J_f(t)$.
+$J_g(f(t)) = J_g(t^2, e^t) = \begin{pmatrix} (e^t)^2 & 2(t^2)(e^t) \end{pmatrix} = \begin{pmatrix} e^{2t} & 2t^2 e^t \end{pmatrix}$.
+Le produit matriciel :
+$$ J_{g \circ f}(t) = \begin{pmatrix} e^{2t} & 2t^2 e^t \end{pmatrix} \begin{pmatrix} 2t \\ e^t \end{pmatrix} = 2t e^{2t} + (2t^2 e^t)(e^t) = 2te^{2t} + 2t^2e^{2t} = 2t e^{2t}(1+t) $$
+Les deux méthodes coïncident parfaitement.
+$\blacksquare$
+
+\newpage
+\section*{Exercice 5 : Équation aux dérivées partielles via Chain Rule $\quad \bigstar\bigstar\star\star\star$}
+\subsection*{Énoncé}
+Soit $F : \mathbb{R}^2 \to \mathbb{R}$ une fonction différentiable. On pose $f(r, \theta) = F(r \cos \theta, r \sin \theta)$.
+Montrer l'identité :
+$$ \|\nabla F(x,y)\|^2 = \left( \frac{\partial f}{\partial r} \right)^2 + \frac{1}{r^2} \left( \frac{\partial f}{\partial \theta} \right)^2 $$
+\subsection*{Correction Détaillée}
+Posons $x(r,\theta) = r\cos\theta$ et $y(r,\theta) = r\sin\theta$.
+Par la règle de la chaîne :
+$$ \frac{\partial f}{\partial r} = \frac{\partial F}{\partial x} \frac{\partial x}{\partial r} + \frac{\partial F}{\partial y} \frac{\partial y}{\partial r} = \frac{\partial F}{\partial x} \cos\theta + \frac{\partial F}{\partial y} \sin\theta $$
+$$ \frac{\partial f}{\partial \theta} = \frac{\partial F}{\partial x} \frac{\partial x}{\partial \theta} + \frac{\partial F}{\partial y} \frac{\partial y}{\partial \theta} = \frac{\partial F}{\partial x} (-r\sin\theta) + \frac{\partial F}{\partial y} (r\cos\theta) $$
+Évaluons le membre de droite :
+$\left( \frac{\partial f}{\partial r} \right)^2 = \left(\frac{\partial F}{\partial x}\right)^2 \cos^2\theta + \left(\frac{\partial F}{\partial y}\right)^2 \sin^2\theta + 2\frac{\partial F}{\partial x}\frac{\partial F}{\partial y}\sin\theta\cos\theta$
+$\frac{1}{r^2}\left( \frac{\partial f}{\partial \theta} \right)^2 = \left(-\frac{\partial F}{\partial x}\sin\theta + \frac{\partial F}{\partial y}\cos\theta\right)^2 = \left(\frac{\partial F}{\partial x}\right)^2 \sin^2\theta + \left(\frac{\partial F}{\partial y}\right)^2 \cos^2\theta - 2\frac{\partial F}{\partial x}\frac{\partial F}{\partial y}\sin\theta\cos\theta$
+En sommant les deux expressions, les termes croisés s'annulent :
+$$ \left( \frac{\partial f}{\partial r} \right)^2 + \frac{1}{r^2} \left( \frac{\partial f}{\partial \theta} \right)^2 = \left(\frac{\partial F}{\partial x}\right)^2(\cos^2\theta + \sin^2\theta) + \left(\frac{\partial F}{\partial y}\right)^2(\sin^2\theta + \cos^2\theta) $$
+$$ = \left(\frac{\partial F}{\partial x}\right)^2 + \left(\frac{\partial F}{\partial y}\right)^2 = \|\nabla F(x,y)\|^2 $$
+L'identité est démontrée.
+$\blacksquare$
+
+\newpage
+\section*{Exercice 6 : Différentielle d'une application bilinéaire $\quad \bigstar\bigstar\star\star\star$}
+\subsection*{Énoncé}
+Soit $B : \mathbb{R}^n \times \mathbb{R}^p \to \mathbb{R}^m$ une application bilinéaire.
+Démontrer en utilisant la définition par développement limité que sa différentielle en un point $a = (x_0, y_0)$ appliquée à un vecteur $h = (h_x, h_y)$ est :
+$$ dB_{(x_0, y_0)}(h_x, h_y) = B(x_0, h_y) + B(h_x, y_0) $$
+\subsection*{Correction Détaillée}
+Calculons $B(a+h) = B(x_0+h_x, y_0+h_y)$.
+Par bilinéarité de $B$ :
+$$ B(x_0+h_x, y_0+h_y) = B(x_0, y_0+h_y) + B(h_x, y_0+h_y) $$
+$$ B(x_0+h_x, y_0+h_y) = B(x_0, y_0) + B(x_0, h_y) + B(h_x, y_0) + B(h_x, h_y) $$
+Analysons les termes :
+- $B(x_0, y_0) = B(a)$ (la constante).
+- L'application $L : (h_x, h_y) \mapsto B(x_0, h_y) + B(h_x, y_0)$ est linéaire par rapport à $h=(h_x, h_y)$.
+- Le terme de reste est $R(h) = B(h_x, h_y)$.
+Montrons que $R(h) = o(\|h\|)$.
+Puisque $B$ est bilinéaire sur des espaces de dimension finie, elle est continue. Il existe $C > 0$ tel que $\|B(u, v)\| \le C\|u\|\|v\|$.
+$\|R(h)\| = \|B(h_x, h_y)\| \le C \|h_x\| \|h_y\|$.
+Or $\|h_x\| \le \|h\|$ et $\|h_y\| \le \|h\|$ (où $\|h\| = \max(\|h_x\|, \|h_y\|)$ par exemple).
+Donc $\|R(h)\| \le C \|h\|^2$.
+Par conséquent, $\frac{\|R(h)\|}{\|h\|} \le C\|h\| \to 0$ quand $h \to 0$.
+La différentielle est donc bien l'application linéaire $L$.
+$\blacksquare$
+
+\newpage
+\section*{Exercice 7 : Application de la Chain Rule à une fonction matricielle $\quad \bigstar\bigstar\bigstar\star\star$}
+\subsection*{Énoncé}
+Soit $f : \mathcal{M}_n(\mathbb{R}) \to \mathcal{M}_n(\mathbb{R})$ définie par $f(X) = X^2$.
+Soit $g : \mathcal{M}_n(\mathbb{R}) \to \mathbb{R}$ définie par $g(X) = \mathrm{Tr}(X)$.
+Calculer la différentielle de $h = g \circ f$ en $A$.
+\subsection*{Correction Détaillée}
+Calculons d'abord les différentielles séparément.
+1. Différentielle de $f(X) = X^2$ :
+   $f(A+H) = (A+H)^2 = A^2 + AH + HA + H^2$.
+   La partie linéaire en $H$ est $df_A(H) = AH + HA$, avec reste $\|H^2\| = O(\|H\|^2)$.
+2. Différentielle de $g(X) = \mathrm{Tr}(X)$ :
+   Comme la trace est linéaire, sa différentielle est elle-même : $dg_B(K) = \mathrm{Tr}(K)$.
+3. Règle de la chaîne :
+   $dh_A(H) = dg_{f(A)}(df_A(H)) = \mathrm{Tr}(df_A(H)) = \mathrm{Tr}(AH + HA)$.
+   Par linéarité de la trace : $\mathrm{Tr}(AH + HA) = \mathrm{Tr}(AH) + \mathrm{Tr}(HA)$.
+   Par propriété de symétrie cyclique : $\mathrm{Tr}(HA) = \mathrm{Tr}(AH)$.
+   Donc $dh_A(H) = 2\mathrm{Tr}(AH)$.
+La différentielle, au sens scalaire (gradient matriciel), correspond à la matrice $\nabla h(A) = 2A^T$.
+$\blacksquare$
+
+\newpage
+\section*{Exercice 8 : Dérivation d'une équation implicite $\quad \bigstar\bigstar\bigstar\star\star$}
+\subsection*{Énoncé}
+Soit l'équation $x^2 y + y^3 x - 2 = 0$. On suppose que cette équation définit localement $y$ comme une fonction de $x$, soit $y = \phi(x)$.
+Calculer $\phi'(x)$ en utilisant le théorème de composition.
+\subsection*{Correction Détaillée}
+Posons $F(x, y) = x^2 y + y^3 x - 2$. Nous savons que $F(x, \phi(x)) = 0$ pour tout $x$.
+On définit $g(x) = (x, \phi(x))^T$, de sorte que la fonction composée $h(x) = F(g(x)) = 0$.
+Par la règle de la chaîne, $dh_x = dF_{g(x)} \circ dg_x = 0$.
+En termes de matrices jacobiennes :
+$J_h(x) = J_F(x, \phi(x)) \times J_g(x) = 0$.
+- $J_F(x, y) = \begin{pmatrix} \frac{\partial F}{\partial x} & \frac{\partial F}{\partial y} \end{pmatrix} = \begin{pmatrix} 2xy + y^3 & x^2 + 3y^2 x \end{pmatrix}$.
+- $J_g(x) = \begin{pmatrix} 1 \\ \phi'(x) \end{pmatrix}$.
+
+Le produit donne l'équation scalaire :
+$$ (2x\phi(x) + \phi(x)^3) \cdot 1 + (x^2 + 3\phi(x)^2 x) \cdot \phi'(x) = 0 $$
+On isole $\phi'(x)$ :
+$$ \phi'(x) = - \frac{2x\phi(x) + \phi(x)^3}{x^2 + 3x\phi(x)^2} $$
+$\blacksquare$
+
+\newpage
+\section*{Exercice 9 : Backpropagation manuelle sur un perceptron simple $\quad \bigstar\bigstar\bigstar\bigstar\star$}
+\subsection*{Énoncé}
+Considérons une fonction $L(w) = \frac{1}{2} ( \sigma(wx) - y )^2$ où $x, y, w \in \mathbb{R}$ et $\sigma$ est la fonction sigmoïde.
+Exprimer le gradient $\frac{\partial L}{\partial w}$ à l'aide de la Règle de la Chaîne.
+\subsection*{Correction Détaillée}
+Décomposons la fonction d'erreur $L(w)$ en une suite d'opérations élémentaires :
+1. $z = wx$ (transformation affine)
+2. $a = \sigma(z)$ (activation)
+3. $L = \frac{1}{2} (a - y)^2$ (coût)
+
+Appliquons la règle de la chaîne en remontant de la sortie vers l'entrée (Backpropagation) :
+$$ \frac{\partial L}{\partial w} = \frac{\partial L}{\partial a} \cdot \frac{\partial a}{\partial z} \cdot \frac{\partial z}{\partial w} $$
+Calculons chaque dérivée locale :
+- $\frac{\partial L}{\partial a} = a - y$
+- $\frac{\partial a}{\partial z} = \sigma'(z) = \sigma(z)(1 - \sigma(z))$ (propriété classique de la sigmoïde)
+- $\frac{\partial z}{\partial w} = x$
+
+En multipliant le tout :
+$$ \frac{\partial L}{\partial w} = (a - y) \cdot \sigma'(wx) \cdot x = (\sigma(wx) - y) \sigma(wx)(1 - \sigma(wx)) x $$
+Ceci est la formule d'apprentissage exacte pour mettre à jour le poids $w$ via descente de gradient.
+$\blacksquare$
+
+\newpage
+\section*{Exercice 10 : Jacobienne d'un réseau multi-couches $\quad \bigstar\bigstar\bigstar\bigstar\bigstar$}
+\subsection*{Énoncé}
+Soit un réseau $f(x) = W_2 \sigma(W_1 x)$ où $x \in \mathbb{R}^n$, $W_1 \in \mathcal{M}_{p,n}(\mathbb{R})$, $W_2 \in \mathcal{M}_{m,p}(\mathbb{R})$ et $\sigma$ agit composante par composante.
+Démontrer que la jacobienne de $f$ par rapport à l'entrée $x$ s'écrit :
+$J_f(x) = W_2 \Sigma'(W_1 x) W_1$ où $\Sigma'(z)$ est la matrice diagonale des dérivées des activations.
+\subsection*{Correction Détaillée}
+Soit $h = g \circ k \circ l$, avec :
+- $l(x) = W_1 x$ : application linéaire, $J_l(x) = W_1$.
+- $k(z) = \sigma(z)$ : application de $\mathbb{R}^p \to \mathbb{R}^p$ où $k_i(z) = \sigma(z_i)$.
+  Puisque la $i$-ème coordonnée de $k$ ne dépend que de $z_i$, les dérivées croisées $\frac{\partial k_i}{\partial z_j}$ sont nulles pour $i \neq j$.
+  Donc $J_k(z)$ est une matrice diagonale : $J_k(z) = \mathrm{Diag}(\sigma'(z_1), \dots, \sigma'(z_p)) = \Sigma'(z)$.
+- $g(a) = W_2 a$ : application linéaire, $J_g(a) = W_2$.
+
+Appliquons la règle de la chaîne généralisée :
+$$ J_f(x) = J_g(k(l(x))) \times J_k(l(x)) \times J_l(x) $$
+En remplaçant par les matrices trouvées :
+$$ J_f(x) = W_2 \times \Sigma'(W_1 x) \times W_1 $$
+Ce produit $m \times p \times p \times p \times p \times n$ donne bien une matrice de taille $m \times n$, reflétant fidèlement l'étirement global de l'espace par le réseau au voisinage de $x$.
+$\blacksquare$
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\section*{TP 1 : Calcul symbolique de la Jacobienne}
+
+\subsection*{Objectif Mathématique}
+Utiliser une bibliothèque de calcul formel (SymPy) pour extraire analytiquement la matrice Jacobienne d'un système d'équations multivariées.
+
+\subsection*{Code Python (From Scratch)}
+
+\begin{lstlisting}
+import sympy as sp
+
+def calculer_jacobienne_analytique():
+    # Declaration des variables symboliques
+    x, y, z = sp.symbols('x y z')
+
+    # Definition des fonctions du systeme
+    f1 = x**2 * y + z
+    f2 = sp.sin(x*y) + z**2
+    f3 = sp.exp(x + y + z)
+
+    F = sp.Matrix([f1, f2, f3])
+    V = sp.Matrix([x, y, z])
+
+    # Calcul direct via la methode jacobian
+    J = F.jacobian(V)
+
+    return J, V
+
+if __name__ == '__main__':
+    J, V = calculer_jacobienne_analytique()
+    print("Matrice Jacobienne J(x, y, z) :")
+    print(J)
+
+    # Evaluation en un point precis a = (0, 0, 0)
+    J_eval = J.subs({V[0]: 0, V[1]: 0, V[2]: 0})
+    print("\nJacobienne en (0, 0, 0) :")
+    print(J_eval)
+
+    # Assertions mathematiques pour valider les coefficients partiels
+    assert J[0, 0] == 2*V[0]*V[1], "Derivee de f1 par rapport a x incorrecte"
+    assert J_eval[2, 2] == 1, "e^(0+0+0) = 1"
+\end{lstlisting}
+
+\newpage
+\section*{TP 2 : Règle de la chaîne numérique}
+
+\subsection*{Objectif Mathématique}
+Implémenter la règle de la chaîne analytique et la comparer avec l'approximation par différences finies centrales sur une composition $g \circ f$.
+
+\subsection*{Code Python (From Scratch)}
+
+\begin{lstlisting}
+import math
+
+def f(x):
+    return (x**2, math.exp(x))
+
+def df(x):
+    return (2*x, math.exp(x))
+
+def g(u, v):
+    return u * v**2
+
+def dg(u, v):
+    return (v**2, 2*u*v)
+
+def chain_rule_analytique(x):
+    u, v = f(x)
+    du_dx, dv_dx = df(x)
+    dg_du, dg_dv = dg(u, v)
+
+    # Regle de la chaîne (produit scalaire Jacobienne 1x2 * Jacobienne 2x1)
+    return dg_du * du_dx + dg_dv * dv_dx
+
+def differences_finies_centrees(x, epsilon=1e-5):
+    # Approximation (g(f(x+eps)) - g(f(x-eps))) / (2eps)
+    h_plus = g(*f(x + epsilon))
+    h_minus = g(*f(x - epsilon))
+    return (h_plus - h_minus) / (2 * epsilon)
+
+if __name__ == '__main__':
+    x0 = 1.5
+
+    val_analytique = chain_rule_analytique(x0)
+    val_numerique = differences_finies_centrees(x0)
+
+    print(f"Derivee analytique (Chain Rule) : {val_analytique}")
+    print(f"Derivee numerique (Differences) : {val_numerique}")
+
+    assert abs(val_analytique - val_numerique) < 1e-6, "Divergence entre l'analytique et le numerique"
+\end{lstlisting}
+
+\newpage
+\section*{TP 3 : Gradient vectoriel et Rétropropagation}
+
+\subsection*{Objectif Mathématique}
+Simuler le calcul de rétropropagation (Backpropagation) manuellement sur une architecture 1-couche pour voir la Jacobienne en action.
+
+\subsection*{Code Python (From Scratch)}
+
+\begin{lstlisting}
+def forward_pass(w, x, b):
+    z = w * x + b
+    a = 1 / (1 + 2.718281828459**(-z))  # Sigmoid
+    return z, a
+
+def backpropagation(w, x, b, y_true):
+    z, a = forward_pass(w, x, b)
+
+    # L = 0.5 * (a - y_true)^2
+    # dL/da :
+    dL_da = a - y_true
+
+    # da/dz (Jacobienne de sigmoid) :
+    da_dz = a * (1 - a)
+
+    # dz/dw et dz/db :
+    dz_dw = x
+    dz_db = 1
+
+    # Regle de la chaîne (Produits de derivees)
+    dL_dw = dL_da * da_dz * dz_dw
+    dL_db = dL_da * da_dz * dz_db
+
+    return dL_dw, dL_db
+
+if __name__ == '__main__':
+    # Initialisation
+    w, b = 0.5, 0.1
+    x, y_true = 2.0, 1.0
+
+    grad_w, grad_b = backpropagation(w, x, b, y_true)
+
+    print(f"Gradient par rapport a w : {grad_w}")
+    print(f"Gradient par rapport a b : {grad_b}")
+
+    # Verification empirique du signe (si a < y_true, on veut augmenter w (x positif), donc grad_w < 0)
+    z, a = forward_pass(w, x, b)
+    if a < y_true:
+        assert grad_w < 0, "Le gradient devrait etre negatif pour encourager l'augmentation du poids"
+\end{lstlisting}
+
+\newpage
+\section*{TP 4 : Jacobienne géométrique (changement de variable intégral)}
+
+\subsection*{Objectif Mathématique}
+Calculer numériquement le déterminant de la matrice jacobienne (Le Jacobien) pour le changement de variables en coordonnées polaires, validant la mesure d'intégration $r dr d\theta$.
+
+\subsection*{Code Python (From Scratch)}
+
+\begin{lstlisting}
+import math
+
+def jacobienne_polaires(r, theta):
+    # f(r, t) = (r*cos(t), r*sin(t))
+    dx_dr = math.cos(theta)
+    dx_dt = -r * math.sin(theta)
+
+    dy_dr = math.sin(theta)
+    dy_dt = r * math.cos(theta)
+
+    return [[dx_dr, dx_dt], [dy_dr, dy_dt]]
+
+def determinant_2x2(matrix):
+    return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+
+if __name__ == '__main__':
+    points_test = [
+        (1.0, 0.0),
+        (2.5, math.pi / 4),
+        (5.0, math.pi / 2)
+    ]
+
+    for r, theta in points_test:
+        J = jacobienne_polaires(r, theta)
+        det_J = determinant_2x2(J)
+
+        print(f"Rayon r={r}, Theta={theta:.2f} -> Det(J)={det_J}")
+
+        # Le determinant de la jacobienne polaire DOIT etre exactement r
+        assert abs(det_J - r) < 1e-9, "Le jacobien ne correspond pas a la theorie."
+\end{lstlisting}
+
+\newpage
+\section*{TP 5 : Vector-Jacobian Product (VJP)}
+
+\subsection*{Objectif Mathématique}
+L'opération fondamentale des frameworks de Deep Learning modernes (PyTorch, JAX) n'est pas de matérialiser la matrice Jacobienne complète, mais de calculer le produit d'un vecteur par la Jacobienne transposée ($v^T J$). Implémentons ce VJP pour une fonction multi-dimensionnelle.
+
+\subsection*{Code Python (From Scratch)}
+
+\begin{lstlisting}
+def relu(x):
+    return [max(0, xi) for xi in x]
+
+def vjp_relu(v, x):
+    # La jacobienne de ReLU est diagonale avec 1 si x > 0, 0 sinon.
+    # v^T J revient a faire v_i * (1 si x_i > 0 else 0)
+    return [vi * (1.0 if xi > 0 else 0.0) for vi, xi in zip(v, x)]
+
+def couche_lineaire(W, x):
+    # y = W * x
+    return [sum(w_ij * x_j for w_ij, x_j in zip(row, x)) for row in W]
+
+def vjp_lineaire(v, W):
+    # J = W. Donc v^T J = v^T W = W^T v
+    cols = len(W[0])
+    rows = len(W)
+    return [sum(W[i][j] * v[i] for i in range(rows)) for j in range(cols)]
+
+if __name__ == '__main__':
+    # Exemple : Couche lineaire suivie de ReLU
+    x = [0.5, -1.0, 2.0]
+    W = [
+        [1.0, 0.5, -0.5],
+        [0.0, 1.0, 2.0]
+    ]
+
+    # Passe Forward
+    z = couche_lineaire(W, x)
+    a = relu(z)
+
+    # Supposons un vecteur gradient venant de la fin du reseau
+    grad_a = [0.1, -0.2]
+
+    # Passe Backward (VJP successifs, de l'exterieur vers l'interieur)
+    grad_z = vjp_relu(grad_a, z)
+    grad_x = vjp_lineaire(grad_z, W)
+
+    print("Vecteur d'entree x:", x)
+    print("Gradient recu grad_a:", grad_a)
+    print("Gradient propage grad_x:", grad_x)
+
+    # Validation dimensionnelle
+    assert len(grad_x) == len(x), "Le VJP doit conserver la dimension de l'espace de depart."
+\end{lstlisting}
+
+\newpage
+\end{document}
