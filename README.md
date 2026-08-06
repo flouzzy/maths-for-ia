@@ -137,7 +137,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 45](jalon-45/Jalon-45.md)** : Différentiabilité, différentielle totale, dérivées partielles et gradient.
 - **[Jalon 46](jalon-46/Jalon-46.md)** : Matrice jacobienne, théorème de dérivation des fonctions composées (Chain Rule généralisée). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 47](jalon-47/Jalon%2047%20%28D%C3%A9riv%C3%A9es%20partielles%20d%27ordre%20deux%29.md)** : Dérivées partielles d'ordre deux, matrice hessienne et lemme de Schwarz.
-- **[Jalon 48](jalon-48/Jalon%2048%20%28Livrable%20IA%29.md)** : Livrable IA T4 : Formalisation mathématique complète de la rétropropagation (Backpropagation) d'un réseau de neurones profond sous forme de produits de matrices jacobiennes.
+- **[Jalon 48](jalon-48/Jalon-48.md)** : Livrable IA T4 : Formalisation mathématique complète de la rétropropagation (Backpropagation) d'un réseau de neurones profond sous forme de produits de matrices jacobiennes.
 
 </details>
 
@@ -465,3 +465,5 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-08-03] : [Upsert/Création] du Jalon 44 - Fonctions de plusieurs variables. Status: Terminé.
 
 - [2026-08-05] : [Upsert/Création] du Jalon 47 - Dérivées partielles d'ordre deux et Hessienne. Status: Terminé.
+
+- [2026-08-06] : [Upsert/Création] du Jalon 48 - Livrable IA T4 : Formalisation mathématique de la Rétropropagation. Status: Terminé.

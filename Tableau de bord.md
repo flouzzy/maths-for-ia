@@ -54,7 +54,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-45/Jalon-45.md|Jalon 45 : Différentiabilité]] : Différentiabilité, différentielle totale, dérivées partielles et gradient.
 - [x] [[jalon-46/Jalon-46.md|Jalon 46 : Matrice jacobienne]] : Matrice jacobienne, théorème de dérivation des fonctions composées (Chain Rule généralisée). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-47/Jalon-47.md|Jalon 47 : Dérivées partielles d'ordre deux]] : Dérivées partielles d'ordre deux, matrice hessienne et lemme de Schwarz. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [ ] [[jalon-48/Jalon 48 (Livrable IA).md|Jalon 48 : Livrable IA]] : Livrable IA T4 : Formalisation mathématique complète de la rétropropagation (Backpropagation) d'un réseau de neurones profond sous forme de produits de matrices jacobiennes.
+- [x] [[jalon-48/Jalon-48.md|Jalon 48 : Livrable IA]] : Livrable IA T4 : Formalisation mathématique complète de la rétropropagation (Backpropagation) d'un réseau de neurones profond sous forme de produits de matrices jacobiennes. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 ## Année 2 : l'abstraction topologique et la théorie de la mesure
 ### Trimestre 5 : topologie générale et espaces métriques
 - [ ] [[jalon-49/Jalon 49 (Espaces topologiques généraux).md|Jalon 49 : Espaces topologiques généraux]] : Espaces topologiques généraux, définition par les ouverts, les fermés et les voisinages.
