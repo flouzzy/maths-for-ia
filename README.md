@@ -409,6 +409,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
+- [2026-08-05] : [Upsert/Création] du Jalon 48 - Livrable IA T4 : Formalisation mathématique de la Rétropropagation. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 ### 2026-08-03-audit
 - [[#2026-08-03-audit|2026-08-03]] : [Audit & Weekly Compilation] - Jalon 32 - Preuve complète du théorème spectral pour les endomorphismes symétriques. Fichiers Obsidian .md nettoyés et enrichis, intégration des schémas TikZ vectoriels et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 
