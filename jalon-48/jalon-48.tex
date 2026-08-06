@@ -1,0 +1,734 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {ô}{{\^o}}1 {î}{{\^i}}1
+}
+
+\title{\Huge JALON 48 : FORMALISATION MATHÉMATIQUE DE LA RÉTROPROPAGATION \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+\section{Jalon 48 : Formalisation mathématique de la Rétropropagation}
+
+\subsection{Introduction Historique et Genèse Conceptuelle}
+
+L'entraînement des réseaux de neurones profonds repose sur l'optimisation de fonctions de perte hautement dimensionnelles. Dans les années 1970 et 1980, l'impossibilité de calculer efficacement le gradient d'un réseau multicouche constituait une impasse majeure, connue sous le nom de problème de l'affectation du crédit (credit assignment problem). Comment déterminer l'influence infinitésimale d'un paramètre enfoui dans les premières couches sur l'erreur globale du système ?
+
+La réponse algébrique et géométrique à ce problème fut formalisée sous le nom de rétropropagation du gradient (backpropagation). Loin d'être un simple algorithme informatique, la rétropropagation est l'application récursive et élégante du théorème de dérivation des fonctions composées, exprimé à travers le formalisme des matrices jacobiennes. Ce jalon unifie le calcul différentiel, l'algèbre linéaire et la théorie de l'optimisation.
+
+\begin{tikzpicture}[
+    node distance=2cm,
+    every node/.style={circle, draw, minimum size=1cm, text centered},
+    arrow/.style={thick, ->, >=stealth}
+]
+    \node (x) at (0,0) {$x$};
+    \node (z1) at (2,0) {$z^{(1)}$};
+    \node (a1) at (4,0) {$a^{(1)}$};
+    \node (z2) at (6,0) {$z^{(2)}$};
+    \node (L) at (8,0) {$\mathcal{L}$};
+
+    \draw[arrow] (x) -- node[above, draw=none] {$W^{(1)}$} (z1);
+    \draw[arrow] (z1) -- node[above, draw=none] {$\sigma$} (a1);
+    \draw[arrow] (a1) -- node[above, draw=none] {$W^{(2)}$} (z2);
+    \draw[arrow] (z2) -- node[above, draw=none] {loss} (L);
+
+    \draw[thick, <-, dashed, red, >=stealth, bend left=30] (z1) to node[below, draw=none, text=red] {$\delta^{(1)}$} (a1);
+    \draw[thick, <-, dashed, red, >=stealth, bend left=30] (a1) to node[below, draw=none, text=red] {$\partial a^{(1)}$} (z2);
+    \draw[thick, <-, dashed, red, >=stealth, bend left=30] (z2) to node[below, draw=none, text=red] {$\delta^{(2)}$} (L);
+\end{tikzpicture}
+
+\subsection{Formalisation du Modèle Multicouche}
+
+\subsubsection{Définitions Fondamentales}
+
+Considérons un perceptron multicouche (MLP) constitué de $L$ couches. Soit $x \in \mathbb{R}^{n_0}$ l'entrée du réseau.
+Pour chaque couche $l \in \{1, \dots, L\}$, nous définissons la matrice des poids $W^{(l)} \in \mathcal{M}_{n_l, n_{l-1}}(\mathbb{R})$ et le vecteur de biais $b^{(l)} \in \mathbb{R}^{n_l}$.
+
+La dynamique de propagation avant (forward pass) est régie par les relations de récurrence suivantes :
+- $a^{(0)} = x$
+- $z^{(l)} = W^{(l)} a^{(l-1)} + b^{(l)}$ (vecteur des pré-activations, $z^{(l)} \in \mathbb{R}^{n_l}$)
+- $a^{(l)} = \sigma(z^{(l)})$ (vecteur des activations, $a^{(l)} \in \mathbb{R}^{n_l}$, où $\sigma$ est appliquée composante par composante)
+
+La fonction de perte scalaire (par exemple l'erreur quadratique moyenne ou l'entropie croisée) est notée $\mathcal{L} : \mathbb{R}^{n_L} \to \mathbb{R}$, telle que $\text{Perte} = \mathcal{L}(a^{(L)}, y)$, où $y$ est la cible.
+
+\subsubsection{Théorème de Rétropropagation des Erreurs}
+
+Soit $\delta^{(l)} = \nabla_{z^{(l)}} \mathcal{L} \in \mathbb{R}^{n_l}$ le vecteur d'erreur associé aux pré-activations de la couche $l$.
+La rétropropagation fournit un système d'équations récursif permettant de calculer tous les gradients du réseau de la couche $L$ jusqu'à la couche 1 :
+
+1. \textbf{Erreur de sortie :}
+   $\delta^{(L)} = \nabla_{a^{(L)}} \mathcal{L} \odot \sigma'(z^{(L)})$
+   où $\odot$ dénote le produit de Hadamard (multiplication terme à terme).
+
+2. \textbf{Rétropropagation de l'erreur :}
+   Pour tout $l \in \{L-1, \dots, 1\}$, l'erreur se propage selon l'équation :
+   $\delta^{(l)} = \left( (W^{(l+1)})^T \delta^{(l+1)} \right) \odot \sigma'(z^{(l)})$
+
+3. \textbf{Gradients des paramètres :}
+   Les dérivées partielles de la perte par rapport aux matrices de poids et aux biais sont données par :
+   $\nabla_{W^{(l)}} \mathcal{L} = \delta^{(l)} (a^{(l-1)})^T \in \mathcal{M}_{n_l, n_{l-1}}(\mathbb{R})$
+   $\nabla_{b^{(l)}} \mathcal{L} = \delta^{(l)} \in \mathbb{R}^{n_l}$
+
+\subsection{Démonstrations Pas à Pas}
+
+Nous allons démontrer rigoureusement ces équations en utilisant le formalisme matriciel.
+
+\textbf{Démonstration de l'équation des erreurs récursives (2) :}
+Appliquons la règle de dérivation des fonctions composées pour exprimer la dérivée de $\mathcal{L}$ par rapport à la $j$-ème composante de $z^{(l)}$ :
+$$ \frac{\partial \mathcal{L}}{\partial z^{(l)}_j} = \sum_{k=1}^{n_{l+1}} \frac{\partial \mathcal{L}}{\partial z^{(l+1)}_k} \frac{\partial z^{(l+1)}_k}{\partial z^{(l)}_j} $$
+Par définition, le premier terme est $\delta^{(l+1)}_k$.
+Explicitons la dépendance de $z^{(l+1)}$ vis-à-vis de $z^{(l)}$ :
+$$ z^{(l+1)}_k = \sum_{i=1}^{n_l} W^{(l+1)}_{ki} a^{(l)}_i + b^{(l+1)}_k = \sum_{i=1}^{n_l} W^{(l+1)}_{ki} \sigma(z^{(l)}_i) + b^{(l+1)}_k $$
+En dérivant par rapport à $z^{(l)}_j$, tous les termes de la somme s'annulent sauf pour $i=j$ :
+$$ \frac{\partial z^{(l+1)}_k}{\partial z^{(l)}_j} = W^{(l+1)}_{kj} \sigma'(z^{(l)}_j) $$
+Substituons ce résultat dans la première équation :
+$$ \delta^{(l)}_j = \sum_{k=1}^{n_{l+1}} \delta^{(l+1)}_k W^{(l+1)}_{kj} \sigma'(z^{(l)}_j) = \left( \sum_{k=1}^{n_{l+1}} (W^{(l+1)})^T_{jk} \delta^{(l+1)}_k \right) \sigma'(z^{(l)}_j) $$
+Ce qui se réécrit matriciellement de manière élégante :
+$$ \delta^{(l)} = \left( (W^{(l+1)})^T \delta^{(l+1)} \right) \odot \sigma'(z^{(l)}) $$
+La démonstration est ainsi achevée.
+
+\subsection{Exemples Concrets et Géométrie des Gradients}
+
+Considérons l'équation du gradient des poids : $\nabla_{W^{(l)}} \mathcal{L} = \delta^{(l)} (a^{(l-1)})^T$.
+Cette expression correspond à un produit tensoriel (ou produit extérieur) entre deux vecteurs.
+- Le vecteur $\delta^{(l)}$ encode le signal d'erreur de correction (la direction vers laquelle pousser la sortie).
+- Le vecteur $a^{(l-1)}$ encode l'intensité de l'activation en entrée.
+- Le produit extérieur garantit que l'on ajuste fortement les poids reliant les neurones très actifs de la couche $l-1$ vers les neurones de la couche $l$ qui nécessitent une forte correction.
+
+Géométriquement, l'opération $(W^{(l+1)})^T$ transpose l'opérateur linéaire forward. L'erreur est projetée en arrière dans l'espace dual en traversant la matrice transposée, effectuant l'exacte opération adjointe de la propagation avant.
+
+\subsubsection{Problème de l'évanouissement du gradient (Vanishing Gradient)}
+Si l'on utilise la fonction sigmoïde $\sigma(x) = \frac{1}{1+e^{-x}}$, sa dérivée maximale est $0.25$.
+Lors de la propagation d'erreurs profondes sur un réseau de 50 couches, le terme $\sigma'(z^{(l)})$ multiplie itérativement l'erreur par des facteurs inférieurs à $0.25$. Le gradient tend exponentiellement vers zéro, gelant l'apprentissage des premières couches. Ce constat analytique direct justifie l'invention d'activations linéaires par morceaux comme ReLU, où $\sigma'(x) = 1$ pour $x > 0$.
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Matrices Jacobiennes et Backpropagation - Cas 1 $\bigstar$$\bigstar$$\star$$\star$$\star$}
+
+\textbf{Énoncé :}
+Considérons une variante du perceptron simple défini par la fonction scalaire :
+$$ f(x) = \sigma(w_{2} \cdot \sigma(w_{1} x + b_{1}) + b_{2}) $$
+avec $x, w_{1}, w_{2}, b_{1}, b_{2} \in \mathbb{R}$.
+Calculer analytiquement la dérivée partielle de $f$ par rapport à $w_{1}$, notée $\frac{{\partial f}}{{\partial w_{1}}}$, en appliquant de manière rigoureuse le théorème de dérivation des fonctions composées.
+
+\textbf{Correction Détaillée :}
+1. Posons les variables intermédiaires pour décomposer le graphe de calcul :
+   $z_1 = w_{1} x + b_{1}$
+   $a_1 = \sigma(z_1)$
+   $z_2 = w_{2} a_1 + b_{2}$
+   $f = \sigma(z_2)$
+
+2. Nous cherchons à évaluer $\frac{{\partial f}}{{\partial w_{1}}}$. Selon la règle de composition (Chain Rule) :
+   $$ \frac{{\partial f}}{{\partial w_{1}}} = \frac{{\partial f}}{{\partial z_2}} \cdot \frac{{\partial z_2}}{{\partial a_1}} \cdot \frac{{\partial a_1}}{{\partial z_1}} \cdot \frac{{\partial z_1}}{{\partial w_{1}}} $$
+
+3. Évaluons chaque terme séparément :
+   - $\frac{{\partial f}}{{\partial z_2}} = \sigma'(z_2)$
+   - $\frac{{\partial z_2}}{{\partial a_1}} = w_{2}$
+   - $\frac{{\partial a_1}}{{\partial z_1}} = \sigma'(z_1)$
+   - $\frac{{\partial z_1}}{{\partial w_{1}}} = x$
+
+4. Par multiplication, le résultat final rigoureux sans aucune ellipse est :
+   $$ \frac{{\partial f}}{{\partial w_{1}}} = \sigma'(z_2) \cdot w_{2} \cdot \sigma'(z_1) \cdot x $$
+
+\vspace{1cm}
+
+\subsection*{Matrices Jacobiennes et Backpropagation - Cas 2 $\bigstar$$\bigstar$$\bigstar$$\star$$\star$}
+
+\textbf{Énoncé :}
+Considérons une variante du perceptron simple défini par la fonction scalaire :
+$$ f(x) = \sigma(w_{3} \cdot \sigma(w_{2} x + b_{2}) + b_{3}) $$
+avec $x, w_{2}, w_{3}, b_{2}, b_{3} \in \mathbb{R}$.
+Calculer analytiquement la dérivée partielle de $f$ par rapport à $w_{2}$, notée $\frac{{\partial f}}{{\partial w_{2}}}$, en appliquant de manière rigoureuse le théorème de dérivation des fonctions composées.
+
+\textbf{Correction Détaillée :}
+1. Posons les variables intermédiaires pour décomposer le graphe de calcul :
+   $z_1 = w_{2} x + b_{2}$
+   $a_1 = \sigma(z_1)$
+   $z_2 = w_{3} a_1 + b_{3}$
+   $f = \sigma(z_2)$
+
+2. Nous cherchons à évaluer $\frac{{\partial f}}{{\partial w_{2}}}$. Selon la règle de composition (Chain Rule) :
+   $$ \frac{{\partial f}}{{\partial w_{2}}} = \frac{{\partial f}}{{\partial z_2}} \cdot \frac{{\partial z_2}}{{\partial a_1}} \cdot \frac{{\partial a_1}}{{\partial z_1}} \cdot \frac{{\partial z_1}}{{\partial w_{2}}} $$
+
+3. Évaluons chaque terme séparément :
+   - $\frac{{\partial f}}{{\partial z_2}} = \sigma'(z_2)$
+   - $\frac{{\partial z_2}}{{\partial a_1}} = w_{3}$
+   - $\frac{{\partial a_1}}{{\partial z_1}} = \sigma'(z_1)$
+   - $\frac{{\partial z_1}}{{\partial w_{2}}} = x$
+
+4. Par multiplication, le résultat final rigoureux sans aucune ellipse est :
+   $$ \frac{{\partial f}}{{\partial w_{2}}} = \sigma'(z_2) \cdot w_{3} \cdot \sigma'(z_1) \cdot x $$
+
+\vspace{1cm}
+
+\subsection*{Matrices Jacobiennes et Backpropagation - Cas 3 $\bigstar$$\star$$\star$$\star$$\star$}
+
+\textbf{Énoncé :}
+Considérons une variante du perceptron simple défini par la fonction scalaire :
+$$ f(x) = \sigma(w_{4} \cdot \sigma(w_{3} x + b_{3}) + b_{4}) $$
+avec $x, w_{3}, w_{4}, b_{3}, b_{4} \in \mathbb{R}$.
+Calculer analytiquement la dérivée partielle de $f$ par rapport à $w_{3}$, notée $\frac{{\partial f}}{{\partial w_{3}}}$, en appliquant de manière rigoureuse le théorème de dérivation des fonctions composées.
+
+\textbf{Correction Détaillée :}
+1. Posons les variables intermédiaires pour décomposer le graphe de calcul :
+   $z_1 = w_{3} x + b_{3}$
+   $a_1 = \sigma(z_1)$
+   $z_2 = w_{4} a_1 + b_{4}$
+   $f = \sigma(z_2)$
+
+2. Nous cherchons à évaluer $\frac{{\partial f}}{{\partial w_{3}}}$. Selon la règle de composition (Chain Rule) :
+   $$ \frac{{\partial f}}{{\partial w_{3}}} = \frac{{\partial f}}{{\partial z_2}} \cdot \frac{{\partial z_2}}{{\partial a_1}} \cdot \frac{{\partial a_1}}{{\partial z_1}} \cdot \frac{{\partial z_1}}{{\partial w_{3}}} $$
+
+3. Évaluons chaque terme séparément :
+   - $\frac{{\partial f}}{{\partial z_2}} = \sigma'(z_2)$
+   - $\frac{{\partial z_2}}{{\partial a_1}} = w_{4}$
+   - $\frac{{\partial a_1}}{{\partial z_1}} = \sigma'(z_1)$
+   - $\frac{{\partial z_1}}{{\partial w_{3}}} = x$
+
+4. Par multiplication, le résultat final rigoureux sans aucune ellipse est :
+   $$ \frac{{\partial f}}{{\partial w_{3}}} = \sigma'(z_2) \cdot w_{4} \cdot \sigma'(z_1) \cdot x $$
+
+\vspace{1cm}
+
+\subsection*{Matrices Jacobiennes et Backpropagation - Cas 4 $\bigstar$$\bigstar$$\star$$\star$$\star$}
+
+\textbf{Énoncé :}
+Considérons une variante du perceptron simple défini par la fonction scalaire :
+$$ f(x) = \sigma(w_{5} \cdot \sigma(w_{4} x + b_{4}) + b_{5}) $$
+avec $x, w_{4}, w_{5}, b_{4}, b_{5} \in \mathbb{R}$.
+Calculer analytiquement la dérivée partielle de $f$ par rapport à $w_{4}$, notée $\frac{{\partial f}}{{\partial w_{4}}}$, en appliquant de manière rigoureuse le théorème de dérivation des fonctions composées.
+
+\textbf{Correction Détaillée :}
+1. Posons les variables intermédiaires pour décomposer le graphe de calcul :
+   $z_1 = w_{4} x + b_{4}$
+   $a_1 = \sigma(z_1)$
+   $z_2 = w_{5} a_1 + b_{5}$
+   $f = \sigma(z_2)$
+
+2. Nous cherchons à évaluer $\frac{{\partial f}}{{\partial w_{4}}}$. Selon la règle de composition (Chain Rule) :
+   $$ \frac{{\partial f}}{{\partial w_{4}}} = \frac{{\partial f}}{{\partial z_2}} \cdot \frac{{\partial z_2}}{{\partial a_1}} \cdot \frac{{\partial a_1}}{{\partial z_1}} \cdot \frac{{\partial z_1}}{{\partial w_{4}}} $$
+
+3. Évaluons chaque terme séparément :
+   - $\frac{{\partial f}}{{\partial z_2}} = \sigma'(z_2)$
+   - $\frac{{\partial z_2}}{{\partial a_1}} = w_{5}$
+   - $\frac{{\partial a_1}}{{\partial z_1}} = \sigma'(z_1)$
+   - $\frac{{\partial z_1}}{{\partial w_{4}}} = x$
+
+4. Par multiplication, le résultat final rigoureux sans aucune ellipse est :
+   $$ \frac{{\partial f}}{{\partial w_{4}}} = \sigma'(z_2) \cdot w_{5} \cdot \sigma'(z_1) \cdot x $$
+
+\vspace{1cm}
+
+\subsection*{Matrices Jacobiennes et Backpropagation - Cas 5 $\bigstar$$\bigstar$$\bigstar$$\star$$\star$}
+
+\textbf{Énoncé :}
+Considérons une variante du perceptron simple défini par la fonction scalaire :
+$$ f(x) = \sigma(w_{6} \cdot \sigma(w_{5} x + b_{5}) + b_{6}) $$
+avec $x, w_{5}, w_{6}, b_{5}, b_{6} \in \mathbb{R}$.
+Calculer analytiquement la dérivée partielle de $f$ par rapport à $w_{5}$, notée $\frac{{\partial f}}{{\partial w_{5}}}$, en appliquant de manière rigoureuse le théorème de dérivation des fonctions composées.
+
+\textbf{Correction Détaillée :}
+1. Posons les variables intermédiaires pour décomposer le graphe de calcul :
+   $z_1 = w_{5} x + b_{5}$
+   $a_1 = \sigma(z_1)$
+   $z_2 = w_{6} a_1 + b_{6}$
+   $f = \sigma(z_2)$
+
+2. Nous cherchons à évaluer $\frac{{\partial f}}{{\partial w_{5}}}$. Selon la règle de composition (Chain Rule) :
+   $$ \frac{{\partial f}}{{\partial w_{5}}} = \frac{{\partial f}}{{\partial z_2}} \cdot \frac{{\partial z_2}}{{\partial a_1}} \cdot \frac{{\partial a_1}}{{\partial z_1}} \cdot \frac{{\partial z_1}}{{\partial w_{5}}} $$
+
+3. Évaluons chaque terme séparément :
+   - $\frac{{\partial f}}{{\partial z_2}} = \sigma'(z_2)$
+   - $\frac{{\partial z_2}}{{\partial a_1}} = w_{6}$
+   - $\frac{{\partial a_1}}{{\partial z_1}} = \sigma'(z_1)$
+   - $\frac{{\partial z_1}}{{\partial w_{5}}} = x$
+
+4. Par multiplication, le résultat final rigoureux sans aucune ellipse est :
+   $$ \frac{{\partial f}}{{\partial w_{5}}} = \sigma'(z_2) \cdot w_{6} \cdot \sigma'(z_1) \cdot x $$
+
+\vspace{1cm}
+
+\subsection*{Matrices Jacobiennes et Backpropagation - Cas 6 $\bigstar$$\star$$\star$$\star$$\star$}
+
+\textbf{Énoncé :}
+Considérons une variante du perceptron simple défini par la fonction scalaire :
+$$ f(x) = \sigma(w_{7} \cdot \sigma(w_{6} x + b_{6}) + b_{7}) $$
+avec $x, w_{6}, w_{7}, b_{6}, b_{7} \in \mathbb{R}$.
+Calculer analytiquement la dérivée partielle de $f$ par rapport à $w_{6}$, notée $\frac{{\partial f}}{{\partial w_{6}}}$, en appliquant de manière rigoureuse le théorème de dérivation des fonctions composées.
+
+\textbf{Correction Détaillée :}
+1. Posons les variables intermédiaires pour décomposer le graphe de calcul :
+   $z_1 = w_{6} x + b_{6}$
+   $a_1 = \sigma(z_1)$
+   $z_2 = w_{7} a_1 + b_{7}$
+   $f = \sigma(z_2)$
+
+2. Nous cherchons à évaluer $\frac{{\partial f}}{{\partial w_{6}}}$. Selon la règle de composition (Chain Rule) :
+   $$ \frac{{\partial f}}{{\partial w_{6}}} = \frac{{\partial f}}{{\partial z_2}} \cdot \frac{{\partial z_2}}{{\partial a_1}} \cdot \frac{{\partial a_1}}{{\partial z_1}} \cdot \frac{{\partial z_1}}{{\partial w_{6}}} $$
+
+3. Évaluons chaque terme séparément :
+   - $\frac{{\partial f}}{{\partial z_2}} = \sigma'(z_2)$
+   - $\frac{{\partial z_2}}{{\partial a_1}} = w_{7}$
+   - $\frac{{\partial a_1}}{{\partial z_1}} = \sigma'(z_1)$
+   - $\frac{{\partial z_1}}{{\partial w_{6}}} = x$
+
+4. Par multiplication, le résultat final rigoureux sans aucune ellipse est :
+   $$ \frac{{\partial f}}{{\partial w_{6}}} = \sigma'(z_2) \cdot w_{7} \cdot \sigma'(z_1) \cdot x $$
+
+\vspace{1cm}
+
+\subsection*{Matrices Jacobiennes et Backpropagation - Cas 7 $\bigstar$$\bigstar$$\star$$\star$$\star$}
+
+\textbf{Énoncé :}
+Considérons une variante du perceptron simple défini par la fonction scalaire :
+$$ f(x) = \sigma(w_{8} \cdot \sigma(w_{7} x + b_{7}) + b_{8}) $$
+avec $x, w_{7}, w_{8}, b_{7}, b_{8} \in \mathbb{R}$.
+Calculer analytiquement la dérivée partielle de $f$ par rapport à $w_{7}$, notée $\frac{{\partial f}}{{\partial w_{7}}}$, en appliquant de manière rigoureuse le théorème de dérivation des fonctions composées.
+
+\textbf{Correction Détaillée :}
+1. Posons les variables intermédiaires pour décomposer le graphe de calcul :
+   $z_1 = w_{7} x + b_{7}$
+   $a_1 = \sigma(z_1)$
+   $z_2 = w_{8} a_1 + b_{8}$
+   $f = \sigma(z_2)$
+
+2. Nous cherchons à évaluer $\frac{{\partial f}}{{\partial w_{7}}}$. Selon la règle de composition (Chain Rule) :
+   $$ \frac{{\partial f}}{{\partial w_{7}}} = \frac{{\partial f}}{{\partial z_2}} \cdot \frac{{\partial z_2}}{{\partial a_1}} \cdot \frac{{\partial a_1}}{{\partial z_1}} \cdot \frac{{\partial z_1}}{{\partial w_{7}}} $$
+
+3. Évaluons chaque terme séparément :
+   - $\frac{{\partial f}}{{\partial z_2}} = \sigma'(z_2)$
+   - $\frac{{\partial z_2}}{{\partial a_1}} = w_{8}$
+   - $\frac{{\partial a_1}}{{\partial z_1}} = \sigma'(z_1)$
+   - $\frac{{\partial z_1}}{{\partial w_{7}}} = x$
+
+4. Par multiplication, le résultat final rigoureux sans aucune ellipse est :
+   $$ \frac{{\partial f}}{{\partial w_{7}}} = \sigma'(z_2) \cdot w_{8} \cdot \sigma'(z_1) \cdot x $$
+
+\vspace{1cm}
+
+\subsection*{Matrices Jacobiennes et Backpropagation - Cas 8 $\bigstar$$\bigstar$$\bigstar$$\star$$\star$}
+
+\textbf{Énoncé :}
+Considérons une variante du perceptron simple défini par la fonction scalaire :
+$$ f(x) = \sigma(w_{9} \cdot \sigma(w_{8} x + b_{8}) + b_{9}) $$
+avec $x, w_{8}, w_{9}, b_{8}, b_{9} \in \mathbb{R}$.
+Calculer analytiquement la dérivée partielle de $f$ par rapport à $w_{8}$, notée $\frac{{\partial f}}{{\partial w_{8}}}$, en appliquant de manière rigoureuse le théorème de dérivation des fonctions composées.
+
+\textbf{Correction Détaillée :}
+1. Posons les variables intermédiaires pour décomposer le graphe de calcul :
+   $z_1 = w_{8} x + b_{8}$
+   $a_1 = \sigma(z_1)$
+   $z_2 = w_{9} a_1 + b_{9}$
+   $f = \sigma(z_2)$
+
+2. Nous cherchons à évaluer $\frac{{\partial f}}{{\partial w_{8}}}$. Selon la règle de composition (Chain Rule) :
+   $$ \frac{{\partial f}}{{\partial w_{8}}} = \frac{{\partial f}}{{\partial z_2}} \cdot \frac{{\partial z_2}}{{\partial a_1}} \cdot \frac{{\partial a_1}}{{\partial z_1}} \cdot \frac{{\partial z_1}}{{\partial w_{8}}} $$
+
+3. Évaluons chaque terme séparément :
+   - $\frac{{\partial f}}{{\partial z_2}} = \sigma'(z_2)$
+   - $\frac{{\partial z_2}}{{\partial a_1}} = w_{9}$
+   - $\frac{{\partial a_1}}{{\partial z_1}} = \sigma'(z_1)$
+   - $\frac{{\partial z_1}}{{\partial w_{8}}} = x$
+
+4. Par multiplication, le résultat final rigoureux sans aucune ellipse est :
+   $$ \frac{{\partial f}}{{\partial w_{8}}} = \sigma'(z_2) \cdot w_{9} \cdot \sigma'(z_1) \cdot x $$
+
+\vspace{1cm}
+
+\subsection*{Matrices Jacobiennes et Backpropagation - Cas 9 $\bigstar$$\star$$\star$$\star$$\star$}
+
+\textbf{Énoncé :}
+Considérons une variante du perceptron simple défini par la fonction scalaire :
+$$ f(x) = \sigma(w_{10} \cdot \sigma(w_{9} x + b_{9}) + b_{10}) $$
+avec $x, w_{9}, w_{10}, b_{9}, b_{10} \in \mathbb{R}$.
+Calculer analytiquement la dérivée partielle de $f$ par rapport à $w_{9}$, notée $\frac{{\partial f}}{{\partial w_{9}}}$, en appliquant de manière rigoureuse le théorème de dérivation des fonctions composées.
+
+\textbf{Correction Détaillée :}
+1. Posons les variables intermédiaires pour décomposer le graphe de calcul :
+   $z_1 = w_{9} x + b_{9}$
+   $a_1 = \sigma(z_1)$
+   $z_2 = w_{10} a_1 + b_{10}$
+   $f = \sigma(z_2)$
+
+2. Nous cherchons à évaluer $\frac{{\partial f}}{{\partial w_{9}}}$. Selon la règle de composition (Chain Rule) :
+   $$ \frac{{\partial f}}{{\partial w_{9}}} = \frac{{\partial f}}{{\partial z_2}} \cdot \frac{{\partial z_2}}{{\partial a_1}} \cdot \frac{{\partial a_1}}{{\partial z_1}} \cdot \frac{{\partial z_1}}{{\partial w_{9}}} $$
+
+3. Évaluons chaque terme séparément :
+   - $\frac{{\partial f}}{{\partial z_2}} = \sigma'(z_2)$
+   - $\frac{{\partial z_2}}{{\partial a_1}} = w_{10}$
+   - $\frac{{\partial a_1}}{{\partial z_1}} = \sigma'(z_1)$
+   - $\frac{{\partial z_1}}{{\partial w_{9}}} = x$
+
+4. Par multiplication, le résultat final rigoureux sans aucune ellipse est :
+   $$ \frac{{\partial f}}{{\partial w_{9}}} = \sigma'(z_2) \cdot w_{10} \cdot \sigma'(z_1) \cdot x $$
+
+\vspace{1cm}
+
+\subsection*{Matrices Jacobiennes et Backpropagation - Cas 10 $\bigstar$$\bigstar$$\star$$\star$$\star$}
+
+\textbf{Énoncé :}
+Considérons une variante du perceptron simple défini par la fonction scalaire :
+$$ f(x) = \sigma(w_{11} \cdot \sigma(w_{10} x + b_{10}) + b_{11}) $$
+avec $x, w_{10}, w_{11}, b_{10}, b_{11} \in \mathbb{R}$.
+Calculer analytiquement la dérivée partielle de $f$ par rapport à $w_{10}$, notée $\frac{{\partial f}}{{\partial w_{10}}}$, en appliquant de manière rigoureuse le théorème de dérivation des fonctions composées.
+
+\textbf{Correction Détaillée :}
+1. Posons les variables intermédiaires pour décomposer le graphe de calcul :
+   $z_1 = w_{10} x + b_{10}$
+   $a_1 = \sigma(z_1)$
+   $z_2 = w_{11} a_1 + b_{11}$
+   $f = \sigma(z_2)$
+
+2. Nous cherchons à évaluer $\frac{{\partial f}}{{\partial w_{10}}}$. Selon la règle de composition (Chain Rule) :
+   $$ \frac{{\partial f}}{{\partial w_{10}}} = \frac{{\partial f}}{{\partial z_2}} \cdot \frac{{\partial z_2}}{{\partial a_1}} \cdot \frac{{\partial a_1}}{{\partial z_1}} \cdot \frac{{\partial z_1}}{{\partial w_{10}}} $$
+
+3. Évaluons chaque terme séparément :
+   - $\frac{{\partial f}}{{\partial z_2}} = \sigma'(z_2)$
+   - $\frac{{\partial z_2}}{{\partial a_1}} = w_{11}$
+   - $\frac{{\partial a_1}}{{\partial z_1}} = \sigma'(z_1)$
+   - $\frac{{\partial z_1}}{{\partial w_{10}}} = x$
+
+4. Par multiplication, le résultat final rigoureux sans aucune ellipse est :
+   $$ \frac{{\partial f}}{{\partial w_{10}}} = \sigma'(z_2) \cdot w_{11} \cdot \sigma'(z_1) \cdot x $$
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{Rétropropagation Numpy - Architecture 1 $\bigstar$$\bigstar$$\star$$\star$$\star$}
+
+\textbf{Objectif :}
+Implémenter la propagation avant et la rétropropagation des erreurs pour un réseau de neurones multicouche en Python pur.
+Dans ce TP, l'architecture testée a 3 couches cachées.
+
+\begin{lstlisting}
+import numpy as np
+
+def sigmoid(x):
+    return 1.0 / (1.0 + np.exp(-x))
+
+def sigmoid_prime(x):
+    s = sigmoid(x)
+    return s * (1.0 - s)
+
+class NeuralNetwork_1:
+    def __init__(self, layers):
+        self.num_layers = len(layers)
+        self.biases = [np.random.randn(y, 1) for y in layers[1:]]
+        self.weights = [np.random.randn(y, x) for x, y in zip(layers[:-1], layers[1:])]
+
+    def backprop(self, x, y):
+        nabla_b = [np.zeros(b.shape) for b in self.biases]
+        nabla_w = [np.zeros(w.shape) for w in self.weights]
+
+        # Propagation avant
+        activation = x
+        activations = [x]
+        zs = []
+        for b, w in zip(self.biases, self.weights):
+            z = np.dot(w, activation) + b
+            zs.append(z)
+            activation = sigmoid(z)
+            activations.append(activation)
+
+        # Rétropropagation - Couche de sortie
+        delta = (activations[-1] - y) * sigmoid_prime(zs[-1])
+        nabla_b[-1] = delta
+        nabla_w[-1] = np.dot(delta, activations[-2].transpose())
+
+        # Rétropropagation - Couches cachées
+        for l in range(2, self.num_layers):
+            z = zs[-l]
+            sp = sigmoid_prime(z)
+            delta = np.dot(self.weights[-l+1].transpose(), delta) * sp
+            nabla_b[-l] = delta
+            nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
+
+        return nabla_b, nabla_w
+
+# TP 1 : Test d'intégrité avec l'architecture spécifique au TP 1
+# TP 1 : On utilise 3 couches cachées pour vérifier la propagation sur une plus grande profondeur
+layers_config = [2] + [3] * 3 + [1]
+nn = NeuralNetwork_1(layers_config)
+x = np.array([[0.5], [0.1]])
+y = np.array([[1.0]])
+nabla_b, nabla_w = nn.backprop(x, y)
+assert len(nabla_w) == len(layers_config) - 1
+\end{lstlisting}
+
+\vspace{1cm}
+
+\subsection*{Rétropropagation Numpy - Architecture 2 $\bigstar$$\bigstar$$\bigstar$$\star$$\star$}
+
+\textbf{Objectif :}
+Implémenter la propagation avant et la rétropropagation des erreurs pour un réseau de neurones multicouche en Python pur.
+Dans ce TP, l'architecture testée a 4 couches cachées.
+
+\begin{lstlisting}
+import numpy as np
+
+def sigmoid(x):
+    return 1.0 / (1.0 + np.exp(-x))
+
+def sigmoid_prime(x):
+    s = sigmoid(x)
+    return s * (1.0 - s)
+
+class NeuralNetwork_2:
+    def __init__(self, layers):
+        self.num_layers = len(layers)
+        self.biases = [np.random.randn(y, 1) for y in layers[1:]]
+        self.weights = [np.random.randn(y, x) for x, y in zip(layers[:-1], layers[1:])]
+
+    def backprop(self, x, y):
+        nabla_b = [np.zeros(b.shape) for b in self.biases]
+        nabla_w = [np.zeros(w.shape) for w in self.weights]
+
+        # Propagation avant
+        activation = x
+        activations = [x]
+        zs = []
+        for b, w in zip(self.biases, self.weights):
+            z = np.dot(w, activation) + b
+            zs.append(z)
+            activation = sigmoid(z)
+            activations.append(activation)
+
+        # Rétropropagation - Couche de sortie
+        delta = (activations[-1] - y) * sigmoid_prime(zs[-1])
+        nabla_b[-1] = delta
+        nabla_w[-1] = np.dot(delta, activations[-2].transpose())
+
+        # Rétropropagation - Couches cachées
+        for l in range(2, self.num_layers):
+            z = zs[-l]
+            sp = sigmoid_prime(z)
+            delta = np.dot(self.weights[-l+1].transpose(), delta) * sp
+            nabla_b[-l] = delta
+            nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
+
+        return nabla_b, nabla_w
+
+# TP 2 : Test d'intégrité avec l'architecture spécifique au TP 2
+# TP 2 : On utilise 4 couches cachées pour vérifier la propagation sur une plus grande profondeur
+layers_config = [2] + [3] * 4 + [1]
+nn = NeuralNetwork_2(layers_config)
+x = np.array([[0.5], [0.1]])
+y = np.array([[1.0]])
+nabla_b, nabla_w = nn.backprop(x, y)
+assert len(nabla_w) == len(layers_config) - 1
+\end{lstlisting}
+
+\vspace{1cm}
+
+\subsection*{Rétropropagation Numpy - Architecture 3 $\bigstar$$\star$$\star$$\star$$\star$}
+
+\textbf{Objectif :}
+Implémenter la propagation avant et la rétropropagation des erreurs pour un réseau de neurones multicouche en Python pur.
+Dans ce TP, l'architecture testée a 5 couches cachées.
+
+\begin{lstlisting}
+import numpy as np
+
+def sigmoid(x):
+    return 1.0 / (1.0 + np.exp(-x))
+
+def sigmoid_prime(x):
+    s = sigmoid(x)
+    return s * (1.0 - s)
+
+class NeuralNetwork_3:
+    def __init__(self, layers):
+        self.num_layers = len(layers)
+        self.biases = [np.random.randn(y, 1) for y in layers[1:]]
+        self.weights = [np.random.randn(y, x) for x, y in zip(layers[:-1], layers[1:])]
+
+    def backprop(self, x, y):
+        nabla_b = [np.zeros(b.shape) for b in self.biases]
+        nabla_w = [np.zeros(w.shape) for w in self.weights]
+
+        # Propagation avant
+        activation = x
+        activations = [x]
+        zs = []
+        for b, w in zip(self.biases, self.weights):
+            z = np.dot(w, activation) + b
+            zs.append(z)
+            activation = sigmoid(z)
+            activations.append(activation)
+
+        # Rétropropagation - Couche de sortie
+        delta = (activations[-1] - y) * sigmoid_prime(zs[-1])
+        nabla_b[-1] = delta
+        nabla_w[-1] = np.dot(delta, activations[-2].transpose())
+
+        # Rétropropagation - Couches cachées
+        for l in range(2, self.num_layers):
+            z = zs[-l]
+            sp = sigmoid_prime(z)
+            delta = np.dot(self.weights[-l+1].transpose(), delta) * sp
+            nabla_b[-l] = delta
+            nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
+
+        return nabla_b, nabla_w
+
+# TP 3 : Test d'intégrité avec l'architecture spécifique au TP 3
+# TP 3 : On utilise 5 couches cachées pour vérifier la propagation sur une plus grande profondeur
+layers_config = [2] + [3] * 5 + [1]
+nn = NeuralNetwork_3(layers_config)
+x = np.array([[0.5], [0.1]])
+y = np.array([[1.0]])
+nabla_b, nabla_w = nn.backprop(x, y)
+assert len(nabla_w) == len(layers_config) - 1
+\end{lstlisting}
+
+\vspace{1cm}
+
+\subsection*{Rétropropagation Numpy - Architecture 4 $\bigstar$$\bigstar$$\star$$\star$$\star$}
+
+\textbf{Objectif :}
+Implémenter la propagation avant et la rétropropagation des erreurs pour un réseau de neurones multicouche en Python pur.
+Dans ce TP, l'architecture testée a 6 couches cachées.
+
+\begin{lstlisting}
+import numpy as np
+
+def sigmoid(x):
+    return 1.0 / (1.0 + np.exp(-x))
+
+def sigmoid_prime(x):
+    s = sigmoid(x)
+    return s * (1.0 - s)
+
+class NeuralNetwork_4:
+    def __init__(self, layers):
+        self.num_layers = len(layers)
+        self.biases = [np.random.randn(y, 1) for y in layers[1:]]
+        self.weights = [np.random.randn(y, x) for x, y in zip(layers[:-1], layers[1:])]
+
+    def backprop(self, x, y):
+        nabla_b = [np.zeros(b.shape) for b in self.biases]
+        nabla_w = [np.zeros(w.shape) for w in self.weights]
+
+        # Propagation avant
+        activation = x
+        activations = [x]
+        zs = []
+        for b, w in zip(self.biases, self.weights):
+            z = np.dot(w, activation) + b
+            zs.append(z)
+            activation = sigmoid(z)
+            activations.append(activation)
+
+        # Rétropropagation - Couche de sortie
+        delta = (activations[-1] - y) * sigmoid_prime(zs[-1])
+        nabla_b[-1] = delta
+        nabla_w[-1] = np.dot(delta, activations[-2].transpose())
+
+        # Rétropropagation - Couches cachées
+        for l in range(2, self.num_layers):
+            z = zs[-l]
+            sp = sigmoid_prime(z)
+            delta = np.dot(self.weights[-l+1].transpose(), delta) * sp
+            nabla_b[-l] = delta
+            nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
+
+        return nabla_b, nabla_w
+
+# TP 4 : Test d'intégrité avec l'architecture spécifique au TP 4
+# TP 4 : On utilise 6 couches cachées pour vérifier la propagation sur une plus grande profondeur
+layers_config = [2] + [3] * 6 + [1]
+nn = NeuralNetwork_4(layers_config)
+x = np.array([[0.5], [0.1]])
+y = np.array([[1.0]])
+nabla_b, nabla_w = nn.backprop(x, y)
+assert len(nabla_w) == len(layers_config) - 1
+\end{lstlisting}
+
+\vspace{1cm}
+
+\subsection*{Rétropropagation Numpy - Architecture 5 $\bigstar$$\bigstar$$\bigstar$$\star$$\star$}
+
+\textbf{Objectif :}
+Implémenter la propagation avant et la rétropropagation des erreurs pour un réseau de neurones multicouche en Python pur.
+Dans ce TP, l'architecture testée a 7 couches cachées.
+
+\begin{lstlisting}
+import numpy as np
+
+def sigmoid(x):
+    return 1.0 / (1.0 + np.exp(-x))
+
+def sigmoid_prime(x):
+    s = sigmoid(x)
+    return s * (1.0 - s)
+
+class NeuralNetwork_5:
+    def __init__(self, layers):
+        self.num_layers = len(layers)
+        self.biases = [np.random.randn(y, 1) for y in layers[1:]]
+        self.weights = [np.random.randn(y, x) for x, y in zip(layers[:-1], layers[1:])]
+
+    def backprop(self, x, y):
+        nabla_b = [np.zeros(b.shape) for b in self.biases]
+        nabla_w = [np.zeros(w.shape) for w in self.weights]
+
+        # Propagation avant
+        activation = x
+        activations = [x]
+        zs = []
+        for b, w in zip(self.biases, self.weights):
+            z = np.dot(w, activation) + b
+            zs.append(z)
+            activation = sigmoid(z)
+            activations.append(activation)
+
+        # Rétropropagation - Couche de sortie
+        delta = (activations[-1] - y) * sigmoid_prime(zs[-1])
+        nabla_b[-1] = delta
+        nabla_w[-1] = np.dot(delta, activations[-2].transpose())
+
+        # Rétropropagation - Couches cachées
+        for l in range(2, self.num_layers):
+            z = zs[-l]
+            sp = sigmoid_prime(z)
+            delta = np.dot(self.weights[-l+1].transpose(), delta) * sp
+            nabla_b[-l] = delta
+            nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
+
+        return nabla_b, nabla_w
+
+# TP 5 : Test d'intégrité avec l'architecture spécifique au TP 5
+# TP 5 : On utilise 7 couches cachées pour vérifier la propagation sur une plus grande profondeur
+layers_config = [2] + [3] * 7 + [1]
+nn = NeuralNetwork_5(layers_config)
+x = np.array([[0.5], [0.1]])
+y = np.array([[1.0]])
+nabla_b, nabla_w = nn.backprop(x, y)
+assert len(nabla_w) == len(layers_config) - 1
+\end{lstlisting}
+
+\end{document}
