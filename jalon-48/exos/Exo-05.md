@@ -1,30 +1,16 @@
----
-uuid: jalon-48-exo-05
-title: "Exercice 5 : Calculs analytiques du Gradient (Variation 5)"
----
-# Exercice 5 : Matrices Jacobiennes et Backpropagation - Cas 5 $\bigstar$$\bigstar$$\bigstar$$\star$$\star$
+# Exercice 5 : Produit de Hadamard et Jacobienne d'activation
+**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
 
-**Énoncé :**
-Considérons une variante du perceptron simple défini par la fonction scalaire :
-$$ f(x) = \sigma(w_{6} \cdot \sigma(w_{5} x + b_{5}) + b_{6}) $$
-avec $x, w_{5}, w_{6}, b_{5}, b_{6} \in \mathbb{R}$.
-Calculer analytiquement la dérivée partielle de $f$ par rapport à $w_{5}$, notée $\frac{{\partial f}}{{\partial w_{5}}}$, en appliquant de manière rigoureuse le théorème de dérivation des fonctions composées.
+## Énoncé
+L'application d'activation est $a = \sigma(z)$, opérant élément par élément sur le vecteur $z \in \mathbb{R}^n$. Montrer que la multiplication par la Jacobienne de cette transformation se réduit à un produit de Hadamard (terme à terme).
 
-**Correction Détaillée :**
-1. Posons les variables intermédiaires pour décomposer le graphe de calcul :
-   $z_1 = w_{5} x + b_{5}$
-   $a_1 = \sigma(z_1)$
-   $z_2 = w_{6} a_1 + b_{6}$
-   $f = \sigma(z_2)$
-
-2. Nous cherchons à évaluer $\frac{{\partial f}}{{\partial w_{5}}}$. Selon la règle de composition (Chain Rule) :
-   $$ \frac{{\partial f}}{{\partial w_{5}}} = \frac{{\partial f}}{{\partial z_2}} \cdot \frac{{\partial z_2}}{{\partial a_1}} \cdot \frac{{\partial a_1}}{{\partial z_1}} \cdot \frac{{\partial z_1}}{{\partial w_{5}}} $$
-
-3. Évaluons chaque terme séparément :
-   - $\frac{{\partial f}}{{\partial z_2}} = \sigma'(z_2)$
-   - $\frac{{\partial z_2}}{{\partial a_1}} = w_{6}$
-   - $\frac{{\partial a_1}}{{\partial z_1}} = \sigma'(z_1)$
-   - $\frac{{\partial z_1}}{{\partial w_{5}}} = x$
-
-4. Par multiplication, le résultat final rigoureux sans aucune ellipse est :
-   $$ \frac{{\partial f}}{{\partial w_{5}}} = \sigma'(z_2) \cdot w_{6} \cdot \sigma'(z_1) \cdot x $$
+## Correction détaillée
+1. On a le vecteur $a = (a_1, a_2, \dots, a_n)^T$ avec $a_i = \sigma(z_i)$.
+2. La Jacobienne $J_z(a)$ est de taille $n \times n$. Son coefficient $(i, j)$ est $\frac{\partial a_i}{\partial z_j}$.
+3. Puisque $a_i$ ne dépend que de $z_i$, les dérivées croisées sont nulles : $\frac{\partial a_i}{\partial z_j} = 0$ si $i \neq j$.
+4. Pour les termes diagonaux ($i = j$), on a $\frac{\partial a_i}{\partial z_i} = \sigma'(z_i)$.
+5. La matrice Jacobienne $J_z(a)$ est donc une matrice diagonale : $J_z(a) = \text{diag}(\sigma'(z_1), \dots, \sigma'(z_n))$.
+6. Lors de la rétropropagation, on calcule le vecteur $\delta_{in} = J_z(a)^T \delta_{out}$.
+7. Multiplier un vecteur $\delta_{out}$ par une matrice diagonale $\text{diag}(v)$ équivaut à multiplier composante par composante le vecteur $v$ et le vecteur $\delta_{out}$.
+8. Ainsi, on retrouve la notation du produit de Hadamard : $\delta_{in} = \delta_{out} \odot \sigma'(z)$.
+Cette propriété garantit l'efficacité calculatoire de la rétropropagation, évitant une véritable multiplication de matrices pleines.

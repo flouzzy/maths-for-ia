@@ -10,95 +10,80 @@ prev: "[[Jalon 47 (Dérivées partielles d'ordre deux).md]]"
 next: "[[Jalon 49 (Espaces topologiques généraux).md]]"
 ---
 
-# Jalon 48 : Formalisation mathématique de la Rétropropagation
+# Jalon 48 : Livrable IA T4 : Formalisation mathématique de la Rétropropagation
 
-## Introduction Historique et Genèse Conceptuelle
+## Introduction
 
-L'entraînement des réseaux de neurones profonds repose sur l'optimisation de fonctions de perte hautement dimensionnelles. Dans les années 1970 et 1980, l'impossibilité de calculer efficacement le gradient d'un réseau multicouche constituait une impasse majeure, connue sous le nom de problème de l'affectation du crédit (credit assignment problem). Comment déterminer l'influence infinitésimale d'un paramètre enfoui dans les premières couches sur l'erreur globale du système ?
+L'optimisation des architectures neuronales profondes a longtemps été entravée par le problème de l'assignation de crédit : comment déterminer l'influence précise d'un paramètre isolé, enfoui dans de multiples couches de transformations non-linéaires, sur l'erreur globale de prédiction ? L'invention de la rétropropagation (backpropagation), popularisée dans les années 1980 par Rumelhart, Hinton et Williams (et anticipée par des travaux en théorie du contrôle comme ceux de Linnainmaa), résout ce problème de manière élégante par une application systématique de la règle de composition des différentielles. Ce procédé transforme un problème d'optimisation apparemment inextricable en un calcul itératif, couche par couche, tirant parti de la structure modulaire des réseaux de neurones. L'essence géométrique réside dans la propagation à rebours du vecteur gradient de la fonction de coût, modulé par les matrices jacobiennes des transformations locales successives.
 
-La réponse algébrique et géométrique à ce problème fut formalisée sous le nom de rétropropagation du gradient (backpropagation). Loin d'être un simple algorithme informatique, la rétropropagation est l'application récursive et élégante du théorème de dérivation des fonctions composées, exprimé à travers le formalisme des matrices jacobiennes. Ce jalon unifie le calcul différentiel, l'algèbre linéaire et la théorie de l'optimisation.
+## Définitions, Théorèmes et Exemples
 
-\begin{tikzpicture}[
-    node distance=2cm,
-    every node/.style={circle, draw, minimum size=1cm, text centered},
-    arrow/.style={thick, ->, >=stealth}
-]
-    \node (x) at (0,0) {$x$};
-    \node (z1) at (2,0) {$z^{(1)}$};
-    \node (a1) at (4,0) {$a^{(1)}$};
-    \node (z2) at (6,0) {$z^{(2)}$};
-    \node (L) at (8,0) {$\mathcal{L}$};
+### Modèle du Perceptron Multicouche (MLP)
 
-    \draw[arrow] (x) -- node[above, draw=none] {$W^{(1)}$} (z1);
-    \draw[arrow] (z1) -- node[above, draw=none] {$\sigma$} (a1);
-    \draw[arrow] (a1) -- node[above, draw=none] {$W^{(2)}$} (z2);
-    \draw[arrow] (z2) -- node[above, draw=none] {loss} (L);
+Définissons rigoureusement l'architecture d'un réseau de neurones feedforward à $L$ couches.
+Pour chaque couche $l \in \{1, \dots, L\}$, soient $n_{l-1}$ la dimension de l'entrée et $n_l$ la dimension de la sortie :
+- $a^{(0)} \in \mathbb{R}^{n_0}$ : le vecteur d'entrée initial (les caractéristiques ou "features").
+- $W^{(l)} \in \mathcal{M}_{n_l, n_{l-1}}(\mathbb{R})$ : la matrice des poids synaptiques de la couche $l$.
+- $b^{(l)} \in \mathbb{R}^{n_l}$ : le vecteur de biais de la couche $l$.
+- $z^{(l)} \in \mathbb{R}^{n_l}$ : le vecteur de pré-activation, défini par $z^{(l)} = W^{(l)} a^{(l-1)} + b^{(l)}$.
+- $a^{(l)} \in \mathbb{R}^{n_l}$ : le vecteur d'activation, défini par $a^{(l)} = \sigma(z^{(l)})$, où $\sigma : \mathbb{R} \to \mathbb{R}$ est une fonction d'activation non-linéaire (ex: Sigmoïde, ReLU) appliquée composante par composante.
 
-    \draw[thick, <-, dashed, red, >=stealth, bend left=30] (z1) to node[below, draw=none, text=red] {$\delta^{(1)}$} (a1);
-    \draw[thick, <-, dashed, red, >=stealth, bend left=30] (a1) to node[below, draw=none, text=red] {$\partial a^{(1)}$} (z2);
-    \draw[thick, <-, dashed, red, >=stealth, bend left=30] (z2) to node[below, draw=none, text=red] {$\delta^{(2)}$} (L);
-\end{tikzpicture}
+**Exemple :**
+Considérons un réseau simple avec $n_0 = 2$, $n_1 = 2$, et $\sigma(x) = \max(0, x)$ (ReLU).
+Soit $a^{(0)} = \begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+Pour la couche 1, soit $W^{(1)} = \begin{pmatrix} 0.5 & -0.5 \\ 1 & 0 \end{pmatrix}$ et $b^{(1)} = \begin{pmatrix} 0.2 \\ -1 \end{pmatrix}$.
+Le calcul de la pré-activation donne :
+$z^{(1)} = \begin{pmatrix} 0.5 & -0.5 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} 1 \\ -1 \end{pmatrix} + \begin{pmatrix} 0.2 \\ -1 \end{pmatrix} = \begin{pmatrix} 1 \\ 1 \end{pmatrix} + \begin{pmatrix} 0.2 \\ -1 \end{pmatrix} = \begin{pmatrix} 1.2 \\ 0 \end{pmatrix}$.
+Le vecteur d'activation est :
+$a^{(1)} = \begin{pmatrix} \max(0, 1.2) \\ \max(0, 0) \end{pmatrix} = \begin{pmatrix} 1.2 \\ 0 \end{pmatrix}$.
 
-## Formalisation du Modèle Multicouche
+### Fonction de Coût et Jacobiennes
 
-### Définitions Fondamentales
+La performance du réseau est évaluée par une fonction de perte $\mathcal{L} : \mathbb{R}^{n_L} \times \mathbb{R}^{n_L} \to \mathbb{R}$, mesurant l'écart entre la sortie du réseau $a^{(L)}$ et la cible $y$.
+L'objectif est de calculer le gradient de $\mathcal{L}$ par rapport à chaque paramètre $W^{(l)}$ et $b^{(l)}$.
+D'après le théorème de dérivation des fonctions composées (Jalon 46), la différentielle de la perte se factorise. Si nous posons $\delta^{(l)} = \nabla_{z^{(l)}} \mathcal{L} \in \mathbb{R}^{n_l}$ (le vecteur d'erreur au niveau de la pré-activation de la couche $l$), on obtient les relations fondamentales de la rétropropagation.
 
-Considérons un perceptron multicouche (MLP) constitué de $L$ couches. Soit $x \in \mathbb{R}^{n_0}$ l'entrée du réseau.
-Pour chaque couche $l \in \{1, \dots, L\}$, nous définissons la matrice des poids $W^{(l)} \in \mathcal{M}_{n_l, n_{l-1}}(\mathbb{R})$ et le vecteur de biais $b^{(l)} \in \mathbb{R}^{n_l}$.
+### Théorème de la Rétropropagation
 
-La dynamique de propagation avant (forward pass) est régie par les relations de récurrence suivantes :
-- $a^{(0)} = x$
-- $z^{(l)} = W^{(l)} a^{(l-1)} + b^{(l)}$ (vecteur des pré-activations, $z^{(l)} \in \mathbb{R}^{n_l}$)
-- $a^{(l)} = \sigma(z^{(l)})$ (vecteur des activations, $a^{(l)} \in \mathbb{R}^{n_l}$, où $\sigma$ est appliquée composante par composante)
-
-La fonction de perte scalaire (par exemple l'erreur quadratique moyenne ou l'entropie croisée) est notée $\mathcal{L} : \mathbb{R}^{n_L} \to \mathbb{R}$, telle que $\text{Perte} = \mathcal{L}(a^{(L)}, y)$, où $y$ est la cible.
-
-### Théorème de Rétropropagation des Erreurs
-
-Soit $\delta^{(l)} = \nabla_{z^{(l)}} \mathcal{L} \in \mathbb{R}^{n_l}$ le vecteur d'erreur associé aux pré-activations de la couche $l$.
-La rétropropagation fournit un système d'équations récursif permettant de calculer tous les gradients du réseau de la couche $L$ jusqu'à la couche 1 :
-
-1. **Erreur de sortie :**
-   $\delta^{(L)} = \nabla_{a^{(L)}} \mathcal{L} \odot \sigma'(z^{(L)})$
-   où $\odot$ dénote le produit de Hadamard (multiplication terme à terme).
-
-2. **Rétropropagation de l'erreur :**
-   Pour tout $l \in \{L-1, \dots, 1\}$, l'erreur se propage selon l'équation :
-   $\delta^{(l)} = \left( (W^{(l+1)})^T \delta^{(l+1)} \right) \odot \sigma'(z^{(l)})$
-
+Les vecteurs d'erreur et les gradients satisfont les équations de récurrence arrière suivantes :
+1. **Initialisation (couche de sortie) :** $\delta^{(L)} = \nabla_{a^{(L)}} \mathcal{L} \odot \sigma'(z^{(L)})$, où $\odot$ désigne le produit de Hadamard.
+2. **Propagation (couches cachées) :** Pour $l = L-1, \dots, 1$, on a $\delta^{(l)} = \left( (W^{(l+1)})^T \delta^{(l+1)} \right) \odot \sigma'(z^{(l)})$.
 3. **Gradients des paramètres :**
-   Les dérivées partielles de la perte par rapport aux matrices de poids et aux biais sont données par :
-   $\nabla_{W^{(l)}} \mathcal{L} = \delta^{(l)} (a^{(l-1)})^T \in \mathcal{M}_{n_l, n_{l-1}}(\mathbb{R})$
-   $\nabla_{b^{(l)}} \mathcal{L} = \delta^{(l)} \in \mathbb{R}^{n_l}$
+   - $\nabla_{W^{(l)}} \mathcal{L} = \delta^{(l)} (a^{(l-1)})^T$ (produit extérieur).
+   - $\nabla_{b^{(l)}} \mathcal{L} = \delta^{(l)}$.
 
-## Démonstrations Pas à Pas
+**Cas pathologiques et limites :**
+L'algorithme suppose que $\sigma$ est différentiable. Pour des fonctions comme ReLU, non-différentiable en 0, on adopte la convention $\sigma'(0) = 0$ (sous-gradient usuel).
+De plus, si la norme de $W^{(l)}$ ou $\sigma'(z^{(l)})$ est trop faible (ou trop grande), la récurrence $\delta^{(l)} = \left( (W^{(l+1)})^T \delta^{(l+1)} \right) \odot \sigma'(z^{(l)})$ engendre le problème de la disparition (ou de l'explosion) du gradient, empêchant l'apprentissage des couches profondes.
 
-Nous allons démontrer rigoureusement ces équations en utilisant le formalisme matriciel.
+## Démonstrations
 
-**Démonstration de l'équation des erreurs récursives (2) :**
-Appliquons la règle de dérivation des fonctions composées pour exprimer la dérivée de $\mathcal{L}$ par rapport à la $j$-ème composante de $z^{(l)}$ :
-$$ \frac{\partial \mathcal{L}}{\partial z^{(l)}_j} = \sum_{k=1}^{n_{l+1}} \frac{\partial \mathcal{L}}{\partial z^{(l+1)}_k} \frac{\partial z^{(l+1)}_k}{\partial z^{(l)}_j} $$
-Par définition, le premier terme est $\delta^{(l+1)}_k$.
-Explicitons la dépendance de $z^{(l+1)}$ vis-à-vis de $z^{(l)}$ :
-$$ z^{(l+1)}_k = \sum_{i=1}^{n_l} W^{(l+1)}_{ki} a^{(l)}_i + b^{(l+1)}_k = \sum_{i=1}^{n_l} W^{(l+1)}_{ki} \sigma(z^{(l)}_i) + b^{(l+1)}_k $$
-En dérivant par rapport à $z^{(l)}_j$, tous les termes de la somme s'annulent sauf pour $i=j$ :
-$$ \frac{\partial z^{(l+1)}_k}{\partial z^{(l)}_j} = W^{(l+1)}_{kj} \sigma'(z^{(l)}_j) $$
-Substituons ce résultat dans la première équation :
-$$ \delta^{(l)}_j = \sum_{k=1}^{n_{l+1}} \delta^{(l+1)}_k W^{(l+1)}_{kj} \sigma'(z^{(l)}_j) = \left( \sum_{k=1}^{n_{l+1}} (W^{(l+1)})^T_{jk} \delta^{(l+1)}_k \right) \sigma'(z^{(l)}_j) $$
-Ce qui se réécrit matriciellement de manière élégante :
-$$ \delta^{(l)} = \left( (W^{(l+1)})^T \delta^{(l+1)} \right) \odot \sigma'(z^{(l)}) $$
-La démonstration est ainsi achevée.
+Démontrons rigoureusement les équations du théorème de la rétropropagation en employant le calcul différentiel matriciel.
 
-## Exemples Concrets et Géométrie des Gradients
+**Démonstration de l'équation 3 (Gradients des poids) :**
+La pré-activation est $z^{(l)} = W^{(l)} a^{(l-1)} + b^{(l)}$.
+Pour une composante $i \in \{1, \dots, n_l\}$, on a $z^{(l)}_i = \sum_{j=1}^{n_{l-1}} W^{(l)}_{ij} a^{(l-1)}_j + b^{(l)}_i$.
+Par la règle de la chaîne, la dérivée partielle de la perte par rapport au poids $W^{(l)}_{ij}$ est :
+$\frac{\partial \mathcal{L}}{\partial W^{(l)}_{ij}} = \sum_{k=1}^{n_l} \frac{\partial \mathcal{L}}{\partial z^{(l)}_k} \frac{\partial z^{(l)}_k}{\partial W^{(l)}_{ij}}$.
+Or, $\frac{\partial z^{(l)}_k}{\partial W^{(l)}_{ij}} = 0$ si $k \neq i$. Pour $k = i$, $\frac{\partial z^{(l)}_i}{\partial W^{(l)}_{ij}} = a^{(l-1)}_j$.
+Ainsi, $\frac{\partial \mathcal{L}}{\partial W^{(l)}_{ij}} = \frac{\partial \mathcal{L}}{\partial z^{(l)}_i} a^{(l-1)}_j = \delta^{(l)}_i a^{(l-1)}_j$.
+Sous forme matricielle, cela correspond exactement au produit extérieur : $\nabla_{W^{(l)}} \mathcal{L} = \delta^{(l)} (a^{(l-1)})^T$.
+De même, $\frac{\partial z^{(l)}_i}{\partial b^{(l)}_i} = 1$, d'où $\nabla_{b^{(l)}} \mathcal{L} = \delta^{(l)}$.
 
-Considérons l'équation du gradient des poids : $\nabla_{W^{(l)}} \mathcal{L} = \delta^{(l)} (a^{(l-1)})^T$.
-Cette expression correspond à un produit tensoriel (ou produit extérieur) entre deux vecteurs.
-- Le vecteur $\delta^{(l)}$ encode le signal d'erreur de correction (la direction vers laquelle pousser la sortie).
-- Le vecteur $a^{(l-1)}$ encode l'intensité de l'activation en entrée.
-- Le produit extérieur garantit que l'on ajuste fortement les poids reliant les neurones très actifs de la couche $l-1$ vers les neurones de la couche $l$ qui nécessitent une forte correction.
+**Démonstration de l'équation 2 (Propagation de l'erreur) :**
+Nous cherchons à exprimer $\delta^{(l)} = \nabla_{z^{(l)}} \mathcal{L}$ en fonction de $\delta^{(l+1)} = \nabla_{z^{(l+1)}} \mathcal{L}$.
+On a $z^{(l+1)} = W^{(l+1)} a^{(l)} + b^{(l+1)} = W^{(l+1)} \sigma(z^{(l)}) + b^{(l+1)}$.
+Pour la composante $k$, on obtient : $z^{(l+1)}_k = \sum_{p=1}^{n_l} W^{(l+1)}_{kp} \sigma(z^{(l)}_p) + b^{(l+1)}_k$.
+Par la règle de la chaîne multicouche :
+$\delta^{(l)}_j = \frac{\partial \mathcal{L}}{\partial z^{(l)}_j} = \sum_{k=1}^{n_{l+1}} \frac{\partial \mathcal{L}}{\partial z^{(l+1)}_k} \frac{\partial z^{(l+1)}_k}{\partial z^{(l)}_j} = \sum_{k=1}^{n_{l+1}} \delta^{(l+1)}_k W^{(l+1)}_{kj} \sigma'(z^{(l)}_j)$.
+En factorisant, on obtient :
+$\delta^{(l)}_j = \left( \sum_{k=1}^{n_{l+1}} (W^{(l+1)})^T_{jk} \delta^{(l+1)}_k \right) \sigma'(z^{(l)}_j)$.
+Vectoriellement, cela donne bien l'équation 2 : $\delta^{(l)} = \left( (W^{(l+1)})^T \delta^{(l+1)} \right) \odot \sigma'(z^{(l)})$.
 
-Géométriquement, l'opération $(W^{(l+1)})^T$ transpose l'opérateur linéaire forward. L'erreur est projetée en arrière dans l'espace dual en traversant la matrice transposée, effectuant l'exacte opération adjointe de la propagation avant.
+## Applications en Physique, Logique et Intelligence Artificielle
 
-### Problème de l'évanouissement du gradient (Vanishing Gradient)
-Si l'on utilise la fonction sigmoïde $\sigma(x) = \frac{1}{1+e^{-x}}$, sa dérivée maximale est $0.25$.
-Lors de la propagation d'erreurs profondes sur un réseau de 50 couches, le terme $\sigma'(z^{(l)})$ multiplie itérativement l'erreur par des facteurs inférieurs à $0.25$. Le gradient tend exponentiellement vers zéro, gelant l'apprentissage des premières couches. Ce constat analytique direct justifie l'invention d'activations linéaires par morceaux comme ReLU, où $\sigma'(x) = 1$ pour $x > 0$.
+En intelligence artificielle, le théorème de rétropropagation constitue le moteur fondamental de l'apprentissage profond (Deep Learning). Les bibliothèques modernes de différenciation automatique, telles que PyTorch ou TensorFlow, construisent dynamiquement le graphe de calcul de la fonction de perte (la passe "forward") puis parcourent ce graphe en sens inverse pour évaluer les gradients via la récurrence démontrée.
+
+En théorie du contrôle optimal (d'où la rétropropagation tire partiellement ses origines), ces équations sont l'équivalent des équations adjoignantes pour le calcul du gradient d'une fonctionnelle de coût dans le principe du maximum de Pontryagin.
+
+Le choix des fonctions d'activation (et de leurs dérivées $\sigma'$) est dicté par ces équations : la fonction sigmoïde, où la dérivée $\sigma'(x) = \sigma(x)(1-\sigma(x))$ atteint un maximum de 0.25, atténue géométriquement l'erreur lors de la rétropropagation, expliquant l'impossibilité historique d'entraîner des réseaux très profonds (Vanishing Gradient) avant l'adoption de fonctions à dérivée unitaire (ReLU).

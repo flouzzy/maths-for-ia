@@ -1,30 +1,15 @@
----
-uuid: jalon-48-exo-06
-title: "Exercice 6 : Calculs analytiques du Gradient (Variation 6)"
----
-# Exercice 6 : Matrices Jacobiennes et Backpropagation - Cas 6 $\bigstar$$\star$$\star$$\star$$\star$
+# Exercice 6 : Rétropropagation de l'erreur Softmax avec Cross-Entropy (Cas $i=j$)
+**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
 
-**Énoncé :**
-Considérons une variante du perceptron simple défini par la fonction scalaire :
-$$ f(x) = \sigma(w_{7} \cdot \sigma(w_{6} x + b_{6}) + b_{7}) $$
-avec $x, w_{6}, w_{7}, b_{6}, b_{7} \in \mathbb{R}$.
-Calculer analytiquement la dérivée partielle de $f$ par rapport à $w_{6}$, notée $\frac{{\partial f}}{{\partial w_{6}}}$, en appliquant de manière rigoureuse le théorème de dérivation des fonctions composées.
+## Énoncé
+Soit un vecteur de probabilités $\hat{y}$ produit par une couche Softmax $\hat{y}_i = \frac{e^{z_i}}{\sum_k e^{z_k}}$ et une fonction de perte entropie croisée $\mathcal{L} = - \sum_k y_k \ln(\hat{y}_k)$, où $y$ est un vecteur one-hot. Montrer que $\frac{\partial \mathcal{L}}{\partial z_i} = \hat{y}_i - 1$ lorsque $y_i = 1$.
 
-**Correction Détaillée :**
-1. Posons les variables intermédiaires pour décomposer le graphe de calcul :
-   $z_1 = w_{6} x + b_{6}$
-   $a_1 = \sigma(z_1)$
-   $z_2 = w_{7} a_1 + b_{7}$
-   $f = \sigma(z_2)$
-
-2. Nous cherchons à évaluer $\frac{{\partial f}}{{\partial w_{6}}}$. Selon la règle de composition (Chain Rule) :
-   $$ \frac{{\partial f}}{{\partial w_{6}}} = \frac{{\partial f}}{{\partial z_2}} \cdot \frac{{\partial z_2}}{{\partial a_1}} \cdot \frac{{\partial a_1}}{{\partial z_1}} \cdot \frac{{\partial z_1}}{{\partial w_{6}}} $$
-
-3. Évaluons chaque terme séparément :
-   - $\frac{{\partial f}}{{\partial z_2}} = \sigma'(z_2)$
-   - $\frac{{\partial z_2}}{{\partial a_1}} = w_{7}$
-   - $\frac{{\partial a_1}}{{\partial z_1}} = \sigma'(z_1)$
-   - $\frac{{\partial z_1}}{{\partial w_{6}}} = x$
-
-4. Par multiplication, le résultat final rigoureux sans aucune ellipse est :
-   $$ \frac{{\partial f}}{{\partial w_{6}}} = \sigma'(z_2) \cdot w_{7} \cdot \sigma'(z_1) \cdot x $$
+## Correction détaillée
+1. Supposons que $y_i = 1$ (c'est la vraie classe). Tous les autres $y_k$ sont nuls.
+2. La fonction de perte se simplifie en $\mathcal{L} = -\ln(\hat{y}_i)$.
+3. Par la règle de la chaîne, $\frac{\partial \mathcal{L}}{\partial z_i} = \frac{\partial \mathcal{L}}{\partial \hat{y}_i} \frac{\partial \hat{y}_i}{\partial z_i}$.
+4. On a $\frac{\partial \mathcal{L}}{\partial \hat{y}_i} = -\frac{1}{\hat{y}_i}$.
+5. Calculons la dérivée de Softmax par rapport à sa propre entrée $z_i$. On pose le dénominateur $S = \sum_k e^{z_k}$.
+6. $\hat{y}_i = \frac{e^{z_i}}{S}$. Par la règle du quotient, $\frac{\partial \hat{y}_i}{\partial z_i} = \frac{e^{z_i} S - e^{z_i} e^{z_i}}{S^2} = \frac{e^{z_i}}{S} \left( \frac{S - e^{z_i}}{S} \right) = \hat{y}_i (1 - \hat{y}_i)$.
+7. En substituant dans la règle de la chaîne : $\frac{\partial \mathcal{L}}{\partial z_i} = -\frac{1}{\hat{y}_i} \cdot \hat{y}_i (1 - \hat{y}_i) = -(1 - \hat{y}_i) = \hat{y}_i - 1$.
+Ce résultat extrêmement élégant (Prédiction - Cible) est à la base de l'apprentissage des classifieurs modernes.

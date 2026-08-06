@@ -1,30 +1,17 @@
----
-uuid: jalon-48-exo-09
-title: "Exercice 9 : Calculs analytiques du Gradient (Variation 9)"
----
-# Exercice 9 : Matrices Jacobiennes et Backpropagation - Cas 9 $\bigstar$$\star$$\star$$\star$$\star$
+# Exercice 9 : Rétropropagation à travers une couche de normalisation (Batch Normalization)
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :**
-Considérons une variante du perceptron simple défini par la fonction scalaire :
-$$ f(x) = \sigma(w_{10} \cdot \sigma(w_{9} x + b_{9}) + b_{10}) $$
-avec $x, w_{9}, w_{10}, b_{9}, b_{10} \in \mathbb{R}$.
-Calculer analytiquement la dérivée partielle de $f$ par rapport à $w_{9}$, notée $\frac{{\partial f}}{{\partial w_{9}}}$, en appliquant de manière rigoureuse le théorème de dérivation des fonctions composées.
+## Énoncé
+Soit $z = \gamma \hat{x} + \beta$ où $\hat{x} = \frac{x - \mu}{\sqrt{\sigma^2 + \epsilon}}$. Sachant qu'on a le gradient entrant $\frac{\partial \mathcal{L}}{\partial z}$, exprimer rigoureusement $\frac{\partial \mathcal{L}}{\partial \gamma}$ et $\frac{\partial \mathcal{L}}{\partial \beta}$ sur un mini-batch de taille $N$.
 
-**Correction Détaillée :**
-1. Posons les variables intermédiaires pour décomposer le graphe de calcul :
-   $z_1 = w_{9} x + b_{9}$
-   $a_1 = \sigma(z_1)$
-   $z_2 = w_{10} a_1 + b_{10}$
-   $f = \sigma(z_2)$
-
-2. Nous cherchons à évaluer $\frac{{\partial f}}{{\partial w_{9}}}$. Selon la règle de composition (Chain Rule) :
-   $$ \frac{{\partial f}}{{\partial w_{9}}} = \frac{{\partial f}}{{\partial z_2}} \cdot \frac{{\partial z_2}}{{\partial a_1}} \cdot \frac{{\partial a_1}}{{\partial z_1}} \cdot \frac{{\partial z_1}}{{\partial w_{9}}} $$
-
-3. Évaluons chaque terme séparément :
-   - $\frac{{\partial f}}{{\partial z_2}} = \sigma'(z_2)$
-   - $\frac{{\partial z_2}}{{\partial a_1}} = w_{10}$
-   - $\frac{{\partial a_1}}{{\partial z_1}} = \sigma'(z_1)$
-   - $\frac{{\partial z_1}}{{\partial w_{9}}} = x$
-
-4. Par multiplication, le résultat final rigoureux sans aucune ellipse est :
-   $$ \frac{{\partial f}}{{\partial w_{9}}} = \sigma'(z_2) \cdot w_{10} \cdot \sigma'(z_1) \cdot x $$
+## Correction détaillée
+1. Les paramètres $\gamma$ (facteur d'échelle) et $\beta$ (décalage) sont des vecteurs de la même taille que $x$. Soit $i$ l'indice de la dimension. On somme sur les $N$ exemples du mini-batch, indexés par $k$.
+2. Pour l'exemple $k$, on a la pré-activation $z_{k,i} = \gamma_i \hat{x}_{k,i} + \beta_i$.
+3. La dérivée totale de la perte par rapport au paramètre $\beta_i$ nécessite de sommer les contributions de tous les exemples du batch.
+4. Par la règle de la chaîne : $\frac{\partial \mathcal{L}}{\partial \beta_i} = \sum_{k=1}^N \frac{\partial \mathcal{L}}{\partial z_{k,i}} \frac{\partial z_{k,i}}{\partial \beta_i}$.
+5. On calcule trivialement $\frac{\partial z_{k,i}}{\partial \beta_i} = 1$.
+6. Donc, $\frac{\partial \mathcal{L}}{\partial \beta_i} = \sum_{k=1}^N \frac{\partial \mathcal{L}}{\partial z_{k,i}}$. Le gradient par rapport à $\beta$ est la somme des erreurs propagées sur le batch.
+7. De manière similaire pour $\gamma_i$ : $\frac{\partial \mathcal{L}}{\partial \gamma_i} = \sum_{k=1}^N \frac{\partial \mathcal{L}}{\partial z_{k,i}} \frac{\partial z_{k,i}}{\partial \gamma_i}$.
+8. La dérivée est $\frac{\partial z_{k,i}}{\partial \gamma_i} = \hat{x}_{k,i}$.
+9. Ainsi, $\frac{\partial \mathcal{L}}{\partial \gamma_i} = \sum_{k=1}^N \frac{\partial \mathcal{L}}{\partial z_{k,i}} \hat{x}_{k,i}$.
+Ces gradients paramétriques sont essentiels pour que la couche de normalisation puisse restaurer le pouvoir d'expressivité du réseau si la normalisation stricte s'avérait sous-optimale.

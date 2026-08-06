@@ -1,30 +1,15 @@
----
-uuid: jalon-48-exo-08
-title: "Exercice 8 : Calculs analytiques du Gradient (Variation 8)"
----
-# Exercice 8 : Matrices Jacobiennes et Backpropagation - Cas 8 $\bigstar$$\bigstar$$\bigstar$$\star$$\star$
+# Exercice 8 : Régularisation L2 (Weight Decay) et impact sur le gradient
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
 
-**Énoncé :**
-Considérons une variante du perceptron simple défini par la fonction scalaire :
-$$ f(x) = \sigma(w_{9} \cdot \sigma(w_{8} x + b_{8}) + b_{9}) $$
-avec $x, w_{8}, w_{9}, b_{8}, b_{9} \in \mathbb{R}$.
-Calculer analytiquement la dérivée partielle de $f$ par rapport à $w_{8}$, notée $\frac{{\partial f}}{{\partial w_{8}}}$, en appliquant de manière rigoureuse le théorème de dérivation des fonctions composées.
+## Énoncé
+On ajoute un terme de régularisation L2 à la fonction de coût : $\mathcal{L}_{\text{reg}} = \mathcal{L}(y, \hat{y}) + \frac{\lambda}{2} \|W\|_F^2$, où $\|W\|_F^2 = \sum_{i,j} W_{ij}^2$ est la norme de Frobenius. Démontrer l'expression modifiée du gradient par rapport aux poids $W_{ij}$.
 
-**Correction Détaillée :**
-1. Posons les variables intermédiaires pour décomposer le graphe de calcul :
-   $z_1 = w_{8} x + b_{8}$
-   $a_1 = \sigma(z_1)$
-   $z_2 = w_{9} a_1 + b_{9}$
-   $f = \sigma(z_2)$
-
-2. Nous cherchons à évaluer $\frac{{\partial f}}{{\partial w_{8}}}$. Selon la règle de composition (Chain Rule) :
-   $$ \frac{{\partial f}}{{\partial w_{8}}} = \frac{{\partial f}}{{\partial z_2}} \cdot \frac{{\partial z_2}}{{\partial a_1}} \cdot \frac{{\partial a_1}}{{\partial z_1}} \cdot \frac{{\partial z_1}}{{\partial w_{8}}} $$
-
-3. Évaluons chaque terme séparément :
-   - $\frac{{\partial f}}{{\partial z_2}} = \sigma'(z_2)$
-   - $\frac{{\partial z_2}}{{\partial a_1}} = w_{9}$
-   - $\frac{{\partial a_1}}{{\partial z_1}} = \sigma'(z_1)$
-   - $\frac{{\partial z_1}}{{\partial w_{8}}} = x$
-
-4. Par multiplication, le résultat final rigoureux sans aucune ellipse est :
-   $$ \frac{{\partial f}}{{\partial w_{8}}} = \sigma'(z_2) \cdot w_{9} \cdot \sigma'(z_1) \cdot x $$
+## Correction détaillée
+1. La dérivée d'une somme est la somme des dérivées.
+2. $\frac{\partial \mathcal{L}_{\text{reg}}}{\partial W_{ij}} = \frac{\partial \mathcal{L}}{\partial W_{ij}} + \frac{\partial}{\partial W_{ij}} \left( \frac{\lambda}{2} \sum_{p,q} W_{pq}^2 \right)$.
+3. Dans la double somme, le seul terme non constant par rapport à $W_{ij}$ est le terme où $p=i$ et $q=j$, c'est-à-dire $W_{ij}^2$.
+4. La dérivée de $\frac{\lambda}{2} W_{ij}^2$ par rapport à $W_{ij}$ est $\lambda W_{ij}$.
+5. En utilisant l'expression du gradient non régularisé $\frac{\partial \mathcal{L}}{\partial W_{ij}} = \delta_i a_j$ (où $\delta$ est l'erreur de la couche et $a$ l'activation de la couche précédente).
+6. Le gradient complet est donc : $\frac{\partial \mathcal{L}_{\text{reg}}}{\partial W_{ij}} = \delta_i a_j + \lambda W_{ij}$.
+7. Sous forme matricielle : $\nabla_W \mathcal{L}_{\text{reg}} = \delta a^T + \lambda W$.
+Cette pénalisation force les poids à rester proches de zéro, d'où le terme empirique de \"déclin du poids\" (Weight Decay) utilisé par les optimiseurs.

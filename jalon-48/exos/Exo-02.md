@@ -1,30 +1,15 @@
----
-uuid: jalon-48-exo-02
-title: "Exercice 2 : Calculs analytiques du Gradient (Variation 2)"
----
-# Exercice 2 : Matrices Jacobiennes et Backpropagation - Cas 2 $\bigstar$$\bigstar$$\bigstar$$\star$$\star$
+# Exercice 2 : Dérivation de la fonction ReLU
+**Difficulté :** $\bigstar\star\star\star\star$
 
-**Énoncé :**
-Considérons une variante du perceptron simple défini par la fonction scalaire :
-$$ f(x) = \sigma(w_{3} \cdot \sigma(w_{2} x + b_{2}) + b_{3}) $$
-avec $x, w_{2}, w_{3}, b_{2}, b_{3} \in \mathbb{R}$.
-Calculer analytiquement la dérivée partielle de $f$ par rapport à $w_{2}$, notée $\frac{{\partial f}}{{\partial w_{2}}}$, en appliquant de manière rigoureuse le théorème de dérivation des fonctions composées.
+## Énoncé
+Calculer le sous-gradient de la fonction ReLU, définie par $\text{ReLU}(x) = \max(0, x)$.
 
-**Correction Détaillée :**
-1. Posons les variables intermédiaires pour décomposer le graphe de calcul :
-   $z_1 = w_{2} x + b_{2}$
-   $a_1 = \sigma(z_1)$
-   $z_2 = w_{3} a_1 + b_{3}$
-   $f = \sigma(z_2)$
-
-2. Nous cherchons à évaluer $\frac{{\partial f}}{{\partial w_{2}}}$. Selon la règle de composition (Chain Rule) :
-   $$ \frac{{\partial f}}{{\partial w_{2}}} = \frac{{\partial f}}{{\partial z_2}} \cdot \frac{{\partial z_2}}{{\partial a_1}} \cdot \frac{{\partial a_1}}{{\partial z_1}} \cdot \frac{{\partial z_1}}{{\partial w_{2}}} $$
-
-3. Évaluons chaque terme séparément :
-   - $\frac{{\partial f}}{{\partial z_2}} = \sigma'(z_2)$
-   - $\frac{{\partial z_2}}{{\partial a_1}} = w_{3}$
-   - $\frac{{\partial a_1}}{{\partial z_1}} = \sigma'(z_1)$
-   - $\frac{{\partial z_1}}{{\partial w_{2}}} = x$
-
-4. Par multiplication, le résultat final rigoureux sans aucune ellipse est :
-   $$ \frac{{\partial f}}{{\partial w_{2}}} = \sigma'(z_2) \cdot w_{3} \cdot \sigma'(z_1) \cdot x $$
+## Correction détaillée
+1. La fonction ReLU est définie par deux morceaux : $f(x) = x$ si $x > 0$, et $f(x) = 0$ si $x < 0$.
+2. Pour $x > 0$, la fonction est linéaire et sa dérivée est trivialement $f'(x) = 1$.
+3. Pour $x < 0$, la fonction est constante et sa dérivée est $f'(x) = 0$.
+4. En $x = 0$, la fonction n'est pas strictement dérivable au sens classique car les limites des taux d'accroissement diffèrent à gauche (0) et à droite (1).
+5. En théorie de l'optimisation non-lisse, on utilise le sous-différentiel $\partial f(0)$, qui est l'intervalle $[0, 1]$.
+6. En pratique dans les réseaux de neurones, on choisit une valeur arbitraire dans cet intervalle, usuellement $0$ (ou parfois $1$). On adopte donc la convention $\text{ReLU}'(0) = 0$.
+7. L'expression finale pour le gradient est la fonction indicatrice : $\text{ReLU}'(x) = \mathbf{1}_{\{x > 0\}}$.
+Ce calcul simple permet un passage arrière rapide sans calcul exponentiel.

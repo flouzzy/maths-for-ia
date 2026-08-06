@@ -1,30 +1,16 @@
----
-uuid: jalon-48-exo-01
-title: "Exercice 1 : Calculs analytiques du Gradient (Variation 1)"
----
-# Exercice 1 : Matrices Jacobiennes et Backpropagation - Cas 1 $\bigstar$$\bigstar$$\star$$\star$$\star$
+# Exercice 1 : Dérivation de la fonction Sigmoïde
+**Difficulté :** $\bigstar\star\star\star\star$
 
-**Énoncé :**
-Considérons une variante du perceptron simple défini par la fonction scalaire :
-$$ f(x) = \sigma(w_{2} \cdot \sigma(w_{1} x + b_{1}) + b_{2}) $$
-avec $x, w_{1}, w_{2}, b_{1}, b_{2} \in \mathbb{R}$.
-Calculer analytiquement la dérivée partielle de $f$ par rapport à $w_{1}$, notée $\frac{{\partial f}}{{\partial w_{1}}}$, en appliquant de manière rigoureuse le théorème de dérivation des fonctions composées.
+## Énoncé
+Calculer la dérivée de la fonction d'activation sigmoïde $\sigma(x) = \frac{1}{1 + e^{-x}}$ et l'exprimer en fonction de $\sigma(x)$.
 
-**Correction Détaillée :**
-1. Posons les variables intermédiaires pour décomposer le graphe de calcul :
-   $z_1 = w_{1} x + b_{1}$
-   $a_1 = \sigma(z_1)$
-   $z_2 = w_{2} a_1 + b_{2}$
-   $f = \sigma(z_2)$
-
-2. Nous cherchons à évaluer $\frac{{\partial f}}{{\partial w_{1}}}$. Selon la règle de composition (Chain Rule) :
-   $$ \frac{{\partial f}}{{\partial w_{1}}} = \frac{{\partial f}}{{\partial z_2}} \cdot \frac{{\partial z_2}}{{\partial a_1}} \cdot \frac{{\partial a_1}}{{\partial z_1}} \cdot \frac{{\partial z_1}}{{\partial w_{1}}} $$
-
-3. Évaluons chaque terme séparément :
-   - $\frac{{\partial f}}{{\partial z_2}} = \sigma'(z_2)$
-   - $\frac{{\partial z_2}}{{\partial a_1}} = w_{2}$
-   - $\frac{{\partial a_1}}{{\partial z_1}} = \sigma'(z_1)$
-   - $\frac{{\partial z_1}}{{\partial w_{1}}} = x$
-
-4. Par multiplication, le résultat final rigoureux sans aucune ellipse est :
-   $$ \frac{{\partial f}}{{\partial w_{1}}} = \sigma'(z_2) \cdot w_{2} \cdot \sigma'(z_1) \cdot x $$
+## Correction détaillée
+1. On utilise la règle de dérivation d'un quotient. Soit $f(x) = 1 + e^{-x}$. Alors $\sigma(x) = \frac{1}{f(x)}$.
+2. $\sigma'(x) = -\frac{f'(x)}{(f(x))^2}$.
+3. La dérivée de $f(x)$ est $f'(x) = -e^{-x}$.
+4. Donc, $\sigma'(x) = -\frac{-e^{-x}}{(1 + e^{-x})^2} = \frac{e^{-x}}{(1 + e^{-x})^2}$.
+5. On réécrit le numérateur : $e^{-x} = (1 + e^{-x}) - 1$.
+6. Ainsi, $\sigma'(x) = \frac{(1 + e^{-x}) - 1}{(1 + e^{-x})^2} = \frac{1 + e^{-x}}{(1 + e^{-x})^2} - \frac{1}{(1 + e^{-x})^2}$.
+7. On simplifie : $\sigma'(x) = \frac{1}{1 + e^{-x}} - \left(\frac{1}{1 + e^{-x}}\right)^2$.
+8. Finalement, en factorisant : $\sigma'(x) = \sigma(x) (1 - \sigma(x))$.
+Cette propriété est cruciale pour optimiser le calcul du gradient lors de la rétropropagation.
