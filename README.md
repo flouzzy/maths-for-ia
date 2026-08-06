@@ -148,7 +148,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 <summary><b>Trimestre 5 : topologie générale et espaces métriques</b></summary>
 <br>
 
-- **[Jalon 49](jalon-49/Jalon%2049%20%28Espaces%20topologiques%20g%C3%A9n%C3%A9raux%29.md)** : Espaces topologiques généraux, définition par les ouverts, les fermés et les voisinages.
+- **[Jalon 49](jalon-49/Jalon-49.md)** : Espaces topologiques généraux, définition par les ouverts, les fermés et les voisinages. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 50](jalon-50/Jalon%2050%20%28Op%C3%A9rateurs%20topologiques%29.md)** : Opérateurs topologiques : intérieur, adhérence, frontière et ensembles denses.
 - **[Jalon 51](jalon-51/Jalon%2051%20%28Espaces%20m%C3%A9triques%29.md)** : Espaces métriques, topologie induite par une distance et distances équivalentes.
 - **[Jalon 52](jalon-52/Jalon%2052%20%28Applications%20continues%20entre%20espaces%20topologiques%20et%20d%C3%A9finition%20fine%20des%20hom%C3%A9omorphismes.%29.md)** : Applications continues entre espaces topologiques et définition fine des homéomorphismes.
@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-08-06] : [Upsert/Création] du Jalon 49 - Espaces topologiques généraux. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-04] : [Upsert/Création] du Jalon 46 - Matrice jacobienne. Status: Terminé.
 - [2026-08-04] : [Upsert/Création] du Jalon 45 - Différentiabilité. Status: Terminé.
 
