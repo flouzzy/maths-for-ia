@@ -57,7 +57,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-48/Jalon-48.md|Jalon 48 : Livrable IA]] : Livrable IA T4 : Formalisation mathématique complète de la rétropropagation (Backpropagation) d'un réseau de neurones profond sous forme de produits de matrices jacobiennes. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 ## Année 2 : l'abstraction topologique et la théorie de la mesure
 ### Trimestre 5 : topologie générale et espaces métriques
-- [ ] [[jalon-49/Jalon 49 (Espaces topologiques généraux).md|Jalon 49 : Espaces topologiques généraux]] : Espaces topologiques généraux, définition par les ouverts, les fermés et les voisinages.
+- [x] [[jalon-49/Jalon-49.md|Jalon 49 : Espaces topologiques généraux]] : Espaces topologiques généraux, définition par les ouverts, les fermés et les voisinages. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-50/Jalon 50 (Opérateurs topologiques).md|Jalon 50 : Opérateurs topologiques]] : Opérateurs topologiques : intérieur, adhérence, frontière et ensembles denses.
 - [ ] [[jalon-51/Jalon 51 (Espaces métriques).md|Jalon 51 : Espaces métriques]] : Espaces métriques, topologie induite par une distance et distances équivalentes.
 - [ ] [[jalon-52/Jalon 52 (Applications continues entre espaces topologiques et définition fine des homéomorphismes.).md|Jalon 52 : Applications continues entre espaces topologiques et définition fine des homéomorphismes.]] : Applications continues entre espaces topologiques et définition fine des homéomorphismes.

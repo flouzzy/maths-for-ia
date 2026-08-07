@@ -1,0 +1,402 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1
+}
+
+\title{\Huge ESPACES TOPOLOGIQUES GÉNÉRAUX \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+\section{Introduction : Genèse et intuition géométrique}
+
+La géométrie euclidienne et la théorie des espaces métriques reposent sur la notion de distance : on peut mesurer rigoureusement l'écart entre deux points. Toutefois, de nombreuses situations mathématiques exigent d'étudier la continuité, la convergence ou les propriétés globales d'espaces où aucune distance naturelle ne peut être définie (comme des espaces de fonctions très vastes, ou la topologie de Zariski en géométrie algébrique).
+
+L'intuition fondatrice de la topologie générale, initiée par Felix Hausdorff et Maurice Fréchet, est de s'abstraire de la distance pour ne conserver que la notion pure de "voisinage" ou de "proximité". Imaginez une membrane élastique infiniment déformable : tant qu'on ne la déchire pas et qu'on ne recolle pas des points distincts, les éléments initialement voisins restent voisins. La topologie est l'étude mathématique rigoureuse de ces déformations continues. Au lieu de s'appuyer sur des boules de rayon $\epsilon$, on se base axiomatiquement sur la donnée d'une collection d'ensembles privilégiés appelés "ouverts".
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \draw[thick, fill=blue!10] (0,0) ellipse (2cm and 1cm);
+  \node at (0,0) {$\bullet$};
+  \node[above] at (0,0) {$x$};
+  \node[right] at (1, 0.5) {$U$};
+  \node[below] at (0, -1.2) {Un ouvert $U$ contenant $x$};
+
+  \draw[->, thick, shorten >=5pt, shorten <=5pt] (2.5,0) -- (4.5,0) node[midway, above] {Déformation continue};
+
+  \draw[thick, fill=red!10] (6,0) to[out=90,in=180] (7,1.5) to[out=0,in=90] (8,-0.5) to[out=270,in=0] (7,-1) to[out=180,in=270] (6,0);
+  \node at (6.8,0.2) {$\bullet$};
+  \node[above] at (6.8,0.2) {$f(x)$};
+  \node[right] at (7.5, 0.8) {$f(U)$};
+  \node[below] at (7, -1.2) {L'image est toujours un voisinage};
+\end{tikzpicture}
+\end{center}
+
+\section{Définitions et théorèmes fondamentaux}
+
+\subsection{Topologie et Ouverts}
+
+Soit $X$ un ensemble.
+
+\textbf{Définition (Topologie) :}
+Une topologie sur $X$ est une collection $\mathcal{T}$ de sous-ensembles de $X$ (appelés les ouverts) satisfaisant les trois axiomes suivants :
+1. L'ensemble vide $\emptyset$ et l'espace entier $X$ appartiennent à $\mathcal{T}$.
+2. L'intersection d'un nombre \textbf{fini} d'ouverts est un ouvert : si $O_1, \dots, O_n \in \mathcal{T}$, alors $\bigcap_{i=1}^n O_i \in \mathcal{T}$.
+3. La réunion d'une famille \textbf{quelconque} d'ouverts est un ouvert : si $(O_i)_{i \in I}$ est une famille d'éléments de $\mathcal{T}$, alors $\bigcup_{i \in I} O_i \in \mathcal{T}$.
+
+Le couple $(X, \mathcal{T})$ est appelé un espace topologique.
+
+\textbf{Exemple concret (Topologie discrète) :}
+Si $X = \{a, b, c\}$, la topologie discrète est $\mathcal{T}_{discr\grave{e}te} = \mathcal{P}(X) = \{\emptyset, \{a\}, \{b\}, \{c\}, \{a,b\}, \{a,c\}, \{b,c\}, X\}$. Tous les sous-ensembles sont ouverts.
+
+\textbf{Exemple concret (Topologie grossière) :}
+Sur le même $X$, la topologie grossière est $\mathcal{T}_{grossi\grave{e}re} = \{\emptyset, X\}$. Seuls l'ensemble vide et $X$ sont ouverts.
+
+\textbf{Exemple concret (Topologie usuelle sur $\mathbb{R}$) :}
+La topologie usuelle sur $\mathbb{R}$ est définie en disant qu'un ensemble $U$ est ouvert si pour tout $x \in U$, il existe $\epsilon > 0$ tel que l'intervalle ouvert $]x-\epsilon, x+\epsilon[$ soit inclus dans $U$.
+
+\subsection{Fermés et Voisinages}
+
+\textbf{Définition (Fermé) :}
+Un sous-ensemble $F$ de $X$ est dit fermé si son complémentaire $X \setminus F$ est un ouvert.
+
+\textbf{Définition (Voisinage) :}
+Soit $x \in X$. Un sous-ensemble $V \subset X$ est un voisinage de $x$ s'il existe un ouvert $U \in \mathcal{T}$ tel que $x \in U \subset V$.
+L'ensemble des voisinages de $x$ est noté $\mathcal{V}(x)$.
+
+\textbf{Théorème (Caractérisation des ouverts par les voisinages) :}
+Un sous-ensemble $U$ de $X$ est ouvert si et seulement si, pour tout $x \in U$, $U$ est un voisinage de $x$.
+
+\textbf{Cas pathologique (Topologie cofinie) :}
+Soit $X$ infini (par exemple $X = \mathbb{R}$). On définit $\mathcal{T}_{cofinie} = \{\emptyset\} \cup \{U \subset X \mid X \setminus U \text{ est fini}\}$. Dans cette topologie, deux ouverts non vides ont toujours une intersection non vide. Il n'est donc pas possible de "séparer" deux points par des voisinages disjoints (cet espace n'est pas séparé au sens de Hausdorff).
+
+\section{Démonstrations}
+
+\subsection{Démonstration de la stabilité des fermés}
+
+Nous allons démontrer que l'intersection d'une famille quelconque de fermés est un fermé, et que la réunion finie de fermés est un fermé.
+
+\textbf{Preuve pas à pas :}
+1. Soit $(F_i)_{i \in I}$ une famille quelconque de fermés de $X$. Par définition, pour tout $i \in I$, le complémentaire $O_i = X \setminus F_i$ est un ouvert ($O_i \in \mathcal{T}$).
+2. Considérons l'intersection $F = \bigcap_{i \in I} F_i$.
+3. En utilisant les lois de De Morgan, le complémentaire de $F$ est :
+   $$ X \setminus F = X \setminus \left( \bigcap_{i \in I} F_i \right) = \bigcup_{i \in I} (X \setminus F_i) = \bigcup_{i \in I} O_i $$
+4. Puisque $(O_i)_{i \in I}$ est une famille d'ouverts, l'axiome 3 des topologies assure que leur réunion quelconque est un ouvert. Donc $X \setminus F \in \mathcal{T}$.
+5. Ainsi, $F$ est le complémentaire d'un ouvert, donc $F$ est fermé.
+6. Considérons maintenant une famille \textbf{finie} de fermés $F_1, \dots, F_n$. Leurs complémentaires $O_k = X \setminus F_k$ sont ouverts.
+7. Soit la réunion $G = \bigcup_{k=1}^n F_k$. Son complémentaire est, par les lois de De Morgan :
+   $$ X \setminus G = X \setminus \left( \bigcup_{k=1}^n F_k \right) = \bigcap_{k=1}^n (X \setminus F_k) = \bigcap_{k=1}^n O_k $$
+8. Par l'axiome 2, l'intersection finie d'ouverts est un ouvert. Donc $X \setminus G \in \mathcal{T}$.
+9. Ainsi, $G$ est fermé. $\blacksquare$
+
+\section{Applications en Physique, Logique et Intelligence Artificielle}
+
+En intelligence artificielle, les topologies générales interviennent dans la modélisation des graphes discrets (Graph Neural Networks). Un graphe peut être vu comme un espace topologique où les voisinages sont définis par la connectivité des nœuds.
+
+De plus, l'apprentissage de variétés (Manifold Learning, comme t-SNE ou UMAP) vise explicitement à trouver un plongement de données de haute dimension dans un espace de basse dimension tout en préservant la topologie locale. L'algorithme UMAP (Uniform Manifold Approximation and Projection) construit d'ailleurs explicitement un complexe simplicial et une topologie floue (fuzzy topology) sur les données pour approximer la variété sous-jacente. L'étude de ces voisinages sans recourir à la stricte distance euclidienne globale permet de capturer la géométrie intrinsèque des données complexes.
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Topologie discrète \quad $\bigstar\star\star\star\star$}
+\textbf{Énoncé :}
+Soit $X$ un ensemble. Démontrer que la topologie discrète $\mathcal{T} = \mathcal{P}(X)$ vérifie bien les trois axiomes d'une topologie. Quels sont les fermés de cette topologie ?
+
+\textbf{Correction exhaustive :}
+1. Par définition, l'ensemble vide $\emptyset$ et $X$ sont des sous-ensembles de $X$, donc $\emptyset \in \mathcal{P}(X)$ et $X \in \mathcal{P}(X)$. L'axiome 1 est vérifié.
+2. Soit $O_1, \dots, O_n$ une famille finie d'ouverts (donc de sous-ensembles de $X$). Leur intersection $\bigcap_{i=1}^n O_i$ est un sous-ensemble de $X$, donc elle appartient à $\mathcal{P}(X)$. L'axiome 2 est vérifié.
+3. Soit $(O_i)_{i \in I}$ une famille quelconque d'ouverts (sous-ensembles de $X$). Leur réunion $\bigcup_{i \in I} O_i$ est composée d'éléments de $X$, donc c'est un sous-ensemble de $X$, et elle appartient à $\mathcal{P}(X)$. L'axiome 3 est vérifié.
+Conclusion : $\mathcal{P}(X)$ est bien une topologie sur $X$.
+Fermés : Un sous-ensemble $F \subset X$ est fermé si son complémentaire $X \setminus F$ est ouvert. Or, tout sous-ensemble de $X$ est ouvert. Donc pour tout $F \subset X$, $X \setminus F$ est ouvert, ce qui implique que $F$ est fermé. Ainsi, dans la topologie discrète, tout sous-ensemble est à la fois ouvert et fermé (clopen).
+\subsection*{Exercice 2 : Topologie grossière \quad $\bigstar\star\star\star\star$}
+\textbf{Énoncé :}
+Soit $X$ un ensemble non vide. Montrer que $\mathcal{T} = \{\emptyset, X\}$ est une topologie. Détailler les propriétés de ses voisinages.
+
+\textbf{Correction exhaustive :}
+1. L'axiome 1 exige que $\emptyset \in \mathcal{T}$ et $X \in \mathcal{T}$. C'est explicitement le cas par définition de $\mathcal{T}$.
+2. Les intersections finies possibles d'éléments de $\mathcal{T}$ sont $\emptyset \cap \emptyset = \emptyset$, $X \cap X = X$, et $\emptyset \cap X = \emptyset$. Toutes ces intersections sont dans $\mathcal{T}$. L'axiome 2 est vérifié.
+3. Les réunions quelconques possibles sont $\emptyset \cup \emptyset = \emptyset$, $X \cup X = X$, et $\emptyset \cup X = X$. Elles sont toutes dans $\mathcal{T}$. L'axiome 3 est vérifié.
+Voisinages : Soit $x \in X$. Un voisinage de $x$ est un sous-ensemble $V \subset X$ contenant un ouvert contenant $x$. Le seul ouvert de $\mathcal{T}$ contenant $x$ est $X$ (car $\emptyset$ ne contient pas $x$). Ainsi, on doit avoir $x \in X \subset V$. Comme $V \subset X$, la seule possibilité est $V = X$.
+Conclusion : Le seul voisinage possible pour n'importe quel point $x \in X$ est l'espace entier $X$ lui-même.
+\subsection*{Exercice 3 : Topologie cofinie \quad $\bigstar\bigstar\star\star\star$}
+\textbf{Énoncé :}
+Sur un ensemble infini $X$, on définit $\mathcal{T}_{cof} = \{\emptyset\} \cup \{U \subset X \mid X \setminus U \text{ est fini}\}$. Montrer que c'est une topologie.
+
+\textbf{Correction exhaustive :}
+Vérifions les axiomes de la topologie :
+1. $\emptyset \in \mathcal{T}_{cof}$ par définition. Le complémentaire de $X$ est $X \setminus X = \emptyset$. L'ensemble vide a pour cardinal $0$, qui est fini, donc $X \in \mathcal{T}_{cof}$.
+2. Soit $(U_i)_{i \in I}$ une famille d'ouverts. Si tous les $U_i$ sont vides, leur réunion est vide, donc dans $\mathcal{T}_{cof}$. Supposons qu'il existe $i_0 \in I$ tel que $U_{i_0} \neq \emptyset$. Alors $X \setminus U_{i_0}$ est fini. Le complémentaire de la réunion est $X \setminus \left(\bigcup_{i \in I} U_i\right) = \bigcap_{i \in I} (X \setminus U_i)$. Cet ensemble est inclus dans $X \setminus U_{i_0}$, qui est fini. Donc $X \setminus \left(\bigcup_{i \in I} U_i\right)$ est fini, ce qui prouve que $\bigcup_{i \in I} U_i \in \mathcal{T}_{cof}$.
+3. Soient $U, V \in \mathcal{T}_{cof}$. Si $U = \emptyset$ ou $V = \emptyset$, $U \cap V = \emptyset \in \mathcal{T}_{cof}$. Sinon, $X \setminus U$ et $X \setminus V$ sont finis. Le complémentaire de l'intersection est $X \setminus (U \cap V) = (X \setminus U) \cup (X \setminus V)$. L'union de deux ensembles finis est finie. Donc $U \cap V \in \mathcal{T}_{cof}$. Par récurrence, cela s'étend à toute intersection finie.
+La famille $\mathcal{T}_{cof}$ est donc bien une topologie.
+\subsection*{Exercice 4 : Fermés de la topologie cofinie \quad $\bigstar\bigstar\star\star\star$}
+\textbf{Énoncé :}
+Quels sont les sous-ensembles fermés de la topologie cofinie sur un ensemble $X$ ?
+
+\textbf{Correction exhaustive :}
+Par définition, un sous-ensemble $F \subset X$ est fermé si son complémentaire $X \setminus F$ est un ouvert.
+Dans la topologie cofinie, les ouverts sont $\emptyset$ et les ensembles dont le complémentaire est fini.
+- Si $X \setminus F = \emptyset$, alors $F = X$.
+- Si $X \setminus F$ est tel que son propre complémentaire (c'est-à-dire $F$) est fini, alors $X \setminus F$ est ouvert.
+Ainsi, les fermés de la topologie cofinie sont exactement l'espace entier $X$ et tous les sous-ensembles finis de $X$.
+\subsection*{Exercice 5 : Intersection de topologies \quad $\bigstar\bigstar\star\star\star$}
+\textbf{Énoncé :}
+Soient $\mathcal{T}_1$ et $\mathcal{T}_2$ deux topologies sur un ensemble $X$. Montrer que leur intersection $\mathcal{T}_1 \cap \mathcal{T}_2$ est encore une topologie sur $X$.
+
+\textbf{Correction exhaustive :}
+Vérifions les axiomes pour $\mathcal{T} = \mathcal{T}_1 \cap \mathcal{T}_2$.
+1. $\emptyset \in \mathcal{T}_1$ et $\emptyset \in \mathcal{T}_2$, donc $\emptyset \in \mathcal{T}$. De même, $X \in \mathcal{T}_1$ et $X \in \mathcal{T}_2$, donc $X \in \mathcal{T}$.
+2. Soit $(O_i)_{i \in I}$ une famille d'éléments de $\mathcal{T}$. Pour tout $i$, $O_i \in \mathcal{T}_1$ et $O_i \in \mathcal{T}_2$. Comme $\mathcal{T}_1$ est une topologie, $\bigcup_{i \in I} O_i \in \mathcal{T}_1$. De même pour $\mathcal{T}_2$. Donc $\bigcup_{i \in I} O_i \in \mathcal{T}_1 \cap \mathcal{T}_2 = \mathcal{T}$.
+3. Soient $U, V \in \mathcal{T}$. Alors $U, V \in \mathcal{T}_1$ et $U, V \in \mathcal{T}_2$. Par stabilité de $\mathcal{T}_1$ et $\mathcal{T}_2$ par intersections finies, $U \cap V \in \mathcal{T}_1$ et $U \cap V \in \mathcal{T}_2$. Donc $U \cap V \in \mathcal{T}$.
+Conclusion : L'intersection de topologies est une topologie.
+\subsection*{Exercice 6 : Union de topologies \quad $\bigstar\bigstar\bigstar\star\star$}
+\textbf{Énoncé :}
+Montrer par un contre-exemple que l'union de deux topologies n'est pas nécessairement une topologie.
+
+\textbf{Correction exhaustive :}
+Considérons l'ensemble $X = \{a, b, c\}$.
+Définissons deux topologies sur $X$ :
+$\mathcal{T}_1 = \{\emptyset, \{a\}, X\}$ (c'est bien une topologie car les unions et intersections de ces éléments y sont).
+$\mathcal{T}_2 = \{\emptyset, \{b\}, X\}$.
+Considérons l'union des deux familles : $\mathcal{T} = \mathcal{T}_1 \cup \mathcal{T}_2 = \{\emptyset, \{a\}, \{b\}, X\}$.
+Si $\mathcal{T}$ était une topologie, elle devrait être stable par réunion.
+Or, $\{a\} \in \mathcal{T}$ et $\{b\} \in \mathcal{T}$, mais $\{a\} \cup \{b\} = \{a, b\} \notin \mathcal{T}$.
+L'axiome de réunion quelconque (ici finie) n'est pas vérifié. Donc l'union de deux topologies n'est pas nécessairement une topologie.
+\subsection*{Exercice 7 : Topologie induite \quad $\bigstar\bigstar\bigstar\star\star$}
+\textbf{Énoncé :}
+Soit $(X, \mathcal{T})$ un espace topologique et $A \subset X$. On définit $\mathcal{T}_A = \{O \cap A \mid O \in \mathcal{T}\}$. Montrer que $\mathcal{T}_A$ est une topologie sur $A$ (topologie induite ou topologie trace).
+
+\textbf{Correction exhaustive :}
+Vérifions les axiomes pour $\mathcal{T}_A$ sur l'ensemble $A$ :
+1. $\emptyset \in \mathcal{T}$, et $\emptyset \cap A = \emptyset$, donc $\emptyset \in \mathcal{T}_A$.
+   $X \in \mathcal{T}$, et $X \cap A = A$, donc $A \in \mathcal{T}_A$.
+2. Soit $(U_i)_{i \in I}$ une famille d'éléments de $\mathcal{T}_A$. Pour chaque $i$, il existe $O_i \in \mathcal{T}$ tel que $U_i = O_i \cap A$.
+   La réunion est $\bigcup_{i \in I} U_i = \bigcup_{i \in I} (O_i \cap A) = \left( \bigcup_{i \in I} O_i \right) \cap A$.
+   Comme $\mathcal{T}$ est une topologie, $\bigcup_{i \in I} O_i \in \mathcal{T}$, donc l'intersection avec $A$ appartient à $\mathcal{T}_A$.
+3. Soient $U_1, \dots, U_n \in \mathcal{T}_A$. Il existe $O_1, \dots, O_n \in \mathcal{T}$ tels que $U_k = O_k \cap A$.
+   L'intersection finie est $\bigcap_{k=1}^n U_k = \bigcap_{k=1}^n (O_k \cap A) = \left( \bigcap_{k=1}^n O_k \right) \cap A$.
+   Comme $\mathcal{T}$ est stable par intersection finie, $\bigcap_{k=1}^n O_k \in \mathcal{T}$, donc $\bigcap_{k=1}^n U_k \in \mathcal{T}_A$.
+Conclusion : $\mathcal{T}_A$ est bien une topologie sur $A$.
+\subsection*{Exercice 8 : Intérieur et adhérence \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+\textbf{Énoncé :}
+Soit $A$ une partie de $X$. L'intérieur $\mathring{A}$ est la réunion de tous les ouverts inclus dans $A$. L'adhérence $\bar{A}$ est l'intersection de tous les fermés contenant $A$. Montrer que $X \setminus \mathring{A} = \overline{X \setminus A}$.
+
+\textbf{Correction exhaustive :}
+L'intérieur de $A$ est défini par :
+$\mathring{A} = \bigcup \{O \in \mathcal{T} \mid O \subset A\}$.
+Passons au complémentaire dans $X$ et utilisons les lois de De Morgan généralisées :
+$X \setminus \mathring{A} = X \setminus \left( \bigcup_{O \in \mathcal{T}, O \subset A} O \right) = \bigcap_{O \in \mathcal{T}, O \subset A} (X \setminus O)$.
+Posons $F = X \setminus O$. Comme $O$ est ouvert, $F$ est un fermé.
+La condition $O \subset A$ est équivalente, par passage au complémentaire, à $X \setminus A \subset X \setminus O$, c'est-à-dire $X \setminus A \subset F$.
+Ainsi, la famille des complémentaires des ouverts inclus dans $A$ correspond exactement à la famille des fermés contenant le complémentaire de $A$.
+L'intersection de ces fermés est, par définition, l'adhérence de $X \setminus A$.
+On obtient donc : $X \setminus \mathring{A} = \bigcap_{F \text{ ferm\'{e}}, X \setminus A \subset F} F = \overline{X \setminus A}$.
+\subsection*{Exercice 9 : Voisinages dans la topologie cofinie \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+\textbf{Énoncé :}
+Dans la topologie cofinie sur un ensemble infini $X$, quels sont les voisinages d'un point $x \in X$ ? En déduire que l'espace n'est pas séparé (pas de Hausdorff).
+
+\textbf{Correction exhaustive :}
+1. Voisinages :
+Soit $x \in X$. Un sous-ensemble $V \subset X$ est un voisinage de $x$ s'il contient un ouvert $U$ contenant $x$.
+Dans la topologie cofinie, un ouvert non vide $U$ est tel que son complémentaire $X \setminus U$ est fini.
+Si $U \subset V$, alors $X \setminus V \subset X \setminus U$. Comme $X \setminus U$ est fini, tout sous-ensemble d'un ensemble fini est fini. Donc $X \setminus V$ doit être fini.
+Réciproquement, si $V$ est tel que $x \in V$ et $X \setminus V$ est fini, alors $V$ est un ouvert (donc $U=V$) contenant $x$.
+Les voisinages de $x$ sont donc exactement les parties de $X$ contenant $x$ et dont le complémentaire est fini.
+
+2. Espace non séparé :
+Un espace est séparé (Hausdorff) si pour tous points distincts $x \neq y$, il existe des voisinages $V_x$ et $V_y$ tels que $V_x \cap V_y = \emptyset$.
+Prenons $x \neq y$ dans $X$. Soit $V_x$ un voisinage de $x$ et $V_y$ un voisinage de $y$.
+Leurs complémentaires $C_x = X \setminus V_x$ et $C_y = X \setminus V_y$ sont finis.
+Le complémentaire de leur intersection est $X \setminus (V_x \cap V_y) = C_x \cup C_y$.
+L'union de deux ensembles finis est finie. Ainsi $V_x \cap V_y$ a un complémentaire fini.
+Or, par hypothèse, $X$ est infini. Un sous-ensemble dont le complémentaire est fini dans un ensemble infini ne peut pas être vide (sinon le complémentaire de l'ensemble vide, qui est $X$, serait fini, ce qui est absurde).
+Donc $V_x \cap V_y \neq \emptyset$. On ne peut jamais séparer deux points.
+\subsection*{Exercice 10 : Topologie de l'ordre \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+\textbf{Énoncé :}
+Soit $X$ un ensemble totalement ordonné muni d'une relation d'ordre strict $<$. On définit la base de la topologie de l'ordre par les intervalles ouverts $]a, b[ = \{x \in X \mid a < x < b\}$, les demi-droites ouvertes $]-\infty, a[$ et $]a, +\infty[$. Montrer que l'intersection finie de ces ouverts de base reste un ouvert de base ou est vide.
+
+\textbf{Correction exhaustive :}
+Une base de topologie engendre une topologie par réunions quelconques de ses éléments. Pour que ce soit valide, il faut que l'intersection de deux ouverts de base s'écrive comme union d'ouverts de base (ou soit vide). Montrons ici qu'elle est en fait un seul ouvert de base ou vide.
+Soient $I_1$ et $I_2$ deux éléments de la base.
+Prenons le cas général de deux intervalles ouverts $I_1 = ]a, b[$ et $I_2 = ]c, d[$.
+Leur intersection est $\{x \in X \mid (a < x < b) \text{ et } (c < x < d)\}$.
+Puisque l'ordre est total, l'ensemble $\{a, c\}$ a un plus grand élément, notons le $\max(a,c)$. De même l'ensemble $\{b, d\}$ a un plus petit élément, notons le $\min(b,d)$.
+L'intersection devient $\{x \in X \mid \max(a,c) < x < \min(b,d)\}$.
+Si $\max(a,c) < \min(b,d)$, cet ensemble est exactement l'intervalle ouvert $]\max(a,c), \min(b,d)[$, qui est un ouvert de base.
+Sinon, l'intersection est vide $\emptyset$.
+Ce raisonnement s'étend de la même manière si $I_1$ ou $I_2$ est une demi-droite, en considérant que $-\infty$ est toujours inférieur à n'importe quel élément et $+\infty$ toujours supérieur. L'intersection finie reste donc toujours dans la famille des ouverts de base ou l'ensemble vide, assurant ainsi que l'axiome d'intersection finie de la topologie engendrée sera vérifié.
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+
+\subsection*{TP 1 : Implémentation d'une topologie finie}
+\begin{lstlisting}
+def is_topology(X, T):
+    # X est un set, T est une liste de sets
+    # Axiome 1 : vide et X sont dans T
+    if set() not in T or X not in T:
+        return False
+
+    # Axiome 2 : Intersection finie (ici toutes les paires suffisent)
+    for U in T:
+        for V in T:
+            if (U & V) not in T:
+                return False
+
+    # Axiome 3 : Réunion quelconque
+    # Pour un ensemble fini, tester toutes les paires suffit par récurrence
+    for U in T:
+        for V in T:
+            if (U | V) not in T:
+                return False
+
+    return True
+
+# Test
+X = {1, 2, 3}
+T_discrete = [set(), {1}, {2}, {3}, {1,2}, {1,3}, {2,3}, {1,2,3}]
+T_grossiere = [set(), {1,2,3}]
+T_bad = [set(), {1}, {2}, {1,2,3}] # manque union {1,2}
+
+assert is_topology(X, T_discrete) == True
+assert is_topology(X, T_grossiere) == True
+assert is_topology(X, T_bad) == False
+print("Tous les tests passent pour la vérification des axiomes topologiques.")
+\end{lstlisting}
+
+\subsection*{TP 2 : Calcul de l'intérieur et de l'adhérence}
+\begin{lstlisting}
+def get_interior(A, T):
+    # A est un set, T une liste de sets (la topologie)
+    interior = set()
+    for U in T:
+        if U.issubset(A):
+            interior = interior | U
+    return interior
+
+def get_closure(A, X, T):
+    # Les fermés sont les complémentaires des ouverts
+    closed_sets = [X - U for U in T]
+    closure = set(X)
+    for F in closed_sets:
+        if A.issubset(F):
+            closure = closure & F
+    return closure
+
+X = {1, 2, 3, 4}
+T = [set(), {1}, {1, 2}, {1, 2, 3}, {1, 2, 3, 4}]
+A = {1, 3}
+
+assert get_interior(A, T) == {1}
+assert get_closure(A, X, T) == {1, 2, 3, 4}
+print("Intérieur et adhérence calculés avec succès.")
+\end{lstlisting}
+
+\subsection*{TP 3 : Détection d'un espace séparé (Hausdorff)}
+\begin{lstlisting}
+def is_hausdorff(X, T):
+    # Vérifie si pour toute paire x, y distincts, il existe des ouverts disjoints
+    for x in X:
+        for y in X:
+            if x != y:
+                # Chercher des ouverts U contenant x et V contenant y disjoints
+                separated = False
+                for U in T:
+                    for V in T:
+                        if x in U and y in V and len(U & V) == 0:
+                            separated = True
+                            break
+                    if separated:
+                        break
+                if not separated:
+                    return False
+    return True
+
+X = {1, 2, 3}
+T_disc = [set(), {1}, {2}, {3}, {1,2}, {1,3}, {2,3}, {1,2,3}]
+T_grossiere = [set(), {1,2,3}]
+
+assert is_hausdorff(X, T_disc) == True
+assert is_hausdorff(X, T_grossiere) == False
+print("Propriété de Hausdorff validée formellement.")
+\end{lstlisting}
+
+\subsection*{TP 4 : Topologie induite}
+\begin{lstlisting}
+def induced_topology(A, T):
+    # Calcule la topologie trace sur A
+    T_A = []
+    for U in T:
+        intersection = U & A
+        if intersection not in T_A:
+            T_A.append(intersection)
+    return T_A
+
+X = {1, 2, 3, 4}
+T = [set(), {1}, {1, 2}, {1, 2, 3}, X]
+A = {2, 4}
+
+T_A = induced_topology(A, T)
+expected = [set(), {2}, A] # {1}&A=vide, {1,2}&A={2}, {1,2,3}&A={2}, X&A=A
+for e in expected:
+    assert e in T_A
+assert len(T_A) == len(expected)
+print("Génération de la topologie induite correcte.")
+\end{lstlisting}
+
+\subsection*{TP 5 : Base de voisinages}
+\begin{lstlisting}
+def filter_neighborhoods(x, X, T):
+    # Retourne tous les voisinages de x
+    neighborhoods = []
+    # Parcourir toutes les parties de X
+    # (implémentation basique pour petits ensembles)
+    # On génère le powerset de X
+    from itertools import chain, combinations
+    powerset = list(map(set, chain.from_iterable(combinations(X, r) for r in range(len(X)+1))))
+
+    for V in powerset:
+        # V est un voisinage de x s'il contient un ouvert U contenant x
+        is_voisinage = False
+        for U in T:
+            if x in U and U.issubset(V):
+                is_voisinage = True
+                break
+        if is_voisinage:
+            neighborhoods.append(V)
+    return neighborhoods
+
+X = {1, 2, 3}
+T = [set(), {1}, {1, 2}, {1, 2, 3}]
+
+V_1 = filter_neighborhoods(1, X, T)
+# Ouvert contenant 1 : {1}, {1,2}, {1,2,3}. Voisinages: {1}, {1,2}, {1,3}, {1,2,3}
+assert {1} in V_1
+assert {2} not in V_1
+print("Base de voisinages générée avec succès.")
+\end{lstlisting}
+
+\end{document}
