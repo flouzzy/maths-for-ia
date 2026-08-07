@@ -7,7 +7,7 @@ tags:
   - math/topologie
   - ia/abstraction
 prev: "[[Jalon 49 (Espaces topologiques généraux).md]]"
-next: "[[Jalon 51 (Espaces métriques).md]]"
+next: "[[Jalon-51.md]]"
 ---
 
 # Jalon 50 : Opérateurs topologiques : Intérieur, Adhérence, Frontière
