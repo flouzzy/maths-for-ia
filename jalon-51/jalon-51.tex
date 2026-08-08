@@ -1,0 +1,454 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1
+}
+
+\title{\Huge JALON 51 : ESPACES MÉTRIQUES \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+\section{Espaces métriques et topologies induites}
+
+La notion de distance est le fondement géométrique de l'analyse moderne. Issue des travaux de Maurice Fréchet et Felix Hausdorff au début du XXe siècle, elle permet d'étendre la rigueur des limites et de la continuité (définies sur $\mathbb{R}$) à des ensembles abstraits arbitraires (fonctions, matrices, graphes). En s'affranchissant de toute structure algébrique sous-jacente, l'espace métrique constitue la structure topologique la plus naturelle et la plus intuitive pour modéliser la proximité, l'approximation et la convergence.
+
+\subsection*{Distances et axiomes fondamentaux}
+
+Soit $X$ un ensemble non vide.
+
+\textbf{Définition (Distance) :}
+Une application $d : X \times X \to \mathbb{R}_+$ est une distance sur $X$ si elle vérifie les trois axiomes suivants pour tout $(x, y, z) \in X^3$ :
+1. \textbf{Séparation :} $d(x, y) = 0 \iff x = y$.
+2. \textbf{Symétrie :} $d(x, y) = d(y, x)$.
+3. \textbf{Inégalité triangulaire :} $d(x, z) \le d(x, y) + d(y, z)$.
+
+Le couple $(X, d)$ est alors appelé un espace métrique.
+
+\textbf{Exemple géométrique immédiat (Distance euclidienne sur $\mathbb{R}^2$) :}
+Pour $x = (x_1, x_2)$ et $y = (y_1, y_2)$ dans $\mathbb{R}^2$, l'application $d_2(x, y) = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2}$ est une distance. La séparation et la symétrie sont triviales, et l'inégalité triangulaire découle de l'inégalité de Cauchy-Schwarz sur le produit scalaire canonique.
+
+\textbf{Exemple pathologique (Distance discrète) :}
+Sur un ensemble arbitraire $X$, définissons $d(x, y) = 1$ si $x \neq y$ et $d(x, x) = 0$. Il s'agit d'une métrique valide. En effet, l'inégalité triangulaire $d(x, z) \le d(x, y) + d(y, z)$ est satisfaite car si $x \neq z$, alors $d(x, z) = 1$. Or, $y$ ne peut être simultanément égal à $x$ et à $z$. Ainsi, $d(x, y)$ ou $d(y, z)$ vaut $1$, et la somme est supérieure ou égale à $1$.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  % Triangle points
+  \coordinate (X) at (0,0);
+  \coordinate (Y) at (3,1);
+  \coordinate (Z) at (2,3);
+
+  % Draw points
+  \fill[black] (X) circle (2pt) node[below left] {$x$};
+  \fill[black] (Y) circle (2pt) node[below right] {$y$};
+  \fill[black] (Z) circle (2pt) node[above] {$z$};
+
+  % Draw lines
+  \draw[thick, blue] (X) -- (Z) node[midway, left] {$d(x,z)$};
+  \draw[dashed, red] (X) -- (Y) node[midway, below] {$d(x,y)$};
+  \draw[dashed, red] (Y) -- (Z) node[midway, right] {$d(y,z)$};
+\end{tikzpicture}
+\\
+\textit{Illustration géométrique de l'inégalité triangulaire : le chemin direct (bleu) est toujours plus court ou égal au chemin avec détour (rouge).}
+\end{center}
+
+\subsection*{Topologie induite par une métrique}
+
+La puissance des espaces métriques réside dans leur capacité à engendrer canoniquement une structure topologique.
+
+\textbf{Définition (Boules) :}
+Soit $(X, d)$ un espace métrique, $a \in X$ et $r > 0$.
+- La boule ouverte de centre $a$ et de rayon $r$ est : $B(a, r) = \{ x \in X \mid d(a, x) < r \}$.
+- La boule fermée de centre $a$ et de rayon $r$ est : $\overline{B}(a, r) = \{ x \in X \mid d(a, x) \le r \}$.
+
+\textbf{Théorème (Génération de la topologie) :}
+Soit $(X, d)$ un espace métrique. L'ensemble $\mathcal{T}_d$ des parties $O \subset X$ telles que pour tout $x \in O$, il existe $r > 0$ vérifiant $B(x, r) \subset O$, forme une topologie sur $X$.
+
+\textbf{Démonstration détaillée :}
+Montrons d'abord qu'une boule ouverte est un ouvert de $\mathcal{T}_d$. Soit $B(a, R)$ une boule ouverte. Considérons un point arbitraire $x \in B(a, R)$. Par définition, $d(a, x) < R$. Posons $r = R - d(a, x) > 0$.
+Soit $y \in B(x, r)$. Nous devons prouver que $y \in B(a, R)$.
+Par l'inégalité triangulaire :
+$$ d(a, y) \le d(a, x) + d(x, y) < d(a, x) + r = d(a, x) + R - d(a, x) = R $$
+Donc $d(a, y) < R$, ce qui implique $y \in B(a, R)$. Ainsi $B(x, r) \subset B(a, R)$, et la boule ouverte est bien un ouvert topologique.
+
+Les axiomes de la topologie (stabilité par union quelconque et intersection finie) découlent ensuite directement de cette caractérisation par les boules locales.
+
+\begin{center}
+\begin{tikzpicture}[scale=2]
+  % Main ball B(a, R)
+  \draw[blue, thick] (0,0) circle (1.5cm);
+  \fill[blue, opacity=0.1] (0,0) circle (1.5cm);
+  \fill[black] (0,0) circle (1pt) node[below] {$a$};
+
+  % Radius R
+  \draw[->, blue, dashed] (0,0) -- (1.06, 1.06) node[midway, above left] {$R$};
+
+  % Sub-ball B(x, r)
+  \coordinate (X) at (0.8, 0.3);
+  \draw[red, thick] (X) circle (0.6cm);
+  \fill[red, opacity=0.2] (X) circle (0.6cm);
+  \fill[black] (X) circle (1pt) node[below] {$x$};
+
+  % Radius r
+  \draw[->, red, dashed] (X) -- +(0.6, 0) node[midway, below] {$r$};
+
+  % Line from a to x
+  \draw[dashed] (0,0) -- (X) node[midway, above] {$d(a,x)$};
+\end{tikzpicture}
+\\
+\textit{Construction géométrique prouvant qu'une boule ouverte est un ouvert : pour tout point $x$, on peut inscrire une sous-boule de rayon $r = R - d(a,x)$.}
+\end{center}
+
+\subsection*{Distances équivalentes}
+
+\textbf{Définition (Équivalence) :}
+Deux distances $d_1$ et $d_2$ sur $X$ sont dites (topologiquement) équivalentes s'il existe des constantes $C_1 > 0, C_2 > 0$ telles que pour tout $x, y \in X$ :
+$$ C_1 d_1(x, y) \le d_2(x, y) \le C_2 d_1(x, y) $$
+
+\textbf{Proposition :}
+Si deux distances sont équivalentes, elles induisent exactement la même topologie sur $X$ (les mêmes ouverts, les mêmes fermés, les mêmes suites convergentes).
+
+\textbf{Exemple (Normes sur $\mathbb{R}^n$) :}
+Sur $\mathbb{R}^n$, la distance de Manhattan $d_1(x,y) = \sum |x_i - y_i|$, la distance euclidienne $d_2(x,y) = \sqrt{\sum (x_i - y_i)^2}$, et la distance infinie $d_\infty(x,y) = \max |x_i - y_i|$ sont toutes équivalentes, car $\mathbb{R}^n$ est de dimension finie. Par exemple, $d_\infty(x,y) \le d_2(x,y) \le \sqrt{n} d_\infty(x,y)$.
+
+\subsection*{Applications en Physique et Intelligence Artificielle}
+
+En apprentissage automatique, le choix de la métrique définit la géométrie de l'espace de représentation. Par exemple, l'algorithme des $k$-plus proches voisins (k-NN) s'appuie directement sur un espace métrique. De même, les distances de Wasserstein (issues du transport optimal de Monge-Kantorovich) permettent de quantifier la proximité entre des distributions de probabilité dans les réseaux antagonistes génératifs (WGAN), surmontant les limites de la divergence de Kullback-Leibler qui ne satisfait pas l'inégalité triangulaire ni la symétrie.
+
+\newpage
+
+\part{Exercices d'Application et de Concours}
+
+\subsection*{Exercice 1 : Distance ultramétrique \quad $\bigstar$}
+
+\textbf{Énoncé :} Soit $(X, d)$ un espace métrique tel que pour tout $(x, y, z) \in X^3$, $d(x, z) \le \max(d(x, y), d(y, z))$. Montrer que dans cet espace, tout triangle est isocèle.
+
+\textbf{Correction :} Soient $x, y, z \in X$ distincts. Supposons sans perte de généralité que $d(x, y) \neq d(y, z)$. Par exemple, $d(x, y) < d(y, z)$.
+Par l'inégalité ultramétrique, $d(x, z) \le \max(d(x, y), d(y, z)) = d(y, z)$.
+D'autre part, en appliquant l'inégalité ultramétrique au triangle $y, x, z$, on obtient :
+$d(y, z) \le \max(d(y, x), d(x, z)) = \max(d(x, y), d(x, z))$.
+Puisque $d(x, y) < d(y, z)$, la seule possibilité pour que $\max(d(x, y), d(x, z))$ soit supérieur ou égal à $d(y, z)$ est que $\max(d(x, y), d(x, z)) = d(x, z)$.
+Donc $d(y, z) \le d(x, z)$.
+En combinant les deux inégalités, on obtient $d(x, z) = d(y, z)$. Ainsi, le triangle a au moins deux côtés égaux (isocèle).
+
+\vspace{1cm}
+
+\subsection*{Exercice 2 : Topologie discrète \quad $\bigstar$}
+
+\textbf{Énoncé :} Démontrer rigoureusement que la distance discrète $d(x, y) = 1$ si $x \neq y$, et $0$ sinon, induit la topologie discrète (où toute partie est un ouvert).
+
+\textbf{Correction :} Considérons la boule ouverte $B(x, 1/2)$.
+Par définition, $B(x, 1/2) = \{ y \in X \mid d(x, y) < 1/2 \}$.
+Puisque la distance ne prend que les valeurs $0$ et $1$, la condition $d(x, y) < 1/2$ équivaut strictement à $d(x, y) = 0$.
+Par l'axiome de séparation, cela équivaut à $y = x$. Donc $B(x, 1/2) = \{x\}$.
+Puisqu'une boule ouverte est un ouvert pour la topologie induite, le singleton $\{x\}$ est un ouvert.
+Toute partie $A \subset X$ peut s'écrire comme l'union de ses points : $A = \bigcup_{x \in A} \{x\}$.
+Une union quelconque d'ouverts étant un ouvert, la partie $A$ est un ouvert. Ainsi, toute partie de $X$ est ouverte, c'est la topologie discrète.
+
+\vspace{1cm}
+
+\subsection*{Exercice 3 : Distances bornées \quad $\bigstar\bigstar$}
+
+\textbf{Énoncé :} Soit $(X, d)$ un espace métrique. Montrer que $\delta(x, y) = \frac{d(x, y)}{1 + d(x, y)}$ est une distance sur $X$, et qu'elle est bornée par $1$.
+
+\textbf{Correction :}
+1. \textbf{Séparation et Symétrie :} Évidentes à partir des propriétés de $d$. De plus, $\delta(x,y) < 1$ pour tout $x,y$.
+2. \textbf{Inégalité triangulaire :} Soit $f(t) = \frac{t}{1+t}$. La dérivée $f'(t) = \frac{1}{(1+t)^2} > 0$, donc $f$ est strictement croissante sur $\mathbb{R}_+$.
+On sait que $d(x, z) \le d(x, y) + d(y, z)$. Par croissance de $f$ :
+$\delta(x, z) = f(d(x, z)) \le f(d(x, y) + d(y, z)) = \frac{d(x, y) + d(y, z)}{1 + d(x, y) + d(y, z)}$
+On sépare la fraction :
+$\delta(x, z) \le \frac{d(x, y)}{1 + d(x, y) + d(y, z)} + \frac{d(y, z)}{1 + d(x, y) + d(y, z)}$
+En minorant les dénominateurs (en enlevant les termes positifs) :
+$\delta(x, z) \le \frac{d(x, y)}{1 + d(x, y)} + \frac{d(y, z)}{1 + d(y, z)} = \delta(x, y) + \delta(y, z)$.
+L'application $\delta$ est bien une métrique bornée par $1$ (et topologiquement équivalente à $d$).
+
+\vspace{1cm}
+
+\subsection*{Exercice 4 : Continuité de la distance \quad $\bigstar\bigstar$}
+
+\textbf{Énoncé :} Soit $(X, d)$ un espace métrique. Démontrer que l'application $x \mapsto d(a, x)$ est continue sur $X$, c'est-à-dire que $|d(a, x) - d(a, y)| \le d(x, y)$.
+
+\textbf{Correction :} Soient $a, x, y \in X$.
+Par l'inégalité triangulaire appliquée aux points $a, x, y$ :
+$d(a, x) \le d(a, y) + d(y, x) = d(a, y) + d(x, y)$ (par symétrie).
+Donc $d(a, x) - d(a, y) \le d(x, y)$.
+
+En intervertissant les rôles de $x$ et $y$ :
+$d(a, y) \le d(a, x) + d(x, y)$, donc $d(a, y) - d(a, x) \le d(x, y)$, ce qui s'écrit $-(d(a, x) - d(a, y)) \le d(x, y)$.
+
+En combinant les deux inégalités, on obtient la valeur absolue :
+$|d(a, x) - d(a, y)| \le d(x, y)$.
+Cette propriété montre que l'application distance à un point est $1$-lipschitzienne, donc uniformément continue.
+
+\vspace{1cm}
+
+\subsection*{Exercice 5 : Intersection de boules \quad $\bigstar\bigstar\star$}
+
+\textbf{Énoncé :} Dans un espace métrique, si deux boules fermées $\overline{B}(x, r_1)$ et $\overline{B}(y, r_2)$ sont disjointes, démontrer strictement que $d(x, y) > r_1 + r_2$.
+
+\textbf{Correction :} Procédons par l'absurde. Supposons que $d(x, y) \le r_1 + r_2$.
+Dans l'espace euclidien $\mathbb{R}^n$, si la distance entre les centres est inférieure à la somme des rayons, l'intersection est non vide. Cependant, dans un espace métrique général, on ne peut pas construire trivialement un point milieu.
+En fait, l'implication proposée dans l'énoncé s'écrit par contraposée : si $d(x, y) \le r_1 + r_2$, alors les boules peuvent-elles être disjointes ?
+Dans la distance discrète, si $r_1=r_2=1/2$, et $x \neq y$, $d(x,y)=1 \le 1/2+1/2=1$. Les boules fermées $\overline{B}(x, 1/2)=\{x\}$ et $\overline{B}(y, 1/2)=\{y\}$ sont disjointes, bien que $d(x,y) = r_1+r_2$.
+Donc, $d(x, y) > r_1 + r_2$ est \textbf{faux en général} pour impliquer des boules disjointes, il faut une métrique stricte comme une norme sur un EV.
+Réciproquement, montrons que si $\overline{B}(x, r_1) \cap \overline{B}(y, r_2) \neq \emptyset$, alors $d(x,y) \le r_1+r_2$.
+Soit $z$ dans l'intersection. $d(x, z) \le r_1$ et $d(y, z) \le r_2$.
+Par inégalité triangulaire, $d(x, y) \le d(x, z) + d(z, y) \le r_1 + r_2$.
+Par contraposée absolue, si $d(x, y) > r_1 + r_2$, alors les boules sont strictement disjointes.
+
+\vspace{1cm}
+
+\subsection*{Exercice 6 : Distance de Hausdorff (Intro) \quad $\bigstar\bigstar\star$}
+
+\textbf{Énoncé :} Soit $X$ un espace métrique. Pour un point $x \in X$ et une partie non vide $A \subset X$, on définit $d(x, A) = \inf_{a \in A} d(x, a)$. Démontrer que $x \mapsto d(x, A)$ est $1$-lipschitzienne.
+
+\textbf{Correction :} Soient $x, y \in X$. Pour tout $a \in A$, on a par inégalité triangulaire :
+$d(x, a) \le d(x, y) + d(y, a)$.
+En passant à l'infimum sur $a \in A$ du membre de gauche, tout en gardant $a$ fixé à droite, on a :
+$\inf_{a \in A} d(x, a) \le d(x, y) + d(y, a)$ ce qui s'écrit $d(x, A) \le d(x, y) + d(y, a)$.
+Puisque cette inégalité est vraie pour tout $a \in A$, le terme de gauche est un minorant de l'ensemble $\{ d(x, y) + d(y, a) \mid a \in A \}$.
+La plus grande borne inférieure (l'infimum) de cet ensemble est donc supérieure ou égale à $d(x, A)$.
+Donc : $d(x, A) \le d(x, y) + \inf_{a \in A} d(y, a) = d(x, y) + d(y, A)$.
+Ce qui donne $d(x, A) - d(y, A) \le d(x, y)$.
+Par symétrie en échangeant $x$ et $y$, on obtient $|d(x, A) - d(y, A)| \le d(x, y)$, démontrant la propriété de contraction de Lipschitz.
+
+\vspace{1cm}
+
+\subsection*{Exercice 7 : Fermeture par la distance \quad $\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :} Démontrer que $x \in \overline{A}$ (l'adhérence de $A$) si et seulement si $d(x, A) = 0$.
+
+\textbf{Correction :}
+\textbf{Sens direct ($\implies$) :} Si $x \in \overline{A}$, alors tout voisinage de $x$ rencontre $A$. Pour tout $\epsilon > 0$, la boule ouverte $B(x, \epsilon)$ contient au moins un point $a \in A$.
+Ainsi, pour tout $\epsilon > 0$, il existe $a \in A$ tel que $d(x, a) < \epsilon$.
+Cela signifie précisément que l'infimum des distances est inférieur à tout $\epsilon > 0$, soit $d(x, A) = 0$.
+
+\textbf{Sens réciproque ($\impliedby$) :} Si $d(x, A) = 0$, alors $\inf_{a \in A} d(x, a) = 0$.
+Par la définition de la borne inférieure, pour tout $\epsilon > 0$, il n'est pas possible que $0$ soit le seul minorant ; il existe un élément de l'ensemble strictement inférieur à $0 + \epsilon$.
+Donc, il existe $a \in A$ tel que $d(x, a) < \epsilon$.
+Ce point $a$ appartient donc à $B(x, \epsilon) \cap A$. Puisque toute boule centrée en $x$ rencontre $A$, $x$ appartient bien à l'adhérence $\overline{A}$ par caractérisation métrique.
+
+\vspace{1cm}
+
+\subsection*{Exercice 8 : L'espace des suites bornées \quad $\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :} Sur l'espace $l^\infty(\mathbb{R})$ des suites réelles bornées, on définit $d(u, v) = \sup_{n \in \mathbb{N}} |u_n - v_n|$. Démontrer que la convergence pour cette distance implique la convergence uniforme des suites.
+
+\textbf{Correction :} Soit $(u^{(k)})_{k \in \mathbb{N}}$ une suite d'éléments de $l^\infty(\mathbb{R})$ (donc une suite de suites) convergeant vers une suite $v$ pour la distance $d$.
+Par définition de la convergence métrique :
+$\forall \epsilon > 0, \exists K \in \mathbb{N}, \forall k \ge K, d(u^{(k)}, v) < \epsilon$.
+En remplaçant $d$ par sa définition :
+$\forall k \ge K, \sup_{n \in \mathbb{N}} |u^{(k)}_n - v_n| < \epsilon$.
+Par définition du supremum, cela implique que pour chaque indice scalaire $n$, l'écart est majoré par le supremum :
+$\forall k \ge K, \forall n \in \mathbb{N}, |u^{(k)}_n - v_n| \le \sup_{m} |u^{(k)}_m - v_m| < \epsilon$.
+L'entier $K$ dépend uniquement de $\epsilon$ et est parfaitement indépendant de l'indice $n$. C'est l'exacte définition formelle de la convergence uniforme d'une suite de fonctions (ici définies sur $\mathbb{N}$).
+
+\vspace{1cm}
+
+\subsection*{Exercice 9 : SNCF et topologie arborescente \quad $\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :} Sur $\mathbb{R}^2$, on définit la "distance de la jungle" (ou SNCF centrée en $0$) par $d(x, y) = ||x-y||_2$ si $x$ et $y$ sont alignés avec l'origine, et $d(x, y) = ||x||_2 + ||y||_2$ sinon. Décrire géométriquement les boules ouvertes de cet espace.
+
+\textbf{Correction :} C'est une métrique valide (les détails de l'inégalité triangulaire découlent du triangle euclidien via l'origine).
+Fixons un point $x \neq 0$ et cherchons la boule ouverte $B(x, r)$.
+\textbf{Cas 1 :} $r \le ||x||_2$. Soit $y \in B(x, r)$. Si $y$ n'est pas aligné avec $0$, $d(x, y) = ||x||_2 + ||y||_2 \ge ||x||_2 \ge r$, donc $y$ ne peut pas appartenir à la boule. La boule est donc strictement contenue dans le segment ouvert de la droite passant par $0$ et $x$, de longueur $2r$ centré en $x$. (Topologie 1D).
+\textbf{Cas 2 :} $r > ||x||_2$. Si $y$ n'est pas aligné avec $0$, il est dans la boule ssi $||x||_2 + ||y||_2 < r$, c'est-à-dire $||y||_2 < r - ||x||_2$.
+Donc la boule est constituée de la réunion d'un segment sur la droite issue de l'origine contenant $x$, et d'une vraie boule euclidienne (ouverte) centrée en l'origine de rayon $r - ||x||_2$.
+Cet espace métrique est localement $1$-dimensionnel sauf en l'origine où il est $2$-dimensionnel.
+
+\vspace{1cm}
+
+\subsection*{Exercice 10 : Isométries et Théorème de Mazur-Ulam \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :} Une application $f : E \to F$ entre deux espaces normés est une isométrie si $||f(x) - f(y)|| = ||x - y||$. Montrer que toute isométrie surjective (avec $f(0)=0$) préserve l'alignement, étape clé prouvant qu'elle est linéaire.
+
+\textbf{Correction :} Le cœur du théorème de Mazur-Ulam réside dans la caractérisation métrique du milieu d'un segment.
+Soient $x, y \in E$. Le point milieu $m = \frac{x+y}{2}$ est l'unique point de $E$ satisfaisant :
+$||x - m|| = ||y - m|| = \frac{1}{2}||x - y||$.
+Puisque $f$ est une isométrie :
+$||f(x) - f(m)|| = ||x - m|| = \frac{1}{2}||x - y|| = \frac{1}{2}||f(x) - f(y)||$
+$||f(y) - f(m)|| = ||y - m|| = \frac{1}{2}||x - y|| = \frac{1}{2}||f(x) - f(y)||$
+Dans un espace strictement convexe (pour simplifier), il existe un unique point satisfaisant ces équations métriques, qui est le milieu du segment $[f(x), f(y)]$.
+Ainsi $f(m) = \frac{f(x) + f(y)}{2}$. L'isométrie préserve les milieux.
+Par une récurrence dyadique standard et l'utilisation de la densité et de la continuité (une isométrie étant 1-lipschitzienne donc continue), on montre que $f(tx + (1-t)y) = tf(x) + (1-t)f(y)$ pour tout réel $t$, ce qui prouve la linéarité absolue.
+
+\vspace{1cm}
+
+\newpage
+
+\part{Travaux Pratiques et Simulations Algorithmiques}
+
+\subsection*{TP 1 : Métrique Euclidienne et Manhattan}
+
+\begin{lstlisting}
+import math
+
+def distance_euclidienne(x, y):
+    # Calcul rigoureux de la métrique induite par la norme 2
+    assert len(x) == len(y), "Les vecteurs doivent être de même dimension"
+    somme_carr = sum((a - b)**2 for a, b in zip(x, y))
+    return math.sqrt(somme_carr)
+
+def distance_manhattan(x, y):
+    # Calcul de la métrique L1
+    assert len(x) == len(y), "Les vecteurs doivent être de même dimension"
+    return sum(abs(a - b) for a, b in zip(x, y))
+
+# Validation mathématique sur R^2
+v1 = [0.0, 0.0]
+v2 = [3.0, 4.0]
+
+d2 = distance_euclidienne(v1, v2)
+d1 = distance_manhattan(v1, v2)
+
+assert math.isclose(d2, 5.0), "La distance euclidienne de (3,4) à l'origine doit être 5"
+assert math.isclose(d1, 7.0), "La distance de Manhattan doit être 7"
+
+print("TP1 validé : distances standards implémentées avec succès.")
+\end{lstlisting}
+
+\vspace{1cm}
+
+\subsection*{TP 2 : Distance de Tchebychev et Inégalités d'Équivalence}
+
+\begin{lstlisting}
+def distance_infinie(x, y):
+    # Implémentation de la norme infinie (Tchebychev)
+    assert len(x) == len(y), "Vecteurs de tailles distinctes"
+    return max(abs(a - b) for a, b in zip(x, y))
+
+# Vérification formelle des constantes d'équivalence en dimension n
+def verif_equivalence(x, y):
+    n = len(x)
+    import math
+
+    d_inf = distance_infinie(x, y)
+
+    # distance_euclidienne reproduite localement
+    d_2 = math.sqrt(sum((a - b)**2 for a, b in zip(x, y)))
+
+    # Inégalité théorique : d_inf <= d_2 <= sqrt(n) * d_inf
+    assert d_inf <= d_2 + 1e-9, "Violation de la borne inférieure de l'équivalence"
+    assert d_2 <= math.sqrt(n) * d_inf + 1e-9, "Violation de la borne supérieure"
+
+v1 = [1.0, -2.5, 3.0]
+v2 = [0.0, 1.0, 1.0]
+verif_equivalence(v1, v2)
+
+print("TP2 validé : équivalence topologique vérifiée numériquement.")
+\end{lstlisting}
+
+\vspace{1cm}
+
+\subsection*{TP 3 : Distance de Minkowski paramétrée}
+
+\begin{lstlisting}
+def distance_minkowski(x, y, p):
+    # Généralisation formelle des distances Lp
+    assert len(x) == len(y), "Dimensions incompatibles"
+    assert p >= 1, "p doit être supérieur ou égal à 1 pour conserver l'inégalité triangulaire"
+
+    somme_puiss = sum(abs(a - b)**p for a, b in zip(x, y))
+    return somme_puiss ** (1.0 / p)
+
+v1 = [2.0, 5.0]
+v2 = [1.0, 3.0]
+
+# Pour p=1, on retrouve Manhattan
+d_1 = distance_minkowski(v1, v2, 1)
+assert abs(d_1 - 3.0) < 1e-7
+
+# Pour p=2, on retrouve Euclidienne
+import math
+d_2 = distance_minkowski(v1, v2, 2)
+assert abs(d_2 - math.sqrt(5)) < 1e-7
+
+print("TP3 validé : métriques paramétriques Lp opérationnelles.")
+\end{lstlisting}
+
+\vspace{1cm}
+
+\subsection*{TP 4 : Distance Discrète Pathologique}
+
+\begin{lstlisting}
+def distance_discrete(x, y):
+    # La métrique la plus radicale : l'espace est totalement éclaté
+    assert len(x) == len(y), "Tailles discordantes"
+
+    # On compare si les vecteurs sont strictement identiques
+    sont_egaux = all(a == b for a, b in zip(x, y))
+    return 0.0 if sont_egaux else 1.0
+
+A = [1, 2, 3]
+B = [1, 2, 3]
+C = [1, 2, 4]
+
+assert distance_discrete(A, B) == 0.0, "Séparation axiomatique non vérifiée"
+assert distance_discrete(A, C) == 1.0, "Distance non unitaire pour des points distincts"
+
+# Vérification de l'inégalité triangulaire d(A,C) <= d(A,B) + d(B,C)
+assert distance_discrete(A, C) <= distance_discrete(A, B) + distance_discrete(B, C)
+
+print("TP4 validé : métrique discrète et axiomes stricts validés.")
+\end{lstlisting}
+
+\vspace{1cm}
+
+\subsection*{TP 5 : Calcul numérique de la distance à un ensemble}
+
+\begin{lstlisting}
+import math
+
+def distance_point_ensemble(x, ensemble, metric_func):
+    # Calcule l'infimum des distances d(x, a) pour a in A
+    assert len(ensemble) > 0, "L'ensemble ne peut être vide"
+
+    distances = [metric_func(x, a) for a in ensemble]
+    return min(distances)
+
+def euclidienne(x, y):
+    return math.sqrt(sum((a - b)**2 for a, b in zip(x, y)))
+
+# Définition d'un point et d'un sous-ensemble discret de R^2
+point = [0.0, 0.0]
+ensemble_A = [
+    [3.0, 4.0],
+    [1.0, 1.0],
+    [-2.0, 0.0]
+]
+
+d_xA = distance_point_ensemble(point, ensemble_A, euclidienne)
+
+# Le point le plus proche est (1, 1) dont la distance à l'origine est sqrt(2)
+assert math.isclose(d_xA, math.sqrt(2)), "Le calcul de l'infimum métrique a échoué"
+
+print("TP5 validé : calcul de la distance ensembliste inf d(x,A) réussi.")
+\end{lstlisting}
+
+\vspace{1cm}
+
+\end{document}
