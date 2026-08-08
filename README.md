@@ -150,7 +150,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 
 - **[Jalon 49](jalon-49/Jalon-49.md)** : Espaces topologiques généraux, définition par les ouverts, les fermés et les voisinages. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 50](jalon-50/Jalon-50.md)** : Opérateurs topologiques : intérieur, adhérence, frontière et ensembles denses. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 51](jalon-51/Jalon%2051%20%28Espaces%20m%C3%A9triques%29.md)** : Espaces métriques, topologie induite par une distance et distances équivalentes.
+- **[Jalon 51](jalon-51/Jalon-51.md)** : Espaces métriques, topologie induite par une distance et distances équivalentes.
 - **[Jalon 52](jalon-52/Jalon%2052%20%28Applications%20continues%20entre%20espaces%20topologiques%20et%20d%C3%A9finition%20fine%20des%20hom%C3%A9omorphismes.%29.md)** : Applications continues entre espaces topologiques et définition fine des homéomorphismes.
 - **[Jalon 53](jalon-53/Jalon%2053%20%28Axiomes%20de%20s%C3%A9paration%29.md)** : Axiomes de séparation (notamment les espaces de Hausdorff).
 - **[Jalon 54](jalon-54/Jalon%2054%20%28Compacit%C3%A9%20g%C3%A9n%C3%A9rale%29.md)** : Compacité générale (propriété de Borel-Lebesgue) et démonstration du théorème de Tychonoff pour les produits finis.
@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-08-08] : [Upsert/Création] du Jalon 51 - Espaces métriques. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-07] : [Upsert/Création] du Jalon 50 - Opérateurs topologiques : Intérieur, Adhérence, Frontière. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-06] : [Upsert/Création] du Jalon 49 - Espaces topologiques généraux. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-04] : [Upsert/Création] du Jalon 46 - Matrice jacobienne. Status: Terminé.
