@@ -59,7 +59,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 ### Trimestre 5 : topologie générale et espaces métriques
 - [x] [[jalon-49/Jalon-49.md|Jalon 49 : Espaces topologiques généraux]] : Espaces topologiques généraux, définition par les ouverts, les fermés et les voisinages. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-50/Jalon-50.md|Jalon 50 : Opérateurs topologiques]] : Opérateurs topologiques : intérieur, adhérence, frontière et ensembles denses. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [ ] [[jalon-51/Jalon 51 (Espaces métriques).md|Jalon 51 : Espaces métriques]] : Espaces métriques, topologie induite par une distance et distances équivalentes.
+- [x] [[jalon-51/Jalon-51.md|Jalon 51 : Espaces métriques]] : Espaces métriques, topologie induite par une distance et distances équivalentes. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-52/Jalon 52 (Applications continues entre espaces topologiques et définition fine des homéomorphismes.).md|Jalon 52 : Applications continues entre espaces topologiques et définition fine des homéomorphismes.]] : Applications continues entre espaces topologiques et définition fine des homéomorphismes.
 - [ ] [[jalon-53/Jalon 53 (Axiomes de séparation).md|Jalon 53 : Axiomes de séparation]] : Axiomes de séparation (notamment les espaces de Hausdorff).
 - [ ] [[jalon-54/Jalon 54 (Compacité générale).md|Jalon 54 : Compacité générale]] : Compacité générale (propriété de Borel-Lebesgue) et démonstration du théorème de Tychonoff pour les produits finis.
