@@ -1,19 +1,20 @@
----
-title: "Exercice 10 : Métrique p-adique sur les rationnels"
----
+# Exercice 10 : Boules dans un espace ultramétrique
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-### Exercice 10 : Métrique p-adique sur les rationnels \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
+## Énoncé formel
+Dans un espace ultramétrique $(X, d)$, montrer que pour toute boule ouverte $B(a, r)$, tout point $b \in B(a, r)$ peut être considéré comme le centre de la boule, c'est-à-dire que $B(b, r) = B(a, r)$.
 
-**Énoncé :**
-Soit $p$ un nombre premier. Pour tout rationnel non nul $x = p^k \frac{a}{b}$ où $a,b$ sont des entiers non divisibles par $p$, on définit sa valeur absolue p-adique $|x|_p = p^{-k}$. On pose $|0|_p = 0$. Démontrer que $d(x, y) = |x - y|_p$ est une distance sur $\mathbb{Q}$, et vérifier qu'elle est ultramétrique.
+## Résolution pas à pas
+**Étape 1 : Inclusion directe $B(b, r) \subset B(a, r)$**
 
-**Correction Détaillée :**
-1. **Séparation :** Si $d(x, y) = 0$, alors $|x - y|_p = 0$. Par définition, cela n'arrive que si $x - y = 0$, donc $x = y$.
-2. **Symétrie :** $d(y, x) = |y - x|_p = |-1 \cdot (x - y)|_p$. L'entier $-1$ n'est pas divisible par $p$, sa valuation est $0$, donc son module est $1$. $|y - x|_p = |x - y|_p$.
-3. **Ultramétrie (et donc Inégalité triangulaire) :** Il suffit de montrer que $|u + v|_p \le \max(|u|_p, |v|_p)$ pour tous $u, v \in \mathbb{Q}$.
-Soient $u = p^{k_u} \frac{a}{b}$ et $v = p^{k_v} \frac{c}{d}$. Supposons $k_u \le k_v$.
-Alors $u + v = p^{k_u} (\frac{a}{b} + p^{k_v - k_u} \frac{c}{d}) = p^{k_u} \frac{ad + p^{k_v - k_u} bc}{bd}$.
-La puissance de $p$ factorisant le numérateur est au moins $0$. Donc la valuation de $u+v$ est $\ge k_u$.
-Ainsi $|u+v|_p \le p^{-k_u} = \max(|u|_p, |v|_p)$.
-En appliquant avec $u = x-y$ et $v = y-z$, $x-z = u+v$, ce qui donne $d(x, z) \le \max(d(x, y), d(y, z))$.
-Cette métrique étrange (où $1024$ est extrêmement 'proche' de $0$ pour $p=2$ car $2^{10}$ a un module $2^{-10} = 1/1024$) est le fondement de l'analyse p-adique.
+Soit $x \in B(b, r)$. Cela signifie que $d(b, x) < r$.
+Comme $b \in B(a, r)$, nous savons par définition que $d(a, b) < r$.
+Appliquons l'inégalité ultramétrique pour évaluer la distance à $a$ :
+$d(a, x) \le \max(d(a, b), d(b, x))$.
+Puisque $d(a, b) < r$ et $d(b, x) < r$, leur maximum est strictement inférieur à $r$.
+Donc $d(a, x) < r$, ce qui prouve que $x \in B(a, r)$.
+
+**Étape 2 : Inclusion réciproque et conclusion**
+
+Par la parfaite symétrie du problème, on a également $d(b, a) < r$, ce qui place $a$ dans la boule de centre $b$. En répétant la logique, $B(a, r) \subset B(b, r)$.
+Ainsi, $B(a,r) = B(b,r)$. Dans une géométrie ultramétrique, chaque point intérieur d'une boule en est le centre. C'est une topologie radicalement différente de celle de notre espace euclidien usuel. $\blacksquare$

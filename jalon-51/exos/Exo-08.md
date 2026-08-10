@@ -1,24 +1,21 @@
----
-title: "Exercice 8 : Distance de Hausdorff entre compacts"
----
+# Exercice 8 : Espace d'Ultramétrie
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-### Exercice 8 : Distance de Hausdorff entre compacts \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
+## Énoncé formel
+Une distance $d$ est dite ultramétrique si elle vérifie l'inégalité forte : $d(x,z) \le \max(d(x,y), d(y,z))$. Dans un tel espace, montrer que tout triangle est isocèle et que sa base est inférieure aux côtés égaux.
 
-**Énoncé :**
-Soit $(X, d)$ un espace métrique. Pour tout compact non vide $A$ de $X$ et tout point $x \in X$, on définit la distance d'un point à un ensemble : $d(x, A) = \inf_{a \in A} d(x, a)$.
-La distance de Hausdorff entre deux compacts non vides $A$ et $B$ est définie par :
-$$d_H(A, B) = \max \left( \sup_{a \in A} d(a, B), \sup_{b \in B} d(b, A) \right)$$
-Démontrer que si $d_H(A, B) = 0$, alors $A = B$. Pourquoi l'hypothèse de compacité (ou au moins d'être fermé) est-elle cruciale ?
+## Résolution pas à pas
+**Étape 1 : Formulation du problème**
 
-**Correction Détaillée :**
-Supposons que $d_H(A, B) = 0$. Par définition de la distance de Hausdorff (qui est un maximum de termes positifs ou nuls), cela implique que :
-$$\sup_{a \in A} d(a, B) = 0 \quad \text{et} \quad \sup_{b \in B} d(b, A) = 0$$
-Considérons la première condition : $\sup_{a \in A} d(a, B) = 0$.
-Cela signifie que pour tout élément $a \in A$, on a $d(a, B) = 0$.
-Par définition de la distance à un ensemble, on a donc $\inf_{b \in B} d(a, b) = 0$.
-Puisque $B$ est un ensemble compact, la borne inférieure de la distance continue $x \mapsto d(a, x)$ sur $B$ est atteinte. Il existe donc au moins un élément $b_0 \in B$ tel que $d(a, b_0) = 0$.
-Par l'axiome de séparation de la distance $d$, on en déduit que $a = b_0$, et par conséquent, $a \in B$.
-Ceci étant valable pour tout $a \in A$, on a montré l'inclusion $A \subset B$.
-Un raisonnement rigoureusement symétrique à partir de l'hypothèse $\sup_{b \in B} d(b, A) = 0$ montre que pour tout $b \in B$, il existe $a_0 \in A$ tel que $b=a_0$, d'où $B \subset A$.
-Les deux inclusions réciproques impliquent l'égalité des ensembles : $A = B$.
-**Rôle de la compacité/fermeture :** Si les ensembles n'étaient pas fermés, avoir $\inf_{b \in B} d(a, b) = 0$ signifierait seulement que $a$ est dans l'adhérence de $B$ (notée $\bar{B}$). Ainsi $d_H(A, B) = 0$ entraînerait seulement $\bar{A} = \bar{B}$. Par exemple, dans $\mathbb{R}$, pour $A=]0, 1[$ et $B=[0, 1]$, on a $d_H(A, B) = 0$ mais $A \neq B$. La compacité garantit que l'ensemble contient sa propre frontière, préservant ainsi l'axiome de séparation sur l'espace des parties compactes.
+Soit $x, y, z$ trois points distincts formant un triangle topologique. Supposons sans perte de généralité que les trois distances ne sont pas égales, et qu'il y a une distance strictement supérieure aux autres, disons $d(x,z) > d(x,y)$ et $d(x,z) > d(y,z)$.
+
+**Étape 2 : Contradiction par l'ultramétrie**
+
+Selon l'inégalité ultramétrique :
+$d(x,z) \le \max(d(x,y), d(y,z))$.
+Or, notre hypothèse implique que le maximum à droite est strictement inférieur à $d(x,z)$.
+Nous obtenons une contradiction évidente : un réel ne peut pas être strictement inférieur à lui-même.
+
+**Étape 3 : Conclusion**
+
+L'hypothèse selon laquelle une distance puisse être l'unique maximum est fausse. Par conséquent, les deux plus grandes distances du triangle doivent être exactement égales. Le triangle est donc toujours isocèle, et le troisième côté (la base) est nécessairement inférieur ou égal à ces deux côtés. Cette propriété fascinante régit les distances $p$-adiques en arithmétique. $\blacksquare$

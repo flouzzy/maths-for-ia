@@ -1,28 +1,23 @@
----
-title: "Exercice 3 : Distance SNCF (ou du centre spatial)"
----
+# Exercice 3 : Équivalence de distances : Produit cartésien
+**Difficulté :** $\bigstar\bigstar\star\star\star$
 
-### Exercice 3 : Distance SNCF (ou du centre spatial) \quad $\bigstar\bigstar\bigstar\star\star$
+## Énoncé formel
+Sur $\mathbb{R}^2$, on définit $d_1(x,y) = |x_1 - y_1| + |x_2 - y_2|$ et $d_{\infty}(x,y) = \max(|x_1 - y_1|, |x_2 - y_2|)$. Montrer que ces deux distances sont uniformément équivalentes.
 
-**Énoncé :**
-Soit $X = \mathbb{R}^2$ et $O$ l'origine $(0,0)$. Soit $\|\cdot\|$ la norme euclidienne standard. On définit la fonction $d$ par :
-- $d(A, B) = \|A - B\|$ si $A, B$ et $O$ sont alignés.
-- $d(A, B) = \|A\| + \|B\|$ si $A, B$ et $O$ ne sont pas alignés.
+## Résolution pas à pas
+**Étape 1 : Définition de l'équivalence**
 
-Démontrer que $d$ est une distance. Pourquoi l'appelle-t-on souvent la distance de la SNCF ?
+Il faut trouver deux constantes strictement positives $c, C$ telles que pour tout $x,y \in \mathbb{R}^2$, $c \cdot d_{\infty}(x,y) \le d_1(x,y) \le C \cdot d_{\infty}(x,y)$.
 
-**Correction Détaillée :**
-Vérifions les trois axiomes d'une distance :
+**Étape 2 : Majoration**
 
-1. **Séparation :** Si $d(A, B) = 0$.
-   - Si $A, B, O$ alignés, $\|A - B\| = 0 \implies A = B$.
-   - Si non alignés, $\|A\| + \|B\| = 0 \implies \|A\| = 0$ et $\|B\| = 0 \implies A = O$ et $B = O$. Or si $A=O$ et $B=O$, ils sont alignés (avec $O$), contradiction. Donc $A=B$ est l'unique cas d'annulation.
-2. **Symétrie :** Claire, par symétrie de la norme et de l'addition.
-3. **Inégalité triangulaire :** $d(A, C) \le d(A, B) + d(B, C)$.
-   - Cas 1 : $A, B, C$ sur une même droite passant par $O$. Alors $d$ coïncide avec la distance euclidienne, qui vérifie l'inégalité triangulaire.
-   - Cas 2 : $A, C, O$ alignés, mais $B$ n'appartient pas à cette droite. Alors $d(A, C) = \|A - C\| \le \|A\| + \|C\|$ (par inégalité triangulaire de la norme).
-     De plus, $d(A, B) = \|A\| + \|B\|$ et $d(B, C) = \|B\| + \|C\|$.
-     La somme donne $\|A\| + 2\|B\| + \|C\|$, qui est clairement supérieur ou égal à $\|A\| + \|C\|$. L'inégalité est vérifiée.
-   - Cas 3 : $A, C, O$ non alignés. $d(A, C) = \|A\| + \|C\|$. Les paires $(A, B)$ et $(B, C)$ ne peuvent pas toutes deux être alignées avec $O$ (sinon $A$ et $C$ le seraient aussi). Au moins l'une donne la somme des normes, ce qui garantit que $d(A,B)+d(B,C) \ge \|A\| + \|C\|$.
+Par définition du maximum, $|x_1 - y_1| \le d_{\infty}(x,y)$ et $|x_2 - y_2| \le d_{\infty}(x,y)$.
+En sommant ces deux inégalités, on obtient : $d_1(x,y) = |x_1 - y_1| + |x_2 - y_2| \le d_{\infty}(x,y) + d_{\infty}(x,y) = 2 \cdot d_{\infty}(x,y)$. On pose $C = 2$.
 
-Cette métrique est appelée distance de la SNCF (centralisée sur Paris) car pour aller d'une ville A à une ville B, si elles ne sont pas sur la même ligne passant par la capitale, on est obligé de transiter par l'origine.
+**Étape 3 : Minoration**
+
+Puisque $|x_1 - y_1| \ge 0$ et $|x_2 - y_2| \ge 0$, la somme est nécessairement supérieure ou égale au plus grand des deux termes. Autrement dit :
+$d_{\infty}(x,y) = \max(|x_1 - y_1|, |x_2 - y_2|) \le |x_1 - y_1| + |x_2 - y_2| = d_1(x,y)$.
+Ceci correspond à poser $c = 1$.
+
+**Conclusion :** Nous avons montré que $1 \cdot d_{\infty} \le d_1 \le 2 \cdot d_{\infty}$. Les métriques sont équivalentes, ce qui implique que les pavés ($d_{\infty}$) et les losanges ($d_1$) définissent la même topologie usuelle sur le plan. $\blacksquare$

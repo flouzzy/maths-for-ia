@@ -1,20 +1,20 @@
----
-title: "Exercice 2 : Une fonction non-métrique"
----
+# Exercice 2 : La distance discrète en profondeur
+**Difficulté :** $\bigstar\bigstar\star\star\star$
 
-### Exercice 2 : Une fonction non-métrique \quad $\bigstar\bigstar\star\star\star$
+## Énoncé formel
+Sur un ensemble $X$, on munit $X$ de la distance discrète $d(x,y) = 1$ si $x \neq y$, et $0$ sinon.
+1. Montrer rigoureusement l'inégalité triangulaire.
+2. Déterminer la boule ouverte $B(a, 1)$, la boule ouverte $B(a, 2)$, la boule fermée $B_f(a, 1)$ et la sphère $S(a, 1)$ pour un point $a \in X$.
 
-**Énoncé :**
-On considère l'application $d : \mathbb{R} \times \mathbb{R} \to \mathbb{R}_+$ définie par $d(x, y) = (x - y)^2$. Démontrer que $d$ ne définit pas une distance sur $\mathbb{R}$.
+## Résolution pas à pas
+**Étape 1 : L'inégalité triangulaire**
 
-**Correction Détaillée :**
-Pour que $d$ soit une distance, elle doit vérifier l'inégalité triangulaire pour tout triplet de réels $(x, y, z)$ :
-$$d(x, z) \le d(x, y) + d(y, z)$$
-Ce qui équivaut ici à :
-$$(x - z)^2 \le (x - y)^2 + (y - z)^2$$
-Cherchons un contre-exemple. Prenons $x = 0$, $y = 1$ et $z = 2$.
-Évaluons le membre de gauche :
-$$d(0, 2) = (0 - 2)^2 = 4$$
-Évaluons le membre de droite :
-$$d(0, 1) + d(1, 2) = (0 - 1)^2 + (1 - 2)^2 = 1 + 1 = 2$$
-On constate que $4$ n'est pas inférieur ou égal à $2$. L'inégalité triangulaire est donc mise en défaut. Par conséquent, l'application $d$ n'est pas une distance sur $\mathbb{R}$. L'élévation au carré pénalise de manière disproportionnée les grands écarts par rapport à la somme de petits écarts, rompant ainsi l'analogie géométrique du plus court chemin.
+Soient $x, y, z \in X$. Si $x=z$, $d(x,z)=0 \le d(x,y) + d(y,z)$ est trivial. Si $x \neq z$, alors $d(x,z)=1$. Il est impossible d'avoir simultanément $x=y$ et $y=z$ (sinon $x=z$, absurde). Donc soit $x \neq y$ (et $d(x,y)=1$), soit $y \neq z$ (et $d(y,z)=1$), soit les deux. Ainsi, $d(x,y)+d(y,z) \ge 1$. Dans tous les cas, $d(x,z) \le d(x,y)+d(y,z)$.
+
+**Étape 2 : Exploration topologique**
+
+- **$B(a, 1) = \left\lbrace x \in X \mid d(a,x) < 1\right\rbrace$ :** La seule distance strictement inférieure à 1 est 0. Donc la seule solution est $x=a$. $B(a, 1) = \left\lbrace a\right\rbrace$.
+- **$B(a, 2) = \left\lbrace x \in X \mid d(a,x) < 2\right\rbrace$ :** Toutes les distances possibles sont 0 ou 1, qui sont $< 2$. Donc $B(a, 2) = X$.
+- **$B_f(a, 1) = \left\lbrace x \in X \mid d(a,x) \le 1\right\rbrace$ :** De même, toutes les distances possibles valent 0 ou 1. Donc $B_f(a, 1) = X$.
+- **$S(a, 1) = \left\lbrace x \in X \mid d(a,x) = 1\right\rbrace$ :** Ce sont tous les points distincts de $a$. Donc $S(a, 1) = X \setminus \left\lbrace a\right\rbrace$.
+*Remarque :* On voit ici que $B_f(a, r)$ n'est pas toujours l'adhérence de $B(a, r)$ dans les espaces métriques généraux. $\blacksquare$

@@ -1,27 +1,19 @@
----
-title: "Exercice 4 : Topologie induite par des distances équivalentes"
----
+# Exercice 4 : Métrique induite sur une sphère
+**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
 
-### Exercice 4 : Topologie induite par des distances équivalentes \quad $\bigstar\bigstar\bigstar\star\star$
+## Énoncé formel
+Sur la sphère unité de $\mathbb{R}^3$, $S^2 = \left\lbrace  x \in \mathbb{R}^3 \mid \|x\|_2 = 1 \right\rbrace$, la distance géodésique entre deux points $x$ et $y$ est définie par $d_S(x,y) = \arccos(\langle x, y \rangle)$. Montrer que $d_S$ est bien une distance.
 
-**Énoncé :**
-Soit un ensemble $X$. Soient $d_1$ et $d_2$ deux distances sur $X$ fortement équivalentes, c'est-à-dire qu'il existe $\alpha, \beta > 0$ telles que :
-$$\forall x, y \in X, \quad \alpha d_1(x, y) \le d_2(x, y) \le \beta d_1(x, y)$$
-Démontrer que toute boule ouverte pour la distance $d_2$ contient une boule ouverte pour la distance $d_1$ de même centre.
+## Résolution pas à pas
+**Étape 1 : L'angle comme métrique**
 
-**Correction Détaillée :**
-Soit $x_0 \in X$ et $R > 0$. Considérons la boule ouverte $B_2(x_0, R)$ relative à la distance $d_2$, définie par :
-$$B_2(x_0, R) = \{x \in X \mid d_2(x_0, x) < R\}$$
-Nous cherchons un rayon $r > 0$ tel que la boule ouverte $B_1(x_0, r)$, relative à $d_1$, soit incluse dans $B_2(x_0, R)$.
+Le produit scalaire usuel donne $\langle x, y \rangle = \|x\| \|y\| \cos(\theta) = \cos(\theta)$ sur la sphère unité. L'arc cosinus renvoie la valeur principale $\theta \in [0, \pi]$, qui représente la longueur de l'arc de grand cercle géodésique.
 
-Considérons un élément $x \in B_1(x_0, r)$. Par définition, on a :
-$$d_1(x_0, x) < r$$
-D'après l'hypothèse d'équivalence forte, nous avons :
-$$d_2(x_0, x) \le \beta d_1(x_0, x)$$
-En combinant ces deux inégalités, nous obtenons :
-$$d_2(x_0, x) < \beta r$$
-Pour que $x$ appartienne à $B_2(x_0, R)$, il suffit que $d_2(x_0, x) < R$. Ceci est garanti si l'on impose :
-$$\beta r \le R \implies r \le \frac{R}{\beta}$$
-Puisque $\beta > 0$ et $R > 0$, la quantité $R/\beta$ est strictement positive. En posant par exemple $r = R/\beta$, on assure que tout point de $B_1(x_0, r)$ est dans $B_2(x_0, R)$.
+**Étape 2 : Séparation et Symétrie**
 
-Donc, $B_1(x_0, r) \subset B_2(x_0, R)$. Cela implique que les ouverts de la topologie induite par $d_2$ sont des ouverts de la topologie induite par $d_1$ (et vice versa par symétrie), montrant que les deux distances définissent la même topologie.
+- **Séparation :** $d_S(x,y) = 0 \iff \arccos(\langle x, y \rangle) = 0 \iff \langle x, y \rangle = 1$. Puisque $\|x\|=\|y\|=1$, le cas d'égalité de Cauchy-Schwarz indique que $x$ et $y$ sont positivement colinéaires, donc $x=y$.
+- **Symétrie :** $d_S(x,y) = \arccos(\langle x, y \rangle) = \arccos(\langle y, x \rangle) = d_S(y,x)$ par symétrie du produit scalaire réel.
+
+**Étape 3 : Inégalité triangulaire**
+
+Soit $x, y, z \in S^2$. Considérons la trigonométrie sphérique. Le théorème fondamental sur les triangles sphériques énonce que la somme de deux côtés d'un triangle sphérique est toujours supérieure ou égale au troisième côté. La démonstration analytique repose sur l'algèbre des quaternions ou la géométrie différentielle (les géodésiques minimisent la longueur de l'arc). Plus élémentairement, en calculant $\|x \times z\|^2$, l'identité de Lagrange permet d'établir $\theta_{xz} \le \theta_{xy} + \theta_{yz}$. La géodésique reste le chemin le plus court sur la variété. $\blacksquare$

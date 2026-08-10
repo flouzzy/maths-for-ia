@@ -34,539 +34,511 @@
 
 \part{Cours Magistral}
 
+
 \section{Genèse et Intuition Géométrique}
 
-La notion d'espace métrique émerge de la volonté de généraliser et de formaliser le concept de distance géométrique, intuitivement compris dans le plan euclidien, à des espaces abstraits plus généraux. L'idée fondatrice est de dégager les propriétés essentielles qui caractérisent l'écart entre deux éléments. Historiquement, le développement de l'analyse fonctionnelle au début du XXe siècle a nécessité la comparaison entre des fonctions ou des suites, imposant ainsi la création d'une structure capable d'évaluer quantitativement la proximité dans des ensembles arbitraires.
+La topologie générale (étudiée précédemment) fournit un cadre abstrait pour définir les voisinages et la continuité via les ouverts. Cependant, cette abstraction est parfois insuffisante pour capturer la notion quantitative de proximité. Historiquement, la formalisation de la distance a émergé du besoin d'étendre la rigueur du calcul géométrique euclidien à des espaces plus complexes, tels que les espaces de fonctions ou les espaces de suites.
 
-Dans un espace usuel, la distance permet de définir ce qu'est une boule, une convergence, ou une continuité. L'objectif est ici de s'abstraire de la structure vectorielle ou algébrique pour ne conserver que la fonction de mesure, garantissant une robustesse topologique universelle.
+Maurice Fréchet, en 1906, a introduit le concept d'espace métrique pour unifier diverses théories naissantes de l'analyse fonctionnelle. En dotant un ensemble d'une fonction mesurant la "distance" entre deux points, il devient possible de quantifier la convergence d'une suite, la continuité d'une application ou la compacité d'un domaine. L'inégalité triangulaire, clé de voûte de cette structure, garantit que les distances respectent l'intuition géométrique du chemin le plus court.
 
 \section{Définitions, Théorèmes et Exemples Concrets}
 
-\subsection{Formalisation d'une Distance}
+\subsection{Définition d'une Distance}
 
 Soit $X$ un ensemble non vide.
 
 \textbf{Définition (Distance) :}
-On appelle distance, ou métrique, sur $X$, toute application $d : X \times X \to \mathbb{R}_+$ vérifiant les trois axiomes suivants pour tous $x, y, z \in X$ :
-1. Séparation : $d(x, y) = 0 \iff x = y$.
-2. Symétrie : $d(x, y) = d(y, x)$.
-3. Inégalité triangulaire : $d(x, z) \le d(x, y) + d(y, z)$.
+Une \textit{distance} (ou métrique) sur $X$ est une application $d : X \times X \to \mathbb{R}_+$ vérifiant les trois axiomes suivants pour tous $x, y, z \in X$ :
+1. \textbf{Séparation :} $d(x, y) = 0 \iff x = y$.
+2. \textbf{Symétrie :} $d(x, y) = d(y, x)$.
+3. \textbf{Inégalité Triangulaire :} $d(x, z) \le d(x, y) + d(y, z)$.
 
-Le couple $(X, d)$ est alors appelé un espace métrique.
+Le couple $(X, d)$ est alors appelé un \textbf{espace métrique}.
 
 \textbf{Exemple Numérique Immédiat :}
-Sur l'ensemble des réels $\mathbb{R}$, l'application définie par $d(x, y) = |x - y|$ est une distance. Par exemple, pour $x = 3$ et $y = -2$, la distance est $d(3, -2) = |3 - (-2)| = 5$. L'inégalité triangulaire reflète le fait que la distance la plus courte entre deux points est la ligne droite : $d(3, 5) \le d(3, 0) + d(0, 5)$, soit $2 \le 3 + 5$, ce qui est strictement respecté.
+Sur $\mathbb{R}^n$, la distance euclidienne canonique est définie par :
+$$ d_2(x, y) = \sqrt{\sum_{i=1}^n (x_i - y_i)^2} $$
+Si $x = (1, 0)$ et $y = (4, 4)$ dans $\mathbb{R}^2$, alors $d_2(x, y) = \sqrt{(4-1)^2 + (4-0)^2} = \sqrt{9 + 16} = 5$.
 
-\textbf{Cas Pathologique :}
-Si l'on considère la fonction $d(x, y) = (x - y)^2$ sur $\mathbb{R}$, elle vérifie la séparation et la symétrie. Cependant, l'inégalité triangulaire fait défaut. En effet, pour $x=0$, $y=1$ et $z=2$, on a $d(0, 2) = 4$, tandis que $d(0, 1) + d(1, 2) = 1 + 1 = 2$. Comme $4 > 2$, $d(x,y) = (x-y)^2$ ne définit pas une distance.
-
-\begin{tikzpicture}
-\draw[thick, ->] (-1,0) -- (4,0) node[anchor=north west] {$x$};
-\draw[thick, ->] (0,-1) -- (0,4) node[anchor=south east] {$y$};
-\fill (1,1) circle (2pt) node[below right] {$A$};
-\fill (3,3) circle (2pt) node[below right] {$B$};
-\fill (1,3) circle (2pt) node[above left] {$C$};
-\draw[dashed] (1,1) -- (3,3) node[midway, below right] {$d(A,B)$};
-\draw[dashed] (1,1) -- (1,3) node[midway, left] {$d(A,C)$};
-\draw[dashed] (1,3) -- (3,3) node[midway, above] {$d(C,B)$};
-\end{tikzpicture}
-
-\subsection{Boules et Topologie Induite}
+\subsection{Topologie Induite et Boules}
 
 \textbf{Définition (Boules) :}
-Dans un espace métrique $(X, d)$, pour $a \in X$ et un rayon $r > 0$, on définit :
-- La boule ouverte de centre $a$ et de rayon $r$ : $B(a, r) = \{ x \in X \mid d(a, x) < r \}$.
-- La boule fermée de centre $a$ et de rayon $r$ : $\bar{B}(a, r) = \{ x \in X \mid d(a, x) \le r \}$.
+Dans un espace métrique $(X, d)$, pour $a \in X$ et $r > 0$ :
+- La \textbf{boule ouverte} de centre $a$ et de rayon $r$ est $B(a, r) = \{ x \in X \mid d(a, x) < r \}$.
+- La \textbf{boule fermée} de centre $a$ et de rayon $r$ est $\bar{B}(a, r) = \{ x \in X \mid d(a, x) \le r \}$.
 
-\textbf{Théorème (Topologie Métrique) :}
-L'ensemble des parties de $X$ qui sont des réunions quelconques de boules ouvertes forme une topologie sur $X$. Un sous-ensemble $U$ est donc un ouvert pour cette topologie si, pour tout point $x \in U$, il existe un réel $r > 0$ tel que $B(x, r) \subset U$.
+\textbf{Théorème (Topologie induite) :}
+L'ensemble des parties de $X$ pouvant s'écrire comme une réunion quelconque de boules ouvertes forme une topologie sur $X$. On dit que c'est la topologie induite par la distance $d$.
 
-\textbf{Exemple Géométrique :}
-Sur $\mathbb{R}^2$ muni de la distance euclidienne $d_2(x, y) = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2}$, la boule ouverte $B((0,0), 1)$ est le disque strictement intérieur au cercle unité. Un point $A(0.5, 0)$ appartient à ce disque, et l'on peut trouver une boule ouverte centrée en $A$, par exemple de rayon $0.4$, entièrement incluse dans le disque initial.
+\begin{center}
+\begin{tikzpicture}
+    % Boule euclidienne
+    \draw[blue, thick] (0,0) circle (1.5cm);
+    \filldraw[black] (0,0) circle (1.5pt) node[anchor=north] {$a$};
+    \draw[->, dashed] (0,0) -- (1.06, 1.06) node[anchor=south west] {$r$};
+    \node at (0, -2) {Norme 2 ($L^2$)};
+
+    % Boule norme 1 (losange)
+    \draw[red, thick, xshift=4cm] (0, 1.5) -- (1.5, 0) -- (0, -1.5) -- (-1.5, 0) -- cycle;
+    \filldraw[black, xshift=4cm] (0,0) circle (1.5pt) node[anchor=north] {$a$};
+    \node at (4, -2) {Norme 1 ($L^1$)};
+
+    % Boule norme infini (carré)
+    \draw[green!60!black, thick, xshift=8cm] (-1.5, -1.5) rectangle (1.5, 1.5);
+    \filldraw[black, xshift=8cm] (0,0) circle (1.5pt) node[anchor=north] {$a$};
+    \node at (8, -2) {Norme $\infty$ ($L^\infty$)};
+\end{tikzpicture}
+\end{center}
 
 \subsection{Distances Équivalentes}
 
-\textbf{Définition :}
-Deux distances $d_1$ et $d_2$ sur un même ensemble $X$ sont dites topologiquement équivalentes si elles induisent la même topologie. Elles sont dites fortement équivalentes s'il existe des constantes $C_1, C_2 > 0$ telles que pour tous $x, y \in X$ :
-$$C_1 d_1(x, y) \le d_2(x, y) \le C_2 d_1(x, y)$$
+\textbf{Définition (Équivalence) :}
+Deux distances $d_1$ et $d_2$ sur $X$ sont dites \textit{équivalentes} s'il existe des constantes $C_1 > 0$ et $C_2 > 0$ telles que :
+$$ \forall x, y \in X, \quad C_1 d_1(x, y) \le d_2(x, y) \le C_2 d_1(x, y) $$
 
-\section{Démonstrations Pas-à-Pas}
+\textbf{Propriété Fondamentale :}
+Deux distances équivalentes induisent strictement la même topologie. Elles définissent les mêmes ouverts, les mêmes suites convergentes et les mêmes fonctions continues.
 
-\subsection{Une boule ouverte est un ouvert au sens de la topologie}
+\section{Démonstrations}
 
-\textbf{Énoncé :} Dans tout espace métrique $(X, d)$, une boule ouverte $B(a, r)$ est un sous-ensemble ouvert.
+\textbf{Théorème :} Dans un espace métrique $(X, d)$, toute boule ouverte $B(a, r)$ est un ouvert pour la topologie induite.
 
-\textbf{Démonstration :}
-Soit $B(a, r)$ une boule ouverte de rayon $r > 0$ centrée en $a$.
-Considérons un point quelconque $x \in B(a, r)$. Par définition, la distance entre $a$ et $x$ vérifie :
-$$d(a, x) < r$$
-Nous devons trouver un rayon $\epsilon > 0$ tel que la boule ouverte $B(x, \epsilon)$ soit entièrement incluse dans $B(a, r)$.
-Posons :
-$$\epsilon = r - d(a, x)$$
-Puisque $d(a, x) < r$, il s'ensuit que $\epsilon > 0$.
-Soit maintenant un point $y \in B(x, \epsilon)$. Par définition, on a :
-$$d(x, y) < \epsilon$$
-Appliquons l'inégalité triangulaire aux points $a$, $x$ et $y$ :
-$$d(a, y) \le d(a, x) + d(x, y)$$
-En injectant la majoration de $d(x, y)$, nous obtenons strictement :
-$$d(a, y) < d(a, x) + \epsilon$$
-Remplaçons $\epsilon$ par sa valeur $r - d(a, x)$ :
-$$d(a, y) < d(a, x) + (r - d(a, x))$$
-Ce qui se simplifie en :
-$$d(a, y) < r$$
-Par conséquent, $y \in B(a, r)$.
-Puisque cela est vrai pour tout $y \in B(x, \epsilon)$, nous avons bien l'inclusion :
-$$B(x, \epsilon) \subset B(a, r)$$
-La boule $B(a, r)$ contient un voisinage de chacun de ses points ; elle est donc un ouvert topologique.
+\textit{Démonstration rigoureuse pas-à-pas :}
+Soit $B(a, r)$ une boule ouverte. Il faut montrer que pour tout point $x \in B(a, r)$, il existe un rayon $\epsilon > 0$ tel que $B(x, \epsilon) \subset B(a, r)$.
 
-\section{Applications en Physique, Logique et Intelligence Artificielle}
+1. Soit $x \in B(a, r)$. Par définition, nous savons que $d(a, x) < r$.
+2. Posons $\epsilon = r - d(a, x)$. Puisque $d(a, x) < r$, nous avons bien $\epsilon > 0$.
+3. Montrons l'inclusion. Soit $y \in B(x, \epsilon)$. Par définition, cela signifie que $d(x, y) < \epsilon$.
+4. Évaluons la distance de $y$ au centre $a$. Par l'inégalité triangulaire de la distance $d$ :
+   $$ d(a, y) \le d(a, x) + d(x, y) $$
+5. En utilisant l'inégalité $d(x, y) < \epsilon$, nous obtenons :
+   $$ d(a, y) < d(a, x) + \epsilon $$
+6. Remplaçons $\epsilon$ par sa valeur :
+   $$ d(a, y) < d(a, x) + (r - d(a, x)) $$
+   $$ d(a, y) < r $$
+7. Par conséquent, $y \in B(a, r)$. L'inclusion $B(x, \epsilon) \subset B(a, r)$ est démontrée. La boule ouverte est donc bien un voisinage de chacun de ses points. \hfill $\blacksquare$
 
-En intelligence artificielle, la notion d'espace métrique est le socle de l'apprentissage non supervisé et de l'évaluation de la similarité. Le regroupement de données (clustering) repose intrinsèquement sur le choix d'une métrique. Par exemple, l'algorithme des k-moyennes (k-means) cherche à minimiser la variance intra-classe, s'appuyant souvent sur la distance euclidienne.
+\section{Applications en Physique, Logique et Apprentissage Automatique}
 
-La reconnaissance des formes et le traitement du langage naturel utilisent massivement des distances. Dans les espaces de plongement vectoriel (word embeddings comme Word2Vec), la proximité sémantique entre deux mots est évaluée par une métrique de similarité, souvent dérivée de la distance cosinus ou euclidienne, transformant des concepts linguistiques en entités d'un espace métrique abstrait.
+- \textbf{Optimisation et Descente de Gradient :} Dans les algorithmes d'optimisation, la notion de distance est fondamentale pour évaluer la convergence d'une suite d'itérés $(x_n)_{n \in \mathbb{N}}$ vers un minimum local. Le critère d'arrêt est souvent formulé comme $d(x_{n+1}, x_n) < \epsilon$.
+- \textbf{K-Plus Proches Voisins (K-NN) :} L'algorithme K-NN, très utilisé en classification, repose entièrement sur la métrique choisie pour l'espace des descripteurs. Le choix entre une distance de Manhattan ($L^1$), euclidienne ($L^2$) ou de Tchebychev ($L^\infty$) modifie la frontière de décision géométrique du classifieur.
+- \textbf{Analyse des signaux et de l'audio :} Dans l'espace des fonctions $\mathcal{C}([a,b], \mathbb{R})$, l'utilisation de distances intégrales permet de comparer deux signaux continus. Par exemple, $d(f, g) = \int_a^b |f(t) - g(t)| dt$ quantifie l'erreur moyenne de reconstruction d'un signal filtré.
 
-En physique théorique, la structure de l'espace-temps repose sur des concepts apparentés. Bien que la relativité utilise des espaces pseudo-métriques (où la "distance" entre des événements distincts peut être nulle), la rigueur de la formulation métrique permet de concevoir et d'étudier la courbure et la géométrie de l'univers, fondant ainsi la relativité générale sur des bases d'analyse fonctionnelle solide.
-
-
-\newpage
 \part{Exercices d'Application et de Concours}
-
-\subsection{Exercice 1 : La distance discrète \quad $\bigstar\star\star\star\star$}
-
-\textbf{Énoncé :}
-Soit $X$ un ensemble non vide. On définit l'application $d : X \times X \to \mathbb{R}_+$ par $d(x, y) = 1$ si $x \neq y$ et $d(x, x) = 0$. Démontrer que $d$ est une distance sur $X$. Quelle est la topologie induite par cette distance ?
-
-\textbf{Correction Détaillée :}
-1. \textbf{Séparation :} Par définition, $d(x, y) = 0$ si et seulement si $x = y$.
-2. \textbf{Symétrie :} Si $x = y$, $d(x, y) = d(y, x) = 0$. Si $x \neq y$, alors $y \neq x$ et $d(x, y) = d(y, x) = 1$. L'axiome de symétrie est vérifié.
-3. \textbf{Inégalité triangulaire :} Montrons que $d(x, z) \le d(x, y) + d(y, z)$ pour tous $x, y, z \in X$. Si $x = z$, alors $d(x, z) = 0$, et l'inégalité est trivialement satisfaite car $d$ est à valeurs positives. Si $x \neq z$, alors $d(x, z) = 1$. Il est impossible d'avoir simultanément $x = y$ et $y = z$, sinon $x = z$ par transitivité. Donc, au moins l'une des distances $d(x, y)$ ou $d(y, z)$ vaut 1. Par conséquent, $d(x, y) + d(y, z) \ge 1 = d(x, z)$. L'inégalité triangulaire est prouvée.
-
-$d$ est bien une distance.
-
-\textbf{Topologie induite :} Regardons les boules ouvertes. Soit $x \in X$. Si on choisit un rayon $r$ tel que $0 < r \le 1$ (par exemple $r = 1/2$), la boule ouverte de centre $x$ et de rayon $r$ est $B(x, r) = \{y \in X \mid d(x, y) < r\}$. Puisque les seules valeurs possibles pour la distance sont 0 et 1, et que $r \le 1$, le seul élément vérifiant cette condition est $x$ lui-même (car $d(x,x)=0 < r$). Donc, $B(x, r) = \{x\}$. Ainsi, chaque singleton est une boule ouverte, donc un ouvert. Comme toute partie de $X$ est une réunion de ses éléments (singletons), toute partie de $X$ est ouverte. La topologie induite est la topologie discrète.
-
-\vspace{1cm}
-
-\subsection{Exercice 2 : Une fonction non-métrique \quad $\bigstar\bigstar\star\star\star$}
+\section*{Exercice 1 : La distance discrète \quad $\bigstar\star\star\star\star$}
 
 \textbf{Énoncé :}
-On considère l'application $d : \mathbb{R} \times \mathbb{R} \to \mathbb{R}_+$ définie par $d(x, y) = (x - y)^2$. Démontrer que $d$ ne définit pas une distance sur $\mathbb{R}$.
+Soit $X$ un ensemble non vide. On définit l'application $d : X \times X \to \mathbb{R}$ par $d(x, y) = 1$ si $x \neq y$ et $d(x, x) = 0$.
+1. Démontrer rigoureusement que $d$ est une distance sur $X$.
+2. Déterminer explicitement la topologie induite par cette distance.
 
-\textbf{Correction Détaillée :}
-Pour que $d$ soit une distance, elle doit vérifier l'inégalité triangulaire pour tout triplet de réels $(x, y, z)$ :
-$$d(x, z) \le d(x, y) + d(y, z)$$
-Ce qui équivaut ici à :
-$$(x - z)^2 \le (x - y)^2 + (y - z)^2$$
-Cherchons un contre-exemple. Prenons $x = 0$, $y = 1$ et $z = 2$.
-Évaluons le membre de gauche :
-$$d(0, 2) = (0 - 2)^2 = 4$$
-Évaluons le membre de droite :
-$$d(0, 1) + d(1, 2) = (0 - 1)^2 + (1 - 2)^2 = 1 + 1 = 2$$
-On constate que $4$ n'est pas inférieur ou égal à $2$. L'inégalité triangulaire est donc mise en défaut. Par conséquent, l'application $d$ n'est pas une distance sur $\mathbb{R}$. L'élévation au carré pénalise de manière disproportionnée les grands écarts par rapport à la somme de petits écarts, rompant ainsi l'analogie géométrique du plus court chemin.
+\textbf{Correction :}
+1. \textbf{Axiomes de distance :}
+   - \textit{Séparation :} Par définition, $d(x,y)=0 \implies x=y$, et réciproquement.
+   - \textit{Symétrie :} La condition $x \neq y$ est équivalente à $y \neq x$, donc $d(x,y)=d(y,x)$ dans tous les cas.
+   - \textit{Inégalité triangulaire :} Pour $x, y, z \in X$, on doit montrer $d(x, z) \le d(x, y) + d(y, z)$.
+     Si $x=z$, $d(x,z)=0 \le d(x,y)+d(y,z)$ est trivial car les distances sont positives.
+     Si $x \neq z$, alors $d(x,z)=1$. Or, on ne peut pas avoir simultanément $x=y$ et $y=z$ (sinon $x=z$). Ainsi, soit $x \neq y$, soit $y \neq z$. Cela implique qu'au moins l'un des termes $d(x,y)$ ou $d(y,z)$ vaut $1$. La somme $d(x,y)+d(y,z)$ est donc $\ge 1$. L'inégalité $1 \le d(x,y)+d(y,z)$ est vérifiée.
+2. \textbf{Topologie :}
+   Considérons la boule ouverte $B(x, 1/2)$. Par définition, $y \in B(x, 1/2) \iff d(x,y) < 1/2$.
+   Puisque $d(x,y) \in \{0, 1\}$, la seule possibilité est $d(x,y)=0$, soit $y=x$.
+   Ainsi, $B(x, 1/2) = \{x\}$. Toute boule ouverte est un ouvert, donc chaque singleton est ouvert.
+   Toute partie de $X$ étant l'union de ses singletons, toute partie est ouverte. Il s'agit de la topologie discrète. $\blacksquare$
 
-\vspace{1cm}
 
-\subsection{Exercice 3 : Distance SNCF (ou du centre spatial) \quad $\bigstar\bigstar\bigstar\star\star$}
-
-\textbf{Énoncé :}
-Soit $X = \mathbb{R}^2$ et $O$ l'origine $(0,0)$. Soit $\|\cdot\|$ la norme euclidienne standard. On définit la fonction $d$ par :
-- $d(A, B) = \|A - B\|$ si $A, B$ et $O$ sont alignés.
-- $d(A, B) = \|A\| + \|B\|$ si $A, B$ et $O$ ne sont pas alignés.
-
-Démontrer que $d$ est une distance. Pourquoi l'appelle-t-on souvent la distance de la SNCF ?
-
-\textbf{Correction Détaillée :}
-Vérifions les trois axiomes d'une distance :
-
-1. \textbf{Séparation :} Si $d(A, B) = 0$.
-   - Si $A, B, O$ alignés, $\|A - B\| = 0 \implies A = B$.
-   - Si non alignés, $\|A\| + \|B\| = 0 \implies \|A\| = 0$ et $\|B\| = 0 \implies A = O$ et $B = O$. Or si $A=O$ et $B=O$, ils sont alignés (avec $O$), contradiction. Donc $A=B$ est l'unique cas d'annulation.
-2. \textbf{Symétrie :} Claire, par symétrie de la norme et de l'addition.
-3. \textbf{Inégalité triangulaire :} $d(A, C) \le d(A, B) + d(B, C)$.
-   - Cas 1 : $A, B, C$ sur une même droite passant par $O$. Alors $d$ coïncide avec la distance euclidienne, qui vérifie l'inégalité triangulaire.
-   - Cas 2 : $A, C, O$ alignés, mais $B$ n'appartient pas à cette droite. Alors $d(A, C) = \|A - C\| \le \|A\| + \|C\|$ (par inégalité triangulaire de la norme).
-     De plus, $d(A, B) = \|A\| + \|B\|$ et $d(B, C) = \|B\| + \|C\|$.
-     La somme donne $\|A\| + 2\|B\| + \|C\|$, qui est clairement supérieur ou égal à $\|A\| + \|C\|$. L'inégalité est vérifiée.
-   - Cas 3 : $A, C, O$ non alignés. $d(A, C) = \|A\| + \|C\|$. Les paires $(A, B)$ et $(B, C)$ ne peuvent pas toutes deux être alignées avec $O$ (sinon $A$ et $C$ le seraient aussi). Au moins l'une donne la somme des normes, ce qui garantit que $d(A,B)+d(B,C) \ge \|A\| + \|C\|$.
-
-Cette métrique est appelée distance de la SNCF (centralisée sur Paris) car pour aller d'une ville A à une ville B, si elles ne sont pas sur la même ligne passant par la capitale, on est obligé de transiter par l'origine.
-
-\vspace{1cm}
-
-\subsection{Exercice 4 : Topologie induite par des distances équivalentes \quad $\bigstar\bigstar\bigstar\star\star$}
+\section*{Exercice 2 : Inégalité triangulaire inversée \quad $\bigstar\star\star\star\star$}
 
 \textbf{Énoncé :}
-Soit un ensemble $X$. Soient $d_1$ et $d_2$ deux distances sur $X$ fortement équivalentes, c'est-à-dire qu'il existe $\alpha, \beta > 0$ telles que :
-$$\forall x, y \in X, \quad \alpha d_1(x, y) \le d_2(x, y) \le \beta d_1(x, y)$$
-Démontrer que toute boule ouverte pour la distance $d_2$ contient une boule ouverte pour la distance $d_1$ de même centre.
+Soit $(X, d)$ un espace métrique. Démontrer rigoureusement que pour tous $x, y, z \in X$ :
+$$ |d(x, z) - d(y, z)| \le d(x, y) $$
 
-\textbf{Correction Détaillée :}
-Soit $x_0 \in X$ et $R > 0$. Considérons la boule ouverte $B_2(x_0, R)$ relative à la distance $d_2$, définie par :
-$$B_2(x_0, R) = \{x \in X \mid d_2(x_0, x) < R\}$$
-Nous cherchons un rayon $r > 0$ tel que la boule ouverte $B_1(x_0, r)$, relative à $d_1$, soit incluse dans $B_2(x_0, R)$.
+\textbf{Correction :}
+Nous devons montrer cette double inégalité. Utilisons l'inégalité triangulaire standard.
+1. D'une part, évaluons $d(x, z)$. En passant par $y$, nous avons :
+   $$ d(x, z) \le d(x, y) + d(y, z) $$
+   En soustrayant $d(y, z)$ de chaque côté, nous obtenons :
+   $$ d(x, z) - d(y, z) \le d(x, y) $$
+2. D'autre part, évaluons $d(y, z)$. En passant par $x$, nous avons :
+   $$ d(y, z) \le d(y, x) + d(x, z) $$
+   Par symétrie, $d(y, x) = d(x, y)$. Ainsi :
+   $$ d(y, z) - d(x, z) \le d(x, y) $$
+   Ce qui s'écrit également :
+   $$ -(d(x, z) - d(y, z)) \le d(x, y) $$
+3. Les deux inégalités combinées affirment que la quantité $d(x, z) - d(y, z)$ est bornée supérieurement par $d(x, y)$ et inférieurement par $-d(x, y)$.
+   Ceci équivaut exactement à la valeur absolue :
+   $$ |d(x, z) - d(y, z)| \le d(x, y) $$
+La démonstration est achevée. $\blacksquare$
 
-Considérons un élément $x \in B_1(x_0, r)$. Par définition, on a :
-$$d_1(x_0, x) < r$$
-D'après l'hypothèse d'équivalence forte, nous avons :
-$$d_2(x_0, x) \le \beta d_1(x_0, x)$$
-En combinant ces deux inégalités, nous obtenons :
-$$d_2(x_0, x) < \beta r$$
-Pour que $x$ appartienne à $B_2(x_0, R)$, il suffit que $d_2(x_0, x) < R$. Ceci est garanti si l'on impose :
-$$\beta r \le R \implies r \le \frac{R}{\beta}$$
-Puisque $\beta > 0$ et $R > 0$, la quantité $R/\beta$ est strictement positive. En posant par exemple $r = R/\beta$, on assure que tout point de $B_1(x_0, r)$ est dans $B_2(x_0, R)$.
 
-Donc, $B_1(x_0, r) \subset B_2(x_0, R)$. Cela implique que les ouverts de la topologie induite par $d_2$ sont des ouverts de la topologie induite par $d_1$ (et vice versa par symétrie), montrant que les deux distances définissent la même topologie.
-
-\vspace{1cm}
-
-\subsection{Exercice 5 : Produit d'espaces métriques \quad $\bigstar\bigstar\bigstar\star\star$}
+\section*{Exercice 3 : L'espace des suites bornées \quad $\bigstar\bigstar\star\star\star$}
 
 \textbf{Énoncé :}
-Soient $(X, d_X)$ et $(Y, d_Y)$ deux espaces métriques. On définit sur l'espace produit $X \times Y$ l'application $D$ par :
-$$D((x_1, y_1), (x_2, y_2)) = \max(d_X(x_1, x_2), d_Y(y_1, y_2))$$
-Démontrer que $D$ est une distance sur $X \times Y$.
+Soit $l^\infty$ l'espace vectoriel des suites réelles bornées $u = (u_n)_{n \in \mathbb{N}}$.
+On pose $d(u, v) = \sup_{n \in \mathbb{N}} |u_n - v_n|$.
+Montrer que $d$ définit bien une distance sur $l^\infty$.
 
-\textbf{Correction Détaillée :}
-Vérifions les axiomes :
-1. \textbf{Séparation :} $D((x_1, y_1), (x_2, y_2)) = 0$ équivaut à $\max(d_X(x_1, x_2), d_Y(y_1, y_2)) = 0$. Comme les deux distances sont positives, cela implique $d_X(x_1, x_2) = 0$ et $d_Y(y_1, y_2) = 0$. D'où $x_1 = x_2$ et $y_1 = y_2$, donc $(x_1, y_1) = (x_2, y_2)$.
-2. \textbf{Symétrie :} La symétrie découle immédiatement de la symétrie de $d_X$ et $d_Y$ et de la commutativité de la fonction max.
-3. \textbf{Inégalité triangulaire :} Soient $A=(x_1, y_1)$, $B=(x_2, y_2)$ et $C=(x_3, y_3)$.
-   On a $d_X(x_1, x_3) \le d_X(x_1, x_2) + d_X(x_2, x_3)$.
-   Or, $d_X(x_1, x_2) \le D(A, B)$ et $d_X(x_2, x_3) \le D(B, C)$.
-   Donc, $d_X(x_1, x_3) \le D(A, B) + D(B, C)$.
-   De même, $d_Y(y_1, y_3) \le D(A, B) + D(B, C)$.
-   Ainsi, les deux réels $d_X(x_1, x_3)$ et $d_Y(y_1, y_3)$ sont majorés par la quantité $D(A, B) + D(B, C)$. Par conséquent, leur maximum l'est aussi :
-   $$D(A, C) = \max(d_X(x_1, x_3), d_Y(y_1, y_3)) \le D(A, B) + D(B, C)$$
-$D$ définit donc bien une métrique produit sur $X \times Y$.
+\textbf{Correction :}
+L'application $d$ est bien à valeurs dans $\mathbb{R}_+$ car la différence de deux suites bornées est bornée, donc le supremum existe et est fini et positif.
+1. \textbf{Séparation :}
+   Si $d(u, v) = 0$, alors $\sup_{n} |u_n - v_n| = 0$. Puisque $|u_n - v_n| \ge 0$ pour tout $n$, cela impose $\forall n, |u_n - v_n| = 0$, soit $u_n = v_n$. Donc $u = v$.
+2. \textbf{Symétrie :}
+   $d(u, v) = \sup_{n} |u_n - v_n| = \sup_{n} |-(v_n - u_n)| = \sup_{n} |v_n - u_n| = d(v, u)$.
+3. \textbf{Inégalité triangulaire :}
+   Soient $u, v, w \in l^\infty$. Pour tout $n \in \mathbb{N}$ :
+   $|u_n - w_n| = |u_n - v_n + v_n - w_n| \le |u_n - v_n| + |v_n - w_n|$.
+   Par définition du supremum, $|u_n - v_n| \le d(u, v)$ et $|v_n - w_n| \le d(v, w)$.
+   Ainsi, pour tout $n$ :
+   $|u_n - w_n| \le d(u, v) + d(v, w)$.
+   Puisque cette inégalité est vraie pour tout $n$, le terme de droite est un majorant de l'ensemble $\{|u_n - w_n| \mid n \in \mathbb{N}\}$. Le supremum étant le plus petit des majorants :
+   $\sup_{n} |u_n - w_n| \le d(u, v) + d(v, w)$, soit $d(u, w) \le d(u, v) + d(v, w)$. $\blacksquare$
 
-\vspace{1cm}
 
-\subsection{Exercice 6 : Bornitude et distance topologiquement équivalente \quad $\bigstar\bigstar\bigstar\bigstar\star$}
-
-\textbf{Énoncé :}
-Soit $(X, d)$ un espace métrique. On définit l'application $d'(x, y) = \frac{d(x, y)}{1 + d(x, y)}$.
-Démontrer que $d'$ est une distance sur $X$, et qu'elle est bornée par 1. Montrer qu'elle induit la même topologie que $d$.
-
-\textbf{Correction Détaillée :}
-La séparation et la symétrie découlent directement des propriétés de $d$.
-Pour l'inégalité triangulaire, considérons la fonction $f(t) = \frac{t}{1+t} = 1 - \frac{1}{1+t}$. Sa dérivée est $f'(t) = \frac{1}{(1+t)^2} > 0$, donc $f$ est strictement croissante sur $\mathbb{R}_+$.
-Soient $x, y, z \in X$. Posons $a = d(x, y)$, $b = d(y, z)$ et $c = d(x, z)$. Par l'inégalité triangulaire de $d$, $c \le a + b$.
-Puisque $f$ est croissante :
-$$f(c) \le f(a + b) = \frac{a+b}{1+a+b} = \frac{a}{1+a+b} + \frac{b}{1+a+b}$$
-Comme $1+a+b \ge 1+a$ et $1+a+b \ge 1+b$ (car $a,b \ge 0$), on a :
-$$f(c) \le \frac{a}{1+a} + \frac{b}{1+b} = f(a) + f(b)$$
-Soit $d'(x, z) \le d'(x, y) + d'(y, z)$. Ainsi, $d'$ est une distance.
-De plus, comme $d \ge 0$, $\frac{d}{1+d} < 1$, donc $d'$ est bornée par 1.
-\textbf{Topologies équivalentes :} Les boules s'emboîtent. Comme $d' \le d$, pour tout $r>0$, $B_d(x, r) \subset B_{d'}(x, r)$. Inversement, si on choisit $r' < 1$, alors $d' < r'$ équivaut à $d < \frac{r'}{1-r'}$. Ainsi, pour tout rayon $R$ de la topologie $d$, on peut trouver un rayon $r'$ de la topologie $d'$ qui l'inclut, prouvant l'équivalence topologique. Toute topologie métrique peut donc être engendrée par une métrique bornée.
-
-\vspace{1cm}
-
-\subsection{Exercice 7 : Distance ultramétrique et triangles isocèles \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+\section*{Exercice 4 : Distance induite par une fonction continue croissante \quad $\bigstar\bigstar\star\star\star$}
 
 \textbf{Énoncé :}
-Une distance $d$ sur un ensemble $X$ est dite ultramétrique si elle vérifie l'inégalité forte :
-$$d(x, z) \le \max(d(x, y), d(y, z))$$
-Démontrer que dans un tel espace métrique, tout triangle est isocèle, c'est-à-dire que pour tout triplet de points $(x, y, z)$, au moins deux des distances sont égales, et la troisième est inférieure ou égale.
+Soit $(X, d)$ un espace métrique. On pose $d'(x, y) = \frac{d(x, y)}{1 + d(x, y)}$.
+Montrer que $d'$ est une distance sur $X$.
 
-\textbf{Correction Détaillée :}
-Soient $x, y, z \in X$. Il y a trois distances : $d(x, y)$, $d(y, z)$ et $d(x, z)$.
-Supposons par l'absurde que ces trois distances soient distinctes. Quitte à permuter les points, nous pouvons les ordonner strictement. Supposons sans perte de généralité que :
-$$d(x, z) < d(x, y) < d(y, z)$$
-Appliquons l'inégalité ultramétrique au couple $(y, z)$ en introduisant le point $x$ :
-$$d(y, z) \le \max(d(y, x), d(x, z))$$
-Puisque la distance est symétrique, $d(y, x) = d(x, y)$. L'inégalité devient :
-$$d(y, z) \le \max(d(x, y), d(x, z))$$
-Or, par notre hypothèse d'ordre strict, le maximum de l'ensemble $\{d(x, y), d(x, z)\}$ est précisément $d(x, y)$ (car $d(x, z) < d(x, y)$).
-Nous obtenons donc l'inégalité :
-$$d(y, z) \le d(x, y)$$
-Cependant, ceci est en contradiction flagrante avec notre hypothèse initiale selon laquelle $d(x, y) < d(y, z)$.
-L'hypothèse que les trois distances sont distinctes est donc fausse.
-Par conséquent, au moins deux des distances doivent être égales. Le 'triangle' formé par ces trois points possède donc au moins deux 'côtés' de même 'longueur', justifiant l'appellation de triangle isocèle. De plus, la démonstration montre que les deux plus grandes distances doivent être égales.
+\textbf{Correction :}
+La fonction $f(t) = \frac{t}{1+t} = 1 - \frac{1}{1+t}$ est strictement croissante sur $\mathbb{R}_+$.
+1. \textbf{Séparation :}
+   $d'(x,y) = 0 \iff \frac{d(x,y)}{1+d(x,y)} = 0 \iff d(x,y) = 0 \iff x = y$.
+2. \textbf{Symétrie :}
+   L'expression dépend uniquement de $d(x,y)$, qui est symétrique, donc $d'(x,y) = d'(y,x)$.
+3. \textbf{Inégalité triangulaire :}
+   Pour $x,y,z \in X$, notons $a=d(x,y)$, $b=d(y,z)$ et $c=d(x,z)$. On sait que $c \le a+b$.
+   Puisque $f$ est croissante, $f(c) \le f(a+b)$.
+   $f(a+b) = \frac{a+b}{1+a+b} = \frac{a}{1+a+b} + \frac{b}{1+a+b}$.
+   Comme $1+a+b \ge 1+a$ et $1+a+b \ge 1+b$ (car $a,b \ge 0$), on a :
+   $\frac{a}{1+a+b} \le \frac{a}{1+a}$ et $\frac{b}{1+a+b} \le \frac{b}{1+b}$.
+   En sommant, $f(a+b) \le \frac{a}{1+a} + \frac{b}{1+b} = f(a) + f(b)$.
+   Donc $f(c) \le f(a) + f(b)$, ce qui équivaut à $d'(x,z) \le d'(x,y) + d'(y,z)$. $\blacksquare$
 
-\vspace{1cm}
 
-\subsection{Exercice 8 : Distance de Hausdorff entre compacts \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+\section*{Exercice 5 : Distance ultra-métrique \quad $\bigstar\bigstar\bigstar\star\star$}
 
 \textbf{Énoncé :}
-Soit $(X, d)$ un espace métrique. Pour tout compact non vide $A$ de $X$ et tout point $x \in X$, on définit la distance d'un point à un ensemble : $d(x, A) = \inf_{a \in A} d(x, a)$.
-La distance de Hausdorff entre deux compacts non vides $A$ et $B$ est définie par :
-$$d_H(A, B) = \max \left( \sup_{a \in A} d(a, B), \sup_{b \in B} d(b, A) \right)$$
-Démontrer que si $d_H(A, B) = 0$, alors $A = B$. Pourquoi l'hypothèse de compacité (ou au moins d'être fermé) est-elle cruciale ?
+Une distance $d$ sur $X$ est dite \textit{ultra-métrique} si elle vérifie :
+$\forall x,y,z \in X, d(x,z) \le \max(d(x,y), d(y,z))$.
+Montrer que dans un tel espace, tout point d'une boule ouverte en est un centre.
 
-\textbf{Correction Détaillée :}
-Supposons que $d_H(A, B) = 0$. Par définition de la distance de Hausdorff (qui est un maximum de termes positifs ou nuls), cela implique que :
-$$\sup_{a \in A} d(a, B) = 0 \quad \text{et} \quad \sup_{b \in B} d(b, A) = 0$$
-Considérons la première condition : $\sup_{a \in A} d(a, B) = 0$.
-Cela signifie que pour tout élément $a \in A$, on a $d(a, B) = 0$.
-Par définition de la distance à un ensemble, on a donc $\inf_{b \in B} d(a, b) = 0$.
-Puisque $B$ est un ensemble compact, la borne inférieure de la distance continue $x \mapsto d(a, x)$ sur $B$ est atteinte. Il existe donc au moins un élément $b_0 \in B$ tel que $d(a, b_0) = 0$.
-Par l'axiome de séparation de la distance $d$, on en déduit que $a = b_0$, et par conséquent, $a \in B$.
-Ceci étant valable pour tout $a \in A$, on a montré l'inclusion $A \subset B$.
-Un raisonnement rigoureusement symétrique à partir de l'hypothèse $\sup_{b \in B} d(b, A) = 0$ montre que pour tout $b \in B$, il existe $a_0 \in A$ tel que $b=a_0$, d'où $B \subset A$.
-Les deux inclusions réciproques impliquent l'égalité des ensembles : $A = B$.
-\textbf{Rôle de la compacité/fermeture :} Si les ensembles n'étaient pas fermés, avoir $\inf_{b \in B} d(a, b) = 0$ signifierait seulement que $a$ est dans l'adhérence de $B$ (notée $\bar{B}$). Ainsi $d_H(A, B) = 0$ entraînerait seulement $\bar{A} = \bar{B}$. Par exemple, dans $\mathbb{R}$, pour $A=]0, 1[$ et $B=[0, 1]$, on a $d_H(A, B) = 0$ mais $A \neq B$. La compacité garantit que l'ensemble contient sa propre frontière, préservant ainsi l'axiome de séparation sur l'espace des parties compactes.
+\textbf{Correction :}
+Soit $B(a, r)$ une boule ouverte. Prenons $b \in B(a, r)$. Montrons que $B(b, r) = B(a, r)$.
+1. \textbf{Montrons $B(b, r) \subset B(a, r)$ :}
+   Soit $x \in B(b, r)$. Ainsi $d(b, x) < r$.
+   On sait aussi que $b \in B(a, r)$, donc $d(a, b) < r$.
+   Par l'inégalité ultra-métrique :
+   $d(a, x) \le \max(d(a, b), d(b, x))$.
+   Puisque $d(a,b)<r$ et $d(b,x)<r$, leur maximum est strictement inférieur à $r$.
+   Donc $d(a,x) < r$, ce qui signifie $x \in B(a, r)$.
+2. \textbf{Montrons $B(a, r) \subset B(b, r)$ :}
+   Par symétrie des rôles, en échangeant $a$ et $b$ (puisque $a \in B(b, r)$ car $d(b, a) = d(a, b) < r$), le même argument s'applique pour montrer l'inclusion réciproque.
+Conclusion : $B(b, r) = B(a, r)$. $\blacksquare$
 
-\vspace{1cm}
 
-\subsection{Exercice 9 : Complétude et suite de Cauchy \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+\section*{Exercice 6 : L'espace des fonctions continues et distance de Manhattan \quad $\bigstar\bigstar\bigstar\star\star$}
 
 \textbf{Énoncé :}
-Dans un espace métrique $(X, d)$, on considère une suite $(x_n)$ telle que la série $\sum d(x_n, x_{n+1})$ est convergente. Démontrer que la suite $(x_n)$ est une suite de Cauchy.
+Sur $E = \mathcal{C}([0, 1], \mathbb{R})$, on pose $d_1(f, g) = \int_0^1 |f(t) - g(t)| dt$.
+Démontrer l'axiome de séparation (la difficulté réside dans le fait que l'intégrale d'une fonction positive est nulle).
 
-\textbf{Correction Détaillée :}
-Pour montrer que la suite $(x_n)$ est de Cauchy, nous devons prouver que la distance entre $x_p$ et $x_q$ tend vers zéro lorsque $p$ et $q$ tendent vers l'infini indépendamment. Soit $\epsilon > 0$.
-Soient $p, q$ deux entiers naturels avec $q > p$. En appliquant itérativement l'inégalité triangulaire de l'espace métrique, nous avons :
-$$d(x_p, x_q) \le d(x_p, x_{p+1}) + d(x_{p+1}, x_{p+2}) + \dots + d(x_{q-1}, x_q)$$
-Ce qui peut s'écrire formellement comme une somme partielle :
-$$d(x_p, x_q) \le \sum_{k=p}^{q-1} d(x_k, x_{k+1})$$
-Or, par hypothèse, la série de terme général positif $u_n = d(x_n, x_{n+1})$ est convergente. Soit $S$ sa somme totale. Les sommes partielles $S_n = \sum_{k=0}^{n} u_k$ convergent vers $S$.
-La somme $\sum_{k=p}^{q-1} d(x_k, x_{k+1})$ correspond exactement à la différence de deux sommes partielles : $S_{q-1} - S_{p-1}$.
-Puisque la suite des sommes partielles $(S_n)$ est convergente, elle est elle-même une suite de Cauchy réelle. Il existe donc un rang $N$ tel que pour tous entiers $q > p > N$, on ait :
-$$|S_{q-1} - S_{p-1}| < \epsilon$$
-Comme les termes sont positifs, cela implique que la somme entre $p$ et $q-1$ est strictement inférieure à $\epsilon$.
-Par conséquent, pour tous $q > p > N$ :
-$$d(x_p, x_q) \le \sum_{k=p}^{q-1} d(x_k, x_{k+1}) < \epsilon$$
-Ceci est exactement la définition d'une suite de Cauchy dans l'espace métrique $(X, d)$. La finitude de la somme des distances de sauts (analogue à la longueur finie d'une courbe en analyse métrique discrète) garantit le caractère de Cauchy de la suite.
+\textbf{Correction :}
+Il est évident que si $f=g$, alors $d_1(f,g) = \int_0^1 0 = 0$.
+Réciproquement, supposons $d_1(f,g) = 0$. Posons $h(t) = |f(t) - g(t)|$.
+La fonction $h$ est continue sur $[0,1]$ et $h(t) \ge 0$ pour tout $t$.
+Supposons par l'absurde qu'il existe $t_0 \in [0,1]$ tel que $h(t_0) > 0$. Notons $c = h(t_0)$.
+Puisque $h$ est continue, il existe un voisinage ouvert de $t_0$ dans $[0,1]$, disons $[a,b]$ avec $a<b$, sur lequel $h(t) \ge c/2$.
+Alors $\int_0^1 h(t) dt \ge \int_a^b h(t) dt \ge \int_a^b \frac{c}{2} dt = (b-a)\frac{c}{2} > 0$.
+Cela contredit l'hypothèse $\int_0^1 h(t) dt = 0$.
+Donc pour tout $t$, $h(t)=0$, c'est-à-dire $f(t)=g(t)$. L'axiome de séparation est vérifié. $\blacksquare$
 
-\vspace{1cm}
 
-\subsection{Exercice 10 : Métrique p-adique sur les rationnels \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+\section*{Exercice 7 : Distances équivalentes dans $\mathbb{R}^n$ \quad $\bigstar\bigstar\bigstar\star\star$}
 
 \textbf{Énoncé :}
-Soit $p$ un nombre premier. Pour tout rationnel non nul $x = p^k \frac{a}{b}$ où $a,b$ sont des entiers non divisibles par $p$, on définit sa valeur absolue p-adique $|x|_p = p^{-k}$. On pose $|0|_p = 0$. Démontrer que $d(x, y) = |x - y|_p$ est une distance sur $\mathbb{Q}$, et vérifier qu'elle est ultramétrique.
+Sur $\mathbb{R}^n$, on définit les distances $d_1(x,y) = \sum |x_i - y_i|$ et $d_\infty(x,y) = \max |x_i - y_i|$.
+Montrer que $d_1$ et $d_\infty$ sont équivalentes.
 
-\textbf{Correction Détaillée :}
-1. \textbf{Séparation :} Si $d(x, y) = 0$, alors $|x - y|_p = 0$. Par définition, cela n'arrive que si $x - y = 0$, donc $x = y$.
-2. \textbf{Symétrie :} $d(y, x) = |y - x|_p = |-1 \cdot (x - y)|_p$. L'entier $-1$ n'est pas divisible par $p$, sa valuation est $0$, donc son module est $1$. $|y - x|_p = |x - y|_p$.
-3. \textbf{Ultramétrie (et donc Inégalité triangulaire) :} Il suffit de montrer que $|u + v|_p \le \max(|u|_p, |v|_p)$ pour tous $u, v \in \mathbb{Q}$.
-Soient $u = p^{k_u} \frac{a}{b}$ et $v = p^{k_v} \frac{c}{d}$. Supposons $k_u \le k_v$.
-Alors $u + v = p^{k_u} (\frac{a}{b} + p^{k_v - k_u} \frac{c}{d}) = p^{k_u} \frac{ad + p^{k_v - k_u} bc}{bd}$.
-La puissance de $p$ factorisant le numérateur est au moins $0$. Donc la valuation de $u+v$ est $\ge k_u$.
-Ainsi $|u+v|_p \le p^{-k_u} = \max(|u|_p, |v|_p)$.
-En appliquant avec $u = x-y$ et $v = y-z$, $x-z = u+v$, ce qui donne $d(x, z) \le \max(d(x, y), d(y, z))$.
-Cette métrique étrange (où $1024$ est extrêmement 'proche' de $0$ pour $p=2$ car $2^{10}$ a un module $2^{-10} = 1/1024$) est le fondement de l'analyse p-adique.
+\textbf{Correction :}
+Soient $x, y \in \mathbb{R}^n$.
+1. \textbf{Majoration de $d_\infty$ par $d_1$ :}
+   Pour tout $j \in \{1, \dots, n\}$, $|x_j - y_j| \le \sum_{i=1}^n |x_i - y_i| = d_1(x,y)$.
+   Puisque c'est vrai pour tout $j$, c'est vrai pour le maximum :
+   $d_\infty(x,y) \le d_1(x,y)$. (Constante $C_1 = 1$).
+2. \textbf{Majoration de $d_1$ par $d_\infty$ :}
+   $d_1(x,y) = \sum_{i=1}^n |x_i - y_i|$.
+   Chaque terme de la somme est majoré par le maximum des écarts, soit $d_\infty(x,y)$.
+   $d_1(x,y) \le \sum_{i=1}^n d_\infty(x,y) = n \cdot d_\infty(x,y)$.
+   Ce qui s'écrit $d_\infty(x,y) \ge \frac{1}{n} d_1(x,y)$.
+En combinant, on a pour tout $x,y$ :
+$$ \frac{1}{n} d_1(x,y) \le d_\infty(x,y) \le d_1(x,y) $$
+Les distances sont donc équivalentes. $\blacksquare$
 
-\vspace{1cm}
+
+\section*{Exercice 8 : Produit d'espaces métriques \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Soient $(X, d_X)$ et $(Y, d_Y)$ deux espaces métriques. Sur l'espace produit $X \times Y$, on pose :
+$d((x_1, y_1), (x_2, y_2)) = d_X(x_1, x_2) + d_Y(y_1, y_2)$.
+Montrer que c'est une distance sur $X \times Y$.
+
+\textbf{Correction :}
+Notons $u = (x_1, y_1)$, $v = (x_2, y_2)$ et $w = (x_3, y_3)$.
+1. \textbf{Séparation :}
+   $d(u,v) = 0 \iff d_X(x_1, x_2) + d_Y(y_1, y_2) = 0$.
+   Comme les deux termes sont positifs, cela implique $d_X(x_1, x_2) = 0$ et $d_Y(y_1, y_2) = 0$.
+   Donc $x_1=x_2$ et $y_1=y_2$, soit $u=v$.
+2. \textbf{Symétrie :}
+   $d(u,v) = d_X(x_1, x_2) + d_Y(y_1, y_2) = d_X(x_2, x_1) + d_Y(y_2, y_1) = d(v,u)$.
+3. \textbf{Inégalité triangulaire :}
+   $d(u,w) = d_X(x_1, x_3) + d_Y(y_1, y_3)$.
+   Par inégalité triangulaire dans $X$ et $Y$ :
+   $d_X(x_1, x_3) \le d_X(x_1, x_2) + d_X(x_2, x_3)$
+   $d_Y(y_1, y_3) \le d_Y(y_1, y_2) + d_Y(y_2, y_3)$
+   En sommant ces deux inégalités :
+   $d(u,w) \le (d_X(x_1, x_2) + d_Y(y_1, y_2)) + (d_X(x_2, x_3) + d_Y(y_2, y_3))$
+   Soit $d(u,w) \le d(u,v) + d(v,w)$. $\blacksquare$
 
 
-\newpage
+\section*{Exercice 9 : Distance de Hausdorff \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Soit $(X, d)$ un espace métrique et $P, Q$ deux parties non vides bornées. On définit la distance d'un point $x$ à $P$ par $d(x, P) = \inf_{p \in P} d(x, p)$.
+Montrer que l'application $x \mapsto d(x, P)$ est $1$-lipschitzienne (et donc continue).
+
+\textbf{Correction :}
+Soient $x, y \in X$. Prenons $p \in P$. Par l'inégalité triangulaire :
+$$ d(x, p) \le d(x, y) + d(y, p) $$
+Passons à la borne inférieure par rapport à $p \in P$. Puisque $d(x, y)$ ne dépend pas de $p$, on peut le sortir de l'infimum :
+$$ \inf_{p \in P} d(x, p) \le \inf_{p \in P} [d(x, y) + d(y, p)] = d(x, y) + \inf_{p \in P} d(y, p) $$
+Ce qui se réécrit :
+$$ d(x, P) \le d(x, y) + d(y, P) \implies d(x, P) - d(y, P) \le d(x, y) $$
+En échangeant les rôles de $x$ et $y$, on obtient symétriquement :
+$$ d(y, P) - d(x, P) \le d(y, x) = d(x, y) $$
+En combinant les deux, on a :
+$$ |d(x, P) - d(y, P)| \le d(x, y) $$
+L'application est bien $1$-lipschitzienne. $\blacksquare$
+
+
+\section*{Exercice 10 : Convergence de suites dans un espace métrique \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Dans un espace métrique $(X, d)$, on dit qu'une suite $(x_n)$ converge vers $L$ si $d(x_n, L) \to 0$.
+Montrer que si $x_n \to L$, alors l'unicité de la limite est garantie.
+
+\textbf{Correction :}
+Supposons par l'absurde qu'une suite $(x_n)$ admette deux limites distinctes $L_1$ et $L_2$ avec $L_1 \neq L_2$.
+Alors $d(L_1, L_2) > 0$ par l'axiome de séparation. Posons $\epsilon = \frac{d(L_1, L_2)}{2} > 0$.
+Puisque $x_n \to L_1$, il existe $N_1$ tel que pour $n \ge N_1$, $d(x_n, L_1) < \epsilon$.
+Puisque $x_n \to L_2$, il existe $N_2$ tel que pour $n \ge N_2$, $d(x_n, L_2) < \epsilon$.
+Soit $N = \max(N_1, N_2)$. Pour $n \ge N$, évaluons la distance entre $L_1$ et $L_2$ avec l'inégalité triangulaire en passant par $x_n$ :
+$$ d(L_1, L_2) \le d(L_1, x_n) + d(x_n, L_2) $$
+$$ d(L_1, L_2) < \epsilon + \epsilon = 2\epsilon $$
+Or, par définition, $2\epsilon = d(L_1, L_2)$. Nous aboutissons donc à la contradiction stricte :
+$$ d(L_1, L_2) < d(L_1, L_2) $$
+L'hypothèse initiale est fausse. La limite d'une suite dans un espace métrique, lorsqu'elle existe, est unique. $\blacksquare$
+
+
+
 \part{Travaux Pratiques et Simulations Algorithmiques}
+\section*{TP 1 : Implémentation des distances usuelles (L1, L2, Linf)}
 
-\subsection{TP 1 : Implémentation des Distances Classiques}
-
-Ce TP propose d'implémenter les distances euclidienne, de Manhattan et de Minkowski en Python pur. Ces fonctions sont la base de l'espace métrique usuel.
-
-\begin{lstlisting}
-def distance_minkowski(p1, p2, p):
-    # p1 et p2 sont des listes de coordonnees (vecteurs de dimension n)
-    assert len(p1) == len(p2), "Les points doivent etre de meme dimension"
-    assert p >= 1, "Le parametre p de Minkowski doit etre >= 1 pour respecter l'inegalite triangulaire"
-
-    somme = 0
-    for i in range(len(p1)):
-        somme += abs(p1[i] - p2[i]) ** p
-
-    return somme ** (1 / p)
-
-def distance_euclidienne(p1, p2):
-    return distance_minkowski(p1, p2, 2)
-
-def distance_manhattan(p1, p2):
-    return distance_minkowski(p1, p2, 1)
-
-# Tests de validation
-pt_A = [0, 0]
-pt_B = [3, 4]
-
-dist_eucl = distance_euclidienne(pt_A, pt_B)
-assert abs(dist_eucl - 5.0) < 1e-9, "Erreur sur la distance euclidienne"
-
-dist_manh = distance_manhattan(pt_A, pt_B)
-assert abs(dist_manh - 7.0) < 1e-9, "Erreur sur la distance de Manhattan"
-
-print("Toutes les distances classiques sont valides.")
-\end{lstlisting}
-
-\vspace{1cm}
-
-\subsection{TP 2 : Distance de Levenshtein (Métrique sur les chaînes de caractères)}
-
-L'espace des mots forme un espace métrique abstrait. La distance de Levenshtein (ou distance d'édition) vérifie les trois axiomes et permet de quantifier la proximité orthographique entre deux mots.
+Ce TP implémente les trois distances fondamentales sur des vecteurs de dimension n et vérifie empiriquement l'inégalité triangulaire.
 
 \begin{lstlisting}
-def distance_levenshtein(s1, s2):
-    # Initialisation de la matrice des distances
-    m, n = len(s1), len(s2)
-    dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+import math
 
-    # Conditions aux limites (distance avec la chaine vide)
-    for i in range(m + 1):
-        dp[i][0] = i
-    for j in range(n + 1):
-        dp[0][j] = j
+def distance_l1(u, v):
+    '''Distance de Manhattan.'''
+    assert len(u) == len(v), "Les vecteurs doivent avoir la meme dimension."
+    return sum(abs(x - y) for x, y in zip(u, v))
 
-    # Remplissage par programmation dynamique
-    for i in range(1, m + 1):
-        for j in range(1, n + 1):
-            cout_substitution = 0 if s1[i - 1] == s2[j - 1] else 1
+def distance_l2(u, v):
+    '''Distance Euclidienne canonique.'''
+    assert len(u) == len(v)
+    return math.sqrt(sum((x - y)**2 for x, y in zip(u, v)))
 
-            dp[i][j] = min(
-                dp[i - 1][j] + 1,               # Effacement
-                dp[i][j - 1] + 1,               # Insertion
-                dp[i - 1][j - 1] + cout_substitution  # Substitution
-            )
+def distance_linf(u, v):
+    '''Distance de Tchebychev (Maximum).'''
+    assert len(u) == len(v)
+    return max(abs(x - y) for x, y in zip(u, v))
 
-    return dp[m][n]
+if __name__ == "__main__":
+    A = [1.0, 0.0, -2.0]
+    B = [4.0, 4.0, 2.0]
+    C = [0.0, 5.0, 1.0]
 
-# Tests et validation des axiomes
-mot1 = "chien"
-mot2 = "chat"
-mot3 = "chou"
+    # Test L2
+    d_AB = distance_l2(A, B)
+    d_AC = distance_l2(A, C)
+    d_CB = distance_l2(C, B)
 
-# Axiome 1: Separation
-assert distance_levenshtein(mot1, mot1) == 0
-
-# Axiome 2: Symetrie
-assert distance_levenshtein(mot1, mot2) == distance_levenshtein(mot2, mot1)
-
-# Axiome 3: Inegalite triangulaire
-d_12 = distance_levenshtein(mot1, mot2)
-d_23 = distance_levenshtein(mot2, mot3)
-d_13 = distance_levenshtein(mot1, mot3)
-
-assert d_13 <= d_12 + d_23, "L'inegalite triangulaire a echoue"
-
-print(f"Distance entre {mot1} et {mot2} : {d_12}")
-print("La metrique de Levenshtein est valide.")
+    # Inegalite triangulaire AB <= AC + CB
+    print("Verification Inegalite Triangulaire L2 :")
+    print("d(A,B) =", d_AB)
+    print("d(A,C) + d(C,B) =", d_AC + d_CB)
+    assert d_AB <= d_AC + d_CB + 1e-9
 \end{lstlisting}
 
-\vspace{1cm}
+\section*{TP 2 : Génération de nuages de points et vérification d'équivalence}
 
-\subsection{TP 3 : Algorithme des K-Plus Proches Voisins (k-NN) sur un espace métrique}
-
-Application directe de l'espace métrique en IA : la classification par K-NN repose entièrement sur l'évaluation des distances entre les points. Ce TP implémente la recherche des k voisins et le vote majoritaire.
+Dans ce TP, nous simulons un grand nombre de points aléatoires pour observer la relation d'équivalence entre la norme L1 et L2 en dimension n.
 
 \begin{lstlisting}
-def distance_euclidienne(p1, p2):
-    return sum((a - b) ** 2 for a, b in zip(p1, p2)) ** 0.5
+import random
 
-def knn_classifier(train_data, train_labels, test_point, k):
-    # Calcul des distances entre test_point et tous les points d'entrainement
-    distances = []
-    for i in range(len(train_data)):
-        dist = distance_euclidienne(test_point, train_data[i])
-        distances.append((dist, train_labels[i]))
+def generate_random_vector(dim, bound=10.0):
+    return [random.uniform(-bound, bound) for _ in range(dim)]
 
-    # Tri par distance croissante (le coeur de la notion topologique de voisinage)
-    distances.sort(key=lambda x: x[0])
+def distance_l1(u, v):
+    return sum(abs(x - y) for x, y in zip(u, v))
 
-    # Extraction des k plus proches voisins
-    k_voisins = distances[:k]
+def distance_l2(u, v):
+    return sum((x - y)**2 for x, y in zip(u, v)) ** 0.5
 
-    # Vote majoritaire pour la classification
-    compteurs = {}
-    for _, label in k_voisins:
-        compteurs[label] = compteurs.get(label, 0) + 1
+if __name__ == "__main__":
+    dim = 5
+    n_samples = 1000
 
-    classe_predite = max(compteurs, key=compteurs.get)
-    return classe_predite
+    c1_empirique = float('inf')
+    c2_empirique = 0.0
 
-# Jeu de donnees d'entrainement (x, y) et labels (classes 0 ou 1)
-X_train = [[1, 2], [1.5, 1.8], [5, 8], [8, 8], [1, 0.6], [9, 11]]
-y_train = [0, 0, 1, 1, 0, 1]
+    for _ in range(n_samples):
+        u = generate_random_vector(dim)
+        v = generate_random_vector(dim)
 
-# Point a classer
-nouveau_point = [2, 2]
+        d1 = distance_l1(u, v)
+        d2 = distance_l2(u, v)
 
-# Prediction avec k=3
-prediction = knn_classifier(X_train, y_train, nouveau_point, 3)
+        if d2 > 0:
+            ratio = d1 / d2
+            if ratio < c1_empirique:
+                c1_empirique = ratio
+            if ratio > c2_empirique:
+                c2_empirique = ratio
 
-assert prediction == 0, "Le point [2, 2] devrait etre proche de la classe 0"
-print(f"Le point {nouveau_point} a ete classe dans la categorie {prediction}")
+    # Theoriquement: L2 <= L1 <= sqrt(dim) * L2
+    # Donc L1/L2 est encadre par [1, sqrt(dim)]
+    print(f"Dimension: {dim}")
+    print(f"Borne theorique min : 1.0, observee : {c1_empirique}")
+    print(f"Borne theorique max : {dim**0.5}, observee : {c2_empirique}")
 \end{lstlisting}
 
-\vspace{1cm}
+\section*{TP 3 : La distance discrète et topologie}
 
-\subsection{TP 4 : Simulation de la Topologie Discrète}
-
-Ce TP illustre la topologie discrète en construisant une structure de données qui vérifie empiriquement que dans cet espace métrique particulier, l'intersection de voisinages reste isolée.
+Implémentation d'une distance discrète sur des chaînes de caractères (symboles).
 
 \begin{lstlisting}
 def distance_discrete(x, y):
-    # La metrique par excellence des espaces discretises
+    '''Distance valant 0 si x==y, 1 sinon.'''
     if x == y:
-        return 0
+        return 0.0
     else:
-        return 1
+        return 1.0
 
-def generer_boule_ouverte(espace, centre, rayon):
-    # Renvoie la liste des points dans la boule ouverte B(centre, rayon)
-    boule = []
-    for pt in espace:
-        if distance_discrete(centre, pt) < rayon:
-            boule.append(pt)
-    return boule
+if __name__ == "__main__":
+    mots = ["chat", "chien", "chat", "oiseau"]
 
-# Un espace de travail arbitraire (pouvant representer des etats disjoints)
-X = ["Etat_A", "Etat_B", "Etat_C", "Etat_D"]
+    # Verification des axiomes sur tous les triplets possibles
+    for x in mots:
+        for y in mots:
+            for z in mots:
+                d_xy = distance_discrete(x, y)
+                d_yz = distance_discrete(y, z)
+                d_xz = distance_discrete(x, z)
 
-# Pour r = 0.5 (r <= 1), la boule ne contient que le centre
-b_petite = generer_boule_ouverte(X, "Etat_B", 0.5)
-assert b_petite == ["Etat_B"], "Erreur : la boule de rayon < 1 n'est pas un singleton"
+                # Separation
+                if d_xy == 0:
+                    assert x == y
 
-# Pour r = 2.0 (r > 1), la boule contient tout l'espace
-b_grande = generer_boule_ouverte(X, "Etat_B", 2.0)
-assert len(b_grande) == len(X), "Erreur : la boule de rayon > 1 ne contient pas tout X"
+                # Symetrie
+                assert d_xy == distance_discrete(y, x)
 
-print("La topologie discrete est validee : chaque point est son propre ouvert.")
+                # Triangulaire
+                assert d_xz <= d_xy + d_yz
+
+    print("Tous les axiomes de la distance discrete sont verifies sur l'ensemble de mots.")
 \end{lstlisting}
 
-\vspace{1cm}
+\section*{TP 4 : Algorithme des K-Plus Proches Voisins (KNN) pur Python}
 
-\subsection{TP 5 : Distance de Jaccard sur les ensembles}
-
-L'espace des parties d'un ensemble fini peut être muni d'une distance. La distance de Jaccard est fondamentale en data science pour mesurer la dissimilarité entre des ensembles (comme des paniers d'achat ou des documents textuels).
+Implémentation naïve de KNN pour illustrer l'importance du choix de la distance dans un processus de décision.
 
 \begin{lstlisting}
-def distance_jaccard(ens1, ens2):
-    # ens1 et ens2 sont des ensembles Python (set)
-    intersection = ens1.intersection(ens2)
-    union = ens1.union(ens2)
+def distance_euclidienne(u, v):
+    return sum((x-y)**2 for x,y in zip(u,v))**0.5
 
-    # Gestion du cas limite des ensembles vides
-    if len(union) == 0:
-        return 0.0
+class KNN:
+    def __init__(self, k, dist_func=distance_euclidienne):
+        self.k = k
+        self.dist_func = dist_func
+        self.data = []
+        self.labels = []
 
-    similarite = len(intersection) / len(union)
+    def fit(self, X, y):
+        self.data = X
+        self.labels = y
 
-    # La distance est le complement de la similarite
-    return 1.0 - similarite
+    def predict(self, x_new):
+        # Calculer toutes les distances
+        distances = [(self.dist_func(x_new, x_train), label)
+                     for x_train, label in zip(self.data, self.labels)]
 
-# Test des axiomes de la metrique
-A = {"apple", "banana", "cherry"}
-B = {"banana", "cherry", "date"}
-C = {"apple", "date", "fig"}
+        # Trier par distance
+        distances.sort(key=lambda item: item[0])
 
-# 1. Separation
-assert distance_jaccard(A, A) == 0.0
+        # Prendre les k plus proches
+        k_nearest = distances[:self.k]
 
-# 2. Symetrie
-assert distance_jaccard(A, B) == distance_jaccard(B, A)
+        # Vote majoritaire (naif)
+        votes = {}
+        for _, label in k_nearest:
+            votes[label] = votes.get(label, 0) + 1
 
-# 3. Inegalite triangulaire
-d_AB = distance_jaccard(A, B)
-d_BC = distance_jaccard(B, C)
-d_AC = distance_jaccard(A, C)
+        return max(votes.items(), key=lambda item: item[1])[0]
 
-# Note: d_AB = 1 - 2/4 = 0.5
-# d_BC = 1 - 1/5 = 0.8
-# d_AC = 1 - 1/5 = 0.8
-assert d_AC <= d_AB + d_BC, "Echec de l'inegalite triangulaire"
+if __name__ == "__main__":
+    X_train = [[1, 1], [1, 2], [5, 5], [6, 5]]
+    y_train = ["Classe_A", "Classe_A", "Classe_B", "Classe_B"]
 
-print(f"Distance de Jaccard entre A et B : {d_AB}")
-print("L'espace des ensembles muni de Jaccard est bien un espace metrique.")
+    knn = KNN(k=3)
+    knn.fit(X_train, y_train)
+
+    x_test = [2, 2]
+    pred = knn.predict(x_test)
+    print(f"Prediction pour {x_test} : {pred}")
+    assert pred == "Classe_A"
 \end{lstlisting}
 
-\vspace{1cm}
+\section*{TP 5 : Distance de Hausdorff entre deux ensembles discrets}
+
+Calcul de la distance de Hausdorff entre deux ensembles de points dans un plan 2D.
+
+\begin{lstlisting}
+def dist_euclidienne(p1, p2):
+    return ((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)**0.5
+
+def dist_point_ensemble(point, ensemble):
+    '''Calcule d(x, A) = inf {d(x,a) pour a dans A}'''
+    return min(dist_euclidienne(point, a) for a in ensemble)
+
+def hausdorff(A, B):
+    '''Distance de Hausdorff entre A et B.'''
+    max_A_to_B = max(dist_point_ensemble(a, B) for a in A)
+    max_B_to_A = max(dist_point_ensemble(b, A) for b in B)
+    return max(max_A_to_B, max_B_to_A)
+
+if __name__ == "__main__":
+    # Carre de cote 1
+    ensemble_A = [(0,0), (1,0), (0,1), (1,1)]
+    # Carre decale de (0.5, 0.5)
+    ensemble_B = [(0.5,0.5), (1.5,0.5), (0.5,1.5), (1.5,1.5)]
+
+    dH = hausdorff(ensemble_A, ensemble_B)
+    print(f"Distance de Hausdorff entre A et B : {dH}")
+
+    # La distance de A a lui-meme doit etre 0
+    assert hausdorff(ensemble_A, ensemble_A) == 0.0
+\end{lstlisting}
 
 \end{document}

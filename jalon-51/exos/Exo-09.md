@@ -1,23 +1,23 @@
----
-title: "Exercice 9 : Complétude et suite de Cauchy"
----
+# Exercice 9 : Produit d'espaces métriques
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-### Exercice 9 : Complétude et suite de Cauchy \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
+## Énoncé formel
+Soient $(X_1, d_1)$ et $(X_2, d_2)$ deux espaces métriques. On équipe $X = X_1 \times X_2$ de la distance produit : $D(x, y) = \sqrt{d_1(x_1, y_1)^2 + d_2(x_2, y_2)^2}$. Vérifier l'inégalité triangulaire de $D$.
 
-**Énoncé :**
-Dans un espace métrique $(X, d)$, on considère une suite $(x_n)$ telle que la série $\sum d(x_n, x_{n+1})$ est convergente. Démontrer que la suite $(x_n)$ est une suite de Cauchy.
+## Résolution pas à pas
+**Étape 1 : Passage à l'espace euclidien bidimensionnel**
 
-**Correction Détaillée :**
-Pour montrer que la suite $(x_n)$ est de Cauchy, nous devons prouver que la distance entre $x_p$ et $x_q$ tend vers zéro lorsque $p$ et $q$ tendent vers l'infini indépendamment. Soit $\epsilon > 0$.
-Soient $p, q$ deux entiers naturels avec $q > p$. En appliquant itérativement l'inégalité triangulaire de l'espace métrique, nous avons :
-$$d(x_p, x_q) \le d(x_p, x_{p+1}) + d(x_{p+1}, x_{p+2}) + \dots + d(x_{q-1}, x_q)$$
-Ce qui peut s'écrire formellement comme une somme partielle :
-$$d(x_p, x_q) \le \sum_{k=p}^{q-1} d(x_k, x_{k+1})$$
-Or, par hypothèse, la série de terme général positif $u_n = d(x_n, x_{n+1})$ est convergente. Soit $S$ sa somme totale. Les sommes partielles $S_n = \sum_{k=0}^{n} u_k$ convergent vers $S$.
-La somme $\sum_{k=p}^{q-1} d(x_k, x_{k+1})$ correspond exactement à la différence de deux sommes partielles : $S_{q-1} - S_{p-1}$.
-Puisque la suite des sommes partielles $(S_n)$ est convergente, elle est elle-même une suite de Cauchy réelle. Il existe donc un rang $N$ tel que pour tous entiers $q > p > N$, on ait :
-$$|S_{q-1} - S_{p-1}| < \epsilon$$
-Comme les termes sont positifs, cela implique que la somme entre $p$ et $q-1$ est strictement inférieure à $\epsilon$.
-Par conséquent, pour tous $q > p > N$ :
-$$d(x_p, x_q) \le \sum_{k=p}^{q-1} d(x_k, x_{k+1}) < \epsilon$$
-Ceci est exactement la définition d'une suite de Cauchy dans l'espace métrique $(X, d)$. La finitude de la somme des distances de sauts (analogue à la longueur finie d'une courbe en analyse métrique discrète) garantit le caractère de Cauchy de la suite.
+Pour trois points $x, y, z$ dans l'espace produit $X_1 \times X_2$, on a des composantes $(x_1, x_2)$, $(y_1, y_2)$ et $(z_1, z_2)$.
+Posons les réels $a = d_1(x_1, y_1)$, $b = d_2(x_2, y_2)$, $u = d_1(y_1, z_1)$ et $v = d_2(y_2, z_2)$.
+Les inégalités triangulaires sur les espaces de base donnent : $d_1(x_1, z_1) \le a + u$ et $d_2(x_2, z_2) \le b + v$.
+
+**Étape 2 : Évaluation du membre de gauche**
+
+Le carré de la distance cible est :
+$D(x,z)^2 = d_1(x_1, z_1)^2 + d_2(x_2, z_2)^2 \le (a+u)^2 + (b+v)^2$.
+
+**Étape 3 : Utilisation de Minkowski (Cauchy-Schwarz)**
+
+Nous voulons montrer que $\sqrt{(a+u)^2 + (b+v)^2} \le \sqrt{a^2+b^2} + \sqrt{u^2+v^2}$.
+Cette inégalité est exactement l'inégalité triangulaire pour la norme euclidienne usuelle sur $\mathbb{R}^2$ appliquée aux vecteurs $V_1 = (a,b)$ et $V_2 = (u,v)$.
+Ainsi, $D(x,z) \le D(x,y) + D(y,z)$. La distance produit est parfaitement valide. $\blacksquare$

@@ -1,23 +1,23 @@
----
-title: "Exercice 5 : Produit d'espaces métriques"
----
+# Exercice 5 : Distances sur l'espace des suites
+**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
 
-### Exercice 5 : Produit d'espaces métriques \quad $\bigstar\bigstar\bigstar\star\star$
+## Énoncé formel
+Soit $\mathcal{B}(\mathbb{N}, \mathbb{R})$ l'ensemble des suites réelles bornées. On pose $d_\infty((u_n), (v_n)) = \sup_{n \in \mathbb{N}} |u_n - v_n|$. Vérifier les axiomes de la distance.
 
-**Énoncé :**
-Soient $(X, d_X)$ et $(Y, d_Y)$ deux espaces métriques. On définit sur l'espace produit $X \times Y$ l'application $D$ par :
-$$D((x_1, y_1), (x_2, y_2)) = \max(d_X(x_1, x_2), d_Y(y_1, y_2))$$
-Démontrer que $D$ est une distance sur $X \times Y$.
+## Résolution pas à pas
+**Étape 1 : Définition rigoureuse**
 
-**Correction Détaillée :**
-Vérifions les axiomes :
-1. **Séparation :** $D((x_1, y_1), (x_2, y_2)) = 0$ équivaut à $\max(d_X(x_1, x_2), d_Y(y_1, y_2)) = 0$. Comme les deux distances sont positives, cela implique $d_X(x_1, x_2) = 0$ et $d_Y(y_1, y_2) = 0$. D'où $x_1 = x_2$ et $y_1 = y_2$, donc $(x_1, y_1) = (x_2, y_2)$.
-2. **Symétrie :** La symétrie découle immédiatement de la symétrie de $d_X$ et $d_Y$ et de la commutativité de la fonction max.
-3. **Inégalité triangulaire :** Soient $A=(x_1, y_1)$, $B=(x_2, y_2)$ et $C=(x_3, y_3)$.
-   On a $d_X(x_1, x_3) \le d_X(x_1, x_2) + d_X(x_2, x_3)$.
-   Or, $d_X(x_1, x_2) \le D(A, B)$ et $d_X(x_2, x_3) \le D(B, C)$.
-   Donc, $d_X(x_1, x_3) \le D(A, B) + D(B, C)$.
-   De même, $d_Y(y_1, y_3) \le D(A, B) + D(B, C)$.
-   Ainsi, les deux réels $d_X(x_1, x_3)$ et $d_Y(y_1, y_3)$ sont majorés par la quantité $D(A, B) + D(B, C)$. Par conséquent, leur maximum l'est aussi :
-   $$D(A, C) = \max(d_X(x_1, x_3), d_Y(y_1, y_3)) \le D(A, B) + D(B, C)$$
-$D$ définit donc bien une métrique produit sur $X \times Y$.
+Soient $U=(u_n)$ et $V=(v_n)$ deux suites bornées. La différence $u_n - v_n$ est également une suite bornée. L'ensemble $\left\lbrace |u_n - v_n| \mid n \in \mathbb{N}\right\rbrace$ est donc une partie non vide et majorée de $\mathbb{R}$, elle admet donc une borne supérieure. L'application $d_\infty$ est bien à valeurs dans $\mathbb{R}_+$.
+
+**Étape 2 : Axiomes de base**
+
+- **Séparation :** Si $d_\infty(U, V) = 0$, alors $\forall n, |u_n - v_n| = 0$, donc $u_n = v_n$. Ainsi $U=V$.
+- **Symétrie :** Évidente par symétrie de la valeur absolue.
+
+**Étape 3 : Inégalité triangulaire (passage à la borne supérieure)**
+
+Pour tout entier $n$, l'inégalité triangulaire dans $\mathbb{R}$ donne : $|u_n - w_n| \le |u_n - v_n| + |v_n - w_n|$.
+Puisque $|u_n - v_n| \le d_\infty(U,V)$ et $|v_n - w_n| \le d_\infty(V,W)$, on a pour tout $n$ :
+$|u_n - w_n| \le d_\infty(U,V) + d_\infty(V,W)$.
+Le terme de droite est un majorant de l'ensemble $\left\lbrace |u_n - w_n|\right\rbrace$. Par définition, la borne supérieure est le plus petit des majorants. Donc :
+$\sup_n |u_n - w_n| \le d_\infty(U,V) + d_\infty(V,W)$, ce qui conclut la preuve. $\blacksquare$
