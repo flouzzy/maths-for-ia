@@ -1,12 +1,21 @@
-## Exercice 8 : L'espace des suites bornées \quad $\bigstar\bigstar\bigstar$
+# Exercice 8 : Espace d'Ultramétrie
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :** Sur l'espace $l^\infty(\mathbb{R})$ des suites réelles bornées, on définit $d(u, v) = \sup_{n \in \mathbb{N}} |u_n - v_n|$. Démontrer que la convergence pour cette distance implique la convergence uniforme des suites.
+## Énoncé formel
+Une distance $d$ est dite ultramétrique si elle vérifie l'inégalité forte : $d(x,z) \le \max(d(x,y), d(y,z))$. Dans un tel espace, montrer que tout triangle est isocèle et que sa base est inférieure aux côtés égaux.
 
-**Correction :** Soit $(u^{(k)})_{k \in \mathbb{N}}$ une suite d'éléments de $l^\infty(\mathbb{R})$ (donc une suite de suites) convergeant vers une suite $v$ pour la distance $d$.
-Par définition de la convergence métrique :
-$\forall \epsilon > 0, \exists K \in \mathbb{N}, \forall k \ge K, d(u^{(k)}, v) < \epsilon$.
-En remplaçant $d$ par sa définition :
-$\forall k \ge K, \sup_{n \in \mathbb{N}} |u^{(k)}_n - v_n| < \epsilon$.
-Par définition du supremum, cela implique que pour chaque indice scalaire $n$, l'écart est majoré par le supremum :
-$\forall k \ge K, \forall n \in \mathbb{N}, |u^{(k)}_n - v_n| \le \sup_{m} |u^{(k)}_m - v_m| < \epsilon$.
-L'entier $K$ dépend uniquement de $\epsilon$ et est parfaitement indépendant de l'indice $n$. C'est l'exacte définition formelle de la convergence uniforme d'une suite de fonctions (ici définies sur $\mathbb{N}$).
+## Résolution pas à pas
+**Étape 1 : Formulation du problème**
+
+Soit $x, y, z$ trois points distincts formant un triangle topologique. Supposons sans perte de généralité que les trois distances ne sont pas égales, et qu'il y a une distance strictement supérieure aux autres, disons $d(x,z) > d(x,y)$ et $d(x,z) > d(y,z)$.
+
+**Étape 2 : Contradiction par l'ultramétrie**
+
+Selon l'inégalité ultramétrique :
+$d(x,z) \le \max(d(x,y), d(y,z))$.
+Or, notre hypothèse implique que le maximum à droite est strictement inférieur à $d(x,z)$.
+Nous obtenons une contradiction évidente : un réel ne peut pas être strictement inférieur à lui-même.
+
+**Étape 3 : Conclusion**
+
+L'hypothèse selon laquelle une distance puisse être l'unique maximum est fausse. Par conséquent, les deux plus grandes distances du triangle doivent être exactement égales. Le triangle est donc toujours isocèle, et le troisième côté (la base) est nécessairement inférieur ou égal à ces deux côtés. Cette propriété fascinante régit les distances $p$-adiques en arithmétique. $\blacksquare$

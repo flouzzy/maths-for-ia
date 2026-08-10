@@ -1,10 +1,23 @@
-## Exercice 9 : SNCF et topologie arborescente \quad $\bigstar\bigstar\bigstar\star$
+# Exercice 9 : Produit d'espaces métriques
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :** Sur $\mathbb{R}^2$, on définit la "distance de la jungle" (ou SNCF centrée en $0$) par $d(x, y) = ||x-y||_2$ si $x$ et $y$ sont alignés avec l'origine, et $d(x, y) = ||x||_2 + ||y||_2$ sinon. Décrire géométriquement les boules ouvertes de cet espace.
+## Énoncé formel
+Soient $(X_1, d_1)$ et $(X_2, d_2)$ deux espaces métriques. On équipe $X = X_1 \times X_2$ de la distance produit : $D(x, y) = \sqrt{d_1(x_1, y_1)^2 + d_2(x_2, y_2)^2}$. Vérifier l'inégalité triangulaire de $D$.
 
-**Correction :** C'est une métrique valide (les détails de l'inégalité triangulaire découlent du triangle euclidien via l'origine).
-Fixons un point $x \neq 0$ et cherchons la boule ouverte $B(x, r)$.
-**Cas 1 :** $r \le ||x||_2$. Soit $y \in B(x, r)$. Si $y$ n'est pas aligné avec $0$, $d(x, y) = ||x||_2 + ||y||_2 \ge ||x||_2 \ge r$, donc $y$ ne peut pas appartenir à la boule. La boule est donc strictement contenue dans le segment ouvert de la droite passant par $0$ et $x$, de longueur $2r$ centré en $x$. (Topologie 1D).
-**Cas 2 :** $r > ||x||_2$. Si $y$ n'est pas aligné avec $0$, il est dans la boule ssi $||x||_2 + ||y||_2 < r$, c'est-à-dire $||y||_2 < r - ||x||_2$.
-Donc la boule est constituée de la réunion d'un segment sur la droite issue de l'origine contenant $x$, et d'une vraie boule euclidienne (ouverte) centrée en l'origine de rayon $r - ||x||_2$.
-Cet espace métrique est localement $1$-dimensionnel sauf en l'origine où il est $2$-dimensionnel.
+## Résolution pas à pas
+**Étape 1 : Passage à l'espace euclidien bidimensionnel**
+
+Pour trois points $x, y, z$ dans l'espace produit $X_1 \times X_2$, on a des composantes $(x_1, x_2)$, $(y_1, y_2)$ et $(z_1, z_2)$.
+Posons les réels $a = d_1(x_1, y_1)$, $b = d_2(x_2, y_2)$, $u = d_1(y_1, z_1)$ et $v = d_2(y_2, z_2)$.
+Les inégalités triangulaires sur les espaces de base donnent : $d_1(x_1, z_1) \le a + u$ et $d_2(x_2, z_2) \le b + v$.
+
+**Étape 2 : Évaluation du membre de gauche**
+
+Le carré de la distance cible est :
+$D(x,z)^2 = d_1(x_1, z_1)^2 + d_2(x_2, z_2)^2 \le (a+u)^2 + (b+v)^2$.
+
+**Étape 3 : Utilisation de Minkowski (Cauchy-Schwarz)**
+
+Nous voulons montrer que $\sqrt{(a+u)^2 + (b+v)^2} \le \sqrt{a^2+b^2} + \sqrt{u^2+v^2}$.
+Cette inégalité est exactement l'inégalité triangulaire pour la norme euclidienne usuelle sur $\mathbb{R}^2$ appliquée aux vecteurs $V_1 = (a,b)$ et $V_2 = (u,v)$.
+Ainsi, $D(x,z) \le D(x,y) + D(y,z)$. La distance produit est parfaitement valide. $\blacksquare$

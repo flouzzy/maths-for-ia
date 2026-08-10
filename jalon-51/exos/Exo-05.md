@@ -1,13 +1,23 @@
-## Exercice 5 : Intersection de boules \quad $\bigstar\bigstar\star$
+# Exercice 5 : Distances sur l'espace des suites
+**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
 
-**Énoncé :** Dans un espace métrique, si deux boules fermées $\overline{B}(x, r_1)$ et $\overline{B}(y, r_2)$ sont disjointes, démontrer strictement que $d(x, y) > r_1 + r_2$.
+## Énoncé formel
+Soit $\mathcal{B}(\mathbb{N}, \mathbb{R})$ l'ensemble des suites réelles bornées. On pose $d_\infty((u_n), (v_n)) = \sup_{n \in \mathbb{N}} |u_n - v_n|$. Vérifier les axiomes de la distance.
 
-**Correction :** Procédons par l'absurde. Supposons que $d(x, y) \le r_1 + r_2$.
-Dans l'espace euclidien $\mathbb{R}^n$, si la distance entre les centres est inférieure à la somme des rayons, l'intersection est non vide. Cependant, dans un espace métrique général, on ne peut pas construire trivialement un point milieu.
-En fait, l'implication proposée dans l'énoncé s'écrit par contraposée : si $d(x, y) \le r_1 + r_2$, alors les boules peuvent-elles être disjointes ?
-Dans la distance discrète, si $r_1=r_2=1/2$, et $x \neq y$, $d(x,y)=1 \le 1/2+1/2=1$. Les boules fermées $\overline{B}(x, 1/2)=\{x\}$ et $\overline{B}(y, 1/2)=\{y\}$ sont disjointes, bien que $d(x,y) = r_1+r_2$.
-Donc, $d(x, y) > r_1 + r_2$ est **faux en général** pour impliquer des boules disjointes, il faut une métrique stricte comme une norme sur un EV.
-Réciproquement, montrons que si $\overline{B}(x, r_1) \cap \overline{B}(y, r_2) \neq \emptyset$, alors $d(x,y) \le r_1+r_2$.
-Soit $z$ dans l'intersection. $d(x, z) \le r_1$ et $d(y, z) \le r_2$.
-Par inégalité triangulaire, $d(x, y) \le d(x, z) + d(z, y) \le r_1 + r_2$.
-Par contraposée absolue, si $d(x, y) > r_1 + r_2$, alors les boules sont strictement disjointes.
+## Résolution pas à pas
+**Étape 1 : Définition rigoureuse**
+
+Soient $U=(u_n)$ et $V=(v_n)$ deux suites bornées. La différence $u_n - v_n$ est également une suite bornée. L'ensemble $\left\lbrace |u_n - v_n| \mid n \in \mathbb{N}\right\rbrace$ est donc une partie non vide et majorée de $\mathbb{R}$, elle admet donc une borne supérieure. L'application $d_\infty$ est bien à valeurs dans $\mathbb{R}_+$.
+
+**Étape 2 : Axiomes de base**
+
+- **Séparation :** Si $d_\infty(U, V) = 0$, alors $\forall n, |u_n - v_n| = 0$, donc $u_n = v_n$. Ainsi $U=V$.
+- **Symétrie :** Évidente par symétrie de la valeur absolue.
+
+**Étape 3 : Inégalité triangulaire (passage à la borne supérieure)**
+
+Pour tout entier $n$, l'inégalité triangulaire dans $\mathbb{R}$ donne : $|u_n - w_n| \le |u_n - v_n| + |v_n - w_n|$.
+Puisque $|u_n - v_n| \le d_\infty(U,V)$ et $|v_n - w_n| \le d_\infty(V,W)$, on a pour tout $n$ :
+$|u_n - w_n| \le d_\infty(U,V) + d_\infty(V,W)$.
+Le terme de droite est un majorant de l'ensemble $\left\lbrace |u_n - w_n|\right\rbrace$. Par définition, la borne supérieure est le plus petit des majorants. Donc :
+$\sup_n |u_n - w_n| \le d_\infty(U,V) + d_\infty(V,W)$, ce qui conclut la preuve. $\blacksquare$

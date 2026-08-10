@@ -1,13 +1,20 @@
-## Exercice 10 : Isométries et Théorème de Mazur-Ulam \quad $\bigstar\bigstar\bigstar\star\star$
+# Exercice 10 : Boules dans un espace ultramétrique
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :** Une application $f : E \to F$ entre deux espaces normés est une isométrie si $||f(x) - f(y)|| = ||x - y||$. Montrer que toute isométrie surjective (avec $f(0)=0$) préserve l'alignement, étape clé prouvant qu'elle est linéaire.
+## Énoncé formel
+Dans un espace ultramétrique $(X, d)$, montrer que pour toute boule ouverte $B(a, r)$, tout point $b \in B(a, r)$ peut être considéré comme le centre de la boule, c'est-à-dire que $B(b, r) = B(a, r)$.
 
-**Correction :** Le cœur du théorème de Mazur-Ulam réside dans la caractérisation métrique du milieu d'un segment.
-Soient $x, y \in E$. Le point milieu $m = \frac{x+y}{2}$ est l'unique point de $E$ satisfaisant :
-$||x - m|| = ||y - m|| = \frac{1}{2}||x - y||$.
-Puisque $f$ est une isométrie :
-$||f(x) - f(m)|| = ||x - m|| = \frac{1}{2}||x - y|| = \frac{1}{2}||f(x) - f(y)||$
-$||f(y) - f(m)|| = ||y - m|| = \frac{1}{2}||x - y|| = \frac{1}{2}||f(x) - f(y)||$
-Dans un espace strictement convexe (pour simplifier), il existe un unique point satisfaisant ces équations métriques, qui est le milieu du segment $[f(x), f(y)]$.
-Ainsi $f(m) = \frac{f(x) + f(y)}{2}$. L'isométrie préserve les milieux.
-Par une récurrence dyadique standard et l'utilisation de la densité et de la continuité (une isométrie étant 1-lipschitzienne donc continue), on montre que $f(tx + (1-t)y) = tf(x) + (1-t)f(y)$ pour tout réel $t$, ce qui prouve la linéarité absolue.
+## Résolution pas à pas
+**Étape 1 : Inclusion directe $B(b, r) \subset B(a, r)$**
+
+Soit $x \in B(b, r)$. Cela signifie que $d(b, x) < r$.
+Comme $b \in B(a, r)$, nous savons par définition que $d(a, b) < r$.
+Appliquons l'inégalité ultramétrique pour évaluer la distance à $a$ :
+$d(a, x) \le \max(d(a, b), d(b, x))$.
+Puisque $d(a, b) < r$ et $d(b, x) < r$, leur maximum est strictement inférieur à $r$.
+Donc $d(a, x) < r$, ce qui prouve que $x \in B(a, r)$.
+
+**Étape 2 : Inclusion réciproque et conclusion**
+
+Par la parfaite symétrie du problème, on a également $d(b, a) < r$, ce qui place $a$ dans la boule de centre $b$. En répétant la logique, $B(a, r) \subset B(b, r)$.
+Ainsi, $B(a,r) = B(b,r)$. Dans une géométrie ultramétrique, chaque point intérieur d'une boule en est le centre. C'est une topologie radicalement différente de celle de notre espace euclidien usuel. $\blacksquare$

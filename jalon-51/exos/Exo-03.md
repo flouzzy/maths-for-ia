@@ -1,14 +1,23 @@
-## Exercice 3 : Distances bornées \quad $\bigstar\bigstar$
+# Exercice 3 : Équivalence de distances : Produit cartésien
+**Difficulté :** $\bigstar\bigstar\star\star\star$
 
-**Énoncé :** Soit $(X, d)$ un espace métrique. Montrer que $\delta(x, y) = \frac{d(x, y)}{1 + d(x, y)}$ est une distance sur $X$, et qu'elle est bornée par $1$.
+## Énoncé formel
+Sur $\mathbb{R}^2$, on définit $d_1(x,y) = |x_1 - y_1| + |x_2 - y_2|$ et $d_{\infty}(x,y) = \max(|x_1 - y_1|, |x_2 - y_2|)$. Montrer que ces deux distances sont uniformément équivalentes.
 
-**Correction :**
-1. **Séparation et Symétrie :** Évidentes à partir des propriétés de $d$. De plus, $\delta(x,y) < 1$ pour tout $x,y$.
-2. **Inégalité triangulaire :** Soit $f(t) = \frac{t}{1+t}$. La dérivée $f'(t) = \frac{1}{(1+t)^2} > 0$, donc $f$ est strictement croissante sur $\mathbb{R}_+$.
-On sait que $d(x, z) \le d(x, y) + d(y, z)$. Par croissance de $f$ :
-$\delta(x, z) = f(d(x, z)) \le f(d(x, y) + d(y, z)) = \frac{d(x, y) + d(y, z)}{1 + d(x, y) + d(y, z)}$
-On sépare la fraction :
-$\delta(x, z) \le \frac{d(x, y)}{1 + d(x, y) + d(y, z)} + \frac{d(y, z)}{1 + d(x, y) + d(y, z)}$
-En minorant les dénominateurs (en enlevant les termes positifs) :
-$\delta(x, z) \le \frac{d(x, y)}{1 + d(x, y)} + \frac{d(y, z)}{1 + d(y, z)} = \delta(x, y) + \delta(y, z)$.
-L'application $\delta$ est bien une métrique bornée par $1$ (et topologiquement équivalente à $d$).
+## Résolution pas à pas
+**Étape 1 : Définition de l'équivalence**
+
+Il faut trouver deux constantes strictement positives $c, C$ telles que pour tout $x,y \in \mathbb{R}^2$, $c \cdot d_{\infty}(x,y) \le d_1(x,y) \le C \cdot d_{\infty}(x,y)$.
+
+**Étape 2 : Majoration**
+
+Par définition du maximum, $|x_1 - y_1| \le d_{\infty}(x,y)$ et $|x_2 - y_2| \le d_{\infty}(x,y)$.
+En sommant ces deux inégalités, on obtient : $d_1(x,y) = |x_1 - y_1| + |x_2 - y_2| \le d_{\infty}(x,y) + d_{\infty}(x,y) = 2 \cdot d_{\infty}(x,y)$. On pose $C = 2$.
+
+**Étape 3 : Minoration**
+
+Puisque $|x_1 - y_1| \ge 0$ et $|x_2 - y_2| \ge 0$, la somme est nécessairement supérieure ou égale au plus grand des deux termes. Autrement dit :
+$d_{\infty}(x,y) = \max(|x_1 - y_1|, |x_2 - y_2|) \le |x_1 - y_1| + |x_2 - y_2| = d_1(x,y)$.
+Ceci correspond à poser $c = 1$.
+
+**Conclusion :** Nous avons montré que $1 \cdot d_{\infty} \le d_1 \le 2 \cdot d_{\infty}$. Les métriques sont équivalentes, ce qui implique que les pavés ($d_{\infty}$) et les losanges ($d_1$) définissent la même topologie usuelle sur le plan. $\blacksquare$

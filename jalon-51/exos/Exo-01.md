@@ -1,11 +1,19 @@
-## Exercice 1 : Distance ultramétrique \quad $\bigstar$
+# Exercice 1 : Axiomes de base et distance usuelle
+**Difficulté :** $\bigstar\star\star\star\star$
 
-**Énoncé :** Soit $(X, d)$ un espace métrique tel que pour tout $(x, y, z) \in X^3$, $d(x, z) \le \max(d(x, y), d(y, z))$. Montrer que dans cet espace, tout triangle est isocèle.
+## Énoncé formel
+Soit $X = \mathbb{R}$. Montrer que la fonction $d(x, y) = |x - y|$ définit bien une distance sur $\mathbb{R}$. Que se passe-t-il si on remplace la valeur absolue par la fonction $f(t) = t^2$ (i.e. $d'(x,y) = (x-y)^2$) ?
 
-**Correction :** Soient $x, y, z \in X$ distincts. Supposons sans perte de généralité que $d(x, y) \neq d(y, z)$. Par exemple, $d(x, y) < d(y, z)$.
-Par l'inégalité ultramétrique, $d(x, z) \le \max(d(x, y), d(y, z)) = d(y, z)$.
-D'autre part, en appliquant l'inégalité ultramétrique au triangle $y, x, z$, on obtient :
-$d(y, z) \le \max(d(y, x), d(x, z)) = \max(d(x, y), d(x, z))$.
-Puisque $d(x, y) < d(y, z)$, la seule possibilité pour que $\max(d(x, y), d(x, z))$ soit supérieur ou égal à $d(y, z)$ est que $\max(d(x, y), d(x, z)) = d(x, z)$.
-Donc $d(y, z) \le d(x, z)$.
-En combinant les deux inégalités, on obtient $d(x, z) = d(y, z)$. Ainsi, le triangle a au moins deux côtés égaux (isocèle).
+## Résolution pas à pas
+**Étape 1 : Vérification des axiomes pour la valeur absolue**
+
+1. **Séparation :** $d(x,y) = 0 \iff |x-y| = 0 \iff x-y=0 \iff x=y$.
+2. **Symétrie :** $d(x,y) = |x-y| = |-(y-x)| = |-1| \cdot |y-x| = |y-x| = d(y,x)$.
+3. **Inégalité triangulaire :** Pour $x,y,z \in \mathbb{R}$, on a $d(x,z) = |x-z| = |(x-y) + (y-z)|$. D'après l'inégalité triangulaire classique sur les réels, $|(x-y) + (y-z)| \le |x-y| + |y-z| = d(x,y) + d(y,z)$. Les trois axiomes sont validés.
+
+**Étape 2 : Analyse de la fonction au carré**
+
+Pour $d'(x,y) = (x-y)^2$, vérifions l'inégalité triangulaire. Prenons $x=0$, $y=1$ et $z=2$.
+$d'(x,z) = (0-2)^2 = 4$.
+$d'(x,y) + d'(y,z) = (0-1)^2 + (1-2)^2 = 1 + 1 = 2$.
+On constate que $4 \not\le 2$, l'inégalité triangulaire n'est donc pas respectée. $d'$ n'est pas une distance, confirmant que le passage par un point intermédiaire ($y=1$) pourrait curieusement rendre le trajet total plus 'court' que le trajet direct si $d'$ était une métrique valide, ce qui est absurde. $\blacksquare$
