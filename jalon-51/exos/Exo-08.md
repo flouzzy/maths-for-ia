@@ -1,23 +1,21 @@
-## Exercice 8 : Produit d'espaces métriques \quad $\bigstar\bigstar\bigstar\bigstar\star$
+# Exercice 8 : Espace d'Ultramétrie
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :**
-Soient $(X, d_X)$ et $(Y, d_Y)$ deux espaces métriques. Sur l'espace produit $X \times Y$, on pose :
-$d((x_1, y_1), (x_2, y_2)) = d_X(x_1, x_2) + d_Y(y_1, y_2)$.
-Montrer que c'est une distance sur $X \times Y$.
+## Énoncé formel
+Une distance $d$ est dite ultramétrique si elle vérifie l'inégalité forte : $d(x,z) \le \max(d(x,y), d(y,z))$. Dans un tel espace, montrer que tout triangle est isocèle et que sa base est inférieure aux côtés égaux.
 
-**Correction :**
-Notons $u = (x_1, y_1)$, $v = (x_2, y_2)$ et $w = (x_3, y_3)$.
-1. **Séparation :**
-   $d(u,v) = 0 \iff d_X(x_1, x_2) + d_Y(y_1, y_2) = 0$.
-   Comme les deux termes sont positifs, cela implique $d_X(x_1, x_2) = 0$ et $d_Y(y_1, y_2) = 0$.
-   Donc $x_1=x_2$ et $y_1=y_2$, soit $u=v$.
-2. **Symétrie :**
-   $d(u,v) = d_X(x_1, x_2) + d_Y(y_1, y_2) = d_X(x_2, x_1) + d_Y(y_2, y_1) = d(v,u)$.
-3. **Inégalité triangulaire :**
-   $d(u,w) = d_X(x_1, x_3) + d_Y(y_1, y_3)$.
-   Par inégalité triangulaire dans $X$ et $Y$ :
-   $d_X(x_1, x_3) \le d_X(x_1, x_2) + d_X(x_2, x_3)$
-   $d_Y(y_1, y_3) \le d_Y(y_1, y_2) + d_Y(y_2, y_3)$
-   En sommant ces deux inégalités :
-   $d(u,w) \le (d_X(x_1, x_2) + d_Y(y_1, y_2)) + (d_X(x_2, x_3) + d_Y(y_2, y_3))$
-   Soit $d(u,w) \le d(u,v) + d(v,w)$. $\blacksquare$
+## Résolution pas à pas
+**Étape 1 : Formulation du problème**
+
+Soit $x, y, z$ trois points distincts formant un triangle topologique. Supposons sans perte de généralité que les trois distances ne sont pas égales, et qu'il y a une distance strictement supérieure aux autres, disons $d(x,z) > d(x,y)$ et $d(x,z) > d(y,z)$.
+
+**Étape 2 : Contradiction par l'ultramétrie**
+
+Selon l'inégalité ultramétrique :
+$d(x,z) \le \max(d(x,y), d(y,z))$.
+Or, notre hypothèse implique que le maximum à droite est strictement inférieur à $d(x,z)$.
+Nous obtenons une contradiction évidente : un réel ne peut pas être strictement inférieur à lui-même.
+
+**Étape 3 : Conclusion**
+
+L'hypothèse selon laquelle une distance puisse être l'unique maximum est fausse. Par conséquent, les deux plus grandes distances du triangle doivent être exactement égales. Le triangle est donc toujours isocèle, et le troisième côté (la base) est nécessairement inférieur ou égal à ces deux côtés. Cette propriété fascinante régit les distances $p$-adiques en arithmétique. $\blacksquare$

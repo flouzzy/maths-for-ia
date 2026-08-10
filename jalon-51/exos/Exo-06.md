@@ -1,15 +1,26 @@
-## Exercice 6 : L'espace des fonctions continues et distance de Manhattan \quad $\bigstar\bigstar\bigstar\star\star$
+# Exercice 6 : La distance de Hausdorff
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
 
-**Énoncé :**
-Sur $E = \mathcal{C}([0, 1], \mathbb{R})$, on pose $d_1(f, g) = \int_0^1 |f(t) - g(t)| dt$.
-Démontrer l'axiome de séparation (la difficulté réside dans le fait que l'intégrale d'une fonction positive est nulle).
+## Énoncé formel
+Soit $(X,d)$ un espace métrique. Pour un point $x \in X$ et une partie $A \subset X$ non vide, la distance de $x$ à $A$ est définie par $d(x, A) = \inf_{a \in A} d(x, a)$. Montrer que l'application $x \mapsto d(x, A)$ est $1$-lipschitzienne.
 
-**Correction :**
-Il est évident que si $f=g$, alors $d_1(f,g) = \int_0^1 0 = 0$.
-Réciproquement, supposons $d_1(f,g) = 0$. Posons $h(t) = |f(t) - g(t)|$.
-La fonction $h$ est continue sur $[0,1]$ et $h(t) \ge 0$ pour tout $t$.
-Supposons par l'absurde qu'il existe $t_0 \in [0,1]$ tel que $h(t_0) > 0$. Notons $c = h(t_0)$.
-Puisque $h$ est continue, il existe un voisinage ouvert de $t_0$ dans $[0,1]$, disons $[a,b]$ avec $a<b$, sur lequel $h(t) \ge c/2$.
-Alors $\int_0^1 h(t) dt \ge \int_a^b h(t) dt \ge \int_a^b \frac{c}{2} dt = (b-a)\frac{c}{2} > 0$.
-Cela contredit l'hypothèse $\int_0^1 h(t) dt = 0$.
-Donc pour tout $t$, $h(t)=0$, c'est-à-dire $f(t)=g(t)$. L'axiome de séparation est vérifié. $\blacksquare$
+## Résolution pas à pas
+**Étape 1 : Traduction avec l'inégalité triangulaire**
+
+Soient $x, y \in X$. Pour tout $a \in A$, par l'inégalité triangulaire de $d$ :
+$d(x, a) \le d(x, y) + d(y, a)$.
+
+**Étape 2 : Passage à l'infimum**
+
+L'inégalité ci-dessus implique que pour tout $a \in A$ :
+$d(x, A) \le d(x, a) \le d(x, y) + d(y, a)$.
+Ainsi, $d(x, A) - d(x, y) \le d(y, a)$ pour tout $a \in A$.
+Le terme de gauche est un minorant de l'ensemble $\left\lbrace d(y, a) \mid a \in A\right\rbrace$. Par définition, l'infimum est le plus grand des minorants, d'où :
+$d(x, A) - d(x, y) \le d(y, A)$, c'est-à-dire $d(x, A) - d(y, A) \le d(x, y)$.
+
+**Étape 3 : Symétrie et conclusion**
+
+En échangeant le rôle de $x$ et de $y$, on obtient de même $d(y, A) - d(x, A) \le d(y, x) = d(x, y)$.
+Les deux inégalités se résument en la valeur absolue :
+$|d(x, A) - d(y, A)| \le d(x, y)$.
+Ceci prouve formellement que la fonction de distance à un ensemble est 1-lipschitzienne (et donc uniformément continue). $\blacksquare$

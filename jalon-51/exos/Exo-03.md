@@ -1,21 +1,23 @@
-## Exercice 3 : L'espace des suites bornées \quad $\bigstar\bigstar\star\star\star$
+# Exercice 3 : Équivalence de distances : Produit cartésien
+**Difficulté :** $\bigstar\bigstar\star\star\star$
 
-**Énoncé :**
-Soit $l^\infty$ l'espace vectoriel des suites réelles bornées $u = (u_n)_{n \in \mathbb{N}}$.
-On pose $d(u, v) = \sup_{n \in \mathbb{N}} |u_n - v_n|$.
-Montrer que $d$ définit bien une distance sur $l^\infty$.
+## Énoncé formel
+Sur $\mathbb{R}^2$, on définit $d_1(x,y) = |x_1 - y_1| + |x_2 - y_2|$ et $d_{\infty}(x,y) = \max(|x_1 - y_1|, |x_2 - y_2|)$. Montrer que ces deux distances sont uniformément équivalentes.
 
-**Correction :**
-L'application $d$ est bien à valeurs dans $\mathbb{R}_+$ car la différence de deux suites bornées est bornée, donc le supremum existe et est fini et positif.
-1. **Séparation :**
-   Si $d(u, v) = 0$, alors $\sup_{n} |u_n - v_n| = 0$. Puisque $|u_n - v_n| \ge 0$ pour tout $n$, cela impose $\forall n, |u_n - v_n| = 0$, soit $u_n = v_n$. Donc $u = v$.
-2. **Symétrie :**
-   $d(u, v) = \sup_{n} |u_n - v_n| = \sup_{n} |-(v_n - u_n)| = \sup_{n} |v_n - u_n| = d(v, u)$.
-3. **Inégalité triangulaire :**
-   Soient $u, v, w \in l^\infty$. Pour tout $n \in \mathbb{N}$ :
-   $|u_n - w_n| = |u_n - v_n + v_n - w_n| \le |u_n - v_n| + |v_n - w_n|$.
-   Par définition du supremum, $|u_n - v_n| \le d(u, v)$ et $|v_n - w_n| \le d(v, w)$.
-   Ainsi, pour tout $n$ :
-   $|u_n - w_n| \le d(u, v) + d(v, w)$.
-   Puisque cette inégalité est vraie pour tout $n$, le terme de droite est un majorant de l'ensemble $\{|u_n - w_n| \mid n \in \mathbb{N}\}$. Le supremum étant le plus petit des majorants :
-   $\sup_{n} |u_n - w_n| \le d(u, v) + d(v, w)$, soit $d(u, w) \le d(u, v) + d(v, w)$. $\blacksquare$
+## Résolution pas à pas
+**Étape 1 : Définition de l'équivalence**
+
+Il faut trouver deux constantes strictement positives $c, C$ telles que pour tout $x,y \in \mathbb{R}^2$, $c \cdot d_{\infty}(x,y) \le d_1(x,y) \le C \cdot d_{\infty}(x,y)$.
+
+**Étape 2 : Majoration**
+
+Par définition du maximum, $|x_1 - y_1| \le d_{\infty}(x,y)$ et $|x_2 - y_2| \le d_{\infty}(x,y)$.
+En sommant ces deux inégalités, on obtient : $d_1(x,y) = |x_1 - y_1| + |x_2 - y_2| \le d_{\infty}(x,y) + d_{\infty}(x,y) = 2 \cdot d_{\infty}(x,y)$. On pose $C = 2$.
+
+**Étape 3 : Minoration**
+
+Puisque $|x_1 - y_1| \ge 0$ et $|x_2 - y_2| \ge 0$, la somme est nécessairement supérieure ou égale au plus grand des deux termes. Autrement dit :
+$d_{\infty}(x,y) = \max(|x_1 - y_1|, |x_2 - y_2|) \le |x_1 - y_1| + |x_2 - y_2| = d_1(x,y)$.
+Ceci correspond à poser $c = 1$.
+
+**Conclusion :** Nous avons montré que $1 \cdot d_{\infty} \le d_1 \le 2 \cdot d_{\infty}$. Les métriques sont équivalentes, ce qui implique que les pavés ($d_{\infty}$) et les losanges ($d_1$) définissent la même topologie usuelle sur le plan. $\blacksquare$

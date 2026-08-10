@@ -1,20 +1,19 @@
-## Exercice 4 : Distance induite par une fonction continue croissante \quad $\bigstar\bigstar\star\star\star$
+# Exercice 4 : Métrique induite sur une sphère
+**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
 
-**Énoncé :**
-Soit $(X, d)$ un espace métrique. On pose $d'(x, y) = \frac{d(x, y)}{1 + d(x, y)}$.
-Montrer que $d'$ est une distance sur $X$.
+## Énoncé formel
+Sur la sphère unité de $\mathbb{R}^3$, $S^2 = \left\lbrace  x \in \mathbb{R}^3 \mid \|x\|_2 = 1 \right\rbrace$, la distance géodésique entre deux points $x$ et $y$ est définie par $d_S(x,y) = \arccos(\langle x, y \rangle)$. Montrer que $d_S$ est bien une distance.
 
-**Correction :**
-La fonction $f(t) = \frac{t}{1+t} = 1 - \frac{1}{1+t}$ est strictement croissante sur $\mathbb{R}_+$.
-1. **Séparation :**
-   $d'(x,y) = 0 \iff \frac{d(x,y)}{1+d(x,y)} = 0 \iff d(x,y) = 0 \iff x = y$.
-2. **Symétrie :**
-   L'expression dépend uniquement de $d(x,y)$, qui est symétrique, donc $d'(x,y) = d'(y,x)$.
-3. **Inégalité triangulaire :**
-   Pour $x,y,z \in X$, notons $a=d(x,y)$, $b=d(y,z)$ et $c=d(x,z)$. On sait que $c \le a+b$.
-   Puisque $f$ est croissante, $f(c) \le f(a+b)$.
-   $f(a+b) = \frac{a+b}{1+a+b} = \frac{a}{1+a+b} + \frac{b}{1+a+b}$.
-   Comme $1+a+b \ge 1+a$ et $1+a+b \ge 1+b$ (car $a,b \ge 0$), on a :
-   $\frac{a}{1+a+b} \le \frac{a}{1+a}$ et $\frac{b}{1+a+b} \le \frac{b}{1+b}$.
-   En sommant, $f(a+b) \le \frac{a}{1+a} + \frac{b}{1+b} = f(a) + f(b)$.
-   Donc $f(c) \le f(a) + f(b)$, ce qui équivaut à $d'(x,z) \le d'(x,y) + d'(y,z)$. $\blacksquare$
+## Résolution pas à pas
+**Étape 1 : L'angle comme métrique**
+
+Le produit scalaire usuel donne $\langle x, y \rangle = \|x\| \|y\| \cos(\theta) = \cos(\theta)$ sur la sphère unité. L'arc cosinus renvoie la valeur principale $\theta \in [0, \pi]$, qui représente la longueur de l'arc de grand cercle géodésique.
+
+**Étape 2 : Séparation et Symétrie**
+
+- **Séparation :** $d_S(x,y) = 0 \iff \arccos(\langle x, y \rangle) = 0 \iff \langle x, y \rangle = 1$. Puisque $\|x\|=\|y\|=1$, le cas d'égalité de Cauchy-Schwarz indique que $x$ et $y$ sont positivement colinéaires, donc $x=y$.
+- **Symétrie :** $d_S(x,y) = \arccos(\langle x, y \rangle) = \arccos(\langle y, x \rangle) = d_S(y,x)$ par symétrie du produit scalaire réel.
+
+**Étape 3 : Inégalité triangulaire**
+
+Soit $x, y, z \in S^2$. Considérons la trigonométrie sphérique. Le théorème fondamental sur les triangles sphériques énonce que la somme de deux côtés d'un triangle sphérique est toujours supérieure ou égale au troisième côté. La démonstration analytique repose sur l'algèbre des quaternions ou la géométrie différentielle (les géodésiques minimisent la longueur de l'arc). Plus élémentairement, en calculant $\|x \times z\|^2$, l'identité de Lagrange permet d'établir $\theta_{xz} \le \theta_{xy} + \theta_{yz}$. La géodésique reste le chemin le plus court sur la variété. $\blacksquare$

@@ -1,17 +1,20 @@
-## Exercice 10 : Convergence de suites dans un espace métrique \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
+# Exercice 10 : Boules dans un espace ultramétrique
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :**
-Dans un espace métrique $(X, d)$, on dit qu'une suite $(x_n)$ converge vers $L$ si $d(x_n, L) \to 0$.
-Montrer que si $x_n \to L$, alors l'unicité de la limite est garantie.
+## Énoncé formel
+Dans un espace ultramétrique $(X, d)$, montrer que pour toute boule ouverte $B(a, r)$, tout point $b \in B(a, r)$ peut être considéré comme le centre de la boule, c'est-à-dire que $B(b, r) = B(a, r)$.
 
-**Correction :**
-Supposons par l'absurde qu'une suite $(x_n)$ admette deux limites distinctes $L_1$ et $L_2$ avec $L_1 \neq L_2$.
-Alors $d(L_1, L_2) > 0$ par l'axiome de séparation. Posons $\epsilon = \frac{d(L_1, L_2)}{2} > 0$.
-Puisque $x_n \to L_1$, il existe $N_1$ tel que pour $n \ge N_1$, $d(x_n, L_1) < \epsilon$.
-Puisque $x_n \to L_2$, il existe $N_2$ tel que pour $n \ge N_2$, $d(x_n, L_2) < \epsilon$.
-Soit $N = \max(N_1, N_2)$. Pour $n \ge N$, évaluons la distance entre $L_1$ et $L_2$ avec l'inégalité triangulaire en passant par $x_n$ :
-$$ d(L_1, L_2) \le d(L_1, x_n) + d(x_n, L_2) $$
-$$ d(L_1, L_2) < \epsilon + \epsilon = 2\epsilon $$
-Or, par définition, $2\epsilon = d(L_1, L_2)$. Nous aboutissons donc à la contradiction stricte :
-$$ d(L_1, L_2) < d(L_1, L_2) $$
-L'hypothèse initiale est fausse. La limite d'une suite dans un espace métrique, lorsqu'elle existe, est unique. $\blacksquare$
+## Résolution pas à pas
+**Étape 1 : Inclusion directe $B(b, r) \subset B(a, r)$**
+
+Soit $x \in B(b, r)$. Cela signifie que $d(b, x) < r$.
+Comme $b \in B(a, r)$, nous savons par définition que $d(a, b) < r$.
+Appliquons l'inégalité ultramétrique pour évaluer la distance à $a$ :
+$d(a, x) \le \max(d(a, b), d(b, x))$.
+Puisque $d(a, b) < r$ et $d(b, x) < r$, leur maximum est strictement inférieur à $r$.
+Donc $d(a, x) < r$, ce qui prouve que $x \in B(a, r)$.
+
+**Étape 2 : Inclusion réciproque et conclusion**
+
+Par la parfaite symétrie du problème, on a également $d(b, a) < r$, ce qui place $a$ dans la boule de centre $b$. En répétant la logique, $B(a, r) \subset B(b, r)$.
+Ainsi, $B(a,r) = B(b,r)$. Dans une géométrie ultramétrique, chaque point intérieur d'une boule en est le centre. C'est une topologie radicalement différente de celle de notre espace euclidien usuel. $\blacksquare$

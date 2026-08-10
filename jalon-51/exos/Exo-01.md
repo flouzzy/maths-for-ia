@@ -1,19 +1,19 @@
-## Exercice 1 : La distance discrète \quad $\bigstar\star\star\star\star$
+# Exercice 1 : Axiomes de base et distance usuelle
+**Difficulté :** $\bigstar\star\star\star\star$
 
-**Énoncé :**
-Soit $X$ un ensemble non vide. On définit l'application $d : X \times X \to \mathbb{R}$ par $d(x, y) = 1$ si $x \neq y$ et $d(x, x) = 0$.
-1. Démontrer rigoureusement que $d$ est une distance sur $X$.
-2. Déterminer explicitement la topologie induite par cette distance.
+## Énoncé formel
+Soit $X = \mathbb{R}$. Montrer que la fonction $d(x, y) = |x - y|$ définit bien une distance sur $\mathbb{R}$. Que se passe-t-il si on remplace la valeur absolue par la fonction $f(t) = t^2$ (i.e. $d'(x,y) = (x-y)^2$) ?
 
-**Correction :**
-1. **Axiomes de distance :**
-   - *Séparation :* Par définition, $d(x,y)=0 \implies x=y$, et réciproquement.
-   - *Symétrie :* La condition $x \neq y$ est équivalente à $y \neq x$, donc $d(x,y)=d(y,x)$ dans tous les cas.
-   - *Inégalité triangulaire :* Pour $x, y, z \in X$, on doit montrer $d(x, z) \le d(x, y) + d(y, z)$.
-     Si $x=z$, $d(x,z)=0 \le d(x,y)+d(y,z)$ est trivial car les distances sont positives.
-     Si $x \neq z$, alors $d(x,z)=1$. Or, on ne peut pas avoir simultanément $x=y$ et $y=z$ (sinon $x=z$). Ainsi, soit $x \neq y$, soit $y \neq z$. Cela implique qu'au moins l'un des termes $d(x,y)$ ou $d(y,z)$ vaut $1$. La somme $d(x,y)+d(y,z)$ est donc $\ge 1$. L'inégalité $1 \le d(x,y)+d(y,z)$ est vérifiée.
-2. **Topologie :**
-   Considérons la boule ouverte $B(x, 1/2)$. Par définition, $y \in B(x, 1/2) \iff d(x,y) < 1/2$.
-   Puisque $d(x,y) \in \{0, 1\}$, la seule possibilité est $d(x,y)=0$, soit $y=x$.
-   Ainsi, $B(x, 1/2) = \{x\}$. Toute boule ouverte est un ouvert, donc chaque singleton est ouvert.
-   Toute partie de $X$ étant l'union de ses singletons, toute partie est ouverte. Il s'agit de la topologie discrète. $\blacksquare$
+## Résolution pas à pas
+**Étape 1 : Vérification des axiomes pour la valeur absolue**
+
+1. **Séparation :** $d(x,y) = 0 \iff |x-y| = 0 \iff x-y=0 \iff x=y$.
+2. **Symétrie :** $d(x,y) = |x-y| = |-(y-x)| = |-1| \cdot |y-x| = |y-x| = d(y,x)$.
+3. **Inégalité triangulaire :** Pour $x,y,z \in \mathbb{R}$, on a $d(x,z) = |x-z| = |(x-y) + (y-z)|$. D'après l'inégalité triangulaire classique sur les réels, $|(x-y) + (y-z)| \le |x-y| + |y-z| = d(x,y) + d(y,z)$. Les trois axiomes sont validés.
+
+**Étape 2 : Analyse de la fonction au carré**
+
+Pour $d'(x,y) = (x-y)^2$, vérifions l'inégalité triangulaire. Prenons $x=0$, $y=1$ et $z=2$.
+$d'(x,z) = (0-2)^2 = 4$.
+$d'(x,y) + d'(y,z) = (0-1)^2 + (1-2)^2 = 1 + 1 = 2$.
+On constate que $4 \not\le 2$, l'inégalité triangulaire n'est donc pas respectée. $d'$ n'est pas une distance, confirmant que le passage par un point intermédiaire ($y=1$) pourrait curieusement rendre le trajet total plus 'court' que le trajet direct si $d'$ était une métrique valide, ce qui est absurde. $\blacksquare$

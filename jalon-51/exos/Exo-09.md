@@ -1,18 +1,23 @@
-## Exercice 9 : Distance de Hausdorff \quad $\bigstar\bigstar\bigstar\bigstar\star$
+# Exercice 9 : Produit d'espaces métriques
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :**
-Soit $(X, d)$ un espace métrique et $P, Q$ deux parties non vides bornées. On définit la distance d'un point $x$ à $P$ par $d(x, P) = \inf_{p \in P} d(x, p)$.
-Montrer que l'application $x \mapsto d(x, P)$ est $1$-lipschitzienne (et donc continue).
+## Énoncé formel
+Soient $(X_1, d_1)$ et $(X_2, d_2)$ deux espaces métriques. On équipe $X = X_1 \times X_2$ de la distance produit : $D(x, y) = \sqrt{d_1(x_1, y_1)^2 + d_2(x_2, y_2)^2}$. Vérifier l'inégalité triangulaire de $D$.
 
-**Correction :**
-Soient $x, y \in X$. Prenons $p \in P$. Par l'inégalité triangulaire :
-$$ d(x, p) \le d(x, y) + d(y, p) $$
-Passons à la borne inférieure par rapport à $p \in P$. Puisque $d(x, y)$ ne dépend pas de $p$, on peut le sortir de l'infimum :
-$$ \inf_{p \in P} d(x, p) \le \inf_{p \in P} [d(x, y) + d(y, p)] = d(x, y) + \inf_{p \in P} d(y, p) $$
-Ce qui se réécrit :
-$$ d(x, P) \le d(x, y) + d(y, P) \implies d(x, P) - d(y, P) \le d(x, y) $$
-En échangeant les rôles de $x$ et $y$, on obtient symétriquement :
-$$ d(y, P) - d(x, P) \le d(y, x) = d(x, y) $$
-En combinant les deux, on a :
-$$ |d(x, P) - d(y, P)| \le d(x, y) $$
-L'application est bien $1$-lipschitzienne. $\blacksquare$
+## Résolution pas à pas
+**Étape 1 : Passage à l'espace euclidien bidimensionnel**
+
+Pour trois points $x, y, z$ dans l'espace produit $X_1 \times X_2$, on a des composantes $(x_1, x_2)$, $(y_1, y_2)$ et $(z_1, z_2)$.
+Posons les réels $a = d_1(x_1, y_1)$, $b = d_2(x_2, y_2)$, $u = d_1(y_1, z_1)$ et $v = d_2(y_2, z_2)$.
+Les inégalités triangulaires sur les espaces de base donnent : $d_1(x_1, z_1) \le a + u$ et $d_2(x_2, z_2) \le b + v$.
+
+**Étape 2 : Évaluation du membre de gauche**
+
+Le carré de la distance cible est :
+$D(x,z)^2 = d_1(x_1, z_1)^2 + d_2(x_2, z_2)^2 \le (a+u)^2 + (b+v)^2$.
+
+**Étape 3 : Utilisation de Minkowski (Cauchy-Schwarz)**
+
+Nous voulons montrer que $\sqrt{(a+u)^2 + (b+v)^2} \le \sqrt{a^2+b^2} + \sqrt{u^2+v^2}$.
+Cette inégalité est exactement l'inégalité triangulaire pour la norme euclidienne usuelle sur $\mathbb{R}^2$ appliquée aux vecteurs $V_1 = (a,b)$ et $V_2 = (u,v)$.
+Ainsi, $D(x,z) \le D(x,y) + D(y,z)$. La distance produit est parfaitement valide. $\blacksquare$

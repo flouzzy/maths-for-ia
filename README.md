@@ -320,7 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
-- [2026-08-07] : [Upsert/Création] du Jalon 51 - Espaces métriques. Status: Terminé.
+- [2026-08-08] : [Upsert/Création] du Jalon 51 - Espaces métriques. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-07] : [Upsert/Création] du Jalon 50 - Opérateurs topologiques : Intérieur, Adhérence, Frontière. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-06] : [Upsert/Création] du Jalon 49 - Espaces topologiques généraux. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-04] : [Upsert/Création] du Jalon 46 - Matrice jacobienne. Status: Terminé.

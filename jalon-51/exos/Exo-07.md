@@ -1,20 +1,20 @@
-## Exercice 7 : Distances équivalentes dans $\mathbb{R}^n$ \quad $\bigstar\bigstar\bigstar\star\star$
+# Exercice 7 : Générer une distance bornée
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
 
-**Énoncé :**
-Sur $\mathbb{R}^n$, on définit les distances $d_1(x,y) = \sum |x_i - y_i|$ et $d_\infty(x,y) = \max |x_i - y_i|$.
-Montrer que $d_1$ et $d_\infty$ sont équivalentes.
+## Énoncé formel
+Montrer que si $d$ est une distance sur $X$, alors $d'(x,y) = \frac{d(x,y)}{1+d(x,y)}$ définit une autre distance sur $X$ qui est majorée par 1. Sont-elles topologiquement équivalentes ?
 
-**Correction :**
-Soient $x, y \in \mathbb{R}^n$.
-1. **Majoration de $d_\infty$ par $d_1$ :**
-   Pour tout $j \in \{1, \dots, n\}$, $|x_j - y_j| \le \sum_{i=1}^n |x_i - y_i| = d_1(x,y)$.
-   Puisque c'est vrai pour tout $j$, c'est vrai pour le maximum :
-   $d_\infty(x,y) \le d_1(x,y)$. (Constante $C_1 = 1$).
-2. **Majoration de $d_1$ par $d_\infty$ :**
-   $d_1(x,y) = \sum_{i=1}^n |x_i - y_i|$.
-   Chaque terme de la somme est majoré par le maximum des écarts, soit $d_\infty(x,y)$.
-   $d_1(x,y) \le \sum_{i=1}^n d_\infty(x,y) = n \cdot d_\infty(x,y)$.
-   Ce qui s'écrit $d_\infty(x,y) \ge \frac{1}{n} d_1(x,y)$.
-En combinant, on a pour tout $x,y$ :
-$$ \frac{1}{n} d_1(x,y) \le d_\infty(x,y) \le d_1(x,y) $$
-Les distances sont donc équivalentes. $\blacksquare$
+## Résolution pas à pas
+**Étape 1 : Étude de la fonction de modification**
+
+Posons $f(t) = \frac{t}{1+t}$. Sa dérivée est $f'(t) = \frac{1}{(1+t)^2} > 0$. La fonction est donc strictement croissante sur $\mathbb{R}_+$. De plus, $f(t) < 1$.
+
+**Étape 2 : Axiomes de la distance**
+
+Séparation et symétrie découlent directement de celles de $d$. L'inégalité triangulaire nécessite la monotonie. Soit $d(x,z) \le d(x,y) + d(y,z)$. Puisque $f$ croît, $f(d(x,z)) \le f(d(x,y) + d(y,z))$.
+Or, on montre algébriquement que $\frac{a+b}{1+a+b} = \frac{a}{1+a+b} + \frac{b}{1+a+b} \le \frac{a}{1+a} + \frac{b}{1+b}$.
+Donc $d'(x,z) \le d'(x,y) + d'(y,z)$. $d'$ est bien une distance.
+
+**Étape 3 : Équivalence topologique**
+
+Les distances sont topologiquement équivalentes car l'application $x \mapsto \frac{x}{1+x}$ est un homéomorphisme de $\mathbb{R}_+$ sur $[0, 1[$. Elles induisent les mêmes voisinages (si l'une tend vers 0, l'autre aussi). Cependant, elles ne sont *pas* uniformément équivalentes si $X$ est non borné. $\blacksquare$
