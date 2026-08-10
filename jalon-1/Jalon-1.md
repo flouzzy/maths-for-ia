@@ -49,7 +49,7 @@ Pour structurer rigoureusement le calcul des propositions (ou logique propositio
 
 Soit $\mathcal{P}$ un ensemble dénombrable de symboles appelés **variables propositionnelles** (ou atomes), généralement notés $p, q, r, \dots$ ou $p_1, p_2, \dots$
 
-On définit l'alphabet de notre langage par la réunion de $\mathcal{P}$, des connecteurs logiques $\{\neg, \lor, \land, \Rightarrow, \Leftrightarrow\}$ et des symboles de ponctuation $\{$ ( , ) $\}$.
+On définit l'alphabet de notre langage par la réunion de P, des connecteurs logiques ¬,∨,∧,⇒,⇔ et des symboles de ponctuation ${$ ( , ) }$.
 
 L'ensemble $\mathcal{F}$ des **formules bien formées** (FBF) est défini de manière inductive comme le plus petit ensemble de mots sur cet alphabet satisfaisant aux règles suivantes :
 1. **Règle de base :** Si $p \in \mathcal{P}$, alors $p \in \mathcal{F}$ (les variables propositionnelles sont des formules atomiques).
