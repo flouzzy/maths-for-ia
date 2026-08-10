@@ -61,7 +61,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-50/Jalon-50.md|Jalon 50 : Opérateurs topologiques]] : Opérateurs topologiques : intérieur, adhérence, frontière et ensembles denses. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-51/Jalon-51.md|Jalon 51 : Espaces métriques]] : Espaces métriques, topologie induite par une distance et distances équivalentes.
 - [x] [[jalon-52/Jalon-52.md|Jalon 52 : Applications continues entre espaces topologiques et définition fine des homéomorphismes.]] : Applications continues entre espaces topologiques et définition fine des homéomorphismes. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [ ] [[jalon-53/Jalon 53 (Axiomes de séparation).md|Jalon 53 : Axiomes de séparation]] : Axiomes de séparation (notamment les espaces de Hausdorff).
+- [x] [[jalon-53/Jalon-53.md|Jalon 53 : Axiomes de séparation]] : Axiomes de séparation (notamment les espaces de Hausdorff). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-54/Jalon 54 (Compacité générale).md|Jalon 54 : Compacité générale]] : Compacité générale (propriété de Borel-Lebesgue) et démonstration du théorème de Tychonoff pour les produits finis.
 - [ ] [[jalon-55/Jalon 55 (Connexité).md|Jalon 55 : Connexité]] : Connexité, connexité par arcs et étude des composantes connexes.
 - [ ] [[jalon-56/Jalon 56 (Espaces métriques complets).md|Jalon 56 : Espaces métriques complets]] : Espaces métriques complets, suites de Cauchy et théorème de prolongement des applications continues.
