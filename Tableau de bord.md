@@ -4,7 +4,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 
 ## Année 1 : le socle des fondations et l'analyse réelle
 ### Trimestre 1 : logique, ensembles et algèbre linéaire de base
-- [x] [[jalon-1/Jalon 1 (Logique formelle).md|Jalon 1 : Logique formelle]] : Logique formelle, connecteurs, tables de vérité et calcul des propositions.
+- [x] [[jalon-1/Jalon-1.md|Jalon 1 : Logique formelle]] : Logique formelle, connecteurs, tables de vérité et calcul des propositions. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-2/Jalon-2.md|Jalon 2 : Méthodes de raisonnement]] : Méthodes de raisonnement (implication, contraposée, l'absurde, analyse-synthèse).
 - [x] [[jalon-3/Jalon-3.md|Jalon 3 : Quantification]] : Quantification ($\\forall, \\exists$), ordre des quantificateurs et négation de propositions complexes.
 - [x] [[jalon-4/Jalon-4.md|Jalon 4 : Théorie des ensembles]] : Théorie des ensembles (ZFC), opérations sur les ensembles, ensembles des parties $\\mathcal{P}(E)$.

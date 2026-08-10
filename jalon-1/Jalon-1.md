@@ -93,7 +93,7 @@ Les propriétés fondamentales reliant sémantique et syntaxe sont :
 
 ## 3. Le Noyau Dur : Démonstrations Pas-à-Pas
 
-Nous présentons ici trois démonstrations fondamentales du calcul des propositions, rédigées avec une rigueur absolue et sans aucune ellipse mathématique.
+Nous présentons ici trois démonstrations fondamentales du calcul des propositions, rédigées avec une rigueur absolue .
 
 ### Démonstration 1 : Loi de De Morgan $\neg(A \lor B) \Leftrightarrow (\neg A \land \neg B)$
 
