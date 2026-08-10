@@ -1,44 +1,23 @@
----
-title: "Exo-09 : Topologie d'un espace ultramétrique"
-difficulty: "$\bigstar\bigstar\bigstar\bigstar\bigstar$"
----
+# Exercice 9 : Produit d'espaces métriques
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-# Exo-09 : Topologie d'un espace ultramétrique
+## Énoncé formel
+Soient $(X_1, d_1)$ et $(X_2, d_2)$ deux espaces métriques. On équipe $X = X_1 \times X_2$ de la distance produit : $D(x, y) = \sqrt{d_1(x_1, y_1)^2 + d_2(x_2, y_2)^2}$. Vérifier l'inégalité triangulaire de $D$.
 
+## Résolution pas à pas
+**Étape 1 : Passage à l'espace euclidien bidimensionnel**
 
-## 1. Énoncé
+Pour trois points $x, y, z$ dans l'espace produit $X_1 \times X_2$, on a des composantes $(x_1, x_2)$, $(y_1, y_2)$ et $(z_1, z_2)$.
+Posons les réels $a = d_1(x_1, y_1)$, $b = d_2(x_2, y_2)$, $u = d_1(y_1, z_1)$ et $v = d_2(y_2, z_2)$.
+Les inégalités triangulaires sur les espaces de base donnent : $d_1(x_1, z_1) \le a + u$ et $d_2(x_2, z_2) \le b + v$.
 
-Soit $(X, d)$ un espace métrique vérifiant l'inégalité ultramétrique :
-$$\forall x, y, z \in X, \quad d(x, z) \le \max(d(x, y), d(y, z))$$
+**Étape 2 : Évaluation du membre de gauche**
 
-1. Soit $B(a, r)$ une boule ouverte. Montrer que pour tout $b \in B(a, r)$, on a $B(b, r) = B(a, r)$. (Tout point de la boule en est un centre).
-2. Montrer que toute boule ouverte est également un ensemble fermé.
-3. Deux boules d'un tel espace sont soit disjointes, soit l'une est incluse dans l'autre. Démontrer cette propriété.
+Le carré de la distance cible est :
+$D(x,z)^2 = d_1(x_1, z_1)^2 + d_2(x_2, z_2)^2 \le (a+u)^2 + (b+v)^2$.
 
-## 2. Correction détaillée
+**Étape 3 : Utilisation de Minkowski (Cauchy-Schwarz)**
 
-**Question 1 :**
-Soit $b \in B(a, r)$, c'est-à-dire $d(a, b) < r$.
-- Si $x \in B(b, r)$, alors $d(b, x) < r$.
-  Par l'inégalité ultramétrique : $d(a, x) \le \max(d(a, b), d(b, x)) < r$. Donc $x \in B(a, r)$. D'où $B(b, r) \subset B(a, r)$.
-- Inversement, si $x \in B(a, r)$, alors $d(a, x) < r$.
-  $d(b, x) \le \max(d(b, a), d(a, x))$. Or $d(b, a) = d(a, b) < r$, donc $d(b, x) < r$. D'où $x \in B(b, r)$. Ainsi $B(a, r) \subset B(b, r)$.
-Conclusion : $B(a, r) = B(b, r)$.
-
-**Question 2 :**
-Montrons que le complémentaire de $B(a, r)$ est un ouvert.
-Soit $y \notin B(a, r)$, c'est-à-dire $d(a, y) \ge r$.
-Montrons que la boule $B(y, r)$ ne coupe pas $B(a, r)$.
-Supposons par l'absurde qu'il existe $z \in B(y, r) \cap B(a, r)$.
-Alors $d(y, z) < r$ et $d(a, z) < r$.
-Par l'inégalité ultramétrique : $d(a, y) \le \max(d(a, z), d(z, y)) < r$.
-Cela contredit $d(a, y) \ge r$.
-Ainsi $B(y, r) \subset X \setminus B(a, r)$. Le complémentaire est ouvert, donc la boule ouverte est fermée. (L'espace est dit totalement discontinu).
-
-**Question 3 :**
-Soient $B_1 = B(x_1, r_1)$ et $B_2 = B(x_2, r_2)$. Supposons $r_1 \le r_2$.
-Si $B_1 \cap B_2 \neq \emptyset$, il existe $z$ dans l'intersection.
-D'après la Q1, on peut recentrer les boules en $z$ :
-$B_1 = B(z, r_1)$ et $B_2 = B(z, r_2)$.
-Puisque $r_1 \le r_2$, la définition implique immédiatement que $B(z, r_1) \subset B(z, r_2)$.
-Donc $B_1 \subset B_2$. Si elles s'intersectent, l'une est incluse dans l'autre.
+Nous voulons montrer que $\sqrt{(a+u)^2 + (b+v)^2} \le \sqrt{a^2+b^2} + \sqrt{u^2+v^2}$.
+Cette inégalité est exactement l'inégalité triangulaire pour la norme euclidienne usuelle sur $\mathbb{R}^2$ appliquée aux vecteurs $V_1 = (a,b)$ et $V_2 = (u,v)$.
+Ainsi, $D(x,z) \le D(x,y) + D(y,z)$. La distance produit est parfaitement valide. $\blacksquare$

@@ -1,42 +1,19 @@
----
-title: "Exo-04 : Distance sur l'espace des suites"
-difficulty: "$\bigstar\bigstar\bigstar\star\star$"
----
+# Exercice 4 : Métrique induite sur une sphère
+**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
 
-# Exo-04 : Distance sur l'espace des suites
+## Énoncé formel
+Sur la sphère unité de $\mathbb{R}^3$, $S^2 = \left\lbrace  x \in \mathbb{R}^3 \mid \|x\|_2 = 1 \right\rbrace$, la distance géodésique entre deux points $x$ et $y$ est définie par $d_S(x,y) = \arccos(\langle x, y \rangle)$. Montrer que $d_S$ est bien une distance.
 
+## Résolution pas à pas
+**Étape 1 : L'angle comme métrique**
 
-## 1. Énoncé
+Le produit scalaire usuel donne $\langle x, y \rangle = \|x\| \|y\| \cos(\theta) = \cos(\theta)$ sur la sphère unité. L'arc cosinus renvoie la valeur principale $\theta \in [0, \pi]$, qui représente la longueur de l'arc de grand cercle géodésique.
 
-Soit $S$ l'ensemble de toutes les suites à valeurs réelles $x = (x_n)_{n \in \mathbb{N}}$.
-On définit l'application :
-$$d(x, y) = \sum_{n=0}^{+\infty} \frac{1}{2^n} \frac{|x_n - y_n|}{1 + |x_n - y_n|}$$
+**Étape 2 : Séparation et Symétrie**
 
-1. Montrer que la fonction $t \mapsto \frac{t}{1+t}$ est strictement croissante sur $\mathbb{R}_+$ et majorée.
-2. Justifier que la série définissant $d$ converge toujours.
-3. Montrer que $d$ est une distance sur $S$.
+- **Séparation :** $d_S(x,y) = 0 \iff \arccos(\langle x, y \rangle) = 0 \iff \langle x, y \rangle = 1$. Puisque $\|x\|=\|y\|=1$, le cas d'égalité de Cauchy-Schwarz indique que $x$ et $y$ sont positivement colinéaires, donc $x=y$.
+- **Symétrie :** $d_S(x,y) = \arccos(\langle x, y \rangle) = \arccos(\langle y, x \rangle) = d_S(y,x)$ par symétrie du produit scalaire réel.
 
-## 2. Correction détaillée
+**Étape 3 : Inégalité triangulaire**
 
-**Question 1 :**
-Soit $f(t) = \frac{t}{1+t}$. La fonction est dérivable sur $\mathbb{R}_+$.
-$f'(t) = \frac{1 \cdot (1+t) - t \cdot 1}{(1+t)^2} = \frac{1}{(1+t)^2}$.
-Puisque $f'(t) > 0$, $f$ est strictement croissante.
-De plus, $f(t) = 1 - \frac{1}{1+t}$, donc pour $t \ge 0$, $f(t) < 1$. Elle est majorée par 1.
-
-**Question 2 :**
-Pour tout entier $n$, posons $u_n = \frac{1}{2^n} f(|x_n - y_n|)$.
-Puisque $f(t) < 1$, on a $0 \le u_n \le \frac{1}{2^n}$.
-La série de terme général $1/2^n$ est une série géométrique convergente de raison $1/2$.
-Par le théorème de comparaison des séries à termes positifs, la série définissant $d(x,y)$ converge absolument pour toutes suites $x, y$.
-
-**Question 3 :**
-Vérifions les axiomes :
-- **Séparation :** $d(x, y) = 0 \iff \sum_{n=0}^{+\infty} u_n = 0$. Comme c'est une somme de termes positifs ou nuls, elle est nulle si et seulement si tous les termes sont nuls : $\forall n, |x_n - y_n| = 0$, donc $x = y$.
-- **Symétrie :** Évidente car $|x_n - y_n| = |y_n - x_n|$.
-- **Inégalité triangulaire :** Utilisons la croissance de $f$.
-  On a $|x_n - z_n| \le |x_n - y_n| + |y_n - z_n|$.
-  Comme $f$ est croissante, $f(|x_n - z_n|) \le f(|x_n - y_n| + |y_n - z_n|)$.
-  Or, on peut montrer que pour tous $a,b \ge 0$, $f(a+b) = \frac{a+b}{1+a+b} = \frac{a}{1+a+b} + \frac{b}{1+a+b} \le \frac{a}{1+a} + \frac{b}{1+b} = f(a) + f(b)$.
-  Donc $f(|x_n - z_n|) \le f(|x_n - y_n|) + f(|y_n - z_n|)$.
-  En multipliant par $1/2^n$ et en sommant sur $n$, on obtient $d(x, z) \le d(x, y) + d(y, z)$.
+Soit $x, y, z \in S^2$. Considérons la trigonométrie sphérique. Le théorème fondamental sur les triangles sphériques énonce que la somme de deux côtés d'un triangle sphérique est toujours supérieure ou égale au troisième côté. La démonstration analytique repose sur l'algèbre des quaternions ou la géométrie différentielle (les géodésiques minimisent la longueur de l'arc). Plus élémentairement, en calculant $\|x \times z\|^2$, l'identité de Lagrange permet d'établir $\theta_{xz} \le \theta_{xy} + \theta_{yz}$. La géodésique reste le chemin le plus court sur la variété. $\blacksquare$

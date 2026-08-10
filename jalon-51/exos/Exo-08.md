@@ -1,36 +1,21 @@
----
-title: "Exo-08 : Complétion d'un espace métrique"
-difficulty: "$\bigstar\bigstar\bigstar\bigstar\star$"
----
+# Exercice 8 : Espace d'Ultramétrie
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-# Exo-08 : Complétion d'un espace métrique
+## Énoncé formel
+Une distance $d$ est dite ultramétrique si elle vérifie l'inégalité forte : $d(x,z) \le \max(d(x,y), d(y,z))$. Dans un tel espace, montrer que tout triangle est isocèle et que sa base est inférieure aux côtés égaux.
 
+## Résolution pas à pas
+**Étape 1 : Formulation du problème**
 
-## 1. Énoncé
+Soit $x, y, z$ trois points distincts formant un triangle topologique. Supposons sans perte de généralité que les trois distances ne sont pas égales, et qu'il y a une distance strictement supérieure aux autres, disons $d(x,z) > d(x,y)$ et $d(x,z) > d(y,z)$.
 
-On considère l'espace $\mathbb{Q}$ muni de la distance usuelle $d(x, y) = |x - y|$.
-Soit la suite $(u_n)$ définie par $u_0 = 1$ et $u_{n+1} = \frac{1}{2}(u_n + \frac{2}{u_n})$.
+**Étape 2 : Contradiction par l'ultramétrie**
 
-1. Montrer que $(u_n)$ est une suite de Cauchy dans $(\mathbb{Q}, d)$.
-2. La suite $(u_n)$ converge-elle dans $\mathbb{Q}$ ?
-3. Que conclut-on sur l'espace métrique $(\mathbb{Q}, d)$ ?
+Selon l'inégalité ultramétrique :
+$d(x,z) \le \max(d(x,y), d(y,z))$.
+Or, notre hypothèse implique que le maximum à droite est strictement inférieur à $d(x,z)$.
+Nous obtenons une contradiction évidente : un réel ne peut pas être strictement inférieur à lui-même.
 
-## 2. Correction détaillée
+**Étape 3 : Conclusion**
 
-**Question 1 :**
-La suite est la méthode de Héron pour approximer $\sqrt{2}$. Par une étude classique (niveau Bac S / L1), on montre que pour $n \ge 1$, $u_n \ge \sqrt{2}$ et que la suite est décroissante, minorée par $\sqrt{2}$.
-Elle converge donc dans $\mathbb{R}$ vers $\sqrt{2}$.
-Toute suite convergente dans $\mathbb{R}$ est une suite de Cauchy dans $\mathbb{R}$.
-Cela signifie : $\forall \epsilon > 0, \exists N, \forall p,q \ge N, |u_p - u_q| < \epsilon$.
-Cette définition de suite de Cauchy ne fait intervenir que la distance $|u_p - u_q|$ entre les termes, qui sont tous rationnels (récurrence évidente sur $\mathbb{Q}$).
-Donc $(u_n)$ est une suite de Cauchy dans $\mathbb{Q}$.
-
-**Question 2 :**
-Si la suite convergeait dans $\mathbb{Q}$, elle aurait une limite $l \in \mathbb{Q}$.
-Par passage à la limite dans la relation de récurrence (les opérations algébriques étant continues), on aurait $l = \frac{1}{2}(l + \frac{2}{l})$, ce qui équivaut à $l^2 = 2$.
-Or, on sait (depuis les Grecs) qu'il n'existe aucun rationnel $l$ tel que $l^2 = 2$.
-Donc, bien qu'elle soit de Cauchy, la suite $(u_n)$ ne converge pas dans $\mathbb{Q}$.
-
-**Question 3 :**
-Un espace métrique dans lequel toute suite de Cauchy converge est dit **complet**.
-L'espace métrique $(\mathbb{Q}, d)$ possède des suites de Cauchy divergentes ; il n'est donc **pas complet**. Ce manque topologique justifie la construction (complétion) de l'ensemble des réels $\mathbb{R}$.
+L'hypothèse selon laquelle une distance puisse être l'unique maximum est fausse. Par conséquent, les deux plus grandes distances du triangle doivent être exactement égales. Le triangle est donc toujours isocèle, et le troisième côté (la base) est nécessairement inférieur ou égal à ces deux côtés. Cette propriété fascinante régit les distances $p$-adiques en arithmétique. $\blacksquare$

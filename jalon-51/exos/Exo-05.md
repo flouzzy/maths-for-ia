@@ -1,36 +1,23 @@
----
-title: "Exo-05 : Distances équivalentes et normes"
-difficulty: "$\bigstar\bigstar\bigstar\star\star$"
----
+# Exercice 5 : Distances sur l'espace des suites
+**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
 
-# Exo-05 : Distances équivalentes et normes
+## Énoncé formel
+Soit $\mathcal{B}(\mathbb{N}, \mathbb{R})$ l'ensemble des suites réelles bornées. On pose $d_\infty((u_n), (v_n)) = \sup_{n \in \mathbb{N}} |u_n - v_n|$. Vérifier les axiomes de la distance.
 
+## Résolution pas à pas
+**Étape 1 : Définition rigoureuse**
 
-## 1. Énoncé
+Soient $U=(u_n)$ et $V=(v_n)$ deux suites bornées. La différence $u_n - v_n$ est également une suite bornée. L'ensemble $\left\lbrace |u_n - v_n| \mid n \in \mathbb{N}\right\rbrace$ est donc une partie non vide et majorée de $\mathbb{R}$, elle admet donc une borne supérieure. L'application $d_\infty$ est bien à valeurs dans $\mathbb{R}_+$.
 
-Dans $\mathbb{R}^2$, on considère les trois distances usuelles induites par les normes correspondantes :
-- $d_1(x, y) = |x_1 - y_1| + |x_2 - y_2|$
-- $d_2(x, y) = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2}$
-- $d_\infty(x, y) = \max(|x_1 - y_1|, |x_2 - y_2|)$
+**Étape 2 : Axiomes de base**
 
-Démontrer, en revenant aux définitions et sans utiliser le théorème d'équivalence des normes en dimension finie, que $d_1$ et $d_\infty$ sont topologiquement équivalentes à $d_2$.
+- **Séparation :** Si $d_\infty(U, V) = 0$, alors $\forall n, |u_n - v_n| = 0$, donc $u_n = v_n$. Ainsi $U=V$.
+- **Symétrie :** Évidente par symétrie de la valeur absolue.
 
-## 2. Correction détaillée
+**Étape 3 : Inégalité triangulaire (passage à la borne supérieure)**
 
-Nous devons trouver des constantes d'encadrement pour montrer l'équivalence forte des distances.
-Posons $a = |x_1 - y_1|$ et $b = |x_2 - y_2|$.
-
-**Comparaison $d_\infty$ et $d_1$ :**
-$d_\infty = \max(a, b)$ et $d_1 = a + b$.
-D'une part, $a \le \max(a, b)$ et $b \le \max(a, b)$, donc $a + b \le 2 \max(a, b)$. Soit $d_1 \le 2 d_\infty$.
-D'autre part, $a \le a + b$ et $b \le a + b$ (puisque $a, b \ge 0$), donc $\max(a, b) \le a + b$. Soit $d_\infty \le d_1$.
-Ainsi, $d_\infty \le d_1 \le 2 d_\infty$.
-
-**Comparaison $d_2$ et $d_\infty$ :**
-$d_2^2 = a^2 + b^2$.
-D'une part, $a^2 \le (\max(a,b))^2$ et $b^2 \le (\max(a,b))^2$, donc $a^2 + b^2 \le 2(\max(a,b))^2$. En prenant la racine, $d_2 \le \sqrt{2} d_\infty$.
-D'autre part, $\max(a^2, b^2) \le a^2 + b^2$, et la fonction racine est croissante, donc $\max(a, b) = \sqrt{\max(a^2, b^2)} \le \sqrt{a^2 + b^2}$. Soit $d_\infty \le d_2$.
-Ainsi, $d_\infty \le d_2 \le \sqrt{2} d_\infty$.
-
-**Conclusion :**
-Les distances vérifient des inégalités du type $C_1 d_A(x,y) \le d_B(x,y) \le C_2 d_A(x,y)$. Elles induisent donc les mêmes ouverts, c'est-à-dire la même topologie sur $\mathbb{R}^2$.
+Pour tout entier $n$, l'inégalité triangulaire dans $\mathbb{R}$ donne : $|u_n - w_n| \le |u_n - v_n| + |v_n - w_n|$.
+Puisque $|u_n - v_n| \le d_\infty(U,V)$ et $|v_n - w_n| \le d_\infty(V,W)$, on a pour tout $n$ :
+$|u_n - w_n| \le d_\infty(U,V) + d_\infty(V,W)$.
+Le terme de droite est un majorant de l'ensemble $\left\lbrace |u_n - w_n|\right\rbrace$. Par définition, la borne supérieure est le plus petit des majorants. Donc :
+$\sup_n |u_n - w_n| \le d_\infty(U,V) + d_\infty(V,W)$, ce qui conclut la preuve. $\blacksquare$

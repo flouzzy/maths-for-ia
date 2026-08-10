@@ -1,38 +1,20 @@
----
-title: "Exo-07 : Produit d'espaces métriques"
-difficulty: "$\bigstar\bigstar\bigstar\bigstar\star$"
----
+# Exercice 7 : Générer une distance bornée
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
 
-# Exo-07 : Produit d'espaces métriques
+## Énoncé formel
+Montrer que si $d$ est une distance sur $X$, alors $d'(x,y) = \frac{d(x,y)}{1+d(x,y)}$ définit une autre distance sur $X$ qui est majorée par 1. Sont-elles topologiquement équivalentes ?
 
+## Résolution pas à pas
+**Étape 1 : Étude de la fonction de modification**
 
-## 1. Énoncé
+Posons $f(t) = \frac{t}{1+t}$. Sa dérivée est $f'(t) = \frac{1}{(1+t)^2} > 0$. La fonction est donc strictement croissante sur $\mathbb{R}_+$. De plus, $f(t) < 1$.
 
-Soient $(X_1, d_1)$ et $(X_2, d_2)$ deux espaces métriques. Sur le produit cartésien $X = X_1 \times X_2$, on définit :
-$$D((x_1, x_2), (y_1, y_2)) = d_1(x_1, y_1) + d_2(x_2, y_2)$$
+**Étape 2 : Axiomes de la distance**
 
-1. Montrer que $D$ est une distance sur $X$.
-2. Montrer qu'une suite $z_n = (x_{1,n}, x_{2,n})$ converge vers $l = (l_1, l_2)$ dans $(X, D)$ si et seulement si $x_{1,n} \to l_1$ dans $(X_1, d_1)$ et $x_{2,n} \to l_2$ dans $(X_2, d_2)$.
+Séparation et symétrie découlent directement de celles de $d$. L'inégalité triangulaire nécessite la monotonie. Soit $d(x,z) \le d(x,y) + d(y,z)$. Puisque $f$ croît, $f(d(x,z)) \le f(d(x,y) + d(y,z))$.
+Or, on montre algébriquement que $\frac{a+b}{1+a+b} = \frac{a}{1+a+b} + \frac{b}{1+a+b} \le \frac{a}{1+a} + \frac{b}{1+b}$.
+Donc $d'(x,z) \le d'(x,y) + d'(y,z)$. $d'$ est bien une distance.
 
-## 2. Correction détaillée
+**Étape 3 : Équivalence topologique**
 
-**Question 1 :**
-Soient $x=(x_1, x_2), y=(y_1, y_2), z=(z_1, z_2) \in X$.
-- **Séparation :** $D(x, y) = 0 \iff d_1(x_1, y_1) + d_2(x_2, y_2) = 0$. Étant des quantités positives, la somme est nulle si et seulement si chacune est nulle. $d_1(x_1, y_1) = 0 \iff x_1 = y_1$ et $d_2(x_2, y_2) = 0 \iff x_2 = y_2$. Donc $x=y$.
-- **Symétrie :** $D(x, y) = d_1(x_1, y_1) + d_2(x_2, y_2) = d_1(y_1, x_1) + d_2(y_2, x_2) = D(y, x)$.
-- **Inégalité triangulaire :**
-  $D(x, z) = d_1(x_1, z_1) + d_2(x_2, z_2)$
-  $\le (d_1(x_1, y_1) + d_1(y_1, z_1)) + (d_2(x_2, y_2) + d_2(y_2, z_2))$
-  $= (d_1(x_1, y_1) + d_2(x_2, y_2)) + (d_1(y_1, z_1) + d_2(y_2, z_2))$
-  $= D(x, y) + D(y, z)$.
-$D$ est bien une distance.
-
-**Question 2 :**
-- Supposons $z_n \to l$. Alors pour tout $\epsilon > 0$, il existe $N$ tel que $n \ge N \implies D(z_n, l) < \epsilon$.
-  Comme $d_1(x_{1,n}, l_1) \le D(z_n, l)$, on a $d_1(x_{1,n}, l_1) < \epsilon$. Donc $x_{1,n} \to l_1$. De même pour $x_{2,n}$.
-- Réciproquement, supposons $x_{1,n} \to l_1$ et $x_{2,n} \to l_2$.
-  Soit $\epsilon > 0$. Il existe $N_1$ tel que $n \ge N_1 \implies d_1(x_{1,n}, l_1) < \epsilon/2$.
-  Il existe $N_2$ tel que $n \ge N_2 \implies d_2(x_{2,n}, l_2) < \epsilon/2$.
-  Pour $n \ge \max(N_1, N_2)$, $D(z_n, l) = d_1(x_{1,n}, l_1) + d_2(x_{2,n}, l_2) < \epsilon/2 + \epsilon/2 = \epsilon$.
-  Donc $z_n \to l$.
-La convergence dans l'espace produit métrique est bien la convergence coordonnée par coordonnée.
+Les distances sont topologiquement équivalentes car l'application $x \mapsto \frac{x}{1+x}$ est un homéomorphisme de $\mathbb{R}_+$ sur $[0, 1[$. Elles induisent les mêmes voisinages (si l'une tend vers 0, l'autre aussi). Cependant, elles ne sont *pas* uniformément équivalentes si $X$ est non borné. $\blacksquare$
