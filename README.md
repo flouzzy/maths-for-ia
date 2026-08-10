@@ -380,7 +380,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-06-18] : Upsert du Jalon 7 - Espaces vectoriels abstraits. Status: Terminé.
 - [2026-06-17] : Upsert du Jalon 6 - Relations d'équivalence. Status: Terminé.
 - [2026-06-16] : Upsert du Jalon 5 - Applications. Status: Terminé.
-- [2026-06-14] : Audit & Auto-correction du Jalon 1 - Logique formelle. Statut : Validé et Fixé. Prêt pour le jalon suivant.
+- [2026-08-10] : [Upsert/Création] du Jalon 1 - Logique formelle. Status: Terminé.
 - **Dernier Jalon Enrichi** : [Jalon 143](jalon-143/Jalon-143.md) (Cours complet, 10 exercices avancés, 5 TP d'implémentation pure Python).
 - [2026-06-06] : Upsert du Jalon 140 - Classifieur de Bayes optimal. Status: Terminé.
 - [2026-06-07] : Audit & Auto-correction du Jalon 141 - Théorèmes de Glivenko-Cantelli généralisés pour les classes de fonctions VC. Statut : Validé et Fixé. Prêt pour le jalon suivant.
@@ -396,7 +396,6 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [[#2026-06-28-audit|2026-06-28]] : [Audit & Weekly Compilation] - Jalon 6 - Relations d'équivalence, relations d'ordre, ensembles quotients et structures de base (groupes, anneaux, corps). Fichiers Obsidian .md mis à jour, intégration des figures TikZ et génération du polycopié PDF d'étude. Statut : Validé et Fixé.
 - [2026-06-10] : Upsert du Jalon 2 - Méthodes de raisonnement. Status: Terminé.
 - [2026-06-12] : Upsert du Jalon 3 - Quantification. Status: Terminé.
-- [2026-06-12] : Audit & Auto-correction du Jalon 1 - Logique formelle. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - [2026-06-17] : Audit & Auto-correction du Jalon 2 - Méthodes de raisonnement. Statut : Validé et Fixé. Prêt pour le jalon suivant.
 - [2026-06-20] : Upsert du Jalon 8 - Applications linéaires. Status: Terminé.
 - [2026-06-22] : Upsert du Jalon 9 - Calcul matriciel. Status: Terminé.
