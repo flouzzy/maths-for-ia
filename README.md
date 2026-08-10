@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-08-10] : [Upsert/Création] du Jalon 54 - Compacité générale. Status: Terminé.
 - [2026-08-10] : [Upsert/Création] du Jalon 53 - Axiomes de séparation. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-08] : [Upsert/Création] du Jalon 51 - Espaces métriques. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-07] : [Upsert/Création] du Jalon 50 - Opérateurs topologiques : Intérieur, Adhérence, Frontière. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
