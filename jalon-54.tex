@@ -1,0 +1,501 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1
+}
+
+\title{\Huge COMPACITÉ GÉNÉRALE \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+\section{Introduction}
+
+La compacité est l'un des concepts les plus profonds et puissants de la topologie générale et de l'analyse moderne. Elle constitue la clé de voûte permettant de transférer les propriétés de finitude à des espaces continus infinis. Essentiellement, un espace compact est un espace qui, bien que potentiellement infini, ne contient pas suffisamment de "place" pour qu'une suite puisse s'y échapper sans accumuler ses valeurs autour d'un point limite. Historiquement, la formalisation de la compacité a émergé des travaux de Borel et Lebesgue sur le recouvrement des intervalles réels fermés et bornés, avant d'être généralisée par Alexandrov, Urysohn et Tychonoff aux espaces topologiques abstraits.
+
+\section{Définitions, Théorèmes et Exemples}
+
+\subsection{La Propriété de Borel-Lebesgue}
+
+Soit $(X, \mathcal{T})$ un espace topologique.
+
+Un recouvrement ouvert de $X$ est une famille d'ouverts $(U_i)_{i \in I}$ telle que $X = \bigcup_{i \in I} U_i$.
+
+Un espace $X$ est dit compact s'il est séparé (au sens de Hausdorff, c'est-à-dire que deux points distincts admettent des voisinages disjoints) et si, de tout recouvrement ouvert de $X$, on peut extraire un sous-recouvrement fini. Autrement dit :
+$$ \forall (U_i)_{i \in I} \in \mathcal{T}^I, \quad X = \bigcup_{i \in I} U_i \implies \exists J \subset I, J \text{ fini, } X = \bigcup_{j \in J} U_j $$
+
+\textbf{Exemple Concret :}
+Considérons le segment réel $X = [0, 1]$. Prenons le recouvrement ouvert infini constitué des intervalles $U_n = \left( \frac{1}{n}, 1 \right]$ pour $n \ge 2$, auquel on adjoint $U_0 = \left[ 0, \frac{1}{4} \right)$.
+Clairement, $\bigcup_{n \ge 2} U_n \cup U_0 = [0, 1]$. Puisque $[0, 1]$ est compact (théorème de Borel-Lebesgue usuel), on peut en extraire un sous-recouvrement fini. Ici, il suffit de prendre $U_0$ et $U_5 = \left( \frac{1}{5}, 1 \right]$, car $U_0 \cup U_5 = \left[ 0, \frac{1}{4} \right) \cup \left( \frac{1}{5}, 1 \right] = [0, 1]$.
+
+\textbf{Cas Pathologique :}
+L'intervalle ouvert $Y = (0, 1)$ n'est pas compact. En effet, considérons le recouvrement ouvert donné par les ensembles $V_n = \left( \frac{1}{n}, 1 \right)$ pour $n \ge 2$. La réunion de tous ces $V_n$ recouvre bien $(0, 1)$. Cependant, toute sous-famille finie de ce recouvrement possède un plus grand indice $N$, et sa réunion sera simplement $V_N = \left( \frac{1}{N}, 1 \right)$, ce qui laisse le sous-intervalle $\left( 0, \frac{1}{N} \right]$ non recouvert.
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1.5]
+  % Axe réel
+  \draw[->] (-0.5,0) -- (4,0) node[right] {$\mathbb{R}$};
+  \draw (0,0.1) -- (0,-0.1) node[below] {$0$};
+  \draw (3,0.1) -- (3,-0.1) node[below] {$1$};
+
+  % Ouverts Un
+  \draw[thick, blue] (1.5,0.2) -- (3,0.2) node[above, pos=0.5] {$U_2$};
+  \draw[blue, fill=white] (1.5,0.2) circle (0.05);
+  \draw[blue, fill=blue] (3,0.2) circle (0.05);
+
+  \draw[thick, red] (1,0.4) -- (3,0.4) node[above, pos=0.5] {$U_3$};
+  \draw[red, fill=white] (1,0.4) circle (0.05);
+  \draw[red, fill=red] (3,0.4) circle (0.05);
+
+  \draw[thick, green!70!black] (0.6,0.6) -- (3,0.6) node[above, pos=0.5] {$U_5$};
+  \draw[green!70!black, fill=white] (0.6,0.6) circle (0.05);
+  \draw[green!70!black, fill=green!70!black] (3,0.6) circle (0.05);
+
+  \draw[thick, orange] (0,0.8) -- (0.75,0.8) node[above, pos=0.5] {$U_0$};
+  \draw[orange, fill=orange] (0,0.8) circle (0.05);
+  \draw[orange, fill=white] (0.75,0.8) circle (0.05);
+\end{tikzpicture}
+\caption{Illustration du concept}
+\end{figure}
+
+\subsection{Caractérisation par les Fermés et Intersection Finie}
+
+Une formulation duale et équivalente de la compacité s'exprime en termes de fermés et de la propriété de l'intersection finie.
+
+Une famille de parties $(A_i)_{i \in I}$ possède la propriété d'intersection finie si pour toute sous-famille finie $J \subset I$, l'intersection $\bigcap_{j \in J} A_j$ est non vide.
+
+Un espace topologique $X$ est compact si et seulement si toute famille de fermés de $X$ possédant la propriété d'intersection finie a une intersection globale non vide : $\bigcap_{i \in I} F_i \neq \emptyset$.
+
+\textbf{Exemple Concret :}
+Prenons $X = [0, 1]$ et la suite de fermés emboîtés $F_n = \left[ 0, \frac{1}{n} \right]$ pour $n \ge 1$. Toute sous-famille finie a une intersection qui est simplement le "plus petit" des intervalles (celui correspondant au plus grand $n$), qui est non vide. La compacité assure que l'intersection globale $\bigcap_{n \ge 1} F_n$ est non vide. Ici, cette intersection contient exactement le point $\{0\}$.
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1.5]
+  % Axe réel
+  \draw[->] (-0.5,0) -- (4,0) node[right] {$\mathbb{R}$};
+  \draw (0,0.1) -- (0,-0.1) node[below] {$0$};
+  \draw (3,0.1) -- (3,-0.1) node[below] {$1$};
+
+  \draw[thick, purple] (0,0.2) -- (3,0.2) node[above, pos=1] {$F_1$};
+  \draw[purple, fill=purple] (0,0.2) circle (0.05);
+  \draw[purple, fill=purple] (3,0.2) circle (0.05);
+
+  \draw[thick, purple] (0,0.4) -- (1.5,0.4) node[above, pos=1] {$F_2$};
+  \draw[purple, fill=purple] (0,0.4) circle (0.05);
+  \draw[purple, fill=purple] (1.5,0.4) circle (0.05);
+
+  \draw[thick, purple] (0,0.6) -- (1,0.6) node[above, pos=1] {$F_3$};
+  \draw[purple, fill=purple] (0,0.6) circle (0.05);
+  \draw[purple, fill=purple] (1,0.6) circle (0.05);
+\end{tikzpicture}
+\caption{Illustration du concept}
+\end{figure}
+
+\section{Démonstrations}
+
+\subsection{L'image continue d'un compact est compacte}
+
+\textbf{Théorème :} Soit $f : X \to Y$ une application continue. Si $X$ est compact, alors son image $f(X)$ est un espace compact (pour la topologie induite).
+
+\textbf{Démonstration :}
+Soit $(V_i)_{i \in I}$ un recouvrement ouvert de $f(X)$ par des ouverts de $Y$.
+Puisque $f(X) \subset \bigcup_{i \in I} V_i$, on a en prenant l'image réciproque :
+$X = f^{-1}(f(X)) \subset f^{-1}\left( \bigcup_{i \in I} V_i \right) = \bigcup_{i \in I} f^{-1}(V_i)$.
+L'application $f$ étant continue, pour chaque $i \in I$, l'ensemble $U_i = f^{-1}(V_i)$ est un ouvert de $X$.
+La famille $(U_i)_{i \in I}$ forme donc un recouvrement ouvert de l'espace compact $X$.
+Par définition de la compacité de $X$, il existe une sous-famille finie $J \subset I$ telle que $X = \bigcup_{j \in J} U_j$.
+En appliquant $f$ aux deux membres de l'égalité, on obtient :
+$f(X) = f\left( \bigcup_{j \in J} U_j \right) = \bigcup_{j \in J} f(U_j)$.
+Or, par construction, $f(U_j) = f(f^{-1}(V_j)) \subset V_j$.
+Par conséquent, $f(X) \subset \bigcup_{j \in J} V_j$.
+Nous avons ainsi extrait un sous-recouvrement fini $(V_j)_{j \in J}$ du recouvrement ouvert initial. L'espace $f(X)$ satisfait la propriété de Borel-Lebesgue, il est donc compact. $\blacksquare$
+
+\subsection{Compacité Séquentielle dans les Espaces Métriques (Théorème de Bolzano-Weierstrass)}
+
+\textbf{Théorème :} Dans un espace métrique $(X, d)$, la compacité topologique (Borel-Lebesgue) est équivalente à la compacité séquentielle : de toute suite $(x_n)_{n \in \mathbb{N}}$ d'éléments de $X$, on peut extraire une sous-suite convergente vers un élément $l \in X$.
+
+\textbf{Démonstration (Implication Borel-Lebesgue $\implies$ Compacité séquentielle) :}
+Soit $X$ un espace compact et $(x_n)_{n \in \mathbb{N}}$ une suite dans $X$. Supposons par l'absurde que cette suite n'admette aucune valeur d'adhérence.
+Alors, pour tout point $y \in X$, $y$ n'est pas une valeur d'adhérence de la suite. Cela signifie qu'il existe un ouvert $U_y$ contenant $y$ tel que $U_y$ ne contient qu'un nombre fini de termes de la suite $(x_n)$.
+La famille $(U_y)_{y \in X}$ constitue manifestement un recouvrement ouvert de $X$.
+Puisque $X$ est compact, on peut en extraire un sous-recouvrement fini $U_{y_1}, U_{y_2}, \dots, U_{y_k}$.
+Ainsi, $X = \bigcup_{i=1}^k U_{y_i}$.
+Or, chaque ouvert $U_{y_i}$ ne contient qu'un nombre fini de termes de la suite. L'union finie $\bigcup_{i=1}^k U_{y_i}$ ne peut donc contenir qu'un nombre fini de termes de la suite.
+Mais cette union est l'espace $X$ tout entier, qui contient la totalité des termes de la suite (qui sont en nombre infini). Nous aboutissons à une contradiction.
+Par conséquent, la suite $(x_n)$ admet au moins une valeur d'adhérence $l \in X$. Dans un espace métrique, cela implique l'existence d'une sous-suite convergente vers $l$. $\blacksquare$
+
+
+\textbf{Exemple Concret 3 (Image continue) :} Considérons la fonction sinus $f(x) = \sin(x)$ sur le segment compact $[0, 2\pi]$. Son image est $[-1, 1]$, qui est bien un compact (fermé et borné). Si on la considère sur l'ouvert non compact $(0, 2\pi)$, l'image est aussi $[-1, 1]$ (qui est compact), mais l'image d'un non-compact n'est pas obligatoirement non-compacte. Par contre, si on prend $f(x) = 1/x$ sur l'ouvert non compact $(0, 1)$, l'image est $(1, +\infty)$, qui n'est pas compact.
+
+\textbf{Exemple Concret 4 (Bolzano-Weierstrass) :} Prenons la suite $x_n = (-1)^n (1 - 1/n)$. Elle vit dans le compact $[-1, 1]$. Elle n'est pas convergente, mais elle a deux valeurs d'adhérence: -1 et 1. On peut extraire la sous-suite des indices pairs qui converge vers 1, et des impairs vers -1.
+
+
+\section{Applications en Physique, Logique et Intelligence Artificielle}
+
+En apprentissage statistique (Machine Learning), le théorème des bornes atteintes (corollaire direct du fait que l'image continue d'un compact est compacte) est fondamental. Pour entraîner un modèle paramétré par $\theta \in \Theta$, on cherche à minimiser une fonction de coût (ou perte empirique) $L(\theta)$.
+Si l'espace des paramètres $\Theta$ est un compact de $\mathbb{R}^d$ (par exemple, grâce à une pénalisation en norme type régression Ridge ou Lasso qui contraint les paramètres dans une boule fermée) et que la fonction de coût $L$ est continue par rapport à $\theta$, alors l'existence d'un minimiseur global $\theta^\star$ est mathématiquement garantie : il existe $\theta^\star \in \Theta$ tel que $L(\theta^\star) = \min_{\theta \in \Theta} L(\theta)$.
+
+De plus, en théorie de l'apprentissage PAC (Probably Approximately Correct), la notion de capacité d'un espace d'hypothèses (comme l'entropie métrique ou la dimension de Vapnik-Chervonenkis) repose sur la capacité de recouvrir cet espace par un nombre fini de boules de petit rayon (précompacité). La compacité des espaces de fonctions permet d'établir des bornes uniformes d'erreur de généralisation, empêchant le sur-apprentissage (overfitting) catastrophique en garantissant que l'espace des fonctions n'est pas "trop grand".
+
+
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Compacité de l'intervalle unité \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :} En utilisant le théorème de Bolzano-Weierstrass, démontrer rigoureusement que l'intervalle fermé $[0, 1]$ est séquentiellement compact dans $\mathbb{R}$.
+
+\textbf{Correction Détaillée :}
+Soit $(x_n)_{n \in \mathbb{N}}$ une suite d'éléments de $[0, 1]$.
+La suite $(x_n)$ est bornée car pour tout $n$, $0 \le x_n \le 1$.
+D'après le théorème de Bolzano-Weierstrass dans $\mathbb{R}$ (toute suite réelle bornée admet une sous-suite convergente), il existe une sous-suite $(x_{\phi(n)})_{n \in \mathbb{N}}$ (où $\phi : \mathbb{N} \to \mathbb{N}$ est strictement croissante) qui converge vers un réel $l \in \mathbb{R}$.
+Puisque pour tout $n$, $x_{\phi(n)} \in [0, 1]$, et que le passage à la limite préserve les inégalités larges, on a :
+$0 \le \lim_{n \to \infty} x_{\phi(n)} \le 1$, c'est-à-dire $0 \le l \le 1$.
+Donc $l \in [0, 1]$.
+Ainsi, de toute suite de $[0, 1]$, on a pu extraire une sous-suite convergente dans $[0, 1]$. Par définition, $[0, 1]$ est séquentiellement compact.
+
+\subsection*{Exercice 2 : Union finie de compacts \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :} Soient $K_1$ et $K_2$ deux parties compactes d'un espace topologique séparé $X$. Montrer que $K_1 \cup K_2$ est compact en utilisant la définition par recouvrement ouvert (Borel-Lebesgue).
+
+\textbf{Correction Détaillée :}
+Soit $(U_i)_{i \in I}$ un recouvrement ouvert de $K_1 \cup K_2$.
+Cela signifie que $K_1 \cup K_2 \subset \bigcup_{i \in I} U_i$.
+Puisque $K_1 \subset K_1 \cup K_2$, la famille $(U_i)_{i \in I}$ est a fortiori un recouvrement ouvert de $K_1$.
+Comme $K_1$ est compact, il existe un sous-ensemble fini $J_1 \subset I$ tel que $K_1 \subset \bigcup_{j \in J_1} U_j$.
+De même, $(U_i)_{i \in I}$ est un recouvrement ouvert de $K_2$, qui est compact. Il existe donc un sous-ensemble fini $J_2 \subset I$ tel que $K_2 \subset \bigcup_{j \in J_2} U_j$.
+Soit $J = J_1 \cup J_2$. L'ensemble $J$, réunion de deux ensembles finis, est un ensemble fini.
+On a alors : $K_1 \cup K_2 \subset \left( \bigcup_{j \in J_1} U_j \right) \cup \left( \bigcup_{j \in J_2} U_j \right) = \bigcup_{j \in J} U_j$.
+Nous avons ainsi extrait de $(U_i)_{i \in I}$ un sous-recouvrement fini indexé par $J$, recouvrant $K_1 \cup K_2$.
+L'espace $X$ étant supposé séparé, $K_1 \cup K_2$ l'est également pour la topologie induite, et vérifiant la propriété de Borel-Lebesgue, il est compact.
+
+\subsection*{Exercice 3 : Un sous-espace fermé d'un compact est compact \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :} Soit $X$ un espace topologique compact et $F$ un sous-espace fermé de $X$. Démontrer que $F$ est compact.
+
+\textbf{Correction Détaillée :}
+Soit $(U_i)_{i \in I}$ une famille d'ouverts de l'espace global $X$ recouvrant $F$, c'est-à-dire $F \subset \bigcup_{i \in I} U_i$.
+Puisque $F$ est fermé dans $X$, son complémentaire $V = X \setminus F$ est un ouvert de $X$.
+Considérons la famille d'ouverts formée des $U_i$ et de $V$. Cette famille recouvre l'espace entier $X$ puisque $X = F \cup (X \setminus F) \subset \left(\bigcup_{i \in I} U_i\right) \cup V$.
+L'espace $X$ étant compact, on peut en extraire un sous-recouvrement fini. Ce sous-recouvrement est constitué d'un nombre fini de $U_i$, notons-les $U_{i_1}, \dots, U_{i_n}$, et éventuellement de l'ouvert $V$.
+On a donc $X = U_{i_1} \cup \dots \cup U_{i_n} \cup V$.
+En intersectant cette égalité avec $F$, et puisque $F \cap V = F \cap (X \setminus F) = \emptyset$, on obtient :
+$F = F \cap X = F \cap (U_{i_1} \cup \dots \cup U_{i_n} \cup V) = (F \cap U_{i_1}) \cup \dots \cup (F \cap U_{i_n})$.
+Ainsi, $F \subset U_{i_1} \cup \dots \cup U_{i_n}$.
+Nous avons extrait un sous-recouvrement fini recouvrant $F$. $F$ est donc compact.
+
+\subsection*{Exercice 4 : Compacité et distance au bord \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :} Soit $X$ un espace métrique compact, et $(U_i)_{i \in I}$ un recouvrement ouvert de $X$. Démontrer le lemme de Lebesgue : il existe un $\delta > 0$ tel que toute boule de rayon $\delta$ est entièrement contenue dans au moins l'un des ouverts $U_i$.
+
+\textbf{Correction Détaillée :}
+Par l'absurde, supposons qu'un tel $\delta$ n'existe pas.
+Cela signifie que pour tout $\delta > 0$, il existe un point $x \in X$ tel que la boule ouverte $B(x, \delta)$ n'est contenue dans aucun des $U_i$.
+En prenant $\delta_n = \frac{1}{n}$ pour $n \in \mathbb{N}^*$, on construit une suite $(x_n)_{n \ge 1}$ telle que pour tout $n$, $B(x_n, \frac{1}{n})$ n'est incluse dans aucun $U_i$.
+L'espace $X$ étant métrique compact, il est séquentiellement compact. Il existe donc une sous-suite $(x_{\phi(n)})$ convergeant vers un point $l \in X$.
+Puisque $(U_i)_{i \in I}$ recouvre $X$, il existe un $i_0 \in I$ tel que $l \in U_{i_0}$.
+L'ensemble $U_{i_0}$ étant ouvert, il existe un rayon $r > 0$ tel que $B(l, r) \subset U_{i_0}$.
+Puisque $x_{\phi(n)} \to l$, la distance $d(x_{\phi(n)}, l)$ tend vers 0. Soit $N$ suffisamment grand tel que pour tout $n \ge N$, on ait $d(x_{\phi(n)}, l) < \frac{r}{2}$ et $\frac{1}{\phi(n)} < \frac{r}{2}$.
+Pour un tel $n$, si $y \in B\left(x_{\phi(n)}, \frac{1}{\phi(n)}\right)$, l'inégalité triangulaire donne :
+$d(y, l) \le d(y, x_{\phi(n)}) + d(x_{\phi(n)}, l) < \frac{1}{\phi(n)} + \frac{r}{2} < \frac{r}{2} + \frac{r}{2} = r$.
+Donc $y \in B(l, r) \subset U_{i_0}$.
+On en déduit que la boule entière $B\left(x_{\phi(n)}, \frac{1}{\phi(n)}\right)$ est incluse dans $U_{i_0}$, ce qui contredit formellement la définition de la suite $(x_n)$.
+L'hypothèse initiale est donc fausse, et le nombre de Lebesgue $\delta$ existe bien.
+
+\subsection*{Exercice 5 : Compacité de la sphère unité \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :} Démontrer que la sphère unité $S^{n-1} = \{x \in \mathbb{R}^n \mid \|x\|_2 = 1\}$ est un compact de $\mathbb{R}^n$.
+
+\textbf{Correction Détaillée :}
+Nous utilisons le théorème de Heine-Borel pour les espaces de dimension finie, qui stipule qu'une partie de $\mathbb{R}^n$ est compacte si et seulement si elle est fermée et bornée.
+1. \textbf{Bornée :} Pour tout point $x \in S^{n-1}$, sa norme euclidienne est exactement $1$. La sphère est donc intégralement contenue dans la boule fermée centrée à l'origine et de rayon 1, $\bar{B}(0, 1)$. Elle est donc bornée.
+2. \textbf{Fermée :} L'application norme $f : \mathbb{R}^n \to \mathbb{R}$ définie par $f(x) = \|x\|_2$ est une fonction continue (car 1-lipschitzienne par l'inégalité triangulaire inversée).
+Le singleton $\{1\}$ est un fermé de $\mathbb{R}$.
+Or, par définition, $S^{n-1} = f^{-1}(\{1\})$. L'image réciproque d'un fermé par une application continue étant fermée, $S^{n-1}$ est une partie fermée de $\mathbb{R}^n$.
+Puisque $S^{n-1}$ est à la fois fermée et bornée dans l'espace euclidien de dimension finie $\mathbb{R}^n$, elle est compacte.
+
+\subsection*{Exercice 6 : Intersection décroissante de compacts non vides \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :} Soit $X$ un espace topologique compact. Soit $(K_n)_{n \in \mathbb{N}}$ une suite de fermés non vides de $X$, emboîtés, c'est-à-dire que pour tout $n$, $K_{n+1} \subset K_n$. Démontrer que leur intersection globale $K = \bigcap_{n \in \mathbb{N}} K_n$ est non vide.
+
+\textbf{Correction Détaillée :}
+Supposons par l'absurde que l'intersection globale soit vide : $\bigcap_{n \in \mathbb{N}} K_n = \emptyset$.
+Passons au complémentaire dans $X$. En utilisant les lois de De Morgan, on obtient :
+$X = X \setminus \emptyset = X \setminus \left( \bigcap_{n \in \mathbb{N}} K_n \right) = \bigcup_{n \in \mathbb{N}} (X \setminus K_n)$.
+Notons $O_n = X \setminus K_n$. Puisque les $K_n$ sont fermés, les $O_n$ sont des ouverts de $X$.
+La relation précédente montre que la famille d'ouverts $(O_n)_{n \in \mathbb{N}}$ forme un recouvrement ouvert de l'espace compact $X$.
+Par la propriété de Borel-Lebesgue de la compacité, on peut en extraire un sous-recouvrement fini : il existe un entier $N$ (le plus grand indice de la sous-famille finie) tel que $X = \bigcup_{i=0}^N O_i$.
+Or, la suite des ensembles $(K_n)$ étant décroissante, la suite de leurs complémentaires $(O_n)$ est croissante au sens de l'inclusion : $O_0 \subset O_1 \subset \dots \subset O_N$.
+La réunion finie $\bigcup_{i=0}^N O_i$ est donc simplement égale au plus grand d'entre eux, $O_N$.
+Ainsi, $X = O_N = X \setminus K_N$.
+En repassant au complémentaire, cela implique que $K_N = \emptyset$.
+Or, par hypothèse, tous les $K_n$ sont non vides, y compris $K_N$. Nous aboutissons à une contradiction directe.
+Par conséquent, l'intersection $\bigcap_{n \in \mathbb{N}} K_n$ ne peut pas être vide.
+
+\subsection*{Exercice 7 : Produit d'espaces compacts \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :} Démontrer le théorème de Tychonoff pour le produit de deux espaces séquentiellement compacts : Si $X$ et $Y$ sont deux espaces métriques compacts, alors l'espace produit $X \times Y$ muni de la distance $d((x_1, y_1), (x_2, y_2)) = d_X(x_1, x_2) + d_Y(y_1, y_2)$ est compact.
+
+\textbf{Correction Détaillée :}
+Soit $(z_n)_{n \in \mathbb{N}} = (x_n, y_n)_{n \in \mathbb{N}}$ une suite d'éléments de l'espace produit $X \times Y$.
+Considérons la projection sur la première composante : $(x_n)_{n \in \mathbb{N}}$ est une suite dans l'espace métrique compact $X$.
+Elle admet donc une sous-suite convergente. Il existe une fonction d'extraction $\phi : \mathbb{N} \to \mathbb{N}$ telle que $x_{\phi(n)} \to l_x \in X$.
+Considérons maintenant la suite projetée correspondante sur la seconde composante, mais indexée par la même extraction $\phi$ : il s'agit de la suite $(y_{\phi(n)})_{n \in \mathbb{N}}$.
+C'est une suite dans l'espace métrique compact $Y$. Elle admet à son tour une sous-suite convergente.
+Il existe donc une seconde fonction d'extraction $\psi : \mathbb{N} \to \mathbb{N}$ telle que $y_{\phi(\psi(n))} \to l_y \in Y$.
+Regardons maintenant la première composante le long de cette double extraction : la sous-suite $(x_{\phi(\psi(n))})_{n \in \mathbb{N}}$ est une sous-suite de la suite convergente $(x_{\phi(n)})$, donc elle converge vers la même limite $l_x$.
+Ainsi, la double sous-suite $(z_{\phi(\psi(n))}) = (x_{\phi(\psi(n))}, y_{\phi(\psi(n))})$ converge dans l'espace produit vers le couple limite $(l_x, l_y) \in X \times Y$.
+Toute suite de $X \times Y$ admettant une sous-suite convergente, l'espace $X \times Y$ est séquentiellement compact.
+
+\subsection*{Exercice 8 : Non-compacité de la boule fermée en dimension infinie \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :} Soit $E$ l'espace des suites réelles de carré sommable, $\ell^2(\mathbb{N})$, muni de la norme $\|x\|_2 = \sqrt{\sum_{n=0}^\infty x_n^2}$. Démontrer que la boule unité fermée $\bar{B}(0, 1)$ n'est pas compacte, bien qu'étant fermée et bornée. (Théorème de Riesz).
+
+\textbf{Correction Détaillée :}
+Considérons la suite d'éléments $(e_n)_{n \in \mathbb{N}}$ de $E$ formant la base de Hilbert canonique, définie par $e_n = (0, \dots, 0, 1, 0, \dots)$ où le 1 est à la $n$-ième position.
+La norme de chaque $e_n$ est $\|e_n\|_2 = 1$. Donc la suite $(e_n)$ est intégralement contenue dans la boule unité fermée $\bar{B}(0, 1)$.
+Calculons la distance entre deux termes distincts $e_n$ et $e_m$ (pour $n \neq m$) :
+$\|e_n - e_m\|_2^2 = \sum_{k=0}^\infty (e_{n,k} - e_{m,k})^2 = 1^2 + (-1)^2 = 2$.
+Ainsi, pour tous $n \neq m$, $\|e_n - e_m\|_2 = \sqrt{2}$.
+Supposons par l'absurde que $\bar{B}(0, 1)$ soit compacte. Alors la suite $(e_n)$ admettrait une sous-suite convergente $(e_{\phi(k)})_{k \in \mathbb{N}}$ convergeant vers un certain $l \in E$.
+Si une suite converge, c'est une suite de Cauchy. Il devrait donc exister un rang $K$ tel que pour tous $p, q > K$, $\|e_{\phi(p)} - e_{\phi(q)}\|_2 < \frac{1}{2}$.
+Mais pour $p \neq q$, l'injectivité stricte de l'extraction $\phi$ assure que $\phi(p) \neq \phi(q)$. Ainsi, la distance est invariablement $\|e_{\phi(p)} - e_{\phi(q)}\|_2 = \sqrt{2} \approx 1.414$, ce qui est strictement supérieur à $\frac{1}{2}$.
+Ceci est une contradiction flagrante avec le fait d'être une suite de Cauchy. La suite $(e_n)$ ne possède donc aucune sous-suite convergente. La boule unité fermée n'est pas séquentiellement compacte.
+
+\subsection*{Exercice 9 : Compacité et valeurs d'adhérence \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :} Soit $X$ un espace métrique compact. Démontrer qu'une suite $(x_n)_{n \in \mathbb{N}}$ d'éléments de $X$ converge si et seulement si elle possède une unique valeur d'adhérence.
+
+\textbf{Correction Détaillée :}
+$(\implies)$ Si $(x_n)$ converge vers $l \in X$, alors toute sous-suite converge également vers $l$. L'unique valeur d'adhérence est donc $l$. Ceci est vrai dans tout espace topologique séparé.
+$(\impliedby)$ C'est ici qu'intervient la compacité. Supposons que $(x_n)$ admette une unique valeur d'adhérence $l \in X$. Montrons que la suite converge vers $l$.
+Raisonnons par l'absurde en supposant que la suite ne converge pas vers $l$.
+Cela signifie qu'il existe un voisinage ouvert $V$ de $l$ et une sous-suite $(x_{\phi(n)})$ telle que, pour tout $n$, $x_{\phi(n)} \notin V$.
+Considérons cette sous-suite $(x_{\phi(n)})$ évoluant dans le fermé $F = X \setminus V$.
+Le fermé $F$ est un sous-espace fermé du compact $X$, il est donc lui-même compact.
+La suite $(x_{\phi(n)})$ évoluant dans le compact $F$, elle admet (par compacité séquentielle) une sous-suite convergente vers une limite $l' \in F$.
+Cette double extraction de sous-suite est toujours une sous-suite de la suite originelle $(x_n)$.
+Donc la limite $l'$ est une valeur d'adhérence de la suite initiale $(x_n)$.
+Or, par construction, $l' \in F = X \setminus V$, et comme $l \in V$, on a nécessairement $l' \neq l$.
+Nous avons ainsi trouvé une seconde valeur d'adhérence $l'$ distincte de $l$, ce qui contredit l'hypothèse de l'unicité de la valeur d'adhérence.
+L'hypothèse que la suite ne convergeait pas vers $l$ est donc fausse. La suite converge bien vers $l$.
+
+\subsection*{Exercice 10 : Lemme du tube \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :} Soient $X$ et $Y$ deux espaces topologiques, avec $Y$ compact. Soit $x_0 \in X$. Démontrer le lemme du tube : si $N$ est un ouvert de l'espace produit $X \times Y$ contenant la "tranche" $\{x_0\} \times Y$, alors il existe un voisinage ouvert $U$ de $x_0$ dans $X$ tel que le "tube" $U \times Y$ soit entièrement contenu dans $N$.
+
+\textbf{Correction Détaillée :}
+Pour chaque point $y \in Y$, le point $(x_0, y)$ appartient à $N$.
+Comme $N$ est ouvert dans la topologie produit, par définition de la base d'ouverts produits, il existe un ouvert $U_y$ de $X$ contenant $x_0$ et un ouvert $V_y$ de $Y$ contenant $y$ tels que le pavé $U_y \times V_y \subset N$.
+La famille $(V_y)_{y \in Y}$ recouvre l'espace entier $Y$, puisque pour chaque $y$, $y \in V_y$.
+L'espace $Y$ étant compact, on peut en extraire un sous-recouvrement fini : il existe un sous-ensemble fini $\{y_1, y_2, \dots, y_n\} \subset Y$ tel que $Y = \bigcup_{i=1}^n V_{y_i}$.
+Considérons les voisinages correspondants de $x_0$ sur l'axe des $X$, soient $U_{y_1}, U_{y_2}, \dots, U_{y_n}$.
+Posons $U = \bigcap_{i=1}^n U_{y_i}$.
+L'ensemble $U$ est une intersection d'un nombre \textit{fini} d'ouverts de $X$ (c'est ici qu'intervient fondamentalement la finitude induite par la compacité), il est donc lui-même un ouvert de $X$. De plus, $x_0 \in U$.
+Considérons maintenant un point arbitraire $(x, y) \in U \times Y$.
+Puisque $(V_{y_i})$ recouvre $Y$, il existe un indice $k \in \{1, \dots, n\}$ tel que $y \in V_{y_k}$.
+D'autre part, $x \in U$, donc par définition de l'intersection, $x \in U_{y_k}$.
+Ainsi, le couple $(x, y)$ appartient au pavé $U_{y_k} \times V_{y_k}$.
+Or, nous avions choisi ces pavés de sorte que $U_{y_k} \times V_{y_k} \subset N$.
+Par conséquent, $(x, y) \in N$.
+Ceci étant vrai pour tout $(x, y)$ dans $U \times Y$, on a bien établi l'inclusion du tube : $U \times Y \subset N$.
+
+
+
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Algorithme d'extraction de sous-suites de Bolzano-Weierstrass}
+
+\begin{lstlisting}
+def generate_sequence(n_terms: int) -> list:
+    # Suite bornée oscillante : x_n = sin(n)
+    import math
+    return [math.sin(n) for n in range(n_terms)]
+
+def extract_convergent_subsequence(seq: list, tolerance: float = 0.05) -> list:
+    # Recherche naïve d'une sous-suite de Cauchy
+    # Complexité élevée, but purement didactique
+    subsequence = []
+    indices = []
+
+    if not seq:
+        return subsequence
+
+    subsequence.append(seq[0])
+    indices.append(0)
+    current_val = seq[0]
+
+    for i in range(1, len(seq)):
+        # Si la valeur est proche du premier terme, on l'ajoute
+        if abs(seq[i] - current_val) < tolerance:
+            subsequence.append(seq[i])
+            indices.append(i)
+            # Raffinement de la cible (moyenne glissante simple)
+            current_val = sum(subsequence) / len(subsequence)
+            tolerance *= 0.95 # On exige d'être de plus en plus proche
+
+    return subsequence
+
+seq = generate_sequence(1000)
+sub = extract_convergent_subsequence(seq)
+print("Nombre de termes extraits:", len(sub))
+if len(sub) > 1:
+    diff = abs(sub[-1] - sub[-2])
+    print("Difference entre les deux derniers termes:", diff)
+    assert diff < 0.1, "La sous-suite ne converge pas assez vite"
+\end{lstlisting}
+
+\subsection*{TP 2 : Calcul de la distance au bord (Lemme de Lebesgue)}
+
+\begin{lstlisting}
+def distance_point_set(point: float, subset: list) -> float:
+    # Distance euclidienne minimale 1D
+    return min(abs(point - x) for x in subset)
+
+def compute_lebesgue_number(space: list, covers: list) -> float:
+    # covers est une liste d'ouverts, chaque ouvert modélisé par une liste de points
+    min_dist = float('inf')
+
+    for point in space:
+        # Distance du point au bord de son ouvert "le plus protecteur"
+        point_max_radius = 0
+
+        for cover in covers:
+            if point in cover:
+                # Calcul brut de la distance au bord (complémentaire)
+                complement = [p for p in space if p not in cover]
+                if not complement:
+                    radius = float('inf')
+                else:
+                    radius = distance_point_set(point, complement)
+
+                point_max_radius = max(point_max_radius, radius)
+
+        # Le nombre de lebesgue est l'infimum sur l'espace compact
+        min_dist = min(min_dist, point_max_radius)
+
+    return min_dist
+
+# Espace discret modélisant [0, 1]
+space = [x/100 for x in range(101)]
+cover1 = [x/100 for x in range(60)] # [0, 0.59]
+cover2 = [x/100 for x in range(40, 101)] # [0.4, 1]
+covers = [cover1, cover2]
+
+lebesgue_nb = compute_lebesgue_number(space, covers)
+print("Nombre de Lebesgue approche :", lebesgue_nb)
+assert lebesgue_nb > 0, "Le nombre de Lebesgue sur un compact discret fini doit etre strictement positif"
+\end{lstlisting}
+
+\subsection*{TP 3 : Contre-exemple de compacité en dimension infinie}
+
+\begin{lstlisting}
+def compute_distance_l2(x: list, y: list) -> float:
+    import math
+    return math.sqrt(sum((a - b)**2 for a, b in zip(x, y)))
+
+def generate_canonical_basis_vector(dimension: int, index: int) -> list:
+    vector = [0.0] * dimension
+    vector[index] = 1.0
+    return vector
+
+# Troncature de l'espace hilbertien l2 en dimension N finie mais grande
+N = 100
+basis = [generate_canonical_basis_vector(N, i) for i in range(N)]
+
+def check_compactness_hypothesis(sequence: list) -> float:
+    min_dist = float('inf')
+    # Recherche de la plus petite distance entre deux vecteurs distincts
+    for i in range(len(sequence)):
+        for j in range(i + 1, len(sequence)):
+            dist = compute_distance_l2(sequence[i], sequence[j])
+            min_dist = min(min_dist, dist)
+    return min_dist
+
+min_pairwise_distance = check_compactness_hypothesis(basis)
+import math
+print("Distance minimale entre deux points de la base :", min_pairwise_distance)
+# La distance théorique est sqrt(2) ~ 1.414. Il est donc impossible d'extraire une suite de Cauchy
+assert abs(min_pairwise_distance - math.sqrt(2)) < 1e-6, "Erreur dans le calcul normique"
+\end{lstlisting}
+
+\subsection*{TP 4 : Intersection décroissante de fermés}
+
+\begin{lstlisting}
+def generate_nested_intervals(n_max: int) -> list:
+    # F_n = [0, 1/n]
+    return [(0.0, 1.0/n) for n in range(1, n_max + 1)]
+
+def find_intersection_point(intervals: list) -> float:
+    # L'intersection de [a_n, b_n] est [sup(a_n), inf(b_n)]
+    lower_bound = max(a for a, b in intervals)
+    upper_bound = min(b for a, b in intervals)
+
+    assert lower_bound <= upper_bound, "L'intersection est vide !"
+    return lower_bound
+
+nested = generate_nested_intervals(1000)
+intersection_pt = find_intersection_point(nested)
+print("Un point appartenant a l'intersection globale :", intersection_pt)
+assert intersection_pt == 0.0, "L'intersection d'une telle suite de compacts est le singleton {0}"
+\end{lstlisting}
+
+\subsection*{TP 5 : Heuristique de recouvrement par des boules (Précompacité)}
+
+\begin{lstlisting}
+def distance_2d(p1: tuple, p2: tuple) -> float:
+    return ((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)**0.5
+
+def greedy_cover(points: list, radius: float) -> list:
+    centers = []
+    uncovered = set(points)
+
+    while uncovered:
+        # Prendre arbitrairement un point non couvert comme nouveau centre
+        new_center = uncovered.pop()
+        centers.append(new_center)
+
+        # Eliminer tous les points couverts par cette nouvelle boule
+        covered = {p for p in uncovered if distance_2d(p, new_center) <= radius}
+        uncovered -= covered
+
+    return centers
+
+# Generer un "compact" discret 2D (une grille dans [0,1]x[0,1])
+resolution = 10
+grid = [(x/resolution, y/resolution) for x in range(resolution+1) for y in range(resolution+1)]
+
+radius = 0.3
+centers = greedy_cover(grid, radius)
+print(f"Nombre de boules de rayon {radius} necessaires :", len(centers))
+assert len(centers) < len(grid), "Le recouvrement devrait compresser l'information."
+assert len(centers) > 0, "L'espace n'est pas vide."
+\end{lstlisting}
+
+
+\end{document}
