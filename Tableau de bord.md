@@ -63,7 +63,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-52/Jalon-52.md|Jalon 52 : Applications continues entre espaces topologiques et définition fine des homéomorphismes.]] : Applications continues entre espaces topologiques et définition fine des homéomorphismes. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-53/Jalon-53.md|Jalon 53 : Axiomes de séparation]] : Axiomes de séparation (notamment les espaces de Hausdorff). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-54/Jalon-54.md|Jalon 54 : Compacité générale]] : Compacité générale (propriété de Borel-Lebesgue) et démonstration du théorème de Tychonoff pour les produits finis. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [ ] [[jalon-55/Jalon 55 (Connexité).md|Jalon 55 : Connexité]] : Connexité, connexité par arcs et étude des composantes connexes.
+- [x] [[jalon-55/Jalon-55.md|Jalon 55 : Connexité]] : Connexité, connexité par arcs et étude des composantes connexes. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-56/Jalon 56 (Espaces métriques complets).md|Jalon 56 : Espaces métriques complets]] : Espaces métriques complets, suites de Cauchy et théorème de prolongement des applications continues.
 - [ ] [[jalon-57/Jalon 57 (Théorème du point fixe de Banach).md|Jalon 57 : Théorème du point fixe de Banach]] : Théorème du point fixe de Banach (contractions) et application à l'existence locale des solutions d'EDP.
 - [ ] [[jalon-58/Jalon 58 (Théorème de Baire).md|Jalon 58 : Théorème de Baire]] : Théorème de Baire (les espaces de l'impossible) et applications aux fonctions continues nulle part dérivables.
