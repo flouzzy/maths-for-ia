@@ -1,0 +1,426 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1
+}
+
+\title{\Huge ESPACES MÉTRIQUES COMPLETS \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+\section{Espaces métriques complets}
+
+\subsection*{Introduction et genèse du concept}
+
+La construction de la théorie de la convergence nécessite un cadre où les suites qui "devraient" converger le font effectivement. Historiquement, l'insuffisance de l'ensemble des rationnels $\mathbb{Q}$ s'est manifestée lorsque des suites rationnelles s'approchant indéfiniment de $\sqrt{2}$ ne trouvaient aucune limite dans $\mathbb{Q}$. Cette "absence de trou" dans l'espace est le cœur de la complétude.
+
+Une suite dont les termes se rapprochent arbitrairement les uns des autres (suite de Cauchy) possède un comportement intrinsèque de convergence, indépendamment du point limite. Un espace métrique est dit complet si ce comportement intrinsèque garantit l'existence effective d'une limite au sein de cet espace.
+
+\subsection*{Définitions, Théorèmes et Exemples Immédiats}
+
+Soit $(X, d)$ un espace métrique.
+
+\textbf{Définition (Suite de Cauchy) :}
+Une suite $(x_n)_{n \in \mathbb{N}}$ d'éléments de $X$ est dite de Cauchy si, pour tout seuil d'éloignement, les termes de la suite finissent par être tous proches les uns des autres. Formellement :
+$$ \forall \epsilon > 0, \exists N \in \mathbb{N}, \forall p, q \geq N, \quad d(x_p, x_q) < \epsilon $$
+
+\textbf{Définition (Espace Complet) :}
+Un espace métrique $(X, d)$ est complet si toute suite de Cauchy d'éléments de $X$ converge vers un élément de $X$.
+Un espace vectoriel normé complet est appelé espace de Banach. Un espace préhilbertien complet est un espace de Hilbert.
+
+\textbf{Exemple concret immédiat : L'espace $\mathbb{R}$}
+La droite réelle $(\mathbb{R}, |\cdot|)$ est complète. C'est le théorème fondamental de l'analyse réelle, qui découle de l'axiome de la borne supérieure. Ainsi, la suite définie par $x_{n+1} = \frac{1}{2}(x_n + \frac{2}{x_n})$ avec $x_0 = 1$ est de Cauchy et converge vers $\sqrt{2} \in \mathbb{R}$.
+
+\textbf{Exemple concret de non-complétude : L'espace $\mathbb{Q}$}
+L'espace des rationnels $(\mathbb{Q}, |\cdot|)$ n'est pas complet. Reprenons la suite $x_{n+1} = \frac{1}{2}(x_n + \frac{2}{x_n})$. Les termes $(x_n)$ sont tous rationnels. On a $|x_p - x_q| \to 0$ : la suite est de Cauchy. Cependant, elle n'admet aucune limite dans $\mathbb{Q}$ (puisque $\sqrt{2} \notin \mathbb{Q}$).
+
+\textbf{Exemple géométrique : Les sous-espaces de $\mathbb{R}$}
+- L'intervalle fermé $[0, 1]$ est complet (tout sous-espace fermé d'un complet est complet).
+- L'intervalle ouvert $]0, 1[$ n'est pas complet. La suite $x_n = \frac{1}{n}$ est de Cauchy (car $x_n \to 0$ dans $\mathbb{R}$), mais elle ne converge pas dans $]0, 1[$ puisque $0 \notin ]0, 1[$.
+
+\textbf{Illustration géométrique : Complétion d'un espace}
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  % Espaces
+  \draw[thick, blue] (-2,0) -- (-0.1,0);
+  \draw[thick, blue] (0.1,0) -- (2,0);
+  \fill[white] (0,0) circle (0.1);
+  \draw[red, dashed] (0,0) circle (0.1);
+
+  % Suite
+  \fill[black] (-1.5,0) circle (1pt) node[below] {$x_0$};
+  \fill[black] (-0.8,0) circle (1pt) node[below] {$x_1$};
+  \fill[black] (-0.4,0) circle (1pt) node[below] {$x_2$};
+  \fill[black] (-0.2,0) circle (1pt) node[below] {$x_3$};
+
+  % Flèches
+  \draw[->, gray] (-1.4, 0.1) to[bend left=20] (-0.9, 0.1);
+  \draw[->, gray] (-0.7, 0.1) to[bend left=20] (-0.5, 0.1);
+  \draw[->, gray] (-0.3, 0.1) to[bend left=20] (-0.25, 0.1);
+
+  \node[above, text width=6cm, align=center] at (0, 0.5) {Suite de Cauchy dans un espace percé (non complet). La limite "virtuelle" n'appartient pas à l'espace.};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Théorème (Fermé d'un complet) :}
+Soit $(X, d)$ un espace métrique complet et $F$ une partie de $X$.
+Alors $(F, d)$ est complet si et seulement si $F$ est fermée dans $X$.
+
+\textbf{Exemple immédiat :}
+Soit $X = \mathbb{R}$ qui est complet. L'intervalle $F = [0, 1]$ est fermé dans $\mathbb{R}$, il est donc complet. En revanche, l'intervalle $]0, 1]$ n'est pas fermé (le point $0$ est adhérent mais pas dans l'ensemble), donc il n'est pas complet (la suite $1/n$ est de Cauchy mais ne converge pas dans l'ensemble).
+
+\textbf{Théorème de prolongement des applications uniformément continues :}
+Soit $(X, d_X)$ un espace métrique, $A$ une partie dense de $X$. Soit $(Y, d_Y)$ un espace métrique \textbf{complet}. Si $f : A \to Y$ est uniformément continue, alors $f$ admet un unique prolongement continu $\tilde{f} : X \to Y$, et $\tilde{f}$ est uniformément continue.
+
+\textbf{Exemple immédiat :}
+Considérons $X = \mathbb{R}$, $Y = \mathbb{R}$, et $A = \mathbb{Q}$ (qui est dense dans $\mathbb{R}$). Soit $f : \mathbb{Q} \to \mathbb{R}$ définie par $f(x) = \sin(x)$. La fonction $f$ est uniformément continue sur $\mathbb{Q}$ car sa dérivée est bornée par 1, ce qui implique $|f(x) - f(y)| \le |x - y|$. Puisque $\mathbb{R}$ est complet, le théorème garantit qu'il existe un unique prolongement continu $\tilde{f}$ défini sur tout $\mathbb{R}$. Ce prolongement est bien sûr la fonction sinus usuelle sur les réels.
+
+\subsection*{Démonstrations}
+
+\textbf{Démonstration : Un fermé d'un complet est complet}
+1. \textit{Hypothèse :} Soit $(X, d)$ un espace complet et $F \subset X$ un fermé. Montrons que $F$ est complet.
+2. \textit{Initialisation :} Soit $(x_n)_{n \in \mathbb{N}}$ une suite de Cauchy d'éléments de $F$.
+3. \textit{Complétude de l'espace ambiant :} Puisque $(x_n)$ est une suite de Cauchy dans l'espace complet $X$, elle admet une limite $l \in X$.
+4. \textit{Fermeture :} Par caractérisation séquentielle des fermés (les limites de suites de $F$ appartiennent à $F$), puisque $x_n \in F$ pour tout $n$ et $x_n \to l$, alors $l \in F$.
+5. \textit{Conclusion :} Toute suite de Cauchy de $F$ converge vers un élément de $F$. Donc $F$ est complet.
+
+\textbf{Démonstration : Toute suite convergente est de Cauchy}
+1. \textit{Hypothèse :} Soit $(x_n)$ une suite convergeant vers $l \in X$.
+2. \textit{Majoration :} Soit $\epsilon > 0$. Par définition de la limite, il existe $N \in \mathbb{N}$ tel que pour tout $n \geq N$, $d(x_n, l) < \frac{\epsilon}{2}$.
+3. \textit{Inégalité triangulaire :} Pour tout $p, q \geq N$, on a :
+$$ d(x_p, x_q) \leq d(x_p, l) + d(l, x_q) < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon $$
+4. \textit{Conclusion :} La suite est bien de Cauchy.
+
+\subsection*{Applications en Physique, Logique et IA}
+
+\textbf{Intelligence Artificielle et Optimisation :}
+Dans l'entraînement des réseaux de neurones, la descente de gradient génère une suite de paramètres $\theta_n$. La théorie garantit que si cette suite est de Cauchy (la variation des paramètres tend vers zéro), l'espace des paramètres $\mathbb{R}^k$ étant complet, la suite convergera vers un point $\theta^*$ (un minimum local). Sans la complétude, l'algorithme pourrait chercher éternellement un minimum n'existant pas dans l'espace de recherche.
+
+\textbf{Espaces de Hilbert en Machine Learning (RKHS) :}
+Les méthodes à noyaux (Support Vector Machines) opèrent dans des espaces de fonctions appelés RKHS (Reproducing Kernel Hilbert Spaces). La complétude de ces espaces de Hilbert est fondamentale pour garantir l'existence du classifieur optimal (Théorème de représentation).
+
+\textbf{Équations aux Dérivées Partielles (EDP) :}
+En physique (mécanique des fluides, quantique), les solutions des EDP sont cherchées comme limites de suites de fonctions approximantes. La complétude des espaces fonctionnels sous-jacents (espaces de Sobolev $H^s$, espaces $L^p$) est ce qui garantit mathématiquement que la solution existe rigoureusement.
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Complétude et suites de Cauchy (Facile) \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Montrer que l'espace des rationnels $\mathbb{Q}$ muni de la distance usuelle $d(x, y) = |x - y|$ n'est pas complet.
+\textbf{Correction Détaillée :}
+1. Considérons la suite $x_n = \sum_{k=0}^n \frac{1}{k!}$.
+2. On montre que $(x_n)$ est de Cauchy. Soit $p > q$.
+$$|x_p - x_q| = \sum_{k=q+1}^p \frac{1}{k!} \leq \frac{1}{(q+1)!} \sum_{j=0}^{\infty} \frac{1}{2^j} \leq \frac{2}{(q+1)!}$$
+Pour tout $\epsilon > 0$, il existe $N$ tel que pour $q \geq N$, $\frac{2}{(q+1)!} < \epsilon$.
+3. La suite est de Cauchy dans $\mathbb{Q}$.
+4. Or, on sait que $\lim_{n \to \infty} x_n = e \notin \mathbb{Q}$.
+5. Conclusion : on a trouvé une suite de Cauchy dans $\mathbb{Q}$ qui n'y admet pas de limite. $\mathbb{Q}$ n'est pas complet.
+
+
+\subsection*{Exercice 2 : Complétude et suites de Cauchy (Facile) \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Montrer que toute suite de Cauchy admettant une valeur d'adhérence est convergente.
+\textbf{Correction Détaillée :}
+1. Soit $(x_n)$ une suite de Cauchy dans $(X,d)$.
+2. Supposons qu'elle admette une valeur d'adhérence $l \in X$. Par définition, il existe une sous-suite $(x_{\phi(n)})$ qui converge vers $l$.
+3. Soit $\epsilon > 0$. Comme $(x_n)$ est de Cauchy, il existe $N_1$ tel que pour $p, q \geq N_1$, $d(x_p, x_q) < \frac{\epsilon}{2}$.
+4. Comme $x_{\phi(n)} \to l$, il existe $N_2$ tel que pour $n \geq N_2$, $d(x_{\phi(n)}, l) < \frac{\epsilon}{2}$.
+5. Soit $N = \max(N_1, N_2)$. Pour $n \geq N$, on choisit $k \geq N$ tel que $\phi(k) \geq N$.
+6. $d(x_n, l) \leq d(x_n, x_{\phi(k)}) + d(x_{\phi(k)}, l)$.
+7. Comme $n, \phi(k) \geq N \geq N_1$, on a $d(x_n, x_{\phi(k)}) < \frac{\epsilon}{2}$. Et comme $k \geq N_2$, $d(x_{\phi(k)}, l) < \frac{\epsilon}{2}$.
+8. Ainsi, $d(x_n, l) < \epsilon$. Donc $(x_n)$ converge vers $l$.
+
+
+\subsection*{Exercice 3 : Complétude et suites de Cauchy (Facile) \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $X$ un espace métrique. Montrer que l'intersection d'une suite décroissante de fermés non vides dont le diamètre tend vers zéro est un singleton si $X$ est complet.
+\textbf{Correction Détaillée :}
+1. Soit $(F_n)$ une suite décroissante de fermés non vides tels que $\text{diam}(F_n) \to 0$.
+2. Pour chaque $n$, choisissons $x_n \in F_n$.
+3. Pour $p \geq q \geq N$, on a $x_p \in F_p \subset F_q$ et $x_q \in F_q$.
+4. Donc $d(x_p, x_q) \leq \text{diam}(F_q)$.
+5. Comme $\text{diam}(F_q) \to 0$, pour tout $\epsilon > 0$, il existe $N$ tel que pour $q \geq N$, $\text{diam}(F_q) < \epsilon$. Ainsi $d(x_p, x_q) < \epsilon$.
+6. La suite $(x_n)$ est de Cauchy.
+7. Comme $X$ est complet, $x_n$ converge vers un point $l$.
+8. Pour tout $k$, les termes de la suite $x_n$ (pour $n \geq k$) appartiennent au fermé $F_k$. La limite $l$ appartient donc à $F_k$.
+9. Ainsi $l \in \cap F_n$.
+10. Unicité : s'il existe un autre point $y \in \cap F_n$, $d(l, y) \leq \text{diam}(F_n) \to 0$, donc $d(l, y) = 0 \implies l=y$. L'intersection est un singleton.
+
+
+\subsection*{Exercice 4 : Complétude et suites de Cauchy (Intermédiaire) \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Soit $(X, d)$ un espace métrique. Montrer que deux suites de Cauchy équivalentes convergent vers la même limite si $X$ est complet.
+
+\textbf{Correction Détaillée :}
+1. Soit $(x_n)$ et $(y_n)$ deux suites de Cauchy telles que $d(x_n, y_n) \to 0$.
+2. Supposons $X$ complet. La suite $(x_n)$ converge vers $l \in X$.
+3. Montrons que $y_n \to l$.
+4. Par l'inégalité triangulaire, $d(y_n, l) \leq d(y_n, x_n) + d(x_n, l)$.
+5. Soit $\epsilon > 0$. Il existe $N_1$ tel que pour $n \ge N_1$, $d(x_n, l) < \epsilon/2$.
+6. Il existe $N_2$ tel que pour $n \ge N_2$, $d(y_n, x_n) < \epsilon/2$.
+7. Pour $n \ge \max(N_1, N_2)$, $d(y_n, l) < \epsilon/2 + \epsilon/2 = \epsilon$.
+8. Ainsi, $(y_n)$ converge bien vers $l$.
+
+
+\subsection*{Exercice 5 : Complétude et suites de Cauchy (Intermédiaire) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Soit $X$ complet et $f: X \to X$ une contraction (constante $k < 1$). Démontrer que $f$ admet au moins un point fixe en construisant une suite.
+
+\textbf{Correction Détaillée :}
+1. Soit $x_0 \in X$ quelconque. Posons la suite récurrente $x_{n+1} = f(x_n)$.
+2. Évaluons la distance entre termes consécutifs : $d(x_{n+1}, x_n) = d(f(x_n), f(x_{n-1})) \leq k d(x_n, x_{n-1})$.
+3. Par récurrence, $d(x_{n+1}, x_n) \leq k^n d(x_1, x_0)$.
+4. Pour $p > q$, $d(x_p, x_q) \leq \sum_{i=q}^{p-1} d(x_{i+1}, x_i) \leq d(x_1, x_0) \sum_{i=q}^{p-1} k^i$.
+5. Majorons par la série géométrique : $d(x_p, x_q) \leq d(x_1, x_0) \frac{k^q}{1-k}$.
+6. Comme $k < 1$, $k^q \to 0$ quand $q \to \infty$. Pour tout $\epsilon > 0$, on peut trouver $N$ tel que pour $q \ge N$, cette quantité est $< \epsilon$.
+7. La suite $(x_n)$ est donc de Cauchy. Comme $X$ est complet, elle converge vers $l \in X$.
+8. Comme $f$ est continue, $l = \lim x_{n+1} = \lim f(x_n) = f(\lim x_n) = f(l)$. Le point $l$ est un point fixe.
+
+
+\subsection*{Exercice 6 : Complétude et suites de Cauchy (Intermédiaire) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Montrer que l'espace $\mathcal{C}([0,1], \mathbb{R})$ muni de la norme $\|\cdot\|_\infty$ est complet.
+
+\textbf{Correction Détaillée :}
+1. Soit $(f_n)$ une suite de Cauchy dans $\mathcal{C}([0,1], \mathbb{R})$.
+2. Pour chaque $x \in [0,1]$, $|f_p(x) - f_q(x)| \leq \|f_p - f_q\|_\infty$.
+3. La suite de réels $(f_n(x))$ est donc de Cauchy dans $\mathbb{R}$. Comme $\mathbb{R}$ est complet, elle converge vers un réel qu'on note $f(x)$.
+4. Montrons la convergence uniforme. Soit $\epsilon > 0$. Il existe $N$ tel que pour $p, q \ge N$ et $x \in [0,1]$, $|f_p(x) - f_q(x)| < \epsilon/2$.
+5. Fixons $p \ge N$ et passons à la limite quand $q \to \infty$ : $|f_p(x) - f(x)| \leq \epsilon/2 < \epsilon$.
+6. Ceci étant vrai pour tout $x$, $\|f_p - f\|_\infty \leq \epsilon/2 < \epsilon$ pour $p \ge N$. La convergence est uniforme.
+7. Par le théorème de transfert de continuité, une limite uniforme de fonctions continues est continue.
+8. Donc $f \in \mathcal{C}([0,1], \mathbb{R})$. L'espace est complet.
+
+
+\subsection*{Exercice 7 : Complétude et suites de Cauchy (Intermédiaire) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Démontrer que l'espace $\ell^\infty(\mathbb{N}, \mathbb{R})$ des suites réelles bornées muni de $\|u\|_\infty = \sup |u_n|$ est complet.
+
+\textbf{Correction Détaillée :}
+1. Soit $(u^{(k)})_{k \in \mathbb{N}}$ une suite de Cauchy dans $\ell^\infty$. Chaque $u^{(k)}$ est une suite $(u_n^{(k)})_{n \in \mathbb{N}}$.
+2. Pour tout $n$, $|u_n^{(p)} - u_n^{(q)}| \leq \|u^{(p)} - u^{(q)}\|_\infty$.
+3. La suite réelle $(u_n^{(k)})_{k}$ est de Cauchy, donc converge dans $\mathbb{R}$ vers une limite $u_n$.
+4. Montrons que la suite $u = (u_n)$ est bornée. Il existe $N$ t.q. $\|u^{(p)} - u^{(N)}\|_\infty \le 1$. Chaque composante $u_n^{(p)}$ est bornée indépendamment de $p \ge N$, donc la limite $u$ l'est. $u \in \ell^\infty$.
+5. On montre ensuite que $\|u^{(p)} - u\|_\infty \to 0$ exactement comme pour la convergence uniforme.
+6. L'espace est donc complet.
+
+
+\subsection*{Exercice 8 : Complétude et suites de Cauchy (Avancé) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Complétion de l'espace des fonctions nulles à l'infini : $C_0(\mathbb{R})$. L'espace des fonctions continues s'annulant à l'infini muni de la norme uniforme est-il complet ?
+
+\textbf{Correction Détaillée :}
+1. Soit $(f_n)$ une suite de Cauchy dans $C_0(\mathbb{R})$ pour la norme $\|\cdot\|_\infty$.
+2. Comme $C_b(\mathbb{R})$ (fonctions continues bornées) est complet, et que $(f_n)$ y est une suite de Cauchy, $(f_n)$ converge uniformément vers une fonction $f \in C_b(\mathbb{R})$.
+3. Il reste à montrer que $f \in C_0(\mathbb{R})$, c'est-à-dire que $\lim_{|x| \to \infty} f(x) = 0$.
+4. Soit $\epsilon > 0$. Par convergence uniforme, il existe $N$ tel que $\|f_N - f\|_\infty < \epsilon/2$.
+5. Comme $f_N \in C_0(\mathbb{R})$, il existe $M > 0$ tel que pour $|x| > M$, $|f_N(x)| < \epsilon/2$.
+6. Pour $|x| > M$, $|f(x)| \leq |f(x) - f_N(x)| + |f_N(x)| < \epsilon/2 + \epsilon/2 = \epsilon$.
+7. Donc $\lim_{|x| \to \infty} f(x) = 0$, d'où $f \in C_0(\mathbb{R})$. $C_0(\mathbb{R})$ est un espace de Banach.
+
+
+\subsection*{Exercice 9 : Complétude et suites de Cauchy (Avancé) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Étude de la complétude de l'espace des fonctions polynomiales muni de la norme infinie.
+
+\textbf{Correction Détaillée :}
+1. Soit $E = \mathbb{R}[X]$ muni de la norme $\|P\| = \sup_{x \in [0,1]} |P(x)|$.
+2. Cet espace n'est pas complet. Pour le démontrer, exhibons une suite de Cauchy qui ne converge pas dans $E$.
+3. Considérons $P_n(X) = \sum_{k=0}^n \frac{X^k}{k!}$.
+4. Pour $p > q$, $\|P_p - P_q\| = \sup_{x \in [0,1]} \sum_{k=q+1}^p \frac{x^k}{k!} \leq \sum_{k=q+1}^p \frac{1}{k!}$.
+5. Comme la série $\sum \frac{1}{k!}$ converge vers $e$, ses restes tendent vers 0. La suite $(P_n)$ est donc de Cauchy pour la norme uniforme.
+6. Si $P_n$ convergeait vers un polynôme $P \in \mathbb{R}[X]$, on aurait $P_n(x) \to P(x)$ pour tout $x \in [0,1]$.
+7. Or $P_n(x) \to e^x$. Donc $P(x) = e^x$ sur $[0,1]$, ce qui est absurde car $e^x$ n'est pas polynomiale (ses dérivées successives ne s'annulent jamais).
+8. L'espace n'est pas complet.
+
+
+\subsection*{Exercice 10 : Complétude et suites de Cauchy (Avancé) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Théorème de Baire (cas particulier). Montrer qu'un espace métrique complet sans point isolé est non dénombrable.
+
+\textbf{Correction Détaillée :}
+1. Raisonnons par l'absurde. Supposons $(X, d)$ complet, sans point isolé (chaque point est limite d'une suite), et dénombrable : $X = \{x_1, x_2, \ldots\}$.
+2. Posons $O_n = X \setminus \{x_n\}$. Chaque $O_n$ est ouvert car $\{x_n\}$ est fermé (dans un espace métrique, les singletons sont fermés).
+3. Chaque $O_n$ est dense dans $X$. En effet, si $O_n$ n'était pas dense, l'intérieur de son complémentaire $\{x_n\}$ serait non vide, donc $\{x_n\}$ serait un ouvert. $x_n$ serait alors un point isolé, contredisant l'hypothèse.
+4. Par le théorème de Baire, une intersection dénombrable d'ouverts denses dans un espace complet est dense.
+5. Donc $\cap_{n=1}^\infty O_n$ est dense dans $X$.
+6. Or, $\cap_{n=1}^\infty O_n = X \setminus \cup_{n=1}^\infty \{x_n\} = X \setminus X = \emptyset$.
+7. C'est une contradiction car l'ensemble vide ne peut pas être dense dans $X$ (si $X \neq \emptyset$).
+8. L'espace $X$ doit donc être non dénombrable.
+
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{Travail Pratique 1 : Simulation algorithmique}
+
+Ce script Python illustre la convergence des suites de Cauchy.
+
+\begin{lstlisting}
+def is_cauchy_empirical(sequence, epsilon_threshold, N_start):
+    # Verifie empiriquement la condition de Cauchy pour les N premiers termes de fin
+    tail = sequence[N_start:]
+    for p in range(len(tail)):
+        for q in range(p + 1, len(tail)):
+            if abs(tail[p] - tail[q]) >= epsilon_threshold:
+                return False
+    return True
+
+# Simulation de la suite x_{n+1 = 0.5 * (x_n + 2 / x_n)}
+seq = [1.0]
+for _ in range(50):
+    seq.append(0.5 * (seq[-1] + 2.0 / seq[-1]))
+
+# Test avec un epsilon strict
+eps = 1e-6
+N = 10
+print(f"Est de Cauchy a partir du rang {N} (eps={eps}) ? ", is_cauchy_empirical(seq, eps, N))
+
+# Affichage des derniers termes
+print("Derniers termes:", seq[-5:])
+\end{lstlisting}
+
+
+\subsection*{Travail Pratique 2 : Calcul itératif avec garantie de Cauchy pour l'équation $x = \cos(x)$}
+
+\begin{lstlisting}
+# On vérifie empiriquement que la suite générée par f(x) = cos(x) est de Cauchy,
+# ce qui implique sa convergence dans R (complet).
+import math
+
+def point_fixe_cos(x0, N_iter, eps=1e-5):
+    seq = [x0]
+    for _ in range(N_iter):
+        seq.append(math.cos(seq[-1]))
+
+    # Check Cauchy property for the last 10 terms
+    tail = seq[-10:]
+    is_cauchy = all(abs(tail[i] - tail[j]) < eps for i in range(len(tail)) for j in range(i+1, len(tail)))
+    return seq[-1], is_cauchy
+
+x_lim, cauchy_status = point_fixe_cos(0.0, 50)
+print("Limite estimee:", x_lim)
+print("La suite est-elle numeriquement de Cauchy ?", cauchy_status)
+
+\end{lstlisting}
+
+
+\subsection*{Travail Pratique 3 : Simulation de la non-complétude de $\mathbb{Q}$ via la méthode de Héron}
+
+\begin{lstlisting}
+# Approximation de sqrt(2) par rationnels.
+# Bien que les termes se rapprochent (différence tend vers 0),
+# l'erreur par rapport à un quelconque rationnel cible ne s'annule jamais.
+from fractions import Fraction
+
+def heron_sqrt2_rationals(n_iter):
+    x = Fraction(1, 1)
+    seq = [x]
+    for _ in range(n_iter):
+        x = Fraction(1, 2) * (x + Fraction(2, 1) / x)
+        seq.append(x)
+    return seq
+
+suite_rationnelle = heron_sqrt2_rationals(7)
+# On calcule la distance entre termes successifs (Cauchy)
+diffs = [abs(suite_rationnelle[i+1] - suite_rationnelle[i]) for i in range(len(suite_rationnelle)-1)]
+print("Differences successives (tendent vers 0) :")
+for d in diffs:
+    print(float(d))
+
+\end{lstlisting}
+
+
+\subsection*{Travail Pratique 4 : Analyse de complétude dans $L^1$: suite approchant une fonction discontinue}
+
+\begin{lstlisting}
+# Simulation numérique de l'intégrale L1 d'une suite de fonctions
+# s'approchant de la fonction signe (discontinue).
+def f_n(x, n):
+    if x < -1.0/n:
+        return -1.0
+    elif x > 1.0/n:
+        return 1.0
+    else:
+        return x * n
+
+def dist_L1(f1_params, f2_params, num_points=1000):
+    n1, n2 = f1_params, f2_params
+    dx = 2.0 / num_points
+    integral = 0.0
+    for i in range(num_points):
+        x = -1.0 + i * dx
+        integral += abs(f_n(x, n1) - f_n(x, n2)) * dx
+    return integral
+
+# On vérifie que la suite est de Cauchy dans L1
+print("Distance L1 entre f_10 et f_20:", dist_L1(10, 20))
+print("Distance L1 entre f_100 et f_200:", dist_L1(100, 200))
+
+\end{lstlisting}
+
+
+\subsection*{Travail Pratique 5 : Application en IA : Descente de gradient comme suite de Cauchy}
+
+\begin{lstlisting}
+# En IA, si le pas d'apprentissage (learning rate) décroît convenablement,
+# la suite des poids générée par la descente de gradient est de Cauchy.
+def loss_derivative(w):
+    return 2 * (w - 3.0)  # Minimum at w = 3.0
+
+def gradient_descent(w_init, epochs):
+    w = w_init
+    weights = [w]
+    for t in range(1, epochs + 1):
+        lr = 1.0 / (t + 1)  # Décroissance du pas
+        w = w - lr * loss_derivative(w)
+        weights.append(w)
+    return weights
+
+traj = gradient_descent(0.0, 50)
+dist_cauchy = [abs(traj[i] - traj[-1]) for i in range(len(traj)-10, len(traj))]
+print("Distances des derniers termes a la limite :", dist_cauchy)
+
+\end{lstlisting}
+
+
+
+
+\end{document}
