@@ -65,7 +65,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-54/Jalon-54.md|Jalon 54 : Compacité générale]] : Compacité générale (propriété de Borel-Lebesgue) et démonstration du théorème de Tychonoff pour les produits finis. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-55/Jalon-55.md|Jalon 55 : Connexité]] : Connexité, connexité par arcs et étude des composantes connexes. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-56/Jalon-56.md|Jalon 56 : Espaces métriques complets]] : Espaces métriques complets, suites de Cauchy et théorème de prolongement des applications continues. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [ ] [[jalon-57/Jalon 57 (Théorème du point fixe de Banach).md|Jalon 57 : Théorème du point fixe de Banach]] : Théorème du point fixe de Banach (contractions) et application à l'existence locale des solutions d'EDP.
+- [x] [[jalon-57/Jalon-57.md|Jalon 57 : Théorème du point fixe de Banach]] : Théorème du point fixe de Banach (contractions) et application à l'existence locale des solutions d'EDP. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-58/Jalon 58 (Théorème de Baire).md|Jalon 58 : Théorème de Baire]] : Théorème de Baire (les espaces de l'impossible) et applications aux fonctions continues nulle part dérivables.
 - [ ] [[jalon-59/Jalon 59 (Topologie des espaces de fonctions).md|Jalon 59 : Topologie des espaces de fonctions]] : Topologie des espaces de fonctions, convergence compacte et théorème d'Arzelà-Ascoli.
 - [ ] [[jalon-60/Jalon 60 (Livrable IA).md|Jalon 60 : Livrable IA]] : Livrable IA T5 : Preuve du théorème d'approximation universelle des réseaux de neurones (utilisation de la topologie de la convergence uniforme sur les compacts).
@@ -165,6 +165,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
+- [2026-08-12] : [Upsert/Création] du Jalon 57 - Théorème du point fixe de Banach. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-05] : [Upsert/Création] du Jalon 48 - Livrable IA T4 : Formalisation mathématique de la Rétropropagation. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-04] : [Upsert/Création] du Jalon 46 - Matrice jacobienne. Status: Terminé.
 - [2026-08-04] : [Upsert/Création] du Jalon 45 - Différentiabilité. Status: Terminé.
