@@ -157,7 +157,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 55](jalon-55/Jalon-55.md)** : Connexité, connexité par arcs et étude des composantes connexes.
 - **[Jalon 56](jalon-56/Jalon-56.md)** : Espaces métriques complets, suites de Cauchy et théorème de prolongement des applications continues. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 57](jalon-57/Jalon-57.md)** : Théorème du point fixe de Banach (contractions) et application à l'existence locale des solutions d'EDP. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 58](jalon-58/Jalon%2058%20%28Th%C3%A9or%C3%A8me%20de%20Baire%29.md)** : Théorème de Baire (les espaces de l'impossible) et applications aux fonctions continues nulle part dérivables.
+- **[Jalon 58](jalon-58/Jalon-58.md)** : Théorème de Baire (les espaces de l'impossible) et applications aux fonctions continues nulle part dérivables.
 - **[Jalon 59](jalon-59/Jalon%2059%20%28Topologie%20des%20espaces%20de%20fonctions%29.md)** : Topologie des espaces de fonctions, convergence compacte et théorème d'Arzelà-Ascoli.
 - **[Jalon 60](jalon-60/Jalon%2060%20%28Livrable%20IA%29.md)** : Livrable IA T5 : Preuve du théorème d'approximation universelle des réseaux de neurones (utilisation de la topologie de la convergence uniforme sur les compacts).
 
@@ -417,6 +417,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
+- [2026-08-12] : [Upsert/Création] du Jalon 58 - Théorème de Baire. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-11] : [Upsert/Création] du Jalon 56 - Espaces métriques complets. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 
 - [2026-08-10] : [Upsert/Création] du Jalon 52 - Applications continues entre espaces topologiques et définition fine des homéomorphismes. Status: Terminé.

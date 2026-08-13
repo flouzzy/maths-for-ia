@@ -14,9 +14,9 @@ next: "[[Jalon 59 (Topologie des espaces de fonctions).md]]"
 
 ## 1. Présentation du concept clé
 
-- **La Métaphore :** Imaginez que vous ayez une grande feuille de papier (un espace complet). Vous décidez de la percer avec une épingle. Un trou d'épingle, c'est minuscule, ça ne "remplit" rien (c'est nulle part dense). Maintenant, imaginez que vous perciez des millions, des milliards, voire une infinité (dénombrable) de trous. Le **Théorème de Baire** dit que, peu importe le nombre de trous que vous faites, il restera toujours de la "matière" sur votre feuille. Vous ne pourrez jamais faire disparaître toute la feuille en ne faisant que des trous isolés. La feuille est "trop solide" pour être détruite par des poussières de vide.
-- **Le "Pourquoi on a inventé ça" :** Parfois, on veut prouver qu'un objet bizarre existe (ex: une fonction qui est continue partout mais qui n'a de pente nulle part). Au lieu de construire cet objet à la main, on prouve que l'ensemble des objets "normaux" est tout petit, et que la "grande majorité" des objets de l'espace sont bizarres. Baire est l'outil qui permet de dire : "ce que vous croyez impossible est en fait le cas général".
-- **Visualisation :** Un fromage de Gruyère infini. Même avec une infinité de trous, il reste toujours du fromage entre les trous.
+- **Introduction Conceptuelle :** Imaginez que vous ayez une grande feuille de papier (un espace complet). Vous décidez de la percer avec une épingle. Un trou d'épingle, c'est minuscule, ça ne "remplit" rien (c'est nulle part dense). Maintenant, imaginez que vous perciez des millions, des milliards, voire une infinité (dénombrable) de trous. Le **Théorème de Baire** dit que, peu importe le nombre de trous que vous faites, il restera toujours de la "matière" sur votre feuille. Vous ne pourrez jamais faire disparaître toute la feuille en ne faisant que des trous isolés. La feuille est "trop solide" pour être détruite par des poussières de vide.
+- **Génèse Mathématique :** Parfois, on veut prouver qu'un objet bizarre existe (ex: une fonction qui est continue partout mais qui n'a de pente nulle part). Au lieu de construire cet objet à la main, on prouve que l'ensemble des objets "normaux" est tout petit, et que la "grande majorité" des objets de l'espace sont bizarres. Baire est l'outil qui permet de dire : "ce que vous croyez impossible est en fait le cas général".
+- **Illustration Géométrique :** Un fromage de Gruyère infini. Même avec une infinité de trous, il reste toujours du fromage entre les trous.
 
 ## 2. Formalisation
 
@@ -36,6 +36,33 @@ Soit $(X, d)$ un espace métrique.
 
 > **Théorème de Baire (Version 2 - Ouverts denses) :**
 > Dans un espace métrique complet, toute intersection dénombrable d'ouverts denses est dense.
+
+
+### C. Exemples Numériques et Géométriques Immédiats
+
+1. **La droite réelle :** $\mathbb{R}$ est complet. Les singletons $\{x\}$ sont d'intérieur vide. Baire implique que $\mathbb{R}$ est indénombrable, sinon $\mathbb{R} = \bigcup_{x\in \mathbb{R}} \{x\}$ contredirait le théorème.
+2. **L'espace de Cantor :** Bien que totalement discontinu, il est de Baire (homéomorphe à $\{0,1\}^{\mathbb{N}}$ complet).
+3. **Contre-exemple (non complet) :** L'espace $\mathbb{Q}$ muni de la métrique usuelle n'est pas un espace de Baire. En effet, $\mathbb{Q} = \bigcup_{q\in \mathbb{Q}} \{q\}$, une union dénombrable de fermés d'intérieur vide, d'intérieur non vide dans $\mathbb{Q}$.
+
+\begin{tikzpicture}[scale=1.5]
+  % Espace de base
+  \draw[thick] (0,0) ellipse (4cm and 1.5cm);
+  \node at (0, -1.8) {Espace complet $X$};
+
+  % Ouverts denses
+  \draw[dashed, blue, thick] (-2,0) ellipse (2cm and 1cm);
+  \draw[dashed, red, thick] (1.5,0.2) ellipse (2.2cm and 1cm);
+  \draw[dashed, green!60!black, thick] (0,0.5) ellipse (3cm and 0.8cm);
+
+  % Intersection
+  \fill[gray, opacity=0.3] (-0.5,0.3) ellipse (0.8cm and 0.4cm);
+  \node at (-0.5, 0.3) {$D = \bigcap U_n$};
+
+  \node[blue] at (-3, 0) {$U_1$};
+  \node[red] at (3, 0.5) {$U_2$};
+  \node[green!60!black] at (0, 1) {$U_3$};
+\end{tikzpicture}
+
 
 ## 3. Démonstrations
 
@@ -66,7 +93,7 @@ C'est l'application la plus célèbre de Baire (via le théorème de Banach-Mazu
 
 ## 5. Application en Intelligence Artificielle
 
-- **Le Pont Théorique :** En IA, on s'intéresse à la **Généricité** des propriétés des réseaux de neurones. Une propriété est générique si elle est vraie sur un ouvert dense de l'espace des modèles.
+- **Lien avec la théorie de l'Apprentissage :** En IA, on s'intéresse à la **Généricité** des propriétés des réseaux de neurones. Une propriété est générique si elle est vraie sur un ouvert dense de l'espace des modèles.
 - **Example Concret :**
     - **Initialisation des poids :** Dans l'étude des points selles des fonctions de perte, on prouve que pour "presque toutes" les initialisations (un ensemble dense au sens de Baire ou de la mesure de Lebesgue), la descente de gradient va éviter les points selles instables.
     - **Capacité de mémorisation :** On montre que pour un réseau assez large, la propriété de pouvoir mémoriser parfaitement $N$ points de données est générique : si vous prenez un réseau au hasard, il aura cette capacité avec une probabilité de 1, car l'ensemble des "mauvais" réseaux est de "première catégorie" (maigre).
