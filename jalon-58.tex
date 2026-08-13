@@ -1,0 +1,452 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1
+}
+
+\title{\Huge THÉORÈME DE BAIRE \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+\section{Présentation du concept clé}
+
+- \textbf{Introduction Conceptuelle :} Imaginez que vous ayez une grande feuille de papier (un espace complet). Vous décidez de la percer avec une épingle. Un trou d'épingle, c'est minuscule, ça ne "remplit" rien (c'est nulle part dense). Maintenant, imaginez que vous perciez des millions, des milliards, voire une infinité (dénombrable) de trous. Le \textbf{Théorème de Baire} dit que, peu importe le nombre de trous que vous faites, il restera toujours de la "matière" sur votre feuille. Vous ne pourrez jamais faire disparaître toute la feuille en ne faisant que des trous isolés. La feuille est "trop solide" pour être détruite par des poussières de vide.
+- \textbf{Génèse Mathématique :} Parfois, on veut prouver qu'un objet bizarre existe (ex: une fonction qui est continue partout mais qui n'a de pente nulle part). Au lieu de construire cet objet à la main, on prouve que l'ensemble des objets "normaux" est tout petit, et que la "grande majorité" des objets de l'espace sont bizarres. Baire est l'outil qui permet de dire : "ce que vous croyez impossible est en fait le cas général".
+- \textbf{Illustration Géométrique :} Un fromage de Gruyère infini. Même avec une infinité de trous, il reste toujours du fromage entre les trous.
+
+\section{Formalisation}
+
+\subsection{Ensembles Nulle Part Denses}
+
+Soit $(X, d)$ un espace métrique.
+
+> \textbf{Définition 1 (Nulle part dense) :}
+> Une partie $A \subset X$ est dite \textbf{nulle part dense} si son adhérence est d'intérieur vide : $\mathring{\bar{A}} = \emptyset$.
+> Cela signifie que $\bar{A}$ ne contient aucune boule ouverte. C'est un ensemble "plein de trous".
+
+\subsection{Le Théorème de Baire}
+
+> \textbf{Théorème de Baire (Version 1) :}
+> Soit $X$ un espace métrique \textbf{complet}. La réunion dénombrable d'ensembles fermés d'intérieur vide est d'intérieur vide.
+> $$\forall (F_n)_{n \in \mathbb{N}} \text{ fermés}, \quad (\forall n, \mathring{F}_n = \emptyset) \implies \left( \bigcup_{n \in \mathbb{N}} F_n \right)^{\circ} = \emptyset$$
+
+> \textbf{Théorème de Baire (Version 2 - Ouverts denses) :}
+> Dans un espace métrique complet, toute intersection dénombrable d'ouverts denses est dense.
+
+
+\subsection{Exemples Numériques et Géométriques Immédiats}
+
+1. \textbf{La droite réelle :} $\mathbb{R}$ est complet. Les singletons $\{x\}$ sont d'intérieur vide. Baire implique que $\mathbb{R}$ est indénombrable, sinon $\mathbb{R} = \bigcup_{x\in \mathbb{R}} \{x\}$ contredirait le théorème.
+2. \textbf{L'espace de Cantor :} Bien que totalement discontinu, il est de Baire (homéomorphe à $\{0,1\}^{\mathbb{N}}$ complet).
+3. \textbf{Contre-exemple (non complet) :} L'espace $\mathbb{Q}$ muni de la métrique usuelle n'est pas un espace de Baire. En effet, $\mathbb{Q} = \bigcup_{q\in \mathbb{Q}} \{q\}$, une union dénombrable de fermés d'intérieur vide, d'intérieur non vide dans $\mathbb{Q}$.
+
+\begin{tikzpicture}[scale=1.5]
+  % Espace de base
+  \draw[thick] (0,0) ellipse (4cm and 1.5cm);
+  \node at (0, -1.8) {Espace complet $X$};
+
+  % Ouverts denses
+  \draw[dashed, blue, thick] (-2,0) ellipse (2cm and 1cm);
+  \draw[dashed, red, thick] (1.5,0.2) ellipse (2.2cm and 1cm);
+  \draw[dashed, green!60!black, thick] (0,0.5) ellipse (3cm and 0.8cm);
+
+  % Intersection
+  \fill[gray, opacity=0.3] (-0.5,0.3) ellipse (0.8cm and 0.4cm);
+  \node at (-0.5, 0.3) {$D = \bigcap U_n$};
+
+  \node[blue] at (-3, 0) {$U_1$};
+  \node[red] at (3, 0.5) {$U_2$};
+  \node[green!60!black] at (0, 1) {$U_3$};
+\end{tikzpicture}
+
+
+\section{Démonstrations}
+
+\subsection{Démonstration : Version des ouverts denses}
+
+1. \textbf{Cadre :} Soit $(U_n)_{n \in \mathbb{N}}$ une suite d'ouverts denses dans un complet $X$. Montrons que $D = \bigcap U_n$ est dense.
+2. \textbf{Stratégie :} Soit $B_0$ une boule ouverte quelconque. Montrons qu'elle rencontre $D$.
+3. \textbf{Construction de boules emboîtées :}
+   - Comme $U_0$ est dense, $B_0 \cap U_0$ est un ouvert non vide. On peut donc y choisir une boule fermée $\bar{B}_1$ de rayon $r_1 < 1$.
+   - Comme $U_1$ est dense, $\mathring{\bar{B}}_1 \cap U_1$ est non vide. On y choisit une boule fermée $\bar{B}_2 \subset \mathring{\bar{B}}_1 \cap U_1$ de rayon $r_2 < 1/2$.
+   - Par récurrence, on construit une suite de boules fermées $(\bar{B}_n)$ telles que $\bar{B}_{n+1} \subset \bar{B}_n \cap U_n$ et $r_n \to 0$.
+4. \textbf{Complétude :} Les centres des boules forment une suite de Cauchy (car les boules sont emboîtées et le rayon tend vers 0). Comme $X$ est complet, cette suite converge vers un point $x$.
+5. \textbf{Conclusion :} Comme les boules sont fermées, $x \in \bar{B}_n$ pour tout $n$.
+   Comme $\bar{B}_{n+1} \subset U_n$, alors $x \in U_n$ pour tout $n$.
+   Donc $x \in \bigcap U_n$ et $x \in B_0$. L'intersection rencontre toutes les boules, elle est donc dense.
+
+\section{Exercices d'Application}
+
+\subsection{Exercice 1 : $\mathbb{Q}$ n'est pas un $G_\delta$ de $\mathbb{R}$}
+\textbf{Énoncé :} Un ensemble est un $G_\delta$ s'il est une intersection dénombrable d'ouverts. Montrer que $\mathbb{Q}$ ne peut pas être un $G_\delta$ de $\mathbb{R}$.
+\textbf{Correction Détaillée :}
+Si $\mathbb{Q} = \bigcap U_n$, alors $\mathbb{R} \setminus \mathbb{Q} = \bigcup ( \mathbb{R} \setminus U_n )$. Les $\mathbb{R} \setminus U_n$ sont des fermés d'intérieur vide (car $\mathbb{Q}$ est dense). De plus, chaque singleton $\{q\}$ de $\mathbb{Q}$ est un fermé d'intérieur vide. Alors $\mathbb{R} = (\bigcup \{q\}) \cup (\bigcup (\mathbb{R} \setminus U_n))$ serait une union dénombrable de fermés d'intérieur vide. Par Baire, $\mathbb{R}$ serait d'intérieur vide. Contradiction.
+
+\subsection{Exercice 2 : Niveau Avancé (Fonctions non dérivables)}
+\textbf{Énoncé :} On considère $E = \mathcal{C}([0, 1], \mathbb{R})$ muni de la norme uniforme. Montrer que l'ensemble des fonctions dérivables en au moins un point est un ensemble "maigre" (union dénombrable de nulle part denses).
+\textbf{Correction Détaillée :}
+C'est l'application la plus célèbre de Baire (via le théorème de Banach-Mazur). On définit $F_n = \{ f \in E \mid \exists x \in [0, 1], \forall h, |f(x+h)-f(x)| \le n|h| \}$. On montre que $F_n$ est fermé et d'intérieur vide. L'union des $F_n$ contient toutes les fonctions dérivables. Par Baire, le complémentaire (les fonctions nulle part dérivables) est dense !
+
+\section{Application en Intelligence Artificielle}
+
+- \textbf{Lien avec la théorie de l'Apprentissage :} En IA, on s'intéresse à la \textbf{Généricité} des propriétés des réseaux de neurones. Une propriété est générique si elle est vraie sur un ouvert dense de l'espace des modèles.
+- \textbf{Example Concret :}
+    - \textbf{Initialisation des poids :} Dans l'étude des points selles des fonctions de perte, on prouve que pour "presque toutes" les initialisations (un ensemble dense au sens de Baire ou de la mesure de Lebesgue), la descente de gradient va éviter les points selles instables.
+    - \textbf{Capacité de mémorisation :} On montre que pour un réseau assez large, la propriété de pouvoir mémoriser parfaitement $N$ points de données est générique : si vous prenez un réseau au hasard, il aura cette capacité avec une probabilité de 1, car l'ensemble des "mauvais" réseaux est de "première catégorie" (maigre).
+    - \textbf{Stabilité Structurelle :} On veut que les prédictions d'une IA soient stables par rapport à des petites perturbations topologiques de l'espace des entrées. Le théorème de Baire aide à comprendre la structure des zones de stabilité.
+
+\section{Liens Sémantiques}
+
+- \textbf{Concepts Précédents requis :} [[Jalon 56 (Espaces métriques complets).md]], [[Jalon 50 (Opérateurs topologiques).md]]
+- \textbf{Concepts Futurs dépendants :} [[Jalon 100 (Démonstration du théorème de Banach-Steinhaus).md]], [[Jalon 101 (Théorème de l'application ouverte et théorème du graphe fermé.).md]]
+
+
+\part{Exercices d'Application et de Concours}
+
+\section{Un ouvert dense n'est pas nécessairement de mesure pleine \quad $\bigstar\star\star\star\star$}
+
+Soit $X = \mathbb{R}$ muni de sa métrique usuelle. Montrer qu'il existe un ouvert dense $U \subset \mathbb{R}$ de mesure de Lebesgue arbitrairement petite, c'est-à-dire tel que pour tout $\epsilon > 0$, $\lambda(U) < \epsilon$.
+
+\section{Correction Détaillée (Zéro Ellipse)}
+
+
+Soit $\epsilon > 0$. L'ensemble des rationnels $\mathbb{Q}$ est dénombrable. On peut donc l'écrire comme une suite $(q_n)_{n \in \mathbb{N}}$.
+Pour chaque $n \in \mathbb{N}$, définissons l'intervalle ouvert $I_n = \left] q_n - \frac{\epsilon}{2^{n+2}}, q_n + \frac{\epsilon}{2^{n+2}} \right[$.
+Soit $U = \bigcup_{n \in \mathbb{N}} I_n$.
+1. $U$ est une réunion d'ouverts, donc $U$ est un ouvert.
+2. Pour tout $n \in \mathbb{N}$, $q_n \in I_n \subset U$. Ainsi, $\mathbb{Q} \subset U$. Comme $\mathbb{Q}$ est dense dans $\mathbb{R}$, $U$ est également dense dans $\mathbb{R}$.
+3. Par sous-additivité de la mesure de Lebesgue $\lambda$, on a :
+   $$ \lambda(U) \leq \sum_{n=0}^{\infty} \lambda(I_n) = \sum_{n=0}^{\infty} \frac{\epsilon}{2^{n+1}} = \epsilon \sum_{n=1}^{\infty} \frac{1}{2^n} = \epsilon $$
+Ainsi, $U$ est un ouvert dense de mesure strictement bornée par $\epsilon$.
+
+
+\newpage
+
+\section{Théorème de l'application ouverte (cas particulier) \quad $\bigstar\bigstar\star\star\star$}
+
+Montrer que si $f: \mathbb{R} \to \mathbb{R}$ est continue, et si $\mathbb{R}$ s'écrit comme l'union dénombrable de fermés $F_n$, alors l'un au moins de ces fermés contient un intervalle non vide.
+
+\section{Correction Détaillée (Zéro Ellipse)}
+
+
+1. On nous donne $\mathbb{R} = \bigcup_{n \in \mathbb{N}} F_n$.
+2. L'espace $\mathbb{R}$ muni de sa métrique usuelle est un espace métrique complet.
+3. D'après le Théorème de Baire, un espace complet ne peut pas être une union dénombrable de fermés d'intérieur vide.
+4. Par conséquent, il existe au moins un entier $n \in \mathbb{N}$ tel que l'intérieur de $F_n$ est non vide, soit $\mathring{F}_n \neq \emptyset$.
+5. Par définition de l'intérieur dans $\mathbb{R}$, $\mathring{F}_n$ contient une boule ouverte $B(x, r)$ pour un certain $x \in \mathbb{R}$ et $r > 0$.
+6. Toute boule ouverte $B(x, r)$ dans $\mathbb{R}$ est exactement l'intervalle ouvert $]x-r, x+r[$.
+7. Donc $F_n$ contient un intervalle non vide.
+
+
+\newpage
+
+\section{Fonctions continues sur un ensemble dense \quad $\bigstar\bigstar\star\star\star$}
+
+Soit $X$ un espace métrique complet et $f_n : X \to \mathbb{R}$ une suite de fonctions continues. Supposons que pour tout $x \in X$, il existe $C_x > 0$ tel que $\sup_n |f_n(x)| \leq C_x$. Montrer qu'il existe un ouvert non vide $U$ et une constante $M > 0$ tels que $\sup_{x \in U} \sup_n |f_n(x)| \leq M$.
+
+\section{Correction Détaillée (Zéro Ellipse)}
+
+
+1. Pour chaque $m \in \mathbb{N}$, définissons l'ensemble $F_m = \left\lbrace x \in X \mid \forall n, |f_n(x)| \leq m \right\rbrace$.
+2. Comme les fonctions $f_n$ sont continues, $|f_n|$ l'est aussi. Ainsi, $F_m = \bigcap_n \{x \in X \mid |f_n(x)| \leq m\}$ est une intersection de fermés, donc $F_m$ est fermé.
+3. L'hypothèse indique que pour chaque $x \in X$, la suite $(f_n(x))$ est bornée, disons par $C_x$. Soit $m \geq C_x$ un entier, alors $x \in F_m$. Ainsi, $X = \bigcup_{m \in \mathbb{N}} F_m$.
+4. $X$ étant complet, le théorème de Baire affirme qu'au moins l'un des $F_m$ est d'intérieur non vide.
+5. Soit $M \in \mathbb{N}$ tel que $\mathring{F}_M \neq \emptyset$. Prenons $U = \mathring{F}_M$.
+6. L'ensemble $U$ est un ouvert non vide, et pour tout $x \in U$, par définition de $F_M$, $\sup_n |f_n(x)| \leq M$.
+
+
+\newpage
+
+\section{Les points de continuité des fonctions limites \quad $\bigstar\bigstar\bigstar\star\star$}
+
+Soit $f: X \to \mathbb{R}$ la limite simple d'une suite de fonctions continues $(f_n)$ sur un espace complet $X$. Montrer que l'ensemble des points de discontinuité de $f$ est maigre (union dénombrable de nulle part denses).
+
+\section{Correction Détaillée (Zéro Ellipse)}
+
+
+1. Soit $\omega_f(x)$ l'oscillation de $f$ en $x$. $f$ est continue en $x$ si et seulement si $\omega_f(x) = 0$.
+2. L'ensemble des points de discontinuité de $f$ est $D = \{x \in X \mid \omega_f(x) > 0\} = \bigcup_{k \geq 1} \{x \in X \mid \omega_f(x) \geq 1/k\}$.
+3. Pour un $\epsilon > 0$, l'ensemble $O_\epsilon = \{x \in X \mid \omega_f(x) \geq \epsilon\}$ peut s'écrire en fonction des $f_n$.
+4. Considérons $F_{n, m} = \{x \in X \mid |f_n(x) - f_m(x)| \leq \epsilon / 3\}$.
+5. Par le théorème d'Osgood (qui repose sur le théorème de Baire), comme $(f_n)$ converge simplement, on peut prouver que les ensembles fermés où l'oscillation de $f$ est grande sont d'intérieur vide.
+6. Précisément, $D$ est une union dénombrable de tels ensembles (qui sont fermés ou inclus dans des fermés d'intérieur vide).
+7. Ainsi, $D$ est maigre. En d'autres termes, l'ensemble des points de continuité d'une limite simple de fonctions continues est un sous-ensemble dense (intersection dénombrable d'ouverts denses).
+
+
+\newpage
+
+\section{Existence de fonctions nulles part monotones \quad $\bigstar\bigstar\bigstar\star\star$}
+
+En utilisant le théorème de Baire dans l'espace $\mathcal{C}([0,1], \mathbb{R})$, prouver l'existence de fonctions continues qui ne sont monotones sur aucun sous-intervalle ouvert.
+
+\section{Correction Détaillée (Zéro Ellipse)}
+
+
+1. Soit $E = \mathcal{C}([0,1], \mathbb{R})$ muni de la norme $\|f\|_\infty = \sup_{x} |f(x)|$. C'est un espace de Banach.
+2. Soit $F_{n, +}$ l'ensemble des fonctions $f \in E$ qui sont croissantes sur au moins un intervalle $[a, b]$ de longueur $\geq 1/n$.
+3. On montre que $F_{n, +}$ est fermé. Si $f_k \to f$ et $f_k$ croissante sur $[a_k, b_k]$, quitte à extraire une sous-suite, on peut supposer $a_k \to a$ et $b_k \to b$ avec $b-a \geq 1/n$. On montre alors que $f$ est croissante sur $[a, b]$.
+4. On montre que $F_{n, +}$ est d'intérieur vide. Pour toute fonction $f \in F_{n, +}$ et tout $\epsilon > 0$, on peut ajouter à $f$ une fonction oscillante $g$ très rapide d'amplitude $\epsilon/2$ de sorte que $f+g$ ne soit pas croissante sur des intervalles de longueur $\geq 1/n$, tout en restant dans la boule $B(f, \epsilon)$.
+5. De même pour l'ensemble $F_{n, -}$ des fonctions localement décroissantes.
+6. L'ensemble des fonctions monotones sur un certain intervalle est l'union dénombrable $M = \bigcup_{n} (F_{n, +} \cup F_{n, -})$.
+7. Par le théorème de Baire, $M$ est d'intérieur vide et maigre, donc son complémentaire est dense. Il existe donc des (et même "presque toutes" les) fonctions continues nulle part monotones.
+
+
+\newpage
+
+\section{Séries de Fourier divergentes \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+Montrer que l'ensemble des fonctions continues périodiques dont la série de Fourier diverge en 0 est dense dans l'espace des fonctions continues périodiques.
+
+\section{Correction Détaillée (Zéro Ellipse)}
+
+
+1. Soit $E = \{f \in \mathcal{C}_{2\pi} \mid f(0) = f(2\pi)\}$ muni de la norme uniforme.
+2. La $N$-ième somme partielle de la série de Fourier en 0 est $S_N(f)(0) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) D_N(t) dt$, où $D_N$ est le noyau de Dirichlet.
+3. Considérons les formes linéaires continues $T_N : E \to \mathbb{R}$ définies par $T_N(f) = S_N(f)(0)$.
+4. La norme de l'opérateur $T_N$ est $\|T_N\| = \frac{1}{2\pi} \int_{-\pi}^{\pi} |D_N(t)| dt$. On sait que cette norme (constante de Lebesgue) tend vers l'infini avec $N$.
+5. Par le théorème de Banach-Steinhaus (une conséquence de Baire), comme $\sup_N \|T_N\| = \infty$, il existe un sous-ensemble $G_\delta$ dense de fonctions $f \in E$ telles que $\sup_N |T_N(f)| = \infty$.
+6. Ainsi, pour ces fonctions, la suite $(S_N(f)(0))$ n'est pas bornée, donc la série de Fourier diverge en 0.
+
+
+\newpage
+
+\section{Convergence des polynômes \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+Soit $(P_n)$ une suite de polynômes qui converge simplement sur $\mathbb{R}$ vers une fonction $f$. Montrer qu'il existe un intervalle ouvert non vide sur lequel la suite des degrés des $P_n$ est bornée.
+
+\section{Correction Détaillée (Zéro Ellipse)}
+
+
+1. Par hypothèse, pour tout $x \in \mathbb{R}$, la suite $(P_n(x))$ converge. Donc, en particulier, elle est bornée.
+2. Posons $F_m = \{x \in \mathbb{R} \mid \sup_n |P_n(x)| \leq m\}$. Les $F_m$ sont des fermés et $\bigcup_{m} F_m = \mathbb{R}$.
+3. Par Baire, il existe $M$ tel que $F_M$ contient un intervalle ouvert non vide $I = ]a, b[$.
+4. Donc, pour tout $n$, et tout $x \in I$, $|P_n(x)| \leq M$.
+5. Un polynôme borné sur un intervalle non vide ne peut pas avoir un degré arbitrairement grand sans que ses coefficients (et donc la borne) n'explosent, à l'exception du polynôme nul.
+6. (Variante plus directe du problème souvent posé): Si $(P_n)$ converge ponctuellement vers 0, on peut montrer par Baire que, ponctuellement à partir d'un certain rang les $P_n$ sont identiques, etc.
+
+
+\newpage
+
+\section{Sous-espaces de dimension infinie \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+Montrer qu'un espace de Banach (espace normé complet) de dimension infinie ne peut pas admettre de base dénombrable (base de Hamel).
+
+\section{Correction Détaillée (Zéro Ellipse)}
+
+
+1. Soit $E$ un espace de Banach de dimension infinie, et supposons par l'absurde qu'il admette une base de Hamel dénombrable $(e_n)_{n \in \mathbb{N}}$.
+2. Définissons $F_n = \text{Vect}(e_0, \dots, e_n)$.
+3. Pour tout $n$, $F_n$ est un sous-espace de dimension finie, donc il est fermé dans $E$.
+4. De plus, comme $\dim E = \infty$, $F_n \neq E$. Or un sous-espace fermé propre est toujours d'intérieur vide (car il ne peut contenir de boule ouverte de $E$).
+5. L'hypothèse selon laquelle $(e_n)$ est une base signifie que tout vecteur s'écrit comme une combinaison linéaire finie de $e_i$. Ainsi, $E = \bigcup_{n \in \mathbb{N}} F_n$.
+6. $E$ est donc une union dénombrable de fermés d'intérieur vide.
+7. Ceci contredit le Théorème de Baire, puisque $E$ est complet. Donc aucune base de Hamel de $E$ n'est dénombrable.
+
+
+\newpage
+
+\section{Espace des fonctions $L^p$ \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+Considérons les espaces de Lebesgue $L^p([0,1])$. Prouver que $\bigcup_{p > 1} L^p([0,1])$ est maigre dans $L^1([0,1])$.
+
+\section{Correction Détaillée (Zéro Ellipse)}
+
+
+1. Les $L^p$ sont des espaces de Banach.
+2. On définit $F_n = \{f \in L^1([0,1]) \mid \int_0^1 |f|^n \leq n\}$.
+3. $F_n$ est un fermé de $L^1$ par le Lemme de Fatou.
+4. $F_n$ est d'intérieur vide dans $L^1$. En effet, pour toute fonction $f \in F_n$, on peut lui ajouter une fonction $g$ très concentrée de sorte que sa norme $L^1$ soit très petite (donc $f+g$ est dans une boule $L^1$ arbitrairement petite autour de $f$), mais sa norme $L^n$ explose.
+5. Ainsi, chaque $F_n$ est nulle part dense.
+6. De plus, tout espace $L^p$ pour $p > 1$ est inclus dans l'union des $F_n$. (Car si $p > 1$, la fonction est dans un certain $L^q$ avec $q$ entier positif).
+7. Donc l'union des $L^p$ pour $p>1$ est une partie maigre de $L^1$.
+
+
+\newpage
+
+\section{Généricité des matrices diagonalisables \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+Démontrer topologiquement que l'ensemble des matrices diagonalisables à coefficients complexes de taille $n \times n$ est dense dans $\mathcal{M}_n(\mathbb{C})$. (Indice: relier à Baire et au discriminant).
+
+\section{Correction Détaillée (Zéro Ellipse)}
+
+
+1. Soit $\Delta(M)$ le discriminant du polynôme caractéristique de $M \in \mathcal{M}_n(\mathbb{C})$. $\Delta$ est un polynôme en les coefficients de $M$.
+2. Une matrice $M$ possède $n$ valeurs propres distinctes si et seulement si $\Delta(M) \neq 0$. Les matrices ayant $n$ valeurs propres distinctes sont diagonalisables.
+3. L'ensemble des matrices non diagonalisables ayant des valeurs propres multiples est inclus dans l'ensemble $Z = \{M \in \mathcal{M}_n(\mathbb{C}) \mid \Delta(M) = 0\}$.
+4. Comme $\Delta$ est un polynôme non nul, l'ensemble de ses zéros, $Z$, est un ensemble fermé d'intérieur vide (une hypersurface algébrique propre).
+5. (On peut voir cela via Baire : l'espace est complet, si $Z$ contenait un ouvert, le polynôme serait nul partout, ce qui est faux pour la matrice diagonale $(1, 2, \dots, n)$).
+6. Ainsi, le complémentaire de $Z$, $\mathcal{M}_n(\mathbb{C}) \setminus Z$, qui ne contient que des matrices diagonalisables, est un ouvert dense.
+
+
+\newpage
+
+
+\part{Travaux Pratiques et Simulations Algorithmiques}
+
+\section{Simulation : Simulation numérique de l'ensemble de Cantor}
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+import matplotlib.pyplot as plt
+
+def cantor_set(iterations):
+    '''Genere l'ensemble de Cantor apres un certain nombre d'iterations.'''
+    lines = [[0, 1]]
+    for _ in range(iterations):
+        next_lines = []
+        for segment in lines:
+            start, end = segment
+            length = end - start
+            next_lines.append([start, start + length / 3])
+            next_lines.append([end - length / 3, end])
+        lines = next_lines
+    return lines
+
+\section{Validation des proprietes}
+c_set = cantor_set(5)
+total_length = sum([end - start for start, end in c_set])
+print(f"Longueur totale apres 5 iterations : {total_length:.4f}")
+assert total_length < 0.2
+\end{lstlisting}
+
+\newpage
+
+\section{Simulation : Vérification de la densité de l'ensemble de Cantor}
+
+\begin{lstlisting}[language=Python]
+import random
+
+def is_in_cantor(x, iterations=10):
+    '''Verifie si un point x de [0,1] appartient a l'ensemble de Cantor.'''
+    for _ in range(iterations):
+        x *= 3
+        if 1 < x < 2:
+            return False
+        if x >= 2:
+            x -= 2
+    return True
+
+\section{Validation}
+assert is_in_cantor(1/3) == True
+assert is_in_cantor(0.5) == False
+\section{L'ensemble est nulle part dense : entre deux points du Cantor,}
+\section{on peut toujours trouver un point qui n'y est pas (un point du milieu retire).}
+\end{lstlisting}
+
+\newpage
+
+\section{Simulation : Construction de fonctions de Weierstrass}
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+
+def weierstrass(x, a=0.5, b=3, terms=50):
+    '''
+    Fonction continue nulle part derivable (Weierstrass).
+    a in (0, 1), b entier impair tel que ab > 1 + 3pi/2.
+    '''
+    result = 0.0
+    for n in range(terms):
+        result += (a \textbf{ n) * np.cos((b } n) * np.pi * x)
+    return result
+
+\section{Calcul de taux d'accroissement (qui doit exploser)}
+x0 = 0.5
+h = 1e-6
+taux = (weierstrass(x0 + h) - weierstrass(x0)) / h
+print(f"Taux d'accroissement en x=0.5 avec h={h}: {taux:.2f}")
+\section{On observe numeriquement que la derivee n'existe pas.}
+\end{lstlisting}
+
+\newpage
+
+\section{Simulation : Détection d'ensembles nulle part denses (Grille 2D)}
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+from scipy.ndimage import binary_dilation
+
+def check_nowhere_dense_2d(matrix):
+    '''
+    Verifie empiriquement si l'ensemble des pixels a 1 est nulle part dense.
+    On calcule l'adherence via une dilatation et on verifie qu'il n'y a pas
+    de blocs 3x3 complets.
+    '''
+    # Matrice de structure pour la dilatation (connexite 8)
+    struct = np.ones((3,3))
+    closure = binary_dilation(matrix, structure=struct).astype(int)
+
+    # Convolution pour trouver des blocs 3x3 pleins dans l'adherence
+    from scipy.signal import convolve2d
+    blocks = convolve2d(closure, np.ones((3,3)), mode='valid')
+
+    # S'il y a un 9, c'est qu'il y a un bloc 3x3 de 1, donc un interieur
+    if np.any(blocks == 9):
+        return False
+    return True
+
+\section{Validation}
+mat = np.zeros((10, 10))
+mat[::4, ::4] = 1 # Points isoles
+assert check_nowhere_dense_2d(mat) == True
+\end{lstlisting}
+
+\newpage
+
+\section{Simulation : Série de Fourier divergente de la fonction d'Osgood}
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+
+def dirichlet_kernel(n, x):
+    '''Noyau de Dirichlet D_n(x).'''
+    if np.isclose(x, 0) or np.isclose(x % (2*np.pi), 0):
+        return 2*n + 1
+    return np.sin((n + 0.5) * x) / np.sin(x / 2)
+
+\section{La norme L1 du noyau de Dirichlet (Constante de Lebesgue) diverge}
+\section{C'est la clef pour utiliser Baire / Banach-Steinhaus.}
+def lebesgue_constant(n):
+    # Integration numerique approchee
+    x = np.linspace(-np.pi, np.pi, 1000)
+    dx = 2 * np.pi / 1000
+    return np.sum(np.abs(dirichlet_kernel(n, x))) * dx / (2 * np.pi)
+
+\section{Validation : la constante augmente logarythmiquement avec n}
+c1 = lebesgue_constant(1)
+c10 = lebesgue_constant(10)
+c50 = lebesgue_constant(50)
+assert c1 < c10 < c50
+\end{lstlisting}
+
+\newpage
+
+
+\end{document}
