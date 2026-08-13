@@ -1,0 +1,8 @@
+\babel@toc {french}{}\relax
+\contentsline {part}{I\hspace {1em}Cours Magistral}{2}{}%
+\contentsline {section}{\numberline {1}Introduction et genèse du concept}{2}{}%
+\contentsline {section}{\numberline {2}Définitions, Théorèmes et Exemples Concrets}{2}{}%
+\contentsline {section}{\numberline {3}Démonstrations}{3}{}%
+\contentsline {section}{\numberline {4}Applications en Physique, Logique et Intelligence Artificielle}{4}{}%
+\contentsline {part}{II\hspace {1em}Exercices d'Application et de Concours}{5}{}%
+\contentsline {part}{III\hspace {1em}Travaux Pratiques et Simulations Algorithmiques}{9}{}%
