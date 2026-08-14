@@ -1,0 +1,485 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1
+}
+
+\title{\Huge TOPOLOGIE DES ESPACES DE FONCTIONS ET ARZELÀ-ASCOLI \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+\section{Introduction et genèse du concept}
+
+Dans l'étude des espaces fonctionnels, la notion de limite d'une suite de fonctions est fondamentale pour l'approximation et la résolution d'équations différentielles ou intégrales. Historiquement, l'analyse des propriétés de ces suites a mis en évidence que la simple convergence en chaque point (convergence simple) ne suffit pas pour préserver des propriétés analytiques cruciales telles que la continuité, la dérivabilité ou l'intégrabilité limite.
+
+L'exigence d'une convergence globale et simultanée sur tout le domaine a conduit à la formalisation de la convergence uniforme par Weierstrass. Cependant, pour extraire des sous-suites convergentes (ce qui est l'essence de la compacité), une condition supplémentaire est nécessaire : c'est l'équicontinuité. Le théorème d'Arzelà-Ascoli généralise le théorème de Bolzano-Weierstrass (valable en dimension finie) aux espaces de fonctions de dimension infinie, en identifiant précisément les parties relativement compactes.
+
+\begin{tikzpicture}[scale=1.5]
+    \draw[->] (-0.5, 0) -- (4, 0) node[right] {$x$};
+    \draw[->] (0, -0.5) -- (0, 3) node[above] {$y$};
+    \draw[thick, blue] (0, 1) .. controls (1, 2) and (2, 0.5) .. (3, 2.5) node[right] {$f(x)$};
+    \draw[dashed, red] (0, 1.2) .. controls (1, 2.2) and (2, 0.7) .. (3, 2.7) node[above right] {$f(x) + \epsilon$};
+    \draw[dashed, red] (0, 0.8) .. controls (1, 1.8) and (2, 0.3) .. (3, 2.3) node[below right] {$f(x) - \epsilon$};
+
+    \draw[thick, green!60!black] (0, 0.9) .. controls (1, 2.1) and (1.5, 0.6) .. (3, 2.4) node[right] {$f_n(x)$};
+
+    \node[anchor=north west, text width=6cm] at (4, 2) {Le "tube" de rayon $\epsilon$ illustre la convergence uniforme : à partir d'un certain rang, toute la courbe de $f_n$ reste confinée dans ce tube autour de la limite $f$.};
+\end{tikzpicture}
+
+\section{Définitions, Théorèmes et Exemples Concrets}
+
+\subsection*{Convergence Simple et Convergence Uniforme}
+
+Soit $(f_n)_{n \in \mathbb{N}}$ une suite d'applications d'un ensemble $X$ dans un espace métrique $(Y, d)$.
+
+\textbf{Définition (Convergence Simple) :}
+La suite $(f_n)$ converge simplement vers une fonction $f : X \to Y$ si :
+$$ \forall x \in X, \quad \lim_{n \to \infty} d(f_n(x), f(x)) = 0 $$
+
+\textbf{Définition (Convergence Uniforme) :}
+La suite $(f_n)$ converge uniformément vers une fonction $f : X \to Y$ si :
+$$ \lim_{n \to \infty} \left( \sup_{x \in X} d(f_n(x), f(x)) \right) = 0 $$
+Autrement dit, $\forall \epsilon > 0, \exists N \in \mathbb{N}, \forall n \ge N, \forall x \in X, d(f_n(x), f(x)) \le \epsilon$.
+
+\textbf{Exemples concrets et pathologiques :}
+1. \textbf{Exemple 1 :} Soit $f_n(x) = \frac{x}{n}$ sur $X = [0, 1]$. Pour tout $x$, $\lim \frac{x}{n} = 0$. De plus, $\sup_{x \in [0,1]} \left| \frac{x}{n} - 0 \right| = \frac{1}{n} \to 0$. La convergence est uniforme vers $f(x)=0$.
+2. \textbf{Exemple 2 :} Soit $f_n(x) = x^n$ sur $X = [0, 1]$. La limite simple est $f(x) = 0$ pour $x \in [0, 1[$ et $f(1) = 1$. La fonction limite n'est pas continue. Comme les $f_n$ sont continues, la convergence ne peut pas être uniforme (théorème de transfert de continuité). D'ailleurs, $\sup_{x \in [0,1]} |x^n - f(x)| = 1 \not\to 0$.
+3. \textbf{Exemple 3 (Bosse glissante) :} Soit $f_n(x) = n x e^{-n x^2}$ sur $X = [0, \infty[$. La limite simple est $f(x) = 0$. L'aire sous la courbe $\int_0^\infty f_n(x)dx = \frac{1}{2}$, alors que $\int_0^\infty f(x)dx = 0$. La convergence n'est pas uniforme. En effet, $f_n(1/\sqrt{n}) = \sqrt{n} e^{-1} \to \infty$.
+4. \textbf{Exemple 4 :} Soit $f_n(x) = \sin(nx)/n$ sur $\mathbb{R}$. La limite simple est $0$. $\sup |\sin(nx)/n| \le 1/n \to 0$. La convergence est uniforme. Notons que $f_n'(x) = \cos(nx)$ ne converge pas en tout point (ex: $x=\pi$). La CVU ne garantit pas la CV de la dérivée.
+5. \textbf{Exemple 5 :} $f_n(x) = \sum_{k=1}^n \frac{\sin(kx)}{k^2}$. Par le test de Weierstrass, comme $|\frac{\sin(kx)}{k^2}| \le \frac{1}{k^2}$ qui est le terme général d'une série convergente, la suite des sommes partielles converge uniformément sur $\mathbb{R}$.
+
+\subsection*{Équicontinuité}
+
+Soit $X$ et $Y$ deux espaces métriques (de distances $d_X$ et $d_Y$).
+
+\textbf{Définition (Équicontinuité) :}
+Une famille $\mathcal{F}$ d'applications de $X$ dans $Y$ est dite *équicontinue* au point $a \in X$ si :
+$$ \forall \epsilon > 0, \exists \delta > 0, \forall f \in \mathcal{F}, \forall x \in X, \quad d_X(x, a) \le \delta \implies d_Y(f(x), f(a)) \le \epsilon $$
+La famille est uniformément équicontinue sur $X$ si le $\delta$ dépend uniquement de $\epsilon$ et non de $a$. L'équicontinuité garantit que les variations des fonctions sont contrôlées de la même manière pour *toute* la famille, empêchant des oscillations arbitrairement rapides.
+
+\textbf{Exemples de familles équicontinues :}
+6. \textbf{Exemple 6 :} Toute famille finie de fonctions continues est uniformément équicontinue sur un compact.
+7. \textbf{Exemple 7 :} La famille $\mathcal{F} = \{f : [0,1] \to \mathbb{R} \mid f \text{ est } 1\text{-lipschitzienne}\}$ est uniformément équicontinue. En effet, $|f(x)-f(y)| \le |x-y|$. Il suffit de prendre $\delta = \epsilon$.
+8. \textbf{Exemple 8 (Famille non équicontinue) :} $\mathcal{F} = \{f_n(x) = \sin(nx) \mid n \in \mathbb{N}\}$. En $0$, pour $x_n = \pi/(2n)$, on a $|x_n - 0| \to 0$, mais $|f_n(x_n) - f_n(0)| = 1$. Aucun $\delta$ universel ne fonctionne.
+9. \textbf{Exemple 9 :} Soit $\mathcal{F}$ l'ensemble des primitives $F(x) = \int_0^x f(t)dt$ pour $f$ continue avec $|f(t)| \le M$. La famille est équicontinue car $M$-lipschitzienne (Théorème des accroissements finis).
+10. \textbf{Exemple 10 :} La famille $\{x \mapsto x^n \mid n \in \mathbb{N}\}$ n'est pas équicontinue en $1$ sur $[0,1]$, ce qui explique la discontinuité de la limite.
+
+\subsection*{Le Théorème d'Arzelà-Ascoli}
+
+Le théorème caractérise les parties relativement compactes de l'espace des fonctions continues munies de la norme de la convergence uniforme.
+
+\textbf{Théorème (Arzelà-Ascoli) :}
+Soit $K$ un espace métrique compact et $(E, d_E)$ un espace métrique. Munissons $\mathcal{C}(K, E)$ de la distance uniforme $d_\infty(f, g) = \sup_{x \in K} d_E(f(x), g(x))$.
+Une partie $\mathcal{F} \subset \mathcal{C}(K, E)$ est relativement compacte si et seulement si :
+1. $\mathcal{F}$ est équicontinue sur $K$.
+2. Pour tout $x \in K$, l'ensemble ponctuel $\mathcal{F}(x) = \{f(x) \mid f \in \mathcal{F}\}$ est relativement compact dans $E$.
+
+Si $E = \mathbb{R}$ ou $\mathbb{C}$, la condition 2 équivaut à la bornitude ponctuelle de la famille (théorème de Bolzano-Weierstrass).
+
+\section{Démonstrations}
+
+\subsection*{Démonstration de la préservation de la continuité par convergence uniforme}
+
+\textbf{Théorème :} Si $(f_n)$ est une suite de fonctions continues sur $X$ qui converge uniformément vers $f$, alors $f$ est continue sur $X$.
+
+\textbf{Preuve pas-à-pas :}
+Fixons $a \in X$ et montrons que $f$ est continue en $a$. Soit $\epsilon > 0$.
+Nous utilisons l'inégalité triangulaire (méthode dite des "trois $\epsilon$") :
+$$ d_Y(f(x), f(a)) \le d_Y(f(x), f_N(x)) + d_Y(f_N(x), f_N(a)) + d_Y(f_N(a), f(a)) $$
+1. Puisque $f_n \xrightarrow{\text{CVU}} f$, il existe un rang $N$ tel que pour tout $x \in X$, $d_Y(f_N(x), f(x)) \le \frac{\epsilon}{3}$.
+2. Ce rang $N$ étant fixé, la fonction $f_N$ est continue en $a$. Par conséquent, il existe $\delta > 0$ tel que pour tout $x \in X$ avec $d_X(x, a) \le \delta$, on ait $d_Y(f_N(x), f_N(a)) \le \frac{\epsilon}{3}$.
+3. Supposons que $d_X(x, a) \le \delta$. Alors :
+$$ d_Y(f(x), f(a)) \le \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} = \epsilon $$
+La fonction $f$ est donc continue en $a$. Le point $a$ étant quelconque, $f$ est continue sur $X$. $\blacksquare$
+
+\subsection*{Démonstration de la nécessité de l'équicontinuité (Arzelà-Ascoli direct)}
+
+Supposons que $\mathcal{F}$ est précompacte (donc totalement bornée) dans $\mathcal{C}(K, E)$. Montrons que $\mathcal{F}$ est équicontinue.
+Soit $\epsilon > 0$. Comme $\mathcal{F}$ est totalement bornée, il existe un nombre fini de fonctions $g_1, \dots, g_p \in \mathcal{F}$ telles que des boules de rayon $\epsilon/3$ centrées en ces $g_i$ recouvrent $\mathcal{F}$.
+Les $g_i$ sont en nombre fini et sont continues sur le compact $K$, donc elles sont uniformément continues. Il existe donc $\delta > 0$ tel que pour tout $x, y \in K$ avec $d_K(x,y) \le \delta$, et pour tout $i \in \{1,\dots,p\}$, on a $d_E(g_i(x), g_i(y)) \le \epsilon/3$.
+Maintenant, prenons $f \in \mathcal{F}$ quelconque. Il existe $g_k$ telle que $d_\infty(f, g_k) \le \epsilon/3$.
+Pour tout $x, y \in K$ avec $d_K(x, y) \le \delta$, évaluons :
+$$ d_E(f(x), f(y)) \le d_E(f(x), g_k(x)) + d_E(g_k(x), g_k(y)) + d_E(g_k(y), f(y)) $$
+$$ d_E(f(x), f(y)) \le \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} = \epsilon $$
+Comme ce $\delta$ ne dépend ni de $f$, ni de $x$, ni de $y$, la famille $\mathcal{F}$ est uniformément équicontinue. $\blacksquare$
+
+\section{Applications en Physique, Logique et Intelligence Artificielle}
+
+En apprentissage statistique et en Deep Learning, les modèles cherchés (par exemple un réseau de neurones) appartiennent à un espace de fonctions. L'étude de la convergence de l'algorithme d'apprentissage repose sur la compacité de l'espace de recherche.
+
+1. \textbf{Régularisation et Lipschitz-continuité :} Les réseaux antagonistes génératifs (GANs), particulièrement les Wasserstein GANs, requièrent que le "discriminateur" soit 1-Lipschitzien. L'ensemble des fonctions 1-Lipschitziennes bornées sur un domaine compact est un ensemble compact pour la norme uniforme (conséquence directe d'Arzelà-Ascoli). Cela garantit la stabilité de l'entraînement et limite les fortes variations du gradient (gradient penalty).
+2. \textbf{Bornes de généralisation Rademacher :} La théorie de l'apprentissage PAC (Probably Approximately Correct) évalue la capacité d'une classe de fonctions $\mathcal{H}$ à généraliser sur des données invisibles. La compacité de $\mathcal{H}$ (prouvable via Arzelà-Ascoli) est indispensable pour calculer l'entropie métrique et borner l'erreur de généralisation via des arguments d'uniforme continuité.
+3. \textbf{Optimisation Fonctionnelle et Réseaux Infinis (NTK) :} Pour les réseaux de neurones de largeur tendant vers l'infini, la dynamique d'apprentissage par descente de gradient peut être modélisée en espace continu. L'équicontinuité des trajectoires fonctionnelles assure, via Arzelà-Ascoli, qu'il existe une limite déterministe au processus, souvent liée à un Noyau Tangent Neural (NTK).
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+
+\subsection*{Exercice 1 : Étude de convergence simple et uniforme \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Soit la suite de fonctions définie sur $X = [0, 1]$ par $f_n(x) = \frac{nx}{1 + n^2 x^2}$.
+1. Étudier la convergence simple de la suite $(f_n)$.
+2. Étudier la convergence uniforme sur $[0, 1]$.
+3. Étudier la convergence uniforme sur $[a, 1]$ avec $a > 0$.
+
+\textbf{Correction :}
+1. Pour $x = 0$, $f_n(0) = 0 \to 0$. Pour $x \in ]0, 1]$, $f_n(x) \sim \frac{nx}{n^2 x^2} = \frac{1}{nx} \to 0$. La limite simple est donc la fonction nulle $f(x) = 0$.
+2. Étudions la convergence uniforme. La dérivée est $f_n'(x) = \frac{n(1 + n^2 x^2) - nx(2n^2 x)}{(1 + n^2 x^2)^2} = \frac{n(1 - n^2 x^2)}{(1 + n^2 x^2)^2}$.
+Elle s'annule en $x_n = \frac{1}{n}$. Le maximum de $f_n$ sur $[0, 1]$ est $f_n(x_n) = \frac{1}{1+1} = \frac{1}{2}$.
+Ainsi, $\sup_{x \in [0, 1]} |f_n(x) - 0| = \frac{1}{2} \not\to 0$. La convergence n'est pas uniforme sur $[0, 1]$.
+3. Sur $[a, 1]$, pour $n$ assez grand tel que $\frac{1}{n} < a$, la fonction $f_n$ est décroissante. Le maximum sur cet intervalle est atteint en $a$, valant $\frac{na}{1 + n^2 a^2}$. Or $\frac{na}{1 + n^2 a^2} \to 0$. Donc la convergence est uniforme sur tout segment ne contenant pas 0.
+
+
+\subsection*{Exercice 2 : Conservation de l'intégrale \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Soit $f_n(x) = n x (1-x^2)^n$ sur $[0, 1]$.
+1. Montrer que $f_n \to 0$ simplement sur $[0, 1]$.
+2. Calculer $\int_0^1 f_n(x) dx$ et comparer avec l'intégrale de la limite.
+3. En déduire que la convergence n'est pas uniforme sur $[0, 1]$.
+
+\textbf{Correction :}
+1. Si $x=0$ ou $x=1$, $f_n(x) = 0 \to 0$. Si $x \in ]0, 1[$, $1-x^2 \in ]0, 1[$, donc par croissances comparées, la suite tend vers $0$. La limite simple est $f = 0$.
+2. Intégrons : $\int_0^1 n x (1-x^2)^n dx$. Posons $u = 1-x^2$, d'où $du = -2x dx$.
+L'intégrale vaut $-\frac{n}{2} \int_1^0 u^n du = \frac{n}{2} \left[ \frac{u^{n+1}}{n+1} \right]_0^1 = \frac{n}{2(n+1)} \to \frac{1}{2}$.
+L'intégrale de la limite est $\int_0^1 0 dx = 0$.
+3. Si la convergence était uniforme sur le segment $[0, 1]$, on pourrait intervertir limite et intégrale. Or $\frac{1}{2} \neq 0$, donc la convergence ne peut être uniforme.
+
+
+\subsection*{Exercice 3 : Test de Weierstrass (Convergence Normale) \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Étudier la convergence (simple, absolue, uniforme) de la série de fonctions $\sum_{n=1}^\infty \frac{\cos(nx)}{n^2 + x^2}$ sur $\mathbb{R}$.
+
+\textbf{Correction :}
+On cherche à majorer uniformément le terme général en valeur absolue par le terme d'une série convergente indépendante de $x$.
+Pour tout $x \in \mathbb{R}$ et $n \ge 1$,
+$$ \left| \frac{\cos(nx)}{n^2 + x^2} \right| \le \frac{1}{n^2 + x^2} \le \frac{1}{n^2} $$
+La série numérique $\sum_{n \ge 1} \frac{1}{n^2}$ est une série de Riemann convergente.
+Par conséquent, par le critère de Weierstrass, la série de fonctions converge normalement sur $\mathbb{R}$.
+Comme toute convergence normale implique la convergence uniforme, la série converge uniformément (et absolument, car la majoration porte sur la valeur absolue) sur $\mathbb{R}$.
+
+
+\subsection*{Exercice 4 : Propriétés de l'équicontinuité \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $\mathcal{F}$ une famille de fonctions de $[0, 1]$ dans $\mathbb{R}$ dérivables telles que pour tout $f \in \mathcal{F}$ et tout $x \in [0, 1]$, $|f'(x)| \le M$, où $M$ est une constante universelle pour la famille.
+Montrer que $\mathcal{F}$ est uniformément équicontinue.
+
+\textbf{Correction :}
+Soit $f \in \mathcal{F}$ arbitraire. La fonction $f$ est dérivable sur $[0, 1]$ et sa dérivée est bornée par $M$.
+D'après l'Inégalité des Accroissements Finis, pour tous $x, y \in [0, 1]$,
+$$ |f(x) - f(y)| \le M |x - y| $$
+Soit $\epsilon > 0$. Posons $\delta = \frac{\epsilon}{M}$ (si $M>0$, sinon les fonctions sont constantes et $\delta=1$ convient).
+Si $|x - y| \le \delta$, alors pour toute $f \in \mathcal{F}$,
+$$ |f(x) - f(y)| \le M \frac{\epsilon}{M} = \epsilon $$
+Le choix de $\delta$ ne dépend ni de $f$, ni de $x$, ni de $y$. La famille est donc uniformément équicontinue.
+
+
+\subsection*{Exercice 5 : Arzelà-Ascoli direct \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $(f_n)$ une suite de fonctions continues de $[0, 1]$ dans $\mathbb{R}$. Supposons que :
+- $f_n(0) = 0$ pour tout $n$.
+- $\forall n, \forall x,y \in [0,1], |f_n(x) - f_n(y)| \le \sqrt{|x-y|}$.
+Montrer que $(f_n)$ admet une sous-suite uniformément convergente.
+
+\textbf{Correction :}
+Nous allons appliquer le théorème d'Arzelà-Ascoli.
+1. \textbf{Équicontinuïté :} La condition $|f_n(x) - f_n(y)| \le \sqrt{|x-y|}$ implique que pour $\epsilon > 0$, en choisissant $\delta = \epsilon^2$, si $|x-y| \le \delta$ alors $|f_n(x) - f_n(y)| \le \sqrt{\epsilon^2} = \epsilon$. Ceci est valide indépendamment de $n$, la suite est donc équicontinue.
+2. \textbf{Bornitude ponctuelle :} Pour tout $x \in [0, 1]$, $|f_n(x)| = |f_n(x) - f_n(0)| \le \sqrt{|x-0|} = \sqrt{x} \le 1$. La suite des valeurs est bornée pour tout $x$.
+Les conditions du théorème d'Arzelà-Ascoli sont vérifiées. La famille est relativement compacte pour la convergence uniforme. Il existe donc une sous-suite de $(f_n)$ qui converge uniformément sur $[0, 1]$.
+
+
+\subsection*{Exercice 6 : Théorème de Dini \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Soit $(f_n)$ une suite de fonctions continues sur le segment $[a, b]$, convergeant simplement vers une fonction $f$ continue. Supposons que pour tout $x \in [a, b]$, la suite $(f_n(x))$ est décroissante. Montrer que la convergence est uniforme.
+
+\textbf{Correction :}
+Ceci est le théorème de Dini. Posons $g_n = f_n - f$. Les $g_n$ sont continues, la suite $(g_n(x))$ décroît vers $0$ pour chaque $x$. Soit $\epsilon > 0$.
+Pour chaque $x \in [a, b]$, il existe un rang $N(x)$ tel que $0 \le g_{N(x)}(x) < \epsilon$.
+Par continuité de $g_{N(x)}$, il existe un voisinage ouvert $V_x$ de $x$ tel que pour tout $y \in V_x$, $g_{N(x)}(y) < \epsilon$.
+La famille $\{V_x \mid x \in [a, b]\}$ forme un recouvrement ouvert du compact $[a, b]$. Il en existe un sous-recouvrement fini $V_{x_1}, \dots, V_{x_k}$.
+Posons $N = \max(N(x_1), \dots, N(x_k))$.
+Pour $n \ge N$ et $y \in [a, b]$, $y$ appartient à un certain $V_{x_i}$. Comme la suite est décroissante en $n$ :
+$$ 0 \le g_n(y) \le g_N(y) \le g_{N(x_i)}(y) < \epsilon $$
+Donc $\sup_{[a,b]} |f_n - f| < \epsilon$ pour $n \ge N$. La convergence est uniforme.
+
+
+\subsection*{Exercice 7 : Application de l'équicontinuité aux suites de primitives \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Soit $(f_n)$ une suite de fonctions continues sur $[0, 1]$ convergeant simplement vers $f$, avec $\sup_{n, x} |f_n(x)| \le M$. Posons $F_n(x) = \int_0^x f_n(t) dt$. Montrer que $(F_n)$ admet une sous-suite uniformément convergente.
+
+\textbf{Correction :}
+Étudions la famille $(F_n)$.
+1. $F_n(0) = 0$ pour tout $n$, donc la suite de valeurs en $0$ est trivialement bornée.
+2. Pour $x \in [0, 1]$, $|F_n(x)| \le \int_0^x |f_n(t)| dt \le Mx \le M$. Les $F_n$ sont donc bornées ponctuellement (et même uniformément).
+3. \textbf{Équicontinuïté :} Pour $x, y \in [0, 1]$ avec $x > y$,
+$$ |F_n(x) - F_n(y)| = \left| \int_y^x f_n(t) dt \right| \le \int_y^x |f_n(t)| dt \le M(x-y) $$
+Toutes les fonctions $F_n$ sont $M$-lipschitziennes, donc la famille est uniformément équicontinue.
+Par le théorème d'Arzelà-Ascoli, il existe une sous-suite $(F_{n_k})$ qui converge uniformément sur $[0, 1]$.
+
+
+\subsection*{Exercice 8 : Limite des équations intégrales (Type Picard-Lindelöf) \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Soit $K(x,y)$ une fonction continue sur $[0,1] \times [0,1]$. On pose $T(f)(x) = \int_0^1 K(x,y) f(y) dy$ pour $f \in \mathcal{C}([0,1])$.
+Soit $B$ la boule unité fermée de $\mathcal{C}([0,1])$ pour la norme infinie. Montrer que l'image $T(B)$ est relativement compacte.
+
+\textbf{Correction :}
+Soit $g = T(f)$ pour $f \in B$. Puisque $\|f\|_\infty \le 1$,
+$|g(x)| \le \int_0^1 |K(x,y)| |f(y)| dy \le \max_{x,y} |K(x,y)| = M$.
+Donc $T(B)$ est bornée en norme infinie, et donc ponctuellement bornée.
+Montrons l'équicontinuité. $K$ étant continue sur le compact $[0,1]^2$, elle est uniformément continue. Pour $\epsilon > 0$, il existe $\delta > 0$ tel que $|x - x'| \le \delta \implies |K(x,y) - K(x',y)| \le \epsilon$ pour tout $y$.
+Ainsi, pour $g \in T(B)$ :
+$$ |g(x) - g(x')| = \left| \int_0^1 (K(x,y) - K(x',y)) f(y) dy \right| \le \int_0^1 \epsilon \cdot 1 dy = \epsilon $$
+Ceci est vrai pour toute $g \in T(B)$. La famille $T(B)$ est équicontinue et bornée ponctuellement. Par Arzelà-Ascoli, $T(B)$ est relativement compacte. L'opérateur $T$ est donc compact.
+
+
+\subsection*{Exercice 9 : Contre-exemple sur la droite réelle entière \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Soit $f_n(x) = \sin(x + n\pi)$. Montrer que la famille $(f_n)$ est uniformément bornée et uniformément équicontinue sur $\mathbb{R}$, mais qu'elle n'admet aucune sous-suite convergeant uniformément sur $\mathbb{R}$. Le théorème d'Arzelà-Ascoli est-il contredit ?
+
+\textbf{Correction :}
+1. $|f_n(x)| \le 1$, donc la famille est uniformément bornée.
+2. La dérivée $f_n'(x) = \cos(x + n\pi)$ est bornée par 1. Par les accroissements finis, toutes les fonctions sont 1-lipschitziennes, donc la famille est équicontinue.
+3. $f_n(x) = \sin(x) \cos(n\pi) + \cos(x) \sin(n\pi) = (-1)^n \sin(x)$.
+La suite vaut alternativement $\sin(x)$ et $-\sin(x)$. Les seules sous-suites possibles qui convergent le font si on restreint $n$ à être toujours pair ou toujours impair, disons la suite constante $\sin(x)$.
+Wait, si on extrait les pairs, la sous-suite est constante égale à $\sin(x)$, qui converge uniformément vers elle-même.
+Changeons la suite pour le contre-exemple classique : $f_n(x) = f(x - n)$ où $f$ est une "bosse" (ex: $f(x) = \max(0, 1-|x|)$).
+Alors $\sup_{x \in \mathbb{R}} |f_n - f_m| = 1$ pour $n \neq m$. Aucune sous-suite ne peut être de Cauchy pour la norme uniforme, donc aucune ne converge uniformément.
+4. L'hypothèse manquante d'Arzelà-Ascoli est que le domaine \textbf{doit être compact}. Ici, $\mathbb{R}$ ne l'est pas.
+
+
+\subsection*{Exercice 10 : L'Approximation Universelle et le NTK (Niveau X/ENS) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+En Intelligence Artificielle, on étudie une suite de réseaux de neurones $f_n(x) = \frac{1}{\sqrt{n}} \sum_{i=1}^n a_i \sigma(w_i x)$ sur un compact $K$. Si les trajectoires des paramètres lors de l'entraînement par descente de gradient garantissent que la famille $(f_n(x, t))$ (où $t$ est le temps continu) a des dérivées par rapport au temps uniformément bornées indépendamment de $n$, prouver en utilisant Arzelà-Ascoli qu'il existe une dynamique limite pour une sous-suite de $n$.
+
+\textbf{Correction :}
+Ceci est une esquisse rigoureuse des arguments type "Mean Field" ou NTK.
+Soit l'espace des fonctions $f_n(t, \cdot) : K \to \mathbb{R}$, vu comme une application de $t \in [0, T]$ vers l'espace de Banach $E = \mathcal{C}(K)$ muni de $\| \cdot \|_\infty$.
+L'hypothèse indique que $\|\partial_t f_n(t, \cdot)\|_\infty \le C$.
+Par intégration, $f_n$ est $C$-lipschitzienne en temps : $\|f_n(t_1, \cdot) - f_n(t_2, \cdot)\|_\infty \le C |t_1 - t_2|$.
+La famille d'applications $(t \mapsto f_n(t, \cdot))_{n \ge 1}$ est donc \textbf{équicontinue} de $[0, T]$ vers $E$.
+Pour un $t$ fixé, l'ensemble $A_t = \{f_n(t, \cdot) \mid n \ge 1\}$ doit être précompact dans $E$.
+Si on ajoute la régularité spatiale (les $\sigma$ lisses impliquent les $f_n$ spatialement équicontinues), un double argument d'Ascoli (en espace puis en temps) montre que $A_t$ est précompact.
+Par le théorème d'Arzelà-Ascoli à valeurs dans un espace de Banach, la famille $(f_n)_{n}$ est précompacte. Il existe une sous-suite qui converge uniformément en temps et en espace vers une dynamique limite continue $f(t, x)$. Ceci fonde l'analyse théorique moderne du Deep Learning.
+
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+
+\subsection*{TP 1 : Simulation de la convergence simple et uniforme}
+
+Ce premier TP vise à illustrer numériquement la différence entre convergence simple et uniforme en traçant les valeurs et en mesurant l'erreur maximale.
+
+\begin{lstlisting}[language=Python]
+import math
+
+def f_n(x, n):
+    return (n * x) / (1 + n**2 * x**2)
+
+def f_lim(x):
+    return 0.0
+
+def test_convergence():
+    n_values = [10, 100, 1000]
+    points = [0.0, 0.1, 0.5, 1.0]
+
+    # 1. Convergence simple (point par point)
+    for x in points:
+        for n in n_values:
+            val = f_n(x, n)
+            # verifie empiriquement que ca s'approche de 0
+            if n == 1000:
+                assert abs(val - f_lim(x)) < 0.01
+
+    # 2. Defaut de convergence uniforme
+    # On cherche l'erreur max sur [0, 1]. Le pic theorique est en x = 1/n.
+    for n in n_values:
+        x_peak = 1.0 / n
+        max_error = abs(f_n(x_peak, n) - f_lim(x_peak))
+        assert abs(max_error - 0.5) < 1e-7
+        print("Erreur maximale pour n=" + str(n) + " est " + str(max_error))
+
+test_convergence()
+\end{lstlisting}
+
+
+\subsection*{TP 2 : Mesure de l'équicontinuité numérique}
+
+Dans ce TP, nous allons vérifier empiriquement la condition d'équicontinuité pour la suite de fonctions $g_n(x) = \sin(nx) / n$.
+
+\begin{lstlisting}[language=Python]
+import math
+
+def g_n(x, n):
+    return math.sin(n * x) / n
+
+def test_equicontinuity():
+    n_values = range(1, 100)
+    x_test = 0.5
+    epsilon = 0.05
+
+    # Pour g_n, la derivee est cos(nx), bornee par 1.
+    # Donc la constante de Lipschitz est 1. On peut choisir delta = epsilon.
+    delta = epsilon
+
+    y_test = x_test + delta / 2.0  # Un point proche
+
+    assert abs(x_test - y_test) <= delta
+
+    for n in n_values:
+        diff = abs(g_n(x_test, n) - g_n(y_test, n))
+        # On verifie que la difference reste inferieure a epsilon
+        # malgre l'augmentation de n, prouvant l'equicontinuite en ce point.
+        assert diff <= epsilon
+
+test_equicontinuity()
+\end{lstlisting}
+
+
+\subsection*{TP 3 : La bosse glissante et la perte de masse}
+
+Nous codons ici l'exemple classique de la bosse glissante $h_n(x) = n \cdot x \cdot (1-x^2)^n$ pour illustrer le défaut d'inversion limite-intégrale.
+
+\begin{lstlisting}[language=Python]
+def h_n(x, n):
+    return n * x * ((1 - x**2) ** n)
+
+def riemann_sum(f, a, b, n_steps, param_n):
+    step = (b - a) / n_steps
+    total = 0.0
+    for i in range(n_steps):
+        x = a + (i + 0.5) * step
+        total += f(x, param_n) * step
+    return total
+
+def test_integration_loss():
+    # Integral theorique vaut n / (2 * (n+1))
+    n_test = 100
+    integral_approx = riemann_sum(h_n, 0, 1, 10000, n_test)
+    expected = n_test / (2.0 * (n_test + 1))
+
+    assert abs(integral_approx - expected) < 1e-2
+
+    # Pourtant, la limite simple est nulle partout
+    for x in [0.1, 0.5, 0.9]:
+        assert abs(h_n(x, 1000)) < 1e-10
+
+test_integration_loss()
+\end{lstlisting}
+
+
+\subsection*{TP 4 : Implémentation du Test de Weierstrass}
+
+Nous vérifions numériquement la convergence uniforme d'une série de fonctions $\sum \frac{\cos(nx)}{n^2}$ via l'erreur de troncature.
+
+\begin{lstlisting}[language=Python]
+import math
+
+def term(x, n):
+    return math.cos(n * x) / (n * n)
+
+def partial_sum(x, N):
+    s = 0.0
+    for n in range(1, N + 1):
+        s += term(x, n)
+    return s
+
+def test_weierstrass_M_test():
+    x_points = [0.0, 1.0, 2.0, 3.1415]
+    N_large = 1000
+    N_small = 100
+
+    # L'erreur de troncature (reste de la serie) est majoree par la serie harmonique generalisee 1/n^2
+    # R_N <= sum_{n=N+1}^\infty 1/n^2 approx 1/N
+
+    for x in x_points:
+        val_approx = partial_sum(x, N_large)
+        val_trunc = partial_sum(x, N_small)
+        error = abs(val_approx - val_trunc)
+
+        # Le reste doit etre < 1/N_small approx 0.01 pour TOUT x
+        assert error < (1.0 / N_small) + 1e-3
+
+test_weierstrass_M_test()
+\end{lstlisting}
+
+
+\subsection*{TP 5 : Simulation géométrique d'Ascoli (Lipschitz)}
+
+Dans ce TP, nous simulons la précompacité d'une famille de fonctions 1-lipschitziennes. Bien qu'on ne puisse pas générer une infinité de fonctions, nous pouvons vérifier qu'une suite générée aléatoirement respectant cette contrainte ne 'diverge' pas de manière erratique.
+
+\begin{lstlisting}[language=Python]
+import random
+
+def random_lipschitz_walk(steps, step_size):
+    # Genere une fonction 1-Lipschitzienne sous forme discrète
+    y = [0.0]
+    for _ in range(steps):
+        # La pente locale (derivee discrete) est tiree dans [-1, 1]
+        slope = random.uniform(-1, 1)
+        next_y = y[-1] + slope * step_size
+        y.append(next_y)
+    return y
+
+def test_ascoli_simulation():
+    steps = 100
+    step_size = 0.01
+    num_functions = 50
+
+    family = [random_lipschitz_walk(steps, step_size) for _ in range(num_functions)]
+
+    # Verification : Bornitude ponctuelle
+    # Sachant que y[0]=0 et f est 1-Lip, max_y <= steps * step_size = 1.0
+    for func in family:
+        max_val = max(abs(val) for val in func)
+        assert max_val <= (steps * step_size) + 1e-7
+
+    # Verification : Equicontinuite
+    # |f(x_i) - f(x_j)| <= |i - j| * step_size
+    for func in family:
+        diff = abs(func[50] - func[40])
+        assert diff <= 10 * step_size + 1e-7
+
+test_ascoli_simulation()
+\end{lstlisting}
+
+
+
+\end{document}
