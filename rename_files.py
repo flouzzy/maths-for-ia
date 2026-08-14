@@ -1,23 +1,23 @@
-def clean_filename(filename):
+def clean_filename(name):
     replacements = {
-        "Ã©": "e",
-        "Ã¨": "e",
-        "Ãª": "e",
-        "Ã«": "e",
-        "Ã ": "a",
-        "Ã¢": "a",
-        "Ã´": "o",
-        "Ã»": "u",
-        "Ã§": "c",
-        "Ã¯": "i",
-        "Ã®": "i",
-        "Ã": "e",
+        "MathÃ©matiques": "Mathematiques",
+        "ModÃ¨les": "Modeles",
+        "ForÃªt": "Foret",
+        "NoÃ«l": "Noel",
+        "LÃ ": "La",
+        "PÃ¢tes": "Pates",
+        "CÃ´te": "Cote",
+        "SÃ»r": "Sur",
+        "FranÃ§ais": "Francais",
+        "NaÃ¯f": "Naif",
+        "MaÃ®tre": "Maitre",
+        "ThÃorÃ¨me": "Theoreme",
         "$-mathbb{R}^n$": "Rn",
         "$-mathcal{L}^p$": "Lp",
         "$-mathbb{R}$": "R",
         "$": "",
         "\\": ""
     }
-    for old, new in replacements.items():
-        filename = filename.replace(old, new)
-    return filename
+    for k, v in replacements.items():
+        name = name.replace(k, v)
+    return name
