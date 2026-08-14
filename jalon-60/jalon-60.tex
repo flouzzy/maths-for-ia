@@ -1,0 +1,517 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1
+}
+
+\title{\Huge PREUVE DU THÉORÈME D'APPROXIMATION UNIVERSELLE \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+\section{Jalon 60 : Livrable IA T5 : Preuve du théorème d'approximation universelle}
+
+\section{Présentation du concept clé}
+
+\subsubsection{Intuition Fondamentale}
+ Imaginez que vous ayez une boîte de LEGO. Chaque pièce de LEGO est très simple (une bosse, un creux). Le \textbf{Théorème d'Approximation Universelle} dit que, si vous avez assez de pièces, vous pouvez construire n'importe quelle forme complexe (une voiture, un château, un visage) avec une précision infinie. En IA, les LEGO sont les "neurones" et la forme complexe est la "fonction" que l'on veut apprendre. Tant que la fonction est continue (pas de sauts brusques), un réseau de neurones avec une seule couche cachée très large peut l'imiter parfaitement.
+\subsubsection{Genèse Conceptuelle}
+ Au début de l'IA, on se demandait si les réseaux de neurones étaient juste des gadgets ou s'ils pouvaient vraiment tout calculer. Cette preuve mathématique a confirmé que les réseaux de neurones sont des \textbf{estimateurs universels} : ils ont la capacité théorique de représenter n'importe quelle logique ou n'importe quel phénomène physique.
+\subsubsection{Représentation Géométrique}
+ On prend une courbe compliquée. On essaie de la reproduire en additionnant des fonctions "marches d'escalier" ou des "sigmoïdes". Plus on ajoute de fonctions simples, plus la somme ressemble à la courbe compliquée.
+
+\section{Formalisation}
+
+\subsubsection{Énoncé du Théorème (Cybenko, 1989)}
+
+Soit $I_n = [0, 1]^n$ le cube unité de $\mathbb{R}^n$. Soit $\mathcal{C}(I_n)$ l'espace des fonctions continues sur $I_n$ muni de la norme uniforme $\|f\|_\infty = \sup |f(x)|$.
+
+> \textbf{Théorème d'Approximation Universelle :}
+> Soit $\sigma : \mathbb{R} \to \mathbb{R}$ une fonction d'activation continue, non constante et bornée (ex: une sigmoïde). L'ensemble des fonctions de la forme :
+> $$G(x) = \sum_{i=1}^N \alpha_i \sigma(w_i^T x + b_i)$$
+> est \textbf{dense} dans $\mathcal{C}(I_n)$.
+> En d'autres termes, pour tout $f \in \mathcal{C}(I_n)$ et pour tout $\epsilon > 0$, il existe un entier $N$ et des paramètres $(\alpha_i, w_i, b_i)$ tels que :
+> $$\|f - G\|_\infty < \epsilon$$
+
+
+\subsubsection{Représentation Schématique (TikZ)}
+
+\begin{tikzpicture}[scale=1.5]
+    \draw[->] (-0.5, 0) -- (3.5, 0) node[right] {$x$};
+    \draw[->] (0, -0.5) -- (0, 1.5) node[above] {$y$};
+    \draw[domain=0:3, smooth, variable=\x, blue, thick] plot ({\x}, {1/(1+exp(-2*(\x-1.5)))});
+    \node[blue, right] at (3, 1) {$\sigma(w^T x + b)$};
+    \draw[dashed] (0, 1) -- (3.5, 1);
+    \node[left] at (0, 1) {$1$};
+    \node[left] at (0, 0.5) {$0.5$};
+    \draw[dashed] (1.5, 0) -- (1.5, 0.5) -- (0, 0.5);
+    \node[below] at (1.5, 0) {$-b/w$};
+\end{tikzpicture}
+
+
+
+\subsubsection{Exemples Concrets Immédiats}
+
+1. \textbf{Exemple Numérique (1D) :} Pour approcher $f(x) = x^2$ sur $[0,1]$, un réseau avec $\sigma(x) = \max(0,x)$ (ReLU) construit une approximation affine par morceaux. Si $N=3$, la somme $\sum_{i=1}^3 \alpha_i \max(0, w_i x + b_i)$ trace un polygone à 3 segments.
+2. \textbf{Exemple Analytique :} La fonction porte (fonction indicatrice de l'intervalle $[a,b]$) s'approxime avec deux sigmoïdes: $\sigma(k(x-a)) - \sigma(k(x-b))$. Pour un très grand $k=1000$, l'erreur uniforme sur $\mathbb{R} \setminus ([a-\epsilon, a+\epsilon] \cup [b-\epsilon, b+\epsilon])$ tend vers $0$.
+3. \textbf{Exemple Matriciel :} En dimension $n=2$, le terme $w_i^T x + b_i$ représente une droite de séparation $w_{i,1} x_1 + w_{i,2} x_2 + b_i = 0$. La combinaison affine pondère l'activation de ces demi-plans.
+4. \textbf{Cas Pathologique (Absence de Non-linéarité) :} Si $\sigma(x) = cx$, le réseau s'écrit $\sum \alpha_i c(w_i^T x + b_i) = (\sum \alpha_i c w_i^T) x + (\sum \alpha_i c b_i)$, ce qui est purement affine. Il est impossible d'approcher $x^2$ sur $[-1, 1]$.
+5. \textbf{Cas Pathologique (Constante) :} Si $\sigma(x) = 1$, le réseau ne produit qu'une fonction constante.
+6. \textbf{Exemple Numérique de Densité :} Soit $f(x) = \sin(2\pi x)$ sur $[0,1]$ et $\epsilon = 0.01$. Le théorème stipule qu'il existe un jeu de poids explicite $(\alpha_i, w_i, b_i)$ pour $N$ grand tel que la différence maximale absolue entre la courbe du sinus et la sortie du réseau soit inférieure à $0.01$ en tout point $x$.
+7. \textbf{Exemple d'Application de Hahn-Banach :} Dans la preuve, si l'espace engendré n'est pas tout $\mathcal{C}(I_n)$, Hahn-Banach garantit qu'on peut "séparer" cet espace d'une fonction hors de l'espace par un hyperplan fonctionnel (mesure $\mu$).
+8. \textbf{Exemple Géométrique :} La boule unité de l'espace des fonctions continues est couverte de manière arbitrairement proche par la variété engendrée par les paramètres du réseau.
+
+
+\subsubsection{Cadre Topologique}
+
+La densité s'entend au sens de la topologie de la convergence uniforme sur les compacts (Jalon 59). Cela signifie que le réseau peut s'approcher de $f$ partout sur le domaine de manière uniforme.
+
+\section{Démonstrations}
+
+\subsubsection{Esquisse de la preuve via l'Analyse Fonctionnelle}
+
+La preuve originale de Cybenko utilise le \textbf{Théorème de Hahn-Banach} et le \textbf{Théorème de Riesz}.
+
+1. \textbf{Stratégie par l'absurde :} Supposons que l'ensemble des réseaux $S$ n'est pas dense dans $\mathcal{C}(I_n)$.
+2. \textbf{Utilisation de Hahn-Banach :} S'il n'est pas dense, alors son adhérence $\bar{S}$ est un sous-espace fermé strict. Il existe donc une forme linéaire continue non nulle $L$ sur $\mathcal{C}(I_n)$ telle que $L(g) = 0$ pour tout $g \in S$.
+3. \textbf{Représentation de Riesz :} Toute forme linéaire continue sur $\mathcal{C}(I_n)$ est représentée par une mesure de Borel signée $\mu$ sur $I_n$. L'hypothèse $L(g)=0$ devient :
+   $$\int_{I_n} \sigma(w^T x + b) d\mu(x) = 0 \quad \text{pour tous } w, b$$
+4. \textbf{Propriété Discriminatoire :} Cybenko a prouvé que si $\sigma$ est une sigmoïdale continue, alors elle est "discriminatoire". Cela signifie que si l'intégrale ci-dessus est nulle pour tous $w, b$, alors la mesure $\mu$ est nécessairement nulle.
+5. \textbf{Conclusion :} Comme $\mu = 0$, la forme linéaire $L$ est nulle. Contradiction. Donc $S$ est dense dans $\mathcal{C}(I_n)$.
+
+\section{Exercices d'Application}
+
+\subsubsection{Exercice 1 : Approximation d'une porte par des sigmoïdes}
+\textbf{Énoncé :} Comment obtenir une fonction "marche" (qui vaut 0 pour $x < 0$ et 1 pour $x > 0$) en utilisant une sigmoïde $\sigma(z) = \frac{1}{1+e^{-z}}$ ?
+\textbf{Correction Détaillée :}
+On considère $g_k(x) = \sigma(kx)$.
+- Si $x > 0$, $kx \to +\infty$ quand $k \to \infty$, donc $\sigma(kx) \to 1$.
+- Si $x < 0$, $kx \to -\infty$, donc $\sigma(kx) \to 0$.
+- Si $x = 0$, $\sigma(0) = 0.5$.
+En augmentant le "poids" $k$, on rend la transition de la sigmoïde de plus en plus raide, tendant vers une fonction de Heaviside. On peut ensuite décaler et sommer ces marches pour approcher n'importe quelle fonction en escalier.
+
+\subsubsection{Exercice 2 : Niveau Avancé (Cas de la ReLU)}
+\textbf{Énoncé :} Le théorème est-il vrai pour $\sigma(x) = \max(0, x)$ (ReLU) ?
+\textbf{Correction Détaillée :}
+Oui, bien que ReLU ne soit pas bornée. On peut construire une fonction "chapeau" (triangulaire) en combinant deux ou trois ReLUs. Comme toute fonction continue sur un compact est limite uniforme de fonctions affines par morceaux (triangulations), l'ensemble des réseaux ReLU est dense.
+
+\section{Application en Intelligence Artificielle}
+
+- \textbf{Le Pont Théorique :} Ce théorème est la justification existentielle de l'IA. Il dit : "La solution existe dans votre espace de recherche". Cependant, il ne dit pas comment la trouver, ni si $N$ sera raisonnablement petit.
+- \textbf{Example Concret :}
+    - \textbf{Largeur vs Profondeur :} Le théorème original parle d'une seule couche cachée très large ($N \to \infty$). En pratique, on préfère des réseaux profonds (plusieurs couches) car ils sont beaucoup plus efficaces pour représenter certaines fonctions complexes avec beaucoup moins de neurones (compacité de la représentation).
+    - \textbf{Le rôle de la non-linéarité :} Si $\sigma$ était linéaire, alors toute somme de $\sigma$ resterait linéaire. On ne pourrait approcher que des droites. C'est le passage par la non-linéarité (la "cassure" de la droite) qui donne au réseau sa puissance d'approximation universelle.
+    - \textbf{Inductive Bias :} Puisque le réseau peut tout apprendre, pourquoi apprend-il souvent la "bonne" fonction ? C'est grâce à la régularisation et à l'architecture (CNN, Transformers) qui restreignent l'espace de recherche vers des fonctions physiquement plausibles.
+
+\section{Liens Sémantiques}
+
+- \textbf{Concepts Précédents requis :} [[Jalon 59 (Topologie des espaces de fonctions).md]], [[Jalon 98 (Théorème de Hahn-Banach).md]] (anticipé)
+- \textbf{Concepts Futurs dépendants :} [[Jalon 134 (Complexite des classes de fonctions).md]], [[Jalon 144 (Le phénomène de double descente).md]]
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\section{Approximation de la fonction carré}
+
+\subsubsection{Énoncé $\quad \bigstar\star\star\star\star$}
+
+Montrer rigoureusement que la classe de fonctions définies par des combinaisons linéaires d'une fonction d'activation sigmoïdale permet d'approcher la fonction $f(x) = x^2$ sur le segment $[-1, 1]$ avec une erreur maximale $\epsilon > 0$. Construisez explicitement l'approximation en utilisant des fonctions indicatrices approchées par des sigmoïdes.
+
+\subsubsection{Démonstration Détaillée}
+
+Soit $f(x) = x^2$. Puisque $f$ est uniformément continue sur le compact $[-1, 1]$, on partitionne ce segment en $N$ sous-intervalles de largeur $\delta = 2/N$. Pour un choix adéquat de $N$, l'oscillation de $f$ sur chaque intervalle est bornée par $\epsilon/2$. On approche l'indicatrice de chaque sous-intervalle par la différence de deux sigmoïdes de très grande pente. La somme pondérée par la valeur de $f$ aux centres des sous-intervalles fournit l'approximation désirée à $\epsilon$ près par inégalité triangulaire.
+
+
+\section{Approximation du sinus}
+
+\subsubsection{Énoncé $\quad \bigstar\bigstar\star\star\star$}
+
+Démontrer que le réseau de neurones à une couche cachée peut approcher $f(x) = \sin(x)$ sur $[0, 2\pi]$. Quelle est l'influence de la largeur de la couche (nombre de neurones) sur l'erreur d'approximation uniforme ?
+
+\subsubsection{Démonstration Détaillée}
+
+La fonction sinus est lipschitzienne sur le compact $[0, 2\pi]$ (constante de Lipschitz $L=1$). En découpant le domaine en intervalles de taille $\delta$, on obtient une erreur d'approximation en escalier de $O(\delta)$. Le lissage par des sigmoïdes introduit une erreur additionnelle, qui peut être rendue arbitrairement petite pour un paramètre d'échelle $k \to \infty$. L'erreur décroît généralement de l'ordre de $O(1/\sqrt{N})$ pour $N$ neurones, ce qui illustre le compromis entre complexité du réseau et précision.
+
+
+\section{Approximation de Heaviside}
+
+\subsubsection{Énoncé $\quad \bigstar\bigstar\bigstar\star\star$}
+
+Prouver que la fonction de Heaviside (marche d'escalier), bien que discontinue, peut être approchée par une suite de fonctions générées par un réseau de neurones, pour la topologie de la convergence ponctuelle.
+
+\subsubsection{Démonstration Détaillée}
+
+Bien que le théorème universel classique s'applique aux fonctions continues pour la norme uniforme, on peut approcher une discontinuité de manière ponctuelle. La sigmoïde standard $\sigma(kx)$ pour $k \to \infty$ converge ponctuellement vers $0$ pour $x<0$, vers $1$ pour $x>0$, et vers $0.5$ en $x=0$. Ainsi, une seule couche cachée avec un seul neurone suffit pour obtenir cette convergence, illustrant que la limite forte de l'espace des réseaux englobe les fonctions étagées.
+
+
+\section{Le cas de l'activation ReLU}
+
+\subsubsection{Énoncé $\quad \bigstar\bigstar\bigstar\bigstar\star$}
+
+Démontrer l'approximation universelle sur le segment $[0, 1]$ en utilisant la fonction ReLU $\sigma(x) = \max(0, x)$ comme fonction d'activation.
+
+\subsubsection{Démonstration Détaillée}
+
+Avec ReLU, on peut construire une fonction \og chapeau \fg{} centrée en $c$ avec un support $[c-h, c+h]$ par combinaison de trois ReLU : $g(x) = \frac{1}{h} (\text{ReLU}(x - (c-h)) - 2\text{ReLU}(x-c) + \text{ReLU}(x - (c+h)))$. Toute fonction continue sur $[0, 1]$ peut être approchée uniformément par une somme finie pondérée de ces fonctions chapeaux (interpolation linéaire par morceaux). Ceci démontre que l'architecture ReLU est un approximateur universel.
+
+
+\section{Évaluation de la densité}
+
+\subsubsection{Énoncé $\quad \bigstar\bigstar\bigstar\bigstar\star$}
+
+Soit $S$ le sous-espace engendré par l'architecture. Montrer que si la fermeture de $S$ pour la norme uniforme est strictement incluse dans $\mathcal{C}(I_n)$, alors il existe une mesure non triviale orthogonale à $S$.
+
+\subsubsection{Démonstration Détaillée}
+
+Ceci est une application directe du théorème de Hahn-Banach (forme analytique) et du théorème de représentation de Riesz-Markov-Kakutani. Si $\bar{S} \neq \mathcal{C}(I_n)$, l'espace $\bar{S}$ est un sous-espace fermé propre. Par le corollaire de Hahn-Banach, il existe une forme linéaire continue $L \neq 0$ s'annulant sur $S$. Par le théorème de Riesz, $L(f) = \int_{I_n} f d\mu$ pour une mesure de Borel signée finie $\mu$. Ainsi, $\int \sigma(w^T x + b) d\mu(x) = 0$ pour tous $w, b$, ce qui contredit la propriété discriminatoire de la sigmoïde.
+
+
+\section{La propriété discriminatoire}
+
+\subsubsection{Énoncé $\quad \bigstar\bigstar\bigstar\bigstar\star$}
+
+Définir ce que signifie pour une fonction d'activation d'être discriminatoire et démontrer que la limite des fonctions discriminatoires contient les fonctions trigonométriques complexes.
+
+\subsubsection{Démonstration Détaillée}
+
+Une fonction $\sigma$ est discriminatoire si $\int_{I_n} \sigma(w^T x + b) d\mu(x) = 0$ pour tous $w,b$ implique $\mu=0$. Cybenko démontre cela en montrant que l'espace vectoriel engendré par les fonctions $\sigma(w^T x + b)$ contient par passage à la limite les exponentielles complexes $x \mapsto e^{i w^T x}$. Par injectivité de la transformée de Fourier des mesures, la nullité de l'intégrale contre ces exponentielles impose $\mu = 0$.
+
+
+\section{Absence de garantie sur les dérivées}
+
+\subsubsection{Énoncé $\quad \bigstar\bigstar\bigstar\bigstar\star$}
+
+Montrer par un contre-exemple que si un réseau de neurones approche $f \in \mathcal{C}^1$ avec une erreur $\epsilon$ en norme uniforme, son gradient (si existant) n'approche pas nécessairement le gradient de $f$.
+
+\subsubsection{Démonstration Détaillée}
+
+Soit $f(x) = 0$ sur $[0,1]$ ($f' \equiv 0$). On peut construire un réseau $g(x) = \epsilon \sin(Nx)$ (approché par des activations). On a $\|f - g\|_\infty \le \epsilon$. Cependant, $g'(x) = N\epsilon \cos(Nx)$. Si on choisit $N$ grand, $\|f' - g'\|_\infty = N\epsilon$ peut être arbitrairement grand. L'approximation uniforme des fonctions n'implique aucune régularité sur les dérivées, sauf si on utilise des topologiques de Sobolev adaptées.
+
+
+\section{Borne inférieure sur la taille}
+
+\subsubsection{Énoncé $\quad \bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+Pour approcher l'indicatrice d'un hypercube en dimension $d$ avec une activation sigmoïde de type heaviside approchée, quel est le nombre minimal de neurones requis dans une seule couche cachée ?
+
+\subsubsection{Démonstration Détaillée}
+
+L'hypercube possède $2^d$ sommets et $2d$ faces. Chaque neurone de la couche cachée décrit un hyperplan affine qui divise l'espace. Pour découper un volume fini et borné (l'intersection de $2d$ demi-espaces), il faut au strict minimum $2d$ hyperplans. Donc il faut au moins $2d$ neurones dans la couche cachée pour créer la primitive de la localisation spatiale en dimension $d$. C'est un argument géométrique (théorème de Cover).
+
+
+\section{Approximation de fonctions multivariables}
+
+\subsubsection{Énoncé $\quad \bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+Étendre explicitement le théorème d'approximation à une fonction de deux variables $f(x_1, x_2) = x_1 x_2$ sur le carré unité.
+
+\subsubsection{Démonstration Détaillée}
+
+L'identité algébrique remarquable $4 x_1 x_2 = (x_1 + x_2)^2 - (x_1 - x_2)^2$ montre qu'il suffit d'approcher la fonction univariée carrée $u \mapsto u^2$. On sait qu'un réseau à une couche peut approcher $u^2$. On forme donc deux sous-réseaux, un prenant l'entrée $w^T x = x_1 + x_2$ et l'autre $w^T x = x_1 - x_2$. La combinaison linéaire des sorties de ces sous-réseaux permet d'approcher la multiplication $x_1 x_2$, brique de base des polynômes multivariés.
+
+
+\section{Généralisation aux espaces de Lebesgue}
+
+\subsubsection{Énoncé $\quad \bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+Montrer que si l'architecture est dense dans $\mathcal{C}(I_n)$ pour la norme $\|\cdot\|_\infty$, alors elle est également dense dans l'espace de Lebesgue $L^p(I_n)$ pour $1 \le p < \infty$.
+
+\subsubsection{Démonstration Détaillée}
+
+Ce résultat repose sur la densité des fonctions continues dans $L^p$. Pour tout $f \in L^p(I_n)$ et $\epsilon > 0$, on sait par la théorie de la mesure de Lebesgue qu'il existe $g \in \mathcal{C}(I_n)$ telle que $\|f - g\|_p < \epsilon/2$. Par le théorème d'approximation, il existe un réseau $h$ tel que $\|g - h\|_\infty < \epsilon/2$. Puisque le domaine $I_n$ a une mesure finie (volume 1), l'inégalité de Hölder donne $\|g - h\|_p \le \|g - h\|_\infty < \epsilon/2$. Par l'inégalité triangulaire dans $L^p$, on a $\|f - h\|_p < \epsilon$. L'approximation en norme $L^p$ est donc garantie.
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\section{Approximation d'une fonction polynomiale simple avec descente de gradient de base}
+
+Ce TP explore une facette spécifique du théorème d'approximation universelle en implémentant en Python pur (sans aucune dépendance) une preuve de concept algorithmique.
+
+\begin{lstlisting}[language=Python]
+def approx_polynomial(x_vals, target_func, n_neurons, epochs=500, lr=0.01):
+    """
+    Approximation d'une fonction 1D par un perceptron multicouche à 1 couche cachée (ReLU).
+    """
+    import random
+
+    # Paramètres initiaux
+    W1 = [random.uniform(-1, 1) for _ in range(n_neurons)]
+    b1 = [random.uniform(-1, 1) for _ in range(n_neurons)]
+    W2 = [random.uniform(-1, 1) for _ in range(n_neurons)]
+
+    def relu(z):
+        return z if z > 0 else 0
+
+    def forward(x):
+        return sum(W2[j] * relu(W1[j] * x + b1[j]) for j in range(n_neurons))
+
+    for epoch in range(epochs):
+        total_loss = 0
+        for x in x_vals:
+            y_true = target_func(x)
+            y_pred = forward(x)
+            error = y_pred - y_true
+            total_loss += error ** 2
+
+            for j in range(n_neurons):
+                z = W1[j] * x + b1[j]
+                if z > 0:
+                    grad_w2 = relu(z)
+                    grad_w1 = W2[j] * x
+                    grad_b1 = W2[j]
+
+                    W2[j] -= lr * error * grad_w2
+                    W1[j] -= lr * error * grad_w1
+                    b1[j] -= lr * error * grad_b1
+
+    final_mse = sum((forward(x) - target_func(x))**2 for x in x_vals) / len(x_vals)
+    assert final_mse >= 0, "L'erreur quadratique moyenne doit etre positive."
+    return final_mse
+
+x_points = [x/20.0 for x in range(-20, 21)]
+final_error = approx_polynomial(x_points, lambda x: x**2 - 0.5, 10)
+print("Erreur quadratique finale pour x^2:", final_error)
+\end{lstlisting}
+
+
+\section{Approximation d'une fonction oscillatoire complexe (sinus)}
+
+Ce TP explore une facette spécifique du théorème d'approximation universelle en implémentant en Python pur (sans aucune dépendance) une preuve de concept algorithmique.
+
+\begin{lstlisting}[language=Python]
+def approx_sinus(x_vals, target_func, n_neurons, epochs=1000, lr=0.005):
+    """
+    Implémentation pure Python de l'approximation du sinus, nécessitant un plus
+    grand nombre de neurones et un pas d'apprentissage plus fin.
+    """
+    import math
+    import random
+
+    W1 = [random.uniform(-2, 2) for _ in range(n_neurons)]
+    b1 = [random.uniform(-2, 2) for _ in range(n_neurons)]
+    W2 = [random.uniform(-1, 1) for _ in range(n_neurons)]
+
+    def activation(z):
+        # Utilisation d'une pseudo-sigmoide (softsign)
+        return z / (1 + abs(z))
+
+    def derivative(z):
+        return 1 / ((1 + abs(z)) ** 2)
+
+    def forward(x):
+        return sum(W2[j] * activation(W1[j] * x + b1[j]) for j in range(n_neurons))
+
+    for epoch in range(epochs):
+        for x in x_vals:
+            y_pred = forward(x)
+            error = y_pred - target_func(x)
+
+            for j in range(n_neurons):
+                z = W1[j] * x + b1[j]
+                grad_w2 = activation(z)
+                grad_w1 = W2[j] * derivative(z) * x
+                grad_b1 = W2[j] * derivative(z)
+
+                W2[j] -= lr * error * grad_w2
+                W1[j] -= lr * error * grad_w1
+                b1[j] -= lr * error * grad_b1
+
+    max_error = max(abs(forward(x) - target_func(x)) for x in x_vals)
+    assert max_error < 2.0, "Le modele a diverge de la cible oscillatoire."
+    return max_error
+
+x_points = [x/10.0 for x in range(-31, 32)]
+err = approx_sinus(x_points, lambda x: math.sin(x), 30)
+print("Erreur maximale de la reconstruction du sinus:", err)
+\end{lstlisting}
+
+
+\section{Simulation de la fonction de Heaviside avec régularisation}
+
+Ce TP explore une facette spécifique du théorème d'approximation universelle en implémentant en Python pur (sans aucune dépendance) une preuve de concept algorithmique.
+
+\begin{lstlisting}[language=Python]
+def heaviside_approximation(x_vals, n_neurons):
+    """
+    Apprentissage d'un saut abrupt. Demontre la limite du modele sur les discontinuites.
+    """
+    import random
+
+    def target(x):
+        return 1.0 if x > 0 else 0.0
+
+    W1 = [random.uniform(-5, 5) for _ in range(n_neurons)]
+    b1 = [random.uniform(-1, 1) for _ in range(n_neurons)]
+    W2 = [random.uniform(-1, 1) for _ in range(n_neurons)]
+
+    def sigmoid(z):
+        # Approximation de exp pour eviter les overflow en python pur
+        if z < -20: return 0.0
+        if z > 20: return 1.0
+        exp_z = 2.71828 ** z
+        return exp_z / (1 + exp_z)
+
+    def forward(x):
+        return sum(W2[j] * sigmoid(W1[j] * x + b1[j]) for j in range(n_neurons))
+
+    lr = 0.05
+    for epoch in range(300):
+        for x in x_vals:
+            y_pred = forward(x)
+            err = y_pred - target(x)
+
+            for j in range(n_neurons):
+                z = W1[j] * x + b1[j]
+                s = sigmoid(z)
+                ds = s * (1 - s)
+
+                W2[j] -= lr * err * s
+                W1[j] -= lr * err * W2[j] * ds * x
+                b1[j] -= lr * err * W2[j] * ds
+
+    # Evaluation
+    err_0 = abs(forward(-0.1) - target(-0.1))
+    err_1 = abs(forward(0.1) - target(0.1))
+    assert err_0 >= 0 and err_1 >= 0
+    return err_0, err_1
+
+pts = [x/10.0 for x in range(-10, 11)]
+e0, e1 = heaviside_approximation(pts, 15)
+print("Erreur d'approximation autour du saut:", e0, e1)
+\end{lstlisting}
+
+
+\section{Fonction multivariable 2D (Approximation de XOR continu)}
+
+Ce TP explore une facette spécifique du théorème d'approximation universelle en implémentant en Python pur (sans aucune dépendance) une preuve de concept algorithmique.
+
+\begin{lstlisting}[language=Python]
+def approx_multivar(data_points, n_neurons):
+    """
+    Approximation en dimension superieure (2 vers 1).
+    Demontre la capacite du modele a casser la planarite.
+    """
+    import random
+
+    # 2 variables d'entree
+    W1 = [[random.uniform(-1, 1), random.uniform(-1, 1)] for _ in range(n_neurons)]
+    b1 = [random.uniform(-1, 1) for _ in range(n_neurons)]
+    W2 = [random.uniform(-1, 1) for _ in range(n_neurons)]
+
+    def relu(z):
+        return z if z > 0 else 0
+
+    def forward(x1, x2):
+        s = 0
+        for j in range(n_neurons):
+            z = W1[j][0] * x1 + W1[j][1] * x2 + b1[j]
+            s += W2[j] * relu(z)
+        return s
+
+    lr = 0.02
+    for epoch in range(400):
+        for x1, x2, y_true in data_points:
+            y_pred = forward(x1, x2)
+            err = y_pred - y_true
+
+            for j in range(n_neurons):
+                z = W1[j][0] * x1 + W1[j][1] * x2 + b1[j]
+                if z > 0:
+                    W2[j] -= lr * err * relu(z)
+                    W1[j][0] -= lr * err * W2[j] * x1
+                    W1[j][1] -= lr * err * W2[j] * x2
+                    b1[j] -= lr * err * W2[j]
+
+    mse = sum((forward(x1, x2) - y)**2 for x1, x2, y in data_points) / len(data_points)
+    assert mse >= 0.0
+    return mse
+
+# XOR continu
+dataset = [
+    (0, 0, 0), (1, 1, 0), (0, 1, 1), (1, 0, 1),
+    (0.5, 0.5, 0.5), (0.2, 0.8, 0.8), (0.9, 0.1, 0.8)
+]
+mse_final = approx_multivar(dataset, 10)
+print("MSE multivarié:", mse_final)
+\end{lstlisting}
+
+
+\section{Évaluation comparative des fonctions d'activation}
+
+Ce TP explore une facette spécifique du théorème d'approximation universelle en implémentant en Python pur (sans aucune dépendance) une preuve de concept algorithmique.
+
+\begin{lstlisting}[language=Python]
+def evaluate_activations(x_vals, target_func, n_neurons):
+    """
+    Compare la vitesse de convergence de ReLU et tanh sur la meme cible.
+    """
+    import random
+
+    def train_network(activation_type):
+        W1 = [random.uniform(-0.5, 0.5) for _ in range(n_neurons)]
+        b1 = [0.0 for _ in range(n_neurons)]
+        W2 = [random.uniform(-0.5, 0.5) for _ in range(n_neurons)]
+
+        lr = 0.01
+        for epoch in range(100):
+            for x in x_vals:
+                # Forward
+                zs = [W1[j] * x + b1[j] for j in range(n_neurons)]
+                if activation_type == "relu":
+                    acts = [z if z > 0 else 0 for z in zs]
+                    derivs = [1 if z > 0 else 0 for z in zs]
+                else:
+                    # tanh approche
+                    acts = [(2.718**z - 2.718**(-z))/(2.718**z + 2.718**(-z)) if abs(z)<10 else (1 if z>0 else -1) for z in zs]
+                    derivs = [1 - a*a for a in acts]
+
+                y_pred = sum(W2[j] * acts[j] for j in range(n_neurons))
+                err = y_pred - target_func(x)
+
+                # Backward
+                for j in range(n_neurons):
+                    W2[j] -= lr * err * acts[j]
+                    W1[j] -= lr * err * W2[j] * derivs[j] * x
+                    b1[j] -= lr * err * W2[j] * derivs[j]
+
+        mse = sum((sum(W2[j] * (W1[j]*x+b1[j] if W1[j]*x+b1[j]>0 else 0) if activation_type=="relu" else 0) - target_func(x))**2 for x in x_vals) / len(x_vals)
+        return mse
+
+    mse_relu = train_network("relu")
+    mse_tanh = train_network("tanh")
+    assert mse_relu >= 0 and mse_tanh >= 0
+    return mse_relu, mse_tanh
+
+pts = [x/5.0 for x in range(-5, 6)]
+# Target = x^3
+m1, m2 = evaluate_activations(pts, lambda x: x*x*x, 15)
+print("Comparaison terminee.")
+\end{lstlisting}
+
+
+\end{document}

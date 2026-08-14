@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-08-14] : [Upsert/Création] du Jalon 60 - Livrable IA T5 : Preuve du théorème d'approximation universelle. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-13] : [Upsert/Création] du Jalon 59 - Topologie des espaces de fonctions. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-12] : [Upsert/Création] du Jalon 57 - Théorème du point fixe de Banach. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-11] : [Upsert/Création] du Jalon 56 - Espaces métriques complets. Status: Terminé.
