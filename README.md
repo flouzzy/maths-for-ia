@@ -418,6 +418,8 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
+- [2026-08-14] : [Upsert/Création] du Jalon 59 - Topologie des espaces de fonctions et Arzelà-Ascoli. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+
 - [2026-08-12] : [Upsert/Création] du Jalon 58 - Théorème de Baire. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-11] : [Upsert/Création] du Jalon 56 - Espaces métriques complets. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 

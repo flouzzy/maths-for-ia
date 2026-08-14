@@ -1,27 +1,52 @@
-# Exercice 7 : Opérateurs à noyau et compacité
+# Exercice 7 : Densité et convergence
+
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
 
 ## Énoncé
-Soit $K \in \mathcal{C}([0, 1] \times [0, 1], \mathbb{R})$.
-On définit l'opérateur $T : \mathcal{C}([0, 1], \mathbb{R}) \to \mathcal{C}([0, 1], \mathbb{R})$ par :
-$$(Tf)(x) = \int_0^1 K(x, y) f(y) dy$$
-Montrer que si $B$ est la boule unité fermée de $\mathcal{C}([0, 1], \mathbb{R})$, alors $T(B)$ est relativement compact.
 
-## Correction Détaillée
+Soit $(f_n)_{n\in\mathbb{N}}$ une suite de fonctions réelles, équicontinues sur $[0, 1]$.
+On suppose de plus qu'il existe une partie dénombrable dense $D \subset [0, 1]$ telle que pour tout $x \in D$, la suite numérique $(f_n(x))$ converge.
+Montrer que la suite $(f_n)$ converge uniformément sur tout l'intervalle $[0, 1]$.
 
-On pose $\mathcal{F} = T(B) = \{Tf \mid \|f\|_\infty \le 1\}$. On veut appliquer Arzelà-Ascoli.
-Puisque $K$ est continue sur le compact $[0, 1] \times [0, 1]$, $K$ est bornée. Posons $M = \sup |K(x, y)|$.
-$K$ est aussi uniformément continue sur ce compact (théorème de Heine).
+*Indice : Ce résultat est l'étape finale de la démonstration constructive du théorème d'Arzelà-Ascoli.*
 
-1. **Bornitude ponctuelle :**
-Soit $g \in \mathcal{F}$, il existe $f \in B$ tel que $g = Tf$.
-$|g(x)| = \left|\int_0^1 K(x, y) f(y) dy\right| \le \int_0^1 |K(x, y)| \cdot |f(y)| dy \le \int_0^1 M \cdot 1 dy = M$.
-Donc pour tout $x$, $\{g(x) \mid g \in \mathcal{F}\} \subset [-M, M]$, qui est relativement compact dans $\mathbb{R}$.
+## Résolution Détaillée
 
-2. **Équicontinuité :**
-$|g(x_1) - g(x_2)| = \left|\int_0^1 (K(x_1, y) - K(x_2, y))f(y) dy\right| \le \int_0^1 |K(x_1, y) - K(x_2, y)| dy$.
-Par uniforme continuité de $K$, pour tout $\epsilon > 0$, il existe $\delta > 0$ tel que $\|(x_1, y) - (x_2, y)\| = |x_1 - x_2| < \delta \implies |K(x_1, y) - K(x_2, y)| < \epsilon$.
-Donc $|x_1 - x_2| < \delta \implies |g(x_1) - g(x_2)| \le \int_0^1 \epsilon dy = \epsilon$.
-Ceci est vrai indépendamment de $f \in B$, donc $\mathcal{F}$ est équicontinue.
+Pour montrer la convergence uniforme, nous allons montrer que $(f_n)$ est une suite de Cauchy pour la norme uniforme. Comme l'espace des fonctions continues sur un compact à valeurs dans $\mathbb{R}$ est complet (Banach), cela prouvera la convergence uniforme.
 
-3. **Conclusion :**
-Par Arzelà-Ascoli, $\mathcal{F}$ est relativement compacte. $T$ est un opérateur compact.
+Fixons $\epsilon > 0$.
+
+### 1. Utilisation de l'équicontinuité
+
+Puisque la suite $(f_n)$ est équicontinue sur le compact $[0, 1]$, elle est uniformément équicontinue (théorème de Heine généralisé).
+Il existe donc $\delta > 0$ tel que :
+$$ \forall n \in \mathbb{N}, \forall x, y \in [0, 1], \quad |x - y| < \delta \implies |f_n(x) - f_n(y)| < \frac{\epsilon}{3} $$
+
+### 2. Discrétisation par la partie dense
+
+Le segment $[0, 1]$ est compact. Les boules ouvertes $B(y, \delta)$ pour $y \in [0, 1]$ en forment un recouvrement. De ce recouvrement, on peut extraire un sous-recouvrement fini. Mieux encore, $D$ étant dense dans $[0, 1]$, on peut choisir un sous-ensemble fini $A = \{a_1, a_2, \ldots, a_K\} \subset D$ tel que $[0, 1] \subset \bigcup_{i=1}^K B(a_i, \delta)$.
+Concrètement, cela signifie que pour tout $x \in [0, 1]$, il existe $a_i \in A$ tel que $|x - a_i| < \delta$.
+
+### 3. Convergence sur l'ensemble fini
+
+L'ensemble $A \subset D$ est fini (de cardinal $K$). Par hypothèse, pour tout $a_i \in A$, la suite $(f_n(a_i))$ converge.
+La convergence d'une suite réelle implique qu'elle est de Cauchy. Donc, pour chaque $a_i$, il existe un rang $N_i$ tel que pour tous $p, q \ge N_i$, $|f_p(a_i) - f_q(a_i)| < \frac{\epsilon}{3}$.
+Posons $N = \max(N_1, \ldots, N_K)$. Puisque le maximum porte sur un nombre fini d'éléments, $N$ est bien un entier défini, et pour tous $p, q \ge N$, on a :
+$$ \forall i \in \{1, \ldots, K\}, \quad |f_p(a_i) - f_q(a_i)| < \frac{\epsilon}{3} $$
+
+### 4. Recollage : La méthode des trois epsilons
+
+Soit $x \in [0, 1]$ quelconque. Il existe $a_i \in A$ tel que $|x - a_i| < \delta$.
+Soient $p, q \ge N$. Évaluons l'écart global par l'inégalité triangulaire :
+$$ |f_p(x) - f_q(x)| \le |f_p(x) - f_p(a_i)| + |f_p(a_i) - f_q(a_i)| + |f_q(a_i) - f_q(x)| $$
+Détaillons chaque terme :
+- Par équicontinuité (car $|x - a_i| < \delta$), $|f_p(x) - f_p(a_i)| < \frac{\epsilon}{3}$.
+- Par la condition de Cauchy ponctuelle au point $a_i$ (pour $p, q \ge N$), $|f_p(a_i) - f_q(a_i)| < \frac{\epsilon}{3}$.
+- Par équicontinuité pour l'indice $q$, $|f_q(a_i) - f_q(x)| < \frac{\epsilon}{3}$.
+
+En somsommant, nous obtenons pour tout $x \in [0, 1]$ et tous $p, q \ge N$ :
+$$ |f_p(x) - f_q(x)| < \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} = \epsilon $$
+Le rang $N$ ne dépendant pas de $x$, la propriété :
+$$ \forall \epsilon > 0, \exists N \in \mathbb{N}, \forall p, q \ge N, \sup_{x \in [0, 1]} |f_p(x) - f_q(x)| \le \epsilon $$
+est démontrée. La suite $(f_n)$ est donc une suite de Cauchy pour la norme uniforme sur $[0, 1]$.
+L'espace $\mathcal{C}([0, 1], \mathbb{R})$ muni de $\| \cdot \|_\infty$ étant complet, la suite de Cauchy $(f_n)$ converge uniformément. $\blacksquare$

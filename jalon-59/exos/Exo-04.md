@@ -1,21 +1,40 @@
-# Exercice 4 : Norme de la convergence uniforme
+# Exercice 4 : Famille Lipschitzienne et compacité
+
+**Difficulté :** $\bigstar\bigstar\star\star\star$
 
 ## Énoncé
-On se place dans l'espace $\mathcal{C}([0, 1], \mathbb{R})$ muni de la norme $\|f\|_\infty = \sup_{x \in [0, 1]} |f(x)|$.
-Soit $A = \left\lbrace f \in \mathcal{C}([0, 1], \mathbb{R}) \mid f(0) = 0 \text{ et } f(1) = 1 \right\rbrace$.
-Montrer que $A$ est un fermé de $(\mathcal{C}([0, 1], \mathbb{R}), \|\cdot\|_\infty)$.
 
-## Correction Détaillée
+Soit $\mathcal{F}$ l'ensemble des fonctions $f : [0, 1] \to \mathbb{R}$ telles que :
+1. $f(0) = 0$
+2. Pour tous $x, y \in [0, 1]$, $|f(x) - f(y)| \le L |x - y|$, où $L > 0$ est une constante fixée.
 
-Pour montrer que $A$ est fermé, on va utiliser la caractérisation séquentielle.
-Soit $(f_n)_{n\in\mathbb{N}}$ une suite de fonctions de $A$ convergeant vers $f$ dans $\mathcal{C}([0, 1], \mathbb{R})$ pour la norme infinie.
-Cela signifie que $f_n$ converge uniformément vers $f$ sur $[0, 1]$.
-La convergence uniforme implique la convergence simple. Donc, pour tout $x \in [0, 1]$, $f_n(x) \to f(x)$.
+Montrer que toute suite de fonctions $(f_n)_{n\in\mathbb{N}}$ extraite de $\mathcal{F}$ admet une sous-suite uniformément convergente sur $[0, 1]$.
 
-En particulier, pour $x = 0$, $f_n(0) \to f(0)$.
-Comme pour tout $n$, $f_n(0) = 0$ (car $f_n \in A$), on a nécessairement $f(0) = 0$.
+## Résolution Détaillée
 
-De même, pour $x = 1$, $f_n(1) \to f(1)$.
-Comme $f_n(1) = 1$ pour tout $n$, on a nécessairement $f(1) = 1$.
+Pour répondre à cette question, nous allons utiliser le théorème d'Arzelà-Ascoli. Il faut vérifier les deux conditions sur la famille $\mathcal{F}$ : l'équicontinuité et la bornitude ponctuelle.
 
-Donc $f \in A$. $A$ contient la limite de toutes ses suites convergentes, c'est donc un fermé.
+### 1. Équicontinuité
+
+L'hypothèse indique que toutes les fonctions de $\mathcal{F}$ sont $L$-Lipschitziennes avec la même constante $L$.
+Soit $\epsilon > 0$. Fixons $\delta = \frac{\epsilon}{L} > 0$.
+Pour toute fonction $f \in \mathcal{F}$ et pour tous $x, y \in [0, 1]$ tels que $|x - y| < \delta$, nous avons :
+$$ |f(x) - f(y)| \le L |x - y| < L \left( \frac{\epsilon}{L} \right) = \epsilon $$
+Le module de continuité uniforme $\delta$ dépend uniquement de $\epsilon$ et de $L$, mais est complètement indépendant du choix de $f \in \mathcal{F}$.
+La famille $\mathcal{F}$ est donc (uniformément) équicontinue sur le compact $[0, 1]$.
+
+### 2. Bornitude ponctuelle (et uniforme)
+
+Soit $x \in [0, 1]$. Pour toute $f \in \mathcal{F}$, appliquons la condition de Lipschitz entre le point $x$ et le point $0$ :
+$$ |f(x) - f(0)| \le L |x - 0| = L x $$
+Comme $f(0) = 0$ et $x \le 1$, nous obtenons :
+$$ |f(x)| \le L x \le L $$
+Ainsi, pour tout $x \in [0, 1]$, l'ensemble d'évaluation $\{f(x) \mid f \in \mathcal{F}\}$ est inclus dans l'intervalle fermé borné $[-L, L]$ de $\mathbb{R}$. Cet ensemble est donc relativement compact (par le théorème de Bolzano-Weierstrass dans $\mathbb{R}$).
+
+### Conclusion par Arzelà-Ascoli
+
+L'espace de départ $[0, 1]$ est un espace topologique compact.
+L'espace d'arrivée $\mathbb{R}$ est un espace métrique complet.
+La famille $\mathcal{F}$ est équicontinue et ponctuellement relativement compacte.
+D'après le théorème d'Arzelà-Ascoli, la famille $\mathcal{F}$ est relativement compacte dans l'espace des fonctions continues muni de la topologie de la convergence uniforme (norme infinie).
+Par conséquent, toute suite $(f_n)$ de $\mathcal{F}$ admet une sous-suite $(f_{\phi(n)})$ qui converge uniformément sur $[0, 1]$ vers une certaine fonction continue $f$. $\blacksquare$

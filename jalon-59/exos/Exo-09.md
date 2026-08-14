@@ -1,21 +1,47 @@
-# Exercice 9 : Une variante du Théorème de Dini
+# Exercice 9 : Équation différentielle et Théorème de Peano (Esquisse par Arzelà-Ascoli)
+
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
 ## Énoncé
-Soit $(f_n)$ une suite de fonctions continues sur un compact $K$.
-On suppose que pour tout $x \in K$, la suite $(f_n(x))$ est croissante et converge vers une limite continue $f(x)$.
-Montrer rigoureusement (sans citer directement Dini) que la convergence est uniforme.
 
-## Correction Détaillée
+Soit $F : \mathbb{R} \to \mathbb{R}$ une fonction continue, bornée par $M > 0$.
+Considérons l'équation intégrale de Volterra, associée au problème de Cauchy $y' = F(y)$ avec $y(0) = 0$ :
+$$ y(t) = \int_0^t F(y(s)) ds $$
+Soit $(y_n)_{n\in\mathbb{N}}$ la suite d'approximations d'Euler polygonalisées de pas $1/n$ définies sur un segment fixe $[0, T]$.
+Ces approximations vérifient la propriété de Lipschitz stricte : pour tout $n$, $|y'_n(t)| \le M$ (sauf aux points de cassure, où l'on prend les dérivées à droite et à gauche).
 
-On pose $g_n = f - f_n$. Les fonctions $g_n$ sont continues (car $f$ et $f_n$ le sont).
-Pour tout $x \in K$, $(f_n(x))$ est croissante vers $f(x)$, donc $(g_n(x))$ est décroissante vers $0$.
-Soit $\epsilon > 0$. Pour chaque $x \in K$, $\lim_{n \to \infty} g_n(x) = 0$, donc il existe $N_x$ tel que $0 \le g_{N_x}(x) < \epsilon/2$.
-Comme $g_{N_x}$ est continue en $x$, il existe un voisinage ouvert $V_x$ de $x$ tel que pour tout $y \in V_x$, $g_{N_x}(y) < \epsilon$.
-La famille $(V_x)_{x \in K}$ forme un recouvrement ouvert du compact $K$.
-Il existe donc un sous-recouvrement fini $V_{x_1}, \dots, V_{x_k}$.
-Soit $N = \max(N_{x_1}, \dots, N_{x_k})$.
-Soit $y \in K$. Il existe $i \in \{1, \dots, k\}$ tel que $y \in V_{x_i}$.
-Comme la suite $(g_n)$ est décroissante, pour $n \ge N \ge N_{x_i}$, on a :
-$0 \le g_n(y) \le g_N(y) \le g_{N_{x_i}}(y) < \epsilon$.
-Ainsi, pour tout $n \ge N$ et pour tout $y \in K$, $0 \le f(y) - f_n(y) < \epsilon$.
-Cela prouve que $\|f - f_n\|_\infty \to 0$, donc la convergence est uniforme.
+Montrer, par compacité, que cette suite admet une sous-suite convergeant vers une solution locale de l'équation différentielle (Théorème de Peano d'existence, sans unicité).
+
+## Résolution Détaillée
+
+Cet exercice est le sommet applicatif du théorème d'Arzelà-Ascoli dans l'étude des équations différentielles non-linéaires, où Cauchy-Lipschitz ne s'applique pas par manque de lipschitzianité de $F$.
+
+### 1. Propriétés de la suite d'approximations
+
+Considérons l'ensemble $\mathcal{F} = \{y_n \mid n \in \mathbb{N}^*\}$ des fonctions d'Euler sur le segment de temps compact $[0, T]$.
+Les approximations polygonales d'Euler sont, par construction formelle, continues et affines par morceaux.
+Sur chaque intervalle linéaire, la pente est fixée par la valeur de $F$, qui est bornée par $M$. Ainsi, pour tout $t$ régulier (hors des cassures), $|y'_n(t)| \le M$.
+Par le théorème des accroissements finis (ou en intégrant la dérivée de cette fonction continue), il en découle que toutes les approximations $y_n$ sont globalement $M$-Lipschitziennes sur $[0, T]$.
+
+### 2. Équicontinuité et Bornitude ponctuelle
+
+- **Équicontinuité :** Puisque toute fonction de la famille est $M$-Lipschitzienne, la famille est équicontinue sur le segment compact $[0, T]$. (Il suffit de prendre $\delta = \frac{\epsilon}{M}$ universel pour toutes les fonctions $y_n$).
+- **Bornitude ponctuelle :** Pour $t \in [0, T]$, la condition initiale impose $y_n(0) = 0$. Donc $|y_n(t)| = |y_n(t) - y_n(0)| \le M|t - 0| \le MT$.
+La famille est donc uniformément bornée, ce qui assure la condition ponctuelle exigée.
+
+### 3. Extraction d'une sous-suite convergente
+
+D'après le Théorème d'Arzelà-Ascoli appliqué sur le compact $[0, T]$, la famille $(y_n)$ est relativement compacte pour la norme uniforme. Il existe donc une sous-suite $(y_{\phi(n)})$ qui converge uniformément vers une fonction $y : [0, T] \to \mathbb{R}$ continue.
+
+### 4. Validation de la solution (Passage à la limite sous le signe intégrale)
+
+Il reste à montrer que cette fonction limite $y$ vérifie effectivement l'équation intégrale $y(t) = \int_0^t F(y(s)) ds$.
+Par la construction d'Euler (ce qui demande une petite majoration technique souvent omise en licence mais cruciale) :
+$$ y_n(t) = \int_0^t F(y_n(s_n)) ds + \epsilon_n(t) $$
+Où $s_n$ est l'arrondi du temps sur la grille, et l'erreur d'approximation du schéma $\epsilon_n$ tend uniformément vers $0$.
+Dans l'extraction, remplaçons $n$ par $\phi(n)$.
+Puisque $y_{\phi(n)}$ converge uniformément vers $y$, et que $F$ est continue (donc uniformément continue sur tout compact contenant les images de $y$), la composition $F(y_{\phi(n)}(s))$ converge uniformément vers $F(y(s))$ sur $[0, T]$.
+Par le théorème d'interversion de la limite et de l'intégrale (convergence uniforme sur le segment $[0, t] \subset [0, T]$), on passe à la limite sous le signe intégral :
+$$ \lim_{k\to\infty} \int_0^t F(y_{\phi(k)}(s_{\phi(k)})) ds = \int_0^t F(y(s)) ds $$
+Ainsi, on obtient $y(t) = \int_0^t F(y(s)) ds$.
+Par le théorème fondamental de l'analyse, l'intégrande étant continue, $y$ est de classe $\mathcal{C}^1$ et $y'(t) = F(y(t))$, avec $y(0) = 0$. $\blacksquare$
