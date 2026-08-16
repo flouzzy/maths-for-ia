@@ -159,7 +159,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 57](jalon-57/Jalon-57.md)** : Théorème du point fixe de Banach (contractions) et application à l'existence locale des solutions d'EDP. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 58](jalon-58/Jalon-58.md)** : Théorème de Baire (les espaces de l'impossible) et applications aux fonctions continues nulle part dérivables.
 - **[Jalon 59](jalon-59/Jalon-59.md)** : Topologie des espaces de fonctions, convergence compacte et théorème d'Arzelà-Ascoli.
-- **[Jalon 60](jalon-60/Jalon%2060%20%28Livrable%20IA%29.md)** : Livrable IA T5 : Preuve du théorème d'approximation universelle des réseaux de neurones (utilisation de la topologie de la convergence uniforme sur les compacts).
+- **[Jalon 60](jalon-60/Jalon-60.md)** : Livrable IA T5 : Preuve du théorème d'approximation universelle des réseaux de neurones (utilisation de la topologie de la convergence uniforme sur les compacts).
 
 </details>
 
@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-08-16] : [Upsert/Création] du Jalon 60 - Livrable IA T5 : Preuve du théorème d'approximation universelle. Status: Terminé.
 - [2026-08-13] : [Upsert/Création] du Jalon 59 - Topologie des espaces de fonctions. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-12] : [Upsert/Création] du Jalon 57 - Théorème du point fixe de Banach. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-11] : [Upsert/Création] du Jalon 56 - Espaces métriques complets. Status: Terminé.
