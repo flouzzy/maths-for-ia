@@ -1,0 +1,576 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1
+}
+
+\title{\Huge ALGÈBRES ET TRIBUS (SIGMA-ALGÈBRES) \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+\section{Genèse et motivation conceptuelle}
+
+La théorie de la mesure vise à assigner un "volume" (ou longueur, aire, masse, probabilité) aux sous-ensembles d'un espace donné. Intuitivement, on souhaiterait pouvoir mesurer n'importe quel sous-ensemble de $\mathbb{R}$. Cependant, l'axiome du choix et la géométrie de l'espace tridimensionnel conduisent à des paradoxes majeurs, tel que le paradoxe de Banach-Tarski, démontrant qu'il est impossible de définir une mesure consistante et invariante par translation sur toutes les parties de $\mathbb{R}^n$.
+
+Pour pallier ce problème fondamental, l'approche axiomatique moderne restreint la collection des sous-ensembles que l'on s'autorise à mesurer. On ne mesure pas tout, mais seulement une famille d'ensembles dits "mesurables". Cette famille doit posséder une structure algébrique robuste vis-à-vis des opérations ensemblistes fondamentales : le passage au complémentaire et l'union dénombrable, permettant ainsi de définir des processus limites continus. C'est l'essence même du concept de tribu, ou $\sigma$-algèbre, introduit formellement par Émile Borel et Henri Lebesgue.
+
+\section{Algèbres et Tribus}
+
+Soit $X$ un ensemble non vide.
+
+\subsection{Définitions et Théorèmes}
+
+\textbf{Définition (Algèbre) :}
+Une famille $\mathcal{A}$ de parties de $X$ est une \textbf{algèbre} sur $X$ si elle vérifie les trois propriétés suivantes :
+1. $X \in \mathcal{A}$.
+2. Stabilité par passage au complémentaire : Si $A \in \mathcal{A}$, alors $X \setminus A \in \mathcal{A}$.
+3. Stabilité par union finie : Si $A, B \in \mathcal{A}$, alors $A \cup B \in \mathcal{A}$.
+
+\textbf{Définition (Tribu ou $\sigma$-algèbre) :}
+Une famille $\mathcal{F}$ de parties de $X$ est une \textbf{tribu} (ou $\sigma$-algèbre) sur $X$ si elle vérifie :
+1. $X \in \mathcal{F}$.
+2. Stabilité par passage au complémentaire : Si $A \in \mathcal{F}$, alors $X \setminus A \in \mathcal{F}$.
+3. Stabilité par union dénombrable : Si $(A_n)_{n \in \mathbb{N}}$ est une suite d'éléments de $\mathcal{F}$, alors $\bigcup_{n \in \mathbb{N}} A_n \in \mathcal{F}$.
+
+Le couple $(X, \mathcal{F})$ est alors appelé un \textbf{espace mesurable}.
+
+\textbf{Exemples concrets (Tribus) :}
+1. La tribu triviale $\mathcal{F} = \{\emptyset, X\}$ est la plus petite tribu sur $X$.
+2. La tribu discrète $\mathcal{F} = \mathcal{P}(X)$ (l'ensemble des parties de $X$) est la plus grande tribu sur $X$.
+3. Soit $A \subset X$. La famille $\mathcal{F} = \{\emptyset, A, X \setminus A, X\}$ est une tribu.
+4. Sur $X = \{1, 2, 3\}$, la famille $\{\emptyset, \{1\}, \{2, 3\}, X\}$ est une tribu.
+5. Soit $X$ un ensemble infini. La famille des parties $A \subset X$ telles que $A$ est finie ou $X \setminus A$ est finie forme une algèbre, mais en général pas une tribu.
+6. La famille des parties $A \subset X$ telles que $A$ est dénombrable ou $X \setminus A$ est dénombrable forme une tribu.
+
+\textbf{Exemples concrets (Algèbre non Tribu) :}
+7. Sur $X = \mathbb{R}$, l'ensemble des réunions finies d'intervalles de la forme $]a, b]$, $]-\infty, a]$, ou $]a, +\infty[$ est une algèbre, mais non une tribu (l'union dénombrable de $]0, 1-1/n]$ donne $]0, 1[$ qui n'est pas de cette forme de base si l'on se restreint à des intervalles semi-ouverts de manière stricte, bien que l'algèbre soit définie différemment usuellement, disons l'algèbre engendrée par les intervalles semi-ouverts). Un meilleur exemple : l'algèbre des parties finies ou cofinies de $\mathbb{N}$. L'union des singletons $\{2n\}$ est l'ensemble des pairs, qui n'est ni fini ni cofini.
+
+\begin{tikzpicture}
+\node[draw, circle, minimum size=3cm] (X) at (0,0) {};
+\node at (0, 1) {$X$};
+\draw[fill=blue!20] (-0.5,-0.5) circle (0.8);
+\node at (-0.5,-0.5) {$A$};
+\draw[fill=red!20] (0.8,-0.2) circle (0.6);
+\node at (0.8,-0.2) {$B$};
+\node at (0, -2) {Dans une tribu, $A \cup B, A \cap B, X \setminus A$ sont inclus.};
+\end{tikzpicture}
+
+\subsection{Démonstrations et Propriétés}
+
+\textbf{Propriété :} Une tribu est stable par intersection dénombrable.
+\textit{Preuve détaillée :} Soit $(A_n)_{n \in \mathbb{N}}$ une suite d'éléments de $\mathcal{F}$. Nous voulons montrer que $\bigcap_{n \in \mathbb{N}} A_n \in \mathcal{F}$.
+D'après les lois de De Morgan, le complémentaire d'une intersection est l'union des complémentaires :
+$$ X \setminus \left( \bigcap_{n \in \mathbb{N}} A_n \right) = \bigcup_{n \in \mathbb{N}} (X \setminus A_n) $$
+Puisque $\mathcal{F}$ est une tribu :
+- Pour tout $n$, $A_n \in \mathcal{F}$, donc par stabilité par passage au complémentaire, $X \setminus A_n \in \mathcal{F}$.
+- Par stabilité par union dénombrable, $\bigcup_{n \in \mathbb{N}} (X \setminus A_n) \in \mathcal{F}$.
+- Enfin, par stabilité par passage au complémentaire appliquée à cette union, le complémentaire du complémentaire, c'est-à-dire $\bigcap_{n \in \mathbb{N}} A_n$, appartient à $\mathcal{F}$.
+
+\textbf{Propriété :} Toute tribu est une algèbre.
+\textit{Preuve détaillée :} La stabilité par union finie s'obtient en complétant une suite finie $A_1, \dots, A_k$ par l'ensemble vide : pour $n > k$, posons $A_n = \emptyset$. Puisque $\emptyset = X \setminus X \in \mathcal{F}$, la suite $(A_n)$ est dans $\mathcal{F}$, et $\bigcup_{n \in \mathbb{N}} A_n = \bigcup_{i=1}^k A_i \in \mathcal{F}$.
+
+\section{Tribu engendrée et Tribu de Borel}
+
+\subsection{Définitions et Théorèmes}
+
+Il est souvent difficile de décrire explicitement tous les éléments d'une tribu. On la définit plutôt à partir d'une famille d'ensembles générateurs.
+
+\textbf{Définition (Tribu engendrée) :}
+Soit $\mathcal{C}$ une classe (famille) de parties de $X$. La \textbf{tribu engendrée} par $\mathcal{C}$, notée $\sigma(\mathcal{C})$, est la plus petite tribu contenant $\mathcal{C}$. Formellement, c'est l'intersection de toutes les tribus contenant $\mathcal{C}$ :
+$$ \sigma(\mathcal{C}) = \bigcap \{ \mathcal{F} \text{ tribu sur } X \mid \mathcal{C} \subset \mathcal{F} \} $$
+
+\textbf{Définition (Tribu borélienne) :}
+Soit $(X, \mathcal{T})$ un espace topologique ($\mathcal{T}$ étant la famille des ouverts). La \textbf{tribu borélienne}, ou tribu de Borel, notée $\mathcal{B}(X)$, est la tribu engendrée par les ouverts de $X$ : $\mathcal{B}(X) = \sigma(\mathcal{T})$.
+Les éléments de $\mathcal{B}(X)$ sont appelés les \textbf{boréliens}.
+
+\textbf{Exemples concrets (Tribus engendrées) :}
+1. Si $\mathcal{C} = \{A\}$ avec $A \subsetneq X, A \neq \emptyset$, alors $\sigma(\mathcal{C}) = \{\emptyset, A, X \setminus A, X\}$.
+2. Sur $\mathbb{R}$, $\mathcal{B}(\mathbb{R})$ est générée par les ouverts $]a, b[$.
+3. L'ensemble $\{a\}$ est un borélien car $\{a\} = \bigcap_{n \in \mathbb{N}^*} ]a - \frac{1}{n}, a + \frac{1}{n}[$.
+4. Tout fermé est un borélien car complémentaire d'un ouvert.
+5. Sur un ensemble fini $X$, si on partitionne $X$ en $\{A_i\}$, la tribu engendrée par cette partition contient exactement les unions de ces éléments $A_i$.
+
+\subsection{Démonstrations}
+
+\textbf{Théorème :} La tribu engendrée $\sigma(\mathcal{C})$ existe et est bien une tribu.
+\textit{Preuve détaillée :}
+1. L'ensemble des tribus contenant $\mathcal{C}$ n'est pas vide, car la tribu des parties $\mathcal{P}(X)$ contient $\mathcal{C}$ et est une tribu.
+2. Montrons que l'intersection d'une famille quelconque de tribus $(\mathcal{F}_i)_{i \in I}$ est une tribu.
+   - $\forall i \in I, X \in \mathcal{F}_i$, donc $X \in \bigcap_{i \in I} \mathcal{F}_i$.
+   - Si $A \in \bigcap_{i \in I} \mathcal{F}_i$, alors $\forall i \in I, A \in \mathcal{F}_i$. Comme chaque $\mathcal{F}_i$ est une tribu, $\forall i \in I, X \setminus A \in \mathcal{F}_i$, d'où $X \setminus A \in \bigcap_{i \in I} \mathcal{F}_i$.
+   - Si $(A_n)$ est une suite dans l'intersection, elle est dans chaque $\mathcal{F}_i$, donc l'union est dans chaque $\mathcal{F}_i$, donc l'union est dans l'intersection.
+3. Ainsi $\sigma(\mathcal{C})$ est bien une tribu contenant $\mathcal{C}$, et c'est manifestement la plus petite pour l'inclusion.
+
+\textbf{Théorème :} Sur $\mathbb{R}$, la tribu borélienne $\mathcal{B}(\mathbb{R})$ est engendrée par la classe des intervalles semi-ouverts $\mathcal{C} = \{ ]-\infty, x] \mid x \in \mathbb{R} \}$.
+\textit{Preuve détaillée :}
+Notons $\mathcal{T}$ l'ensemble des ouverts de $\mathbb{R}$.
+- Montrons $\sigma(\mathcal{C}) \subset \mathcal{B}(\mathbb{R})$ : chaque intervalle $]-\infty, x]$ est un fermé, donc son complémentaire $]x, +\infty[$ est un ouvert. Ainsi, $]-\infty, x]$ appartient à $\mathcal{B}(\mathbb{R})$. Puisque $\sigma(\mathcal{C})$ est la plus petite tribu contenant $\mathcal{C}$, $\sigma(\mathcal{C}) \subset \mathcal{B}(\mathbb{R})$.
+- Montrons $\mathcal{B}(\mathbb{R}) \subset \sigma(\mathcal{C})$ :
+  Pour tout $a < b$, on peut écrire l'intervalle semi-ouvert $]a, b] = ]-\infty, b] \setminus ]-\infty, a] = ]-\infty, b] \cap (]-\infty, a])^c$. Donc $]a, b] \in \sigma(\mathcal{C})$.
+  L'intervalle ouvert $]a, b[$ s'écrit $]a, b[ = \bigcup_{n \geq 1} ]a, b - \frac{1}{n}]$. L'union étant dénombrable, $]a, b[ \in \sigma(\mathcal{C})$.
+  Puisque tout ouvert de $\mathbb{R}$ s'écrit comme une union dénombrable d'intervalles ouverts, tout ouvert est dans $\sigma(\mathcal{C})$. La tribu de Borel étant engendrée par les ouverts, $\mathcal{B}(\mathbb{R}) \subset \sigma(\mathcal{C})$.
+L'égalité est donc démontrée.
+
+\section{Applications en Théorie des Probabilités et IA}
+
+Dans la formalisation axiomatique de Kolmogorov (1933), un espace de probabilité est un triplet $(\Omega, \mathcal{F}, \mathbb{P})$.
+- $\Omega$ est l'univers (les réalisations possibles).
+- $\mathcal{F}$ est la tribu des événements (les ensembles auxquels on sait affecter une probabilité).
+- $\mathbb{P} : \mathcal{F} \to [0, 1]$ est la mesure de probabilité.
+
+En IA et en apprentissage automatique, les variables aléatoires (comme les poids d'un réseau ou les variables latentes dans un VAE) sont des fonctions mesurables.
+Définition : Une fonction $X : \Omega \to E$ entre deux espaces mesurables $(\Omega, \mathcal{F})$ et $(E, \mathcal{E})$ est dite \textbf{mesurable} si pour tout $B \in \mathcal{E}$, on a $X^{-1}(B) \in \mathcal{F}$.
+Cela garantit que l'on peut toujours demander la probabilité de l'événement $\{ X \in B \}$ !
+Les probabilités modernes sur des espaces complexes (espaces de fonctions, graphes) requièrent l'utilisation méticuleuse des tribus cylindriques et de la tribu borélienne pour assurer une assise rigoureuse.
+
+
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : La tribu grossière et discrète \quad $\bigstar\star\star\star\star$}
+
+
+\textbf{Énoncé :}
+Soit $X$ un ensemble. Démontrer que l'intersection de toutes les tribus sur $X$ est la tribu grossière $\{\emptyset, X\}$, et que l'union de toutes les tribus n'est pas nécessairement une tribu, mais que la tribu des parties $\mathcal{P}(X)$ est la plus grande.
+
+\textbf{Correction exhaustive pas-à-pas :}
+1. Soit $\mathfrak{F}$ l'ensemble de toutes les tribus sur $X$. Par définition, pour toute tribu $\mathcal{F} \in \mathfrak{F}$, on a $\emptyset \in \mathcal{F}$ et $X \in \mathcal{F}$.
+2. Par conséquent, $\{\emptyset, X\} \subset \bigcap_{\mathcal{F} \in \mathfrak{F}} \mathcal{F}$.
+3. De plus, $\mathcal{F}_0 = \{\emptyset, X\}$ est elle-même une tribu sur $X$, donc elle appartient à $\mathfrak{F}$. L'intersection est donc contenue dans $\mathcal{F}_0$.
+4. Ainsi, $\bigcap_{\mathcal{F} \in \mathfrak{F}} \mathcal{F} = \{\emptyset, X\}$.
+5. Pour l'union : soient $\mathcal{F}_1 = \{\emptyset, \{1\}, \{2, 3\}, \{1, 2, 3\}\}$ et $\mathcal{F}_2 = \{\emptyset, \{2\}, \{1, 3\}, \{1, 2, 3\}\}$ sur $X=\{1, 2, 3\}$. $\mathcal{F}_1 \cup \mathcal{F}_2$ contient $\{1\}$ et $\{2\}$, mais pas leur union $\{1, 2\}$. Donc l'union de tribus n'est pas une tribu.
+
+
+
+\subsection*{Exercice 2 : Tribu engendrée par un sous-ensemble \quad $\bigstar\bigstar\star\star\star$}
+
+
+\textbf{Énoncé :}
+Déterminer explicitement la tribu $\sigma(\{A\})$ engendrée par une partie $A \subset X$.
+
+\textbf{Correction exhaustive pas-à-pas :}
+1. Une tribu contenant $A$ doit contenir $A$.
+2. Par stabilité au complémentaire, elle doit contenir $A^c = X \setminus A$.
+3. Elle doit contenir l'ensemble vide $\emptyset$ et l'espace entier $X$.
+4. Posons $\mathcal{T} = \{\emptyset, A, A^c, X\}$.
+5. Vérifions que $\mathcal{T}$ est une tribu :
+   - $X \in \mathcal{T}$.
+   - Stabilité par complémentaire : $A^c \in \mathcal{T}, (A^c)^c = A \in \mathcal{T}, \emptyset^c = X \in \mathcal{T}, X^c = \emptyset \in \mathcal{T}$.
+   - Stabilité par union : $A \cup A^c = X$, $A \cup \emptyset = A$, etc. Toutes les unions possibles d'éléments de $\mathcal{T}$ restent dans $\mathcal{T}$.
+6. $\mathcal{T}$ est donc une tribu contenant $A$. C'est manifestement la plus petite, car toute tribu contenant $A$ doit contenir ces quatre éléments.
+7. Ainsi, $\sigma(\{A\}) = \{\emptyset, A, A^c, X\}$.
+
+
+
+\subsection*{Exercice 3 : Tribu co-dénombrable \quad $\bigstar\bigstar\star\star\star$}
+
+
+\textbf{Énoncé :}
+Soit $X$ un ensemble non dénombrable. Montrer que $\mathcal{F} = \{A \subset X \mid A \text{ est dénombrable ou } A^c \text{ est dénombrable}\}$ est une tribu sur $X$.
+
+\textbf{Correction exhaustive pas-à-pas :}
+1. L'ensemble vide $\emptyset$ est fini (donc dénombrable), donc $\emptyset \in \mathcal{F}$, et son complémentaire $X \in \mathcal{F}$.
+2. Stabilité par complémentaire : Si $A \in \mathcal{F}$, alors par définition, soit $A$ est dénombrable (donc le complémentaire de $A^c$ est dénombrable, d'où $A^c \in \mathcal{F}$), soit $A^c$ est dénombrable (donc $A^c \in \mathcal{F}$).
+3. Stabilité par union dénombrable : Soit $(A_n)_{n \in \mathbb{N}}$ une suite d'éléments de $\mathcal{F}$.
+   - Cas 1 : Pour tout $n$, $A_n$ est dénombrable. Une réunion dénombrable d'ensembles dénombrables est dénombrable, donc $\bigcup A_n$ est dénombrable, d'où $\bigcup A_n \in \mathcal{F}$.
+   - Cas 2 : Il existe au moins un entier $k$ tel que $A_k^c$ est dénombrable.
+     Alors $(\bigcup A_n)^c = \bigcap A_n^c \subset A_k^c$.
+     Puisque $A_k^c$ est dénombrable, tout sous-ensemble de $A_k^c$ est dénombrable.
+     Donc $(\bigcup A_n)^c$ est dénombrable, ce qui implique $\bigcup A_n \in \mathcal{F}$.
+4. Conclusion : $\mathcal{F}$ est bien une tribu.
+
+
+
+\subsection*{Exercice 4 : Propriétés de l'opérateur $\sigma$ \quad $\bigstar\bigstar\bigstar\star\star$}
+
+
+\textbf{Énoncé :}
+Soient $\mathcal{C}_1$ et $\mathcal{C}_2$ deux familles de parties de $X$. Montrer que :
+1. Si $\mathcal{C}_1 \subset \mathcal{C}_2$, alors $\sigma(\mathcal{C}_1) \subset \sigma(\mathcal{C}_2)$.
+2. $\sigma(\sigma(\mathcal{C}_1)) = \sigma(\mathcal{C}_1)$.
+
+\textbf{Correction exhaustive pas-à-pas :}
+1. $\sigma(\mathcal{C}_2)$ est une tribu qui contient $\mathcal{C}_2$. Puisque $\mathcal{C}_1 \subset \mathcal{C}_2$, on a $\mathcal{C}_1 \subset \sigma(\mathcal{C}_2)$.
+   Or $\sigma(\mathcal{C}_1)$ est l'intersection de toutes les tribus contenant $\mathcal{C}_1$. Comme $\sigma(\mathcal{C}_2)$ est l'une de ces tribus, on a nécessairement $\sigma(\mathcal{C}_1) \subset \sigma(\mathcal{C}_2)$.
+2. Posons $\mathcal{T} = \sigma(\mathcal{C}_1)$. $\mathcal{T}$ est une tribu. L'opérateur $\sigma$ associe à une famille la plus petite tribu la contenant. Puisque $\mathcal{T}$ est déjà une tribu, la plus petite tribu contenant $\mathcal{T}$ est $\mathcal{T}$ elle-même.
+   Ainsi, $\sigma(\sigma(\mathcal{C}_1)) = \sigma(\mathcal{T}) = \mathcal{T} = \sigma(\mathcal{C}_1)$.
+
+
+
+\subsection*{Exercice 5 : Tribu trace \quad $\bigstar\bigstar\bigstar\star\star$}
+
+
+\textbf{Énoncé :}
+Soit $(X, \mathcal{F})$ un espace mesurable et $Y \subset X$ un sous-ensemble (pas nécessairement dans $\mathcal{F}$). Démontrer que $\mathcal{F}_Y = \{A \cap Y \mid A \in \mathcal{F}\}$ est une tribu sur $Y$, appelée tribu trace.
+
+\textbf{Correction exhaustive pas-à-pas :}
+1. L'ensemble entier pour $Y$ est $Y$. Or $X \in \mathcal{F}$ et $X \cap Y = Y$, donc $Y \in \mathcal{F}_Y$.
+2. Stabilité par complémentaire relatif : Soit $B \in \mathcal{F}_Y$. Il existe $A \in \mathcal{F}$ tel que $B = A \cap Y$.
+   Le complémentaire de $B$ dans $Y$ est $Y \setminus B = Y \setminus (A \cap Y) = Y \setminus A = (X \setminus A) \cap Y$.
+   Puisque $\mathcal{F}$ est une tribu, $X \setminus A \in \mathcal{F}$. Donc $(X \setminus A) \cap Y \in \mathcal{F}_Y$.
+3. Stabilité par union dénombrable : Soit $(B_n)_{n \in \mathbb{N}}$ une suite dans $\mathcal{F}_Y$. Pour tout $n$, il existe $A_n \in \mathcal{F}$ tel que $B_n = A_n \cap Y$.
+   $\bigcup_{n \in \mathbb{N}} B_n = \bigcup_{n \in \mathbb{N}} (A_n \cap Y) = \left( \bigcup_{n \in \mathbb{N}} A_n \right) \cap Y$.
+   Puisque $\mathcal{F}$ est une tribu, $\bigcup A_n \in \mathcal{F}$. Ainsi, l'union des $B_n$ appartient à $\mathcal{F}_Y$.
+4. $\mathcal{F}_Y$ est bien une tribu sur $Y$.
+
+
+
+\subsection*{Exercice 6 : Atomes d'une tribu \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+
+\textbf{Énoncé :}
+Soit $X$ un ensemble et $\mathcal{F}$ une tribu engendrée par une partition dénombrable $\{E_n\}_{n \in \mathbb{N}}$ de $X$ ($E_n \neq \emptyset$, disjoints, réunion vaut $X$). Montrer que tout élément de $\mathcal{F}$ est une union (éventuellement vide ou dénombrable) d'éléments $E_n$.
+
+\textbf{Correction exhaustive pas-à-pas :}
+1. Soit $\mathcal{T}$ l'ensemble des unions, finies, dénombrables ou vides, des éléments $E_n$.
+2. Montrons que $\mathcal{T}$ est une tribu.
+   - $\emptyset \in \mathcal{T}$ (union vide). $X \in \mathcal{T}$ car $X = \bigcup E_n$.
+   - Stabilité par complémentaire : Soit $A \in \mathcal{T}$, $A = \bigcup_{n \in J} E_n$ où $J \subset \mathbb{N}$. Le complémentaire de $A$ est $X \setminus A = \bigcup_{n \notin J} E_n$ (puisque les $E_n$ forment une partition). Cette union appartient bien à $\mathcal{T}$.
+   - Stabilité par union dénombrable : Une union dénombrable d'unions dénombrables d'éléments $E_n$ reste une union dénombrable d'éléments $E_n$.
+3. $\mathcal{T}$ est donc une tribu. De plus, chaque $E_k \in \mathcal{T}$, donc $\mathcal{T}$ contient la partition.
+4. Comme $\mathcal{F}$ est la plus petite tribu contenant la partition, on a $\mathcal{F} \subset \mathcal{T}$.
+5. D'autre part, toute tribu contenant les $E_n$ doit contenir leurs unions dénombrables, donc $\mathcal{T} \subset \mathcal{F}$.
+6. Par conséquent, $\mathcal{F} = \mathcal{T}$. Les $E_n$ sont appelés les atomes de cette tribu.
+
+
+
+\subsection*{Exercice 7 : Générateurs de la tribu borélienne \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+
+\textbf{Énoncé :}
+Démontrer que la tribu de Borel sur $\mathbb{R}$, $\mathcal{B}(\mathbb{R})$, est engendrée par les intervalles ouverts rationnels $]p, q[$ avec $p, q \in \mathbb{Q}$.
+
+\textbf{Correction exhaustive pas-à-pas :}
+1. Notons $\mathcal{D} = \{ ]p, q[ \mid p, q \in \mathbb{Q}, p < q \}$. Puisque chaque intervalle $]p, q[$ est un ouvert, il appartient à $\mathcal{B}(\mathbb{R})$. Donc $\sigma(\mathcal{D}) \subset \mathcal{B}(\mathbb{R})$.
+2. Pour l'inclusion inverse, il suffit de montrer que tout ouvert de $\mathbb{R}$ appartient à $\sigma(\mathcal{D})$.
+3. Tout ouvert de $\mathbb{R}$ peut s'écrire comme une réunion au plus dénombrable d'intervalles ouverts disjoints : $U = \bigcup_{i} ]a_i, b_i[$.
+4. Soit un intervalle quelconque $]a, b[$. Par la densité de $\mathbb{Q}$ dans $\mathbb{R}$, on peut trouver deux suites de rationnels $(p_n)$ et $(q_n)$ telles que $p_n \downarrow a$ et $q_n \uparrow b$ avec $p_n < q_n$.
+5. On a alors $]a, b[ = \bigcup_{n} ]p_n, q_n[$. Chaque $]p_n, q_n[ \in \mathcal{D} \subset \sigma(\mathcal{D})$, donc l'union dénombrable $]a, b[ \in \sigma(\mathcal{D})$.
+6. Ainsi, $U \in \sigma(\mathcal{D})$. Puisque $\mathcal{B}(\mathbb{R})$ est générée par les ouverts, $\mathcal{B}(\mathbb{R}) \subset \sigma(\mathcal{D})$.
+7. En conclusion, $\mathcal{B}(\mathbb{R}) = \sigma(\mathcal{D})$.
+
+
+
+\subsection*{Exercice 8 : Image réciproque de tribu \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+
+\textbf{Énoncé :}
+Soit $f : X \to Y$ une application et $\mathcal{F}_Y$ une tribu sur $Y$. Montrer que l'ensemble $f^{-1}(\mathcal{F}_Y) = \{f^{-1}(B) \mid B \in \mathcal{F}_Y\}$ est une tribu sur $X$.
+
+\textbf{Correction exhaustive pas-à-pas :}
+1. L'espace complet : $Y \in \mathcal{F}_Y$. L'image réciproque est $f^{-1}(Y) = X$. Donc $X \in f^{-1}(\mathcal{F}_Y)$.
+2. Stabilité par complémentaire : Soit $A \in f^{-1}(\mathcal{F}_Y)$. Il existe $B \in \mathcal{F}_Y$ tel que $A = f^{-1}(B)$.
+   Le complémentaire est $X \setminus A = X \setminus f^{-1}(B) = f^{-1}(Y \setminus B)$.
+   Puisque $\mathcal{F}_Y$ est une tribu, $Y \setminus B \in \mathcal{F}_Y$. Donc $X \setminus A \in f^{-1}(\mathcal{F}_Y)$.
+3. Stabilité par union dénombrable : Soit $(A_n)_{n \in \mathbb{N}}$ une suite dans $f^{-1}(\mathcal{F}_Y)$. Il existe une suite $(B_n)$ dans $\mathcal{F}_Y$ telle que $A_n = f^{-1}(B_n)$.
+   $\bigcup A_n = \bigcup f^{-1}(B_n) = f^{-1}(\bigcup B_n)$.
+   Puisque $\mathcal{F}_Y$ est une tribu, $\bigcup B_n \in \mathcal{F}_Y$. Ainsi, $\bigcup A_n \in f^{-1}(\mathcal{F}_Y)$.
+4. Conclusion : $f^{-1}(\mathcal{F}_Y)$ est bien une tribu sur $X$.
+
+
+
+\subsection*{Exercice 9 : Tribu produit (Introduction) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+
+\textbf{Énoncé :}
+Soient $(X, \mathcal{A})$ et $(Y, \mathcal{B})$ deux espaces mesurables. On note $\mathcal{R} = \{A \times B \mid A \in \mathcal{A}, B \in \mathcal{B}\}$ la famille des pavés mesurables. Montrer que $\mathcal{R}$ n'est en général pas une algèbre (donc pas une tribu).
+
+\textbf{Correction exhaustive pas-à-pas :}
+1. Soient $A \times B \in \mathcal{R}$. Son complémentaire dans $X \times Y$ est :
+   $(X \times Y) \setminus (A \times B) = ((X \setminus A) \times Y) \cup (X \times (Y \setminus B))$.
+2. En général, la réunion de deux pavés n'est pas un pavé. Prenons $X = Y = \mathbb{R}$, avec $\mathcal{A} = \mathcal{B} = \mathcal{B}(\mathbb{R})$.
+   Soit $A = [0, 1]$ et $B = [0, 1]$. $A \times B$ est le carré unité.
+3. Son complémentaire est la région plane privée du carré. Cette région ne peut pas s'écrire sous la forme d'un unique produit cartésien $U \times V$.
+4. Puisque le complémentaire d'un élément de $\mathcal{R}$ n'est pas dans $\mathcal{R}$, la famille $\mathcal{R}$ n'est pas stable par passage au complémentaire.
+5. Elle n'est donc pas une algèbre, et \textit{a fortiori} pas une tribu.
+
+
+
+\subsection*{Exercice 10 : Lemme des classes monotones (Cas simplifé) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+
+\textbf{Énoncé :}
+Une classe monotone $\mathcal{M}$ est stable par limites croissantes dénombrables et limites décroissantes dénombrables. Démontrer que si une algèbre $\mathcal{A}$ est une classe monotone, alors c'est une tribu.
+
+\textbf{Correction exhaustive pas-à-pas :}
+1. On sait que $\mathcal{A}$ est une algèbre : elle contient $X$, est stable par complémentaire et par union finie.
+2. Pour montrer que c'est une tribu, il suffit de prouver la stabilité par union dénombrable.
+3. Soit $(A_n)_{n \in \mathbb{N}}$ une suite d'éléments de $\mathcal{A}$.
+4. Posons $B_N = \bigcup_{n=0}^N A_n$. Puisque $\mathcal{A}$ est une algèbre (stable par union finie), $B_N \in \mathcal{A}$ pour tout $N$.
+5. La suite $(B_N)$ est croissante au sens de l'inclusion : $B_0 \subset B_1 \subset B_2 \dots$
+6. La limite croissante de cette suite est exactement $\bigcup_{n=0}^{\infty} A_n$.
+7. Puisque $\mathcal{A}$ est une classe monotone, la limite croissante d'une suite d'éléments de $\mathcal{A}$ appartient à $\mathcal{A}$.
+8. Par conséquent, $\bigcup_{n=0}^{\infty} A_n \in \mathcal{A}$.
+9. L'algèbre $\mathcal{A}$ est donc stable par union dénombrable, ce qui prouve que c'est une tribu.
+
+
+
+
+
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Implémentation ensembliste naïve d'une tribu finie}
+
+\begin{lstlisting}
+
+# Représentation d'une tribu générée par une partition finie
+def generate_algebra(partition):
+    # La partition est une liste de sets disjoints
+    universe = set().union(*partition)
+
+    # Générer toutes les unions possibles (2^n éléments)
+    # L'union de combinaisons de la partition garantit la structure de tribu
+    n = len(partition)
+    algebra = []
+
+    for i in range(1 << n):
+        element = set()
+        for j in range(n):
+            if (i & (1 << j)):
+                element = element.union(partition[j])
+        algebra.append(frozenset(element))
+
+    return set(algebra)
+
+# Validation
+P = [{"a", "b"}, {"c"}, {"d", "e"}]
+tribu = generate_algebra(P)
+
+print("Taille de la tribu :", len(tribu)) # 2^3 = 8
+assert len(tribu) == 8
+
+# Vérification de la stabilité par complémentaire
+universe = frozenset().union(*P)
+for A in tribu:
+    complement = universe - A
+    assert complement in tribu
+print("Stabilité par complémentaire validée.")
+
+\end{lstlisting}
+
+
+\subsection*{TP 2 : Génération de la tribu borélienne sur une grille discrète}
+
+\begin{lstlisting}
+
+# Approximation discrète de la tribu borélienne 1D
+def generate_topology_on_grid(grid_size):
+    # Les ouverts de base sont les 'intervalles ouverts' i.e. segments continus sans bords
+    # Sur une grille discrète, on simule l'ouverture stricte.
+    base_open_sets = []
+    for start in range(grid_size):
+        for end in range(start + 2, grid_size + 1):
+            # Un segment ouvert nécessite au moins 1 point strict entre start et end
+            base_open_sets.append(frozenset(range(start + 1, end - 1)))
+
+    return base_open_sets
+
+def closure_union_complement(generator_sets, universe):
+    current = set(generator_sets)
+    current.add(frozenset(universe))
+    current.add(frozenset())
+
+    added = True
+    while added:
+        added = False
+        new_sets = set()
+
+        # Complémentaire
+        for A in current:
+            Ac = frozenset(universe - A)
+            if Ac not in current and Ac not in new_sets:
+                new_sets.add(Ac)
+
+        # Unions paires
+        current_list = list(current)
+        for i in range(len(current_list)):
+            for j in range(i, len(current_list)):
+                union_set = current_list[i].union(current_list[j])
+                if union_set not in current and union_set not in new_sets:
+                    new_sets.add(union_set)
+
+        if new_sets:
+            current.update(new_sets)
+            added = True
+
+    return current
+
+grid_size = 5
+universe = set(range(grid_size))
+base = generate_topology_on_grid(grid_size)
+borel = closure_union_complement(base, universe)
+
+print("Taille de la tribu borélienne discrète :", len(borel))
+# Dans ce cas fini, Borel = Parties(X) car les singletons sont des fermés, donc leur union donne tout.
+assert len(borel) == 2**grid_size
+
+\end{lstlisting}
+
+
+\subsection*{TP 3 : Validation de la stabilité d'une tribu (Automatisée)}
+
+\begin{lstlisting}
+
+def is_algebra(family, universe):
+    # family est un set de frozensets
+
+    # 1. Vérifier si l'univers et l'ensemble vide sont présents
+    if frozenset(universe) not in family or frozenset() not in family:
+        return False
+
+    # 2. Vérifier la stabilité par complémentaire
+    for A in family:
+        complement = frozenset(universe - A)
+        if complement not in family:
+            return False
+
+    # 3. Vérifier la stabilité par union finie
+    for A in family:
+        for B in family:
+            union_set = A.union(B)
+            if union_set not in family:
+                return False
+
+    return True
+
+# Test 1 : L'ensemble des parties
+U1 = {1, 2}
+F1 = {frozenset(), frozenset({1}), frozenset({2}), frozenset({1, 2})}
+assert is_algebra(F1, U1) == True
+
+# Test 2 : Manque un complémentaire
+F2 = {frozenset(), frozenset({1}), frozenset({1, 2})}
+assert is_algebra(F2, U1) == False
+
+# Test 3 : Manque l'union
+U3 = {1, 2, 3}
+F3 = {frozenset(), frozenset({1}), frozenset({2, 3}), frozenset({2}), frozenset({1, 3}), frozenset(U3)}
+assert is_algebra(F3, U3) == False # {1} U {2} = {1, 2} n'est pas dans F3
+
+print("Vérificateur d'algèbre opérationnel.")
+
+\end{lstlisting}
+
+
+\subsection*{TP 4 : Approximation de la tribu trace}
+
+\begin{lstlisting}
+
+def trace_algebra(family, subset):
+    # Génère la tribu trace sur le sous-ensemble 'subset'
+    trace = set()
+    for A in family:
+        intersection = frozenset(A.intersection(subset))
+        trace.add(intersection)
+    return trace
+
+# Définissons un univers et une tribu valide (générée par une partition)
+universe = {1, 2, 3, 4, 5, 6}
+partition = [{"1", "2"}, {"3", "4"}, {"5", "6"}]
+# Remplace les strings par des int pour matcher l'univers
+P = [{1, 2}, {3, 4}, {5, 6}]
+
+F = set()
+F.add(frozenset())
+F.add(frozenset(universe))
+F.add(frozenset({1, 2}))
+F.add(frozenset({3, 4}))
+F.add(frozenset({5, 6}))
+F.add(frozenset({1, 2, 3, 4}))
+F.add(frozenset({1, 2, 5, 6}))
+F.add(frozenset({3, 4, 5, 6}))
+
+subset = {2, 3, 6}
+trace = trace_algebra(F, subset)
+
+print("Éléments de la tribu trace :")
+for el in trace:
+    print(set(el))
+
+# Validation : la trace doit elle-même être une tribu sur 'subset'
+def is_algebra_trace(family, local_universe):
+    if frozenset(local_universe) not in family: return False
+    for A in family:
+        if frozenset(local_universe - A) not in family: return False
+        for B in family:
+            if A.union(B) not in family: return False
+    return True
+
+assert is_algebra_trace(trace, subset) == True
+print("Propriété de la tribu trace validée.")
+
+\end{lstlisting}
+
+
+\subsection*{TP 5 : Image réciproque d'une algèbre}
+
+\begin{lstlisting}
+
+def inverse_image_algebra(mapping, Y_family, domain):
+    # mapping est un dictionnaire représentant une fonction de domain dans codomain
+    inv_family = set()
+
+    for B in Y_family:
+        preimage = set()
+        for x in domain:
+            if mapping.get(x) in B:
+                preimage.add(x)
+        inv_family.add(frozenset(preimage))
+
+    return inv_family
+
+# Soit f : X -> Y
+X = {"a", "b", "c", "d"}
+Y = {1, 2, 3}
+f = {"a": 1, "b": 1, "c": 2, "d": 3}
+
+# Soit F_Y une tribu sur Y (la tribu des parties)
+F_Y = {
+    frozenset(), frozenset({1}), frozenset({2}), frozenset({3}),
+    frozenset({1, 2}), frozenset({1, 3}), frozenset({2, 3}), frozenset(Y)
+}
+
+inv_F = inverse_image_algebra(f, F_Y, X)
+
+# Validation que l'image réciproque est une tribu sur X
+def validate_algebra(family, univ):
+    if frozenset(univ) not in family: return False
+    for A in family:
+        if frozenset(univ - A) not in family: return False
+    for A in family:
+        for B in family:
+            if A.union(B) not in family: return False
+    return True
+
+assert validate_algebra(inv_F, X) == True
+print("L'image réciproque de la tribu a conservé sa structure.")
+
+\end{lstlisting}
+
+
+
+
+\end{document}
