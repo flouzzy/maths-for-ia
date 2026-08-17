@@ -1,14 +1,10 @@
----
-title: "Exo 05 : Continuité des opérateurs fonctionnels"
-difficulty: "$\bigstar\bigstar\bigstar\star\star$"
----
+## Exercice 5 : Mesure de Lebesgue et Hahn-Banach \quad $\bigstar\bigstar\bigstar\star\star$
 
-# Exo 05 : Continuité des opérateurs fonctionnels
+Lors de la preuve de Cybenko, justifier formellement pourquoi l'espace fonctionnel généré $S$ est dense si et seulement si l'unique mesure $\mu$ l'annulant est la mesure nulle.
 
-## Énoncé formel
-Considérons un sous-espace vectoriel $S \subset C([0,1])$. Démontrer que si $S$ est dense dans $C([0,1])$ pour la norme uniforme, alors pour toute forme linéaire continue $L \in C([0,1])^*$, si $L(f) = 0$ pour tout $f \in S$, alors nécessairement $L = 0$ (c'est le socle du théorème de Cybenko).
-
----
-
-## Démonstration et correction pas à pas
-Soit $L : C([0,1]) \to \mathbb{R}$ une forme linéaire continue. Par hypothèse de continuité topologique, pour toute fonction $f \in C([0,1])$ et toute suite $(f_n)_{n \ge 0} \subset C([0,1])$ telle que $\|f_n - f\|_\infty \to 0$, on a $\lim_{n \to \infty} L(f_n) = L(f)$.\n\nSupposons que $S$ est dense dans $C([0,1])$. Cela signifie que pour toute fonction $f \in C([0,1])$, il existe une suite $(f_n)_{n \ge 0}$ d'éléments de $S$ telle que $\lim_{n \to \infty} \|f_n - f\|_\infty = 0$.\n\nPar hypothèse, $L$ s'annule sur $S$. Donc pour chaque $n$, $f_n \in S \implies L(f_n) = 0$.\nEn combinant avec la continuité de $L$, on obtient :\n$$L(f) = L\left(\lim_{n \to \infty} f_n\right) = \lim_{n \to \infty} L(f_n) = \lim_{n \to \infty} 0 = 0$$\n\nPuisque ce résultat est vrai pour un $f$ quelconque de $C([0,1])$, l'opérateur $L$ envoie toute fonction de l'espace sur $0$. Par conséquent, l'opérateur est nul, $L = 0$. C'est le théorème de Hahn-Banach sous-jacent qui affirme réciproquement que si $S$ n'était pas dense, une telle forme linéaire non nulle existerait.
+**Correction :**
+Par le théorème de Hahn-Banach, si un sous-espace $S$ d'un espace vectoriel normé (ici $\mathcal{C}(I_n)$ avec la norme infinie) n'est pas dense, alors son adhérence $\overline{S}$ est un sous-espace strict fermé.
+Il existe alors une forme linéaire continue non nulle $L$ telle que $\ker(L) \supset \overline{S}$, c'est-à-dire $L(f) = 0$ pour tout $f \in S$.
+Le théorème de Riesz-Markov-Kakutani stipule que pour l'espace dual de $\mathcal{C}(I_n)$, toute forme linéaire continue $L$ s'exprime de manière unique par une intégrale contre une mesure de Borel régulière signée $\mu$ finie : $L(f) = \int f d\mu$.
+Ainsi, $\overline{S}$ est strict équivaut à l'existence d'une mesure $\mu \neq 0$ telle que $\int \sigma(w^T x + b) d\mu(x) = 0$ pour tout $w, b$.
+Par contraposée, si la seule mesure vérifiant cette propriété est $\mu = 0$, alors la forme linéaire est nulle, et aucune telle forme n'existe pour séparer un point extérieur de $\overline{S}$. Donc $\overline{S} = \mathcal{C}(I_n)$, soit $S$ dense.

@@ -1,14 +1,11 @@
----
-title: "Exo 09 : Rôle crucial du compact"
-difficulty: "$\bigstar\bigstar\bigstar\bigstar\bigstar$"
----
+## Exercice 9 : Propriété de discrimination de la sigmoïde \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-# Exo 09 : Rôle crucial du compact
+Montrer qu'une fonction continue $\sigma$ qui vérifie $\sigma(x) \to 1$ en $+\infty$ et $\sigma(x) \to 0$ en $-\infty$ est discriminatoire (esquisse de preuve).
 
-## Énoncé formel
-Expliquer, preuve géométrique à l'appui, pourquoi le théorème de Cybenko ne s'applique pas sur l'espace tout entier $\mathbb{R}^n$, c'est-à-dire qu'un réseau de neurones à taille fixe $N$ (aussi grand soit-il) ne peut pas approximer la fonction $f(x) = x^2$ de façon uniformément proche sur $\mathbb{R}$.
-
----
-
-## Démonstration et correction pas à pas
-Un réseau à une couche cachée de taille $N$ avec des activations sigmoïdales bornées (comme Tanh ou Logistique) génère des fonctions de la forme $G(x) = \sum_{i=1}^N \alpha_i \sigma(w_i x + b_i)$.\nPuisque $\sigma$ est bornée (disons $|\sigma(t)| \le 1$), alors pour tout $x \in \mathbb{R}$, on a la majoration globale absolue :\n$$ |G(x)| \le \sum_{i=1}^N |\alpha_i| |\sigma(w_i x + b_i)| \le \sum_{i=1}^N |\alpha_i| = M $$\nLa fonction du réseau $G(x)$ est donc intrinsèquement bornée par la somme des normes des poids de la couche de sortie, notée $M$. Cette constante $M$ est fixée dès que l'entraînement est achevé (poids gelés).\nEn revanche, la fonction cible $f(x) = x^2$ tend vers $+\infty$ lorsque $|x| \to \infty$. Elle est non bornée sur $\mathbb{R}$.\nL'erreur uniforme sur $\mathbb{R}$ est :\n$$ \|f - G\|_{L^\infty(\mathbb{R})} = \sup_{x \in \mathbb{R}} |x^2 - G(x)| $$\nPour des $x$ suffisamment grands, $x^2 > M + 1$, ce qui garantit $|x^2 - G(x)| \ge (M+1) - M = 1$. L'erreur suprémum est donc toujours infinie, peu importe le nombre fini $N$ de neurones choisis. C'est pourquoi le théorème exige un domaine compact $K$, où toute fonction continue $f$ atteint ses bornes (théorème de Weierstrass) et peut donc coexister avec l'enveloppe bornée du réseau.
+**Correction :**
+Soit $\mu$ une mesure telle que $\int \sigma(w^T x + b) d\mu(x) = 0$ pour tout $w, b$.
+Pour $\lambda > 0$, posons $\sigma_\lambda(x) = \sigma(\lambda(w^T x + b))$.
+Lorsque $\lambda \to +\infty$, par convergence dominée (puisque $\sigma$ est bornée et $\mu$ finie), $\sigma_\lambda(x)$ converge ponctuellement vers 1 si $w^T x + b > 0$, vers 0 si $w^T x + b < 0$, et vers $\sigma(0)$ si $w^T x + b = 0$.
+La limite est donc (presque) la fonction indicatrice du demi-espace $H = \{x \mid w^T x + b > 0\}$.
+En passant à la limite, on trouve que $\mu(H) = 0$ pour tout demi-espace ouvert.
+Puisque l'ensemble des demi-espaces engendre la tribu borélienne, cela implique que la mesure $\mu$ s'annule sur tous les boréliens, donc $\mu = 0$. La fonction est donc discriminatoire.
