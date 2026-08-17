@@ -1,34 +1,11 @@
----
-title: "Exercice 2 : Interpolation linéaire par morceaux avec ReLU"
-difficulty: $\bigstar\bigstar\star\star\star$
----
+## Exercice 2 : Approximation d'une fonction affine \quad $\bigstar\star\star\star\star$
 
-# Exercice 2 : Interpolation linéaire par morceaux avec ReLU
+Soit la fonction de Heaviside modifiée $H(x)$ telle que l'on puisse approcher une fonction affine. Comment utiliser deux neurones ReLU $\sigma(x) = \max(0, x)$ pour représenter exactement une fonction affine par morceaux avec un changement de pente ?
 
-## Énoncé
-
-La fonction ReLU est définie par $\sigma(x) = \max(0, x)$.
-Construisez explicitement un réseau de neurones $G(x)$ combinant des fonctions ReLU qui approche la fonction "valeur absolue" $f(x) = |x|$ sur $[-1, 1]$.
-Montrez que l'approximation peut être exacte avec un nombre fini de neurones.
-
-## Correction Rigoureuse
-
-**Étape 1 : Analyse de la fonction cible**
-La fonction $f(x) = |x|$ est définie par :
-- $f(x) = -x$ si $x \leq 0$
-- $f(x) = x$ si $x \geq 0$
-
-**Étape 2 : Utilisation des propriétés de ReLU**
-Remarquons que pour tout réel $x$ :
-$x = \max(0, x) - \max(0, -x) = \sigma(x) - \sigma(-x)$
-$|x| = \max(0, x) + \max(0, -x) = \sigma(x) + \sigma(-x)$
-
-**Étape 3 : Construction du réseau**
-Nous pouvons donc poser directement :
-$$G(x) = \sigma(x) + \sigma(-x)$$
-Ce réseau utilise $N=2$ neurones dans sa couche cachée :
-- Neurone 1 : poids $w_1 = 1$, biais $b_1 = 0$, amplitude $\alpha_1 = 1$
-- Neurone 2 : poids $w_2 = -1$, biais $b_2 = 0$, amplitude $\alpha_2 = 1$
-
-**Étape 4 : Conclusion**
-Le réseau $G(x)$ reproduit exactement $f(x) = |x|$ sur tout $\mathbb{R}$, sans erreur. L'approximation est exacte avec $N=2$. $\blacksquare$
+**Correction :**
+Soit $f(x)$ une fonction affine par morceaux telle que $f(x) = a x + b$ pour $x < x_0$ et $f(x) = c x + d$ pour $x \ge x_0$, avec continuité en $x_0$ ($a x_0 + b = c x_0 + d$).
+On peut utiliser deux ReLUs pour construire cela.
+Posons $G(x) = a x + b + (c-a) \max(0, x - x_0)$.
+Puisque $x = \max(0, x) - \max(0, -x)$, l'expression affine totale peut s'écrire uniquement avec des ReLUs.
+Plus simplement, on écrit $G(x) = a \max(0, x) - a \max(0, -x) + b + (c-a) \max(0, x - x_0)$.
+Le réseau représente exactement la fonction.

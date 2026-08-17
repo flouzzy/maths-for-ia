@@ -1,31 +1,12 @@
----
-title: "Exercice 3 : La fonction porte (Bump Function) avec des échelons"
-difficulty: $\bigstar\bigstar\star\star\star$
----
+## Exercice 3 : Construction de la fonction identité avec des sigmoïdes \quad $\bigstar\bigstar\star\star\star$
 
-# Exercice 3 : La fonction porte (Bump Function) avec des échelons
+Montrer qu'en utilisant des combinaisons linéaires de sigmoïdes $\sigma(x) = \frac{1}{1+e^{-x}}$, on peut approcher la fonction identité $f(x) = x$ sur l'intervalle $[-1, 1]$ avec une erreur arbitrairement petite $\epsilon > 0$.
 
-## Énoncé
-
-Considérons une fonction d'activation échelon de Heaviside $H(x)$, valant $1$ si $x \geq 0$ et $0$ sinon.
-Construisez mathématiquement une "porte" de hauteur $h$, qui vaut $h$ sur l'intervalle $[a, b]$ (avec $a < b$) et $0$ en dehors.
-
-## Correction Rigoureuse
-
-**Étape 1 : Translation de l'échelon**
-La fonction $H(x - a)$ "s'allume" et passe à 1 pour tout $x \geq a$.
-La fonction $H(x - b)$ "s'allume" et passe à 1 pour tout $x \geq b$.
-
-**Étape 2 : Combinaison linéaire pour former un créneau**
-Si nous soustrayons la seconde à la première, on obtient :
-$\Pi_{[a, b)}(x) = H(x - a) - H(x - b)$
-Cette fonction vaut :
-- $0 - 0 = 0$ pour $x < a$
-- $1 - 0 = 1$ pour $a \leq x < b$
-- $1 - 1 = 0$ pour $x \geq b$
-C'est exactement la fonction indicatrice de l'intervalle $[a, b)$.
-
-**Étape 3 : Ajustement de l'amplitude**
-Pour obtenir une hauteur $h$, il suffit de multiplier l'expression entière par $h$ :
-$G(x) = h H(x - a) - h H(x - b)$
-Ce réseau utilise $N=2$ neurones avec la fonction d'activation de Heaviside. $\blacksquare$
+**Correction :**
+Le développement limité de $\sigma(x)$ au voisinage de 0 donne $\sigma(x) = \frac{1}{2} + \frac{1}{4}x + \mathcal{O}(x^3)$.
+On considère la combinaison $G_h(x) = \frac{\sigma(h x) - \sigma(-h x)}{2}$.
+On a $\sigma(hx) = \frac{1}{2} + \frac{h x}{4} + \mathcal{O}(h^3 x^3)$ et $\sigma(-hx) = \frac{1}{2} - \frac{h x}{4} + \mathcal{O}(h^3 x^3)$.
+Donc $G_h(x) = \frac{h x}{4} + \mathcal{O}(h^3 x^3)$.
+En multipliant par $\frac{4}{h}$, on obtient $\tilde{G}_h(x) = \frac{4}{h} G_h(x) = x + \mathcal{O}(h^2 x^3)$.
+Sur le compact $[-1, 1]$, $|x^3| \le 1$. L'erreur est en $\mathcal{O}(h^2)$.
+En choisissant $h$ suffisamment petit tel que l'erreur maximale soit inférieure à $\epsilon$, on a bien approché la fonction identité uniformément sur $[-1, 1]$.

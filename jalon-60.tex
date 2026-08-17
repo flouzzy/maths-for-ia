@@ -1,0 +1,478 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge Preuve du théorème d'approximation universelle \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+\section{Introduction et contexte historique}
+
+Le théorème d'approximation universelle, formulé initialement par George Cybenko en 1989 pour les fonctions d'activation sigmoïdales, puis généralisé par Kurt Hornik, établit qu'un réseau de neurones artificiels à propagation avant (feedforward) avec une seule couche cachée finie peut approximer n'importe quelle fonction continue sur un sous-ensemble compact de $\mathbb{R}^n$, sous des hypothèses très faibles sur la fonction d'activation.
+
+L'émergence de ce théorème a marqué une étape fondamentale en théorie de l'apprentissage automatique. Avant sa démonstration, la capacité de représentation des réseaux de neurones était souvent considérée empiriquement. Cette preuve a cimenté les réseaux de neurones comme des approximateurs universels, garantissant que tout phénomène modélisable par une fonction continue peut, en théorie, être appris avec une précision arbitraire, pourvu que l'architecture soit suffisamment large. Le problème se déplace alors de l'expressivité de l'architecture vers les difficultés de l'optimisation (entraînement) et de la généralisation.
+
+La démonstration repose sur des outils profonds d'analyse fonctionnelle, en particulier le théorème de Hahn-Banach et le théorème de représentation de Riesz-Markov-Kakutani, reliant la densité dans les espaces de fonctions continues aux mesures de Radon.
+
+\section{Définitions, théorèmes et exemples concrets}
+
+\subsection{Espace des fonctions continues et topologie}
+
+Soit $I_n = [0, 1]^n$ le cube unité de $\mathbb{R}^n$, qui est un espace compact. On considère $\mathcal{C}(I_n)$, l'espace vectoriel des fonctions réelles continues définies sur $I_n$. Cet espace est muni de la norme uniforme, définie par :
+$$\|f\|_\infty = \sup_{x \in I_n} |f(x)|$$
+
+La convergence par rapport à cette norme correspond à la convergence uniforme sur le compact $I_n$.
+
+\subsection{Fonctions discriminatoires}
+
+\textbf{Définition (Fonction discriminatoire) :} Une fonction $\sigma : \mathbb{R} \to \mathbb{R}$ est dite discriminatoire si, pour toute mesure de Borel signée finie $\mu$ sur $I_n$, la condition :
+$$\int_{I_n} \sigma(w^T x + b) d\mu(x) = 0 \quad \text{pour tous } w \in \mathbb{R}^n, b \in \mathbb{R}$$
+implique que la mesure $\mu$ est identiquement nulle ($\mu = 0$).
+
+\subsection{Énoncé du Théorème d'Approximation Universelle (Cybenko, 1989)}
+
+\textbf{Théorème :} Soit $\sigma : \mathbb{R} \to \mathbb{R}$ une fonction continue, non constante et bornée. Alors $\sigma$ est discriminatoire. De plus, l'ensemble des fonctions de la forme :
+$$G(x) = \sum_{i=1}^N \alpha_i \sigma(w_i^T x + b_i)$$
+avec $N \in \mathbb{N}^*$, $\alpha_i \in \mathbb{R}$, $w_i \in \mathbb{R}^n$ et $b_i \in \mathbb{R}$, est dense dans $\mathcal{C}(I_n)$.
+
+Autrement dit, pour toute fonction $f \in \mathcal{C}(I_n)$ et pour tout $\epsilon > 0$, il existe un entier $N$ et des paramètres $(\alpha_i, w_i, b_i)_{1 \le i \le N}$ tels que :
+$$\|f - G\|_\infty = \sup_{x \in I_n} |f(x) - G(x)| < \epsilon$$
+
+\subsection{Exemples d'application du théorème}
+
+\textbf{Exemple 1 : Approximation de la fonction cosinus}
+Considérons $f(x) = \cos(x)$ sur $I_1 = [0, 1]$. On utilise la fonction d'activation sigmoïde standard $\sigma(x) = \frac{1}{1 + e^{-x}}$. Le théorème assure l'existence de paramètres tels que $\sup_{x \in [0, 1]} |\cos(x) - \sum_{i=1}^N \alpha_i \sigma(w_i x + b_i)| < 0.01$.
+
+\textbf{Exemple 2 : Approximation d'une surface parabolique}
+Soit $f(x_1, x_2) = x_1^2 + x_2^2$ sur $[0, 1]^2$. Bien que $f$ soit une fonction polynomiale de degré 2, un réseau avec une seule couche cachée utilisant une activation $\tanh(x)$ (qui est continue et bornée) peut approximer $f$ à toute précision $\epsilon > 0$ près.
+
+\textbf{Exemple 3 : Fonction en escalier lissée}
+Considérons une fonction continue $f$ approchant une fonction indicatrice de l'intervalle $[0.4, 0.6]$. En utilisant des combinaisons linéaires de sigmoïdes, on peut créer une fonction "chapeau" très précise, ce qui démontre la capacité du réseau à localiser ses approximations.
+
+\textbf{Exemple 4 : Limites avec des activations non bornées (ReLU)}
+Bien que le théorème original de Cybenko requière une fonction d'activation bornée, le résultat a été étendu à d'autres fonctions non bornées, comme la ReLU (Rectified Linear Unit), $\sigma(x) = \max(0, x)$. Une combinaison de ReLU peut former des fonctions affines par morceaux qui sont denses dans $\mathcal{C}(I_n)$.
+
+\textbf{Exemple 5 : L'importance de la continuité}
+Si l'on cherche à approximer une fonction discontinue, comme $f(x) = 1$ pour $x \ge 0.5$ et $0$ sinon, sur $[0,1]$, la norme $\|\cdot\|_\infty$ ne permet pas de converger uniformément. La convergence n'est garantie que presque partout vis-à-vis d'une mesure de probabilité (norme $L^p$).
+
+\begin{center}
+\begin{tikzpicture}
+    % Axes
+    \draw[->, thick] (-3, 0) -- (3, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.5) -- (0, 2.5) node[above] {$y$};
+
+    % The target function (e.g., a Gaussian-like pulse)
+    \draw[thick, blue, domain=-2.5:2.5, samples=100] plot (\x, {2*exp(-\x*\x)});
+    \node[blue, above right] at (1, 1) {$f(x)$ cible};
+
+    % Approximation with 3 sigmoids
+    \draw[thick, red, dashed, domain=-2.5:2.5, samples=100] plot (\x, {2*exp(-\x*\x) + 0.1*sin(\x*180/3.14*10)});
+    \node[red, above right] at (-2, 1.5) {$G(x)$ réseau};
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+    % 2D Domain
+    \draw[thick] (0,0) rectangle (4,4);
+    \node at (2, -0.5) {$I_n = [0,1]^n$};
+
+    % Function representation
+    \draw[->, thick, shorten >= 2pt] (4.2, 2) -- (5.8, 2);
+    \node[above] at (5, 2) {$G(x) \approx f(x)$};
+
+    % Error bounds
+    \draw[thick, blue] (7, 0) -- (7, 4);
+    \draw[thick, red, dashed] (6.8, 0) to[out=90,in=270] (7.2, 2) to[out=90,in=270] (6.8, 4);
+    \node at (8, 2) {$\|f - G\|_\infty < \epsilon$};
+\end{tikzpicture}
+\end{center}
+
+
+\section{Démonstrations}
+
+La démonstration complète, telle que donnée par Cybenko, s'appuie sur la contraposée d'une conséquence du théorème de Hahn-Banach.
+
+\textbf{Preuve :}
+Soit $S \subset \mathcal{C}(I_n)$ le sous-espace vectoriel défini par :
+$$S = \text{Vect} \left\lbrace x \mapsto \sigma(w^T x + b) \mid w \in \mathbb{R}^n, b \in \mathbb{R} \right\rbrace$$
+Nous voulons montrer que $S$ est dense dans $\mathcal{C}(I_n)$, c'est-à-dire que son adhérence $\overline{S}$ est égale à $\mathcal{C}(I_n)$.
+
+Supposons par l'absurde que $\overline{S} \neq \mathcal{C}(I_n)$. Comme $\overline{S}$ est un sous-espace vectoriel fermé propre de l'espace de Banach $\mathcal{C}(I_n)$, le théorème de Hahn-Banach garantit l'existence d'une forme linéaire continue non nulle $L : \mathcal{C}(I_n) \to \mathbb{R}$ telle que $L_{|\overline{S}} = 0$.
+
+Le théorème de représentation de Riesz-Markov-Kakutani affirme que toute forme linéaire continue sur $\mathcal{C}(I_n)$ peut être représentée par l'intégrale par rapport à une unique mesure de Radon (Borel signée régulière) finie $\mu$ sur $I_n$. Ainsi :
+$$L(f) = \int_{I_n} f(x) d\mu(x) \quad \text{pour toute } f \in \mathcal{C}(I_n)$$
+Puisque $L$ s'annule sur $S$, on a pour tous $w \in \mathbb{R}^n$ et $b \in \mathbb{R}$ :
+$$\int_{I_n} \sigma(w^T x + b) d\mu(x) = 0$$
+
+Par hypothèse du théorème, la fonction $\sigma$ est continue, bornée et non constante. Un lemme technique (Lemme de Cybenko) stipule que toute fonction continue sigmoïdale (ou simplement bornée non constante, selon les formulations étendues de Hornik) est discriminatoire.
+
+La propriété discriminatoire de $\sigma$ implique alors que la mesure $\mu$ est identiquement nulle.
+Si $\mu = 0$, alors la forme linéaire $L$ est identiquement nulle.
+Ceci contredit le fait que $L$ est non nulle.
+L'hypothèse initiale est donc fausse, et on conclut que $\overline{S} = \mathcal{C}(I_n)$, ce qui achève la démonstration. \qed
+
+\section{Applications en physique, logique et intelligence artificielle}
+
+\subsection{Expressivité des réseaux de neurones}
+
+En intelligence artificielle, le théorème garantit qu'un réseau de neurones multicouches classique (Perceptron Multicouche ou MLP) possède la puissance de représentation nécessaire pour modéliser toute relation continue déterministe entre des entrées (par exemple, les pixels d'une image, un vecteur d'état physique) et des sorties (probabilités de classe, énergies, coordonnées).
+
+Cependant, ce théorème est un résultat d'existence. Il n'indique pas :
+1. Le nombre de neurones $N$ requis (qui peut croître exponentiellement avec la dimension $n$, souffrant du "fléau de la dimension").
+2. Si un algorithme d'optimisation par descente de gradient (comme la rétropropagation) convergera vers ce minimum global.
+
+\subsection{Mécanique quantique et physique statistique}
+
+Dans la modélisation de systèmes physiques complexes, les réseaux de neurones sont utilisés pour approximer les fonctions d'onde en mécanique quantique (Neural Network Quantum States). La compacité du domaine $I_n$ peut être adaptée via des homéomorphismes pour couvrir des espaces de configuration physiques, et la densité garantie par le théorème justifie la recherche d'énergies fondamentales par des méthodes variationnelles utilisant des architectures neuronales.
+
+\subsection{Modélisation en dynamique des fluides}
+
+Pour les équations aux dérivées partielles non linéaires (comme l'équation de Navier-Stokes), les réseaux de neurones informés par la physique (PINNs) exploitent l'approximation universelle pour représenter le champ de vitesse ou de pression. La capacité à représenter n'importe quelle fonction lisse garantit que la solution physique exacte appartient à l'adhérence de l'espace des fonctions générées par le réseau.
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Approximation d'une fonction constante \quad $\star\star\star\star\star$}
+
+Montrer qu'un réseau de neurones avec une seule couche cachée, utilisant la fonction sigmoïde $\sigma(x) = \frac{1}{1 + e^{-x}}$, peut représenter exactement une fonction constante arbitraire $c \in \mathbb{R}$.
+
+\textbf{Correction :}
+Soit $f(x) = c$. Considérons le réseau $G(x) = \alpha \sigma(w x + b)$.
+On choisit $w = 0$. Alors $G(x) = \alpha \sigma(b) = \alpha \frac{1}{1 + e^{-b}}$.
+Pour obtenir $G(x) = c$, on peut fixer $b = 0$, ce qui donne $\sigma(0) = \frac{1}{2}$.
+Il suffit alors de choisir $\alpha = 2c$.
+Ainsi, le réseau $G(x) = 2c \cdot \sigma(0 \cdot x + 0)$ représente exactement et uniformément la constante $c$ sur n'importe quel domaine.
+
+
+\vspace{1cm}
+\subsection*{Exercice 2 : Approximation d'une fonction affine \quad $\bigstar\star\star\star\star$}
+
+Soit la fonction de Heaviside modifiée $H(x)$ telle que l'on puisse approcher une fonction affine. Comment utiliser deux neurones ReLU $\sigma(x) = \max(0, x)$ pour représenter exactement une fonction affine par morceaux avec un changement de pente ?
+
+\textbf{Correction :}
+Soit $f(x)$ une fonction affine par morceaux telle que $f(x) = a x + b$ pour $x < x_0$ et $f(x) = c x + d$ pour $x \ge x_0$, avec continuité en $x_0$ ($a x_0 + b = c x_0 + d$).
+On peut utiliser deux ReLUs pour construire cela.
+Posons $G(x) = a x + b + (c-a) \max(0, x - x_0)$.
+Puisque $x = \max(0, x) - \max(0, -x)$, l'expression affine totale peut s'écrire uniquement avec des ReLUs.
+Plus simplement, on écrit $G(x) = a \max(0, x) - a \max(0, -x) + b + (c-a) \max(0, x - x_0)$.
+Le réseau représente exactement la fonction.
+
+
+\vspace{1cm}
+\subsection*{Exercice 3 : Construction de la fonction identité avec des sigmoïdes \quad $\bigstar\bigstar\star\star\star$}
+
+Montrer qu'en utilisant des combinaisons linéaires de sigmoïdes $\sigma(x) = \frac{1}{1+e^{-x}}$, on peut approcher la fonction identité $f(x) = x$ sur l'intervalle $[-1, 1]$ avec une erreur arbitrairement petite $\epsilon > 0$.
+
+\textbf{Correction :}
+Le développement limité de $\sigma(x)$ au voisinage de 0 donne $\sigma(x) = \frac{1}{2} + \frac{1}{4}x + \mathcal{O}(x^3)$.
+On considère la combinaison $G_h(x) = \frac{\sigma(h x) - \sigma(-h x)}{2}$.
+On a $\sigma(hx) = \frac{1}{2} + \frac{h x}{4} + \mathcal{O}(h^3 x^3)$ et $\sigma(-hx) = \frac{1}{2} - \frac{h x}{4} + \mathcal{O}(h^3 x^3)$.
+Donc $G_h(x) = \frac{h x}{4} + \mathcal{O}(h^3 x^3)$.
+En multipliant par $\frac{4}{h}$, on obtient $\tilde{G}_h(x) = \frac{4}{h} G_h(x) = x + \mathcal{O}(h^2 x^3)$.
+Sur le compact $[-1, 1]$, $|x^3| \le 1$. L'erreur est en $\mathcal{O}(h^2)$.
+En choisissant $h$ suffisamment petit tel que l'erreur maximale soit inférieure à $\epsilon$, on a bien approché la fonction identité uniformément sur $[-1, 1]$.
+
+
+\vspace{1cm}
+\subsection*{Exercice 4 : Approximation d'un pulse carré (créneau) \quad $\bigstar\bigstar\star\star\star$}
+
+Montrer comment approcher la fonction porte (créneau) $f(x) = 1$ si $x \in [-1, 1]$ et $0$ sinon, avec des sigmoïdes. L'approximation doit être arbitrairement proche pour tout $|x| \neq 1$.
+
+\textbf{Correction :}
+Posons $G_k(x) = \sigma(k(x+1)) - \sigma(k(x-1))$.
+Pour $x < -1$, $k(x+1) \to -\infty$ et $k(x-1) \to -\infty$ quand $k \to +\infty$. Donc $\sigma \to 0$ pour les deux, et $G_k(x) \to 0$.
+Pour $-1 < x < 1$, $k(x+1) \to +\infty$ et $k(x-1) \to -\infty$. Donc le premier terme tend vers 1 et le second vers 0. $G_k(x) \to 1$.
+Pour $x > 1$, $k(x+1) \to +\infty$ et $k(x-1) \to +\infty$. Les deux termes tendent vers 1, la différence tend vers 0.
+En choisissant $k$ assez grand, la fonction $G_k(x)$ approche arbitrairement près la porte, sauf aux discontinuités $x = -1$ et $x = 1$. L'approximation en norme $L^p$ (ou uniforme sur tout sous-compact disjoint de $\{-1, 1\}$) est valide.
+
+
+\vspace{1cm}
+\subsection*{Exercice 5 : Mesure de Lebesgue et Hahn-Banach \quad $\bigstar\bigstar\bigstar\star\star$}
+
+Lors de la preuve de Cybenko, justifier formellement pourquoi l'espace fonctionnel généré $S$ est dense si et seulement si l'unique mesure $\mu$ l'annulant est la mesure nulle.
+
+\textbf{Correction :}
+Par le théorème de Hahn-Banach, si un sous-espace $S$ d'un espace vectoriel normé (ici $\mathcal{C}(I_n)$ avec la norme infinie) n'est pas dense, alors son adhérence $\overline{S}$ est un sous-espace strict fermé.
+Il existe alors une forme linéaire continue non nulle $L$ telle que $\ker(L) \supset \overline{S}$, c'est-à-dire $L(f) = 0$ pour tout $f \in S$.
+Le théorème de Riesz-Markov-Kakutani stipule que pour l'espace dual de $\mathcal{C}(I_n)$, toute forme linéaire continue $L$ s'exprime de manière unique par une intégrale contre une mesure de Borel régulière signée $\mu$ finie : $L(f) = \int f d\mu$.
+Ainsi, $\overline{S}$ est strict équivaut à l'existence d'une mesure $\mu \neq 0$ telle que $\int \sigma(w^T x + b) d\mu(x) = 0$ pour tout $w, b$.
+Par contraposée, si la seule mesure vérifiant cette propriété est $\mu = 0$, alors la forme linéaire est nulle, et aucune telle forme n'existe pour séparer un point extérieur de $\overline{S}$. Donc $\overline{S} = \mathcal{C}(I_n)$, soit $S$ dense.
+
+
+\vspace{1cm}
+\subsection*{Exercice 6 : Fonctions d'activation polynomiales \quad $\bigstar\bigstar\bigstar\star\star$}
+
+Le théorème d'approximation universelle est-il valable si la fonction d'activation est un polynôme de degré $d$ fini, $\sigma(x) = P(x)$ ?
+
+\textbf{Correction :}
+Non. L'espace vectoriel engendré par les fonctions de la forme $P(w^T x + b)$ pour divers $w, b$ est un espace de polynômes à $n$ variables de degré maximal $d$.
+Puisque le degré est borné, cet espace est de dimension finie (précisément $\binom{n+d}{n}$).
+Un sous-espace de dimension finie dans $\mathcal{C}(I_n)$ (qui est de dimension infinie) est toujours fermé et d'intérieur vide, il ne peut donc pas être dense dans $\mathcal{C}(I_n)$.
+On ne peut approximer à n'importe quelle précision des fonctions comme $\exp(x)$ ou $\sin(x)$ avec des polynômes d'un degré globalement borné par $d$. C'est pourquoi la fonction d'activation doit être non polynomiale pour garantir l'universalité.
+
+
+\vspace{1cm}
+\subsection*{Exercice 7 : Théorème d'approximation et réseaux ReLU profonds \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+Démontrer qu'un réseau composé uniquement de couches affines et de la fonction d'activation identité ne peut pas être un approximateur universel, quelle que soit sa profondeur.
+
+\textbf{Correction :}
+Soit un réseau avec $L$ couches, où la $k$-ème couche calcule $x^{(k)} = W^{(k)} x^{(k-1)} + b^{(k)}$.
+Par récurrence immédiate, on a $x^{(1)} = W^{(1)} x^{(0)} + b^{(1)}$ (une fonction affine de l'entrée $x^{(0)}$).
+Supposons que $x^{(k-1)} = A x^{(0)} + c$ pour des matrices $A$ et vecteurs $c$.
+Alors $x^{(k)} = W^{(k)} (A x^{(0)} + c) + b^{(k)} = (W^{(k)} A) x^{(0)} + (W^{(k)} c + b^{(k)})$.
+La composition de fonctions affines est une fonction affine.
+Ainsi, le réseau complet calcule une fonction $f(x) = W x + B$.
+L'ensemble de ces fonctions n'est que l'ensemble des applications affines, qui est de dimension finie et donc fermé et non dense dans $\mathcal{C}(I_n)$. Sans la non-linéarité (comme la ReLU ou la sigmoïde), la profondeur est inutile.
+
+
+\vspace{1cm}
+\subsection*{Exercice 8 : Régularité et borne d'erreur de Barron \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+Le théorème de Cybenko ne précise pas la vitesse de convergence. Citer et utiliser le résultat de Barron (1993) pour borner l'erreur d'approximation en fonction du nombre de neurones $N$ pour une fonction $f$ ayant un moment d'ordre 1 fini pour sa transformée de Fourier.
+
+\textbf{Correction :}
+Le théorème de Barron stipule que si la transformée de Fourier de $f$, notée $\hat{f}(\omega)$, vérifie $C_f = \int_{\mathbb{R}^n} |\omega| |\hat{f}(\omega)| d\omega < \infty$, alors il existe un réseau $G_N$ avec $N$ neurones (couche cachée) tel que l'erreur quadratique moyenne vérifie :
+$$\int_{I_n} (f(x) - G_N(x))^2 dx \le \frac{C_f^2}{N}$$
+L'erreur décroît donc en $\mathcal{O}(1/\sqrt{N})$.
+Il est remarquable que cette borne de convergence $1/\sqrt{N}$ est indépendante de la dimension de l'espace d'entrée $n$, ce qui permet aux réseaux de neurones d'échapper partiellement à la malédiction de la dimension, contrairement aux méthodes d'approximation traditionnelles (par exemple par polynômes ou splines) dont l'erreur typique décroît en $\mathcal{O}(N^{-s/n})$ où $s$ est la régularité.
+
+
+\vspace{1cm}
+\subsection*{Exercice 9 : Propriété de discrimination de la sigmoïde \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+Montrer qu'une fonction continue $\sigma$ qui vérifie $\sigma(x) \to 1$ en $+\infty$ et $\sigma(x) \to 0$ en $-\infty$ est discriminatoire (esquisse de preuve).
+
+\textbf{Correction :}
+Soit $\mu$ une mesure telle que $\int \sigma(w^T x + b) d\mu(x) = 0$ pour tout $w, b$.
+Pour $\lambda > 0$, posons $\sigma_\lambda(x) = \sigma(\lambda(w^T x + b))$.
+Lorsque $\lambda \to +\infty$, par convergence dominée (puisque $\sigma$ est bornée et $\mu$ finie), $\sigma_\lambda(x)$ converge ponctuellement vers 1 si $w^T x + b > 0$, vers 0 si $w^T x + b < 0$, et vers $\sigma(0)$ si $w^T x + b = 0$.
+La limite est donc (presque) la fonction indicatrice du demi-espace $H = \{x \mid w^T x + b > 0\}$.
+En passant à la limite, on trouve que $\mu(H) = 0$ pour tout demi-espace ouvert.
+Puisque l'ensemble des demi-espaces engendre la tribu borélienne, cela implique que la mesure $\mu$ s'annule sur tous les boréliens, donc $\mu = 0$. La fonction est donc discriminatoire.
+
+
+\vspace{1cm}
+\subsection*{Exercice 10 : Approximation par réseaux de largeur fixe et profondeur arbitraire \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+Le théorème de Cybenko considère une largeur arbitraire et une seule couche cachée. Quel est le résultat analogue (théorème de Lu et al. 2017) pour une largeur fixe et une profondeur arbitraire, utilisant la fonction ReLU ?
+
+\textbf{Correction :}
+Lu et al. ont prouvé que pour approcher n'importe quelle fonction continue de $I_n$ vers $\mathbb{R}^m$ avec une précision arbitraire, un réseau ReLU avec une largeur maximale $W$ et une profondeur arbitraire est un approximateur universel si et seulement si $W \ge n + m + 1$.
+C'est le théorème d'approximation universelle par largeur (Width-Bounded Universal Approximation Theorem).
+Pour une fonction de $\mathbb{R}^n \to \mathbb{R}$, il suffit d'une largeur de $n+2$. Si la largeur est strictement inférieure à ce seuil, il existe des fonctions lisses qui ne peuvent pas être approximées, peu importe la profondeur du réseau (la "bande passante" de l'information s'étrangle à chaque couche, détruisant la topologie du signal d'entrée).
+
+
+\vspace{1cm}
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Implémentation from scratch du neurone artificiel}
+
+\begin{lstlisting}
+# Simulation du théorème d'approximation : Le neurone de base
+import math
+import random
+
+def sigmoid(x):
+    # No LaTeX symbols used, pure Python math
+    return 1.0 / (1.0 + math.exp(-x))
+
+def neuron_forward(x_vector, w_vector, b):
+    # Dot product
+    z = sum(x * w for x, w in zip(x_vector, w_vector)) + b
+    return sigmoid(z)
+
+# Test simple
+x_test = [0.5, -1.2]
+w_test = [0.1, 0.8]
+b_test = -0.2
+output = neuron_forward(x_test, w_test, b_test)
+print("Output of single neuron:", output)
+assert 0 <= output <= 1
+
+\end{lstlisting}
+
+\vspace{1cm}
+\subsection*{TP 2 : Réseau à une couche cachée (Feedforward)}
+
+\begin{lstlisting}
+# Construction du réseau à une couche cachée de largeur N
+import math
+
+def relu(x):
+    return max(0.0, x)
+
+def network_forward(x_val, weights, biases, alphas):
+    # Network with 1 input, N hidden neurons, 1 output
+    # G(x) = sum(alpha_i * sigma(w_i * x + b_i))
+    output = 0.0
+    for w, b, alpha in zip(weights, biases, alphas):
+        z = w * x_val + b
+        output += alpha * relu(z)
+    return output
+
+# Test with 3 neurons
+W = [1.0, -1.0, 2.0]
+B = [0.0, 1.0, -0.5]
+A = [1.5, 0.5, -1.0]
+
+result = network_forward(0.5, W, B, A)
+print("Network approximation at x=0.5:", result)
+
+\end{lstlisting}
+
+\vspace{1cm}
+\subsection*{TP 3 : Approximation d'un créneau (marche)}
+
+\begin{lstlisting}
+# Demonstration experimentale de l'approximation d'une fonction porte
+import math
+
+def sigmoid(x):
+    return 1.0 / (1.0 + math.exp(-x))
+
+def step_approximation(x, k):
+    # G_k(x) = sigmoid(k(x+1)) - sigmoid(k(x-1))
+    return sigmoid(k * (x + 1.0)) - sigmoid(k * (x - 1.0))
+
+# Evaluate at different points and different sharpness (k)
+test_points = [-1.5, -0.5, 0.0, 0.5, 1.5]
+for k in [1.0, 10.0, 100.0]:
+    print("Sharpness k =", k)
+    for x in test_points:
+        val = step_approximation(x, k)
+        print("  x=", x, " => ", round(val, 4))
+
+# Assertions for large k
+assert step_approximation(0.0, 100.0) > 0.99
+assert step_approximation(1.5, 100.0) < 0.01
+assert step_approximation(-1.5, 100.0) < 0.01
+
+\end{lstlisting}
+
+\vspace{1cm}
+\subsection*{TP 4 : Entraînement naïf par force brute (Random Search)}
+
+\begin{lstlisting}
+# Tentative d'approximation de f(x) = x^2 par recherche aleatoire
+import random
+import math
+
+def target_function(x):
+    return x * x
+
+def relu(x):
+    return max(0.0, x)
+
+N = 5 # number of neurons
+best_mse = float('inf')
+best_params = None
+
+# Generate points on [0, 1]
+x_data = [i/10.0 for i in range(11)]
+y_data = [target_function(x) for x in x_data]
+
+# Random search over 10000 configurations
+for _ in range(10000):
+    weights = [random.uniform(-2, 2) for _ in range(N)]
+    biases = [random.uniform(-1, 1) for _ in range(N)]
+    alphas = [random.uniform(-2, 2) for _ in range(N)]
+
+    mse = 0.0
+    for x, y in zip(x_data, y_data):
+        pred = sum(a * relu(w * x + b) for w, b, a in zip(weights, biases, alphas))
+        mse += (pred - y)**2
+    mse /= len(x_data)
+
+    if mse < best_mse:
+        best_mse = mse
+        best_params = (weights, biases, alphas)
+
+print("Best MSE found:", best_mse)
+assert best_mse < 0.1 # Should find at least a decent fit
+
+\end{lstlisting}
+
+\vspace{1cm}
+\subsection*{TP 5 : Approximation d'un cosinus avec Descent de Gradient (Auto-diff simplifiee)}
+
+\begin{lstlisting}
+# Descente de gradient numerique pour optimiser les poids alpha
+import math
+
+def target(x):
+    return math.cos(x)
+
+def sigmoid(x):
+    return 1.0 / (1.0 + math.exp(-x))
+
+# We fix W and B randomly, we only optimize alphas (linear regression on features)
+N = 10
+W = [math.sin(i) for i in range(N)]
+B = [math.cos(i) for i in range(N)]
+alphas = [0.0] * N
+
+x_data = [i/20.0 for i in range(21)] # [0, 1]
+learning_rate = 0.1
+
+for epoch in range(100):
+    grad_alphas = [0.0] * N
+    mse = 0.0
+    for x in x_data:
+        # features
+        phi = [sigmoid(w * x + b) for w, b in zip(W, B)]
+        pred = sum(a * p for a, p in zip(alphas, phi))
+        error = pred - target(x)
+        mse += error**2
+
+        # Gradients
+        for j in range(N):
+            grad_alphas[j] += 2 * error * phi[j]
+
+    # Update
+    for j in range(N):
+        alphas[j] -= learning_rate * (grad_alphas[j] / len(x_data))
+
+    if epoch % 20 == 0:
+        print("Epoch", epoch, "MSE:", mse / len(x_data))
+
+print("Final MSE:", mse / len(x_data))
+assert mse / len(x_data) < 0.1
+
+\end{lstlisting}
+
+\vspace{1cm}
+
+
+\end{document}
