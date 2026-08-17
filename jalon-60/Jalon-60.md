@@ -10,112 +10,128 @@ prev: "[[Jalon 59 (Topologie des espaces de fonctions).md]]"
 next: "[[Jalon 61 (Insuffisances de l'intégrale de Riemann).md]]"
 ---
 
-# Preuve du théorème d'approximation universelle
+# Livrable IA T5 : Preuve du théorème d'approximation universelle
 
-## Genèse et Intuition Géométrique
+## Introduction et contexte historique
 
-Le théorème d'approximation universelle, formalisé initialement par George Cybenko en 1989 puis étendu par Kurt Hornik en 1991, constitue le fondement mathématique justifiant la capacité des réseaux de neurones artificiels à modéliser n'importe quelle fonction continue.
+Le théorème d'approximation universelle, formulé initialement par George Cybenko en 1989 pour les fonctions d'activation sigmoïdales, puis généralisé par Kurt Hornik, établit qu'un réseau de neurones artificiels à propagation avant (feedforward) avec une seule couche cachée finie peut approximer n'importe quelle fonction continue sur un sous-ensemble compact de $\mathbb{R}^n$, sous des hypothèses très faibles sur la fonction d'activation.
 
-L'intuition fondamentale repose sur la densité : de manière analogue au théorème d'approximation de Weierstrass qui affirme que les polynômes sont denses dans l'espace des fonctions continues sur un compact, ce théorème énonce qu'une somme pondérée de fonctions d'activation (par exemple des sigmoïdes) peut approcher uniformément toute fonction continue sur un hypercube compact de $\mathbb{R}^n$.
+L'émergence de ce théorème a marqué une étape fondamentale en théorie de l'apprentissage automatique. Avant sa démonstration, la capacité de représentation des réseaux de neurones était souvent considérée empiriquement. Cette preuve a cimenté les réseaux de neurones comme des approximateurs universels, garantissant que tout phénomène modélisable par une fonction continue peut, en théorie, être appris avec une précision arbitraire, pourvu que l'architecture soit suffisamment large. Le problème se déplace alors de l'expressivité de l'architecture vers les difficultés de l'optimisation (entraînement) et de la généralisation.
 
-Géométriquement, chaque neurone d'une couche cachée agit comme un demi-plan séparateur de l'espace d'entrée. En combinant un nombre suffisant de ces demi-plans, on peut construire des "bosses" locales ou des "hyper-cylindres" qui, additionnés, permettent d'épouser n'importe quelle surface continue avec une erreur arbitrairement petite, sans nécessiter plus d'une seule couche cachée.
+La démonstration repose sur des outils profonds d'analyse fonctionnelle, en particulier le théorème de Hahn-Banach et le théorème de représentation de Riesz-Markov-Kakutani, reliant la densité dans les espaces de fonctions continues aux mesures de Radon.
 
+## Définitions, théorèmes et exemples concrets
+
+### Espace des fonctions continues et topologie
+
+Soit $I_n = [0, 1]^n$ le cube unité de $\mathbb{R}^n$, qui est un espace compact. On considère $\mathcal{C}(I_n)$, l'espace vectoriel des fonctions réelles continues définies sur $I_n$. Cet espace est muni de la norme uniforme, définie par :
+$$\|f\|_\infty = \sup_{x \in I_n} |f(x)|$$
+
+La convergence par rapport à cette norme correspond à la convergence uniforme sur le compact $I_n$.
+
+### Fonctions discriminatoires
+
+**Définition (Fonction discriminatoire) :** Une fonction $\sigma : \mathbb{R} \to \mathbb{R}$ est dite discriminatoire si, pour toute mesure de Borel signée finie $\mu$ sur $I_n$, la condition :
+$$\int_{I_n} \sigma(w^T x + b) d\mu(x) = 0 \quad \text{pour tous } w \in \mathbb{R}^n, b \in \mathbb{R}$$
+implique que la mesure $\mu$ est identiquement nulle ($\mu = 0$).
+
+### Énoncé du Théorème d'Approximation Universelle (Cybenko, 1989)
+
+**Théorème :** Soit $\sigma : \mathbb{R} \to \mathbb{R}$ une fonction continue, non constante et bornée. Alors $\sigma$ est discriminatoire. De plus, l'ensemble des fonctions de la forme :
+$$G(x) = \sum_{i=1}^N \alpha_i \sigma(w_i^T x + b_i)$$
+avec $N \in \mathbb{N}^*$, $\alpha_i \in \mathbb{R}$, $w_i \in \mathbb{R}^n$ et $b_i \in \mathbb{R}$, est dense dans $\mathcal{C}(I_n)$.
+
+Autrement dit, pour toute fonction $f \in \mathcal{C}(I_n)$ et pour tout $\epsilon > 0$, il existe un entier $N$ et des paramètres $(\alpha_i, w_i, b_i)_{1 \le i \le N}$ tels que :
+$$\|f - G\|_\infty = \sup_{x \in I_n} |f(x) - G(x)| < \epsilon$$
+
+### Exemples d'application du théorème
+
+**Exemple 1 : Approximation de la fonction cosinus**
+Considérons $f(x) = \cos(x)$ sur $I_1 = [0, 1]$. On utilise la fonction d'activation sigmoïde standard $\sigma(x) = \frac{1}{1 + e^{-x}}$. Le théorème assure l'existence de paramètres tels que $\sup_{x \in [0, 1]} |\cos(x) - \sum_{i=1}^N \alpha_i \sigma(w_i x + b_i)| < 0.01$.
+
+**Exemple 2 : Approximation d'une surface parabolique**
+Soit $f(x_1, x_2) = x_1^2 + x_2^2$ sur $[0, 1]^2$. Bien que $f$ soit une fonction polynomiale de degré 2, un réseau avec une seule couche cachée utilisant une activation $\tanh(x)$ (qui est continue et bornée) peut approximer $f$ à toute précision $\epsilon > 0$ près.
+
+**Exemple 3 : Fonction en escalier lissée**
+Considérons une fonction continue $f$ approchant une fonction indicatrice de l'intervalle $[0.4, 0.6]$. En utilisant des combinaisons linéaires de sigmoïdes, on peut créer une fonction "chapeau" très précise, ce qui démontre la capacité du réseau à localiser ses approximations.
+
+**Exemple 4 : Limites avec des activations non bornées (ReLU)**
+Bien que le théorème original de Cybenko requière une fonction d'activation bornée, le résultat a été étendu à d'autres fonctions non bornées, comme la ReLU (Rectified Linear Unit), $\sigma(x) = \max(0, x)$. Une combinaison de ReLU peut former des fonctions affines par morceaux qui sont denses dans $\mathcal{C}(I_n)$.
+
+**Exemple 5 : L'importance de la continuité**
+Si l'on cherche à approximer une fonction discontinue, comme $f(x) = 1$ pour $x \ge 0.5$ et $0$ sinon, sur $[0,1]$, la norme $\|\cdot\|_\infty$ ne permet pas de converger uniformément. La convergence n'est garantie que presque partout vis-à-vis d'une mesure de probabilité (norme $L^p$).
+
+\begin{center}
 \begin{tikzpicture}
-  \draw[->] (-0.5, 0) -- (6, 0) node[right] {$x$};
-  \draw[->] (0, -0.5) -- (0, 3) node[above] {$f(x)$};
+    % Axes
+    \draw[->, thick] (-3, 0) -- (3, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.5) -- (0, 2.5) node[above] {$y$};
 
-  \draw[thick, blue, domain=0:5.5, samples=100] plot (\x, {sin(\x*50) + 1.5});
-  \node[blue] at (5.5, 2.5) {$f(x)$ continue};
+    % The target function (e.g., a Gaussian-like pulse)
+    \draw[thick, blue, domain=-2.5:2.5, samples=100] plot (\x, {2*exp(-\x*\x)});
+    \node[blue, above right] at (1, 1) {$f(x)$ cible};
 
-  \draw[red, dashed, thick] (0, 1.5) -- (1, 1.5) -- (1, 2.3) -- (2, 2.3) -- (2, 0.7) -- (3, 0.7) -- (3, 1.9) -- (4, 1.9) -- (4, 1.2) -- (5, 1.2) -- (5, 0.5);
-  \node[red] at (4, 2.5) {Approximation $G(x)$};
+    % Approximation with 3 sigmoids
+    \draw[thick, red, dashed, domain=-2.5:2.5, samples=100] plot (\x, {2*exp(-\x*\x) + 0.1*sin(\x*180/3.14*10)});
+    \node[red, above right] at (-2, 1.5) {$G(x)$ réseau};
 \end{tikzpicture}
+\end{center}
 
-## Définitions, Théorèmes et Exemples Concrets
-
-Soit $I_n = [0, 1]^n$ le cube unité de $\mathbb{R}^n$. Considérons l'espace de Banach $\mathcal{C}(I_n)$ des fonctions continues de $I_n$ dans $\mathbb{R}$, muni de la norme de la convergence uniforme :
-$$ \|f\|_\infty = \sup_{x \in I_n} |f(x)| $$
-
-\textbf{Définition (Fonction sigmoïdale)}
-Une fonction $\sigma : \mathbb{R} \to \mathbb{R}$ est dite sigmoïdale si elle est mesurable et vérifie :
-$$ \lim_{t \to -\infty} \sigma(t) = 0 \quad \text{et} \quad \lim_{t \to +\infty} \sigma(t) = 1 $$
-
-\textbf{Théorème (Approximation Universelle - Cybenko 1989)}
-Soit $\sigma$ une fonction d'activation continue sigmoïdale. L'ensemble $S$ des fonctions de la forme :
-$$ G(x) = \sum_{j=1}^N \alpha_j \sigma(w_j^T x + b_j) $$
-avec $N \in \mathbb{N}^*$, $\alpha_j, b_j \in \mathbb{R}$ et $w_j \in \mathbb{R}^n$, est dense dans $\mathcal{C}(I_n)$.
-Autrement dit, pour toute $f \in \mathcal{C}(I_n)$ et tout $\epsilon > 0$, il existe $G \in S$ telle que $\|f - G\|_\infty < \epsilon$.
-
-\textbf{Exemple 1 : Approximation d'une constante}
-Si $f(x) = C$, on choisit $N=1$, $w_1 = 0$, $b_1 \to \infty$ tel que $\sigma(b_1) \approx 1$. Alors $G(x) = \alpha_1 \sigma(b_1)$. En posant $\alpha_1 = C / \sigma(b_1)$, on a $G(x) = C$.
-Si $C = 5$, $\alpha_1 = 5$, $\sigma(w^T x + b) \to 1$, $G(x) \to 5$.
-
-\textbf{Exemple 2 : Fonction porte en 1D}
-Approximation de $f(x) = 1$ si $x \in [0.4, 0.6]$, $0$ sinon.
-On utilise $G(x) = \sigma(k(x - 0.4)) - \sigma(k(x - 0.6))$ avec $k \gg 1$.
-Pour $x = 0.5$, $k(0.1) \to +\infty \implies \sigma \to 1$, $k(-0.1) \to -\infty \implies \sigma \to 0$. $G(0.5) \approx 1 - 0 = 1$.
-Pour $x = 0.2$, $k(-0.2) \to -\infty \implies \sigma \to 0$, $k(-0.4) \to -\infty \implies \sigma \to 0$. $G(0.2) \approx 0$.
-Pour $x = 0.8$, $k(0.4) \to +\infty \implies 1$, $k(0.2) \to +\infty \implies 1$. $G(0.8) \approx 1 - 1 = 0$.
-
-\textbf{Exemple 3 : Évaluation numérique de la porte}
-Avec $\sigma(t) = \frac{1}{1+e^{-t}}$, pour $k=100$ et $x=0.5$:
-$G(0.5) = \sigma(10) - \sigma(-10) = \frac{1}{1+e^{-10}} - \frac{1}{1+e^{10}} \approx 0.99995 - 0.00005 = 0.9999$.
-
-\textbf{Exemple 4 : La bosse 2D}
-Soit $x = (x_1, x_2) \in [0,1]^2$. Pour approcher un pic autour de $(0.5, 0.5)$, on somme plusieurs "hyper-cylindres" orientés le long de différents vecteurs $w$.
-Si on veut localiser l'activation, on prend $\sigma(w_1 x_1 - b_1) - \sigma(w_1 x_1 - b_2)$ et similairement pour $x_2$.
-
-\textbf{Exemple 5 : Fonction d'activation ReLU}
-Le théorème se généralise pour $\sigma(t) = \max(0, t)$. Une fonction "chapeau" s'écrit: $T(x) = \sigma(x+1) - 2\sigma(x) + \sigma(x-1)$.
-Pour $x=0$, $T(0) = \sigma(1) - 2\sigma(0) + \sigma(-1) = 1 - 0 + 0 = 1$.
-Pour $x=1$, $T(1) = \sigma(2) - 2\sigma(1) + \sigma(0) = 2 - 2 + 0 = 0$.
-Pour $x=-1$, $T(-1) = \sigma(0) - 2\sigma(-1) + \sigma(-2) = 0 - 0 + 0 = 0$.
-
-\textbf{Exemple 6 : Limites pathologiques}
-Si $f(x) = \sin(1/x)$ sur $(0, 1]$ prolongée par 0 en 0. $f$ n'est pas continue en 0. Le théorème ne s'applique pas sur le compact $[0,1]$ au sens de la norme uniforme.
-
+\begin{center}
 \begin{tikzpicture}
-  \draw[->] (-2, 0) -- (2, 0) node[right] {$x$};
-  \draw[->] (0, -0.5) -- (0, 2) node[above] {$\sigma(x)$};
+    % 2D Domain
+    \draw[thick] (0,0) rectangle (4,4);
+    \node at (2, -0.5) {$I_n = [0,1]^n$};
 
-  \draw[thick, blue, domain=-2:2, samples=100] plot (\x, {max(0, \x)});
-  \node[blue] at (1.5, 1.8) {ReLU};
+    % Function representation
+    \draw[->, thick, shorten >= 2pt] (4.2, 2) -- (5.8, 2);
+    \node[above] at (5, 2) {$G(x) \approx f(x)$};
 
-  \draw[thick, red, domain=-2:2, samples=100] plot (\x, {1 / (1 + exp(-4*\x))});
-  \node[red] at (-1, 0.5) {Sigmoïde};
+    % Error bounds
+    \draw[thick, blue] (7, 0) -- (7, 4);
+    \draw[thick, red, dashed] (6.8, 0) to[out=90,in=270] (7.2, 2) to[out=90,in=270] (6.8, 4);
+    \node at (8, 2) {$\|f - G\|_\infty < \epsilon$};
 \end{tikzpicture}
+\end{center}
 
 
 ## Démonstrations
 
-La preuve originale exploite la dualité topologique et le théorème de Riesz-Markov, démontrant la densité par l'absurde via le théorème de Hahn-Banach.
+La démonstration complète, telle que donnée par Cybenko, s'appuie sur la contraposée d'une conséquence du théorème de Hahn-Banach.
 
-\textbf{Étape 1 : Hypothèse par l'absurde}
-Soit $S$ le sous-espace vectoriel engendré par les fonctions $x \mapsto \sigma(w^T x + b)$.
-Supposons que $S$ ne soit pas dense dans $\mathcal{C}(I_n)$.
-L'adhérence $\bar{S}$ est donc un sous-espace fermé strict de $\mathcal{C}(I_n)$.
+**Preuve :**
+Soit $S \subset \mathcal{C}(I_n)$ le sous-espace vectoriel défini par :
+$$S = \text{Vect} \left\lbrace x \mapsto \sigma(w^T x + b) \mid w \in \mathbb{R}^n, b \in \mathbb{R} \right\rbrace$$
+Nous voulons montrer que $S$ est dense dans $\mathcal{C}(I_n)$, c'est-à-dire que son adhérence $\overline{S}$ est égale à $\mathcal{C}(I_n)$.
 
-\textbf{Étape 2 : Intervention du Théorème de Hahn-Banach}
-D'après un corollaire du théorème de Hahn-Banach (forme analytique), il existe une forme linéaire continue non nulle $L$ sur $\mathcal{C}(I_n)$ telle que $L(g) = 0$ pour toute fonction $g \in \bar{S}$.
+Supposons par l'absurde que $\overline{S} \neq \mathcal{C}(I_n)$. Comme $\overline{S}$ est un sous-espace vectoriel fermé propre de l'espace de Banach $\mathcal{C}(I_n)$, le théorème de Hahn-Banach garantit l'existence d'une forme linéaire continue non nulle $L : \mathcal{C}(I_n) \to \mathbb{R}$ telle que $L_{|\overline{S}} = 0$.
 
-\textbf{Étape 3 : Théorème de Représentation de Riesz}
-Le dual de $\mathcal{C}(I_n)$ est isomorphe à l'espace des mesures de Borel régulières signées finies sur $I_n$.
-Il existe donc une mesure $\mu \neq 0$ sur $I_n$ telle que pour toute $f \in \mathcal{C}(I_n)$, $L(f) = \int_{I_n} f(x) d\mu(x)$.
-Puisque $L$ s'annule sur $S$, on a :
-$$ \int_{I_n} \sigma(w^T x + b) d\mu(x) = 0 \quad \forall w \in \mathbb{R}^n, \forall b \in \mathbb{R} $$
+Le théorème de représentation de Riesz-Markov-Kakutani affirme que toute forme linéaire continue sur $\mathcal{C}(I_n)$ peut être représentée par l'intégrale par rapport à une unique mesure de Radon (Borel signée régulière) finie $\mu$ sur $I_n$. Ainsi :
+$$L(f) = \int_{I_n} f(x) d\mu(x) \quad \text{pour toute } f \in \mathcal{C}(I_n)$$
+Puisque $L$ s'annule sur $S$, on a pour tous $w \in \mathbb{R}^n$ et $b \in \mathbb{R}$ :
+$$\int_{I_n} \sigma(w^T x + b) d\mu(x) = 0$$
 
-\textbf{Étape 4 : Propriété discriminatoire}
-Une fonction $\sigma$ est dite discriminatoire si la condition ci-dessus implique $\mu = 0$.
-Cybenko démontre que toute fonction sigmoïdale continue est discriminatoire. En fixant $w \neq 0$, et en considérant $h(x) = w^T x$, on projette la mesure $\mu$ sur la droite engendrée par $w$.
-Par des arguments d'analyse de Fourier (ou par transformation de Laplace pour des mesures à support compact), l'annulation de l'intégrale pour toutes translations $b$ et dilatations des sigmoïdes implique que la mesure projetée est nulle pour toute direction $w$.
+Par hypothèse du théorème, la fonction $\sigma$ est continue, bornée et non constante. Un lemme technique (Lemme de Cybenko) stipule que toute fonction continue sigmoïdale (ou simplement bornée non constante, selon les formulations étendues de Hornik) est discriminatoire.
 
-\textbf{Étape 5 : Conclusion}
-Puisque les projections monodimensionnelles de la mesure $\mu$ sont toutes nulles, la transformée de Fourier de $\mu$ s'annule partout. Cela entraîne que $\mu$ est la mesure nulle.
-Or, on avait supposé $L \neq 0$, donc $\mu \neq 0$, ce qui est une contradiction.
-Par conséquent, $S$ est nécessairement dense dans $\mathcal{C}(I_n)$.
+La propriété discriminatoire de $\sigma$ implique alors que la mesure $\mu$ est identiquement nulle.
+Si $\mu = 0$, alors la forme linéaire $L$ est identiquement nulle.
+Ceci contredit le fait que $L$ est non nulle.
+L'hypothèse initiale est donc fausse, et on conclut que $\overline{S} = \mathcal{C}(I_n)$, ce qui achève la démonstration. \qed
 
-## Applications en Physique, Logique et IA
+## Applications en physique, logique et intelligence artificielle
 
-Le théorème d'approximation universelle justifie théoriquement la capacité de l'apprentissage profond à modéliser des systèmes physiques complexes non linéaires, tels que la dynamique des fluides (via les Physics-Informed Neural Networks - PINNs) ou la résolution d'équations aux dérivées partielles à haute dimension (comme l'équation de Schrödinger).
+### Expressivité des réseaux de neurones
 
-En logique, ce théorème établit que les réseaux de neurones constituent un système formel complet pour l'approximation de fonctions continues réelles, surpassant les limites expressives du perceptron simple, qui ne pouvait pas représenter la fonction logique XOR non linéairement séparable.
+En intelligence artificielle, le théorème garantit qu'un réseau de neurones multicouches classique (Perceptron Multicouche ou MLP) possède la puissance de représentation nécessaire pour modéliser toute relation continue déterministe entre des entrées (par exemple, les pixels d'une image, un vecteur d'état physique) et des sorties (probabilités de classe, énergies, coordonnées).
+
+Cependant, ce théorème est un résultat d'existence. Il n'indique pas :
+1. Le nombre de neurones $N$ requis (qui peut croître exponentiellement avec la dimension $n$, souffrant du "fléau de la dimension").
+2. Si un algorithme d'optimisation par descente de gradient (comme la rétropropagation) convergera vers ce minimum global.
+
+### Mécanique quantique et physique statistique
+
+Dans la modélisation de systèmes physiques complexes, les réseaux de neurones sont utilisés pour approximer les fonctions d'onde en mécanique quantique (Neural Network Quantum States). La compacité du domaine $I_n$ peut être adaptée via des homéomorphismes pour couvrir des espaces de configuration physiques, et la densité garantie par le théorème justifie la recherche d'énergies fondamentales par des méthodes variationnelles utilisant des architectures neuronales.
+
+### Modélisation en dynamique des fluides
+
+Pour les équations aux dérivées partielles non linéaires (comme l'équation de Navier-Stokes), les réseaux de neurones informés par la physique (PINNs) exploitent l'approximation universelle pour représenter le champ de vitesse ou de pression. La capacité à représenter n'importe quelle fonction lisse garantit que la solution physique exacte appartient à l'adhérence de l'espace des fonctions générées par le réseau.

@@ -1,11 +1,12 @@
-# Exercice 7 : Approximation d'une gaussienne $\bigstar\bigstar\bigstar\bigstar\star$
-Approcher $f(x) = \exp(-x^2)$ sur $[-1, 1]$ par une combinaison de ReLU $\max(0, x)$.
+## Exercice 7 : Théorème d'approximation et réseaux ReLU profonds \quad $\bigstar\bigstar\bigstar\bigstar\star$
 
-\textbf{Correction détaillée}
-$f$ est dérivable et convexe par morceaux (inflexion en $\pm 1/\sqrt{2}$).
-On utilise une subdivision de $[-1, 1]$ avec pas $h = 2/N$, $x_i = -1 + ih$.
-L'interpolée linéaire par morceaux est $G(x)$. La dérivée seconde de $f$ est bornée par 2, donc l'erreur d'interpolation spline linéaire est encadrée par $M_2 h^2 / 8 \le 2 / (8 N^2) = 1/(4N^2)$.
-Pour avoir une erreur $\epsilon$, il suffit que $1/(4N^2) < \epsilon$, soit $N > \frac{1}{2\sqrt{\epsilon}}$.
-La fonction spline $G(x)$ s'écrit formelently $G(x) = f(-1) + c_{-1}(x+1) + \sum_{i=1}^{N-1} a_i \max(0, x-x_i)$.
-Où les coefficients $a_i$ représentent les sauts de dérivée aux noeuds $x_i$ : $a_i = f'(x_i+) - f'(x_i-)$.
-Ainsi, l'approximation est bien une somme pondérée de ReLUs.
+Démontrer qu'un réseau composé uniquement de couches affines et de la fonction d'activation identité ne peut pas être un approximateur universel, quelle que soit sa profondeur.
+
+**Correction :**
+Soit un réseau avec $L$ couches, où la $k$-ème couche calcule $x^{(k)} = W^{(k)} x^{(k-1)} + b^{(k)}$.
+Par récurrence immédiate, on a $x^{(1)} = W^{(1)} x^{(0)} + b^{(1)}$ (une fonction affine de l'entrée $x^{(0)}$).
+Supposons que $x^{(k-1)} = A x^{(0)} + c$ pour des matrices $A$ et vecteurs $c$.
+Alors $x^{(k)} = W^{(k)} (A x^{(0)} + c) + b^{(k)} = (W^{(k)} A) x^{(0)} + (W^{(k)} c + b^{(k)})$.
+La composition de fonctions affines est une fonction affine.
+Ainsi, le réseau complet calcule une fonction $f(x) = W x + B$.
+L'ensemble de ces fonctions n'est que l'ensemble des applications affines, qui est de dimension finie et donc fermé et non dense dans $\mathcal{C}(I_n)$. Sans la non-linéarité (comme la ReLU ou la sigmoïde), la profondeur est inutile.

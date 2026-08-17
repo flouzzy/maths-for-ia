@@ -1,11 +1,10 @@
-# Exercice 5 : Densité des fonctions en escalier $\bigstar\bigstar\bigstar\star\star$
-Montrer que l'ensemble des fonctions en escalier sur $I_1 = [0,1]$ est dense dans $L^1([0,1])$.
+## Exercice 5 : Mesure de Lebesgue et Hahn-Banach \quad $\bigstar\bigstar\bigstar\star\star$
 
-\textbf{Correction détaillée}
-Par définition de l'intégrale de Lebesgue, les fonctions étagées (combinaisons linéaires d'indicatrices d'ensembles mesurables) sont denses dans $L^1$.
-Un sous-ensemble mesurable $A$ peut être approché en mesure par des unions finies d'intervalles ouverts.
-L'indicatrice d'un intervalle est une fonction en escalier.
-Donc, pour toute fonction intégrable $f \in L^1([0,1])$ et $\epsilon > 0$, il existe une fonction étagée $\phi = \sum_{i=1}^n c_i \mathbb{I}_{A_i}$ telle que $\|f - \phi\|_1 < \epsilon/2$.
-Ensuite, pour chaque $A_i$, il existe une union finie d'intervalles $U_i$ telle que $m(A_i \Delta U_i) < \epsilon / (2n|c_i|)$.
-La fonction $\psi = \sum_{i=1}^n c_i \mathbb{I}_{U_i}$ est en escalier.
-Par l'inégalité triangulaire, $\|f - \psi\|_1 \le \|f - \phi\|_1 + \|\phi - \psi\|_1 \le \epsilon/2 + \sum |c_i| m(A_i \Delta U_i) < \epsilon$.
+Lors de la preuve de Cybenko, justifier formellement pourquoi l'espace fonctionnel généré $S$ est dense si et seulement si l'unique mesure $\mu$ l'annulant est la mesure nulle.
+
+**Correction :**
+Par le théorème de Hahn-Banach, si un sous-espace $S$ d'un espace vectoriel normé (ici $\mathcal{C}(I_n)$ avec la norme infinie) n'est pas dense, alors son adhérence $\overline{S}$ est un sous-espace strict fermé.
+Il existe alors une forme linéaire continue non nulle $L$ telle que $\ker(L) \supset \overline{S}$, c'est-à-dire $L(f) = 0$ pour tout $f \in S$.
+Le théorème de Riesz-Markov-Kakutani stipule que pour l'espace dual de $\mathcal{C}(I_n)$, toute forme linéaire continue $L$ s'exprime de manière unique par une intégrale contre une mesure de Borel régulière signée $\mu$ finie : $L(f) = \int f d\mu$.
+Ainsi, $\overline{S}$ est strict équivaut à l'existence d'une mesure $\mu \neq 0$ telle que $\int \sigma(w^T x + b) d\mu(x) = 0$ pour tout $w, b$.
+Par contraposée, si la seule mesure vérifiant cette propriété est $\mu = 0$, alors la forme linéaire est nulle, et aucune telle forme n'existe pour séparer un point extérieur de $\overline{S}$. Donc $\overline{S} = \mathcal{C}(I_n)$, soit $S$ dense.

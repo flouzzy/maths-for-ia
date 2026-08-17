@@ -1,6 +1,6 @@
-.antigravitycli/
-__pycache__/
-.obsidian/plugins/obsidian-git/
+*.aux
+*.log
+*.toc
 *.aux
 *.log
 *.toc

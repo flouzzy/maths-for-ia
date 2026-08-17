@@ -1,11 +1,9 @@
-# Exercice 6 : Non-linéarité stricte $\bigstar\bigstar\bigstar\bigstar\star$
-Si la fonction d'activation est $\sigma(t) = at + b$, le théorème d'approximation universelle est-il valable ?
+## Exercice 6 : Fonctions d'activation polynomiales \quad $\bigstar\bigstar\bigstar\star\star$
 
-\textbf{Correction détaillée}
-Non. L'ensemble $S$ des réseaux s'écrit $G(x) = \sum_{j=1}^N \alpha_j (a(w_j^T x) + b_j + b) = (\sum \alpha_j a w_j)^T x + \sum \alpha_j(b_j+b)$.
-C'est-à-dire $G(x) = W^T x + B$ où $W \in \mathbb{R}^n$ et $B \in \mathbb{R}$.
-$S$ est exactement l'espace des fonctions affines sur $\mathbb{R}^n$.
-L'espace des fonctions affines est un sous-espace vectoriel de dimension finie $n+1$.
-Dans l'espace $\mathcal{C}(I_n)$ qui est de dimension infinie, un sous-espace de dimension finie est toujours fermé (et complet), et ne peut donc pas être dense.
-Il est impossible d'approcher uniformément une fonction non-affine, par exemple $f(x) = x^2$ sur $[0,1]$.
-Si $\sup_{x \in [0,1]} |x^2 - (Wx+B)| < \epsilon$, alors les dérivées secondes devraient être proches, ce qui n'est pas le cas.
+Le théorème d'approximation universelle est-il valable si la fonction d'activation est un polynôme de degré $d$ fini, $\sigma(x) = P(x)$ ?
+
+**Correction :**
+Non. L'espace vectoriel engendré par les fonctions de la forme $P(w^T x + b)$ pour divers $w, b$ est un espace de polynômes à $n$ variables de degré maximal $d$.
+Puisque le degré est borné, cet espace est de dimension finie (précisément $\binom{n+d}{n}$).
+Un sous-espace de dimension finie dans $\mathcal{C}(I_n)$ (qui est de dimension infinie) est toujours fermé et d'intérieur vide, il ne peut donc pas être dense dans $\mathcal{C}(I_n)$.
+On ne peut approximer à n'importe quelle précision des fonctions comme $\exp(x)$ ou $\sin(x)$ avec des polynômes d'un degré globalement borné par $d$. C'est pourquoi la fonction d'activation doit être non polynomiale pour garantir l'universalité.

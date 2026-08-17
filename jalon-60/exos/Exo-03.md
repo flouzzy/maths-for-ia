@@ -1,13 +1,12 @@
-# Exercice 3 : La porte logique XOR (version continue) $\bigstar\bigstar\star\star\star$
-Considérons $I_2 = [0,1]^2$. On veut approcher la fonction surface $f(x_1, x_2) = x_1 + x_2 - 2x_1 x_2$.
-Montrer comment utiliser des ReLUs $\sigma(t) = \max(0, t)$ pour approcher le terme croisé $x_1 x_2$.
+## Exercice 3 : Construction de la fonction identité avec des sigmoïdes \quad $\bigstar\bigstar\star\star\star$
 
-\textbf{Correction détaillée}
-On sait que $2x_1 x_2 = (x_1 + x_2)^2 - x_1^2 - x_2^2$.
-Pour approcher la fonction carré $t \mapsto t^2$ sur $[0, 2]$, on peut utiliser une somme de ReLUs.
-Puisque $t^2$ est convexe, on peut l'approcher par une ligne brisée convexe, qui est une combinaison linéaire de fonctions $\max(0, t - t_i)$.
-Soit $N$ le nombre de segments. On subdivise $[0, 2]$ en $t_i = i \frac{2}{N}$.
-La fonction approchant $t^2$ est de la forme $H_N(t) = \sum_{i=1}^{N-1} c_i \max(0, t - t_i) + c_0 t + b_0$.
-Ainsi, la multiplication $x_1 x_2 = \frac{1}{2} (H_N(x_1+x_2) - H_N(x_1) - H_N(x_2))$ peut être approchée arbitrairement près.
-Puisque $H_N$ est une somme de ReLUs, $x_1 x_2$ s'exprime comme une combinaison linéaire de ReLUs de la forme $\sigma(w^T x + b)$.
-La densité s'ensuit.
+Montrer qu'en utilisant des combinaisons linéaires de sigmoïdes $\sigma(x) = \frac{1}{1+e^{-x}}$, on peut approcher la fonction identité $f(x) = x$ sur l'intervalle $[-1, 1]$ avec une erreur arbitrairement petite $\epsilon > 0$.
+
+**Correction :**
+Le développement limité de $\sigma(x)$ au voisinage de 0 donne $\sigma(x) = \frac{1}{2} + \frac{1}{4}x + \mathcal{O}(x^3)$.
+On considère la combinaison $G_h(x) = \frac{\sigma(h x) - \sigma(-h x)}{2}$.
+On a $\sigma(hx) = \frac{1}{2} + \frac{h x}{4} + \mathcal{O}(h^3 x^3)$ et $\sigma(-hx) = \frac{1}{2} - \frac{h x}{4} + \mathcal{O}(h^3 x^3)$.
+Donc $G_h(x) = \frac{h x}{4} + \mathcal{O}(h^3 x^3)$.
+En multipliant par $\frac{4}{h}$, on obtient $\tilde{G}_h(x) = \frac{4}{h} G_h(x) = x + \mathcal{O}(h^2 x^3)$.
+Sur le compact $[-1, 1]$, $|x^3| \le 1$. L'erreur est en $\mathcal{O}(h^2)$.
+En choisissant $h$ suffisamment petit tel que l'erreur maximale soit inférieure à $\epsilon$, on a bien approché la fonction identité uniformément sur $[-1, 1]$.
