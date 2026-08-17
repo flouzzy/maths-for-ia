@@ -1,9 +1,12 @@
-# Approximation de Heaviside
+## Exercice 3 : Construction de la fonction identité avec des sigmoïdes \quad $\bigstar\bigstar\star\star\star$
 
-### Énoncé $\quad \bigstar\bigstar\bigstar\star\star$
+Montrer qu'en utilisant des combinaisons linéaires de sigmoïdes $\sigma(x) = \frac{1}{1+e^{-x}}$, on peut approcher la fonction identité $f(x) = x$ sur l'intervalle $[-1, 1]$ avec une erreur arbitrairement petite $\epsilon > 0$.
 
-Prouver que la fonction de Heaviside (marche d'escalier), bien que discontinue, peut être approchée par une suite de fonctions générées par un réseau de neurones, pour la topologie de la convergence ponctuelle.
-
-### Démonstration Détaillée
-
-Bien que le théorème universel classique s'applique aux fonctions continues pour la norme uniforme, on peut approcher une discontinuité de manière ponctuelle. La sigmoïde standard $\sigma(kx)$ pour $k \to \infty$ converge ponctuellement vers $0$ pour $x<0$, vers $1$ pour $x>0$, et vers $0.5$ en $x=0$. Ainsi, une seule couche cachée avec un seul neurone suffit pour obtenir cette convergence, illustrant que la limite forte de l'espace des réseaux englobe les fonctions étagées.
+**Correction :**
+Le développement limité de $\sigma(x)$ au voisinage de 0 donne $\sigma(x) = \frac{1}{2} + \frac{1}{4}x + \mathcal{O}(x^3)$.
+On considère la combinaison $G_h(x) = \frac{\sigma(h x) - \sigma(-h x)}{2}$.
+On a $\sigma(hx) = \frac{1}{2} + \frac{h x}{4} + \mathcal{O}(h^3 x^3)$ et $\sigma(-hx) = \frac{1}{2} - \frac{h x}{4} + \mathcal{O}(h^3 x^3)$.
+Donc $G_h(x) = \frac{h x}{4} + \mathcal{O}(h^3 x^3)$.
+En multipliant par $\frac{4}{h}$, on obtient $\tilde{G}_h(x) = \frac{4}{h} G_h(x) = x + \mathcal{O}(h^2 x^3)$.
+Sur le compact $[-1, 1]$, $|x^3| \le 1$. L'erreur est en $\mathcal{O}(h^2)$.
+En choisissant $h$ suffisamment petit tel que l'erreur maximale soit inférieure à $\epsilon$, on a bien approché la fonction identité uniformément sur $[-1, 1]$.

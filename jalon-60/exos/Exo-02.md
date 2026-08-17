@@ -1,9 +1,11 @@
-# Approximation du sinus
+## Exercice 2 : Approximation d'une fonction affine \quad $\bigstar\star\star\star\star$
 
-### Énoncé $\quad \bigstar\bigstar\star\star\star$
+Soit la fonction de Heaviside modifiée $H(x)$ telle que l'on puisse approcher une fonction affine. Comment utiliser deux neurones ReLU $\sigma(x) = \max(0, x)$ pour représenter exactement une fonction affine par morceaux avec un changement de pente ?
 
-Démontrer que le réseau de neurones à une couche cachée peut approcher $f(x) = \sin(x)$ sur $[0, 2\pi]$. Quelle est l'influence de la largeur de la couche (nombre de neurones) sur l'erreur d'approximation uniforme ?
-
-### Démonstration Détaillée
-
-La fonction sinus est lipschitzienne sur le compact $[0, 2\pi]$ (constante de Lipschitz $L=1$). En découpant le domaine en intervalles de taille $\delta$, on obtient une erreur d'approximation en escalier de $O(\delta)$. Le lissage par des sigmoïdes introduit une erreur additionnelle, qui peut être rendue arbitrairement petite pour un paramètre d'échelle $k \to \infty$. L'erreur décroît généralement de l'ordre de $O(1/\sqrt{N})$ pour $N$ neurones, ce qui illustre le compromis entre complexité du réseau et précision.
+**Correction :**
+Soit $f(x)$ une fonction affine par morceaux telle que $f(x) = a x + b$ pour $x < x_0$ et $f(x) = c x + d$ pour $x \ge x_0$, avec continuité en $x_0$ ($a x_0 + b = c x_0 + d$).
+On peut utiliser deux ReLUs pour construire cela.
+Posons $G(x) = a x + b + (c-a) \max(0, x - x_0)$.
+Puisque $x = \max(0, x) - \max(0, -x)$, l'expression affine totale peut s'écrire uniquement avec des ReLUs.
+Plus simplement, on écrit $G(x) = a \max(0, x) - a \max(0, -x) + b + (c-a) \max(0, x - x_0)$.
+Le réseau représente exactement la fonction.

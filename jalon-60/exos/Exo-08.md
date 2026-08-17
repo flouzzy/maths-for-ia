@@ -1,9 +1,9 @@
-# Borne inférieure sur la taille
+## Exercice 8 : Régularité et borne d'erreur de Barron \quad $\bigstar\bigstar\bigstar\bigstar\star$
 
-### Énoncé $\quad \bigstar\bigstar\bigstar\bigstar\bigstar$
+Le théorème de Cybenko ne précise pas la vitesse de convergence. Citer et utiliser le résultat de Barron (1993) pour borner l'erreur d'approximation en fonction du nombre de neurones $N$ pour une fonction $f$ ayant un moment d'ordre 1 fini pour sa transformée de Fourier.
 
-Pour approcher l'indicatrice d'un hypercube en dimension $d$ avec une activation sigmoïde de type heaviside approchée, quel est le nombre minimal de neurones requis dans une seule couche cachée ?
-
-### Démonstration Détaillée
-
-L'hypercube possède $2^d$ sommets et $2d$ faces. Chaque neurone de la couche cachée décrit un hyperplan affine qui divise l'espace. Pour découper un volume fini et borné (l'intersection de $2d$ demi-espaces), il faut au strict minimum $2d$ hyperplans. Donc il faut au moins $2d$ neurones dans la couche cachée pour créer la primitive de la localisation spatiale en dimension $d$. C'est un argument géométrique (théorème de Cover).
+**Correction :**
+Le théorème de Barron stipule que si la transformée de Fourier de $f$, notée $\hat{f}(\omega)$, vérifie $C_f = \int_{\mathbb{R}^n} |\omega| |\hat{f}(\omega)| d\omega < \infty$, alors il existe un réseau $G_N$ avec $N$ neurones (couche cachée) tel que l'erreur quadratique moyenne vérifie :
+$$\int_{I_n} (f(x) - G_N(x))^2 dx \le \frac{C_f^2}{N}$$
+L'erreur décroît donc en $\mathcal{O}(1/\sqrt{N})$.
+Il est remarquable que cette borne de convergence $1/\sqrt{N}$ est indépendante de la dimension de l'espace d'entrée $n$, ce qui permet aux réseaux de neurones d'échapper partiellement à la malédiction de la dimension, contrairement aux méthodes d'approximation traditionnelles (par exemple par polynômes ou splines) dont l'erreur typique décroît en $\mathcal{O}(N^{-s/n})$ où $s$ est la régularité.

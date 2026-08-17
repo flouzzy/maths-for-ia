@@ -1,9 +1,8 @@
-# Généralisation aux espaces de Lebesgue
+## Exercice 10 : Approximation par réseaux de largeur fixe et profondeur arbitraire \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-### Énoncé $\quad \bigstar\bigstar\bigstar\bigstar\bigstar$
+Le théorème de Cybenko considère une largeur arbitraire et une seule couche cachée. Quel est le résultat analogue (théorème de Lu et al. 2017) pour une largeur fixe et une profondeur arbitraire, utilisant la fonction ReLU ?
 
-Montrer que si l'architecture est dense dans $\mathcal{C}(I_n)$ pour la norme $\|\cdot\|_\infty$, alors elle est également dense dans l'espace de Lebesgue $L^p(I_n)$ pour $1 \le p < \infty$.
-
-### Démonstration Détaillée
-
-Ce résultat repose sur la densité des fonctions continues dans $L^p$. Pour tout $f \in L^p(I_n)$ et $\epsilon > 0$, on sait par la théorie de la mesure de Lebesgue qu'il existe $g \in \mathcal{C}(I_n)$ telle que $\|f - g\|_p < \epsilon/2$. Par le théorème d'approximation, il existe un réseau $h$ tel que $\|g - h\|_\infty < \epsilon/2$. Puisque le domaine $I_n$ a une mesure finie (volume 1), l'inégalité de Hölder donne $\|g - h\|_p \le \|g - h\|_\infty < \epsilon/2$. Par l'inégalité triangulaire dans $L^p$, on a $\|f - h\|_p < \epsilon$. L'approximation en norme $L^p$ est donc garantie.
+**Correction :**
+Lu et al. ont prouvé que pour approcher n'importe quelle fonction continue de $I_n$ vers $\mathbb{R}^m$ avec une précision arbitraire, un réseau ReLU avec une largeur maximale $W$ et une profondeur arbitraire est un approximateur universel si et seulement si $W \ge n + m + 1$.
+C'est le théorème d'approximation universelle par largeur (Width-Bounded Universal Approximation Theorem).
+Pour une fonction de $\mathbb{R}^n \to \mathbb{R}$, il suffit d'une largeur de $n+2$. Si la largeur est strictement inférieure à ce seuil, il existe des fonctions lisses qui ne peuvent pas être approximées, peu importe la profondeur du réseau (la "bande passante" de l'information s'étrangle à chaque couche, détruisant la topologie du signal d'entrée).

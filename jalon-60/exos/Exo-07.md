@@ -1,9 +1,12 @@
-# Absence de garantie sur les dérivées
+## Exercice 7 : Théorème d'approximation et réseaux ReLU profonds \quad $\bigstar\bigstar\bigstar\bigstar\star$
 
-### Énoncé $\quad \bigstar\bigstar\bigstar\bigstar\star$
+Démontrer qu'un réseau composé uniquement de couches affines et de la fonction d'activation identité ne peut pas être un approximateur universel, quelle que soit sa profondeur.
 
-Montrer par un contre-exemple que si un réseau de neurones approche $f \in \mathcal{C}^1$ avec une erreur $\epsilon$ en norme uniforme, son gradient (si existant) n'approche pas nécessairement le gradient de $f$.
-
-### Démonstration Détaillée
-
-Soit $f(x) = 0$ sur $[0,1]$ ($f' \equiv 0$). On peut construire un réseau $g(x) = \epsilon \sin(Nx)$ (approché par des activations). On a $\|f - g\|_\infty \le \epsilon$. Cependant, $g'(x) = N\epsilon \cos(Nx)$. Si on choisit $N$ grand, $\|f' - g'\|_\infty = N\epsilon$ peut être arbitrairement grand. L'approximation uniforme des fonctions n'implique aucune régularité sur les dérivées, sauf si on utilise des topologiques de Sobolev adaptées.
+**Correction :**
+Soit un réseau avec $L$ couches, où la $k$-ème couche calcule $x^{(k)} = W^{(k)} x^{(k-1)} + b^{(k)}$.
+Par récurrence immédiate, on a $x^{(1)} = W^{(1)} x^{(0)} + b^{(1)}$ (une fonction affine de l'entrée $x^{(0)}$).
+Supposons que $x^{(k-1)} = A x^{(0)} + c$ pour des matrices $A$ et vecteurs $c$.
+Alors $x^{(k)} = W^{(k)} (A x^{(0)} + c) + b^{(k)} = (W^{(k)} A) x^{(0)} + (W^{(k)} c + b^{(k)})$.
+La composition de fonctions affines est une fonction affine.
+Ainsi, le réseau complet calcule une fonction $f(x) = W x + B$.
+L'ensemble de ces fonctions n'est que l'ensemble des applications affines, qui est de dimension finie et donc fermé et non dense dans $\mathcal{C}(I_n)$. Sans la non-linéarité (comme la ReLU ou la sigmoïde), la profondeur est inutile.
