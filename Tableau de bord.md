@@ -71,7 +71,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-60/Jalon-60.md|Jalon 60 : Livrable IA T5 : Preuve du théorème d'approximation universelle]] : Livrable IA T5 : Preuve du théorème d'approximation universelle des réseaux de neurones (utilisation de la topologie de la convergence uniforme sur les compacts). 🔥 **Enrichi** *(10 Exos + 5 TP)*
  🔥 **Enrichi** *(10 Exos + 5 TP)*
 ### Trimestre 6 : théorie de la mesure et intégration de Lebesgue
-- [ ] [[jalon-61/Jalon 61 (Insuffisances de l'intégrale de Riemann).md|Jalon 61 : Insuffisances de l'intégrale de Riemann]] : Insuffisances de l'intégrale de Riemann, paradoxe de la fonction de Dirichlet.
+- [x] [[jalon-61/Jalon-61.md|Jalon 61 : Insuffisances de l'intégrale de Riemann]] : Insuffisances de l'intégrale de Riemann, paradoxe de la fonction de Dirichlet. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-62/Jalon 62 (Algèbres).md|Jalon 62 : Algèbres]] : Algèbres, $\\sigma$-algèbres (tribus), tribus engendrées et tribu de Borel sur $\\mathbb{R}$.
 - [ ] [[jalon-63/Jalon 63 (Définition axiomatique d'une mesure).md|Jalon 63 : Définition axiomatique d'une mesure]] : Définition axiomatique d'une mesure, mesures finies, $\\sigma$-finies et propriétés de continuité monotone.
 - [ ] [[jalon-64/Jalon 64 (Construction pas à pas de la mesure de Lebesgue sur -mathbb{R}- via la mesure extérieure.).md|Jalon 64 : Construction pas à pas de la mesure de Lebesgue sur $\\mathbb{R}$ via la mesure extérieure.]] : Construction pas à pas de la mesure de Lebesgue sur $\\mathbb{R}$ via la mesure extérieure.

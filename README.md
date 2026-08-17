@@ -167,7 +167,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 <summary><b>Trimestre 6 : théorie de la mesure et intégration de Lebesgue</b></summary>
 <br>
 
-- **[Jalon 61](jalon-61/Jalon%2061%20%28Insuffisances%20de%20l%27int%C3%A9grale%20de%20Riemann%29.md)** : Insuffisances de l'intégrale de Riemann, paradoxe de la fonction de Dirichlet.
+- **[Jalon 61](jalon-61/Jalon-61.md)** : Insuffisances de l'intégrale de Riemann, paradoxe de la fonction de Dirichlet.
 - **[Jalon 62](jalon-62/Jalon%2062%20%28Alg%C3%A8bres%29.md)** : Algèbres, $\sigma$-algèbres (tribus), tribus engendrées et tribu de Borel sur $\mathbb{R}$.
 - **[Jalon 63](jalon-63/Jalon%2063%20%28D%C3%A9finition%20axiomatique%20d%27une%20mesure%29.md)** : Définition axiomatique d'une mesure, mesures finies, $\sigma$-finies et propriétés de continuité monotone.
 - **[Jalon 64](jalon-64/Jalon%2064%20%28Construction%20pas%20%C3%A0%20pas%20de%20la%20mesure%20de%20Lebesgue%20sur%20-mathbb%7BR%7D-%20via%20la%20mesure%20ext%C3%A9rieure.%29.md)** : Construction pas à pas de la mesure de Lebesgue sur $\mathbb{R}$ via la mesure extérieure.
@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-08-17] : [Upsert/Création] du Jalon 61 - Insuffisances de l'intégrale de Riemann. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-16] : [Upsert/Création] du Jalon 60 - Livrable IA T5 : Preuve du théorème d'approximation universelle. Status: Terminé.
 - [2026-08-13] : [Upsert/Création] du Jalon 59 - Topologie des espaces de fonctions. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-12] : [Upsert/Création] du Jalon 57 - Théorème du point fixe de Banach. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
