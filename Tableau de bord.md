@@ -68,7 +68,8 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-57/Jalon-57.md|Jalon 57 : Théorème du point fixe de Banach]] : Théorème du point fixe de Banach (contractions) et application à l'existence locale des solutions d'EDP. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-58/Jalon-58.md|Jalon 58 : Théorème de Baire]] : Théorème de Baire (les espaces de l'impossible) et applications aux fonctions continues nulle part dérivables. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-59/Jalon-59.md|Jalon 59 : Topologie des espaces de fonctions et Arzelà-Ascoli]] : Topologie des espaces de fonctions, convergence compacte et théorème d'Arzelà-Ascoli. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [ ] [[jalon-60/Jalon 60 (Livrable IA).md|Jalon 60 : Livrable IA]] : Livrable IA T5 : Preuve du théorème d'approximation universelle des réseaux de neurones (utilisation de la topologie de la convergence uniforme sur les compacts).
+- [x] [[jalon-60/Jalon-60.md|Jalon 60 : Livrable IA T5 : Preuve du théorème d'approximation universelle]] : Livrable IA T5 : Preuve du théorème d'approximation universelle des réseaux de neurones (utilisation de la topologie de la convergence uniforme sur les compacts). 🔥 **Enrichi** *(10 Exos + 5 TP)*
+ 🔥 **Enrichi** *(10 Exos + 5 TP)*
 ### Trimestre 6 : théorie de la mesure et intégration de Lebesgue
 - [ ] [[jalon-61/Jalon 61 (Insuffisances de l'intégrale de Riemann).md|Jalon 61 : Insuffisances de l'intégrale de Riemann]] : Insuffisances de l'intégrale de Riemann, paradoxe de la fonction de Dirichlet.
 - [ ] [[jalon-62/Jalon 62 (Algèbres).md|Jalon 62 : Algèbres]] : Algèbres, $\\sigma$-algèbres (tribus), tribus engendrées et tribu de Borel sur $\\mathbb{R}$.
