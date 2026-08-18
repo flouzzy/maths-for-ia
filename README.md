@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-08-17] : [Upsert/Création] du Jalon 62 - Algèbres et Tribus. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-17] : [Upsert/Création] du Jalon 61 - Insuffisances de l'intégrale de Riemann. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-16] : [Upsert/Création] du Jalon 60 - Livrable IA T5 : Preuve du théorème d'approximation universelle. Status: Terminé.
 - [2026-08-13] : [Upsert/Création] du Jalon 59 - Topologie des espaces de fonctions. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
