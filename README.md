@@ -486,3 +486,4 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-08-05] : [Upsert/Création] du Jalon 47 - Dérivées partielles d'ordre deux et Hessienne. Status: Terminé.
 
 - [2026-08-06] : [Upsert/Création] du Jalon 48 - Livrable IA T4 : Formalisation mathématique de la Rétropropagation. Status: Terminé.
+- [2026-08-18] : [Upsert/Création] du Jalon 63 - Définition axiomatique d'une mesure. Status: Terminé.
