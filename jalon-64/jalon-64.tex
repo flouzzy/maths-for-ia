@@ -1,0 +1,530 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1
+}
+
+\title{\Huge CONSTRUCTION PAS À PAS DE LA MESURE DE LEBESGUE SUR $\mathbb{R}$ VIA LA MESURE EXTÉRIEURE \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+\section{Introduction}
+
+L'objectif de la théorie de la mesure est de généraliser les notions élémentaires de longueur, d'aire et de volume à des sous-ensembles arbitrairement complexes de $\mathbb{R}^n$. Historiquement, l'intégrale de Riemann, bien qu'efficace pour les fonctions continues par morceaux, montre ses limites face à des fonctions fortement discontinues ou lors de passages à la limite (comme avec des suites de fonctions). Émile Borel, puis Henri Lebesgue, ont introduit au début du XXe siècle une approche fondamentalement différente. Au lieu de découper l'axe des abscisses en intervalles pour approcher l'aire sous une courbe, Lebesgue propose de mesurer la taille des ensembles de valeurs de la fonction sur l'axe des ordonnées, ce qui requiert d'être capable de "mesurer" des ensembles très fractionnés, tels que l'image réciproque d'un petit intervalle.
+
+La construction de la mesure de Lebesgue sur $\mathbb{R}$ commence par l'idée intuitive que l'on peut "recouvrir" n'importe quel ensemble par une réunion dénombrable de petits intervalles ouverts, pour lesquels la notion de longueur est triviale. L'infimum des sommes des longueurs de ces intervalles de recouvrement fournit une première estimation, appelée *mesure extérieure*. Cependant, pour préserver la propriété fondamentale d'additivité (la mesure de la réunion disjointe de deux ensembles doit être la somme de leurs mesures), la mesure extérieure ne peut pas être appliquée à toutes les parties de $\mathbb{R}$ sans créer de paradoxes géométriques (comme le paradoxe de Banach-Tarski, ou l'ensemble de Vitali). Constantin Carathéodory a formulé un critère élégant permettant de sélectionner les "bons" ensembles : les ensembles mesurables. Sur cette classe restreinte d'ensembles, qui forme une tribu (ou $\sigma$-algèbre), la mesure extérieure devient une véritable mesure, complète et invariante par translation, appelée la mesure de Lebesgue.
+
+\section{Mesure Extérieure et Théorèmes Fondamentaux}
+
+Soit $\mathcal{P}(\mathbb{R})$ l'ensemble des parties de $\mathbb{R}$. Pour tout intervalle $I$ de bornes $a$ et $b$ (avec $a \le b$), on définit sa longueur $\ell(I) = b - a$.
+
+\textbf{Définition 1 (Mesure extérieure de Lebesgue) :}
+Pour toute partie $A \subset \mathbb{R}$, on définit la mesure extérieure de Lebesgue $\lambda^*(A)$ par :
+$$\lambda^*(A) = \inf \left\lbrace \sum_{n=1}^\infty \ell(I_n) \mid A \subset \bigcup_{n=1}^\infty I_n, \quad I_n \text{ ouverts} \right\rbrace$$
+
+La figure suivante illustre le principe de recouvrement pour la mesure extérieure d'un ensemble de points isolés.
+
+\begin{tikzpicture}[scale=1.5]
+  % Axe réel
+  \draw[->, thick] (0,0) -- (6,0) node[right] {$\mathbb{R}$};
+
+  % Points de l'ensemble A
+  \fill[blue] (1,0) circle (1.5pt) node[below=2pt] {$x_1$};
+  \fill[blue] (2.5,0) circle (1.5pt) node[below=2pt] {$x_2$};
+  \fill[blue] (4.2,0) circle (1.5pt) node[below=2pt] {$x_3$};
+  \fill[blue] (4.8,0) circle (1.5pt) node[below=2pt] {$x_4$};
+
+  % Intervalles ouverts I_n
+  \draw[red, thick, |-|] (0.7,0.2) -- (1.3,0.2) node[midway, above] {$I_1$};
+  \draw[red, thick, |-|] (2.1,0.2) -- (2.9,0.2) node[midway, above] {$I_2$};
+  \draw[red, thick, |-|] (3.8,0.2) -- (5.1,0.2) node[midway, above] {$I_3$};
+
+  % Lignes pointillées
+  \draw[dotted, gray] (0.7,0) -- (0.7,0.2);
+  \draw[dotted, gray] (1.3,0) -- (1.3,0.2);
+  \draw[dotted, gray] (2.1,0) -- (2.1,0.2);
+  \draw[dotted, gray] (2.9,0) -- (2.9,0.2);
+  \draw[dotted, gray] (3.8,0) -- (3.8,0.2);
+  \draw[dotted, gray] (5.1,0) -- (5.1,0.2);
+
+  % Titre
+  \node at (3,-0.7) {Recouvrement d'un ensemble discret $A$ par des intervalles ouverts $I_n$.};
+\end{tikzpicture}
+
+
+\textbf{Exemple Concret 1 : Mesure extérieure d'un point}
+Considérons l'ensemble $A = \{x\}$ avec $x \in \mathbb{R}$.
+Pour tout $\epsilon > 0$, l'intervalle ouvert $I_\epsilon = \left]x - \frac{\epsilon}{2}, x + \frac{\epsilon}{2}\right[$ contient $A$.
+La longueur de cet intervalle est $\ell(I_\epsilon) = \epsilon$.
+Ainsi, $\lambda^*(A) \le \epsilon$ pour tout $\epsilon > 0$, ce qui implique rigoureusement que $\lambda^*(A) = 0$.
+
+\textbf{Exemple Concret 2 : Mesure extérieure d'un segment fermé}
+Considérons le segment $A = [0, 1]$.
+Pour tout $\epsilon > 0$, on peut recouvrir $A$ par l'intervalle $I = ]-\epsilon, 1+\epsilon[$, de longueur $1+2\epsilon$.
+Donc $\lambda^*(A) \le 1+2\epsilon$ pour tout $\epsilon > 0$, ce qui implique $\lambda^*(A) \le 1$.
+D'autre part, si $\bigcup_{n=1}^\infty I_n$ recouvre $[0, 1]$, on peut, par compacité (Théorème de Heine-Borel), extraire un sous-recouvrement fini. On peut montrer, par récurrence sur le nombre d'intervalles finis, que la somme de leurs longueurs est au moins la longueur de l'intervalle recouvert. Ainsi, $\sum_{n=1}^\infty \ell(I_n) \ge 1$.
+Par définition de l'infimum, $\lambda^*([0, 1]) = 1$.
+
+\textbf{Exemple Concret 3 : Mesure extérieure de l'ensemble de Cantor}
+L'ensemble de Cantor $\mathcal{C}$ est construit en retirant itérativement le tiers central ouvert des segments restants, à partir de $[0, 1]$.
+À l'étape $n$, l'ensemble $C_n$ est composé de $2^n$ intervalles fermés de longueur $\frac{1}{3^n}$.
+La longueur totale (mesure extérieure) à l'étape $n$ est $2^n \times \frac{1}{3^n} = \left(\frac{2}{3}\right)^n$.
+Puisque $\mathcal{C} \subset C_n$ pour tout $n$, nous avons $\lambda^*(\mathcal{C}) \le \left(\frac{2}{3}\right)^n$.
+En faisant tendre $n \to \infty$, on obtient $\lambda^*(\mathcal{C}) = 0$. L'ensemble de Cantor est donc de mesure extérieure nulle, bien qu'il ait la puissance du continu (non dénombrable).
+
+La mesure extérieure possède les propriétés de monotonie ($A \subset B \implies \lambda^*(A) \le \lambda^*(B)$) et de sous-additivité dénombrable ($\lambda^*\left(\bigcup_{n=1}^\infty A_n\right) \le \sum_{n=1}^\infty \lambda^*(A_n)$). Toutefois, elle n'est pas additive.
+
+\textbf{Définition 2 (Ensemble Lebesgue-mesurable, Critère de Carathéodory) :}
+Une partie $E \subset \mathbb{R}$ est dite mesurable au sens de Lebesgue si, pour tout sous-ensemble $A \subset \mathbb{R}$ (que nous appellerons sous-ensemble de test), on a :
+$$\lambda^*(A) = \lambda^*(A \cap E) + \lambda^*(A \cap (\mathbb{R} \setminus E))$$
+On note $\mathcal{L}(\mathbb{R})$ l'ensemble des parties mesurables de $\mathbb{R}$.
+
+\begin{tikzpicture}[scale=1.5]
+  % Espace total R
+  \draw[thick] (0,0) rectangle (6,3);
+  \node at (0.3, 2.7) {$\mathbb{R}$};
+
+  % Ensemble de test A
+  \fill[gray!20, draw=black, thick] (3,1.5) ellipse (1.5 and 1);
+  \node at (3, 2) {$A$};
+
+  % Ligne séparatrice représentant l'ensemble mesurable E (partie gauche) et E^c (partie droite)
+  \draw[dashed, very thick, blue] (2.5,0) -- (3.5,3);
+  \node[blue] at (1.5, 0.3) {Ensemble Mesurable $E$};
+  \node[red] at (4.5, 0.3) {$E^c = \mathbb{R} \setminus E$};
+
+  % Mettre en évidence les intersections
+  \node at (2.2, 1.2) {$A \cap E$};
+  \node at (4.0, 1.2) {$A \cap E^c$};
+\end{tikzpicture}
+
+Le critère de Carathéodory exprime que $E$ "coupe" proprement (au sens de la mesure extérieure) tout ensemble de test $A$. Si $E$ est très "irrégulier" ou "chiffonné" (comme l'ensemble non mesurable de Vitali), sa frontière est tellement pathologique qu'elle crée un excédent de mesure : la somme des mesures des parties excède la mesure extérieure de l'ensemble de départ.
+
+\textbf{Définition 3 (Mesure de Lebesgue) :}
+On appelle mesure de Lebesgue, notée $\lambda$, la restriction de la mesure extérieure $\lambda^*$ à la tribu $\mathcal{L}(\mathbb{R})$ des ensembles Lebesgue-mesurables.
+
+\textbf{Exemple Concret 4 : Mesurabilité d'un ensemble de mesure nulle}
+Soit $E \subset \mathbb{R}$ tel que $\lambda^*(E) = 0$.
+Soit $A \subset \mathbb{R}$ un ensemble de test quelconque.
+On a $A \cap E \subset E$, donc par monotonie, $\lambda^*(A \cap E) \le \lambda^*(E) = 0$, ce qui implique $\lambda^*(A \cap E) = 0$.
+D'autre part, $A \cap (\mathbb{R} \setminus E) \subset A$, donc $\lambda^*(A \cap (\mathbb{R} \setminus E)) \le \lambda^*(A)$.
+Ainsi, $\lambda^*(A \cap E) + \lambda^*(A \cap (\mathbb{R} \setminus E)) = 0 + \lambda^*(A \cap (\mathbb{R} \setminus E)) \le \lambda^*(A)$.
+Comme l'inégalité inverse (sous-additivité) $\lambda^*(A) \le \lambda^*(A \cap E) + \lambda^*(A \cap (\mathbb{R} \setminus E))$ est toujours vraie, nous avons bien l'égalité.
+Conclusion : tout ensemble de mesure extérieure nulle est Lebesgue-mesurable, et sa mesure de Lebesgue est nulle.
+
+\textbf{Exemple Concret 5 : Mesure d'une réunion dénombrable disjointe}
+Par définition des tribus et des mesures, la mesure de Lebesgue est $\sigma$-additive.
+Considérons l'ensemble des rationnels $\mathbb{Q} \cap [0, 1]$. Cet ensemble est dénombrable. Soit $\{q_1, q_2, \dots \}$ une énumération.
+$\mathbb{Q} \cap [0, 1] = \bigcup_{n=1}^\infty \{q_n\}$, qui est une union disjointe d'ensembles mesurables de mesure nulle (Exemple 1 et 4).
+Ainsi, $\lambda(\mathbb{Q} \cap [0, 1]) = \sum_{n=1}^\infty \lambda(\{q_n\}) = \sum_{n=1}^\infty 0 = 0$.
+Les irrationnels dans $[0, 1]$, notés $\mathbb{I} \cap [0, 1]$, satisfont $\lambda([0, 1]) = \lambda(\mathbb{Q} \cap [0, 1]) + \lambda(\mathbb{I} \cap [0, 1])$, donc $1 = 0 + \lambda(\mathbb{I} \cap [0, 1])$.
+La mesure des irrationnels dans $[0, 1]$ est exactement 1.
+
+\textbf{Exemple Concret 6 : L'ensemble de Vitali (cas pathologique non mesurable)}
+On définit une relation d'équivalence sur $[0, 1]$ par $x \sim y \iff x - y \in \mathbb{Q}$.
+Par l'axiome du choix, on construit un ensemble $V \subset [0, 1]$ contenant exactement un représentant de chaque classe d'équivalence.
+On peut translater cet ensemble $V$ par tous les rationnels $q \in \mathbb{Q} \cap [-1, 1]$. On obtient une famille dénombrable disjointe de translations $V_q = V + q$.
+Leur réunion couvre $[0, 1]$ et est contenue dans $[-1, 2]$.
+Si $V$ était mesurable, on aurait par invariance par translation $\lambda(V_q) = \lambda(V)$.
+La $\sigma$-additivité donnerait : $\lambda\left(\bigcup_q V_q\right) = \sum_q \lambda(V)$.
+Si $\lambda(V) = 0$, la somme fait $0$, contredisant le fait que la réunion recouvre $[0, 1]$ (de mesure 1).
+Si $\lambda(V) > 0$, la somme vaut $+\infty$, contredisant le fait que la réunion est incluse dans $[-1, 2]$ (de mesure 3).
+Conclusion : on ne peut pas attribuer de mesure à $V$. L'ensemble de Vitali n'est pas Lebesgue-mesurable.
+
+\textbf{Exemple Concret 7 : Invariance par translation des intervalles}
+Soit $I = [a, b]$ un intervalle fermé.
+Soit $x \in \mathbb{R}$. Le translaté de $I$ est $I + x = [a+x, b+x]$.
+La mesure extérieure de $I$ est $\lambda^*(I) = b - a$.
+La mesure extérieure de $I+x$ est $\lambda^*(I+x) = (b+x) - (a+x) = b - a$.
+Nous vérifions directement que $\lambda^*(I+x) = \lambda^*(I)$, un fait fondamental de la mesure de Lebesgue qui assure son unicité mathématique en tant que mesure régulière invariante par translation sur les boréliens de $\mathbb{R}$.
+
+\section{Démonstrations}
+
+\textbf{Démonstration 1 : Un ensemble dénombrable est de mesure nulle}
+
+Soit $A = \{a_1, a_2, \dots, a_n, \dots \}$ un sous-ensemble dénombrable de $\mathbb{R}$.
+Soit $\epsilon > 0$ un réel strictement positif fixé arbitrairement.
+Pour chaque élément $a_n \in A$ (indexé par $n \in \mathbb{N}^*$), construisons un intervalle ouvert $I_n$ centré en $a_n$ et de longueur $\frac{\epsilon}{2^n}$.
+Plus précisément, on pose $I_n = \left] a_n - \frac{\epsilon}{2^{n+1}}, a_n + \frac{\epsilon}{2^{n+1}} \right[$.
+La longueur de chaque intervalle $I_n$ est strictement $\ell(I_n) = \frac{\epsilon}{2^n}$.
+Par construction, chaque $a_n$ appartient à l'intervalle $I_n$, et par conséquent, la collection $\{I_n\}_{n \ge 1}$ forme un recouvrement ouvert dénombrable de l'ensemble $A$ :
+$A \subset \bigcup_{n=1}^\infty I_n$
+La définition de la mesure extérieure nous garantit que :
+$\lambda^*(A) \le \sum_{n=1}^\infty \ell(I_n)$
+Substituons les longueurs et calculons la série géométrique :
+$\lambda^*(A) \le \sum_{n=1}^\infty \frac{\epsilon}{2^n} = \epsilon \sum_{n=1}^\infty \left(\frac{1}{2}\right)^n$
+La somme géométrique convergente vaut exactement $1$ : $\sum_{n=1}^\infty \left(\frac{1}{2}\right)^n = \frac{1/2}{1 - 1/2} = 1$.
+Ainsi, $\lambda^*(A) \le \epsilon$.
+Cette inégalité est vérifiée pour tout réel $\epsilon > 0$. La mesure extérieure $\lambda^*(A)$ étant par définition positive ou nulle, nous en déduisons rigoureusement que :
+$\lambda^*(A) = 0$
+Puisque tout sous-ensemble de mesure extérieure nulle est mesurable (Exemple 4), $A \in \mathcal{L}(\mathbb{R})$ et $\lambda(A) = 0$.
+
+\textbf{Démonstration 2 : La sous-additivité dénombrable de la mesure extérieure}
+
+Soit $(A_k)_{k \in \mathbb{N}^*}$ une suite d'ensembles quelconques de $\mathbb{R}$. Nous souhaitons montrer que $\lambda^*\left( \bigcup_{k=1}^\infty A_k \right) \le \sum_{k=1}^\infty \lambda^*(A_k)$.
+Si la série du membre de droite diverge (somme infinie), l'inégalité est trivialement vérifiée. Supposons donc que pour tout $k \in \mathbb{N}^*$, $\lambda^*(A_k) < +\infty$.
+Soit $\epsilon > 0$. Par la définition de l'infimum pour la mesure extérieure, pour chaque entier $k$, il existe une suite d'intervalles ouverts $(I_{k, n})_{n \in \mathbb{N}^*}$ telle que :
+$A_k \subset \bigcup_{n=1}^\infty I_{k, n}$ et $\sum_{n=1}^\infty \ell(I_{k, n}) < \lambda^*(A_k) + \frac{\epsilon}{2^k}$.
+La réunion de tous ces ensembles donne :
+$\bigcup_{k=1}^\infty A_k \subset \bigcup_{k=1}^\infty \bigcup_{n=1}^\infty I_{k, n}$
+La famille de tous les intervalles $\{I_{k, n}\}_{(k, n) \in (\mathbb{N}^*)^2}$ est dénombrable et forme un recouvrement ouvert de $\bigcup_{k=1}^\infty A_k$.
+Par conséquent, la définition de la mesure extérieure de la réunion implique :
+$\lambda^*\left( \bigcup_{k=1}^\infty A_k \right) \le \sum_{k=1}^\infty \sum_{n=1}^\infty \ell(I_{k, n})$
+En utilisant la borne supérieure sur les sommes des longueurs pour chaque $k$, on a :
+$\lambda^*\left( \bigcup_{k=1}^\infty A_k \right) \le \sum_{k=1}^\infty \left( \lambda^*(A_k) + \frac{\epsilon}{2^k} \right) = \sum_{k=1}^\infty \lambda^*(A_k) + \epsilon \sum_{k=1}^\infty \frac{1}{2^k} = \sum_{k=1}^\infty \lambda^*(A_k) + \epsilon$
+Étant donné que cette inégalité est vraie pour tout $\epsilon > 0$, le passage à la limite $\epsilon \to 0$ conclut la preuve rigoureusement.
+
+\section{Applications en Physique, Logique et IA}
+
+En probabilités et apprentissage automatique (IA), l'espace mesuré $(\mathbb{R}, \mathcal{L}(\mathbb{R}), \lambda)$ constitue la fondation de la notion de variable aléatoire à densité. Une densité de probabilité $f : \mathbb{R} \to \mathbb{R}^+$ n'est intégrable rigoureusement que par l'intégrale de Lebesgue (Jalons suivants) qui repose sur cette mesure.
+
+Dans les architectures de génération de données (GANs, Normalizing Flows), un problème théorique profond découle de la mesure de Lebesgue. Supposons que les données réelles (images de visages par exemple) résident sur une variété différentielle de faible dimension au sein d'un espace de très grande dimension $\mathbb{R}^D$ (ex: $D = 1000 \times 1000 = 10^6$ pixels). La mesure de Lebesgue d'une variété de dimension $d < D$ dans $\mathbb{R}^D$ est stricement nulle. Par conséquent, toute distribution de probabilité absolue continue par rapport à la mesure de Lebesgue (qui assigne une masse non nulle à tout volume ouvert) aura un support disjoint de la variété des données réelles. Cela cause des divergences infinies lors du calcul de la divergence de Kullback-Leibler, expliquant fondamentalement pourquoi l'entraînement des GANs est si instable mathématiquement et a justifié l'introduction de la distance de Wasserstein (qui s'appuie sur la théorie du transport optimal) pour mesurer la distance entre des distributions supportées sur des ensembles de mesure de Lebesgue nulle.
+
+De plus, en théorie de la mesure, la non-mesurabilité de certains ensembles (comme les ensembles de Vitali) prévient l'apparition de paradoxes lors de l'apprentissage statistique. Tous les ouverts, fermés, intersections dénombrables et réunions dénombrables (les ensembles boréliens) sont inclus dans la tribu de Lebesgue, ce qui assure que l'image réciproque d'intervalles par des réseaux de neurones (fonctions continues, donc mesurables) sera toujours un ensemble pour lequel la probabilité (la taille) est mathématiquement bien définie, évitant ainsi toute ambiguïté théorique dans la formulation empirique du risque.
+
+
+\part{Exercices d'Application et de Concours}
+
+\subsection*{Exercice 1 : Propriétés fondamentales de la mesure \quad $\displaystyle \bigstar\star\star$}
+
+
+\subsubsection*{Énoncé}
+
+Démontrer formellement que pour tout ensemble mesurable $A$ et tout réel $c$, si nous définissons la dilatation $cA = \{cx \mid x \in A\}$, alors $cA$ est Lebesgue-mesurable et $\lambda(cA) = |c|\lambda(A)$. Appliquer ensuite ce résultat à un segment $A = [0, 1]$ et une constante $c = 3$, puis à l'ensemble de Cantor pour tout $c \neq 0$.
+
+\subsubsection*{Correction Détaillée}
+
+1. \textbf{Mesure extérieure sous dilatation :} Soit $\epsilon > 0$ et $A \subset \mathbb{R}$. Par définition de la mesure extérieure, il existe une suite d'intervalles ouverts $I_n = ]a_n, b_n[$ telle que $A \subset \bigcup I_n$ et $\sum \ell(I_n) < \lambda^*(A) + \epsilon$.
+2. Considérons l'ensemble $cI_n$. Si $c > 0$, $cI_n = ]ca_n, cb_n[$, dont la longueur est $cb_n - ca_n = c(b_n - a_n) = |c|\ell(I_n)$.
+   Si $c < 0$, $cI_n = ]cb_n, ca_n[$, dont la longueur est $ca_n - cb_n = -c(b_n - a_n) = |c|\ell(I_n)$.
+   Si $c = 0$, $cI_n = \{0\}$, de longueur nulle.
+3. La suite d'intervalles $(cI_n)$ forme un recouvrement ouvert de $cA$. Ainsi, $\lambda^*(cA) \le \sum \ell(cI_n) = |c|\sum \ell(I_n) < |c|(\lambda^*(A) + \epsilon)$. Puisque $\epsilon$ est arbitraire, $\lambda^*(cA) \le |c|\lambda^*(A)$.
+4. En appliquant la même logique à la transformation inverse par $1/c$ sur l'ensemble $cA$, nous obtenons : $\lambda^*(A) \le (1/|c|)\lambda^*(cA)$. D'où $\lambda^*(cA) \ge |c|\lambda^*(A)$.
+5. Donc $\lambda^*(cA) = |c|\lambda^*(A)$.
+6. \textbf{Mesurabilité :} Soit un ensemble de test $E$. $\lambda^*(E \cap cA) + \lambda^*(E \cap (\mathbb{R} \setminus cA)) = \lambda^*(c(E/c \cap A)) + \lambda^*(c(E/c \cap (\mathbb{R} \setminus A))) = |c| [ \lambda^*(E/c \cap A) + \lambda^*(E/c \cap (\mathbb{R} \setminus A)) ] = |c|\lambda^*(E/c) = \lambda^*(E)$. Le critère de Carathéodory est respecté.
+7. \textbf{Applications concrètes :} Pour $A = [0, 1]$ et $c = 3$, $cA = [0, 3]$. $\lambda(cA) = |3|\times 1 = 3$. Pour l'ensemble de Cantor $\mathcal{C}$, $\lambda(c\mathcal{C}) = |c| \times 0 = 0$.
+
+
+\subsection*{Exercice 2 : Sous-additivité stricte \quad $\displaystyle \bigstar\bigstar\star$}
+
+
+\subsubsection*{Énoncé}
+
+Trouver un exemple de suite d'ensembles $(A_n)$ où $\lambda^*(\bigcup A_n) < \sum \lambda^*(A_n)$ (inégalité stricte).
+
+\subsubsection*{Correction Détaillée}
+
+Pour avoir une inégalité stricte, il faut que les ensembles ne soient pas disjoints et aient une intersection de mesure non nulle.
+Prenons $A_1 = [0, 2]$ et $A_2 = [1, 3]$.
+On a $\lambda^*(A_1) = 2$ et $\lambda^*(A_2) = 2$. La somme est $\lambda^*(A_1) + \lambda^*(A_2) = 4$.
+L'union est $A_1 \cup A_2 = [0, 3]$, dont la mesure extérieure est $\lambda^*([0, 3]) = 3$.
+On a bien $3 < 4$. Cela montre que la mesure (extérieure) n'est additive que pour des ensembles disjoints.
+
+
+\subsection*{Exercice 3 : Ensembles denses et mesure \quad $\displaystyle \bigstar\bigstar\bigstar$}
+
+
+\subsubsection*{Énoncé}
+
+Construire un sous-ensemble ouvert $U$ de $\mathbb{R}$ qui est dense dans $\mathbb{R}$ mais de mesure $\lambda(U) \le 1$.
+
+\subsubsection*{Correction Détaillée}
+
+Soit $(q_n)_{n \ge 1}$ une énumération des rationnels de $\mathbb{R}$.
+Pour chaque entier $n \ge 1$, on pose $I_n = ]q_n - \frac{1}{2^{n+1}}, q_n + \frac{1}{2^{n+1}}[$.
+On définit $U = \bigcup_{n=1}^\infty I_n$.
+1. \textbf{Ouverture :} $U$ est une union d'intervalles ouverts, c'est donc un ouvert de $\mathbb{R}$.
+2. \textbf{Densité :} Par construction, pour tout $n$, $q_n \in U$. Donc $\mathbb{Q} \subset U$. Or $\mathbb{Q}$ est dense dans $\mathbb{R}$, donc l'adhérence de $U$ est $\mathbb{R}$. $U$ est bien dense.
+3. \textbf{Mesure :} Par sous-additivité, $\lambda(U) \le \sum_{n=1}^\infty \lambda(I_n) = \sum_{n=1}^\infty \frac{1}{2^n} = 1$.
+C'est un exemple fascinant : un ouvert contenant tous les rationnels, dense, mais avec "des trous" irrationnels immenses de mesure infinie en dehors de lui.
+
+
+\subsection*{Exercice 4 : Boréliens et mesurabilité \quad $\displaystyle \bigstar\bigstar\bigstar$}
+
+
+\subsubsection*{Énoncé}
+
+Soit $A$ un ouvert de $\mathbb{R}$. Montrer que $A$ est mesurable.
+
+\subsubsection*{Correction Détaillée}
+
+1. Tout ouvert $A$ de $\mathbb{R}$ peut s'écrire comme une union dénombrable d'intervalles ouverts disjoints : $A = \bigcup I_n$.
+2. Il suffit de montrer qu'un intervalle ouvert $I = ]a, b[$ est mesurable.
+3. Pour cela, montrons d'abord que $J = [a, \infty[$ est mesurable par le critère de Carathéodory.
+Soit $E$ un ensemble de test. Si $\lambda^*(E) = \infty$, l'égalité de Carathéodory est vraie. Supposons $\lambda^*(E) < \infty$.
+Pour tout $\epsilon > 0$, il existe un recouvrement de $E$ par des ouverts $O_k$ tels que $\sum \ell(O_k) \le \lambda^*(E) + \epsilon$.
+On a $\lambda^*(E \cap J) + \lambda^*(E \setminus J) \le \sum \lambda^*(O_k \cap J) + \sum \lambda^*(O_k \setminus J)$.
+Pour un intervalle $O_k$, l'intersection avec un demi-intervalle $J$ donne au pire deux intervalles disjoints dont la somme des longueurs est $\ell(O_k)$.
+Donc $\lambda^*(E \cap J) + \lambda^*(E \setminus J) \le \sum \ell(O_k) \le \lambda^*(E) + \epsilon$. Ceci implique la mesurabilité.
+4. Les intervalles sont donc mesurables. La tribu de Lebesgue est stable par intersection et passage au complémentaire. Un intervalle $]a, b[ = [a, \infty[ \cap ]-\infty, b[ \setminus \{a\}$ est donc mesurable (les points sont de mesure nulle, donc mesurables).
+5. $A$, étant une union dénombrable de mesurables, est mesurable.
+
+
+\subsection*{Exercice 5 : Régularité intérieure \quad $\displaystyle \bigstar\bigstar\bigstar$}
+
+
+\subsubsection*{Énoncé}
+
+Démontrer que pour tout ensemble mesurable $E$ et $\epsilon > 0$, il existe un fermé $F \subset E$ tel que $\lambda(E \setminus F) \le \epsilon$. On suppose $E$ borné.
+
+\subsubsection*{Correction Détaillée}
+
+1. \textbf{Régularité extérieure :} Par définition de la mesure extérieure (qui coïncide avec la mesure sur $E$), $\lambda(E) = \inf \{ \sum \ell(I_n) \mid E \subset \bigcup I_n \}$.
+Il existe donc une union dénombrable d'ouverts $O = \bigcup I_n$ contenant $E$ telle que $\lambda(O) \le \lambda(E) + \epsilon$.
+Ainsi, $\lambda(O \setminus E) = \lambda(O) - \lambda(E) \le \epsilon$ (car $E$ est mesurable et $\lambda(E)$ fini car $E$ borné).
+2. \textbf{Passage au complémentaire :} Considérons un grand segment fermé $K = [-M, M]$ contenant $E$. L'ensemble $K \setminus E$ est mesurable.
+Par la régularité extérieure appliquée à $K \setminus E$, il existe un ouvert $V$ contenant $K \setminus E$ tel que $\lambda(V \setminus (K \setminus E)) \le \epsilon$.
+3. \textbf{Construction du fermé :} Posons $F = K \setminus V$.
+Puisque $V$ est ouvert, son complémentaire $F$ dans le fermé $K$ est fermé.
+Comme $V \supset K \setminus E$, le passage au complémentaire dans $K$ donne $F \subset E$.
+De plus, $E \setminus F = E \cap V = V \setminus (K \setminus E)$.
+Donc $\lambda(E \setminus F) = \lambda(V \setminus (K \setminus E)) \le \epsilon$.
+
+
+\subsection*{Exercice 6 : L'invariance par translation du non-mesurable \quad $\displaystyle \bigstar\bigstar\bigstar$}
+
+
+\subsubsection*{Énoncé}
+
+Montrer que si $E$ n'est pas mesurable, alors pour tout réel $x$, $E+x$ n'est pas mesurable.
+
+\subsubsection*{Correction Détaillée}
+
+1. Raisonnons par l'absurde. Supposons qu'il existe un $x$ tel que $E+x$ soit mesurable.
+2. La tribu de Lebesgue $\mathcal{L}(\mathbb{R})$ et la mesure sont invariantes par translation.
+3. Si $E+x$ est mesurable, alors son translaté par $-x$ doit aussi être mesurable.
+4. L'ensemble $(E+x) + (-x) = E$ serait donc mesurable, ce qui contredit l'hypothèse de départ.
+5. De façon plus détaillée via le critère de Carathéodory : si $E$ ne le vérifie pas pour un ensemble de test $A$ ($\lambda^*(A) \neq \lambda^*(A \cap E) + \lambda^*(A \setminus E)$), alors en translatant tout par $x$, on obtient que $E+x$ ne vérifie pas le critère pour l'ensemble de test $A+x$. En effet, les intersections sont préservées : $(A+x) \cap (E+x) = (A \cap E) + x$. Et $\lambda^*$ est invariante par translation.
+
+
+\subsection*{Exercice 7 : Limite d'une suite décroissante d'ensembles \quad $\displaystyle \bigstar\bigstar\bigstar$}
+
+
+\subsubsection*{Énoncé}
+
+Soit $(A_n)$ une suite décroissante d'ensembles mesurables ($A_{n+1} \subset A_n$) avec $\lambda(A_1) < \infty$. Démontrer que $\lambda(\bigcap A_n) = \lim_{n \to \infty} \lambda(A_n)$.
+
+\subsubsection*{Correction Détaillée}
+
+1. Soit $A = \bigcap A_n$. Posons $E_n = A_1 \setminus A_n$.
+2. La suite $(E_n)$ est une suite croissante d'ensembles mesurables ($E_1 \subset E_2 \subset \dots$).
+L'union des $E_n$ est $\bigcup E_n = A_1 \setminus (\bigcap A_n) = A_1 \setminus A$.
+3. Pour une suite croissante, la mesure de la limite est la limite des mesures :
+$\lambda(\bigcup E_n) = \lim_{n \to \infty} \lambda(E_n)$.
+4. Puisque tous les ensembles sont inclus dans $A_1$ de mesure finie, on peut soustraire :
+$\lambda(A_1 \setminus A) = \lambda(A_1) - \lambda(A)$
+$\lambda(E_n) = \lambda(A_1) - \lambda(A_n)$
+5. L'équation de l'étape 3 devient :
+$\lambda(A_1) - \lambda(A) = \lim_{n \to \infty} (\lambda(A_1) - \lambda(A_n))$
+$\lambda(A_1) - \lambda(A) = \lambda(A_1) - \lim_{n \to \infty} \lambda(A_n)$
+6. En simplifiant $\lambda(A_1)$ (qui est fini, c'est crucial !), on obtient $\lambda(A) = \lim_{n \to \infty} \lambda(A_n)$.
+
+
+\subsection*{Exercice 8 : Contre-exemple sans la condition finie \quad $\displaystyle \bigstar\bigstar\bigstar$}
+
+
+\subsubsection*{Énoncé}
+
+Trouver un exemple de suite décroissante d'ensembles mesurables $(A_n)$ pour laquelle la conclusion de l'exercice 7 est fausse. Expliquer pourquoi la condition $\lambda(A_1) < \infty$ est cruciale.
+
+\subsubsection*{Correction Détaillée}
+
+1. Prenons les intervalles $A_n = [n, \infty[$.
+2. La suite est bien décroissante : $[1, \infty[ \supset [2, \infty[ \supset \dots$
+3. Pour tout $n$, $A_n$ a une longueur infinie, donc $\lambda(A_n) = \infty$. La limite de la suite des mesures est $\infty$.
+4. Quelle est l'intersection $A = \bigcap_{n=1}^\infty A_n$ ? Il s'agit des réels qui sont supérieurs à $n$ pour TOUT entier $n$. Par la propriété d'Archimède, aucun réel ne vérifie cela. Donc $A = \emptyset$.
+5. La mesure de l'intersection est $\lambda(\emptyset) = 0$.
+6. On a donc $\lambda(A) = 0 \neq \infty = \lim \lambda(A_n)$.
+La condition que l'un des ensembles (par exemple $A_1$) ait une mesure finie évite l'indétermination "$\infty - \infty$" à l'étape 5 de la démonstration précédente.
+
+
+\subsection*{Exercice 9 : Mesure et limites supérieures \quad $\displaystyle \bigstar\bigstar\bigstar$}
+
+
+\subsubsection*{Énoncé}
+
+Pour une suite d'ensembles $(A_n)$, on définit la limite supérieure $\limsup A_n = \bigcap_{N=1}^\infty \bigcup_{n \ge N} A_n$. Si $\sum_{n=1}^\infty \lambda(A_n) < \infty$, montrer que $\lambda(\limsup A_n) = 0$ (Lemme de Borel-Cantelli).
+
+\subsubsection*{Correction Détaillée}
+
+1. Posons $E_N = \bigcup_{n \ge N} A_n$. La suite $(E_N)$ est décroissante par rapport à $N$.
+2. La limite supérieure est $A = \bigcap E_N$.
+3. Évaluons la mesure de $E_N$ par sous-additivité : $\lambda(E_N) = \lambda(\bigcup_{n \ge N} A_n) \le \sum_{n=N}^\infty \lambda(A_n)$.
+4. L'hypothèse dit que la série globale $\sum_{n=1}^\infty \lambda(A_n)$ converge. Donc le reste de la série tend vers zéro : $\lim_{N \to \infty} \sum_{n=N}^\infty \lambda(A_n) = 0$.
+5. Ceci implique que $\lim_{N \to \infty} \lambda(E_N) = 0$.
+6. Comme $A \subset E_N$ pour tout $N$, on a $\lambda(A) \le \lambda(E_N)$.
+À la limite, $\lambda(A) = 0$. En d'autres termes, la probabilité (la mesure) d'appartenir à une infinité d'ensembles $A_n$ est nulle si la somme de leurs mesures converge.
+
+
+\subsection*{Exercice 10 : Paradoxe de l'ensemble de Vitali \quad $\displaystyle \bigstar\bigstar\bigstar$}
+
+
+\subsubsection*{Énoncé}
+
+L'ensemble de Vitali $V \subset [0, 1]$ est construit de sorte que pour tout rationnel $q \in [-1, 1]$, les translations $V_q = V+q$ soient disjointes, et $\bigcup_{q \in \mathbb{Q} \cap [-1, 1]} V_q \supset [0, 1]$. Expliquer étape par étape pourquoi la tribu des parties mesurables $\mathcal{L}(\mathbb{R})$ ne peut pas être égale à $\mathcal{P}(\mathbb{R})$.
+
+\subsubsection*{Correction Détaillée}
+
+1. Supposons par l'absurde que $\mathcal{L}(\mathbb{R}) = \mathcal{P}(\mathbb{R})$. Alors tout sous-ensemble de $\mathbb{R}$ admet une mesure de Lebesgue $\lambda$, et en particulier l'ensemble de Vitali $V$.
+2. Les ensembles $V_q$ pour $q \in \mathbb{Q} \cap [-1, 1]$ sont dénombrables et disjoints 2 à 2. La mesure de Lebesgue est $\sigma$-additive.
+3. Posons $S = \bigcup_q V_q$. Par $\sigma$-additivité, $\lambda(S) = \sum_q \lambda(V_q)$.
+4. Par invariance par translation, $\lambda(V_q) = \lambda(V)$. La somme devient $\lambda(S) = \sum_{q} \lambda(V)$.
+5. Evaluons cette somme : si $\lambda(V) = 0$, alors $\lambda(S) = 0$. Si $\lambda(V) = c > 0$, alors une somme infinie de constantes strictement positives diverge, donc $\lambda(S) = +\infty$.
+6. D'un autre côté, par construction géométrique, on a $[0, 1] \subset S \subset [-1, 2]$. Par monotonie, $\lambda([0, 1]) \le \lambda(S) \le \lambda([-1, 2])$, ce qui donne $1 \le \lambda(S) \le 3$.
+7. C'est une contradiction fatale : $\lambda(S)$ doit valoir entre 1 et 3, mais nos calculs d'additivité donnent soit 0 soit $+\infty$.
+Conclusion : La supposition initiale est fausse. $V$ ne peut pas appartenir à la tribu sur laquelle $\lambda$ est définie.
+
+
+\part{Travaux Pratiques et Simulations Algorithmiques}
+
+\subsection*{TP 1 : Simulation algorithmique de la mesure extérieure}
+
+\subsection*{Implémentation en Python pur}
+
+\begin{lstlisting}
+def interval_length(interval):
+    a, b = interval
+    return b - a
+
+def compute_total_length(intervals):
+    total = 0.0
+    for interval in intervals:
+        total = total + interval_length(interval)
+    return total
+
+def generate_cover(points, epsilon):
+    intervals = []
+    n = 1
+    for p in points:
+        radius = epsilon / (2 ** (n + 1))
+        intervals.append((p - radius, p + radius))
+        n = n + 1
+    return intervals
+
+points = [0.1, 0.4, 0.9]
+epsilon = 0.1
+recouvrement = generate_cover(points, epsilon)
+print(f"Total length: {compute_total_length(recouvrement)}")
+\end{lstlisting}
+
+
+\subsection*{TP 2 : Recouvrement d'un intervalle avec Monte Carlo}
+
+\subsection*{Implémentation en Python pur}
+
+\begin{lstlisting}
+import random
+
+def is_covered(x, intervals):
+    for a, b in intervals:
+        if a < x < b:
+            return True
+    return False
+
+intervals = [(0.1, 0.3), (0.4, 0.8), (0.7, 0.9)]
+N = 10000
+hits = 0
+for _ in range(N):
+    x = random.random()
+    if is_covered(x, intervals):
+        hits += 1
+
+estimated_measure = hits / N
+print(f"Estimated Lebesgue measure: {estimated_measure}")
+\end{lstlisting}
+
+
+\subsection*{TP 3 : Calcul de la mesure extérieure de Cantor (approche discrète)}
+
+\subsection*{Implémentation en Python pur}
+
+\begin{lstlisting}
+def cantor_step(segments):
+    new_segments = []
+    for a, b in segments:
+        length = b - a
+        new_segments.append((a, a + length/3))
+        new_segments.append((b - length/3, b))
+    return new_segments
+
+def measure_cantor(n_steps):
+    segments = [(0.0, 1.0)]
+    for _ in range(n_steps):
+        segments = cantor_step(segments)
+
+    total = sum(b - a for a, b in segments)
+    return total
+
+for step in [1, 2, 5, 10]:
+    print(f"Step {step} measure: {measure_cantor(step)}")
+\end{lstlisting}
+
+
+\subsection*{TP 4 : Vérification de l'additivité finie}
+
+\subsection*{Implémentation en Python pur}
+
+\begin{lstlisting}
+def measure_disjoint_union(set1, set2):
+    # sets are lists of disjoint tuples (a,b)
+    len1 = sum(b-a for a,b in set1)
+    len2 = sum(b-a for a,b in set2)
+    union_len = len1 + len2
+    return union_len
+
+s1 = [(0, 1), (3, 4)]
+s2 = [(1.5, 2), (5, 6)]
+print(f"Measure S1: {measure_disjoint_union(s1, [])}")
+print(f"Measure S2: {measure_disjoint_union(s2, [])}")
+print(f"Measure S1 U S2: {measure_disjoint_union(s1, s2)}")
+\end{lstlisting}
+
+
+\subsection*{TP 5 : Invariance par translation numérique}
+
+\subsection*{Implémentation en Python pur}
+
+\begin{lstlisting}
+def translate_set(intervals, t):
+    return [(a + t, b + t) for a, b in intervals]
+
+def get_measure(intervals):
+    return sum(b-a for a,b in intervals)
+
+orig = [(1, 2), (5, 8)]
+print(f"Original measure: {get_measure(orig)}")
+
+translated = translate_set(orig, 3.5)
+print(f"Translated measure: {get_measure(translated)}")
+assert get_measure(orig) == get_measure(translated)
+\end{lstlisting}
+
+
+\end{document}
