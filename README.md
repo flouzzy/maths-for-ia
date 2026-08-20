@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-08-20] : [Upsert/Création] du Jalon 65 - Fonctions mesurables. Status: Terminé.
 - [2026-08-20] : [Upsert/Création] du Jalon 64 - Construction pas à pas de la mesure de Lebesgue sur $\mathbb{R}$ via la mesure extérieure. Status: Terminé.
 - [2026-08-17] : [Upsert/Création] du Jalon 62 - Algèbres et Tribus. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-17] : [Upsert/Création] du Jalon 61 - Insuffisances de l'intégrale de Riemann. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
