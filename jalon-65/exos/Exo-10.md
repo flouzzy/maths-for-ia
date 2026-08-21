@@ -1,19 +1,32 @@
----
-uuid: "jalon-65-exo-10"
-title: "Exercice 10 : Lemme de factorisation de Doob"
-difficulty: "$\bigstar\bigstar\bigstar\bigstar\bigstar$"
----
+## L'invariance par translation est préservée \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-# Exercice 10 : Lemme de factorisation de Doob
+Soit $f : \mathbb{R} \to \mathbb{R}$ une fonction mesurable pour la tribu de Borel. Soit $h \in \mathbb{R}$ un réel.
+Démontrez formellement que la fonction translatée $f_h(x) = f(x - h)$ est également mesurable.
 
-## Énoncé
+### Correction Détaillée
 
-Soient $X, Y : \Omega \to \mathbb{R}$ deux variables aléatoires. Démontrer que $Y$ est $\sigma(X)$-mesurable si et seulement s'il existe une fonction borélienne $f : \mathbb{R} \to \mathbb{R}$ telle que $Y = f(X)$. (Preuve sur les indicatrices puis étagées).
+Soit $f_h : x \mapsto f(x - h)$. On peut la voir comme la composée $f_h = f \circ \tau_h$ où $\tau_h(x) = x - h$ est la fonction de translation.
 
-## Solution Détaillée
+Pour démontrer que $f_h$ est mesurable, il suffit de démontrer que pour tout borélien $B \in \mathcal{B}(\mathbb{R})$, $f_h^{-1}(B) \in \mathcal{B}(\mathbb{R})$.
+Soit $B \in \mathcal{B}(\mathbb{R})$.
+Calculons l'image réciproque :
+$$ f_h^{-1}(B) = (f \circ \tau_h)^{-1}(B) = \tau_h^{-1}(f^{-1}(B)) $$
 
-Si $Y = f(X)$ avec $f$ borélienne, alors $Y$ est la composée d'une fonction borélienne et d'une fonction mesurable, donc $Y$ est $\sigma(X)$-mesurable. Réciproquement, soit $Y$ une variable $\sigma(X)$-mesurable.
-1) Si $Y = \mathbb{1}_A$ avec $A \in \sigma(X)$. Par définition de la tribu engendrée, il existe un borélien $B$ tel que $A = X^{-1}(B)$. Alors $\mathbb{1}_A(\omega) = \mathbb{1}_B(X(\omega))$, donc $f = \mathbb{1}_B$ convient.
-2) Par linéarité, si $Y$ est étagée positive, il existe $f$ étagée telle que $Y = f(X)$.
-3) Si $Y$ est mesurable positive, il existe une suite de fonctions étagées $Y_n \uparrow Y$. Par (2), $Y_n = f_n(X)$. Posons $f(x) = \limsup f_n(x)$. $f$ est borélienne et pour tout $\omega$, $Y(\omega) = \limsup Y_n(\omega) = \limsup f_n(X(\omega)) = f(X(\omega))$.
-4) Pour $Y$ quelconque, on décompose $Y = Y^+ - Y^-$, on trouve $f^+$ et $f^-$ et $f = f^+ - f^-$. $\blacksquare$
+1. Puisque $f$ est mesurable, l'ensemble $A = f^{-1}(B)$ est un borélien ($A \in \mathcal{B}(\mathbb{R})$).
+2. Nous devons évaluer $\tau_h^{-1}(A)$.
+   Par définition géométrique : $\tau_h(x) \in A \iff x - h \in A \iff x \in \{y + h \mid y \in A\}$.
+   Donc $\tau_h^{-1}(A) = A + h$ (l'ensemble $A$ translaté de $h$).
+3. Il nous reste à prouver que la translation d'un borélien est un borélien.
+   La tribu borélienne $\mathcal{B}(\mathbb{R})$ est la plus petite tribu contenant tous les ouverts $\mathcal{O}$.
+   La translation $x \mapsto x + h$ est un homéomorphisme (bijection continue d'inverse continu). Par conséquent, l'image d'un ouvert par une translation est un ouvert : si $O \in \mathcal{O}$, alors $O+h \in \mathcal{O}$.
+   Considérons la collection $\mathcal{M} = \{E \subset \mathbb{R} \mid E-h \in \mathcal{B}(\mathbb{R})\}$.
+   On vérifie aisément que $\mathcal{M}$ est une tribu :
+   - $\emptyset - h = \emptyset \in \mathcal{B}(\mathbb{R})$, donc $\emptyset \in \mathcal{M}$.
+   - Stabilité par complémentaire : $(\mathbb{R} \setminus E) - h = \mathbb{R} \setminus (E-h) \in \mathcal{B}(\mathbb{R})$.
+   - Stabilité par union dénombrable : $(\bigcup E_n) - h = \bigcup (E_n - h) \in \mathcal{B}(\mathbb{R})$.
+   Puisque $O-h \in \mathcal{O} \subset \mathcal{B}(\mathbb{R})$ pour tout ouvert $O$, la tribu $\mathcal{M}$ contient tous les ouverts.
+   Or $\mathcal{B}(\mathbb{R})$ est la PLUS PETITE tribu contenant les ouverts, donc $\mathcal{B}(\mathbb{R}) \subset \mathcal{M}$.
+   Cela signifie que pour tout borélien $E \in \mathcal{B}(\mathbb{R})$, son translaté $E+h \in \mathcal{B}(\mathbb{R})$.
+
+Appliqué à $A = f^{-1}(B)$, on conclut que l'ensemble $f_h^{-1}(B) = A + h$ est un borélien.
+Ainsi, $f_h$ est mesurable.

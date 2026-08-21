@@ -1,15 +1,27 @@
----
-uuid: "jalon-65-exo-08"
-title: "Exercice 8 : Mesurabilité de fonctions monotones"
-difficulty: "$\bigstar\bigstar\bigstar\bigstar\star$"
----
+## Définition alternative de la mesurabilité \quad $\bigstar\bigstar\bigstar\bigstar\star$
 
-# Exercice 8 : Mesurabilité de fonctions monotones
+Soit $(X, \mathcal{F})$ un espace mesurable. Soit $f : X \to \mathbb{R}$.
+Montrez que $f$ est mesurable si et seulement si, pour tout nombre rationnel $q \in \mathbb{Q}$, l'ensemble $f^{-1}(]q, +\infty[) \in \mathcal{F}$.
 
-## Énoncé
+### Correction Détaillée
 
-Montrer que toute fonction monotone $f : \mathbb{R} \to \mathbb{R}$ est borélienne.
+1. **Sens ($\implies$) :**
+   Si $f$ est mesurable, alors pour tout borélien $B$, $f^{-1}(B) \in \mathcal{F}$. Or, pour tout rationnel $q \in \mathbb{Q}$, l'intervalle $]q, +\infty[$ est un borélien. Donc trivialement $f^{-1}(]q, +\infty[) \in \mathcal{F}$.
 
-## Solution Détaillée
+2. **Sens ($\impliedby$) :**
+   Supposons que pour tout rationnel $q \in \mathbb{Q}$, $f^{-1}(]q, +\infty[) \in \mathcal{F}$.
+   Nous devons montrer que pour tout réel $a \in \mathbb{R}$, $f^{-1}(]a, +\infty[) \in \mathcal{F}$, car ces intervalles engendrent la tribu borélienne.
 
-Supposons $f$ croissante. Pour montrer que $f$ est mesurable, utilisons le système générateur $\mathcal{C} = \{ ]a, +\infty[ \mid a \in \mathbb{R} \}$. Soit $a \in \mathbb{R}$, considérons $E_a = \{ x \in \mathbb{R} \mid f(x) > a \}$. Puisque $f$ est croissante, si $x_0 \in E_a$ et $x \ge x_0$, alors $f(x) \ge f(x_0) > a$, donc $x \in E_a$. Ainsi, $E_a$ est nécessairement un intervalle (soit $]c, +\infty[$, soit $[c, +\infty[$, soit $\emptyset$, soit $\mathbb{R}$). Tous ces intervalles sont des boréliens. L'image réciproque de chaque élément du système générateur est mesurable, donc $f$ est mesurable. La démonstration est analogue pour $f$ décroissante. $\blacksquare$
+   Soit $a \in \mathbb{R}$ un nombre irrationnel.
+   La densité de $\mathbb{Q}$ dans $\mathbb{R}$ implique qu'il existe une suite décroissante de nombres rationnels $(q_n)_{n \in \mathbb{N}}$ qui converge vers $a$ (c'est-à-dire que $q_n > a$ et $q_n \to a$).
+   Plus précisément, on peut approcher l'intervalle strict $]a, +\infty[$ par une union dénombrable d'intervalles stricts aux bornes rationnelles.
+   Pour tout $x > a$, il existe un rationnel $q_n$ tel que $a < q_n < x$. Par conséquent :
+   $$ ]a, +\infty[ = \bigcup_{n \in \mathbb{N}} ]q_n, +\infty[ $$
+
+   Appliquons l'image réciproque, qui commute avec l'union :
+   $$ f^{-1}(]a, +\infty[) = f^{-1}\left(\bigcup_{n \in \mathbb{N}} ]q_n, +\infty[\right) = \bigcup_{n \in \mathbb{N}} f^{-1}(]q_n, +\infty[) $$
+
+   Par hypothèse, chaque ensemble $f^{-1}(]q_n, +\infty[)$ appartient à $\mathcal{F}$.
+   La tribu $\mathcal{F}$ étant stable par union dénombrable, leur réunion appartient également à $\mathcal{F}$.
+   Ainsi $f^{-1}(]a, +\infty[) \in \mathcal{F}$ pour tout réel $a$, ce qui engendre bien la tribu de Borel.
+   $f$ est donc mesurable.

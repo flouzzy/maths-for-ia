@@ -1,15 +1,21 @@
----
-uuid: "jalon-65-exo-06"
-title: "Exercice 6 : Fonction étagée et partition"
-difficulty: "$\bigstar\bigstar\bigstar\bigstar\star$"
----
+## Fonction monotone et mesurabilité \quad $\bigstar\bigstar\bigstar\star\star$
 
-# Exercice 6 : Fonction étagée et partition
+Démontrez que toute fonction croissante $f : \mathbb{R} \to \mathbb{R}$ est borélienne.
 
-## Énoncé
+### Correction Détaillée
 
-Montrer que toute fonction étagée mesurable $s : E \to \mathbb{R}$ admet une unique représentation sous la forme $s = \sum_{i=1}^n \alpha_i \mathbb{1}_{A_i}$, où les $\alpha_i$ sont deux à deux distincts et les $A_i$ forment une partition mesurable de $E$.
+Soit $f : \mathbb{R} \to \mathbb{R}$ une fonction croissante (c'est-à-dire $x \leq y \implies f(x) \leq f(y)$).
+Il suffit de démontrer que pour tout réel $a$, l'ensemble $A_a = f^{-1}(]a, +\infty[) = \{x \in \mathbb{R} \mid f(x) > a\}$ est un borélien.
 
-## Solution Détaillée
+Soit $a \in \mathbb{R}$. Considérons l'ensemble $A_a$.
+Deux cas peuvent se présenter :
+1. $A_a$ est vide (si $f(x) \leq a$ pour tout $x$). Dans ce cas, $A_a = \emptyset \in \mathcal{B}(\mathbb{R})$.
+2. $A_a$ n'est pas vide. Il existe donc au moins un point $x_0$ tel que $f(x_0) > a$.
+   Puisque $f$ est croissante, pour tout $x \geq x_0$, on a $f(x) \geq f(x_0) > a$.
+   Par conséquent, si un point appartient à $A_a$, tous les points à sa droite appartiennent également à $A_a$.
+   Géométriquement, cela implique que l'ensemble $A_a$ est nécessairement soit un intervalle semi-ouvert $]c, +\infty[$, soit un intervalle fermé $[c, +\infty[$ (où $c = \inf A_a$, pouvant valoir $-\infty$).
 
-Soit $s$ une fonction étagée mesurable. Soit $V = s(E) = \{\alpha_1, \alpha_2, \dots, \alpha_n\}$ l'ensemble fini des valeurs prises par $s$, que l'on ordonne $\alpha_1 < \alpha_2 < \dots < \alpha_n$. Posons $A_i = s^{-1}(\{\alpha_i\})$. Puisque $s$ est mesurable et que les singletons $\{\alpha_i\}$ sont des boréliens, les ensembles $A_i$ sont mesurables. De plus, comme tout $x \in E$ a une unique image $s(x) \in V$, les ensembles $A_i$ sont disjoints et leur réunion est $E$. Donc $(A_i)$ forme une partition mesurable de $E$. Pour tout $x \in E$, $x$ appartient à un unique $A_i$, donc $\sum_{j=1}^n \alpha_j \mathbb{1}_{A_j}(x) = \alpha_i = s(x)$. L'unicité découle de la stricte définition de la partition et des valeurs distinctes. $\blacksquare$
+Dans tous les cas possibles, $A_a$ est un intervalle.
+Tout intervalle de $\mathbb{R}$ appartient à la tribu de Borel $\mathcal{B}(\mathbb{R})$.
+Donc, l'image réciproque par $f$ de tout intervalle du type $]a, +\infty[$ est un borélien.
+Puisque ces demi-droites engendrent la tribu borélienne, on en déduit que $f$ est borélienne.

@@ -1,15 +1,23 @@
----
-uuid: "jalon-65-exo-02"
-title: "Exercice 2 : Composition de fonctions"
-difficulty: "$\bigstar\bigstar\star\star\star$"
----
+## Mesurabilité d'une fonction constante \quad $\bigstar\star\star\star\star$
 
-# Exercice 2 : Composition de fonctions
+Soit $(X, \mathcal{F})$ un espace mesurable. Soit $c \in \mathbb{R}$. Démontrez formellement que la fonction constante $f(x) = c$ pour tout $x \in X$ est mesurable.
 
-## Énoncé
+### Correction Détaillée
 
-Soient $(E, \mathcal{A})$, $(F, \mathcal{B})$ et $(G, \mathcal{C})$ trois espaces mesurables. Montrer que si $f : E \to F$ est $(\mathcal{A}, \mathcal{B})$-mesurable et $g : F \to G$ est $(\mathcal{B}, \mathcal{C})$-mesurable, alors $g \circ f$ est $(\mathcal{A}, \mathcal{C})$-mesurable.
+Soit $B \in \mathcal{B}(\mathbb{R})$ un ensemble borélien quelconque de $\mathbb{R}$.
+Par définition de la mesurabilité, il faut montrer que $f^{-1}(B) = \{x \in X \mid f(x) \in B\} \in \mathcal{F}$.
 
-## Solution Détaillée
+Puisque $f(x) = c$ pour tout $x \in X$, la valeur de $f(x)$ ne dépend pas de $x$. Nous devons distinguer deux cas selon que $c$ appartient ou non à $B$ :
 
-Soit $C \in \mathcal{C}$. L'image réciproque par la composition est donnée par $(g \circ f)^{-1}(C) = f^{-1}(g^{-1}(C))$. Comme $g$ est mesurable, l'ensemble $B = g^{-1}(C)$ appartient à $\mathcal{B}$. Ensuite, puisque $f$ est mesurable et $B \in \mathcal{B}$, l'ensemble $A = f^{-1}(B)$ appartient à $\mathcal{A}$. Ainsi, pour tout $C \in \mathcal{C}$, $(g \circ f)^{-1}(C) \in \mathcal{A}$. Par définition, la fonction $g \circ f$ est mesurable. $\blacksquare$
+1. **Cas 1 : $c \in B$.**
+   Puisque $f(x) = c$ pour tout $x$, et que $c \in B$, alors pour tout $x \in X$, la condition $f(x) \in B$ est vérifiée.
+   Ainsi, $f^{-1}(B) = X$.
+   Par définition d'une tribu, $X \in \mathcal{F}$.
+
+2. **Cas 2 : $c \notin B$.**
+   Puisque $f(x) = c$ pour tout $x$, et que $c \notin B$, il n'existe aucun $x \in X$ tel que $f(x) \in B$.
+   Ainsi, $f^{-1}(B) = \emptyset$.
+   Par définition d'une tribu, $\emptyset \in \mathcal{F}$.
+
+Dans tous les cas possibles, l'image réciproque de $B$ par $f$ appartient à la tribu $\mathcal{F}$.
+Conclusion : La fonction constante $f$ est strictement mesurable.

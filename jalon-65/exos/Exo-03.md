@@ -1,15 +1,21 @@
----
-uuid: "jalon-65-exo-03"
-title: "Exercice 3 : Supremum d'une famille non dénombrable"
-difficulty: "$\bigstar\bigstar\bigstar\star\star$"
----
+## Mesurabilité par composition (continue $\circ$ mesurable) \quad $\bigstar\bigstar\star\star\star$
 
-# Exercice 3 : Supremum d'une famille non dénombrable
+Soit $(X, \mathcal{F})$ un espace mesurable. Soit $f : X \to \mathbb{R}$ une fonction mesurable. Soit $g : \mathbb{R} \to \mathbb{R}$ une fonction continue.
+Démontrez que la composition $h = g \circ f : X \to \mathbb{R}$ est mesurable.
 
-## Énoncé
+### Correction Détaillée
 
-Soit $(f_t)_{t \in [0, 1]}$ une famille non dénombrable de fonctions mesurables de $\mathbb{R}$ dans $\mathbb{R}$. La fonction $g(x) = \sup_{t \in [0, 1]} f_t(x)$ est-elle nécessairement mesurable ? Prouvez-le ou donnez un contre-exemple.
+Pour prouver que $h$ est mesurable, il suffit de montrer que pour tout ouvert $O \subset \mathbb{R}$, son image réciproque $h^{-1}(O) \in \mathcal{F}$. (En effet, la tribu borélienne $\mathcal{B}(\mathbb{R})$ est engendrée par les ouverts).
 
-## Solution Détaillée
+Soit $O$ un ouvert de $\mathbb{R}$.
+Calculons l'image réciproque de $O$ par $h$ :
+$$ h^{-1}(O) = (g \circ f)^{-1}(O) = f^{-1}(g^{-1}(O)) $$
 
-Non, elle n'est pas nécessairement mesurable. Le supremum d'une famille non dénombrable de fonctions mesurables peut être non mesurable. Considérons un ensemble de Vitali $V \subset [0, 1]$ non borélien. Définissons pour chaque $t \in V$ la fonction constante $f_t(x) = 1$ si $x = t$ et $0$ sinon, et pour $t \notin V$, $f_t(x) = 0$. Chaque $f_t$ est la fonction indicatrice d'un point ou de l'ensemble vide, donc mesurable (borélienne). Cependant, $g(x) = \sup_{t \in [0, 1]} f_t(x) = \mathbb{1}_V(x)$. Comme $V$ n'est pas mesurable, la fonction indicatrice $\mathbb{1}_V$ n'est pas mesurable. $\blacksquare$
+Analysons cet ensemble pas à pas :
+1. Puisque $g$ est continue et $O$ est un ouvert de $\mathbb{R}$, par définition topologique de la continuité, l'image réciproque $g^{-1}(O)$ est un ouvert de $\mathbb{R}$.
+2. Tout ouvert de $\mathbb{R}$ est un borélien. Donc $g^{-1}(O) \in \mathcal{B}(\mathbb{R})$. Posons $B = g^{-1}(O)$.
+3. Nous devons évaluer $f^{-1}(B)$ où $B \in \mathcal{B}(\mathbb{R})$.
+4. Puisque $f$ est une fonction mesurable (par hypothèse), l'image réciproque de tout borélien appartient à $\mathcal{F}$. Ainsi, $f^{-1}(B) \in \mathcal{F}$.
+
+Par conséquent, $h^{-1}(O) = f^{-1}(g^{-1}(O)) \in \mathcal{F}$.
+Puisque cela est vrai pour tout ouvert $O$, la composition $h = g \circ f$ est mesurable.

@@ -1,15 +1,23 @@
----
-uuid: "jalon-65-exo-01"
-title: "Exercice 1 : Mesurabilité de fonctions indicatrices"
-difficulty: "$\bigstar\star\star\star\star$"
----
+## Mesurabilité de la fonction indicatrice \quad $\bigstar\star\star\star\star$
 
-# Exercice 1 : Mesurabilité de fonctions indicatrices
+Soit $(X, \mathcal{F})$ un espace mesurable et $A \subset X$. Démontrez que la fonction indicatrice $\mathbf{1}_A : X \to \mathbb{R}$ est mesurable si et seulement si $A \in \mathcal{F}$.
 
-## Énoncé
+### Correction Détaillée
 
-Soit $(X, \mathcal{A})$ un espace mesurable. Soient $A, B \subset X$. Démontrer que la fonction $f = \mathbb{1}_A + 2\mathbb{1}_B$ est mesurable si et seulement si $A \in \mathcal{A}$ et $B \in \mathcal{A}$.
+1. **Sens ($\implies$) :**
+   Supposons que $\mathbf{1}_A$ soit mesurable de $(X, \mathcal{F})$ vers $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$.
+   Considérons l'ensemble $B = \{1\}$. Puisque $\{1\}$ est un ensemble fermé de $\mathbb{R}$, c'est un borélien, donc $B \in \mathcal{B}(\mathbb{R})$.
+   Par définition de la mesurabilité, l'image réciproque $\mathbf{1}_A^{-1}(B)$ doit appartenir à $\mathcal{F}$.
+   Or, par définition de la fonction indicatrice, $\mathbf{1}_A(x) = 1$ si et seulement si $x \in A$.
+   Ainsi, $\mathbf{1}_A^{-1}(\{1\}) = A$.
+   Conclusion : $A \in \mathcal{F}$.
 
-## Solution Détaillée
-
-Supposons $A \in \mathcal{A}$ et $B \in \mathcal{A}$. Les fonctions $\mathbb{1}_A$ et $\mathbb{1}_B$ sont mesurables car l'image réciproque de tout borélien s'exprime à l'aide de $A$, $A^c$, $X$, ou $\emptyset$. Comme l'espace des fonctions mesurables est un espace vectoriel, $f = \mathbb{1}_A + 2\mathbb{1}_B$ est mesurable. Réciproquement, supposons $f$ mesurable. $f$ prend ses valeurs dans $\{0, 1, 2, 3\}$. Remarquons que $f^{-1}(\{1, 3\}) = A$. Comme $\{1, 3\}$ est un borélien de $\mathbb{R}$ (partie finie), $f^{-1}(\{1, 3\}) = A \in \mathcal{A}$. De même $f^{-1}(\{2, 3\}) = B \in \mathcal{A}$. Ainsi, $A$ et $B$ sont mesurables. $\blacksquare$
+2. **Sens ($\impliedby$) :**
+   Supposons que $A \in \mathcal{F}$. Nous devons prouver que pour tout borélien $B \in \mathcal{B}(\mathbb{R})$, l'image réciproque $\mathbf{1}_A^{-1}(B) \in \mathcal{F}$.
+   La fonction $\mathbf{1}_A$ ne prend que les valeurs $0$ et $1$. Ainsi, pour tout sous-ensemble $B$ de $\mathbb{R}$, il n'y a que 4 cas possibles pour son intersection avec $\{0, 1\}$ :
+   - Cas 1 : $1 \in B$ et $0 \notin B$. Alors $\mathbf{1}_A^{-1}(B) = A$. Comme $A \in \mathcal{F}$ par hypothèse, c'est vérifié.
+   - Cas 2 : $0 \in B$ et $1 \notin B$. Alors $\mathbf{1}_A^{-1}(B) = X \setminus A = A^c$. Comme $\mathcal{F}$ est une tribu, le complémentaire d'un de ses éléments lui appartient, donc $A^c \in \mathcal{F}$.
+   - Cas 3 : $0 \in B$ et $1 \in B$. Alors $\mathbf{1}_A^{-1}(B) = X$. Or l'espace total $X$ appartient toujours à une tribu.
+   - Cas 4 : $0 \notin B$ et $1 \notin B$. Alors $\mathbf{1}_A^{-1}(B) = \emptyset$. L'ensemble vide appartient toujours à une tribu.
+   Dans tous les cas possibles, $\mathbf{1}_A^{-1}(B) \in \mathcal{F}$.
+   Conclusion : La fonction $\mathbf{1}_A$ est mesurable.

@@ -6,110 +6,121 @@ trimester: 6
 tags:
   - math/mesure
   - ia/abstraction
-prev: "[[jalon-64/Jalon-64.md|Jalon 64 (Construction pas à pas de la mesure de Lebesgue sur Rn via la mesure extérieure.)]]"
-next: "[[jalon-66/Jalon-66.md|Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.)]]"
+prev: "[[Jalon 64 (Construction pas à pas de la mesure de Lebesgue sur Rn via la mesure extérieure.).md]]"
+next: "[[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.).md]]"
 ---
 
 # Jalon 65 : Fonctions mesurables
 
-## 1. Genèse et Nécessité Structurelle
+## Introduction
 
-Historiquement, l'intégrale de Riemann a montré ses limites lorsqu'elle fut confrontée à des fonctions fortement discontinues ou lors du passage à la limite dans les intégrales (convergence des suites de fonctions). L'intégrale de Lebesgue a été conçue pour intégrer une classe beaucoup plus vaste de fonctions, en changeant de perspective : au lieu de partitionner le domaine de départ, on partitionne l'espace d'arrivée.
+La théorie de l'intégration nécessite une classe de fonctions pour lesquelles la notion d'aire sous la courbe (ou d'intégrale) ait un sens rigoureux par rapport à une mesure donnée. Si l'intégrale de Riemann s'appuie sur la subdivision de l'espace de départ (l'axe des abscisses), l'intégrale de Lebesgue procède par une subdivision de l'espace d'arrivée (l'axe des ordonnées). Cette inversion de perspective impose que l'image réciproque d'un intervalle de l'espace d'arrivée soit un ensemble dont on sait mesurer la taille dans l'espace de départ.
 
-Cependant, pour que cette construction soit rigoureuse et ne conduise pas à des contradictions logiques, on ne peut pas intégrer n'importe quelle fonction arbitraire. Il est impératif que les ensembles sur lesquels la fonction prend ses valeurs soient "mesurables" au sens de la théorie de la mesure. Une fonction est donc dite "mesurable" si, grosso modo, l'image réciproque de tout ensemble bien défini dans l'espace d'arrivée appartient à la tribu de l'espace de départ. C'est le prérequis fondamental de toute l'intégration moderne et de la théorie des probabilités de Kolmogorov.
+Ainsi émerge le concept de fonction mesurable. Une fonction est dite mesurable si elle préserve la structure mesurable : elle transporte la tribu d'arrivée vers la tribu de départ par image réciproque. Cette condition garantit l'absence de paradoxes lors de la quantification des probabilités et le calcul des espérances.
 
-## 2. Définitions et Théorèmes Fondamentaux
+## Définitions, Théorèmes et Exemples
 
-### Mesurabilité d'une Fonction
+### Définition formelle de la mesurabilité
 
-> **Définition 1 (Fonction mesurable) :**
-> Soient $(E, \mathcal{A})$ et $(F, \mathcal{B})$ deux espaces mesurables. Une application $f : E \to F$ est dite **mesurable** (ou plus précisément $(\mathcal{A}, \mathcal{B})$-mesurable) si pour tout ensemble $B \in \mathcal{B}$, l'image réciproque $f^{-1}(B)$ appartient à la tribu $\mathcal{A}$ :
-> $$ \forall B \in \mathcal{B}, \quad f^{-1}(B) \in \mathcal{A} $$
+Soient $(X, \mathcal{F})$ et $(Y, \mathcal{G})$ deux espaces mesurables, où $\mathcal{F}$ et $\mathcal{G}$ sont des tribus sur $X$ et $Y$ respectivement.
 
-**Exemple Numérique Immédiat :**
-Considérons l'espace mesurable $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$ où $\mathcal{B}(\mathbb{R})$ est la tribu borélienne. Soit la fonction indicatrice d'un ensemble $A \subset \mathbb{R}$, définie par :
-$$ \mathbb{1}_A(x) = \begin{cases} 1 & \text{si } x \in A \\ 0 & \text{si } x \notin A \end{cases} $$
-Cette fonction prend ses valeurs dans $F = \{0, 1\}$. Munissons $F$ de la tribu $\mathcal{P}(F) = \{\emptyset, \{0\}, \{1\}, \{0, 1\}\}$.
-Vérifions la mesurabilité pour chaque élément de $\mathcal{P}(F)$ :
-- $\mathbb{1}_A^{-1}(\emptyset) = \emptyset \in \mathcal{B}(\mathbb{R})$
-- $\mathbb{1}_A^{-1}(\{1\}) = A$. Pour que $\mathbb{1}_A$ soit mesurable, il faut donc impérativement que $A \in \mathcal{B}(\mathbb{R})$.
-- $\mathbb{1}_A^{-1}(\{0\}) = A^c \in \mathcal{B}(\mathbb{R})$ (car la tribu est stable par passage au complémentaire).
-- $\mathbb{1}_A^{-1}(\{0, 1\}) = \mathbb{R} \in \mathcal{B}(\mathbb{R})$.
-Donc, $\mathbb{1}_A$ est mesurable si et seulement si $A$ est un borélien. Si $A$ est l'ensemble de Vitali (non mesurable), la fonction indicatrice correspondante n'est pas mesurable.
+Une application $f : X \to Y$ est dite mesurable de $(X, \mathcal{F})$ dans $(Y, \mathcal{G})$, ou simplement $\mathcal{F}/\mathcal{G}$-mesurable, si pour tout ensemble $B \in \mathcal{G}$, son image réciproque par $f$ appartient à $\mathcal{F}$ :
+$$ \forall B \in \mathcal{G}, \quad f^{-1}(B) = \{ x \in X \mid f(x) \in B \} \in \mathcal{F} $$
 
-> **Théorème 1 (Critère de mesurabilité sur un système générateur) :**
-> Soit $\mathcal{C}$ une classe de parties de $F$ qui engendre la tribu $\mathcal{B}$, c'est-à-dire $\sigma(\mathcal{C}) = \mathcal{B}$.
-> L'application $f : (E, \mathcal{A}) \to (F, \mathcal{B})$ est mesurable si et seulement si :
-> $$ \forall C \in \mathcal{C}, \quad f^{-1}(C) \in \mathcal{A} $$
+Dans le cas fondamental où $Y = \mathbb{R}$ muni de sa tribu borélienne $\mathcal{B}(\mathbb{R})$, on dit que $f$ est une fonction borélienne (si $X$ est aussi topologique et $\mathcal{F}$ est sa tribu borélienne) ou plus généralement simplement mesurable. La définition se réduit à : pour tout intervalle $I \subset \mathbb{R}$, $f^{-1}(I) \in \mathcal{F}$.
 
-**Exemple de validation géométrique :**
-Pour prouver qu'une fonction $f : \mathbb{R} \to \mathbb{R}$ est borélienne, on n'a pas besoin de tester tous les boréliens (ce qui est impossible). Il suffit de vérifier la mesurabilité sur les générateurs, par exemple les intervalles du type $]-\infty, a]$. Ainsi, $f$ est borélienne si et seulement si :
-$$ \forall a \in \mathbb{R}, \quad \{ x \in \mathbb{R} \mid f(x) \leq a \} \in \mathcal{B}(\mathbb{R}) $$
+### Exemples concrets et immédiats
 
-### Opérations sur les Fonctions Mesurables
+1. \textbf{Fonction constante :} Soit $c \in Y$. La fonction $f(x) = c$ pour tout $x \in X$ est mesurable. Pour tout $B \in \mathcal{G}$, $f^{-1}(B)$ est soit $X$ (si $c \in B$), soit $\emptyset$ (si $c \notin B$). Comme $X, \emptyset \in \mathcal{F}$, $f$ est mesurable.
+2. \textbf{Fonction indicatrice :} Pour un sous-ensemble $A \subset X$, sa fonction indicatrice $\mathbf{1}_A : X \to \mathbb{R}$ est définie par $\mathbf{1}_A(x) = 1$ si $x \in A$ et $0$ sinon. $\mathbf{1}_A$ est mesurable si et seulement si $A \in \mathcal{F}$. En effet, $\mathbf{1}_A^{-1}(\{1\}) = A$, qui doit donc être dans la tribu $\mathcal{F}$.
+3. \textbf{Fonction continue :} Si $X, Y$ sont des espaces topologiques munis de leurs tribus boréliennes respectives $\mathcal{B}(X)$ et $\mathcal{B}(Y)$, toute application continue $f : X \to Y$ est mesurable. L'image réciproque d'un ouvert de $Y$ est un ouvert de $X$, et les ouverts engendrent les tribus boréliennes.
+4. \textbf{Fonction monotone :} Toute fonction croissante ou décroissante $f : \mathbb{R} \to \mathbb{R}$ est mesurable pour la tribu borélienne. L'image réciproque d'un intervalle du type $]a, +\infty[$ est un intervalle ou une demi-droite, qui est un borélien.
+5. \textbf{Fonction en escalier :} La fonction signe $\text{sgn}(x)$ (qui vaut $1$ si $x > 0$, $0$ si $x = 0$, et $-1$ si $x < 0$) est une fonction mesurable. L'image réciproque de tout borélien est une combinaison d'intervalles comme $]0, +\infty[$, $\{0\}$ et $]-\infty, 0[$.
+6. \textbf{Fonction de Dirichlet :} La fonction indicatrice des rationnels $f = \mathbf{1}_{\mathbb{Q}}$ est borélienne. $\mathbb{Q}$ est une union dénombrable de singletons, donc un borélien.
+7. \textbf{Maximum de deux fonctions mesurables :} Si $f, g$ sont mesurables, $h(x) = \max(f(x), g(x))$ l'est. Par exemple, si $f(x) = x$ et $g(x) = 0$, la fonction partie positive $x^+$ (ReLU en IA) est mesurable.
+8. \textbf{Fonction partie entière :} La fonction $f(x) = \lfloor x \rfloor$ est constante par morceaux et borélienne. $f^{-1}(\{k\}) = [k, k+1[$ qui est un borélien.
+9. \textbf{Distance à un fermé :} Soit $F \subset \mathbb{R}^n$ fermé. La fonction $x \mapsto d(x, F) = \inf_{y \in F} \|x - y\|$ est continue (1-lipschitzienne) donc borélienne.
+10. \textbf{Pathologie (Fonction non mesurable) :} Soit $V$ l'ensemble de Vitali (un ensemble non mesurable au sens de Lebesgue). La fonction indicatrice $\mathbf{1}_V$ n'est pas mesurable, car $\mathbf{1}_V^{-1}(\{1\}) = V \notin \mathcal{L}(\mathbb{R})$.
 
-> **Théorème 2 (Stabilité des fonctions mesurables réelles) :**
-> Soient $f$ et $g$ deux fonctions mesurables de $(E, \mathcal{A})$ dans $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$, et soit $\lambda \in \mathbb{R}$.
-> Alors les fonctions suivantes sont mesurables :
-> 1. $\lambda f$
-> 2. $f + g$
-> 3. $f \cdot g$
-> 4. $\max(f, g)$ et $\min(f, g)$
-> 5. $|f|$
+### Opérations sur les fonctions mesurables
 
-### Suites de Fonctions Mesurables
+Soient $f, g : (X, \mathcal{F}) \to (\mathbb{R}, \mathcal{B}(\mathbb{R}))$ deux fonctions mesurables.
+Les opérations algébriques usuelles préservent la mesurabilité. Les fonctions $f+g$, $fg$, $|f|$, $\max(f, g)$ et $\min(f, g)$ sont mesurables.
 
-> **Théorème 3 (Stabilité par passage à la limite) :**
-> Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables de $(E, \mathcal{A})$ dans $(\overline{\mathbb{R}}, \mathcal{B}(\overline{\mathbb{R}}))$.
-> Alors les fonctions suivantes sont mesurables :
-> 1. $\sup_{n \in \mathbb{N}} f_n$
-> 2. $\inf_{n \in \mathbb{N}} f_n$
-> 3. $\limsup_{n \to \infty} f_n$
-> 4. $\liminf_{n \to \infty} f_n$
-> De plus, si la suite $(f_n)_{n \in \mathbb{N}}$ converge ponctuellement vers une fonction $f$, alors la fonction limite $f$ est mesurable.
+\textbf{Théorème de stabilité par passage à la limite :}
+Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables de $(X, \mathcal{F})$ dans $\overline{\mathbb{R}}$. Alors, les fonctions suivantes sont mesurables :
+$$ \sup_{n} f_n, \quad \inf_{n} f_n, \quad \limsup_{n} f_n, \quad \liminf_{n} f_n $$
+Si la suite converge simplement, sa limite $\lim_{n \to \infty} f_n$ est mesurable.
 
-**Cas limite :** Ce théorème est crucial. Il indique que l'espace des fonctions mesurables est fermé pour la convergence ponctuelle, ce qui n'est pas le cas pour les fonctions continues (la limite d'une suite de fonctions continues n'est pas nécessairement continue).
+## Demonstrations
 
-### Fonctions Étagées
+### Démonstration de la mesurabilité du supremum
 
-> **Définition 2 (Fonction étagée) :**
-> Une fonction mesurable $s : (E, \mathcal{A}) \to (\mathbb{R}, \mathcal{B}(\mathbb{R}))$ est dite **étagée** si elle ne prend qu'un nombre fini de valeurs réelles.
-> Toute fonction étagée s'écrit sous la forme canonique :
-> $$ s(x) = \sum_{i=1}^n \alpha_i \mathbb{1}_{A_i}(x) $$
-> où $\alpha_1, \dots, \alpha_n$ sont des réels distincts et $A_1, \dots, A_n$ forment une partition mesurable de $E$ ($A_i \in \mathcal{A}$).
+Nous devons montrer que si $f_n : X \to \overline{\mathbb{R}}$ sont mesurables, alors $h = \sup_n f_n$ est mesurable.
 
-> **Théorème 4 (Approximation par des fonctions étagées) :**
-> 1. Soit $f : E \to [0, +\infty]$ une fonction mesurable positive. Il existe une suite croissante $(s_n)_{n \in \mathbb{N}}$ de fonctions étagées positives qui converge ponctuellement vers $f$.
-> 2. Si de plus $f$ est bornée, la convergence de cette suite est uniforme.
+1. La tribu borélienne sur $\overline{\mathbb{R}}$ est engendrée par les intervalles de la forme $]a, +\infty]$ pour tout $a \in \mathbb{R}$. Il suffit de montrer que $h^{-1}(]a, +\infty]) \in \mathcal{F}$.
+2. Par définition du supremum, $h(x) > a$ si et seulement s'il existe au moins un entier $n \in \mathbb{N}$ tel que $f_n(x) > a$.
+3. Nous pouvons exprimer l'image réciproque en termes d'opérations ensemblistes :
+   $$ h^{-1}(]a, +\infty]) = \{ x \in X \mid \sup_n f_n(x) > a \} = \bigcup_{n \in \mathbb{N}} \{ x \in X \mid f_n(x) > a \} $$
+   $$ h^{-1}(]a, +\infty]) = \bigcup_{n \in \mathbb{N}} f_n^{-1}(]a, +\infty]) $$
+4. Puisque chaque $f_n$ est mesurable, $f_n^{-1}(]a, +\infty]) \in \mathcal{F}$.
+5. Comme $\mathcal{F}$ est une tribu, elle est stable par union dénombrable. Ainsi, $h^{-1}(]a, +\infty]) \in \mathcal{F}$.
+La fonction $h = \sup_n f_n$ est donc mesurable.
 
-## 3. Démonstrations
+## Approximation par des fonctions simples
 
-**Démonstration du Théorème 1 (Critère sur les générateurs) :**
-L'implication directe est triviale puisque $\mathcal{C} \subset \mathcal{B}$.
-Montrons la réciproque. Supposons que $\forall C \in \mathcal{C}, f^{-1}(C) \in \mathcal{A}$.
-Posons $\mathcal{T} = \{ B \in \mathcal{P}(F) \mid f^{-1}(B) \in \mathcal{A} \}$.
-L'objectif est de montrer que $\mathcal{B} \subset \mathcal{T}$.
-1. $f^{-1}(F) = E \in \mathcal{A}$, donc $F \in \mathcal{T}$.
-2. Soit $B \in \mathcal{T}$. $f^{-1}(B^c) = (f^{-1}(B))^c$. Or $f^{-1}(B) \in \mathcal{A}$ et $\mathcal{A}$ est une tribu, donc $(f^{-1}(B))^c \in \mathcal{A}$. D'où $B^c \in \mathcal{T}$.
-3. Soit $(B_n)_{n \in \mathbb{N}}$ une suite d'éléments de $\mathcal{T}$. $f^{-1}(\bigcup_{n \in \mathbb{N}} B_n) = \bigcup_{n \in \mathbb{N}} f^{-1}(B_n)$. Or $\forall n, f^{-1}(B_n) \in \mathcal{A}$ et $\mathcal{A}$ est une tribu, donc la réunion dénombrable appartient à $\mathcal{A}$. D'où $\bigcup_{n \in \mathbb{N}} B_n \in \mathcal{T}$.
-Par conséquent, $\mathcal{T}$ est une tribu sur $F$.
-Puisque par hypothèse $\mathcal{C} \subset \mathcal{T}$ et que $\mathcal{T}$ est une tribu, $\mathcal{T}$ contient nécessairement la plus petite tribu contenant $\mathcal{C}$, soit $\sigma(\mathcal{C})$. Or $\mathcal{B} = \sigma(\mathcal{C})$, donc $\mathcal{B} \subset \mathcal{T}$.
-Ainsi, $\forall B \in \mathcal{B}, f^{-1}(B) \in \mathcal{A}$, ce qui prouve la mesurabilité de $f$. $\blacksquare$
+Une \textbf{fonction simple} (ou étagée) est une combinaison linéaire finie d'indicatrices d'ensembles mesurables :
+$$ \varphi(x) = \sum_{i=1}^k a_i \mathbf{1}_{A_i}(x) $$
+où $a_i \in \mathbb{R}$ et $A_i \in \mathcal{F}$. Les ensembles $A_i$ peuvent toujours être choisis disjoints, formant une partition de $X$.
 
-**Démonstration du Théorème 4.1 (Approximation canonique) :**
-Pour tout entier $n \ge 1$ et pour tout $x \in E$, on pose :
-$$ s_n(x) = \sum_{k=0}^{n2^n - 1} \frac{k}{2^n} \mathbb{1}_{\{ x \in E \mid \frac{k}{2^n} \le f(x) < \frac{k+1}{2^n} \}}(x) + n \mathbb{1}_{\{ x \in E \mid f(x) \ge n \}}(x) $$
-Par définition de la mesurabilité de $f$, les ensembles de niveau $A_{n,k} = f^{-1}([\frac{k}{2^n}, \frac{k+1}{2^n}[)$ et $B_n = f^{-1}([n, +\infty])$ sont dans $\mathcal{A}$.
-Donc $s_n$ est bien une fonction étagée mesurable positive.
-De plus, par construction :
-- Si $f(x) < n$, on a $\frac{k}{2^n} \le f(x) < \frac{k+1}{2^n}$ pour un certain $k$, d'où $s_n(x) = \frac{k}{2^n} \le f(x)$ et $f(x) - s_n(x) < \frac{1}{2^n}$.
-- Si $f(x) \ge n$, alors $s_n(x) = n \le f(x)$.
-On a donc bien $s_n \le s_{n+1} \le f$ pour tout $n$.
-Si $x \in E$ est tel que $f(x) = +\infty$, alors $s_n(x) = n \to +\infty = f(x)$.
-Si $f(x) \in \mathbb{R}$, pour $n > f(x)$, la différence $0 \le f(x) - s_n(x) < \frac{1}{2^n}$ tend vers 0. Donc la suite converge ponctuellement vers $f$. $\blacksquare$
+\textbf{Théorème fondamental d'approximation :}
+Toute fonction mesurable positive $f : X \to [0, +\infty]$ est la limite simple d'une suite croissante $(\varphi_n)$ de fonctions simples positives :
+$$ 0 \leq \varphi_1 \leq \varphi_2 \leq \dots \leq f, \quad \text{et} \quad \lim_{n \to \infty} \varphi_n(x) = f(x) \quad \forall x \in X $$
 
-## 4. Applications en Physique, Logique & Intelligence Artificielle
+\textbf{Construction de la suite d'approximation :}
+Pour chaque entier $n \geq 1$, on partitionne l'axe des ordonnées $[0, n]$ en intervalles de longueur $1/2^n$. On définit :
+$$ E_{n,k} = f^{-1}\left( \left[ \frac{k}{2^n}, \frac{k+1}{2^n} \right[ \right) \quad \text{pour } k=0, \dots, n2^n-1 $$
+$$ F_n = f^{-1}([n, +\infty]) $$
+La fonction simple approchante est définie par :
+$$ \varphi_n = \sum_{k=0}^{n2^n-1} \frac{k}{2^n} \mathbf{1}_{E_{n,k}} + n \mathbf{1}_{F_n} $$
 
-Dans la théorie moderne des probabilités (Axiomatique de Kolmogorov), une **variable aléatoire** réelle $X$ définie sur un espace de probabilité $(\Omega, \mathcal{A}, \mathbb{P})$ n'est rien d'autre qu'une **fonction mesurable** de $(\Omega, \mathcal{A})$ dans $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$.
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % Axes
+    \draw[->, thick] (-0.2, 0) -- (4, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.2) -- (0, 3) node[above] {$f(x)$};
 
-En Machine Learning, les espaces d'observation (pixels, ondes sonores) sont munis de tribus. L'existence même d'une loi de probabilité pour les variables et de l'espérance mathématique (la fonction de perte empirique ou théorique) repose intégralement sur la mesurabilité des fonctions considérées, comme les réseaux de neurones (les fonctions continues ou de classe $C^1$ par morceaux composant les couches denses et d'activation étant par essence boréliennes).
+    % Fonction continue
+    \draw[thick, blue, smooth, domain=0:3.5] plot (\x, {0.2*exp(\x*0.6)}) node[right] {$f$};
+
+    % Intervalles sur Y
+    \draw[dashed, gray] (0, 0.5) -- (3.5, 0.5);
+    \draw[dashed, gray] (0, 1.0) -- (3.5, 1.0);
+    \draw[dashed, gray] (0, 1.5) -- (3.5, 1.5);
+    \draw[dashed, gray] (0, 2.0) -- (3.5, 2.0);
+
+    \node[left] at (0, 0.5) {$\frac{1}{2^n}$};
+    \node[left] at (0, 1.0) {$\frac{2}{2^n}$};
+    \node[left] at (0, 1.5) {$\frac{3}{2^n}$};
+    \node[left] at (0, 2.0) {$\frac{4}{2^n}$};
+
+    % Rectangles d'approximation
+    \draw[fill=red, opacity=0.3] (0, 0) rectangle (1.52, 0.5);
+    \draw[fill=red, opacity=0.3] (1.52, 0) rectangle (2.68, 1.0);
+    \draw[fill=red, opacity=0.3] (2.68, 0) rectangle (3.35, 1.5);
+
+    \draw[thick, red] (0, 0) -- (1.52, 0);
+    \draw[thick, red] (1.52, 0.5) -- (2.68, 0.5);
+    \draw[thick, red] (2.68, 1.0) -- (3.35, 1.0);
+    \draw[thick, red] (3.35, 1.5) -- (3.5, 1.5);
+
+    \node[red] at (2.5, 0.25) {$\varphi_n$};
+\end{tikzpicture}
+\end{center}
+
+## Applications en Physique, Logique et IA
+
+Dans la théorie des probabilités et l'intelligence artificielle, l'espace des données ou l'espace probabilisé de base $(\Omega, \mathcal{F}, P)$ représente les échantillons possibles.
+Une variable aléatoire n'est rien d'autre qu'une application mesurable $X : \Omega \to \mathbb{R}$. La mesurabilité est la propriété structurelle minimale permettant de calculer la probabilité qu'un algorithme prenne une certaine décision : $P(X \in B) = P(X^{-1}(B))$.
+
+Lors de l'apprentissage profond, un réseau de neurones représente une fonction $f_{\theta} : \mathbb{R}^d \to \mathbb{R}$. Composé d'opérations matricielles et de fonctions d'activation continues (ReLU, Sigmoïde), $f_{\theta}$ est continu, donc strictement mesurable. Cela permet de définir le risque espéré (l'intégrale de la fonction de perte) $\mathcal{R}(f_{\theta}) = \mathbb{E}[L(f_{\theta}(X), Y)]$. Si le modèle n'était pas mesurable, ce risque théorique serait indéfinissable. De plus, la fonction de décision d'un classifieur $h(x) = \mathbf{1}_{f_{\theta}(x) > 0}$ est une fonction étagée construite à partir du modèle continu $f_{\theta}$, et la préservation de la mesurabilité par composition et indicatrice garantit la validité théorique du cadre PAC (Probably Approximately Correct).

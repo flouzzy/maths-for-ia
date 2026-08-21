@@ -1,19 +1,27 @@
----
-uuid: "jalon-65-exo-05"
-title: "Exercice 5 : Tribu engendrée par une fonction"
-difficulty: "$\bigstar\bigstar\bigstar\bigstar\star$"
----
+## Mesurabilité de la limite simple \quad $\bigstar\bigstar\bigstar\star\star$
 
-# Exercice 5 : Tribu engendrée par une fonction
+Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables définies sur un espace $(X, \mathcal{F})$ à valeurs dans $\mathbb{R}$.
+On suppose que la suite converge simplement vers une fonction $f : X \to \mathbb{R}$, c'est-à-dire que pour tout $x \in X$, $\lim_{n \to \infty} f_n(x) = f(x)$.
+Démontrez que la limite $f$ est une fonction mesurable.
 
-## Énoncé
+### Correction Détaillée
 
-Soit $f : X \to Y$. Montrer que l'ensemble $\mathcal{A} = \{ f^{-1}(B) \mid B \in \mathcal{B} \}$ où $\mathcal{B}$ est une tribu sur $Y$, est une tribu sur $X$. On l'appelle tribu engendrée par $f$, notée $\sigma(f)$.
+L'idée est d'exprimer la limite simple à l'aide des opérateurs $\limsup$ et $\liminf$, qui se construisent par des infimums et suprémums dénombrables.
 
-## Solution Détaillée
+1. Puisque la suite $(f_n)$ converge simplement, on sait que pour tout $x \in X$ :
+   $$ f(x) = \lim_{n \to \infty} f_n(x) = \limsup_{n \to \infty} f_n(x) $$
 
-Vérifions les axiomes d'une tribu pour $\mathcal{A}$ :
-1. L'espace total : $Y \in \mathcal{B}$, or $f^{-1}(Y) = X$, donc $X \in \mathcal{A}$.
-2. Stabilité par complémentaire : Soit $A \in \mathcal{A}$. Il existe $B \in \mathcal{B}$ tel que $A = f^{-1}(B)$. Or $A^c = (f^{-1}(B))^c = f^{-1}(B^c)$. Puisque $\mathcal{B}$ est une tribu, $B^c \in \mathcal{B}$, donc $A^c \in \mathcal{A}$.
-3. Stabilité par union dénombrable : Soit $(A_n)$ une suite dans $\mathcal{A}$. Pour chaque $n$, il existe $B_n \in \mathcal{B}$ tel que $A_n = f^{-1}(B_n)$. L'union $\cup_n A_n = \cup_n f^{-1}(B_n) = f^{-1}(\cup_n B_n)$. Puisque $\mathcal{B}$ est une tribu, $\cup_n B_n \in \mathcal{B}$, donc l'union $\cup_n A_n \in \mathcal{A}$.
-$\mathcal{A}$ est donc bien une tribu. $\blacksquare$
+2. Par définition géométrique et analytique de la limite supérieure :
+   $$ \limsup_{n \to \infty} f_n(x) = \inf_{k \geq 0} \left( \sup_{n \geq k} f_n(x) \right) $$
+
+3. Considérons d'abord la suite de fonctions $g_k(x) = \sup_{n \geq k} f_n(x)$.
+   Le supremum d'une suite (finie ou dénombrable) de fonctions mesurables est mesurable. En effet :
+   $$ g_k^{-1}(]a, +\infty]) = \bigcup_{n \ge k} f_n^{-1}(]a, +\infty]) $$
+   L'union dénombrable d'ensembles mesurables étant mesurable, $g_k$ est mesurable pour tout $k$.
+
+4. Ensuite, on considère l'infimum infini $f(x) = \inf_{k \geq 0} g_k(x)$.
+   L'infimum d'une suite de fonctions mesurables est également mesurable. La preuve est symétrique :
+   $$ f^{-1}([-\infty, a[) = \bigcup_{k \geq 0} g_k^{-1}([-\infty, a[) $$
+   L'union dénombrable d'ensembles mesurables étant mesurable, $f$ est mesurable.
+
+Conclusion : Toute limite simple d'une suite de fonctions mesurables reste mesurable, ce qui est une propriété fondamentale et puissante (non vraie pour la continuité).

@@ -1,15 +1,25 @@
----
-uuid: "jalon-65-exo-04"
-title: "Exercice 4 : Mesurabilité et limites"
-difficulty: "$\bigstar\bigstar\bigstar\star\star$"
----
+## La fonction maximum de deux fonctions mesurables \quad $\bigstar\bigstar\star\star\star$
 
-# Exercice 4 : Mesurabilité et limites
+Soient $f$ et $g$ deux fonctions mesurables définies sur un espace mesurable $(X, \mathcal{F})$ et à valeurs dans $\mathbb{R}$.
+Démontrez que la fonction $h(x) = \max(f(x), g(x))$ est mesurable.
 
-## Énoncé
+### Correction Détaillée
 
-Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables de $E$ vers $\overline{\mathbb{R}}$. Montrer en détail que l'ensemble $C = \{ x \in E \mid (f_n(x))_{n} \text{ converge dans } \overline{\mathbb{R}} \}$ est mesurable.
+Pour montrer que $h$ est mesurable, il suffit de prouver que pour tout réel $a \in \mathbb{R}$, l'ensemble $h^{-1}(]a, +\infty[) = \{x \in X \mid h(x) > a\} \in \mathcal{F}$.
 
-## Solution Détaillée
+Analysons la condition : $h(x) > a \iff \max(f(x), g(x)) > a$.
+Le maximum de deux nombres est strictement supérieur à $a$ si et seulement si l'un au moins des deux nombres est strictement supérieur à $a$.
+Par conséquent, logiquement :
+$$ \max(f(x), g(x)) > a \iff (f(x) > a) \text{ ou } (g(x) > a) $$
 
-Une suite dans $\overline{\mathbb{R}}$ converge si et seulement si sa limite supérieure est égale à sa limite inférieure. Ainsi, $C = \{ x \in E \mid \limsup_{n \to \infty} f_n(x) = \liminf_{n \to \infty} f_n(x) \}$. Posons $g = \limsup_{n} f_n$ et $h = \liminf_{n} f_n$. Par les propriétés de stabilité des suites de fonctions mesurables, $g$ et $h$ sont mesurables. Considérons la fonction $\Delta(x) = g(x) - h(x)$ (bien définie car $h \le g$ sauf formes indéterminées traitées à part). $C$ correspond à l'ensemble où $g = h$. Ainsi, $C = (g-h)^{-1}(\{0\})$. Puisque $g$ et $h$ sont mesurables, la soustraction (quand elle est définie) l'est, et donc $C \in \mathcal{A}$. $\blacksquare$
+Traduisons cette équivalence logique en termes ensemblistes :
+$$ \{x \in X \mid h(x) > a\} = \{x \in X \mid f(x) > a\} \cup \{x \in X \mid g(x) > a\} $$
+Soit :
+$$ h^{-1}(]a, +\infty[) = f^{-1}(]a, +\infty[) \cup g^{-1}(]a, +\infty[) $$
+
+Analysons les propriétés des ensembles impliqués :
+1. Puisque $f$ est mesurable, $f^{-1}(]a, +\infty[) \in \mathcal{F}$.
+2. Puisque $g$ est mesurable, $g^{-1}(]a, +\infty[) \in \mathcal{F}$.
+3. Par définition (Axiome 3), une tribu est stable par union. Donc l'union de ces deux ensembles appartient à $\mathcal{F}$.
+
+Conclusion : Pour tout $a$, $h^{-1}(]a, +\infty[) \in \mathcal{F}$, ce qui prouve que $h = \max(f, g)$ est mesurable.
