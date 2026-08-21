@@ -1,0 +1,631 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1
+}
+
+\title{\Huge INTÉGRALE DE LEBESGUE POUR LES FONCTIONS POSITIVES \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+\section{Introduction}
+
+Imaginez que vous vouliez calculer l'aire totale de confiture étalée sur une table.
+La confiture n'est pas étalée de manière régulière : il y a des endroits où elle est épaisse et d'autres où elle est très fine.
+Au lieu de découper la table en carrés (méthode de Riemann), vous décidez d'utiliser des tampons de différentes tailles. Chaque tampon a une épaisseur de confiture précise (une valeur $a_i$).
+Vous cherchez tous les endroits où l'épaisseur est exactement $a_i$ (l'ensemble $A_i$), vous mesurez la surface de ces endroits ($\mu(A_i)$), et vous multipliez par l'épaisseur.
+En faisant cela pour toutes les épaisseurs possibles et en additionnant, vous obtenez le volume total de confiture.
+
+Pour pouvoir intégrer des fonctions qui présentent de fortes irrégularités (comme la fonction indicatrice des rationnels, dite de Dirichlet). La construction de Lebesgue procède par approximations ascendantes : on définit l'intégrale pour des fonctions dites "simples" en premier lieu, puis on généralise aux fonctions mesurables positives par un passage au supremum.
+
+On remplit l'espace sous la courbe par des "rectangles horizontaux" qui capturent l'ensemble des points du domaine où la fonction dépasse une certaine valeur, au lieu des rectangles verticaux de Riemann.
+
+\section{Définitions, Théorèmes et Exemples Concrets}
+
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré, où $X$ est un ensemble, $\mathcal{F}$ une tribu sur $X$, et $\mu$ une mesure positive.
+
+\subsection{Intégrale des Fonctions Simples}
+
+Soit $\mathcal{S}_+$ l'ensemble des fonctions simples (ou étagées) positives sur $X$.
+Une fonction $s \in \mathcal{S}_+$ s'écrit de manière unique (forme canonique) :
+$$s = \sum_{i=1}^n a_i \mathbf{1}_{A_i}$$
+avec $a_i \ge 0$ des réels distincts, et les $A_i = s^{-1}(\{a_i\}) \in \mathcal{F}$ formant une partition de $X$.
+
+\textbf{Définition (Intégrale d'une fonction simple) :} L'intégrale de la fonction simple $s$ par rapport à $\mu$ est définie par :
+$$\int_X s \, d\mu = \sum_{i=1}^n a_i \mu(A_i)$$
+\textit{(On utilise la convention $0 \cdot \infty = 0$ pour traiter le cas où une valeur nulle est prise sur un ensemble de mesure infinie).}
+
+\textbf{Exemples de calcul pour des fonctions simples :}
+\begin{itemize}
+\item \textbf{Mesure de Lebesgue sur $[0,1]$ :} Si $s(x) = 3 \cdot \mathbf{1}_{[0, 1/2]}(x) + 5 \cdot \mathbf{1}_{]1/2, 1]}(x)$, alors $\int s \, d\lambda = 3 \cdot \lambda([0, 1/2]) + 5 \cdot \lambda(]1/2, 1]) = 3 \cdot \frac{1}{2} + 5 \cdot \frac{1}{2} = 4$.
+\item \textbf{Mesure de Dirac en 0 :} Soit $\delta_0$ sur $\mathbb{R}$. Si $s(x) = 7 \cdot \mathbf{1}_{[-1, 1]}(x) + 2 \cdot \mathbf{1}_{]1, 3]}(x)$, on a $\int s \, d\delta_0 = 7 \cdot \delta_0([-1, 1]) + 2 \cdot \delta_0(]1, 3]) = 7 \cdot 1 + 2 \cdot 0 = 7$.
+\item \textbf{Mesure de comptage sur $\mathbb{N}$ :} Si $s(n) = 4 \cdot \mathbf{1}_{\{2, 4, 6\}}(n)$, alors $\int s \, d\mu = 4 \cdot \mu(\{2, 4, 6\}) = 4 \cdot 3 = 12$.
+\item \textbf{Fonction simple sur un espace fini :} Soit $X = \{a, b, c\}$ avec $\mu(\{a\})=2, \mu(\{b\})=3, \mu(\{c\})=1$. Pour $s(a)=1, s(b)=1, s(c)=4$, la forme canonique est $1 \cdot \mathbf{1}_{\{a,b\}} + 4 \cdot \mathbf{1}_{\{c\}}$. Son intégrale est $1 \cdot (2+3) + 4 \cdot 1 = 9$.
+\item \textbf{Ensemble de mesure infinie :} Sur $\mathbb{R}$ muni de Lebesgue $\lambda$, si $s = 2 \cdot \mathbf{1}_{[0, +\infty[}$, alors $\int s \, d\lambda = 2 \cdot \lambda([0, +\infty[) = 2 \cdot \infty = \infty$.
+\item \textbf{Convention $0 \cdot \infty = 0$ :} Si $s = 0 \cdot \mathbf{1}_{\mathbb{R}}$, alors $\int s \, d\lambda = 0 \cdot \lambda(\mathbb{R}) = 0 \cdot \infty = 0$.
+\end{itemize}
+
+\begin{tikzpicture}[scale=1.5]
+  % Axes
+  \draw[->] (-0.5,0) -- (4,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,3) node[above] {$y$};
+
+  % Graphe fonction simple
+  \draw[thick, blue] (0, 1) -- (1, 1);
+  \draw[thick, blue] (1, 2.5) -- (2.5, 2.5);
+  \draw[thick, blue] (2.5, 1.5) -- (3.5, 1.5);
+
+  % Lignes pointillees
+  \draw[dashed] (1,0) -- (1,2.5);
+  \draw[dashed] (2.5,0) -- (2.5,2.5);
+  \draw[dashed] (3.5,0) -- (3.5,1.5);
+  \draw[dashed] (0,1) -- (1,1);
+  \draw[dashed] (0,2.5) -- (1,2.5);
+  \draw[dashed] (0,1.5) -- (2.5,1.5);
+
+  % Valeurs
+  \node[below] at (0.5, 0) {$A_1$};
+  \node[below] at (1.75, 0) {$A_2$};
+  \node[below] at (3, 0) {$A_3$};
+
+  \node[left] at (0, 1) {$a_1$};
+  \node[left] at (0, 2.5) {$a_2$};
+  \node[left] at (0, 1.5) {$a_3$};
+
+  % Rectangles
+  \fill[blue, opacity=0.1] (0,0) rectangle (1,1);
+  \fill[blue, opacity=0.1] (1,0) rectangle (2.5,2.5);
+  \fill[blue, opacity=0.1] (2.5,0) rectangle (3.5,1.5);
+
+  \node at (2, -0.7) {L'intégrale est la somme des aires : $a_1\mu(A_1) + a_2\mu(A_2) + a_3\mu(A_3)$};
+\end{tikzpicture}
+
+\subsection{Intégrale des Fonctions Mesurables Positives}
+
+Soit $\mathcal{M}_+$ l'ensemble des fonctions mesurables de $X$ dans $[0, +\infty]$.
+
+\textbf{Définition (Intégrale de Lebesgue) :} Pour tout $f \in \mathcal{M}_+$, on définit :
+$$\int_X f \, d\mu = \sup \left\lbrace \int_X s \, d\mu \mid s \in \mathcal{S}_+, \ 0 \le s \le f \right\rbrace$$
+Cette valeur appartient à $[0, +\infty]$. Si elle est finie, on dit que $f$ est \textbf{intégrable}.
+
+\textbf{Théorème (Propriétés de l'intégrale) :} Soient $f, g \in \mathcal{M}_+$ et $\alpha \ge 0$.
+\begin{itemize}
+\item \textbf{Positivité :} $\int_X f \, d\mu \ge 0$.
+\item \textbf{Croissance :} Si $f \le g$ presque partout, alors $\int_X f \, d\mu \le \int_X g \, d\mu$.
+\item \textbf{Homogénéité positive :} $\int_X \alpha f \, d\mu = \alpha \int_X f \, d\mu$.
+\end{itemize}
+\textit{(La linéarité complète nécessite le théorème de convergence monotone, abordé au prochain jalon).}
+
+\textbf{Exemples concrets d'intégrales de fonctions mesurables :}
+\begin{itemize}
+\item \textbf{Fonction indicatrice de Dirichlet :} $f = \mathbf{1}_{\mathbb{Q}}$ sur $[0,1]$ avec la mesure de Lebesgue $\lambda$. Puisque $f$ est une fonction simple (valant 1 sur $\mathbb{Q} \cap [0,1]$ de mesure nulle, et 0 ailleurs), $\int f \, d\lambda = 1 \cdot \lambda(\mathbb{Q} \cap [0,1]) = 1 \cdot 0 = 0$.
+\item \textbf{Fonction continue positive sur un segment :} Soit $f(x) = x^2$ sur $[0, 1]$. L'intégrale de Lebesgue coïncide avec l'intégrale de Riemann : $\int_{[0,1]} x^2 \, d\lambda = \left[ \frac{x^3}{3} \right]_0^1 = \frac{1}{3}$.
+\item \textbf{Série comme intégrale de Lebesgue :} Sur $\mathbb{N}$ avec la mesure de comptage $\mu_c$, si $f(n) = \frac{1}{2^n}$, l'intégrale est la somme de la série : $\int_{\mathbb{N}} f \, d\mu_c = \sum_{n=0}^\infty \frac{1}{2^n} = 2$.
+\item \textbf{Fonction tendant vers l'infini :} Soit $f(x) = \frac{1}{\sqrt{x}}$ sur $]0, 1]$. Bien que $f$ ne soit pas bornée, elle est mesurable positive et $\int_{]0,1]} \frac{1}{\sqrt{x}} \, d\lambda = [2\sqrt{x}]_0^1 = 2$. Elle est donc intégrable.
+\item \textbf{Intégrale divergente :} Soit $f(x) = \frac{1}{x}$ sur $]0, 1]$. L'intégrale vaut $\int_{]0,1]} \frac{1}{x} \, d\lambda = [\ln(x)]_0^1 = +\infty$. Elle n'est pas intégrable.
+\item \textbf{Modification sur un ensemble de mesure nulle :} Soit $g(x) = x^2$ si $x \notin \mathbb{Q}$ et $g(x) = 17$ si $x \in \mathbb{Q}$, sur $[0,1]$. Puisque $g = f$ (où $f(x)=x^2$) presque partout, $\int_{[0,1]} g \, d\lambda = \int_{[0,1]} f \, d\lambda = \frac{1}{3}$.
+\end{itemize}
+
+\begin{tikzpicture}[scale=1.5]
+  % Axes
+  \draw[->] (-0.5,0) -- (4,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,3.5) node[above] {$y$};
+
+  % Courbe
+  \draw[thick, red, domain=0:3.5, samples=100] plot (\x, {0.2*\x*\x + 0.5});
+  \node[red, right] at (3.5, 2.95) {$f(x)$};
+
+  % Approximation par des fonctions simples (s_n <= f)
+  \fill[blue, opacity=0.1] (0,0) rectangle (1, 0.5);
+  \fill[blue, opacity=0.2] (1,0) rectangle (2, 0.7);
+  \fill[blue, opacity=0.3] (2,0) rectangle (2.8, 1.3);
+  \fill[blue, opacity=0.4] (2.8,0) rectangle (3.5, 2.06);
+
+  \draw[blue, thick] (0, 0.5) -- (1, 0.5);
+  \draw[blue, thick] (1, 0.7) -- (2, 0.7);
+  \draw[blue, thick] (2, 1.3) -- (2.8, 1.3);
+  \draw[blue, thick] (2.8, 2.06) -- (3.5, 2.06);
+
+  \draw[dashed, blue] (1, 0) -- (1, 0.5);
+  \draw[dashed, blue] (2, 0) -- (2, 1.3);
+  \draw[dashed, blue] (2.8, 0) -- (2.8, 2.06);
+  \draw[dashed, blue] (3.5, 0) -- (3.5, 2.06);
+
+  \node at (1.75, -0.5) {L'intégrale de $f$ est le supremum des intégrales de fonctions simples $s \le f$};
+\end{tikzpicture}
+
+
+\section{Démonstrations}
+
+\subsection{Démonstration : Relation entre intégrale nulle et nullité presque partout}
+
+Soit $f \in \mathcal{M}_+$. Montrons que $\int_X f \, d\mu = 0 \iff f = 0$ $\mu$-presque partout.
+
+\textbf{Sens direct ($\implies$) :} Supposons $\int_X f \, d\mu = 0$.
+Soit $A = \{x \in X \mid f(x) > 0\}$. Nous devons prouver que $\mu(A) = 0$.
+Pour tout entier $n \ge 1$, définissons $A_n = \left\{x \in X \mid f(x) \ge \frac{1}{n}\right\}$.
+On observe que $A = \bigcup_{n=1}^\infty A_n$.
+Sur l'ensemble $A_n$, nous avons $f(x) \ge \frac{1}{n}$. Ainsi, la fonction simple $s_n = \frac{1}{n} \mathbf{1}_{A_n}$ vérifie $0 \le s_n \le f$ sur $X$.
+Par croissance de l'intégrale :
+$$\int_X f \, d\mu \ge \int_X s_n \, d\mu = \frac{1}{n} \mu(A_n)$$
+Puisque $\int_X f \, d\mu = 0$, nous avons $0 \ge \frac{1}{n} \mu(A_n)$. La mesure étant positive, cela implique $\mu(A_n) = 0$ pour tout $n \ge 1$.
+Par $\sigma$-sous-additivité de la mesure, nous concluons :
+$$\mu(A) = \mu\left( \bigcup_{n=1}^\infty A_n \right) \le \sum_{n=1}^\infty \mu(A_n) = \sum_{n=1}^\infty 0 = 0$$
+Donc $\mu(A) = 0$, ce qui signifie que $f = 0$ presque partout.
+
+\textbf{Sens réciproque ($\impliedby$) :} Supposons que $f = 0$ $\mu$-presque partout.
+Soit $s \in \mathcal{S}_+$ telle que $0 \le s \le f$. Écrivons $s = \sum_{i=1}^k a_i \mathbf{1}_{B_i}$ dans sa forme canonique.
+Puisque $s \le f$ et $f = 0$ p.p., pour tout $x \in B_i$ où $a_i > 0$, on doit avoir $f(x) \ge a_i > 0$. L'ensemble des tels $x$ est inclus dans l'ensemble des points où $f(x) > 0$, qui est de mesure nulle. Ainsi, pour chaque $i$ tel que $a_i > 0$, $\mu(B_i) = 0$.
+L'intégrale de $s$ est :
+$$\int_X s \, d\mu = \sum_{i=1}^k a_i \mu(B_i) = \sum_{a_i > 0} a_i \cdot 0 + \sum_{a_i = 0} 0 \cdot \mu(B_i) = 0$$
+Le supremum sur toutes ces fonctions simples $s$ est donc 0, d'où $\int_X f \, d\mu = 0$.
+
+
+\section{Applications en Intelligence Artificielle}
+
+\begin{itemize}
+\item \textbf{Calcul de la Perte Attendue (Expected Loss) :} En apprentissage automatique, le risque statistique est formulé comme l'espérance mathématique de la fonction de perte : $L(\theta) = \int \ell(x, y, \theta) \, d\mathbb{P}(x, y)$. La théorie de Lebesgue offre le cadre adéquat pour calculer cette intégrale de manière unifiée, que la loi de probabilité sous-jacente $\mathbb{P}$ soit discrète, absolument continue par rapport à la mesure de Lebesgue, ou une mixture complexe des deux.
+\item \textbf{Divergences en Modélisation Générative :} Les méthodes avancées comme les réseaux antagonistes génératifs (GANs) ou les modèles de diffusion cherchent à minimiser une divergence entre la distribution des données réelles et celle du modèle (ex: Divergence de Kullback-Leibler). La formulation de ces divergences repose intrinsèquement sur des intégrales de Lebesgue par rapport à des mesures de probabilité sur des espaces de grande dimension (images, textes).
+\item \textbf{Processus Stochastiques et Filtrage :} Le filtrage de Kalman et ses variantes non linéaires nécessitent l'intégration de densités de transition. Le cadre de Lebesgue garantit la stabilité et l'existence des espérances conditionnelles calculées à chaque étape du filtre.
+\end{itemize}
+
+\part{Exercices d'Application et de Concours}
+\subsection*{{Exercice 1 : Calcul d'intégrale de fonction simple \quad $\bigstar\star\star\star\star$}}
+
+\textbf{Énoncé :}
+Soit $X = \{1, 2, 3, 4, 5\}$ muni de la mesure de comptage $\mu$. Soit $s(x) = x^2$ si $x$ est pair, et $s(x) = x$ si $x$ est impair. Calculer $\int_X s \, d\mu$.
+
+\textbf{Correction :}
+La fonction $s$ prend les valeurs : $s(1)=1, s(2)=4, s(3)=3, s(4)=16, s(5)=5$.
+
+Écrivons $s$ sous forme canonique :
+$s = 1 \cdot \mathbf{1}_{\{1\}} + 3 \cdot \mathbf{1}_{\{3\}} + 4 \cdot \mathbf{1}_{\{2\}} + 5 \cdot \mathbf{1}_{\{5\}} + 16 \cdot \mathbf{1}_{\{4\}}$.
+
+L'intégrale est :
+$\int_X s \, d\mu = 1 \cdot \mu(\{1\}) + 3 \cdot \mu(\{3\}) + 4 \cdot \mu(\{2\}) + 5 \cdot \mu(\{5\}) + 16 \cdot \mu(\{4\})$.
+
+Puisque $\mu$ est la mesure de comptage, chaque singleton a une mesure de 1.
+$\int_X s \, d\mu = 1\cdot 1 + 3\cdot 1 + 4\cdot 1 + 5\cdot 1 + 16\cdot 1 = 29$.
+
+\subsection*{{Exercice 2 : Intégrale de la fonction partie entière \quad $\bigstar\bigstar\star\star\star$}}
+
+\textbf{Énoncé :}
+Calculer $\int_{[0, 3]} \lfloor x \rfloor \, d\lambda$, où $\lambda$ est la mesure de Lebesgue sur $\mathbb{R}$.
+
+\textbf{Correction :}
+La fonction $s(x) = \lfloor x \rfloor$ sur $[0,3]$ est une fonction simple. Elle prend les valeurs 0, 1, 2, et 3.
+
+Précisément :
+$A_0 = \{x \in [0,3] \mid \lfloor x \rfloor = 0\} = [0, 1[$
+$A_1 = \{x \in [0,3] \mid \lfloor x \rfloor = 1\} = [1, 2[$
+$A_2 = \{x \in [0,3] \mid \lfloor x \rfloor = 2\} = [2, 3[$
+$A_3 = \{x \in [0,3] \mid \lfloor x \rfloor = 3\} = \{3\}$
+
+La forme canonique est $s = 0 \cdot \mathbf{1}_{A_0} + 1 \cdot \mathbf{1}_{A_1} + 2 \cdot \mathbf{1}_{A_2} + 3 \cdot \mathbf{1}_{A_3}$.
+
+On calcule les mesures :
+$\lambda(A_0) = 1 - 0 = 1$
+$\lambda(A_1) = 2 - 1 = 1$
+$\lambda(A_2) = 3 - 2 = 1$
+$\lambda(A_3) = 0$ (un point est de mesure nulle).
+
+L'intégrale est :
+$\int_{[0,3]} \lfloor x \rfloor \, d\lambda = 0 \cdot 1 + 1 \cdot 1 + 2 \cdot 1 + 3 \cdot 0 = 3$.
+
+\subsection*{{Exercice 3 : Intégrale par rapport à la mesure de Dirac \quad $\bigstar\bigstar\star\star\star$}}
+
+\textbf{Énoncé :}
+Soit $\delta_2$ la mesure de Dirac en 2 sur $\mathbb{R}$. Calculer $\int_{\mathbb{R}} e^x \mathbf{1}_{[0,5]}(x) \, d\delta_2(x)$.
+
+\textbf{Correction :}
+Soit $f(x) = e^x \mathbf{1}_{[0,5]}(x)$. C'est une fonction mesurable positive.
+
+On sait que pour toute fonction mesurable positive $g$, $\int_{\mathbb{R}} g \, d\delta_a = g(a)$.
+
+Ainsi, $\int_{\mathbb{R}} f \, d\delta_2 = f(2)$.
+
+Puisque $2 \in [0,5]$, $\mathbf{1}_{[0,5]}(2) = 1$.
+Donc $f(2) = e^2 \cdot 1 = e^2$.
+
+L'intégrale vaut $e^2$.
+
+\subsection*{{Exercice 4 : Limite de fonctions simples \quad $\bigstar\bigstar\bigstar\star\star$}}
+
+\textbf{Énoncé :}
+Soit $f(x) = x$ sur $[0,1]$. Pour tout entier $n \ge 1$, on pose $s_n(x) = \frac{\lfloor nx \rfloor}{n}$. Montrer que $s_n$ est une suite de fonctions simples positives, que $s_n \le f$, et calculer $\lim_{n \to \infty} \int_{[0,1]} s_n \, d\lambda$.
+
+\textbf{Correction :}
+\begin{itemize}
+\item $s_n(x)$ prend un nombre fini de valeurs sur $[0,1]$ : $\frac{0}{n}, \frac{1}{n}, \dots, \frac{n-1}{n}, \frac{n}{n}$. Ce sont des valeurs positives, donc $s_n \in \mathcal{S}_+$.
+\end{itemize}
+
+\begin{itemize}
+\item Par définition de la partie entière, $nx - 1 < \lfloor nx \rfloor \le nx$. En divisant par $n > 0$, on obtient $\frac{\lfloor nx \rfloor}{n} \le x$. Donc $s_n(x) \le f(x)$ pour tout $x \in [0,1]$.
+\end{itemize}
+
+\begin{itemize}
+\item Calculons l'intégrale de $s_n$ :
+\end{itemize}
+$s_n(x) = \frac{k}{n}$ si $x \in [\frac{k}{n}, \frac{k+1}{n}[$ pour $0 \le k \le n-1$, et $s_n(1) = 1$.
+$\int_{[0,1]} s_n \, d\lambda = \sum_{k=0}^{n-1} \frac{k}{n} \lambda([\frac{k}{n}, \frac{k+1}{n}[) = \sum_{k=0}^{n-1} \frac{k}{n} \cdot \frac{1}{n} = \frac{1}{n^2} \sum_{k=0}^{n-1} k = \frac{1}{n^2} \frac{(n-1)n}{2} = \frac{n-1}{2n}$.
+
+\begin{itemize}
+\item Limite : $\lim_{n \to \infty} \frac{n-1}{2n} = \lim_{n \to \infty} \left( \frac{1}{2} - \frac{1}{2n} \right) = \frac{1}{2}$.
+\end{itemize}
+
+On retrouve bien l'intégrale de Lebesgue (et de Riemann) de $f(x)=x$ sur $[0,1]$ qui est $\frac{1}{2}$.
+
+\subsection*{{Exercice 5 : Intégrale sur un ensemble infini \quad $\bigstar\bigstar\bigstar\star\star$}}
+
+\textbf{Énoncé :}
+Calculer l'intégrale de $f(x) = 2^{-x}$ sur $[0, +\infty[$ par rapport à la mesure de comptage restreinte aux entiers $\mu = \sum_{n=0}^\infty \delta_n$.
+
+\textbf{Correction :}
+L'intégrale de $f$ par rapport à cette mesure est par définition la somme de la série évaluée aux entiers positifs.
+
+$\int_{[0,+\infty[} f \, d\mu = \sum_{n=0}^\infty f(n) = \sum_{n=0}^\infty 2^{-n}$.
+
+C'est la somme d'une série géométrique de raison $q = \frac{1}{2}$.
+
+Puisque $|q| < 1$, la série converge et sa somme est :
+$S = \frac{\text{premier terme}}{1 - q} = \frac{1}{1 - 1/2} = \frac{1}{1/2} = 2$.
+
+L'intégrale vaut donc 2.
+
+\subsection*{{Exercice 6 : Linéarité pour les fonctions simples \quad $\bigstar\bigstar\bigstar\bigstar\star$}}
+
+\textbf{Énoncé :}
+Soient $s_1$ et $s_2$ deux fonctions simples positives. Prouver que $\int (s_1 + s_2) d\mu = \int s_1 d\mu + \int s_2 d\mu$.
+
+\textbf{Correction :}
+Soit $s_1 = \sum_{i=1}^n a_i \mathbf{1}_{A_i}$ et $s_2 = \sum_{j=1}^m b_j \mathbf{1}_{B_j}$ les formes canoniques.
+Les familles $(A_i)$ et $(B_j)$ sont des partitions de $X$.
+
+L'ensemble $X$ peut être partitionné par les intersections $A_i \cap B_j$ (pour $1 \le i \le n, 1 \le j \le m$).
+Sur chaque ensemble $A_i \cap B_j$, la fonction $s_1 + s_2$ est constante et vaut $a_i + b_j$.
+
+La fonction $s_1 + s_2$ est donc simple et peut s'écrire :
+$s_1 + s_2 = \sum_{i,j} (a_i + b_j) \mathbf{1}_{A_i \cap B_j}$.
+
+Par définition de l'intégrale d'une fonction simple :
+$\int (s_1 + s_2) d\mu = \sum_{i,j} (a_i + b_j) \mu(A_i \cap B_j)$
+$= \sum_{i,j} a_i \mu(A_i \cap B_j) + \sum_{i,j} b_j \mu(A_i \cap B_j)$.
+
+Puisque $(B_j)$ est une partition, $\cup_j (A_i \cap B_j) = A_i$, et par additivité de la mesure, $\sum_j \mu(A_i \cap B_j) = \mu(A_i)$.
+De même, $\sum_i \mu(A_i \cap B_j) = \mu(B_j)$.
+
+On obtient :
+$\int (s_1 + s_2) d\mu = \sum_{i} a_i \mu(A_i) + \sum_{j} b_j \mu(B_j) = \int s_1 d\mu + \int s_2 d\mu$.
+
+\subsection*{{Exercice 7 : Intégrabilité et mesure finie \quad $\bigstar\bigstar\bigstar\bigstar\star$}}
+
+\textbf{Énoncé :}
+Soit $f \in \mathcal{M}_+$. On suppose que $\int_X f \, d\mu < +\infty$. Montrer que pour tout $\epsilon > 0$, l'ensemble $A_\epsilon = \{x \in X \mid f(x) \ge \epsilon\}$ est de mesure finie.
+
+\textbf{Correction :}
+Sur l'ensemble $X$, nous avons l'inégalité :
+$f(x) \ge \epsilon \cdot \mathbf{1}_{A_\epsilon}(x)$ pour tout $x \in X$.
+
+En effet, si $x \in A_\epsilon$, $f(x) \ge \epsilon = \epsilon \cdot 1$.
+Si $x \notin A_\epsilon$, $f(x) \ge 0 = \epsilon \cdot 0$.
+
+Par croissance et homogénéité de l'intégrale de Lebesgue pour les fonctions mesurables positives :
+$\int_X f \, d\mu \ge \int_X \epsilon \cdot \mathbf{1}_{A_\epsilon} \, d\mu = \epsilon \mu(A_\epsilon)$.
+
+Puisque $\int_X f \, d\mu = I < +\infty$, on a :
+$I \ge \epsilon \mu(A_\epsilon)$
+
+Comme $\epsilon > 0$, on peut diviser :
+$\mu(A_\epsilon) \le \frac{I}{\epsilon} < +\infty$.
+
+L'ensemble $A_\epsilon$ est donc de mesure finie.
+
+\subsection*{{Exercice 8 : Fonction non intégrable mais finie p.p. \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}}
+
+\textbf{Énoncé :}
+Donner un exemple d'une fonction $f \in \mathcal{M}_+$ sur $]0, 1]$ (avec la mesure de Lebesgue) telle que $f(x) < +\infty$ pour tout $x$, mais $\int_{]0,1]} f \, d\lambda = +\infty$.
+
+\textbf{Correction :}
+Prenons la fonction $f(x) = \frac{1}{x}$.
+
+\begin{itemize}
+\item $f$ est continue sur $]0, 1]$, donc mesurable. Elle est positive.
+\item Pour tout $x \in ]0, 1]$, $f(x) = \frac{1}{x} < +\infty$. La fonction est donc finie partout.
+\item Calculons son intégrale. Pour tout entier $n > 1$, soit $f_n(x) = f(x) \mathbf{1}_{[1/n, 1]}(x)$.
+\end{itemize}
+Les fonctions $f_n$ sont bornées sur des intervalles fermés bornés, donc intégrables au sens de Riemann, et leurs intégrales de Lebesgue coïncident.
+
+$\int_{]0,1]} f_n \, d\lambda = \int_{1/n}^1 \frac{1}{x} dx = [\ln x]_{1/n}^1 = \ln(1) - \ln(1/n) = \ln(n)$.
+
+Comme $f_n \le f$ sur $]0,1]$, on a par croissance de l'intégrale :
+$\int_{]0,1]} f \, d\lambda \ge \int_{]0,1]} f_n \, d\lambda = \ln(n)$ pour tout $n$.
+
+En faisant tendre $n \to \infty$, on obtient $\int_{]0,1]} f \, d\lambda = +\infty$.
+$f$ n'est donc pas intégrable de Lebesgue.
+
+\subsection*{{Exercice 9 : Changement de mesure \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}}
+
+\textbf{Énoncé :}
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré et $g \in \mathcal{M}_+$. On définit $\nu(A) = \int_X g \mathbf{1}_A \, d\mu$ pour tout $A \in \mathcal{F}$.
+Prouver que pour toute fonction simple positive $s$, $\int_X s \, d\nu = \int_X s g \, d\mu$.
+
+\textbf{Correction :}
+Soit $s = \sum_{i=1}^n a_i \mathbf{1}_{A_i}$ une fonction simple positive sous sa forme canonique.
+
+Par définition de l'intégrale d'une fonction simple par rapport à $\nu$ :
+$\int_X s \, d\nu = \sum_{i=1}^n a_i \nu(A_i)$.
+
+Par définition de $\nu(A_i)$ :
+$\nu(A_i) = \int_X g \mathbf{1}_{A_i} \, d\mu$.
+
+En substituant :
+$\int_X s \, d\nu = \sum_{i=1}^n a_i \left( \int_X g \mathbf{1}_{A_i} \, d\mu \right)$.
+
+Par propriété de linéarité (multiplication par un scalaire et somme finie) de l'intégrale des fonctions mesurables positives :
+$\int_X s \, d\nu = \int_X \left( \sum_{i=1}^n a_i g \mathbf{1}_{A_i} \right) \, d\mu$.
+
+Or, $\sum_{i=1}^n a_i g(x) \mathbf{1}_{A_i}(x) = g(x) \sum_{i=1}^n a_i \mathbf{1}_{A_i}(x) = g(x) s(x)$.
+
+Donc $\int_X s \, d\nu = \int_X s g \, d\mu$.
+
+\subsection*{{Exercice 10 : Inégalité de Tchebychev \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}}
+
+\textbf{Énoncé :}
+Soit $f \in \mathcal{M}_+$ et $\alpha > 0$. Démontrer l'inégalité de Tchebychev-Markov : $\mu(\{x \in X \mid f(x) \ge \alpha\}) \le \frac{1}{\alpha} \int_X f \, d\mu$.
+
+\textbf{Correction :}
+Soit $A_\alpha = \{x \in X \mid f(x) \ge \alpha\}$.
+
+Sur l'ensemble $X$, nous avons l'inégalité ponctuelle :
+$f(x) \ge f(x) \mathbf{1}_{A_\alpha}(x)$. (car $f$ est positive et $\mathbf{1}_{A_\alpha}$ vaut 0 ou 1).
+
+De plus, par définition de $A_\alpha$, si $x \in A_\alpha$, alors $f(x) \ge \alpha$. Donc :
+$f(x) \mathbf{1}_{A_\alpha}(x) \ge \alpha \mathbf{1}_{A_\alpha}(x)$.
+
+En combinant les deux, pour tout $x \in X$ :
+$f(x) \ge \alpha \mathbf{1}_{A_\alpha}(x)$.
+
+L'intégrale préserve l'ordre (croissance) :
+$\int_X f \, d\mu \ge \int_X \alpha \mathbf{1}_{A_\alpha} \, d\mu$.
+
+Par homogénéité de l'intégrale d'une fonction simple :
+$\int_X \alpha \mathbf{1}_{A_\alpha} \, d\mu = \alpha \mu(A_\alpha)$.
+
+Ainsi :
+$\int_X f \, d\mu \ge \alpha \mu(A_\alpha)$.
+
+Comme $\alpha > 0$, on peut diviser par $\alpha$ pour obtenir :
+$\mu(A_\alpha) \le \frac{1}{\alpha} \int_X f \, d\mu$.
+
+C'est l'inégalité de Tchebychev (ou Markov).
+
+
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{{TP 1 : Intégrale de Riemann vs Lebesgue (Approche naïve)}}
+
+\textbf{Objectif :}
+Implémenter une fonction Python pour approximer l'intégrale d'une fonction continue sur $[0,1]$ en utilisant des rectangles verticaux (Riemann) et des 'rectangles' horizontaux (Lebesgue, fonctions simples basées sur les ordonnées).
+
+\textbf{Implémentation :}
+\begin{lstlisting}
+def f(x):
+    return x * x
+
+def riemann_integral(func, n_steps):
+    dx = 1.0 / n_steps
+    total = 0.0
+    for i in range(n_steps):
+        x = i * dx
+        total += func(x) * dx
+    return total
+
+def lebesgue_integral_approx(func, n_y_steps):
+    # Approximation par partitionnement de l'axe des ordonnées
+    y_max = func(1.0)
+    dy = y_max / n_y_steps
+    total = 0.0
+    n_samples = 10000
+
+    for j in range(n_y_steps):
+        y_val = j * dy
+        # Mesure de l'ensemble A_j = {x | f(x) >= y_val} (Approximation par Monte Carlo/Echantillonnage)
+        count_in_set = 0
+        for i in range(n_samples):
+            x = i / n_samples
+            if func(x) >= y_val and func(x) < y_val + dy:
+                count_in_set += 1
+
+        measure = count_in_set / n_samples
+        total += y_val * measure
+
+    return total
+
+print("Riemann (n=1000):", riemann_integral(f, 1000))
+print("Lebesgue approx (n=100):", lebesgue_integral_approx(f, 100))
+
+\end{lstlisting}
+
+\subsection*{{TP 2 : Intégrale d'une fonction simple sur un domaine discret}}
+
+\textbf{Objectif :}
+Écrire une fonction qui calcule de manière exacte l'intégrale d'une fonction simple sur un ensemble fini $X = \{0, 1, \dots, N-1\}$ muni d'une mesure discrète arbitraire.
+
+\textbf{Implémentation :}
+\begin{lstlisting}
+def integral_discrete_simple(values, measure_probs):
+    # values: liste des valeurs de la fonction f(x) pour x=0 à N-1
+    # measure_probs: liste des mesures mu({x}) pour x=0 à N-1
+    assert len(values) == len(measure_probs), "Taille incoherente"
+
+    # 1. Trouver les valeurs distinctes (a_i)
+    distinct_vals = list(set(values))
+
+    # 2. Calculer la mesure de chaque ensemble A_i
+    integral_value = 0.0
+    for a in distinct_vals:
+        measure_Ai = 0.0
+        for i in range(len(values)):
+            if values[i] == a:
+                measure_Ai += measure_probs[i]
+
+        integral_value += a * measure_Ai
+
+    return integral_value
+
+# Exemple
+f_vals = [1.5, 2.0, 1.5, 3.0, 0.0]
+mu_probs = [0.1, 0.2, 0.3, 0.1, 0.3] # Somme = 1 (mesure de proba)
+res = integral_discrete_simple(f_vals, mu_probs)
+print("Integrale exacte = ", res)
+
+\end{lstlisting}
+
+\subsection*{{TP 3 : Vérification empirique de l'inégalité de Markov}}
+
+\textbf{Objectif :}
+Simuler un grand nombre d'échantillons d'une loi exponentielle et vérifier empiriquement que la borne de Markov est respectée.
+
+\textbf{Implémentation :}
+\begin{lstlisting}
+import random
+
+def exp_sample(lam):
+    # Echantillonnage par transformee inverse
+    u = random.random()
+    return - (1.0/lam) * (1.0 - u) # Approx empirique sans log pour eviter l'import math
+
+# Une approximation grossiere du log pour l'exemple
+def approx_log_1_minus_u(u):
+    return -u - (u*u)/2.0 - (u*u*u)/3.0
+
+def generate_samples(n, lam):
+    samples = []
+    for _ in range(n):
+        u = random.random()
+        # u est proche de 0 ou 1. On utilise le vrai log de python pour la simu
+        import math
+        val = - math.log(1.0 - u) / lam
+        samples.append(val)
+    return samples
+
+n_sim = 10000
+lam = 2.0
+data = generate_samples(n_sim, lam)
+
+# E[X] pour exp(lambda) est 1/lambda
+expected_mean = 1.0 / lam
+empirical_mean = sum(data) / n_sim
+
+alpha = 1.5
+count_greater = sum(1 for x in data if x >= alpha)
+prob_empirical = count_greater / n_sim
+
+markov_bound = expected_mean / alpha
+
+print("Moyenne empirique:", empirical_mean)
+print("P(X >= alpha):", prob_empirical)
+print("Borne de Markov:", markov_bound)
+print("Inegalite respectee:", prob_empirical <= markov_bound)
+
+\end{lstlisting}
+
+\subsection*{{TP 4 : Fonction de Dirichlet et approximations}}
+
+\textbf{Objectif :}
+Simuler le calcul de l'intégrale de la fonction indicatrice des rationnels en échantillonnant au hasard dans $[0,1]$ (flottants) vs évaluer exactement.
+
+\textbf{Implémentation :}
+\begin{lstlisting}
+import random
+
+def dirichlet(x):
+    # En informatique, tester si un flottant est rationnel n'a pas de sens mathematique pur.
+    # On simule un comportement "rare".
+    # Un float Python est techniquement rationnel, mais on veut simuler Q vs R.
+    # On va dire que si x est generable par une fraction simple, c'est 1.
+    return 0.0 # Dans le continu, presque tout est irrationnel.
+
+def monte_carlo_integral(func, n_samples):
+    total = 0.0
+    for _ in range(n_samples):
+        x = random.random()
+        total += func(x)
+    return total / n_samples
+
+approx = monte_carlo_integral(dirichlet, 100000)
+print("Integrale approchee de Dirichlet:", approx)
+print("Valeur theorique (Lebesgue): 0.0")
+# Riemann echouerait car inf et sup sur tout intervalle vaudraient 0 et 1, ne convergeant pas.
+
+\end{lstlisting}
+
+\subsection*{{TP 5 : Convergence monotone (Introduction numérique)}}
+
+\textbf{Objectif :}
+Écrire une suite croissante de fonctions simples qui converge vers $f(x) = x^2$ sur $[0,1]$, et calculer la limite de leurs intégrales numériquement.
+
+\textbf{Implémentation :}
+\begin{lstlisting}
+def f(x):
+    return x * x
+
+def s_n(x, n):
+    # Construit la fonction simple de l'approximation de Lebesgue
+    for k in range(n):
+        lower = k / n
+        upper = (k + 1) / n
+        # Pour eviter les boucles lourdes, on fait une formule directe pour x^2
+        if f(x) >= lower and f(x) < upper:
+            return lower
+    if f(x) >= 1.0:
+        return 1.0
+    return 0.0
+
+def integral_s_n(n):
+    # Integrale par somme de Riemann tres fine pour l'aire de la fonction simple
+    n_steps = 1000
+    dx = 1.0 / n_steps
+    total = 0.0
+    for i in range(n_steps):
+        x = i * dx
+        total += s_n(x, n) * dx
+    return total
+
+for n in [2, 5, 10, 50]:
+    val = integral_s_n(n)
+    print("Integrale s_{} = {}".format(n, val))
+
+print("Valeur theorique = 0.3333...")
+
+\end{lstlisting}
+
+
+\end{document}
