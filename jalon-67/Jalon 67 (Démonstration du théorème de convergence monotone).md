@@ -6,7 +6,7 @@ trimester: 6
 tags:
   - math/analyse
   - ia/abstraction
-prev: "[[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.).md]]"
+prev: "[[Jalon-66.md]]"
 next: "[[Jalon 68 (Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque).md]]"
 ---
 
@@ -79,5 +79,5 @@ On considère l'espace $\mathbb{N}$ muni de la mesure de comptage $\mu$. Soit $f
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.).md]], [[Jalon 63 (Définition axiomatique d'une mesure).md]]
+- **Concepts Précédents requis :** [[Jalon-66.md]], [[Jalon 63 (Définition axiomatique d'une mesure).md]]
 - **Concepts Futurs dépendants :** [[Jalon 68 (Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque).md]], [[Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md]]

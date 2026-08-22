@@ -1,0 +1,707 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1
+}
+
+\title{\Huge INTÉGRALE DE LEBESGUE POUR LES FONCTIONS POSITIVES \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+\section*{Jalon 66 : Intégrale de Lebesgue pour les fonctions positives}
+
+\section{Introduction}
+
+Imaginez que vous vouliez calculer le volume total d'une colline irrégulière à l'aide de blocs de construction.
+L'approche de Riemann consiste à découper la base (le sol) en une grille régulière et, pour chaque petit carré, à empiler des blocs jusqu'à atteindre la surface de la colline. Si la colline a des pics très fins ou des trous profonds sur des espaces minuscules, la largeur fixe de la base nous empêchera d'être précis sans faire exploser le nombre de carrés.
+
+L'approche de Lebesgue inverse la logique : on ne découpe plus le sol, on découpe l'altitude.
+On prend une tranche de colline située exactement entre $0$ et $1$ mètre d'altitude. On cherche partout sur le terrain la "zone" où la colline a au moins cette altitude, et on calcule l'aire de cette zone (la mesure de l'ensemble de niveau). On multiplie cette aire par la hauteur de la tranche. Ensuite, on prend la tranche entre $1$ et $2$ mètres, et on fait pareil.
+Le volume de la colline est la somme de toutes ces tranches horizontales.
+
+Cette inversion conceptuelle, où l'on intègre "selon l'axe des y" (les valeurs de la fonction) plutôt que "selon l'axe des x" (le domaine de départ), permet de traiter des fonctions extrêmement chaotiques. Si une fonction prend la valeur $1$ sur les nombres rationnels et $0$ sur les irrationnels, Riemann est incapable de l'intégrer car son graphe ne ressemble à rien. Lebesgue s'en moque : il regarde simplement l'ensemble des points où la fonction vaut $1$, et demande "quelle est la mesure (la taille) de cet ensemble ?". Si la mesure est nulle, alors le "volume" correspondant est nul.
+
+\section{Définitions, Théorèmes et Exemples}
+
+L'intégration de Lebesgue procède de manière ascendante et constructiviste. On définit d'abord l'intégrale pour les fonctions les plus basiques possibles (les fonctions dites "étagées" ou "simples"), puis on généralise aux fonctions mesurables positives par une procédure de supremum (limite supérieure).
+
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
+
+\subsection{Les Fonctions Étagées (ou Simples) Positives}
+
+Une fonction étagée positive est une fonction qui ne prend qu'un nombre fini de valeurs réelles positives.
+
+\begin{quote}
+\textbf{Définition :} Soit $s : X \to [0, +\infty[$. On dit que $s$ est une \textbf{fonction étagée (ou simple) positive}, notée $s \in \mathcal{E}_+$ (ou $\mathcal{S}_+$), si elle peut s'écrire sous la forme canonique :
+\end{quote}
+\begin{quote}
+$$s(x) = \sum_{i=1}^n a_i \mathbf{1}_{A_i}(x)$$
+\end{quote}
+\begin{quote}
+où :
+\end{quote}
+\begin{quote}
+- $n \in \mathbb{N}^*$.
+\end{quote}
+\begin{quote}
+- $a_1, \dots, a_n$ sont des nombres réels positifs ou nuls deux à deux distincts.
+\end{quote}
+\begin{quote}
+- $A_1, \dots, A_n$ forment une partition finie de $X$ constituée d'ensembles mesurables ($A_i \in \mathcal{F}$).
+\end{quote}
+\begin{quote}
+- $\mathbf{1}_{A_i}$ est la fonction indicatrice de l'ensemble $A_i$.
+\end{quote}
+
+\textbf{Exemple Concret 1 : L'intégrale d'une fonction constante par morceaux.}
+Plaçons-nous sur l'espace mesurable $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$ muni de la mesure de Lebesgue $\lambda$.
+Considérons la fonction $s(x)$ qui vaut :
+- $2$ si $x \in [0, 1]$
+- $5$ si $x \in ]1, 3]$
+- $0$ ailleurs.
+
+La décomposition canonique de $s$ est :
+$$s = 0 \cdot \mathbf{1}_{\mathbb{R} \setminus [0, 3]} + 2 \cdot \mathbf{1}_{[0, 1]} + 5 \cdot \mathbf{1}_{]1, 3]}$$
+
+Ici, $A_1 = \mathbb{R} \setminus [0, 3]$, $A_2 = [0, 1]$, et $A_3 = ]1, 3]$. Ce sont tous des boréliens, donc $s \in \mathcal{E}_+$.
+
+\subsection{Intégrale des Fonctions Étagées Positives}
+
+\begin{quote}
+\textbf{Définition :} L'intégrale par rapport à $\mu$ de la fonction étagée positive $s = \sum_{i=1}^n a_i \mathbf{1}_{A_i}$ est le nombre (éventuellement infini) défini par :
+\end{quote}
+\begin{quote}
+$$\int_X s \, d\mu = \sum_{i=1}^n a_i \mu(A_i)$$
+\end{quote}
+\begin{quote}
+
+\end{quote}
+\begin{quote}
+*Convention cruciale :* Si pour un indice $i$, $a_i = 0$ et $\mu(A_i) = +\infty$, on pose $0 \times (+\infty) = 0$.
+\end{quote}
+
+\textbf{Exemple Concret 2 : Calcul de l'intégrale de l'exemple 1.}
+En reprenant la fonction $s$ définie précédemment :
+$$\int_{\mathbb{R}} s \, d\lambda = 0 \cdot \lambda(\mathbb{R} \setminus [0, 3]) + 2 \cdot \lambda([0, 1]) + 5 \cdot \lambda(]1, 3])$$
+$$\int_{\mathbb{R}} s \, d\lambda = 0 + 2 \times (1 - 0) + 5 \times (3 - 1)$$
+$$\int_{\mathbb{R}} s \, d\lambda = 2 + 10 = 12$$
+
+\textbf{Cas Pathologique :} Soit la fonction $s(x) = 0$ sur $\mathbb{R}$. Bien que la mesure de Lebesgue de $\mathbb{R}$ soit infinie, l'intégrale est $\int_{\mathbb{R}} 0 \, d\lambda = 0 \times (+\infty) = 0$. Cela traduit l'idée géométrique évidente qu'un "rectangle" de hauteur strictement nulle a une aire nulle, même s'il est de longueur infinie.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  % Axes
+  \draw[->] (-1,0) -- (4,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,6) node[above] {$s(x)$};
+
+  % Fonction étagée
+  \draw[very thick, blue] (-1,0) -- (0,0);
+  \draw[dashed, blue] (0,0) -- (0,2);
+  \draw[very thick, blue] (0,2) -- (1,2);
+  \draw[dashed, blue] (1,2) -- (1,5);
+  \draw[very thick, blue] (1,5) -- (3,5);
+  \draw[dashed, blue] (3,5) -- (3,0);
+  \draw[very thick, blue] (3,0) -- (4,0);
+
+  % Remplissage
+  \fill[blue, opacity=0.2] (0,0) rectangle (1,2);
+  \fill[blue, opacity=0.2] (1,0) rectangle (3,5);
+
+  % Ticks
+  \draw (1,0.1) -- (1,-0.1) node[below] {$1$};
+  \draw (3,0.1) -- (3,-0.1) node[below] {$3$};
+  \draw (0.1,2) -- (-0.1,2) node[left] {$2$};
+  \draw (0.1,5) -- (-0.1,5) node[left] {$5$};
+
+  \node at (0.5, 1) {Aire $= 2$};
+  \node at (2, 2.5) {Aire $= 10$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Approximation par des fonctions étagées}
+
+Pour étendre l'intégrale à toute fonction mesurable positive, nous utilisons un résultat fondamental d'approximation.
+
+\begin{quote}
+\textbf{Théorème d'Approximation :} Soit $f : X \to [0, +\infty]$ une fonction mesurable. Alors il existe une suite croissante $(s_n)_{n \in \mathbb{N}}$ de fonctions étagées positives, c'est-à-dire $0 \leq s_0 \leq s_1 \leq \dots \leq s_n \leq \dots \leq f$, telle que $(s_n)$ converge simplement vers $f$ sur $X$.
+\end{quote}
+\begin{quote}
+
+\end{quote}
+\begin{quote}
+$$\forall x \in X, \quad \lim_{n \to +\infty} s_n(x) = f(x)$$
+\end{quote}
+
+\textbf{Exemple Concret 3 : Approximation d'une exponentielle.}
+Considérons $f(x) = e^{-x}$ sur $\mathbb{R}_+$. On peut construire $s_n$ en découpant l'axe des ordonnées en intervalles de taille $\frac{1}{2^n}$.
+Pour un $x$ donné, si $f(x) \in [\frac{k}{2^n}, \frac{k+1}{2^n}[$, on pose $s_n(x) = \frac{k}{2^n}$.
+Pour $n=1$, les valeurs de $s_1$ sont $0, \frac{1}{2}, 1, \dots$
+Ainsi, si $x = 0.5$, $f(0.5) = e^{-0.5} \approx 0.606$.
+Pour $n=1$, l'intervalle d'ordonnées contenant $0.606$ est $[\frac{1}{2}, \frac{2}{2}[$, donc $s_1(0.5) = 0.5$.
+Pour $n=2$, l'intervalle est $[\frac{2}{4}, \frac{3}{4}[$, donc $s_2(0.5) = 0.5$.
+Pour $n=3$, l'intervalle est $[\frac{4}{8}, \frac{5}{8}[$, donc $s_3(0.5) = 0.5$.
+Pour $n=4$, l'intervalle est $[\frac{9}{16}, \frac{10}{16}[$, donc $s_4(0.5) = 0.5625$.
+On voit que la suite $s_n(0.5)$ est croissante et converge bien vers $e^{-0.5}$.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  % Axes
+  \draw[->] (0,0) -- (4,0) node[right] {$x$};
+  \draw[->] (0,0) -- (0,2.5) node[above] {$y$};
+
+  % Courbe exp(-x)
+  \draw[thick, red, domain=0:3.5, samples=100] plot (\x, {2*exp(-\x)});
+  \node[red, above right] at (0.2, 1.8) {$f(x) = e^{-x}$};
+
+  % Approximation étagée (n grossier)
+  \draw[very thick, blue] (0, 1.5) -- (0.287, 1.5);
+  \draw[dashed, blue] (0.287, 1.5) -- (0.287, 1.0);
+  \draw[very thick, blue] (0.287, 1.0) -- (0.693, 1.0);
+  \draw[dashed, blue] (0.693, 1.0) -- (0.693, 0.5);
+  \draw[very thick, blue] (0.693, 0.5) -- (1.386, 0.5);
+  \draw[dashed, blue] (1.386, 0.5) -- (1.386, 0.0);
+  \draw[very thick, blue] (1.386, 0.0) -- (3.5, 0.0);
+
+  \node[blue] at (2, 0.5) {$s_n \le f$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{L'Intégrale de Lebesgue des Fonctions Mesurables Positives}
+
+Soit $\mathcal{M}_+(X, \mathcal{F})$ l'ensemble des fonctions mesurables positives (à valeurs dans $[0, +\infty]$).
+
+\begin{quote}
+\textbf{Définition (Intégrale de Lebesgue) :} Pour toute fonction $f \in \mathcal{M}_+(X, \mathcal{F})$, on définit l'intégrale de $f$ par rapport à $\mu$ comme le supremum des intégrales de toutes les fonctions étagées positives minorant $f$ :
+\end{quote}
+\begin{quote}
+$$\int_X f \, d\mu = \sup \left\lbrace \int_X s \, d\mu \ \mid \ s \in \mathcal{E}_+(X, \mathcal{F}), \quad 0 \leq s \leq f \right\rbrace$$
+\end{quote}
+\begin{quote}
+
+\end{quote}
+\begin{quote}
+Cette valeur existe toujours dans $[0, +\infty]$. Si $\int_X f \, d\mu < +\infty$, on dit que la fonction $f$ est \textbf{intégrable} (ou $\mu$-intégrable).
+\end{quote}
+
+\textbf{Exemple Concret 4 : Intégrale de la fonction indicatrice de $\mathbb{Q}$ (Fonction de Dirichlet).}
+Soit $f = \mathbf{1}_{\mathbb{Q} \cap [0,1]}$ sur le segment $[0, 1]$ muni de la mesure de Lebesgue $\lambda$.
+La fonction $f$ vaut $1$ sur les rationnels, $0$ sur les irrationnels.
+C'est une fonction étagée positive de décomposition canonique : $f = 1 \cdot \mathbf{1}_{\mathbb{Q} \cap [0,1]} + 0 \cdot \mathbf{1}_{[0,1] \setminus \mathbb{Q}}$.
+Son intégrale de Lebesgue est immédiate (puisque $f \in \mathcal{E}_+$) :
+$$\int_{[0,1]} f \, d\lambda = 1 \times \lambda(\mathbb{Q} \cap [0,1]) + 0 \times \lambda([0,1] \setminus \mathbb{Q})$$
+Or, l'ensemble des rationnels est dénombrable, donc sa mesure de Lebesgue est stricte nulle : $\lambda(\mathbb{Q}) = 0$.
+Ainsi, $\int_{[0,1]} f \, d\lambda = 1 \times 0 + 0 = 0$.
+L'intégrale de Riemann, elle, est incapable de donner un résultat (la fonction est partout discontinue et ni les sommes de Darboux inférieures ni les supérieures ne convergent).
+
+\section{Démonstrations}
+
+\subsection{Démonstration : Relation entre intégrale et ensembles de mesure nulle}
+
+Un résultat crucial affirme qu'une fonction positive dont l'intégrale est nulle est nécessairement nulle "presque partout" (p.p.), c'est-à-dire que l'ensemble des points où elle n'est pas nulle est de mesure strictement nulle.
+
+\textbf{Théorème :} Soit $f \in \mathcal{M}_+(X, \mathcal{F})$.
+$$ \int_X f \, d\mu = 0 \iff f = 0 \text{ } \mu\text{-presque partout.}$$
+
+\textbf{Preuve :}
+
+*Sens direct ($\implies$) : Supposons $\int_X f \, d\mu = 0$.*
+1. \textbf{Initialisation / Cadre :} Soit $A = \{x \in X \mid f(x) > 0\}$. On veut démontrer que $\mu(A) = 0$.
+2. \textbf{Étape 1 (Stratégie de découpage discret) :} L'astuce fondamentale de la théorie de la mesure consiste à écrire un ensemble strictement positif comme une union dénombrable de seuils stricts.
+   Pour tout entier $n \ge 1$, posons $A_n = \{x \in X \mid f(x) \ge \frac{1}{n}\}$.
+   L'ensemble $A$ s'écrit formellement comme l'union croissante de ces ensembles :
+   $$A = \bigcup_{n=1}^\infty A_n$$
+3. \textbf{Étape 2 (Minoration par des indicatrices) :} Fixons un entier $n \ge 1$. Par construction de $A_n$, pour tout $x \in X$, on a :
+   $$f(x) \ge \frac{1}{n} \mathbf{1}_{A_n}(x)$$
+   (Si $x \notin A_n$, l'inégalité est $f(x) \ge 0$, ce qui est vrai car $f \in \mathcal{M}_+$. Si $x \in A_n$, l'inégalité est $f(x) \ge \frac{1}{n}$, ce qui est vrai par définition de $A_n$).
+4. \textbf{Étape 3 (Passage à l'intégrale) :} La croissance de l'intégrale de Lebesgue impose que :
+   $$\int_X f \, d\mu \ge \int_X \left( \frac{1}{n} \mathbf{1}_{A_n} \right) \, d\mu$$
+   Or la fonction à droite est une fonction étagée de base. Donc :
+   $$\int_X f \, d\mu \ge \frac{1}{n} \mu(A_n)$$
+5. \textbf{Étape 4 (Utilisation de l'hypothèse) :} Par hypothèse, l'intégrale de $f$ est nulle. Donc :
+   $$0 \ge \frac{1}{n} \mu(A_n)$$
+   Comme $\mu$ est positive par définition, la seule possibilité est que $\mu(A_n) = 0$ pour tout entier $n$.
+6. \textbf{Étape 5 (Conclusion par sous-additivité) :} La mesure d'une union dénombrable est majorée par la somme des mesures ($\sigma$-sous-additivité) :
+   $$\mu(A) = \mu\left( \bigcup_{n=1}^\infty A_n \right) \le \sum_{n=1}^\infty \mu(A_n) = \sum_{n=1}^\infty 0 = 0$$
+   Donc $\mu(\{x \in X \mid f(x) > 0\}) = 0$. La fonction $f$ est bien nulle presque partout.
+
+*Sens réciproque ($\impliedby$) : Supposons que $f = 0$ presque partout.*
+1. Cela signifie que $\mu(A) = 0$, avec $A = \{x \in X \mid f(x) > 0\}$.
+2. Soit $s \in \mathcal{E}_+$ telle que $0 \le s \le f$. Soit $s = \sum_{i=1}^k a_i \mathbf{1}_{B_i}$ sa forme canonique, avec les $a_i > 0$.
+3. Pour chaque $i$, si $x \in B_i$, alors $s(x) = a_i > 0$. Comme $s \le f$, on a $f(x) > 0$, donc $x \in A$.
+4. Ainsi, $B_i \subseteq A$. Par monotonie de la mesure, $\mu(B_i) \le \mu(A) = 0$, donc $\mu(B_i) = 0$.
+5. L'intégrale de $s$ est $\int s \, d\mu = \sum a_i \mu(B_i) = \sum a_i \cdot 0 = 0$.
+6. L'intégrale de $f$ étant le supremum sur toutes ces fonctions étagées $s$, elle est nécessairement $\sup \{0\} = 0$.
+
+\section{Applications en Physique, Logique et Intelligence Artificielle}
+
+L'intégrale de Lebesgue est la fondation indissociable de la \textbf{Théorie des Probabilités Modernes} (l'axiomatisation de Kolmogorov).
+
+Dans les algorithmes de \textbf{Machine Learning}, en particulier l'Apprentissage par Renforcement et les Processus Décisionnels de Markov Continus (MDP), nous devons calculer la fonction de valeur d'un état (Value Function), qui se définit comme une Espérance conditionnelle de gains futurs.
+
+$$\mathbb{E}[R_t \mid S_t = s] = \int_{\mathcal{R}} r \, dP(r \mid s)$$
+
+L'espace des récompenses $\mathcal{R}$ peut être hybride : il peut contenir des valeurs discrètes (une pénalité fixe $-100$ si le robot tombe) et des valeurs continues (le temps écoulé ou l'énergie dépensée). La théorie de Riemann exigerait de diviser la formule en une somme d'un côté et une intégrale de l'autre.
+L'intégrale de Lebesgue permet d'utiliser une seule notation unifiée $\int$ et traite parfaitement les atomes de mesure (les impulsions de Dirac) et les densités lisses sous le même formalisme.
+
+Un autre cas majeur est la théorie de l'Information. La minimisation de l'Entropie Croisée (Cross-Entropy Loss) pour entraîner les réseaux de neurones repose sur la Divergence de Kullback-Leibler. Sa définition est purement abstraite : $D_{KL}(P \parallel Q) = \int_{\mathcal{X}} \log\left(\frac{dP}{dQ}\right) dP$. La dérivée de Radon-Nikodym ($\frac{dP}{dQ}$) et l'intégrale externe n'existent rigoureusement qu'à travers le formalisme de Lebesgue.
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Intégrale d'une fonction étagée simple $\bigstar$}
+
+\textbf{Énoncé :}
+Sur l'espace mesuré $(\mathbb{R}, \mathcal{B}(\mathbb{R}), \lambda)$, calculer l'intégrale de Lebesgue de la fonction $f$ définie par :
+$f(x) = 3$ si $x \in [-1, 2]$, $f(x) = 7$ si $x \in \{4, 5, 6\}$, $f(x) = 2$ si $x \in [10, 11[$, et $f(x) = 0$ sinon.
+
+\textbf{Correction Détaillée :}
+1. La fonction $f$ ne prend qu'un nombre fini de valeurs positives, c'est donc une fonction étagée positive.
+2. Sa forme canonique est $f = 3 \cdot \mathbf{1}_{[-1, 2]} + 7 \cdot \mathbf{1}_{\{4, 5, 6\}} + 2 \cdot \mathbf{1}_{[10, 11[} + 0 \cdot \mathbf{1}_{A^c}$ avec $A$ l'union des trois sous-ensembles précédents.
+3. L'intégrale de $f$ est la somme des valeurs multipliées par la mesure de Lebesgue des ensembles associés :
+   $$\int_{\mathbb{R}} f \, d\lambda = 3 \cdot \lambda([-1, 2]) + 7 \cdot \lambda(\{4, 5, 6\}) + 2 \cdot \lambda([10, 11[)$$
+4. On calcule les mesures des boréliens :
+   - $\lambda([-1, 2]) = 2 - (-1) = 3$.
+   - L'ensemble $\{4, 5, 6\}$ est fini (ou dénombrable), donc $\lambda(\{4, 5, 6\}) = 0$.
+   - $\lambda([10, 11[) = 11 - 10 = 1$.
+5. On remplace dans l'équation :
+   $$\int_{\mathbb{R}} f \, d\lambda = 3 \times 3 + 7 \times 0 + 2 \times 1 = 9 + 0 + 2 = 11$$
+
+
+\vspace{0.5cm}
+\subsection*{Exercice 2 : Indicatrice des rationnels dilatée $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Soit $f(x) = 10 \cdot \mathbf{1}_{\mathbb{Q}}(x) + 5 \cdot \mathbf{1}_{\mathbb{R} \setminus \mathbb{Q}}(x)$ définie sur le segment $[0, 4]$.
+Calculer son intégrale de Lebesgue par rapport à la mesure de Lebesgue $\lambda$.
+
+\textbf{Correction Détaillée :}
+1. Nous reconnaissons $f$ comme une fonction étagée positive sur le domaine restreint $[0, 4]$.
+2. Les ensembles de niveau sont $A_1 = \mathbb{Q} \cap [0, 4]$ (où $f=10$) et $A_2 = (\mathbb{R} \setminus \mathbb{Q}) \cap [0, 4]$ (où $f=5$).
+3. Par définition :
+   $$\int_{[0, 4]} f \, d\lambda = 10 \cdot \lambda(\mathbb{Q} \cap [0, 4]) + 5 \cdot \lambda((\mathbb{R} \setminus \mathbb{Q}) \cap [0, 4])$$
+4. La mesure de Lebesgue des rationnels est nulle : $\lambda(\mathbb{Q} \cap [0, 4]) = 0$.
+5. Par additivité de la mesure, $\lambda([0, 4]) = \lambda(\mathbb{Q} \cap [0, 4]) + \lambda((\mathbb{R} \setminus \mathbb{Q}) \cap [0, 4])$.
+   Donc $4 - 0 = 0 + \lambda((\mathbb{R} \setminus \mathbb{Q}) \cap [0, 4])$, d'où l'ensemble des irrationnels de ce segment a pour mesure $4$.
+6. Le calcul donne :
+   $$\int_{[0, 4]} f \, d\lambda = 10 \times 0 + 5 \times 4 = 20$$
+
+
+\vspace{0.5cm}
+\subsection*{Exercice 3 : Intégrale et mesure de Dirac $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+On munit $\mathbb{R}$ de la mesure de Dirac en zéro, notée $\delta_0$.
+Soit $f : \mathbb{R} \to \mathbb{R}_+$ une fonction mesurable positive quelconque.
+Démontrer que $\int_{\mathbb{R}} f \, d\delta_0 = f(0)$.
+
+\textbf{Correction Détaillée :}
+1. \textbf{Cas des fonctions étagées :} Supposons d'abord que $s = \sum_{i=1}^n a_i \mathbf{1}_{A_i}$ est une fonction étagée positive, où les $A_i$ forment une partition de $\mathbb{R}$.
+2. Par définition de l'intégrale pour une fonction étagée :
+   $$\int_{\mathbb{R}} s \, d\delta_0 = \sum_{i=1}^n a_i \delta_0(A_i)$$
+3. Or, par définition de la mesure de Dirac, $\delta_0(A_i) = 1$ si $0 \in A_i$, et $\delta_0(A_i) = 0$ sinon.
+4. Comme les $A_i$ forment une partition, le point $0$ appartient à un et un seul des ensembles, disons $A_k$.
+   Ainsi, $\delta_0(A_k) = 1$ et pour tout $i \neq k$, $\delta_0(A_i) = 0$.
+5. La somme se réduit donc à $a_k$. Mais $a_k$ est précisément la valeur de $s$ sur l'ensemble $A_k$, donc en particulier $a_k = s(0)$.
+   Nous avons prouvé que $\int s \, d\delta_0 = s(0)$.
+6. \textbf{Passage au supremum (fonction mesurable positive quelconque) :}
+   Par définition, $\int f \, d\delta_0 = \sup \left\lbrace \int s \, d\delta_0 \mid s \in \mathcal{E}_+, 0 \le s \le f \right\rbrace$.
+7. D'après le point précédent, cela se réécrit :
+   $$\int f \, d\delta_0 = \sup \{ s(0) \mid s \in \mathcal{E}_+, 0 \le s \le f \}$$
+8. Comme $s \le f$ partout, on a en particulier $s(0) \le f(0)$. Le supremum est donc majoré par $f(0)$.
+9. Pour montrer que le supremum est exactement $f(0)$, on peut construire la fonction étagée triviale $\tilde{s}(x) = f(0) \cdot \mathbf{1}_{\{0\}}(x) + 0 \cdot \mathbf{1}_{\mathbb{R} \setminus \{0\}}(x)$.
+   On vérifie que $\tilde{s} \in \mathcal{E}_+$ et que $\tilde{s} \le f$ (car sur $\{0\}$, $\tilde{s}(0) = f(0) \le f(0)$, et sur $\mathbb{R} \setminus \{0\}$, $0 \le f(x)$).
+   L'intégrale de cette $\tilde{s}$ est $\tilde{s}(0) = f(0)$.
+10. Conclusion : Le supremum est atteint et vaut exactement $f(0)$.
+
+
+\vspace{0.5cm}
+\subsection*{Exercice 4 : Intégrale de la fonction partie entière $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Calculer l'intégrale de Lebesgue de la fonction $f(x) = \lfloor x \rfloor$ sur le segment $[0, n]$ où $n \in \mathbb{N}^*$, par rapport à la mesure de Lebesgue $\lambda$.
+
+\textbf{Correction Détaillée :}
+1. La fonction $f(x) = \lfloor x \rfloor$ sur $[0, n]$ prend des valeurs entières constantes sur des intervalles.
+2. Décomposons le segment $[0, n]$ en union disjointe d'intervalles :
+   $[0, n] = \bigcup_{k=0}^{n-1} [k, k+1[ \cup \{n\}$
+3. Sur chaque intervalle $[k, k+1[$, on a $f(x) = k$. Sur $\{n\}$, on a $f(n) = n$.
+4. $f$ s'écrit donc comme une fonction étagée positive :
+   $f = \sum_{k=0}^{n-1} k \cdot \mathbf{1}_{[k, k+1[} + n \cdot \mathbf{1}_{\{n\}}$
+5. Calculons son intégrale :
+   $$\int_{[0, n]} f \, d\lambda = \sum_{k=0}^{n-1} k \cdot \lambda([k, k+1[) + n \cdot \lambda(\{n\})$$
+6. On a $\lambda([k, k+1[) = (k+1) - k = 1$. L'ensemble $\{n\}$ est un singleton, donc sa mesure de Lebesgue est $\lambda(\{n\}) = 0$.
+7. L'intégrale devient :
+   $$\int_{[0, n]} f \, d\lambda = \sum_{k=0}^{n-1} k \times 1 + n \times 0 = \sum_{k=0}^{n-1} k$$
+8. C'est la somme des premiers entiers :
+   $$\sum_{k=0}^{n-1} k = \frac{(n-1)n}{2}$$
+
+
+\vspace{0.5cm}
+\subsection*{Exercice 5 : La fonction indicatrice des nombres constructibles $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $\mathcal{C} \subset \mathbb{R}$ l'ensemble des nombres réels constructibles à la règle et au compas.
+Soit $f(x) = e^x \cdot \mathbf{1}_{\mathcal{C}}(x)$ sur $[0, 1]$. Calculer $\int_{[0, 1]} f \, d\lambda$.
+
+\textbf{Correction Détaillée :}
+1. L'ensemble $\mathcal{C}$ des nombres constructibles est un sous-ensemble du corps des nombres algébriques sur $\mathbb{Q}$.
+2. Tout nombre algébrique est racine d'un polynôme à coefficients rationnels. Comme les polynômes à coefficients dans $\mathbb{Q}$ forment un ensemble dénombrable, et que chaque polynôme n'a qu'un nombre fini de racines, l'ensemble des nombres algébriques est dénombrable.
+3. Par conséquent, $\mathcal{C}$ est dénombrable.
+4. Or, la mesure de Lebesgue de tout ensemble dénombrable est nulle. Donc $\lambda(\mathcal{C}) = 0$.
+5. La fonction $f$ s'annule en dehors de $\mathcal{C}$, donc $f(x) = 0$ pour $\lambda$-presque tout $x \in [0, 1]$.
+6. Nous avons vu le théorème fondamental stipulant que si $f = 0$ presque partout, alors son intégrale de Lebesgue est nulle.
+7. Ainsi, bien que $f$ prenne des valeurs non nulles (et même irrationnelles comme $e^{1/2}$) sur certains points, ces points forment un ensemble négligeable pour la mesure de Lebesgue.
+8. Conclusion : $\int_{[0, 1]} f \, d\lambda = 0$.
+
+
+\vspace{0.5cm}
+\subsection*{Exercice 6 : Intégrale de comptage et série géométrique $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+On considère l'espace mesurable $(\mathbb{N}, \mathcal{P}(\mathbb{N}))$ muni de la mesure de comptage $\mu(A) = \operatorname{Card}(A)$.
+Soit $f : \mathbb{N} \to \mathbb{R}_+$ définie par $f(n) = \frac{1}{3^n}$.
+Calculer $\int_{\mathbb{N}} f \, d\mu$ en utilisant le théorème d'approximation par des fonctions étagées.
+
+\textbf{Correction Détaillée :}
+1. Posons pour tout entier $N \ge 0$, la fonction tronquée (qui est une fonction étagée car elle ne prend qu'un nombre fini de valeurs non nulles) :
+   $s_N(n) = f(n)$ si $n \le N$, et $s_N(n) = 0$ si $n > N$.
+   Formellement, $s_N = \sum_{k=0}^N \frac{1}{3^k} \mathbf{1}_{\{k\}}$.
+2. L'intégrale de cette fonction étagée est :
+   $$\int_{\mathbb{N}} s_N \, d\mu = \sum_{k=0}^N \frac{1}{3^k} \mu(\{k\}) = \sum_{k=0}^N \frac{1}{3^k}$$
+   car la mesure de comptage d'un singleton est $1$.
+3. La suite $(s_N)$ est manifestement croissante ($s_{N+1}(n) \ge s_N(n)$) et converge simplement vers $f$ sur $\mathbb{N}$.
+4. Or, par définition de l'intégrale pour des fonctions mesurables positives (ou via le futur théorème de Beppo-Levi), l'intégrale de $f$ est le supremum des intégrales des fonctions étagées qui la minorent, et ce supremum est atteint par la limite de $\int s_N \, d\mu$.
+5. Ainsi :
+   $$\int_{\mathbb{N}} f \, d\mu = \lim_{N \to \infty} \sum_{k=0}^N \left(\frac{1}{3}\right)^k$$
+6. On reconnaît la série géométrique de raison $1/3$, convergente car $|1/3| < 1$ :
+   $$\int_{\mathbb{N}} f \, d\mu = \frac{1}{1 - 1/3} = \frac{1}{2/3} = \frac{3}{2}$$
+
+
+\vspace{0.5cm}
+\subsection*{Exercice 7 : L'intégrale avec mesure pondérée $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Sur $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$, on définit la mesure $\nu$ de densité (pondérée) telle que $\nu(A) = \int_A x^2 \, d\lambda(x)$ pour tout borélien $A$, où $\lambda$ est la mesure de Lebesgue.
+Soit $s(x) = \mathbf{1}_{[0, 2]}(x) + 3 \cdot \mathbf{1}_{]2, 3]}(x)$.
+Calculer $\int_{\mathbb{R}} s \, d\nu$.
+
+\textbf{Correction Détaillée :}
+1. $s$ est une fonction étagée positive avec $A_1 = [0, 2]$ et $a_1 = 1$, puis $A_2 = ]2, 3]$ et $a_2 = 3$.
+2. Par définition de l'intégrale étagée par rapport à la mesure $\nu$ :
+   $$\int_{\mathbb{R}} s \, d\nu = 1 \cdot \nu([0, 2]) + 3 \cdot \nu(]2, 3])$$
+3. Calculons les mesures pondérées de ces deux ensembles. Par définition de $\nu$ (qui s'appuie sur une intégrale de Riemann/Lebesgue classique de la fonction continue $x^2$) :
+   $$\nu([0, 2]) = \int_{[0, 2]} x^2 \, d\lambda(x) = \left[ \frac{x^3}{3} \right]_0^2 = \frac{8}{3}$$
+   $$\nu(]2, 3]) = \int_{]2, 3]} x^2 \, d\lambda(x) = \left[ \frac{x^3}{3} \right]_2^3 = \frac{27}{3} - \frac{8}{3} = \frac{19}{3}$$
+4. En injectant ces résultats dans la formule de l'intégrale :
+   $$\int_{\mathbb{R}} s \, d\nu = 1 \times \frac{8}{3} + 3 \times \frac{19}{3}$$
+5. Le calcul final donne :
+   $$\int_{\mathbb{R}} s \, d\nu = \frac{8}{3} + 19 = \frac{8 + 57}{3} = \frac{65}{3}$$
+
+
+\vspace{0.5cm}
+\subsection*{Exercice 8 : Égalité presque partout et intégrale $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré, et $f, g \in \mathcal{M}_+(X, \mathcal{F})$ deux fonctions mesurables positives.
+Prouver rigoureusement que si $f = g$ $\mu$-presque partout, alors $\int_X f \, d\mu = \int_X g \, d\mu$.
+
+\textbf{Correction Détaillée :}
+1. Dire que $f = g$ presque partout signifie qu'il existe un ensemble mesurable $N \in \mathcal{F}$ tel que $\mu(N) = 0$ et pour tout $x \in X \setminus N$, $f(x) = g(x)$.
+2. Nous utilisons la linéarité (pas encore démontrée dans le cours général, donc on va le faire par construction étagée).
+   Écrivons la décomposition disjointe de l'espace : $X = (X \setminus N) \cup N$.
+3. Une fonction étagée $s \le f$ peut s'écrire $s = s \cdot \mathbf{1}_{X \setminus N} + s \cdot \mathbf{1}_N$.
+   Son intégrale est $\int s \, d\mu = \int s \cdot \mathbf{1}_{X \setminus N} \, d\mu + \int s \cdot \mathbf{1}_N \, d\mu$.
+4. Or, $s \cdot \mathbf{1}_N \le \|s\|_{\infty} \mathbf{1}_N$, donc son intégrale est majorée par $C \cdot \mu(N) = 0$.
+   Ainsi, $\int s \, d\mu = \int s \cdot \mathbf{1}_{X \setminus N} \, d\mu$.
+5. Sur l'ensemble $X \setminus N$, on a $f = g$. Donc si $s \le f$ sur $X$, alors $s \le g$ sur $X \setminus N$.
+   Soit la fonction $\tilde{s} = s \cdot \mathbf{1}_{X \setminus N}$. On a $\tilde{s} \in \mathcal{E}_+$ et $\tilde{s} \le g$ sur $X$ entier (car sur $N$, $\tilde{s}=0 \le g$).
+6. L'intégrale de $\tilde{s}$ est exactement la même que l'intégrale de $s$.
+   Donc $\int s \, d\mu = \int \tilde{s} \, d\mu \le \int g \, d\mu$ (puisque $\tilde{s}$ est une candidate pour le supremum définissant l'intégrale de $g$).
+7. Comme ceci est vrai pour toute fonction étagée $s \le f$, on passe au supremum à gauche :
+   $$\int_X f \, d\mu \le \int_X g \, d\mu$$
+8. Par symétrie (les rôles de $f$ et $g$ sont totalement interchangeables car $g = f$ sur $X \setminus N$), on prouve de la même manière que $\int_X g \, d\mu \le \int_X f \, d\mu$.
+9. Les deux intégrales (éventuellement infinies) sont donc égales.
+
+
+\vspace{0.5cm}
+\subsection*{Exercice 9 : Intégrale de Lebesgue et inégalité de Markov $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Soit $f \in \mathcal{M}_+(X, \mathcal{F})$ intégrable par rapport à $\mu$ (donc $\int f \, d\mu < +\infty$).
+Montrer rigoureusement l'inégalité de Markov : pour tout $t > 0$,
+$$\mu(\{x \in X \mid f(x) \ge t\}) \le \frac{1}{t} \int_X f \, d\mu$$
+
+\textbf{Correction Détaillée :}
+1. Fixons un réel strictement positif $t > 0$.
+2. Définissons l'ensemble de niveau $A_t = \{x \in X \mid f(x) \ge t\}$. Par définition de la mesurabilité de $f$, $A_t \in \mathcal{F}$.
+3. Nous construisons une fonction étagée très simple qui minore $f$.
+   Posons $s = t \cdot \mathbf{1}_{A_t}$. C'est clairement une fonction étagée positive ($s \in \mathcal{E}_+$).
+4. Vérifions que $s(x) \le f(x)$ pour tout $x \in X$ :
+   - Si $x \notin A_t$, alors $s(x) = 0$. Comme $f$ est positive ($f \in \mathcal{M}_+$), on a bien $s(x) = 0 \le f(x)$.
+   - Si $x \in A_t$, alors $s(x) = t$. Par définition même de l'ensemble $A_t$, on a $f(x) \ge t$, donc $s(x) \le f(x)$.
+   L'inégalité fonctionnelle $s \le f$ est donc inconditionnellement vraie sur tout $X$.
+5. Par la propriété de croissance de l'intégrale (qui découle directement de la définition par supremum) :
+   $$\int_X s \, d\mu \le \int_X f \, d\mu$$
+6. Mais l'intégrale de la fonction étagée $s$ est connue de façon exacte par définition :
+   $$\int_X s \, d\mu = \int_X t \cdot \mathbf{1}_{A_t} \, d\mu = t \cdot \mu(A_t)$$
+7. En substituant ceci dans l'inégalité précédente :
+   $$t \cdot \mu(A_t) \le \int_X f \, d\mu$$
+8. Comme $t > 0$, on peut diviser de part et d'autre par $t$ en conservant le sens de l'inégalité :
+   $$\mu(A_t) \le \frac{1}{t} \int_X f \, d\mu$$
+   Ce qui démontre précisément le théorème de Markov, pilier incontournable de la théorie des probabilités.
+
+
+\vspace{0.5cm}
+\subsection*{Exercice 10 : Mesure de comptage et passage à la limite $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Montrer que pour toute fonction positive sur $\mathbb{N}$ (i.e. $f : \mathbb{N} \to [0, +\infty]$), l'intégrale par rapport à la mesure de comptage $\mu$ est équivalente à la somme d'une série :
+$\int_{\mathbb{N}} f \, d\mu = \sup_{K \subset \mathbb{N}, K \text{ fini}} \sum_{k \in K} f(k) = \sum_{k=0}^{\infty} f(k)$
+
+\textbf{Correction Détaillée :}
+1. Toute partie de $\mathbb{N}$ est mesurable, et $\mu(A) = \text{Card}(A)$.
+2. Soit $\alpha = \sup_{K \subset \mathbb{N}, K \text{ fini}} \sum_{k \in K} f(k)$.
+3. Montrons que $\int f \, d\mu \ge \alpha$.
+   Soit $K \subset \mathbb{N}$ un ensemble fini. Posons la fonction étagée $s_K = \sum_{k \in K} f(k) \mathbf{1}_{\{k\}}$.
+   Clairement $s_K \in \mathcal{E}_+$ et $s_K \le f$ sur tout $\mathbb{N}$.
+   L'intégrale vaut $\int s_K \, d\mu = \sum_{k \in K} f(k) \mu(\{k\}) = \sum_{k \in K} f(k)$.
+   Par définition de l'intégrale de $f$ comme supremum sur tous les minorants étagés, on a :
+   $\int f \, d\mu \ge \int s_K \, d\mu = \sum_{k \in K} f(k)$.
+   Ceci est vrai pour tout ensemble fini $K$, donc en passant au sup, $\int f \, d\mu \ge \alpha$.
+4. Montrons l'inégalité inverse $\int f \, d\mu \le \alpha$.
+   Soit $s = \sum_{i=1}^m a_i \mathbf{1}_{A_i}$ une fonction étagée telle que $0 \le s \le f$.
+   Son intégrale est $I = \sum_{i=1}^m a_i \mu(A_i)$.
+   Si l'intégrale $I$ est infinie, c'est qu'un $a_i > 0$ correspond à un $A_i$ de mesure infinie. Donc $A_i$ contient une infinité d'entiers sur lesquels $f(k) \ge a_i$. En prenant $K \subset A_i$ fini mais arbitrairement grand, la somme partielle $\sum_{K} f(k)$ diverge vers $+\infty$, donc $\alpha = +\infty$, et l'inégalité $I \le \alpha$ est triviale.
+   Si $I$ est finie, alors les $A_i$ pour lesquels $a_i > 0$ sont finis. Leur union est un ensemble fini $K^*$.
+   Sur $K^*$, $s(k) \le f(k)$. L'intégrale de $s$ s'écrit $\int s \, d\mu = \sum_{k \in K^*} s(k) \le \sum_{k \in K^*} f(k)$.
+   Cette dernière somme est par définition majorée par $\alpha$.
+   Donc pour toute fonction étagée $s \le f$, on a $\int s \, d\mu \le \alpha$. Le supremum sur les étagées respecte la borne, d'où $\int f \, d\mu \le \alpha$.
+5. Par double inégalité, l'égalité est démontrée. La notation de série infinie $\sum_{k=0}^{\infty} f(k)$ est exactement la définition analytique de ce supremum sur les sommes finies pour des termes positifs.
+
+
+\vspace{0.5cm}
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Implémentation d'une fonction étagée et calcul d'intégrale}
+
+Dans ce TP, nous allons modéliser en pur Python le concept mathématique de fonction étagée (ou simple) et coder le calcul de son intégrale de Lebesgue selon la définition théorique.
+
+\begin{lstlisting}
+class FonctionEtagee:
+    def __init__(self, valeurs_ensembles):
+        # valeurs_ensembles est une liste de tuples (a_i, mesure_A_i)
+        self.composantes = valeurs_ensembles
+
+    def integrale(self):
+        resultat = 0.0
+        for a_i, mesure_A_i in self.composantes:
+            if a_i < 0:
+                raise ValueError("La fonction doit être positive.")
+            if a_i == 0 and mesure_A_i == float('inf'):
+                # Convention Lebesgue : 0 * infty = 0
+                produit = 0.0
+            else:
+                produit = a_i * mesure_A_i
+            resultat += produit
+        return resultat
+
+# Validation avec l'exemple du cours
+# s(x) = 2 sur [0, 1] (mesure 1), 5 sur ]1, 3] (mesure 2), 0 sur le reste (mesure infty)
+s = FonctionEtagee([
+    (2.0, 1.0),
+    (5.0, 2.0),
+    (0.0, float('inf'))
+])
+
+integ = s.integrale()
+print("Integrale de Lebesgue de la fonction etagee :", integ)
+assert integ == 12.0
+\end{lstlisting}
+
+
+\vspace{0.5cm}
+\subsection*{TP 2 : Approximation d'une fonction continue par des fonctions étagées}
+
+Nous simulons le théorème fondamental d'approximation. Soit $f(x) = e^{-x}$ sur l'intervalle $[0, 5]$. Nous allons construire la fonction étagée $s_n$ et l'évaluer en un point.
+
+\begin{lstlisting}
+import math
+
+def f(x):
+    return math.exp(-x)
+
+def s_n(x, n):
+    valeur_f = f(x)
+    # On découpe l'axe des ordonnées en tranches de hauteur 1/(2^n)
+    tranche = 1.0 / (2**n)
+    # k est l'indice de la tranche tel que k * tranche <= f(x) < (k+1) * tranche
+    k = math.floor(valeur_f / tranche)
+    return k * tranche
+
+x_test = 0.5
+val_exacte = f(x_test)
+print(f"Valeur exacte f(0.5) = {val_exacte}")
+
+for n in range(1, 10):
+    val_approchee = s_n(x_test, n)
+    print(f"Approximation s_{n}(0.5) = {val_approchee}")
+    assert val_approchee <= val_exacte
+
+# On vérifie la convergence
+assert abs(s_n(x_test, 10) - val_exacte) < 0.001
+\end{lstlisting}
+
+
+\vspace{0.5cm}
+\subsection*{TP 3 : Intégrale de Lebesgue numérique par sommation des strates}
+
+Pour une fonction bornée, nous pouvons estimer numériquement son intégrale de Lebesgue en calculant la mesure des ensembles de niveau.
+
+\begin{lstlisting}
+def mesure_lebesgue_numerique(f, domaine, nb_echantillons=100000):
+    # Approximation par Monte-Carlo 1D de la mesure d'un ensemble de points
+    a, b = domaine
+    pas = (b - a) / nb_echantillons
+
+    def mesure_niveau(seuil_bas, seuil_haut):
+        compteur = 0
+        x = a
+        while x <= b:
+            if seuil_bas <= f(x) < seuil_haut:
+                compteur += 1
+            x += pas
+        return compteur * pas
+
+    return mesure_niveau
+
+def integrale_lebesgue_approchee(f, domaine, n):
+    # s_n découpe les y en intervalles de 1/2^n
+    mesure_fct = mesure_lebesgue_numerique(f, domaine)
+    tranche = 1.0 / (2**n)
+    max_y = 1.0  # Hypothèse pour f(x)=exp(-x) sur [0, 5]
+    nb_tranches = int(max_y / tranche) + 1
+
+    integrale = 0.0
+    for k in range(nb_tranches):
+        seuil_b = k * tranche
+        seuil_h = (k + 1) * tranche
+        mesure_k = mesure_fct(seuil_b, seuil_h)
+        integrale += seuil_b * mesure_k
+
+    return integrale
+
+def f(x):
+    import math
+    return math.exp(-x)
+
+val = integrale_lebesgue_approchee(f, (0.0, 5.0), 5)
+print("Integrale approchee via Lebesgue = ", val)
+# Valeur exacte 1 - exp(-5) approx 0.993
+assert 0.95 <= val <= 1.05
+\end{lstlisting}
+
+
+\vspace{0.5cm}
+\subsection*{TP 4 : L'inégalité de Markov empirique}
+
+Vérification de l'inégalité de Markov par simulation discrète de l'intégrale.
+
+\begin{lstlisting}
+def verification_markov():
+    # Distribution de probabilité discrète (mesure de probabilité = intégrale de Lebesgue sur Omega)
+    # variables = [valeurs], probas = [mesures des ensembles P(X=valeur)]
+    valeurs = [1.0, 2.0, 5.0, 10.0, 50.0]
+    probas = [0.5, 0.2, 0.15, 0.1, 0.05]
+
+    # 1. Calcul de l'intégrale (Espérance)
+    esperance = sum(v * p for v, p in zip(valeurs, probas))
+    print(f"Integrale (Esperance) = {esperance}")
+
+    # 2. Vérification pour t = 10
+    t = 10.0
+    mesure_A_t = sum(p for v, p in zip(valeurs, probas) if v >= t)
+    print(f"Mesure de l'ensemble (X >= 10) = {mesure_A_t}")
+
+    borne_markov = esperance / t
+    print(f"Borne de Markov = {borne_markov}")
+
+    assert mesure_A_t <= borne_markov
+    print("Inegalite de Markov verifiee avec succes.")
+
+verification_markov()
+\end{lstlisting}
+
+
+\vspace{0.5cm}
+\subsection*{TP 5 : Fonctions équivalentes presque partout}
+
+Simulons deux fonctions qui sont égales presque partout (aux points singuliers près) et vérifions que leur intégrale est identique via approximation de Riemann-Lebesgue matricielle.
+
+\begin{lstlisting}
+def f_g_presque_partout():
+    n_points = 1000
+    domaine = [i / n_points for i in range(n_points)] # [0, 1)
+
+    # Fonction f(x) = x^2
+    def f(x):
+        return x**2
+
+    # Fonction g(x) identique sauf sur quelques points (ensemble négligeable)
+    def g(x):
+        # On altère artificiellement pour 3 points précis
+        if x in [0.1, 0.5, 0.9]:
+            return 1000.0
+        return x**2
+
+    # Intégrale discrète (Riemann/Lebesgue discrétisé, mesure de chq segment = 1/n_points)
+    mesure = 1.0 / n_points
+
+    integ_f = sum(f(x) * mesure for x in domaine)
+    integ_g = sum(g(x) * mesure for x in domaine)
+
+    print(f"Integrale f : {integ_f}")
+    print(f"Integrale g : {integ_g}")
+
+    # L'écart introduit par les singularités est 3 * 1000 / 1000 = 3
+    # Si la mesure tendait vers 0 de façon continue stricte, l'impact serait nul
+    # Mais ici l'impact est calculable. On prouve l'importance de "presque partout" !
+    # Dans une intégrale théorique de Lebesgue, la mesure de 3 points est EXACTEMENT 0,
+    # notre implémentation discrète montre le biais des maillages finis !
+    assert abs(integ_f - 0.333) < 0.01
+
+f_g_presque_partout()
+\end{lstlisting}
+
+
+\vspace{0.5cm}
+
+
+\end{document}

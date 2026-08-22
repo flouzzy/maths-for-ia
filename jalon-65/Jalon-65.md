@@ -7,7 +7,7 @@ tags:
   - math/mesure
   - ia/abstraction
 prev: "[[Jalon 64 (Construction pas à pas de la mesure de Lebesgue sur Rn via la mesure extérieure.).md]]"
-next: "[[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.).md]]"
+next: "[[Jalon-66.md]]"
 ---
 
 # Jalon 65 : Fonctions mesurables
