@@ -1,0 +1,538 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{\'e}1 {è}{\`e}1 {à}{\`a}1 {ê}{\^e}1 {î}{\^i}1 {ç}{\c{c}}1 {ï}{\"i}1 {É}{\'E}1
+}
+
+\title{\Huge CONSTRUCTION DE L'INTÉGRALE DE LEBESGUE POUR LES FONCTIONS MESURABLES POSITIVES \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+
+
+
+\section{Introduction}
+
+L'intégrale de Riemann, bien que fondamentalement intuitive, souffre de limitations sévères liées aux passages à la limite et à l'intégration de fonctions fortement discontinues. L'approche de Lebesgue repose sur une construction diamétralement opposée : plutôt que de subdiviser le domaine de départ, on partitionne l'espace d'arrivée. Cette méthode, fondée sur la théorie de la mesure, permet d'intégrer des fonctions complexes en les approchant par des fonctions dites "étagées" (ou simples). La construction est descendante et garantit une robustesse analytique exceptionnelle, généralisant le concept d'aire ou d'espérance.
+
+\section{Définitions, Théorèmes \& Exemples Concrets}
+
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
+
+\subsection{Intégrale des Fonctions Simples}
+
+Soit $\mathcal{S}_+$ l'ensemble des fonctions simples (étagées) positives sur $X$.
+Une fonction $s \in \mathcal{S}_+$ s'écrit $s = \sum_{i=1}^n a_i \mathbf{1}_{A_i}$ avec $a_i \ge 0$.
+
+> \textbf{Définition 1 :} L'intégrale de la fonction simple $s$ par rapport à $\mu$ est :
+> $$\int_X s d\mu = \sum_{i=1}^n a_i \mu(A_i)$$
+> (On utilise la convention $0 \cdot \infty = 0$).
+
+\subsection{Intégrale des Fonctions Mesurables Positives}
+
+Soit $\mathcal{M}_+$ l'ensemble des fonctions mesurables de $X$ dans $[0, +\infty]$.
+
+> \textbf{Définition 2 (Intégrale de Lebesgue) :}
+> Pour tout $f \in \mathcal{M}_+$, on définit :
+> $$\int_X f d\mu = \sup \left\lbrace \int_X s d\mu \mid s \in \mathcal{S}_+, 0 \le s \le f \right\rbrace$$
+> Cette valeur appartient à $[0, +\infty]$. Si elle est finie, on dit que $f$ est \textbf{intégrable}.
+
+
+\textbf{Exemple Concret 1 : Fonction de Dirichlet}
+Soit $f = \mathbf{1}_{\mathbb{Q} \cap [0,1]}$. C'est une fonction simple (elle ne prend que les valeurs 0 et 1).
+Son intégrale est $1 \cdot \\mu(\mathbb{Q} \cap [0,1]) + 0 \cdot \\mu([0,1] \setminus \mathbb{Q}) = 1 \cdot 0 + 0 \cdot 1 = 0$.
+
+\textbf{Exemple Concret 2 : Fonction de Heaviside}
+Soit $H(x) = 1$ si $x \ge 0$, et $0$ si $x < 0$. $H \in \mathcal{M}_+$.
+Sur l'espace $(\mathbb{R}, \mathcal{B}(\mathbb{R}), \lambda)$, l'intégrale de $H$ sur $[-1, 1]$ est $\int_{[-1,1]} H d\lambda = \lambda([0,1]) = 1$.
+
+\textbf{Exemple Concret 3 : Limite de fonctions simples}
+Soit $f(x) = x$ sur $[0,1]$. On peut approcher $f$ par la suite de fonctions simples $s_n(x) = \sum_{k=0}^{n-1} \frac{k}{n} \mathbf{1}_{[\frac{k}{n}, \frac{k+1}{n})}(x)$.
+Alors $\int_{[0,1]} s_n d\lambda = \sum_{k=0}^{n-1} \frac{k}{n} \cdot \frac{1}{n} = \frac{1}{n^2} \frac{(n-1)n}{2} = \frac{n-1}{2n}$.
+La limite quand $n \to \infty$ est $\frac{1}{2}$. Par le théorème de convergence monotone, $\int_0^1 x d\lambda = \frac{1}{2}$.
+
+\textbf{Exemple Concret 4 : Intégrale infinie}
+Soit $f(x) = \frac{1}{\sqrt{x}} \mathbf{1}_{(0,1]}(x)$. $f \in \mathcal{M}_+$.
+On peut utiliser le TCM avec $f_n(x) = f(x) \mathbf{1}_{[\frac{1}{n}, 1]}(x)$. L'intégrale de Riemann de $f_n$ est $2(1 - \frac{1}{\sqrt{n}}) \to 2$. L'intégrale de Lebesgue est 2.
+
+\textbf{Exemple Concret 5 : Un atome}
+Soit $\delta_0$ la mesure de Dirac en $0$. Pour toute fonction $f \in \mathcal{M}_+$, l'intégrale est $\int f d\delta_0 = f(0)$.
+
+
+\begin{tikzpicture}[scale=1.5]
+  % Axes
+  \draw[->] (-0.5,0) -- (5,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,3) node[above] {$f(x)$};
+
+  % Courbe de f
+  \draw[thick, blue] (0,0.5) .. controls (1,1.5) and (3,0.5) .. (4.5,2.5) node[right] {$f$};
+
+  % Fonction etagée s <= f
+  \fill[red!20, opacity=0.5] (0,0) rectangle (1.5,0.5);
+  \draw[red, thick] (0,0.5) -- (1.5,0.5);
+  \draw[dashed] (1.5,0) -- (1.5,0.5);
+
+  \fill[red!20, opacity=0.5] (1.5,0) rectangle (2.5,1.0);
+  \draw[red, thick] (1.5,1.0) -- (2.5,1.0);
+  \draw[dashed] (1.5,0.5) -- (1.5,1.0);
+  \draw[dashed] (2.5,0) -- (2.5,1.0);
+
+  \fill[red!20, opacity=0.5] (2.5,0) rectangle (4,0.8);
+  \draw[red, thick] (2.5,0.8) -- (4,0.8);
+  \draw[dashed] (2.5,1.0) -- (2.5,0.8);
+  \draw[dashed] (4,0) -- (4,0.8);
+
+  % Annotations
+  \node at (0.75, 0.25) {$a_1$};
+  \node at (2, 0.5) {$a_2$};
+  \node at (3.25, 0.4) {$a_3$};
+\end{tikzpicture}
+
+
+\subsection{Propriétés Immédiates}
+
+> \textbf{Théorème :}
+> 1. \textbf{Positivité :} $\int f d\mu \ge 0$.
+> 2. \textbf{Croissance :} Si $f \le g$, alors $\int f \le \int g$.
+> 3. \textbf{Homogénéité :} $\int \alpha f d\mu = \alpha \int f d\mu$ pour $\alpha \ge 0$.
+
+\section{Démonstrations}
+
+\subsection{Démonstration : Relation entre intégrale et ensembles de mesure nulle}
+
+Montrons que si $f \in \mathcal{M}_+$ et $\int f d\mu = 0$, alors $f = 0$ presque partout (c'est-à-dire $\mu(\{x \mid f(x) > 0\}) = 0$).
+
+1. \textbf{Cadre :} Soit $A = \{x \in X \mid f(x) > 0\}$. On veut montrer $\mu(A) = 0$.
+2. \textbf{Décomposition de l'ensemble :} Posons $A_n = \{x \in X \mid f(x) \ge 1/n\}$ pour $n \in \mathbb{N}^*$.
+   Alors $A = \bigcup_{n=1}^\infty A_n$.
+3. \textbf{Inégalité sur chaque morceau :} On remarque que $f \ge \frac{1}{n} \mathbf{1}_{A_n}$.
+   Par croissance de l'intégrale :
+   $$\int_X f d\mu \ge \int_X \frac{1}{n} \mathbf{1}_{A_n} d\mu = \frac{1}{n} \mu(A_n)$$
+4. \textbf{Utilisation de l'hypothèse :} Comme $\int f d\mu = 0$, alors pour tout $n$, $\frac{1}{n} \mu(A_n) = 0$, donc $\mu(A_n) = 0$.
+5. \textbf{Conclusion :} Par $\sigma$-sous-additivité de la mesure :
+   $$\mu(A) = \mu\left( \bigcup_{n=1}^\infty A_n \right) \le \sum_{n=1}^\infty \mu(A_n) = 0$$
+   Donc $f$ est nulle presque partout.
+
+\section{Applications}
+
+\subsection{Exercice 1 : Intégrale de la fonction de Dirichlet}
+\textbf{Énoncé :} Calculer l'intégrale de Lebesgue de $f = \mathbf{1}_\mathbb{Q}$ sur $[0, 1]$ pour la mesure de Lebesgue $\lambda$.
+\textbf{Correction Détaillée :}
+1. $f$ est une fonction simple car elle ne prend que les valeurs 0 et 1.
+2. Par définition : $\int_{[0,1]} f d\lambda = 1 \cdot \lambda(\mathbb{Q}) + 0 \cdot \lambda([0,1] \setminus \mathbb{Q})$.
+3. On sait que $\lambda(\mathbb{Q}) = 0$ (Jalon 64).
+4. Donc $\int f d\lambda = 1 \cdot 0 + 0 = 0$.
+\textbf{Remarque :} Lebesgue réussit là où Riemann échouait (Jalon 61).
+
+\subsection{Exercice 2 : Niveau Avancé (Mesure de comptage)}
+\textbf{Énoncé :} Soit $\mu$ la mesure de comptage sur $\mathbb{N}$ ($\mu(A) = \text{card}(A)$). Que vaut $\int_{\mathbb{N}} f d\mu$ pour une fonction $f : \mathbb{N} \to \mathbb{R}_+$ ?
+\textbf{Correction Détaillée :}
+Toute fonction sur $\mathbb{N}$ est limite de fonctions simples (sommes finies). L'intégrale de Lebesgue par rapport à la mesure de comptage est exactement la somme de la série :
+$$\int_{\mathbb{N}} f d\mu = \sum_{n=0}^\infty f(n)$$
+La théorie de Lebesgue unifie donc le calcul intégral et le calcul des séries.
+
+\subsection{Applications en IA}
+
+ L'intégrale de Lebesgue permet de définir l'\textbf{Espérance mathématique} de manière universelle, que la variable soit discrète, continue ou mixte. $\mathbb{E}[X] = \int_\Omega X(\omega) dP(\omega)$.
+
+    - \textbf{Calcul de la Perte Attendue (Expected Loss) :} En IA, on minimise $L(\theta) = \int \ell(x, y, \theta) d\mathbb{P}(x, y)$. La mesure $\mathbb{P}$ représente nos données. Lebesgue nous permet de calculer cette intégrale même si nos données sont un mélange de catégories (discret) et de mesures physiques (continu).
+    - \textbf{Mesures de similarité entre distributions :} La divergence de Jensen-Shannon ou la divergence KL sont définies par des intégrales de Lebesgue. Ces mesures sont le cœur des modèles génératifs et du clustering.
+    - \textbf{Filtrage de Kalman :} La mise à jour des croyances dans un système dynamique repose sur l'intégration de fonctions de vraisemblance, souvent sur des espaces de grande dimension.
+
+\section{Liens Sémantiques}
+
+\begin{itemize}
+  \item \textbf{Concepts Précédents requis :} [[Jalon 65 (Fonctions mesurables).md]], [[Jalon 63 (Définition axiomatique d'une mesure).md]]
+  \item \textbf{Concepts Futurs dépendants :} [[Jalon 67 (Démonstration du théorème de convergence monotone).md]], [[Jalon 73 (Définition des espaces Lp).md]]
+\end{itemize}
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+
+\subsection*{Exercice 1 : Intégrabilité et mesure nulle $\quad \bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Montrer que si $f, g \in \mathcal{M}_+$ et $f \le g$ presque partout, alors $\int f d\mu \le \int g d\mu$.
+
+\textbf{Correction :}
+Soit $N = \{x \in X \mid f(x) > g(x)\}$. Par hypothèse, $\mu(N) = 0$.
+Soit $s \in \mathcal{S}_+$ telle que $s \le f$.
+Définissons $s' = s \mathbf{1}_{X \setminus N}$. Puisque $\mu(N) = 0$, on a $\int s d\mu = \int s' d\mu$.
+Sur $X \setminus N$, $s' \le f \le g$. Donc $s'$ est une fonction simple minorant $g$ presque partout.
+On peut construire une fonction simple $\tilde{s} \le g$ partout telle que $\int \tilde{s} d\mu = \int s d\mu$.
+Par définition du supremum, $\int s d\mu \le \int g d\mu$.
+En prenant le supremum sur toutes les fonctions simples $s \le f$, on obtient $\int f d\mu \le \int g d\mu$.
+
+
+\subsection*{Exercice 2 : Convergence de l'intégrale $\quad \bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Soit $f_n = n \mathbf{1}_{(0, 1/n)}$ sur $\mathbb{R}$ avec la mesure de Lebesgue $\lambda$.
+Calculer $\int f_n d\lambda$ et $\int \liminf f_n d\lambda$.
+
+\textbf{Correction :}
+Pour tout $n \ge 1$, $f_n$ est une fonction simple.
+Son intégrale est $\int f_n d\lambda = n \cdot \lambda((0, 1/n)) = n \cdot \frac{1}{n} = 1$.
+Fixons $x \in \mathbb{R}$. Si $x \le 0$, $f_n(x) = 0$ pour tout $n$.
+Si $x > 0$, alors pour $n > 1/x$, on a $x \notin (0, 1/n)$, donc $f_n(x) = 0$.
+Ainsi, pour tout $x$, $f_n(x) \to 0$ quand $n \to \infty$.
+Donc $f = \liminf f_n = 0$ (et $\lim f_n = 0$).
+L'intégrale de $f$ est $\int 0 d\lambda = 0$.
+On a bien $\int \liminf f_n \le \liminf \int f_n$, c'est-à-dire $0 \le 1$ (Lemme de Fatou strict).
+
+
+\subsection*{Exercice 3 : Mesure de densité $\quad \bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré et $f \in \mathcal{M}_+$.
+Pour tout $A \in \mathcal{F}$, on pose $\nu(A) = \int_A f d\mu = \int_X f \mathbf{1}_A d\mu$.
+Montrer que $\nu$ est une mesure sur $\mathcal{F}$.
+
+\textbf{Correction :}
+1. $\nu(\emptyset) = \int f \mathbf{1}_{\emptyset} d\mu = \int 0 d\mu = 0$.
+2. Soit $(A_n)_{n \in \mathbb{N}}$ une suite d'ensembles mesurables deux à deux disjoints. Posons $A = \bigcup_{n=0}^\infty A_n$.
+On a $\mathbf{1}_A = \sum_{n=0}^\infty \mathbf{1}_{A_n}$.
+Considérons les sommes partielles $g_k = \sum_{n=0}^k f \mathbf{1}_{A_n}$.
+La suite $(g_k)$ est une suite croissante de fonctions mesurables positives, et elle converge simplement vers $g = f \mathbf{1}_A$.
+D'après le théorème de convergence monotone, $\int g d\mu = \lim_{k \to \infty} \int g_k d\mu$.
+Or, par linéarité, $\int g_k d\mu = \sum_{n=0}^k \int f \mathbf{1}_{A_n} d\mu = \sum_{n=0}^k \nu(A_n)$.
+Donc $\nu(A) = \lim_{k \to \infty} \sum_{n=0}^k \nu(A_n) = \sum_{n=0}^\infty \nu(A_n)$.
+Ainsi, $\nu$ est bien une mesure (sigma-additive).
+
+
+\subsection*{Exercice 4 : Fonctions bornées sur mesure finie $\quad \bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Soit $\mu(X) < \infty$. Montrer que si $f \in \mathcal{M}_+$ est bornée, alors $\int f d\mu < \infty$.
+
+\textbf{Correction :}
+Supposons que $f$ est bornée par une constante $M > 0$. Ainsi, pour tout $x \in X$, $0 \le f(x) \le M$.
+On a donc $f \le M \mathbf{1}_X$.
+Par la propriété de croissance de l'intégrale (démontrée pour les fonctions simples puis étendue) :
+$\int f d\mu \le \int M \mathbf{1}_X d\mu = M \mu(X)$.
+Comme $\mu(X) < \infty$, l'intégrale de $f$ est majorée par une valeur finie.
+Donc $\int f d\mu < \infty$.
+
+
+\subsection*{Exercice 5 : Inégalité de Markov $\quad \bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $f \in \mathcal{M}_+$. Montrer que pour tout $t > 0$, $\mu(\{x \in X \mid f(x) \ge t\}) \le \frac{1}{t} \int f d\mu$.
+
+\textbf{Correction :}
+Soit $A_t = \{x \in X \mid f(x) \ge t\}$. L'ensemble $A_t$ est mesurable car $f$ l'est.
+Remarquons que $f \ge t \mathbf{1}_{A_t}$ partout sur $X$.
+En effet, si $x \in A_t$, $f(x) \ge t = t \cdot 1$. Si $x \notin A_t$, $f(x) \ge 0 = t \cdot 0$.
+Par croissance de l'intégrale :
+$\int f d\mu \ge \int t \mathbf{1}_{A_t} d\mu = t \mu(A_t)$.
+En divisant par $t > 0$, on obtient bien l'inégalité de Markov : $\mu(A_t) \le \frac{1}{t} \int f d\mu$.
+
+
+\subsection*{Exercice 6 : Lemme de Fatou - Preuve $\quad \bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $(f_n)$ une suite dans $\mathcal{M}_+$. Montrer le lemme de Fatou: $\int \liminf f_n d\mu \le \liminf \int f_n d\mu$.
+
+\textbf{Correction :}
+Posons $g_k = \inf_{n \ge k} f_n$. Par définition, $(g_k)$ est une suite croissante de fonctions mesurables positives.
+Et $\lim_{k \to \infty} g_k = \liminf f_n$.
+D'après le théorème de convergence monotone, $\int \liminf f_n d\mu = \lim_{k \to \infty} \int g_k d\mu$.
+Or, pour tout $n \ge k$, $g_k \le f_n$, donc $\int g_k d\mu \le \int f_n d\mu$.
+Par conséquent, $\int g_k d\mu \le \inf_{n \ge k} \int f_n d\mu$.
+En passant à la limite quand $k \to \infty$ :
+$\lim_{k \to \infty} \int g_k d\mu \le \lim_{k \to \infty} \inf_{n \ge k} \int f_n d\mu = \liminf \int f_n d\mu$.
+Ce qui conclut la preuve.
+
+
+\subsection*{Exercice 7 : Continuité des translations $\quad \bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Pour $f \in L^1(\mathbb{R}, \lambda)$ positive, montrer que $\lim_{h \to 0} \int |f(x+h) - f(x)| d\lambda = 0$.
+
+\textbf{Correction :}
+Le résultat est d'abord vrai pour les fonctions continues à support compact $C_c(\mathbb{R})$.
+Soit $f \in C_c(\mathbb{R})$. Elle est uniformément continue, donc $\sup_x |f(x+h) - f(x)| \to 0$.
+Comme le support est contenu dans un segment compact $K$, pour $h$ assez petit, les supports de $x \mapsto f(x+h)$ restent dans un compact un peu plus grand $K'$.
+Ainsi, $\int |f(x+h) - f(x)| d\lambda \le \lambda(K') \sup_x |f(x+h) - f(x)| \to 0$.
+Pour $f \in L^1(\mathbb{R})$ quelconque, on utilise la densité de $C_c(\mathbb{R})$ dans $L^1$.
+Soit $\epsilon > 0$. Il existe $g \in C_c(\mathbb{R})$ telle que $\|f-g\|_1 < \epsilon / 3$.
+Alors $\int |f(x+h) - f(x)| \le \int |f(x+h) - g(x+h)| + \int |g(x+h) - g(x)| + \int |g(x) - f(x)|$.
+Le premier terme est par changement de variable $\|f-g\|_1 < \epsilon/3$. Le dernier aussi.
+Le terme du milieu tend vers 0, donc est $< \epsilon/3$ pour $h$ petit. Le tout est $< \epsilon$.
+
+
+\subsection*{Exercice 8 : Produit de Lebesgue $\quad \bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Soit $f \in \mathcal{M}_+(\mathbb{R})$ t.q. $\int f d\lambda < \infty$. La fonction $F(x) = \int_{(-\infty, x]} f d\lambda$ est-elle absolument continue ?
+
+\textbf{Correction :}
+Oui. L'absolue continuité requiert que pour tout $\epsilon > 0$, il existe $\delta > 0$ tel que pour toute famille finie d'intervalles disjoints $(a_i, b_i)$ de somme des longueurs $\sum (b_i - a_i) < \delta$, on ait $\sum |F(b_i) - F(a_i)| < \epsilon$.
+Or $F(b_i) - F(a_i) = \int_{(a_i, b_i]} f d\lambda$.
+Ainsi, $\sum (F(b_i) - F(a_i)) = \int_A f d\lambda$, où $A = \bigcup (a_i, b_i]$.
+Il faut donc montrer que si $\lambda(A) < \delta$, $\int_A f d\lambda < \epsilon$.
+Par convergence dominée (ou propriétés des mesures), comme $\int f < \infty$, on peut tronquer $f$ : posons $f_n = \min(f, n)$.
+$\int f_n \to \int f$, donc on choisit $n$ tel que $\int (f - f_n) < \epsilon/2$.
+Ensuite, $\int_A f \le \int_A (f - f_n) + \int_A f_n \le \epsilon/2 + n \lambda(A)$.
+Il suffit de prendre $\delta = \frac{\epsilon}{2n}$ pour conclure.
+
+
+\subsection*{Exercice 9 : Équirépartition et limite $\quad \bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Calculer $\lim_{n \to \infty} \int_0^\infty e^{-x} \sin^2(nx) dx$.
+
+\textbf{Correction :}
+La fonction $f_n(x) = e^{-x} \sin^2(nx)$ est intégrable.
+On peut linéariser : $\sin^2(nx) = \frac{1 - \cos(2nx)}{2}$.
+Donc $\int_0^\infty e^{-x} \sin^2(nx) dx = \frac{1}{2} \int_0^\infty e^{-x} dx - \frac{1}{2} \int_0^\infty e^{-x} \cos(2nx) dx$.
+La première intégrale vaut $1/2$.
+Pour la seconde, utilisons deux IPP ou les complexes : $\int e^{-x} e^{i2nx} dx = \int e^{(-1+i2n)x} dx$.
+La primitive est $\frac{e^{(-1+i2n)x}}{-1+i2n}$. Entre $0$ et $\infty$, cela donne $\frac{-1}{-1+i2n} = \frac{1}{1-i2n} = \frac{1+i2n}{1+4n^2}$.
+La partie réelle est $\frac{1}{1+4n^2}$.
+L'intégrale vaut $\frac{1}{2} - \frac{1}{2(1+4n^2)}$.
+La limite quand $n \to \infty$ est $\frac{1}{2}$.
+
+
+\subsection*{Exercice 10 : Mesure sans atomes $\quad \bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Si $\mu$ est une mesure de probabilité sans atomes sur $\mathbb{R}$, montrer que la fonction de répartition $F(x) = \mu((-\infty, x])$ est continue.
+
+\textbf{Correction :}
+La fonction de répartition est toujours croissante et continue à droite (par continuité décroissante des mesures).
+Étudions la limite à gauche en un point $a$.
+Soit $x_n \to a$ avec $x_n < a$.
+Les ensembles $A_n = (-\infty, x_n]$ sont croissants. L'union des $A_n$ est $(-\infty, a)$.
+Par continuité croissante de la mesure, $\lim_{n \to \infty} \mu(A_n) = \mu((-\infty, a))$.
+Donc $F(a^-) = \mu((-\infty, a))$.
+La différence avec $F(a)$ est $F(a) - F(a^-) = \mu((-\infty, a]) - \mu((-\infty, a)) = \mu(\{a\})$.
+Dire que $\mu$ est sans atomes signifie exactement que $\mu(\{a\}) = 0$ pour tout $a$.
+Donc $F(a) = F(a^-)$, la fonction est continue à gauche.
+Étant continue à droite et à gauche en tout point, elle est continue.
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+
+\subsection*{TP 1 : Approximation de l'intégrale de Lebesgue}
+
+\textbf{Objectif :} Écrire un script Python pur pour approcher l'intégrale de Lebesgue d'une fonction positive en utilisant des fonctions simples, sans aucune bibliothèque externe.
+
+\begin{lstlisting}
+def lebesgue_integral_approximation(func, domain_start, domain_end, num_points, num_levels):
+    step_size = (domain_end - domain_start) / num_points
+    domain = [domain_start + j * step_size for j in range(num_points)]
+
+    values = [func(x) for x in domain]
+    max_val = max(values)
+
+    if max_val == 0:
+        return 0.0
+
+    level_step = max_val / num_levels
+    integral = 0.0
+
+    for i in range(num_levels):
+        current_level = i * level_step
+        measure = 0.0
+        for val in values:
+            if val >= current_level:
+                measure += step_size
+
+        integral += level_step * measure
+
+    return integral
+
+def f(x):
+    return x * x
+
+if __name__ == "__main__":
+    result = lebesgue_integral_approximation(f, 0, 1, 1000, 100)
+    print("Approximation for f(x) = x*x on [0, 1]:", result)
+    diff = result - (1.0 / 3.0)
+    if diff < 0:
+        diff = -diff
+    assert diff < 0.05
+\end{lstlisting}
+
+
+\subsection*{TP 2 : Fonctions indicatrices et mesures}
+
+\textbf{Objectif :} Implémenter le calcul de l'intégrale d'une fonction simple définie par des indicatrices.
+
+\begin{lstlisting}
+class SimpleFunction:
+    def __init__(self):
+        self.coefficients = []
+        self.sets = []
+
+    def add_term(self, coeff, intervals):
+        self.coefficients.append(coeff)
+        self.sets.append(intervals)
+
+    def evaluate(self, x):
+        val = 0
+        for i in range(len(self.coefficients)):
+            in_set = False
+            for interval in self.sets[i]:
+                if interval[0] <= x < interval[1]:
+                    in_set = True
+                    break
+            if in_set:
+                val += self.coefficients[i]
+        return val
+
+    def integrate_lebesgue(self):
+        total = 0
+        for i in range(len(self.coefficients)):
+            measure = 0
+            for interval in self.sets[i]:
+                measure += (interval[1] - interval[0])
+            total += self.coefficients[i] * measure
+        return total
+
+if __name__ == "__main__":
+    s = SimpleFunction()
+    s.add_term(2, [[0, 1]])
+    s.add_term(5, [[2, 3]])
+
+    integral = s.integrate_lebesgue()
+    print("Integral of simple function:", integral)
+    assert integral == 7
+\end{lstlisting}
+
+
+\subsection*{TP 3 : Convergence monotone en action}
+
+\textbf{Objectif :} Visualiser algorithmiquement le théorème de convergence monotone avec une suite de fonctions simples.
+
+\begin{lstlisting}
+def fn(x, n):
+    if x == 0:
+        return 0
+    return x - (x ** n)
+
+def integrate_riemann_approx(func, n, steps=1000):
+    total = 0
+    dx = 1.0 / steps
+    for i in range(steps):
+        x = i * dx
+        total += func(x, n) * dx
+    return total
+
+if __name__ == "__main__":
+    integrals = []
+    for n in range(1, 15):
+        val = integrate_riemann_approx(fn, n)
+        integrals.append(val)
+        print("Integral of f_{n} =", val)
+
+    diff = integrals[-1] - 0.5
+    if diff < 0:
+        diff = -diff
+    assert diff < 0.1
+\end{lstlisting}
+
+
+\subsection*{TP 4 : Simulation de la mesure extérieure}
+
+\textbf{Objectif :} Coder une approche naïve de la mesure extérieure de Lebesgue pour un ensemble de points.
+
+\begin{lstlisting}
+def outer_measure_approx(points, epsilon):
+    intervals = []
+    for p in points:
+        intervals.append([p - epsilon/2, p + epsilon/2])
+
+    intervals.sort(key=lambda x: x[0])
+    merged = []
+
+    for interval in intervals:
+        if not merged:
+            merged.append(interval)
+        else:
+            last = merged[-1]
+            if interval[0] <= last[1]:
+                last[1] = max(last[1], interval[1])
+            else:
+                merged.append(interval)
+
+    measure = 0
+    for interval in merged:
+        measure += (interval[1] - interval[0])
+
+    return measure
+
+if __name__ == "__main__":
+    points = [0.1, 0.15, 0.4, 0.42, 0.8]
+    eps = 0.1
+    m = outer_measure_approx(points, eps)
+    print("Outer measure approx:", m)
+    assert m <= len(points) * eps
+\end{lstlisting}
+
+
+\subsection*{TP 5 : Inégalité de Markov expérimentale}
+
+\textbf{Objectif :} Vérifier expérimentalement l'inégalité de Markov pour une fonction positive.
+
+\begin{lstlisting}
+def check_markov(func, domain_start, domain_end, points, t):
+    step = (domain_end - domain_start) / points
+
+    integral = 0
+    for i in range(points):
+        integral += func(domain_start + i * step) * step
+
+    measure_ge_t = 0
+    for i in range(points):
+        if func(domain_start + i * step) >= t:
+            measure_ge_t += step
+
+    bound = integral / t
+
+    print("Mesure {f >= t}:", measure_ge_t)
+    print("Borne de Markov:", bound)
+
+    return measure_ge_t <= bound
+
+def h(x):
+    return x * x * x + 1
+
+if __name__ == "__main__":
+    valid = check_markov(h, 0, 2, 1000, 4.0)
+    assert valid == True
+\end{lstlisting}
+
+
+\end{document}
