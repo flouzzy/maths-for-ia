@@ -1,0 +1,528 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1
+}
+
+\title{\Huge INTÉGRALE DE LEBESGUE POUR LES FONCTIONS POSITIVES \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+\section{Introduction et Genèse}
+
+La construction de l'intégrale de Lebesgue repose sur une approche fondamentale différente de celle de Riemann.
+Au lieu de découper le domaine de définition (la méthode de Riemann), on découpe l'ensemble d'arrivée en considérant des "tampons" horizontaux de valeurs.
+Chaque niveau de valeur $a_i$ définit un ensemble de points $A_i$ où la fonction prend cette valeur. En mesurant la "surface" de ces ensembles (grâce à la mesure $\mu(A_i)$) et en la multipliant par la valeur $a_i$, on obtient l'intégrale.
+
+Cette approche descendante permet d'intégrer des fonctions hautement irrégulières (qui "sautent" partout, comme la fonction de Dirichlet) en définissant d'abord l'intégrale pour des fonctions en escalier très simples, puis en généralisant par passage au supremum.
+
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  % Axes
+  \draw[->] (-0.5,0) -- (4,0) node[right] {$X$};
+  \draw[->] (0,-0.5) -- (0,3) node[above] {$y$};
+
+  % Courbe quelconque
+  \draw[thick, blue] (0.2, 0.5) .. controls (1, 2) and (2, 0.5) .. (3.5, 2.5) node[right] {$f(x)$};
+
+  % Niveaux a_i pour l'integrale de Lebesgue
+  \draw[dashed, gray] (0, 0.8) node[left, black] {$a_1$} -- (4, 0.8);
+  \draw[dashed, gray] (0, 1.5) node[left, black] {$a_2$} -- (4, 1.5);
+  \draw[dashed, gray] (0, 2.1) node[left, black] {$a_3$} -- (4, 2.1);
+
+  % Ensembles A_i
+  \draw[very thick, red] (0.3, 0) -- (0.7, 0) node[midway, below] {$A_1$};
+  \draw[very thick, red] (2.5, 0) -- (3.2, 0);
+
+  \node[align=center] at (2, -1) {\textit{Approche de Lebesgue : On découpe selon l'axe $y$ et on mesure} \\ \textit{la taille des ensembles de départ $A_i = \{x \mid f(x) \ge a_i\}$.}};
+\end{tikzpicture}
+\end{center}
+
+
+\section{Définitions, Théorèmes et Exemples Concrets}
+
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
+
+\subsection{Intégrale des Fonctions Simples}
+
+Soit $\mathcal{S}_+$ l'ensemble des fonctions simples (étagées) positives sur $X$.
+Une fonction $s \in \mathcal{S}_+$ s'écrit $s = \sum_{i=1}^n a_i \mathbf{1}_{A_i}$ avec $a_i \ge 0$.
+
+\textbf{Remarque : } \textbf{Définition 1 :} L'intégrale de la fonction simple $s$ par rapport à $\mu$ est :
+\textbf{Remarque : } $$\int_X s d\mu = \sum_{i=1}^n a_i \mu(A_i)$$
+\textbf{Remarque : } (On utilise la convention $0 \cdot \infty = 0$).
+
+\subsection{Intégrale des Fonctions Mesurables Positives}
+
+Soit $\mathcal{M}_+$ l'ensemble des fonctions mesurables de $X$ dans $[0, +\infty]$.
+
+\textbf{Remarque : } \textbf{Définition 2 (Intégrale de Lebesgue) :}
+\textbf{Remarque : } Pour tout $f \in \mathcal{M}_+$, on définit :
+\textbf{Remarque : } $$\int_X f d\mu = \sup \left\lbrace \int_X s d\mu \mid s \in \mathcal{S}_+, 0 \le s \le f \right\rbrace$$
+\textbf{Remarque : } Cette valeur appartient à $[0, +\infty]$. Si elle est finie, on dit que $f$ est \textbf{intégrable}.
+
+\subsection{Exemples Concrets}
+
+\textbf{Exemple 1 : Intégrale d'une fonction simple sur un espace fini}
+Soit $X = \{1, 2, 3\}$ avec la mesure de comptage $\mu$.
+Considérons la fonction $s : X \to \mathbb{R}_+$ définie par $s(1) = 5$, $s(2) = 0$, $s(3) = 2$.
+$s$ peut s'écrire comme $s = 5 \cdot \mathbf{1}_{\{1\}} + 0 \cdot \mathbf{1}_{\{2\}} + 2 \cdot \mathbf{1}_{\{3\}}$.
+L'intégrale de $s$ par rapport à $\mu$ est :
+$$\int_X s d\mu = 5 \cdot \mu(\{1\}) + 0 \cdot \mu(\{2\}) + 2 \cdot \mu(\{3\}) = 5(1) + 0(1) + 2(1) = 7.$$
+
+\textbf{Exemple 2 : Fonction indicatrice sur $\mathbb{R}$}
+Soit $X = \mathbb{R}$ muni de la mesure de Lebesgue $\lambda$. Soit $s = 3 \cdot \mathbf{1}_{[0, 2]} + 4 \cdot \mathbf{1}_{[3, 4]}$.
+L'intégrale est :
+$$\int_\mathbb{R} s d\lambda = 3 \cdot \lambda([0, 2]) + 4 \cdot \lambda([3, 4]) = 3(2 - 0) + 4(4 - 3) = 6 + 4 = 10.$$
+
+\textbf{Exemple 3 : Approximation d'une fonction par une fonction étagée}
+Considérons $f(x) = x$ sur $[0, 1]$. Pour $n = 2$, on peut minorer $f$ par la fonction simple $s_2 = 0 \cdot \mathbf{1}_{[0, 1/2[} + \frac{1}{2} \cdot \mathbf{1}_{[1/2, 1]}$.
+L'intégrale de cette fonction simple est $\int_0^1 s_2 d\lambda = 0 \cdot \frac{1}{2} + \frac{1}{2} \cdot \frac{1}{2} = \frac{1}{4}$.
+L'intégrale de Lebesgue de $f$ (qui vaut $1/2$) est le supremum des intégrales de telles fonctions simples minorantes.
+
+\textbf{Exemple 4 : Intégrale infinie}
+Soit $X = \mathbb{R}$ avec la mesure de Lebesgue $\lambda$. Soit $f = 1 \cdot \mathbf{1}_{[0, +\infty[}$.
+L'intégrale est $\int_\mathbb{R} f d\lambda = 1 \cdot \lambda([0, +\infty[) = +\infty$.
+La fonction n'est pas intégrable, bien qu'elle soit mesurable positive.
+
+\textbf{Exemple 5 : Fonction constante sur un ensemble de mesure nulle}
+Soit $X = \mathbb{R}$ avec la mesure de Lebesgue $\lambda$. Soit $f = 100 \cdot \mathbf{1}_{\{0\}}$.
+La mesure de Lebesgue d'un singleton est nulle : $\lambda(\{0\}) = 0$.
+L'intégrale est donc $\int_\mathbb{R} f d\lambda = 100 \cdot 0 = 0$.
+
+\subsection{Propriétés Immédiates}
+
+\textbf{Remarque : } \textbf{Théorème :}
+\textbf{Remarque : } 1. \textbf{Positivité :} $\int f d\mu \ge 0$.
+\textbf{Remarque : } 2. \textbf{Croissance :} Si $f \le g$, alors $\int f \le \int g$.
+\textbf{Remarque : } 3. \textbf{Homogénéité :} $\int \alpha f d\mu = \alpha \int f d\mu$ pour $\alpha \ge 0$.
+
+\section{Démonstrations Rigoureuses}
+
+\subsection{Démonstration : Relation entre intégrale et ensembles de mesure nulle}
+
+Montrons que si $f \in \mathcal{M}_+$ et $\int f d\mu = 0$, alors $f = 0$ presque partout (c'est-à-dire $\mu(\{x \mid f(x) > 0\}) = 0$).
+
+1. \textbf{Cadre :} Soit $A = \{x \in X \mid f(x) > 0\}$. On veut montrer $\mu(A) = 0$.
+2. \textbf{Décomposition de l'ensemble :} Posons $A_n = \{x \in X \mid f(x) \ge 1/n\}$ pour $n \in \mathbb{N}^*$.
+   Alors $A = \bigcup_{n=1}^\infty A_n$.
+3. \textbf{Inégalité sur chaque morceau :} On remarque que $f \ge \frac{1}{n} \mathbf{1}_{A_n}$.
+   Par croissance de l'intégrale :
+   $$\int_X f d\mu \ge \int_X \frac{1}{n} \mathbf{1}_{A_n} d\mu = \frac{1}{n} \mu(A_n)$$
+4. \textbf{Utilisation de l'hypothèse :} Comme $\int f d\mu = 0$, alors pour tout $n$, $\frac{1}{n} \mu(A_n) = 0$, donc $\mu(A_n) = 0$.
+5. \textbf{Conclusion :} Par $\sigma$-sous-additivité de la mesure :
+   $$\mu(A) = \mu\left( \bigcup_{n=1}^\infty A_n \right) \le \sum_{n=1}^\infty \mu(A_n) = 0$$
+   Donc $f$ est nulle presque partout.
+
+\section{Applications en Physique, Logique et Intelligence Artificielle}
+
+\textbullet\ \textbf{Le Pont Théorique :} L'intégrale de Lebesgue permet de définir l'\textbf{Espérance mathématique} de manière universelle, que la variable soit discrète, continue ou mixte. $\mathbb{E}[X] = \int_\Omega X(\omega) dP(\omega)$.
+\textbullet\ \textbf{Exemple Concret :}
+\textbullet\ \textbf{Calcul de la Perte Attendue (Expected Loss) :} En IA, on minimise $L(\theta) = \int \ell(x, y, \theta) d\mathbb{P}(x, y)$. La mesure $\mathbb{P}$ représente nos données. Lebesgue nous permet de calculer cette intégrale même si nos données sont un mélange de catégories (discret) et de mesures physiques (continu).
+\textbullet\ \textbf{Mesures de similarité entre distributions :} La divergence de Jensen-Shannon ou la divergence KL sont définies par des intégrales de Lebesgue. Ces mesures sont le cœur des modèles génératifs et du clustering.
+\textbullet\ \textbf{Filtrage de Kalman :} La mise à jour des croyances dans un système dynamique repose sur l'intégration de fonctions de vraisemblance, souvent sur des espaces de grande dimension.
+
+\section{Liens Sémantiques}
+
+\textbullet\ \textbf{Concepts Précédents requis :} [[Jalon 65 (Fonctions mesurables).md]], [[Jalon 63 (Définition axiomatique d'une mesure).md]]
+\textbullet\ \textbf{Concepts Futurs dépendants :} [[Jalon 67 (Démonstration du théorème de convergence monotone).md]], [[Jalon 73 (Définition des espaces Lp).md]]
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\section{Exercice 1 : Intégrale de la fonction de Dirichlet \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :} Calculer l'intégrale de Lebesgue de $f = \mathbf{1}_\mathbb{Q}$ sur $[0, 1]$ pour la mesure de Lebesgue $\lambda$.
+
+\textbf{Correction Détaillée :}
+1. La fonction $f$ est une fonction simple car elle ne prend que les valeurs 0 et 1 sur l'intervalle $[0, 1]$.
+   On peut l'écrire formellement comme $f = 1 \cdot \mathbf{1}_{\mathbb{Q} \cap [0,1]} + 0 \cdot \mathbf{1}_{[0,1] \setminus \mathbb{Q}}$.
+2. Par définition de l'intégrale d'une fonction simple pour la mesure de Lebesgue $\lambda$ :
+   $$\int_{[0,1]} f d\lambda = 1 \cdot \lambda(\mathbb{Q} \cap [0,1]) + 0 \cdot \lambda([0,1] \setminus \mathbb{Q})$$
+3. On sait que l'ensemble des rationnels $\mathbb{Q}$ est dénombrable. La mesure de Lebesgue de tout ensemble dénombrable est nulle, donc $\lambda(\mathbb{Q} \cap [0,1]) = 0$.
+4. Par conséquent, l'intégrale est :
+   $$\int_{[0,1]} f d\lambda = 1 \cdot 0 + 0 = 0$$
+
+
+\vspace{1cm}
+\section{Exercice 2 : Intégrale par rapport à la mesure de comptage \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :} Soit $\mu$ la mesure de comptage sur $\mathbb{N}$ (c'est-à-dire $\mu(A) = \text{card}(A)$ pour tout $A \subset \mathbb{N}$). Montrer que pour toute fonction $f : \mathbb{N} \to \mathbb{R}_+$, son intégrale de Lebesgue par rapport à $\mu$ coïncide avec la somme de la série de terme général $f(n)$.
+
+\textbf{Correction Détaillée :}
+1. Pour tout entier $N$, définissons la fonction simple $s_N$ sur $\mathbb{N}$ par :
+   $$s_N(n) = \begin{cases} f(n) & \text{si } n \le N \\ 0 & \text{si } n > N \end{cases}$$
+   Cette fonction s'écrit $s_N = \sum_{n=0}^N f(n) \mathbf{1}_{\{n\}}$.
+2. L'intégrale de cette fonction simple par rapport à la mesure de comptage $\mu$ est :
+   $$\int_\mathbb{N} s_N d\mu = \sum_{n=0}^N f(n) \mu(\{n\}) = \sum_{n=0}^N f(n) \cdot 1 = \sum_{n=0}^N f(n)$$
+3. La suite de fonctions $(s_N)_{N \in \mathbb{N}}$ est une suite croissante de fonctions mesurables positives qui converge simplement vers $f$ sur $\mathbb{N}$.
+4. Par définition de l'intégrale de Lebesgue (ou par application du théorème de convergence monotone que l'on verra au jalon suivant), l'intégrale de $f$ est le supremum des intégrales des fonctions simples minorantes :
+   $$\int_\mathbb{N} f d\mu = \sup_N \int_\mathbb{N} s_N d\mu = \sup_N \sum_{n=0}^N f(n) = \sum_{n=0}^\infty f(n)$$
+
+
+\vspace{1cm}
+\section{Exercice 3 : Mesure de Dirac \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :} Soit $\delta_a$ la mesure de Dirac au point $a \in \mathbb{R}$, définie par $\delta_a(A) = 1$ si $a \in A$ et $0$ sinon. Calculer $\int_\mathbb{R} f d\delta_a$ pour une fonction mesurable positive $f$.
+
+\textbf{Correction Détaillée :}
+1. Considérons d'abord le cas où $f$ est une fonction indicatrice, c'est-à-dire $f = \mathbf{1}_A$.
+   Par définition, $\int_\mathbb{R} \mathbf{1}_A d\delta_a = \delta_a(A)$.
+   Si $a \in A$, $\delta_a(A) = 1 = \mathbf{1}_A(a)$. Si $a \notin A$, $\delta_a(A) = 0 = \mathbf{1}_A(a)$.
+   Donc, $\int_\mathbb{R} \mathbf{1}_A d\delta_a = \mathbf{1}_A(a)$.
+2. Par linéarité, pour toute fonction simple $s = \sum_{i=1}^n c_i \mathbf{1}_{A_i}$, on a :
+   $$\int_\mathbb{R} s d\delta_a = \sum_{i=1}^n c_i \delta_a(A_i) = \sum_{i=1}^n c_i \mathbf{1}_{A_i}(a) = s(a)$$
+3. Pour une fonction mesurable positive $f$ quelconque, il existe une suite de fonctions simples positives $(s_n)$ croissant vers $f$.
+   On a $\int_\mathbb{R} s_n d\delta_a = s_n(a)$.
+4. En passant à la limite (ou en utilisant la définition par le supremum) :
+   $$\int_\mathbb{R} f d\delta_a = \sup_{s \le f} \int_\mathbb{R} s d\delta_a = \sup_{s \le f} s(a) = f(a)$$
+   Ainsi, l'intégrale par rapport à la mesure de Dirac en $a$ évalue simplement la fonction en $a$.
+
+
+\vspace{1cm}
+\section{Exercice 4 : Fonction constante et mesure infinie \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :} Calculer $\int_\mathbb{R} c \, d\lambda$, où $c > 0$ est une constante et $\lambda$ est la mesure de Lebesgue sur $\mathbb{R}$.
+
+\textbf{Correction Détaillée :}
+1. La fonction $f(x) = c$ est une fonction simple, qui peut s'écrire $f = c \cdot \mathbf{1}_\mathbb{R}$.
+2. Par définition de l'intégrale d'une fonction simple :
+   $$\int_\mathbb{R} f d\lambda = c \cdot \lambda(\mathbb{R})$$
+3. La mesure de Lebesgue de l'ensemble des réels $\mathbb{R}$ est infinie, c'est-à-dire $\lambda(\mathbb{R}) = +\infty$.
+4. Puisque $c > 0$, on a $c \cdot (+\infty) = +\infty$.
+   Donc, $\int_\mathbb{R} c \, d\lambda = +\infty$.
+   La fonction constante strictement positive n'est pas intégrable sur $\mathbb{R}$ pour la mesure de Lebesgue.
+
+
+\vspace{1cm}
+\section{Exercice 5 : Égalité presque partout \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :} Soient $f, g \in \mathcal{M}_+$ deux fonctions mesurables positives. Montrer que si $f = g$ presque partout, alors $\int f d\mu = \int g d\mu$.
+
+\textbf{Correction Détaillée :}
+1. Notons $N = \{x \in X \mid f(x) \neq g(x)\}$. Par hypothèse, $\mu(N) = 0$.
+2. Posons $h(x) = |f(x) - g(x)|$. La fonction $h$ est mesurable positive.
+   Pour tout $x \in X$, $h(x) = h(x) \cdot \mathbf{1}_N(x) + h(x) \cdot \mathbf{1}_{X \setminus N}(x)$.
+   Puisque $h(x) = 0$ pour $x \in X \setminus N$, on a $h = h \cdot \mathbf{1}_N$.
+3. Soit $s$ une fonction simple positive telle que $s \le h$. Alors $s$ est nulle hors de $N$, donc $s = s \cdot \mathbf{1}_N$.
+   $s$ s'écrit $\sum_{i=1}^n a_i \mathbf{1}_{A_i}$. On peut remplacer chaque $A_i$ par $A_i \cap N$.
+   L'intégrale de $s$ est $\sum a_i \mu(A_i \cap N) = 0$ car $\mu(A_i \cap N) \le \mu(N) = 0$.
+4. Ainsi, $\int h d\mu = \sup \int s d\mu = 0$.
+5. On a $f(x) \le g(x) + h(x)$. Par monotonie et sous-additivité (admise pour le moment ou prouvée via fonctions simples) de l'intégrale pour des fonctions positives :
+   $$\int f d\mu \le \int g d\mu + \int h d\mu = \int g d\mu + 0 = \int g d\mu$$
+6. Par symétrie, $g(x) \le f(x) + h(x)$, d'où $\int g d\mu \le \int f d\mu$.
+7. On conclut que $\int f d\mu = \int g d\mu$.
+
+
+\vspace{1cm}
+\section{Exercice 6 : Intégrale d'une fonction simple sur les rationnels \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :} Considérons la fonction $f(x) = x^2$ définie sur l'intervalle $[0, 2]$. Calculer l'intégrale de Lebesgue de $g = f \cdot \mathbf{1}_{\mathbb{Q} \cap [0,2]}$ par rapport à la mesure de Lebesgue $\lambda$.
+
+\textbf{Correction Détaillée :}
+1. La fonction $g$ prend la valeur $x^2$ si $x \in \mathbb{Q} \cap [0, 2]$ et la valeur $0$ si $x \in [0, 2] \setminus \mathbb{Q}$.
+2. Les rationnels de $[0, 2]$ forment un ensemble de mesure de Lebesgue nulle : $\lambda(\mathbb{Q} \cap [0, 2]) = 0$.
+3. La fonction $g$ est donc nulle en dehors d'un ensemble de mesure nulle. Autrement dit, $g = 0$ presque partout sur $[0, 2]$.
+4. D'après l'exercice précédent, si deux fonctions sont égales presque partout, leurs intégrales de Lebesgue sont égales.
+5. Soit $h(x) = 0$ pour tout $x \in [0, 2]$. On a $g = h$ presque partout, et $\int_{[0, 2]} h d\lambda = 0$.
+6. Par conséquent, $\int_{[0, 2]} g d\lambda = 0$.
+
+
+\vspace{1cm}
+\section{Exercice 7 : Linéarité (Cas partiel) \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :} Soient $s, t \in \mathcal{S}_+$ deux fonctions simples. Montrer par un calcul direct que $\int (s + t) d\mu = \int s d\mu + \int t d\mu$.
+
+\textbf{Correction Détaillée :}
+1. Soit $s = \sum_{i=1}^n a_i \mathbf{1}_{A_i}$ et $t = \sum_{j=1}^m b_j \mathbf{1}_{B_j}$, où les $(A_i)$ forment une partition de $X$, et les $(B_j)$ forment une partition de $X$.
+2. Les ensembles $C_{i,j} = A_i \cap B_j$ (pour $1 \le i \le n$, $1 \le j \le m$) forment une nouvelle partition plus fine de $X$.
+3. Sur chaque sous-ensemble $C_{i,j}$, les fonctions sont constantes : $s$ y vaut $a_i$, $t$ y vaut $b_j$, et donc $s+t$ y vaut $a_i + b_j$.
+4. On peut réécrire $s$ et $t$ en utilisant cette partition commune :
+   $$s = \sum_{i=1}^n \sum_{j=1}^m a_i \mathbf{1}_{C_{i,j}} \quad \text{et} \quad t = \sum_{i=1}^n \sum_{j=1}^m b_j \mathbf{1}_{C_{i,j}}$$
+5. L'intégrale de $s+t$ est :
+   $$\int (s+t) d\mu = \sum_{i,j} (a_i + b_j) \mu(C_{i,j}) = \sum_{i,j} a_i \mu(C_{i,j}) + \sum_{i,j} b_j \mu(C_{i,j})$$
+6. D'autre part, comme les $(B_j)$ partitonnent $X$, $\sum_j \mu(C_{i,j}) = \sum_j \mu(A_i \cap B_j) = \mu(A_i)$. De même $\sum_i \mu(C_{i,j}) = \mu(B_j)$.
+7. Ainsi, $\sum_{i,j} a_i \mu(C_{i,j}) = \sum_i a_i \mu(A_i) = \int s d\mu$, et $\sum_{i,j} b_j \mu(C_{i,j}) = \sum_j b_j \mu(B_j) = \int t d\mu$.
+8. On obtient bien $\int (s+t) d\mu = \int s d\mu + \int t d\mu$.
+
+
+\vspace{1cm}
+\section{Exercice 8 : Inégalité de Markov (Cas des fonctions simples) \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :} Soit $s \in \mathcal{S}_+$ une fonction simple positive, et $\alpha > 0$. Montrer que $\mu(\{x \in X \mid s(x) \ge \alpha\}) \le \frac{1}{\alpha} \int_X s d\mu$.
+
+\textbf{Correction Détaillée :}
+1. Posons $A = \{x \in X \mid s(x) \ge \alpha\}$.
+2. Considérons la fonction simple $\alpha \cdot \mathbf{1}_A$.
+3. Pour tout $x \in X$, on a l'inégalité $s(x) \ge \alpha \cdot \mathbf{1}_A(x)$.
+   En effet, si $x \in A$, $s(x) \ge \alpha = \alpha \cdot 1$. Si $x \notin A$, $s(x) \ge 0 = \alpha \cdot 0$.
+4. Par monotonie de l'intégrale des fonctions simples :
+   $$\int_X s d\mu \ge \int_X \alpha \cdot \mathbf{1}_A d\mu$$
+5. Par définition de l'intégrale d'une fonction indicatrice, on a :
+   $$\int_X \alpha \cdot \mathbf{1}_A d\mu = \alpha \mu(A)$$
+6. En combinant ces inégalités, on obtient :
+   $$\int_X s d\mu \ge \alpha \mu(A)$$
+7. Puisque $\alpha > 0$, on peut diviser par $\alpha$ pour obtenir :
+   $$\mu(A) \le \frac{1}{\alpha} \int_X s d\mu$$
+   Ce qui démontre l'inégalité de Markov pour une fonction simple.
+
+
+\vspace{1cm}
+\section{Exercice 9 : Fonction mesurable d'intégrale nulle \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :} Retrouver la preuve vue en cours, que pour toute fonction $f \in \mathcal{M}_+$, si $\int f d\mu = 0$ alors $f = 0$ presque partout, en utilisant l'inégalité de Markov pour $f$.
+
+\textbf{Correction Détaillée :}
+1. L'inégalité de Markov (vue pour les fonctions simples dans l'exercice précédent et qui s'étend aux fonctions de $\mathcal{M}_+$ par passage au supremum) stipule que pour tout $\alpha > 0$, $\mu(\{f \ge \alpha\}) \le \frac{1}{\alpha} \int f d\mu$.
+2. Supposons que $\int f d\mu = 0$. Alors pour tout $\alpha > 0$, on a $\mu(\{f \ge \alpha\}) \le \frac{0}{\alpha} = 0$.
+   Donc $\mu(\{f \ge \alpha\}) = 0$.
+3. On veut montrer que l'ensemble $A = \{x \in X \mid f(x) > 0\}$ a une mesure nulle.
+4. On peut écrire $A$ comme une union dénombrable d'ensembles :
+   $$A = \{f > 0\} = \bigcup_{n=1}^\infty \left\{f \ge \frac{1}{n}\right\}$$
+5. Par $\sigma$-sous-additivité de la mesure $\mu$, on a :
+   $$\mu(A) = \mu\left( \bigcup_{n=1}^\infty \left\{f \ge \frac{1}{n}\right\} \right) \le \sum_{n=1}^\infty \mu\left(\left\{f \ge \frac{1}{n}\right\}\right)$$
+6. D'après l'étape 2, $\mu(\{f \ge 1/n\}) = 0$ pour tout entier $n \ge 1$.
+7. On obtient donc :
+   $$\mu(A) \le \sum_{n=1}^\infty 0 = 0$$
+8. Comme une mesure est positive, $\mu(A) = 0$. Ainsi, $f = 0$ presque partout.
+
+
+\vspace{1cm}
+\section{Exercice 10 : Mesure à densité (Introduction) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :} Soit $(X, \mathcal{F}, \mu)$ un espace mesuré et $f \in \mathcal{M}_+$. On définit pour tout $A \in \mathcal{F}$ : $\nu(A) = \int_X f \cdot \mathbf{1}_A \, d\mu$.
+Montrer que pour toute fonction simple positive $s$, on a $\int_X s \, d\nu = \int_X s \cdot f \, d\mu$.
+
+\textbf{Correction Détaillée :}
+1. Soit $s \in \mathcal{S}_+$ une fonction simple positive. Par définition, elle peut s'écrire sous forme canonique :
+   $$s = \sum_{i=1}^n c_i \mathbf{1}_{A_i}$$
+   où les $c_i \ge 0$ sont les valeurs distinctes prises par $s$, et les $A_i$ sont les préimages disjointes $s^{-1}(\{c_i\})$.
+2. Calculons l'intégrale de $s$ par rapport à la "nouvelle" fonction d'ensemble $\nu$ :
+   $$\int_X s \, d\nu = \sum_{i=1}^n c_i \nu(A_i)$$
+3. Remplaçons $\nu(A_i)$ par sa définition :
+   $$\nu(A_i) = \int_X f \cdot \mathbf{1}_{A_i} \, d\mu$$
+4. On a donc :
+   $$\int_X s \, d\nu = \sum_{i=1}^n c_i \left( \int_X f \cdot \mathbf{1}_{A_i} \, d\mu \right)$$
+5. Par la propriété d'homogénéité (mise en évidence d'une constante hors de l'intégrale) :
+   $$\int_X s \, d\nu = \sum_{i=1}^n \int_X c_i \cdot f \cdot \mathbf{1}_{A_i} \, d\mu$$
+6. En utilisant la linéarité de l'intégrale pour les fonctions positives (somme finie) :
+   $$\int_X s \, d\nu = \int_X \left( \sum_{i=1}^n c_i \cdot f \cdot \mathbf{1}_{A_i} \right) \, d\mu$$
+7. Factorisons $f$ à l'intérieur de l'intégrale :
+   $$\sum_{i=1}^n c_i \cdot f \cdot \mathbf{1}_{A_i} = f \cdot \left( \sum_{i=1}^n c_i \mathbf{1}_{A_i} \right) = f \cdot s$$
+8. On conclut que :
+   $$\int_X s \, d\nu = \int_X s \cdot f \, d\mu$$
+   Ce résultat fondamental permet de montrer que $\nu$ est bien une mesure (mesure à densité) et de généraliser cette égalité à toute fonction mesurable positive (formule de changement de mesure).
+
+
+\vspace{1cm}
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\section{TP 1 : Implémentation d'un Espace Mesuré de Base}
+
+Dans ce TP, nous allons modéliser de manière conceptuelle (et algorithmique) un espace mesuré discret. Bien que la théorie de Lebesgue brille pour les espaces continus, sa construction algébrique sur des ensembles finis permet de saisir l'intuition de la "mesure".
+
+\begin{lstlisting}[language=Python]
+class EspaceMesureFini:
+    def __init__(self, omega):
+        # omega est une liste d'elements de base
+        self.omega = set(omega)
+
+    def mesure_comptage(self, A):
+        # A doit etre un sous-ensemble de omega
+        ensemble_A = set(A)
+        assert ensemble_A.issubset(self.omega), "A n'est pas dans l'espace mesurable"
+        return len(ensemble_A)
+
+    def mesure_dirac(self, A, a):
+        ensemble_A = set(A)
+        assert ensemble_A.issubset(self.omega), "A n'est pas dans l'espace mesurable"
+        assert a in self.omega, "Le point de Dirac doit etre dans l'espace"
+        if a in ensemble_A:
+            return 1
+        return 0
+
+# Test simple
+X = EspaceMesureFini([1, 2, 3, 4, 5])
+assert X.mesure_comptage([2, 4]) == 2
+assert X.mesure_dirac([1, 2, 3], 3) == 1
+assert X.mesure_dirac([1, 2], 3) == 0
+print("TP1: Tests passes")
+\end{lstlisting}
+
+
+\vspace{1cm}
+\section{TP 2 : Construction de Fonctions Simples (Étagées)}
+
+Nous allons représenter informatiquement une fonction simple. Mathématiquement, c'est une somme pondérée de fonctions indicatrices d'ensembles disjoints.
+
+\begin{lstlisting}[language=Python]
+class FonctionSimple:
+    def __init__(self):
+        # Stockage sous la forme d'un dictionnaire {valeur: ensemble_de_points}
+        self.composantes = {}
+
+    def ajouter_palier(self, valeur, points):
+        assert valeur >= 0, "Pour l'instant, on s'interesse aux fonctions positives"
+        points_set = set(points)
+        # Verification que l'ensemble est disjoint des precedents (partitionnement)
+        for val_existante, pts_existants in self.composantes.items():
+            assert len(points_set.intersection(pts_existants)) == 0, "Les ensembles doivent etre disjoints"
+
+        self.composantes[valeur] = points_set
+
+    def evaluer(self, x):
+        for valeur, points in self.composantes.items():
+            if x in points:
+                return valeur
+        return 0 # 0 par defaut si en dehors du support
+
+s = FonctionSimple()
+s.ajouter_palier(5, [1, 2])
+s.ajouter_palier(3, [3, 4, 5])
+
+assert s.evaluer(1) == 5
+assert s.evaluer(4) == 3
+assert s.evaluer(6) == 0
+print("TP2: Tests passes")
+\end{lstlisting}
+
+
+\vspace{1cm}
+\section{TP 3 : Intégrale de Lebesgue d'une Fonction Simple}
+
+Maintenant que nous avons notre espace et nos fonctions simples, nous pouvons coder l'intégrale de Lebesgue pour ces fonctions de base.
+
+\begin{lstlisting}[language=Python]
+class EspaceMesureFini:
+    def __init__(self, omega):
+        self.omega = set(omega)
+
+    def mesure_comptage(self, A):
+        return len(set(A).intersection(self.omega))
+
+def integrer_fonction_simple(s, espace, mesure_func):
+    integrale_totale = 0
+    for valeur, points in s.composantes.items():
+        mesure_ensemble = mesure_func(points)
+        integrale_totale += valeur * mesure_ensemble
+    return integrale_totale
+
+class FonctionSimple:
+    def __init__(self):
+        self.composantes = {}
+    def ajouter_palier(self, valeur, points):
+        self.composantes[valeur] = set(points)
+
+# Application
+X = EspaceMesureFini([1, 2, 3, 4, 5, 6, 7])
+f = FonctionSimple()
+f.ajouter_palier(2, [1, 2])       # Valeur 2 sur 2 points
+f.ajouter_palier(4, [3, 4, 5])    # Valeur 4 sur 3 points
+
+# Integrale attendue : 2*2 + 4*3 = 4 + 12 = 16
+resultat = integrer_fonction_simple(f, X, X.mesure_comptage)
+assert resultat == 16, "Erreur de calcul integral"
+print(f"TP3: Integrale calculee avec succes = {resultat}")
+\end{lstlisting}
+
+
+\vspace{1cm}
+\section{TP 4 : Approximation de Fonctions par des Fonctions Simples}
+
+L'intégrale de Lebesgue pour une fonction continue se définit comme le supremum de l'intégrale des fonctions simples la minorant. Nous allons approximer empiriquement la fonction f(x) = x sur [0, 1].
+
+\begin{lstlisting}[language=Python]
+def approximer_identite(n_paliers):
+    # On decoupe [0, 1] en n_paliers intervalles egaux
+    # f(x) = x
+    pas = 1.0 / n_paliers
+    integrale = 0.0
+
+    for i in range(n_paliers):
+        borne_inf = i * pas
+        borne_sup = (i + 1) * pas
+        # La fonction simple minorante prend la valeur minimale de f sur l'intervalle
+        valeur = borne_inf
+        # La mesure de l'intervalle (mesure de Lebesgue 1D) est sa longueur
+        mesure = borne_sup - borne_inf
+
+        integrale += valeur * mesure
+
+    return integrale
+
+# L'integrale analytique de x sur [0, 1] est 0.5
+n_test = 1000
+approx = approximer_identite(n_test)
+erreur = abs(0.5 - approx)
+assert erreur < 0.01, "L'approximation est trop mauvaise"
+print(f"TP4: Approximation de Riemann-Lebesgue ({n_test} paliers) = {approx:.4f}")
+\end{lstlisting}
+
+
+\vspace{1cm}
+\section{TP 5 : Inégalité de Markov Discrète}
+
+L'inégalité de Markov est un résultat direct de la théorie de la mesure. Prouvons algorithmiquement qu'elle se vérifie sur un échantillon empirique.
+
+\begin{lstlisting}[language=Python]
+def verifier_markov(valeurs, alpha):
+    assert alpha > 0, "alpha doit etre strictement positif"
+
+    n_total = len(valeurs)
+    # L'integrale (esperance) par rapport a la mesure de proba uniforme
+    moyenne = sum(valeurs) / n_total
+
+    # Mesure de proba de l'ensemble {x | f(x) >= alpha}
+    cpt_superieur = 0
+    for v in valeurs:
+        if v >= alpha:
+            cpt_superieur += 1
+    proba = cpt_superieur / n_total
+
+    borne_markov = moyenne / alpha
+
+    # Verifion l'inegalite de Markov : P(X >= alpha) <= E[X]/alpha
+    assert proba <= borne_markov, "Violaton de l'inegalite de Markov"
+    return proba, borne_markov
+
+echantillon = [1, 2, 5, 0, 1, 3, 2, 10, 1, 4]
+alpha_test = 4
+p, b = verifier_markov(echantillon, alpha_test)
+
+print(f"TP5: Inegalite verifiee. Proba={p} <= Borne Markov={b}")
+\end{lstlisting}
+
+
+\vspace{1cm}
+
+\end{document}
