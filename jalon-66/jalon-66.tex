@@ -1,0 +1,710 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={\'e}{{\'e}}1 {\`e}{{\`e}}1 {\`a}{{\`a}}1 {\^e}{{\^e}}1 {\^i}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1
+}
+
+\title{\Huge Construction De L'Int\'egrale De Lebesgue Pour Les Fonctions Mesurables Positives \\ \large Cours magistral, exercices corrig\'es et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\n\newpage
+\part{Cours Magistral}
+
+
+\section{Pr\'esentation du concept cl\'e}
+
+Historiquement, la construction de l'int\'egrale de Lebesgue est descendante : on d\'efinit d'abord l'int\'egrale pour des fonctions en escalier tr\`es simples (les fonctions \'etag\'ees), puis on g\'en\'eralise cette notion \`a toutes les fonctions mesurables positives par un passage \`a la borne sup\'erieure (supremum). Cette approche permet de s'affranchir des limitations de l'int\'egrale de Riemann, en int\'egrant des fonctions hautement discontinues (telle la fonction indicatrice de $\mathbb{Q}$).
+
+\section{Formalisation}
+
+Soit $(X, \mathcal{F}, \mu)$ un espace mesur\'e.
+
+\subsection*{Int\'egrale des Fonctions Simples}
+
+Soit $\mathcal{S}_+$ l'ensemble des fonctions simples (\'etag\'ees) positives sur $X$.
+Une fonction $s \in \mathcal{S}_+$ s'\'ecrit $s = \sum_{i=1}^n a_i \mathbf{1}_{A_i}$ avec $a_i \ge 0$.
+
+\begin{quote}
+\textbf{D\'efinition 1 :} L'int\'egrale de la fonction simple $s$ par rapport \`a $\mu$ est :
+\end{quote}
+\begin{quote}
+$$\int_X s d\mu = \sum_{i=1}^n a_i \mu(A_i)$$
+\end{quote}
+\begin{quote}
+(On utilise la convention $0 \cdot \infty = 0$).
+\end{quote}
+
+
+\subsection*{Exemples Concrets Imm\'ediats}
+
+\textbf{Exemple 1 : Fonction indicatrice simple.}
+Soit $X = \mathbb{R}$ muni de la mesure de Lebesgue $\lambda$. Soit $s = 5 \mathbf{1}_{[0, 2]}$.
+L'ensemble $A_1 = [0, 2]$ a pour mesure $\lambda([0, 2]) = 2$.
+L'int\'egrale est : $\int_\mathbb{R} s d\lambda = 5 \times 2 = 10$.
+
+\textbf{Exemple 2 : Combinaison lin\'eaire d'indicatrices disjointes.}
+Soit $s = 2 \mathbf{1}_{[0, 1]} + 7 \mathbf{1}_{[3, 4]}$. Les intervalles sont disjoints.
+$\int_\mathbb{R} s d\lambda = 2 \times \lambda([0, 1]) + 7 \times \lambda([3, 4]) = 2 \times 1 + 7 \times 1 = 9$.
+
+\textbf{Exemple 3 : Combinaison lin\'eaire d'indicatrices non disjointes.}
+Soit $s = 3 \mathbf{1}_{[0, 3]} + 4 \mathbf{1}_{[2, 5]}$. On r\'e\'ecrit $s$ sous forme canonique (ensembles disjoints) :
+Sur $[0, 2[$, $s(x) = 3$.
+Sur $[2, 3]$, $s(x) = 3 + 4 = 7$.
+Sur $]3, 5]$, $s(x) = 4$.
+Ailleurs, $s(x) = 0$.
+Ainsi, $\int_\mathbb{R} s d\lambda = 3 \times \lambda([0, 2[) + 7 \times \lambda([2, 3]) + 4 \times \lambda(]3, 5]) = 3 \times 2 + 7 \times 1 + 4 \times 2 = 6 + 7 + 8 = 21$.
+V\'erifions par lin\'earit\'e (qui sera d\'emontr\'ee plus tard) : $3 \times 3 + 4 \times 3 = 9 + 12 = 21$.
+
+\textbf{Exemple 4 : Mesure de Dirac.}
+Soit $X = \mathbb{R}$ muni de la mesure de Dirac en z\'ero, not\'ee $\delta_0$.
+Soit $s = 8 \mathbf{1}_{[-1, 1]} + 2 \mathbf{1}_{[2, 3]}$.
+On a $\delta_0([-1, 1]) = 1$ car $0 \in [-1, 1]$, et $\delta_0([2, 3]) = 0$ car $0 \notin [2, 3]$.
+L'int\'egrale est $\int_\mathbb{R} s d\delta_0 = 8 \times 1 + 2 \times 0 = 8$. Ceci correspond bien \`a $s(0) = 8$.
+
+\textbf{Exemple 5 : Fonction constante sur un ensemble de mesure infinie.}
+Soit $s = 3 \mathbf{1}_{[0, +\infty[}$ pour la mesure de Lebesgue.
+$\lambda([0, +\infty[) = +\infty$.
+L'int\'egrale est $\int_\mathbb{R} s d\lambda = 3 \times (+\infty) = +\infty$.
+
+\textbf{Exemple 6 : Z\'ero sur un ensemble de mesure infinie.}
+Soit $s = 0 \mathbf{1}_\mathbb{R}$. Par convention dans la th\'eorie de la mesure, $0 \times \infty = 0$.
+Donc $\int_\mathbb{R} s d\lambda = 0 \times \lambda(\mathbb{R}) = 0$.
+
+\subsection*{Int\'egrale des Fonctions Mesurables Positives}
+
+Soit $\mathcal{M}_+$ l'ensemble des fonctions mesurables de $X$ dans $[0, +\infty]$.
+
+\begin{quote}
+\textbf{D\'efinition 2 (Int\'egrale de Lebesgue) :}
+\end{quote}
+\begin{quote}
+Pour tout $f \in \mathcal{M}_+$, on d\'efinit :
+\end{quote}
+\begin{quote}
+$$\int_X f d\mu = \sup \left\lbrace \int_X s d\mu \mid s \in \mathcal{S}_+, 0 \le s \le f \right\rbrace$$
+\end{quote}
+\begin{quote}
+Cette valeur appartient \`a $[0, +\infty]$. Si elle est finie, on dit que $f$ est \textbf{int\'egrable}.
+\end{quote}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  % Axes
+  \draw[->] (-0.5, 0) -- (4, 0) node[right] {$x$};
+  \draw[->] (0, -0.5) -- (0, 3) node[above] {$f(x)$};
+
+  % Courbe
+  \draw[thick, blue] (0, 0) .. controls (1, 2) and (2, 0.5) .. (3, 2.5);
+  \node[blue, right] at (3, 2.5) {$f \in \mathcal{M}_+$};
+
+  % Fonction simple s <= f
+  \draw[thick, red] (0, 0) -- (0.8, 0) -- (0.8, 0.5) -- (1.5, 0.5) -- (1.5, 1) -- (2.2, 1) -- (2.2, 0.8) -- (2.8, 0.8) -- (2.8, 1.8) -- (3, 1.8) -- (3, 0);
+
+  % Remplissage
+  \fill[red, opacity=0.2] (0, 0) rectangle (0.8, 0);
+  \fill[red, opacity=0.2] (0.8, 0) rectangle (1.5, 0.5);
+  \fill[red, opacity=0.2] (1.5, 0) rectangle (2.2, 1);
+  \fill[red, opacity=0.2] (2.2, 0) rectangle (2.8, 0.8);
+  \fill[red, opacity=0.2] (2.8, 0) rectangle (3, 1.8);
+
+  \node[red] at (1.5, 0.25) {$s \le f$};
+\end{tikzpicture}
+\end{center}
+
+
+\subsection*{Propri\'et\'es Imm\'ediates}
+
+\begin{quote}
+\textbf{Th\'eor\`eme :}
+\end{quote}
+\begin{quote}
+1. \textbf{Positivit\'e :} $\int f d\mu \ge 0$.
+\end{quote}
+\begin{quote}
+2. \textbf{Croissance :} Si $f \le g$, alors $\int f \le \int g$.
+\end{quote}
+\begin{quote}
+3. \textbf{Homog\'en\'eit\'e :} $\int \alpha f d\mu = \alpha \int f d\mu$ pour $\alpha \ge 0$.
+\end{quote}
+
+\section{D\'emonstrations}
+
+\subsection*{D\'emonstration : Relation entre int\'egrale et ensembles de mesure nulle}
+
+Montrons rigoureusement que si $f \in \mathcal{M}_+$ et $\int f d\mu = 0$, alors $f = 0$ presque partout (c'est-\`a-dire que $\mu(\{x \in X \mid f(x) > 0\}) = 0$).
+
+\textbf{Étape 1 : Cadre et d\'efinition des ensembles de niveau.}
+Soit $A = \{x \in X \mid f(x) > 0\}$. Nous voulons prouver que $\mu(A) = 0$.
+Remarquons que si $f(x) > 0$, alors il existe n\'ecessairement un entier $n \ge 1$ tel que $f(x) \ge \frac{1}{n}$.
+Posons, pour tout $n \in \mathbb{N}^*$, l'ensemble de niveau :
+$$A_n = \left\{x \in X \mid f(x) \ge \frac{1}{n}\right\}$$
+Puisque $f$ est une fonction mesurable, chaque ensemble $A_n$ appartient \`a la tribu $\mathcal{F}$.
+
+\textbf{Étape 2 : D\'ecomposition de l'ensemble strict de positivit\'e.}
+L'ensemble $A$ s'\'ecrit comme la r\'eunion d\'enombrable (croissante) des ensembles $A_n$ :
+$$A = \bigcup_{n=1}^\infty A_n$$
+
+\textbf{Étape 3 : Minoration par des fonctions simples.}
+Sur chaque sous-ensemble $A_n$, nous avons par d\'efinition $f(x) \ge \frac{1}{n}$.
+Par cons\'equent, nous pouvons minorer globalement la fonction $f$ par une fonction simple impliquant l'indicatrice de $A_n$ :
+$$f \ge \frac{1}{n} \mathbf{1}_{A_n}$$
+Cette in\'egalit\'e est vraie pour tout $x \in X$. Si $x \notin A_n$, alors $f(x) \ge 0$, ce qui est satisfait puisque $f \in \mathcal{M}_+$.
+
+\textbf{Étape 4 : Utilisation de la croissance de l'int\'egrale.}
+Par la propri\'et\'e de croissance de l'int\'egrale de Lebesgue, si $g \le f$, alors $\int g d\mu \le \int f d\mu$.
+En prenant $g = \frac{1}{n} \mathbf{1}_{A_n}$, qui est une fonction simple, nous obtenons :
+$$\int_X \left(\frac{1}{n} \mathbf{1}_{A_n}\right) d\mu \le \int_X f d\mu$$
+Par d\'efinition de l'int\'egrale d'une fonction simple, le terme de gauche vaut exactement $\frac{1}{n} \mu(A_n)$.
+Donc :
+$$\frac{1}{n} \mu(A_n) \le \int_X f d\mu$$
+
+\textbf{Étape 5 : Exploitation de l'hypoth\`ese principale.}
+Par hypoth\`ese, l'int\'egrale de $f$ est nulle : $\int_X f d\mu = 0$.
+Il s'ensuit que pour tout entier $n \ge 1$ :
+$$\frac{1}{n} \mu(A_n) \le 0$$
+Puisque la mesure $\mu(A_n)$ est par d\'efinition positive ou nulle, et que $\frac{1}{n} > 0$, la seule solution possible est :
+$$\mu(A_n) = 0 \quad \text{pour tout } n \ge 1$$
+
+\textbf{Étape 6 : Conclusion par sous-additivit\'e d\'enombrable.}
+Nous savons que $\mu$ est une mesure (donc $\sigma$-sous-additive). La mesure de l'union d\'enombrable est major\'ee par la somme des mesures :
+$$\mu(A) = \mu\left( \bigcup_{n=1}^\infty A_n \right) \le \sum_{n=1}^\infty \mu(A_n)$$
+Puisque chaque terme de la somme est nul, nous concluons que :
+$$\mu(A) \le \sum_{n=1}^\infty 0 = 0$$
+Comme une mesure est toujours positive, $\mu(A) = 0$. Ainsi, $f = 0$ presque partout.
+
+\section{Application en Intelligence Artificielle}
+
+- \textbf{Le Pont Th\'eorique :} L'int\'egrale de Lebesgue permet de d\'efinir l'\textbf{Esp\'erance math\'ematique} de mani\`ere universelle, que la variable soit discr\`ete, continue ou mixte. $\mathbb{E}[X] = \int_\Omega X(\omega) dP(\omega)$.
+- \textbf{Example Concret :}
+    - \textbf{Calcul de la Perte Attendue (Expected Loss) :} En IA, on minimise $L(\theta) = \int \ell(x, y, \theta) d\mathbb{P}(x, y)$. La mesure $\mathbb{P}$ repr\'esente nos donn\'ees. Lebesgue nous permet de calculer cette int\'egrale m\^eme si nos donn\'ees sont un m\'elange de cat\'egories (discret) et de mesures physiques (continu).
+    - \textbf{Mesures de similarit\'e entre distributions :} La divergence de Jensen-Shannon ou la divergence KL sont d\'efinies par des int\'egrales de Lebesgue. Ces mesures sont le coeur des mod\`eles g\'en\'eratifs et du clustering.
+    - \textbf{Filtrage de Kalman :} La mise \`a jour des croyances dans un syst\`eme dynamique repose sur l'int\'egration de fonctions de vraisemblance, souvent sur des espaces de grande dimension.
+
+\section{Liens S\'emantiques}
+
+- \textbf{Concepts Pr\'ec\'edents requis :} [[Jalon 65 (Fonctions mesurables).md]], [[Jalon 63 (D\'efinition axiomatique d'une mesure).md]]
+- \textbf{Concepts Futurs d\'ependants :} [[Jalon 67 (D\'emonstration du th\'eor\`eme de convergence monotone).md]], [[Jalon 73 (D\'efinition des espaces Lp).md]]
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+
+\subsection*{Int\'egrale de la fonction de Dirichlet (Mesure de Lebesgue) \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énonc\'e :}
+Calculer l'int\'egrale de Lebesgue de $f = \mathbf{1}_\mathbb{Q}$ sur l'intervalle $[0, 1]$ muni de la mesure de Lebesgue $\lambda$.
+
+\textbf{Correction D\'etaill\'ee :}
+\textbf{Étape 1 : Typage de la fonction.}
+La fonction $f = \mathbf{1}_\mathbb{Q}$ est une fonction simple, car elle ne prend qu'un nombre fini de valeurs : $1$ si $x \in \mathbb{Q}$ et $0$ si $x \notin \mathbb{Q}$.
+Elle s'\'ecrit sous la forme standard :
+$$f = 1 \cdot \mathbf{1}_{\mathbb{Q} \cap [0,1]} + 0 \cdot \mathbf{1}_{[0,1] \setminus \mathbb{Q}}$$
+
+\textbf{Étape 2 : Application de la d\'efinition.}
+Par d\'efinition de l'int\'egrale d'une fonction simple :
+$$\int_{[0,1]} f d\lambda = 1 \cdot \lambda(\mathbb{Q} \cap [0,1]) + 0 \cdot \lambda([0,1] \setminus \mathbb{Q})$$
+
+\textbf{Étape 3 : Évaluation des mesures.}
+L'ensemble $\mathbb{Q}$ est d\'enombrable. On peut l'\'ecrire comme $\mathbb{Q} = \bigcup_{n=0}^\infty \{q_n\}$.
+Par $\sigma$-additivit\'e de la mesure de Lebesgue :
+$$\lambda(\mathbb{Q}) = \sum_{n=0}^\infty \lambda(\{q_n\})$$
+Or, la mesure de Lebesgue d'un singleton est nulle : $\lambda(\{q_n\}) = 0$.
+Donc $\lambda(\mathbb{Q}) = 0$, et a fortiori $\lambda(\mathbb{Q} \cap [0,1]) = 0$.
+
+\textbf{Étape 4 : Calcul final.}
+En remplaçant dans la formule :
+$$\int_{[0,1]} f d\lambda = 1 \cdot 0 + 0 \cdot 1 = 0$$
+
+\textbf{Conclusion :}
+L'int\'egrale de Lebesgue de la fonction indicatrice des rationnels sur $[0,1]$ est nulle. Remarquons que cette fonction n'est pas int\'egrable au sens de Riemann, illustrant la sup\'eriorit\'e de la construction de Lebesgue.
+
+
+\subsection*{Mesure de comptage et s\'eries \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énonc\'e :}
+Soit $X = \mathbb{N}$ muni de la tribu discr\`ete $\mathcal{P}(\mathbb{N})$ et de la mesure de comptage $\mu$.
+Montrer que pour toute fonction $f : \mathbb{N} \to \mathbb{R}_+$, l'int\'egrale de Lebesgue de $f$ par rapport \`a $\mu$ coïncide avec la somme de la s\'erie de terme g\'en\'eral $f(n)$ :
+$$\int_{\mathbb{N}} f d\mu = \sum_{n=0}^\infty f(n)$$
+
+\textbf{Correction D\'etaill\'ee :}
+\textbf{Étape 1 : Cas des fonctions simples.}
+Soit $s$ une fonction simple positive sur $\mathbb{N}$ s'annulant en dehors d'un sous-ensemble fini $K \subset \mathbb{N}$.
+Elle s'\'ecrit $s = \sum_{n \in K} s(n) \mathbf{1}_{\{n\}}$.
+Son int\'egrale par rapport \`a la mesure de comptage est :
+$$\int_{\mathbb{N}} s d\mu = \sum_{n \in K} s(n) \mu(\{n\})$$
+Puisque $\mu$ est la mesure de comptage, pour tout singleton, $\mu(\{n\}) = 1$.
+Donc $\int_{\mathbb{N}} s d\mu = \sum_{n \in K} s(n)$.
+
+\textbf{Étape 2 : Approximation de la fonction mesurable positive.}
+Soit $f \in \mathcal{M}_+$. D\'efinissons une suite croissante de fonctions simples $(s_N)_{N \in \mathbb{N}}$ par :
+$$s_N(n) = f(n) \mathbf{1}_{\{0, 1, \dots, N\}}(n)$$
+Il est clair que $0 \le s_N \le f$ pour tout $N$.
+
+\textbf{Étape 3 : Utilisation de la d\'efinition par le supremum.}
+Par d\'efinition, $\int_{\mathbb{N}} f d\mu = \sup \left\{ \int_{\mathbb{N}} s d\mu \mid 0 \le s \le f, s \text{ simple} \right\}$.
+D'une part, comme $s_N \le f$, on a :
+$$\int_{\mathbb{N}} s_N d\mu = \sum_{n=0}^N f(n) \le \int_{\mathbb{N}} f d\mu$$
+En passant \`a la limite quand $N \to \infty$ (ou \`a la borne sup\'erieure), on obtient :
+$$\sum_{n=0}^\infty f(n) \le \int_{\mathbb{N}} f d\mu$$
+
+\textbf{Étape 4 : In\'egalit\'e inverse.}
+Soit $s$ une fonction simple quelconque telle que $0 \le s \le f$.
+Soit $s = \sum_{i=1}^k a_i \mathbf{1}_{A_i}$.
+Si un $A_i$ est infini et $a_i > 0$, alors $\int_{\mathbb{N}} s d\mu = \infty$. Comme $s \le f$, on a alors $a_i \le f(n)$ pour une infinit\'e de $n$, d'où $\sum_{n=0}^\infty f(n) = \infty$, l'\'egalit\'e est triviale.
+Si tous les $A_i$ pour lesquels $a_i > 0$ sont finis, alors $s$ ne prend des valeurs non nulles que sur un ensemble fini $K$.
+$$\int_{\mathbb{N}} s d\mu = \sum_{n \in K} s(n) \le \sum_{n \in K} f(n) \le \sum_{n=0}^\infty f(n)$$
+Puisque ceci est vrai pour toute fonction simple $s \le f$, en prenant le supremum sur $s$, on a :
+$$\int_{\mathbb{N}} f d\mu \le \sum_{n=0}^\infty f(n)$$
+
+\textbf{Conclusion :}
+Les deux in\'egalit\'es d\'emontrent l'\'egalit\'e. L'int\'egrale de Lebesgue subsume ainsi la th\'eorie des s\'eries \`a termes positifs.
+
+
+\subsection*{Int\'egrale par rapport \`a une mesure de Dirac \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énonc\'e :}
+Soit $(X, \mathcal{F})$ un espace mesurable, $a \in X$, et $\delta_a$ la mesure de Dirac en $a$.
+D\'emontrer que pour toute fonction mesurable positive $f \in \mathcal{M}_+$, on a :
+$$\int_X f d\delta_a = f(a)$$
+
+\textbf{Correction D\'etaill\'ee :}
+\textbf{Étape 1 : Int\'egration d'une indicatrice.}
+Soit $A \in \mathcal{F}$. L'int\'egrale de la fonction indicatrice $\mathbf{1}_A$ est :
+$$\int_X \mathbf{1}_A d\delta_a = \delta_a(A)$$
+Par d\'efinition de la mesure de Dirac :
+- Si $a \in A$, $\delta_a(A) = 1$, et $\mathbf{1}_A(a) = 1$.
+- Si $a \notin A$, $\delta_a(A) = 0$, et $\mathbf{1}_A(a) = 0$.
+Dans tous les cas, on a l'\'egalit\'e : $\int_X \mathbf{1}_A d\delta_a = \mathbf{1}_A(a)$.
+
+\textbf{Étape 2 : Extension aux fonctions simples.}
+Soit $s = \sum_{i=1}^n c_i \mathbf{1}_{A_i}$ une fonction simple positive, avec les $A_i$ formant une partition de $X$.
+Par lin\'earit\'e de l'int\'egrale pour les fonctions simples :
+$$\int_X s d\delta_a = \sum_{i=1}^n c_i \int_X \mathbf{1}_{A_i} d\delta_a = \sum_{i=1}^n c_i \delta_a(A_i)$$
+Puisque les $A_i$ partitionnent $X$, le point $a$ appartient \`a exactement un seul ensemble de la partition, disons $A_k$.
+Donc $\delta_a(A_k) = 1$ et pour $i \neq k$, $\delta_a(A_i) = 0$.
+La somme se r\'eduit donc \`a $c_k$. Or, par d\'efinition de $s$, on a pr\'ecis\'ement $s(a) = c_k$.
+Donc $\int_X s d\delta_a = s(a)$.
+
+\textbf{Étape 3 : G\'en\'eralisation \`a $\mathcal{M}_+$.}
+Soit $f \in \mathcal{M}_+$. Par d\'efinition, l'int\'egrale est le supremum des int\'egrales des fonctions simples $s \le f$ :
+$$\int_X f d\delta_a = \sup_{s \le f} \int_X s d\delta_a = \sup_{s \le f} s(a)$$
+Puisque $s(x) \le f(x)$ pour tout $x$, en particulier $s(a) \le f(a)$. Donc le supremum est inf\'erieur ou \'egal \`a $f(a)$ :
+$$\int_X f d\delta_a \le f(a)$$
+Pour montrer l'in\'egalit\'e inverse, consid\'erons la fonction simple particuli\`ere $s_0 = f(a) \mathbf{1}_{\{a\}}$.
+Cette fonction est bien mesurable (car $\{a\}$ est mesurable), elle est positive, et pour tout $x \in X$, $s_0(x) \le f(x)$.
+Donc $s_0$ fait partie de l'ensemble sur lequel on prend le supremum.
+Ainsi :
+$$\int_X f d\delta_a \ge \int_X s_0 d\delta_a = f(a) \delta_a(\{a\}) = f(a) \cdot 1 = f(a)$$
+
+\textbf{Conclusion :}
+On a bien $\int_X f d\delta_a = f(a)$ pour toute fonction $f \in \mathcal{M}_+$.
+
+
+\subsection*{Lin\'earit\'e de l'int\'egrale pour des fonctions mesurables (cas simple) \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énonc\'e :}
+Soit $f$ une fonction mesurable positive, et $\alpha \ge 0$ une constante.
+D\'emontrer rigoureusement \`a partir de la d\'efinition que $\int_X (\alpha f) d\mu = \alpha \int_X f d\mu$.
+(Homog\'en\'eit\'e de l'int\'egrale).
+
+\textbf{Correction D\'etaill\'ee :}
+\textbf{Étape 1 : Traitement du cas trivial $\alpha = 0$.}
+Si $\alpha = 0$, alors $\alpha f = 0 \cdot f = 0$.
+L'int\'egrale de la fonction nulle est $0$.
+De l'autre côt\'e, $0 \cdot \int_X f d\mu = 0$ (avec la convention $0 \cdot \infty = 0$).
+L'\'egalit\'e est donc v\'erifi\'ee.
+
+\textbf{Étape 2 : Cas $\alpha > 0$.}
+Par d\'efinition :
+$$\int_X (\alpha f) d\mu = \sup \left\{ \int_X t d\mu \mid 0 \le t \le \alpha f, t \text{ simple} \right\}$$
+Puisque $\alpha > 0$, la condition $t \le \alpha f$ est \'equivalente \`a $\frac{1}{\alpha} t \le f$.
+Remarquons que $t$ est une fonction simple si et seulement si $s = \frac{1}{\alpha} t$ est une fonction simple.
+Ainsi, lorsque $t$ parcourt l'ensemble des fonctions simples telles que $t \le \alpha f$, la fonction $s = \frac{1}{\alpha} t$ parcourt l'ensemble des fonctions simples telles que $s \le f$.
+
+\textbf{Étape 3 : Substitution et propri\'et\'e du supremum.}
+On peut donc r\'e\'ecrire l'ensemble sur lequel on prend le supremum :
+$$\int_X (\alpha f) d\mu = \sup \left\{ \int_X (\alpha s) d\mu \mid 0 \le s \le f, s \text{ simple} \right\}$$
+Or, on sait d\'ej\`a que pour une fonction simple $s = \sum a_i \mathbf{1}_{A_i}$, $\alpha s = \sum (\alpha a_i) \mathbf{1}_{A_i}$.
+Son int\'egrale est $\int_X (\alpha s) d\mu = \sum (\alpha a_i) \mu(A_i) = \alpha \sum a_i \mu(A_i) = \alpha \int_X s d\mu$.
+L'\'equation devient :
+$$\int_X (\alpha f) d\mu = \sup \left\{ \alpha \int_X s d\mu \mid 0 \le s \le f, s \text{ simple} \right\}$$
+
+\textbf{Étape 4 : Sortie de la constante du supremum.}
+Puisque $\alpha > 0$, la constante $\alpha$ peut \^etre sortie du supremum : $\sup(c \cdot A) = c \cdot \sup(A)$.
+$$\int_X (\alpha f) d\mu = \alpha \sup \left\{ \int_X s d\mu \mid 0 \le s \le f, s \text{ simple} \right\}$$
+Le supremum n'est autre que la d\'efinition de l'int\'egrale de $f$ :
+$$\int_X (\alpha f) d\mu = \alpha \int_X f d\mu$$
+
+\textbf{Conclusion :}
+L'homog\'en\'eit\'e positive est v\'erifi\'ee rigoureusement.
+
+
+\subsection*{L'in\'egalit\'e de Markov \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énonc\'e :}
+Soit $f \in \mathcal{M}_+$. D\'emontrer l'in\'egalit\'e de Markov :
+Pour tout $\alpha > 0$,
+$$\mu(\{x \in X \mid f(x) \ge \alpha\}) \le \frac{1}{\alpha} \int_X f d\mu$$
+
+\textbf{Correction D\'etaill\'ee :}
+\textbf{Étape 1 : Cadre g\'eom\'etrique.}
+Soit $\alpha > 0$. Posons l'ensemble $A_\alpha = \{x \in X \mid f(x) \ge \alpha\}$.
+Puisque $f$ est une fonction mesurable, $A_\alpha$ est un ensemble mesurable ($A_\alpha \in \mathcal{F}$).
+
+\textbf{Étape 2 : Minoration de la fonction $f$.}
+Sur l'ensemble $A_\alpha$, nous savons par d\'efinition que $f(x) \ge \alpha$.
+Sur le compl\'ementaire $A_\alpha^c$, nous savons que $f(x) \ge 0$ (car $f \in \mathcal{M}_+$).
+Nous pouvons synth\'etiser cela par une unique in\'egalit\'e valable sur tout l'espace $X$ en utilisant la fonction indicatrice de l'ensemble $A_\alpha$ :
+Pour tout $x \in X$, $f(x) \ge \alpha \mathbf{1}_{A_\alpha}(x)$.
+
+\textbf{Étape 3 : Croissance de l'int\'egrale.}
+La fonction $g = \alpha \mathbf{1}_{A_\alpha}$ est une fonction simple positive.
+Nous appliquons la propri\'et\'e de croissance de l'int\'egrale. Si $g \le f$, alors :
+$$\int_X g d\mu \le \int_X f d\mu$$
+Soit :
+$$\int_X (\alpha \mathbf{1}_{A_\alpha}) d\mu \le \int_X f d\mu$$
+
+\textbf{Étape 4 : Calcul de l'int\'egrale de la fonction simple.}
+Par d\'efinition de l'int\'egrale d'une fonction simple :
+$$\int_X (\alpha \mathbf{1}_{A_\alpha}) d\mu = \alpha \mu(A_\alpha)$$
+
+\textbf{Étape 5 : Conclusion.}
+En substituant ce r\'esultat dans l'in\'egalit\'e, nous obtenons :
+$$\alpha \mu(A_\alpha) \le \int_X f d\mu$$
+Comme $\alpha > 0$, on peut diviser par $\alpha$ (m\^eme si l'int\'egrale est infinie, l'in\'egalit\'e reste vraie avec la convention ad\'equate) :
+$$\mu(A_\alpha) \le \frac{1}{\alpha} \int_X f d\mu$$
+Ce r\'esultat fondamental est \`a la base de nombreuses in\'egalit\'es de concentration en probabilit\'es (notamment l'in\'egalit\'e de Bienaym\'e-Tchebychev).
+
+
+\subsection*{Int\'egrale sur une r\'eunion disjointe \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énonc\'e :}
+Soit $f \in \mathcal{M}_+$. Soient $A, B \in \mathcal{F}$ deux ensembles disjoints ($A \cap B = \emptyset$).
+On note $\int_E f d\mu := \int_X (f \mathbf{1}_E) d\mu$.
+Montrer que $\int_{A \cup B} f d\mu = \int_A f d\mu + \int_B f d\mu$.
+
+\textbf{Correction D\'etaill\'ee :}
+\textbf{Étape 1 : R\'e\'ecriture de l'indicatrice.}
+Puisque $A$ et $B$ sont disjoints, la fonction indicatrice de leur r\'eunion est la somme des fonctions indicatrices :
+$$\mathbf{1}_{A \cup B} = \mathbf{1}_A + \mathbf{1}_B$$
+Par cons\'equent, la fonction \`a int\'egrer est :
+$$f \mathbf{1}_{A \cup B} = f (\mathbf{1}_A + \mathbf{1}_B) = f \mathbf{1}_A + f \mathbf{1}_B$$
+
+\textbf{Étape 2 : Cas des fonctions simples.}
+Si $f$ est une fonction simple positive, disons $s$, alors $s \mathbf{1}_A$ et $s \mathbf{1}_B$ sont aussi des fonctions simples.
+Par lin\'earit\'e de l'int\'egrale sur les fonctions simples :
+$$\int_X s \mathbf{1}_{A \cup B} d\mu = \int_X (s \mathbf{1}_A + s \mathbf{1}_B) d\mu = \int_X s \mathbf{1}_A d\mu + \int_X s \mathbf{1}_B d\mu$$
+
+\textbf{Étape 3 : G\'en\'eralisation (esquisse, car le th\'eor\`eme complet de lin\'earit\'e requiert Beppo-Levi).}
+Par d\'efinition, $\int_{A \cup B} f d\mu = \sup \{ \int_X s d\mu \mid 0 \le s \le f \mathbf{1}_{A \cup B}, s \text{ simple} \}$.
+Toute fonction simple $s$ major\'ee par $f \mathbf{1}_{A \cup B}$ peut se d\'ecomposer en $s = s \mathbf{1}_A + s \mathbf{1}_B = s_A + s_B$.
+Ici, $s_A \le f \mathbf{1}_A$ et $s_B \le f \mathbf{1}_B$.
+L'int\'egrale devient le supremum des sommes $\int s_A d\mu + \int s_B d\mu$.
+Le supremum de sommes d'ensembles ind\'ependants (car \`a support disjoint) est la somme des supremums :
+$$\sup (\int s_A d\mu + \int s_B d\mu) = \sup (\int s_A d\mu) + \sup (\int s_B d\mu)$$
+Ce qui donne bien $\int_A f d\mu + \int_B f d\mu$.
+
+
+\subsection*{Limite d'une int\'egrale tronqu\'ee \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énonc\'e :}
+Soit $f \in \mathcal{M}_+$. On d\'efinit $f_n(x) = \min(f(x), n)$.
+Montrer que pour tout $x$, $f_n(x)$ est une suite croissante, et exprimer la relation entre $\sup_n \int f_n d\mu$ et $\int f d\mu$ (en l'admettant comme cas particulier de Beppo-Levi, ou en le montrant directement).
+
+\textbf{Correction D\'etaill\'ee :}
+\textbf{Étape 1 : Croissance de la suite.}
+Pour tout $x \in X$, $f_n(x) = \min(f(x), n)$.
+Évidemment, $\min(f(x), n) \le \min(f(x), n+1)$ car $n < n+1$.
+Donc $f_n \le f_{n+1}$. La suite de fonctions est positive et croissante.
+De plus, $\lim_{n \to \infty} f_n(x) = f(x)$.
+
+\textbf{Étape 2 : Relation d'ordre sur les int\'egrales.}
+Puisque $f_n \le f$, la croissance de l'int\'egrale assure que pour tout $n$, $\int f_n d\mu \le \int f d\mu$.
+En passant au supremum (ou \`a la limite, puisque la suite est croissante) :
+$$\sup_n \int f_n d\mu \le \int f d\mu$$
+
+\textbf{Étape 3 : In\'egalit\'e inverse.}
+L'\'egalit\'e $\sup_n \int f_n d\mu = \int f d\mu$ est une cons\'equence directe du th\'eor\`eme de convergence monotone (Beppo-Levi), qui sera formellement prouv\'e au Jalon suivant.
+L'int\'er\^et de cette troncature est que chaque $f_n$ est born\'ee. Si la mesure de l'espace est finie, les $f_n$ sont dans des espaces plus r\'eguliers (comme $L^\infty$), facilitant certains passages \`a la limite analytiques.
+
+
+\subsection*{Support d'une fonction et mesure nulle \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énonc\'e :}
+Soit $f \in \mathcal{M}_+$. Soit $E = \{x \in X \mid f(x) > 0\}$ le support strict de $f$.
+Montrer que si $\mu(E) = 0$, alors $\int_X f d\mu = 0$.
+
+\textbf{Correction D\'etaill\'ee :}
+\textbf{Étape 1 : Les fonctions simples minorantes.}
+Soit $s$ une fonction simple telle que $0 \le s \le f$.
+$s$ s'\'ecrit $s = \sum_{i=1}^k a_i \mathbf{1}_{A_i}$, où on suppose que $a_i > 0$ et les $A_i$ sont disjoints.
+Puisque $s(x) \le f(x)$, si $s(x) > 0$, alors on a obligatoirement $f(x) > 0$.
+Donc pour tout $x \in A_i$, on a $f(x) \ge a_i > 0$, d'où $x \in E$.
+Cela implique que $A_i \subset E$ pour tout $i$.
+
+\textbf{Étape 2 : Mesure des ensembles de niveau de s.}
+Par la propri\'et\'e de monotonie de la mesure, si $A_i \subset E$, alors $\mu(A_i) \le \mu(E)$.
+Par hypoth\`ese, $\mu(E) = 0$. Donc $\mu(A_i) \le 0$.
+Comme une mesure est positive, on a $\mu(A_i) = 0$ pour tout $i$.
+
+\textbf{Étape 3 : Int\'egrale de s.}
+L'int\'egrale de la fonction simple est :
+$$\int_X s d\mu = \sum_{i=1}^k a_i \mu(A_i) = \sum_{i=1}^k a_i \cdot 0 = 0$$
+
+\textbf{Étape 4 : Passage au supremum.}
+Par d\'efinition, l'int\'egrale de $f$ est le supremum de ces int\'egrales :
+$$\int_X f d\mu = \sup_{0 \le s \le f} \int_X s d\mu = \sup_{0 \le s \le f} 0 = 0$$
+
+\textbf{Conclusion :}
+Une fonction qui est non-nulle uniquement sur un ensemble de mesure nulle a une int\'egrale nulle. Combin\'e au r\'esultat du cours, on a l'\'equivalence : $\int f d\mu = 0 \iff f = 0$ presque partout.
+
+
+\subsection*{Int\'egrale sur des espaces produits (Introduction) \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énonc\'e :}
+Consid\'erons l'espace $X = \{1, 2\}$ et la tribu $\mathcal{P}(X)$, muni de la mesure $\mu(\{1\}) = \alpha$, $\mu(\{2\}) = \beta$.
+Calculer explicitement l'int\'egrale d'une fonction quelconque $f: X \to \mathbb{R}_+$ d\'efinie par $f(1) = u$, $f(2) = v$.
+
+\textbf{Correction D\'etaill\'ee :}
+\textbf{Étape 1 : Forme simple.}
+Dans ce cas discret fini, TOUTE fonction est une fonction simple.
+En effet, on peut \'ecrire $f = u \mathbf{1}_{\{1\}} + v \mathbf{1}_{\{2\}}$.
+
+\textbf{Étape 2 : Calcul direct.}
+Par d\'efinition de l'int\'egrale d'une fonction simple :
+$$\int_X f d\mu = u \cdot \mu(\{1\}) + v \cdot \mu(\{2\}) = u\alpha + v\beta$$
+
+\textbf{Conclusion :}
+Sur un espace fini, l'int\'egrale de Lebesgue se r\'eduit \`a une somme pond\'er\'ee (ou produit scalaire de dimension finie). C'est le socle de l'esp\'erance math\'ematique des variables al\'eatoires discr\`etes finies.
+
+
+\subsection*{Absolue continuit\'e (cas discret) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énonc\'e :}
+Soit $\mu$ une mesure. On d\'efinit une fonction d'ensemble $\nu(A) = \int_A f d\mu = \int_X f \mathbf{1}_A d\mu$, avec $f \in \mathcal{M}_+$.
+Montrer que si $\mu(A) = 0$, alors $\nu(A) = 0$. (Ceci prouve que $\nu$ est absolument continue par rapport \`a $\mu$).
+
+\textbf{Correction D\'etaill\'ee :}
+\textbf{Étape 1 : Traduction du probl\`eme.}
+Nous voulons montrer que si $\mu(A) = 0$, l'int\'egrale de $g = f \mathbf{1}_A$ par rapport \`a $\mu$ est nulle.
+
+\textbf{Étape 2 : Support de la fonction.}
+Où la fonction $g$ est-elle strictement positive ?
+$g(x) > 0 \iff f(x) \mathbf{1}_A(x) > 0 \iff f(x) > 0 \text{ ET } x \in A$.
+Donc, le support strict de $g$, notons-le $E_g = \{x \mid g(x) > 0\}$, est un sous-ensemble de $A$ : $E_g \subset A$.
+
+\textbf{Étape 3 : Mesure du support.}
+Par croissance de la mesure, $\mu(E_g) \le \mu(A)$.
+Puisque $\mu(A) = 0$ par hypoth\`ese, on a $\mu(E_g) = 0$.
+
+\textbf{Étape 4 : Utilisation du r\'esultat \'etabli.}
+Nous avons vu (Exo 8) que si le support strict d'une fonction mesurable positive est de mesure nulle, alors son int\'egrale est nulle.
+Ainsi, $\int_X g d\mu = 0$, ce qui signifie exactement que $\nu(A) = 0$.
+
+\textbf{Conclusion :}
+La "mesure \`a densit\'e" $\nu$ h\'erite des propri\'et\'es de nullit\'e de la mesure de base $\mu$. C'est le principe fondamental qui fonde le th\'eor\`eme de Radon-Nikodym.
+
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+
+\subsection*{Repr\'esentation algorithmique d'une fonction simple}
+
+Ce TP impl\'emente la d\'efinition formelle d'une fonction simple sur un univers fini et calcule son int\'egrale exacte, en \'evitant toute erreur de flottant sur les mesures par l'usage de types discrets.
+
+\begin{lstlisting}
+def integrale_simple(valeurs_ensembles, mesure_base):
+    # valeurs_ensembles est une liste de tuples (a_i, A_i)
+    # ou a_i est la valeur constante sur l'ensemble A_i.
+    # mesure_base est un dictionnaire associant chaque element de l'univers \`a son "poids"
+
+    integrale_totale = 0
+
+    for a_i, A_i in valeurs_ensembles:
+        # Calcul strict de la mesure de l'ensemble A_i
+        mesure_A_i = 0
+        for element in A_i:
+            if element in mesure_base:
+                mesure_A_i = mesure_A_i + mesure_base[element]
+
+        # Incrementation de l'integrale de Lebesgue
+        integrale_totale = integrale_totale + (a_i * mesure_A_i)
+
+    return integrale_totale
+
+# Validation Mathematique
+mesure_univers = {1: 0.2, 2: 0.3, 3: 0.5}
+# s = 10 * 1_{1, 2} + 5 * 1_{3}
+fonction_s = [(10, [1, 2]), (5, [3])]
+
+resultat = integrale_simple(fonction_s, mesure_univers)
+# Attendu: 10 * (0.2 + 0.3) + 5 * (0.5) = 10 * 0.5 + 2.5 = 7.5
+assert abs(resultat - 7.5) <= 1e-9, "L'integrale simple est incorrecte"
+print("Validation TP1 reussie :", resultat)
+\end{lstlisting}
+
+
+\subsection*{Approximation de l'int\'egrale de Lebesgue par supremum}
+
+Nous simulons le calcul de l'int\'egrale de $f(x) = x^2$ sur $[0, 1]$ par la d\'efinition de Lebesgue : on partitionne l'axe des ORDONNEES (valeurs), contrairement \`a Riemann qui partitionne l'axe des abscisses.
+
+\begin{lstlisting}
+def lebesgue_approximation_x2_sur_0_1(n_valeurs):
+    # On subdivise l'espace des valeurs [0, 1] en n_valeurs intervalles
+    # f(x) = x^2 va de 0 a 1.
+    pas_valeur = 1.0 / n_valeurs
+    integrale_approx = 0.0
+
+    for k in range(n_valeurs):
+        # Valeur en bas du rectangle horizontal : y_k
+        y_k = k * pas_valeur
+        y_k_plus_1 = (k + 1) * pas_valeur
+
+        # Trouver l'ensemble A_k = {x dans [0,1] | y_k <= f(x) < y_k_plus_1}
+        # f(x) = x^2, donc x = sqrt(y)
+        # A_k = [sqrt(y_k), sqrt(y_k_plus_1)[
+
+        # Mesure de Lebesgue de A_k (longueur de l'intervalle)
+        borne_inf = y_k ** 0.5
+        borne_sup = y_k_plus_1 ** 0.5
+        mesure_A_k = borne_sup - borne_inf
+
+        # Contribution a l'integrale (on prend la borne inf pour minorer f)
+        integrale_approx = integrale_approx + (y_k * mesure_A_k)
+
+    return integrale_approx
+
+res = lebesgue_approximation_x2_sur_0_1(1000)
+# La vraie valeur est \int_0^1 x^2 dx = 1/3 = 0.3333...
+assert res <= 0.334 and res >= 0.332, "L'approximation de Lebesgue par defaut est defectueuse"
+print("Validation TP2 reussie :", res)
+\end{lstlisting}
+
+
+\subsection*{L'in\'egalit\'e de Markov algorithmique}
+
+Nous v\'erifions exp\'erimentalement l'in\'egalit\'e de Markov : $\mu(\{x \mid f(x) \ge \alpha\}) \le \frac{1}{\alpha} \int f$.
+
+\begin{lstlisting}
+def verification_markov(valeurs, probabilites, alpha):
+    # Calcul de l'esperance (Integrale de f dP)
+    esperance = 0.0
+    for i in range(len(valeurs)):
+        esperance = esperance + valeurs[i] * probabilites[i]
+
+    # Calcul de la mesure (probabilite) de l'ensemble {x | f(x) >= alpha}
+    mesure_A_alpha = 0.0
+    for i in range(len(valeurs)):
+        if valeurs[i] >= alpha:
+            mesure_A_alpha = mesure_A_alpha + probabilites[i]
+
+    borne_markov = esperance / alpha
+
+    return mesure_A_alpha, borne_markov
+
+val = [0, 1, 2, 5, 10]
+prob = [0.1, 0.4, 0.3, 0.15, 0.05]
+# Esperance E[X] = 0 + 0.4 + 0.6 + 0.75 + 0.5 = 2.25
+
+alpha_test = 4.0
+mesure, borne = verification_markov(val, prob, alpha_test)
+
+assert mesure <= borne, "Violaton flagrante du Theoreme de Markov"
+print("Validation TP3 reussie : Mesure =", mesure, "<= Borne =", borne)
+\end{lstlisting}
+
+
+\subsection*{Int\'egration d'une fonction avec support de mesure nulle}
+
+Impl\'ementation du th\'eor\`eme montrant que si une fonction n'est strictement positive que sur un ensemble de mesure nulle, alors son int\'egrale est nulle.
+
+\begin{lstlisting}
+def integrale_support_nul(valeurs_x, fonction_f, oracle_mesure):
+    integrale = 0.0
+
+    for x in valeurs_x:
+        val = fonction_f(x)
+        # La fonction oracle_mesure retourne la mesure du singleton {x}
+        mesure_x = oracle_mesure(x)
+
+        # Ajout a l'integrale globale
+        integrale = integrale + (val * mesure_x)
+
+    return integrale
+
+# L'espace est {0, 1, 2, 3, 4, 5}
+# L'oracle de mesure donne un poids 0.5 a '0' et '1', et un poids STRICTEMENT 0 aux autres.
+def mon_oracle(x):
+    if x == 0 or x == 1:
+        return 0.5
+    return 0.0
+
+# La fonction vaut 1000 sur '4' et '5' (qui sont de mesure nulle)
+def ma_fonction(x):
+    if x >= 4:
+        return 1000.0
+    return 0.0
+
+res_integrale = integrale_support_nul([0, 1, 2, 3, 4, 5], ma_fonction, mon_oracle)
+
+# L'integrale doit etre rigoureusement nulle car la fonction s'annule sur les ensembles de mesure non nulle
+assert res_integrale == 0.0, "Theoreme de la mesure nulle invalide"
+print("Validation TP4 reussie : Integrale =", res_integrale)
+\end{lstlisting}
+
+
+\subsection*{Mesure de comptage et conversion en s\'erie}
+
+D\'emonstration par le code que l'int\'egrale de Lebesgue avec la mesure de comptage \'equivaut exactement \`a la sommation d'une s\'erie num\'erique standard.
+
+\begin{lstlisting}
+def integrale_mesure_comptage(termes_suite, N_max):
+    # Mesure de comptage : chaque element a pour mesure 1
+    integrale = 0.0
+    for n in range(N_max):
+        # f(n) * \mu({n}) = f(n) * 1
+        integrale = integrale + (termes_suite(n) * 1.0)
+
+    return integrale
+
+# On considere la suite f(n) = (1/2)^n
+def suite_geometrique(n):
+    return (0.5) ** n
+
+# Calcul sur les 50 premiers termes
+res_comptage = integrale_mesure_comptage(suite_geometrique, 50)
+
+# La limite theorique de la serie sum (1/2)^n de 0 a infini est 1 / (1 - 1/2) = 2.0
+assert res_comptage <= 2.0, "L'integrale depasse la borne theorique de la serie"
+assert abs(res_comptage - 2.0) < 1e-5, "La convergence est defectueuse"
+print("Validation TP5 reussie : L'integrale converge vers la somme de la serie =", res_comptage)
+\end{lstlisting}
+
+
+
+\end{document}
