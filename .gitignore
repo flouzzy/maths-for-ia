@@ -5,3 +5,6 @@
 *.log
 *.toc
 __pycache__/
+*.aux
+*.log
+*.toc
