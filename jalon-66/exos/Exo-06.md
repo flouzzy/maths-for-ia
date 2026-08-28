@@ -1,24 +1,18 @@
-# Exercice 6 : Linéarité pour les fonctions simples \quad $\bigstar\bigstar\bigstar\bigstar\star$
+# Majoration par l'intégrale de Lebesgue
 
-**Énoncé :**
-Soient $s_1$ et $s_2$ deux fonctions simples positives. Prouver que $\int (s_1 + s_2) d\mu = \int s_1 d\mu + \int s_2 d\mu$.
+**Difficulté :** $\star\star\star\star☆$
 
-**Correction :**
-Soit $s_1 = \sum_{i=1}^n a_i \mathbf{1}_{A_i}$ et $s_2 = \sum_{j=1}^m b_j \mathbf{1}_{B_j}$ les formes canoniques.
-Les familles $(A_i)$ et $(B_j)$ sont des partitions de $X$.
+## Énoncé
 
-L'ensemble $X$ peut être partitionné par les intersections $A_i \cap B_j$ (pour $1 \le i \le n, 1 \le j \le m$).
-Sur chaque ensemble $A_i \cap B_j$, la fonction $s_1 + s_2$ est constante et vaut $a_i + b_j$.
+Montrez rigoureusement (en utilisant la définition par supremum) que pour une fonction mesurable $f \geq 0$ et une constante $c \geq 0$, on a $\int_X cf \, d\mu = c \int_X f \, d\mu$. (On supposera $c > 0$, le cas $c=0$ étant trivial).
 
-La fonction $s_1 + s_2$ est donc simple et peut s'écrire :
-$s_1 + s_2 = \sum_{i,j} (a_i + b_j) \mathbf{1}_{A_i \cap B_j}$.
+---
 
-Par définition de l'intégrale d'une fonction simple :
-$\int (s_1 + s_2) d\mu = \sum_{i,j} (a_i + b_j) \mu(A_i \cap B_j)$
-$= \sum_{i,j} a_i \mu(A_i \cap B_j) + \sum_{i,j} b_j \mu(A_i \cap B_j)$.
+## Correction détaillée
 
-Puisque $(B_j)$ est une partition, $\cup_j (A_i \cap B_j) = A_i$, et par additivité de la mesure, $\sum_j \mu(A_i \cap B_j) = \mu(A_i)$.
-De même, $\sum_i \mu(A_i \cap B_j) = \mu(B_j)$.
-
-On obtient :
-$\int (s_1 + s_2) d\mu = \sum_{i} a_i \mu(A_i) + \sum_{j} b_j \mu(B_j) = \int s_1 d\mu + \int s_2 d\mu$.
+Soit $g = cf$. Par définition : $\int_X g \, d\mu = \sup \{ \int_X s \, d\mu \mid s \in \mathcal{E}^+, 0 \leq s \leq cf \} $.
+Pour toute $s \in \mathcal{E}^+$, $0 \leq s \leq cf \iff 0 \leq \frac{1}{c}s \leq f$. Or, si $s \in \mathcal{E}^+$, alors $t = \frac{1}{c}s \in \mathcal{E}^+$, et par linéarité de l'intégrale sur $\mathcal{E}^+$ (vue en cours), $\int_X s \, d\mu = c \int_X t \, d\mu$.
+L'ensemble dont on prend le supremum se réécrit alors :
+$$ \left\{ c \int_X t \, d\mu \mid t \in \mathcal{E}^+, 0 \leq t \leq f \right\} $$
+En factorisant la constante $c > 0$ hors du supremum :
+$$ \sup \left\{ c \int_X t \, d\mu \right\} = c \sup \left\{ \int_X t \, d\mu \right\} = c \int_X f \, d\mu $$

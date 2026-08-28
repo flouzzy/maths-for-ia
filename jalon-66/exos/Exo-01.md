@@ -1,16 +1,19 @@
-# Exercice 1 : Calcul d'intégrale de fonction simple \quad $\bigstar\star\star\star\star$
+# Intégrale d'une fonction en escalier
 
-**Énoncé :**
-Soit $X = \{1, 2, 3, 4, 5\}$ muni de la mesure de comptage $\mu$. Soit $s(x) = x^2$ si $x$ est pair, et $s(x) = x$ si $x$ est impair. Calculer $\int_X s \, d\mu$.
+**Difficulté :** $\star\☆☆☆☆$
 
-**Correction :**
-La fonction $s$ prend les valeurs : $s(1)=1, s(2)=4, s(3)=3, s(4)=16, s(5)=5$.
+## Énoncé
 
-Écrivons $s$ sous forme canonique :
-$s = 1 \cdot \mathbf{1}_{\{1\}} + 3 \cdot \mathbf{1}_{\{3\}} + 4 \cdot \mathbf{1}_{\{2\}} + 5 \cdot \mathbf{1}_{\{5\}} + 16 \cdot \mathbf{1}_{\{4\}}$.
+Soit $(X, \mathcal{A}, \mu) = ([0, 2], \mathcal{B}([0, 2]), \lambda)$. Soit la fonction étagée $s(x) = 3 \cdot \mathbb{1}_{[0,1[}(x) + 7 \cdot \mathbb{1}_{[1,2]}(x)$. Calculez rigoureusement $\int_{[0,2]} s \, d\lambda$.
 
-L'intégrale est :
-$\int_X s \, d\mu = 1 \cdot \mu(\{1\}) + 3 \cdot \mu(\{3\}) + 4 \cdot \mu(\{2\}) + 5 \cdot \mu(\{5\}) + 16 \cdot \mu(\{4\})$.
+---
 
-Puisque $\mu$ est la mesure de comptage, chaque singleton a une mesure de 1.
-$\int_X s \, d\mu = 1\cdot 1 + 3\cdot 1 + 4\cdot 1 + 5\cdot 1 + 16\cdot 1 = 29$.
+## Correction détaillée
+
+Par définition de l'intégrale d'une fonction étagée positive :
+$$ \int_X s \, d\lambda = \sum_{i} \alpha_i \lambda(A_i) $$
+Ici, les valeurs sont $\alpha_1 = 3$ et $\alpha_2 = 7$. Les ensembles correspondants sont $A_1 = [0,1[$ et $A_2 = [1,2]$.
+Leurs mesures de Lebesgue sont :
+$\lambda([0,1[) = 1 - 0 = 1$
+$\lambda([1,2]) = 2 - 1 = 1$
+Donc, $\int_{[0,2]} s \, d\lambda = 3 \times 1 + 7 \times 1 = 10$.

@@ -1,30 +1,23 @@
-# Exercice 10 : Inégalité de Tchebychev \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
+# Inégalité de Tchebychev-Markov
 
-**Énoncé :**
-Soit $f \in \mathcal{M}_+$ et $\alpha > 0$. Démontrer l'inégalité de Tchebychev-Markov : $\mu(\{x \in X \mid f(x) \ge \alpha\}) \le \frac{1}{\alpha} \int_X f \, d\mu$.
+**Difficulté :** $\star\star\star\star\star$
 
-**Correction :**
-Soit $A_\alpha = \{x \in X \mid f(x) \ge \alpha\}$.
+## Énoncé
 
-Sur l'ensemble $X$, nous avons l'inégalité ponctuelle :
-$f(x) \ge f(x) \mathbf{1}_{A_\alpha}(x)$. (car $f$ est positive et $\mathbf{1}_{A_\alpha}$ vaut 0 ou 1).
+Soit $f \geq 0$ une fonction mesurable sur $(X, \mathcal{A}, \mu)$. Pour tout $\alpha > 0$, prouvez l'inégalité fondamentale : $\mu(\{x \in X \mid f(x) \geq \alpha\}) \leq \frac{1}{\alpha} \int_X f \, d\mu$.
 
-De plus, par définition de $A_\alpha$, si $x \in A_\alpha$, alors $f(x) \ge \alpha$. Donc :
-$f(x) \mathbf{1}_{A_\alpha}(x) \ge \alpha \mathbf{1}_{A_\alpha}(x)$.
+---
 
-En combinant les deux, pour tout $x \in X$ :
-$f(x) \ge \alpha \mathbf{1}_{A_\alpha}(x)$.
+## Correction détaillée
 
-L'intégrale préserve l'ordre (croissance) :
-$\int_X f \, d\mu \ge \int_X \alpha \mathbf{1}_{A_\alpha} \, d\mu$.
-
-Par homogénéité de l'intégrale d'une fonction simple :
-$\int_X \alpha \mathbf{1}_{A_\alpha} \, d\mu = \alpha \mu(A_\alpha)$.
-
-Ainsi :
-$\int_X f \, d\mu \ge \alpha \mu(A_\alpha)$.
-
-Comme $\alpha > 0$, on peut diviser par $\alpha$ pour obtenir :
-$\mu(A_\alpha) \le \frac{1}{\alpha} \int_X f \, d\mu$.
-
-C'est l'inégalité de Tchebychev (ou Markov).
+Soit $A_\alpha = \{x \in X \mid f(x) \geq \alpha\}$. L'ensemble $A_\alpha$ est mesurable car $f$ est une fonction mesurable.
+Considérons la fonction étagée $s = \alpha \mathbb{1}_{A_\alpha}$.
+Pour tout $x \in X$ :
+- Si $x \in A_\alpha$, alors $f(x) \geq \alpha = s(x)$.
+- Si $x \notin A_\alpha$, alors $f(x) \geq 0 = s(x)$ (car $f$ est positive).
+Dans tous les cas, on a $0 \leq s \leq f$.
+Par définition de l'intégrale (propriété de monotonie) :
+$$ \int_X s \, d\mu \leq \int_X f \, d\mu $$
+Or, $\int_X s \, d\mu = \int_X \alpha \mathbb{1}_{A_\alpha} \, d\mu = \alpha \mu(A_\alpha)$.
+Donc : $\alpha \mu(A_\alpha) \leq \int_X f \, d\mu$.
+Comme $\alpha > 0$, en divisant par $\alpha$, on obtient le résultat escompté : $\mu(A_\alpha) \leq \frac{1}{\alpha} \int_X f \, d\mu$.

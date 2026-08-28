@@ -1,24 +1,18 @@
-# Exercice 9 : Changement de mesure \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
+# L'intégrale d'une série géométrique de fonctions
 
-**Énoncé :**
-Soit $(X, \mathcal{F}, \mu)$ un espace mesuré et $g \in \mathcal{M}_+$. On définit $\nu(A) = \int_X g \mathbf{1}_A \, d\mu$ pour tout $A \in \mathcal{F}$.
-Prouver que pour toute fonction simple positive $s$, $\int_X s \, d\nu = \int_X s g \, d\mu$.
+**Difficulté :** $\star\star\star\star\star$
 
-**Correction :**
-Soit $s = \sum_{i=1}^n a_i \mathbf{1}_{A_i}$ une fonction simple positive sous sa forme canonique.
+## Énoncé
 
-Par définition de l'intégrale d'une fonction simple par rapport à $\nu$ :
-$\int_X s \, d\nu = \sum_{i=1}^n a_i \nu(A_i)$.
+On pose $X=[0,1]$ muni de $\lambda$. Soit $f(x) = \sum_{n=1}^\infty x^n$. On admet provisoirement le théorème d'interversion de Beppo-Levi : $\int \sum u_n = \sum \int u_n$ pour $u_n \geq 0$. Calculez $\int_0^1 f(x) d\lambda(x)$ en le justifiant.
 
-Par définition de $\nu(A_i)$ :
-$\nu(A_i) = \int_X g \mathbf{1}_{A_i} \, d\mu$.
+---
 
-En substituant :
-$\int_X s \, d\nu = \sum_{i=1}^n a_i \left( \int_X g \mathbf{1}_{A_i} \, d\mu \right)$.
+## Correction détaillée
 
-Par propriété de linéarité (multiplication par un scalaire et somme finie) de l'intégrale des fonctions mesurables positives :
-$\int_X s \, d\nu = \int_X \left( \sum_{i=1}^n a_i g \mathbf{1}_{A_i} \right) \, d\mu$.
-
-Or, $\sum_{i=1}^n a_i g(x) \mathbf{1}_{A_i}(x) = g(x) \sum_{i=1}^n a_i \mathbf{1}_{A_i}(x) = g(x) s(x)$.
-
-Donc $\int_X s \, d\nu = \int_X s g \, d\mu$.
+Sur $[0,1[$, on reconnaît la série géométrique de raison $x$. Donc $f(x) = \frac{x}{1-x}$ pour $x < 1$. En $x=1$, la série diverge vers $+\infty$.
+En utilisant le théorème de Beppo-Levi admis (ou théorème de convergence monotone) :
+$$ \int_{[0,1]} \left(\sum_{n=1}^\infty x^n\right) d\lambda = \sum_{n=1}^\infty \int_{[0,1]} x^n \, d\lambda $$
+Or, $x \mapsto x^n$ est continue, et sur $[0,1]$, l'intégrale de Lebesgue coïncide avec celle de Riemann. Donc $\int_{[0,1]} x^n \, d\lambda = \frac{1}{n+1}$.
+L'intégrale cherchée est la série $\sum_{n=1}^\infty \frac{1}{n+1} = \frac{1}{2} + \frac{1}{3} + \dots$
+C'est le reste de la série harmonique, qui diverge vers $+\infty$. L'intégrale de $f$ vaut donc $+\infty$.

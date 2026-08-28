@@ -1,22 +1,20 @@
-# Exercice 7 : Intégrabilité et mesure finie \quad $\bigstar\bigstar\bigstar\bigstar\star$
+# Intégrabilité et finitude
 
-**Énoncé :**
-Soit $f \in \mathcal{M}_+$. On suppose que $\int_X f \, d\mu < +\infty$. Montrer que pour tout $\epsilon > 0$, l'ensemble $A_\epsilon = \{x \in X \mid f(x) \ge \epsilon\}$ est de mesure finie.
+**Difficulté :** $\star\star\star\star\star$
 
-**Correction :**
-Sur l'ensemble $X$, nous avons l'inégalité :
-$f(x) \ge \epsilon \cdot \mathbf{1}_{A_\epsilon}(x)$ pour tout $x \in X$.
+## Énoncé
 
-En effet, si $x \in A_\epsilon$, $f(x) \ge \epsilon = \epsilon \cdot 1$.
-Si $x \notin A_\epsilon$, $f(x) \ge 0 = \epsilon \cdot 0$.
+Soit $f \geq 0$ mesurable. On suppose que $\int_X f \, d\mu < +\infty$. Montrez que l'ensemble $E = \{x \in X \mid f(x) = +\infty\}$ est de mesure nulle : $\mu(E) = 0$.
 
-Par croissance et homogénéité de l'intégrale de Lebesgue pour les fonctions mesurables positives :
-$\int_X f \, d\mu \ge \int_X \epsilon \cdot \mathbf{1}_{A_\epsilon} \, d\mu = \epsilon \mu(A_\epsilon)$.
+---
 
-Puisque $\int_X f \, d\mu = I < +\infty$, on a :
-$I \ge \epsilon \mu(A_\epsilon)$
+## Correction détaillée
 
-Comme $\epsilon > 0$, on peut diviser :
-$\mu(A_\epsilon) \le \frac{I}{\epsilon} < +\infty$.
-
-L'ensemble $A_\epsilon$ est donc de mesure finie.
+Considérons pour tout entier $n \geq 1$ la fonction étagée $s_n = n \mathbb{1}_E$.
+Puisque pour $x \in E$, $f(x) = +\infty > n$, et pour $x \notin E$, $s_n(x) = 0 \leq f(x)$, on a toujours $0 \leq s_n \leq f$.
+Par définition de l'intégrale de Lebesgue via le supremum sur $\mathcal{E}^+$, on a :
+$$ \int_X f \, d\mu \geq \int_X s_n \, d\mu = n \mu(E) $$
+Ceci est vrai pour tout $n \geq 1$. Supposons par l'absurde que $\mu(E) > 0$.
+Alors la limite de $n \mu(E)$ quand $n \to +\infty$ est $+\infty$.
+Cela impliquerait que $\int_X f \, d\mu = +\infty$, ce qui contredit l'hypothèse de l'énoncé.
+Par conséquent, on doit nécessairement avoir $\mu(E) = 0$. On dit que $f$ est finie *presque partout*.
