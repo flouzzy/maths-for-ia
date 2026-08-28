@@ -1,22 +1,21 @@
-# Exercice 8 : Égalité presque partout et intégrale $\bigstar\bigstar\bigstar\bigstar\star$
+# Approximation par suites croissantes (Lemme fondamental)
 
-**Énoncé :**
-Soit $(X, \mathcal{F}, \mu)$ un espace mesuré, et $f, g \in \mathcal{M}_+(X, \mathcal{F})$ deux fonctions mesurables positives.
-Prouver rigoureusement que si $f = g$ $\mu$-presque partout, alors $\int_X f \, d\mu = \int_X g \, d\mu$.
+**Difficulté :** $\star\star\star\star\star$
 
-**Correction Détaillée :**
-1. Dire que $f = g$ presque partout signifie qu'il existe un ensemble mesurable $N \in \mathcal{F}$ tel que $\mu(N) = 0$ et pour tout $x \in X \setminus N$, $f(x) = g(x)$.
-2. Nous utilisons la linéarité (pas encore démontrée dans le cours général, donc on va le faire par construction étagée).
-   Écrivons la décomposition disjointe de l'espace : $X = (X \setminus N) \cup N$.
-3. Une fonction étagée $s \le f$ peut s'écrire $s = s \cdot \mathbf{1}_{X \setminus N} + s \cdot \mathbf{1}_N$.
-   Son intégrale est $\int s \, d\mu = \int s \cdot \mathbf{1}_{X \setminus N} \, d\mu + \int s \cdot \mathbf{1}_N \, d\mu$.
-4. Or, $s \cdot \mathbf{1}_N \le \|s\|_{\infty} \mathbf{1}_N$, donc son intégrale est majorée par $C \cdot \mu(N) = 0$.
-   Ainsi, $\int s \, d\mu = \int s \cdot \mathbf{1}_{X \setminus N} \, d\mu$.
-5. Sur l'ensemble $X \setminus N$, on a $f = g$. Donc si $s \le f$ sur $X$, alors $s \le g$ sur $X \setminus N$.
-   Soit la fonction $\tilde{s} = s \cdot \mathbf{1}_{X \setminus N}$. On a $\tilde{s} \in \mathcal{E}_+$ et $\tilde{s} \le g$ sur $X$ entier (car sur $N$, $\tilde{s}=0 \le g$).
-6. L'intégrale de $\tilde{s}$ est exactement la même que l'intégrale de $s$.
-   Donc $\int s \, d\mu = \int \tilde{s} \, d\mu \le \int g \, d\mu$ (puisque $\tilde{s}$ est une candidate pour le supremum définissant l'intégrale de $g$).
-7. Comme ceci est vrai pour toute fonction étagée $s \le f$, on passe au supremum à gauche :
-   $$\int_X f \, d\mu \le \int_X g \, d\mu$$
-8. Par symétrie (les rôles de $f$ et $g$ sont totalement interchangeables car $g = f$ sur $X \setminus N$), on prouve de la même manière que $\int_X g \, d\mu \le \int_X f \, d\mu$.
-9. Les deux intégrales (éventuellement infinies) sont donc égales.
+## Énoncé
+
+Soit $f \geq 0$ mesurable. Démontrez la formule explicite pour construire la suite $(s_n)$ de fonctions étagées qui croît ponctuellement vers $f$.
+
+---
+
+## Correction détaillée
+
+L'idée est de tronquer la fonction à la hauteur $n$, et de découper l'intervalle $[0, n[$ en $n \times 2^n$ sous-intervalles de longueur $\frac{1}{2^n}$.
+Pour tout entier $n \geq 1$ et tout $x \in X$, on définit :
+$$ s_n(x) = \sum_{k=0}^{n2^n-1} \frac{k}{2^n} \mathbb{1}_{\{x \mid \frac{k}{2^n} \leq f(x) < \frac{k+1}{2^n}\}} + n \mathbb{1}_{\{x \mid f(x) \geq n\}} $$
+Par construction, $s_n$ est étagée (car les ensembles impliqués sont mesurables par mesurabilité de $f$) et $0 \leq s_n \leq f$.
+De plus, sur l'ensemble où $f(x) < n$, on a $|f(x) - s_n(x)| < \frac{1}{2^n}$. Sur l'ensemble où $f(x) \geq n$, $s_n(x) = n$.
+Pour un $x$ fixé :
+- Si $f(x) = +\infty$, alors $s_n(x) = n \to +\infty = f(x)$.
+- Si $f(x) < +\infty$, pour $n$ assez grand ($n > f(x)$), on a $|f(x) - s_n(x)| < \frac{1}{2^n} \to 0$, donc $s_n(x) \to f(x)$.
+Il reste à vérifier $s_n \leq s_{n+1}$. En passant de $n$ à $n+1$, on divise chaque intervalle de hauteur par $2$ (hauteur $\frac{1}{2^n}$ devient $\frac{1}{2^{n+1}}$). La valeur prise sur le sous-intervalle inférieur reste inchangée, celle sur le supérieur augmente de $\frac{1}{2^{n+1}}$. La suite est donc bien croissante.

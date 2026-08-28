@@ -1,19 +1,18 @@
-# Exercice 4 : Intégrale de la fonction partie entière $\bigstar\bigstar\star\star\star$
+# Propriété de l'ensemble de mesure nulle
 
-**Énoncé :**
-Calculer l'intégrale de Lebesgue de la fonction $f(x) = \lfloor x \rfloor$ sur le segment $[0, n]$ où $n \in \mathbb{N}^*$, par rapport à la mesure de Lebesgue $\lambda$.
+**Difficulté :** $\star\star\star☆☆$
 
-**Correction Détaillée :**
-1. La fonction $f(x) = \lfloor x \rfloor$ sur $[0, n]$ prend des valeurs entières constantes sur des intervalles.
-2. Décomposons le segment $[0, n]$ en union disjointe d'intervalles :
-   $[0, n] = \bigcup_{k=0}^{n-1} [k, k+1[ \cup \{n\}$
-3. Sur chaque intervalle $[k, k+1[$, on a $f(x) = k$. Sur $\{n\}$, on a $f(n) = n$.
-4. $f$ s'écrit donc comme une fonction étagée positive :
-   $f = \sum_{k=0}^{n-1} k \cdot \mathbf{1}_{[k, k+1[} + n \cdot \mathbf{1}_{\{n\}}$
-5. Calculons son intégrale :
-   $$\int_{[0, n]} f \, d\lambda = \sum_{k=0}^{n-1} k \cdot \lambda([k, k+1[) + n \cdot \lambda(\{n\})$$
-6. On a $\lambda([k, k+1[) = (k+1) - k = 1$. L'ensemble $\{n\}$ est un singleton, donc sa mesure de Lebesgue est $\lambda(\{n\}) = 0$.
-7. L'intégrale devient :
-   $$\int_{[0, n]} f \, d\lambda = \sum_{k=0}^{n-1} k \times 1 + n \times 0 = \sum_{k=0}^{n-1} k$$
-8. C'est la somme des premiers entiers :
-   $$\sum_{k=0}^{n-1} k = \frac{(n-1)n}{2}$$
+## Énoncé
+
+Montrez que si $f \geq 0$ est mesurable et si $A \in \mathcal{A}$ vérifie $\mu(A) = 0$, alors $\int_X f \mathbb{1}_A \, d\mu = 0$.
+
+---
+
+## Correction détaillée
+
+Soit $g = f \mathbb{1}_A$. On a $g(x) = f(x)$ si $x \in A$ et $g(x) = 0$ sinon.
+Par définition, $\int_X g \, d\mu = \sup_{s \in \mathcal{E}^+, 0 \leq s \leq g} \int_X s \, d\mu$.
+Soit $s \in \mathcal{E}^+$ telle que $0 \leq s \leq g$. Alors $s(x) = 0$ pour tout $x \notin A$. La fonction $s$ peut s'écrire sous forme canonique : $s = \sum_{i=1}^n \alpha_i \mathbb{1}_{B_i}$. Puisque $s=0$ hors de $A$, tous les ensembles $B_i$ correspondant à $\alpha_i > 0$ sont inclus dans $A$.
+Par monotonie de la mesure, $\mu(B_i) \leq \mu(A) = 0$. Donc $\mu(B_i) = 0$.
+Ainsi, l'intégrale de $s$ vaut $\sum \alpha_i \mu(B_i) = \sum \alpha_i \times 0 = 0$.
+Le supremum d'un ensemble ne contenant que $0$ est $0$. CQFD.

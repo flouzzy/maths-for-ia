@@ -1,18 +1,20 @@
-# Exercice 7 : L'intégrale avec mesure pondérée $\bigstar\bigstar\bigstar\bigstar\star$
+# Intégrabilité et finitude
 
-**Énoncé :**
-Sur $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$, on définit la mesure $\nu$ de densité (pondérée) telle que $\nu(A) = \int_A x^2 \, d\lambda(x)$ pour tout borélien $A$, où $\lambda$ est la mesure de Lebesgue.
-Soit $s(x) = \mathbf{1}_{[0, 2]}(x) + 3 \cdot \mathbf{1}_{]2, 3]}(x)$.
-Calculer $\int_{\mathbb{R}} s \, d\nu$.
+**Difficulté :** $\star\star\star\star\star$
 
-**Correction Détaillée :**
-1. $s$ est une fonction étagée positive avec $A_1 = [0, 2]$ et $a_1 = 1$, puis $A_2 = ]2, 3]$ et $a_2 = 3$.
-2. Par définition de l'intégrale étagée par rapport à la mesure $\nu$ :
-   $$\int_{\mathbb{R}} s \, d\nu = 1 \cdot \nu([0, 2]) + 3 \cdot \nu(]2, 3])$$
-3. Calculons les mesures pondérées de ces deux ensembles. Par définition de $\nu$ (qui s'appuie sur une intégrale de Riemann/Lebesgue classique de la fonction continue $x^2$) :
-   $$\nu([0, 2]) = \int_{[0, 2]} x^2 \, d\lambda(x) = \left[ \frac{x^3}{3} \right]_0^2 = \frac{8}{3}$$
-   $$\nu(]2, 3]) = \int_{]2, 3]} x^2 \, d\lambda(x) = \left[ \frac{x^3}{3} \right]_2^3 = \frac{27}{3} - \frac{8}{3} = \frac{19}{3}$$
-4. En injectant ces résultats dans la formule de l'intégrale :
-   $$\int_{\mathbb{R}} s \, d\nu = 1 \times \frac{8}{3} + 3 \times \frac{19}{3}$$
-5. Le calcul final donne :
-   $$\int_{\mathbb{R}} s \, d\nu = \frac{8}{3} + 19 = \frac{8 + 57}{3} = \frac{65}{3}$$
+## Énoncé
+
+Soit $f \geq 0$ mesurable. On suppose que $\int_X f \, d\mu < +\infty$. Montrez que l'ensemble $E = \{x \in X \mid f(x) = +\infty\}$ est de mesure nulle : $\mu(E) = 0$.
+
+---
+
+## Correction détaillée
+
+Considérons pour tout entier $n \geq 1$ la fonction étagée $s_n = n \mathbb{1}_E$.
+Puisque pour $x \in E$, $f(x) = +\infty > n$, et pour $x \notin E$, $s_n(x) = 0 \leq f(x)$, on a toujours $0 \leq s_n \leq f$.
+Par définition de l'intégrale de Lebesgue via le supremum sur $\mathcal{E}^+$, on a :
+$$ \int_X f \, d\mu \geq \int_X s_n \, d\mu = n \mu(E) $$
+Ceci est vrai pour tout $n \geq 1$. Supposons par l'absurde que $\mu(E) > 0$.
+Alors la limite de $n \mu(E)$ quand $n \to +\infty$ est $+\infty$.
+Cela impliquerait que $\int_X f \, d\mu = +\infty$, ce qui contredit l'hypothèse de l'énoncé.
+Par conséquent, on doit nécessairement avoir $\mu(E) = 0$. On dit que $f$ est finie *presque partout*.

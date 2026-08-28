@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-08-22] : [Upsert/Création] du Jalon 66 - Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives. Status: Terminé.
 - [2026-08-20] : [Upsert/Création] du Jalon 65 - Fonctions mesurables. Status: Terminé.
 - [2026-08-20] : [Upsert/Création] du Jalon 64 - Construction pas à pas de la mesure de Lebesgue sur $\mathbb{R}$ via la mesure extérieure. Status: Terminé.
 - [2026-08-17] : [Upsert/Création] du Jalon 62 - Algèbres et Tribus. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
@@ -423,7 +424,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
-- [2026-08-22] : [Upsert/Création] du Jalon 66 - Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-08-21] : [Upsert/Création] du Jalon 66 - Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives. Status: Terminé.
 - [2026-08-21] : [Upsert/Création] du Jalon 65 - Fonctions mesurables. Status: Terminé.
 - [2026-08-14] : [Upsert/Création] du Jalon 59 - Topologie des espaces de fonctions et Arzelà-Ascoli. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 
