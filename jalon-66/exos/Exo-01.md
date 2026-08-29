@@ -1,14 +1,36 @@
-## Exercice 1 : Intégrale de la fonction nulle \quad $$\bigstar$$
+---
+uuid: "jalon-66-exo-01"
+title: "Exercice 1 - Jalon 66"
+difficulty: "$\bigstar\star\star\star\star$"
+---
+
+# Exercice 1 : Calcul élémentaire pour une fonction simple
 
 **Énoncé :**
-Soit $(X, \mathcal{F}, \mu)$ un espace mesuré et la fonction nulle $f(x) = 0$ pour tout $x \in X$.
-Montrer en utilisant la définition stricte par supremum que $\int_X f \, d\mu = 0$.
+On considère l'espace mesurable $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$ muni de la mesure de Lebesgue $\lambda$.
+Soit la fonction $f : \mathbb{R} \to \mathbb{R}$ définie par :
+$$f(x) = 2 \cdot \mathbf{1}_{[0, 3]}(x) + 4 \cdot \mathbf{1}_{]3, 5]}(x) + 7 \cdot \mathbf{1}_{\{6\}}(x)$$
+Calculer rigoureusement l'intégrale de Lebesgue $\int_{\mathbb{R}} f \, d\lambda$.
 
-**Correction :**
-1. Par définition, $f \in \mathcal{M}_+$.
-2. Soit $s \in \mathcal{E}_+$ une fonction étagée telle que $0 \le s \le f$.
-3. Puisque $f(x) = 0$ pour tout $x \in X$, la seule fonction $s$ satisfaisant cette condition est $s(x) = 0$ pour tout $x$.
-4. L'écriture canonique de $s$ est $s = 0 \cdot \mathbf{1}_X$.
-5. L'intégrale de cette fonction étagée est par définition : $\int_X s \, d\mu = 0 \cdot \mu(X) = 0$. (La convention $0 \cdot \infty = 0$ assure ce résultat même si $\mu(X) = \infty$).
-6. Le supremum sur l'ensemble de ces intégrales (qui ne contient que la valeur 0) est donc 0.
-7. Ainsi, $\int_X f \, d\mu = 0$.
+**Corrigé :**
+La fonction $f$ est une fonction simple positive (étagée). Elle prend un nombre fini de valeurs (0, 2, 4, 7) et s'écrit comme une combinaison linéaire de fonctions indicatrices d'ensembles mesurables (des intervalles ou singletons de $\mathbb{R}$, qui sont bien des boréliens).
+
+La définition de l'intégrale d'une fonction simple $s = \sum_{i=1}^n a_i \mathbf{1}_{A_i}$ est :
+$$\int s \, d\lambda = \sum_{i=1}^n a_i \lambda(A_i)$$
+
+Identifions les composantes de notre fonction $f$ :
+- $a_1 = 2$, $A_1 = [0, 3]$
+- $a_2 = 4$, $A_2 = ]3, 5]$
+- $a_3 = 7$, $A_3 = \{6\}$
+
+Calculons la mesure de Lebesgue de chaque ensemble :
+- $\lambda(A_1) = \lambda([0, 3]) = 3 - 0 = 3$
+- $\lambda(A_2) = \lambda(]3, 5]) = 5 - 3 = 2$
+- $\lambda(A_3) = \lambda(\{6\}) = 0$ (la mesure de Lebesgue d'un singleton est nulle).
+
+Nous pouvons maintenant calculer l'intégrale :
+$$\int_{\mathbb{R}} f \, d\lambda = 2 \times \lambda([0, 3]) + 4 \times \lambda(]3, 5]) + 7 \times \lambda(\{6\})$$
+$$\int_{\mathbb{R}} f \, d\lambda = 2 \times 3 + 4 \times 2 + 7 \times 0$$
+$$\int_{\mathbb{R}} f \, d\lambda = 6 + 8 + 0 = 14$$
+
+L'intégrale de $f$ par rapport à la mesure de Lebesgue vaut 14.

@@ -1,15 +1,32 @@
-## Exercice 5 : Intégrale de Dirichlet sur $\mathbb{R}$ \quad $$\bigstar\bigstar\star$$
+---
+uuid: "jalon-66-exo-05"
+title: "Exercice 5 - Jalon 66"
+difficulty: "$\bigstar\bigstar\bigstar\star\star$"
+---
+
+# Exercice 5 : Croissance stricte presque partout
 
 **Énoncé :**
-Calculer l'intégrale de Lebesgue $I = \int_{\mathbb{R}} \mathbf{1}_{\mathbb{Q}} \, d\lambda$ où $\lambda$ est la mesure de Lebesgue sur $\mathbb{R}$.
-Montrer que cette intégrale vaut 0 bien que le domaine d'intégration soit de mesure infinie.
+Soit $(X, \mathcal{A}, \mu)$ un espace mesuré.
+Soient $f, g \in \mathcal{M}_+$ telles que $f \le g$ sur $X$.
+Montrer que si $\int_X f \, d\mu = \int_X g \, d\mu < +\infty$, alors $f = g$ presque partout.
 
-**Correction :**
-1. La fonction $f = \mathbf{1}_{\mathbb{Q}}$ est une fonction mesurable car $\mathbb{Q}$ est un borélien (union dénombrable de singletons).
-2. De plus, $f$ est une fonction étagée puisqu'elle ne prend que les valeurs 0 et 1.
-3. Son écriture canonique sur la partition $(\mathbb{Q}, \mathbb{R} \setminus \mathbb{Q})$ est $f = 1 \cdot \mathbf{1}_{\mathbb{Q}} + 0 \cdot \mathbf{1}_{\mathbb{R} \setminus \mathbb{Q}}$.
-4. Par définition de l'intégrale d'une fonction étagée :
-   $$I = 1 \cdot \lambda(\mathbb{Q}) + 0 \cdot \lambda(\mathbb{R} \setminus \mathbb{Q})$$
-5. La mesure de Lebesgue d'un ensemble dénombrable est nulle, donc $\lambda(\mathbb{Q}) = 0$.
-6. L'ensemble des irrationnels $\mathbb{R} \setminus \mathbb{Q}$ est de mesure infinie ($\lambda(\mathbb{R} \setminus \mathbb{Q}) = \infty$), mais par la convention stricte $0 \cdot \infty = 0$, le deuxième terme s'annule.
-7. Ainsi, $I = 1 \cdot 0 + 0 = 0$.
+**Corrigé :**
+Puisque $f, g \in \mathcal{M}_+$ et $f \le g$, la fonction différence $h = g - f$ est bien définie (car l'intégrale est finie, donc les valeurs infinies sont sur un ensemble de mesure nulle, qu'on exclut), positive ($h \ge 0$) et mesurable.
+
+Démontrons que $\int_X h \, d\mu = 0$.
+Par la propriété d'additivité de l'intégrale pour les fonctions positives (qui sera pleinement démontrée via Beppo-Levi au Jalon 67, mais assumée ici par linéarité) :
+$$\int_X g \, d\mu = \int_X (f + (g-f)) \, d\mu = \int_X f \, d\mu + \int_X (g-f) \, d\mu$$
+Puisque $\int_X f \, d\mu < +\infty$, nous pouvons soustraire cette quantité finie de part et d'autre :
+$$\int_X (g-f) \, d\mu = \int_X g \, d\mu - \int_X f \, d\mu$$
+Or par hypothèse, $\int_X f \, d\mu = \int_X g \, d\mu$.
+Ainsi :
+$$\int_X (g-f) \, d\mu = 0$$
+
+Appliquons maintenant le Théorème 1 (propriété 2 de la nullité) vu dans le cours : l'intégrale d'une fonction mesurable positive est nulle si et seulement si cette fonction est nulle presque partout.
+Puisque $g - f$ est positive et son intégrale est nulle, nous avons :
+$g - f = 0$ presque partout.
+C'est-à-dire :
+$\mu(\{x \in X \mid g(x) - f(x) \neq 0\}) = 0$.
+Soit $\mu(\{x \in X \mid f(x) \neq g(x)\}) = 0$.
+Donc $f = g$ presque partout.
