@@ -14,9 +14,9 @@ next: "[[Jalon 68 (Lemme de Fatou et définition de l'intégrale pour les foncti
 
 ## 1. Présentation du concept clé
 
-- **La Métaphore :** Imaginez que vous construisiez une tour de blocs de glace qui fondent très lentement, mais que chaque jour vous ajoutiez une petite couche de glace supplémentaire par-dessus ($f_n \le f_{n+1}$). Vous voulez savoir quel sera le volume final de la tour ($f = \lim f_n$). Le **Théorème de Convergence Monotone** dit quelque chose de très simple et rassurant : le volume de la tour finale est exactement égal à la limite des volumes que vous avez mesurés jour après jour. En d'autres termes, pour des objets qui ne font que grandir, l'ordre dans lequel on fait les opérations (calculer le volume puis faire la limite, ou faire la limite puis calculer le volume) ne change pas le résultat.
-- **Le "Pourquoi on a inventé ça" :** C'est la grande force de l'intégrale de Lebesgue par rapport à celle de Riemann. Avec Riemann, on ne pouvait pas garantir que la limite d'une suite de fonctions intégrables soit encore intégrable. Avec Lebesgue et Beppo Levi, on a un outil ultra-robuste pour manipuler les limites et les sommes infinies.
-- **Visualisation :** Une suite de courbes qui "montent" vers une courbe plafond. L'aire sous les courbes monte elle aussi vers l'aire sous le plafond.
+Le passage à la limite sous le signe intégral est l'un des problèmes centraux de l'analyse mathématique. La théorie de Riemann offre des théorèmes de convergence très restrictifs (nécessitant souvent la convergence uniforme, une condition extrêmement forte). L'intégrale de Lebesgue, quant à elle, brille par sa robustesse face aux processus limites. Le Théorème de Convergence Monotone de Beppo Levi en est la première et plus éclatante démonstration. Il affirme que pour des fonctions positives mesurables, si la suite est croissante, on peut toujours intervertir limite et intégrale, y compris lorsque ces grandeurs tendent vers l'infini.
+
+
 
 ## 2. Formalisation
 
@@ -35,6 +35,31 @@ Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 
 > **Théorème :** Pour toute suite de fonctions mesurables **positives** $(u_n)$ :
 > $$\int_X \left( \sum_{n=0}^\infty u_n \right) d\mu = \sum_{n=0}^\infty \int_X u_n d\mu$$
+
+
+
+### Exemples d'application immédiats
+
+1. **Exemple 1 : Suites constantes**
+   Soit $X = \mathbb{R}$ avec la mesure de Lebesgue. Si $f_n(x) = c \ge 0$ pour tout $x \in [0, 1]$ et tout $n$, la suite est croissante au sens large. La limite est $f(x) = c$. L'intégrale de la limite est $\int_0^1 c dx = c$. La limite des intégrales est $\lim_{n \to \infty} c = c$.
+
+2. **Exemple 2 : Suite géométrique croissante**
+   Sur $X = [0, 1]$, soit $f_n(x) = 1 - (x/2)^n$. Pour tout $x \in [0, 1]$, $x/2 \le 1/2$, donc $(x/2)^n$ décroît vers $0$. La suite $f_n(x)$ croît vers $f(x) = 1$.
+   L'intégrale de $f_n$ est $\int_0^1 (1 - (x/2)^n) dx = 1 - \frac{1}{2^n(n+1)}$.
+   La limite est $1$. L'intégrale de la limite est $\int_0^1 1 dx = 1$.
+
+3. **Exemple 3 : Convergence ponctuelle vers l'infini**
+   Soit $f_n(x) = n \cdot \mathbf{1}_{[0, 1]}(x)$. $f_n$ est croissante. La limite est $f(x) = +\infty$ sur $[0, 1]$ et $0$ ailleurs.
+   $\int f_n d\lambda = n \to +\infty$.
+   $\int f d\lambda = +\infty$.
+
+4. **Exemple 4 : La bosse glissante (contre-exemple si non croissant)**
+   $g_n(x) = n \cdot \mathbf{1}_{[0, 1/n]}(x)$. La limite est $g(x) = 0$ pour $x > 0$. La suite n'est pas croissante.
+   $\int g_n = 1$, mais $\int g = 0$. Le TCM ne s'applique pas.
+
+5. **Exemple 5 : La bosse croissante**
+   $f_n(x) = \mathbf{1}_{[n, n+1]}(x)$ n'est pas croissante, mais si on prend $S_n(x) = \sum_{k=1}^n \mathbf{1}_{[k, k+1]}(x) = \mathbf{1}_{[1, n+1]}(x)$, $S_n$ est croissante vers $\mathbf{1}_{[1, +\infty)}$.
+   $\int S_n = n \to +\infty$. $\int \mathbf{1}_{[1, +\infty)} = +\infty$.
 
 ## 3. Démonstrations
 
