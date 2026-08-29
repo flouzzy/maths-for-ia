@@ -1,15 +1,13 @@
-# Convergence et intégrale de Lebesgue sur un point
+## Exercice 2 : Indicatrice d'un ensemble mesurable \quad $$\bigstar\bigstar$$
 
-**Difficulté :** $\star\star☆☆☆$
+**Énoncé :**
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré et $A \in \mathcal{F}$.
+Calculer $\int_X \mathbf{1}_A \, d\mu$.
 
-## Énoncé
-
-Sur $(\mathbb{R}, \mathcal{B}(\mathbb{R}), \lambda)$, on pose $A = \{0\}$. Soit $f(x) = \mathbb{1}_{A}(x)$ la fonction caractéristique du singleton $\{0\}$. Que vaut $\int_\mathbb{R} f \, d\lambda$ ?
-
----
-
-## Correction détaillée
-
-La fonction $f$ est une fonction étagée positive avec une seule valeur non nulle, $\alpha_1 = 1$, prise sur l'ensemble $A_1 = \{0\}$. La mesure de Lebesgue d'un point est nulle : $\lambda(\{0\}) = 0$.
-Ainsi : $\int_\mathbb{R} f \, d\lambda = 1 \times \lambda(\{0\}) = 1 \times 0 = 0$.
-Bien que la fonction ne soit pas partout nulle, son intégrale de Lebesgue l'est car l'ensemble sur lequel elle est non nulle est de mesure négligeable.
+**Correction :**
+1. La fonction $f = \mathbf{1}_A$ ne prend que les valeurs 0 et 1 sur des ensembles mesurables ($A$ et $A^c$).
+2. Elle est donc, par définition, une fonction étagée, $f \in \mathcal{E}_+$.
+3. Son écriture canonique (si $A \neq X$ et $A \neq \emptyset$) est : $f = 1 \cdot \mathbf{1}_A + 0 \cdot \mathbf{1}_{A^c}$.
+4. Son intégrale en tant que fonction étagée est : $\int_X f \, d\mu = 1 \cdot \mu(A) + 0 \cdot \mu(A^c) = \mu(A)$.
+5. Par définition de l'intégrale de Lebesgue pour les fonctions positives (qui coïncide avec l'intégrale pour les fonctions étagées lorsque $f \in \mathcal{E}_+$) :
+   $$\int_X \mathbf{1}_A \, d\mu = \mu(A)$$

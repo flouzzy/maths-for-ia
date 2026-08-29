@@ -1,21 +1,18 @@
-# Approximation par suites croissantes (Lemme fondamental)
+## Exercice 8 : Intégrale d'une fonction discrète \quad $$\bigstar\bigstar\bigstar\star$$
 
-**Difficulté :** $\star\star\star\star\star$
+**Énoncé :**
+Soit $\mathbb{N}$ muni de la mesure de comptage $\mu$ (i.e. $\mu(\{n\}) = 1$).
+Considérons la fonction mesurable positive $f(n) = \frac{1}{2^n}$.
+Calculer $\int_{\mathbb{N}} f \, d\mu$ en approchant $f$ par des fonctions étagées.
 
-## Énoncé
-
-Soit $f \geq 0$ mesurable. Démontrez la formule explicite pour construire la suite $(s_n)$ de fonctions étagées qui croît ponctuellement vers $f$.
-
----
-
-## Correction détaillée
-
-L'idée est de tronquer la fonction à la hauteur $n$, et de découper l'intervalle $[0, n[$ en $n \times 2^n$ sous-intervalles de longueur $\frac{1}{2^n}$.
-Pour tout entier $n \geq 1$ et tout $x \in X$, on définit :
-$$ s_n(x) = \sum_{k=0}^{n2^n-1} \frac{k}{2^n} \mathbb{1}_{\{x \mid \frac{k}{2^n} \leq f(x) < \frac{k+1}{2^n}\}} + n \mathbb{1}_{\{x \mid f(x) \geq n\}} $$
-Par construction, $s_n$ est étagée (car les ensembles impliqués sont mesurables par mesurabilité de $f$) et $0 \leq s_n \leq f$.
-De plus, sur l'ensemble où $f(x) < n$, on a $|f(x) - s_n(x)| < \frac{1}{2^n}$. Sur l'ensemble où $f(x) \geq n$, $s_n(x) = n$.
-Pour un $x$ fixé :
-- Si $f(x) = +\infty$, alors $s_n(x) = n \to +\infty = f(x)$.
-- Si $f(x) < +\infty$, pour $n$ assez grand ($n > f(x)$), on a $|f(x) - s_n(x)| < \frac{1}{2^n} \to 0$, donc $s_n(x) \to f(x)$.
-Il reste à vérifier $s_n \leq s_{n+1}$. En passant de $n$ à $n+1$, on divise chaque intervalle de hauteur par $2$ (hauteur $\frac{1}{2^n}$ devient $\frac{1}{2^{n+1}}$). La valeur prise sur le sous-intervalle inférieur reste inchangée, celle sur le supérieur augmente de $\frac{1}{2^{n+1}}$. La suite est donc bien croissante.
+**Correction :**
+1. Soit la suite de fonctions étagées $s_N(n) = f(n) \mathbf{1}_{\{0, 1, \dots, N\}}(n)$.
+2. Pour chaque $N$, $s_N \in \mathcal{E}_+$ et $0 \le s_N \le f$.
+3. L'intégrale de $s_N$ par rapport à la mesure de comptage est :
+   $$\int_{\mathbb{N}} s_N \, d\mu = \sum_{n=0}^N \frac{1}{2^n} \mu(\{n\}) = \sum_{n=0}^N \frac{1}{2^n}$$
+4. C'est la somme partielle d'une série géométrique de raison $1/2$.
+   $$\sum_{n=0}^N \left(\frac{1}{2}\right)^n = \frac{1 - (1/2)^{N+1}}{1 - 1/2} = 2 \left(1 - \frac{1}{2^{N+1}}\right)$$
+5. Puisque $s_N \le f$, on a $\int_{\mathbb{N}} s_N \, d\mu \le \int_{\mathbb{N}} f \, d\mu$.
+6. En prenant la limite $N \to \infty$, on obtient $2 \le \int_{\mathbb{N}} f \, d\mu$.
+7. D'autre part, toute fonction étagée $s \le f$ ne possède qu'un nombre fini de valeurs non nulles, et est donc dominée par un certain $s_M$. Le supremum coïncide donc avec la limite.
+8. Ainsi, $\int_{\mathbb{N}} f \, d\mu = 2$.

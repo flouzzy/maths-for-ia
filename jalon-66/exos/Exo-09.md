@@ -1,18 +1,19 @@
-# L'intégrale d'une série géométrique de fonctions
+## Exercice 9 : Fonction de mesure de niveau \quad $$\bigstar\bigstar\bigstar\star$$
 
-**Difficulté :** $\star\star\star\star\star$
+**Énoncé :**
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré fini. Soit $f \in \mathcal{M}_+$.
+On définit $A_n = \{x \in X \mid f(x) \ge n\}$ pour $n \in \mathbb{N}^*$.
+Montrer que si $\sum_{n=1}^\infty \mu(A_n) = +\infty$, alors $f$ n'est pas intégrable.
 
-## Énoncé
-
-On pose $X=[0,1]$ muni de $\lambda$. Soit $f(x) = \sum_{n=1}^\infty x^n$. On admet provisoirement le théorème d'interversion de Beppo-Levi : $\int \sum u_n = \sum \int u_n$ pour $u_n \geq 0$. Calculez $\int_0^1 f(x) d\lambda(x)$ en le justifiant.
-
----
-
-## Correction détaillée
-
-Sur $[0,1[$, on reconnaît la série géométrique de raison $x$. Donc $f(x) = \frac{x}{1-x}$ pour $x < 1$. En $x=1$, la série diverge vers $+\infty$.
-En utilisant le théorème de Beppo-Levi admis (ou théorème de convergence monotone) :
-$$ \int_{[0,1]} \left(\sum_{n=1}^\infty x^n\right) d\lambda = \sum_{n=1}^\infty \int_{[0,1]} x^n \, d\lambda $$
-Or, $x \mapsto x^n$ est continue, et sur $[0,1]$, l'intégrale de Lebesgue coïncide avec celle de Riemann. Donc $\int_{[0,1]} x^n \, d\lambda = \frac{1}{n+1}$.
-L'intégrale cherchée est la série $\sum_{n=1}^\infty \frac{1}{n+1} = \frac{1}{2} + \frac{1}{3} + \dots$
-C'est le reste de la série harmonique, qui diverge vers $+\infty$. L'intégrale de $f$ vaut donc $+\infty$.
+**Correction :**
+1. Pour tout entier $N \ge 1$, on peut définir la fonction étagée :
+   $$s_N = \sum_{n=1}^N \mathbf{1}_{A_n}$$
+2. Remarquons que si $x$ est tel que $k \le f(x) < k+1$, alors $x \in A_n$ pour $n \le k$ et $x \notin A_n$ pour $n > k$.
+   Ainsi, $s_N(x) = \min(k, N) \le f(x)$.
+3. Donc, pour tout $N$, $s_N \le f$ sur tout $X$, et $s_N \in \mathcal{E}_+$.
+4. L'intégrale de $s_N$ est :
+   $$\int_X s_N \, d\mu = \sum_{n=1}^N \int_X \mathbf{1}_{A_n} \, d\mu = \sum_{n=1}^N \mu(A_n)$$
+5. Par croissance de l'intégrale de Lebesgue, on a :
+   $$\int_X f \, d\mu \ge \int_X s_N \, d\mu = \sum_{n=1}^N \mu(A_n)$$
+6. Si la série $\sum \mu(A_n)$ diverge, la limite quand $N \to \infty$ du membre de droite est $+\infty$.
+7. Par conséquent, $\int_X f \, d\mu = +\infty$, ce qui signifie par définition que $f$ n'est pas intégrable.

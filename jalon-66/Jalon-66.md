@@ -1,129 +1,144 @@
-# Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives
+---
+uuid: "jalon-66"
+title: "Intégrale de Lebesgue pour les fonctions positives"
+year: 2
+trimester: 6
+tags:
+  - math/analyse
+  - ia/abstraction
+prev: "[[Jalon 65 (Fonctions mesurables).md]]"
+next: "[[Jalon 67 (Démonstration du théorème de convergence monotone).md]]"
+---
 
-## 1. La quête de l'aire sous la courbe : De Riemann à Lebesgue
+# Jalon 66 : Intégrale de Lebesgue pour les fonctions positives
 
-Le concept d'intégration trouve son origine dans le problème millénaire de la quadrature, c'est-à-dire le calcul de l'aire sous une courbe géométrique. L'intégrale de Riemann a apporté une première formalisation rigoureuse en découpant le domaine de départ (l'axe des abscisses) en petits intervalles, puis en encadrant la fonction par des fonctions en escalier.
+## 1. Genèse et Intuition Géométrique
 
-Cependant, cette approche se heurte rapidement à des limites physiques et computationnelles : l'intégrale de Riemann est impuissante face à des fonctions très oscillantes ou très discontinues (comme la fonction indicatrice des rationnels, qui vaut 1 sur les rationnels et 0 ailleurs). De plus, l'espace des fonctions Riemann-intégrables n'est pas complet : une limite de fonctions intégrables n'est pas nécessairement intégrable.
+La construction de l'intégrale de Lebesgue repose sur une approche conceptuellement distincte de celle de Riemann. Alors que Riemann découpe le domaine de définition (l'axe des abscisses) en petits intervalles, Lebesgue choisit de partitionner l'espace d'arrivée (l'axe des ordonnées). Cette inversion de perspective permet d'intégrer des fonctions présentant un comportement très irrégulier, telles que la fonction caractéristique des rationnels (fonction de Dirichlet), qui n'est pas intégrable au sens de Riemann.
 
-C'est ici qu'intervient le coup de génie d'Henri Lebesgue en 1901. Plutôt que de découper le domaine de départ, Lebesgue propose de découper l'espace d'arrivée (l'axe des ordonnées). L'idée est de regrouper les points $x$ qui partagent la même valeur $f(x)$ ou des valeurs proches. Ce changement de perspective permet de s'affranchir de l'ordre géométrique des points sur l'axe des abscisses et d'utiliser la puissance de la théorie de la mesure.
+L'idée centrale est de construire l'intégrale progressivement : d'abord pour des fonctions très simples prenant un nombre fini de valeurs (les fonctions étagées), puis d'étendre cette définition à toute fonction mesurable positive par un processus de passage à la limite supérieure.
 
-Pour construire l'intégrale de Lebesgue, nous procédons en deux étapes fondamentales :
-1.  Nous définissons d'abord l'intégrale pour des fonctions très simples, dites **fonctions étagées positives**.
-2.  Nous étendons ensuite cette définition à toute fonction mesurable positive, par un processus de passage à la limite (approximation par des suites de fonctions étagées).
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  % Axes
+  \draw[->] (-0.5, 0) -- (6, 0) node[right] {$x$};
+  \draw[->] (0, -0.5) -- (0, 4) node[above] {$y$};
 
-Cette construction, à la fois algébrique (pour les fonctions étagées) et topologique (pour le passage à la limite), est le socle sur lequel repose toute l'analyse fonctionnelle moderne et la théorie des probabilités (axiomatisation de Kolmogorov).
+  % Courbe approximée
+  \draw[thick, blue] (0,0.5) to[out=20,in=180] (2,3) to[out=0,in=150] (4,1.5) to[out=-30,in=180] (5.5,2.5);
 
-## 2. Intégration des fonctions étagées positives
+  % Fonction étagée s(x)
+  \fill[red, opacity=0.3] (0,0) rectangle (1,0.5);
+  \draw[red, thick] (0,0.5) -- (1,0.5);
 
-### 2.1 Définition et construction
+  \fill[red, opacity=0.3] (1,0) rectangle (1.8, 1.5);
+  \draw[red, thick] (1,1.5) -- (1.8,1.5);
+  \draw[red, dashed] (1,0.5) -- (1,1.5);
 
-Considérons un espace mesuré $(X, \mathcal{A}, \mu)$. Une fonction étagée positive est une fonction $s : X \to \mathbb{R}^+$ qui ne prend qu'un nombre fini de valeurs et qui est mesurable. Toute fonction étagée positive peut s'écrire sous forme canonique.
+  \fill[red, opacity=0.3] (1.8,0) rectangle (3, 2.5);
+  \draw[red, thick] (1.8,2.5) -- (3,2.5);
+  \draw[red, dashed] (1.8,1.5) -- (1.8,2.5);
 
-**Définition (Intégrale d'une fonction étagée positive)**
-Soit $(X, \mathcal{A}, \mu)$ un espace mesuré et $s : X \to \mathbb{R}^+$ une fonction étagée positive mesurable. Si l'on écrit $s$ sous la forme de sa représentation canonique :
-$$
-s = \sum_{i=1}^n \alpha_i \mathbb{1}_{A_i}
-$$
-où les $\alpha_i \geq 0$ sont les valeurs distinctes prises par $s$, et les $A_i = s^{-1}(\{\alpha_i\}) \in \mathcal{A}$ forment une partition mesurable de $X$.
+  \fill[red, opacity=0.3] (3,0) rectangle (4.5, 1.2);
+  \draw[red, thick] (3,1.2) -- (4.5,1.2);
+  \draw[red, dashed] (3,2.5) -- (3,1.2);
 
-L'intégrale de $s$ par rapport à la mesure $\mu$, notée $\int_X s \, d\mu$, est définie par :
-$$
-\int_X s \, d\mu = \sum_{i=1}^n \alpha_i \mu(A_i)
-$$
-Dans cette formule, nous adoptons la convention $0 \times (+\infty) = 0$, ce qui garantit qu'un ensemble de mesure nulle n'apporte aucune contribution, même si la fonction y prend une valeur infinie.
+  \fill[red, opacity=0.3] (4.5,0) rectangle (5.5, 2.0);
+  \draw[red, thick] (4.5,2.0) -- (5.5,2.0);
+  \draw[red, dashed] (4.5,1.2) -- (4.5,2.0);
 
-**Exemple concret immédiat :**
-Plaçons-nous sur $X = \mathbb{R}$ muni de la tribu de Borel $\mathcal{B}(\mathbb{R})$ et de la mesure de Lebesgue $\lambda$.
-Soit la fonction étagée $s(x)$ définie par :
-- $s(x) = 2$ pour $x \in [0, 1]$
-- $s(x) = 5$ pour $x \in [2, 3]$
-- $s(x) = 0$ ailleurs.
+  \node[red] at (2.5, 1.2) {$s \le f$};
+  \node[blue] at (5, 3.2) {$y = f(x)$};
+\end{tikzpicture}
+\end{center}
 
-La représentation canonique est $s = 2 \cdot \mathbb{1}_{[0,1]} + 5 \cdot \mathbb{1}_{[2,3]} + 0 \cdot \mathbb{1}_{\mathbb{R} \setminus ([0,1] \cup [2,3])}$.
-Son intégrale vaut :
-$$
-\int_{\mathbb{R}} s \, d\lambda = 2 \cdot \lambda([0,1]) + 5 \cdot \lambda([2,3]) + 0 \cdot \lambda(\mathbb{R} \setminus \dots)
-$$
-$$
-\int_{\mathbb{R}} s \, d\lambda = 2 \cdot (1 - 0) + 5 \cdot (3 - 2) + 0 = 2(1) + 5(1) = 7
-$$
-Le calcul se réduit à une simple combinaison linéaire des mesures (les longueurs ici) des ensembles de niveau.
+## 2. Définitions, Théorèmes et Exemples Numériques
 
-### 2.2 Propriétés fondamentales (Cas étagé)
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 
-L'intégrale sur l'espace des fonctions étagées positives, noté $\mathcal{E}^+$, possède des propriétés algébriques et d'ordre cruciales.
+### Intégrale des Fonctions Étages
 
-**Proposition (Linéarité et monotonie sur $\mathcal{E}^+$)**
-Soient $s, t \in \mathcal{E}^+$ et $c \geq 0$.
-1.  **Linéarité :** $\int_X (cs + t) \, d\mu = c \int_X s \, d\mu + \int_X t \, d\mu$
-2.  **Monotonie :** Si $s \leq t$ sur $X$, alors $\int_X s \, d\mu \leq \int_X t \, d\mu$
+On note $\mathcal{E}_+$ l'ensemble des fonctions étagées mesurables positives sur $X$. Une fonction $s \in \mathcal{E}_+$ peut s'écrire sous forme canonique :
+$$s = \sum_{i=1}^n a_i \mathbf{1}_{A_i}$$
+où les $A_i \in \mathcal{F}$ forment une partition de $X$, et $a_i \ge 0$ sont les valeurs distinctes prises par $s$.
 
-*Remarque sur les cas limites :* La linéarité n'est vraie que pour des coefficients positifs. L'introduction de coefficients négatifs forcerait à considérer des fonctions de signe quelconque, ce qui nécessite une extension ultérieure de la théorie.
+> **Définition (Intégrale d'une fonction étagée) :** L'intégrale de la fonction étagée $s$ par rapport à la mesure $\mu$ est définie par :
+> $$\int_X s \, d\mu = \sum_{i=1}^n a_i \mu(A_i)$$
+> avec la convention stricte que $0 \cdot (+\infty) = 0$.
 
-## 3. Extension aux fonctions mesurables positives
+**Exemple Calculatoire Immédiat :**
+Sur l'espace $(\mathbb{R}, \mathcal{B}(\mathbb{R}), \lambda)$ où $\lambda$ est la mesure de Lebesgue, considérons la fonction :
+$$s(x) = 3 \cdot \mathbf{1}_{[0, 2]}(x) + 5 \cdot \mathbf{1}_{[4, 5]}(x)$$
+L'intégrale vaut :
+$$\int_{\mathbb{R}} s \, d\lambda = 3 \cdot \lambda([0, 2]) + 5 \cdot \lambda([4, 5]) = 3 \cdot 2 + 5 \cdot 1 = 11$$
 
-Nous passons maintenant des fonctions "simples" (étagées) aux fonctions plus générales.
+**Exemple sur une mesure de probabilité :**
+Soit un dé équilibré. L'espace est $X = \{1, 2, 3, 4, 5, 6\}$ muni de la mesure $\mathbb{P}(A) = \frac{\text{Card}(A)}{6}$.
+Soit la fonction gain $G(x) = 10 \cdot \mathbf{1}_{\{6\}}(x) + 2 \cdot \mathbf{1}_{\{1,2,3,4,5\}}(x)$.
+$$\int_X G \, d\mathbb{P} = 10 \cdot \mathbb{P}(\{6\}) + 2 \cdot \mathbb{P}(\{1,2,3,4,5\}) = 10 \cdot \frac{1}{6} + 2 \cdot \frac{5}{6} = \frac{20}{6} = \frac{10}{3}$$
+L'intégrale de Lebesgue correspond ici parfaitement à l'espérance mathématique.
 
-**Théorème fondamental de l'approximation (Rappel)**
-Pour toute fonction mesurable $f : X \to [0, +\infty]$, il existe une suite croissante $(s_n)_{n \in \mathbb{N}}$ de fonctions étagées positives ($s_n \in \mathcal{E}^+$) telle que $s_n \leq s_{n+1}$ pour tout $n$, et $s_n(x)$ converge ponctuellement vers $f(x)$ pour tout $x \in X$ lorsque $n \to +\infty$.
+### Intégrale des Fonctions Mesurables Positives
 
-C'est ce théorème qui fonde la définition de l'intégrale pour une fonction mesurable positive quelconque par la méthode du "Supremum".
+Soit $\mathcal{M}_+$ l'ensemble des fonctions mesurables de $X$ dans $[0, +\infty]$.
 
-**Définition (Intégrale de Lebesgue d'une fonction mesurable positive)**
-Soit $f : X \to [0, +\infty]$ une fonction mesurable positive. L'intégrale de $f$ par rapport à $\mu$ est définie comme le supremum des intégrales de toutes les fonctions étagées positives qui sont minorantes de $f$ :
-$$
-\int_X f \, d\mu = \sup \left\{ \int_X s \, d\mu \ \middle| \ s \in \mathcal{E}^+ \text{ et } 0 \leq s \leq f \text{ sur } X \right\}
-$$
-L'intégrale $\int_X f \, d\mu$ prend ses valeurs dans $[0, +\infty]$.
+> **Définition (Intégrale de Lebesgue) :**
+> Pour toute fonction $f \in \mathcal{M}_+$, on définit son intégrale par :
+> $$\int_X f \, d\mu = \sup \left\lbrace \int_X s \, d\mu \ \mid \ s \in \mathcal{E}_+, \ s \le f \right\rbrace$$
+> Cette valeur appartient à $[0, +\infty]$. Si cette valeur est finie, on dit que $f$ est intégrable sur $X$.
 
-**Exemple concret immédiat :**
-Considérons l'espace mesuré $(]0, 1], \mathcal{B}(]0,1]), \lambda)$. Soit la fonction $f(x) = \frac{1}{\sqrt{x}}$. $f$ est continue donc mesurable et positive.
-Considérons une suite de fonctions étagées $s_n$ minorant $f$. Puisque $\lim_{x \to 0} \frac{1}{\sqrt{x}} = +\infty$, l'intégrale de Riemann classique est impropre, mais au sens de Lebesgue, nous avons directement :
-$$
-\int_{]0,1]} \frac{1}{\sqrt{x}} \, d\lambda = \lim_{n \to \infty} \int_{]0,1]} s_n \, d\lambda = \left[ 2\sqrt{x} \right]_0^1 = 2
-$$
-Ici, l'intégrale de Lebesgue coïncide avec la limite de l'intégrale de Riemann, mais la construction est intrinsèquement liée à la mesure $\lambda$.
+**Exemple de la fonction de Dirichlet :**
+Soit $f = \mathbf{1}_{\mathbb{Q} \cap [0,1]}$. $f \in \mathcal{M}_+$.
+$f$ ne prend que les valeurs 0 et 1, c'est donc elle-même une fonction étagée sur le segment $[0, 1]$.
+$$\int_{[0,1]} f \, d\lambda = 1 \cdot \lambda(\mathbb{Q} \cap [0,1]) + 0 \cdot \lambda(([0,1] \setminus \mathbb{Q}))$$
+Puisque les rationnels sont dénombrables, $\lambda(\mathbb{Q}) = 0$. Ainsi :
+$$\int_{[0,1]} f \, d\lambda = 1 \cdot 0 + 0 = 0$$
 
-### 3.1 Monotonie (Cas général)
+## 3. Démonstrations Pas-à-Pas
 
-La propriété de monotonie est préservée par le passage au supremum.
+### Théorème : Annulation de l'intégrale
 
-**Proposition (Monotonie générale)**
-Si $f$ et $g$ sont deux fonctions mesurables positives telles que $f \leq g$ sur $X$, alors :
-$$
-\int_X f \, d\mu \leq \int_X g \, d\mu
-$$
+> **Théorème :** Soit $f \in \mathcal{M}_+$.
+> $\int_X f \, d\mu = 0 \iff f = 0$ presque partout ($\mu$-p.p).
 
-*Démonstration:*
-Soit $s \in \mathcal{E}^+$ telle que $0 \leq s \leq f$. Puisque $f \leq g$, nous avons $0 \leq s \leq g$.
-Par conséquent, $s$ fait partie de l'ensemble sur lequel on prend le supremum pour définir $\int_X g \, d\mu$.
-Ainsi, pour toute fonction étagée $s \leq f$, $\int_X s \, d\mu \leq \int_X g \, d\mu$.
-En prenant le supremum sur toutes ces fonctions $s$, on obtient :
-$$
-\sup_{s \leq f} \int_X s \, d\mu \leq \int_X g \, d\mu
-$$
-Ce qui est exactement la définition de $\int_X f \, d\mu \leq \int_X g \, d\mu$.
+**Démonstration Complète :**
 
-## 4. Démonstrations : Additivité et Lemme de Fatou (Prélude)
+\textbf{Sens Réciproque ($\impliedby$) :}
+Supposons que $f = 0$ $\mu$-p.p. Cela signifie que l'ensemble $N = \{x \in X \mid f(x) > 0\}$ est de mesure nulle : $\mu(N) = 0$.
+Soit $s \in \mathcal{E}_+$ telle que $0 \le s \le f$.
+Puisque $s \le f$, alors $\{x \mid s(x) > 0\} \subset \{x \mid f(x) > 0\} = N$.
+Ainsi, $s$ peut s'écrire $s = \sum_{i=1}^k a_i \mathbf{1}_{A_i}$, où $a_i > 0 \implies A_i \subset N$, ce qui impose $\mu(A_i) = 0$.
+Par conséquent, $\int_X s \, d\mu = \sum a_i \mu(A_i) = 0$.
+Par passage au supremum sur toutes ces fonctions étagées, on obtient bien $\int_X f \, d\mu = 0$.
 
-L'une des propriétés les plus importantes (et délicates à démontrer rigoureusement par le supremum) est la linéarité, en particulier l'additivité $\int (f+g) = \int f + \int g$.
+\textbf{Sens Direct ($\implies$) :}
+Supposons $\int_X f \, d\mu = 0$.
+Considérons les ensembles $A_n = \left\lbrace x \in X \mid f(x) \ge \frac{1}{n} \right\rbrace$ pour tout $n \in \mathbb{N}^*$.
+Définissons la fonction étagée $s_n = \frac{1}{n} \mathbf{1}_{A_n}$.
+Par construction, pour tout $x \in A_n$, $f(x) \ge \frac{1}{n} = s_n(x)$. Pour $x \notin A_n$, $s_n(x) = 0 \le f(x)$.
+Donc $0 \le s_n \le f$ partout sur $X$.
+Par définition du supremum de l'intégrale de Lebesgue :
+$$\int_X s_n \, d\mu \le \int_X f \, d\mu = 0$$
+Or $\int_X s_n \, d\mu = \frac{1}{n} \mu(A_n)$.
+On a donc $\frac{1}{n} \mu(A_n) \le 0$, ce qui, la mesure étant positive, impose $\mu(A_n) = 0$.
+L'ensemble où $f$ est strictement positive s'écrit $A = \{x \in X \mid f(x) > 0\}$.
+Remarquons que $A = \bigcup_{n=1}^\infty A_n$.
+Par $\sigma$-sous-additivité de la mesure :
+$$\mu(A) \le \sum_{n=1}^\infty \mu(A_n) = \sum_{n=1}^\infty 0 = 0$$
+Puisque $\mu(A) \ge 0$, on conclut que $\mu(A) = 0$, soit $f = 0$ $\mu$-presque partout. $\blacksquare$
 
-*Preuve de l'additivité (Esquisse rigoureuse)*
-Soient $f, g$ mesurables positives.
-1.  **Inégalité directe :** Si $s \leq f$ et $t \leq g$ sont des fonctions étagées, alors $s+t \leq f+g$ est une fonction étagée.
-    Par additivité sur $\mathcal{E}^+$, $\int (s+t) = \int s + \int t \leq \int (f+g)$.
-    En prenant le supremum indépendamment sur $s$ puis sur $t$, on obtient :
-    $\int f + \int g \leq \int (f+g)$.
-2.  **Inégalité inverse :** L'inégalité $\int (f+g) \leq \int f + \int g$ nécessite le puissant **Théorème de convergence monotone** (qui sera vu au jalon suivant). Si $(s_n)$ et $(t_n)$ sont des suites étagées croissant vers $f$ et $g$, alors $s_n+t_n$ croît vers $f+g$. En admettant que l'on peut inverser limite et intégrale pour des suites croissantes, on conclut :
-    $\int (f+g) = \lim \int (s_n+t_n) = \lim (\int s_n + \int t_n) = \int f + \int g$.
+## 4. Applications en Intelligence Artificielle
 
-Ce chaînage logique montre la nécessité absolue d'établir des théorèmes de passage à la limite sous le signe intégral (Convergence Monotone, Fatou, Convergence Dominée) pour rendre l'intégrale de Lebesgue véritablement opérationnelle.
+### Fondations pour l'Apprentissage Statistique
 
-## 5. Applications en Physique, Logique et IA
+En apprentissage automatique (Machine Learning), le risque réel d'un modèle (la Loss Function espérée) est défini par une intégrale de Lebesgue.
+Étant donné un espace de données $\mathcal{Z} = \mathcal{X} \times \mathcal{Y}$ muni d'une mesure de probabilité inconnue $\mathbb{P}$, et une fonction de perte (loss) $\ell(z, \theta) \ge 0$ paramétrée par $\theta$, le risque est :
+$$\mathcal{R}(\theta) = \int_{\mathcal{Z}} \ell(z, \theta) \, d\mathbb{P}(z)$$
+Le fait de définir cette fonction via l'intégrale de Lebesgue permet au cadre de l'apprentissage statistique d'être universel : il couvre indifféremment les problèmes de classification (où $\mathbb{P}$ a des composantes discrètes, mesures de Dirac sur les classes) et de régression (où $\mathbb{P}$ a des densités continues par rapport à la mesure de Lebesgue).
 
-La théorie de l'intégration de Lebesgue n'est pas qu'un raffinement purement esthétique ; elle est l'infrastructure mathématique de la science moderne.
+### Théorie de l'Information (Divergence KL)
 
-1.  **Théorie des Probabilités et IA (Espérance mathématique) :** L'espérance d'une variable aléatoire positive $X$ sur un espace probabilisé $(\Omega, \mathcal{F}, P)$ est par définition son intégrale de Lebesgue : $\mathbb{E}[X] = \int_\Omega X \, dP$. Cette formulation unifie le cas des variables discrètes (sommes) et continues (intégrales à densité). En Machine Learning, la fonction de coût empirique converge vers l'espérance du risque théorique, justifiée par la loi forte des grands nombres (une conséquence directe de la théorie de la mesure de Lebesgue).
-2.  **Mécanique Quantique (Espaces de Hilbert $L^2$) :** Les états quantiques d'une particule sont décrits par des fonctions d'onde appartenant à l'espace $L^2(\mathbb{R}^3, \lambda)$ des fonctions de carré Lebesgue-intégrables. La complétude de cet espace (le fait que toute suite de Cauchy converge) est garantie par l'intégrale de Lebesgue, ce qui est faux avec Riemann. La construction de la mesure est donc vitale pour garantir que les limites d'états physiques restent des états physiques valides.
-3.  **Théorie de l'Information (Entropie de Shannon différentielle) :** L'entropie différentielle d'une densité de probabilité continue est définie par une intégrale de Lebesgue : $h(f) = -\int f(x) \ln(f(x)) dx$. La convergence des algorithmes d'optimisation entropique (comme dans les Variational Autoencoders - VAE) s'appuie fondamentalement sur le passage à la limite sous ces intégrales.
+La similarité entre deux distributions de probabilités utilisées lors de la génération de texte (LLMs) est mesurée par la Divergence de Kullback-Leibler. Si $P$ et $Q$ sont deux mesures de probabilité, et si $P$ est absolument continue par rapport à $Q$ (noté $P \ll Q$), le théorème de Radon-Nikodym permet de définir une dérivée $f = \frac{dP}{dQ}$.
+La divergence KL est alors définie rigoureusement par l'intégrale de Lebesgue de la fonction positive $f \log f$ :
+$$D_{KL}(P || Q) = \int_{\Omega} \log\left(\frac{dP}{dQ}\right) dP$$
+Sans la théorie de l'intégration de Lebesgue, ce concept central pour les auto-encodeurs variationnels (VAE) et l'apprentissage par renforcement (PPO) n'aurait aucune assise mathématique robuste.

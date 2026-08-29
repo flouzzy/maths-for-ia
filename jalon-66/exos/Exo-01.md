@@ -1,19 +1,14 @@
-# Intégrale d'une fonction en escalier
+## Exercice 1 : Intégrale de la fonction nulle \quad $$\bigstar$$
 
-**Difficulté :** $\star\☆☆☆☆$
+**Énoncé :**
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré et la fonction nulle $f(x) = 0$ pour tout $x \in X$.
+Montrer en utilisant la définition stricte par supremum que $\int_X f \, d\mu = 0$.
 
-## Énoncé
-
-Soit $(X, \mathcal{A}, \mu) = ([0, 2], \mathcal{B}([0, 2]), \lambda)$. Soit la fonction étagée $s(x) = 3 \cdot \mathbb{1}_{[0,1[}(x) + 7 \cdot \mathbb{1}_{[1,2]}(x)$. Calculez rigoureusement $\int_{[0,2]} s \, d\lambda$.
-
----
-
-## Correction détaillée
-
-Par définition de l'intégrale d'une fonction étagée positive :
-$$ \int_X s \, d\lambda = \sum_{i} \alpha_i \lambda(A_i) $$
-Ici, les valeurs sont $\alpha_1 = 3$ et $\alpha_2 = 7$. Les ensembles correspondants sont $A_1 = [0,1[$ et $A_2 = [1,2]$.
-Leurs mesures de Lebesgue sont :
-$\lambda([0,1[) = 1 - 0 = 1$
-$\lambda([1,2]) = 2 - 1 = 1$
-Donc, $\int_{[0,2]} s \, d\lambda = 3 \times 1 + 7 \times 1 = 10$.
+**Correction :**
+1. Par définition, $f \in \mathcal{M}_+$.
+2. Soit $s \in \mathcal{E}_+$ une fonction étagée telle que $0 \le s \le f$.
+3. Puisque $f(x) = 0$ pour tout $x \in X$, la seule fonction $s$ satisfaisant cette condition est $s(x) = 0$ pour tout $x$.
+4. L'écriture canonique de $s$ est $s = 0 \cdot \mathbf{1}_X$.
+5. L'intégrale de cette fonction étagée est par définition : $\int_X s \, d\mu = 0 \cdot \mu(X) = 0$. (La convention $0 \cdot \infty = 0$ assure ce résultat même si $\mu(X) = \infty$).
+6. Le supremum sur l'ensemble de ces intégrales (qui ne contient que la valeur 0) est donc 0.
+7. Ainsi, $\int_X f \, d\mu = 0$.

@@ -1,20 +1,16 @@
-# Intégrabilité et finitude
+## Exercice 7 : Approximation par le bas \quad $$\bigstar\bigstar\bigstar$$
 
-**Difficulté :** $\star\star\star\star\star$
+**Énoncé :**
+Soit $f(x) = x$ sur $[0, 1]$ muni de la mesure de Lebesgue $\lambda$.
+On définit les fonctions étagées $s_n(x) = \sum_{k=0}^{n-1} \frac{k}{n} \mathbf{1}_{[\frac{k}{n}, \frac{k+1}{n})}(x)$.
+Calculer $\int_{[0, 1]} s_n \, d\lambda$ et trouver sa limite quand $n \to \infty$.
 
-## Énoncé
-
-Soit $f \geq 0$ mesurable. On suppose que $\int_X f \, d\mu < +\infty$. Montrez que l'ensemble $E = \{x \in X \mid f(x) = +\infty\}$ est de mesure nulle : $\mu(E) = 0$.
-
----
-
-## Correction détaillée
-
-Considérons pour tout entier $n \geq 1$ la fonction étagée $s_n = n \mathbb{1}_E$.
-Puisque pour $x \in E$, $f(x) = +\infty > n$, et pour $x \notin E$, $s_n(x) = 0 \leq f(x)$, on a toujours $0 \leq s_n \leq f$.
-Par définition de l'intégrale de Lebesgue via le supremum sur $\mathcal{E}^+$, on a :
-$$ \int_X f \, d\mu \geq \int_X s_n \, d\mu = n \mu(E) $$
-Ceci est vrai pour tout $n \geq 1$. Supposons par l'absurde que $\mu(E) > 0$.
-Alors la limite de $n \mu(E)$ quand $n \to +\infty$ est $+\infty$.
-Cela impliquerait que $\int_X f \, d\mu = +\infty$, ce qui contredit l'hypothèse de l'énoncé.
-Par conséquent, on doit nécessairement avoir $\mu(E) = 0$. On dit que $f$ est finie *presque partout*.
+**Correction :**
+1. $s_n$ est une fonction étagée, ses valeurs sont $\frac{k}{n}$ pour $0 \le k \le n-1$.
+2. La mesure de chaque intervalle $[\frac{k}{n}, \frac{k+1}{n})$ est $\frac{1}{n}$.
+3. Ainsi, l'intégrale de $s_n$ est la somme :
+   $$\int_{[0, 1]} s_n \, d\lambda = \sum_{k=0}^{n-1} \frac{k}{n} \lambda\left(\left[\frac{k}{n}, \frac{k+1}{n}\right)\right) = \sum_{k=0}^{n-1} \frac{k}{n} \cdot \frac{1}{n} = \frac{1}{n^2} \sum_{k=0}^{n-1} k$$
+4. On sait que $\sum_{k=0}^{n-1} k = \frac{(n-1)n}{2}$.
+5. L'intégrale vaut donc $\frac{(n-1)n}{2n^2} = \frac{n-1}{2n} = \frac{1}{2} - \frac{1}{2n}$.
+6. Quand $n \to \infty$, $\lim_{n \to \infty} \left( \frac{1}{2} - \frac{1}{2n} \right) = \frac{1}{2}$.
+7. Ceci prouve rigoureusement que l'intégrale de Lebesgue de $x \mapsto x$ sur $[0, 1]$ est supérieure ou égale à $1/2$. (Elle est exactement de $1/2$ par le théorème de convergence monotone).
