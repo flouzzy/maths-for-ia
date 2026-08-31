@@ -1,0 +1,588 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1
+}
+
+\title{\Huge THÉORÈME DE CONVERGENCE MONOTONE \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+\section*{Théorème de convergence monotone (Beppo Levi)}
+
+\subsection*{Introduction}
+
+Imaginez la construction d'une tour constituée de strates successives de matériaux, où chaque jour une nouvelle couche est ajoutée de sorte que le volume global de la structure soit strictement croissant ($f_n \le f_{n+1}$). Le problème central consiste à déterminer si le volume final de la tour ($f = \lim f_n$) peut être directement déduit par la limite des mesures intermédiaires. Le Théorème de Convergence Monotone stipule que pour des grandeurs positives et croissantes, la mesure de la limite coïncide exactement avec la limite des mesures.
+
+L'intégrale de Riemann ne garantit pas que la limite simple d'une suite de fonctions intégrables soit elle-même intégrable, ni que l'intégrale de la limite soit égale à la limite des intégrales. Le cadre de Lebesgue pallie cette déficience structurelle, offrant un outil robuste pour l'interversion des symboles de limite et d'intégrale.
+
+\subsection*{Définitions, Théorèmes et Exemples}
+
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
+
+\subsubsection*{Théorème de Convergence Monotone (Beppo Levi)}
+
+Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables de $X$ dans $[0, +\infty]$.
+Si la suite est croissante presque partout :
+$$\forall n \in \mathbb{N}, \quad f_n \le f_{n+1} \text{ p.p.}$$
+Alors la fonction limite $f = \lim_{n \to \infty} f_n$ est mesurable et :
+$$\int_X \left( \lim_{n \to \infty} f_n \right) d\mu = \lim_{n \to \infty} \int_X f_n d\mu$$
+
+\textbf{Exemple concret immédiat :}
+Considérons l'espace mesuré $(\mathbb{R}, \mathcal{B}(\mathbb{R}), \lambda)$ avec la mesure de Lebesgue.
+Soit la suite de fonctions indicatrices $f_n = \chi_{[-n, n]}$.
+- Chaque fonction $f_n$ est positive et mesurable.
+- Pour tout $x \in \mathbb{R}$, si on augmente $n$, l'intervalle $[-n, n]$ s'élargit. Donc $f_n(x) \le f_{n+1}(x)$.
+- L'intégrale de chaque fonction est la longueur de l'intervalle : $\int_{\mathbb{R}} f_n d\lambda = 2n$.
+- La limite ponctuelle de la suite est $f(x) = \lim_{n \to \infty} f_n(x) = 1$ (la fonction constante égale à 1).
+D'après le théorème de convergence monotone, l'intégrale de la fonction limite est la limite des intégrales :
+$$\int_{\mathbb{R}} 1 d\lambda = \lim_{n \to \infty} 2n = +\infty$$
+Ce qui correspond bien à la mesure de Lebesgue de $\mathbb{R}$.
+
+\textbf{Exemple avec croissance stricte sur un compact :}
+Soit $f_n(x) = (1 - x/n)^n \chi_{[0, n]}(x)$.
+- Sur $[0, n]$, $f_n(x)$ est positive. On peut montrer (via l'étude de la dérivée par rapport à $n$) que la suite $(f_n(x))$ est croissante et converge vers $e^{-x}$.
+- Les intégrales valent : $\int_0^\infty f_n(x) dx = \int_0^n (1 - x/n)^n dx = \frac{n}{n+1}$.
+- La limite de ces intégrales est $\lim \frac{n}{n+1} = 1$.
+- D'autre part, la fonction limite est $f(x) = e^{-x}$. Son intégrale sur $[0, +\infty[$ vaut $\int_0^\infty e^{-x} dx = 1$.
+Les deux quantités coïncident, validant le théorème.
+
+\subsubsection*{Corollaire sur les séries de fonctions (Sommation terme à terme)}
+
+Pour toute suite de fonctions mesurables positives $(u_n)$ sur $(X, \mathcal{F}, \mu)$ :
+$$\int_X \left( \sum_{n=0}^\infty u_n \right) d\mu = \sum_{n=0}^\infty \int_X u_n d\mu$$
+
+\textbf{Exemple concret immédiat :}
+Soit $X = [0, 1[$ avec la mesure de Lebesgue.
+Considérons la série géométrique : $u_n(x) = x^n$.
+- Les fonctions $u_n$ sont positives et mesurables.
+- L'intégrale de $u_n$ est : $\int_0^1 x^n dx = \frac{1}{n+1}$.
+- La limite de la somme est $\sum_{n=0}^\infty x^n = \frac{1}{1-x}$.
+D'après le corollaire, on peut intervertir la somme et l'intégrale, on a alors :
+$$\int_0^1 \frac{1}{1-x} dx = \sum_{n=0}^\infty \frac{1}{n+1} = +\infty$$
+L'intégrale vaut bien $+\infty$ (divergence logarithmique en 1), confirmant l'égalité.
+
+
+\vspace{1cm}
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % Axes
+    \draw[->] (-0.5,0) -- (4,0) node[right] {$x$};
+    \draw[->] (0,-0.5) -- (0,3) node[above] {$y$};
+
+    % Courbe limite
+    \draw[thick, blue] (0, 0.5) to[out=45,in=180] (2, 2.5) to[out=0,in=135] (3.5, 2) node[right] {$f = \lim f_n$};
+
+    % Courbes fn
+    \draw[thick, red] (0, 0.1) to[out=45,in=180] (2, 1) to[out=0,in=135] (3.5, 0.8) node[right] {$f_1$};
+    \draw[thick, orange] (0, 0.2) to[out=45,in=180] (2, 1.6) to[out=0,in=135] (3.5, 1.3) node[right] {$f_2$};
+    \draw[thick, green!60!black] (0, 0.3) to[out=45,in=180] (2, 2.1) to[out=0,in=135] (3.5, 1.7) node[right] {$f_3$};
+
+    \node at (2, -0.5) {\textit{Illustration de la convergence monotone}};
+\end{tikzpicture}
+\end{center}
+\vspace{1cm}
+
+\subsection*{Demonstrations}
+
+\textbf{Démonstration du Théorème de Beppo Levi}
+
+1. Existence de la limite : Comme la suite $(f_n(x))$ est une suite croissante à valeurs dans $[0, +\infty]$, elle admet nécessairement une limite dans $[0, +\infty]$ pour chaque $x \in X$. Soit $f(x) = \lim_{n \to \infty} f_n(x) = \sup_{n} f_n(x)$. Le supremum dénombrable de fonctions mesurables est mesurable.
+
+2. Majoration immédiate : Puisque pour tout $n$, $f_n \le f$, la monotonie de l'intégrale (établie pour les fonctions positives) implique que :
+   $$\int_X f_n d\mu \le \int_X f d\mu$$
+   En passant à la limite (qui existe dans $[0, +\infty]$ car la suite des intégrales est croissante) :
+   $$\lim_{n \to \infty} \int_X f_n d\mu \le \int_X f d\mu$$
+
+3. Minoration fondamentale : Soit $s$ une fonction étagée mesurable telle que $0 \le s \le f$. Soit un réel $\alpha \in ]0, 1[$.
+   Pour chaque $n \in \mathbb{N}$, définissons l'ensemble mesurable :
+   $$A_n = \{x \in X \mid f_n(x) \ge \alpha s(x) \}$$
+   - Comme $(f_n)$ est une suite croissante, la suite d'ensembles $(A_n)$ est croissante : $A_n \subset A_{n+1}$.
+   - De plus, pour tout $x$ où $s(x) > 0$, on a $\alpha s(x) < s(x) \le f(x) = \lim f_n(x)$. Donc il existe un rang à partir duquel $f_n(x) \ge \alpha s(x)$. Sur l'ensemble où $s(x) = 0$, $x \in A_1$. Par conséquent, $\bigcup_{n=1}^\infty A_n = X$.
+   - Sur l'ensemble $A_n$, on a $f_n \ge \alpha s$. Donc, par positivité :
+   $$\int_X f_n d\mu \ge \int_{A_n} f_n d\mu \ge \alpha \int_{A_n} s d\mu$$
+   - Par propriété de continuité monotone ascendante de la mesure, puisque $A_n \uparrow X$ :
+   $$\lim_{n \to \infty} \int_{A_n} s d\mu = \int_X s d\mu$$
+   - On en déduit, en passant à la limite dans l'inégalité précédente :
+   $$\lim_{n \to \infty} \int_X f_n d\mu \ge \alpha \int_X s d\mu$$
+   - Cette inégalité est vraie pour tout $\alpha \in ]0, 1[$. En faisant tendre $\alpha$ vers $1$, on obtient :
+   $$\lim_{n \to \infty} \int_X f_n d\mu \ge \int_X s d\mu$$
+
+4. Conclusion de l'égalité : Cette dernière inégalité est vraie pour toute fonction étagée $s \le f$. Par définition de l'intégrale des fonctions mesurables positives comme le supremum des intégrales des fonctions étagées minorantes, on prend le supremum sur toutes les fonctions $s$ :
+   $$\lim_{n \to \infty} \int_X f_n d\mu \ge \sup_{0 \le s \le f} \int_X s d\mu = \int_X f d\mu$$
+   Les deux inégalités combinées prouvent formellement l'égalité.
+
+
+\vspace{1cm}
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    % Rectangles showing integration of series
+    \draw[->] (-0.5,0) -- (5,0) node[right] {$x$};
+    \draw[->] (0,-0.5) -- (0,4) node[above] {$y$};
+
+    \fill[blue!20] (0.5,0) rectangle (1.5,1);
+    \draw (0.5,0) rectangle (1.5,1) node[midway] {$u_1$};
+
+    \fill[orange!20] (0.5,1) rectangle (1.5,2.2);
+    \draw (0.5,1) rectangle (1.5,2.2) node[midway] {$u_2$};
+
+    \fill[green!20] (0.5,2.2) rectangle (1.5,3);
+    \draw (0.5,2.2) rectangle (1.5,3) node[midway] {$u_3$};
+
+    \node at (2.5, 1.5) {$\implies$};
+
+    \fill[gray!20] (3.5,0) rectangle (4.5,3);
+    \draw (3.5,0) rectangle (4.5,3) node[midway] {$\sum u_n$};
+
+    \node at (2.5, -0.5) {\textit{Sommation terme à terme des aires}};
+\end{tikzpicture}
+\end{center}
+\vspace{1cm}
+
+\subsection*{Applications en Physique, Logique et IA}
+
+En apprentissage statistique et en théorie de l'information, on calcule fréquemment des espérances d'une somme infinie de variables aléatoires positives, ou l'on étudie la limite de processus itératifs. Le théorème de convergence monotone est le pilier qui permet d'intervertir sans condition l'espérance mathématique (l'intégrale de Lebesgue) et la limite de ces processus monotones.
+
+\textbf{Évaluation de fonctions de coût sous forme de séries :}
+Dans le cadre de l'optimisation stochastique ou des développements en séries de Taylor de fonctions de perte (par exemple la cross-entropie évaluée sur des distributions), l'erreur attendue est souvent décomposable en une série de fonctions de risque partielles positives. Le TCM garantit que l'espérance de la perte globale est précisément la somme des espérances des pertes partielles, validant ainsi la convergence théorique de nombreux algorithmes d'apprentissage sur des espaces de grande dimension.
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Application directe du théorème \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré et $A_n$ une suite croissante d'ensembles mesurables, c'est-à-dire $A_n \subset A_{n+1}$. Soit $A = \bigcup_{n=1}^\infty A_n$. En utilisant le théorème de convergence monotone appliqué aux fonctions indicatrices, démontrer que $\mu(A) = \lim_{n \to \infty} \mu(A_n)$.
+
+\textbf{Correction Détaillée :}
+1. Considérons la suite de fonctions indicatrices $f_n = \chi_{A_n}$.
+2. Puisque $A_n \subset A_{n+1}$, pour tout $x \in X$, on a $f_n(x) \le f_{n+1}(x)$. La suite $(f_n)$ est donc croissante et composée de fonctions mesurables positives.
+3. Pour tout $x \in A$, il existe un entier $N$ tel que $x \in A_N$, donc pour tout $n \ge N$, $x \in A_n$ et $f_n(x) = 1$. Ainsi $\lim f_n(x) = 1 = \chi_A(x)$.
+   Si $x \notin A$, alors $x \notin A_n$ pour tout $n$, donc $\lim f_n(x) = 0 = \chi_A(x)$.
+   On a bien $\lim f_n = \chi_A$.
+4. D'après le théorème de convergence monotone, $\int_X \chi_A d\mu = \lim_{n \to \infty} \int_X \chi_{A_n} d\mu$.
+5. Or, par définition, $\int_X \chi_{A} d\mu = \mu(A)$ et $\int_X \chi_{A_n} d\mu = \mu(A_n)$.
+6. On conclut donc que $\mu(A) = \lim_{n \to \infty} \mu(A_n)$.
+
+
+\subsection*{Interversion série-intégrale classique \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Calculer l'intégrale $\int_0^1 \frac{1}{1-x} dx$ en développant l'intégrande en série entière et en justifiant soigneusement l'interversion.
+
+\textbf{Correction Détaillée :}
+1. Pour tout $x \in [0, 1[$, on a le développement en série entière : $\frac{1}{1-x} = \sum_{n=0}^\infty x^n$.
+2. Posons $u_n(x) = x^n$ sur $[0, 1[$. Les fonctions $u_n$ sont mesurables et positives.
+3. D'après le corollaire du théorème de convergence monotone (ou théorème de sommation terme à terme de Beppo Levi), on peut écrire :
+   $$\int_0^1 \left(\sum_{n=0}^\infty x^n\right) dx = \sum_{n=0}^\infty \int_0^1 x^n dx$$
+4. Calculons l'intégrale du terme général : $\int_0^1 x^n dx = \left[ \frac{x^{n+1}}{n+1} \right]_0^1 = \frac{1}{n+1}$.
+5. On a donc $\int_0^1 \frac{1}{1-x} dx = \sum_{n=0}^\infty \frac{1}{n+1}$.
+6. Cette série est la série harmonique, qui diverge vers $+\infty$. L'intégrale vaut donc $+\infty$.
+
+
+\subsection*{Croissance avec paramètre \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Montrer que $\lim_{n \to \infty} \int_0^1 \frac{n x}{1 + n^2 x^2} dx = 0$ n'est PAS un contre-exemple au théorème de convergence monotone.
+
+\textbf{Correction Détaillée :}
+1. Posons $f_n(x) = \frac{n x}{1 + n^2 x^2}$ pour $x \in [0, 1]$.
+2. Les fonctions $f_n$ sont positives. Calculons la limite simple : pour $x > 0$, $f_n(x) \sim \frac{nx}{n^2x^2} = \frac{1}{nx} \to 0$ quand $n \to \infty$. Pour $x=0$, $f_n(0) = 0$. Donc $f_n(x) \to 0$ ponctuellement, de fonction limite $f(x) = 0$.
+3. Calculons l'intégrale : $I_n = \int_0^1 \frac{n x}{1 + n^2 x^2} dx = \frac{1}{2n} [\ln(1 + n^2 x^2)]_0^1 = \frac{\ln(1+n^2)}{2n}$.
+4. Lorsque $n \to \infty$, $I_n \to 0$. Ici, la limite des intégrales est égale à l'intégrale de la limite.
+5. Cependant, vérifions la condition du théorème de convergence monotone. La dérivée par rapport à $n$ (vu comme variable continue $t$) donne $\partial_t \frac{tx}{1+t^2x^2} = \frac{x(1+t^2x^2) - tx(2tx^2)}{(1+t^2x^2)^2} = \frac{x(1-t^2x^2)}{(1+t^2x^2)^2}$.
+6. Cette dérivée est négative dès que $tx > 1$, c'est-à-dire $n > 1/x$. La suite $(f_n(x))$ n'est donc \textbf{pas} croissante pour $n$ assez grand. Le théorème de convergence monotone ne s'applique pas, ce qui explique pourquoi ce n'est pas un contre-exemple (les hypothèses ne sont pas vérifiées). (La conclusion est quand même vraie ici, grâce au théorème de convergence dominée).
+
+
+\subsection*{Limite d'intégrale de Gaussiennes tronquées \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Soit $f_n(x) = e^{-x^2} \chi_{[-n, n]}(x)$. Calculer $\lim_{n \to \infty} \int_{\mathbb{R}} f_n(x) dx$ en utilisant le TCM.
+
+\textbf{Correction Détaillée :}
+1. Posons $f_n(x) = e^{-x^2} \chi_{[-n, n]}(x)$. Pour tout $x$, $e^{-x^2} > 0$.
+2. L'intervalle $[-n, n]$ est inclus dans $[-(n+1), n+1]$. Ainsi, $\chi_{[-n, n]}(x) \le \chi_{[-(n+1), n+1]}(x)$.
+3. On en déduit que pour tout $x \in \mathbb{R}$, $f_n(x) \le f_{n+1}(x)$. La suite $(f_n)$ est donc positive et croissante.
+4. La limite simple de $f_n(x)$ est $f(x) = e^{-x^2}$ car pour tout $x$, il existe $N$ tel que pour tout $n \ge N$, $x \in [-n, n]$.
+5. Par le théorème de convergence monotone :
+   $\lim_{n \to \infty} \int_{\mathbb{R}} f_n(x) dx = \int_{\mathbb{R}} \lim_{n \to \infty} f_n(x) dx = \int_{\mathbb{R}} e^{-x^2} dx$.
+6. On sait que l'intégrale de Gauss $\int_{\mathbb{R}} e^{-x^2} dx$ vaut $\sqrt{\pi}$.
+7. Ainsi, la limite cherchée est $\sqrt{\pi}$.
+
+
+\subsection*{Somme double de termes positifs \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $(a_{i,j})_{i,j \ge 0}$ une suite double de réels positifs. Démontrer, en utilisant la mesure de comptage sur $\mathbb{N}$ et le corollaire du TCM, que $\sum_{i=0}^\infty \sum_{j=0}^\infty a_{i,j} = \sum_{j=0}^\infty \sum_{i=0}^\infty a_{i,j}$.
+
+\textbf{Correction Détaillée :}
+1. On munit $\mathbb{N}$ de la tribu de l'ensemble de ses parties et de la mesure de comptage $\mu$. L'intégrale par rapport à $\mu$ d'une fonction positive $f$ est $\int_{\mathbb{N}} f d\mu = \sum_{k=0}^\infty f(k)$.
+2. Posons la fonction $u_j : \mathbb{N} \to [0, +\infty]$ définie par $u_j(i) = a_{i,j}$.
+3. La série $\sum_{j=0}^\infty u_j$ est une série de fonctions mesurables positives sur $\mathbb{N}$.
+4. D'après le corollaire du TCM (sommation terme à terme) :
+   $\int_{\mathbb{N}} (\sum_{j=0}^\infty u_j(i)) d\mu(i) = \sum_{j=0}^\infty \int_{\mathbb{N}} u_j(i) d\mu(i)$.
+5. Explicitons les intégrales comme des sommes :
+   Le membre de gauche est $\sum_{i=0}^\infty \left( \sum_{j=0}^\infty a_{i,j} \right)$.
+   Le membre de droite est $\sum_{j=0}^\infty \left( \sum_{i=0}^\infty a_{i,j} \right)$.
+6. L'égalité est donc démontrée : l'interversion des sommes est toujours licite pour des termes positifs.
+
+
+\subsection*{Intégrale de Riemann impropre et limite \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Démontrer que $\int_0^1 \frac{\ln(x)}{x-1} dx = \frac{\pi^2}{6}$. On rappelle que $\sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6}$.
+
+\textbf{Correction Détaillée :}
+1. Sur $]0, 1[$, on a le développement en série entière : $\frac{1}{1-x} = \sum_{n=0}^\infty x^n$.
+2. Donc $f(x) = \frac{-\ln(x)}{1-x} = \sum_{n=0}^\infty (-x^n \ln(x))$.
+3. Posons $u_n(x) = -x^n \ln(x)$. Sur $]0, 1[$, $x^n > 0$ et $\ln(x) < 0$, donc $u_n(x) > 0$. La série est à termes positifs.
+4. Par le TCM (sommation), $\int_0^1 f(x) dx = \sum_{n=0}^\infty \int_0^1 -x^n \ln(x) dx$.
+5. Calculons $I_n = \int_0^1 -x^n \ln(x) dx$ par intégration par parties :
+   $u = -\ln(x) \implies u' = -1/x$
+   $v' = x^n \implies v = \frac{x^{n+1}}{n+1}$
+   $I_n = [-\ln(x) \frac{x^{n+1}}{n+1}]_0^1 - \int_0^1 -1/x \cdot \frac{x^{n+1}}{n+1} dx$
+   Le terme de bord s'annule (car $x^{n+1}\ln(x) \to 0$ en $0$).
+   $I_n = \int_0^1 \frac{x^n}{n+1} dx = \left[ \frac{x^{n+1}}{(n+1)^2} \right]_0^1 = \frac{1}{(n+1)^2}$.
+6. Ainsi, $\int_0^1 \frac{-\ln(x)}{1-x} dx = \sum_{n=0}^\infty \frac{1}{(n+1)^2} = \sum_{k=1}^\infty \frac{1}{k^2} = \frac{\pi^2}{6}$.
+
+
+\subsection*{Croissance de la primitive \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $f$ une fonction intégrable positive sur $\mathbb{R}$. Posons $F(x) = \int_{-\infty}^x f(t) dt$. Démontrer rigoureusement que $\lim_{x \to +\infty} F(x) = \int_{\mathbb{R}} f(t) dt$.
+
+\textbf{Correction Détaillée :}
+1. Considérons toute suite croissante $(x_n)$ tendant vers $+\infty$.
+2. Posons la suite de fonctions $g_n(t) = f(t) \chi_{]-\infty, x_n]}(t)$.
+3. Comme $(x_n)$ est croissante, les intervalles $]-\infty, x_n]$ s'emboîtent : $]-\infty, x_n] \subset ]-\infty, x_{n+1}]$.
+4. Donc $\chi_{]-\infty, x_n]}(t) \le \chi_{]-\infty, x_{n+1}]}(t)$. Puisque $f \ge 0$, on a $g_n(t) \le g_{n+1}(t)$.
+5. La limite simple de $g_n(t)$ est $f(t) \chi_{\mathbb{R}}(t) = f(t)$ car pour tout $t \in \mathbb{R}$, il existe $N$ tel que pour tout $n \ge N$, $x_n > t$, et donc $t \in ]-\infty, x_n]$.
+6. On applique le Théorème de Convergence Monotone :
+   $\lim_{n \to \infty} \int_{\mathbb{R}} g_n(t) dt = \int_{\mathbb{R}} f(t) dt$.
+7. Or $\int_{\mathbb{R}} g_n(t) dt = \int_{-\infty}^{x_n} f(t) dt = F(x_n)$.
+8. Donc pour toute suite $(x_n) \uparrow +\infty$, $F(x_n)$ tend vers $\int_{\mathbb{R}} f(t) dt$, ce qui caractérise la limite $\lim_{x \to +\infty} F(x) = \int_{\mathbb{R}} f(t) dt$.
+
+
+\subsection*{Un contre-exemple (Perte de masse à l'infini) \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Considérons la suite de fonctions $f_n(x) = \frac{1}{n} \chi_{[0, n]}(x)$.
+1. Montrer que $f_n(x)$ converge ponctuellement vers 0.
+2. La suite $(f_n)$ est-elle croissante ?
+3. Calculer $\lim \int f_n$ et comparer à $\int \lim f_n$. Conclure.
+
+\textbf{Correction Détaillée :}
+1. Fixons $x \in \mathbb{R}$. Si $x < 0$, $f_n(x) = 0$ pour tout $n$. Si $x \ge 0$, pour $n > x$, $f_n(x) = 1/n$. Dans tous les cas, $f_n(x) \to 0$ quand $n \to \infty$. Donc $f = 0$.
+2. Regardons la monotonie : $f_n(0) = 1/n$ et $f_{n+1}(0) = 1/(n+1)$. Clairement, $f_{n+1}(0) < f_n(0)$. La suite $(f_n)$ n'est donc \textbf{pas} croissante.
+3. Calculons l'intégrale : $\int_{\mathbb{R}} f_n(x) dx = \int_0^n \frac{1}{n} dx = \frac{n}{n} = 1$.
+   Donc $\lim_{n \to \infty} \int f_n = 1$.
+   D'autre part, $\int \lim f_n = \int 0 = 0$.
+4. On a $\lim \int f_n \neq \int \lim f_n$. Ceci illustre que si l'hypothèse de croissance est absente, l'interversion est en général fausse (la "masse" s'échappe vers l'infini, un phénomène appelé perte de masse ou défaut de tension).
+
+
+\subsection*{Preuve alternative de Lemme de Fatou (Préambule) \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Soit $(f_n)$ une suite de fonctions mesurables positives (pas nécessairement croissante). On pose $g_n(x) = \inf_{k \ge n} f_k(x)$.
+1. Montrer que $(g_n)$ est croissante et positive.
+2. Montrer que $\lim g_n = \liminf f_n$.
+3. En déduire, via le TCM, que $\int \liminf f_n \le \liminf \int f_n$ (C'est le Lemme de Fatou).
+
+\textbf{Correction Détaillée :}
+1. Par définition, $g_n(x)$ est l'infimum sur l'ensemble $\{k \ge n\}$.
+   $g_{n+1}(x)$ est l'infimum sur l'ensemble $\{k \ge n+1\}$.
+   L'ensemble sur lequel on prend l'infimum est plus petit pour $g_{n+1}$, donc l'infimum est potentiellement plus grand : $g_n(x) \le g_{n+1}(x)$. De plus, $g_n \ge 0$ car $f_k \ge 0$.
+2. Par définition de la limite inférieure, $\liminf f_n(x) = \lim_{n \to \infty} (\inf_{k \ge n} f_k(x)) = \lim_{n \to \infty} g_n(x)$.
+3. Appliquons le TCM à la suite croissante de fonctions positives $(g_n)$ :
+   $\int (\lim g_n) d\mu = \lim \int g_n d\mu$.
+   Donc $\int (\liminf f_n) d\mu = \lim_{n \to \infty} \int \inf_{k \ge n} f_k d\mu$.
+   Or, pour tout $k \ge n$, $g_n \le f_k$, donc par monotonie de l'intégrale, $\int g_n \le \int f_k$.
+   Ainsi, $\int g_n \le \inf_{k \ge n} \int f_k$.
+   En passant à la limite quand $n \to \infty$ :
+   $\lim \int g_n \le \lim \inf_{k \ge n} \int f_k = \liminf \int f_n$.
+   On conclut donc que $\int \liminf f_n \le \liminf \int f_n$.
+
+
+\subsection*{Application aux espaces $L^1$ \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Soit $(f_n)$ une suite de fonctions de $L^1(X, \mu)$ convergeant ponctuellement vers $f$. On suppose qu'il existe une fonction $F \in L^1$ telle que $\forall n, |f_n| \le F$ p.p.
+En utilisant le théorème de Beppo Levi (ou plutôt son corollaire qui donne Fatou, voir exercice précédent), démontrer que $f \in L^1$ et $\lim \int |f_n - f| d\mu = 0$ (C'est le Théorème de Convergence Dominée).
+
+\textbf{Correction Détaillée :}
+1. Comme $|f_n| \le F$, à la limite $|f| \le F$. Puisque $F \in L^1$, on a $f \in L^1$.
+2. Considérons la suite de fonctions positives : $g_n = 2F - |f_n - f|$.
+   Puisque $|f_n| \le F$ et $|f| \le F$, l'inégalité triangulaire donne $|f_n - f| \le 2F$, donc $g_n \ge 0$.
+3. La limite simple de $g_n$ est $\lim (2F - |f_n - f|) = 2F - 0 = 2F$.
+4. Appliquons le Lemme de Fatou (démontré via TCM) à la suite positive $g_n$ :
+   $\int \liminf g_n \le \liminf \int g_n$.
+   Ici la limite existe, donc $\liminf = \lim$.
+   $\int 2F \le \liminf \int (2F - |f_n - f|) = \int 2F - \limsup \int |f_n - f|$.
+5. Les quantités $\int 2F$ sont finies (car $F \in L^1$). On peut donc les soustraire de l'inégalité :
+   $0 \le -\limsup \int |f_n - f|$, ce qui implique $\limsup \int |f_n - f| \le 0$.
+6. Or, l'intégrale est positive, donc $\liminf \int |f_n - f| \ge 0$.
+7. Finalement, $0 \le \liminf \int |f_n - f| \le \limsup \int |f_n - f| \le 0$.
+   La limite existe donc et vaut 0 : $\lim \int |f_n - f| d\mu = 0$.
+   La convergence dans $L^1$ implique la convergence des intégrales : $\int f_n \to \int f$.
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{Vérification numérique naïve du TCM}
+
+\begin{lstlisting}
+# Objectif : Verifier numeriquement le Theoreme de Convergence Monotone
+# sur la suite fn(x) = (1 - x/n)^n * indicatrice_[0, n](x) sur [0, 50].
+# On sait que la limite est f(x) = exp(-x).
+
+import math
+
+def f_n(x, n):
+    if x >= 0 and x <= n:
+        return (1 - x / n) ** n
+    return 0.0
+
+def f_limite(x):
+    return math.exp(-x)
+
+# Integration numerique par methode des rectangles
+def integrate(func, a, b, steps, n_val=None):
+    width = (b - a) / steps
+    total = 0.0
+    for i in range(steps):
+        x = a + i * width
+        if n_val is not None:
+            total += func(x, n_val) * width
+        else:
+            total += func(x) * width
+    return total
+
+a, b = 0.0, 20.0
+steps = 5000
+
+print("Verification du Theoreme de Convergence Monotone :")
+for n in [1, 2, 5, 10, 20, 50, 100]:
+    integral_n = integrate(f_n, a, b, steps, n)
+    print("n =", n, "-> integrale =", round(integral_n, 5))
+
+integral_limite = integrate(f_limite, a, b, steps)
+print("Limite theorique de l'integrale =", round(integral_limite, 5))
+\end{lstlisting}
+
+
+\subsection*{Illustration de la condition de croissance}
+
+\begin{lstlisting}
+# Objectif : Montrer ce qui se passe quand la suite de fonctions
+# n'est PAS croissante, provoquant l'echec de la convergence des integrales
+# vers l'integrale de la limite (Perte de masse).
+# fn(x) = (1/n) * indicatrice_[0, n](x)
+# f_limite(x) = 0.
+
+def f_n(x, n):
+    if x >= 0 and x <= n:
+        return 1.0 / n
+    return 0.0
+
+def f_limite(x):
+    return 0.0
+
+def integrate(func, a, b, steps, n_val=None):
+    width = (b - a) / steps
+    total = 0.0
+    for i in range(steps):
+        x = a + i * width
+        if n_val is not None:
+            total += func(x, n_val) * width
+        else:
+            total += func(x) * width
+    return total
+
+steps = 10000
+print("Illustration du contre-exemple sans croissance :")
+# L'intervalle doit grandir avec n pour capturer toute l'integrale
+for n in [10, 50, 100, 500]:
+    integral_n = integrate(f_n, 0.0, n + 1.0, steps, n)
+    print("n =", n, "-> integrale =", round(integral_n, 5))
+
+integral_limite = integrate(f_limite, 0.0, 1000.0, steps)
+print("Integrale de la limite =", round(integral_limite, 5))
+print("Conclusion : La masse 1 s'echappe vers l'infini.")
+\end{lstlisting}
+
+
+\subsection*{Interversion somme-intégrale}
+
+\begin{lstlisting}
+# Objectif : Verifier numeriquement le corollaire du TCM
+# sur l'interversion somme et integrale.
+# int_0^1 (-ln(x)/(1-x)) dx = sum_1^infty 1/n^2 = pi^2 / 6
+
+import math
+
+def terme_n(x, n):
+    if x == 0 or x == 1:
+        return 0.0
+    return - (x ** n) * math.log(x)
+
+def fonction_limite(x):
+    if x == 0 or x == 1:
+        return 0.0
+    return - math.log(x) / (1 - x)
+
+def integrate(func, a, b, steps, n_val=None):
+    width = (b - a) / steps
+    total = 0.0
+    for i in range(steps):
+        x = a + i * width + (width / 2.0)  # point milieu pour eviter les bornes
+        if n_val is not None:
+            total += func(x, n_val) * width
+        else:
+            total += func(x) * width
+    return total
+
+a, b = 0.0, 1.0
+steps = 2000
+
+integrale_totale = integrate(fonction_limite, a, b, steps)
+print("Integrale globale directe = ", round(integrale_totale, 5))
+
+somme_integrales = 0.0
+for n in range(20):
+    I_n = integrate(terme_n, a, b, steps, n)
+    somme_integrales += I_n
+    if n % 5 == 0 or n == 19:
+        print("Somme partielle k=0 a", n, "des integrales =", round(somme_integrales, 5))
+
+pi_carre_sur_6 = (math.pi ** 2) / 6.0
+print("Valeur theorique pi^2/6 = ", round(pi_carre_sur_6, 5))
+\end{lstlisting}
+
+
+\subsection*{Simulation du processus de Fatou}
+
+\begin{lstlisting}
+# Objectif : Simuler g_n = inf_{k>=n} f_k et verifier que la suite (g_n)
+# est bien croissante meme si (f_n) ne l'est pas.
+
+import random
+
+# f_k va osciller, ce ne sera pas monotone.
+def f_k(x, k):
+    return (1.0 + math.sin(k * x)) / x if x > 0 else 0
+
+def g_n(x, n, K_max):
+    # K_max est une borne arbitraire pour estimer l'infimum
+    valeurs = []
+    for k in range(n, K_max):
+        valeurs.append(f_k(x, k))
+    min_val = valeurs[0]
+    for v in valeurs:
+        if v < min_val:
+            min_val = v
+    return min_val
+
+print("Verification de la croissance de l'infimum g_n :")
+x_test = 2.5
+K_max = 50
+g_vals = []
+for n in range(1, 10):
+    val = g_n(x_test, n, K_max)
+    g_vals.append(round(val, 4))
+    print("g_n pour n =", n, "vaut", round(val, 4))
+
+is_croissant = True
+for i in range(len(g_vals) - 1):
+    if g_vals[i] > g_vals[i+1]:
+        is_croissant = False
+
+print("La suite (g_n) est-elle croissante ? :", is_croissant)
+\end{lstlisting}
+
+
+\subsection*{Espérance et Somme Infinie en IA}
+
+\begin{lstlisting}
+# Objectif : Illustrer le TCM dans un contexte statistique (IA).
+# Calcul de l'esperance d'une somme infinie de variables de Poisson.
+# On approche l'esperance de la somme par la somme des esperances.
+
+import random
+
+# Echantillonnage d'une loi de Poisson de parametre lambda
+def sample_poisson(lam):
+    L = math.exp(-lam)
+    p = 1.0
+    k = 0
+    while p > L:
+        k += 1
+        u = random.random()
+        p *= u
+    return k - 1
+
+# On va considerer une somme de variables de Poisson avec lambda_n = 1/2^n
+# La somme theorique des lambda_n pour n>=1 est 1.
+# Donc l'esperance de la somme est 1.
+
+n_simulations = 5000
+N_max = 15
+
+print("Simulation Esperance de somme infinie :")
+somme_des_esperances = 0.0
+
+# Calcul de la somme des esperances empiriques
+for n in range(1, N_max + 1):
+    lam_n = 1.0 / (2.0 ** n)
+    somme_empirique_n = 0.0
+    for _ in range(n_simulations):
+        somme_empirique_n += sample_poisson(lam_n)
+    esperance_n = somme_empirique_n / n_simulations
+    somme_des_esperances += esperance_n
+
+print("Somme des esperances partielles (empirique) =", round(somme_des_esperances, 4))
+
+# Calcul de l'esperance de la somme totale
+somme_totale_echantillons = 0.0
+for _ in range(n_simulations):
+    somme_individu = 0.0
+    for n in range(1, N_max + 1):
+        lam_n = 1.0 / (2.0 ** n)
+        somme_individu += sample_poisson(lam_n)
+    somme_totale_echantillons += somme_individu
+
+esperance_globale = somme_totale_echantillons / n_simulations
+print("Esperance globale de la somme (empirique) =", round(esperance_globale, 4))
+print("Valeur theorique attendue = 1.0")
+\end{lstlisting}
+
+
+
+\end{document}
