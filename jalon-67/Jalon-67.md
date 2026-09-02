@@ -14,9 +14,9 @@ next: "[[Jalon 68 (Lemme de Fatou et définition de l'intégrale pour les foncti
 
 ## 1. Présentation du concept clé
 
-- **La Métaphore :** Imaginez que vous construisiez une tour de blocs de glace qui fondent très lentement, mais que chaque jour vous ajoutiez une petite couche de glace supplémentaire par-dessus ($f_n \le f_{n+1}$). Vous voulez savoir quel sera le volume final de la tour ($f = \lim f_n$). Le **Théorème de Convergence Monotone** dit quelque chose de très simple et rassurant : le volume de la tour finale est exactement égal à la limite des volumes que vous avez mesurés jour après jour. En d'autres termes, pour des objets qui ne font que grandir, l'ordre dans lequel on fait les opérations (calculer le volume puis faire la limite, ou faire la limite puis calculer le volume) ne change pas le résultat.
-- **Le "Pourquoi on a inventé ça" :** C'est la grande force de l'intégrale de Lebesgue par rapport à celle de Riemann. Avec Riemann, on ne pouvait pas garantir que la limite d'une suite de fonctions intégrables soit encore intégrable. Avec Lebesgue et Beppo Levi, on a un outil ultra-robuste pour manipuler les limites et les sommes infinies.
-- **Visualisation :** Une suite de courbes qui "montent" vers une courbe plafond. L'aire sous les courbes monte elle aussi vers l'aire sous le plafond.
+- **Introduction Intuitive :** Imaginez que vous construisiez une tour de blocs de glace qui fondent très lentement, mais que chaque jour vous ajoutiez une petite couche de glace supplémentaire par-dessus ($f_n \le f_{n+1}$). Vous voulez savoir quel sera le volume final de la tour ($f = \lim f_n$). Le **Théorème de Convergence Monotone** dit quelque chose de très simple et rassurant : le volume de la tour finale est exactement égal à la limite des volumes que vous avez mesurés jour après jour. En d'autres termes, pour des objets qui ne font que grandir, l'ordre dans lequel on fait les opérations (calculer le volume puis faire la limite, ou faire la limite puis calculer le volume) ne change pas le résultat.
+- **Genèse Historique et Limites de Riemann :** C'est la grande force de l'intégrale de Lebesgue par rapport à celle de Riemann. Avec Riemann, on ne pouvait pas garantir que la limite d'une suite de fonctions intégrables soit encore intégrable. Avec Lebesgue et Beppo Levi, on a un outil ultra-robuste pour manipuler les limites et les sommes infinies.
+- **Interprétation Géométrique :** Une suite de courbes qui "montent" vers une courbe plafond. L'aire sous les courbes monte elle aussi vers l'aire sous le plafond.
 
 ## 2. Formalisation
 
@@ -26,15 +26,60 @@ Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 
 > **Théorème de Convergence Monotone (Beppo Levi) :**
 > Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables de $X$ dans $[0, +\infty]$.
-> Si la suite est **croissante** presque partout :
+> Si la suite est croissante presque partout :
 > $$\forall n \in \mathbb{N}, \quad f_n \le f_{n+1} \text{ p.p.}$$
 > Alors la fonction limite $f = \lim_{n \to \infty} f_n$ est mesurable et :
 > $$\int_X \left( \lim_{n \to \infty} f_n \right) d\mu = \lim_{n \to \infty} \int_X f_n d\mu$$
+
+### Exemples de Validation
+
+**Exemple 1 : La série géométrique**
+Prenons l'espace $[0,1[$ muni de la mesure de Lebesgue $\lambda$. Soit $f_n(x) = \sum_{k=0}^n x^k$.
+Les fonctions $f_n$ sont mesurables, positives. La suite $(f_n)$ est croissante car $f_{n+1}(x) - f_n(x) = x^{n+1} \ge 0$.
+La limite simple est $f(x) = \lim_{n \to \infty} f_n(x) = \sum_{k=0}^\infty x^k = \frac{1}{1-x}$.
+Calculons l'intégrale de chaque $f_n$ :
+$$\int_0^1 f_n(x) dx = \sum_{k=0}^n \int_0^1 x^k dx = \sum_{k=0}^n \frac{1}{k+1}$$
+Par le TCM, on a :
+$$\int_0^1 \frac{1}{1-x} dx = \lim_{n \to \infty} \sum_{k=0}^n \frac{1}{k+1} = +\infty$$
+Le TCM fonctionne même si la limite est infinie.
+
+**Exemple 2 : Une suite d'indicatrices**
+Soit $f_n = \mathbf{1}_{[0, 1 - \frac{1}{n}]}$.
+Pour $x \in \mathbb{R}$, on a bien $f_n(x) \le f_{n+1}(x)$.
+La limite simple est $f = \mathbf{1}_{[0, 1[}$.
+On a $\int f_n = 1 - \frac{1}{n}$.
+La limite des intégrales est $\lim (1 - \frac{1}{n}) = 1$.
+Et l'intégrale de la limite est $\int \mathbf{1}_{[0, 1[} = 1$.
+C'est bien égal.
+
+**Exemple 3 : Échec de la croissance**
+Prenons $f_n = n \mathbf{1}_{]0, 1/n]}$.
+On a $\int f_n = 1$ pour tout $n$.
+La limite simple de $f_n$ est $f(x) = 0$ pour tout $x$.
+L'intégrale de la limite est $0$.
+$1 \neq 0$. Le théorème de convergence monotone ne s'applique pas car la suite $f_n$ **n'est pas** croissante. En effet $f_1(x) = \mathbf{1}_{]0, 1]}$, alors que $f_2(x) = 2 \mathbf{1}_{]0, 1/2]}$. Si $x = 0.8$, $f_1(x) = 1$ et $f_2(x) = 0$. Donc $f_1 \not\le f_2$.
+
+
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 
 ### B. Corollaire (Sommation terme à terme)
 
 > **Théorème :** Pour toute suite de fonctions mesurables **positives** $(u_n)$ :
 > $$\int_X \left( \sum_{n=0}^\infty u_n \right) d\mu = \sum_{n=0}^\infty \int_X u_n d\mu$$
+
+
+\begin{tikzpicture}[scale=1.2]
+  \draw[->] (-0.5, 0) -- (4, 0) node[right] {$x$};
+  \draw[->] (0, -0.5) -- (0, 3) node[above] {$y$};
+
+  \draw[thick, blue, domain=0:3.5, samples=100] plot (\x, {2.5 - 2*exp(-0.5*\x)}) node[right] {$f(x)$};
+
+  \draw[red, domain=0:3.5, samples=100] plot (\x, {1.5 - 1.5*exp(-0.5*\x)}) node[right] {$f_1(x)$};
+  \draw[red, domain=0:3.5, samples=100] plot (\x, {2.0 - 1.8*exp(-0.5*\x)}) node[right] {$f_2(x)$};
+  \draw[red, domain=0:3.5, samples=100] plot (\x, {2.3 - 1.9*exp(-0.5*\x)}) node[right] {$f_3(x)$};
+
+  \node at (2, -1) {Illustration du Théorème de Convergence Monotone : Les courbes $f_n$ (en rouge) montent vers la courbe limite $f$ (en bleu).};
+\end{tikzpicture}
 
 ## 3. Démonstrations
 
