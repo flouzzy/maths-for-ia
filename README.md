@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-09-02] : [Upsert/Création] du Jalon 67 - Théorème de convergence monotone. Status: Terminé.
 - [2026-08-27] : [Upsert/Création] du Jalon 66 - Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-20] : [Upsert/Création] du Jalon 65 - Fonctions mesurables. Status: Terminé.
 - [2026-08-20] : [Upsert/Création] du Jalon 64 - Construction pas à pas de la mesure de Lebesgue sur $\mathbb{R}$ via la mesure extérieure. Status: Terminé.
