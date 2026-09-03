@@ -8,3 +8,7 @@ __pycache__/
 *.aux
 *.log
 *.toc
+*.aux
+*.log
+*.toc
+*.pdf
