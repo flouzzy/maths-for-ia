@@ -12,17 +12,25 @@ next: "[[Jalon 68 (Lemme de Fatou et définition de l'intégrale pour les foncti
 
 # Jalon 67 : Théorème de convergence monotone (Beppo Levi)
 
-## 1. Présentation du concept clé
+## 1. Introduction Théorique au Passage à la Limite
 
-- **La Métaphore :** Imaginez que vous construisiez une tour de blocs de glace qui fondent très lentement, mais que chaque jour vous ajoutiez une petite couche de glace supplémentaire par-dessus ($f_n \le f_{n+1}$). Vous voulez savoir quel sera le volume final de la tour ($f = \lim f_n$). Le **Théorème de Convergence Monotone** dit quelque chose de très simple et rassurant : le volume de la tour finale est exactement égal à la limite des volumes que vous avez mesurés jour après jour. En d'autres termes, pour des objets qui ne font que grandir, l'ordre dans lequel on fait les opérations (calculer le volume puis faire la limite, ou faire la limite puis calculer le volume) ne change pas le résultat.
-- **Le "Pourquoi on a inventé ça" :** C'est la grande force de l'intégrale de Lebesgue par rapport à celle de Riemann. Avec Riemann, on ne pouvait pas garantir que la limite d'une suite de fonctions intégrables soit encore intégrable. Avec Lebesgue et Beppo Levi, on a un outil ultra-robuste pour manipuler les limites et les sommes infinies.
-- **Visualisation :** Une suite de courbes qui "montent" vers une courbe plafond. L'aire sous les courbes monte elle aussi vers l'aire sous le plafond.
+L'un des problèmes fondamentaux de l'analyse est de déterminer les conditions sous lesquelles la limite d'une suite d'intégrales est égale à l'intégrale de la limite. Dans le cadre de l'intégration de Riemann, cette interversion nécessite des hypothèses restrictives telles que la convergence uniforme. La théorie de la mesure de Lebesgue apporte une réponse élégante et minimale à ce problème avec le théorème de convergence monotone (ou théorème de Beppo Levi), qui stipule que la croissance de la suite suffit pour garantir l'interversion.
+
+### Exemples Concrets Immédiats
+
+1. **Suite stationnaire :** Soit $f_n(x) = x^2$ pour tout $n$. La suite est trivialement croissante ($f_n \le f_{n+1}$). La limite est $f(x) = x^2$. L'intégrale sur $[0, 1]$ est constante à $1/3$, et sa limite est bien $1/3$.
+2. **Suite croissante sur un ensemble de mesure nulle :** Soit $f_n = \mathbf{1}_{\{0, 1/n, 2/n, \dots, 1\}}$. L'intégrale de chaque $f_n$ est $0$ car il s'agit d'un nombre fini de points. La limite $f$ vaut $1$ sur les rationnels, dont la mesure de Lebesgue est $0$. L'intégrale de la limite est $0$.
+3. **Masse s'échappant à l'infini (Contre-exemple sans croissance) :** Soit $f_n(x) = n \mathbf{1}_{]0, 1/n[}$. $f_n \ge 0$, $\int f_n = 1$. $\lim f_n = 0$. $\int \lim f_n = 0$. Le théorème ne s'applique pas car $f_n$ n'est pas croissante ($f_2(1/3) = 0 \le f_1(1/3) = 1$).
+4. **Bosses glissantes (Contre-exemple sans croissance) :** Soit $f_n(x) = \mathbf{1}_{[n, n+1]}$. $\int f_n = 1$, $\lim f_n = 0$. Encore une fois, la perte de la masse est due à l'absence de monotonie.
+5. **Polynômes de Bernstein :** La suite des approximations de Bernstein pour une fonction convexe continue croît de manière monotone, illustrant l'utilité du théorème pour établir des limites sans avoir recours à la convergence uniforme sur des non-compacts.
+
+
 
 ## 2. Formalisation
 
 Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 
-### A. Énoncé du Théorème
+### Énoncé du Théorème
 
 > **Théorème de Convergence Monotone (Beppo Levi) :**
 > Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables de $X$ dans $[0, +\infty]$.
@@ -31,7 +39,7 @@ Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 > Alors la fonction limite $f = \lim_{n \to \infty} f_n$ est mesurable et :
 > $$\int_X \left( \lim_{n \to \infty} f_n \right) d\mu = \lim_{n \to \infty} \int_X f_n d\mu$$
 
-### B. Corollaire (Sommation terme à terme)
+### Corollaire (Sommation terme à terme)
 
 > **Théorème :** Pour toute suite de fonctions mesurables **positives** $(u_n)$ :
 > $$\int_X \left( \sum_{n=0}^\infty u_n \right) d\mu = \sum_{n=0}^\infty \int_X u_n d\mu$$
@@ -53,31 +61,13 @@ Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 4. **Conclusion :** Comme c'est vrai pour tout $s \le f$, alors $\lim \int f_n \ge \sup \int s = \int f$.
    Les deux inégalités prouvent l'égalité.
 
-## 4. Exercices d'Application
+## 4. Application en Intelligence Artificielle
 
-### Exercice 1 : Intégrale d'une série
-**Énoncé :** Calculer $\int_0^1 \sum_{n=1}^\infty x^n dx$.
-**Correction Détaillée :**
-1. Les fonctions $u_n(x) = x^n$ sont mesurables et positives sur $[0, 1]$.
-2. Par le corollaire du TCM, on peut intervertir somme et intégrale.
-3. $I = \sum_{n=1}^\infty \int_0^1 x^n dx = \sum_{n=1}^\infty \left[ \frac{x^{n+1}}{n+1} \right]_0^1 = \sum_{n=1}^\infty \frac{1}{n+1}$.
-4. Cette série est la série harmonique (moins son premier terme), elle diverge vers $+\infty$.
-5. L'intégrale de la somme est donc $+\infty$.
-
-### Exercice 2 : Niveau Avancé (Utilisation de la mesure de comptage)
-**Énoncé :** Retrouver le théorème de sommation des séries à termes positifs doubles : $\sum_{i} \sum_{j} a_{i,j} = \sum_{j} \sum_{i} a_{i,j}$.
-**Correction Détaillée :**
-On considère l'espace $\mathbb{N}$ muni de la mesure de comptage $\mu$. Soit $f_n(i) = \sum_{j=0}^n a_{i,j}$. La suite de fonctions $(f_n)$ est croissante car $a_{i,j} \ge 0$. Par Beppo Levi, l'intégrale de la limite est la limite des intégrales, ce qui correspond exactement à l'interversion des sommes.
-
-## 5. Application en Intelligence Artificielle
-
-- **Le Pont Théorique :** En IA, on manipule souvent des **Espérances de sommes infinies** ou des limites de processus. Le TCM est l'outil qui permet de passer à la limite sous l'espérance en toute sécurité.
-- **Example Concret :**
     - **Processus de Poisson :** Pour calculer le nombre moyen d'événements (ex: clics sur une pub) sur un intervalle de temps, on somme les probabilités d'événements infinitésimaux. Le TCM garantit que la somme de ces moyennes locales donne bien la moyenne globale.
     - **Séries de Taylor de fonctions de perte :** Si on décompose une fonction de coût complexe en une série de fonctions positives, on peut intégrer cette série terme à terme pour obtenir une approximation de la perte attendue.
     - **Théorie des Noyaux (Kernels) :** De nombreux noyaux (comme le noyau RBF) peuvent être vus comme des sommes infinies de caractéristiques. Le TCM permet de manipuler ces représentations de dimension infinie comme si elles étaient finies lors des calculs d'intégrales de risque.
 
-## 6. Liens Sémantiques
+## 5. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.).md]], [[Jalon 63 (Définition axiomatique d'une mesure).md]]
 - **Concepts Futurs dépendants :** [[Jalon 68 (Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque).md]], [[Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md]]
