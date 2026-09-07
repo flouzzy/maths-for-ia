@@ -1,0 +1,394 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1
+}
+
+\title{\Huge THÉORÈME DE CONVERGENCE MONOTONE (BEPPO LEVI) \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+\section{Genèse et Concepts Physiques}
+
+Historiquement, l'intégrale de Riemann posait un problème majeur pour le passage à la limite sous le signe intégral. Si l'on dispose d'une suite de fonctions intégrables au sens de Riemann qui converge simplement vers une fonction limite, cette limite n'est pas nécessairement intégrable, et même si elle l'est, l'intégrale de la limite n'est pas forcément égale à la limite des intégrales. L'intégrale de Lebesgue apporte une flexibilité et une robustesse remarquables à ce problème, et le Théorème de Convergence Monotone (dû à l'école italienne, notamment Beppo Levi) en est la clé de voûte.
+
+De façon intuitive, imaginez que l'on construit un volume par l'accumulation de couches successives positives. Si chaque étape de la construction augmente le volume total, l'aire (ou le volume) finale sous la fonction limite est précisément égale à la limite des aires mesurées à chaque étape. Ce résultat garantit l'invariance de la mesure face à une accumulation monotone infinie, jetant ainsi les bases de la théorie moderne de l'intégration et des probabilités.
+
+\section{Définitions, Théorèmes et Exemples Concrets}
+
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
+
+\subsection{Théorème de Convergence Monotone (Beppo Levi)}
+
+Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables de $X$ dans $[0, +\infty]$.
+Si la suite est croissante presque partout :
+$$\forall n \in \mathbb{N}, \quad f_n \le f_{n+1} \quad \text{p.p.}$$
+Alors la fonction limite $f = \lim_{n \to \infty} f_n$ est mesurable et :
+$$\int_X \left( \lim_{n \to \infty} f_n \right) d\mu = \lim_{n \to \infty} \int_X f_n d\mu$$
+
+\textbf{Dissection des Variables :}
+\begin{itemize}
+\item $X$ : l'espace de base (par exemple $\mathbb{R}$).
+\item $\mathcal{F}$ : la tribu d'ensembles mesurables sur $X$.
+\item $\mu$ : la mesure sur $(X, \mathcal{F})$ (ex: mesure de Lebesgue ou mesure de comptage).
+\item $f_n$ : fonctions positives à valeurs dans $[0, +\infty]$. La valeur $+\infty$ est permise.
+\end{itemize}
+
+\subsection{Exemples d'Application Immédiats}
+
+\textbf{Exemple 1 : Accumulation de marches d'escalier.}
+Soit $f_n = \mathbb{1}_{[0, 1 - 1/n]}$. Les $f_n$ sont croissantes et tendent vers $f = \mathbb{1}_{[0, 1[}$.
+On a $\int f_n = 1 - 1/n$.
+Par Beppo Levi, $\int f = \lim (1 - 1/n) = 1$, ce qui correspond bien à la mesure de $[0, 1[$.
+
+\textbf{Exemple 2 : Somme géométrique sur un intervalle.}
+Soit $f_n(x) = \sum_{k=0}^n x^k$ sur $X = [0, 1/2]$. Les $f_n$ sont croissantes car les termes ajoutés sont positifs. La limite est $f(x) = \frac{1}{1-x}$.
+$\lim_{n\to\infty} \int_0^{1/2} f_n(x) dx = \int_0^{1/2} \frac{1}{1-x} dx = [-\ln(1-x)]_0^{1/2} = \ln(2)$.
+
+\textbf{Exemple 3 : Échappement de masse vers l'infini (Contre-exemple sans croissance).}
+Soit $f_n = n \mathbb{1}_{]0, 1/n[}$. On a $\int f_n = 1$ pour tout $n$.
+La limite simple est $f = 0$ partout. L'intégrale de la limite est $0$, mais la limite des intégrales est $1$.
+Le théorème de Beppo Levi ne s'applique pas car la suite $f_n$ n'est pas croissante : $f_1(1/2) = 0$ mais $f_2(1/2) = 0$, et $f_1(1/3) = 0$ tandis que $f_3(1/3)$ diverge. (C'est un classique qui montre l'importance de la condition de croissance).
+
+\textbf{Exemple 4 : Fonctions dont l'intégrale diverge.}
+Soit $f_n(x) = n \mathbb{1}_{[0, 1]}$. La suite est croissante. $\lim \int f_n = +\infty$. La fonction limite $f = +\infty \cdot \mathbb{1}_{[0, 1]}$. L'intégrale de $f$ vaut $+\infty \cdot 1 = +\infty$. L'égalité est vérifiée dans $\overline{\mathbb{R}}$.
+
+\textbf{Exemple 5 : Mesure de comptage et séries à termes positifs.}
+Soit $X = \mathbb{N}$ muni de la mesure de comptage. Soit $a_{n, k} \ge 0$.
+Soit $f_n(k) = \sum_{j=0}^n a_{j, k}$. La suite $(f_n)$ est croissante en $n$ pour chaque $k$.
+Le théorème de Beppo Levi stipule que :
+$\sum_{k=0}^\infty \left( \sum_{j=0}^\infty a_{j,k} \right) = \sum_{j=0}^\infty \left( \sum_{k=0}^\infty a_{j,k} \right)$.
+C'est le théorème de Fubini pour les séries à termes positifs.
+
+\subsection{Corollaire (Sommation terme à terme)}
+
+Pour toute suite de fonctions mesurables \textbf{positives} $(u_n)_{n \in \mathbb{N}}$ :
+$$\int_X \left( \sum_{n=0}^\infty u_n \right) d\mu = \sum_{n=0}^\infty \int_X u_n d\mu$$
+
+Ce corollaire est une application directe de Beppo Levi aux sommes partielles $S_N = \sum_{n=0}^N u_n$, qui forment bien une suite croissante de fonctions positives.
+
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  \draw[->] (-0.2,0) -- (4,0) node[right] {$x$};
+  \draw[->] (0,-0.2) -- (0,3) node[above] {$f_n(x)$};
+  \draw[thick, blue] (0,0) to[out=20, in=180] (2, 2.5) to[out=0, in=160] (3.8, 2);
+  \node[blue, above] at (2, 2.5) {$f(x)$};
+
+  \draw[dashed, red] (0,0) to[out=10, in=180] (1.5, 1.5) to[out=0, in=170] (3.8, 1.2);
+  \node[red, below] at (1.5, 1.5) {$f_2(x)$};
+
+  \draw[dashed, orange] (0,0) to[out=5, in=180] (1, 0.8) to[out=0, in=175] (3.8, 0.6);
+  \node[orange, below] at (1, 0.8) {$f_1(x)$};
+\end{tikzpicture}
+\end{center}
+
+\section{Démonstrations Rigoureuses}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+  \draw[->] (0,0) -- (4,0) node[right] {$x$};
+  \draw[->] (0,0) -- (0,2.5) node[above] {$y$};
+
+  % Function f
+  \draw[thick, blue] (0,0.2) .. controls (1,2) and (2,0.5) .. (3.5, 2.2) node[right] {$f$};
+
+  % Simple function s
+  \draw[fill=green!20, opacity=0.7] (0,0) rectangle (1, 0.5);
+  \draw[fill=green!20, opacity=0.7] (1,0) rectangle (2, 1.2);
+  \draw[fill=green!20, opacity=0.7] (2,0) rectangle (3.5, 0.8);
+
+  \draw[thick, darkgray] (0,0.5) -- (1,0.5);
+  \draw[thick, darkgray] (1,1.2) -- (2,1.2);
+  \draw[thick, darkgray] (2,0.8) -- (3.5,0.8);
+  \node at (1.5, 1.4) {$s \le f$};
+\end{tikzpicture}
+\end{center}
+
+
+\subsection{Preuve du Théorème de Beppo Levi}
+
+\textbf{Étape 1 : Mesurabilité et existence de la limite.}
+Puisque pour chaque $x \in X$, la suite $(f_n(x))$ est croissante et à valeurs dans $[0, +\infty]$, elle admet nécessairement une limite $f(x) \in [0, +\infty]$. La fonction $f = \sup_{n} f_n$ est mesurable comme supremum dénombrable de fonctions mesurables.
+
+\textbf{Étape 2 : Inégalité $\int f_n \le \int f$.}
+Pour tout $n$, on a $f_n \le f$. Par croissance de l'intégrale de Lebesgue, on obtient $\int f_n d\mu \le \int f d\mu$.
+En passant à la limite (qui existe car la suite des intégrales est croissante), on obtient :
+$$\lim_{n \to \infty} \int_X f_n d\mu \le \int_X f d\mu$$
+
+\textbf{Étape 3 : Inégalité inverse (Le cœur de la preuve).}
+Soit $s = \sum_{i=1}^k c_i \mathbb{1}_{A_i}$ une fonction simple étagée telle que $0 \le s \le f$.
+Soit $\alpha \in ]0, 1[$. On définit l'ensemble $E_n = \{x \in X \mid f_n(x) \ge \alpha s(x)\}$.
+Puisque $f_n \le f_{n+1}$, la suite d'ensembles $(E_n)$ est croissante : $E_n \subset E_{n+1}$.
+De plus, comme $f_n(x) \to f(x)$ et que $\alpha < 1$, si $s(x) > 0$ alors $\alpha s(x) < f(x)$, donc pour $n$ assez grand, $f_n(x) \ge \alpha s(x)$. Si $s(x) = 0$, $x \in E_n$ pour tout $n$.
+Ainsi, $\bigcup_{n=1}^\infty E_n = X$.
+
+Par définition de l'intégrale et positivité de $f_n$ :
+$$\int_X f_n d\mu \ge \int_{E_n} f_n d\mu \ge \int_{E_n} \alpha s d\mu = \alpha \sum_{i=1}^k c_i \mu(A_i \cap E_n)$$
+Par continuité croissante de la mesure $\mu$, puisque $A_i \cap E_n \uparrow A_i$, on a $\lim_{n \to \infty} \mu(A_i \cap E_n) = \mu(A_i)$.
+Ainsi, en passant à la limite quand $n \to \infty$ :
+$$\lim_{n \to \infty} \int_X f_n d\mu \ge \alpha \sum_{i=1}^k c_i \mu(A_i) = \alpha \int_X s d\mu$$
+Cette inégalité étant vraie pour tout $\alpha \in ]0, 1[$, on peut faire tendre $\alpha \to 1$ pour obtenir :
+$$\lim_{n \to \infty} \int_X f_n d\mu \ge \int_X s d\mu$$
+
+\textbf{Étape 4 : Conclusion par passage au supremum.}
+L'inégalité précédente est valable pour toute fonction simple $s$ telle que $0 \le s \le f$.
+Par définition de l'intégrale des fonctions positives (qui est le supremum des intégrales des fonctions simples minorantes), on obtient :
+$$\lim_{n \to \infty} \int_X f_n d\mu \ge \sup_{0 \le s \le f} \int_X s d\mu = \int_X f d\mu$$
+Les deux inégalités (Étapes 2 et 4) prouvent l'égalité formelle du Théorème de Beppo Levi.
+
+\section{Applications en Intelligence Artificielle et Théorie de la Décision}
+
+En apprentissage statistique et en théorie de la décision, on manipule en permanence des espérances mathématiques, qui ne sont rien d'autre que des intégrales de Lebesgue par rapport à une mesure de probabilité $\mathbb{P}$.
+
+\textbf{Approximation des risques empiriques :}
+Lorsqu'on entraîne un réseau de neurones avec un volume de données croissant ou une architecture qui s'affine itérativement, les fonctions de risque empirique peuvent être construites de manière monotone. Le TCM garantit que le risque limite est exactement la limite des risques, permettant de valider les garanties de généralisation asymptotiques.
+
+\textbf{Modèles de Markov cachés et Espérance conditionnelle :}
+Dans le calcul des probabilités de transition infinies et des processus stochastiques sous-jacents aux MDP (Markov Decision Processes) ou l'apprentissage par renforcement, les sommes d'espérances de récompenses futures actualisées (discounted rewards) reposent fondamentalement sur le corollaire du TCM. On s'assure ainsi que l'interversion de la somme (temporelle infinie) et de l'espérance est licite, validant ainsi l'équation de Bellman.
+
+\textbf{Méthodes à noyaux (Kernel Methods) :}
+Les noyaux définis positifs comme le noyau RBF génèrent des espaces de Hilbert (RKHS) de dimension infinie. Le produit scalaire est une série de fonctions propres. Le TCM permet de prouver que les propriétés de reproductibilité se conservent à la limite, assurant la stabilité numérique et analytique des SVMs (Support Vector Machines).
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Convergence simple vs Convergence des intégrales \quad $\bigstar\star\star\star\star$}
+
+Soit $f_n = \frac{1}{n} \mathbb{1}_{[0, n]}$. Les $f_n$ sont-elles croissantes ? Calculer $\lim f_n$ et $\lim \int f_n$. Le théorème de Beppo Levi s'applique-t-il ?
+
+\textbf{Correction :}
+Non, la suite n'est pas croissante car pour $x=1$, $f_1(1) = 1$ et $f_2(1) = 1/2$. La limite simple est $f = 0$. On a $\int f_n = 1$, et $\int f = 0$. Le TCM ne s'applique pas car l'hypothèse de croissance est cruciale.
+
+
+\subsection*{Exercice 2 : Série géométrique \quad $\bigstar\bigstar\star\star\star$}
+
+Prouver que $\int_0^1 \sum_{n=0}^\infty x^n dx = \sum_{n=0}^\infty \frac{1}{n+1}$ et calculer la limite.
+
+\textbf{Correction :}
+Soit $u_n(x) = x^n$. Ces fonctions sont positives. Par le corollaire du TCM (sommation terme à terme), l'intégrale de la somme est la somme des intégrales : $\int_0^1 x^n dx = \left[\frac{x^{n+1}}{n+1}\right]_0^1 = \frac{1}{n+1}$. La série harmonique diverge vers $+\infty$.
+
+
+\subsection*{Exercice 3 : Intégration d'une suite croissante simple \quad $\bigstar\bigstar\star\star\star$}
+
+Soit $f_n(x) = (1 - \frac{x}{n})^n \mathbb{1}_{[0, n]}(x)$. Montrer que $f_n$ est croissante et trouver l'intégrale de sa limite sur $[0, +\infty[$.
+
+\textbf{Correction :}
+Par une étude de fonction (dérivée par rapport à $n$ ou via logarithme), on montre que $f_n(x)$ croît vers $e^{-x}$. Par Beppo Levi, $\int_0^\infty e^{-x} dx = 1$ est la limite des intégrales $\int_0^n (1 - x/n)^n dx$. (Cette intégrale partielle vaut $\frac{n}{n+1}n$).
+
+
+\subsection*{Exercice 4 : Série de fonctions positives intégrables \quad $\bigstar\bigstar\star\star\star$}
+
+Calculer $\int_0^\infty \sum_{n=1}^\infty e^{-nx} dx$.
+
+\textbf{Correction :}
+Posons $u_n(x) = e^{-nx} \ge 0$. Par TCM, $\int_0^\infty \sum e^{-nx} dx = \sum \int_0^\infty e^{-nx} dx = \sum \frac{1}{n}$, qui diverge. Alternativement, $\sum e^{-nx} = \frac{e^{-x}}{1 - e^{-x}}$. L'intégrale de cette limite diverge en $0$ car $\sim \frac{1}{x}$ en 0.
+
+
+\subsection*{Exercice 5 : Intégrale sur la mesure de Dirac \quad $\bigstar\bigstar\bigstar\star\star$}
+
+Soit $\mu = \delta_0$ la mesure de Dirac en 0. Calculer $\lim \int_{\mathbb{R}} e^{-x^2/n} d\delta_0(x)$.
+
+\textbf{Correction :}
+$f_n(x) = e^{-x^2/n}$ est mesurable, strictement positive. On a $f_n(x) \le f_{n+1}(x)$ car $-x^2/n \le -x^2/(n+1)$. La limite est $f(x) = 1$. Par Beppo Levi, $\lim \int f_n d\delta_0 = \int 1 d\delta_0 = 1(0) = 1$. En calcul direct, $\int f_n d\delta_0 = f_n(0) = 1$ constant.
+
+
+\subsection*{Exercice 6 : TCM et espaces abstraits \quad $\bigstar\bigstar\bigstar\star\star$}
+
+Soit $(X, \mathcal{F}, \mu)$ mesuré, $f_n \ge 0$ mesurables telles que $\sum \int f_n < \infty$. Montrer que $\sum f_n(x)$ converge p.p.
+
+\textbf{Correction :}
+Soit $S(x) = \sum f_n(x)$. $S$ est positive mesurable. Par Beppo Levi, $\int S d\mu = \sum \int f_n d\mu < \infty$. Comme l'intégrale de $S$ est finie, la fonction positive $S$ ne peut valoir $+\infty$ que sur un ensemble de mesure nulle, d'où la convergence p.p.
+
+
+\subsection*{Exercice 7 : Lien avec le Lemme de Fatou \quad $\bigstar\bigstar\bigstar\star\star$}
+
+Utiliser Beppo Levi pour démontrer que si $f_n \ge 0$, $\int (\liminf f_n) \le \liminf (\int f_n)$ (Lemme de Fatou).
+
+\textbf{Correction :}
+Posons $g_n = \inf_{k \ge n} f_k$. La suite $(g_n)$ est croissante car on prend l'infimum sur un ensemble plus petit, et $g_n \ge 0$. Par Beppo Levi, $\int \lim g_n = \lim \int g_n$. Or $g_n \le f_n$, donc $\int g_n \le \int f_n$. D'où $\lim \int g_n = \liminf \int g_n \le \liminf \int f_n$. Puisque $\lim g_n = \liminf f_n$, le résultat est prouvé.
+
+
+\subsection*{Exercice 8 : Produit de probabilités croissantes \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+Soit des ensembles mesurables $A_1 \subset A_2 \subset A_3 \dots$. Prouver que $\mu(\cup A_n) = \lim \mu(A_n)$ en utilisant TCM.
+
+\textbf{Correction :}
+Soit $f_n = \mathbb{1}_{A_n}$. Comme les ensembles sont croissants, $f_n \le f_{n+1}$. La limite est $f = \mathbb{1}_{\cup A_n}$. Par Beppo Levi, $\int f = \lim \int f_n$, ce qui équivaut par définition à $\mu(\cup A_n) = \lim \mu(A_n)$.
+
+
+\subsection*{Exercice 9 : Dangers de la décroissance \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+Donner un contre-exemple si $f_n \ge f_{n+1}$ (Théorème de convergence monotone décroissante) sans condition supplémentaire.
+
+\textbf{Correction :}
+Il faut intégrabilité du premier terme. Contre-exemple : $f_n = \mathbb{1}_{[n, \infty[}$. La suite décroît vers $f=0$. $\int f_n = \infty$ pour tout $n$, mais $\int f = 0 \neq \infty$. Si $\int f_1 < \infty$, Beppo Levi s'applique à $f_1 - f_n \ge 0$ (croissante).
+
+
+\subsection*{Exercice 10 : Application aux probabilités - Espérance d'un temps d'arrêt \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+Soit $X \ge 0$ une variable aléatoire entière. Prouver que $\mathbb{E}[X] = \sum_{n=1}^\infty \mathbb{P}(X \ge n)$.
+
+\textbf{Correction :}
+On écrit $X = \sum_{n=1}^\infty \mathbb{1}_{\{X \ge n\}}$. Ce sont des variables positives. Par sommation terme à terme (corollaire du TCM), l'espérance de la somme est la somme des espérances, et $\mathbb{E}[\mathbb{1}_{A}] = \mathbb{P}(A)$, d'où le résultat direct. Formellement : $\int_{\Omega} \sum \mathbb{1}_{\{X \ge n\}} d\mathbb{P} = \sum \int_{\Omega} \mathbb{1}_{\{X \ge n\}} d\mathbb{P}$.
+
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Vérification numérique de la non-interchangeabilité sans croissance}
+
+\begin{lstlisting}
+def integrate(f, a, b, n_steps=1000):
+    dx = (b-a)/n_steps
+    return sum(f(a + i*dx) * dx for i in range(n_steps))
+
+# Suite fn = n * Indicator(0, 1/n)
+def f_n(n, x):
+    if 0 < x < 1/n:
+        return n
+    return 0
+
+res_integrals = []
+for n in range(1, 100):
+    val = integrate(lambda x: f_n(n, x), 0, 1)
+    res_integrals.append(val)
+
+# Verification que l'integrale reste a 1 alors que la limite de f_n est 0 p.p.
+for val in res_integrals:
+    assert abs(val - 1.0) < 0.1
+print('TP 1 Valide')
+\end{lstlisting}
+
+
+
+
+\subsection*{TP 2 : Illustration de Beppo Levi par accumulation de créneaux}
+
+\begin{lstlisting}
+def integrate(f, a, b, steps=1000):
+    dx = (b-a)/steps
+    return sum(f(a+i*dx)*dx for i in range(steps))
+
+# f_n = I_[0, 1 - 1/n]
+def f_n(n, x):
+    return 1 if 0 <= x <= (1 - 1/n) else 0
+
+integrals = [integrate(lambda x: f_n(n, x), 0, 1) for n in range(1, 100)]
+
+# La suite des integrales doit croitre vers 1
+for i in range(len(integrals) - 1):
+    assert integrals[i] <= integrals[i+1] + 1e-9
+
+assert abs(integrals[-1] - 1.0) < 0.05
+print('TP 2 Valide')
+\end{lstlisting}
+
+
+
+
+\subsection*{TP 3 : Calcul de la série géométrique par intégration croissante}
+
+\begin{lstlisting}
+def integrate(f, a, b, steps=1000):
+    dx = (b-a)/steps
+    return sum(f(a+i*dx)*dx for i in range(steps))
+
+# fn(x) = sum(x^k) de 0 a n
+def sum_geom(n, x):
+    return sum(x**k for k in range(n+1))
+
+# Integrale sur [0, 0.5]
+integrals = [integrate(lambda x: sum_geom(n, x), 0, 0.5) for n in range(50)]
+
+# ln(2) approx 0.693
+import math
+assert abs(integrals[-1] - math.log(2)) < 0.05
+print('TP 3 Valide')
+\end{lstlisting}
+
+
+
+
+\subsection*{TP 4 : TCM et Mesure de Comptage discrète}
+
+\begin{lstlisting}
+def sum_matrix(matrix):
+    return sum(sum(row) for row in matrix)
+
+# Matrice infinie simulee finie a_{j,k}
+N, M = 100, 100
+matrix = [[1.0/((j+1)*(k+1)**2) for k in range(M)] for j in range(N)]
+
+# TCM : l'ordre de la double somme pour termes positifs ne change rien
+sum_jk = sum(sum(matrix[j][k] for k in range(M)) for j in range(N))
+sum_kj = sum(sum(matrix[j][k] for j in range(N)) for k in range(M))
+
+assert abs(sum_jk - sum_kj) < 1e-9
+print('TP 4 Valide')
+\end{lstlisting}
+
+
+
+
+\subsection*{TP 5 : Simulation d'espérance d'un temps d'arrêt}
+
+\begin{lstlisting}
+import random
+
+# X ~ Geom(p)
+p = 0.3
+def get_X():
+    count = 1
+    while random.random() > p:
+        count += 1
+    return count
+
+N_sims = 10000
+xs = [get_X() for _ in range(N_sims)]
+
+# Esperance empirique
+mean_X = sum(xs)/N_sims
+
+# Somme des P(X >= n)
+sum_probs = 0
+for n in range(1, 30):
+    prob = sum(1 for x in xs if x >= n) / N_sims
+    sum_probs += prob
+
+assert abs(mean_X - sum_probs) < 0.1
+print('TP 5 Valide')
+\end{lstlisting}
+
+
+
+
+
+
+\end{document}
