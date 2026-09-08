@@ -1,10 +1,4 @@
 *.aux
 *.log
 *.toc
-*.aux
-*.log
-*.toc
 __pycache__/
-*.aux
-*.log
-*.toc
