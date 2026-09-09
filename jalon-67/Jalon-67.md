@@ -14,15 +14,15 @@ next: "[[Jalon 68 (Lemme de Fatou et définition de l'intégrale pour les foncti
 
 ## 1. Présentation du concept clé
 
-- **La Métaphore :** Imaginez que vous construisiez une tour de blocs de glace qui fondent très lentement, mais que chaque jour vous ajoutiez une petite couche de glace supplémentaire par-dessus ($f_n \le f_{n+1}$). Vous voulez savoir quel sera le volume final de la tour ($f = \lim f_n$). Le **Théorème de Convergence Monotone** dit quelque chose de très simple et rassurant : le volume de la tour finale est exactement égal à la limite des volumes que vous avez mesurés jour après jour. En d'autres termes, pour des objets qui ne font que grandir, l'ordre dans lequel on fait les opérations (calculer le volume puis faire la limite, ou faire la limite puis calculer le volume) ne change pas le résultat.
-- **Le "Pourquoi on a inventé ça" :** C'est la grande force de l'intégrale de Lebesgue par rapport à celle de Riemann. Avec Riemann, on ne pouvait pas garantir que la limite d'une suite de fonctions intégrables soit encore intégrable. Avec Lebesgue et Beppo Levi, on a un outil ultra-robuste pour manipuler les limites et les sommes infinies.
-- **Visualisation :** Une suite de courbes qui "montent" vers une courbe plafond. L'aire sous les courbes monte elle aussi vers l'aire sous le plafond.
+Imaginez que vous construisiez une tour de blocs de glace qui fondent très lentement, mais que chaque jour vous ajoutiez une petite couche de glace supplémentaire par-dessus ($f_n \le f_{n+1}$). Vous voulez savoir quel sera le volume final de la tour ($f = \lim f_n$). Le **Théorème de Convergence Monotone** dit quelque chose de très simple et rassurant : le volume de la tour finale est exactement égal à la limite des volumes que vous avez mesurés jour après jour. En d'autres termes, pour des objets qui ne font que grandir, l'ordre dans lequel on fait les opérations (calculer le volume puis faire la limite, ou faire la limite puis calculer le volume) ne change pas le résultat.
+C'est la grande force de l'intégrale de Lebesgue par rapport à celle de Riemann. Avec Riemann, on ne pouvait pas garantir que la limite d'une suite de fonctions intégrables soit encore intégrable. Avec Lebesgue et Beppo Levi, on a un outil ultra-robuste pour manipuler les limites et les sommes infinies.
+Une suite de courbes qui "montent" vers une courbe plafond. L'aire sous les courbes monte elle aussi vers l'aire sous le plafond.
 
 ## 2. Formalisation
 
 Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 
-### A. Énoncé du Théorème
+### Énoncé du Théorème
 
 > **Théorème de Convergence Monotone (Beppo Levi) :**
 > Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables de $X$ dans $[0, +\infty]$.
@@ -31,7 +31,42 @@ Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 > Alors la fonction limite $f = \lim_{n \to \infty} f_n$ est mesurable et :
 > $$\int_X \left( \lim_{n \to \infty} f_n \right) d\mu = \lim_{n \to \infty} \int_X f_n d\mu$$
 
-### B. Corollaire (Sommation terme à terme)
+
+### C. Exemples Concrets Immédiats
+
+**Exemple 1 (Suite constante) :**
+Soit $f_n(x) = c \ge 0$ pour tout $n$. La suite est croissante (large) et converge vers $f(x) = c$. On a bien $\int c d\mu = \lim \int c d\mu$.
+
+**Exemple 2 (Suite de fonctions étagées sur $[0,1]$) :**
+Soit $f_n(x) = 1 - \frac{1}{n}$. La suite est positive et croissante.
+La limite est $f(x) = 1$. L'intégrale de Lebesgue de $f_n$ sur $[0,1]$ est $\int_0^1 (1 - 1/n) dx = 1 - 1/n$.
+La limite des intégrales est $\lim (1 - 1/n) = 1$. L'intégrale de la limite est $\int_0^1 1 dx = 1$. L'égalité est vérifiée.
+
+**Exemple 3 (Fonction tendant vers $+\infty$) :**
+Soit $f_n(x) = n \cdot \chi_{[0,1]}(x)$. La suite est positive, croissante et diverge vers $+\infty$ sur $[0,1]$.
+L'intégrale de $f_n$ est $n$. La limite est $+\infty$. L'intégrale de la limite (la fonction $+\infty \cdot \chi_{[0,1]}$) est $+\infty$.
+
+**Exemple 4 (Série géométrique) :**
+Soit $X = \mathbb{N}$ avec la mesure de comptage. Soit $u_n(k) = (\frac{1}{2})^n \chi_{\{0\}}(k)$.
+La somme $\sum_n u_n(0) = \sum (1/2)^n = 2$.
+L'intégrale de la somme est 2. La somme des intégrales est $\sum 1/2^n = 2$.
+
+**Exemple 5 (Croissance stricte) :**
+Soit $f_n(x) = x^2 - \frac{1}{n}$ pour $x \in [1,2]$. $f_n$ est croissante et $f_n(x) > 0$ sur l'intervalle.
+La limite est $f(x) = x^2$. L'intégrale de $f_n$ est $[x^3/3 - x/n]_1^2 = (8/3 - 2/n) - (1/3 - 1/n) = 7/3 - 1/n$.
+La limite est $7/3$, ce qui est bien $\int_1^2 x^2 dx$.
+
+**Exemple 6 (Fonctions indicatrices emboîtées) :**
+Soit $A_n = [0, 1 - 1/n]$. Les ensembles sont emboîtés $A_n \subset A_{n+1}$.
+Soit $f_n = \chi_{A_n}$. La suite de fonctions croît vers $f = \chi_{[0,1[}$.
+$\int f_n d\mu = \mu(A_n) = 1 - 1/n$. La limite est $1$. $\int f d\mu = \mu([0,1[) = 1$.
+
+**Exemple 7 (Gaussienne qui s'élargit) :**
+Soit $f_n(x) = e^{-x^2} \cdot \chi_{[-n,n]}(x)$. La suite est croissante.
+La limite est $e^{-x^2}$ sur tout $\mathbb{R}$.
+$\int f_n = \int_{-n}^n e^{-x^2} dx \to \sqrt{\pi}$, qui est bien l'intégrale sur $\mathbb{R}$ de la gaussienne.
+
+### Corollaire (Sommation terme à terme)
 
 > **Théorème :** Pour toute suite de fonctions mesurables **positives** $(u_n)$ :
 > $$\int_X \left( \sum_{n=0}^\infty u_n \right) d\mu = \sum_{n=0}^\infty \int_X u_n d\mu$$
