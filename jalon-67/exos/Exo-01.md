@@ -1,18 +1,10 @@
----
-uuid: "jalon-67-exo-01"
-title: "Exercice 01 - Théorème de convergence monotone de base"
-difficulty: "\bigstar\star\star\star\star"
----
+# Exercice 1 : Limite d'une intégrale simple
 
-# Exercice 01 - Théorème de convergence monotone de base
+**Difficulté :** $\bigstar$$\star$$\star$$\star$$\star$
 
 ## Énoncé
-
-Soit $(X, \mathcal{A}, \mu)$ un espace mesuré et $f$ une fonction mesurable positive. Démontrer que la suite de fonctions $f_n(x) = \min(f(x), n)$ converge vers $f$ presque partout, et vérifier que $\lim_{n \to \infty} \int_X f_n d\mu = \int_X f d\mu$.
+Soit $f_n(x) = x^n$ sur $[0, 1[$. Calculer $\lim_{n \to \infty} \int_{[0, 1[} f_n(x) dx$ sans intervertir, puis vérifier que le théorème de Beppo-Levi s'applique bien.
 
 ## Correction Détaillée
-
-1. **Croissance :** Pour tout $x \in X$, $f_{n+1}(x) = \min(f(x), n+1) \ge \min(f(x), n) = f_n(x)$. La suite $(f_n)$ est donc bien croissante.
-2. **Positivité et mesurabilité :** Comme $f \ge 0$, on a $f_n \ge 0$. Les $f_n$ sont mesurables comme minimum de fonctions mesurables.
-3. **Convergence simple :** Pour tout $x \in X$, si $f(x)$ est finie, il existe un rang $N$ tel que $n \ge N \implies n \ge f(x)$. Alors pour $n \ge N$, $f_n(x) = f(x)$. Donc $f_n(x)$ converge vers $f(x)$. Si $f(x) = +\infty$, $f_n(x) = n \to +\infty$. Dans tous les cas, $f_n \to f$.
-4. **Application du TCM :** Les conditions du Théorème de Convergence Monotone sont remplies. On en déduit immédiatement que $\lim_{n \to \infty} \int_X f_n d\mu = \int_X f d\mu$.
+1. On a $f_n(x) = x^n$. L'intégrale est $\int_0^1 x^n dx = \frac{1}{n+1}$, dont la limite est 0.
+2. La suite $(f_n)$ est décroissante, donc Beppo-Levi (pour les suites croissantes) ne s'applique pas directement. C'est le théorème de convergence dominée (ou Lebesgue) qui s'applique, car $f_n \le 1$.

@@ -1,31 +1,11 @@
----
-uuid: "jalon-67-exo-04"
-title: "Exercice 04 - Convergence d'une somme exponentielle"
-difficulty: "\bigstar\bigstar\bigstar\star\star"
----
+# Exercice 4 : Intégration d'une fraction
 
-# Exercice 04 - Convergence d'une somme exponentielle
+**Difficulté :** $\bigstar$$\bigstar$$\star$$\star$$\star$
 
 ## Énoncé
-
-Soit $X = \mathbb{R}^+$ muni de la mesure de Lebesgue. Calculer $\lim_{n \to \infty} \int_0^n (1 + \frac{x}{n})^n e^{-2x} dx$.
+Calculer $\int_0^1 \frac{\ln(1-x)}{x} dx$ en utilisant le développement en série entière et le théorème de convergence monotone.
 
 ## Correction Détaillée
-
-1. **Construction de la suite :**
-On pose $f_n(x) = (1 + \frac{x}{n})^n e^{-2x} \mathbf{1}_{[0, n]}(x)$.
-Les fonctions $x \mapsto (1 + \frac{x}{n})^n e^{-2x}$ sont continues, et $\mathbf{1}_{[0, n]}$ est étagée mesurable, donc les $f_n$ sont mesurables et positives sur $\mathbb{R}^+$.
-
-2. **Croissance de la suite :**
-Étudions $g_n(x) = (1 + \frac{x}{n})^n$ pour $x \in [0, n]$.
-On sait que la suite $u_n = (1 + \frac{x}{n})^n$ est strictement croissante avec $n$ (cela se montre par l'inégalité arithmético-géométrique ou par dérivation). De plus l'indicatrice croît (l'ensemble grandit).
-Donc la suite $(f_n)$ est croissante presque partout.
-
-3. **Limite simple :**
-Pour tout $x > 0$, pour $n$ assez grand ($n > x$), $\mathbf{1}_{[0, n]}(x) = 1$.
-On sait de plus que $\lim_{n \to \infty} (1 + \frac{x}{n})^n = e^x$.
-Donc $\lim_{n \to \infty} f_n(x) = e^x e^{-2x} = e^{-x}$.
-
-4. **Application du TCM :**
-D'après le TCM, l'intégrale de la limite est la limite des intégrales.
-$\lim_{n \to \infty} \int_0^\infty f_n(x) dx = \int_0^\infty e^{-x} dx = \left[-e^{-x}\right]_0^\infty = 1$.
+1. $\frac{-\ln(1-x)}{x} = \sum_{n=1}^\infty \frac{x^{n-1}}{n}$. C'est une série à termes positifs.
+2. Par Beppo-Levi, l'intégrale de la somme est la somme des intégrales : $\sum \int_0^1 \frac{x^{n-1}}{n} dx = \sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6}$.
+3. L'intégrale demandée vaut $-\pi^2/6$.
