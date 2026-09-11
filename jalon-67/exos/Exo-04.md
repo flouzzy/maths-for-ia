@@ -14,7 +14,7 @@ Soit $X = \mathbb{R}^+$ muni de la mesure de Lebesgue. Calculer $\lim_{n \to \in
 
 1. **Construction de la suite :**
 On pose $f_n(x) = (1 + \frac{x}{n})^n e^{-2x} \mathbf{1}_{[0, n]}(x)$.
-Les $f_n$ sont continues (donc mesurables) et positives sur $\mathbb{R}^+$.
+Les fonctions $x \mapsto (1 + \frac{x}{n})^n e^{-2x}$ sont continues, et $\mathbf{1}_{[0, n]}$ est étagée mesurable, donc les $f_n$ sont mesurables et positives sur $\mathbb{R}^+$.
 
 2. **Croissance de la suite :**
 Étudions $g_n(x) = (1 + \frac{x}{n})^n$ pour $x \in [0, n]$.

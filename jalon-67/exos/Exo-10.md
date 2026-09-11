@@ -13,7 +13,7 @@ En théorie des probabilités, si $T$ est une variable aléatoire discrète à v
 ## Correction Détaillée
 
 1. **Définition de l'espérance :**
-Par définition, $T = \sum_{n=1}^\infty n \mathbf{1}_{\{T=n\}}$. Son espérance est $\mathbb{E}[T] = \int_{\Omega} T d\mathbb{P}$.
+La variable aléatoire prend ses valeurs dans $\mathbb{N}^* \cup \{\infty\}$. On peut l'écrire sous la forme $T = \sum_{n=1}^\infty n \mathbf{1}_{\{T=n\}} + \infty \mathbf{1}_{\{T=\infty\}}$. Son espérance est $\mathbb{E}[T] = \int_{\Omega} T d\mathbb{P}$.
 
 2. **Réécriture de la variable aléatoire :**
 Remarquons que l'entier $n$ peut s'écrire comme une somme de $1$ : $n = \sum_{k=1}^n 1$.

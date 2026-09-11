@@ -7,7 +7,7 @@ tags:
   - math/analyse
   - ia/abstraction
 prev: "[[jalon-66/Jalon-66.md]]"
-next: "[[jalon-68/Jalon-68.md]]"
+next: "[[jalon-68/Jalon 68 (Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque).md]]"
 ---
 
 # Jalon 67 : Théorème de convergence monotone (Beppo Levi)
