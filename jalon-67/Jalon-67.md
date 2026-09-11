@@ -6,112 +6,113 @@ trimester: 6
 tags:
   - math/analyse
   - ia/abstraction
-prev: "[[jalon-66/Jalon-66.md]]"
-next: "[[jalon-68/Jalon 68 (Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque).md]]"
+prev: "[[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.).md]]"
+next: "[[Jalon 68 (Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque).md]]"
 ---
 
-# Jalon 67 : Théorème de convergence monotone (Beppo-Levi)
+# Jalon 67 : Théorème de convergence monotone (Beppo Levi)
 
-## 1. Origines et intuitions physiques
+## 1. Présentation du concept clé
 
-À la fin du XIXe siècle, les mathématiciens, dont Henri Lebesgue, cherchent à dépasser les limites de l'intégrale de Riemann, qui échoue souvent face aux passages à la limite. Imaginez que vous accumuliez continuellement de l'énergie thermique dans un système, modélisée par une suite croissante de fonctions de densité d'énergie. Riemann ne peut garantir que l'énergie totale limite (l'intégrale de la limite) correspond à la limite des énergies calculées à chaque étape. Le mathématicien italien Beppo Levi (1906) formule alors un résultat fondamental qui constitue le cœur de la théorie de l'intégration moderne : si des grandeurs positives s'accumulent sans jamais décroître, l'intégrale "commute" avec la limite. Ce théorème est la pierre angulaire qui permet aux physiciens et aux statisticiens de manipuler des séries infinies avec une rigueur absolue.
+Imaginez que vous construisiez une tour de blocs de glace qui fondent très lentement, mais que chaque jour vous ajoutiez une petite couche de glace supplémentaire par-dessus ($f_n \le f_{n+1}$). Vous voulez savoir quel sera le volume final de la tour ($f = \lim f_n$). Le **Théorème de Convergence Monotone** dit quelque chose de très simple et rassurant : le volume de la tour finale est exactement égal à la limite des volumes que vous avez mesurés jour après jour. En d'autres termes, pour des objets qui ne font que grandir, l'ordre dans lequel on fait les opérations (calculer le volume puis faire la limite, ou faire la limite puis calculer le volume) ne change pas le résultat.
+C'est la grande force de l'intégrale de Lebesgue par rapport à celle de Riemann. Avec Riemann, on ne pouvait pas garantir que la limite d'une suite de fonctions intégrables soit encore intégrable. Avec Lebesgue et Beppo Levi, on a un outil ultra-robuste pour manipuler les limites et les sommes infinies.
+Une suite de courbes qui "montent" vers une courbe plafond. L'aire sous les courbes monte elle aussi vers l'aire sous le plafond.
 
-## 2. Formalisation du théorème et exemples fondateurs
+## 2. Formalisation
 
-### A. Le Théorème de Convergence Monotone
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 
-Soit $(X, \mathcal{A}, \mu)$ un espace mesuré.
+### Énoncé du Théorème
 
-**Théorème (Beppo-Levi) :** Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables de $X$ dans $[0, +\infty]$.
-Si la suite est croissante presque partout, c'est-à-dire :
-$$\forall n \in \mathbb{N}, \quad f_n \le f_{n+1} \quad \mu\text{-p.p.}$$
-Alors, la fonction limite $f = \lim_{n \to +\infty} f_n$ (qui existe $\mu$-p.p. dans $[0, +\infty]$) est mesurable, et on a l'égalité fondamentale :
-$$\int_X f \, d\mu = \lim_{n \to +\infty} \int_X f_n \, d\mu$$
+> **Théorème de Convergence Monotone (Beppo Levi) :**
+> Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables de $X$ dans $[0, +\infty]$.
+> Si la suite est **croissante** presque partout :
+> $$\forall n \in \mathbb{N}, \quad f_n \le f_{n+1} \text{ p.p.}$$
+> Alors la fonction limite $f = \lim_{n \to \infty} f_n$ est mesurable et :
+> $$\int_X \left( \lim_{n \to \infty} f_n \right) d\mu = \lim_{n \to \infty} \int_X f_n d\mu$$
 
-**Typage des éléments :**
-- $X$ : l'espace fondamental.
-- $\mathcal{A}$ : une tribu (ou $\sigma$-algèbre) sur $X$.
-- $\mu : \mathcal{A} \to [0, +\infty]$ : une mesure positive.
-- $f_n : X \to [0, +\infty]$ : des fonctions prenant leurs valeurs dans les réels positifs étendus (incluant $+\infty$).
 
-**Exemple de calcul : L'escalier vers l'infini**
-Considérons l'espace mesuré $(\mathbb{R}, \mathcal{B}(\mathbb{R}), \lambda)$ où $\lambda$ est la mesure de Lebesgue.
-Soit $f_n(x) = \mathbf{1}_{[0, n]}(x) \cdot \left(1 - \frac{x}{n}\right)$ pour $n \ge 1$.
-Pour tout $x \ge 0$, dès que $n$ est assez grand, $1 - \frac{x}{n}$ croît vers $1$. Ainsi, la suite $(f_n)$ est croissante et converge simplement vers $f(x) = \mathbf{1}_{[0, +\infty[}(x)$.
-Calculons les intégrales :
-$\int_\mathbb{R} f_n(x) d\lambda(x) = \int_0^n (1 - \frac{x}{n}) dx = \left[x - \frac{x^2}{2n}\right]_0^n = n - \frac{n}{2} = \frac{n}{2}$.
-La limite de ces intégrales lorsque $n \to +\infty$ est $+\infty$.
-Du côté de la limite : $\int_\mathbb{R} f(x) d\lambda(x) = \int_0^{+\infty} 1 dx = +\infty$.
-L'égalité est vérifiée : $+\infty = +\infty$.
+### C. Exemples Concrets Immédiats
 
-### B. Corollaire : Sommation terme à terme
+**Exemple 1 (Suite constante) :**
+Soit $f_n(x) = c \ge 0$ pour tout $n$. La suite est croissante (large) et converge vers $f(x) = c$. On a bien $\int c d\mu = \lim \int c d\mu$.
 
-**Théorème :** Soit $(u_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables de $X$ dans $[0, +\infty]$. Alors :
-$$\int_X \left( \sum_{n=0}^{+\infty} u_n \right) d\mu = \sum_{n=0}^{+\infty} \int_X u_n \, d\mu$$
+**Exemple 2 (Suite de fonctions étagées sur $[0,1]$) :**
+Soit $f_n(x) = 1 - \frac{1}{n}$. La suite est positive et croissante.
+La limite est $f(x) = 1$. L'intégrale de Lebesgue de $f_n$ sur $[0,1]$ est $\int_0^1 (1 - 1/n) dx = 1 - 1/n$.
+La limite des intégrales est $\lim (1 - 1/n) = 1$. L'intégrale de la limite est $\int_0^1 1 dx = 1$. L'égalité est vérifiée.
 
-**Exemple d'application immédiate :**
-Évaluons $\int_{]0, 1[} \frac{1}{1-x} dx$.
-On sait que pour $x \in ]0, 1[$, on a le développement en série entière : $\frac{1}{1-x} = \sum_{n=0}^{+\infty} x^n$.
-Posons $u_n(x) = x^n$. Les $u_n$ sont positives et mesurables. On applique le corollaire :
-$\int_0^1 \left(\sum_{n=0}^{+\infty} x^n\right) dx = \sum_{n=0}^{+\infty} \int_0^1 x^n dx = \sum_{n=0}^{+\infty} \frac{1}{n+1}$.
-On reconnaît la série harmonique, qui diverge. Ainsi l'intégrale vaut $+\infty$.
+**Exemple 3 (Fonction tendant vers $+\infty$) :**
+Soit $f_n(x) = n \cdot \chi_{[0,1]}(x)$. La suite est positive, croissante et diverge vers $+\infty$ sur $[0,1]$.
+L'intégrale de $f_n$ est $n$. La limite est $+\infty$. L'intégrale de la limite (la fonction $+\infty \cdot \chi_{[0,1]}$) est $+\infty$.
 
-### C. Contre-exemple si l'on retire l'hypothèse de positivité ou de monotonie
+**Exemple 4 (Série géométrique) :**
+Soit $X = \mathbb{N}$ avec la mesure de comptage. Soit $u_n(k) = (\frac{1}{2})^n \chi_{\{0\}}(k)$.
+La somme $\sum_n u_n(0) = \sum (1/2)^n = 2$.
+L'intégrale de la somme est 2. La somme des intégrales est $\sum 1/2^n = 2$.
 
-**Cas pathologique (Défaut de monotonie) :**
-Soit $f_n(x) = n \mathbf{1}_{]0, 1/n]}(x)$ sur l'espace de Lebesgue.
-Ici, $f_n \ge 0$, mais la suite n'est *pas* croissante. En effet, $f_n(x)$ converge vers $f(x) = 0$ pour tout $x > 0$.
-L'intégrale de la limite est $\int f d\lambda = 0$.
-Mais pour tout $n$, $\int f_n d\lambda = n \times \frac{1}{n} = 1$.
-On a bien $\lim \int f_n \neq \int \lim f_n$. Ce phénomène est appelé "perte de masse vers l'infini local".
+**Exemple 5 (Croissance stricte) :**
+Soit $f_n(x) = x^2 - \frac{1}{n}$ pour $x \in [1,2]$. $f_n$ est croissante et $f_n(x) > 0$ sur l'intervalle.
+La limite est $f(x) = x^2$. L'intégrale de $f_n$ est $[x^3/3 - x/n]_1^2 = (8/3 - 2/n) - (1/3 - 1/n) = 7/3 - 1/n$.
+La limite est $7/3$, ce qui est bien $\int_1^2 x^2 dx$.
 
-## 3. Démonstrations rigoureuses
+**Exemple 6 (Fonctions indicatrices emboîtées) :**
+Soit $A_n = [0, 1 - 1/n]$. Les ensembles sont emboîtés $A_n \subset A_{n+1}$.
+Soit $f_n = \chi_{A_n}$. La suite de fonctions croît vers $f = \chi_{[0,1[}$.
+$\int f_n d\mu = \mu(A_n) = 1 - 1/n$. La limite est $1$. $\int f d\mu = \mu([0,1[) = 1$.
 
-### Preuve du Théorème de Convergence Monotone
+**Exemple 7 (Gaussienne qui s'élargit) :**
+Soit $f_n(x) = e^{-x^2} \cdot \chi_{[-n,n]}(x)$. La suite est croissante.
+La limite est $e^{-x^2}$ sur tout $\mathbb{R}$.
+$\int f_n = \int_{-n}^n e^{-x^2} dx \to \sqrt{\pi}$, qui est bien l'intégrale sur $\mathbb{R}$ de la gaussienne.
 
-Soit $(f_n)$ une suite croissante de fonctions mesurables positives. Notons $f = \lim_{n \to +\infty} f_n$.
-Puisque pour tout $n$, $f_n \le f$, la monotonie de l'intégrale (établie au Jalon 66) implique que :
-$$\int_X f_n \, d\mu \le \int_X f \, d\mu$$
-En passant à la limite (qui existe car la suite des intégrales est croissante dans $[0, +\infty]$) :
-$$\lim_{n \to +\infty} \int_X f_n \, d\mu \le \int_X f \, d\mu \quad \text{(Équation 1)}$$
+### Corollaire (Sommation terme à terme)
 
-Pour l'inégalité inverse, nous devons revenir à la définition de l'intégrale par les fonctions étagées.
-Soit $s$ une fonction étagée mesurable telle que $0 \le s \le f$.
-Soit un réel $c \in ]0, 1[$. Définissons les ensembles :
-$$A_n = \{x \in X \mid f_n(x) \ge c \cdot s(x)\}$$
-Les ensembles $A_n$ sont mesurables. Puisque $(f_n)$ est croissante, on a $A_n \subset A_{n+1}$.
-De plus, si $s(x) = 0$, $x \in A_n$ trivialement. Si $s(x) > 0$, alors $c \cdot s(x) < s(x) \le f(x)$. Comme $f_n(x) \to f(x)$, il existe un rang $N$ tel que pour $n \ge N$, $f_n(x) \ge c \cdot s(x)$, donc $x \in A_n$.
-Ainsi, $\bigcup_{n \in \mathbb{N}} A_n = X$.
+> **Théorème :** Pour toute suite de fonctions mesurables **positives** $(u_n)$ :
+> $$\int_X \left( \sum_{n=0}^\infty u_n \right) d\mu = \sum_{n=0}^\infty \int_X u_n d\mu$$
 
-Minorons l'intégrale de $f_n$ :
-$$\int_X f_n \, d\mu \ge \int_{A_n} f_n \, d\mu \ge \int_{A_n} c \cdot s \, d\mu = c \int_{A_n} s \, d\mu$$
-La fonction étagée s'écrit $s = \sum_{i=1}^k \alpha_i \mathbf{1}_{E_i}$.
-Donc $\int_{A_n} s \, d\mu = \sum_{i=1}^k \alpha_i \mu(E_i \cap A_n)$.
-Par la continuité croissante de la mesure $\mu$, puisque $E_i \cap A_n \nearrow E_i \cap X = E_i$, on a $\lim_{n \to +\infty} \mu(E_i \cap A_n) = \mu(E_i)$.
-Ainsi, en passant à la limite quand $n \to +\infty$ :
-$$\lim_{n \to +\infty} \int_X f_n \, d\mu \ge c \sum_{i=1}^k \alpha_i \mu(E_i) = c \int_X s \, d\mu$$
-Puisque cette inégalité est vraie pour tout $c \in ]0, 1[$, on peut faire tendre $c \to 1$ :
-$$\lim_{n \to +\infty} \int_X f_n \, d\mu \ge \int_X s \, d\mu$$
-Cette minoration est vraie pour toute fonction étagée $s$ telle que $0 \le s \le f$. En passant au supremum sur toutes ces fonctions étagées $s$, par définition de l'intégrale de Lebesgue, on obtient :
-$$\lim_{n \to +\infty} \int_X f_n \, d\mu \ge \int_X f \, d\mu \quad \text{(Équation 2)}$$
+## 3. Démonstrations
 
-Les équations (1) et (2) prouvent que $\lim_{n \to +\infty} \int_X f_n \, d\mu = \int_X f \, d\mu$. $\blacksquare$
+### Démonstration du Théorème de Beppo Levi
 
-### Preuve du Corollaire (Séries)
+1. **Existence de la limite :** Comme $(f_n(x))$ est une suite croissante de $[0, +\infty]$, elle admet toujours une limite dans $[0, +\infty]$ pour chaque $x$. On a vu (Jalon 65) que le sup (ou la limite ici) de fonctions mesurables est mesurable.
+2. **Inégalité facile ($\ge$) :** Comme $f_n \le f$ pour tout $n$, par croissance de l'intégrale (Jalon 66) :
+   $\int f_n \le \int f$. En prenant la limite : $\lim \int f_n \le \int f$.
+3. **Inégalité difficile ($\le$) :** Soit $s$ une fonction simple telle que $0 \le s \le f$. Soit $\alpha \in ]0, 1[$.
+   On définit $A_n = \{x \in X \mid f_n(x) \ge \alpha s(x) \}$.
+   - Comme $f_n$ croît vers $f$ et $\alpha s < f$ (là où $s>0$), la suite d'ensembles $(A_n)$ est croissante et son union est $X$.
+   - On a $\int f_n \ge \int_{A_n} f_n \ge \int_{A_n} \alpha s = \alpha \int_{A_n} s$.
+   - Par continuité monotone de la mesure (Jalon 63), $\lim \int_{A_n} s = \int_X s$.
+   - Donc $\lim \int f_n \ge \alpha \int_X s$.
+   - En faisant tendre $\alpha \to 1$, on a $\lim \int f_n \ge \int s$.
+4. **Conclusion :** Comme c'est vrai pour tout $s \le f$, alors $\lim \int f_n \ge \sup \int s = \int f$.
+   Les deux inégalités prouvent l'égalité.
 
-Appliquons le TCM à la suite des sommes partielles $S_N = \sum_{n=0}^N u_n$.
-Puisque les $u_n$ sont positives, la suite $(S_N)_N$ est croissante.
-De plus, par linéarité de l'intégrale pour des sommes finies :
-$$\int_X S_N \, d\mu = \sum_{n=0}^N \int_X u_n \, d\mu$$
-La limite ponctuelle de $S_N$ est par définition la série $\sum_{n=0}^{+\infty} u_n$.
-D'après le TCM :
-$$\int_X \left( \sum_{n=0}^{+\infty} u_n \right) d\mu = \lim_{N \to +\infty} \int_X S_N \, d\mu = \lim_{N \to +\infty} \sum_{n=0}^N \int_X u_n \, d\mu = \sum_{n=0}^{+\infty} \int_X u_n \, d\mu$$
-$\blacksquare$
+## 4. Exercices d'Application
 
-## 4. Applications en Physique, Logique et IA
+### Exercice 1 : Intégrale d'une série
+**Énoncé :** Calculer $\int_0^1 \sum_{n=1}^\infty x^n dx$.
+**Correction Détaillée :**
+1. Les fonctions $u_n(x) = x^n$ sont mesurables et positives sur $[0, 1]$.
+2. Par le corollaire du TCM, on peut intervertir somme et intégrale.
+3. $I = \sum_{n=1}^\infty \int_0^1 x^n dx = \sum_{n=1}^\infty \left[ \frac{x^{n+1}}{n+1} \right]_0^1 = \sum_{n=1}^\infty \frac{1}{n+1}$.
+4. Cette série est la série harmonique (moins son premier terme), elle diverge vers $+\infty$.
+5. L'intégrale de la somme est donc $+\infty$.
 
-En Intelligence Artificielle et en Probabilités, le Théorème de Convergence Monotone est omniprésent.
+### Exercice 2 : Niveau Avancé (Utilisation de la mesure de comptage)
+**Énoncé :** Retrouver le théorème de sommation des séries à termes positifs doubles : $\sum_{i} \sum_{j} a_{i,j} = \sum_{j} \sum_{i} a_{i,j}$.
+**Correction Détaillée :**
+On considère l'espace $\mathbb{N}$ muni de la mesure de comptage $\mu$. Soit $f_n(i) = \sum_{j=0}^n a_{i,j}$. La suite de fonctions $(f_n)$ est croissante car $a_{i,j} \ge 0$. Par Beppo Levi, l'intégrale de la limite est la limite des intégrales, ce qui correspond exactement à l'interversion des sommes.
 
-- **Processus Stochastiques et Modèles Génératifs :** Lors du calcul de l'espérance mathématique d'une variable aléatoire définie comme un temps d'atteinte (par exemple, le nombre d'étapes de diffusion dans un Denoising Diffusion Probabilistic Model avant d'atteindre un niveau de bruit seuil), on est amené à évaluer l'espérance d'une somme infinie de variables de Bernoulli positives. Le TCM justifie l'inversion de l'espérance et de la série, assurant la convergence de l'algorithme d'entraînement.
-- **Théorie de l'Information :** Dans l'étude des capacités de canaux (Théorème de Shannon), on manipule des entropies différentielles où l'on intègre des densités de probabilités développées en séries (via des polynômes orthogonaux). La stricte positivité des termes permet, par le corollaire de Beppo-Levi, de sommer les intégrales terme à terme pour trouver la borne supérieure théorique de la transmission.
-- **Calcul des Variations et Réseaux de Neurones Physiques (PINNs) :** Lorsqu'on cherche à minimiser une fonctionnelle d'énergie (Loss function incluant des contraintes d'équations aux dérivées partielles), on utilise souvent des suites régularisantes. L'accumulation de termes de pénalisation positifs permet, via le TCM, de prouver la semi-continuité inférieure de la Loss totale, garantissant ainsi l'existence d'un minimiseur global (le réseau de neurones optimal).
+## 5. Application en Intelligence Artificielle
+
+- **Le Pont Théorique :** En IA, on manipule souvent des **Espérances de sommes infinies** ou des limites de processus. Le TCM est l'outil qui permet de passer à la limite sous l'espérance en toute sécurité.
+- **Example Concret :**
+    - **Processus de Poisson :** Pour calculer le nombre moyen d'événements (ex: clics sur une pub) sur un intervalle de temps, on somme les probabilités d'événements infinitésimaux. Le TCM garantit que la somme de ces moyennes locales donne bien la moyenne globale.
+    - **Séries de Taylor de fonctions de perte :** Si on décompose une fonction de coût complexe en une série de fonctions positives, on peut intégrer cette série terme à terme pour obtenir une approximation de la perte attendue.
+    - **Théorie des Noyaux (Kernels) :** De nombreux noyaux (comme le noyau RBF) peuvent être vus comme des sommes infinies de caractéristiques. Le TCM permet de manipuler ces représentations de dimension infinie comme si elles étaient finies lors des calculs d'intégrales de risque.
+
+## 6. Liens Sémantiques
+
+- **Concepts Précédents requis :** [[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.).md]], [[Jalon 63 (Définition axiomatique d'une mesure).md]]
+- **Concepts Futurs dépendants :** [[Jalon 68 (Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque).md]], [[Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md]]

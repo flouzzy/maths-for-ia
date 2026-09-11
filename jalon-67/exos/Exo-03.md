@@ -1,16 +1,9 @@
----
-title: "Exercice 3 : TCM"
-difficulty: "★★☆☆☆"
----
-# Exercice 3 : Limite d'exponentielles tronquées
+# Exercice 3 : Série de fonctions mesurables \quad $\bigstar\bigstar\bigstar\star$
 
-**Niveau :** $\bigstar\bigstar\star\star\star$
+## Énoncé
+Soit $u_n(x) = \frac{x}{(1+x)^n}$ sur $]0, \infty[$. Calculer $\int_0^\infty \sum u_n(x) dx$.
 
-**Énoncé :**
-Soit $f_n(x) = \left(1 + \frac{x}{n}\right)^n e^{-2x}$ pour $x > 0$. Évaluer $\lim_{n \to +\infty} \int_0^{+\infty} f_n(x) \mathbf{1}_{[0, n]}(x) dx$.
-
-**Correction détaillée :**
-1. Soit $g_n(x) = f_n(x) \mathbf{1}_{[0, n]}(x)$. On sait que pour $x > 0$, la suite $u_n(x) = \left(1 + \frac{x}{n}\right)^n$ est croissante (par l'inégalité de Bernoulli ou l'étude de la dérivée) et converge vers $e^x$.
-2. Ainsi, la suite de fonctions $g_n(x)$ est positive et croissante. Sa limite simple est $g(x) = e^x e^{-2x} = e^{-x}$.
-3. Le théorème de convergence monotone s'applique : $\lim_{n \to \infty} \int_0^{+\infty} g_n(x) dx = \int_0^{+\infty} e^{-x} dx$.
-4. Le calcul donne $\int_0^{+\infty} e^{-x} dx = \left[-e^{-x}\right]_0^{+\infty} = 1$.
+## Correction Détaillée
+\begin{itemize}
+\item $u_n$ mesurable positive. 2. Par le corollaire du TCM, $\int \sum u_n = \sum \int u_n$. 3. $\sum u_n(x) = x \frac{1}{1 - 1/(1+x)} = 1+x$ pour $x>0$. 4. L'intégrale de $1+x$ diverge vers $+\infty$.
+\end{itemize}
