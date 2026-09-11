@@ -1,9 +1,31 @@
-# Exercice 10 : Extension à des fonctions à valeurs dans $[-\infty, +\infty]$ \quad $\bigstar\star\star\star$
+---
+uuid: "jalon-67-exo-10"
+title: "Exercice 10 - Probabilités et Temps d'arrêt"
+difficulty: "\bigstar\bigstar\bigstar\bigstar\bigstar"
+---
+
+# Exercice 10 - Probabilités et Temps d'arrêt
 
 ## Énoncé
-Montrer que si $f_n$ est croissante et $f_1$ est intégrable, le TCM s'applique.
+
+En théorie des probabilités, si $T$ est une variable aléatoire discrète à valeurs dans $\mathbb{N}^* \cup \{\infty\}$, montrer en utilisant le TCM que $\mathbb{E}[T] = \sum_{n=0}^\infty P(T > n)$.
 
 ## Correction Détaillée
-\begin{itemize}
-\item On se ramène aux fonctions positives en considérant $g_n = f_n - f_1$. 2. $g_n \ge 0$ et $g_n \le g_{n+1}$. 3. TCM s'applique à $g_n$. 4. On conclut par linéarité en rajoutant $f_1$.
-\end{itemize}
+
+1. **Définition de l'espérance :**
+La variable aléatoire prend ses valeurs dans $\mathbb{N}^* \cup \{\infty\}$. On peut l'écrire sous la forme $T = \sum_{n=1}^\infty n \mathbf{1}_{\{T=n\}} + \infty \mathbf{1}_{\{T=\infty\}}$. Son espérance est $\mathbb{E}[T] = \int_{\Omega} T d\mathbb{P}$.
+
+2. **Réécriture de la variable aléatoire :**
+Remarquons que l'entier $n$ peut s'écrire comme une somme de $1$ : $n = \sum_{k=1}^n 1$.
+Ainsi, $T = \sum_{k=1}^T 1 = \sum_{k=1}^\infty \mathbf{1}_{\{T \ge k\}}$.
+Pour chaque $\omega \in \Omega$, la somme infinie de droite compte exactement $1$ pour chaque entier $k$ tel que $T(\omega) \ge k$, ce qui donne bien la valeur $T(\omega)$.
+
+3. **Application du TCM :**
+Les variables $X_k = \mathbf{1}_{\{T \ge k\}}$ sont des fonctions mesurables (car $\{T \ge k\}$ est un événement mesurable) et positives.
+D'après le corollaire du TCM pour les sommes, on peut intervertir l'espérance (qui est une intégrale sous la mesure $\mathbb{P}$) et la somme infinie :
+$$\mathbb{E}[T] = \mathbb{E}\left[ \sum_{k=1}^\infty \mathbf{1}_{\{T \ge k\}} \right] = \sum_{k=1}^\infty \mathbb{E}[ \mathbf{1}_{\{T \ge k\}} ]$$
+
+4. **Conclusion :**
+L'espérance d'une fonction indicatrice est la probabilité de l'événement : $\mathbb{E}[ \mathbf{1}_{A} ] = \mathbb{P}(A)$.
+Donc $\mathbb{E}[T] = \sum_{k=1}^\infty \mathbb{P}(T \ge k) = \sum_{n=0}^\infty \mathbb{P}(T > n)$ (en posant $n=k-1$).
+C'est une formule fondamentale souvent appelée formule de l'espérance sans intégration (ou Area Formula en discret), rigoureusement démontrée grâce au TCM.

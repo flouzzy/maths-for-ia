@@ -1,9 +1,31 @@
-# Exercice 4 : Interversion limite et intégrale avec fonction indicatrice \quad $\bigstar\star\star\star$
+---
+uuid: "jalon-67-exo-04"
+title: "Exercice 04 - Convergence d'une somme exponentielle"
+difficulty: "\bigstar\bigstar\bigstar\star\star"
+---
+
+# Exercice 04 - Convergence d'une somme exponentielle
 
 ## Énoncé
-Calculer $\lim_{n \to \infty} \int_0^n (1-\frac{x}{n})^n e^{x/2} dx$.
+
+Soit $X = \mathbb{R}^+$ muni de la mesure de Lebesgue. Calculer $\lim_{n \to \infty} \int_0^n (1 + \frac{x}{n})^n e^{-2x} dx$.
 
 ## Correction Détaillée
-\begin{itemize}
-\item Soit $f_n(x) = \chi_{[0,n]}(x) (1-x/n)^n e^{x/2}$. 2. $f_n(x)$ converge vers $e^{-x} e^{x/2} = e^{-x/2}$. 3. La suite $f_n$ est croissante en $n$. 4. Par TCM, $\int f = \int e^{-x/2} = [-2e^{-x/2}]_0^\infty = 2$.
-\end{itemize}
+
+1. **Construction de la suite :**
+On pose $f_n(x) = (1 + \frac{x}{n})^n e^{-2x} \mathbf{1}_{[0, n]}(x)$.
+Les fonctions $x \mapsto (1 + \frac{x}{n})^n e^{-2x}$ sont continues, et $\mathbf{1}_{[0, n]}$ est étagée mesurable, donc les $f_n$ sont mesurables et positives sur $\mathbb{R}^+$.
+
+2. **Croissance de la suite :**
+Étudions $g_n(x) = (1 + \frac{x}{n})^n$ pour $x \in [0, n]$.
+On sait que la suite $u_n = (1 + \frac{x}{n})^n$ est strictement croissante avec $n$ (cela se montre par l'inégalité arithmético-géométrique ou par dérivation). De plus l'indicatrice croît (l'ensemble grandit).
+Donc la suite $(f_n)$ est croissante presque partout.
+
+3. **Limite simple :**
+Pour tout $x > 0$, pour $n$ assez grand ($n > x$), $\mathbf{1}_{[0, n]}(x) = 1$.
+On sait de plus que $\lim_{n \to \infty} (1 + \frac{x}{n})^n = e^x$.
+Donc $\lim_{n \to \infty} f_n(x) = e^x e^{-2x} = e^{-x}$.
+
+4. **Application du TCM :**
+D'après le TCM, l'intégrale de la limite est la limite des intégrales.
+$\lim_{n \to \infty} \int_0^\infty f_n(x) dx = \int_0^\infty e^{-x} dx = \left[-e^{-x}\right]_0^\infty = 1$.

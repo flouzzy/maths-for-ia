@@ -7,7 +7,7 @@ tags:
   - math/analyse
   - ia/abstraction
 prev: "[[Jalon 65 (Fonctions mesurables).md]]"
-next: "[[Jalon 67 (Démonstration du théorème de convergence monotone).md]]"
+next: "[[jalon-67/Jalon-67.md|Jalon 67 (Démonstration du théorème de convergence monotone)]]"
 ---
 
 # Jalon 66 : Intégrale de Lebesgue pour les fonctions positives

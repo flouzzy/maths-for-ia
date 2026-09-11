@@ -1,11 +1,18 @@
-# Exercice 1 : Intégrale d'une suite de fonctions puissances \quad $\bigstar\star\star\star$
+---
+uuid: "jalon-67-exo-01"
+title: "Exercice 01 - Théorème de convergence monotone de base"
+difficulty: "\bigstar\star\star\star\star"
+---
+
+# Exercice 01 - Théorème de convergence monotone de base
 
 ## Énoncé
-Soit $f_n(x) = x^n$ sur $[0, 1[$. Montrer que $\lim_{n \to \infty} \int_0^1 f_n(x) dx = 0$ en utilisant le TCM.
+
+Soit $(X, \mathcal{A}, \mu)$ un espace mesuré et $f$ une fonction mesurable positive. Démontrer que la suite de fonctions $f_n(x) = \min(f(x), n)$ converge vers $f$ presque partout, et vérifier que $\lim_{n \to \infty} \int_X f_n d\mu = \int_X f d\mu$.
 
 ## Correction Détaillée
-\begin{itemize}
-\item **Mesurabilité et positivité** : $f_n$ est mesurable et positive.
-\item Cependant, la suite $(f_n)$ est décroissante. Mais on peut utiliser le TCM sur $1 - f_n(x)$ qui est croissante positive.
-\item $\lim (1 - f_n(x)) = 1$ p.p. Donc $\int 1 dx = \lim \int (1-x^n)dx \implies 1 = 1 - \lim \int x^n dx \implies \lim \int x^n dx = 0$.
-\end{itemize}
+
+1. **Croissance :** Pour tout $x \in X$, $f_{n+1}(x) = \min(f(x), n+1) \ge \min(f(x), n) = f_n(x)$. La suite $(f_n)$ est donc bien croissante.
+2. **Positivité et mesurabilité :** Comme $f \ge 0$, on a $f_n \ge 0$. Les $f_n$ sont mesurables comme minimum de fonctions mesurables.
+3. **Convergence simple :** Pour tout $x \in X$, si $f(x)$ est finie, il existe un rang $N$ tel que $n \ge N \implies n \ge f(x)$. Alors pour $n \ge N$, $f_n(x) = f(x)$. Donc $f_n(x)$ converge vers $f(x)$. Si $f(x) = +\infty$, $f_n(x) = n \to +\infty$. Dans tous les cas, $f_n \to f$.
+4. **Application du TCM :** Les conditions du Théorème de Convergence Monotone sont remplies. On en déduit immédiatement que $\lim_{n \to \infty} \int_X f_n d\mu = \int_X f d\mu$.
