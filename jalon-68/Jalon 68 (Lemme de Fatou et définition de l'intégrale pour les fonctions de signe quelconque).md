@@ -6,7 +6,7 @@ trimester: 6
 tags:
   - math/analyse
   - ia/abstraction
-prev: "[[Jalon 67 (Démonstration du théorème de convergence monotone).md]]"
+prev: "[[jalon-67/Jalon-67.md|Jalon 67 (Démonstration du théorème de convergence monotone)]]"
 next: "[[Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md]]"
 ---
 
@@ -82,5 +82,5 @@ On a alors $f = f^+ - f^-$ and $|f| = f^+ + f^-$.
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 67 (Démonstration du théorème de convergence monotone).md]], [[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.).md]]
+- **Concepts Précédents requis :** [[jalon-67/Jalon-67.md|Jalon 67 (Démonstration du théorème de convergence monotone)]], [[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.).md]]
 - **Concepts Futurs dépendants :** [[Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md]], [[Jalon 73 (Définition des espaces Lp).md]]
