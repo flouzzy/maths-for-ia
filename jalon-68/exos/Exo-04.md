@@ -1,14 +1,28 @@
-## Exercice 4 : Fonction intégrable mais non bornée \quad $\bigstar\bigstar\bigstar\star\star$
+# Exercice 4 : Fatou et fonctions non bornées
+$\bigstar\bigstar\star\star\star$
 
-**Énoncé :**
-Soit l'espace mesuré $]0, 1]$ muni de la mesure de Lebesgue $\lambda$.
-Considérons la fonction $f(x) = \frac{1}{\sqrt{x}}$.
-1. Montrer que $f$ n'est pas bornée sur $]0, 1]$.
-2. Montrer que $f$ est intégrable sur cet espace et calculer son intégrale.
+## Énoncé
+Soit $f_n(x) = n e^{-nx}$ pour $x \in ]0, 1]$.
+1. Déterminer la limite simple de $f_n$.
+2. Comparer $\int_0^1 (\liminf f_n) dx$ et $\liminf \int_0^1 f_n dx$.
+3. Le théorème de convergence dominée s'applique-t-il ici ?
 
-**Correction :**
-1. $\lim_{x \to 0^+} \frac{1}{\sqrt{x}} = +\infty$. La fonction prend des valeurs arbitrairement grandes près de 0, elle n'est donc pas bornée sur $]0, 1]$.
-2. Pour montrer que $f$ est intégrable, il faut montrer que $\int_{]0,1]} |f| d\lambda < \infty$.
-   Comme $f$ est positive, $|f| = f$. Pour calculer l'intégrale de Lebesgue, on peut utiliser l'intégrale de Riemann généralisée, car la fonction est continue sur $]0,1]$.
-   $\int_{]0, 1]} \frac{1}{\sqrt{x}} d\lambda = \lim_{\epsilon \to 0^+} \int_{\epsilon}^{1} x^{-1/2} dx = \lim_{\epsilon \to 0^+} [2x^{1/2}]_{\epsilon}^{1} = \lim_{\epsilon \to 0^+} (2 - 2\sqrt{\epsilon}) = 2$.
-   L'intégrale est finie, donc $f \in \mathcal{L}^1(\lambda)$.
+## Correction
+**1. Limite simple :**
+Pour un $x \in ]0, 1]$ fixé, $x > 0$.
+Par croissances comparées de l'exponentielle et des polynômes, on a $\lim_{n \to \infty} n e^{-nx} = 0$.
+Donc $f_n$ converge simplement vers la fonction nulle $f = 0$ sur $]0, 1]$.
+
+**2. Comparaison des intégrales :**
+- L'intégrale de la limite est nulle : $\int_0^1 0 dx = 0$.
+- Pour $f_n$, calculons :
+  $\int_0^1 n e^{-nx} dx = \left[ -e^{-nx} \right]_0^1 = -e^{-n} - (-e^0) = 1 - e^{-n}$.
+- Donc $\liminf_{n \to \infty} \int_0^1 f_n dx = \lim_{n \to \infty} (1 - e^{-n}) = 1$.
+
+L'inégalité de Fatou s'écrit $0 \leq 1$, ce qui est vrai et strictement vérifié.
+Ici, la perte de masse n'est pas due à une fuite vers l'infini spatial (l'espace est borné, $[0,1]$) mais à une concentration de masse vers $0$ (un pic de hauteur $n$ et de largeur $1/n$ autour de $0$).
+
+**3. Convergence dominée :**
+Si le théorème de convergence dominée s'appliquait, on aurait l'égalité des limites, ce qui n'est pas le cas ($0 \neq 1$).
+En effet, pour tout $x > 0$, le supremum sur $n$ est $\sup_n n e^{-nx}$. La fonction dominante $g(x) = \sup_n f_n(x)$ n'est pas intégrable.
+On peut le voir en posant $g_N = \sup_{n \le N} f_n$. La fonction enveloppe explose près de $0$ de telle sorte que son intégrale diverge, empêchant la domination.

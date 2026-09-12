@@ -10,74 +10,125 @@ prev: "[[jalon-67/Jalon-67.md|Jalon 67 (Démonstration du théorème de converge
 next: "[[Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md]]"
 ---
 
-# Jalon 68 : Lemme de Fatou et fonctions de signe quelconque
+# Jalon 68 : Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque
 
-## 1. Présentation du concept clé
+## 1. Origines et nécessité de l'intégration des fonctions signées
 
-Le lemme de Fatou est un outil fondamental de l'intégration de Lebesgue. Il stipule que pour une suite de fonctions mesurables positives, l'intégrale de la limite inférieure est toujours majorée par la limite inférieure des intégrales. Cela traduit le fait qu'à la limite, de la masse peut disparaître (vers l'infini ou en s'échappant vers un point de manière singulière), mais elle ne peut pas se créer ex nihilo.
+La construction de l'intégrale de Lebesgue, initiée par les fonctions mesurables positives, trouve rapidement une limite lorsqu'il s'agit d'analyser des phénomènes physiques ou probabilistes réels où les grandeurs étudiées (charges électriques, flux thermiques, gains et pertes) peuvent s'annuler et changer de signe. L'enjeu géométrique et analytique est de définir un cadre rigoureux permettant de sommer de telles quantités sans risquer d'obtenir des indéterminations du type $\infty - \infty$.
+
+Historiquement, Henri Lebesgue, au début du XXe siècle, surmonte cette difficulté par un procédé de décomposition canonique. Plutôt que d'intégrer directement la fonction oscillante, il propose de la scinder en deux composantes strictement positives : sa partie positive (ce qui dépasse l'axe des abscisses) et sa partie négative (la profondeur sous l'axe, rendue positive). Ce traitement symétrique et absolu garantit la stabilité des théorèmes de passage à la limite, dont le Lemme de Fatou, introduit par Pierre Fatou en 1906, constitue la pierre angulaire permettant de gérer la semi-continuité inférieure des intégrales.
+
+## 2. Définition de l'intégrale et théorèmes fondamentaux
+
+### Décomposition canonique d'une fonction mesurable
+
+Pour toute fonction $f : X \to \overline{\mathbb{R}}$ définie sur un espace mesuré $(X, \mathcal{A}, \mu)$, on définit la **partie positive** $f^+$ et la **partie négative** $f^-$ par :
+$$f^+(x) = \max(f(x), 0) \quad \text{et} \quad f^-(x) = \max(-f(x), 0)$$
+
+On obtient ainsi les identités fondamentales :
+$$f = f^+ - f^- \quad \text{et} \quad |f| = f^+ + f^-$$
+
+**Exemple d'application immédiat :**
+Soit $f(x) = \sin(x)$ sur $X = [0, 2\pi]$ muni de la mesure de Lebesgue $\lambda$.
+- $f^+(x) = \sin(x)$ si $x \in [0, \pi]$ et $0$ si $x \in [\pi, 2\pi]$.
+- $f^-(x) = 0$ si $x \in [0, \pi]$ et $-\sin(x)$ si $x \in [\pi, 2\pi]$.
+On vérifie bien que $|f(x)| = |\sin(x)| = f^+(x) + f^-(x)$.
+
+**Illustration (TikZ) de la décomposition $f = f^+ - f^-$ :**
+```tikz
+\begin{tikzpicture}[scale=1.5]
+  % Axes
+  \draw[->,thick] (-2,0) -- (3,0) node[right] {$x$};
+  \draw[->,thick] (0,-1.5) -- (0,1.5) node[above] {$y$};
+
+  % Fonction originale en gris
+  \draw[domain=-1.5:2.5, smooth, variable=\x, gray, dashed, thick] plot ({\x}, {sin(\x r * 1.5)});
+
+  % f^+ en bleu
+  \draw[domain=-1.5:0, smooth, variable=\x, blue, ultra thick] plot ({\x}, {0});
+  \draw[domain=0:2.094, smooth, variable=\x, blue, ultra thick] plot ({\x}, {sin(\x r * 1.5)});
+  \draw[domain=2.094:2.5, smooth, variable=\x, blue, ultra thick] plot ({\x}, {0});
+  \node[blue] at (1, 1.2) {$f^+$};
+
+  % f^- en rouge
+  \draw[domain=-1.5:0, smooth, variable=\x, red, thick] plot ({\x}, {-sin(\x r * 1.5)});
+  \draw[domain=0:2.094, smooth, variable=\x, red, thick] plot ({\x}, {0});
+  \draw[domain=2.094:2.5, smooth, variable=\x, red, thick] plot ({\x}, {-sin(\x r * 1.5)});
+  \node[red] at (-0.7, 1.2) {$f^-$};
+
+  \node at (2.5, -0.5) {$f(x) = \sin(\frac{3}{2}x)$};
+\end{tikzpicture}
+```
 
 
-## 2. Formalisation
+### Intégrabilité selon Lebesgue
 
-### A. Le Lemme de Fatou
+**Définition (Fonction Lebesgue-intégrable) :**
+Une fonction mesurable $f : X \to \overline{\mathbb{R}}$ est dite **intégrable** (ou Lebesgue-intégrable) par rapport à la mesure $\mu$ si et seulement si ses deux parties $f^+$ et $f^-$ ont une intégrale finie :
+$$\int_X f^+ d\mu < +\infty \quad \text{et} \quad \int_X f^- d\mu < +\infty$$
+L'espace vectoriel des fonctions intégrables est noté $\mathcal{L}^1(X, \mathcal{A}, \mu)$.
+Dans ce cas, l'intégrale de $f$ est définie par :
+$$\int_X f d\mu = \int_X f^+ d\mu - \int_X f^- d\mu$$
 
-> **Lemme de Fatou :**
-> Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables de $X$ dans $[0, +\infty]$. Alors :
-> $$\int_X \left( \liminf_{n \to \infty} f_n \right) d\mu \le \liminf_{n \to \infty} \int_X f_n d\mu$$
+**Remarque fondamentale :** $f$ est intégrable si et seulement si $|f|$ l'est, puisque $\int |f| d\mu = \int f^+ d\mu + \int f^- d\mu$. C'est une différence majeure avec l'intégrale de Riemann pour les intégrales généralisées (ex: $\int_0^\infty \frac{\sin x}{x} dx$ converge au sens de Riemann mais pas de Lebesgue).
 
-### B. Fonctions de signe quelconque
+### Le Lemme de Fatou
 
-Soit $f : X \to \mathbb{R}$ une fonction mesurable. On définit :
-- Partie positive : $f^+(x) = \max(f(x), 0)$
-- Partie négative : $f^-(x) = \max(-f(x), 0)$
-On a alors $f = f^+ - f^-$ and $|f| = f^+ + f^-$.
+Le Lemme de Fatou est le premier grand théorème de passage à la limite pour l'intégrale de Lebesgue.
 
-> **Définition (Intégrabilité) :**
-> On dit que $f$ est **intégrable** (ou appartient à $\mathcal{L}^1(\mu)$) si les intégrales de $f^+$ et $f^-$ sont finies. L'intégrale de $f$ est alors définie par :
-> $$\int_X f d\mu = \int_X f^+ d\mu - \int_X f^- d\mu$$
+**Théorème (Lemme de Fatou) :**
+Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables **positives** sur $(X, \mathcal{A}, \mu)$. Alors :
+$$\int_X \left( \liminf_{n \to \infty} f_n \right) d\mu \leq \liminf_{n \to \infty} \int_X f_n d\mu$$
 
-## 3. Démonstrations
+**Exemple de stricte inégalité (perte de masse à l'infini) :**
+Sur $(\mathbb{R}, \mathcal{B}(\mathbb{R}), \lambda)$, posons $f_n = \mathbf{1}_{[n, n+1]}$.
+- Pour tout $x \in \mathbb{R}$, il existe $N$ tel que pour tout $n \geq N$, $f_n(x) = 0$. Donc $\liminf_{n \to \infty} f_n(x) = 0$.
+- D'où $\int_{\mathbb{R}} (\liminf f_n) d\lambda = 0$.
+- Or, pour tout $n$, $\int_{\mathbb{R}} f_n d\lambda = 1$, donc $\liminf_{n \to \infty} \int_{\mathbb{R}} f_n d\lambda = 1$.
+On a bien $0 \leq 1$, avec une inégalité stricte causée par la fuite du support vers l'infini.
+
+**Contre-exemple (cas non positif) :**
+Si les fonctions ne sont pas positives, le lemme peut être faux. Prenons $f_n = -\mathbf{1}_{[n, n+1]}$.
+$\liminf f_n = 0 \implies \int (\liminf f_n) = 0$.
+Mais $\int f_n = -1 \implies \liminf \int f_n = -1$. L'inégalité $0 \leq -1$ est fausse. L'hypothèse de positivité (ou de minoration par une fonction intégrable) est donc cruciale.
+
+## 3. Démonstrations rigoureuses
 
 ### Démonstration du Lemme de Fatou
 
-1. **Cadre :** Posons $g_k = \inf_{n \ge k} f_n$. La suite $(g_k)$ est une suite croissante de fonctions mesurables positives.
-2. **Limite :** Par définition, $\lim_{k \to \infty} g_k = \liminf f_n$.
-3. **Application du TCM (Beppo Levi) :** D'après le Jalon 67 :
-   $$\int \liminf f_n = \int \lim g_k = \lim \int g_k$$
-4. **Inégalité sur l'infimum :** Pour tout $n \ge k$, on a $g_k \le f_n$.
-   Par croissance de l'intégrale : $\int g_k \le \int f_n$ pour tout $n \ge k$.
-   Donc $\int g_k \le \inf_{n \ge k} \int f_n$.
-5. **Passage à la limite :**
-   $$\lim_{k \to \infty} \int g_k \le \lim_{k \to \infty} \left( \inf_{n \ge k} \int f_n \right) = \liminf \int f_n$$
-6. **Conclusion :** $\int \liminf f_n \le \liminf \int f_n$.
+Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables positives.
+Posons, pour tout $n \in \mathbb{N}$, la fonction $g_n = \inf_{k \geq n} f_k$.
+1. **Mesurabilité et positivité :** Les $f_k$ étant mesurables et positives, chaque $g_n$ est mesurable et positive.
+2. **Monotonie :** Pour tout $x \in X$, la suite $(g_n(x))_{n \in \mathbb{N}}$ est croissante. En effet, l'infimum est pris sur un ensemble d'indices de plus en plus restreint : $\{k \ge n+1\} \subset \{k \ge n\} \implies \inf_{k \ge n+1} f_k(x) \ge \inf_{k \ge n} f_k(x)$.
+3. **Limite :** Par définition de la limite inférieure, on a pour tout $x \in X$ :
+   $$\lim_{n \to \infty} g_n(x) = \sup_{n \ge 0} \inf_{k \ge n} f_k(x) = \liminf_{n \to \infty} f_n(x)$$
+4. **Application de Beppo-Levi (Convergence Monotone) :**
+   La suite $(g_n)$ est une suite croissante de fonctions mesurables positives qui converge simplement vers $\liminf f_n$. Par le théorème de convergence monotone, on a :
+   $$\int_X \left( \lim_{n \to \infty} g_n \right) d\mu = \lim_{n \to \infty} \int_X g_n d\mu$$
+   Ce qui s'écrit :
+   $$\int_X \left( \liminf_{n \to \infty} f_n \right) d\mu = \lim_{n \to \infty} \int_X g_n d\mu$$
+5. **Majoration :** Pour tout $k \geq n$, on a par définition $g_n \leq f_k$.
+   En intégrant cette inégalité (croissance de l'intégrale), il vient :
+   $$\int_X g_n d\mu \leq \int_X f_k d\mu \quad \forall k \geq n$$
+   En passant à l'infimum sur $k \geq n$ dans le membre de droite :
+   $$\int_X g_n d\mu \leq \inf_{k \geq n} \int_X f_k d\mu$$
+6. **Conclusion :** En prenant la limite (qui existe puisque la suite est croissante) quand $n \to \infty$ :
+   $$\lim_{n \to \infty} \int_X g_n d\mu \leq \lim_{n \to \infty} \left( \inf_{k \geq n} \int_X f_k d\mu \right) = \liminf_{n \to \infty} \int_X f_n d\mu$$
+   En combinant avec le point 4, on obtient exactement :
+   $$\int_X \left( \liminf_{n \to \infty} f_n \right) d\mu \leq \liminf_{n \to \infty} \int_X f_n d\mu$$
+   $\blacksquare$
 
-## 4. Exercices d'Application
+## 4. Applications en Théorie de l'Information et Intelligence Artificielle
 
-### Exercice 1 : Inégalité stricte dans Fatou
-**Énoncé :** Soit $f_n = n \mathbf{1}_{]0, 1/n[}$ sur $\mathbb{R}$ avec la mesure de Lebesgue.
-1. Calculer $\int f_n d\lambda$.
-2. Calculer $f = \liminf f_n$.
-3. Vérifier le lemme de Fatou.
-**Correction Détaillée :**
-1. $\int f_n = n \cdot \lambda(]0, 1/n[) = n \cdot (1/n) = 1$. La limite des intégrales est donc 1.
-2. Pour tout $x > 0$, $1/n$ finit par être plus petit que $x$, donc $f_n(x) = 0$ pour $n$ assez grand. Pour $x \le 0$, $f_n(x)=0$. Donc $f(x) = 0$ partout. $\int f = 0$.
-3. On a bien $0 \le 1$. L'inégalité est stricte. Ici, la "masse" (l'aire de 1) s'est échappée vers l'origine en devenant infiniment haute et fine, elle a disparu à la limite.
+### Preuve de la semi-continuité inférieure de la divergence de Kullback-Leibler
 
-### Exercice 2 : Niveau Avancé (Intégrabilité)
-**Énoncé :** Montrer que $f$ est intégrable si et seulement si $|f|$ est intégrable.
-**Correction Détaillée :**
-1. **Sens ($\implies$) :** Si $f$ est intégrable, alors $\int f^+$ et $\int f^-$ sont finies. Comme $|f| = f^+ + f^-$, par linéarité $\int |f| = \int f^+ + \int f^-$, qui est une somme de deux nombres finis.
-2. **Sens ($\impliedby$) :** Comme $0 \le f^+ \le |f|$ and $0 \le f^- \le |f|$, par croissance, si $\int |f| < \infty$, alors les deux intégrales sont finies.
+En apprentissage automatique, on cherche souvent à minimiser la divergence de Kullback-Leibler (KL) entre une distribution vraie $P$ et une distribution approchée $Q_\theta$.
+Si $P$ et $Q_\theta$ admettent des densités $p$ et $q_\theta$ par rapport à une mesure de Lebesgue,
+$$D_{KL}(P || Q_\theta) = \int p(x) \log\left(\frac{p(x)}{q_\theta(x)}\right) dx$$
 
-## 5. Application en Intelligence Artificielle
-
-- **Le Pont Théorique :** En IA, on manipule souvent des **récompenses** (Rewards) en Reinforcement Learning qui peuvent être positives ou négatives. La définition de l'espérance du gain total nécessite ce cadre.
-- **Example Concret :**
-    - **Optimisation de Portefeuille :** On intègre des rendements qui peuvent être négatifs (pertes). L'intégrabilité garantit que le risque moyen est calculable.
-    - **Fonctions de score (Log-Likelihood) :** La log-vraisemblance $\ln(p(x))$ est presque toujours négative (car $p(x) \le 1$). Pour calculer l'information de Fisher ou l'entropie, on utilise la décomposition en parties positives et négatives.
-    - **Stabilité des Algorithmes :** Le lemme de Fatou est utilisé pour prouver que si une suite de modèles a une erreur moyenne qui converge, alors le modèle limite ne peut pas être "pire" que la limite de l'erreur. C'est une garantie de sécurité pour la convergence des algorithmes stochastiques.
-
-## 6. Liens Sémantiques
-
-- **Concepts Précédents requis :** [[jalon-67/Jalon-67.md|Jalon 67 (Démonstration du théorème de convergence monotone)]], [[Jalon 66 (Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.).md]]
-- **Concepts Futurs dépendants :** [[Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md]], [[Jalon 73 (Définition des espaces Lp).md]]
+Si l'on considère une suite de paramètres $\theta_n \to \theta^*$ telle que $q_{\theta_n}(x) \to q_{\theta^*}(x)$ ponctuellement, la divergence est-elle continue ?
+En général non, mais grâce au Lemme de Fatou, on peut prouver sa **semi-continuité inférieure**.
+On remarque que la fonction à intégrer n'est pas forcément positive. Toutefois, la fonction $f(u) = u \log(u) - u + 1$ est toujours positive pour $u \ge 0$.
+Par le Lemme de Fatou sur des transformations adéquates de la log-vraisemblance, on garantit que :
+$$\liminf_{n \to \infty} D_{KL}(P || Q_{\theta_n}) \geq D_{KL}(P || Q_{\theta^*})$$
+Cela assure mathématiquement que la limite d'une suite de modèles approchés ne peut pas être "meilleure" (avoir une divergence KL plus faible) que ce que la convergence ponctuelle des densités laisse supposer, sécurisant ainsi les preuves de convergence des algorithmes d'optimisation variationnelle (Variational Inference).

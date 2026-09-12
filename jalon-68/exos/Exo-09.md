@@ -1,16 +1,38 @@
-## Exercice 9 : Fatou et convergence en mesure \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
+# Exercice 9 : Continuité d'une intégrale paramétrée par Fatou
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :**
-Soit $(f_n)$ une suite de fonctions mesurables positives convergeant en mesure vers une fonction $f$.
-Montrer que $\int f d\mu \le \liminf \int f_n d\mu$.
-*(Indice : extraire une sous-suite).*
+## Énoncé
+Soit $f : X \times [0, 1] \to \mathbb{R}$ mesurable en la première variable et continue en la seconde.
+On suppose que pour tout $t \in [0, 1]$ et tout $x \in X$, $0 \leq f(x, t) \leq g(x)$, où $g$ est une fonction intégrable.
+Définissons $F(t) = \int_X f(x, t) d\mu(x)$.
+Démontrer que $F$ est continue sur $[0, 1]$ en utilisant uniquement le Lemme de Fatou (classique et inversé), sans utiliser directement le théorème de convergence dominée.
 
-**Correction :**
-1. Posons $l = \liminf \int f_n d\mu$. Si $l = +\infty$, l'inégalité est triviale. Supposons $l < \infty$.
-2. Par définition de la limite inférieure, il existe une sous-suite $(f_{n_k})$ telle que $\lim_{k \to \infty} \int f_{n_k} d\mu = l$.
-3. Comme $(f_{n_k})$ converge en mesure vers $f$, on peut en extraire une sous-sous-suite $(f_{n_{k_j}})$ qui converge presque partout vers $f$.
-4. On applique le lemme de Fatou classique à la suite $(f_{n_{k_j}})$ :
-   $\int (\liminf_{j \to \infty} f_{n_{k_j}}) d\mu \le \liminf_{j \to \infty} \int f_{n_{k_j}} d\mu$.
-5. Puisque la sous-sous-suite converge p.p. vers $f$, $\liminf_{j \to \infty} f_{n_{k_j}} = f$ presque partout.
-6. La suite réelle $(\int f_{n_{k_j}} d\mu)_j$ est une sous-suite de la suite convergente $(\int f_{n_k} d\mu)_k$, sa limite est donc $l$.
-7. On obtient alors : $\int f d\mu \le l = \liminf \int f_n d\mu$.
+## Correction
+Soit $t_0 \in [0, 1]$. Considérons une suite $t_n \to t_0$.
+Posons $f_n(x) = f(x, t_n)$.
+Par continuité de $f$ en la seconde variable, pour tout $x \in X$, $\lim_{n \to \infty} f_n(x) = f(x, t_0)$.
+Donc $\liminf f_n = \limsup f_n = f(\cdot, t_0)$.
+
+**1. Application de Fatou classique (Borne inférieure) :**
+Les fonctions $f_n$ sont positives ($f_n \geq 0$).
+Par le Lemme de Fatou :
+$$\int_X (\liminf f_n) d\mu \leq \liminf \int_X f_n d\mu$$
+$$\int_X f(x, t_0) d\mu \leq \liminf_{n \to \infty} F(t_n)$$
+Soit $F(t_0) \leq \liminf_{n \to \infty} F(t_n)$.
+
+**2. Application de Fatou inversé (Borne supérieure) :**
+Les fonctions $f_n$ sont majorées par $g$, fonction intégrable.
+On peut appliquer le résultat de l'exercice 6 (Fatou inversé) :
+$$\limsup \int_X f_n d\mu \leq \int_X (\limsup f_n) d\mu$$
+$$\limsup_{n \to \infty} F(t_n) \leq \int_X f(x, t_0) d\mu$$
+Soit $\limsup_{n \to \infty} F(t_n) \leq F(t_0)$.
+
+**3. Synthèse :**
+Par définition générale des limites inf et sup d'une suite réelle, on a toujours :
+$$\liminf_{n \to \infty} F(t_n) \leq \limsup_{n \to \infty} F(t_n)$$
+En chaînant les inégalités obtenues en 1 et 2, on obtient la sandwicherie :
+$$F(t_0) \leq \liminf F(t_n) \leq \limsup F(t_n) \leq F(t_0)$$
+La seule possibilité est que toutes ces valeurs soient égales.
+Donc $\liminf F(t_n) = \limsup F(t_n) = F(t_0)$.
+Cela signifie que la suite $(F(t_n))$ converge et que sa limite est $F(t_0)$.
+Comme ceci est vrai pour toute suite $t_n \to t_0$, $F$ est séquentiellement continue (donc continue) en $t_0$.
