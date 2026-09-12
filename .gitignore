@@ -5,3 +5,13 @@
 *.log
 *.toc
 __pycache__/
+*.aux
+*.log
+*.toc
+build_latex.py
+generate_exos_tp.py
+update_dashboard.py
+update_readme.py
+*.aux
+*.log
+*.toc

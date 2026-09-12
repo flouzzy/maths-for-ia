@@ -6,115 +6,112 @@ trimester: 6
 tags:
   - math/mesure
   - ia/abstraction
-prev: "[[Jalon 63 (Définition axiomatique d'une mesure).md]]"
-next: "[[Jalon 65 (Fonctions mesurables).md]]"
+prev: "[[Jalon-63.md]]"
+next: "[[Jalon-65.md]]"
 ---
 
-# Introduction
+# Construction de la mesure de Lebesgue
 
-La théorie de l'intégration de Riemann souffre de limitations fondamentales. Elle échoue à mesurer des ensembles denses ou présentant de multiples discontinuités, comme l'ensemble des rationnels $\mathbb{Q}$ dans $\mathbb{R}$. Pour surmonter cet écueil et asseoir une théorie de l'intégration complète et stable par passage à la limite, il est impératif de concevoir une fonction d'ensemble capable d'attribuer une "taille" cohérente à la plus vaste classe possible de sous-ensembles de $\mathbb{R}$.
+## 1. De l'intuition géométrique à la nécessité formelle
 
-La démarche, formalisée par Henri Lebesgue et Constantin Carathéodory, procède en deux temps :
-1. Définir une fonction, la \textbf{mesure extérieure}, applicable à toute partie de $\mathbb{R}$, en optimisant le recouvrement de cet ensemble par des intervalles ouverts.
-2. Restreindre cette fonction à une classe spécifique d'ensembles, la tribu des \textbf{ensembles mesurables}, pour garantir la propriété cruciale de $\sigma$-additivité, indispensable à toute théorie de la mesure robuste.
+La théorie de l'intégration de Riemann, étudiée au Jalon 37, repose sur le découpage du domaine d'intégration en intervalles. Cette approche s'avère particulièrement puissante pour les fonctions continues ou continues par morceaux. Toutefois, lorsqu'on est confronté à des espaces plus complexes ou à des fonctions dont le comportement est fortement discontinu (comme la fonction indicatrice de $\mathbb{Q}$), l'approche de Riemann échoue. L'impasse géométrique réside dans notre incapacité à mesurer de façon cohérente des ensembles de points "éparpillés" sur la droite réelle en utilisant de simples longueurs d'intervalles finis.
 
-\begin{tikzpicture}[scale=1]
-  \draw[->, thick] (-1,0) -- (8,0) node[right] {$\mathbb{R}$};
-  \fill[blue, opacity=0.3] (0.5,0) rectangle (2.5,0.5);
-  \fill[blue, opacity=0.3] (3.0,0) rectangle (4.2,0.5);
-  \fill[blue, opacity=0.3] (5.0,0) rectangle (7.0,0.5);
+Historiquement, Émile Borel et Henri Lebesgue, au tournant du 20ème siècle, ont radicalement changé de perspective. Au lieu de découper le domaine de départ en sous-intervalles pour évaluer l'aire sous une courbe, Lebesgue a proposé de mesurer la "taille" de l'ensemble des points de départ qui partagent des valeurs d'arrivée proches. Pour ce faire, il fallait construire un outil capable de mesurer la longueur, l'aire ou le volume d'ensembles infiniment plus complexes que de simples segments ou polygones : c'est la genèse de la mesure de Lebesgue.
 
-  \draw[red, thick, dashed] (0.3,-0.2) rectangle (2.7,0.7);
-  \draw[red, thick, dashed] (2.8,-0.2) rectangle (4.4,0.7);
-  \draw[red, thick, dashed] (4.8,-0.2) rectangle (7.2,0.7);
+Le processus constructif repose sur un principe physique fondamental de majoration : pour mesurer la taille d'un objet abstrait et irrégulier (un nuage de points), on le recouvre par une union dénombrable de briques élémentaires (des intervalles ouverts) dont on connaît la taille exacte. En cherchant le recouvrement le plus économique possible, on définit ce qu'on appelle la *mesure extérieure*.
 
-  \node[blue] at (1.5, 0.25) {$A_1$};
-  \node[blue] at (3.6, 0.25) {$A_2$};
-  \node[blue] at (6.0, 0.25) {$A_3$};
+## 2. Mesure Extérieure et Critère de Carathéodory
 
-  \node[red] at (1.5, 0.9) {$I_1$};
-  \node[red] at (3.6, 0.9) {$I_2$};
-  \node[red] at (6.0, 0.9) {$I_3$};
+### Mesure Extérieure de Lebesgue
 
-  \node at (3.5, -1) {Recouvrement d'un ensemble $A = A_1 \cup A_2 \cup A_3$ par des intervalles ouverts $I_n$.};
-\end{tikzpicture}
+La première étape de la construction consiste à attribuer une valeur positive ou nulle à toute partie de $\mathbb{R}$.
 
-# Définitions, Théorèmes et Exemples Concrets
+> **Définition (Mesure extérieure de Lebesgue) :**
+> Soit $A$ une partie quelconque de $\mathbb{R}$ ($A \in \mathcal{P}(\mathbb{R})$). La mesure extérieure de Lebesgue de $A$, notée $\lambda^*(A)$, est définie par :
+> $$\lambda^*(A) = \inf \left\lbrace \sum_{n=1}^{+\infty} \ell(I_n) \;\middle|\; A \subset \bigcup_{n=1}^{+\infty} I_n \right\rbrace$$
+> où $(I_n)_{n \in \mathbb{N}^*}$ est une suite d'intervalles ouverts de $\mathbb{R}$ tels que $I_n = ]a_n, b_n[$, et $\ell(I_n) = b_n - a_n$ désigne la longueur de l'intervalle $I_n$. Si un intervalle est non borné, sa longueur est $+\infty$.
 
-## Mesure extérieure de Lebesgue
+Cette définition garantit que $\lambda^*$ est bien définie pour toute partie de $\mathbb{R}$, prenant ses valeurs dans $[0, +\infty]$.
 
-Soit $\mathcal{P}(\mathbb{R})$ l'ensemble des parties de $\mathbb{R}$.
-Pour tout intervalle ouvert $I = ]a, b[$, on définit sa longueur $\ell(I) = b - a$.
+**Exemple concret immédiat :**
+Calculons la mesure extérieure d'un point isolé, disons $A = \{x_0\}$.
+Pour tout $\epsilon > 0$, considérons l'intervalle ouvert $I_1 = ]x_0 - \frac{\epsilon}{2}, x_0 + \frac{\epsilon}{2}[$.
+Clairement, $A \subset I_1$. Posons $I_n = \emptyset$ pour $n \ge 2$ (conventionnellement un intervalle ouvert de longueur 0).
+La somme des longueurs de ce recouvrement est $\ell(I_1) = \epsilon$.
+Par définition de l'infimum, on a donc $\lambda^*(\{x_0\}) \le \epsilon$. Comme cela est vrai pour tout $\epsilon > 0$ et que $\lambda^* \ge 0$, on conclut inexorablement que $\lambda^*(\{x_0\}) = 0$. Un point n'a pas d'épaisseur.
 
-**Définition (Mesure extérieure) :**
-Pour toute partie $A \subset \mathbb{R}$, la mesure extérieure de Lebesgue $\lambda^*(A)$ est définie comme l'infimum de la somme des longueurs des intervalles d'un recouvrement dénombrable ouvert de $A$. Formellement :
-$$\lambda^*(A) = \inf \left\lbrace \sum_{n=1}^\infty \ell(I_n) \mid A \subset \bigcup_{n=1}^\infty I_n, \ I_n \text{ intervalles ouverts} \right\rbrace$$
+**Cas pathologique :**
+Bien que la mesure extérieure soit définie pour toute partie de $\mathbb{R}$, elle souffre d'un défaut fatal : elle n'est pas additive sur tout $\mathcal{P}(\mathbb{R})$. On peut construire (grâce à l'axiome du choix, construction de Vitali) des ensembles disjoints $A$ et $B$ tels que $\lambda^*(A \cup B) < \lambda^*(A) + \lambda^*(B)$. C'est inacceptable pour une notion de "mesure" physique rigoureuse. Il faut donc restreindre le domaine de $\lambda^*$ aux ensembles qui se comportent "bien".
 
-Cette fonction $\lambda^* : \mathcal{P}(\mathbb{R}) \to [0, +\infty]$ possède des propriétés fondamentales :
-- Positivité : $\lambda^*(A) \ge 0$.
-- Monotonie : Si $A \subset B$, alors $\lambda^*(A) \le \lambda^*(B)$.
-- Sous-additivité dénombrable : Pour toute suite $(A_n)_{n \in \mathbb{N}}$, $\lambda^*\left(\bigcup_{n=1}^\infty A_n\right) \le \sum_{n=1}^\infty \lambda^*(A_n)$.
+### Tribu de Lebesgue et Critère de Carathéodory
 
-**Exemple 1 : Mesure extérieure d'un point**
-Soit $A = \{x\}$ un singleton. Pour tout $\epsilon > 0$, l'intervalle ouvert $I = ]x - \frac{\epsilon}{2}, x + \frac{\epsilon}{2}[$ recouvre $A$ et possède une longueur $\ell(I) = \epsilon$. L'infimum sur tous les recouvrements possibles est donc $0$. Ainsi, $\lambda^*(\{x\}) = 0$.
+Pour pallier le défaut de la mesure extérieure, Constantin Carathéodory a formulé un critère de découpage permettant d'isoler les sous-ensembles "mesurables".
 
-**Exemple 2 : Mesure extérieure d'un ensemble dénombrable**
-Soit $\mathbb{Q} \subset \mathbb{R}$. $\mathbb{Q}$ est dénombrable, on peut l'énumérer : $\mathbb{Q} = \{q_1, q_2, \dots\}$. Fixons $\epsilon > 0$. Pour chaque $q_n$, définissons l'intervalle ouvert $I_n = \left] q_n - \frac{\epsilon}{2^{n+1}}, q_n + \frac{\epsilon}{2^{n+1}} \right[$. La suite $(I_n)$ recouvre $\mathbb{Q}$.
-La somme des longueurs est $\sum_{n=1}^\infty \ell(I_n) = \sum_{n=1}^\infty \frac{\epsilon}{2^n} = \epsilon$. L'infimum étant pris sur tous les $\epsilon > 0$, on obtient $\lambda^*(\mathbb{Q}) = 0$.
+> **Définition (Ensemble Lebesgue-mesurable et Critère de Carathéodory) :**
+> Une partie $E \subset \mathbb{R}$ est dite **mesurable au sens de Lebesgue** si elle découpe toute autre partie de $\mathbb{R}$ de manière additive vis-à-vis de la mesure extérieure. Précisément, pour tout ensemble $A \subset \mathbb{R}$ (qu'on appelle "ensemble test") :
+> $$\lambda^*(A) = \lambda^*(A \cap E) + \lambda^*(A \cap E^c)$$
+> où $E^c = \mathbb{R} \setminus E$ est le complémentaire de $E$.
+> L'ensemble de toutes les parties Lebesgue-mesurables de $\mathbb{R}$ est noté $\mathcal{L}(\mathbb{R})$.
 
-**Exemple 3 : Mesure extérieure d'un intervalle fermé**
-Soit $A = [a, b]$. Pour tout $\epsilon > 0$, l'intervalle ouvert $I = ]a - \frac{\epsilon}{2}, b + \frac{\epsilon}{2}[$ recouvre $A$ et sa longueur est $b - a + \epsilon$. L'infimum est au plus $b - a$. On démontrera formellement plus loin que $\lambda^*([a, b]) = b - a$.
+Il est remarquable (et c'est un théorème fondamental de la théorie de la mesure) que la classe $\mathcal{L}(\mathbb{R})$ ne soit pas un simple ensemble, mais forme une véritable **tribu** (ou $\sigma$-algèbre). De plus, la restriction de $\lambda^*$ à cette tribu $\mathcal{L}(\mathbb{R})$ est bien une mesure, c'est-à-dire qu'elle vérifie l'axiome de $\sigma$-additivité.
 
-## Le Critère de Carathéodory et les Ensembles Mesurables
+> **Définition (Mesure de Lebesgue) :**
+> La **mesure de Lebesgue** sur $\mathbb{R}$, notée $\lambda$, est la restriction de la mesure extérieure $\lambda^*$ à la tribu des ensembles Lebesgue-mesurables $\mathcal{L}(\mathbb{R})$.
+> Pour tout $E \in \mathcal{L}(\mathbb{R})$, on a :
+> $$\lambda(E) = \lambda^*(E)$$
+> Le triplet $(\mathbb{R}, \mathcal{L}(\mathbb{R}), \lambda)$ constitue l'espace mesuré fondamental de l'analyse réelle.
 
-La mesure extérieure n'est pas additive sur des ensembles disjoints quelconques. Il est nécessaire de restreindre la classe des ensembles considérés.
+## 3. Démonstrations Fondamentales
 
-**Définition (Ensemble Lebesgue-mesurable) :**
-Un ensemble $E \subset \mathbb{R}$ est dit mesurable au sens de Lebesgue s'il divise additivement tout ensemble test (critère de Carathéodory). Pour toute partie $A \subset \mathbb{R}$ :
-$$\lambda^*(A) = \lambda^*(A \cap E) + \lambda^*(A \setminus E)$$
+Nous allons démontrer rigoureusement qu'un ensemble dénombrable est de mesure nulle au sens de Lebesgue. Ce résultat est le socle de l'intégration moderne.
 
-La classe de ces ensembles, notée $\mathcal{L}(\mathbb{R})$, forme une tribu, qui contient la tribu borélienne $\mathcal{B}(\mathbb{R})$.
+> **Théorème :** Si $A \subset \mathbb{R}$ est un ensemble dénombrable (ou fini), alors $\lambda^*(A) = 0$. Par conséquent, $A$ est mesurable et $\lambda(A) = 0$.
 
-\begin{tikzpicture}[scale=1]
-  \draw[thick] (0,0) ellipse (3cm and 2cm);
-  \node at (-1.5, 1) {$A \cap E$};
-  \node at (1.5, 1) {$A \setminus E$};
+**Démonstration ligne par ligne :**
 
-  \draw[thick, dashed] (0, -2) -- (0, 2);
-  \node[above] at (0, 2) {Frontière de $E$};
-  \node at (-3.5, 2) {Ensemble test $A$};
-\end{tikzpicture}
+Soit $A$ un sous-ensemble dénombrable de $\mathbb{R}$. Puisque $A$ est dénombrable, il existe une bijection (ou surjection) de $\mathbb{N}^*$ dans $A$. Nous pouvons donc énumérer les éléments de $A$ sous la forme d'une suite :
+$$A = \{ x_1, x_2, x_3, \dots, x_n, \dots \}$$
 
-**Définition (Mesure de Lebesgue) :**
-La mesure de Lebesgue, notée $\lambda$, est la restriction de la mesure extérieure $\lambda^*$ à la tribu $\mathcal{L}(\mathbb{R})$. Le triplet $(\mathbb{R}, \mathcal{L}(\mathbb{R}), \lambda)$ constitue l'espace mesuré de Lebesgue standard, et $\lambda$ est une mesure positive, complète et $\sigma$-additive.
+Soit $\epsilon > 0$ un réel arbitrairement petit.
+Nous cherchons à recouvrir $A$ par une suite d'intervalles ouverts $(I_n)_{n \in \mathbb{N}^*}$ dont la somme des longueurs est majorée par $\epsilon$.
 
-**Exemple 4 : Invariance par translation**
-Si $E \in \mathcal{L}(\mathbb{R})$ et $x \in \mathbb{R}$, alors $E + x = \{y + x \mid y \in E\}$ est Lebesgue-mesurable et $\lambda(E + x) = \lambda(E)$. La mesure de Lebesgue est l'unique mesure de Radon invariante par translation sur $\mathbb{R}$ (à une constante multiplicative près), ce qui formalise le concept intuitif de volume invariant.
+Pour chaque entier $n \ge 1$, considérons l'intervalle ouvert $I_n$ centré sur $x_n$ et de longueur $\frac{\epsilon}{2^n}$. Explicitons ses bornes :
+$$I_n = \left] x_n - \frac{\epsilon}{2^{n+1}}, x_n + \frac{\epsilon}{2^{n+1}} \right[$$
+La longueur de $I_n$ est bien calculée par :
+$$\ell(I_n) = \left( x_n + \frac{\epsilon}{2^{n+1}} \right) - \left( x_n - \frac{\epsilon}{2^{n+1}} \right) = \frac{2\epsilon}{2^{n+1}} = \frac{\epsilon}{2^n}$$
 
-**Exemple 5 : Mesure d'un segment**
-En combinant les propriétés, la mesure de Lebesgue d'un segment fermé $\lambda([a, b]) = b - a$, d'un segment ouvert $\lambda(]a, b[) = b - a$, et d'un intervalle semi-ouvert $\lambda([a, b[) = b - a$.
+Par construction, le point $x_n$ appartient à l'intervalle $I_n$. Ainsi, l'ensemble $A$ est totalement inclus dans l'union de ces intervalles :
+$$A \subset \bigcup_{n=1}^{+\infty} I_n$$
 
-**Exemple 6 : Ensembles pathologiques**
-Il existe des parties de $\mathbb{R}$ qui ne sont pas Lebesgue-mesurables (nécessitant l'Axiome du Choix pour leur construction, tel l'ensemble de Vitali). L'existence de tels ensembles motive la restriction imposée par le critère de Carathéodory. L'ensemble de Cantor est un exemple remarquable d'ensemble non dénombrable, compact, d'intérieur vide, mais de mesure de Lebesgue nulle.
+Par définition de la mesure extérieure comme infimum des sommes des longueurs des recouvrements, nous avons l'inégalité de majoration :
+$$\lambda^*(A) \le \sum_{n=1}^{+\infty} \ell(I_n)$$
 
-# Démonstrations
+Substituons l'expression de la longueur :
+$$\lambda^*(A) \le \sum_{n=1}^{+\infty} \frac{\epsilon}{2^n}$$
+On peut factoriser $\epsilon$ car il est indépendant de l'indice de sommation $n$ :
+$$\lambda^*(A) \le \epsilon \sum_{n=1}^{+\infty} \frac{1}{2^n}$$
 
-**Démonstration : L'ensemble de Cantor est de mesure de Lebesgue nulle**
-Construisons l'ensemble triadique de Cantor $C$.
-Soit $C_0 = [0, 1]$. On a $\lambda(C_0) = 1$.
-Étape 1 : On retire le tiers central ouvert. $C_1 = [0, \frac{1}{3}] \cup [\frac{2}{3}, 1]$.
-La mesure est $\lambda(C_1) = \lambda([0, \frac{1}{3}]) + \lambda([\frac{2}{3}, 1]) = \frac{1}{3} + \frac{1}{3} = \frac{2}{3}$.
-Étape $n$ : L'ensemble $C_n$ est la réunion de $2^n$ intervalles fermés disjoints, chacun de longueur $(1/3)^n$.
-Par additivité, $\lambda(C_n) = 2^n \times \left(\frac{1}{3}\right)^n = \left(\frac{2}{3}\right)^n$.
-L'ensemble de Cantor est $C = \bigcap_{n=0}^\infty C_n$.
-Puisque $(C_n)$ est une suite décroissante d'ensembles mesurables et $\lambda(C_0) < \infty$, la continuité décroissante de la mesure donne :
-$$\lambda(C) = \lim_{n \to \infty} \lambda(C_n) = \lim_{n \to \infty} \left(\frac{2}{3}\right)^n = 0$$
-L'ensemble de Cantor est donc non dénombrable (en bijection avec $\{0, 1\}^{\mathbb{N}}$) mais de mesure nulle. C'est une structure fractale fondamentale.
+Reconnaissons la somme d'une série géométrique de raison $q = \frac{1}{2}$, dont le premier terme (pour $n=1$) est $\frac{1}{2}$. La somme de cette série classique est connue :
+$$\sum_{n=1}^{+\infty} \left(\frac{1}{2}\right)^n = \frac{\frac{1}{2}}{1 - \frac{1}{2}} = 1$$
 
-# Applications
+Nous obtenons donc :
+$$\lambda^*(A) \le \epsilon \times 1 = \epsilon$$
 
-La formalisation de la mesure de Lebesgue est un prérequis incontournable pour des fondations solides en probabilités et en apprentissage statistique (Machine Learning).
+Puisque la mesure extérieure est par définition positive ou nulle, nous avons :
+$$0 \le \lambda^*(A) \le \epsilon$$
+Cette double inégalité étant vraie pour tout $\epsilon > 0$, la seule possibilité logique en passant à la limite $\epsilon \to 0$ est que :
+$$\lambda^*(A) = 0$$
 
-- **Espaces de probabilité et variables aléatoires :** En théorie des probabilités (Axiomatisation de Kolmogorov), l'espace fondamental $(\Omega, \mathcal{F}, \mathbb{P})$ s'appuie structurellement sur la théorie de la mesure. Pour les variables aléatoires continues réelles, la mesure de probabilité s'exprime par intégration (au sens de Lebesgue) d'une fonction de densité par rapport à la mesure de Lebesgue $\lambda$.
-- **Garanties de convergence en Apprentissage :** Dans l'apprentissage PAC (Probably Approximately Correct), les théorèmes de convergence du risque empirique (Lois fortes des grands nombres, inégalités de concentration) nécessitent que les fonctions de perte soient mesurables. La robustesse de la théorie de la mesure sous-tend la validité des bornes de généralisation.
-- **Réseaux Génératifs Adversariaux (GANs) :** Le support de la distribution des images naturelles plonge dans un espace de très haute dimension (ex: un million de pixels), mais réside sur une variété (manifold) de dimension intrinsèque beaucoup plus faible. L'ensemble des images possibles a donc une mesure de Lebesgue nulle dans l'espace ambiant. Cette propriété explique l'explosion des divergences f-séparables et a motivé l'introduction de la distance de Wasserstein (Transport Optimal) qui se fonde sur des mesures plus complexes.
+Enfin, un ensemble de mesure extérieure nulle satisfait trivialement le critère de Carathéodory (puisque pour tout ensemble test $E$, $\lambda^*(E \cap A) = 0$ et $\lambda^*(E \cap A^c) \le \lambda^*(E)$), donc $A \in \mathcal{L}(\mathbb{R})$ et $\lambda(A) = 0$. $\blacksquare$
+
+## 4. Répercussions en Probabilités et Intelligence Artificielle
+
+La construction formelle de la mesure de Lebesgue n'est pas un artéfact de mathématiciens en quête d'abstraction ; c'est le langage natif des variables aléatoires continues, au cœur du Machine Learning et de l'IA moderne.
+
+**Densités de Probabilité (PDF) et Variables Aléatoires Continues :**
+Lorsqu'un réseau de neurones modélise l'incertitude via une loi de probabilité continue (comme les Variational Autoencoders ou les modèles de diffusion), l'espace sous-jacent est muni de la mesure de Lebesgue. On dit qu'une variable aléatoire réelle $X$ admet une densité $f$ si pour tout sous-ensemble borélien $B$ :
+$$P(X \in B) = \int_B f(x) \, d\lambda(x)$$
+C'est précisément l'intégrale par rapport à la mesure de Lebesgue $\lambda$. La certitude que la mesure d'un point isolé ou d'un ensemble dénombrable est nulle explique pourquoi la probabilité de tirer *exactement* une valeur précise (par exemple $P(X=0.42)$) pour une loi continue est rigoureusement zéro.
+
+**Supports en Manifold Learning et GANs :**
+Dans la théorie des Generative Adversarial Networks (GANs), on suppose souvent que les données d'apprentissage (des images haute résolution en dimension $N = 1024 \times 1024 \times 3$) ne remplissent pas tout l'espace $\mathbb{R}^N$, mais se trouvent sur une sous-variété de dimension intrinsèque beaucoup plus faible $d \ll N$. Par rapport à la mesure de Lebesgue en dimension $N$, cette sous-variété a une mesure nulle. Cette absence d'intersection en termes de mesure de Lebesgue entre la distribution générée et la distribution réelle est la cause mathématique profonde du phénomène d'évanouissement du gradient (vanishing gradient) lorsque l'on utilise des métriques de divergence statistiques basiques, nécessitant alors le recours à la distance de Wasserstein (Optimal Transport) qui ne dépend pas de l'existence d'une densité par rapport à la mesure de Lebesgue sur l'espace complet.

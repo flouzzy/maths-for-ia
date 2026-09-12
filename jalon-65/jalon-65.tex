@@ -1,0 +1,669 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1
+}
+
+\title{\Huge JALON 65 : FONCTIONS MESURABLES \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+\section{Introduction}
+
+La théorie de l'intégration nécessite une classe de fonctions pour lesquelles la notion d'aire sous la courbe (ou d'intégrale) ait un sens rigoureux par rapport à une mesure donnée. Si l'intégrale de Riemann s'appuie sur la subdivision de l'espace de départ (l'axe des abscisses), l'intégrale de Lebesgue procède par une subdivision de l'espace d'arrivée (l'axe des ordonnées). Cette inversion de perspective impose que l'image réciproque d'un intervalle de l'espace d'arrivée soit un ensemble dont on sait mesurer la taille dans l'espace de départ.
+
+Ainsi émerge le concept de fonction mesurable. Une fonction est dite mesurable si elle préserve la structure mesurable : elle transporte la tribu d'arrivée vers la tribu de départ par image réciproque. Cette condition garantit l'absence de paradoxes lors de la quantification des probabilités et le calcul des espérances.
+
+\section{Définitions, Théorèmes et Exemples}
+
+\subsection*{Définition formelle de la mesurabilité}
+
+Soient $(X, \mathcal{F})$ et $(Y, \mathcal{G})$ deux espaces mesurables, où $\mathcal{F}$ et $\mathcal{G}$ sont des tribus sur $X$ et $Y$ respectivement.
+
+Une application $f : X \to Y$ est dite mesurable de $(X, \mathcal{F})$ dans $(Y, \mathcal{G})$, ou simplement $\mathcal{F}/\mathcal{G}$-mesurable, si pour tout ensemble $B \in \mathcal{G}$, son image réciproque par $f$ appartient à $\mathcal{F}$ :
+$$ \forall B \in \mathcal{G}, \quad f^{-1}(B) = \{ x \in X \mid f(x) \in B \} \in \mathcal{F} $$
+
+Dans le cas fondamental où $Y = \mathbb{R}$ muni de sa tribu borélienne $\mathcal{B}(\mathbb{R})$, on dit que $f$ est une fonction borélienne (si $X$ est aussi topologique et $\mathcal{F}$ est sa tribu borélienne) ou plus généralement simplement mesurable. La définition se réduit à : pour tout intervalle $I \subset \mathbb{R}$, $f^{-1}(I) \in \mathcal{F}$.
+
+\subsection*{Exemples concrets et immédiats}
+
+1. \textbf{Fonction constante :} Soit $c \in Y$. La fonction $f(x) = c$ pour tout $x \in X$ est mesurable. Pour tout $B \in \mathcal{G}$, $f^{-1}(B)$ est soit $X$ (si $c \in B$), soit $\emptyset$ (si $c \notin B$). Comme $X, \emptyset \in \mathcal{F}$, $f$ est mesurable.
+2. \textbf{Fonction indicatrice :} Pour un sous-ensemble $A \subset X$, sa fonction indicatrice $\mathbf{1}_A : X \to \mathbb{R}$ est définie par $\mathbf{1}_A(x) = 1$ si $x \in A$ et $0$ sinon. $\mathbf{1}_A$ est mesurable si et seulement si $A \in \mathcal{F}$. En effet, $\mathbf{1}_A^{-1}(\{1\}) = A$, qui doit donc être dans la tribu $\mathcal{F}$.
+3. \textbf{Fonction continue :} Si $X, Y$ sont des espaces topologiques munis de leurs tribus boréliennes respectives $\mathcal{B}(X)$ et $\mathcal{B}(Y)$, toute application continue $f : X \to Y$ est mesurable. L'image réciproque d'un ouvert de $Y$ est un ouvert de $X$, et les ouverts engendrent les tribus boréliennes.
+4. \textbf{Fonction monotone :} Toute fonction croissante ou décroissante $f : \mathbb{R} \to \mathbb{R}$ est mesurable pour la tribu borélienne. L'image réciproque d'un intervalle du type $]a, +\infty[$ est un intervalle ou une demi-droite, qui est un borélien.
+5. \textbf{Fonction en escalier :} La fonction signe $\text{sgn}(x)$ (qui vaut $1$ si $x > 0$, $0$ si $x = 0$, et $-1$ si $x < 0$) est une fonction mesurable. L'image réciproque de tout borélien est une combinaison d'intervalles comme $]0, +\infty[$, $\{0\}$ et $]-\infty, 0[$.
+6. \textbf{Fonction de Dirichlet :} La fonction indicatrice des rationnels $f = \mathbf{1}_{\mathbb{Q}}$ est borélienne. $\mathbb{Q}$ est une union dénombrable de singletons, donc un borélien.
+7. \textbf{Maximum de deux fonctions mesurables :} Si $f, g$ sont mesurables, $h(x) = \max(f(x), g(x))$ l'est. Par exemple, si $f(x) = x$ et $g(x) = 0$, la fonction partie positive $x^+$ (ReLU en IA) est mesurable.
+8. \textbf{Fonction partie entière :} La fonction $f(x) = \lfloor x \rfloor$ est constante par morceaux et borélienne. $f^{-1}(\{k\}) = [k, k+1[$ qui est un borélien.
+9. \textbf{Distance à un fermé :} Soit $F \subset \mathbb{R}^n$ fermé. La fonction $x \mapsto d(x, F) = \inf_{y \in F} \|x - y\|$ est continue (1-lipschitzienne) donc borélienne.
+10. \textbf{Pathologie (Fonction non mesurable) :} Soit $V$ l'ensemble de Vitali (un ensemble non mesurable au sens de Lebesgue). La fonction indicatrice $\mathbf{1}_V$ n'est pas mesurable, car $\mathbf{1}_V^{-1}(\{1\}) = V \notin \mathcal{L}(\mathbb{R})$.
+
+\subsection*{Opérations sur les fonctions mesurables}
+
+Soient $f, g : (X, \mathcal{F}) \to (\mathbb{R}, \mathcal{B}(\mathbb{R}))$ deux fonctions mesurables.
+Les opérations algébriques usuelles préservent la mesurabilité. Les fonctions $f+g$, $fg$, $|f|$, $\max(f, g)$ et $\min(f, g)$ sont mesurables.
+
+\textbf{Théorème de stabilité par passage à la limite :}
+Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables de $(X, \mathcal{F})$ dans $\overline{\mathbb{R}}$. Alors, les fonctions suivantes sont mesurables :
+$$ \sup_{n} f_n, \quad \inf_{n} f_n, \quad \limsup_{n} f_n, \quad \liminf_{n} f_n $$
+Si la suite converge simplement, sa limite $\lim_{n \to \infty} f_n$ est mesurable.
+
+
+\textbf{Exemple concret immédiat (Limite d'indicatrices) :}
+Considérons la suite de fonctions sur $\mathbb{R}$ définie par $f_n(x) = \mathbf{1}_{[-1/n, 1/n]}(x)$.
+Chaque $f_n$ est la fonction indicatrice d'un segment, qui est un borélien fermé. Donc chaque $f_n$ est mesurable.
+La limite simple de cette suite lorsque $n \to \infty$ est $f(x) = \lim_{n \to \infty} f_n(x)$.
+Pour $x = 0$, $f_n(0) = 1$ pour tout $n$, donc $f(0) = 1$.
+Pour $x \neq 0$, il existe un entier $N$ tel que pour tout $n \geq N$, $1/n < |x|$, donc $x \notin [-1/n, 1/n]$ et $f_n(x) = 0$. Ainsi $f(x) = 0$.
+En conclusion, la limite simple $f$ est la fonction indicatrice du singleton $\{0\}$ : $f = \mathbf{1}_{\{0\}}$.
+Le singleton $\{0\}$ étant un borélien fermé, $f$ est bien une fonction mesurable.
+
+
+\section{Demonstrations}
+
+\subsection*{Démonstration de la mesurabilité du supremum}
+
+Nous devons montrer que si $f_n : X \to \overline{\mathbb{R}}$ sont mesurables, alors $h = \sup_n f_n$ est mesurable.
+
+1. La tribu borélienne sur $\overline{\mathbb{R}}$ est engendrée par les intervalles de la forme $]a, +\infty]$ pour tout $a \in \mathbb{R}$. Il suffit de montrer que $h^{-1}(]a, +\infty]) \in \mathcal{F}$.
+2. Par définition du supremum, $h(x) > a$ si et seulement s'il existe au moins un entier $n \in \mathbb{N}$ tel que $f_n(x) > a$.
+3. Nous pouvons exprimer l'image réciproque en termes d'opérations ensemblistes :
+   $$ h^{-1}(]a, +\infty]) = \{ x \in X \mid \sup_n f_n(x) > a \} = \bigcup_{n \in \mathbb{N}} \{ x \in X \mid f_n(x) > a \} $$
+   $$ h^{-1}(]a, +\infty]) = \bigcup_{n \in \mathbb{N}} f_n^{-1}(]a, +\infty]) $$
+4. Puisque chaque $f_n$ est mesurable, $f_n^{-1}(]a, +\infty]) \in \mathcal{F}$.
+5. Comme $\mathcal{F}$ est une tribu, elle est stable par union dénombrable. Ainsi, $h^{-1}(]a, +\infty]) \in \mathcal{F}$.
+La fonction $h = \sup_n f_n$ est donc mesurable.
+
+\section{Approximation par des fonctions simples}
+
+Une \textbf{fonction simple} (ou étagée) est une combinaison linéaire finie d'indicatrices d'ensembles mesurables :
+$$ \varphi(x) = \sum_{i=1}^k a_i \mathbf{1}_{A_i}(x) $$
+où $a_i \in \mathbb{R}$ et $A_i \in \mathcal{F}$. Les ensembles $A_i$ peuvent toujours être choisis disjoints, formant une partition de $X$.
+
+\textbf{Théorème fondamental d'approximation :}
+Toute fonction mesurable positive $f : X \to [0, +\infty]$ est la limite simple d'une suite croissante $(\varphi_n)$ de fonctions simples positives :
+$$ 0 \leq \varphi_1 \leq \varphi_2 \leq \dots \leq f, \quad \text{et} \quad \lim_{n \to \infty} \varphi_n(x) = f(x) \quad \forall x \in X $$
+
+\textbf{Construction de la suite d'approximation :}
+Pour chaque entier $n \geq 1$, on partitionne l'axe des ordonnées $[0, n]$ en intervalles de longueur $1/2^n$. On définit :
+$$ E_{n,k} = f^{-1}\left( \left[ \frac{k}{2^n}, \frac{k+1}{2^n} \right[ \right) \quad \text{pour } k=0, \dots, n2^n-1 $$
+$$ F_n = f^{-1}([n, +\infty]) $$
+La fonction simple approchante est définie par :
+$$ \varphi_n = \sum_{k=0}^{n2^n-1} \frac{k}{2^n} \mathbf{1}_{E_{n,k}} + n \mathbf{1}_{F_n} $$
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % Axes
+    \draw[->, thick] (-0.2, 0) -- (4, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.2) -- (0, 3) node[above] {$f(x)$};
+
+    % Fonction continue
+    \draw[thick, blue, smooth, domain=0:3.5] plot (\x, {0.2*exp(\x*0.6)}) node[right] {$f$};
+
+    % Intervalles sur Y
+    \draw[dashed, gray] (0, 0.5) -- (3.5, 0.5);
+    \draw[dashed, gray] (0, 1.0) -- (3.5, 1.0);
+    \draw[dashed, gray] (0, 1.5) -- (3.5, 1.5);
+    \draw[dashed, gray] (0, 2.0) -- (3.5, 2.0);
+
+    \node[left] at (0, 0.5) {$\frac{1}{2^n}$};
+    \node[left] at (0, 1.0) {$\frac{2}{2^n}$};
+    \node[left] at (0, 1.5) {$\frac{3}{2^n}$};
+    \node[left] at (0, 2.0) {$\frac{4}{2^n}$};
+
+    % Rectangles d'approximation
+    \draw[fill=red, opacity=0.3] (0, 0) rectangle (1.52, 0.5);
+    \draw[fill=red, opacity=0.3] (1.52, 0) rectangle (2.68, 1.0);
+    \draw[fill=red, opacity=0.3] (2.68, 0) rectangle (3.35, 1.5);
+
+    \draw[thick, red] (0, 0) -- (1.52, 0);
+    \draw[thick, red] (1.52, 0.5) -- (2.68, 0.5);
+    \draw[thick, red] (2.68, 1.0) -- (3.35, 1.0);
+    \draw[thick, red] (3.35, 1.5) -- (3.5, 1.5);
+
+    \node[red] at (2.5, 0.25) {$\varphi_n$};
+\end{tikzpicture}
+\end{center}
+
+\section{Applications en Physique, Logique et IA}
+
+Dans la théorie des probabilités et l'intelligence artificielle, l'espace des données ou l'espace probabilisé de base $(\Omega, \mathcal{F}, P)$ représente les échantillons possibles.
+Une variable aléatoire n'est rien d'autre qu'une application mesurable $X : \Omega \to \mathbb{R}$. La mesurabilité est la propriété structurelle minimale permettant de calculer la probabilité qu'un algorithme prenne une certaine décision : $P(X \in B) = P(X^{-1}(B))$.
+
+Lors de l'apprentissage profond, un réseau de neurones représente une fonction $f_{\theta} : \mathbb{R}^d \to \mathbb{R}$. Composé d'opérations matricielles et de fonctions d'activation continues (ReLU, Sigmoïde), $f_{\theta}$ est continu, donc strictement mesurable. Cela permet de définir le risque espéré (l'intégrale de la fonction de perte) $\mathcal{R}(f_{\theta}) = \mathbb{E}[L(f_{\theta}(X), Y)]$. Si le modèle n'était pas mesurable, ce risque théorique serait indéfinissable. De plus, la fonction de décision d'un classifieur $h(x) = \mathbf{1}_{f_{\theta}(x) > 0}$ est une fonction étagée construite à partir du modèle continu $f_{\theta}$, et la préservation de la mesurabilité par composition et indicatrice garantit la validité théorique du cadre PAC (Probably Approximately Correct).
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Mesurabilité de la fonction indicatrice \quad $\bigstar\star\star\star\star$}
+
+Soit $(X, \mathcal{F})$ un espace mesurable et $A \subset X$. Démontrez que la fonction indicatrice $\mathbf{1}_A : X \to \mathbb{R}$ est mesurable si et seulement si $A \in \mathcal{F}$.
+
+\subsection*{Correction Détaillée}
+
+1. \textbf{Sens ($\implies$) :}
+   Supposons que $\mathbf{1}_A$ soit mesurable de $(X, \mathcal{F})$ vers $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$.
+   Considérons l'ensemble $B = \{1\}$. Puisque $\{1\}$ est un ensemble fermé de $\mathbb{R}$, c'est un borélien, donc $B \in \mathcal{B}(\mathbb{R})$.
+   Par définition de la mesurabilité, l'image réciproque $\mathbf{1}_A^{-1}(B)$ doit appartenir à $\mathcal{F}$.
+   Or, par définition de la fonction indicatrice, $\mathbf{1}_A(x) = 1$ si et seulement si $x \in A$.
+   Ainsi, $\mathbf{1}_A^{-1}(\{1\}) = A$.
+   Conclusion : $A \in \mathcal{F}$.
+
+2. \textbf{Sens ($\impliedby$) :}
+   Supposons que $A \in \mathcal{F}$. Nous devons prouver que pour tout borélien $B \in \mathcal{B}(\mathbb{R})$, l'image réciproque $\mathbf{1}_A^{-1}(B) \in \mathcal{F}$.
+   La fonction $\mathbf{1}_A$ ne prend que les valeurs $0$ et $1$. Ainsi, pour tout sous-ensemble $B$ de $\mathbb{R}$, il n'y a que 4 cas possibles pour son intersection avec $\{0, 1\}$ :
+   - Cas 1 : $1 \in B$ et $0 \notin B$. Alors $\mathbf{1}_A^{-1}(B) = A$. Comme $A \in \mathcal{F}$ par hypothèse, c'est vérifié.
+   - Cas 2 : $0 \in B$ et $1 \notin B$. Alors $\mathbf{1}_A^{-1}(B) = X \setminus A = A^c$. Comme $\mathcal{F}$ est une tribu, le complémentaire d'un de ses éléments lui appartient, donc $A^c \in \mathcal{F}$.
+   - Cas 3 : $0 \in B$ et $1 \in B$. Alors $\mathbf{1}_A^{-1}(B) = X$. Or l'espace total $X$ appartient toujours à une tribu.
+   - Cas 4 : $0 \notin B$ et $1 \notin B$. Alors $\mathbf{1}_A^{-1}(B) = \emptyset$. L'ensemble vide appartient toujours à une tribu.
+   Dans tous les cas possibles, $\mathbf{1}_A^{-1}(B) \in \mathcal{F}$.
+   Conclusion : La fonction $\mathbf{1}_A$ est mesurable.
+
+
+\vspace{0.5cm}
+
+\subsection*{Mesurabilité d'une fonction constante \quad $\bigstar\star\star\star\star$}
+
+Soit $(X, \mathcal{F})$ un espace mesurable. Soit $c \in \mathbb{R}$. Démontrez formellement que la fonction constante $f(x) = c$ pour tout $x \in X$ est mesurable.
+
+\subsection*{Correction Détaillée}
+
+Soit $B \in \mathcal{B}(\mathbb{R})$ un ensemble borélien quelconque de $\mathbb{R}$.
+Par définition de la mesurabilité, il faut montrer que $f^{-1}(B) = \{x \in X \mid f(x) \in B\} \in \mathcal{F}$.
+
+Puisque $f(x) = c$ pour tout $x \in X$, la valeur de $f(x)$ ne dépend pas de $x$. Nous devons distinguer deux cas selon que $c$ appartient ou non à $B$ :
+
+1. \textbf{Cas 1 : $c \in B$.}
+   Puisque $f(x) = c$ pour tout $x$, et que $c \in B$, alors pour tout $x \in X$, la condition $f(x) \in B$ est vérifiée.
+   Ainsi, $f^{-1}(B) = X$.
+   Par définition d'une tribu, $X \in \mathcal{F}$.
+
+2. \textbf{Cas 2 : $c \notin B$.}
+   Puisque $f(x) = c$ pour tout $x$, et que $c \notin B$, il n'existe aucun $x \in X$ tel que $f(x) \in B$.
+   Ainsi, $f^{-1}(B) = \emptyset$.
+   Par définition d'une tribu, $\emptyset \in \mathcal{F}$.
+
+Dans tous les cas possibles, l'image réciproque de $B$ par $f$ appartient à la tribu $\mathcal{F}$.
+Conclusion : La fonction constante $f$ est strictement mesurable.
+
+
+\vspace{0.5cm}
+
+\subsection*{Mesurabilité par composition (continue $\circ$ mesurable) \quad $\bigstar\bigstar\star\star\star$}
+
+Soit $(X, \mathcal{F})$ un espace mesurable. Soit $f : X \to \mathbb{R}$ une fonction mesurable. Soit $g : \mathbb{R} \to \mathbb{R}$ une fonction continue.
+Démontrez que la composition $h = g \circ f : X \to \mathbb{R}$ est mesurable.
+
+\subsection*{Correction Détaillée}
+
+Pour prouver que $h$ est mesurable, il suffit de montrer que pour tout ouvert $O \subset \mathbb{R}$, son image réciproque $h^{-1}(O) \in \mathcal{F}$. (En effet, la tribu borélienne $\mathcal{B}(\mathbb{R})$ est engendrée par les ouverts).
+
+Soit $O$ un ouvert de $\mathbb{R}$.
+Calculons l'image réciproque de $O$ par $h$ :
+$$ h^{-1}(O) = (g \circ f)^{-1}(O) = f^{-1}(g^{-1}(O)) $$
+
+Analysons cet ensemble pas à pas :
+1. Puisque $g$ est continue et $O$ est un ouvert de $\mathbb{R}$, par définition topologique de la continuité, l'image réciproque $g^{-1}(O)$ est un ouvert de $\mathbb{R}$.
+2. Tout ouvert de $\mathbb{R}$ est un borélien. Donc $g^{-1}(O) \in \mathcal{B}(\mathbb{R})$. Posons $B = g^{-1}(O)$.
+3. Nous devons évaluer $f^{-1}(B)$ où $B \in \mathcal{B}(\mathbb{R})$.
+4. Puisque $f$ est une fonction mesurable (par hypothèse), l'image réciproque de tout borélien appartient à $\mathcal{F}$. Ainsi, $f^{-1}(B) \in \mathcal{F}$.
+
+Par conséquent, $h^{-1}(O) = f^{-1}(g^{-1}(O)) \in \mathcal{F}$.
+Puisque cela est vrai pour tout ouvert $O$, la composition $h = g \circ f$ est mesurable.
+
+
+\vspace{0.5cm}
+
+\subsection*{La fonction maximum de deux fonctions mesurables \quad $\bigstar\bigstar\star\star\star$}
+
+Soient $f$ et $g$ deux fonctions mesurables définies sur un espace mesurable $(X, \mathcal{F})$ et à valeurs dans $\mathbb{R}$.
+Démontrez que la fonction $h(x) = \max(f(x), g(x))$ est mesurable.
+
+\subsection*{Correction Détaillée}
+
+Pour montrer que $h$ est mesurable, il suffit de prouver que pour tout réel $a \in \mathbb{R}$, l'ensemble $h^{-1}(]a, +\infty[) = \{x \in X \mid h(x) > a\} \in \mathcal{F}$.
+
+Analysons la condition : $h(x) > a \iff \max(f(x), g(x)) > a$.
+Le maximum de deux nombres est strictement supérieur à $a$ si et seulement si l'un au moins des deux nombres est strictement supérieur à $a$.
+Par conséquent, logiquement :
+$$ \max(f(x), g(x)) > a \iff (f(x) > a) \text{ ou } (g(x) > a) $$
+
+Traduisons cette équivalence logique en termes ensemblistes :
+$$ \{x \in X \mid h(x) > a\} = \{x \in X \mid f(x) > a\} \cup \{x \in X \mid g(x) > a\} $$
+Soit :
+$$ h^{-1}(]a, +\infty[) = f^{-1}(]a, +\infty[) \cup g^{-1}(]a, +\infty[) $$
+
+Analysons les propriétés des ensembles impliqués :
+1. Puisque $f$ est mesurable, $f^{-1}(]a, +\infty[) \in \mathcal{F}$.
+2. Puisque $g$ est mesurable, $g^{-1}(]a, +\infty[) \in \mathcal{F}$.
+3. Par définition (Axiome 3), une tribu est stable par union. Donc l'union de ces deux ensembles appartient à $\mathcal{F}$.
+
+Conclusion : Pour tout $a$, $h^{-1}(]a, +\infty[) \in \mathcal{F}$, ce qui prouve que $h = \max(f, g)$ est mesurable.
+
+
+\vspace{0.5cm}
+
+\subsection*{Mesurabilité de la limite simple \quad $\bigstar\bigstar\bigstar\star\star$}
+
+Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables définies sur un espace $(X, \mathcal{F})$ à valeurs dans $\mathbb{R}$.
+On suppose que la suite converge simplement vers une fonction $f : X \to \mathbb{R}$, c'est-à-dire que pour tout $x \in X$, $\lim_{n \to \infty} f_n(x) = f(x)$.
+Démontrez que la limite $f$ est une fonction mesurable.
+
+\subsection*{Correction Détaillée}
+
+L'idée est d'exprimer la limite simple à l'aide des opérateurs $\limsup$ et $\liminf$, qui se construisent par des infimums et suprémums dénombrables.
+
+1. Puisque la suite $(f_n)$ converge simplement, on sait que pour tout $x \in X$ :
+   $$ f(x) = \lim_{n \to \infty} f_n(x) = \limsup_{n \to \infty} f_n(x) $$
+
+2. Par définition géométrique et analytique de la limite supérieure :
+   $$ \limsup_{n \to \infty} f_n(x) = \inf_{k \geq 0} \left( \sup_{n \geq k} f_n(x) \right) $$
+
+3. Considérons d'abord la suite de fonctions $g_k(x) = \sup_{n \geq k} f_n(x)$.
+   Le supremum d'une suite (finie ou dénombrable) de fonctions mesurables est mesurable. En effet :
+   $$ g_k^{-1}(]a, +\infty]) = \bigcup_{n \ge k} f_n^{-1}(]a, +\infty]) $$
+   L'union dénombrable d'ensembles mesurables étant mesurable, $g_k$ est mesurable pour tout $k$.
+
+4. Ensuite, on considère l'infimum infini $f(x) = \inf_{k \geq 0} g_k(x)$.
+   L'infimum d'une suite de fonctions mesurables est également mesurable. La preuve est symétrique :
+   $$ f^{-1}([-\infty, a[) = \bigcup_{k \geq 0} g_k^{-1}([-\infty, a[) $$
+   L'union dénombrable d'ensembles mesurables étant mesurable, $f$ est mesurable.
+
+Conclusion : Toute limite simple d'une suite de fonctions mesurables reste mesurable, ce qui est une propriété fondamentale et puissante (non vraie pour la continuité).
+
+
+\vspace{0.5cm}
+
+\subsection*{Fonction monotone et mesurabilité \quad $\bigstar\bigstar\bigstar\star\star$}
+
+Démontrez que toute fonction croissante $f : \mathbb{R} \to \mathbb{R}$ est borélienne.
+
+\subsection*{Correction Détaillée}
+
+Soit $f : \mathbb{R} \to \mathbb{R}$ une fonction croissante (c'est-à-dire $x \leq y \implies f(x) \leq f(y)$).
+Il suffit de démontrer que pour tout réel $a$, l'ensemble $A_a = f^{-1}(]a, +\infty[) = \{x \in \mathbb{R} \mid f(x) > a\}$ est un borélien.
+
+Soit $a \in \mathbb{R}$. Considérons l'ensemble $A_a$.
+Deux cas peuvent se présenter :
+1. $A_a$ est vide (si $f(x) \leq a$ pour tout $x$). Dans ce cas, $A_a = \emptyset \in \mathcal{B}(\mathbb{R})$.
+2. $A_a$ n'est pas vide. Il existe donc au moins un point $x_0$ tel que $f(x_0) > a$.
+   Puisque $f$ est croissante, pour tout $x \geq x_0$, on a $f(x) \geq f(x_0) > a$.
+   Par conséquent, si un point appartient à $A_a$, tous les points à sa droite appartiennent également à $A_a$.
+   Géométriquement, cela implique que l'ensemble $A_a$ est nécessairement soit un intervalle semi-ouvert $]c, +\infty[$, soit un intervalle fermé $[c, +\infty[$ (où $c = \inf A_a$, pouvant valoir $-\infty$).
+
+Dans tous les cas possibles, $A_a$ est un intervalle.
+Tout intervalle de $\mathbb{R}$ appartient à la tribu de Borel $\mathcal{B}(\mathbb{R})$.
+Donc, l'image réciproque par $f$ de tout intervalle du type $]a, +\infty[$ est un borélien.
+Puisque ces demi-droites engendrent la tribu borélienne, on en déduit que $f$ est borélienne.
+
+
+\vspace{0.5cm}
+
+\subsection*{L'ensemble des points de convergence \quad $\bigstar\bigstar\bigstar\star\star$}
+
+Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables sur $(X, \mathcal{F})$.
+Montrez que l'ensemble de convergence $E = \{x \in X \mid \lim_{n \to \infty} f_n(x) \text{ existe dans } \mathbb{R}\}$ est un ensemble mesurable ($E \in \mathcal{F}$).
+
+\subsection*{Correction Détaillée}
+
+Une suite $(u_n)$ converge dans $\mathbb{R}$ si et seulement si c'est une suite de Cauchy.
+Nous allons traduire le critère de Cauchy en une formule logique purement dénombrable pour utiliser les axiomes de la tribu.
+La suite $(f_n(x))$ est de Cauchy si :
+$$ \forall \varepsilon > 0, \exists N \in \mathbb{N}, \forall p, q \ge N, |f_p(x) - f_q(x)| \le \varepsilon $$
+
+Pour éviter la non-dénombrabilité du quantificateur $\forall \varepsilon > 0$, on se restreint aux rationnels ou simplement aux $\varepsilon_k = \frac{1}{k}$ avec $k \in \mathbb{N}^*$. L'équivalence logique devient :
+$$ x \in E \iff \forall k \ge 1, \exists N \in \mathbb{N}, \forall p \ge N, \forall q \ge N, |f_p(x) - f_q(x)| < \frac{1}{k} $$
+
+Traduisons méticuleusement cela en termes d'ensembles :
+- Le "pour tout $p \ge N, q \ge N$" devient une intersection dénombrable : $\bigcap_{p, q \ge N}$
+- L'expression $|f_p(x) - f_q(x)| < \frac{1}{k}$ décrit un ensemble mesurable car $f_p, f_q$ sont mesurables et leur différence l'est. Notons cet ensemble $A_{p,q,k} = (f_p - f_q)^{-1}(]-\frac{1}{k}, \frac{1}{k}[) \in \mathcal{F}$.
+- Le "il existe $N$" devient une union dénombrable : $\bigcup_{N \in \mathbb{N}}$
+- Le "pour tout $k \ge 1$" devient une intersection dénombrable : $\bigcap_{k \ge 1}$
+
+On synthétise :
+$$ E = \bigcap_{k=1}^{\infty} \bigcup_{N=0}^{\infty} \bigcap_{p=N}^{\infty} \bigcap_{q=N}^{\infty} \left\{ x \in X \mid |f_p(x) - f_q(x)| < \frac{1}{k} \right\} $$
+
+Puisque les tribus sont stables par intersection dénombrable et union dénombrable, cette vaste combinaison d'ensembles mesurables reste mesurable. Donc $E \in \mathcal{F}$.
+
+
+\vspace{0.5cm}
+
+\subsection*{Définition alternative de la mesurabilité \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+Soit $(X, \mathcal{F})$ un espace mesurable. Soit $f : X \to \mathbb{R}$.
+Montrez que $f$ est mesurable si et seulement si, pour tout nombre rationnel $q \in \mathbb{Q}$, l'ensemble $f^{-1}(]q, +\infty[) \in \mathcal{F}$.
+
+\subsection*{Correction Détaillée}
+
+1. \textbf{Sens ($\implies$) :}
+   Si $f$ est mesurable, alors pour tout borélien $B$, $f^{-1}(B) \in \mathcal{F}$. Or, pour tout rationnel $q \in \mathbb{Q}$, l'intervalle $]q, +\infty[$ est un borélien. Donc trivialement $f^{-1}(]q, +\infty[) \in \mathcal{F}$.
+
+2. \textbf{Sens ($\impliedby$) :}
+   Supposons que pour tout rationnel $q \in \mathbb{Q}$, $f^{-1}(]q, +\infty[) \in \mathcal{F}$.
+   Nous devons montrer que pour tout réel $a \in \mathbb{R}$, $f^{-1}(]a, +\infty[) \in \mathcal{F}$, car ces intervalles engendrent la tribu borélienne.
+
+   Soit $a \in \mathbb{R}$ un nombre irrationnel.
+   La densité de $\mathbb{Q}$ dans $\mathbb{R}$ implique qu'il existe une suite décroissante de nombres rationnels $(q_n)_{n \in \mathbb{N}}$ qui converge vers $a$ (c'est-à-dire que $q_n > a$ et $q_n \to a$).
+   Plus précisément, on peut approcher l'intervalle strict $]a, +\infty[$ par une union dénombrable d'intervalles stricts aux bornes rationnelles.
+   Pour tout $x > a$, il existe un rationnel $q_n$ tel que $a < q_n < x$. Par conséquent :
+   $$ ]a, +\infty[ = \bigcup_{n \in \mathbb{N}} ]q_n, +\infty[ $$
+
+   Appliquons l'image réciproque, qui commute avec l'union :
+   $$ f^{-1}(]a, +\infty[) = f^{-1}\left(\bigcup_{n \in \mathbb{N}} ]q_n, +\infty[\right) = \bigcup_{n \in \mathbb{N}} f^{-1}(]q_n, +\infty[) $$
+
+   Par hypothèse, chaque ensemble $f^{-1}(]q_n, +\infty[)$ appartient à $\mathcal{F}$.
+   La tribu $\mathcal{F}$ étant stable par union dénombrable, leur réunion appartient également à $\mathcal{F}$.
+   Ainsi $f^{-1}(]a, +\infty[) \in \mathcal{F}$ pour tout réel $a$, ce qui engendre bien la tribu de Borel.
+   $f$ est donc mesurable.
+
+
+\vspace{0.5cm}
+
+\subsection*{Mesurabilité d'une fonction continue par morceaux \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+Démontrez, en utilisant les axiomes de la théorie de la mesure, qu'une fonction définie sur un intervalle $[a,b]$ et continue par morceaux est nécessairement borélienne.
+
+\subsection*{Correction Détaillée}
+
+Soit $f : [a,b] \to \mathbb{R}$ une fonction continue par morceaux.
+Par définition de la continuité par morceaux, il existe une subdivision finie de l'intervalle $[a,b]$ en $n$ points $x_0 = a < x_1 < \dots < x_n = b$ telle que sur chaque intervalle ouvert $I_k = ]x_{k-1}, x_k[$, la restriction $f_{|I_k}$ coïncide avec une fonction continue $g_k : [x_{k-1}, x_k] \to \mathbb{R}$, et $f$ admet des limites à gauche et à droite aux points $x_k$.
+
+Posons $F_k = \{x_0, x_1, \dots, x_n\}$ l'ensemble fini des points de discontinuité potentielle.
+$F_k$ est une union finie de singletons, donc un borélien.
+Les intervalles $I_k$ sont ouverts, donc des boréliens. L'espace complet $[a,b]$ est partitionné par la réunion disjointe $F_k \cup \bigcup_{k=1}^n I_k$.
+
+Soit $B \in \mathcal{B}(\mathbb{R})$ un borélien. Analysons $f^{-1}(B)$ :
+$$ f^{-1}(B) = \{x \in [a,b] \mid f(x) \in B\} $$
+On peut décomposer cet ensemble suivant la partition de notre domaine :
+$$ f^{-1}(B) = \left( \bigcup_{k=1}^n \{x \in I_k \mid f(x) \in B\} \right) \cup \{x \in F_k \mid f(x) \in B\} $$
+$$ f^{-1}(B) = \left( \bigcup_{k=1}^n (f_{|I_k}^{-1}(B)) \right) \cup (F_k \cap f^{-1}(B)) $$
+
+1. L'ensemble $\{x \in F_k \mid f(x) \in B\}$ est un sous-ensemble d'un ensemble fini $F_k$. Tout sous-ensemble fini d'un borélien est un borélien.
+2. Pour chaque intervalle ouvert $I_k$, la restriction $f_{|I_k}$ est continue. Or, toute fonction continue est borélienne. L'image réciproque $f_{|I_k}^{-1}(B)$ est donc l'intersection d'un borélien de la droite avec l'ouvert $I_k$, ce qui est formellement un borélien de $\mathbb{R}$.
+
+Ainsi, $f^{-1}(B)$ est l'union finie de boréliens. C'est donc un borélien.
+Puisque l'image réciproque de tout borélien est un borélien, la fonction $f$ est borélienne.
+
+
+\vspace{0.5cm}
+
+\subsection*{L'invariance par translation est préservée \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+Soit $f : \mathbb{R} \to \mathbb{R}$ une fonction mesurable pour la tribu de Borel. Soit $h \in \mathbb{R}$ un réel.
+Démontrez formellement que la fonction translatée $f_h(x) = f(x - h)$ est également mesurable.
+
+\subsection*{Correction Détaillée}
+
+Soit $f_h : x \mapsto f(x - h)$. On peut la voir comme la composée $f_h = f \circ \tau_h$ où $\tau_h(x) = x - h$ est la fonction de translation.
+
+Pour démontrer que $f_h$ est mesurable, il suffit de démontrer que pour tout borélien $B \in \mathcal{B}(\mathbb{R})$, $f_h^{-1}(B) \in \mathcal{B}(\mathbb{R})$.
+Soit $B \in \mathcal{B}(\mathbb{R})$.
+Calculons l'image réciproque :
+$$ f_h^{-1}(B) = (f \circ \tau_h)^{-1}(B) = \tau_h^{-1}(f^{-1}(B)) $$
+
+1. Puisque $f$ est mesurable, l'ensemble $A = f^{-1}(B)$ est un borélien ($A \in \mathcal{B}(\mathbb{R})$).
+2. Nous devons évaluer $\tau_h^{-1}(A)$.
+   Par définition géométrique : $\tau_h(x) \in A \iff x - h \in A \iff x \in \{y + h \mid y \in A\}$.
+   Donc $\tau_h^{-1}(A) = A + h$ (l'ensemble $A$ translaté de $h$).
+3. Il nous reste à prouver que la translation d'un borélien est un borélien.
+   La tribu borélienne $\mathcal{B}(\mathbb{R})$ est la plus petite tribu contenant tous les ouverts $\mathcal{O}$.
+   La translation $x \mapsto x + h$ est un homéomorphisme (bijection continue d'inverse continu). Par conséquent, l'image d'un ouvert par une translation est un ouvert : si $O \in \mathcal{O}$, alors $O+h \in \mathcal{O}$.
+   Considérons la collection $\mathcal{M} = \{E \subset \mathbb{R} \mid E-h \in \mathcal{B}(\mathbb{R})\}$.
+   On vérifie aisément que $\mathcal{M}$ est une tribu :
+   - $\emptyset - h = \emptyset \in \mathcal{B}(\mathbb{R})$, donc $\emptyset \in \mathcal{M}$.
+   - Stabilité par complémentaire : $(\mathbb{R} \setminus E) - h = \mathbb{R} \setminus (E-h) \in \mathcal{B}(\mathbb{R})$.
+   - Stabilité par union dénombrable : $(\bigcup E_n) - h = \bigcup (E_n - h) \in \mathcal{B}(\mathbb{R})$.
+   Puisque $O-h \in \mathcal{O} \subset \mathcal{B}(\mathbb{R})$ pour tout ouvert $O$, la tribu $\mathcal{M}$ contient tous les ouverts.
+   Or $\mathcal{B}(\mathbb{R})$ est la PLUS PETITE tribu contenant les ouverts, donc $\mathcal{B}(\mathbb{R}) \subset \mathcal{M}$.
+   Cela signifie que pour tout borélien $E \in \mathcal{B}(\mathbb{R})$, son translaté $E+h \in \mathcal{B}(\mathbb{R})$.
+
+Appliqué à $A = f^{-1}(B)$, on conclut que l'ensemble $f_h^{-1}(B) = A + h$ est un borélien.
+Ainsi, $f_h$ est mesurable.
+
+
+\vspace{0.5cm}
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{Simulation de la mesurabilité d'une fonction indicatrice}
+
+Ce TP illustre de manière algorithmique le concept d'image réciproque pour la fonction indicatrice d'un ensemble discret. L'objectif est de vérifier empiriquement que si l'on prend l'image réciproque d'une "tribu" sur les résultats, on retrouve bien une structure cohérente sur l'espace de départ.
+
+\begin{lstlisting}
+def indicatrice(x, ensemble_A):
+    # Retourne 1 si x est dans ensemble_A, 0 sinon
+    return 1 if x in ensemble_A else 0
+
+def image_reciproque_indicatrice(ensemble_B, espace_X, ensemble_A):
+    # Calcule l'image reciproque de l'ensemble B par la fonction indicatrice
+    resultat = []
+    for x in espace_X:
+        if indicatrice(x, ensemble_A) in ensemble_B:
+            resultat.append(x)
+    return resultat
+
+# Espace de depart et sous-ensemble
+X = [1, 2, 3, 4, 5, 6]
+A = [2, 4, 6]  # Les nombres pairs
+
+# Tribu de Borel degeneree sur {0, 1}
+Tribu_Y = [ [], [0], [1], [0, 1] ]
+
+print("Tests d'images reciproques :")
+for B in Tribu_Y:
+    preimage = image_reciproque_indicatrice(B, X, A)
+    print("f^-1(", B, ") =", preimage)
+
+# Assertions de validation mathematique
+assert image_reciproque_indicatrice([1], X, A) == A
+assert image_reciproque_indicatrice([0], X, A) == [1, 3, 5] # Le complementaire
+assert image_reciproque_indicatrice([0, 1], X, A) == X
+assert image_reciproque_indicatrice([], X, A) == []
+print("Validation : OK")
+\end{lstlisting}
+
+
+\vspace{0.5cm}
+
+\subsection*{Approximation par des fonctions simples (étagées)}
+
+Ce TP implémente le théorème fondamental d'approximation. Toute fonction mesurable positive (ici la fonction exponentielle) peut être approchée par le bas par une suite de fonctions simples (en escalier).
+
+\begin{lstlisting}
+import math
+
+def f_continue(x):
+    # Une fonction continue, donc mesurable
+    return math.exp(0.5 * x)
+
+def approximation_simple(x, n):
+    # Decoupe l'axe des ordonnees en intervalles de taille 1/(2**n)
+    # jusqu'a une hauteur maximale de n
+    if f_continue(x) >= n:
+        return n
+
+    pas = 1.0 / (2 ** n)
+    k = int(f_continue(x) / pas)
+    return k * pas
+
+# On evalue l'approximation sur quelques points
+points = [0.0, 1.0, 2.0]
+valeurs_n1 = [approximation_simple(x, 1) for x in points]
+valeurs_n2 = [approximation_simple(x, 2) for x in points]
+valeurs_n5 = [approximation_simple(x, 5) for x in points]
+
+print("Valeurs reelles :", [round(f_continue(x), 4) for x in points])
+print("Approximation n=1 :", valeurs_n1)
+print("Approximation n=2 :", valeurs_n2)
+print("Approximation n=5 :", valeurs_n5)
+
+# Assertions de validation (croissance et convergence)
+for x in points:
+    # La suite des fonctions simples doit etre croissante
+    assert approximation_simple(x, 1) <= approximation_simple(x, 2)
+    assert approximation_simple(x, 2) <= approximation_simple(x, 5)
+    # Elle doit converger par le bas
+    assert approximation_simple(x, 5) <= f_continue(x)
+
+print("Validation d'approximation : OK")
+\end{lstlisting}
+
+
+\vspace{0.5cm}
+
+\subsection*{Supremum d'une suite de fonctions}
+
+La théorie de la mesure repose sur la stabilité sous les opérations dénombrables, notamment le supremum. Ce TP vérifie algorithmiquement que le supremum d'une famille finie de fonctions (polynomiales) reste bien défini.
+
+\begin{lstlisting}
+def f1(x): return x ** 2
+def f2(x): return 2 * x + 1
+def f3(x): return -x + 5
+
+def h_sup(x):
+    # La fonction supremum h = max(f1, f2, f3)
+    return max(f1(x), f2(x), f3(x))
+
+def tester_image_reciproque_supremum(a, points_test):
+    # On teste l'ensemble {x | h(x) > a}
+    points_h = [x for x in points_test if h_sup(x) > a]
+
+    # Par la theorie, cela doit equivaloir a l'union des {x | fn(x) > a}
+    points_f1 = [x for x in points_test if f1(x) > a]
+    points_f2 = [x for x in points_test if f2(x) > a]
+    points_f3 = [x for x in points_test if f3(x) > a]
+
+    # Construction de l'union
+    points_union = list(set(points_f1 + points_f2 + points_f3))
+    points_union.sort()
+
+    return points_h == points_union
+
+# Points de test (grille discrete)
+X_test = [i * 0.5 for i in range(-10, 11)]
+
+# Verification sur plusieurs seuils
+for seuil in [0, 2, 5, 10]:
+    valide = tester_image_reciproque_supremum(seuil, X_test)
+    assert valide == True
+
+print("Le supremum preserve la structure de la tribu : OK")
+\end{lstlisting}
+
+
+\vspace{0.5cm}
+
+\subsection*{Mesurabilité d'un classifieur en Machine Learning}
+
+En IA, la fonction de décision d'un réseau de neurones avec seuillage est un exemple classique de fonction étagée (mesurable). Ce TP construit un classifieur simple et vérifie sa stabilité.
+
+\begin{lstlisting}
+def reseau_continu(x1, x2):
+    # Un "reseau" continu simpliste : f(x) = W*x + b
+    # avec une pseudo-activation continue
+    score = 1.5 * x1 - 0.8 * x2 + 0.2
+    return score
+
+def decision_mesurable(x1, x2):
+    # La fonction ReLU seuillee (etagee)
+    score = reseau_continu(x1, x2)
+    return 1 if score > 0 else 0
+
+# Echantillon de donnees (X1, X2)
+donnees = [
+    (1.0, 1.0),
+    (-1.0, -1.0),
+    (0.5, 2.0),
+    (2.0, -0.5)
+]
+
+# Calcul de l'image reciproque pour la classe positive {1}
+preimage_classe_1 = [d for d in donnees if decision_mesurable(d[0], d[1]) == 1]
+
+# Verification d'une propriete logique
+# {x | decision(x) == 1} == {x | reseau(x) > 0}
+preimage_theorique = [d for d in donnees if reseau_continu(d[0], d[1]) > 0]
+
+assert preimage_classe_1 == preimage_theorique
+print("Validation de la classe positive :", preimage_classe_1)
+print("Fonction de decision stable : OK")
+\end{lstlisting}
+
+
+\vspace{0.5cm}
+
+\subsection*{La fonction continue par morceaux (Borélienne)}
+
+Toute fonction continue par morceaux est borélienne. Ce TP implémente une fonction définie par morceaux et teste l'appartenance de ses images réciproques.
+
+\begin{lstlisting}
+def f_morceaux(x):
+    # Une fonction constante par morceaux
+    if x < -1:
+        return 0
+    elif -1 <= x < 1:
+        return x
+    else:
+        return 2
+
+def image_reciproque(a, b, grille):
+    # Approximativement l'ensemble f^-1(]a, b[)
+    return [x for x in grille if a < f_morceaux(x) < b]
+
+# Generation d'une grille lineaire fine
+grille_X = [round(i * 0.1, 2) for i in range(-30, 31)]
+
+# Test 1 : Image reciproque de ]0.1, 0.9[
+# Doit correspondre a un sous-intervalle du milieu
+res_1 = image_reciproque(0.1, 0.9, grille_X)
+for x in res_1:
+    assert -1 <= x < 1
+
+# Test 2 : Image reciproque de ]1.5, 2.5[
+# Doit correspondre exactement a la zone x >= 1
+res_2 = image_reciproque(1.5, 2.5, grille_X)
+for x in res_2:
+    assert x >= 1.0
+
+# Test 3 : L'intersection des pre-images
+inter = set(res_1).intersection(set(res_2))
+assert len(inter) == 0
+
+print("La decomposition par morceaux respecte les intervalles de Borel : OK")
+\end{lstlisting}
+
+
+\vspace{0.5cm}
+
+
+
+\end{document}

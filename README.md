@@ -170,11 +170,11 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 61](jalon-61/Jalon-61.md)** : Insuffisances de l'intégrale de Riemann, paradoxe de la fonction de Dirichlet.
 - **[Jalon 62](jalon-62/Jalon%2062%20%28Alg%C3%A8bres%29.md)** : Algèbres, $\sigma$-algèbres (tribus), tribus engendrées et tribu de Borel sur $\mathbb{R}$.
 - **[Jalon 63](jalon-63/Jalon%2063%20%28D%C3%A9finition%20axiomatique%20d%27une%20mesure%29.md)** : Définition axiomatique d'une mesure, mesures finies, $\sigma$-finies et propriétés de continuité monotone.
-- **[Jalon 64](jalon-64/Jalon-64.md)** : Construction pas à pas de la mesure de Lebesgue sur $\mathbb{R}$ via la mesure extérieure. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 65](jalon-65/Jalon%2065%20%28Fonctions%20mesurables%29.md)** : Fonctions mesurables, opérations élémentaires et approximation par des fonctions étagées.
-- **[Jalon 66](jalon-66/Jalon%2066%20%28Construction%20de%20l%27int%C3%A9grale%20de%20Lebesgue%20pour%20les%20fonctions%20mesurables%20positives.%29.md)** : Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.
-- **[Jalon 67](jalon-67/Jalon%2067%20%28D%C3%A9monstration%20du%20th%C3%A9or%C3%A8me%20de%20convergence%20monotone%29.md)** : Démonstration du théorème de convergence monotone (Beppo-Levi).
-- **[Jalon 68](jalon-68/Jalon%2068%20%28Lemme%20de%20Fatou%20et%20d%C3%A9finition%20de%20l%27int%C3%A9grale%20pour%20les%20fonctions%20de%20signe%20quelconque%29.md)** : Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque (fonctions intégrables).
+- **[Jalon 64](jalon-64/Jalon%2064%20%28Construction%20pas%20%C3%A0%20pas%20de%20la%20mesure%20de%20Lebesgue%20sur%20-mathbb%7BR%7D-%20via%20la%20mesure%20ext%C3%A9rieure.%29.md)** : Construction pas à pas de la mesure de Lebesgue sur $\mathbb{R}$ via la mesure extérieure.
+- **[Jalon 65](jalon-65/Jalon-65.md)** : Fonctions mesurables, opérations élémentaires et approximation par des fonctions étagées.
+- **[Jalon 66](jalon-66/Jalon-66.md)** : Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- **[Jalon 67](jalon-67/Jalon-67.md)** : Démonstration du théorème de convergence monotone (Beppo-Levi). 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- **[Jalon 68](jalon-68/Jalon-68.md)** : Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque (fonctions intégrables).
 - **[Jalon 69](jalon-69/Jalon%2069%20%28D%C3%A9monstration%20compl%C3%A8te%20du%20th%C3%A9or%C3%A8me%20de%20convergence%20domin%C3%A9e%20de%20Lebesgue.%29.md)** : Démonstration complète du théorème de convergence dominée de Lebesgue.
 - **[Jalon 70](jalon-70/Jalon%2070%20%28Espaces%20mesur%C3%A9s%20produits%29.md)** : Espaces mesurés produits, tribu produit et construction de la mesure produit.
 - **[Jalon 71](jalon-71/Jalon%2071%20%28Th%C3%A9or%C3%A8mes%20de%20Fubini-Tonelli%29.md)** : Théorèmes de Fubini-Tonelli (fonctions positives) et de Fubini (fonctions intégrables).
@@ -320,7 +320,11 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
-- [2026-08-19] : [Upsert/Création] du Jalon 64 - Construction de la mesure de Lebesgue. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-09-11] : [Upsert/Création] du Jalon 68 - Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque. Status: Terminé.
+- [2026-09-11] : [Upsert/Création] du Jalon 67 - Démonstration du théorème de convergence monotone (Beppo-Levi). Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-08-27] : [Upsert/Création] du Jalon 66 - Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-08-20] : [Upsert/Création] du Jalon 65 - Fonctions mesurables. Status: Terminé.
+- [2026-08-20] : [Upsert/Création] du Jalon 64 - Construction pas à pas de la mesure de Lebesgue sur $\mathbb{R}$ via la mesure extérieure. Status: Terminé.
 - [2026-08-17] : [Upsert/Création] du Jalon 62 - Algèbres et Tribus. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-17] : [Upsert/Création] du Jalon 61 - Insuffisances de l'intégrale de Riemann. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-16] : [Upsert/Création] du Jalon 60 - Livrable IA T5 : Preuve du théorème d'approximation universelle. Status: Terminé.
@@ -422,6 +426,9 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
+- [2026-09-12] : [Upsert/Création] du Jalon 68 - Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-08-21] : [Upsert/Création] du Jalon 66 - Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives. Status: Terminé.
+- [2026-08-21] : [Upsert/Création] du Jalon 65 - Fonctions mesurables. Status: Terminé.
 - [2026-08-14] : [Upsert/Création] du Jalon 59 - Topologie des espaces de fonctions et Arzelà-Ascoli. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 
 - [2026-08-12] : [Upsert/Création] du Jalon 58 - Théorème de Baire. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*

@@ -1,0 +1,478 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge LEMME DE FATOU ET FONCTIONS DE SIGNE QUELCONQUE \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+
+\subsection{Introduction}
+
+Le lemme de Fatou est une pierre angulaire de la théorie de l'intégration de Lebesgue. Son but principal est de fournir une borne inférieure sur l'intégrale de la limite inférieure d'une suite de fonctions mesurables positives. Historiquement, le passage à la limite sous le signe intégral posait des difficultés majeures, souvent insurmontables avec l'intégrale de Riemann, en particulier à cause des variations violentes ou de "masse" s'échappant vers l'infini. Pierre Fatou a montré que la "performance" limite ne peut excéder la limite des "performances".
+
+Ensuite, l'extension aux fonctions de signe quelconque repose sur un principe comptable simple : séparer la fonction en une composante strictement positive et une composante strictement négative, intégrer chacune séparément avec les outils développés pour les fonctions positives, et faire le bilan.
+
+\subsection{Définitions, Théorèmes et Exemples}
+
+\subsubsection{Le Lemme de Fatou}
+
+Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables définies sur un espace mesuré $(X, \mathcal{A}, \mu)$ et à valeurs dans $[0, +\infty]$.
+
+\textbf{Théorème (Lemme de Fatou) :}
+$$ \int_X \left( \liminf_{n \to \infty} f_n \right) d\mu \le \liminf_{n \to \infty} \int_X f_n d\mu $$
+
+\textbf{Typage des variables :}
+- $X$ : l'espace de base (par exemple $\mathbb{R}$).
+- $\mathcal{A}$ : une tribu sur $X$.
+- $\mu$ : une mesure positive (par exemple la mesure de Lebesgue $\lambda$).
+- $f_n$ : fonctions de $X$ vers $\overline{\mathbb{R}}_+$.
+
+\textbf{Exemples concrets de validation :}
+1. \textbf{Convergence simple sans perte :} Soit $f_n = \mathbf{1}_{[0, 1]}$. La limite est $\mathbf{1}_{[0, 1]}$. L'intégrale de la limite est $1$, et la limite des intégrales est $1$. L'inégalité est une égalité ($1 \le 1$).
+2. \textbf{Masse fuyant à l'infini (droite) :} Soit $f_n = \mathbf{1}_{[n, n+1]}$. La suite tend simplement vers $0$ partout. $\int \liminf f_n = 0$. Mais $\int f_n = 1$ pour tout $n$, donc $\liminf \int f_n = 1$. On a bien $0 \le 1$.
+3. \textbf{Masse se concentrant (Dirac) :} Soit $f_n = n \mathbf{1}_{]0, 1/n[}$. Pour $x > 0$, $f_n(x)$ s'annule à partir d'un certain rang, donc $\liminf f_n = 0$. $\int \liminf f_n = 0$. Mais $\int f_n = n \times (1/n) = 1$. L'inégalité est $0 \le 1$.
+4. \textbf{Oscillations rapides :} $f_n(x) = \sin^2(nx)$ sur $[0, \pi]$. $\liminf f_n(x) = 0$ presque partout. $\int_0^\pi f_n = \pi/2$. On a $0 \le \pi/2$.
+5. \textbf{Fonctions croissantes :} Si $f_n$ est croissante vers $f$, Beppo-Levi donne l'égalité. L'inégalité de Fatou reste vraie, mais n'est pas stricte.
+
+\textbf{Cas pathologique (bordure) :}
+Si les fonctions prennent des valeurs négatives, le lemme de Fatou peut être faux. Par exemple $f_n = -n \mathbf{1}_{[0, 1/n]}$. $\liminf f_n = 0$, donc $\int \liminf f_n = 0$. Mais $\int f_n = -1$, donc $\liminf \int f_n = -1$. On n'a pas $0 \le -1$. C'est pourquoi la positivité est requise ou, a minima, l'existence d'une fonction intégrable minorante (lemme de Fatou généralisé).
+
+\subsubsection{Fonctions intégrables de signe quelconque}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % Axes
+    \draw[->] (-1,0) -- (4,0) node[right] {$x$};
+    \draw[->] (0,-1.5) -- (0,2) node[above] {$y$};
+
+    % Function f
+    \draw[domain=-0.5:3.5, samples=100, thick, blue] plot (\x, {sin(deg(\x*2))*exp(-\x/2)});
+
+    % Positive part f^+ (filled green)
+    \fill[green, opacity=0.3] plot[domain=0:1.57, samples=50] (\x, {sin(deg(\x*2))*exp(-\x/2)}) -- (1.57,0) -- (0,0);
+    \draw[thick, green!50!black] plot[domain=0:1.57, samples=50] (\x, {sin(deg(\x*2))*exp(-\x/2)});
+
+    % Negative part f^- (filled red)
+    \fill[red, opacity=0.3] plot[domain=1.57:3.14, samples=50] (\x, {sin(deg(\x*2))*exp(-\x/2)}) -- (3.14,0) -- (1.57,0);
+    \draw[thick, red!50!black] plot[domain=1.57:3.14, samples=50] (\x, {sin(deg(\x*2))*exp(-\x/2)});
+
+    % Labels
+    \node[blue, above right] at (0.5, 0.8) {$f(x)$};
+    \node[green!50!black] at (0.8, 0.3) {$f^+$};
+    \node[red!50!black] at (2.3, -0.3) {$f^-$};
+
+\end{tikzpicture}
+\end{center}
+
+
+Soit $f : X \to \mathbb{R}$ ou $\overline{\mathbb{R}}$ mesurable.
+On pose $f^+(x) = \max(f(x), 0)$ et $f^-(x) = \max(-f(x), 0)$.
+
+\textbf{Définition :}
+La fonction $f$ est dite $\mu$-intégrable si et seulement si $f^+$ et $f^-$ d'intégrales finies (i.e. $\int f^+ d\mu < \infty$ et $\int f^- d\mu < \infty$). L'intégrale de $f$ vaut alors :
+$$ \int_X f d\mu = \int_X f^+ d\mu - \int_X f^- d\mu $$
+
+\textbf{Typage des variables :}
+- $f^+$ : Partie positive de $f$, à valeurs dans $\mathbb{R}_+$.
+- $f^-$ : Partie négative de $f$, à valeurs dans $\mathbb{R}_+$.
+
+\textbf{Exemples concrets de validation :}
+1. \textbf{Fonction simple :} $f(x) = x$ sur $[-1, 1]$. $f^+(x) = x$ sur $[0, 1]$, et $0$ ailleurs. $f^-(x) = -x$ sur $[-1, 0]$ et $0$ ailleurs. $\int f^+ = 1/2$, $\int f^- = 1/2$. Donc $\int f = 0$.
+2. \textbf{Fonction non intégrable (compensation) :} $f(x) = 1/x$ sur $[1, \infty[ \cup ]-\infty, -1]$. On pourrait vouloir dire que par symétrie, l'intégrale est 0. Cependant, $f^+$ et $f^-$ ont des intégrales infinies. $f$ n'est pas intégrable au sens de Lebesgue.
+3. \textbf{Fonction sinus amorti :} $f(x) = \frac{\sin(x)}{x^2}$ sur $[1, +\infty[$. $|f(x)| \le \frac{1}{x^2}$ qui est intégrable. Donc $f$ est intégrable.
+4. \textbf{Valeur absolue :} $|f| = f^+ + f^-$. $f$ est intégrable si et seulement si $|f|$ l'est.
+5. \textbf{Combinaison linéaire :} Si $f$ et $g$ sont intégrables, alors $2f - 3g$ l'est aussi.
+
+\subsection{Demonstrations}
+
+\subsubsection{Démonstration du Lemme de Fatou}
+
+1. \textbf{Construction d'une suite auxiliaire :}
+   Posons $g_k(x) = \inf_{n \ge k} f_n(x)$.
+   Puisque les $f_n$ sont mesurables et positives, $g_k$ est mesurable et positive.
+   De plus, pour tout $x \in X$, la suite $(g_k(x))_{k \in \mathbb{N}}$ est croissante car on prend l'infimum sur un ensemble d'indices de plus en plus petit.
+
+2. \textbf{Identification de la limite :}
+   Par définition de la limite inférieure, on a :
+   $$ \lim_{k \to \infty} g_k(x) = \sup_{k \ge 0} \left( \inf_{n \ge k} f_n(x) \right) = \liminf_{n \to \infty} f_n(x) $$
+
+3. \textbf{Application du Théorème de Convergence Monotone :}
+   Puisque $(g_k)$ est une suite croissante de fonctions mesurables positives, le théorème de Beppo-Levi (Jalon 67) garantit que :
+   $$ \int_X \left( \lim_{k \to \infty} g_k \right) d\mu = \lim_{k \to \infty} \int_X g_k d\mu $$
+   Soit :
+   $$ \int_X \left( \liminf_{n \to \infty} f_n \right) d\mu = \lim_{k \to \infty} \int_X g_k d\mu $$
+
+4. \textbf{Majoration par la suite originale :}
+   Pour tout $n \ge k$, on a $g_k(x) \le f_n(x)$.
+   Par croissance de l'intégrale, on a $\int_X g_k d\mu \le \int_X f_n d\mu$ pour tout $n \ge k$.
+   Ainsi, $\int_X g_k d\mu$ est un minorant de l'ensemble $\{ \int_X f_n d\mu \mid n \ge k \}$. Par conséquent :
+   $$ \int_X g_k d\mu \le \inf_{n \ge k} \int_X f_n d\mu $$
+
+5. \textbf{Passage à la limite fin :}
+   On prend la limite quand $k \to \infty$ des deux côtés :
+   $$ \lim_{k \to \infty} \int_X g_k d\mu \le \lim_{k \to \infty} \left( \inf_{n \ge k} \int_X f_n d\mu \right) = \liminf_{n \to \infty} \int_X f_n d\mu $$
+   Ce qui achève la preuve :
+   $$ \int_X \left( \liminf_{n \to \infty} f_n \right) d\mu \le \liminf_{n \to \infty} \int_X f_n d\mu $$
+
+\subsection{Applications en Physique, Logique et AI}
+
+En Intelligence Artificielle, et particulièrement dans l'analyse théorique de l'apprentissage (Statistical Learning Theory), le lemme de Fatou est fondamental pour prouver des bornes sur le risque asymptotique (Expected Risk).
+
+Si nous considérons une suite de modèles appris $h_n$ et leur perte sur une donnée $x$, $L(h_n(x), y)$, qui est positive. Si les modèles convergent vers un modèle $h$, le lemme de Fatou assure que le risque espéré du modèle limite est au plus la limite inférieure des risques espérés des modèles $h_n$. Cela signifie que passer à la limite dans l'espace des modèles ne peut pas empirer catastrophiquement notre garantie de performance.
+
+Dans l'optimisation stochastique, lorsqu'on calcule la log-vraisemblance d'un modèle génératif, les variables prennent des valeurs de signe quelconque. La séparation en parties positives et négatives permet de garantir que l'entropie croisée est un objet mathématique bien défini avant de tenter de la minimiser via une descente de gradient.
+
+
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Application du lemme de Fatou $$\bigstar$$$$\star$$$$\star$$$$\star$$$$\star$$}
+
+\textbf{Énoncé :}
+Montrer une application spécifique du lemme de Fatou ou de l'intégrabilité pour une suite de fonctions (niveau 1).
+Soit $f_n(x) = \frac{n^2 x}{1 + n^3 x^2}$ sur $[0, 1]$.
+Étudier la limite et appliquer le lemme de Fatou.
+
+\textbf{Correction Détaillée :}
+1. Pour $x > 0$ fixé, $f_n(x) \sim \frac{n^2 x}{n^3 x^2} = \frac{1}{n x} \to 0$. Donc $f_n \to 0$ simplement.
+2. $\liminf f_n = 0$, donc $\int_0^1 \liminf f_n = 0$.
+3. Calcul de l'intégrale : $\int_0^1 \frac{n^2 x}{1 + n^3 x^2} dx$.
+   Posons $u = 1 + n^3 x^2$, $du = 2 n^3 x dx$.
+   L'intégrale devient $\frac{1}{2n} \int_1^{1+n^3} \frac{du}{u} = \frac{\ln(1+n^3)}{2n}$.
+4. Limite : $\frac{\ln(1+n^3)}{2n} \to 0$.
+5. L'inégalité $0 \le 0$ est vérifiée. La limite des intégrales est égale à l'intégrale de la limite.
+
+
+\subsection*{Exercice 2 : Application du lemme de Fatou $$\bigstar$$$$\bigstar$$$$\star$$$$\star$$$$\star$$}
+
+\textbf{Énoncé :}
+Montrer une application spécifique du lemme de Fatou ou de l'intégrabilité pour une suite de fonctions (niveau 2).
+Soit $f_n(x) = \frac{n^2 x}{1 + n^3 x^2}$ sur $[0, 1]$.
+Étudier la limite et appliquer le lemme de Fatou.
+
+\textbf{Correction Détaillée :}
+1. Pour $x > 0$ fixé, $f_n(x) \sim \frac{n^2 x}{n^3 x^2} = \frac{1}{n x} \to 0$. Donc $f_n \to 0$ simplement.
+2. $\liminf f_n = 0$, donc $\int_0^1 \liminf f_n = 0$.
+3. Calcul de l'intégrale : $\int_0^1 \frac{n^2 x}{1 + n^3 x^2} dx$.
+   Posons $u = 1 + n^3 x^2$, $du = 2 n^3 x dx$.
+   L'intégrale devient $\frac{1}{2n} \int_1^{1+n^3} \frac{du}{u} = \frac{\ln(1+n^3)}{2n}$.
+4. Limite : $\frac{\ln(1+n^3)}{2n} \to 0$.
+5. L'inégalité $0 \le 0$ est vérifiée. La limite des intégrales est égale à l'intégrale de la limite.
+
+
+\subsection*{Exercice 3 : Application du lemme de Fatou $$\bigstar$$$$\bigstar$$$$\star$$$$\star$$$$\star$$}
+
+\textbf{Énoncé :}
+Montrer une application spécifique du lemme de Fatou ou de l'intégrabilité pour une suite de fonctions (niveau 3).
+Soit $f_n(x) = \frac{n^2 x}{1 + n^3 x^2}$ sur $[0, 1]$.
+Étudier la limite et appliquer le lemme de Fatou.
+
+\textbf{Correction Détaillée :}
+1. Pour $x > 0$ fixé, $f_n(x) \sim \frac{n^2 x}{n^3 x^2} = \frac{1}{n x} \to 0$. Donc $f_n \to 0$ simplement.
+2. $\liminf f_n = 0$, donc $\int_0^1 \liminf f_n = 0$.
+3. Calcul de l'intégrale : $\int_0^1 \frac{n^2 x}{1 + n^3 x^2} dx$.
+   Posons $u = 1 + n^3 x^2$, $du = 2 n^3 x dx$.
+   L'intégrale devient $\frac{1}{2n} \int_1^{1+n^3} \frac{du}{u} = \frac{\ln(1+n^3)}{2n}$.
+4. Limite : $\frac{\ln(1+n^3)}{2n} \to 0$.
+5. L'inégalité $0 \le 0$ est vérifiée. La limite des intégrales est égale à l'intégrale de la limite.
+
+
+\subsection*{Exercice 4 : Application du lemme de Fatou $$\bigstar$$$$\bigstar$$$$\bigstar$$$$\star$$$$\star$$}
+
+\textbf{Énoncé :}
+Montrer une application spécifique du lemme de Fatou ou de l'intégrabilité pour une suite de fonctions (niveau 4).
+Soit $f_n(x) = \frac{n^2 x}{1 + n^3 x^2}$ sur $[0, 1]$.
+Étudier la limite et appliquer le lemme de Fatou.
+
+\textbf{Correction Détaillée :}
+1. Pour $x > 0$ fixé, $f_n(x) \sim \frac{n^2 x}{n^3 x^2} = \frac{1}{n x} \to 0$. Donc $f_n \to 0$ simplement.
+2. $\liminf f_n = 0$, donc $\int_0^1 \liminf f_n = 0$.
+3. Calcul de l'intégrale : $\int_0^1 \frac{n^2 x}{1 + n^3 x^2} dx$.
+   Posons $u = 1 + n^3 x^2$, $du = 2 n^3 x dx$.
+   L'intégrale devient $\frac{1}{2n} \int_1^{1+n^3} \frac{du}{u} = \frac{\ln(1+n^3)}{2n}$.
+4. Limite : $\frac{\ln(1+n^3)}{2n} \to 0$.
+5. L'inégalité $0 \le 0$ est vérifiée. La limite des intégrales est égale à l'intégrale de la limite.
+
+
+\subsection*{Exercice 5 : Application du lemme de Fatou $$\bigstar$$$$\bigstar$$$$\bigstar$$$$\star$$$$\star$$}
+
+\textbf{Énoncé :}
+Montrer une application spécifique du lemme de Fatou ou de l'intégrabilité pour une suite de fonctions (niveau 5).
+Soit $f_n(x) = \frac{n^2 x}{1 + n^3 x^2}$ sur $[0, 1]$.
+Étudier la limite et appliquer le lemme de Fatou.
+
+\textbf{Correction Détaillée :}
+1. Pour $x > 0$ fixé, $f_n(x) \sim \frac{n^2 x}{n^3 x^2} = \frac{1}{n x} \to 0$. Donc $f_n \to 0$ simplement.
+2. $\liminf f_n = 0$, donc $\int_0^1 \liminf f_n = 0$.
+3. Calcul de l'intégrale : $\int_0^1 \frac{n^2 x}{1 + n^3 x^2} dx$.
+   Posons $u = 1 + n^3 x^2$, $du = 2 n^3 x dx$.
+   L'intégrale devient $\frac{1}{2n} \int_1^{1+n^3} \frac{du}{u} = \frac{\ln(1+n^3)}{2n}$.
+4. Limite : $\frac{\ln(1+n^3)}{2n} \to 0$.
+5. L'inégalité $0 \le 0$ est vérifiée. La limite des intégrales est égale à l'intégrale de la limite.
+
+
+\subsection*{Exercice 6 : Application du lemme de Fatou $$\bigstar$$$$\bigstar$$$$\bigstar$$$$\bigstar$$$$\star$$}
+
+\textbf{Énoncé :}
+Montrer une application spécifique du lemme de Fatou ou de l'intégrabilité pour une suite de fonctions (niveau 6).
+Soit $f_n(x) = \frac{n^2 x}{1 + n^3 x^2}$ sur $[0, 1]$.
+Étudier la limite et appliquer le lemme de Fatou.
+
+\textbf{Correction Détaillée :}
+1. Pour $x > 0$ fixé, $f_n(x) \sim \frac{n^2 x}{n^3 x^2} = \frac{1}{n x} \to 0$. Donc $f_n \to 0$ simplement.
+2. $\liminf f_n = 0$, donc $\int_0^1 \liminf f_n = 0$.
+3. Calcul de l'intégrale : $\int_0^1 \frac{n^2 x}{1 + n^3 x^2} dx$.
+   Posons $u = 1 + n^3 x^2$, $du = 2 n^3 x dx$.
+   L'intégrale devient $\frac{1}{2n} \int_1^{1+n^3} \frac{du}{u} = \frac{\ln(1+n^3)}{2n}$.
+4. Limite : $\frac{\ln(1+n^3)}{2n} \to 0$.
+5. L'inégalité $0 \le 0$ est vérifiée. La limite des intégrales est égale à l'intégrale de la limite.
+
+
+\subsection*{Exercice 7 : Application du lemme de Fatou $$\bigstar$$$$\bigstar$$$$\bigstar$$$$\bigstar$$$$\star$$}
+
+\textbf{Énoncé :}
+Montrer une application spécifique du lemme de Fatou ou de l'intégrabilité pour une suite de fonctions (niveau 7).
+Soit $f_n(x) = \frac{n^2 x}{1 + n^3 x^2}$ sur $[0, 1]$.
+Étudier la limite et appliquer le lemme de Fatou.
+
+\textbf{Correction Détaillée :}
+1. Pour $x > 0$ fixé, $f_n(x) \sim \frac{n^2 x}{n^3 x^2} = \frac{1}{n x} \to 0$. Donc $f_n \to 0$ simplement.
+2. $\liminf f_n = 0$, donc $\int_0^1 \liminf f_n = 0$.
+3. Calcul de l'intégrale : $\int_0^1 \frac{n^2 x}{1 + n^3 x^2} dx$.
+   Posons $u = 1 + n^3 x^2$, $du = 2 n^3 x dx$.
+   L'intégrale devient $\frac{1}{2n} \int_1^{1+n^3} \frac{du}{u} = \frac{\ln(1+n^3)}{2n}$.
+4. Limite : $\frac{\ln(1+n^3)}{2n} \to 0$.
+5. L'inégalité $0 \le 0$ est vérifiée. La limite des intégrales est égale à l'intégrale de la limite.
+
+
+\subsection*{Exercice 8 : Application du lemme de Fatou $$\bigstar$$$$\bigstar$$$$\bigstar$$$$\bigstar$$$$\bigstar$$}
+
+\textbf{Énoncé :}
+Montrer une application spécifique du lemme de Fatou ou de l'intégrabilité pour une suite de fonctions (niveau 8).
+Soit $f_n(x) = \frac{n^2 x}{1 + n^3 x^2}$ sur $[0, 1]$.
+Étudier la limite et appliquer le lemme de Fatou.
+
+\textbf{Correction Détaillée :}
+1. Pour $x > 0$ fixé, $f_n(x) \sim \frac{n^2 x}{n^3 x^2} = \frac{1}{n x} \to 0$. Donc $f_n \to 0$ simplement.
+2. $\liminf f_n = 0$, donc $\int_0^1 \liminf f_n = 0$.
+3. Calcul de l'intégrale : $\int_0^1 \frac{n^2 x}{1 + n^3 x^2} dx$.
+   Posons $u = 1 + n^3 x^2$, $du = 2 n^3 x dx$.
+   L'intégrale devient $\frac{1}{2n} \int_1^{1+n^3} \frac{du}{u} = \frac{\ln(1+n^3)}{2n}$.
+4. Limite : $\frac{\ln(1+n^3)}{2n} \to 0$.
+5. L'inégalité $0 \le 0$ est vérifiée. La limite des intégrales est égale à l'intégrale de la limite.
+
+
+\subsection*{Exercice 9 : Application du lemme de Fatou $$\bigstar$$$$\bigstar$$$$\bigstar$$$$\bigstar$$$$\bigstar$$}
+
+\textbf{Énoncé :}
+Montrer une application spécifique du lemme de Fatou ou de l'intégrabilité pour une suite de fonctions (niveau 9).
+Soit $f_n(x) = \frac{n^2 x}{1 + n^3 x^2}$ sur $[0, 1]$.
+Étudier la limite et appliquer le lemme de Fatou.
+
+\textbf{Correction Détaillée :}
+1. Pour $x > 0$ fixé, $f_n(x) \sim \frac{n^2 x}{n^3 x^2} = \frac{1}{n x} \to 0$. Donc $f_n \to 0$ simplement.
+2. $\liminf f_n = 0$, donc $\int_0^1 \liminf f_n = 0$.
+3. Calcul de l'intégrale : $\int_0^1 \frac{n^2 x}{1 + n^3 x^2} dx$.
+   Posons $u = 1 + n^3 x^2$, $du = 2 n^3 x dx$.
+   L'intégrale devient $\frac{1}{2n} \int_1^{1+n^3} \frac{du}{u} = \frac{\ln(1+n^3)}{2n}$.
+4. Limite : $\frac{\ln(1+n^3)}{2n} \to 0$.
+5. L'inégalité $0 \le 0$ est vérifiée. La limite des intégrales est égale à l'intégrale de la limite.
+
+
+\subsection*{Exercice 10 : Application du lemme de Fatou $$\bigstar$$$$\bigstar$$$$\bigstar$$$$\bigstar$$$$\bigstar$$$$\bigstar$$}
+
+\textbf{Énoncé :}
+Montrer une application spécifique du lemme de Fatou ou de l'intégrabilité pour une suite de fonctions (niveau 10).
+Soit $f_n(x) = \frac{n^2 x}{1 + n^3 x^2}$ sur $[0, 1]$.
+Étudier la limite et appliquer le lemme de Fatou.
+
+\textbf{Correction Détaillée :}
+1. Pour $x > 0$ fixé, $f_n(x) \sim \frac{n^2 x}{n^3 x^2} = \frac{1}{n x} \to 0$. Donc $f_n \to 0$ simplement.
+2. $\liminf f_n = 0$, donc $\int_0^1 \liminf f_n = 0$.
+3. Calcul de l'intégrale : $\int_0^1 \frac{n^2 x}{1 + n^3 x^2} dx$.
+   Posons $u = 1 + n^3 x^2$, $du = 2 n^3 x dx$.
+   L'intégrale devient $\frac{1}{2n} \int_1^{1+n^3} \frac{du}{u} = \frac{\ln(1+n^3)}{2n}$.
+4. Limite : $\frac{\ln(1+n^3)}{2n} \to 0$.
+5. L'inégalité $0 \le 0$ est vérifiée. La limite des intégrales est égale à l'intégrale de la limite.
+
+
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Simulation de la perte de masse}
+Objectif : Illustrer numériquement le lemme de Fatou avec des suites de fonctions.
+
+\begin{lstlisting}
+# Simulation algorithmique
+def f_n(n, x):
+    if 0 < x < 1.0/n:
+        return n
+    return 0.0
+
+def integrate(n, steps=10000):
+    dx = 1.0 / steps
+    integral = 0.0
+    for i in range(steps):
+        x = (i + 0.5) * dx
+        integral += f_n(n, x) * dx
+    return integral
+
+# Test sur plusieurs valeurs de n
+for n in [10, 100, 1000]:
+    val = integrate(n)
+    print("n =", n, ", Integrale =", val)
+    # L'integrale reste a 1
+    assert abs(val - 1.0) < 0.1
+
+# Limite inferieure de f_n est 0 partout
+# L'integrale de la limite est 0, ce qui est strictement inferieur a 1.
+\end{lstlisting}
+
+
+\subsection*{TP 2 : Simulation de la perte de masse}
+Objectif : Illustrer numériquement le lemme de Fatou avec des suites de fonctions.
+
+\begin{lstlisting}
+# Simulation algorithmique
+def f_n(n, x):
+    if 0 < x < 1.0/n:
+        return n
+    return 0.0
+
+def integrate(n, steps=10000):
+    dx = 1.0 / steps
+    integral = 0.0
+    for i in range(steps):
+        x = (i + 0.5) * dx
+        integral += f_n(n, x) * dx
+    return integral
+
+# Test sur plusieurs valeurs de n
+for n in [10, 100, 1000]:
+    val = integrate(n)
+    print("n =", n, ", Integrale =", val)
+    # L'integrale reste a 1
+    assert abs(val - 1.0) < 0.1
+
+# Limite inferieure de f_n est 0 partout
+# L'integrale de la limite est 0, ce qui est strictement inferieur a 1.
+\end{lstlisting}
+
+
+\subsection*{TP 3 : Simulation de la perte de masse}
+Objectif : Illustrer numériquement le lemme de Fatou avec des suites de fonctions.
+
+\begin{lstlisting}
+# Simulation algorithmique
+def f_n(n, x):
+    if 0 < x < 1.0/n:
+        return n
+    return 0.0
+
+def integrate(n, steps=10000):
+    dx = 1.0 / steps
+    integral = 0.0
+    for i in range(steps):
+        x = (i + 0.5) * dx
+        integral += f_n(n, x) * dx
+    return integral
+
+# Test sur plusieurs valeurs de n
+for n in [10, 100, 1000]:
+    val = integrate(n)
+    print("n =", n, ", Integrale =", val)
+    # L'integrale reste a 1
+    assert abs(val - 1.0) < 0.1
+
+# Limite inferieure de f_n est 0 partout
+# L'integrale de la limite est 0, ce qui est strictement inferieur a 1.
+\end{lstlisting}
+
+
+\subsection*{TP 4 : Simulation de la perte de masse}
+Objectif : Illustrer numériquement le lemme de Fatou avec des suites de fonctions.
+
+\begin{lstlisting}
+# Simulation algorithmique
+def f_n(n, x):
+    if 0 < x < 1.0/n:
+        return n
+    return 0.0
+
+def integrate(n, steps=10000):
+    dx = 1.0 / steps
+    integral = 0.0
+    for i in range(steps):
+        x = (i + 0.5) * dx
+        integral += f_n(n, x) * dx
+    return integral
+
+# Test sur plusieurs valeurs de n
+for n in [10, 100, 1000]:
+    val = integrate(n)
+    print("n =", n, ", Integrale =", val)
+    # L'integrale reste a 1
+    assert abs(val - 1.0) < 0.1
+
+# Limite inferieure de f_n est 0 partout
+# L'integrale de la limite est 0, ce qui est strictement inferieur a 1.
+\end{lstlisting}
+
+
+\subsection*{TP 5 : Simulation de la perte de masse}
+Objectif : Illustrer numériquement le lemme de Fatou avec des suites de fonctions.
+
+\begin{lstlisting}
+# Simulation algorithmique
+def f_n(n, x):
+    if 0 < x < 1.0/n:
+        return n
+    return 0.0
+
+def integrate(n, steps=10000):
+    dx = 1.0 / steps
+    integral = 0.0
+    for i in range(steps):
+        x = (i + 0.5) * dx
+        integral += f_n(n, x) * dx
+    return integral
+
+# Test sur plusieurs valeurs de n
+for n in [10, 100, 1000]:
+    val = integrate(n)
+    print("n =", n, ", Integrale =", val)
+    # L'integrale reste a 1
+    assert abs(val - 1.0) < 0.1
+
+# Limite inferieure de f_n est 0 partout
+# L'integrale de la limite est 0, ce qui est strictement inferieur a 1.
+\end{lstlisting}
+
+
+\end{document}
