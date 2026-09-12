@@ -320,6 +320,8 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-09-12] : [Upsert/Création] du Jalon 69 - Théorème de convergence dominée (TCD). Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-09-12] : [Upsert/Création] du Jalon 68 - Lemme de Fatou et fonctions de signe quelconque. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-11] : [Upsert/Création] du Jalon 67 - Démonstration du théorème de convergence monotone (Beppo-Levi). Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-27] : [Upsert/Création] du Jalon 66 - Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-20] : [Upsert/Création] du Jalon 65 - Fonctions mesurables. Status: Terminé.

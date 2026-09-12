@@ -14,11 +14,8 @@ next: "[[Jalon 69 (Démonstration complète du théorème de convergence dominé
 
 ## 1. Présentation du concept clé
 
-- **La Métaphore :**
-    - **Le Lemme de Fatou :** Imaginez des athlètes qui sautent en hauteur. Chaque athlète fait plusieurs essais ($f_n$). La "performance minimale garantie" de l'équipe à la fin ($\liminf f_n$) ne peut pas être plus grande que la moyenne des performances au fil du temps. Autrement dit, si de la "masse" s'échappe vers l'infini ou s'évapore dans des oscillations folles, l'intégrale de la limite sera plus petite que la limite des intégrales. On peut perdre de l'information à la limite, mais on n'en gagne jamais par magie.
-    - **Le Signe Quelconque :** Imaginez un compte bancaire. Vous avez des rentrées d'argent (le côté positif $f^+$) et des dépenses (le côté négatif $f^-$). Pour savoir si vous êtes globalement riche ou pauvre, vous calculez séparément le total de ce que vous avez gagné et le total de ce que vous avez dépensé, puis vous faites la soustraction. Si les deux totaux sont finis, votre situation est bien définie.
-- **Le "Pourquoi on a inventé ça" :** Jusqu'ici, on ne savait intégrer que des fonctions positives. Mais en physique ou en finance, les flux peuvent être négatifs. Il fallait donc étendre la définition de Lebesgue tout en gardant une cohérence mathématique absolue.
-- **Visualisation :** On découpe une fonction qui ondule au-dessus et en dessous de l'axe des abscisses en deux fonctions strictement positives. L'intégrale totale est l'aire au-dessus moins l'aire en dessous.
+Le lemme de Fatou est un outil fondamental de l'intégration de Lebesgue. Il stipule que pour une suite de fonctions mesurables positives, l'intégrale de la limite inférieure est toujours majorée par la limite inférieure des intégrales. Cela traduit le fait qu'à la limite, de la masse peut disparaître (vers l'infini ou en s'échappant vers un point de manière singulière), mais elle ne peut pas se créer ex nihilo.
+
 
 ## 2. Formalisation
 

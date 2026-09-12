@@ -13,13 +13,7 @@ next: "[[Jalon 70 (Espaces mesurés produits).md]]"
 
 ## 1. Présentation du concept clé
 
-- **La Métaphore :** Imaginez une colonie de fourmis qui marchent sur une table. Chaque fourmi représente une valeur d'une fonction à un instant donné. La colonie entière forme une courbe $(f_n)$.
-    - Au fil du temps, les fourmis changent de trajectoire et la courbe se déforme.
-    - Vous voulez savoir si l'aire totale sous la colonie de fourmis va se stabiliser vers l'aire de la trajectoire finale.
-    - Le **Théorème de Convergence Dominée** dit : si vous pouvez installer un "tunnel" ou un "toit" (une fonction $g$) au-dessus de la table, tel que l'aire sous ce toit est finie, et que **toutes les fourmis restent toujours sous ce toit**, alors c'est gagné. Peu importe les zigzags des fourmis, l'aire totale convergera forcément vers l'aire de la limite. Le toit empêche la "masse" de s'échapper vers l'infini.
-- **Le "Pourquoi on a inventé ça" :** C'est le théorème le plus utilisé de toute l'analyse moderne. Il permet d'intervertir limite et intégrale sans les conditions très restrictives de la convergence uniforme (Jalon 59) ou de la croissance monotone (Jalon 67). C'est l'outil de base pour dériver sous le signe somme ou calculer des probabilités limites.
-- **Visualisation :** Une suite de courbes qui peuvent osciller, mais qui sont toutes emprisonnées entre une courbe $g$ et son opposé $-g$.
-
+Le théorème de convergence dominée (TCD) de Lebesgue est sans doute le résultat le plus emblématique et le plus utilisé de toute la théorie de la mesure. Il offre une réponse définitive et élégante au problème de l'interversion de la limite et de l'intégrale. La théorie de Riemann exigeait une convergence uniforme, une condition souvent trop rigide. Lebesgue a démontré que si toute l'agitation des fonctions $f_n$ est contenue en valeur absolue sous une enveloppe intégrable $g$, alors l'interversion est valide.
 ## 2. Formalisation
 
 Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
