@@ -170,7 +170,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 61](jalon-61/Jalon-61.md)** : Insuffisances de l'intégrale de Riemann, paradoxe de la fonction de Dirichlet.
 - **[Jalon 62](jalon-62/Jalon%2062%20%28Alg%C3%A8bres%29.md)** : Algèbres, $\sigma$-algèbres (tribus), tribus engendrées et tribu de Borel sur $\mathbb{R}$.
 - **[Jalon 63](jalon-63/Jalon%2063%20%28D%C3%A9finition%20axiomatique%20d%27une%20mesure%29.md)** : Définition axiomatique d'une mesure, mesures finies, $\sigma$-finies et propriétés de continuité monotone.
-- **[Jalon 64](jalon-64/Jalon%2064%20%28Construction%20pas%20%C3%A0%20pas%20de%20la%20mesure%20de%20Lebesgue%20sur%20-mathbb%7BR%7D-%20via%20la%20mesure%20ext%C3%A9rieure.%29.md)** : Construction pas à pas de la mesure de Lebesgue sur $\mathbb{R}$ via la mesure extérieure.
+- **[Jalon 64](jalon-64/Jalon-64.md)** : Construction pas à pas de la mesure de Lebesgue sur $\mathbb{R}$ via la mesure extérieure. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 65](jalon-65/Jalon%2065%20%28Fonctions%20mesurables%29.md)** : Fonctions mesurables, opérations élémentaires et approximation par des fonctions étagées.
 - **[Jalon 66](jalon-66/Jalon%2066%20%28Construction%20de%20l%27int%C3%A9grale%20de%20Lebesgue%20pour%20les%20fonctions%20mesurables%20positives.%29.md)** : Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives.
 - **[Jalon 67](jalon-67/Jalon%2067%20%28D%C3%A9monstration%20du%20th%C3%A9or%C3%A8me%20de%20convergence%20monotone%29.md)** : Démonstration du théorème de convergence monotone (Beppo-Levi).
@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-08-19] : [Upsert/Création] du Jalon 64 - Construction de la mesure de Lebesgue. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-17] : [Upsert/Création] du Jalon 62 - Algèbres et Tribus. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-17] : [Upsert/Création] du Jalon 61 - Insuffisances de l'intégrale de Riemann. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-16] : [Upsert/Création] du Jalon 60 - Livrable IA T5 : Preuve du théorème d'approximation universelle. Status: Terminé.
