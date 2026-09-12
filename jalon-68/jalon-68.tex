@@ -1,0 +1,499 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1
+}
+
+\title{\Huge JALON 68 : LEMME DE FATOU ET FONCTIONS DE SIGNE QUELCONQUE \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+\section{Présentation du concept clé}
+
+Le lemme de Fatou est un outil fondamental de l'intégration de Lebesgue. Il stipule que pour une suite de fonctions mesurables positives, l'intégrale de la limite inférieure est toujours majorée par la limite inférieure des intégrales. Cela traduit le fait qu'à la limite, de la masse peut disparaître (vers l'infini ou en s'échappant vers un point de manière singulière), mais elle ne peut pas se créer ex nihilo.
+
+Historiquement, l'extension de l'intégrale aux fonctions de signe quelconque a été cruciale pour modéliser des phénomènes physiques ou financiers où les grandeurs étudiées (énergie, capitaux, flux) ne sont pas strictement positives.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+    % Axes
+    \draw[->, thick] (-1,0) -- (6,0) node[right] {$x$};
+    \draw[->, thick] (0,-2) -- (0,3) node[above] {$y$};
+
+    % Fonction f(x)
+    \draw[blue, thick, domain=0.5:5.5, samples=100] plot (\x, {sin(\x*100) + 0.5});
+    \node[blue] at (5, 1.5) {$f(x)$};
+
+    % Fonction f^+(x) (Partie positive)
+    \draw[red, very thick, domain=0.5:5.5, samples=100] plot (\x, {max(sin(\x*100) + 0.5, 0)});
+    \node[red] at (2, 2.2) {$f^+(x)$};
+
+    % Fonction f^-(x) (Partie négative) - on dessine f^-(x) = max(-f(x), 0) au dessus de l'axe, ou -f^-(x) en dessous
+    \draw[orange, very thick, dashed, domain=0.5:5.5, samples=100] plot (\x, {max(-(sin(\x*100) + 0.5), 0)});
+    \node[orange] at (3.5, 1.2) {$f^-(x)$};
+
+    \node[below] at (3, -1.5) {Décomposition d'une fonction de signe quelconque.};
+\end{tikzpicture}
+\caption{Visualisation des parties positive $f^+$ et négative $f^-$.}
+\end{figure}
+
+\section{Formalisation}
+
+\subsection{Le Lemme de Fatou}
+
+Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables définies sur un espace mesuré $(X, \mathcal{A}, \mu)$ et à valeurs dans $[0, +\infty]$. Le lemme de Fatou énonce que :
+\begin{equation}
+\int_X \left( \liminf_{n \to \infty} f_n \right) d\mu \le \liminf_{n \to \infty} \int_X f_n d\mu
+\end{equation}
+
+\textbf{Exemples concrets de la masse fuyante :}\\
+Prenons $X = \mathbb{R}$ et $\mu$ la mesure de Lebesgue.
+Soit $f_n = \frac{1}{n} \mathbf{1}_{[0, n]}$. On a $\int f_n = 1$. Pour tout $x \in \mathbb{R}$, pour $n$ assez grand, $f_n(x) = \frac{1}{n}$, donc $f_n(x) \to 0$. La fonction limite $f = 0$ a pour intégrale 0. On a bien $0 \le 1$. La masse s'est étalée vers l'infini.
+
+\subsection{Fonctions de signe quelconque}
+
+Pour étendre l'intégrale aux fonctions à valeurs dans $\mathbb{R}$, on décompose la fonction $f$ en deux composantes positives :
+\begin{itemize}
+    \item La partie positive : $f^+(x) = \max(f(x), 0)$
+    \item La partie négative : $f^-(x) = \max(-f(x), 0)$
+\end{itemize}
+Il est immédiat que $f = f^+ - f^-$ et que $|f| = f^+ + f^-$. Les fonctions $f^+$ et $f^-$ étant mesurables et positives, leur intégrale est bien définie dans $[0, +\infty]$.
+
+\textbf{Définition (Intégrabilité de Lebesgue) :}\\
+Une fonction mesurable $f : X \to \mathbb{R}$ est dite intégrable (ou sommable) si les intégrales $\int f^+ d\mu$ et $\int f^- d\mu$ sont toutes deux finies.
+Dans ce cas, l'intégrale de $f$ est définie par :
+\begin{equation}
+\int_X f d\mu = \int_X f^+ d\mu - \int_X f^- d\mu
+\end{equation}
+
+\textbf{Remarque fondamentale :}\\
+Par linéarité (pour les fonctions positives), l'intégrabilité de $f$ est équivalente à l'intégrabilité de sa valeur absolue $|f|$, car $\int |f| d\mu = \int f^+ d\mu + \int f^- d\mu < \infty$. Cela distingue l'intégrale de Lebesgue de certaines intégrales semi-convergentes au sens de Riemann, qui interdisent l'intégration de fonctions dont les variations infinies de signe opposé se compensent.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+    % Illustration du lemme de Fatou avec une "masse" qui s'échappe
+    \draw[->, thick] (-1,0) -- (6,0) node[right] {$x$};
+    \draw[->, thick] (0,-0.5) -- (0,3) node[above] {$y$};
+
+    % f_1
+    \draw[thick, blue] (0,0) -- (0,2) -- (0.5, 2) -- (0.5, 0);
+    \node[blue] at (0.25, 2.2) {$f_1$};
+
+    % f_2
+    \draw[thick, red] (1,0) -- (1,2) -- (1.5, 2) -- (1.5, 0);
+    \node[red] at (1.25, 2.2) {$f_2$};
+
+    % f_3
+    \draw[thick, green!70!black] (3,0) -- (3,2) -- (3.5, 2) -- (3.5, 0);
+    \node[green!70!black] at (3.25, 2.2) {$f_3$};
+
+    \node[right] at (4, 1) {$\dots$};
+    \node[below] at (3, -1) {La masse glisse vers l'infini, la limite ponctuelle est 0.};
+\end{tikzpicture}
+\caption{Masse fuyante à l'infini. L'intégrale de la limite (0) est strictement inférieure à la limite des intégrales (constante égale à l'aire des rectangles).}
+\end{figure}
+
+\section{Démonstration du Lemme de Fatou}
+
+Considérons une suite $(f_n)$ de fonctions mesurables positives.
+Posons $g_k = \inf_{n \ge k} f_n$. La suite de fonctions $(g_k)$ est, par construction, croissante ($g_{k+1} \ge g_k$) et mesurable positive.
+Par définition de la limite inférieure, on a :
+$$ \lim_{k \to \infty} g_k(x) = \liminf_{n \to \infty} f_n(x) $$
+
+On peut donc appliquer le Théorème de Convergence Monotone (Théorème de Beppo Levi) à la suite $(g_k)$ :
+$$ \int_X \left( \liminf_{n \to \infty} f_n \right) d\mu = \int_X \left( \lim_{k \to \infty} g_k \right) d\mu = \lim_{k \to \infty} \int_X g_k d\mu $$
+
+Or, pour tout entier $n \ge k$, on a par définition de l'infimum : $g_k(x) \le f_n(x)$.
+La croissance de l'intégrale (pour des fonctions positives) implique que :
+$$ \int_X g_k d\mu \le \int_X f_n d\mu \quad \forall n \ge k $$
+
+En passant à l'infimum sur $n \ge k$ du côté droit, on obtient :
+$$ \int_X g_k d\mu \le \inf_{n \ge k} \left( \int_X f_n d\mu \right) $$
+
+Il ne reste plus qu'à prendre la limite lorsque $k \to \infty$ de chaque côté. Le côté gauche converge vers l'intégrale de la limite inférieure (d'après le TCM), et le côté droit converge, par définition, vers la limite inférieure de la suite des intégrales :
+$$ \lim_{k \to \infty} \int_X g_k d\mu \le \liminf_{n \to \infty} \int_X f_n d\mu $$
+
+Soit finalement :
+$$ \int_X \left( \liminf_{n \to \infty} f_n \right) d\mu \le \liminf_{n \to \infty} \int_X f_n d\mu $$
+Ce qui achève la démonstration du Lemme de Fatou. $\blacksquare$
+
+\newpage
+\part{Exercices d'Application et de Concours}
+
+\subsection*{Exercice 1 : Fatou avec masse fuyante vers l'infini \quad $\bigstar\bigstar\star\star\star$}
+\textbf{Énoncé :}
+Soit $X = \mathbb{R}$ muni de la mesure de Lebesgue $\lambda$.
+Considérons la suite de fonctions $f_n(x) = \frac{1}{n} \mathbf{1}_{[0, n]}(x)$.
+1. Déterminer la limite simple $f(x) = \lim_{n \to \infty} f_n(x)$ pour tout $x \in \mathbb{R}$.
+2. Calculer $\int_{\mathbb{R}} f_n d\lambda$.
+3. Vérifier la conclusion du lemme de Fatou et commenter l'inégalité.
+
+\textbf{Correction :}
+1. Pour tout $x \in \mathbb{R}$ fixé, pour $n > x$, on a $f_n(x) = \frac{1}{n}$. Ainsi, $\lim_{n \to \infty} f_n(x) = 0$. Donc $f(x) = 0$ partout.
+2. $\int_{\mathbb{R}} f_n d\lambda = \frac{1}{n} \lambda([0, n]) = \frac{1}{n} \times n = 1$.
+3. On a $\int_{\mathbb{R}} (\liminf f_n) d\lambda = \int_{\mathbb{R}} 0 d\lambda = 0$.
+D'autre part, $\liminf \left( \int_{\mathbb{R}} f_n d\lambda \right) = \liminf (1) = 1$.
+Le lemme de Fatou donne $0 \le 1$, l'inégalité est stricte. L'intégrale (la masse) de 1 "s'échappe vers l'infini".
+
+
+\subsection*{Exercice 2 : Fatou avec pic s'écrasant à l'origine \quad $\bigstar\bigstar\star\star\star$}
+\textbf{Énoncé :}
+Soit $X = [0, 1]$ muni de la mesure de Lebesgue $\lambda$.
+Soit $f_n(x) = n \mathbf{1}_{]0, 1/n[}(x)$.
+1. Calculer $\int_{0}^{1} f_n d\lambda$.
+2. Trouver $\liminf_{n \to \infty} f_n(x)$.
+3. Le lemme de Fatou s'applique-t-il ? Comparer les intégrales.
+
+\textbf{Correction :}
+1. L'intégrale de l'indicatrice d'un intervalle est la longueur de l'intervalle. Donc, $\int_{0}^{1} f_n d\lambda = n \times (1/n) = 1$.
+2. Pour $x=0$, $f_n(0) = 0$ pour tout $n$. Pour $x > 0$, il existe $N$ tel que pour tout $n \ge N$, $1/n \le x$, donc $f_n(x) = 0$. Ainsi, $f(x) = \liminf f_n(x) = 0$ pour tout $x \in [0,1]$.
+3. Le lemme de Fatou s'applique puisque les $f_n$ sont mesurables et positives. On obtient $\int_{0}^{1} (\liminf f_n) d\lambda = 0$ et $\liminf \int_{0}^{1} f_n d\lambda = 1$. L'inégalité $0 \le 1$ est vérifiée de manière stricte.
+
+
+\subsection*{Exercice 3 : Intégrabilité et inégalité triangulaire \quad $\bigstar\bigstar\bigstar\star\star$}
+\textbf{Énoncé :}
+Soit $X$ un espace mesuré et $\mu$ une mesure. Soit $f \in \mathcal{L}^1(\mu)$ une fonction à valeurs réelles.
+Montrer que $\left| \int_X f d\mu \right| \le \int_X |f| d\mu$.
+
+\textbf{Correction :}
+On utilise la décomposition $f = f^+ - f^-$.
+1. Par définition, on a $\int f d\mu = \int f^+ d\mu - \int f^- d\mu$.
+2. La valeur absolue de l'intégrale est :
+   $\left| \int f d\mu \right| = \left| \int f^+ d\mu - \int f^- d\mu \right|$.
+3. Par l'inégalité triangulaire usuelle pour les réels, $|a - b| \le |a| + |b|$, comme $\int f^+ d\mu \ge 0$ et $\int f^- d\mu \ge 0$, on a :
+   $\left| \int f^+ d\mu - \int f^- d\mu \right| \le \int f^+ d\mu + \int f^- d\mu$.
+4. De plus, $|f| = f^+ + f^-$. L'intégrale étant linéaire pour les fonctions positives :
+   $\int |f| d\mu = \int (f^+ + f^-) d\mu = \int f^+ d\mu + \int f^- d\mu$.
+5. On conclut donc bien que $\left| \int f d\mu \right| \le \int |f| d\mu$.
+
+
+\subsection*{Exercice 4 : Fonction intégrable mais non bornée \quad $\bigstar\bigstar\bigstar\star\star$}
+\textbf{Énoncé :}
+Soit l'espace mesuré $]0, 1]$ muni de la mesure de Lebesgue $\lambda$.
+Considérons la fonction $f(x) = \frac{1}{\sqrt{x}}$.
+1. Montrer que $f$ n'est pas bornée sur $]0, 1]$.
+2. Montrer que $f$ est intégrable sur cet espace et calculer son intégrale.
+
+\textbf{Correction :}
+1. $\lim_{x \to 0^+} \frac{1}{\sqrt{x}} = +\infty$. La fonction prend des valeurs arbitrairement grandes près de 0, elle n'est donc pas bornée sur $]0, 1]$.
+2. Pour montrer que $f$ est intégrable, il faut montrer que $\int_{]0,1]} |f| d\lambda < \infty$.
+   Comme $f$ est positive, $|f| = f$. Pour calculer l'intégrale de Lebesgue, on peut utiliser l'intégrale de Riemann généralisée, car la fonction est continue sur $]0,1]$.
+   $\int_{]0, 1]} \frac{1}{\sqrt{x}} d\lambda = \lim_{\epsilon \to 0^+} \int_{\epsilon}^{1} x^{-1/2} dx = \lim_{\epsilon \to 0^+} [2x^{1/2}]_{\epsilon}^{1} = \lim_{\epsilon \to 0^+} (2 - 2\sqrt{\epsilon}) = 2$.
+   L'intégrale est finie, donc $f \in \mathcal{L}^1(\lambda)$.
+
+
+\subsection*{Exercice 5 : Lemme de Fatou inverse pour des fonctions majorées \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+\textbf{Énoncé :}
+Soit $(f_n)$ une suite de fonctions mesurables telles que $f_n \le g$ pour tout $n$, où $g$ est une fonction intégrable ($g \in \mathcal{L}^1(\mu)$).
+Montrer que $\limsup_{n \to \infty} \int f_n d\mu \le \int \limsup_{n \to \infty} f_n d\mu$.
+
+\textbf{Correction :}
+1. On pose $h_n = g - f_n$. Comme $f_n \le g$, $h_n \ge 0$. Les $h_n$ sont mesurables et positives.
+2. On applique le lemme de Fatou classique à la suite $(h_n)$ :
+   $\int \liminf_{n \to \infty} (g - f_n) d\mu \le \liminf_{n \to \infty} \int (g - f_n) d\mu$.
+3. On utilise les propriétés des limites inférieures et supérieures :
+   $\liminf (-f_n) = - \limsup f_n$ et $\liminf \int (-f_n) d\mu = - \limsup \int f_n d\mu$.
+4. En remplaçant :
+   $\int (g - \limsup f_n) d\mu \le \int g d\mu - \limsup \int f_n d\mu$.
+5. Comme $g$ est intégrable, on peut soustraire $\int g d\mu$ (qui est fini) des deux côtés :
+   $-\int \limsup f_n d\mu \le - \limsup \int f_n d\mu$.
+6. En multipliant par -1 (et en changeant le sens de l'inégalité) :
+   $\limsup \int f_n d\mu \le \int \limsup f_n d\mu$.
+
+
+\subsection*{Exercice 6 : Stabilité par produit avec une fonction bornée \quad $\bigstar\bigstar\star\star\star$}
+\textbf{Énoncé :}
+Soit $f \in \mathcal{L}^1(\mu)$ et $g$ une fonction mesurable et bornée sur $X$, i.e., il existe $M > 0$ tel que $|g(x)| \le M$ pour presque tout $x \in X$.
+Montrer que le produit $fg \in \mathcal{L}^1(\mu)$.
+
+\textbf{Correction :}
+1. Pour prouver que $fg \in \mathcal{L}^1(\mu)$, on doit montrer que $\int |fg| d\mu < \infty$.
+2. On sait que $|g(x)| \le M$ presque partout. Donc, $|f(x)g(x)| = |f(x)||g(x)| \le M|f(x)|$ presque partout.
+3. Par croissance de l'intégrale (les deux fonctions étant positives ou nulles), on a :
+   $\int |fg| d\mu \le \int M|f| d\mu = M \int |f| d\mu$.
+4. Comme $f \in \mathcal{L}^1(\mu)$, $\int |f| d\mu$ est fini. Et comme $M$ est fini, $M \int |f| d\mu$ est fini.
+5. Donc $\int |fg| d\mu < \infty$, ce qui prouve que $fg \in \mathcal{L}^1(\mu)$.
+
+
+\subsection*{Exercice 7 : Non-intégrabilité de sin(x)/x \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+\textbf{Énoncé :}
+Soit $f(x) = \frac{\sin(x)}{x}$ sur $]0, +\infty[$ muni de la mesure de Lebesgue.
+Montrer que $f$ n'est pas intégrable au sens de Lebesgue (c'est-à-dire $f \notin \mathcal{L}^1(]0, +\infty[)$).
+
+\textbf{Correction :}
+1. Il faut montrer que $\int_{]0, +\infty[} \left| \frac{\sin x}{x} \right| dx = +\infty$.
+2. L'intégrale peut être décomposée en une somme sur des intervalles $[k\pi, (k+1)\pi]$ :
+   $I = \sum_{k=0}^{\infty} \int_{k\pi}^{(k+1)\pi} \frac{|\sin x|}{x} dx$.
+3. Sur l'intervalle $[k\pi, (k+1)\pi]$, on a $x \le (k+1)\pi$, donc $\frac{1}{x} \ge \frac{1}{(k+1)\pi}$.
+4. Ainsi, $\int_{k\pi}^{(k+1)\pi} \frac{|\sin x|}{x} dx \ge \frac{1}{(k+1)\pi} \int_{k\pi}^{(k+1)\pi} |\sin x| dx$.
+5. L'intégrale de $|\sin x|$ sur une période demi-entière est toujours 2 :
+   $\int_{k\pi}^{(k+1)\pi} |\sin x| dx = 2$.
+6. On obtient donc : $I \ge \sum_{k=0}^{\infty} \frac{2}{(k+1)\pi} = \frac{2}{\pi} \sum_{n=1}^{\infty} \frac{1}{n}$.
+7. La série harmonique $\sum_{n=1}^{\infty} \frac{1}{n}$ diverge vers l'infini, donc l'intégrale diverge. $f \notin \mathcal{L}^1$.
+
+
+\subsection*{Exercice 8 : Inégalité de Tchebychev \quad $\bigstar\bigstar\bigstar\star\star$}
+\textbf{Énoncé :}
+Soit $f \in \mathcal{L}^1(\mu)$ une fonction à valeurs réelles et $\alpha > 0$.
+Posons $A_\alpha = \{x \in X : |f(x)| \ge \alpha\}$.
+Montrer l'inégalité de Tchebychev (aussi appelée de Markov) :
+$\mu(A_\alpha) \le \frac{1}{\alpha} \int_X |f| d\mu$.
+
+\textbf{Correction :}
+1. On peut minorer $|f|$ en utilisant l'indicatrice de $A_\alpha$ :
+   Pour tout $x \in X$, $|f(x)| \ge |f(x)| \mathbf{1}_{A_\alpha}(x)$.
+2. Si $x \in A_\alpha$, alors $|f(x)| \ge \alpha$, donc $|f(x)| \mathbf{1}_{A_\alpha}(x) \ge \alpha \mathbf{1}_{A_\alpha}(x)$.
+   Si $x \notin A_\alpha$, $\mathbf{1}_{A_\alpha}(x) = 0$, donc les deux côtés valent 0.
+   Ainsi, pour tout $x \in X$, on a $|f(x)| \ge \alpha \mathbf{1}_{A_\alpha}(x)$.
+3. On intègre cette inégalité entre fonctions positives :
+   $\int_X |f| d\mu \ge \int_X \alpha \mathbf{1}_{A_\alpha} d\mu = \alpha \int_X \mathbf{1}_{A_\alpha} d\mu = \alpha \mu(A_\alpha)$.
+4. Comme $\alpha > 0$, on peut diviser par $\alpha$ pour obtenir :
+   $\mu(A_\alpha) \le \frac{1}{\alpha} \int_X |f| d\mu$.
+
+
+\subsection*{Exercice 9 : Fatou et convergence en mesure \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+\textbf{Énoncé :}
+Soit $(f_n)$ une suite de fonctions mesurables positives convergeant en mesure vers une fonction $f$.
+Montrer que $\int f d\mu \le \liminf \int f_n d\mu$.
+*(Indice : extraire une sous-suite).*
+
+\textbf{Correction :}
+1. Posons $l = \liminf \int f_n d\mu$. Si $l = +\infty$, l'inégalité est triviale. Supposons $l < \infty$.
+2. Par définition de la limite inférieure, il existe une sous-suite $(f_{n_k})$ telle que $\lim_{k \to \infty} \int f_{n_k} d\mu = l$.
+3. Comme $(f_{n_k})$ converge en mesure vers $f$, on peut en extraire une sous-sous-suite $(f_{n_{k_j}})$ qui converge presque partout vers $f$.
+4. On applique le lemme de Fatou classique à la suite $(f_{n_{k_j}})$ :
+   $\int (\liminf_{j \to \infty} f_{n_{k_j}}) d\mu \le \liminf_{j \to \infty} \int f_{n_{k_j}} d\mu$.
+5. Puisque la sous-sous-suite converge p.p. vers $f$, $\liminf_{j \to \infty} f_{n_{k_j}} = f$ presque partout.
+6. La suite réelle $(\int f_{n_{k_j}} d\mu)_j$ est une sous-suite de la suite convergente $(\int f_{n_k} d\mu)_k$, sa limite est donc $l$.
+7. On obtient alors : $\int f d\mu \le l = \liminf \int f_n d\mu$.
+
+
+\subsection*{Exercice 10 : Différence entre intégrale de Lebesgue et valeur principale de Cauchy \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+\textbf{Énoncé :}
+Soit $f(x) = \frac{1}{x}$ pour $x \in [-1, 1] \setminus \{0\}$.
+1. Calculer $\lim_{\epsilon \to 0^+} \left( \int_{-1}^{-\epsilon} \frac{1}{x} dx + \int_{\epsilon}^{1} \frac{1}{x} dx \right)$ (Valeur principale de Cauchy).
+2. Montrer que $f$ n'est pas intégrable au sens de Lebesgue sur $[-1, 1]$.
+
+\textbf{Correction :}
+1. On calcule la valeur principale de Cauchy :
+   $VP = \lim_{\epsilon \to 0^+} \left( [\ln |x|]_{-1}^{-\epsilon} + [\ln |x|]_{\epsilon}^{1} \right)$
+   $VP = \lim_{\epsilon \to 0^+} \left( \ln(\epsilon) - \ln(1) + \ln(1) - \ln(\epsilon) \right) = \lim_{\epsilon \to 0^+} (0) = 0$.
+2. Pour que $f$ soit intégrable au sens de Lebesgue, il faut que l'intégrale de la valeur absolue soit finie :
+   $\int_{[-1, 1]} \left| \frac{1}{x} \right| dx = 2 \int_{0}^{1} \frac{1}{x} dx$.
+   L'intégrale de Riemann généralisée $\int_{0}^{1} \frac{1}{x} dx = [\ln x]_0^1$ diverge vers l'infini.
+   Donc $\int |f| dx = +\infty$. $f \notin \mathcal{L}^1([-1, 1])$.
+L'intégrale de Lebesgue exige la convergence absolue, ce qui évite les compensations artificielles de l'infini avec l'infini (comme dans la valeur principale).
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+
+\subsection*{TP 1 : Visualisation du Lemme de Fatou (Masse Fuyante)}
+\begin{lstlisting}
+# TP 1 : Illustration numérique du Lemme de Fatou
+# On calcule l'intégrale d'une suite de fonctions fn et de sa limite.
+
+def fn(x, n):
+    if 0 <= x <= n:
+        return 1.0 / n
+    return 0.0
+
+def f_lim(x):
+    return 0.0  # La limite est 0 partout
+
+# Discrétisation et approximation de l'intégrale de Lebesgue par sommes de Riemann
+def integrale(func, n=None, x_min=0, x_max=100, num_points=10000):
+    dx = (x_max - x_min) / num_points
+    total_area = 0.0
+    for i in range(num_points):
+        x = x_min + i * dx
+        if n is not None:
+            val = func(x, n)
+        else:
+            val = func(x)
+        total_area += val * dx
+    return total_area
+
+print("Demonstration de la masse fuyante:")
+for n in [10, 50, 100]:
+    int_fn = integrale(fn, n=n, x_max=n*2)
+    print(f"n={n:3}, int(f_n) = {int_fn:.4f}")
+
+int_lim = integrale(f_lim, x_max=100)
+print(f"Integrale de la limite f : {int_lim:.4f}")
+print("On observe : int(lim f_n) < lim int(f_n)")
+print("0 < 1 : L'inegalite de Fatou est stricte.")
+\end{lstlisting}
+
+\subsection*{TP 2 : Calcul Numérique des Parties Positives et Négatives}
+\begin{lstlisting}
+# TP 2 : Decomposition en parties positive et negative
+
+def f(x):
+    # Une fonction de signe changeant
+    return x * x - 2
+
+def f_plus(x):
+    return max(f(x), 0)
+
+def f_moins(x):
+    return max(-f(x), 0)
+
+def integrale(func, x_min=-2, x_max=2, num_points=1000):
+    dx = (x_max - x_min) / num_points
+    total_area = 0.0
+    for i in range(num_points):
+        x = x_min + i * dx
+        total_area += func(x) * dx
+    return total_area
+
+int_f = integrale(f)
+int_f_plus = integrale(f_plus)
+int_f_moins = integrale(f_moins)
+int_abs_f = int_f_plus + int_f_moins
+
+print(f"Integrale(f)      = {int_f:.4f}")
+print(f"Integrale(f+)     = {int_f_plus:.4f}")
+print(f"Integrale(f-)     = {int_f_moins:.4f}")
+print(f"int(f+) - int(f-) = {int_f_plus - int_f_moins:.4f}")
+print(f"Integrale(|f|)    = {int_abs_f:.4f}")
+assert abs(int_f - (int_f_plus - int_f_moins)) < 1e-3, "L'egalite n'est pas verifiee"
+print("Verification de la linearite passee.")
+\end{lstlisting}
+
+\subsection*{TP 3 : Non-intégrabilité de Lebesgue vs Compensation}
+\begin{lstlisting}
+# TP 3 : Compensation et integrabilite
+import math
+
+def f(x):
+    if abs(x) < 1e-5:
+        return 0.0
+    return 1.0 / x
+
+def abs_f(x):
+    return abs(f(x))
+
+def integrale_symetrique(func, limit, num_points=1000):
+    dx = 2 * limit / num_points
+    total = 0.0
+    for i in range(num_points):
+        x = -limit + i * dx
+        total += func(x) * dx
+    return total
+
+print("Calcul avec annulation symetrique (Valeur Principale):")
+# Comme f est impaire, l'intégrale symétrique approche 0
+val_sym = integrale_symetrique(f, 1.0, 10001) # nb impair pour eviter 0 pile
+print(f"Valeur principale approchee : {val_sym:.6f}")
+
+print("\nCalcul de l'integrale de Lebesgue (Integrale de la valeur absolue):")
+# L'intégrale de |1/x| diverge près de 0
+val_abs = integrale_symetrique(abs_f, 1.0, 10000)
+print(f"Integrale de |f| sur [-1, 1] : {val_abs:.2f} (depend du pas, tend vers l'infini)")
+
+val_abs_fin = integrale_symetrique(abs_f, 1.0, 100000)
+print(f"Avec un pas plus fin       : {val_abs_fin:.2f} (divergence visible)")
+\end{lstlisting}
+
+\subsection*{TP 4 : Vérification de l'inégalité de Tchebychev}
+\begin{lstlisting}
+# TP 4 : Inegalite de Tchebychev (Markov)
+
+def f(x):
+    # Fonction densite exponentielle (par exemple)
+    if x < 0: return 0
+    return 2.0 * math.exp(-2.0 * x)
+
+def int_f():
+    # Integrale de x*f(x) pour calculer l'esperance
+    # Ici, E[X] = 1/2
+    return 0.5
+
+import math
+def mu_A_alpha(alpha):
+    # Mesure (probabilite) que X >= alpha
+    # P(X >= alpha) = int_{alpha}^{inf} 2*exp(-2x) dx = exp(-2*alpha)
+    if alpha < 0: return 1.0
+    return math.exp(-2.0 * alpha)
+
+print("Verification Tchebychev P(X >= a) <= E[X] / a")
+esperance = int_f()
+for alpha in [1.0, 2.0, 5.0]:
+    p = mu_A_alpha(alpha)
+    borne = esperance / alpha
+    print(f"alpha = {alpha:3.1f} | P(X>={alpha}) = {p:.6f} | Borne = {borne:.6f}")
+    assert p <= borne, "Inegalite violee!"
+print("L'inegalite de Tchebychev est valide.")
+\end{lstlisting}
+
+\subsection*{TP 5 : Instabilité Numérique et Limite Inférieure}
+\begin{lstlisting}
+# TP 5 : Calcul de liminf sur une suite oscillante
+import random
+random.seed(42)
+
+def fn_array(n, size=10):
+    # Suite de n tableaux, chaque élément simule une fonction en un point x
+    # fn(x) = (-1)^n * (1/n) + 1  -> limite est 1
+    # Mais ajoutons des perturbations aleatoires pour voir l'effet sur liminf
+    res = []
+    for x in range(size):
+        base = 1.0
+        oscillation = (1.0 if n % 2 == 0 else -1.0) * (2.0 / n)
+        bruit = random.uniform(0, 1.0/n)
+        res.append(base + oscillation + bruit)
+    return res
+
+N_max = 50
+history = []
+for n in range(1, N_max+1):
+    history.append(fn_array(n))
+
+# Calcul de g_k = inf_{n>=k} f_n
+g_k_history = []
+for k in range(N_max):
+    # inf sur chaque composante x
+    g_k = []
+    for x in range(10):
+        inf_val = history[k][x]
+        for n in range(k+1, N_max):
+            if history[n][x] < inf_val:
+                inf_val = history[n][x]
+        g_k.append(inf_val)
+    g_k_history.append(g_k)
+
+print(f"f_1 (x=0)  : {history[0][0]:.4f}")
+print(f"f_50 (x=0) : {history[49][0]:.4f}")
+print(f"g_1 (x=0)  : {g_k_history[0][0]:.4f} (l'inf global a partir de k=1)")
+print(f"g_45 (x=0) : {g_k_history[44][0]:.4f} (l'inf sur la queue)")
+\end{lstlisting}
+
+\end{document}
