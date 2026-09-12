@@ -1,15 +1,37 @@
-# Exercice 6 : Application du lemme de Fatou $$\bigstar$$$$\bigstar$$$$\bigstar$$$$\bigstar$$$$\star$$
+# Exercice 6 : Application à une limite supérieure
+$\bigstar\bigstar\bigstar\star\star$
 
-**Énoncé :**
-Montrer une application spécifique du lemme de Fatou ou de l'intégrabilité pour une suite de fonctions (niveau 6).
-Soit $f_n(x) = \frac{n^2 x}{1 + n^3 x^2}$ sur $[0, 1]$.
-Étudier la limite et appliquer le lemme de Fatou.
+## Énoncé
+En utilisant un raisonnement similaire au Lemme de Fatou, démontrer que si $(f_n)$ est une suite de fonctions mesurables, toutes majorées presque partout par une fonction intégrable $G$, alors :
+$$\limsup_{n \to \infty} \int_X f_n d\mu \leq \int_X (\limsup_{n \to \infty} f_n) d\mu$$
 
-**Correction Détaillée :**
-1. Pour $x > 0$ fixé, $f_n(x) \sim \frac{n^2 x}{n^3 x^2} = \frac{1}{n x} \to 0$. Donc $f_n \to 0$ simplement.
-2. $\liminf f_n = 0$, donc $\int_0^1 \liminf f_n = 0$.
-3. Calcul de l'intégrale : $\int_0^1 \frac{n^2 x}{1 + n^3 x^2} dx$.
-   Posons $u = 1 + n^3 x^2$, $du = 2 n^3 x dx$.
-   L'intégrale devient $\frac{1}{2n} \int_1^{1+n^3} \frac{du}{u} = \frac{\ln(1+n^3)}{2n}$.
-4. Limite : $\frac{\ln(1+n^3)}{2n} \to 0$.
-5. L'inégalité $0 \le 0$ est vérifiée. La limite des intégrales est égale à l'intégrale de la limite.
+## Correction
+Il s'agit du "Fatou inversé". L'hypothèse clé est la majoration par une fonction intégrable $G$, c'est-à-dire $f_n \leq G$ pour tout $n$.
+
+**1. Changement de signe :**
+Posons $h_n = G - f_n$.
+Puisque $f_n \leq G$, on a $h_n \geq 0$ presque partout.
+Les $h_n$ sont mesurables et positives. On peut leur appliquer le Lemme de Fatou standard :
+$$\int_X \liminf_{n \to \infty} h_n d\mu \leq \liminf_{n \to \infty} \int_X h_n d\mu$$
+
+**2. Propriétés des limites inférieures/supérieures avec les signes :**
+Rappelons que $\liminf (-a_n) = - \limsup (a_n)$.
+Calculons $\liminf h_n$ :
+$$\liminf_{n \to \infty} (G - f_n) = G + \liminf_{n \to \infty} (-f_n) = G - \limsup_{n \to \infty} f_n$$
+
+**3. Application de l'intégrale sur le membre de gauche :**
+$$\int_X \liminf_{n \to \infty} h_n d\mu = \int_X (G - \limsup f_n) d\mu = \int_X G d\mu - \int_X (\limsup f_n) d\mu$$
+(L'utilisation de la linéarité est justifiée car $G$ est intégrable).
+
+**4. Analyse du membre de droite :**
+$$\liminf_{n \to \infty} \int_X h_n d\mu = \liminf_{n \to \infty} \int_X (G - f_n) d\mu = \liminf_{n \to \infty} \left( \int_X G d\mu - \int_X f_n d\mu \right)$$
+$$\liminf_{n \to \infty} \int_X h_n d\mu = \int_X G d\mu + \liminf_{n \to \infty} \left( - \int_X f_n d\mu \right) = \int_X G d\mu - \limsup_{n \to \infty} \int_X f_n d\mu$$
+
+**5. Conclusion :**
+En remplaçant dans l'inégalité de départ :
+$$\int_X G d\mu - \int_X (\limsup f_n) d\mu \leq \int_X G d\mu - \limsup \int_X f_n d\mu$$
+Puisque $\int_X G d\mu$ est un réel fini, on peut la soustraire des deux côtés :
+$$- \int_X (\limsup f_n) d\mu \leq - \limsup \int_X f_n d\mu$$
+En multipliant par $-1$ (ce qui inverse le sens de l'inégalité) :
+$$\int_X (\limsup f_n) d\mu \geq \limsup \int_X f_n d\mu$$
+Ce qui est exactement l'inégalité demandée.
