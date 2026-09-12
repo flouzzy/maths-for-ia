@@ -174,7 +174,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 65](jalon-65/Jalon-65.md)** : Fonctions mesurables, opérations élémentaires et approximation par des fonctions étagées.
 - **[Jalon 66](jalon-66/Jalon-66.md)** : Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 67](jalon-67/Jalon-67.md)** : Démonstration du théorème de convergence monotone (Beppo-Levi). 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 68](jalon-68/Jalon%2068%20%28Lemme%20de%20Fatou%20et%20d%C3%A9finition%20de%20l%27int%C3%A9grale%20pour%20les%20fonctions%20de%20signe%20quelconque%29.md)** : Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque (fonctions intégrables).
+- **[Jalon 68](jalon-68/Jalon-68.md)** : Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque (fonctions intégrables). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 69](jalon-69/Jalon%2069%20%28D%C3%A9monstration%20compl%C3%A8te%20du%20th%C3%A9or%C3%A8me%20de%20convergence%20domin%C3%A9e%20de%20Lebesgue.%29.md)** : Démonstration complète du théorème de convergence dominée de Lebesgue.
 - **[Jalon 70](jalon-70/Jalon%2070%20%28Espaces%20mesur%C3%A9s%20produits%29.md)** : Espaces mesurés produits, tribu produit et construction de la mesure produit.
 - **[Jalon 71](jalon-71/Jalon%2071%20%28Th%C3%A9or%C3%A8mes%20de%20Fubini-Tonelli%29.md)** : Théorèmes de Fubini-Tonelli (fonctions positives) et de Fubini (fonctions intégrables).
@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-09-11] : [Upsert/Création] du Jalon 68 - Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque. Status: Terminé.
 - [2026-09-11] : [Upsert/Création] du Jalon 67 - Démonstration du théorème de convergence monotone (Beppo-Levi). Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-27] : [Upsert/Création] du Jalon 66 - Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-20] : [Upsert/Création] du Jalon 65 - Fonctions mesurables. Status: Terminé.
