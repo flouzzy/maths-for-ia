@@ -1,9 +1,9 @@
-## Exercice 3 : Limite d'une intégrale avec fonction puissance \quad $\bigstar\bigstar\bigstar\star\star$
+##{Exercice 3 : Limite d'une intégrale avec fonction puissance \quad $\bigstar\bigstar\bigstar\star\star$}
 
-**Énoncé :**
+\textbf{Énoncé :}
 Montrer que $\lim_{n \to \infty} \int_0^1 \frac{n x^{n-1}}{1 + x} dx = \frac{1}{2}$.
 
-**Correction :**
+\textbf{Correction :}
 Si on utilise le TCD directement, la fonction $f_n(x) = \frac{n x^{n-1}}{1 + x}$ converge simplement vers 0 sur $[0, 1[$. Mais $\int_0^1 f_n(x) dx$ ne tend pas vers 0 ! Il n'y a donc pas de domination possible.
 Procédons autrement pour appliquer le TCD.
 Par intégration par parties :
