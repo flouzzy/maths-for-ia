@@ -12,20 +12,25 @@ next: "[[Jalon 71 (Théorèmes de Fubini-Tonelli).md]]"
 
 # Jalon 70 : Espaces mesurés produits
 
-## 1. Présentation du concept clé
+## 1. Genèse et Intuition
 
-- **La Métaphore :** Imaginez que vous ayez deux règles. L'une mesure des longueurs sur un axe horizontal ($X$), l'autre mesure des longueurs sur un axe vertical ($Y$). Si vous croisez ces deux règles, vous créez un monde en 2D (le produit $X \times Y$).
+ Imaginez que vous ayez deux règles. L'une mesure des longueurs sur un axe horizontal ($X$), l'autre mesure des longueurs sur un axe vertical ($Y$). Si vous croisez ces deux règles, vous créez un monde en 2D (le produit $X \times Y$).
     - Une **Tribu produit**, c'est décider que les "rectangles" (un ensemble de $X$ croisé avec un ensemble de $Y$) sont nos nouvelles briques de base pour mesurer des surfaces.
     - Une **Mesure produit**, c'est dire que la surface d'un rectangle est simplement sa largeur multipliée par sa hauteur.
     C'est la manière naturelle de construire des mesures complexes à partir de mesures simples.
-- **Le "Pourquoi on a inventé ça" :** La plupart des phénomènes réels dépendent de plusieurs facteurs. Pour calculer le volume d'un objet, ou la probabilité que deux événements indépendants arrivent en même temps, on a besoin de savoir comment "multiplier" les mesures entre elles de manière rigoureuse.
-- **Visualisation :** Un quadrillage. On définit la mesure sur chaque petit carreau, puis on étend cette définition à toutes les formes bizarres que l'on peut construire en assemblant des carreaux.
+ La plupart des phénomènes réels dépendent de plusieurs facteurs. Pour calculer le volume d'un objet, ou la probabilité que deux événements indépendants arrivent en même temps, on a besoin de savoir comment "multiplier" les mesures entre elles de manière rigoureuse.
+ Un quadrillage. On définit la mesure sur chaque petit carreau, puis on étend cette définition à toutes les formes bizarres que l'on peut construire en assemblant des carreaux.
 
-## 2. Formalisation
+## 2. Définitions, Théorèmes & Exemples Concrets Immédiats
 
 Soient $(X_1, \mathcal{F}_1, \mu_1)$ et $(X_2, \mathcal{F}_2, \mu_2)$ deux espaces mesurés.
 
-### A. La Tribu Produit
+### Construction de la Tribu Produit
+
+> **Exemple Concret Immédiat :**
+> Si $X_1 = X_2 = \mathbb{R}$ munis de la tribu borélienne $\mathcal{B}(\mathbb{R})$, la tribu produit $\mathcal{B}(\mathbb{R}) \otimes \mathcal{B}(\mathbb{R})$ est exactement la tribu borélienne de $\mathbb{R}^2$, notée $\mathcal{B}(\mathbb{R}^2)$.
+> Le rectangle géométrique $[0, 1] \times [0, 1]$ est un rectangle mesurable.
+
 
 > **Définition 1 (Rectangle mesurable) :**
 > On appelle **rectangle mesurable** toute partie de $X_1 \times X_2$ de la forme $A_1 \times A_2$ où $A_1 \in \mathcal{F}_1$ et $A_2 \in \mathcal{F}_2$.
@@ -33,13 +38,20 @@ Soient $(X_1, \mathcal{F}_1, \mu_1)$ et $(X_2, \mathcal{F}_2, \mu_2)$ deux espac
 > **Définition 2 (Tribu Produit) :**
 > La **tribu produit**, notée $\mathcal{F}_1 \otimes \mathcal{F}_2$, est la tribu engendrée par l'ensemble des rectangles mesurables sur $X_1 \times X_2$.
 
-### B. La Mesure Produit
+### Existence et Unicité de la Mesure Produit
+
+> **Exemple Concret Immédiat :**
+> Prenons $X_1 = X_2 = \mathbb{R}$ avec $\mu_1 = \mu_2 = \lambda$ (mesure de Lebesgue). Les intervalles $A_1 = [0, 2]$ et $A_2 = [1, 4]$ sont mesurables.
+> La mesure produit $\lambda \otimes \lambda$ du rectangle $R = A_1 \times A_2$ est simplement l'aire géométrique :
+> $\pi(R) = \lambda([0, 2]) \cdot \lambda([1, 4]) = 2 \cdot 3 = 6$.
+> La condition de $\sigma$-finitude est bien vérifiée car $\mathbb{R} = \bigcup_{n \in \mathbb{N}} [-n, n]$.
+
 
 > **Théorème (Existence et Unicité) :**
 > Si les mesures $\mu_1$ et $\mu_2$ sont **$\sigma$-finies**, alors il existe une unique mesure $\pi$ sur $(X_1 \times X_2, \mathcal{F}_1 \otimes \mathcal{F}_2)$, notée $\mu_1 \otimes \mu_2$, telle que pour tout rectangle mesurable $A_1 \times A_2$ :
 > $$\pi(A_1 \times A_2) = \mu_1(A_1) \cdot \mu_2(A_2)$$
 
-### C. Sections d'un ensemble
+### Sections Mesurables
 
 Soit $E \in \mathcal{F}_1 \otimes \mathcal{F}_2$. Pour tout $x \in X_1$, on définit la **section** de $E$ en $x$ par :
 $$E_x = \{ y \in X_2 \mid (x, y) \in E \}$$
@@ -56,7 +68,13 @@ Montrons que $\pi(E) = \int_{X_1} \mu_2(E_x) d\mu_1(x)$.
    - Si $x \notin A_1$, alors $E_x = \emptyset$. Sa mesure est 0.
    - Donc $\mu_2(E_x) = \mu_2(A_2) \mathbf{1}_{A_1}(x)$.
    - En intégrant par rapport à $\mu_1$ : $\int \mu_2(A_2) \mathbf{1}_{A_1}(x) d\mu_1 = \mu_2(A_2) \mu_1(A_1) = \pi(E)$.
-2. **Généralisation :** On utilise le théorème des classes monotones (ou de transport de propriété). La propriété est vraie sur les rectangles, qui forment un $\pi$-système engendrant la tribu. Elle est stable par union dénombrable croissante et par passage au complémentaire.
+2. **Généralisation par classes monotones :**
+   Soit $\mathcal{M}$ l'ensemble des parties $E \in \mathcal{F}_1 \otimes \mathcal{F}_2$ pour lesquelles l'égalité $\pi(E) = \int_{X_1} \mu_2(E_x) d\mu_1(x)$ est vraie.
+   - Nous venons de montrer que $\mathcal{M}$ contient tous les rectangles mesurables. L'ensemble des rectangles forme un $\pi$-système (stable par intersection finie).
+   - $\mathcal{M}$ contient l'espace entier $X_1 \times X_2$.
+   - $\mathcal{M}$ est stable par union dénombrable croissante (par le théorème de convergence monotone appliqué à la suite d'indicatrices correspondantes).
+   - $\mathcal{M}$ est stable par différence (si $A \subset B$ et $A, B \in \mathcal{M}$, alors par linéarité de l'intégrale, $B \setminus A \in \mathcal{M}$).
+   - D'après le théorème des classes monotones, $\mathcal{M}$ contient la tribu engendrée par le $\pi$-système des rectangles, c'est-à-dire $\mathcal{F}_1 \otimes \mathcal{F}_2$.
 3. **Conclusion :** La formule est vraie pour tout ensemble de la tribu produit. Cela montre que la mesure produit est "cohérente" avec l'intégration couche par couche.
 
 ## 4. Exercices d'Application
