@@ -1,22 +1,14 @@
-# Exercice 5 : La tribu produit n'est pas le produit des tribus (★★★☆☆)
+## Exercice 5 : Indépendance et Produit de probabilités \quad $\bigstar\bigstar\bigstar\star\star$
 
 **Énoncé :**
-Soit $X = \{1, 2\}$ et $Y = \{a, b\}$. On munit ces ensembles des tribus discrètes $\mathcal{P}(X)$ et $\mathcal{P}(Y)$.
-1. Déterminer le nombre d'éléments de la tribu produit $\mathcal{P}(X) \otimes \mathcal{P}(Y)$.
-2. Donner un exemple d'ensemble mesurable dans cette tribu produit qui n'est pas un "rectangle mesurable" (c'est-à-dire qui ne s'écrit pas sous la forme $A \times B$).
+Soient $X$ et $Y$ deux variables aléatoires réelles. Leur loi jointe $P_{(X,Y)}$ est une probabilité sur $(\mathbb{R}^2, \mathcal{B}(\mathbb{R}^2))$.
+Montrer que si $P_{(X,Y)} = P_X \otimes P_Y$, alors $P(X \in A, Y \in B) = P(X \in A)P(Y \in B)$ pour tous boréliens $A$ et $B$.
 
 **Correction :**
-1. Les tribus marginales contiennent toutes les parties. Pour des ensembles finis ou dénombrables, la tribu produit de l'ensemble des parties est l'ensemble des parties de l'espace produit.
-   L'espace produit est $Z = X \times Y = \{(1,a), (1,b), (2,a), (2,b)\}$.
-   $Z$ possède 4 éléments.
-   La tribu produit est l'ensemble des parties de $Z$, notée $\mathcal{P}(Z)$.
-   Le nombre d'éléments de la tribu produit est $2^4 = 16$.
-2. Considérons l'ensemble "diagonale" $D = \{(1,a), (2,b)\}$.
-   Cet ensemble $D$ appartient bien sûr à la tribu produit puisqu'elle contient toutes les parties de l'espace produit $Z$.
-   Montrons que $D$ n'est pas un rectangle. Supposons par l'absurde que $D = A \times B$ avec $A \subset X$ et $B \subset Y$.
-   Puisque $(1,a) \in A \times B$, on a nécessairement $1 \in A$ et $a \in B$.
-   Puisque $(2,b) \in A \times B$, on a nécessairement $2 \in A$ et $b \in B$.
-   Par conséquent, $A$ contient au moins $\{1, 2\}$ (donc $A = X$) et $B$ contient au moins $\{a, b\}$ (donc $B = Y$).
-   Alors $A \times B = X \times Y = Z$, qui a 4 éléments.
-   Mais $D$ a seulement 2 éléments. Contradiction.
-   $D$ n'est donc pas un rectangle. Il est cependant obtenu comme union finie de rectangles disjoints : $D = (\{1\} \times \{a\}) \cup (\{2\} \times \{b\})$.
+1. L'événement $\{X \in A, Y \in B\}$ correspond formellement à $(X, Y) \in A \times B$.
+2. La probabilité de cet événement est $P_{(X,Y)}(A \times B)$.
+3. Par hypothèse, $P_{(X,Y)}$ est la mesure produit de $P_X$ et $P_Y$.
+4. Par définition de la mesure produit sur un rectangle mesurable :
+   $P_X \otimes P_Y(A \times B) = P_X(A) \cdot P_Y(B)$.
+5. Or, par définition des lois marginales, $P_X(A) = P(X \in A)$ et $P_Y(B) = P(Y \in B)$.
+6. D'où le résultat : $P(X \in A, Y \in B) = P(X \in A)P(Y \in B)$.

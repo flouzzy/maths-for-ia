@@ -1,22 +1,13 @@
-# Exercice 6 : L'indépendance de deux variables aléatoires via la mesure produit (★★★★☆)
+## Exercice 6 : Produit d'une mesure discrète et continue \quad $\bigstar\bigstar\bigstar\bigstar\star$
 
 **Énoncé :**
-Soit $(\Omega, \mathcal{A}, \mathbb{P})$ un espace probabilisé. Soient $X : \Omega \to \mathbb{R}$ et $Y : \Omega \to \mathbb{R}$ deux variables aléatoires (c'est-à-dire des fonctions mesurables).
-On note $\mathbb{P}_X$ et $\mathbb{P}_Y$ leurs lois respectives sur $\mathbb{R}$. La loi jointe est la mesure $\mathbb{P}_{(X,Y)}$ sur $\mathbb{R}^2$ définie par $\mathbb{P}_{(X,Y)}(C) = \mathbb{P}(\{\omega \in \Omega \mid (X(\omega), Y(\omega)) \in C\})$.
-Montrer que si la loi jointe est égale à la mesure produit, soit $\mathbb{P}_{(X,Y)} = \mathbb{P}_X \otimes \mathbb{P}_Y$, alors pour tous boréliens $A, B \in \mathcal{B}(\mathbb{R})$, les événements $\{X \in A\}$ et $\{Y \in B\}$ sont indépendants.
+Soit $c$ la mesure de comptage sur $(\mathbb{R}, \mathcal{P}(\mathbb{R}))$ et $\lambda$ la mesure de Lebesgue sur $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$. On munit $\mathbb{R}^2$ de la tribu $\mathcal{P}(\mathbb{R}) \otimes \mathcal{B}(\mathbb{R})$.
+Soit la diagonale $\Delta = \{(x,x) \mid x \in [0,1]\}$. Calculer les deux intégrales itérées $\int (\int \mathbf{1}_\Delta(x,y) d\lambda(y)) dc(x)$ et $\int (\int \mathbf{1}_\Delta(x,y) dc(x)) d\lambda(y)$.
+Pourquoi sont-elles différentes ?
 
 **Correction :**
-1. L'objectif est de démontrer que $\mathbb{P}(\{X \in A\} \cap \{Y \in B\}) = \mathbb{P}(X \in A) \mathbb{P}(Y \in B)$.
-2. Considérons le sous-ensemble de $\mathbb{R}^2$ défini par le rectangle borélien $C = A \times B$.
-3. Par définition de la loi jointe :
-   $\mathbb{P}_{(X,Y)}(A \times B) = \mathbb{P}(\{\omega \in \Omega \mid (X(\omega), Y(\omega)) \in A \times B\})$.
-   Or $(X(\omega), Y(\omega)) \in A \times B$ est logiquement équivalent à $(X(\omega) \in A) \text{ et } (Y(\omega) \in B)$.
-   L'ensemble des $\omega$ réalisant cela est exactement l'intersection $\{\omega \in \Omega \mid X(\omega) \in A\} \cap \{\omega \in \Omega \mid Y(\omega) \in B\}$, ce qu'on note plus simplement $\{X \in A\} \cap \{Y \in B\}$.
-   Donc $\mathbb{P}_{(X,Y)}(A \times B) = \mathbb{P}(\{X \in A\} \cap \{Y \in B\})$.
-4. D'autre part, par hypothèse, la loi jointe est la mesure produit : $\mathbb{P}_{(X,Y)} = \mathbb{P}_X \otimes \mathbb{P}_Y$.
-   Par définition de la mesure produit évaluée sur un rectangle mesurable, on a :
-   $(\mathbb{P}_X \otimes \mathbb{P}_Y)(A \times B) = \mathbb{P}_X(A) \cdot \mathbb{P}_Y(B)$.
-5. Or, par définition des lois marginales, $\mathbb{P}_X(A) = \mathbb{P}(X \in A)$ et $\mathbb{P}_Y(B) = \mathbb{P}(Y \in B)$.
-6. En combinant (3), (4) et (5), on obtient exactement :
-   $\mathbb{P}(\{X \in A\} \cap \{Y \in B\}) = \mathbb{P}(X \in A) \cdot \mathbb{P}(Y \in B)$.
-   Cela démontre bien l'indépendance des événements. L'indépendance de variables aléatoires s'exprime profondément comme la factorisation de leur mesure conjointe en une mesure produit tensoriel.
+1. Première intégrale : On intègre d'abord sur $y$. Pour un $x \in [0,1]$ fixé, la section $\Delta_x$ est le singleton $\{x\}$. Sa mesure de Lebesgue est $\lambda(\{x\}) = 0$.
+   Donc $\int \mathbf{1}_\Delta(x,y) d\lambda(y) = 0$. L'intégrale extérieure par rapport à $c$ donne $0$.
+2. Seconde intégrale : On intègre d'abord sur $x$. Pour un $y \in [0,1]$ fixé, la section "verticale" est le singleton $\{y\}$. Sa mesure de comptage est $c(\{y\}) = 1$.
+   Donc $\int \mathbf{1}_\Delta(x,y) dc(x) = 1$ pour $y \in [0,1]$, et $0$ sinon. L'intégrale extérieure est $\int_{[0,1]} 1 d\lambda(y) = 1$.
+3. Les deux intégrales donnent des résultats différents ($0 \neq 1$) car le théorème de Fubini ne s'applique pas. L'espace mesuré $(\mathbb{R}, \mathcal{P}(\mathbb{R}), c)$ n'est pas $\sigma$-fini.

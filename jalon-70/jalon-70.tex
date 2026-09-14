@@ -1,0 +1,410 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1
+}
+
+\title{\Huge JALON 70 : ESPACES MESURÉS PRODUITS \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+---
+uuid: "jalon-70"
+title: "Espaces mesurés produits"
+year: 2
+trimester: 6
+tags:
+  - math/mesure
+  - ia/probabilites
+prev: "[[Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md]]"
+next: "[[Jalon 71 (Théorèmes de Fubini-Tonelli).md]]"
+---
+
+\part{Cours Magistral}
+
+\section{Genèse et Intuition}
+
+ Imaginez que vous ayez deux règles. L'une mesure des longueurs sur un axe horizontal ($X$), l'autre mesure des longueurs sur un axe vertical ($Y$). Si vous croisez ces deux règles, vous créez un monde en 2D (le produit $X \times Y$).
+    - Une \textbf{Tribu produit}, c'est décider que les "rectangles" (un ensemble de $X$ croisé avec un ensemble de $Y$) sont nos nouvelles briques de base pour mesurer des surfaces.
+    - Une \textbf{Mesure produit}, c'est dire que la surface d'un rectangle est simplement sa largeur multipliée par sa hauteur.
+    C'est la manière naturelle de construire des mesures complexes à partir de mesures simples.
+ La plupart des phénomènes réels dépendent de plusieurs facteurs. Pour calculer le volume d'un objet, ou la probabilité que deux événements indépendants arrivent en même temps, on a besoin de savoir comment "multiplier" les mesures entre elles de manière rigoureuse.
+ Un quadrillage. On définit la mesure sur chaque petit carreau, puis on étend cette définition à toutes les formes bizarres que l'on peut construire en assemblant des carreaux.
+
+\section{Définitions, Théorèmes \& Exemples Concrets Immédiats}
+
+Soient $(X_1, \mathcal{F}_1, \mu_1)$ et $(X_2, \mathcal{F}_2, \mu_2)$ deux espaces mesurés.
+
+\subsection{Construction de la Tribu Produit}
+
+> \textbf{Exemple Concret Immédiat :}
+> Si $X_1 = X_2 = \mathbb{R}$ munis de la tribu borélienne $\mathcal{B}(\mathbb{R})$, la tribu produit $\mathcal{B}(\mathbb{R}) \otimes \mathcal{B}(\mathbb{R})$ est exactement la tribu borélienne de $\mathbb{R}^2$, notée $\mathcal{B}(\mathbb{R}^2)$.
+> Le rectangle géométrique $[0, 1] \times [0, 1]$ est un rectangle mesurable.
+
+
+> \textbf{Définition 1 (Rectangle mesurable) :}
+> On appelle \textbf{rectangle mesurable} toute partie de $X_1 \times X_2$ de la forme $A_1 \times A_2$ où $A_1 \in \mathcal{F}_1$ et $A_2 \in \mathcal{F}_2$.
+
+> \textbf{Définition 2 (Tribu Produit) :}
+> La \textbf{tribu produit}, notée $\mathcal{F}_1 \otimes \mathcal{F}_2$, est la tribu engendrée par l'ensemble des rectangles mesurables sur $X_1 \times X_2$.
+
+\subsection{Existence et Unicité de la Mesure Produit}
+
+> \textbf{Exemple Concret Immédiat :}
+> Prenons $X_1 = X_2 = \mathbb{R}$ avec $\mu_1 = \mu_2 = \lambda$ (mesure de Lebesgue). Les intervalles $A_1 = [0, 2]$ et $A_2 = [1, 4]$ sont mesurables.
+> La mesure produit $\lambda \otimes \lambda$ du rectangle $R = A_1 \times A_2$ est simplement l'aire géométrique :
+> $\pi(R) = \lambda([0, 2]) \cdot \lambda([1, 4]) = 2 \cdot 3 = 6$.
+> La condition de $\sigma$-finitude est bien vérifiée car $\mathbb{R} = \bigcup_{n \in \mathbb{N}} [-n, n]$.
+
+
+> \textbf{Théorème (Existence et Unicité) :}
+> Si les mesures $\mu_1$ et $\mu_2$ sont \textbf{$\sigma$-finies}, alors il existe une unique mesure $\pi$ sur $(X_1 \times X_2, \mathcal{F}_1 \otimes \mathcal{F}_2)$, notée $\mu_1 \otimes \mu_2$, telle que pour tout rectangle mesurable $A_1 \times A_2$ :
+> $$\pi(A_1 \times A_2) = \mu_1(A_1) \cdot \mu_2(A_2)$$
+
+\subsection{Sections Mesurables}
+
+Soit $E \in \mathcal{F}_1 \otimes \mathcal{F}_2$. Pour tout $x \in X_1$, on définit la \textbf{section} de $E$ en $x$ par :
+$$E_x = \{ y \in X_2 \mid (x, y) \in E \}$$
+*Propriété :* Pour tout $x$, $E_x \in \mathcal{F}_2$ (la section d'un mesurable est mesurable).
+
+\section{Démonstrations}
+
+\subsection{Démonstration : Calcul de la mesure par intégration des sections}
+
+Montrons que $\pi(E) = \int_{X_1} \mu_2(E_x) d\mu_1(x)$.
+
+1. \textbf{Cas des rectangles :} Soit $E = A_1 \times A_2$.
+   - Si $x \in A_1$, alors $E_x = A_2$. Sa mesure est $\mu_2(A_2)$.
+   - Si $x \notin A_1$, alors $E_x = \emptyset$. Sa mesure est 0.
+   - Donc $\mu_2(E_x) = \mu_2(A_2) \mathbf{1}_{A_1}(x)$.
+   - En intégrant par rapport à $\mu_1$ : $\int \mu_2(A_2) \mathbf{1}_{A_1}(x) d\mu_1 = \mu_2(A_2) \mu_1(A_1) = \pi(E)$.
+2. \textbf{Généralisation par classes monotones :}
+   Soit $\mathcal{M}$ l'ensemble des parties $E \in \mathcal{F}_1 \otimes \mathcal{F}_2$ pour lesquelles l'égalité $\pi(E) = \int_{X_1} \mu_2(E_x) d\mu_1(x)$ est vraie.
+   - Nous venons de montrer que $\mathcal{M}$ contient tous les rectangles mesurables. L'ensemble des rectangles forme un $\pi$-système (stable par intersection finie).
+   - $\mathcal{M}$ contient l'espace entier $X_1 \times X_2$.
+   - $\mathcal{M}$ est stable par union dénombrable croissante (par le théorème de convergence monotone appliqué à la suite d'indicatrices correspondantes).
+   - $\mathcal{M}$ est stable par différence (si $A \subset B$ et $A, B \in \mathcal{M}$, alors par linéarité de l'intégrale, $B \setminus A \in \mathcal{M}$).
+   - D'après le théorème des classes monotones, $\mathcal{M}$ contient la tribu engendrée par le $\pi$-système des rectangles, c'est-à-dire $\mathcal{F}_1 \otimes \mathcal{F}_2$.
+3. \textbf{Conclusion :} La formule est vraie pour tout ensemble de la tribu produit. Cela montre que la mesure produit est "cohérente" avec l'intégration couche par couche.
+
+
+
+
+
+\section{Application en Intelligence Artificielle}
+
+- \textbf{Le Pont Théorique :} En IA, on travaille presque exclusivement dans des espaces produits. Une image de $224 \times 224$ pixels est un point dans un espace produit de dimension 50 176.
+- \textbf{Example Concret :}
+    - \textbf{Indépendance Statistique :} Deux variables aléatoires $X$ et $Y$ sont indépendantes si et seulement si leur mesure de probabilité jointe $P_{X,Y}$ est égale à la mesure produit des marginales $P_X \otimes P_Y$. C'est la définition mathématique de l'absence de corrélation.
+    - \textbf{Modèles Génératifs (GANs, VAEs) :} On essaie souvent de factoriser la distribution des données dans un espace latent où les dimensions sont indépendantes. Topologiquement, cela revient à forcer la mesure latente à être une mesure produit.
+    - \textbf{Calcul de l'erreur moyenne (Risk) :} Le risque est une intégrale sur l'espace produit "Données $\times$ Étiquettes". Pour l'estimer, on suppose que les exemples sont "IID" (indépendants et identiquement distribués), ce qui permet d'utiliser la structure de mesure produit.
+
+\section{Liens Sémantiques}
+
+- \textbf{Concepts Précédents requis :} [[Jalon 63 (Définition axiomatique d'une mesure).md]], [[Jalon 62 (Algèbres).md]]
+- \textbf{Concepts Futurs dépendants :} [[Jalon 71 (Théorèmes de Fubini-Tonelli).md]], [[Jalon 88 (Indépendance d'événements).md]]
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Calcul de mesure produit sur des intervalles finis \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Soit $(\mathbb{R}^2, \mathcal{B}(\mathbb{R}^2), \lambda_2)$ où $\lambda_2 = \lambda \otimes \lambda$ est la mesure de Lebesgue sur $\mathbb{R}^2$.
+Calculer $\lambda_2(A)$ pour $A = [1, 3] \times [2, 5]$.
+
+\textbf{Correction :}
+Par définition de la mesure produit sur un rectangle mesurable :
+1. Les intervalles $A_1 = [1, 3]$ et $A_2 = [2, 5]$ sont des boréliens de $\mathbb{R}$.
+2. On applique la formule : $\lambda_2(A_1 \times A_2) = \lambda(A_1) \cdot \lambda(A_2)$.
+3. Calcul des mesures 1D : $\lambda([1, 3]) = 3 - 1 = 2$ et $\lambda([2, 5]) = 5 - 2 = 3$.
+4. Conclusion : $\lambda_2(A) = 2 \cdot 3 = 6$.
+
+\subsection*{Exercice 2 : Produit de mesures discrètes \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Soient $X_1 = X_2 = \mathbb{N}$ munis de la tribu $\mathcal{P}(\mathbb{N})$ et de la mesure de comptage $c$.
+Montrer que $c \otimes c$ est la mesure de comptage sur $\mathbb{N}^2$. Calculer la mesure du sous-ensemble $D = \{ (n, n) \mid n \in \{1, 2, 3\} \}$.
+
+\textbf{Correction :}
+1. Tout sous-ensemble de $\mathbb{N}^2$ peut s'écrire comme une union au plus dénombrable de singletons.
+2. Pour un singleton $E = \{(a, b)\} = \{a\} \times \{b\}$, qui est un rectangle mesurable, on a :
+   $(c \otimes c)(E) = c(\{a\}) \cdot c(\{b\}) = 1 \cdot 1 = 1$.
+3. La mesure $c \otimes c$ attribue un poids de 1 à chaque point de $\mathbb{N}^2$, c'est donc bien la mesure de comptage sur cet espace.
+4. L'ensemble $D = \{(1,1), (2,2), (3,3)\}$ est l'union disjointe de 3 singletons.
+5. $(c \otimes c)(D) = 1 + 1 + 1 = 3$.
+
+\subsection*{Exercice 3 : La section d'un mesurable \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $E = \{ (x,y) \in [0,1]^2 \mid x^2 + y^2 \le 1 \}$.
+Montrer que $E \in \mathcal{B}(\mathbb{R}) \otimes \mathcal{B}(\mathbb{R})$ et décrire formellement la section $E_x$ pour $x \in \mathbb{R}$.
+
+\textbf{Correction :}
+1. La fonction $f(x,y) = x^2 + y^2$ est continue sur $\mathbb{R}^2$, donc mesurable par rapport à $\mathcal{B}(\mathbb{R}^2)$.
+2. L'ensemble $E = f^{-1}([0, 1]) \cap ([0,1] \times [0,1])$ est l'intersection de deux fermés, donc un borélien de $\mathbb{R}^2$. On rappelle que $\mathcal{B}(\mathbb{R}^2) = \mathcal{B}(\mathbb{R}) \otimes \mathcal{B}(\mathbb{R})$.
+3. Pour un $x \in \mathbb{R}$ fixé :
+   - Si $x \notin [0, 1]$, alors $E_x = \emptyset$.
+   - Si $x \in [0, 1]$, alors on cherche les $y \in [0, 1]$ tels que $y^2 \le 1 - x^2$. Comme $y \ge 0$, on obtient $0 \le y \le \sqrt{1 - x^2}$.
+   - Donc $E_x = [0, \sqrt{1 - x^2}]$.
+
+\subsection*{Exercice 4 : Mesure d'un triangle \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Calculer la mesure de Lebesgue $\lambda_2$ du triangle $T = \{ (x, y) \in \mathbb{R}^2 \mid x \ge 0, y \ge 0, x+y \le 2 \}$ en intégrant ses sections.
+
+\textbf{Correction :}
+1. Les sections $T_x$ sont données par :
+   - Si $x < 0$ ou $x > 2$, $T_x = \emptyset$ et $\lambda(T_x) = 0$.
+   - Si $x \in [0, 2]$, $T_x = [0, 2-x]$ et $\lambda(T_x) = 2-x$.
+2. Par le théorème d'intégration des sections (qui découle de la définition de la mesure produit) :
+   $\lambda_2(T) = \int_{\mathbb{R}} \lambda(T_x) d\lambda(x) = \int_0^2 (2-x) dx$.
+3. Calcul de l'intégrale :
+   $\int_0^2 (2-x) dx = \left[ 2x - \frac{x^2}{2} \right]_0^2 = (4 - 2) - 0 = 2$.
+
+\subsection*{Exercice 5 : Indépendance et Produit de probabilités \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soient $X$ et $Y$ deux variables aléatoires réelles. Leur loi jointe $P_{(X,Y)}$ est une probabilité sur $(\mathbb{R}^2, \mathcal{B}(\mathbb{R}^2))$.
+Montrer que si $P_{(X,Y)} = P_X \otimes P_Y$, alors $P(X \in A, Y \in B) = P(X \in A)P(Y \in B)$ pour tous boréliens $A$ et $B$.
+
+\textbf{Correction :}
+1. L'événement $\{X \in A, Y \in B\}$ correspond formellement à $(X, Y) \in A \times B$.
+2. La probabilité de cet événement est $P_{(X,Y)}(A \times B)$.
+3. Par hypothèse, $P_{(X,Y)}$ est la mesure produit de $P_X$ et $P_Y$.
+4. Par définition de la mesure produit sur un rectangle mesurable :
+   $P_X \otimes P_Y(A \times B) = P_X(A) \cdot P_Y(B)$.
+5. Or, par définition des lois marginales, $P_X(A) = P(X \in A)$ et $P_Y(B) = P(Y \in B)$.
+6. D'où le résultat : $P(X \in A, Y \in B) = P(X \in A)P(Y \in B)$.
+
+\subsection*{Exercice 6 : Produit d'une mesure discrète et continue \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Soit $c$ la mesure de comptage sur $(\mathbb{R}, \mathcal{P}(\mathbb{R}))$ et $\lambda$ la mesure de Lebesgue sur $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$. On munit $\mathbb{R}^2$ de la tribu $\mathcal{P}(\mathbb{R}) \otimes \mathcal{B}(\mathbb{R})$.
+Soit la diagonale $\Delta = \{(x,x) \mid x \in [0,1]\}$. Calculer les deux intégrales itérées $\int (\int \mathbf{1}_\Delta(x,y) d\lambda(y)) dc(x)$ et $\int (\int \mathbf{1}_\Delta(x,y) dc(x)) d\lambda(y)$.
+Pourquoi sont-elles différentes ?
+
+\textbf{Correction :}
+1. Première intégrale : On intègre d'abord sur $y$. Pour un $x \in [0,1]$ fixé, la section $\Delta_x$ est le singleton $\{x\}$. Sa mesure de Lebesgue est $\lambda(\{x\}) = 0$.
+   Donc $\int \mathbf{1}_\Delta(x,y) d\lambda(y) = 0$. L'intégrale extérieure par rapport à $c$ donne $0$.
+2. Seconde intégrale : On intègre d'abord sur $x$. Pour un $y \in [0,1]$ fixé, la section "verticale" est le singleton $\{y\}$. Sa mesure de comptage est $c(\{y\}) = 1$.
+   Donc $\int \mathbf{1}_\Delta(x,y) dc(x) = 1$ pour $y \in [0,1]$, et $0$ sinon. L'intégrale extérieure est $\int_{[0,1]} 1 d\lambda(y) = 1$.
+3. Les deux intégrales donnent des résultats différents ($0 \neq 1$) car le théorème de Fubini ne s'applique pas. L'espace mesuré $(\mathbb{R}, \mathcal{P}(\mathbb{R}), c)$ n'est pas $\sigma$-fini.
+
+\subsection*{Exercice 7 : Génération de la tribu produit \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Montrer que si $\mathcal{C}_1$ engendre $\mathcal{F}_1$ et $\mathcal{C}_2$ engendre $\mathcal{F}_2$, et s'il existe des suites d'ensembles de $\mathcal{C}_i$ qui recouvrent $X_i$, alors l'ensemble des rectangles $C_1 \times C_2$ (avec $C_i \in \mathcal{C}_i$) engendre la tribu produit $\mathcal{F}_1 \otimes \mathcal{F}_2$.
+
+\textbf{Correction :}
+1. Soit $\mathcal{G}$ la tribu engendrée par les rectangles $C_1 \times C_2$. Il est clair que $\mathcal{G} \subset \mathcal{F}_1 \otimes \mathcal{F}_2$ car $C_1 \times C_2 \in \mathcal{F}_1 \otimes \mathcal{F}_2$.
+2. Montrons l'inclusion inverse. Pour un $C_2 \in \mathcal{C}_2$ fixé, considérons $\mathcal{H}_1 = \{ A \in \mathcal{F}_1 \mid A \times C_2 \in \mathcal{G} \}$.
+3. $\mathcal{H}_1$ contient $\mathcal{C}_1$ par définition. De plus, on vérifie facilement que $\mathcal{H}_1$ est une tribu (passage au complémentaire, union dénombrable).
+4. Donc $\mathcal{H}_1 = \mathcal{F}_1$. Ainsi, pour tout $A \in \mathcal{F}_1$ et tout $C_2 \in \mathcal{C}_2$, $A \times C_2 \in \mathcal{G}$.
+5. On répète le même argument. Pour un $A \in \mathcal{F}_1$ fixé, soit $\mathcal{H}_2 = \{ B \in \mathcal{F}_2 \mid A \times B \in \mathcal{G} \}$.
+6. $\mathcal{H}_2$ contient $\mathcal{C}_2$ et est une tribu, donc $\mathcal{H}_2 = \mathcal{F}_2$.
+7. Ainsi, tout rectangle $A \times B \in \mathcal{F}_1 \times \mathcal{F}_2$ appartient à $\mathcal{G}$, ce qui prouve que $\mathcal{F}_1 \otimes \mathcal{F}_2 = \mathcal{G}$.
+
+\subsection*{Exercice 8 : Le problème du produit infini non mesurable \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Montrer par un contre-exemple simple que l'union de deux rectangles mesurables n'est pas nécessairement un rectangle mesurable.
+
+\textbf{Correction :}
+1. Soit $X_1 = X_2 = \mathbb{R}$.
+2. Considérons $R_1 = [0, 1] \times [0, 1]$ et $R_2 = [2, 3] \times [2, 3]$.
+3. Supposons par l'absurde que $R_1 \cup R_2 = A \times B$.
+4. Le point $(0, 0)$ appartient à $R_1$, donc à $A \times B$. Ainsi $0 \in A$ et $0 \in B$.
+5. Le point $(2, 2)$ appartient à $R_2$, donc à $A \times B$. Ainsi $2 \in A$ et $2 \in B$.
+6. Si $A \times B$ est un produit cartésien contenant $0$ et $2$ en $X$, et $0$ et $2$ en $Y$, il doit contenir le point $(0, 2)$.
+7. Or $(0, 2)$ n'appartient ni à $R_1$ ni à $R_2$. C'est une contradiction.
+8. L'ensemble des rectangles mesurables n'est pas stable par union, c'est pourquoi on doit considérer la tribu *engendrée* par ces rectangles.
+
+\subsection*{Exercice 9 : Densité d'une mesure produit (cas à densité) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Si $\mu_1$ a pour densité $f_1$ par rapport à $\lambda$ et $\mu_2$ a pour densité $f_2$ par rapport à $\lambda$, montrer que la mesure produit $\mu_1 \otimes \mu_2$ a pour densité la fonction $(x,y) \mapsto f_1(x)f_2(y)$ par rapport à $\lambda \otimes \lambda$.
+
+\textbf{Correction :}
+1. Soit un rectangle mesurable $A \times B$.
+2. Par définition, $(\mu_1 \otimes \mu_2)(A \times B) = \mu_1(A) \cdot \mu_2(B)$.
+3. Comme les mesures ont des densités : $\mu_1(A) = \int_A f_1(x) dx$ et $\mu_2(B) = \int_B f_2(y) dy$.
+4. Donc $(\mu_1 \otimes \mu_2)(A \times B) = \left( \int_A f_1(x) dx \right) \left( \int_B f_2(y) dy \right)$.
+5. Les fonctions étant positives, et les variables séparables, cela correspond exactement à l'intégrale double sur $A \times B$ :
+   $\int_{A \times B} f_1(x)f_2(y) d(\lambda \otimes \lambda)(x,y)$.
+6. Cette égalité étant vraie sur tous les rectangles (qui forment un $\pi$-système engendrant la tribu), elle s'étend par le théorème d'extension de Carathéodory (ou lemme de classe monotone) à tout borélien de $\mathbb{R}^2$.
+7. La densité est donc bien $f(x,y) = f_1(x)f_2(y)$.
+
+\subsection*{Exercice 10 : Mesure de Dirac produit \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Soit $a \in X_1$ et $b \in X_2$. Soit $\delta_a$ la mesure de Dirac en $a$ sur $(X_1, \mathcal{F}_1)$ et $\delta_b$ la mesure de Dirac en $b$ sur $(X_2, \mathcal{F}_2)$.
+Montrer que $\delta_a \otimes \delta_b = \delta_{(a,b)}$ où $\delta_{(a,b)}$ est la mesure de Dirac au point $(a,b)$ sur l'espace produit.
+
+\textbf{Correction :}
+1. Soit un rectangle mesurable $A_1 \times A_2$.
+2. Par définition de la mesure produit :
+   $(\delta_a \otimes \delta_b)(A_1 \times A_2) = \delta_a(A_1) \cdot \delta_b(A_2)$.
+3. Calculons le membre de droite :
+   - Si $a \in A_1$ et $b \in A_2$, alors $\delta_a(A_1) = 1$ et $\delta_b(A_2) = 1$. Le produit vaut 1.
+   - Sinon, l'un des deux (ou les deux) vaut 0. Le produit vaut 0.
+4. Or, $a \in A_1$ et $b \in A_2$ est exactement équivalent à $(a,b) \in A_1 \times A_2$.
+5. Donc la mesure du rectangle vaut 1 si $(a,b)$ appartient au rectangle, et 0 sinon.
+6. C'est exactement la définition de la mesure de Dirac en $(a,b)$, notée $\delta_{(a,b)}$.
+7. Par unicité de l'extension de la mesure produit (les mesures étant trivialement $\sigma$-finies car finies), l'égalité $\delta_a \otimes \delta_b = \delta_{(a,b)}$ est vraie sur toute la tribu produit.
+
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Approximation numerique d'une integrale 2D par somme de Riemann}
+\begin{lstlisting}
+# TP 1 : Approximation d'une integrale double
+
+def integrale_2d(f, x_min, x_max, y_min, y_max, nx=100, ny=100):
+    dx = (x_max - x_min) / nx
+    dy = (y_max - y_min) / ny
+    somme = 0.0
+    for i in range(nx):
+        x = x_min + i * dx + dx/2
+        for j in range(ny):
+            y = y_min + j * dy + dy/2
+            somme += f(x, y) * dx * dy
+    return somme
+
+# Test : volume d'une pyramide simple f(x,y) = x*y sur [0,1]x[0,1]
+def f(x, y):
+    return x * y
+
+valeur = integrale_2d(f, 0, 1, 0, 1)
+theorique = 0.25 # (1/2) * (1/2)
+print(f"Valeur numerique : {valeur}")
+assert abs(valeur - theorique) < 1e-3, "Erreur dans le calcul de l'integrale 2D"
+\end{lstlisting}
+
+\subsection*{TP 2 : Mesure d'un domaine par methode de Monte-Carlo}
+\begin{lstlisting}
+# TP 2 : Mesure de Monte-Carlo
+
+import random
+
+def mesure_domaine(condition, x_min, x_max, y_min, y_max, n_points=100000):
+    aire_rectangle = (x_max - x_min) * (y_max - y_min)
+    points_dedans = 0
+
+    for _ in range(n_points):
+        x = random.uniform(x_min, x_max)
+        y = random.uniform(y_min, y_max)
+        if condition(x, y):
+            points_dedans += 1
+
+    mesure_estimee = aire_rectangle * (points_dedans / n_points)
+    return mesure_estimee
+
+# Test : Aire du quart de disque unite
+def quart_disque(x, y):
+    return x*x + y*y <= 1.0
+
+aire_est = mesure_domaine(quart_disque, 0, 1, 0, 1)
+pi_sur_4 = 3.14159265 / 4.0
+print(f"Aire estimee : {aire_est}, Theorique : {pi_sur_4}")
+assert abs(aire_est - pi_sur_4) < 1e-2, "L'estimation Monte-Carlo est trop loin"
+\end{lstlisting}
+
+\subsection*{TP 3 : Verification de l'independance statistique (Produit de probabilites)}
+\begin{lstlisting}
+# TP 3 : Independance et probabilite jointe
+
+def verifier_independance(lois_jointes, p_x, p_y, epsilon=1e-6):
+    for x in lois_jointes:
+        for y in lois_jointes[x]:
+            p_jointe = lois_jointes[x][y]
+            p_produit = p_x[x] * p_y[y]
+            if abs(p_jointe - p_produit) > epsilon:
+                return False
+    return True
+
+# Definition des probabilites
+p_x = { 'pile': 0.5, 'face': 0.5 }
+p_y = { 1: 1/6, 2: 1/6, 3: 1/6, 4: 1/6, 5: 1/6, 6: 1/6 }
+
+# Construction d'une loi jointe independante
+lois_jointes = {}
+for x in p_x:
+    lois_jointes[x] = {}
+    for y in p_y:
+        lois_jointes[x][y] = p_x[x] * p_y[y]
+
+indep = verifier_independance(lois_jointes, p_x, p_y)
+print(f"Les variables sont independantes : {indep}")
+assert indep == True, "La fonction devrait renvoyer True pour un produit parfait"
+\end{lstlisting}
+
+\subsection*{TP 4 : Section d'un ensemble 2D}
+\begin{lstlisting}
+# TP 4 : Construction de sections
+
+def generer_section(ensemble_points, x_cible, tolerance=1e-3):
+    section = []
+    for (x, y) in ensemble_points:
+        if abs(x - x_cible) < tolerance:
+            section.append(y)
+    return section
+
+# Construction d'un disque discret
+points = []
+for i in range(-50, 51):
+    for j in range(-50, 51):
+        x = i / 50.0
+        y = j / 50.0
+        if x*x + y*y <= 1.0:
+            points.append((x, y))
+
+# Extraction de la section en x=0 (devrait aller de y=-1 a y=1)
+sec = generer_section(points, 0.0)
+print(f"Taille de la section en 0 : {len(sec)}")
+assert len(sec) == 101, f"Taille inattendue {len(sec)}"
+assert min(sec) == -1.0 and max(sec) == 1.0, "La section ne couvre pas [-1, 1]"
+\end{lstlisting}
+
+\subsection*{TP 5 : Calcul de la densite jointe de deux variables independantes}
+\begin{lstlisting}
+# TP 5 : Calcul de densite produit
+
+import math
+
+def densite_normale(x, mu=0, sigma=1):
+    return (1.0 / (sigma * math.sqrt(2 * math.pi))) * math.exp(-0.5 * ((x - mu)/sigma)**2)
+
+def densite_jointe_independante(x, y, mu_x, sig_x, mu_y, sig_y):
+    # La densite jointe est le produit des densites marginales
+    return densite_normale(x, mu_x, sig_x) * densite_normale(y, mu_y, sig_y)
+
+# Test en (0,0) pour deux normales centrees reduites
+d = densite_jointe_independante(0, 0, 0, 1, 0, 1)
+theorique = (1 / math.sqrt(2 * math.pi))**2 # 1 / (2*pi)
+print(f"Densite jointe en (0,0) : {d}")
+assert abs(d - 1/(2*math.pi)) < 1e-5, "Le calcul de densite jointe est faux"
+\end{lstlisting}
+
+
+\end{document}
