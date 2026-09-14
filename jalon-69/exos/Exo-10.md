@@ -1,13 +1,13 @@
-## Exercice 10 : Lemme de Scheffé (Corollaire du TCD) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
+##{Exercice 10 : Lemme de Scheffé (Corollaire du TCD) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
 
-**Énoncé :**
+\textbf{Énoncé :}
 Soit $(f_n)$ une suite de fonctions de $\mathcal{L}^1(\mu)$ et $f \in \mathcal{L}^1(\mu)$.
 Supposons que :
 1. $f_n \to f$ presque partout.
 2. $\int |f_n| d\mu \to \int |f| d\mu$.
 Montrer que $f_n$ converge vers $f$ dans $L^1$, c'est-à-dire $\lim_{n \to \infty} \int |f_n - f| d\mu = 0$.
 
-**Correction :**
+\textbf{Correction :}
 On ne peut pas appliquer le TCD directement car on n'a pas de fonction dominatrice explicite.
 1. Considérons la fonction $h_n = |f_n| + |f| - |f_n - f|$.
    Par l'inégalité triangulaire, $|f_n - f| \le |f_n| + |f|$, donc $h_n \ge 0$.

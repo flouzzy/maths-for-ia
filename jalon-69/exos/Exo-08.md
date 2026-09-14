@@ -1,13 +1,13 @@
-## Exercice 8 : Limite d'une suite définie par intégrale \quad $\bigstar\bigstar\bigstar\star\star$
+##{Exercice 8 : Limite d'une suite définie par intégrale \quad $\bigstar\bigstar\bigstar\star\star$}
 
-**Énoncé :**
+\textbf{Énoncé :}
 Calculer $\lim_{n \to \infty} \int_0^n \left(1 - \frac{x}{n}\right)^n \ln(x) dx$.
 
-**Correction :**
+\textbf{Correction :}
 On réécrit l'intégrale sur $]0, +\infty[$ avec une fonction indicatrice :
 $I_n = \int_0^\infty f_n(x) dx$ avec $f_n(x) = \left(1 - \frac{x}{n}\right)^n \ln(x) \mathbf{1}_{[0, n]}(x)$.
-1. **Convergence simple :** On sait que $\lim_{n \to \infty} \left(1 - \frac{x}{n}\right)^n = e^{-x}$. Ainsi, la limite simple est $f(x) = e^{-x} \ln(x)$.
-2. **Domination :** On utilise l'inégalité $1 - u \le e^{-u}$ pour $u \in [0, 1]$.
+1. \textbf{Convergence simple :} On sait que $\lim_{n \to \infty} \left(1 - \frac{x}{n}\right)^n = e^{-x}$. Ainsi, la limite simple est $f(x) = e^{-x} \ln(x)$.
+2. \textbf{Domination :} On utilise l'inégalité $1 - u \le e^{-u}$ pour $u \in [0, 1]$.
    Donc $\left(1 - \frac{x}{n}\right)^n \le e^{-x}$ pour $0 \le x \le n$.
    On en déduit que $|f_n(x)| \le e^{-x} |\ln(x)| \mathbf{1}_{[0, n]}(x) \le e^{-x} |\ln(x)|$.
 3. La fonction $g(x) = e^{-x} |\ln(x)|$ est-elle intégrable sur $]0, +\infty[$ ?
