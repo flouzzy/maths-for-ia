@@ -1,3 +1,4 @@
+- [2026-09-14] : [Upsert/Création] du Jalon 70 - Espaces mesurés produits. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-11] : [Upsert/Création] du Jalon 68 - Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque. Status: Terminé.
 - [2026-09-11] : [Upsert/Création] du Jalon 67 - Démonstration du théorème de convergence monotone (Beppo-Levi). Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-27] : [Upsert/Création] du Jalon 66 - Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
