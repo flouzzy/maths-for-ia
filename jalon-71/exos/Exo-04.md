@@ -1,26 +1,20 @@
-# Exercice 4 : Calcul de volume par Fubini $\bigstar\bigstar\bigstar\star\star$
+## Exercice 4 : Intégration sur un domaine triangulaire \quad $\bigstar\bigstar\bigstar\star\star$
 
-## Énoncé
+**Énoncé :**
+Calculer $I = \iint_D x e^y dx dy$ où $D = \{(x, y) \in \mathbb{R}^2 \mid x \ge 0, y \ge 0, x + y \le 1\}$.
 
-Soit $D = \{ (x, y) \in \mathbb{R}^2 \mid x^2 + y^2 \le 1 \}$.
-Calculer l'intégrale double :
-$$ V = \iint_D (1 - x^2 - y^2) \, dx \, dy $$
-Cette intégrale représente le volume du solide compris entre le plan $z=0$ et le paraboloïde $z = 1 - x^2 - y^2$.
-
-## Correction
-
-La fonction $f(x, y) = 1 - x^2 - y^2$ est continue et positive sur le disque unité fermé $D$ (qui est compact, donc de mesure finie). Le théorème de Tonelli/Fubini s'applique.
-Passons en coordonnées polaires pour simplifier le domaine, ce qui est une application de la formule du changement de variables (qui préserve la mesurabilité et l'intégrabilité).
-On pose $x = r \cos \theta$ et $y = r \sin \theta$.
-Le domaine $D$ est décrit par $0 \le r \le 1$ et $0 \le \theta < 2\pi$.
-Le déterminant de la matrice jacobienne est $r$.
-L'intégrale devient :
-$$ V = \int_0^{2\pi} \int_0^1 (1 - r^2) r \, dr \, d\theta $$
-Par le théorème de Tonelli, comme les bornes sont indépendantes, on peut séparer :
-$$ V = \left( \int_0^{2\pi} d\theta \right) \times \left( \int_0^1 (r - r^3) \, dr \right) $$
-Calculons chaque terme :
-$$ \int_0^{2\pi} d\theta = 2\pi $$
-$$ \int_0^1 (r - r^3) \, dr = \left[ \frac{r^2}{2} - \frac{r^4}{4} \right]_0^1 = \frac{1}{2} - \frac{1}{4} = \frac{1}{4} $$
-Donc :
-$$ V = 2\pi \times \frac{1}{4} = \frac{\pi}{2} $$
-Le volume du solide est $\frac{\pi}{2}$.
+**Correction :**
+1. Le domaine $D$ est un triangle plein de sommets $(0,0)$, $(1,0)$, et $(0,1)$. La fonction $f(x,y) = x e^y$ est continue et positive sur ce compact.
+2. D'après Tonelli, on peut intervertir. Nous choisissons d'intégrer d'abord en $x$ (à $y$ fixé).
+3. Pour un $y \in [0, 1]$ fixé, la variable $x$ varie de $0$ à $1 - y$.
+   $$ I = \int_0^1 \left( \int_0^{1-y} x e^y dx \right) dy $$
+4. Calculons l'intégrale interne :
+   $$ \int_0^{1-y} x e^y dx = e^y \int_0^{1-y} x dx = e^y \left[ \frac{x^2}{2} \right]_0^{1-y} = \frac{e^y(1-y)^2}{2} $$
+5. Intégrons maintenant ce résultat par rapport à $y$ sur $[0, 1]$ :
+   $$ I = \frac{1}{2} \int_0^1 e^y(1-y)^2 dy $$
+6. Procédons par intégration par parties. Posons $u = (1-y)^2 \implies u' = -2(1-y)$ et $v' = e^y \implies v = e^y$.
+   $$ \int_0^1 e^y(1-y)^2 dy = \left[ e^y(1-y)^2 \right]_0^1 - \int_0^1 -2(1-y)e^y dy = (0 - 1) + 2 \int_0^1 (1-y)e^y dy $$
+7. Deuxième IPP pour $\int_0^1 (1-y)e^y dy$. $u = 1-y \implies u' = -1$, $v' = e^y \implies v = e^y$.
+   $$ \int_0^1 (1-y)e^y dy = \left[ e^y(1-y) \right]_0^1 - \int_0^1 -e^y dy = (0 - 1) + [e^y]_0^1 = -1 + (e - 1) = e - 2 $$
+8. Reprenons l'équation : $\int e^y(1-y)^2 dy = -1 + 2(e - 2) = 2e - 5$.
+9. Finalement, $I = \frac{2e - 5}{2}$.

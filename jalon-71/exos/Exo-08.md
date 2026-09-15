@@ -1,31 +1,21 @@
-# Exercice 8 : Transformation intégrale et convolution $\bigstar\bigstar\bigstar\bigstar\bigstar$
+## Exercice 8 : Changement de l'ordre d'intégration \quad $\bigstar\bigstar\star\star\star$
 
-## Énoncé
+**Énoncé :**
+L'intégrale $\int_0^1 \int_{\sqrt{y}}^1 e^{x^3} dx dy$ ne peut pas être calculée avec des fonctions élémentaires dans cet ordre, car la primitive de $e^{x^3}$ n'est pas exprimable simplement. Utiliser Fubini pour la calculer.
 
-Soient $f, g \in L^1(\mathbb{R})$. Le produit de convolution est défini par :
-$$ (f * g)(x) = \int_{\mathbb{R}} f(t) g(x - t) \, dt $$
-Montrer, en utilisant les théorèmes de Tonelli et Fubini, que :
-1. $(f * g)(x)$ est défini pour presque tout $x \in \mathbb{R}$.
-2. $f * g \in L^1(\mathbb{R})$ et $\|f * g\|_1 \le \|f\|_1 \|g\|_1$.
-
-## Correction
-
-**1. Utilisation de Tonelli :**
-Considérons la fonction $F(x, t) = |f(t)| |g(x-t)|$. C'est une fonction mesurable et positive sur $\mathbb{R}^2$.
-Appliquons le théorème de Tonelli pour évaluer son intégrale double par rapport à la mesure de Lebesgue sur $\mathbb{R}^2$ :
-$$ I = \int_{\mathbb{R}} \left( \int_{\mathbb{R}} |f(t)| |g(x-t)| \, dx \right) dt $$
-À $t$ fixé, on effectue le changement de variable $u = x - t$. L'élément de mesure est $du = dx$ et les bornes restent inchangées ($-\infty$ à $+\infty$).
-$$ \int_{\mathbb{R}} |g(x-t)| \, dx = \int_{\mathbb{R}} |g(u)| \, du = \|g\|_1 $$
-Cette quantité est finie par hypothèse ($g \in L^1$).
-On remplace dans l'intégrale extérieure :
-$$ I = \int_{\mathbb{R}} |f(t)| \|g\|_1 \, dt = \|g\|_1 \int_{\mathbb{R}} |f(t)| \, dt = \|g\|_1 \|f\|_1 < +\infty $$
-Ainsi, la fonction conjointe $(x,t) \mapsto f(t)g(x-t)$ est absolument intégrable sur $\mathbb{R}^2$.
-
-**2. Utilisation de Fubini et conclusion :**
-Puisque $F \in L^1(\mathbb{R}^2)$, le théorème de Fubini affirme que :
-- L'intégrale par rapport à $t$, à savoir $\int_{\mathbb{R}} f(t) g(x-t) dt = (f*g)(x)$, existe et est finie pour presque tout $x \in \mathbb{R}$. (Cela prouve le point 1).
-- La fonction $x \mapsto (f*g)(x)$ est intégrable (donc dans $L^1(\mathbb{R})$).
-- On peut majorer sa norme $L^1$ :
-$$ \|f * g\|_1 = \int_{\mathbb{R}} \left| \int_{\mathbb{R}} f(t)g(x-t) dt \right| dx \le \int_{\mathbb{R}} \left( \int_{\mathbb{R}} |f(t)| |g(x-t)| dt \right) dx $$
-Par Tonelli, on vient de calculer que cette double intégrale vaut $\|f\|_1 \|g\|_1$.
-Donc $\|f * g\|_1 \le \|f\|_1 \|g\|_1$. C'est l'inégalité de Young pour la convolution $L^1 * L^1$.
+**Correction :**
+1. La fonction $f(x,y) = e^{x^3}$ est positive et continue sur le domaine. Tonelli autorise l'interversion.
+2. Identifions le domaine $D$ d'intégration.
+   Les bornes de $y$ sont $0 \le y \le 1$.
+   Les bornes de $x$ (à $y$ fixé) sont $\sqrt{y} \le x \le 1$.
+   Le domaine est donc délimité par $y=0$, $x=1$ et la parabole $x = \sqrt{y} \iff y = x^2$.
+3. Modifions l'ordre d'intégration : nous projetons d'abord sur l'axe des $x$.
+   Les valeurs extrêmes pour $x$ sur $D$ sont $0 \le x \le 1$.
+   Pour un $x$ fixé, $y$ varie de la droite $y=0$ jusqu'à la parabole $y=x^2$.
+   Donc, $0 \le y \le x^2$.
+4. La nouvelle intégrale s'écrit :
+   $$ I = \int_0^1 \left( \int_0^{x^2} e^{x^3} dy \right) dx $$
+5. L'intégration interne par rapport à $y$ est maintenant triviale ($x$ est constant) :
+   $$ \int_0^{x^2} e^{x^3} dy = e^{x^3} [y]_0^{x^2} = x^2 e^{x^3} $$
+6. L'intégration externe devient facile car $x^2$ est proportionnel à la dérivée de $x^3$ :
+   $$ I = \int_0^1 x^2 e^{x^3} dx = \left[ \frac{1}{3} e^{x^3} \right]_0^1 = \frac{1}{3}(e^1 - e^0) = \frac{e-1}{3} $$

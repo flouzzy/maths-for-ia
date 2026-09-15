@@ -1,28 +1,18 @@
-# Exercice 2 : Inversion de l'ordre d'intégration sur un triangle $\bigstar\bigstar\star\star\star$
+## Exercice 2 : Fubini et fonction à signe variable \quad $\bigstar\bigstar\star\star\star$
 
-## Énoncé
+**Énoncé :**
+Montrer que $f(x, y) = x - y$ est intégrable sur $[0, 1]^2$ et calculer $I = \iint_{[0, 1]^2} (x - y) dx dy$.
 
-Considérons l'intégrale itérée suivante :
-$$ I = \int_0^1 \left( \int_0^x e^{x^2} \, dy \right) dx $$
-1. Esquisser le domaine d'intégration $D$.
-2. Inverser l'ordre d'intégration et calculer la valeur de $I$.
-
-## Correction
-
-1. **Le domaine d'intégration :**
-D'après les bornes, $x$ varie de $0$ à $1$. Pour un $x$ fixé, $y$ varie de $0$ à $x$.
-Ainsi, le domaine $D$ est défini par : $D = \{ (x, y) \in \mathbb{R}^2 \mid 0 \le x \le 1, \, 0 \le y \le x \}$.
-C'est le triangle de sommets $(0,0)$, $(1,0)$ et $(1,1)$.
-La fonction $f(x,y) = e^{x^2}$ est positive et continue sur $D$, donc Tonelli s'applique.
-
-2. **Inversion de l'ordre :**
-Pour intégrer d'abord par rapport à $x$, on doit fixer $y$. En regardant le triangle, $y$ varie globalement de $0$ à $1$.
-Pour un $y$ fixé dans $[0, 1]$, la variable $x$ va de la droite $x = y$ jusqu'à la droite verticale $x = 1$.
-Donc, le domaine s'écrit aussi : $D = \{ (x, y) \in \mathbb{R}^2 \mid 0 \le y \le 1, \, y \le x \le 1 \}$.
-L'intégrale devient :
-$$ I = \int_0^1 \left( \int_y^1 e^{x^2} \, dx \right) dy $$
-L'intégrale intérieure $\int_y^1 e^{x^2} dx$ n'a pas de primitive usuelle. Cependant, le premier ordre d'intégration (celui de l'énoncé) était calculable facilement :
-$$ I = \int_0^1 \left[ y e^{x^2} \right]_{y=0}^{y=x} dx = \int_0^1 x e^{x^2} dx $$
-Posons $u = x^2$, $du = 2x dx$. Alors $x dx = \frac{1}{2} du$. Les bornes restent 0 et 1.
-$$ I = \int_0^1 \frac{1}{2} e^u du = \frac{1}{2} \left[ e^u \right]_0^1 = \frac{1}{2} (e - 1) $$
-Remarque : L'énoncé demande "Inverser l'ordre d'intégration et calculer la valeur". Parfois, inverser rend le calcul impossible, ici l'ordre initial était le bon. Si l'énoncé de départ était dans le mauvais sens, Fubini nous sauve.
+**Correction :**
+1. La fonction $f(x, y) = x - y$ change de signe sur le domaine. Pour appliquer le théorème de Fubini, nous devons d'abord vérifier que l'intégrale de sa valeur absolue est finie.
+2. Considérons $|f(x, y)| = |x - y|$. Cette fonction est positive, donc Tonelli s'applique :
+   $$ \iint |x - y| dx dy = \int_0^1 \left( \int_0^1 |x - y| dy \right) dx $$
+3. Calculons l'intégrale interne pour un $x \in [0, 1]$ fixé. On découpe l'intervalle selon le signe de $x - y$ :
+   $$ \int_0^1 |x - y| dy = \int_0^x (x - y) dy + \int_x^1 (y - x) dy $$
+   $$ = \left[ xy - \frac{y^2}{2} \right]_0^x + \left[ \frac{y^2}{2} - xy \right]_x^1 $$
+   $$ = \left( x^2 - \frac{x^2}{2} \right) + \left( \frac{1}{2} - x - (\frac{x^2}{2} - x^2) \right) = \frac{x^2}{2} + \frac{1}{2} - x + \frac{x^2}{2} = x^2 - x + \frac{1}{2} $$
+4. Intégrons ce résultat en $x$ :
+   $$ \int_0^1 \left( x^2 - x + \frac{1}{2} \right) dx = \left[ \frac{x^3}{3} - \frac{x^2}{2} + \frac{x}{2} \right]_0^1 = \frac{1}{3} - \frac{1}{2} + \frac{1}{2} = \frac{1}{3} $$
+5. L'intégrale de la valeur absolue est $1/3 < +\infty$. La fonction $f$ est intégrable.
+6. Fubini s'applique, nous pouvons calculer $I$ sans la valeur absolue :
+   $$ I = \int_0^1 \left( \int_0^1 (x - y) dy \right) dx = \int_0^1 \left[ xy - \frac{y^2}{2} \right]_0^1 dx = \int_0^1 (x - \frac{1}{2}) dx = \left[ \frac{x^2}{2} - \frac{x}{2} \right]_0^1 = 0 $$

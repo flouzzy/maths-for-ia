@@ -1,31 +1,21 @@
-# Exercice 7 : Astuce de l'intégrale de Dirichlet $\bigstar\bigstar\bigstar\bigstar\star$
+## Exercice 7 : Fubini-Tonelli pour des séries doubles \quad $\bigstar\bigstar\star\star\star$
 
-## Énoncé
+**Énoncé :**
+Les séries doubles sont des intégrales par rapport à la mesure de comptage.
+Calculer $S = \sum_{n=1}^\infty \sum_{m=1}^\infty \frac{1}{(n+m)^3}$.
 
-On se propose de calculer l'intégrale de Dirichlet $I = \int_0^{+\infty} \frac{\sin x}{x} dx$ à l'aide du théorème de Fubini.
-1. Justifier l'identité $\frac{1}{x} = \int_0^{+\infty} e^{-xt} dt$ pour $x > 0$.
-2. Écrire $I$ comme une intégrale double, puis, en justifiant le changement d'ordre, calculer $I$.
-
-## Correction
-
-**1. Identité préliminaire :**
-Pour tout $x > 0$, l'intégrale impropre $\int_0^{+\infty} e^{-xt} dt$ est convergente :
-$$ \int_0^{+\infty} e^{-xt} dt = \left[ \frac{e^{-xt}}{-x} \right]_0^{+\infty} = 0 - \left(-\frac{1}{x}\right) = \frac{1}{x} $$
-
-**2. Application de Fubini-Tonelli :**
-On écrit $I = \lim_{R \to +\infty} \int_0^R \frac{\sin x}{x} dx$ (l'intégrale de Dirichlet est semi-convergente, elle n'est pas absolument convergente sur $[0, +\infty[$).
-Cependant, pour appliquer Fubini de manière standard, on doit s'assurer de l'intégrabilité absolue. Considérons l'intégrale sur le domaine fini $[0, R] \times [0, +\infty[$.
-Soit $f(x,t) = e^{-xt} \sin x$. Montrons que $f$ est intégrable sur $[0, R] \times \mathbb{R}_+$.
-$$ \int_0^R \left( \int_0^{+\infty} |e^{-xt} \sin x| dt \right) dx = \int_0^R |\sin x| \left( \int_0^{+\infty} e^{-xt} dt \right) dx = \int_0^R \frac{|\sin x|}{x} dx $$
-Cette dernière intégrale est finie car $\frac{|\sin x|}{x} \to 1$ en $x=0$ (elle se prolonge par continuité).
-L'hypothèse d'intégrabilité absolue du théorème de Fubini est vérifiée sur ce domaine restreint.
-On peut intervertir les intégrales pour l'intégrale sur $x \in [0, R]$ :
-$$ \int_0^R \frac{\sin x}{x} dx = \int_0^R \left( \int_0^{+\infty} e^{-xt} \sin x \, dt \right) dx = \int_0^{+\infty} \left( \int_0^R e^{-xt} \sin x \, dx \right) dt $$
-Calculons d'abord $\int_0^{+\infty} e^{-xt} \sin x dx$.
-En intégrant par parties deux fois, ou en utilisant $\text{Im}(e^{(i-t)x})$, on trouve une primitive :
-$$ \int_0^{+\infty} e^{-xt} \sin x dx = \frac{1}{1+t^2} $$
-On doit faire attention avec le $R$. L'intégrale exacte est $\left[ \frac{e^{-xt}(-t \sin x - \cos x)}{1+t^2} \right]_0^R$.
-En passant à la limite $R \to +\infty$, le terme de bord s'annule car $e^{-Rt} \to 0$ pour $t>0$.
-La justification précise utilise le théorème de convergence dominée pour passer la limite sous l'intégrale en $t$.
-On obtient :
-$$ I = \int_0^{+\infty} \frac{1}{1+t^2} dt = \left[ \arctan(t) \right]_0^{+\infty} = \frac{\pi}{2} $$
+**Correction :**
+1. Les termes $u_{n,m} = \frac{1}{(n+m)^3}$ sont strictement positifs. Tonelli assure que la sommation peut se faire dans n'importe quel ordre, y compris par "diagonales".
+2. Posons $k = n + m$. Puisque $n \ge 1$ et $m \ge 1$, $k$ varie de $2$ à l'infini.
+3. Pour un $k$ donné, combien y a-t-il de paires $(n, m)$ telles que $n+m = k$ ?
+   On a $m = k - n$. Comme $m \ge 1$, on a $k - n \ge 1$, soit $n \le k - 1$.
+   Puisque $n \ge 1$, $n$ prend les valeurs entières de $1$ à $k-1$.
+   Il y a donc $k - 1$ paires possibles pour chaque somme $k$.
+4. Réécrivons la double somme (ce qui correspond à un changement de variable garanti par Tonelli) :
+   $$ S = \sum_{k=2}^\infty \sum_{(n,m) | n+m=k} \frac{1}{k^3} = \sum_{k=2}^\infty \frac{\text{nombre de paires}}{k^3} = \sum_{k=2}^\infty \frac{k-1}{k^3} $$
+5. Séparons la fraction :
+   $$ S = \sum_{k=2}^\infty \left( \frac{k}{k^3} - \frac{1}{k^3} \right) = \sum_{k=2}^\infty \frac{1}{k^2} - \sum_{k=2}^\infty \frac{1}{k^3} $$
+6. Or, on connaît la fonction zêta de Riemann : $\zeta(s) = \sum_{k=1}^\infty \frac{1}{k^s}$.
+   $$ \sum_{k=2}^\infty \frac{1}{k^2} = \zeta(2) - 1 = \frac{\pi^2}{6} - 1 $$
+   $$ \sum_{k=2}^\infty \frac{1}{k^3} = \zeta(3) - 1 $$
+7. Finalement, $S = \zeta(2) - 1 - (\zeta(3) - 1) = \frac{\pi^2}{6} - \zeta(3)$.

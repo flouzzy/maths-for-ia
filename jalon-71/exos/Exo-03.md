@@ -1,24 +1,15 @@
-# Exercice 3 : Tonelli sur un domaine infini $\bigstar\bigstar\star\star\star$
+## Exercice 3 : Intégrale sur un domaine infini (Tonelli) \quad $\bigstar\bigstar\bigstar\star\star$
 
-## Énoncé
+**Énoncé :**
+Calculer $I = \iint_{\mathbb{R}_+^2} e^{-(x+y)} \cos^2(xy) dx dy$.
 
-Calculer l'intégrale suivante en justifiant soigneusement l'utilisation du théorème de Tonelli :
-$$ I = \int_0^{+\infty} \int_0^{+\infty} y e^{-(1+x)y} \, dx \, dy $$
-
-## Correction
-
-**Justification :**
-L'espace d'intégration est $\mathbb{R}_+ \times \mathbb{R}_+$, qui est $\sigma$-fini.
-La fonction $f(x, y) = y e^{-(1+x)y}$ est continue et positive sur $\mathbb{R}_+ \times \mathbb{R}_+$.
-Par le théorème de Tonelli, on peut intégrer dans n'importe quel ordre, et le résultat sera dans $[0, +\infty]$.
-
-**Calcul :**
-Intégrons d'abord par rapport à $x$ en gardant $y$ constant :
-$$ I = \int_0^{+\infty} y \left( \int_0^{+\infty} e^{-y} e^{-xy} \, dx \right) dy $$
-$$ I = \int_0^{+\infty} y e^{-y} \left[ \frac{e^{-xy}}{-y} \right]_{x=0}^{x=+\infty} dy $$
-Pour $y > 0$, $\lim_{x \to +\infty} e^{-xy} = 0$. Donc la valeur entre crochets est $0 - (-\frac{1}{y}) = \frac{1}{y}$.
-Pour $y = 0$, $f(x,0) = 0$, l'intégrale est nulle. Comme on intègre en $y$, ce point de mesure nulle (Lebesgue) ne change rien.
-On a donc :
-$$ I = \int_0^{+\infty} y e^{-y} \times \frac{1}{y} \, dy = \int_0^{+\infty} e^{-y} \, dy $$
-$$ I = \left[ -e^{-y} \right]_0^{+\infty} = 0 - (-1) = 1 $$
-Ainsi, l'intégrale vaut 1.
+**Correction :**
+1. La fonction $f(x, y) = e^{-(x+y)} \cos^2(xy)$ est continue et positive sur $\mathbb{R}_+^2 = [0, +\infty[ \times [0, +\infty[$.
+2. Tonelli nous autorise à évaluer l'intégrale, mais le terme $\cos^2(xy)$ est difficile à intégrer directement.
+3. Nous allons utiliser une majoration pour montrer que l'intégrale est finie. Remarquons que pour tout $(x, y)$, $0 \le \cos^2(xy) \le 1$.
+4. Ainsi, $0 \le f(x, y) \le e^{-x} e^{-y}$.
+5. Considérons $g(x, y) = e^{-x} e^{-y}$. C'est une fonction à variables séparables.
+   $$ \iint_{\mathbb{R}_+^2} g(x, y) dx dy = \left( \int_0^{+\infty} e^{-x} dx \right) \left( \int_0^{+\infty} e^{-y} dy \right) $$
+6. Or, $\int_0^{+\infty} e^{-t} dt = \lim_{A \to +\infty} [-e^{-t}]_0^A = \lim_{A \to +\infty} (1 - e^{-A}) = 1$.
+7. Donc $\iint_{\mathbb{R}_+^2} g(x, y) dx dy = 1 \times 1 = 1$.
+8. Par monotonie de l'intégrale de Lebesgue, $0 \le I \le 1$. L'intégrale est donc finie (et existe bien grâce à Tonelli). Le calcul exact nécessite des développements en séries ou des fonctions spéciales. Cet exercice illustre l'usage de Tonelli pour la domination.

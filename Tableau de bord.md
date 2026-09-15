@@ -81,7 +81,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-68/Jalon-68.md|Jalon 68 : Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque]] : Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque (fonctions intégrables). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-69/Jalon 69 (Démonstration complète du théorème de convergence dominée de Lebesgue.).md|Jalon 69 : Démonstration complète du théorème de convergence dominée de Lebesgue.]] : Démonstration complète du théorème de convergence dominée de Lebesgue.
 - [x] [[jalon-70/Jalon-70.md|Jalon 70 : Espaces mesurés produits]] : Espaces mesurés produits, tribu produit et construction de la mesure produit. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [x] [[jalon-71/Jalon-71.md|Jalon 71 : Théorèmes de Fubini-Tonelli]] : Théorèmes de Fubini-Tonelli (fonctions positives) et de Fubini (fonctions intégrables). 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [x] [[jalon-71/Jalon-71.md|Jalon 71 : Théorèmes de Fubini-Tonelli]] : Théorèmes de Fubini-Tonelli (fonctions positives) et de Fubini (fonctions intégrables).
 - [ ] [[jalon-72/Jalon 72 (Livrable IA).md|Jalon 72 : Livrable IA]] : Livrable IA T6 : Formalisation de la divergence de Kullback-Leibler entre deux distributions de probabilités continues complexes.
 ### Trimestre 7 : espaces $L^p$ et analyse de Fourier
 - [ ] [[jalon-73/Jalon 73 (Définition des espaces -mathcal{L}^p- et passage à l'espace quotient -L^p-).md|Jalon 73 : Définition des espaces $\\mathcal{L}^p$ et passage à l'espace quotient $L^p$]] : Définition des espaces $\\mathcal{L}^p$ et passage à l'espace quotient $L^p$ (égalité presque partout).

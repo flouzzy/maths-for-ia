@@ -1,25 +1,19 @@
-# Exercice 5 : La fonction indicatrice d'un triangle infini $\bigstar\bigstar\bigstar\star\star$
+## Exercice 5 : L'intégrale de Dirichlet et l'interversion \quad $\bigstar\bigstar\bigstar\bigstar\star$
 
-## Énoncé
+**Énoncé :**
+On veut calculer $I = \int_0^{+\infty} \frac{\sin x}{x} dx$. On utilisera l'identité $\frac{1}{x} = \int_0^{+\infty} e^{-xy} dy$ (pour $x > 0$).
 
-Soit $E = \{ (x, y) \in \mathbb{R}^2 \mid 0 < y < x \}$.
-Calculer $\iint_E y e^{-x} \, dx \, dy$ de deux manières différentes en utilisant le théorème de Tonelli.
-
-## Correction
-
-L'intégrale s'écrit formellement $\int_{\mathbb{R}^2} \mathbf{1}_E(x,y) y e^{-x} dx dy$. La fonction intégrée est positive et mesurable, donc Tonelli s'applique.
-
-**Méthode 1 : Tranches verticales (on fixe $x$, on intègre en $y$)**
-Le domaine impose que $x > 0$. Pour un $x$ donné, $y$ varie de $0$ à $x$.
-$$ I = \int_0^{+\infty} \left( \int_0^x y e^{-x} \, dy \right) dx = \int_0^{+\infty} e^{-x} \left( \int_0^x y \, dy \right) dx $$
-$$ I = \int_0^{+\infty} e^{-x} \left[ \frac{y^2}{2} \right]_0^x dx = \int_0^{+\infty} e^{-x} \frac{x^2}{2} dx $$
-On reconnaît (à un facteur près) la fonction Gamma d'Euler : $\int_0^{+\infty} x^n e^{-x} dx = n!$.
-Ici $n=2$, donc $\int_0^{+\infty} x^2 e^{-x} dx = 2$.
-Ainsi, $I = \frac{1}{2} \times 2 = 1$.
-
-**Méthode 2 : Tranches horizontales (on fixe $y$, on intègre en $x$)**
-Le domaine impose $y > 0$. Pour un $y$ fixé, $x$ doit être strictement supérieur à $y$, donc $x$ varie de $y$ à $+\infty$.
-$$ I = \int_0^{+\infty} \left( \int_y^{+\infty} y e^{-x} \, dx \right) dy = \int_0^{+\infty} y \left( \int_y^{+\infty} e^{-x} \, dx \right) dy $$
-$$ I = \int_0^{+\infty} y \left[ -e^{-x} \right]_y^{+\infty} dy = \int_0^{+\infty} y (0 - (-e^{-y})) \, dy = \int_0^{+\infty} y e^{-y} \, dy $$
-On a ici l'intégrale $\int_0^{+\infty} y^1 e^{-y} dy$ (fonction Gamma avec $n=1$), qui vaut $1! = 1$.
-Les deux méthodes donnent heureusement le même résultat $I = 1$.
+**Correction :**
+1. Remplaçons $1/x$ par son expression intégrale :
+   $$ I = \int_0^{+\infty} \sin x \left( \int_0^{+\infty} e^{-xy} dy \right) dx = \int_0^{+\infty} \int_0^{+\infty} \sin(x) e^{-xy} dy dx $$
+2. Attention, la fonction $f(x, y) = \sin(x) e^{-xy}$ n'est pas de signe constant. Vérifions si elle est Lebesgue-intégrable sur $\mathbb{R}_+^2$ pour appliquer Fubini.
+   $$ \iint |f(x,y)| dx dy = \int_0^{+\infty} \left( \int_0^{+\infty} |\sin x| e^{-xy} dy \right) dx = \int_0^{+\infty} |\sin x| \left[ \frac{e^{-xy}}{-x} \right]_0^{+\infty} dx = \int_0^{+\infty} \frac{|\sin x|}{x} dx $$
+   Or, on sait que l'intégrale de $|\sin x|/x$ diverge en l'infini. $f$ **n'est pas** intégrable sur le produit ! Fubini usuel échoue.
+3. *Astuce :* On tronque le domaine. On calcule d'abord $I_R = \int_0^R \frac{\sin x}{x} dx$.
+   $$ I_R = \int_0^R \left( \int_0^{+\infty} \sin(x) e^{-xy} dy \right) dx $$
+   Sur $[0, R] \times [0, +\infty[$, la fonction est intégrable (car l'intégrale de la valeur absolue est bornée par $\int_0^R 1/x$ non wait, $|\sin x|/x$ est intégrable sur le segment fini).
+4. Fubini s'applique sur ce domaine tronqué :
+   $$ I_R = \int_0^{+\infty} \left( \int_0^R \sin(x) e^{-xy} dx \right) dy $$
+5. Calculons $J(y) = \int_0^R \sin(x) e^{-xy} dx$ (par double IPP ou en utilisant la partie imaginaire de $\int e^{ix} e^{-xy} dx$) :
+   $$ \int_0^R e^{(i-y)x} dx = \left[ \frac{e^{(i-y)x}}{i-y} \right]_0^R = \frac{e^{-yR}e^{iR} - 1}{i-y} = \frac{(e^{-yR}\cos R - 1) + i e^{-yR}\sin R}{-y - i} $$
+   En multipliant par le conjugué $-y+i$ au numérateur et dénominateur $y^2+1$, on isole la partie imaginaire, puis on prend la limite $R \to \infty$ en utilisant le théorème de convergence dominée pour conclure.

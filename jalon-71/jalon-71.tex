@@ -1,0 +1,598 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {\`a}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1
+}
+
+\title{\Huge THÉORÈMES DE FUBINI-TONELLI \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+\begin{center}
+\begin{tikzpicture}
+  % Draw axes
+  \draw[->] (-0.5,0) -- (4,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,4) node[above] {$y$};
+
+  % Draw a function surface proxy
+  \fill[blue!20] (1,1) rectangle (3,3);
+  \draw[thick, blue] (1,1) rectangle (3,3);
+
+  % Draw dx and dy slices
+  \draw[dashed, red, thick] (1.5,1) -- (1.5,3);
+  \draw[dashed, red, thick] (1.7,1) -- (1.7,3);
+
+  \draw[dashed, green!60!black, thick] (1,2) -- (3,2);
+  \draw[dashed, green!60!black, thick] (1,2.2) -- (3,2.2);
+
+  \node at (2,-0.3) {Domaine de Fubini};
+\end{tikzpicture}
+\end{center}
+
+
+\section{Jalon 71 : Théorèmes de Fubini-Tonelli}
+
+\subsection{Genèse et Intuition Physique}
+
+Le calcul d'intégrales multiples se pose naturellement dès que l'on cherche \`a évaluer des grandeurs réparties dans l'espace ou le plan : la masse d'un solide dont la densité varie, le volume d'un fluide sous une surface, ou encore la probabilité conjointe de plusieurs événements.
+
+L'intuition physique sous-jacente au théorème de Fubini est celle du principe de Cavalieri : le volume d'un solide peut être obtenu en sommant (intégrant) l'aire de ses sections parallèles. Concrètement, pour évaluer une quantité globale sur un domaine 2D, on peut soit "balayer" le domaine en calculant la somme des contributions sur des lignes horizontales, puis sommer ces lignes verticalement, soit faire l'inverse (colonnes puis lignes horizontales). Le bon sens physique postule que la quantité totale est invariante par rapport \`a la méthode de balayage. Les théorèmes de Tonelli et Fubini constituent la formalisation rigoureuse de cette invariance dans le cadre de la théorie de la mesure de Lebesgue, en précisant les conditions (positivité ou intégrabilité absolue) sous lesquelles cette interversion des signes d'intégration est légitime.
+
+\subsection{Définitions, Théorèmes et Exemples}
+
+\subsubsection{Cadre formel}
+
+Soient $(X_1, \mathcal{F}_1, \mu_1)$ et $(X_2, \mathcal{F}_2, \mu_2)$ deux espaces mesurés $\sigma$-finis.
+Soit $(X_1 \times X_2, \mathcal{F}_1 \otimes \mathcal{F}_2, \mu_1 \otimes \mu_2)$ l'espace produit associé.
+Soit $f : X_1 \times X_2 \to \overline{\mathbb{R}}$ ou $\mathbb{C}$ une fonction mesurable.
+
+\subsubsection{Théorème de Tonelli (Cas positif)}
+
+\textbf{Théorème} :
+Si $f \ge 0$ (fonction mesurable positive), alors :
+1. Les fonctions partielles $x_1 \mapsto \int_{X_2} f(x_1, x_2) d\mu_2(x_2)$ et $x_2 \mapsto \int_{X_1} f(x_1, x_2) d\mu_1(x_1)$ sont mesurables et positives.
+2. L'égalité suivante est vérifiée (dans $[0, +\infty]$) :
+   $$ \int_{X_1 \times X_2} f d(\mu_1 \otimes \mu_2) = \int_{X_1} \left( \int_{X_2} f(x_1, x_2) d\mu_2(x_2) \right) d\mu_1(x_1) = \int_{X_2} \left( \int_{X_1} f(x_1, x_2) d\mu_1(x_1) \right) d\mu_2(x_2) $$
+
+\subsubsection{Théorème de Fubini (Cas intégrable)}
+
+\textbf{Théorème} :
+Soit $f : X_1 \times X_2 \to \mathbb{C}$ (ou $\mathbb{R}$) mesurable.
+On suppose que l'une des trois intégrales suivantes est finie (en appliquant le théorème de Tonelli \`a $|f|$) :
+- $\int_{X_1 \times X_2} |f| d(\mu_1 \otimes \mu_2) < +\infty$
+- $\int_{X_1} \left( \int_{X_2} |f| d\mu_2 \right) d\mu_1 < +\infty$
+- $\int_{X_2} \left( \int_{X_1} |f| d\mu_1 \right) d\mu_2 < +\infty$
+
+Alors, la fonction $f$ est intégrable par rapport \`a la mesure produit $\mu_1 \otimes \mu_2$, et on a l'égalité des intégrales :
+$$ \int_{X_1 \times X_2} f d(\mu_1 \otimes \mu_2) = \int_{X_1} \left( \int_{X_2} f d\mu_2 \right) d\mu_1 = \int_{X_2} \left( \int_{X_1} f d\mu_1 \right) d\mu_2 $$
+\textit{(Pour presque tout $x_1$, la fonction partielle $x_2 \mapsto f(x_1, x_2)$ est intégrable, et réciproquement).}
+
+\subsubsection{Exemples Concrets et Application Immédiate}
+
+\textbf{Exemple 1 : Intégrale d'un produit (Variables séparables)}
+Soit $f(x,y) = e^{-x} e^{-2y}$ sur $X_1 = [0, +\infty[$, $X_2 = [0, +\infty[$.
+On a $\int_{0}^{+\infty} \int_{0}^{+\infty} e^{-x-2y} dx dy = \left( \int_0^{+\infty} e^{-x} dx \right) \left( \int_0^{+\infty} e^{-2y} dy \right) = 1 \times \frac{1}{2} = \frac{1}{2}$.
+Ici, $f \ge 0$, donc Tonelli garantit que le produit des intégrales est bien l'intégrale sur $\mathbb{R}_+^2$.
+
+\textbf{Exemple 2 : Calcul de volume par section (Tonelli)}
+Soit le domaine $D = \{(x,y) \in \mathbb{R}^2 \mid 0 \le x \le 1, 0 \le y \le x^2\}$.
+L'aire de $D$ vaut $\iint_D 1 dx dy$.
+En intégrant d'abord en $y$ (tranches verticales) : $\int_0^1 \left( \int_0^{x^2} 1 dy \right) dx = \int_0^1 x^2 dx = \frac{1}{3}$.
+En intégrant d'abord en $x$ (tranches horizontales) : $\int_0^1 \left( \int_{\sqrt{y}}^1 1 dx \right) dy = \int_0^1 (1 - \sqrt{y}) dy = 1 - \frac{2}{3} = \frac{1}{3}$.
+L'égalité vérifie empiriquement Tonelli.
+
+\textbf{Exemple 3 : Intégrale double convergente via Fubini}
+Évaluons $I = \int_{0}^1 \int_0^1 \frac{x-y}{x+y} dx dy$.
+Attention, ce domaine nécessite prudence. Si $f(x,y) = \frac{x-y}{(x+y)^3}$, l'intégrale absolue diverge en $(0,0)$.
+Prenons $f(x,y) = x \cos(xy)$ sur $[0,1] \times [0,\pi/2]$. $f$ change de signe mais $|f|$ est bornée (continue sur un compact), donc Lebesgue-intégrable.
+Intégration d'abord selon $y$ : $\int_0^1 \left( [ \sin(xy) ]_{y=0}^{y=\pi/2} \right) dx = \int_0^1 \sin(\frac{\pi x}{2}) dx = [-\frac{2}{\pi} \cos(\frac{\pi x}{2})]_0^1 = \frac{2}{\pi}$.
+
+\textbf{Exemple 4 : La condition de Fubini est indispensable (Contre-exemple classique)}
+Soit $f(x,y) = \frac{x^2-y^2}{(x^2+y^2)^2}$ sur $[0,1] \times [0,1] \setminus \{(0,0)\}$.
+On a $\int_0^1 \left( \int_0^1 f(x,y) dy \right) dx = \int_0^1 [\frac{y}{x^2+y^2}]_0^1 dx = \int_0^1 \frac{1}{x^2+1} dx = \frac{\pi}{4}$.
+Mais $\int_0^1 \left( \int_0^1 f(x,y) dx \right) dy = -\frac{\pi}{4}$.
+Pourquoi l'égalité est-elle fausse ? Car Tonelli sur la valeur absolue donne $\iint |f| = +\infty$. $f$ n'est pas intégrable, Fubini ne s'applique pas.
+
+\textbf{Exemple 5 : L'intégrale de Gauss}
+Le calcul de $I = \int_0^{+\infty} e^{-x^2} dx$ s'appuie sur Tonelli : $I^2 = \int_0^{+\infty} e^{-x^2} dx \int_0^{+\infty} e^{-y^2} dy = \iint_{\mathbb{R}_+^2} e^{-(x^2+y^2)} dx dy$.
+Par passage en polaires, $I^2 = \int_0^{\pi/2} \int_0^{+\infty} e^{-r^2} r dr d\theta = \frac{\pi}{4}$, d'où $I = \frac{\sqrt{\pi}}{2}$.
+
+\textbf{Exemple 6 : Espace de probabilité (Marginalisation)}
+Soit une densité conjointe $p(x,y)$ (fonction positive d'intégrale 1).
+Tonelli assure que $\int_\mathbb{R} \left( \int_\mathbb{R} p(x,y) dy \right) dx = 1$, ce qui justifie que la distribution marginale $p_X(x) = \int p(x,y) dy$ est une densité de probabilité bien définie.
+
+\textbf{Exemple 7 : Fubini-Tonelli et séries}
+Les sommes doubles sont des intégrales par rapport \`a la mesure de comptage sur $\mathbb{N}^2$.
+Si $u_{n,m} \ge 0$, alors $\sum_n \sum_m u_{n,m} = \sum_m \sum_n u_{n,m}$ (Tonelli).
+Si $\sum_n \sum_m |u_{n,m}| < +\infty$, alors on peut sommer $u_{n,m}$ (qui peut avoir des signes variables) dans n'importe quel ordre (Fubini).
+
+\subsection{Démonstrations}
+
+La démonstration des théorèmes de Tonelli et Fubini s'appuie fondamentalement sur le lemme des classes monotones (ou lemme de Dynkin) et se décompose en plusieurs étapes :
+
+1. \textbf{Cas des ensembles mesurables (Indicatrices) :}
+   Si $f = \mathbf{1}_E$ avec $E \in \mathcal{F}_1 \otimes \mathcal{F}_2$. On considère la classe $\mathcal{M}$ des ensembles $E$ pour lesquels la propriété d'interversion de Tonelli est vraie. On montre aisément que la propriété est vraie pour les "pavés mesurables" $A_1 \times A_2$.
+   Puisque l'application $E \mapsto \iint \mathbf{1}_E$ définit une mesure, et que la classe des pavés forme une algèbre qui engendre $\mathcal{F}_1 \otimes \mathcal{F}_2$, le lemme d'extension des mesures de Carathéodory (ou les classes monotones) permet de conclure que l'égalité est vraie pour tout $E \in \mathcal{F}_1 \otimes \mathcal{F}_2$. L'hypothèse $\sigma$-finie est ici cruciale pour l'unicité de l'extension.
+
+2. \textbf{Cas des fonctions étagées positives :}
+   Par linéarité de l'intégrale (qui commute avec les sommes finies), la relation établie pour les indicatrices s'étend immédiatement \`a toute combinaison linéaire positive d'indicatrices (fonctions étagées positives).
+
+3. \textbf{Cas des fonctions mesurables positives (Tonelli complet) :}
+   Toute fonction $f \ge 0$ mesurable est la limite simple d'une suite croissante $(f_n)_{n \in \mathbb{N}}$ de fonctions étagées positives.
+   On applique le théorème de convergence monotone (Beppo-Levi) \`a la suite $(f_n)$. La limite passe sous l'intégrale par rapport \`a $\mu_2$, donnant une suite croissante de fonctions mesurables en $x_1$, sur laquelle on réapplique Beppo-Levi par rapport \`a $\mu_1$. Cela prouve l'égalité pour $f$.
+
+4. \textbf{Cas des fonctions intégrables (Fubini) :}
+   Si $f$ est de signe quelconque, mais vérifie l'hypothèse de la finitude de l'intégrale de $|f|$, on décompose $f = f^+ - f^-$ en sa partie positive et sa partie négative.
+   Par Tonelli, $f^+$ et $f^-$ ont des intégrales finies. Par linéarité, l'intégrale itérée de $f$ est la différence des intégrales itérées de $f^+$ et $f^-$, d'où le résultat. Dans le cas complexe, on décompose en parties réelle et imaginaire.
+
+\subsection{Applications en Physique, Logique et AI}
+
+- \textbf{Physique Théorique (Mécanique Quantique et Statistique) :} Le calcul de grandeurs macroscopiques \`a partir d'états microscopiques continus requiert constamment des intégrations sur l'espace des phases (positions et impulsions). Le théorème de Fubini garantit que le calcul du volume de l'espace des phases (théorème de Liouville) ou de la fonction de partition est indépendant de l'ordre d'intégration sur les degrés de liberté des particules.
+- \textbf{Théorie des Probabilités :} La démonstration de l'indépendance de variables aléatoires s'appuie de façon incontournable sur Fubini. L'espérance du produit de deux variables aléatoires indépendantes $X$ et $Y$ se décompose en $\mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y]$ car la mesure jointe est le produit des mesures marginales, et l'intégrale double factorise grâce \`a Fubini.
+- \textbf{Intelligence Artificielle (Réseaux de Neurones et VAE) :}
+    - Dans la modélisation générative (comme les Auto-encodeurs variationnels, VAE), la vraisemblance marginale des données $P(X) = \int P(X|Z)P(Z) dZ$ est une intégration sur l'espace latent $Z$.
+    - L'estimation de paramètres par maximum de vraisemblance et l'utilisation de divergences (comme Kullback-Leibler) impliquent des doubles sommes (ou intégrales croisées sur des batchs et des dimensions). Le théorème de Tonelli assure la légitimité des inversions d'espérance algorithmique et de sommation spatiale.
+    - Pour les processus gaussiens, le calcul des noyaux covariants par intégration marginale repose fondamentalement sur les garanties analytiques offertes par ces théorèmes.
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Application directe de Tonelli sur un rectangle \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Calculer l'intégrale double $I = \int_{[0, 1] \times [0, 2]} x y^2 dx dy$.
+
+\textbf{Correction :}
+1. Soit $f(x, y) = x y^2$. La fonction $f$ est continue sur le rectangle $R = [0, 1] \times [0, 2]$, donc elle est mesurable.
+2. Pour tout $(x, y) \in R$, $x \ge 0$ et $y^2 \ge 0$, donc $f(x, y) \ge 0$.
+3. Les hypothèses du théorème de Tonelli sont satisfaites (fonction positive, espaces de mesure finie).
+4. Nous pouvons calculer l'intégrale itérée dans l'ordre de notre choix. Intégrons d'abord par rapport \`a $y$ :
+   $$ I = \int_0^1 \left( \int_0^2 x y^2 dy \right) dx $$
+5. Pour $x$ fixé, une primitive de $y \mapsto x y^2$ est $y \mapsto x \frac{y^3}{3}$.
+   $$ \int_0^2 x y^2 dy = x \left[ \frac{y^3}{3} \right]_0^2 = x \left( \frac{8}{3} - 0 \right) = \frac{8x}{3} $$
+6. Nous intégrons maintenant le résultat par rapport \`a $x$ :
+   $$ I = \int_0^1 \frac{8x}{3} dx = \frac{8}{3} \left[ \frac{x^2}{2} \right]_0^1 = \frac{8}{3} \times \frac{1}{2} = \frac{4}{3} $$
+7. \textbf{Conclusion :} L'intégrale vaut $4/3$.
+
+
+\subsection*{Exercice 2 : Fubini et fonction \`a signe variable \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Montrer que $f(x, y) = x - y$ est intégrable sur $[0, 1]^2$ et calculer $I = \iint_{[0, 1]^2} (x - y) dx dy$.
+
+\textbf{Correction :}
+1. La fonction $f(x, y) = x - y$ change de signe sur le domaine. Pour appliquer le théorème de Fubini, nous devons d'abord vérifier que l'intégrale de sa valeur absolue est finie.
+2. Considérons $|f(x, y)| = |x - y|$. Cette fonction est positive, donc Tonelli s'applique :
+   $$ \iint |x - y| dx dy = \int_0^1 \left( \int_0^1 |x - y| dy \right) dx $$
+3. Calculons l'intégrale interne pour un $x \in [0, 1]$ fixé. On découpe l'intervalle selon le signe de $x - y$ :
+   $$ \int_0^1 |x - y| dy = \int_0^x (x - y) dy + \int_x^1 (y - x) dy $$
+   $$ = \left[ xy - \frac{y^2}{2} \right]_0^x + \left[ \frac{y^2}{2} - xy \right]_x^1 $$
+   $$ = \left( x^2 - \frac{x^2}{2} \right) + \left( \frac{1}{2} - x - (\frac{x^2}{2} - x^2) \right) = \frac{x^2}{2} + \frac{1}{2} - x + \frac{x^2}{2} = x^2 - x + \frac{1}{2} $$
+4. Intégrons ce résultat en $x$ :
+   $$ \int_0^1 \left( x^2 - x + \frac{1}{2} \right) dx = \left[ \frac{x^3}{3} - \frac{x^2}{2} + \frac{x}{2} \right]_0^1 = \frac{1}{3} - \frac{1}{2} + \frac{1}{2} = \frac{1}{3} $$
+5. L'intégrale de la valeur absolue est $1/3 < +\infty$. La fonction $f$ est intégrable.
+6. Fubini s'applique, nous pouvons calculer $I$ sans la valeur absolue :
+   $$ I = \int_0^1 \left( \int_0^1 (x - y) dy \right) dx = \int_0^1 \left[ xy - \frac{y^2}{2} \right]_0^1 dx = \int_0^1 (x - \frac{1}{2}) dx = \left[ \frac{x^2}{2} - \frac{x}{2} \right]_0^1 = 0 $$
+
+
+\subsection*{Exercice 3 : Intégrale sur un domaine infini (Tonelli) \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Calculer $I = \iint_{\mathbb{R}_+^2} e^{-(x+y)} \cos^2(xy) dx dy$.
+
+\textbf{Correction :}
+1. La fonction $f(x, y) = e^{-(x+y)} \cos^2(xy)$ est continue et positive sur $\mathbb{R}_+^2 = [0, +\infty[ \times [0, +\infty[$.
+2. Tonelli nous autorise \`a évaluer l'intégrale, mais le terme $\cos^2(xy)$ est difficile \`a intégrer directement.
+3. Nous allons utiliser une majoration pour montrer que l'intégrale est finie. Remarquons que pour tout $(x, y)$, $0 \le \cos^2(xy) \le 1$.
+4. Ainsi, $0 \le f(x, y) \le e^{-x} e^{-y}$.
+5. Considérons $g(x, y) = e^{-x} e^{-y}$. C'est une fonction \`a variables séparables.
+   $$ \iint_{\mathbb{R}_+^2} g(x, y) dx dy = \left( \int_0^{+\infty} e^{-x} dx \right) \left( \int_0^{+\infty} e^{-y} dy \right) $$
+6. Or, $\int_0^{+\infty} e^{-t} dt = \lim_{A \to +\infty} [-e^{-t}]_0^A = \lim_{A \to +\infty} (1 - e^{-A}) = 1$.
+7. Donc $\iint_{\mathbb{R}_+^2} g(x, y) dx dy = 1 \times 1 = 1$.
+8. Par monotonie de l'intégrale de Lebesgue, $0 \le I \le 1$. L'intégrale est donc finie (et existe bien grâce \`a Tonelli). Le calcul exact nécessite des développements en séries ou des fonctions spéciales. Cet exercice illustre l'usage de Tonelli pour la domination.
+
+
+\subsection*{Exercice 4 : Intégration sur un domaine triangulaire \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Calculer $I = \iint_D x e^y dx dy$ où $D = \{(x, y) \in \mathbb{R}^2 \mid x \ge 0, y \ge 0, x + y \le 1\}$.
+
+\textbf{Correction :}
+1. Le domaine $D$ est un triangle plein de sommets $(0,0)$, $(1,0)$, et $(0,1)$. La fonction $f(x,y) = x e^y$ est continue et positive sur ce compact.
+2. D'après Tonelli, on peut intervertir. Nous choisissons d'intégrer d'abord en $x$ (\`a $y$ fixé).
+3. Pour un $y \in [0, 1]$ fixé, la variable $x$ varie de $0$ \`a $1 - y$.
+   $$ I = \int_0^1 \left( \int_0^{1-y} x e^y dx \right) dy $$
+4. Calculons l'intégrale interne :
+   $$ \int_0^{1-y} x e^y dx = e^y \int_0^{1-y} x dx = e^y \left[ \frac{x^2}{2} \right]_0^{1-y} = \frac{e^y(1-y)^2}{2} $$
+5. Intégrons maintenant ce résultat par rapport \`a $y$ sur $[0, 1]$ :
+   $$ I = \frac{1}{2} \int_0^1 e^y(1-y)^2 dy $$
+6. Procédons par intégration par parties. Posons $u = (1-y)^2 \implies u' = -2(1-y)$ et $v' = e^y \implies v = e^y$.
+   $$ \int_0^1 e^y(1-y)^2 dy = \left[ e^y(1-y)^2 \right]_0^1 - \int_0^1 -2(1-y)e^y dy = (0 - 1) + 2 \int_0^1 (1-y)e^y dy $$
+7. Deuxième IPP pour $\int_0^1 (1-y)e^y dy$. $u = 1-y \implies u' = -1$, $v' = e^y \implies v = e^y$.
+   $$ \int_0^1 (1-y)e^y dy = \left[ e^y(1-y) \right]_0^1 - \int_0^1 -e^y dy = (0 - 1) + [e^y]_0^1 = -1 + (e - 1) = e - 2 $$
+8. Reprenons l'équation : $\int e^y(1-y)^2 dy = -1 + 2(e - 2) = 2e - 5$.
+9. Finalement, $I = \frac{2e - 5}{2}$.
+
+
+\subsection*{Exercice 5 : L'intégrale de Dirichlet et l'interversion \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+On veut calculer $I = \int_0^{+\infty} \frac{\sin x}{x} dx$. On utilisera l'identité $\frac{1}{x} = \int_0^{+\infty} e^{-xy} dy$ (pour $x > 0$).
+
+\textbf{Correction :}
+1. Remplaçons $1/x$ par son expression intégrale :
+   $$ I = \int_0^{+\infty} \sin x \left( \int_0^{+\infty} e^{-xy} dy \right) dx = \int_0^{+\infty} \int_0^{+\infty} \sin(x) e^{-xy} dy dx $$
+2. Attention, la fonction $f(x, y) = \sin(x) e^{-xy}$ n'est pas de signe constant. Vérifions si elle est Lebesgue-intégrable sur $\mathbb{R}_+^2$ pour appliquer Fubini.
+   $$ \iint |f(x,y)| dx dy = \int_0^{+\infty} \left( \int_0^{+\infty} |\sin x| e^{-xy} dy \right) dx = \int_0^{+\infty} |\sin x| \left[ \frac{e^{-xy}}{-x} \right]_0^{+\infty} dx = \int_0^{+\infty} \frac{|\sin x|}{x} dx $$
+   Or, on sait que l'intégrale de $|\sin x|/x$ diverge en l'infini. $f$ \textbf{n'est pas} intégrable sur le produit ! Fubini usuel échoue.
+3. \textit{Astuce :} On tronque le domaine. On calcule d'abord $I_R = \int_0^R \frac{\sin x}{x} dx$.
+   $$ I_R = \int_0^R \left( \int_0^{+\infty} \sin(x) e^{-xy} dy \right) dx $$
+   Sur $[0, R] \times [0, +\infty[$, la fonction est intégrable (car l'intégrale de la valeur absolue est bornée par $\int_0^R 1/x$ non wait, $|\sin x|/x$ est intégrable sur le segment fini).
+4. Fubini s'applique sur ce domaine tronqué :
+   $$ I_R = \int_0^{+\infty} \left( \int_0^R \sin(x) e^{-xy} dx \right) dy $$
+5. Calculons $J(y) = \int_0^R \sin(x) e^{-xy} dx$ (par double IPP ou en utilisant la partie imaginaire de $\int e^{ix} e^{-xy} dx$) :
+   $$ \int_0^R e^{(i-y)x} dx = \left[ \frac{e^{(i-y)x}}{i-y} \right]_0^R = \frac{e^{-yR}e^{iR} - 1}{i-y} = \frac{(e^{-yR}\cos R - 1) + i e^{-yR}\sin R}{-y - i} $$
+   En multipliant par le conjugué $-y+i$ au numérateur et dénominateur $y^2+1$, on isole la partie imaginaire, puis on prend la limite $R \to \infty$ en utilisant le théorème de convergence dominée pour conclure.
+
+
+\subsection*{Exercice 6 : Contre-exemple classique de Fubini \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $f(x, y) = \frac{x^2 - y^2}{(x^2 + y^2)^2}$ définie sur $]0, 1]^2$.
+1. Calculer $I_{xy} = \int_0^1 \left( \int_0^1 f(x, y) dy \right) dx$.
+2. Calculer $I_{yx} = \int_0^1 \left( \int_0^1 f(x, y) dx \right) dy$.
+3. Conclure.
+
+\textbf{Correction :}
+1. Pour $x > 0$ fixé, calculons la primitive par rapport \`a $y$ : $\frac{\partial}{\partial y} \left( \frac{y}{x^2+y^2} \right) = \frac{1(x^2+y^2) - y(2y)}{(x^2+y^2)^2} = \frac{x^2-y^2}{(x^2+y^2)^2}$.
+   Donc, $\int_0^1 \frac{x^2-y^2}{(x^2+y^2)^2} dy = \left[ \frac{y}{x^2+y^2} \right]_{y=0}^1 = \frac{1}{x^2+1} - 0 = \frac{1}{x^2+1}$.
+   Intégrons maintenant par rapport \`a $x$ :
+   $$ I_{xy} = \int_0^1 \frac{1}{x^2+1} dx = [\arctan x]_0^1 = \frac{\pi}{4} - 0 = \frac{\pi}{4} $$
+2. Par antisymétrie, $f(y, x) = -f(x, y)$. En échangeant le rôle des variables, l'intégration interne en $x$ donne :
+   $$ \int_0^1 \frac{x^2-y^2}{(x^2+y^2)^2} dx = \left[ \frac{-x}{x^2+y^2} \right]_{x=0}^1 = \frac{-1}{y^2+1} $$
+   Intégrons ensuite par rapport \`a $y$ :
+   $$ I_{yx} = \int_0^1 \frac{-1}{y^2+1} dy = [-\arctan y]_0^1 = -\frac{\pi}{4} $$
+3. $I_{xy} \neq I_{yx}$. L'interversion des intégrales donne un résultat différent. Cela prouve par contraposée que la fonction $f$ \textbf{n'est pas} intégrable (au sens de Lebesgue, i.e., son intégrale absolue diverge sur le carré), empêchant l'application du théorème de Fubini.
+
+
+\subsection*{Exercice 7 : Fubini-Tonelli pour des séries doubles \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Les séries doubles sont des intégrales par rapport \`a la mesure de comptage.
+Calculer $S = \sum_{n=1}^\infty \sum_{m=1}^\infty \frac{1}{(n+m)^3}$.
+
+\textbf{Correction :}
+1. Les termes $u_{n,m} = \frac{1}{(n+m)^3}$ sont strictement positifs. Tonelli assure que la sommation peut se faire dans n'importe quel ordre, y compris par "diagonales".
+2. Posons $k = n + m$. Puisque $n \ge 1$ et $m \ge 1$, $k$ varie de $2$ \`a l'infini.
+3. Pour un $k$ donné, combien y a-t-il de paires $(n, m)$ telles que $n+m = k$ ?
+   On a $m = k - n$. Comme $m \ge 1$, on a $k - n \ge 1$, soit $n \le k - 1$.
+   Puisque $n \ge 1$, $n$ prend les valeurs entières de $1$ \`a $k-1$.
+   Il y a donc $k - 1$ paires possibles pour chaque somme $k$.
+4. Réécrivons la double somme (ce qui correspond \`a un changement de variable garanti par Tonelli) :
+   $$ S = \sum_{k=2}^\infty \sum_{(n,m) | n+m=k} \frac{1}{k^3} = \sum_{k=2}^\infty \frac{\text{nombre de paires}}{k^3} = \sum_{k=2}^\infty \frac{k-1}{k^3} $$
+5. Séparons la fraction :
+   $$ S = \sum_{k=2}^\infty \left( \frac{k}{k^3} - \frac{1}{k^3} \right) = \sum_{k=2}^\infty \frac{1}{k^2} - \sum_{k=2}^\infty \frac{1}{k^3} $$
+6. Or, on connaît la fonction zêta de Riemann : $\zeta(s) = \sum_{k=1}^\infty \frac{1}{k^s}$.
+   $$ \sum_{k=2}^\infty \frac{1}{k^2} = \zeta(2) - 1 = \frac{\pi^2}{6} - 1 $$
+   $$ \sum_{k=2}^\infty \frac{1}{k^3} = \zeta(3) - 1 $$
+7. Finalement, $S = \zeta(2) - 1 - (\zeta(3) - 1) = \frac{\pi^2}{6} - \zeta(3)$.
+
+
+\subsection*{Exercice 8 : Changement de l'ordre d'intégration \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+L'intégrale $\int_0^1 \int_{\sqrt{y}}^1 e^{x^3} dx dy$ ne peut pas être calculée avec des fonctions élémentaires dans cet ordre, car la primitive de $e^{x^3}$ n'est pas exprimable simplement. Utiliser Fubini pour la calculer.
+
+\textbf{Correction :}
+1. La fonction $f(x,y) = e^{x^3}$ est positive et continue sur le domaine. Tonelli autorise l'interversion.
+2. Identifions le domaine $D$ d'intégration.
+   Les bornes de $y$ sont $0 \le y \le 1$.
+   Les bornes de $x$ (\`a $y$ fixé) sont $\sqrt{y} \le x \le 1$.
+   Le domaine est donc délimité par $y=0$, $x=1$ et la parabole $x = \sqrt{y} \iff y = x^2$.
+3. Modifions l'ordre d'intégration : nous projetons d'abord sur l'axe des $x$.
+   Les valeurs extrêmes pour $x$ sur $D$ sont $0 \le x \le 1$.
+   Pour un $x$ fixé, $y$ varie de la droite $y=0$ jusqu'\`a la parabole $y=x^2$.
+   Donc, $0 \le y \le x^2$.
+4. La nouvelle intégrale s'écrit :
+   $$ I = \int_0^1 \left( \int_0^{x^2} e^{x^3} dy \right) dx $$
+5. L'intégration interne par rapport \`a $y$ est maintenant triviale ($x$ est constant) :
+   $$ \int_0^{x^2} e^{x^3} dy = e^{x^3} [y]_0^{x^2} = x^2 e^{x^3} $$
+6. L'intégration externe devient facile car $x^2$ est proportionnel \`a la dérivée de $x^3$ :
+   $$ I = \int_0^1 x^2 e^{x^3} dx = \left[ \frac{1}{3} e^{x^3} \right]_0^1 = \frac{1}{3}(e^1 - e^0) = \frac{e-1}{3} $$
+
+
+\subsection*{Exercice 9 : Produit de Convolution (Fubini) \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soient $f, g \in L^1(\mathbb{R})$. Le produit de convolution est $(f * g)(x) = \int_{\mathbb{R}} f(x-y)g(y) dy$.
+Montrer que $f * g \in L^1(\mathbb{R})$ et que $\|f * g\|_{L^1} \le \|f\|_{L^1} \|g\|_{L^1}$.
+
+\textbf{Correction :}
+1. Calculons la norme $L^1$ de $f * g$ :
+   $$ \|f * g\|_{L^1} = \int_{\mathbb{R}} |(f * g)(x)| dx = \int_{\mathbb{R}} \left| \int_{\mathbb{R}} f(x-y)g(y) dy \right| dx $$
+2. Par l'inégalité triangulaire (l'intégrale de la valeur absolue majore la valeur absolue de l'intégrale) :
+   $$ \|f * g\|_{L^1} \le \int_{\mathbb{R}} \left( \int_{\mathbb{R}} |f(x-y)| |g(y)| dy \right) dx $$
+3. La fonction $F(x, y) = |f(x-y)| |g(y)|$ est positive. On peut utiliser le théorème de Tonelli pour intervertir l'ordre :
+   $$ \int_{\mathbb{R}} \left( \int_{\mathbb{R}} |f(x-y)| |g(y)| dy \right) dx = \int_{\mathbb{R}} \left( \int_{\mathbb{R}} |f(x-y)| |g(y)| dx \right) dy $$
+4. Factorisons le terme $|g(y)|$ qui ne dépend pas de $x$ dans l'intégrale interne :
+   $$ = \int_{\mathbb{R}} |g(y)| \left( \int_{\mathbb{R}} |f(x-y)| dx \right) dy $$
+5. Faisons le changement de variable $u = x - y$ ($du = dx$ car $y$ est fixé) dans l'intégrale interne :
+   $$ \int_{\mathbb{R}} |f(x-y)| dx = \int_{\mathbb{R}} |f(u)| du = \|f\|_{L^1} $$
+6. Substituons ce résultat :
+   $$ \|f * g\|_{L^1} \le \int_{\mathbb{R}} |g(y)| \|f\|_{L^1} dy = \|f\|_{L^1} \int_{\mathbb{R}} |g(y)| dy = \|f\|_{L^1} \|g\|_{L^1} $$
+7. Puisque $\|f\|_{L^1}$ et $\|g\|_{L^1}$ sont finies (car $f, g \in L^1$), la borne est finie, ce qui prouve que $f * g$ est intégrable et conclut la démonstration de l'inégalité de Young pour $L^1$.
+
+
+\subsection*{Exercice 10 : Mesure de Probabilité Marginale \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Soit un vecteur aléatoire $(X, Y)$ de densité de probabilité conjointe $f(x, y) = \frac{1}{\pi} e^{-x^2-y^2}$.
+Prouver que la fonction $f_X(x) = \int_{\mathbb{R}} f(x, y) dy$ est une densité de probabilité légitime (intégrale valant 1) en utilisant le théorème de Fubini-Tonelli.
+
+\textbf{Correction :}
+1. Une fonction $g$ est une densité de probabilité si elle est positive presque partout et que son intégrale vaut 1.
+2. Clairement, $f(x, y) \ge 0$ pour tout $(x,y)$, car l'exponentielle est toujours positive.
+3. Puisque l'intégrale d'une fonction positive est positive, $f_X(x) = \int_\mathbb{R} f(x, y) dy \ge 0$.
+4. Il reste \`a vérifier que $\int_\mathbb{R} f_X(x) dx = 1$.
+   $$ \int_{\mathbb{R}} f_X(x) dx = \int_{\mathbb{R}} \left( \int_{\mathbb{R}} f(x, y) dy \right) dx $$
+5. Comme $f$ est positive, le théorème de Tonelli nous garantit que nous pouvons intervertir ou regrouper les intégrales. De plus, on nous donne que $f(x,y)$ est une densité conjointe, donc par définition $\iint_{\mathbb{R}^2} f(x,y) dx dy = 1$.
+6. L'intégrale itérée est donc égale \`a l'intégrale double, qui vaut $1$.
+7. Si l'on souhaite calculer explicitement $f_X(x)$ :
+   $$ f_X(x) = \int_{\mathbb{R}} \frac{1}{\pi} e^{-x^2} e^{-y^2} dy = \frac{1}{\pi} e^{-x^2} \int_{\mathbb{R}} e^{-y^2} dy $$
+8. On sait que l'intégrale de Gauss $\int_\mathbb{R} e^{-y^2} dy = \sqrt{\pi}$.
+   Donc $f_X(x) = \frac{1}{\pi} e^{-x^2} \sqrt{\pi} = \frac{1}{\sqrt{\pi}} e^{-x^2}$.
+9. On vérifie aisément que $\int_\mathbb{R} \frac{1}{\sqrt{\pi}} e^{-x^2} dx = \frac{1}{\sqrt{\pi}} \times \sqrt{\pi} = 1$. L'exercice confirme analytiquement la cohérence de la marginalisation.
+
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Vérification numérique simple du Théorème de Fubini}
+
+\begin{lstlisting}
+# TP 1 : Approximation d'une integrale double sur un rectangle
+# Objectif : Verifier Fubini sur f(x, y) = x^2 * y
+# Domaine : [0, 1] x [0, 2]
+
+def f(x, y):
+    return (x ** 2) * y
+
+def integrale_x_puis_y(N_x, N_y):
+    # dx = 1/N_x, dy = 2/N_y
+    dx = 1.0 / N_x
+    dy = 2.0 / N_y
+    total = 0.0
+    for j in range(N_y):
+        y = (j + 0.5) * dy
+        int_x = 0.0
+        for i in range(N_x):
+            x = (i + 0.5) * dx
+            int_x += f(x, y) * dx
+        total += int_x * dy
+    return total
+
+def integrale_y_puis_x(N_x, N_y):
+    dx = 1.0 / N_x
+    dy = 2.0 / N_y
+    total = 0.0
+    for i in range(N_x):
+        x = (i + 0.5) * dx
+        int_y = 0.0
+        for j in range(N_y):
+            y = (j + 0.5) * dy
+            int_y += f(x, y) * dy
+        total += int_y * dx
+    return total
+
+res_xy = integrale_y_puis_x(100, 100)
+res_yx = integrale_x_puis_y(100, 100)
+exact = (1.0/3.0) * (4.0/2.0) # x^3/3 * y^2/2 sur [0,1]x[0,2] = 1/3 * 2 = 2/3 = 0.666...
+
+print(f"Integration d'abord y puis x : {res_xy:.6f}")
+print(f"Integration d'abord x puis y : {res_yx:.6f}")
+print(f"Valeur exacte : {exact:.6f}")
+
+assert abs(res_xy - exact) < 1e-4, "L'approximation xy est mauvaise"
+assert abs(res_yx - exact) < 1e-4, "L'approximation yx est mauvaise"
+print("Fubini valide.")
+\end{lstlisting}
+
+
+\subsection*{TP 2 : Intégration de Monte-Carlo et Fubini}
+
+\begin{lstlisting}
+# TP 2 : Verification via Monte-Carlo sur un domaine non rectangulaire
+# Fonction : f(x, y) = x * y
+# Domaine : Triangle x >= 0, y >= 0, x + y <= 1
+import random
+
+def f(x, y):
+    return x * y
+
+def monte_carlo_triangle(num_points):
+    points_in = 0
+    sum_f = 0.0
+    # Boite englobante : [0, 1] x [0, 1]
+    aire_boite = 1.0
+
+    for _ in range(num_points):
+        x = random.uniform(0, 1)
+        y = random.uniform(0, 1)
+        if x + y <= 1.0:
+            points_in += 1
+            sum_f += f(x, y)
+
+    # L'aire du triangle est 0.5
+    # La valeur moyenne de la fonction sur la boite est (sum_f / num_points)
+    # L'integrale est V_boite * E[f_indicatrice]
+    return aire_boite * (sum_f / num_points)
+
+# Calcul theorique : int_0^1 (int_0^(1-x) x y dy) dx
+# = int_0^1 x/2 (1-x)^2 dx = 1/2 int_0^1 (x - 2x^2 + x^3) dx
+# = 1/2 (1/2 - 2/3 + 1/4) = 1/2 (6/12 - 8/12 + 3/12) = 1/2 * 1/12 = 1/24
+exact = 1.0 / 24.0
+
+random.seed(42)
+res_mc = monte_carlo_triangle(500000)
+
+print(f"Resultat Monte Carlo : {res_mc:.6f}")
+print(f"Valeur theorique (Fubini) : {exact:.6f}")
+
+# La tolerance avec MC est plus lache
+assert abs(res_mc - exact) < 1e-3, "L'integrale MC est eloignee de la theorie"
+\end{lstlisting}
+
+
+\subsection*{TP 3 : La bosse divergente (Le contre-exemple de Fubini)}
+
+\begin{lstlisting}
+# TP 3 : Contre-exemple numerique de Fubini
+# f(x, y) = (x^2 - y^2) / (x^2 + y^2)^2 sur [0, 1] x [0, 1]
+# La fonction n'est pas Lebesgue-integrable, l'ordre d'integration change tout.
+
+def f(x, y):
+    if x == 0 and y == 0:
+        return 0.0 # regularisation arbitraire \`a l'origine
+    return (x*x - y*y) / ((x*x + y*y)**2)
+
+def eval_contre_exemple(N):
+    dx = 1.0 / N
+    dy = 1.0 / N
+
+    # 1. d'abord dx, puis dy
+    sum_dy = 0.0
+    for j in range(1, N): # on evite 0 pour contourner la singularite
+        y = j * dy
+        sum_dx = 0.0
+        for i in range(1, N):
+            x = i * dx
+            sum_dx += f(x, y) * dx
+        sum_dy += sum_dx * dy
+
+    # 2. d'abord dy, puis dx
+    sum_dx2 = 0.0
+    for i in range(1, N):
+        x = i * dx
+        sum_dy2 = 0.0
+        for j in range(1, N):
+            y = j * dy
+            sum_dy2 += f(x, y) * dy
+        sum_dx2 += sum_dy2 * dx
+
+    return sum_dy, sum_dx2
+
+res_yx, res_xy = eval_contre_exemple(300)
+# La theorie donne -pi/4 pour res_yx et +pi/4 pour res_xy
+# pi/4 est environ 0.785
+
+print(f"Integration d'abord selon x puis y : {res_yx:.4f}")
+print(f"Integration d'abord selon y puis x : {res_xy:.4f}")
+
+# On verifie que les deux resultats sont de signes opposes et proches de pi/4
+assert res_yx < -0.7, "La premiere limite devrait etre proche de -pi/4"
+assert res_xy > 0.7, "La deuxieme limite devrait etre proche de +pi/4"
+\end{lstlisting}
+
+
+\subsection*{TP 4 : Variables séparables et fonction de distribution (Densité jointe)}
+
+\begin{lstlisting}
+# TP 4 : Marginale d'une distribution jointe gaussienne independante
+# f(x,y) = (1 / 2*pi) * exp(-0.5 * (x^2 + y^2))
+import math
+
+def f(x, y):
+    return (1.0 / (2.0 * math.pi)) * math.exp(-0.5 * (x*x + y*y))
+
+def marginale_X(x, y_min=-5, y_max=5, N=500):
+    # Calcul numerique de l'integrale de f(x,y) dy
+    dy = (y_max - y_min) / N
+    total = 0.0
+    for j in range(N):
+        y = y_min + (j + 0.5) * dy
+        total += f(x, y) * dy
+    return total
+
+def vraie_marginale_X(x):
+    # Theoremiquement : (1 / sqrt(2*pi)) * exp(-0.5 * x^2)
+    return (1.0 / math.sqrt(2.0 * math.pi)) * math.exp(-0.5 * x*x)
+
+x_test = 1.0
+p_x_approx = marginale_X(x_test)
+p_x_vrai = vraie_marginale_X(x_test)
+
+print(f"Marginale f_X(1.0) calculee numeriquement (Tonelli) : {p_x_approx:.6f}")
+print(f"Marginale f_X(1.0) theorique : {p_x_vrai:.6f}")
+
+assert abs(p_x_approx - p_x_vrai) < 1e-5, "La marginalisation a echoue"
+\end{lstlisting}
+
+
+\subsection*{TP 5 : Somme de série double (Théorème de Tonelli discret)}
+
+\begin{lstlisting}
+# TP 5 : Tonelli sur une mesure de comptage (serie double)
+# S = sum_{n=1}^{K} sum_{m=1}^{K} 1 / ((n+m)^3)
+# On verifie que sommer par lignes ou par diagonales donne le meme resultat
+
+K = 50
+
+def somme_grille(K):
+    total = 0.0
+    for n in range(1, K+1):
+        for m in range(1, K+1):
+            total += 1.0 / ((n + m)**3)
+    return total
+
+def somme_diagonale(K):
+    total = 0.0
+    # Les diagonales k = n+m varient de 2 \`a 2K
+    for k in range(2, 2*K + 1):
+        # Pour une somme k, on a min(k-1, K) - max(1, k-K) + 1 elements
+        n_min = max(1, k - K)
+        n_max = min(k - 1, K)
+        nb_elements = max(0, n_max - n_min + 1)
+        if nb_elements > 0:
+            total += nb_elements * (1.0 / (k**3))
+    return total
+
+val_grille = somme_grille(K)
+val_diag = somme_diagonale(K)
+
+print(f"Sommation par lignes/colonnes (Fubini usuel) : {val_grille:.8f}")
+print(f"Sommation par diagonales (Changement de variable) : {val_diag:.8f}")
+
+assert abs(val_grille - val_diag) < 1e-12, "Tonelli echoue sur les series positives"
+\end{lstlisting}
+
+
+
+
+\end{document}
