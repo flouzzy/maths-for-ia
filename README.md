@@ -177,7 +177,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 68](jalon-68/Jalon-68.md)** : Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque (fonctions intégrables).
 - **[Jalon 69](jalon-69/Jalon%2069%20%28D%C3%A9monstration%20compl%C3%A8te%20du%20th%C3%A9or%C3%A8me%20de%20convergence%20domin%C3%A9e%20de%20Lebesgue.%29.md)** : Démonstration complète du théorème de convergence dominée de Lebesgue.
 - **[Jalon 70](jalon-70/Jalon%2070%20%28Espaces%20mesur%C3%A9s%20produits%29.md)** : Espaces mesurés produits, tribu produit et construction de la mesure produit.
-- **[Jalon 71](jalon-71/Jalon%2071%20%28Th%C3%A9or%C3%A8mes%20de%20Fubini-Tonelli%29.md)** : Théorèmes de Fubini-Tonelli (fonctions positives) et de Fubini (fonctions intégrables).
+- **[Jalon 71](jalon-71/Jalon-71.md)** : Théorèmes de Fubini-Tonelli (fonctions positives) et de Fubini (fonctions intégrables).
 - **[Jalon 72](jalon-72/Jalon%2072%20%28Livrable%20IA%29.md)** : Livrable IA T6 : Formalisation de la divergence de Kullback-Leibler entre deux distributions de probabilités continues complexes.
 
 </details>
@@ -427,6 +427,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
+- [2026-09-15] : [Upsert/Création] du Jalon 71 - Théorèmes de Fubini-Tonelli. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-13] : [Upsert/Création] du Jalon 69 - Théorème de convergence dominée (TCD). Status: Terminé.
 - [2026-09-12] : [Upsert/Création] du Jalon 68 - Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-21] : [Upsert/Création] du Jalon 66 - Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives. Status: Terminé.
