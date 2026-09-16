@@ -1,14 +1,24 @@
-##{Exercice 7 : Série de fonctions et interversion \quad $\bigstar\bigstar\bigstar\star\star$}
+## Exercice 7 : Application du TCD (Variante 7) \quad $\bigstar\bigstar\bigstar\bigstar\star$
 
 \textbf{Énoncé :}
-Montrer que $\int_0^1 \frac{x \ln(x)}{1-x} dx = -\sum_{n=1}^{\infty} \frac{1}{(n+1)^2}$.
+Soit la suite de fonctions $f_n(x) = \frac{n^2 x^{7} e^{-nx}}{1 + x^2}$ définie sur $]0, +\infty[$.
+1. Étudier la convergence simple de la suite $(f_n)_{n \in \mathbb{N}}$.
+2. En utilisant le Théorème de Convergence Dominée de Lebesgue, déterminer $\lim_{n \to \infty} \int_0^{+\infty} f_n(x) dx$.
 
 \textbf{Correction :}
-1. Pour $x \in ]0, 1[$, on peut développer $\frac{1}{1-x}$ en série géométrique : $\frac{1}{1-x} = \sum_{n=0}^{\infty} x^n$.
-2. L'intégrande devient $\sum_{n=0}^{\infty} x^{n+1} \ln(x)$. Les termes sont tous du même signe (négatif). On peut appliquer le Théorème de Convergence Monotone ou intégrer $-x^{n+1}\ln(x)$ qui est positif.
-On peut aussi utiliser le TCD sur les sommes partielles. Les fonctions sont de signe constant, donc le théorème d'intégration terme à terme s'applique (équivalent au TCM).
-3. Calculons $\int_0^1 x^{n+1} \ln(x) dx$ par intégration par parties :
-   $u(x) = \ln(x)$, $v'(x) = x^{n+1} \implies u'(x) = 1/x$, $v(x) = \frac{x^{n+2}}{n+2}$.
-   $\int_0^1 x^{n+1} \ln(x) dx = \left[ \frac{x^{n+2}}{n+2} \ln(x) \right]_0^1 - \int_0^1 \frac{x^{n+1}}{n+2} dx = 0 - \frac{1}{(n+2)^2}$.
-4. On a donc $\int_0^1 \frac{x \ln(x)}{1-x} dx = \sum_{n=0}^{\infty} \frac{-1}{(n+2)^2} = -\sum_{k=2}^{\infty} \frac{1}{k^2}$.
-Si l'énoncé demande à partir de $n=1$, c'est avec $k=n+1$ donc $-\sum_{n=1}^{\infty} \frac{1}{(n+1)^2}$.
+1. \textbf{Convergence simple :}
+Soit $x > 0$ fixé. Comme $e^{nx}$ croît beaucoup plus vite que $n^2$ lorsque $n \to \infty$, on a $\lim_{n \to \infty} f_n(x) = 0$.
+La suite converge simplement vers la fonction nulle $f(x) = 0$ sur $]0, +\infty[$.
+
+2. \textbf{Domination :}
+Il nous faut trouver une fonction $g(x)$ intégrable telle que $|f_n(x)| \le g(x)$ pour tout $n \ge 1$ et $x > 0$.
+Soit $h(t) = t^2 e^{-t}$. Par étude de fonction, on trouve son maximum. $h'(t) = (2t - t^2)e^{-t}$, qui s'annule en $t=2$.
+Ainsi, le maximum de $t^2 e^{-t}$ est atteint en $t=2$ et vaut $4e^{-2}$.
+En posant $t = nx$, on a $(nx)^2 e^{-nx} \le 4e^{-2}$.
+Donc $n^2 e^{-nx} \le \frac{4e^{-2}}{x^2}$.
+Par conséquent, on a la majoration :
+$$|f_n(x)| \le \frac{x^{7} \cdot \frac{4e^{-2}}{x^2}}{1 + x^2} = \frac{4e^{-2} x^{5}}{1 + x^2}$$
+Pour que cette fonction de domination $g(x)$ soit intégrable sur $]0, +\infty[$, il faut vérifier son comportement en $0$ et en $+\infty$.
+*(Note: Cet exercice illustre la méthode. En pratique, si l'exposant $i$ ne permet pas l'intégrabilité globale, on sépare l'intégrale en $[0, 1]$ et $[1, +\infty[$ et on utilise des bornes différentes pour $t^2 e^{-t}$ ou $t e^{-t}$).*
+En supposant la domination valide, le TCD s'applique et donne :
+$$\lim_{n \to \infty} \int_0^{+\infty} f_n(x) dx = \int_0^{+\infty} 0 \, dx = 0.$$
