@@ -1,21 +1,15 @@
-## Exercice 7 : Divergence KL entre lois de Poisson (Variante 7) \quad $\bigstar\bigstar\bigstar\bigstar\star$
+# Exercice 7 : Continuité absolue et KL $\quad \bigstar\bigstar\bigstar\bigstar\star$
 
 \textbf{Énoncé :}
-Soit $\mathcal{X} = \mathbb{N}$ avec la mesure de comptage.
-Considérons deux lois de Poisson $P = \mathcal{P}(\lambda_{7})$ et $Q = \mathcal{P}(\mu_{7})$, avec $\lambda_{7} = 7$ et $\mu_{7} = 9$.
-Calculez la divergence de Kullback-Leibler $D_{KL}(P \| Q)$.
+Soit $P \sim \mathcal{U}([0, 1])$ (uniforme) et $Q \sim \mathcal{N}(0, 1)$. Calculer $D_{KL}(P \| Q)$ et $D_{KL}(Q \| P)$.
 
 \textbf{Correction :}
-Les probabilités sont données par :
-$P(X=k) = e^{-\lambda_{7}} \frac{\lambda_{7}^k}{k!}$ et $Q(X=k) = e^{-\mu_{7}} \frac{\mu_{7}^k}{k!}$.
-
-1. Le log-ratio des probabilités est :
-$$ \ln\left(\frac{P(X=k)}{Q(X=k)}\right) = \ln\left( \frac{e^{-\lambda_{7}} \lambda_{7}^k}{e^{-\mu_{7}} \mu_{7}^k} \right) = (\mu_{7} - \lambda_{7}) + k \ln\left(\frac{\lambda_{7}}{\mu_{7}}\right) $$
-
-2. On prend l'espérance sous la loi $P$. On sait que pour une loi de Poisson, $\mathbb{E}_P[X] = \lambda_{7}$.
-$$ D_{KL}(P \| Q) = \mathbb{E}_P\left[ (\mu_{7} - \lambda_{7}) + X \ln\left(\frac{\lambda_{7}}{\mu_{7}}\right) \right] $$
-$$ D_{KL}(P \| Q) = (\mu_{7} - \lambda_{7}) + \lambda_{7} \ln\left(\frac{\lambda_{7}}{\mu_{7}}\right) $$
-
-3. Application numérique pour $\lambda_{7} = 7$ et $\mu_{7} = 9$ :
-$$ D_{KL}(P \| Q) = (9 - 7) + 7 \ln\left(\frac{7}{9}\right) = 2 + 7 \ln\left(\frac{7}{9}\right) $$
-Puisque $\ln(1 - x) < 0$, ce terme est négatif, mais globalement la somme reste strictement positive par l'inégalité de Gibbs.
+1. $D_{KL}(P \| Q)$ :
+   $p(x) = 1$ sur $[0, 1]$, $0$ ailleurs. $q(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2} > 0$ partout.
+   Ici $p(x) > 0 \implies q(x) > 0$. L'hypothèse de continuité absolue $P \ll Q$ est vérifiée.
+   $$D_{KL}(P \| Q) = \int_0^1 1 \ln\left( \frac{1}{\frac{1}{\sqrt{2\pi}} e^{-x^2/2}} \right) dx = \int_0^1 \left( \ln\sqrt{2\pi} + x^2/2 \right) dx$$
+   $$= \ln\sqrt{2\pi} + \left[\frac{x^3}{6}\right]_0^1 = \frac{1}{2}\ln(2\pi) + \frac{1}{6}$$
+2. $D_{KL}(Q \| P)$ :
+   Ici $Q$ n'est pas absolument continue par rapport à $P$. Par exemple, pour $x=2$, $q(2) > 0$ mais $p(2) = 0$.
+   Dans l'intégrale, on aurait une valeur divisée par zéro.
+   Par définition formelle de l'extension de la mesure de Radon-Nikodym, si $Q \not\ll P$, $D_{KL}(Q \| P) = +\infty$.

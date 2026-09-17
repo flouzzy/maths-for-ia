@@ -1,21 +1,16 @@
-## Exercice 2 : Divergence KL entre lois de Poisson (Variante 2) \quad $\bigstar\star\star\star\star$
+# Exercice 2 : KL entre deux Gaussiennes $\quad \bigstar\bigstar\star\star\star$
 
 \textbf{Énoncé :}
-Soit $\mathcal{X} = \mathbb{N}$ avec la mesure de comptage.
-Considérons deux lois de Poisson $P = \mathcal{P}(\lambda_{2})$ et $Q = \mathcal{P}(\mu_{2})$, avec $\lambda_{2} = 2$ et $\mu_{2} = 4$.
-Calculez la divergence de Kullback-Leibler $D_{KL}(P \| Q)$.
+Calculer $D_{KL}(P \| Q)$ pour $P = \mathcal{N}(\mu_1, \sigma^2)$ et $Q = \mathcal{N}(\mu_2, \sigma^2)$.
 
 \textbf{Correction :}
-Les probabilités sont données par :
-$P(X=k) = e^{-\lambda_{2}} \frac{\lambda_{2}^k}{k!}$ et $Q(X=k) = e^{-\mu_{2}} \frac{\mu_{2}^k}{k!}$.
-
-1. Le log-ratio des probabilités est :
-$$ \ln\left(\frac{P(X=k)}{Q(X=k)}\right) = \ln\left( \frac{e^{-\lambda_{2}} \lambda_{2}^k}{e^{-\mu_{2}} \mu_{2}^k} \right) = (\mu_{2} - \lambda_{2}) + k \ln\left(\frac{\lambda_{2}}{\mu_{2}}\right) $$
-
-2. On prend l'espérance sous la loi $P$. On sait que pour une loi de Poisson, $\mathbb{E}_P[X] = \lambda_{2}$.
-$$ D_{KL}(P \| Q) = \mathbb{E}_P\left[ (\mu_{2} - \lambda_{2}) + X \ln\left(\frac{\lambda_{2}}{\mu_{2}}\right) \right] $$
-$$ D_{KL}(P \| Q) = (\mu_{2} - \lambda_{2}) + \lambda_{2} \ln\left(\frac{\lambda_{2}}{\mu_{2}}\right) $$
-
-3. Application numérique pour $\lambda_{2} = 2$ et $\mu_{2} = 4$ :
-$$ D_{KL}(P \| Q) = (4 - 2) + 2 \ln\left(\frac{2}{4}\right) = 2 + 2 \ln\left(\frac{2}{4}\right) $$
-Puisque $\ln(1 - x) < 0$, ce terme est négatif, mais globalement la somme reste strictement positive par l'inégalité de Gibbs.
+1. Posons les densités $p(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x-\mu_1)^2}{2\sigma^2}\right)$ et $q(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x-\mu_2)^2}{2\sigma^2}\right)$.
+2. Calculons le log-ratio :
+   $$\ln\left(\frac{p(x)}{q(x)}\right) = -\frac{(x-\mu_1)^2}{2\sigma^2} + \frac{(x-\mu_2)^2}{2\sigma^2}$$
+   $$= \frac{1}{2\sigma^2} \left[ x^2 - 2\mu_2 x + \mu_2^2 - (x^2 - 2\mu_1 x + \mu_1^2) \right]$$
+   $$= \frac{1}{2\sigma^2} \left[ 2x(\mu_1 - \mu_2) + \mu_2^2 - \mu_1^2 \right]$$
+3. On intègre par rapport à $P(x)dx$ (l'espérance) :
+   $$D_{KL}(P \| Q) = \mathbb{E}_{X \sim P}\left[ \frac{1}{2\sigma^2} \left( 2X(\mu_1 - \mu_2) + \mu_2^2 - \mu_1^2 \right) \right]$$
+   Comme $\mathbb{E}[X] = \mu_1$ :
+   $$D_{KL}(P \| Q) = \frac{1}{2\sigma^2} \left( 2\mu_1(\mu_1 - \mu_2) + \mu_2^2 - \mu_1^2 \right)$$
+   $$= \frac{1}{2\sigma^2} \left( 2\mu_1^2 - 2\mu_1\mu_2 + \mu_2^2 - \mu_1^2 \right) = \frac{(\mu_1 - \mu_2)^2}{2\sigma^2}$$

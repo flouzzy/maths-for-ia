@@ -1,21 +1,16 @@
-## Exercice 6 : Divergence KL entre lois de Poisson (Variante 6) \quad $\bigstar\bigstar\bigstar\star\star$
+# Exercice 6 : VAE et KL $\quad \bigstar\bigstar\bigstar\bigstar\star$
 
 \textbf{Énoncé :}
-Soit $\mathcal{X} = \mathbb{N}$ avec la mesure de comptage.
-Considérons deux lois de Poisson $P = \mathcal{P}(\lambda_{6})$ et $Q = \mathcal{P}(\mu_{6})$, avec $\lambda_{6} = 6$ et $\mu_{6} = 8$.
-Calculez la divergence de Kullback-Leibler $D_{KL}(P \| Q)$.
+Dans un VAE (Variational Auto-Encoder), on calcule la KL entre $q_\phi(z|x) = \mathcal{N}(\mu, \sigma^2)$ et $p(z) = \mathcal{N}(0, 1)$. Calculer cette valeur.
 
 \textbf{Correction :}
-Les probabilités sont données par :
-$P(X=k) = e^{-\lambda_{6}} \frac{\lambda_{6}^k}{k!}$ et $Q(X=k) = e^{-\mu_{6}} \frac{\mu_{6}^k}{k!}$.
-
-1. Le log-ratio des probabilités est :
-$$ \ln\left(\frac{P(X=k)}{Q(X=k)}\right) = \ln\left( \frac{e^{-\lambda_{6}} \lambda_{6}^k}{e^{-\mu_{6}} \mu_{6}^k} \right) = (\mu_{6} - \lambda_{6}) + k \ln\left(\frac{\lambda_{6}}{\mu_{6}}\right) $$
-
-2. On prend l'espérance sous la loi $P$. On sait que pour une loi de Poisson, $\mathbb{E}_P[X] = \lambda_{6}$.
-$$ D_{KL}(P \| Q) = \mathbb{E}_P\left[ (\mu_{6} - \lambda_{6}) + X \ln\left(\frac{\lambda_{6}}{\mu_{6}}\right) \right] $$
-$$ D_{KL}(P \| Q) = (\mu_{6} - \lambda_{6}) + \lambda_{6} \ln\left(\frac{\lambda_{6}}{\mu_{6}}\right) $$
-
-3. Application numérique pour $\lambda_{6} = 6$ et $\mu_{6} = 8$ :
-$$ D_{KL}(P \| Q) = (8 - 6) + 6 \ln\left(\frac{6}{8}\right) = 2 + 6 \ln\left(\frac{6}{8}\right) $$
-Puisque $\ln(1 - x) < 0$, ce terme est négatif, mais globalement la somme reste strictement positive par l'inégalité de Gibbs.
+C'est un cas particulier de l'exercice 2 avec des variances différentes.
+$p(z) = \mathcal{N}(0, 1)$, donc $\ln p(z) = -\frac{1}{2}\ln(2\pi) - \frac{z^2}{2}$.
+$q(z) = \mathcal{N}(\mu, \sigma^2)$, donc $\ln q(z) = -\frac{1}{2}\ln(2\pi\sigma^2) - \frac{(z-\mu)^2}{2\sigma^2}$.
+$$D_{KL}(q \| p) = \mathbb{E}_q [ \ln q(z) - \ln p(z) ]$$
+$$= \mathbb{E}_q \left[ -\frac{1}{2}\ln(2\pi\sigma^2) - \frac{(z-\mu)^2}{2\sigma^2} + \frac{1}{2}\ln(2\pi) + \frac{z^2}{2} \right]$$
+$$= -\frac{1}{2}\ln(\sigma^2) - \frac{1}{2\sigma^2} \mathbb{E}_q[(z-\mu)^2] + \frac{1}{2} \mathbb{E}_q[z^2]$$
+On sait que $\mathbb{E}_q[(z-\mu)^2] = \sigma^2$ et $\mathbb{E}_q[z^2] = \mu^2 + \sigma^2$.
+$$= -\frac{1}{2}\ln(\sigma^2) - \frac{1}{2} + \frac{1}{2}(\mu^2 + \sigma^2)$$
+$$D_{KL}(q \| p) = \frac{1}{2} \left( \sigma^2 + \mu^2 - 1 - \ln(\sigma^2) \right)$$
+C'est la fameuse "loss KL" utilisée dans les VAEs.

@@ -1,21 +1,15 @@
-## Exercice 4 : Divergence KL entre lois de Poisson (Variante 4) \quad $\bigstar\bigstar\star\star\star$
+# Exercice 4 : KL de variables indépendantes $\quad \bigstar\bigstar\bigstar\star\star$
 
 \textbf{Énoncé :}
-Soit $\mathcal{X} = \mathbb{N}$ avec la mesure de comptage.
-Considérons deux lois de Poisson $P = \mathcal{P}(\lambda_{4})$ et $Q = \mathcal{P}(\mu_{4})$, avec $\lambda_{4} = 4$ et $\mu_{4} = 6$.
-Calculez la divergence de Kullback-Leibler $D_{KL}(P \| Q)$.
+Soit $P(x,y) = P_1(x)P_2(y)$ et $Q(x,y) = Q_1(x)Q_2(y)$.
+Montrer que $D_{KL}(P \| Q) = D_{KL}(P_1 \| Q_1) + D_{KL}(P_2 \| Q_2)$.
 
 \textbf{Correction :}
-Les probabilités sont données par :
-$P(X=k) = e^{-\lambda_{4}} \frac{\lambda_{4}^k}{k!}$ et $Q(X=k) = e^{-\mu_{4}} \frac{\mu_{4}^k}{k!}$.
-
-1. Le log-ratio des probabilités est :
-$$ \ln\left(\frac{P(X=k)}{Q(X=k)}\right) = \ln\left( \frac{e^{-\lambda_{4}} \lambda_{4}^k}{e^{-\mu_{4}} \mu_{4}^k} \right) = (\mu_{4} - \lambda_{4}) + k \ln\left(\frac{\lambda_{4}}{\mu_{4}}\right) $$
-
-2. On prend l'espérance sous la loi $P$. On sait que pour une loi de Poisson, $\mathbb{E}_P[X] = \lambda_{4}$.
-$$ D_{KL}(P \| Q) = \mathbb{E}_P\left[ (\mu_{4} - \lambda_{4}) + X \ln\left(\frac{\lambda_{4}}{\mu_{4}}\right) \right] $$
-$$ D_{KL}(P \| Q) = (\mu_{4} - \lambda_{4}) + \lambda_{4} \ln\left(\frac{\lambda_{4}}{\mu_{4}}\right) $$
-
-3. Application numérique pour $\lambda_{4} = 4$ et $\mu_{4} = 6$ :
-$$ D_{KL}(P \| Q) = (6 - 4) + 4 \ln\left(\frac{4}{6}\right) = 2 + 4 \ln\left(\frac{4}{6}\right) $$
-Puisque $\ln(1 - x) < 0$, ce terme est négatif, mais globalement la somme reste strictement positive par l'inégalité de Gibbs.
+Par définition (via Fubini-Tonelli pour intégrer sur $\mathcal{X} \times \mathcal{Y}$) :
+$$D_{KL}(P \| Q) = \iint P_1(x)P_2(y) \ln\left( \frac{P_1(x)P_2(y)}{Q_1(x)Q_2(y)} \right) dx dy$$
+On sépare le log : $\ln(A B) = \ln(A) + \ln(B)$ :
+$$= \iint P_1(x)P_2(y) \left[ \ln\left( \frac{P_1(x)}{Q_1(x)} \right) + \ln\left( \frac{P_2(y)}{Q_2(y)} \right) \right] dx dy$$
+$$= \iint P_1(x)P_2(y) \ln\left( \frac{P_1(x)}{Q_1(x)} \right) dx dy + \iint P_1(x)P_2(y) \ln\left( \frac{P_2(y)}{Q_2(y)} \right) dx dy$$
+L'intégrale sur $y$ dans le 1er terme donne 1 (car $P_2$ est une densité), l'intégrale sur $x$ dans le 2ème terme donne 1 :
+$$= \int P_1(x) \ln\left( \frac{P_1(x)}{Q_1(x)} \right) dx + \int P_2(y) \ln\left( \frac{P_2(y)}{Q_2(y)} \right) dy$$
+$$= D_{KL}(P_1 \| Q_1) + D_{KL}(P_2 \| Q_2)$$

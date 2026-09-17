@@ -1,21 +1,16 @@
-## Exercice 8 : Divergence KL entre lois de Poisson (Variante 8) \quad $\bigstar\bigstar\bigstar\bigstar\star$
+# Exercice 8 : L'inégalité de log-Somme $\quad \bigstar\bigstar\bigstar\bigstar\bigstar$
 
 \textbf{Énoncé :}
-Soit $\mathcal{X} = \mathbb{N}$ avec la mesure de comptage.
-Considérons deux lois de Poisson $P = \mathcal{P}(\lambda_{8})$ et $Q = \mathcal{P}(\mu_{8})$, avec $\lambda_{8} = 8$ et $\mu_{8} = 10$.
-Calculez la divergence de Kullback-Leibler $D_{KL}(P \| Q)$.
+Soient $a_1, ..., a_n$ et $b_1, ..., b_n$ des nombres strictement positifs.
+Prouver l'inégalité de log-somme : $\sum a_i \ln\left(\frac{a_i}{b_i}\right) \ge \left(\sum a_i\right) \ln\left( \frac{\sum a_i}{\sum b_i} \right)$.
 
 \textbf{Correction :}
-Les probabilités sont données par :
-$P(X=k) = e^{-\lambda_{8}} \frac{\lambda_{8}^k}{k!}$ et $Q(X=k) = e^{-\mu_{8}} \frac{\mu_{8}^k}{k!}$.
-
-1. Le log-ratio des probabilités est :
-$$ \ln\left(\frac{P(X=k)}{Q(X=k)}\right) = \ln\left( \frac{e^{-\lambda_{8}} \lambda_{8}^k}{e^{-\mu_{8}} \mu_{8}^k} \right) = (\mu_{8} - \lambda_{8}) + k \ln\left(\frac{\lambda_{8}}{\mu_{8}}\right) $$
-
-2. On prend l'espérance sous la loi $P$. On sait que pour une loi de Poisson, $\mathbb{E}_P[X] = \lambda_{8}$.
-$$ D_{KL}(P \| Q) = \mathbb{E}_P\left[ (\mu_{8} - \lambda_{8}) + X \ln\left(\frac{\lambda_{8}}{\mu_{8}}\right) \right] $$
-$$ D_{KL}(P \| Q) = (\mu_{8} - \lambda_{8}) + \lambda_{8} \ln\left(\frac{\lambda_{8}}{\mu_{8}}\right) $$
-
-3. Application numérique pour $\lambda_{8} = 8$ et $\mu_{8} = 10$ :
-$$ D_{KL}(P \| Q) = (10 - 8) + 8 \ln\left(\frac{8}{10}\right) = 2 + 8 \ln\left(\frac{8}{10}\right) $$
-Puisque $\ln(1 - x) < 0$, ce terme est négatif, mais globalement la somme reste strictement positive par l'inégalité de Gibbs.
+On pose $f(x) = x \ln(x)$. $f''(x) = 1/x > 0$, donc $f$ est strictement convexe sur $\mathbb{R}^{+*}$.
+Posons $\alpha_i = \frac{b_i}{\sum b_j}$ (ce sont des probabilités, $\sum \alpha_i = 1$).
+Posons $x_i = \frac{a_i}{b_i}$.
+Par l'inégalité de Jensen discrète : $\sum \alpha_i f(x_i) \ge f(\sum \alpha_i x_i)$.
+Calculons $\sum \alpha_i x_i = \sum \frac{b_i}{\sum b_j} \frac{a_i}{b_i} = \frac{\sum a_i}{\sum b_i}$.
+Donc $f(\sum \alpha_i x_i) = \frac{\sum a_i}{\sum b_i} \ln\left( \frac{\sum a_i}{\sum b_i} \right)$.
+Calculons $\sum \alpha_i f(x_i) = \sum \frac{b_i}{\sum b_j} \frac{a_i}{b_i} \ln\left(\frac{a_i}{b_i}\right) = \frac{1}{\sum b_j} \sum a_i \ln\left(\frac{a_i}{b_i}\right)$.
+En réinjectant dans l'inégalité, et en multipliant par $\sum b_j$ :
+$\sum a_i \ln\left(\frac{a_i}{b_i}\right) \ge \left(\sum a_i\right) \ln\left( \frac{\sum a_i}{\sum b_i} \right)$.

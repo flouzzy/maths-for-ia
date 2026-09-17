@@ -428,7 +428,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
-- [2026-09-15] : [Upsert/Création] du Jalon 69 - Théorème de convergence dominée (TCD). Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-09-17] : [Upsert/Création] du Jalon 72 - Livrable IA T6 : Formalisation de la divergence de Kullback-Leibler. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-15] : [Upsert/Création] du Jalon 71 - Théorèmes de Fubini-Tonelli. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-13] : [Upsert/Création] du Jalon 69 - Théorème de convergence dominée (TCD). Status: Terminé.
 - [2026-09-12] : [Upsert/Création] du Jalon 68 - Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*

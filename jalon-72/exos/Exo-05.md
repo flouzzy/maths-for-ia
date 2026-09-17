@@ -1,21 +1,9 @@
-## Exercice 5 : Divergence KL entre lois de Poisson (Variante 5) \quad $\bigstar\bigstar\bigstar\star\star$
+# Exercice 5 : Inégalité de Pinsker (introduction) $\quad \bigstar\bigstar\bigstar\star\star$
 
 \textbf{Énoncé :}
-Soit $\mathcal{X} = \mathbb{N}$ avec la mesure de comptage.
-Considérons deux lois de Poisson $P = \mathcal{P}(\lambda_{5})$ et $Q = \mathcal{P}(\mu_{5})$, avec $\lambda_{5} = 5$ et $\mu_{5} = 7$.
-Calculez la divergence de Kullback-Leibler $D_{KL}(P \| Q)$.
+Montrer que pour deux distributions $P$ et $Q$, si $D_{KL}(P \| Q) = 0$, alors la distance en variation totale est nulle.
 
 \textbf{Correction :}
-Les probabilités sont données par :
-$P(X=k) = e^{-\lambda_{5}} \frac{\lambda_{5}^k}{k!}$ et $Q(X=k) = e^{-\mu_{5}} \frac{\mu_{5}^k}{k!}$.
-
-1. Le log-ratio des probabilités est :
-$$ \ln\left(\frac{P(X=k)}{Q(X=k)}\right) = \ln\left( \frac{e^{-\lambda_{5}} \lambda_{5}^k}{e^{-\mu_{5}} \mu_{5}^k} \right) = (\mu_{5} - \lambda_{5}) + k \ln\left(\frac{\lambda_{5}}{\mu_{5}}\right) $$
-
-2. On prend l'espérance sous la loi $P$. On sait que pour une loi de Poisson, $\mathbb{E}_P[X] = \lambda_{5}$.
-$$ D_{KL}(P \| Q) = \mathbb{E}_P\left[ (\mu_{5} - \lambda_{5}) + X \ln\left(\frac{\lambda_{5}}{\mu_{5}}\right) \right] $$
-$$ D_{KL}(P \| Q) = (\mu_{5} - \lambda_{5}) + \lambda_{5} \ln\left(\frac{\lambda_{5}}{\mu_{5}}\right) $$
-
-3. Application numérique pour $\lambda_{5} = 5$ et $\mu_{5} = 7$ :
-$$ D_{KL}(P \| Q) = (7 - 5) + 5 \ln\left(\frac{5}{7}\right) = 2 + 5 \ln\left(\frac{5}{7}\right) $$
-Puisque $\ln(1 - x) < 0$, ce terme est négatif, mais globalement la somme reste strictement positive par l'inégalité de Gibbs.
+L'inégalité de Pinsker stipule que $\delta(P, Q) \le \sqrt{\frac{1}{2} D_{KL}(P \| Q)}$ où $\delta(P, Q) = \sup_{A} |P(A) - Q(A)|$.
+Ainsi, si $D_{KL}(P \| Q) = 0$, on a $\delta(P, Q) \le 0$, donc la distance est strictement nulle, ce qui implique $P = Q$ (au sens de la mesure).
+L'inégalité de Pinsker est l'un des outils qui relie la théorie de l'information (KL) aux distances topologiques fortes des probabilités.
