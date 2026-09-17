@@ -40,16 +40,29 @@ Soit $f_n(x) = e^{-x} \cos(nx)$ sur $X = [0, +\infty[$.
 On a $|f_n(x)| \le e^{-x} = g(x)$. La fonction $g(x) = e^{-x}$ est intégrable (intégrale valant 1).
 Bien que $\cos(nx)$ n'ait pas de limite simple, cet exemple illustre la notion de domination.
 
+```tikz
+\begin{center}
+\begin{tikzpicture}
+\draw[->] (-0.5,0) -- (6,0) node[right] {$x$};
+\draw[->] (0,-0.5) -- (0,3) node[above] {$y$};
+\draw[blue, thick, domain=0:5, samples=100] plot (\x, {2*exp(-\x)});
+\draw[red, dashed, domain=0:5, samples=100] plot (\x, {2*exp(-\x)*cos(5*\x r)});
+\node[blue, above right] at (1, 0.7) {$g(x)$};
+\node[red, below] at (2, -0.3) {$f_n(x)$};
+\end{tikzpicture}
+\end{center}
+```
+
 **Exemple 2 : Calcul avec domination**
 La limite simple de $f_n(x) = \frac{n\sin(x/n)}{x(1+x^2)}$ est $\frac{1}{1+x^2}$.
 Domination : $|f_n(x)| \le \frac{x/n \cdot n}{x(1+x^2)} = \frac{1}{1+x^2}$.
-La fonction $g(x) = \frac{1}{1+x^2}$ est intégrable, son intégrale est $\pi/2$.
+La fonction $g(x) = \frac{1}{1+x^2}$ est intégrable sur $\mathbb{R}$, son intégrale est $\pi$.
 
 **Exemple 3 : Défaut de domination (la bosse glissante)**
 Soit $f_n(x) = n \mathbf{1}_{]0, 1/n[}(x)$ sur $]0, 1[$.
 Limite simple : $\forall x \in ]0, 1[, \lim f_n(x) = 0$.
 Mais $\int_0^1 f_n(x) dx = n \times \frac{1}{n} = 1$. L'intégrale de la limite est 0.
-Pourquoi ? Car le supremum sur $n$ est $g(x) = \sup_n f_n(x) = \approx 1/x$, qui n'est pas intégrable en 0. L'hypothèse de domination n'est pas satisfaite.
+Pourquoi ? Car le supremum sur $n$ est $g(x) = \sup_n f_n(x) \approx 1/x$, qui n'est pas intégrable en 0. L'hypothèse de domination n'est pas satisfaite.
 
 **Exemple 4 : Fonctions puissances**
 $f_n(x) = x^n$ sur $[0, 1[$.
@@ -60,6 +73,27 @@ L'intégrale est $\lim \frac{1}{n+1} = 0 = \int 0 dx$.
 **Exemple 5 : Paramètre de chaleur**
 $f_n(x) = e^{-nx^2}$ sur $]0, 1[$.
 Limite simple $0$. Domination : $|f_n(x)| \le e^{-x^2} \le 1$, intégrable sur $]0, 1[$.
+
+**Exemple 6 : Oscillation amortie**
+Soit $f_n(x) = \frac{\sin(nx)}{x^2+n^2}$ sur $\mathbb{R}$.
+Limite simple : $0$.
+Domination : $|f_n(x)| \le \frac{1}{n^2} \le \frac{1}{1}$ pour $n \ge 1$, mais ce n'est pas intégrable sur $\mathbb{R}$.
+Une meilleure domination pour $n \ge 1$ : $|f_n(x)| \le \frac{1}{x^2+1}$. La fonction $g(x) = \frac{1}{x^2+1}$ est intégrable sur $\mathbb{R}$.
+L'intégrale limite est 0.
+
+**Exemple 7 : Suite de fonctions de Dirac**
+Soit $f_n(x) = \frac{n}{\sqrt{\pi}} e^{-n^2x^2}$ sur $\mathbb{R}$.
+La limite simple est 0 presque partout (pour $x \ne 0$).
+Cependant, l'intégrale de chaque $f_n$ vaut 1.
+L'intégrale de la limite vaut 0.
+Il n'y a pas de fonction intégrable $g$ qui domine tous les $f_n$.
+
+**Exemple 8 : Convergence $L^1$**
+Soit $f_n(x) = \frac{1}{1+x^n}$ sur $[0, 1]$.
+La limite simple est $f(x) = 1$ pour $x < 1$, et $f(1) = 1/2$.
+Presque partout, $f_n \to 1$.
+Domination : $|f_n(x)| \le 1 = g(x)$, intégrable sur $[0, 1]$.
+Ainsi, $\int_0^1 \frac{1}{1+x^n} dx \to \int_0^1 1 dx = 1$.
 
 ## 3. Démonstrations
 
