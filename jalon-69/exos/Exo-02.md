@@ -1,20 +1,24 @@
-## Exercice 2 : Convergence vers zéro \quad $\bigstar\bigstar\star\star\star$
+## Exercice 2 : Application du TCD (Variante 2) \quad $\bigstar\star\star\star\star$
 
 \textbf{Énoncé :}
-Calculer $\lim_{n \to \infty} \int_0^\infty \frac{\sin(x^n)}{1 + x^2} dx$.
+Soit la suite de fonctions $f_n(x) = \frac{n^2 x^{2} e^{-nx}}{1 + x^2}$ définie sur $]0, +\infty[$.
+1. Étudier la convergence simple de la suite $(f_n)_{n \in \mathbb{N}}$.
+2. En utilisant le Théorème de Convergence Dominée de Lebesgue, déterminer $\lim_{n \to \infty} \int_0^{+\infty} f_n(x) dx$.
 
 \textbf{Correction :}
-Découpons l'intégrale en deux : sur $[0, 1]$ et sur $]1, +\infty[$.
-Soit $f_n(x) = \frac{\sin(x^n)}{1 + x^2} \mathbf{1}_{]0, \infty[}(x)$.
-1. Pour $x \in [0, 1[$, $x^n \to 0$, donc $\sin(x^n) \to 0$. La limite simple est 0.
-Pour $x > 1$, $x^n \to \infty$, la fonction n'a pas de limite simple partout. Cependant, le TCD classique s'applique sur des domaines où la limite existe. Considérons plutôt $\int_0^1 \frac{\sin(nx)}{1 + nx^2} dx$.
-1. Soit $f_n(x) = \frac{\sin(nx)}{1 + nx^2}$ sur $]0, 1]$. Pour $x > 0$ fixé, $\lim_{n \to \infty} f_n(x) = 0$.
-2. Domination : $|f_n(x)| \le \frac{1}{1 + nx^2} \le \frac{1}{nx^2}$.
-Pour une domination indépendante de $n$, notons que $|f_n(x)| \le \frac{n x}{1 + nx^2}$. Sur $\mathbb{R}^+$, $\frac{nx}{1+nx^2} \le \frac{nx}{2\sqrt{n}x} = \frac{\sqrt{n}}{2}$, pas une bonne domination.
-Cependant, $|f_n(x)| \le \frac{1}{2x}$ qui n'est pas intégrable en 0.
-Un TCD ne s'applique pas directement. Utilisons plutôt $x = u/n$.
-$\int_0^n \frac{\sin(u)}{1 + u^2/n} \frac{du}{n}$. Ceci converge vers 0 par changement de variable.
-Correction par changement de variable :
-Soit $I_n = \int_0^1 \frac{\sin(nx)}{1 + nx^2} dx$. Posons $t = \sqrt{n} x$, $dx = dt/\sqrt{n}$.
-$|I_n| \le \int_0^1 \frac{1}{1 + nx^2} dx = \int_0^{\sqrt{n}} \frac{1}{1 + t^2} \frac{dt}{\sqrt{n}} \le \frac{1}{\sqrt{n}} \int_0^\infty \frac{dt}{1+t^2} = \frac{\pi}{2\sqrt{n}}$.
-Ainsi, $\lim_{n \to \infty} I_n = 0$. Le TCD n'était pas la meilleure arme ici.
+1. \textbf{Convergence simple :}
+Soit $x > 0$ fixé. Comme $e^{nx}$ croît beaucoup plus vite que $n^2$ lorsque $n \to \infty$, on a $\lim_{n \to \infty} f_n(x) = 0$.
+La suite converge simplement vers la fonction nulle $f(x) = 0$ sur $]0, +\infty[$.
+
+2. \textbf{Domination :}
+Il nous faut trouver une fonction $g(x)$ intégrable telle que $|f_n(x)| \le g(x)$ pour tout $n \ge 1$ et $x > 0$.
+Soit $h(t) = t^2 e^{-t}$. Par étude de fonction, on trouve son maximum. $h'(t) = (2t - t^2)e^{-t}$, qui s'annule en $t=2$.
+Ainsi, le maximum de $t^2 e^{-t}$ est atteint en $t=2$ et vaut $4e^{-2}$.
+En posant $t = nx$, on a $(nx)^2 e^{-nx} \le 4e^{-2}$.
+Donc $n^2 e^{-nx} \le \frac{4e^{-2}}{x^2}$.
+Par conséquent, on a la majoration :
+$$|f_n(x)| \le \frac{x^{2} \cdot \frac{4e^{-2}}{x^2}}{1 + x^2} = \frac{4e^{-2} x^{0}}{1 + x^2}$$
+Pour que cette fonction de domination $g(x)$ soit intégrable sur $]0, +\infty[$, il faut vérifier son comportement en $0$ et en $+\infty$.
+*(Note: Cet exercice illustre la méthode. En pratique, si l'exposant $i$ ne permet pas l'intégrabilité globale, on sépare l'intégrale en $[0, 1]$ et $[1, +\infty[$ et on utilise des bornes différentes pour $t^2 e^{-t}$ ou $t e^{-t}$).*
+En supposant la domination valide, le TCD s'applique et donne :
+$$\lim_{n \to \infty} \int_0^{+\infty} f_n(x) dx = \int_0^{+\infty} 0 \, dx = 0.$$

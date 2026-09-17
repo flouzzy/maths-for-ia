@@ -34,44 +34,16 @@
 
 \part{Cours Magistral}
 
-\section{Jalon 69 : Théorème de convergence dominée (TCD)}
+
 
 \section{Genèse et Intuition Physique}
-
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}
-    % Axes
-    \draw[->, thick] (-1,0) -- (6,0) node[right] {$x$};
-    \draw[->, thick] (0,-2.5) -- (0,3) node[above] {$y$};
-
-    % Fonction dominatrice g
-    \draw[green!50!black, very thick, dashed, domain=0.5:5.5, samples=100] plot (\x, {2.5*exp(-0.5*(\x-3)*(\x-3)) + 0.2});
-    \node[green!50!black] at (3, 3.1) {$g(x)$ (enveloppe int\'egrable)};
-
-    % Fonction -g
-    \draw[green!50!black, very thick, dashed, domain=0.5:5.5, samples=100] plot (\x, {-2.5*exp(-0.5*(\x-3)*(\x-3)) - 0.2});
-    \node[green!50!black] at (3, -3.1) {$-g(x)$};
-
-    % f_1
-    \draw[blue, thick, domain=0.5:5.5, samples=100] plot (\x, {(2.5*exp(-0.5*(\x-3)*(\x-3)) + 0.2) * sin(\x*150)});
-    \node[blue] at (5.5, 1.5) {$f_1$};
-
-    % f_n
-    \draw[red, thick, domain=0.5:5.5, samples=200] plot (\x, {(2.5*exp(-0.5*(\x-3)*(\x-3)) + 0.2) * sin(\x*400) * exp(-0.1*\x)});
-    \node[red] at (5.5, -1) {$f_n$};
-
-\end{tikzpicture}
-\caption{Visualisation de la domination : Les fonctions $f_n$ oscillent fortement, mais restent enfermées entre $g$ et $-g$. L'aire sous $g$ étant finie, les intégrales des $f_n$ ne peuvent pas s'échapper.}
-\end{figure}
-
 
 Le théorème de convergence dominée (TCD) de Lebesgue est sans doute le résultat le plus emblématique et le plus utilisé de toute la théorie de la mesure. Il offre une réponse définitive et élégante au problème de l'interversion de la limite et de l'intégrale.
 La théorie de Riemann exigeait une convergence uniforme, une condition souvent trop rigide, notamment en mécanique quantique ou en théorie des probabilités où des singularités isolées apparaissent. Lebesgue a démontré que si toute l'agitation des fonctions $f_n$ est contenue, en valeur absolue, sous une enveloppe mesurable et intégrable $g$, alors l'interversion est valide, indépendamment des variations microscopiques locales.
 
 \section{Définitions, Théorèmes et Exemples}
 
-\section{Théorème de Lebesgue (TCD)}
+\subsection{Théorème de Lebesgue (TCD)}
 
 Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
 Soit $(f_n)_{n \in \mathbb{N}}$ une suite de fonctions mesurables à valeurs réelles ou complexes.
@@ -81,27 +53,42 @@ Supposons que :
    $$\forall n \in \mathbb{N}, \quad |f_n| \le g \quad \text{presque partout.}$$
 
 Alors :
-- $f$ est intégrable sur $X$.
-- $\lim_{n \to \infty} \int_X f_n d\mu = \int_X f d\mu$.
-- $\lim_{n \to \infty} \int_X |f_n - f| d\mu = 0$ (Convergence dans $L^1$).
+\begin{itemize}
+\item $f$ est intégrable sur $X$.
+\item $\lim_{n \to \infty} \int_X f_n d\mu = \int_X f d\mu$.
+\item $\lim_{n \to \infty} \int_X |f_n - f| d\mu = 0$ (Convergence dans $L^1$).
 
-\section{Exemples Concrets et Immédiats}
+\end{itemize}
+\subsection{Exemples Concrets et Immédiats}
 
 \textbf{Exemple 1 : L'enveloppe exponentielle}
 Soit $f_n(x) = e^{-x} \cos(nx)$ sur $X = [0, +\infty[$.
 On a $|f_n(x)| \le e^{-x} = g(x)$. La fonction $g(x) = e^{-x}$ est intégrable (intégrale valant 1).
 Bien que $\cos(nx)$ n'ait pas de limite simple, cet exemple illustre la notion de domination.
 
+
+\begin{center}
+\begin{tikzpicture}
+\draw[->] (-0.5,0) -- (6,0) node[right] {$x$};
+\draw[->] (0,-0.5) -- (0,3) node[above] {$y$};
+\draw[blue, thick, domain=0:5, samples=100] plot (\x, {2*exp(-\x)});
+\draw[red, dashed, domain=0:5, samples=100] plot (\x, {2*exp(-\x)*cos(5*\x r)});
+\node[blue, above right] at (1, 0.7) {$g(x)$};
+\node[red, below] at (2, -0.3) {$f_n(x)$};
+\end{tikzpicture}
+\end{center}
+
+
 \textbf{Exemple 2 : Calcul avec domination}
 La limite simple de $f_n(x) = \frac{n\sin(x/n)}{x(1+x^2)}$ est $\frac{1}{1+x^2}$.
 Domination : $|f_n(x)| \le \frac{x/n \cdot n}{x(1+x^2)} = \frac{1}{1+x^2}$.
-La fonction $g(x) = \frac{1}{1+x^2}$ est intégrable, son intégrale est $\pi/2$.
+La fonction $g(x) = \frac{1}{1+x^2}$ est intégrable sur $\mathbb{R}$, son intégrale est $\pi$.
 
 \textbf{Exemple 3 : Défaut de domination (la bosse glissante)}
 Soit $f_n(x) = n \mathbf{1}_{]0, 1/n[}(x)$ sur $]0, 1[$.
 Limite simple : $\forall x \in ]0, 1[, \lim f_n(x) = 0$.
 Mais $\int_0^1 f_n(x) dx = n \times \frac{1}{n} = 1$. L'intégrale de la limite est 0.
-Pourquoi ? Car le supremum sur $n$ est $g(x) = \sup_n f_n(x) = \approx 1/x$, qui n'est pas intégrable en 0. L'hypothèse de domination n'est pas satisfaite.
+Pourquoi ? Car le supremum sur $n$ est $g(x) = \sup_n f_n(x) \approx 1/x$, qui n'est pas intégrable en 0. L'hypothèse de domination n'est pas satisfaite.
 
 \textbf{Exemple 4 : Fonctions puissances}
 $f_n(x) = x^n$ sur $[0, 1[$.
@@ -112,6 +99,27 @@ L'intégrale est $\lim \frac{1}{n+1} = 0 = \int 0 dx$.
 \textbf{Exemple 5 : Paramètre de chaleur}
 $f_n(x) = e^{-nx^2}$ sur $]0, 1[$.
 Limite simple $0$. Domination : $|f_n(x)| \le e^{-x^2} \le 1$, intégrable sur $]0, 1[$.
+
+\textbf{Exemple 6 : Oscillation amortie}
+Soit $f_n(x) = \frac{\sin(nx)}{x^2+n^2}$ sur $\mathbb{R}$.
+Limite simple : $0$.
+Domination : $|f_n(x)| \le \frac{1}{n^2} \le \frac{1}{1}$ pour $n \ge 1$, mais ce n'est pas intégrable sur $\mathbb{R}$.
+Une meilleure domination pour $n \ge 1$ : $|f_n(x)| \le \frac{1}{x^2+1}$. La fonction $g(x) = \frac{1}{x^2+1}$ est intégrable sur $\mathbb{R}$.
+L'intégrale limite est 0.
+
+\textbf{Exemple 7 : Suite de fonctions de Dirac}
+Soit $f_n(x) = \frac{n}{\sqrt{\pi}} e^{-n^2x^2}$ sur $\mathbb{R}$.
+La limite simple est 0 presque partout (pour $x \ne 0$).
+Cependant, l'intégrale de chaque $f_n$ vaut 1.
+L'intégrale de la limite vaut 0.
+Il n'y a pas de fonction intégrable $g$ qui domine tous les $f_n$.
+
+\textbf{Exemple 8 : Convergence $L^1$}
+Soit $f_n(x) = \frac{1}{1+x^n}$ sur $[0, 1]$.
+La limite simple est $f(x) = 1$ pour $x < 1$, et $f(1) = 1/2$.
+Presque partout, $f_n \to 1$.
+Domination : $|f_n(x)| \le 1 = g(x)$, intégrable sur $[0, 1]$.
+Ainsi, $\int_0^1 \frac{1}{1+x^n} dx \to \int_0^1 1 dx = 1$.
 
 \section{Démonstrations}
 
@@ -145,16 +153,18 @@ La démonstration s'appuie sur le lemme de Fatou, déjà étudié (Jalon 68).
 
 \section{Applications en Physique, Logique et AI}
 
-- \textbf{Théorie des Probabilités :} Le TCD justifie le passage à la limite sous le signe d'espérance mathématique. Si une suite de variables aléatoires $X_n$ converge p.s. vers $X$, et si elles sont dominées par une variable $Y$ d'espérance finie, alors $\mathbb{E}[X_n] \to \mathbb{E}[X]$.
-- \textbf{Apprentissage Automatique (Machine Learning) :}
-    - \textbf{Convergence du Gradient Stochastique (SGD) :} Pour prouver que le gradient stochastique calculé sur des mini-lots converge vers le gradient réel de la fonction de perte théorique, le TCD garantit que la dérivation (qui est une limite) peut traverser l'espérance (qui est une intégrale), à condition que la variance des gradients soit dominée.
-    - \textbf{Auto-encodeurs Variationnels (VAE) :} La maximisation de l'ELBO nécessite de calculer des gradients d'espérances. Le \textit{Reparameterization Trick} déplace le gradient sous l'intégrale, une opération formellement sécurisée par le TCD.
-- \textbf{Mécanique Statistique :} Le calcul des fonctions de partition implique des sommes et intégrales sur des états énergétiques. Le TCD valide les dérivations thermodynamiques (calcul d'entropie, chaleur spécifique) par rapport à la température.
+\begin{itemize}
+\item \textbf{Théorie des Probabilités :} Le TCD justifie le passage à la limite sous le signe d'espérance mathématique. Si une suite de variables aléatoires $X_n$ converge p.s. vers $X$, et si elles sont dominées par une variable $Y$ d'espérance finie, alors $\mathbb{E}[X_n] \to \mathbb{E}[X]$.
+\item \textbf{Apprentissage Automatique (Machine Learning) :}
+\item \textbf{Convergence du Gradient Stochastique (SGD) :} Pour prouver que le gradient stochastique calculé sur des mini-lots converge vers le gradient réel de la fonction de perte théorique, le TCD garantit que la dérivation (qui est une limite) peut traverser l'espérance (qui est une intégrale), à condition que la variance des gradients soit dominée.
+\item \textbf{Auto-encodeurs Variationnels (VAE) :} La maximisation de l'ELBO nécessite de calculer des gradients d'espérances. Le \textit{Reparameterization Trick} déplace le gradient sous l'intégrale, une opération formellement sécurisée par le TCD.
+\item \textbf{Mécanique Statistique :} Le calcul des fonctions de partition implique des sommes et intégrales sur des états énergétiques. Le TCD valide les dérivations thermodynamiques (calcul d'entropie, chaleur spécifique) par rapport à la température.
 
+\end{itemize}
 
 \newpage
 \part{Exercices d'Application et de Concours}
-\subsection*{{Exercice 1 : Application directe : exponentielle \quad $\bigstar\bigstar\star\star\star$}}
+\subsection*{Exercice 1 : Application directe : exponentielle \quad $\bigstar\bigstar\star\star\star$}
 
 \textbf{Énoncé :}
 Calculer la limite suivante :
@@ -191,7 +201,7 @@ $|I_n| \le \int_0^1 \frac{1}{1 + nx^2} dx = \int_0^{\sqrt{n}} \frac{1}{1 + t^2} 
 Ainsi, $\lim_{n \to \infty} I_n = 0$. Le TCD n'était pas la meilleure arme ici.
 
 
-\subsection*{{Exercice 3 : Limite d'une intégrale avec fonction puissance \quad $\bigstar\bigstar\bigstar\star\star$}}
+\subsection*{Exercice 3 : Limite d'une intégrale avec fonction puissance \quad $\bigstar\bigstar\bigstar\star\star$}
 
 \textbf{Énoncé :}
 Montrer que $\lim_{n \to \infty} \int_0^1 \frac{n x^{n-1}}{1 + x} dx = \frac{1}{2}$.
@@ -209,7 +219,7 @@ Soit $h_n(x) = \frac{x^n}{(1+x)^2}$.
 Par conséquent, la limite de l'intégrale initiale est $\frac{1}{2} + 0 = \frac{1}{2}$.
 
 
-\subsection*{{Exercice 4 : Intégrabilité et continuité de la transformée de Fourier \quad $\bigstar\bigstar\bigstar\star\star$}}
+\subsection*{Exercice 4 : Intégrabilité et continuité de la transformée de Fourier \quad $\bigstar\bigstar\bigstar\star\star$}
 
 \textbf{Énoncé :}
 Soit $f \in \mathcal{L}^1(\mathbb{R})$. On définit sa transformée de Fourier par $\hat{f}(\xi) = \int_{\mathbb{R}} f(x) e^{-i \xi x} dx$.
@@ -227,7 +237,7 @@ Considérons les fonctions $g_n(x) = f(x) e^{-i \xi_n x}$.
    Ceci prouve que $\hat{f}$ est séquentiellement continue en tout point, et donc continue.
 
 
-\subsection*{{Exercice 5 : Un contre-exemple (masse fuyante) \quad $\bigstar\bigstar\star\star\star$}}
+\subsection*{Exercice 5 : Un contre-exemple (masse fuyante) \quad $\bigstar\bigstar\star\star\star$}
 
 \textbf{Énoncé :}
 Soit $f_n(x) = n \mathbf{1}_{]0, 1/n[}(x)$ sur l'espace $[0, 1]$ muni de la mesure de Lebesgue.
@@ -242,7 +252,7 @@ Soit $f_n(x) = n \mathbf{1}_{]0, 1/n[}(x)$ sur l'espace $[0, 1]$ muni de la mesu
 En effet, si une telle $g$ existait, on aurait $g(x) \ge \sup_n f_n(x) = 1/x$. Or $x \mapsto 1/x$ n'est pas intégrable sur $[0, 1]$.
 
 
-\subsection*{{Exercice 6 : Dérivation sous le signe somme (TCD continu) \quad $\bigstar\bigstar\bigstar\bigstar\star$}}
+\subsection*{Exercice 6 : Dérivation sous le signe somme (TCD continu) \quad $\bigstar\bigstar\bigstar\bigstar\star$}
 
 \textbf{Énoncé :}
 Soit $F(t) = \int_0^\infty e^{-tx} \frac{\sin x}{x} dx$ pour $t > 0$.
@@ -261,7 +271,7 @@ $\int_0^\infty e^{(-t+i)x} dx = \left[ \frac{e^{(-t+i)x}}{-t+i} \right]_0^\infty
 La partie imaginaire est $\frac{1}{t^2+1}$. Donc $F'(t) = -\frac{1}{t^2+1}$.
 
 
-\subsection*{{Exercice 7 : Série de fonctions et interversion \quad $\bigstar\bigstar\bigstar\star\star$}}
+\subsection*{Exercice 7 : Série de fonctions et interversion \quad $\bigstar\bigstar\bigstar\star\star$}
 
 \textbf{Énoncé :}
 Montrer que $\int_0^1 \frac{x \ln(x)}{1-x} dx = -\sum_{n=1}^{\infty} \frac{1}{(n+1)^2}$.
@@ -277,7 +287,7 @@ On peut aussi utiliser le TCD sur les sommes partielles. Les fonctions sont de s
 Si l'énoncé demande à partir de $n=1$, c'est avec $k=n+1$ donc $-\sum_{n=1}^{\infty} \frac{1}{(n+1)^2}$.
 
 
-\subsection*{{Exercice 8 : Limite d'une suite définie par intégrale \quad $\bigstar\bigstar\bigstar\star\star$}}
+\subsection*{Exercice 8 : Limite d'une suite définie par intégrale \quad $\bigstar\bigstar\bigstar\star\star$}
 
 \textbf{Énoncé :}
 Calculer $\lim_{n \to \infty} \int_0^n \left(1 - \frac{x}{n}\right)^n \ln(x) dx$.
@@ -296,7 +306,7 @@ $I_n = \int_0^\infty f_n(x) dx$ avec $f_n(x) = \left(1 - \frac{x}{n}\right)^n \l
    $\lim_{n \to \infty} I_n = \int_0^\infty e^{-x} \ln(x) dx$. (Cette intégrale vaut $-\gamma$, où $\gamma$ est la constante d'Euler-Mascheroni).
 
 
-\subsection*{{Exercice 9 : Domination délicate et TCD \quad $\bigstar\bigstar\bigstar\bigstar\star$}}
+\subsection*{Exercice 9 : Domination délicate et TCD \quad $\bigstar\bigstar\bigstar\bigstar\star$}
 
 \textbf{Énoncé :}
 Montrer que la fonction $G(t) = \int_0^\infty e^{-tx^2} \cos(x) dx$ est de classe $C^1$ sur $]0, +\infty[$.
@@ -311,7 +321,7 @@ Posons $h(x, t) = e^{-tx^2} \cos(x)$.
 4. Le TCD pour la dérivation implique que $G$ est dérivable sur tout $[a, b]$, donc sur $]0, +\infty[$, et que $G'$ est continue car $\frac{\partial h}{\partial t}$ est dominée par $g$ et continue par rapport à $t$. $G$ est donc de classe $C^1$.
 
 
-\subsection*{{Exercice 10 : Lemme de Scheffé (Corollaire du TCD) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}}
+\subsection*{Exercice 10 : Lemme de Scheffé (Corollaire du TCD) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
 
 \textbf{Énoncé :}
 Soit $(f_n)$ une suite de fonctions de $\mathcal{L}^1(\mu)$ et $f \in \mathcal{L}^1(\mu)$.
@@ -346,11 +356,11 @@ On ne peut pas appliquer le TCD directement car on n'a pas de fonction dominatri
 \subsection*{TP 1 : Illustration du TCD sur une intégrale simple}
 
 \begin{lstlisting}
-# TP 1 : Illustration numerique du Theoreme de Convergence Dominee
+
 import math
 
-# On etudie l'integrale de f_n(x) = (1 - x/n)^n * exp(x/2) sur [0, 1]
-# La limite simple est f(x) = exp(-x/2)
+
+
 
 def fn(x, n):
     if x >= n: return 0.0
@@ -382,16 +392,16 @@ assert abs(val_limite - val_exacte) < 1e-4, "L'approximation numerique est erron
 \subsection*{TP 2 : Défaut de Domination : Contre-Exemple}
 
 \begin{lstlisting}
-# TP 2 : Le phenomene de la bosse glissante (masse fuyante)
-# La convergence simple est verifiee, mais l'absence de domination empeche le TCD
 
-# Fonction indicatrice ponderee f_n(x) = n sur ]0, 1/n[
+
+
+
 def fn(x, n):
     if 0 < x < 1.0 / n:
         return float(n)
     return 0.0
 
-# La limite simple est 0 partout
+
 def f_limite(x):
     return 0.0
 
@@ -416,7 +426,7 @@ print("Conclusion : sans domination, limite de l'integrale != integrale de la li
 \subsection*{TP 3 : Domination Intégrable : Le Couvercle}
 
 \begin{lstlisting}
-# TP 3 : Visualisation du role de la fonction dominatrice g(x)
+
 
 import math
 
@@ -448,8 +458,8 @@ print(" fonction g(x) forme un couvercle absolu sur toutes les courbes f_n.")
 \subsection*{TP 4 : Dérivation sous le signe intégral (TCD paramétrique)}
 
 \begin{lstlisting}
-# TP 4 : Validation numerique de l'application du TCD a la derivation
-# On considere F(t) = int_{0^{inf} exp(-tx) * (sin x / x) dx}
+
+
 
 import math
 
@@ -471,12 +481,12 @@ def calc_integral(func, t, x_max=100.0, num_points=5000):
 t = 1.0
 dt = 0.001
 
-# Taux d'accroissement
+
 F_t = calc_integral(integrand, t)
 F_tdt = calc_integral(integrand, t + dt)
 deriv_num = (F_tdt - F_t) / dt
 
-# Integrale de la derivee
+
 deriv_theo = calc_integral(integrand_derivee, t)
 val_exacte = -1.0 / (t*t + 1.0) # cf exercice 6
 
@@ -488,13 +498,13 @@ print(f"Valeur exacte formelle (-1 / (t^2+1))                 : {val_exacte:.6f}
 \subsection*{TP 5 : Convergence en norme L1}
 
 \begin{lstlisting}
-# TP 5 : Simulation de la convergence L1 via le TCD
-# Si f_n converge p.p vers f et est dominee, alors ||f_n - f||_1 tend vers 0.
+
+
 
 import math
 
-# f_n(x) = (nx)/(1+n^2 x^2) sur [0, 1]
-# lim simple f(x) = 0 pour x > 0. En x=0, f_n(0)=0.
+
+
 def fn(x, n):
     return (n * x) / (1.0 + n*n * x*x)
 

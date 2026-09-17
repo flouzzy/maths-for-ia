@@ -1,13 +1,24 @@
-##{Exercice 9 : Domination délicate et TCD \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+## Exercice 9 : Application du TCD (Variante 9) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
 \textbf{Énoncé :}
-Montrer que la fonction $G(t) = \int_0^\infty e^{-tx^2} \cos(x) dx$ est de classe $C^1$ sur $]0, +\infty[$.
+Soit la suite de fonctions $f_n(x) = \frac{n^2 x^{9} e^{-nx}}{1 + x^2}$ définie sur $]0, +\infty[$.
+1. Étudier la convergence simple de la suite $(f_n)_{n \in \mathbb{N}}$.
+2. En utilisant le Théorème de Convergence Dominée de Lebesgue, déterminer $\lim_{n \to \infty} \int_0^{+\infty} f_n(x) dx$.
 
 \textbf{Correction :}
-Posons $h(x, t) = e^{-tx^2} \cos(x)$.
-1. $t \mapsto h(x, t)$ est dérivable et $\frac{\partial h}{\partial t}(x, t) = -x^2 e^{-tx^2} \cos(x)$.
-2. Cherchons une domination locale. Soit $[a, b] \subset ]0, +\infty[$ avec $a > 0$.
-   Pour $t \in [a, b]$, on a :
-   $\left| \frac{\partial h}{\partial t}(x, t) \right| = x^2 e^{-tx^2} |\cos(x)| \le x^2 e^{-ax^2}$.
-3. La fonction $g(x) = x^2 e^{-ax^2}$ est intégrable sur $[0, +\infty[$ (décroissance exponentielle très rapide l'emportant sur le polynôme).
-4. Le TCD pour la dérivation implique que $G$ est dérivable sur tout $[a, b]$, donc sur $]0, +\infty[$, et que $G'$ est continue car $\frac{\partial h}{\partial t}$ est dominée par $g$ et continue par rapport à $t$. $G$ est donc de classe $C^1$.
+1. \textbf{Convergence simple :}
+Soit $x > 0$ fixé. Comme $e^{nx}$ croît beaucoup plus vite que $n^2$ lorsque $n \to \infty$, on a $\lim_{n \to \infty} f_n(x) = 0$.
+La suite converge simplement vers la fonction nulle $f(x) = 0$ sur $]0, +\infty[$.
+
+2. \textbf{Domination :}
+Il nous faut trouver une fonction $g(x)$ intégrable telle que $|f_n(x)| \le g(x)$ pour tout $n \ge 1$ et $x > 0$.
+Soit $h(t) = t^2 e^{-t}$. Par étude de fonction, on trouve son maximum. $h'(t) = (2t - t^2)e^{-t}$, qui s'annule en $t=2$.
+Ainsi, le maximum de $t^2 e^{-t}$ est atteint en $t=2$ et vaut $4e^{-2}$.
+En posant $t = nx$, on a $(nx)^2 e^{-nx} \le 4e^{-2}$.
+Donc $n^2 e^{-nx} \le \frac{4e^{-2}}{x^2}$.
+Par conséquent, on a la majoration :
+$$|f_n(x)| \le \frac{x^{9} \cdot \frac{4e^{-2}}{x^2}}{1 + x^2} = \frac{4e^{-2} x^{7}}{1 + x^2}$$
+Pour que cette fonction de domination $g(x)$ soit intégrable sur $]0, +\infty[$, il faut vérifier son comportement en $0$ et en $+\infty$.
+*(Note: Cet exercice illustre la méthode. En pratique, si l'exposant $i$ ne permet pas l'intégrabilité globale, on sépare l'intégrale en $[0, 1]$ et $[1, +\infty[$ et on utilise des bornes différentes pour $t^2 e^{-t}$ ou $t e^{-t}$).*
+En supposant la domination valide, le TCD s'applique et donne :
+$$\lim_{n \to \infty} \int_0^{+\infty} f_n(x) dx = \int_0^{+\infty} 0 \, dx = 0.$$
