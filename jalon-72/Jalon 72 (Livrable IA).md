@@ -12,14 +12,11 @@ next: "[[Jalon 73 (Définition des espaces Lp).md]]"
 
 # Jalon 72 : Livrable IA T6 : Formalisation de la divergence de Kullback-Leibler
 
-## 1. Présentation du concept clé
+## 1. Formalisation Mathématique de l'Information
 
-- **La Métaphore :** Imaginez que vous deviez ranger des livres dans une bibliothèque.
-    - Vous avez un plan idéal de rangement ($P$, la réalité).
-    - Mais vous utilisez un plan simplifié et un peu faux ($Q$, votre modèle).
-    - La **Divergence de Kullback-Leibler (KL)** mesure le "désordre" supplémentaire ou le temps perdu que vous allez subir à cause de l'erreur dans votre plan. C'est le coût de l'approximation. Si votre plan est parfait ($Q=P$), la perte est de zéro. Plus votre plan est mauvais, plus le score KL est élevé.
-- **Le "Pourquoi on a inventé ça" :** En IA, on ne peut pas simplement dire "le modèle est proche de la réalité". On a besoin d'un nombre précis pour mesurer l'erreur. Comme nous travaillons avec des probabilités, on utilise une mesure issue de la théorie de l'information. C'est la "boussole" qui guide l'apprentissage : on modifie le modèle pour réduire le score KL.
-- **Visualisation :** Deux cloches (Gaussiennes). La divergence KL est une surface qui mesure l'aire où les deux cloches ne se superposent pas, pondérée par l'importance (la probabilité) de chaque zone.
+La divergence de Kullback-Leibler (ou entropie relative) est une mesure asymétrique de la dissimilitude entre deux distributions de probabilités $P$ et $Q$. Issu de la théorie de l'information (Shannon, 1948), ce concept quantifie l'excès d'information ou la pénalité asymptotique subie lorsque la distribution $Q$ est utilisée pour approximer la véritable distribution $P$.
+
+En intelligence artificielle, la divergence de Kullback-Leibler est fondamentale. Elle sert de fonction objectif dans la minimisation de l'erreur d'approximation lors de l'entraînement de modèles génératifs (tels que les auto-encodeurs variationnels ou les modèles de diffusion) et constitue le fondement mathématique de la fonction de perte 	extit{Cross-Entropy}.
 
 ## 2. Formalisation
 
@@ -28,6 +25,40 @@ Soit $(\mathcal{X}, \mathcal{F}, \lambda)$ un espace mesuré (généralement $\m
 ### A. Définition via les densités
 
 Supposons que $P$ et $Q$ admettent des densités $p$ et $q$ par rapport à $\lambda$.
+
+
+### Exemples Concrets Immédiats
+
+**Exemple 1 : Divergence entre deux pièces de monnaie (Variables de Bernoulli)**
+Soit $P$ la loi d'une pièce biaisée avec $p=0.8$ (pile) et $1-p=0.2$ (face). Soit $Q$ la loi d'une pièce équilibrée $q=0.5$.
+$$ D_{KL}(P || Q) = 0.8 \ln\left(\frac{0.8}{0.5}\right) + 0.2 \ln\left(\frac{0.2}{0.5}\right) \approx 0.8 \times 0.470 + 0.2 \times (-0.916) = 0.376 - 0.183 = 0.193 $$
+L'asymétrie est visible si on calcule $D_{KL}(Q || P)$ :
+$$ D_{KL}(Q || P) = 0.5 \ln\left(\frac{0.5}{0.8}\right) + 0.5 \ln\left(\frac{0.5}{0.2}\right) = 0.5 \times (-0.470) + 0.5 \times 0.916 = 0.223 $$
+Ainsi, $D_{KL}(P || Q) \neq D_{KL}(Q || P)$.
+
+**Exemple 2 : Divergence nulle pour des distributions identiques**
+Si $P = Q$ (par exemple $p = 0.5, q = 0.5$), alors :
+$$ D_{KL}(P || P) = 0.5 \ln(1) + 0.5 \ln(1) = 0 $$
+
+**Exemple 3 : Divergence infinie (support non inclus)**
+Si $P(X=1) = 1$ et $Q(X=1) = 0$, alors :
+$$ D_{KL}(P || Q) = 1 \ln\left(\frac{1}{0}\right) = +\infty $$
+Cela illustre l'absolue continuité requise : $P$ doit être absolument continue par rapport à $Q$ ($P \ll Q$).
+
+**Exemple 4 : Deux lois uniformes**
+Soient $P = \mathcal{U}([0, 1])$ et $Q = \mathcal{U}([0, 2])$.
+Pour $x \in [0, 1]$, $p(x) = 1$ et $q(x) = 0.5$.
+$$ D_{KL}(P || Q) = \int_{0}^{1} 1 \ln\left(\frac{1}{0.5}\right) dx = \ln(2) \approx 0.693 $$
+À l'inverse, pour $x \in ]1, 2]$, $p(x) = 0$ et $q(x) = 0.5$. Comme $p(x)>0$ sur un ensemble où $q(x)=0$ n'arrive pas, mais pour $D_{KL}(Q || P)$, on intègre sur $[0, 2]$. Sur $]1, 2]$, $p(x) = 0$, d'où $D_{KL}(Q || P) = +\infty$.
+
+**Exemple 5 : Divergence KL entre deux Gaussiennes univariées**
+Soient $P = \mathcal{N}(\mu_1, \sigma_1^2)$ et $Q = \mathcal{N}(\mu_2, \sigma_2^2)$.
+La formule analytique rigoureuse donne :
+$$ D_{KL}(P || Q) = \ln\left(\frac{\sigma_2}{\sigma_1}\right) + \frac{\sigma_1^2 + (\mu_1 - \mu_2)^2}{2\sigma_2^2} - \frac{1}{2} $$
+Si $\mu_1 = 0, \sigma_1 = 1$ et $\mu_2 = 2, \sigma_2 = 1$ :
+$$ D_{KL}(P || Q) = \ln(1) + \frac{1 + 4}{2} - 0.5 = 2.0 $$
+Cette forme quadratique par rapport aux moyennes explique l'efficacité de la KL pour approcher des gaussiennes.
+
 
 > **Définition (Divergence de Kullback-Leibler) :**
 > On définit la divergence KL de $Q$ par rapport à $P$ par l'intégrale de Lebesgue :
