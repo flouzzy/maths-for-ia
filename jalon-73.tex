@@ -1,0 +1,558 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge ESPACES LP ET PASSAGE AU QUOTIENT \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+\section{Genèse et Intuition Physique}
+
+L'intégration de Lebesgue permet de mesurer des ensembles de manière très générale, mais pour construire une théorie robuste de l'analyse fonctionnelle, nous avons besoin d'espaces vectoriels structurés (complets).
+En physique du signal, on rencontre souvent deux signaux qui diffèrent uniquement sur un ensemble de points de mesure nulle (par exemple des bruits impulsionnels instantanés). Si on intègre leur différence, l'énergie de cette différence est nulle.
+Pourtant, d'un point de vue strict des fonctions, ces signaux ne sont pas égaux. Le passage au quotient résout cette anomalie en identifiant les fonctions qui sont "presque partout" égales.
+
+Les espaces $L^p$ classifient les fonctions selon la finitude de leurs moments d'ordre $p$. Par exemple, l'espace $L^1$ rassemble les fonctions d'aire absolue finie (stabilité moyenne), tandis que l'espace $L^2$ regroupe celles d'énergie finie.
+
+\section{Définitions, Théorèmes et Exemples}
+
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
+
+\subsection{Les espaces $\mathcal{L}^p$ (non quotientés)}
+
+\textbf{Définition 1 (Espace $\mathcal{L}^p$) :}
+Pour $1 \le p < +\infty$, on définit l'ensemble des fonctions mesurables dont la puissance $p$-ième est intégrable :
+$$\mathcal{L}^p(\mu) = \left\lbrace f : X \to \mathbb{K} \mid f \text{ est mesurable et } \int_X |f|^p d\mu < +\infty \right\rbrace$$
+On définit également la semi-norme $\|f\|_p = \left( \int_X |f|^p d\mu \right)^{1/p}$.
+
+\textbf{Définition 2 (Espace $\mathcal{L}^\infty$) :}
+L'espace $\mathcal{L}^\infty(\mu)$ est l'ensemble des fonctions mesurables essentiellement bornées, c'est-à-dire bornées presque partout.
+$\|f\|_\infty = \inf \{ C \ge 0 \mid |f(x)| \le C \text{ p.p.} \}$.
+
+\textbf{Exemple 1 (Fonction indicatrice) :} Soit $X=[0,1]$ avec la mesure de Lebesgue $\lambda$. La fonction $f(x) = 1_{[0, 1/2]}(x)$ est dans tous les $\mathcal{L}^p([0,1])$. Son intégrale au carré est $1/2$, donc $\|f\|_2 = 1/\sqrt{2}$. Son intégrale à la puissance $p$ est $1/2$, donc $\|f\|_p = (1/2)^{1/p}$.
+
+\textbf{Exemple 2 (Fonction puissance) :} Soit $f(x) = x^{-1/2}$ sur $X=]0, 1]$ avec la mesure de Lebesgue.
+\begin{itemize}\item $f \in \mathcal{L}^1$ car $\int_0^1 x^{-1/2} dx = [2x^{1/2}]_0^1 = 2 < +\infty$.
+\item $f \notin \mathcal{L}^2$ car $\int_0^1 (x^{-1/2})^2 dx = \int_0^1 \frac{1}{x} dx = [\ln(x)]_0^1 = +\infty$.\end{itemize}
+
+\textbf{Exemple 3 (Espace de suite) :} Si $X = \mathbb{N}$ avec la mesure de comptage, on note $\ell^p = \mathcal{L}^p(\mathbb{N})$. La suite $u_n = 1/n$ est dans $\ell^2$ (car $\sum 1/n^2 = \pi^2/6 < +\infty$) mais n'est pas dans $\ell^1$ (série harmonique divergente).
+
+\subsection{La semi-norme et la relation d'équivalence}
+
+L'application $f \mapsto \|f\|_p$ n'est qu'une \textbf{semi-norme} sur $\mathcal{L}^p$ car $\|f\|_p = 0$ n'implique pas $f=0$ partout, seulement presque partout.
+
+\textbf{Exemple 4 (Fonction nulle p.p.) :} Soit $X = \mathbb{R}$ et $f$ la fonction indicatrice des rationnels $1_{\mathbb{Q}}$.
+Comme $\mathbb{Q}$ est dénombrable, sa mesure de Lebesgue est nulle. Ainsi $\int_{\mathbb{R}} |1_{\mathbb{Q}}|^p d\lambda = 0$. Donc $\|1_{\mathbb{Q}}\|_p = 0$, bien que $f(x)=1$ pour une infinité de points.
+
+\textbf{Définition 3 (Relation d'équivalence) :}
+On définit la relation d'équivalence $\sim$ sur l'ensemble des fonctions mesurables par :
+$f \sim g \iff f = g \text{ presque partout}$ (c'est-à-dire $\mu(\{x \in X \mid f(x) \neq g(x)\}) = 0$).
+
+\subsection{Le passage au quotient $L^p$}
+
+\textbf{Définition 4 (Espace quotient $L^p$) :}
+L'espace $L^p(\mu)$ est l'espace quotient de $\mathcal{L}^p(\mu)$ par la relation $\sim$.
+$L^p(\mu) = \mathcal{L}^p(\mu) / \sim$.
+Ses éléments sont des \textbf{classes d'équivalence} de fonctions. Si $f \in \mathcal{L}^p(\mu)$, sa classe est $[f]$.
+Sur cet espace, $\| \cdot \|_p$ devient une véritable \textbf{norme}. Par abus de notation, on identifie souvent la classe $[f]$ à un représentant $f$.
+
+\textbf{Exemple 5 (Représentant continu) :} Soit $f : \mathbb{R} \to \mathbb{R}$ définie par $f(x) = \sin(x)$ si $x \neq 0$ et $f(0) = 42$. La fonction $f$ n'est pas continue. Cependant, dans $L^p$, $f \sim \sin$. La fonction $\sin$ est un représentant continu de la classe $[f]$.
+
+\textbf{Exemple 6 (Égalité dans $L^p$) :} La fonction de Heaviside modifiée $H^*(x) = 1$ si $x > 0$, $0$ si $x \le 0$ et $1/2$ si $x=0$, et la fonction $H(x)=1$ si $x>0$, $0$ si $x<0$ sont exactement la même "fonction" dans l'espace $L^p(\mathbb{R})$, car elles diffèrent uniquement en $0$ qui est de mesure nulle.
+
+\textbf{Théorème 1 (Structure d'espace vectoriel normé) :}
+Pour $1 \le p \le \infty$, l'espace $(L^p(\mu), \|\cdot\|_p)$ est un espace vectoriel normé.
+La stabilité par addition découle de l'inégalité $(a+b)^p \le 2^{p-1}(a^p + b^p)$ pour $a,b \ge 0$, et l'inégalité triangulaire s'appelle l'inégalité de Minkowski.
+
+\section{Démonstrations}
+
+\subsection{Démonstration : Séparation de la semi-norme au quotient}
+
+\textbf{Proposition :} Dans l'espace quotient $L^p(\mu)$, on a $\|[f]\|_p = 0 \iff [f] = [0]$.
+
+\textit{Preuve :}
+1. \textbf{Sens ($\impliedby$) :} Supposons $[f] = [0]$. Alors $f \sim 0$, ce qui signifie que $f(x) = 0$ pour presque tout $x \in X$.
+Ainsi, l'ensemble $A = \{x \in X \mid f(x) \neq 0\}$ est de mesure nulle : $\mu(A) = 0$.
+La fonction $|f|^p$ est nulle en dehors de $A$. Par conséquent, $\int_X |f|^p d\mu = \int_A |f|^p d\mu + \int_{X \setminus A} 0 d\mu$.
+Puisque $\mu(A) = 0$, l'intégrale sur $A$ est nulle. D'où $\|f\|_p = 0$.
+
+2. \textbf{Sens ($\implies$) :} Supposons $\|f\|_p = 0$. Cela signifie que $\int_X |f|^p d\mu = 0$.
+Soit $A_n = \{x \in X \mid |f(x)|^p \ge 1/n\}$.
+D'après l'inégalité de Markov, $\mu(A_n) \le \frac{1}{1/n} \int_X |f|^p d\mu = n \times 0 = 0$.
+Soit $A = \{x \in X \mid f(x) \neq 0\} = \{x \in X \mid |f(x)|^p > 0\}$.
+On remarque que $A = \bigcup_{n=1}^\infty A_n$.
+La sous-additivité de la mesure implique que $\mu(A) \le \sum_{n=1}^\infty \mu(A_n) = \sum_{n=1}^\infty 0 = 0$.
+Donc $f(x) = 0$ presque partout. Autrement dit $f \sim 0$, et par passage au quotient, $[f] = [0]$. $\blacksquare$
+
+\subsection{Démonstration : Stabilité par combinaison linéaire}
+
+Montrons que si $f, g \in \mathcal{L}^p$, alors $f+g \in \mathcal{L}^p$.
+
+\textit{Preuve :}
+Soient $f, g \in \mathcal{L}^p$. Par définition, $\int_X |f|^p d\mu < \infty$ et $\int_X |g|^p d\mu < \infty$.
+Pour tout $x \in X$, on a $|f(x) + g(x)| \le |f(x)| + |g(x)|$.
+Puisque la fonction $t \mapsto t^p$ est convexe croissante sur $\mathbb{R}^+$ pour $p \ge 1$, on a :
+$$ \left( \frac{|f(x)| + |g(x)|}{2} \right)^p \le \frac{1}{2} |f(x)|^p + \frac{1}{2} |g(x)|^p $$
+En multipliant par $2^p$, on obtient l'inégalité algébrique élémentaire :
+$$ |f(x) + g(x)|^p \le 2^{p-1} \left( |f(x)|^p + |g(x)|^p \right) $$
+En intégrant cette inégalité sur $X$, par linéarité de l'intégrale :
+$$ \int_X |f+g|^p d\mu \le 2^{p-1} \left( \int_X |f|^p d\mu + \int_X |g|^p d\mu \right) < \infty $$
+Donc $f+g \in \mathcal{L}^p$. $\blacksquare$
+
+\section{Applications en Physique, Logique et IA}
+
+\subsection{Intelligence Artificielle et Choix de la Fonction de Perte (Loss)}
+
+En apprentissage automatique, le choix de la métrique d'évaluation est intimement lié aux normes $L^p$. Supposons que l'on cherche à approcher une variable cible $Y$ par un estimateur $f(X)$. L'erreur est une fonction dans un espace $L^p$.
+\begin{itemize}\item \textbf{Régression $L^2$ (Mean Squared Error, MSE) :} On cherche à minimiser $\|Y - f(X)\|_2^2 = \mathbb{E}[(Y - f(X))^2]$. La norme $L^2$ pénalise fortement les grands écarts (à cause du carré). La solution théorique optimale est l'espérance conditionnelle $f(X) = \mathbb{E}[Y \mid X]$.
+\item \textbf{Régression $L^1$ (Mean Absolute Error, MAE) :} On cherche à minimiser $\|Y - f(X)\|_1 = \mathbb{E}[|Y - f(X)|]$. La norme $L^1$ accorde le même poids unitaire à toute erreur. Elle est particulièrement robuste aux points aberrants (outliers). La solution optimale est la médiane conditionnelle.\end{itemize}
+
+\subsection{Compression de signaux et quantification}
+
+La compression de données (par exemple JPEG pour les images ou MP3 pour l'audio) consiste à trouver une fonction "plus simple" qui approxime le signal de départ au sens d'une norme $L^p$.
+\begin{itemize}\item Pour un signal audio, l'oreille humaine est sensible à l'énergie, on cherche donc à approcher le signal en norme $L^2$.
+\item Pour un signal où les variations brusques (bords d'image) sont essentielles, des espaces dérivés basés sur des normes $L^1$ (espaces de Sobolev $W^{1,1}$ ou à variation bornée) sont privilégiés car la norme $L^2$ lisse trop le signal (phénomène de Gibbs).\end{itemize}
+
+
+\begin{center}
+\begin{tikzpicture}
+    % Illustration of quotienting L^p
+    \draw[thick] (0,0) ellipse (4cm and 2cm);
+    \node at (0, 2.3) {Espace $\mathcal{L}^p$ (non quotienté)};
+
+    \filldraw[fill=blue!20, draw=blue, thick] (-1, 0) circle (1cm);
+    \node at (-1, 0) {$[f]$};
+    \filldraw[fill=red!20, draw=red, thick] (1.5, 0) circle (0.8cm);
+    \node at (1.5, 0) {$[g]$};
+
+    \node[circle, fill=black, inner sep=1pt, label=above:$f$] at (-1.2, 0.2) {};
+    \node[circle, fill=black, inner sep=1pt, label=below:$\tilde{f}$] at (-0.8, -0.3) {};
+
+    \node at (0, -3) {Chaque point (fonction) dans un cercle diffère des autres seulement sur un ensemble de mesure nulle.};
+\end{tikzpicture}
+\end{center}
+
+
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Comparaison des normes $L^p$ sur un espace de mesure finie \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré tel que $\mu(X) < +\infty$.
+Montrer que si $1 \le p \le q < +\infty$, alors $L^q(\mu) \subset L^p(\mu)$.
+
+\textbf{Correction :}
+Soit $f \in L^q(\mu)$. On doit montrer que $\int_X |f|^p d\mu < +\infty$.
+On décompose l'intégrale sur deux sous-ensembles :
+$A = \{x \in X \mid |f(x)| \le 1\}$ et $B = \{x \in X \mid |f(x)| > 1\}$.
+
+Sur $A$, on a $|f(x)|^p \le 1$, donc $\int_A |f|^p d\mu \le \int_A 1 d\mu = \mu(A) \le \mu(X) < +\infty$.
+
+Sur $B$, comme $q \ge p$ et $|f(x)| > 1$, on a $|f(x)|^p \le |f(x)|^q$.
+Donc $\int_B |f|^p d\mu \le \int_B |f|^q d\mu$.
+Or, comme $f \in L^q(\mu)$, $\int_X |f|^q d\mu < +\infty$, donc $\int_B |f|^q d\mu \le \int_X |f|^q d\mu < +\infty$.
+
+En sommant, $\int_X |f|^p d\mu = \int_A |f|^p d\mu + \int_B |f|^p d\mu \le \mu(X) + \int_X |f|^q d\mu < +\infty$.
+Ainsi, $f \in L^p(\mu)$. L'inclusion $L^q(\mu) \subset L^p(\mu)$ est démontrée.
+
+
+\subsection*{Exercice 2 : Inclusions strictes sur un espace de mesure infinie \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+On se place sur $X = [1, +\infty[$ muni de la mesure de Lebesgue $\lambda$.
+Trouver une fonction $f \in L^2(\lambda)$ qui n'est pas dans $L^1(\lambda)$.
+
+\textbf{Correction :}
+Considérons la fonction $f(x) = \frac{1}{x}$.
+1. Vérifions si $f \in L^2(\lambda)$ :
+$\int_1^{+\infty} |f(x)|^2 dx = \int_1^{+\infty} \frac{1}{x^2} dx = \left[ -\frac{1}{x} \right]_1^{+\infty} = 0 - (-1) = 1 < +\infty$.
+Donc $f \in L^2(\lambda)$.
+
+2. Vérifions si $f \in L^1(\lambda)$ :
+$\int_1^{+\infty} |f(x)| dx = \int_1^{+\infty} \frac{1}{x} dx = \left[ \ln(x) \right]_1^{+\infty} = +\infty$.
+Donc $f \notin L^1(\lambda)$.
+
+Ceci montre que sur un espace de mesure infinie, l'inclusion $L^q \subset L^p$ (pour $q > p$) n'est pas nécessairement vraie.
+
+
+\subsection*{Exercice 3 : Espaces $\ell^p$ et inclusion inverse \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Soit $\mathbb{N}$ muni de la mesure de comptage. On note $\ell^p$ l'espace $L^p(\mathbb{N})$.
+Montrer que pour $1 \le p \le q \le +\infty$, on a $\ell^p \subset \ell^q$.
+Remarquons que l'inclusion est inversée par rapport au cas d'une mesure finie.
+
+\textbf{Correction :}
+Soit $u = (u_n)_{n \in \mathbb{N}} \in \ell^p$. On suppose que $\|u\|_p = \left( \sum_{n=0}^{+\infty} |u_n|^p \right)^{1/p} < +\infty$.
+Puisque la série converge, le terme général tend vers 0. Donc, il existe un rang $N$ à partir duquel $|u_n| \le 1$.
+De manière encore plus forte, puisque $\sum |u_n|^p < +\infty$, on a $|u_n|^p \le \sum_{k} |u_k|^p = \|u\|_p^p$.
+Donc pour tout $n$, $|u_n| \le \|u\|_p$. La suite est bornée.
+En particulier, si on pose $C = \|u\|_p$, alors pour tout $n$, $|u_n| \le C$. Donc $u \in \ell^\infty$.
+
+Considérons maintenant $q < +\infty$. Comme $u \in \ell^p$, pour tout $n$ tel que $|u_n| \le 1$, comme $q \ge p$, on a $|u_n|^q \le |u_n|^p$.
+La série $\sum |u_n|^q$ est donc majorée par $\sum |u_n|^p$ à un nombre fini de termes près (ceux pour lesquels $|u_n| > 1$).
+Puisque $\sum |u_n|^p < +\infty$, la série $\sum |u_n|^q$ est convergente.
+Ainsi, $u \in \ell^q$. L'inclusion $\ell^p \subset \ell^q$ est démontrée.
+
+
+\subsection*{Exercice 4 : Classe d'équivalence de la fonction indicatrice de $\mathbb{Q}$ \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Sur l'espace $(\mathbb{R}, \mathcal{B}(\mathbb{R}), \lambda)$, soit $f = 1_{\mathbb{Q}}$ la fonction indicatrice des rationnels.
+Déterminer la classe d'équivalence de $f$ dans $L^p(\lambda)$ (pour $1 \le p \le +\infty$).
+
+\textbf{Correction :}
+La fonction $f$ vaut 1 sur $\mathbb{Q}$ et 0 sur $\mathbb{R} \setminus \mathbb{Q}$.
+L'ensemble des rationnels $\mathbb{Q}$ est dénombrable.
+Or, la mesure de Lebesgue d'un ensemble dénombrable est nulle : $\lambda(\mathbb{Q}) = 0$.
+Par conséquent, l'ensemble sur lequel $f$ est non nulle, $A = \{x \in \mathbb{R} \mid f(x) \neq 0\} = \mathbb{Q}$, est de mesure nulle.
+Cela signifie que $f(x) = 0$ pour presque tout $x \in \mathbb{R}$.
+Donc $f \sim 0$.
+La classe d'équivalence de $f$ dans $L^p(\lambda)$ est la classe de la fonction nulle, c'est-à-dire $[0]$.
+
+
+\subsection*{Exercice 5 : Calcul explicite de la norme $L^\infty$ \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $f : \mathbb{R} \to \mathbb{R}$ définie par $f(x) = e^{-|x|} + 10 \cdot 1_{\{0\}}(x) + 5 \cdot 1_{\mathbb{Q} \cap [1, 2]}(x)$.
+Calculer la norme $\|f\|_\infty$ dans l'espace $L^\infty(\mathbb{R}, \lambda)$.
+
+\textbf{Correction :}
+La norme essentielle supremum est définie par :
+$\|f\|_\infty = \inf \{ C \ge 0 \mid \lambda(\{x \in \mathbb{R} \mid |f(x)| > C\}) = 0 \}$.
+
+Analysons les termes de $f$ :
+\begin{itemize}\item $g(x) = e^{-|x|}$ est continue et son maximum est atteint en $x=0$, $g(0) = 1$. Son supremum est $1$.
+\item Le terme $10 \cdot 1_{\{0\}}(x)$ ne modifie $f$ qu'en un seul point $x=0$, ce qui est un ensemble de mesure nulle ($\lambda(\{0\}) = 0$).
+\item Le terme $5 \cdot 1_{\mathbb{Q} \cap [1, 2]}(x)$ ne modifie $f$ que sur un sous-ensemble des rationnels, qui est également dénombrable et de mesure nulle.\end{itemize}
+
+Donc, $f(x) = e^{-|x|}$ presque partout (sur $\mathbb{R} \setminus ( \{0\} \cup (\mathbb{Q} \cap [1,2]) )$).
+Le supremum essentiel de $f$ est donc le supremum de $g(x) = e^{-|x|}$ sur l'ensemble où ils coïncident.
+Puisque $g$ est continue et bornée par $1$, et atteint des valeurs arbitrairement proches de 1 (par exemple pour $x \to 0$, $x \neq 0$), on a $\|f\|_\infty = 1$.
+
+Les pics isolés (en 0 et sur les rationnels) n'affectent pas la norme $L^\infty$ grâce au passage au quotient.
+
+
+\subsection*{Exercice 6 : Convergence d'une norme $L^p$ vers $L^\infty$ \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $f(x) = x$ sur l'espace $X = [0, 1]$ muni de la mesure de Lebesgue $\lambda$.
+1. Calculer $\|f\|_p$ pour $1 \le p < +\infty$.
+2. Déterminer $\|f\|_\infty$.
+3. Montrer que $\lim_{p \to +\infty} \|f\|_p = \|f\|_\infty$.
+
+\textbf{Correction :}
+1. Pour $1 \le p < +\infty$, $\|f\|_p^p = \int_0^1 |x|^p dx = \left[ \frac{x^{p+1}}{p+1} \right]_0^1 = \frac{1}{p+1}$.
+Donc $\|f\|_p = \left( \frac{1}{p+1} \right)^{1/p} = (p+1)^{-1/p}$.
+
+2. La fonction $f(x) = x$ est continue sur $[0, 1]$, donc son supremum essentiel est égal à son supremum classique.
+$\|f\|_\infty = \sup_{x \in [0,1]} |x| = 1$.
+
+3. Étudions la limite :
+$\ln(\|f\|_p) = -\frac{1}{p} \ln(p+1)$.
+Par croissances comparées, lorsque $p \to +\infty$, $\frac{\ln(p+1)}{p} \to 0$.
+Donc $\lim_{p \to +\infty} \ln(\|f\|_p) = 0$, ce qui implique $\lim_{p \to +\infty} \|f\|_p = e^0 = 1$.
+On a bien $\lim_{p \to +\infty} \|f\|_p = \|f\|_\infty$.
+
+
+\subsection*{Exercice 7 : Une fonction dans l'intersection de tous les $L^p$, mais pas dans $L^\infty$ \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Sur $X = [0, 1/2]$ muni de la mesure de Lebesgue, on considère la fonction $f(x) = -\ln(x)$ pour $x > 0$ et $f(0) = 0$.
+Montrer que $f \in L^p(\lambda)$ pour tout $1 \le p < +\infty$, mais que $f \notin L^\infty(\lambda)$.
+
+\textbf{Correction :}
+1. Soit $p \ge 1$.
+$\int_0^{1/2} |f(x)|^p dx = \int_0^{1/2} (-\ln(x))^p dx$.
+Faisons le changement de variable $u = -\ln(x) \iff x = e^{-u}$, $dx = -e^{-u} du$.
+Les bornes : $x=0 \implies u = +\infty$, $x=1/2 \implies u = \ln(2)$.
+L'intégrale devient $\int_{\ln(2)}^{+\infty} u^p e^{-u} du$.
+Cette intégrale converge car l'exponentielle l'emporte sur toute puissance polynomiale : $u^p e^{-u} \underset{u \to +\infty}{=} o(e^{-u/2})$, et $\int e^{-u/2} du$ converge.
+Donc $f \in L^p(\lambda)$.
+
+2. $f(x) = -\ln(x)$ tend vers $+\infty$ lorsque $x \to 0^+$.
+Pour tout $C > 0$, l'ensemble $\{x \in [0, 1/2] \mid f(x) > C\} = \{x \in [0, 1/2] \mid x < e^{-C}\} = [0, e^{-C}[$ est de mesure $e^{-C} > 0$.
+Donc $f$ n'est pas essentiellement bornée. Ainsi, $f \notin L^\infty(\lambda)$.
+
+
+\subsection*{Exercice 8 : Produit de fonctions et exposants conjugués (Hölder rudimentaire) \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Soient $f \in L^p(\mu)$ et $g \in L^q(\mu)$ où $\frac{1}{p} + \frac{1}{q} = 1$ avec $1 < p, q < +\infty$.
+En utilisant l'inégalité de Young ($ab \le \frac{a^p}{p} + \frac{b^q}{q}$ pour $a,b \ge 0$), montrer que la fonction $f \cdot g$ est dans $L^1(\mu)$, c'est-à-dire que $\int_X |fg| d\mu < +\infty$.
+
+\textbf{Correction :}
+Si $\|f\|_p = 0$ ou $\|g\|_q = 0$, alors $f=0$ p.p. ou $g=0$ p.p., donc $fg = 0$ p.p. et l'intégrale est nulle, le résultat est trivial.
+Supposons $\|f\|_p > 0$ et $\|g\|_q > 0$.
+Considérons les fonctions normalisées : $\tilde{f} = \frac{f}{\|f\|_p}$ et $\tilde{g} = \frac{g}{\|g\|_q}$.
+Par définition, $\|\tilde{f}\|_p = 1$ et $\|\tilde{g}\|_q = 1$, ce qui signifie que $\int_X |\tilde{f}|^p d\mu = 1$ et $\int_X |\tilde{g}|^q d\mu = 1$.
+
+Pour tout $x \in X$, on applique l'inégalité de Young à $a = |\tilde{f}(x)|$ et $b = |\tilde{g}(x)|$ :
+$|\tilde{f}(x) \cdot \tilde{g}(x)| \le \frac{|\tilde{f}(x)|^p}{p} + \frac{|\tilde{g}(x)|^q}{q}$.
+
+En intégrant cette inégalité sur $X$ :
+$\int_X |\tilde{f} \cdot \tilde{g}| d\mu \le \frac{1}{p} \int_X |\tilde{f}|^p d\mu + \frac{1}{q} \int_X |\tilde{g}|^q d\mu = \frac{1}{p}(1) + \frac{1}{q}(1) = 1$.
+
+L'intégrale $\int_X |\tilde{f} \cdot \tilde{g}| d\mu$ est finie.
+En remplaçant $\tilde{f}$ et $\tilde{g}$ par leurs définitions, on obtient :
+$\frac{1}{\|f\|_p \|g\|_q} \int_X |f \cdot g| d\mu \le 1$.
+Donc $\int_X |f \cdot g| d\mu \le \|f\|_p \|g\|_q < +\infty$.
+Ainsi, $f \cdot g \in L^1(\mu)$.
+
+
+\subsection*{Exercice 9 : Continuité de la translation dans $L^p(\mathbb{R})$ \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Pour $f \in L^p(\mathbb{R})$ ($1 \le p < +\infty$) et $h \in \mathbb{R}$, on définit la translatée $\tau_h f(x) = f(x - h)$.
+Il est admis que si $g$ est une fonction continue à support compact, alors $\lim_{h \to 0} \|\tau_h g - g\|_p = 0$.
+En utilisant la densité des fonctions continues à support compact dans $L^p(\mathbb{R})$, démontrer que pour toute fonction $f \in L^p(\mathbb{R})$, $\lim_{h \to 0} \|\tau_h f - f\|_p = 0$.
+
+\textbf{Correction :}
+Soit $f \in L^p(\mathbb{R})$ et $\varepsilon > 0$.
+Puisque l'espace des fonctions continues à support compact $C_c(\mathbb{R})$ est dense dans $L^p(\mathbb{R})$, il existe une fonction $g \in C_c(\mathbb{R})$ telle que $\|f - g\|_p < \varepsilon / 3$.
+
+Par invariance par translation de la mesure de Lebesgue, $\|\tau_h(f - g)\|_p = \|f - g\|_p < \varepsilon / 3$.
+
+On peut écrire :
+$\tau_h f - f = (\tau_h f - \tau_h g) + (\tau_h g - g) + (g - f)$.
+En appliquant l'inégalité triangulaire (Minkowski) de la norme $L^p$ :
+$\|\tau_h f - f\|_p \le \|\tau_h(f - g)\|_p + \|\tau_h g - g\|_p + \|g - f\|_p$.
+
+On majore les premier et troisième termes :
+$\|\tau_h f - f\|_p < \varepsilon/3 + \|\tau_h g - g\|_p + \varepsilon/3 = \frac{2\varepsilon}{3} + \|\tau_h g - g\|_p$.
+
+Par hypothèse (car $g \in C_c(\mathbb{R})$), il existe $\delta > 0$ tel que pour tout $|h| < \delta$, $\|\tau_h g - g\|_p < \varepsilon / 3$.
+
+Donc, pour tout $|h| < \delta$, $\|\tau_h f - f\|_p < \frac{2\varepsilon}{3} + \frac{\varepsilon}{3} = \varepsilon$.
+Cela prouve que $\lim_{h \to 0} \|\tau_h f - f\|_p = 0$. L'opérateur de translation est fortement continu sur $L^p(\mathbb{R})$.
+
+
+\subsection*{Exercice 10 : Non-continuité de la translation dans $L^\infty(\mathbb{R})$ \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Montrer que la continuité de la translation n'est pas vérifiée dans $L^\infty(\mathbb{R})$.
+Indication : on pourra considérer la fonction indicatrice d'un intervalle.
+
+\textbf{Correction :}
+Considérons $f = 1_{[-1, 1]}$, la fonction indicatrice de l'intervalle $[-1, 1]$.
+Cette fonction est bornée, donc $f \in L^\infty(\mathbb{R})$ et $\|f\|_\infty = 1$.
+
+Calculons $\tau_h f - f$ pour $h > 0$.
+$\tau_h f(x) = f(x-h) = 1_{[-1, 1]}(x-h) = 1_{[-1+h, 1+h]}(x)$.
+Ainsi, $\tau_h f(x) - f(x) = 1_{[-1+h, 1+h]}(x) - 1_{[-1, 1]}(x)$.
+
+Si $0 < h < 2$ :
+\begin{itemize}\item Pour $x \in ]1, 1+h]$, $\tau_h f(x) = 1$ et $f(x) = 0$, donc la différence vaut $1$.
+\item L'intervalle $]1, 1+h]$ a une mesure de Lebesgue $h > 0$.\end{itemize}
+Donc le supremum essentiel de $|\tau_h f - f|$ est au moins $1$.
+On a donc $\|\tau_h f - f\|_\infty = 1$ pour tout $h \in ]0, 2[$.
+
+Ainsi, $\lim_{h \to 0^+} \|\tau_h f - f\|_\infty = 1 \neq 0$.
+La translation n'est donc pas continue sur $L^\infty(\mathbb{R})$. C'est une différence topologique fondamentale avec les espaces $L^p$ pour $p < +\infty$.
+
+
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Calcul de la norme Lp par sommation discrète}
+
+\begin{lstlisting}
+# Ce TP illustre l'approximation de l'integrale de Lebesgue par des sommes discretes (Riemann)
+# pour calculer une norme Lp sur un intervalle [a, b].
+
+def compute_Lp_norm(func, a, b, p, n_steps=10000):
+    """
+    Calcule la norme Lp d'une fonction sur [a, b] en approchant l'integrale par la methode des rectangles.
+    """
+    step = (b - a) / n_steps
+    integral_sum = 0.0
+    for i in range(n_steps):
+        x = a + i * step
+        val = func(x)
+        integral_sum += (abs(val) ** p) * step
+
+    return integral_sum ** (1.0 / p)
+
+# Exemple 1 : fonction x -> x sur [0, 1]
+def f_identity(x):
+    return x
+
+norm_L1 = compute_Lp_norm(f_identity, 0.0, 1.0, 1)
+norm_L2 = compute_Lp_norm(f_identity, 0.0, 1.0, 2)
+norm_L10 = compute_Lp_norm(f_identity, 0.0, 1.0, 10)
+
+print("Norme L1 (theorique 0.5) :", norm_L1)
+print("Norme L2 (theorique 0.577) :", norm_L2)
+print("Norme L10 :", norm_L10)
+
+assert abs(norm_L1 - 0.5) < 0.01, "Erreur de calcul norme L1"
+assert abs(norm_L2 - (1/3)**0.5) < 0.01, "Erreur de calcul norme L2"\end{lstlisting}
+
+
+\subsection*{TP 2 : Le supremum essentiel (Norme Linfini)}
+
+\begin{lstlisting}
+# Ce TP illustre la difference entre le supremum classique et le supremum essentiel
+# pour une fonction echantillonnee, ou un bruit impulsionnel est ajoute a un seul point.
+
+def compute_Linf_norm(func, a, b, n_steps=10000):
+    """
+    Calcule la norme Linfini de maniere empirique (supremum sur le maillage).
+    """
+    step = (b - a) / n_steps
+    max_val = 0.0
+    for i in range(n_steps):
+        x = a + i * step
+        val = abs(func(x))
+        if val > max_val:
+            max_val = val
+    return max_val
+
+# Fonction classique
+def f_smooth(x):
+    return x * (1 - x) # parabole inversee sur [0,1], max en 0.5 valant 0.25
+
+# Fonction avec une aberration (bruit impulsionnel simulant un point de mesure nulle)
+def f_noisy(x):
+    # On simule l'egalite a un point particulier (ex: x=0.5)
+    if abs(x - 0.5) < 1e-7:
+        return 100.0
+    return x * (1 - x)
+
+inf_smooth = compute_Linf_norm(f_smooth, 0.0, 1.0)
+inf_noisy = compute_Linf_norm(f_noisy, 0.0, 1.0)
+
+print("Norme Linf lisse (theorique 0.25) :", inf_smooth)
+print("Norme Linf bruitee :", inf_noisy)
+
+# Dans l'espace theorique Lp (quotiente), le pic de mesure nulle n'affecte pas la norme.
+# Numeriquement, notre discretisation "voit" ou non le pic selon le maillage.
+# Pour l'ignorer robustement en analyse de donnees, on utilise des percentiles (ex: 99e percentile) au lieu du maximum strict.\end{lstlisting}
+
+
+\subsection*{TP 3 : Convergence des normes Lp vers Linfini}
+
+\begin{lstlisting}
+# Ce TP verifie empiriquement que la limite de la norme Lp quand p tend vers l'infini
+# est egale a la norme Linfini, pour une fonction bornee.
+
+def compute_Lp_norm(func, a, b, p, n_steps=10000):
+    step = (b - a) / n_steps
+    integral_sum = 0.0
+    for i in range(n_steps):
+        x = a + i * step
+        integral_sum += (abs(func(x)) ** p) * step
+    return integral_sum ** (1.0 / p)
+
+def f_test(x):
+    # La fonction est e^-x sur [0, 2]. Son sup est 1 (en x=0)
+    import math
+    return math.exp(-x)
+
+p_values = [1, 2, 5, 10, 20, 50, 100]
+print("Etude de la limite Lp -> Linfini pour f(x) = exp(-x) sur [0,2] :")
+for p in p_values:
+    norm = compute_Lp_norm(f_test, 0.0, 2.0, p)
+    print("p =", p, "=> Norme Lp =", norm)
+
+# On observe que la valeur approche asymptotiquement 1.
+# (Bien que pour de grandes valeurs de p, les depassements de capacite flottante peuvent apparaitre).\end{lstlisting}
+
+
+\subsection*{TP 4 : Inegalite de Holder et espace dual}
+
+\begin{lstlisting}
+# Ce TP illustre l'inegalite de Holder : Integrale(|f*g|) <= ||f||_p * ||g||_q
+# avec 1/p + 1/q = 1.
+
+def integral_product(f, g, a, b, n_steps=10000):
+    step = (b - a) / n_steps
+    int_sum = 0.0
+    for i in range(n_steps):
+        x = a + i * step
+        int_sum += abs(f(x) * g(x)) * step
+    return int_sum
+
+def compute_Lp(func, a, b, p, n_steps=10000):
+    step = (b - a) / n_steps
+    int_sum = 0.0
+    for i in range(n_steps):
+        x = a + i * step
+        int_sum += (abs(func(x)) ** p) * step
+    return int_sum ** (1.0 / p)
+
+def f_test(x):
+    return x
+
+def g_test(x):
+    return 1 - x
+
+p = 3.0
+q = 1.5 # 1/3 + 1/1.5 = 1/3 + 2/3 = 1
+
+int_fg = integral_product(f_test, g_test, 0.0, 1.0)
+norm_f_p = compute_Lp(f_test, 0.0, 1.0, p)
+norm_g_q = compute_Lp(g_test, 0.0, 1.0, q)
+
+produit_normes = norm_f_p * norm_g_q
+
+print("Integrale(|f*g|) :", int_fg)
+print("||f||_p * ||g||_q :", produit_normes)
+
+assert int_fg <= produit_normes + 1e-5, "L'inegalite de Holder est violee"\end{lstlisting}
+
+
+\subsection*{TP 5 : Robustesse des fonctions de perte L1 vs L2}
+
+\begin{lstlisting}
+# En IA, l'espace L1 donne une perte (Mean Absolute Error) robuste aux donnees aberrantes,
+# tandis que l'espace L2 (Mean Squared Error) est tres sensible. Ce TP l'illustre.
+
+data_true = [1.0, 2.0, 3.0, 4.0, 5.0]
+# Une prediction avec un outlier massif
+data_pred = [1.1, 1.9, 3.0, 4.2, 50.0]
+
+def loss_L1(y_true, y_pred):
+    n = len(y_true)
+    return sum(abs(y_true[i] - y_pred[i]) for i in range(n)) / n
+
+def loss_L2(y_true, y_pred):
+    n = len(y_true)
+    return sum((y_true[i] - y_pred[i])**2 for i in range(n)) / n
+
+mae = loss_L1(data_true, data_pred)
+mse = loss_L2(data_true, data_pred)
+
+print("Loss L1 (MAE) :", mae)
+print("Loss L2 (MSE) :", mse)
+
+# L'outlier a un impact de 45. Dans la loss L1, il contribue pour 45/5 = 9 a la moyenne.
+# Dans la loss L2, il contribue pour 45^2 / 5 = 2025/5 = 405.
+# L'erreur L2 explose completement.\end{lstlisting}
+
+
+\end{document}
