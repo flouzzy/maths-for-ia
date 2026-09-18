@@ -1,18 +1,31 @@
-# Exercice 7 : Une fonction dans l'intersection de tous les $L^p$, mais pas dans $L^\infty$ \quad $\bigstar\bigstar\bigstar\star\star$
+# Exercice 7 : Densité des fonctions continues à support compact
 
-**Énoncé :**
-Sur $X = [0, 1/2]$ muni de la mesure de Lebesgue, on considère la fonction $f(x) = -\ln(x)$ pour $x > 0$ et $f(0) = 0$.
-Montrer que $f \in L^p(\lambda)$ pour tout $1 \le p < +\infty$, mais que $f \notin L^\infty(\lambda)$.
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
 
-**Correction :**
-1. Soit $p \ge 1$.
-$\int_0^{1/2} |f(x)|^p dx = \int_0^{1/2} (-\ln(x))^p dx$.
-Faisons le changement de variable $u = -\ln(x) \iff x = e^{-u}$, $dx = -e^{-u} du$.
-Les bornes : $x=0 \implies u = +\infty$, $x=1/2 \implies u = \ln(2)$.
-L'intégrale devient $\int_{\ln(2)}^{+\infty} u^p e^{-u} du$.
-Cette intégrale converge car l'exponentielle l'emporte sur toute puissance polynomiale : $u^p e^{-u} \underset{u \to +\infty}{=} o(e^{-u/2})$, et $\int e^{-u/2} du$ converge.
-Donc $f \in L^p(\lambda)$.
+## Énoncé
 
-2. $f(x) = -\ln(x)$ tend vers $+\infty$ lorsque $x \to 0^+$.
-Pour tout $C > 0$, l'ensemble $\{x \in [0, 1/2] \mid f(x) > C\} = \{x \in [0, 1/2] \mid x < e^{-C}\} = [0, e^{-C}[$ est de mesure $e^{-C} > 0$.
-Donc $f$ n'est pas essentiellement bornée. Ainsi, $f \notin L^\infty(\lambda)$.
+On admet que l'espace des fonctions étagées intégrables est dense dans $L^p(\mathbb{R})$ pour $1 \le p < +\infty$.
+Prouver que l'espace $C_c(\mathbb{R})$ (fonctions continues à support compact) est dense dans $L^p(\mathbb{R})$.
+*Indication : Montrer d'abord qu'on peut approcher la fonction indicatrice d'un segment $[a, b]$ par une fonction continue.*
+
+---
+
+## Correction détaillée
+
+Soit $f \in L^p(\mathbb{R})$. Soit $\epsilon > 0$.
+Puisque les fonctions étagées sont denses, il existe une fonction étagée $\phi = \sum_{i=1}^k c_i \mathbf{1}_{A_i}$ telle que $\|f - \phi\|_p < \epsilon/2$.
+Les ensembles $A_i$ sont de mesure finie. Par régularité de la mesure de Lebesgue, tout ensemble mesurable de mesure finie peut être approché par une union finie d'intervalles disjoints. On peut donc se ramener à approcher des indicatrices de segments $[a, b]$.
+Considérons $g = \mathbf{1}_{[a, b]}$.
+Construisons une approximation continue $g_\delta$ en "adoucissant" les bords sur une largeur $\delta > 0$.
+$$ g_\delta(x) = 1 \text{ si } x \in [a, b] $$
+$$ g_\delta(x) = 0 \text{ si } x \le a-\delta \text{ ou } x \ge b+\delta $$
+$$ g_\delta \text{ affine continue sur } [a-\delta, a] \text{ et } [b, b+\delta] $$
+$g_\delta$ est bien continue à support compact $[a-\delta, b+\delta]$.
+Évaluons la distance dans $L^p$ :
+$$ \|g - g_\delta\|_p^p = \int_\mathbb{R} |g(x) - g_\delta(x)|^p \, dx = \int_{a-\delta}^a |g_\delta(x)|^p \, dx + \int_b^{b+\delta} |g_\delta(x)|^p \, dx $$
+Puisque $0 \le g_\delta(x) \le 1$, l'intégrale est majorée par $1^p \times \delta + 1^p \times \delta = 2\delta$.
+Donc $\|g - g_\delta\|_p \le (2\delta)^{1/p}$.
+En choisissant $\delta$ suffisamment petit, cette distance peut être rendue arbitrairement petite (par exemple $<\epsilon/(2k|c_i|)$).
+Par inégalité triangulaire, on reconstitue une fonction $\psi \in C_c(\mathbb{R})$ (combinaison linéaire des $g_{i,\delta}$) telle que $\|\phi - \psi\|_p < \epsilon/2$.
+Finalement, $\|f - \psi\|_p \le \|f - \phi\|_p + \|\phi - \psi\|_p < \epsilon/2 + \epsilon/2 = \epsilon$.
+L'espace $C_c(\mathbb{R})$ est donc dense dans $L^p(\mathbb{R})$ pour $1 \le p < +\infty$.

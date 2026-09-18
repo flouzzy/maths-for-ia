@@ -1,23 +1,37 @@
-# Exercice 8 : Produit de fonctions et exposants conjugués (Hölder rudimentaire) \quad $\bigstar\bigstar\bigstar\bigstar\star$
+# Exercice 8 : Produit de fonctions dans les espaces Lp (Hölder élémentaire)
 
-**Énoncé :**
-Soient $f \in L^p(\mu)$ et $g \in L^q(\mu)$ où $\frac{1}{p} + \frac{1}{q} = 1$ avec $1 < p, q < +\infty$.
-En utilisant l'inégalité de Young ($ab \le \frac{a^p}{p} + \frac{b^q}{q}$ pour $a,b \ge 0$), montrer que la fonction $f \cdot g$ est dans $L^1(\mu)$, c'est-à-dire que $\int_X |fg| d\mu < +\infty$.
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
 
-**Correction :**
-Si $\|f\|_p = 0$ ou $\|g\|_q = 0$, alors $f=0$ p.p. ou $g=0$ p.p., donc $fg = 0$ p.p. et l'intégrale est nulle, le résultat est trivial.
-Supposons $\|f\|_p > 0$ et $\|g\|_q > 0$.
-Considérons les fonctions normalisées : $\tilde{f} = \frac{f}{\|f\|_p}$ et $\tilde{g} = \frac{g}{\|g\|_q}$.
-Par définition, $\|\tilde{f}\|_p = 1$ et $\|\tilde{g}\|_q = 1$, ce qui signifie que $\int_X |\tilde{f}|^p d\mu = 1$ et $\int_X |\tilde{g}|^q d\mu = 1$.
+## Énoncé
 
-Pour tout $x \in X$, on applique l'inégalité de Young à $a = |\tilde{f}(x)|$ et $b = |\tilde{g}(x)|$ :
-$|\tilde{f}(x) \cdot \tilde{g}(x)| \le \frac{|\tilde{f}(x)|^p}{p} + \frac{|\tilde{g}(x)|^q}{q}$.
+Soit $X$ un espace mesuré.
+1. Soit $f \in L^1(X)$ et $g \in L^\infty(X)$. Montrer rigoureusement que le produit $fg$ appartient à $L^1(X)$ et que $\|fg\|_1 \le \|f\|_1 \|g\|_\infty$.
+2. Application : Si la mesure de l'espace $\mu(X)$ est finie, montrer que pour toute fonction $f \in L^\infty(X)$, alors $f \in L^p(X)$ pour tout $p \ge 1$.
 
-En intégrant cette inégalité sur $X$ :
-$\int_X |\tilde{f} \cdot \tilde{g}| d\mu \le \frac{1}{p} \int_X |\tilde{f}|^p d\mu + \frac{1}{q} \int_X |\tilde{g}|^q d\mu = \frac{1}{p}(1) + \frac{1}{q}(1) = 1$.
+---
 
-L'intégrale $\int_X |\tilde{f} \cdot \tilde{g}| d\mu$ est finie.
-En remplaçant $\tilde{f}$ et $\tilde{g}$ par leurs définitions, on obtient :
-$\frac{1}{\|f\|_p \|g\|_q} \int_X |f \cdot g| d\mu \le 1$.
-Donc $\int_X |f \cdot g| d\mu \le \|f\|_p \|g\|_q < +\infty$.
-Ainsi, $f \cdot g \in L^1(\mu)$.
+## Correction détaillée
+
+1. **Produit $L^1 \times L^\infty$ :**
+   $g \in L^\infty(X)$, donc il existe une constante $C = \|g\|_\infty$ telle que $|g(x)| \le C$ presque partout.
+   $f \in L^1(X)$, donc $f$ est mesurable et $\int_X |f| \, d\mu < +\infty$.
+   La fonction produit $fg$ est mesurable.
+   Considérons son intégrale de module :
+   $$ \int_X |f(x)g(x)| \, d\mu = \int_X |f(x)| |g(x)| \, d\mu $$
+   Puisque $|g(x)| \le \|g\|_\infty$ p.p., et que $|f(x)| \ge 0$, on a presque partout :
+   $$ |f(x)| |g(x)| \le |f(x)| \|g\|_\infty $$
+   Par croissance de l'intégrale :
+   $$ \int_X |fg| \, d\mu \le \int_X |f| \|g\|_\infty \, d\mu = \|g\|_\infty \int_X |f| \, d\mu = \|g\|_\infty \|f\|_1 $$
+   Cette quantité est finie, donc $fg \in L^1(X)$. On a bien $\|fg\|_1 \le \|f\|_1 \|g\|_\infty$.
+
+2. **Espace de mesure finie :**
+   Supposons $\mu(X) < +\infty$. Soit $f \in L^\infty(X)$.
+   Soit $p \ge 1$. Nous devons estimer $\int_X |f|^p \, d\mu$.
+   Puisque $|f| \le \|f\|_\infty$ presque partout, en élevant à la puissance $p$ :
+   $$ |f|^p \le \|f\|_\infty^p \quad \text{p.p.} $$
+   On intègre sur $X$ :
+   $$ \int_X |f|^p \, d\mu \le \int_X \|f\|_\infty^p \, d\mu = \|f\|_\infty^p \int_X 1 \, d\mu = \|f\|_\infty^p \mu(X) $$
+   Puisque $\mu(X) < +\infty$, l'intégrale est finie. Donc $f \in L^p(X)$.
+   De plus, en prenant la racine $p$-ième :
+   $$ \|f\|_p \le \|f\|_\infty \mu(X)^{1/p} $$
+   Ceci généralise l'inclusion $L^\infty \subset L^p$ sur un espace de mesure finie.

@@ -1,18 +1,37 @@
-# Exercice 3 : Espaces $\ell^p$ et inclusion inverse \quad $\bigstar\bigstar\star\star\star$
+# Exercice 3 : Limite de normes Lp
 
-**Énoncé :**
-Soit $\mathbb{N}$ muni de la mesure de comptage. On note $\ell^p$ l'espace $L^p(\mathbb{N})$.
-Montrer que pour $1 \le p \le q \le +\infty$, on a $\ell^p \subset \ell^q$.
-Remarquons que l'inclusion est inversée par rapport au cas d'une mesure finie.
+**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
 
-**Correction :**
-Soit $u = (u_n)_{n \in \mathbb{N}} \in \ell^p$. On suppose que $\|u\|_p = \left( \sum_{n=0}^{+\infty} |u_n|^p \right)^{1/p} < +\infty$.
-Puisque la série converge, le terme général tend vers 0. Donc, il existe un rang $N$ à partir duquel $|u_n| \le 1$.
-De manière encore plus forte, puisque $\sum |u_n|^p < +\infty$, on a $|u_n|^p \le \sum_{k} |u_k|^p = \|u\|_p^p$.
-Donc pour tout $n$, $|u_n| \le \|u\|_p$. La suite est bornée.
-En particulier, si on pose $C = \|u\|_p$, alors pour tout $n$, $|u_n| \le C$. Donc $u \in \ell^\infty$.
+## Énoncé
 
-Considérons maintenant $q < +\infty$. Comme $u \in \ell^p$, pour tout $n$ tel que $|u_n| \le 1$, comme $q \ge p$, on a $|u_n|^q \le |u_n|^p$.
-La série $\sum |u_n|^q$ est donc majorée par $\sum |u_n|^p$ à un nombre fini de termes près (ceux pour lesquels $|u_n| > 1$).
-Puisque $\sum |u_n|^p < +\infty$, la série $\sum |u_n|^q$ est convergente.
-Ainsi, $u \in \ell^q$. L'inclusion $\ell^p \subset \ell^q$ est démontrée.
+Soit $f : [0, 1] \to \mathbb{R}$ définie par $f(x) = x$. L'espace $[0, 1]$ est muni de la mesure de Lebesgue $\lambda$.
+
+1. Pour $p \ge 1$, calculer $\|f\|_p$.
+2. Calculer le supremum essentiel $\|f\|_\infty$.
+3. Montrer rigoureusement par le calcul que $\lim_{p \to +\infty} \|f\|_p = \|f\|_\infty$.
+
+---
+
+## Correction détaillée
+
+1. **Calcul de $\|f\|_p$ :**
+   Pour tout $p \ge 1$, la fonction $x \mapsto x^p$ est continue sur le segment $[0, 1]$, donc intégrable au sens de Riemann et de Lebesgue.
+   $$ \|f\|_p = \left( \int_0^1 |x|^p \, dx \right)^{1/p} $$
+   $$ \int_0^1 x^p \, dx = \left[ \frac{x^{p+1}}{p+1} \right]_0^1 = \frac{1}{p+1} $$
+   Donc :
+   $$ \|f\|_p = \left( \frac{1}{p+1} \right)^{1/p} $$
+
+2. **Calcul de $\|f\|_\infty$ :**
+   La fonction $f(x) = x$ est continue et strictement croissante sur $[0, 1]$. Son maximum est atteint en $x=1$ et vaut 1.
+   Puisque l'ensemble $\{x \in [0, 1] \mid f(x) > 1\}$ est vide (donc de mesure nulle), et pour tout $\epsilon > 0$, l'ensemble $\{x \in [0, 1] \mid f(x) > 1 - \epsilon\} = ]1-\epsilon, 1]$ a une mesure strictement positive ($\epsilon$), on a :
+   $$ \|f\|_\infty = 1 $$
+
+3. **Preuve de la limite :**
+   Étudions la limite de $\|f\|_p = (p+1)^{-1/p}$ lorsque $p \to +\infty$.
+   Passons au logarithme :
+   $$ \ln(\|f\|_p) = -\frac{1}{p} \ln(p+1) $$
+   Par croissances comparées, on sait que $\lim_{p \to +\infty} \frac{\ln(p+1)}{p} = 0$.
+   Donc $\lim_{p \to +\infty} \ln(\|f\|_p) = 0$.
+   En composant par l'exponentielle (qui est continue) :
+   $$ \lim_{p \to +\infty} \|f\|_p = e^0 = 1 = \|f\|_\infty $$
+   Ceci est un cas particulier d'un théorème très général pour toute fonction $f \in L^\infty$ sur un espace de mesure finie.

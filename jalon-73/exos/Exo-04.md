@@ -1,14 +1,28 @@
-# Exercice 4 : Classe d'équivalence de la fonction indicatrice de $\mathbb{Q}$ \quad $\bigstar\bigstar\star\star\star$
+# Exercice 4 : La non-inclusion sur $\mathbb{R}$ entier
 
-**Énoncé :**
-Sur l'espace $(\mathbb{R}, \mathcal{B}(\mathbb{R}), \lambda)$, soit $f = 1_{\mathbb{Q}}$ la fonction indicatrice des rationnels.
-Déterminer la classe d'équivalence de $f$ dans $L^p(\lambda)$ (pour $1 \le p \le +\infty$).
+**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
 
-**Correction :**
-La fonction $f$ vaut 1 sur $\mathbb{Q}$ et 0 sur $\mathbb{R} \setminus \mathbb{Q}$.
-L'ensemble des rationnels $\mathbb{Q}$ est dénombrable.
-Or, la mesure de Lebesgue d'un ensemble dénombrable est nulle : $\lambda(\mathbb{Q}) = 0$.
-Par conséquent, l'ensemble sur lequel $f$ est non nulle, $A = \{x \in \mathbb{R} \mid f(x) \neq 0\} = \mathbb{Q}$, est de mesure nulle.
-Cela signifie que $f(x) = 0$ pour presque tout $x \in \mathbb{R}$.
-Donc $f \sim 0$.
-La classe d'équivalence de $f$ dans $L^p(\lambda)$ est la classe de la fonction nulle, c'est-à-dire $[0]$.
+## Énoncé
+
+On se place sur $\mathbb{R}$ muni de la mesure de Lebesgue $\lambda$. Contrairement au cas des espaces de mesure finie, les espaces $L^p(\mathbb{R})$ ne s'incluent pas mutuellement.
+
+1. Donner un exemple de fonction $f \in L^1(\mathbb{R})$ telle que $f \notin L^2(\mathbb{R})$.
+2. Donner un exemple de fonction $g \in L^2(\mathbb{R})$ telle que $g \notin L^1(\mathbb{R})$.
+
+---
+
+## Correction détaillée
+
+1. **Une fonction dans $L^1$ mais pas dans $L^2$ :**
+   Pour être dans $L^1$ mais exploser au carré, la fonction doit présenter une singularité très abrupte mais localisée (intégrable localement pour l'ordre 1, pas pour l'ordre 2).
+   Considérons $f(x) = \frac{1}{\sqrt{x}} \mathbf{1}_{]0, 1]}(x)$.
+   - Norme $L^1$ : $\int_0^1 x^{-1/2} \, dx = 2 < +\infty \implies f \in L^1(\mathbb{R})$.
+   - Norme $L^2$ : $\int_0^1 (x^{-1/2})^2 \, dx = \int_0^1 \frac{1}{x} \, dx = +\infty \implies f \notin L^2(\mathbb{R})$.
+
+2. **Une fonction dans $L^2$ mais pas dans $L^1$ :**
+   Pour être dans $L^2$ mais avoir trop de masse à l'infini pour être dans $L^1$, la fonction doit décroître lentement vers 0 à l'infini.
+   Considérons $g(x) = \frac{1}{x} \mathbf{1}_{[1, +\infty[}(x)$.
+   - Norme $L^2$ : $\int_1^{+\infty} \frac{1}{x^2} \, dx = \left[ -\frac{1}{x} \right]_1^{+\infty} = 0 - (-1) = 1 < +\infty \implies g \in L^2(\mathbb{R})$.
+   - Norme $L^1$ : $\int_1^{+\infty} \frac{1}{x} \, dx = \left[ \ln x \right]_1^{+\infty} = +\infty \implies g \notin L^1(\mathbb{R})$.
+
+**Conclusion :** Sur un espace de mesure infinie comme $\mathbb{R}$, il n'y a **aucune inclusion** générale entre $L^p$ et $L^q$ si $p \neq q$. L'intégrabilité dépend à la fois du comportement local (singularités) et asymptotique (à l'infini).

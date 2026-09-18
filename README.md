@@ -175,7 +175,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 66](jalon-66/Jalon-66.md)** : Construction de l'intégrale de Lebesgue pour les fonctions mesurables positives. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 67](jalon-67/Jalon-67.md)** : Démonstration du théorème de convergence monotone (Beppo-Levi). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 68](jalon-68/Jalon-68.md)** : Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque (fonctions intégrables).
-- **[Jalon 69](jalon-69/Jalon%2069%20%28D%C3%A9monstration%20compl%C3%A8te%20du%20th%C3%A9or%C3%A8me%20de%20convergence%20domin%C3%A9e%20de%20Lebesgue.%29.md)** : Démonstration complète du théorème de convergence dominée de Lebesgue.
+- **[Jalon 69](jalon-69/Jalon-69.md)** : Démonstration complète du théorème de convergence dominée de Lebesgue. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 70](jalon-70/Jalon%2070%20%28Espaces%20mesur%C3%A9s%20produits%29.md)** : Espaces mesurés produits, tribu produit et construction de la mesure produit.
 - **[Jalon 71](jalon-71/Jalon-71.md)** : Théorèmes de Fubini-Tonelli (fonctions positives) et de Fubini (fonctions intégrables).
 - **[Jalon 72](jalon-72/Jalon%2072%20%28Livrable%20IA%29.md)** : Livrable IA T6 : Formalisation de la divergence de Kullback-Leibler entre deux distributions de probabilités continues complexes.
@@ -186,7 +186,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 <summary><b>Trimestre 7 : espaces $L^p$ et analyse de Fourier</b></summary>
 <br>
 
-- **[Jalon 73](jalon-73/Jalon%2073%20%28D%C3%A9finition%20des%20espaces%20-mathcal%7BL%7D%5Ep-%20et%20passage%20%C3%A0%20l%27espace%20quotient%20-L%5Ep-%29.md)** : Définition des espaces $\mathcal{L}^p$ et passage à l'espace quotient $L^p$ (égalité presque partout).
+- **[Jalon 73](jalon-73/Jalon-73.md)** : Définition des espaces $\mathcal{L}^p$ et passage à l'espace quotient $L^p$ (égalité presque partout). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 74](jalon-74/Jalon%2074%20%28In%C3%A9galit%C3%A9s%20fondamentales%20de%20l%27analyse%20fonctionnelle%29.md)** : Inégalités fondamentales de l'analyse fonctionnelle : Hölder et Minkowski.
 - **[Jalon 75](jalon-75/Jalon%2075%20%28Preuve%20de%20la%20compl%C3%A9tude%20des%20espaces%20-L%5Ep-%29.md)** : Preuve de la complétude des espaces $L^p$ (Théorème de Riesz-Fischer) : structure de Banach.
 - **[Jalon 76](jalon-76/Jalon%2076%20%28Propri%C3%A9t%C3%A9s%20g%C3%A9om%C3%A9triques%20de%20l%27espace%20de%20Hilbert%20-L%5E2-%29.md)** : Propriétés géométriques de l'espace de Hilbert $L^2$, produit scalaire et identité du parallélogramme.
@@ -428,7 +428,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
-- [2026-09-17] : [Upsert/Création] du Jalon 73 - Définition des espaces $\mathcal{L}^p$ et passage à l'espace quotient $L^p$. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-09-18] : [Upsert/Création] du Jalon 73 - Espaces Lp et passage au quotient. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-17] : [Upsert/Création] du Jalon 72 - Livrable IA T6 : Formalisation de la divergence de Kullback-Leibler. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-15] : [Upsert/Création] du Jalon 71 - Théorèmes de Fubini-Tonelli. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-13] : [Upsert/Création] du Jalon 69 - Théorème de convergence dominée (TCD). Status: Terminé.
