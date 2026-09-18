@@ -187,7 +187,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 <br>
 
 - **[Jalon 73](jalon-73/Jalon-73.md)** : Définition des espaces $\mathcal{L}^p$ et passage à l'espace quotient $L^p$ (égalité presque partout). 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 74](jalon-74/Jalon%2074%20%28In%C3%A9galit%C3%A9s%20fondamentales%20de%20l%27analyse%20fonctionnelle%29.md)** : Inégalités fondamentales de l'analyse fonctionnelle : Hölder et Minkowski.
+- **[Jalon 74](jalon-74/Jalon-74.md)** : Inégalités fondamentales de l'analyse fonctionnelle : Hölder et Minkowski.
 - **[Jalon 75](jalon-75/Jalon%2075%20%28Preuve%20de%20la%20compl%C3%A9tude%20des%20espaces%20-L%5Ep-%29.md)** : Preuve de la complétude des espaces $L^p$ (Théorème de Riesz-Fischer) : structure de Banach.
 - **[Jalon 76](jalon-76/Jalon%2076%20%28Propri%C3%A9t%C3%A9s%20g%C3%A9om%C3%A9triques%20de%20l%27espace%20de%20Hilbert%20-L%5E2-%29.md)** : Propriétés géométriques de l'espace de Hilbert $L^2$, produit scalaire et identité du parallélogramme.
 - **[Jalon 77](jalon-77/Jalon%2077%20%28Densit%C3%A9%20des%20fonctions%20simples%29.md)** : Densité des fonctions simples, des fonctions continues à support compact et des fonctions lisses dans $L^p$.
@@ -428,6 +428,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
+- [2026-09-18] : [Upsert/Création] du Jalon 74 - Inégalités fondamentales : Hölder, Minkowski, Jensen. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-18] : [Upsert/Création] du Jalon 73 - Espaces Lp et passage au quotient. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-17] : [Upsert/Création] du Jalon 72 - Livrable IA T6 : Formalisation de la divergence de Kullback-Leibler. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-15] : [Upsert/Création] du Jalon 71 - Théorèmes de Fubini-Tonelli. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
