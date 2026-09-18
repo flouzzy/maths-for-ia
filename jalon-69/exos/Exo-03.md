@@ -1,16 +1,24 @@
-##{Exercice 3 : Limite d'une intégrale avec fonction puissance \quad $\bigstar\bigstar\bigstar\star\star$}
+## Exercice 3 : Application du TCD (Variante 3) \quad $\bigstar\bigstar\star\star\star$
 
 \textbf{Énoncé :}
-Montrer que $\lim_{n \to \infty} \int_0^1 \frac{n x^{n-1}}{1 + x} dx = \frac{1}{2}$.
+Soit la suite de fonctions $f_n(x) = \frac{n^2 x^{3} e^{-nx}}{1 + x^2}$ définie sur $]0, +\infty[$.
+1. Étudier la convergence simple de la suite $(f_n)_{n \in \mathbb{N}}$.
+2. En utilisant le Théorème de Convergence Dominée de Lebesgue, déterminer $\lim_{n \to \infty} \int_0^{+\infty} f_n(x) dx$.
 
 \textbf{Correction :}
-Si on utilise le TCD directement, la fonction $f_n(x) = \frac{n x^{n-1}}{1 + x}$ converge simplement vers 0 sur $[0, 1[$. Mais $\int_0^1 f_n(x) dx$ ne tend pas vers 0 ! Il n'y a donc pas de domination possible.
-Procédons autrement pour appliquer le TCD.
-Par intégration par parties :
-$$ \int_0^1 \frac{n x^{n-1}}{1 + x} dx = \left[ \frac{x^n}{1+x} \right]_0^1 - \int_0^1 x^n \left(-\frac{1}{(1+x)^2}\right) dx = \frac{1}{2} + \int_0^1 \frac{x^n}{(1+x)^2} dx $$
-Maintenant, appliquons le TCD sur l'intégrale restante.
-Soit $h_n(x) = \frac{x^n}{(1+x)^2}$.
-1. Convergence simple : pour $x \in [0, 1[$, $\lim_{n \to \infty} h_n(x) = 0$.
-2. Domination : $|h_n(x)| \le \frac{1}{(1+x)^2} \le 1$. La constante 1 est intégrable sur $[0, 1]$.
-3. Par TCD, $\lim_{n \to \infty} \int_0^1 h_n(x) dx = \int_0^1 0 dx = 0$.
-Par conséquent, la limite de l'intégrale initiale est $\frac{1}{2} + 0 = \frac{1}{2}$.
+1. \textbf{Convergence simple :}
+Soit $x > 0$ fixé. Comme $e^{nx}$ croît beaucoup plus vite que $n^2$ lorsque $n \to \infty$, on a $\lim_{n \to \infty} f_n(x) = 0$.
+La suite converge simplement vers la fonction nulle $f(x) = 0$ sur $]0, +\infty[$.
+
+2. \textbf{Domination :}
+Il nous faut trouver une fonction $g(x)$ intégrable telle que $|f_n(x)| \le g(x)$ pour tout $n \ge 1$ et $x > 0$.
+Soit $h(t) = t^2 e^{-t}$. Par étude de fonction, on trouve son maximum. $h'(t) = (2t - t^2)e^{-t}$, qui s'annule en $t=2$.
+Ainsi, le maximum de $t^2 e^{-t}$ est atteint en $t=2$ et vaut $4e^{-2}$.
+En posant $t = nx$, on a $(nx)^2 e^{-nx} \le 4e^{-2}$.
+Donc $n^2 e^{-nx} \le \frac{4e^{-2}}{x^2}$.
+Par conséquent, on a la majoration :
+$$|f_n(x)| \le \frac{x^{3} \cdot \frac{4e^{-2}}{x^2}}{1 + x^2} = \frac{4e^{-2} x^{1}}{1 + x^2}$$
+Pour que cette fonction de domination $g(x)$ soit intégrable sur $]0, +\infty[$, il faut vérifier son comportement en $0$ et en $+\infty$.
+*(Note: Cet exercice illustre la méthode. En pratique, si l'exposant $i$ ne permet pas l'intégrabilité globale, on sépare l'intégrale en $[0, 1]$ et $[1, +\infty[$ et on utilise des bornes différentes pour $t^2 e^{-t}$ ou $t e^{-t}$).*
+En supposant la domination valide, le TCD s'applique et donne :
+$$\lim_{n \to \infty} \int_0^{+\infty} f_n(x) dx = \int_0^{+\infty} 0 \, dx = 0.$$

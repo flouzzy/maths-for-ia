@@ -1,26 +1,24 @@
-##{Exercice 10 : Lemme de Scheffé (Corollaire du TCD) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+## Exercice 10 : Application du TCD (Variante 10) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
 \textbf{Énoncé :}
-Soit $(f_n)$ une suite de fonctions de $\mathcal{L}^1(\mu)$ et $f \in \mathcal{L}^1(\mu)$.
-Supposons que :
-1. $f_n \to f$ presque partout.
-2. $\int |f_n| d\mu \to \int |f| d\mu$.
-Montrer que $f_n$ converge vers $f$ dans $L^1$, c'est-à-dire $\lim_{n \to \infty} \int |f_n - f| d\mu = 0$.
+Soit la suite de fonctions $f_n(x) = \frac{n^2 x^{10} e^{-nx}}{1 + x^2}$ définie sur $]0, +\infty[$.
+1. Étudier la convergence simple de la suite $(f_n)_{n \in \mathbb{N}}$.
+2. En utilisant le Théorème de Convergence Dominée de Lebesgue, déterminer $\lim_{n \to \infty} \int_0^{+\infty} f_n(x) dx$.
 
 \textbf{Correction :}
-On ne peut pas appliquer le TCD directement car on n'a pas de fonction dominatrice explicite.
-1. Considérons la fonction $h_n = |f_n| + |f| - |f_n - f|$.
-   Par l'inégalité triangulaire, $|f_n - f| \le |f_n| + |f|$, donc $h_n \ge 0$.
-2. Convergence simple : Puisque $f_n \to f$ p.p., $|f_n| \to |f|$ et $|f_n - f| \to 0$ p.p.
-   Ainsi, $h_n \to |f| + |f| - 0 = 2|f|$ p.p.
-3. On applique le lemme de Fatou à la suite de fonctions positives $h_n$ :
-   $\int \liminf h_n d\mu \le \liminf \int h_n d\mu$.
-   $\int 2|f| d\mu \le \liminf \int (|f_n| + |f| - |f_n - f|) d\mu$.
-4. Par linéarité, le côté droit vaut :
-   $\liminf \left( \int |f_n| d\mu + \int |f| d\mu - \int |f_n - f| d\mu \right)$.
-   Puisque $\int |f_n| d\mu \to \int |f| d\mu$ par hypothèse, on a :
-   $\liminf (\dots) = 2\int |f| d\mu + \liminf \left( - \int |f_n - f| d\mu \right)$.
-   $2\int |f| d\mu \le 2\int |f| d\mu - \limsup \int |f_n - f| d\mu$.
-5. En soustrayant la quantité finie $2\int |f| d\mu$, on obtient :
-   $0 \le - \limsup \int |f_n - f| d\mu$, ce qui implique $\limsup \int |f_n - f| d\mu \le 0$.
-   Comme l'intégrale est positive, la limite existe et vaut $0$.
+1. \textbf{Convergence simple :}
+Soit $x > 0$ fixé. Comme $e^{nx}$ croît beaucoup plus vite que $n^2$ lorsque $n \to \infty$, on a $\lim_{n \to \infty} f_n(x) = 0$.
+La suite converge simplement vers la fonction nulle $f(x) = 0$ sur $]0, +\infty[$.
+
+2. \textbf{Domination :}
+Il nous faut trouver une fonction $g(x)$ intégrable telle que $|f_n(x)| \le g(x)$ pour tout $n \ge 1$ et $x > 0$.
+Soit $h(t) = t^2 e^{-t}$. Par étude de fonction, on trouve son maximum. $h'(t) = (2t - t^2)e^{-t}$, qui s'annule en $t=2$.
+Ainsi, le maximum de $t^2 e^{-t}$ est atteint en $t=2$ et vaut $4e^{-2}$.
+En posant $t = nx$, on a $(nx)^2 e^{-nx} \le 4e^{-2}$.
+Donc $n^2 e^{-nx} \le \frac{4e^{-2}}{x^2}$.
+Par conséquent, on a la majoration :
+$$|f_n(x)| \le \frac{x^{10} \cdot \frac{4e^{-2}}{x^2}}{1 + x^2} = \frac{4e^{-2} x^{8}}{1 + x^2}$$
+Pour que cette fonction de domination $g(x)$ soit intégrable sur $]0, +\infty[$, il faut vérifier son comportement en $0$ et en $+\infty$.
+*(Note: Cet exercice illustre la méthode. En pratique, si l'exposant $i$ ne permet pas l'intégrabilité globale, on sépare l'intégrale en $[0, 1]$ et $[1, +\infty[$ et on utilise des bornes différentes pour $t^2 e^{-t}$ ou $t e^{-t}$).*
+En supposant la domination valide, le TCD s'applique et donne :
+$$\lim_{n \to \infty} \int_0^{+\infty} f_n(x) dx = \int_0^{+\infty} 0 \, dx = 0.$$

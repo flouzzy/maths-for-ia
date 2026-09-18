@@ -1,6 +1,13 @@
-## Exercice 3 : KL entre lois normales (même variance) \quad $\bigstar\bigstar\star$
-### Énoncé
-Calculez $D_{KL}(\mathcal{N}(\mu_1, \sigma^2) || \mathcal{N}(\mu_2, \sigma^2))$.
-### Correction
-La formule donne $\ln(1) + \frac{\sigma^2 + (\mu_1-\mu_2)^2}{2\sigma^2} - 0.5 = \frac{(\mu_1-\mu_2)^2}{2\sigma^2}$.
-La divergence est proportionnelle au carré de la distance euclidienne des moyennes, divisé par la variance.
+# Exercice 3 : L'Entropie Croisée $\quad \bigstar\bigstar\star\star\star$
+
+\textbf{Énoncé :}
+Montrer que minimiser la Cross-Entropy $H(P, Q) = -\int p(x) \ln q(x) dx$ est équivalent à minimiser $D_{KL}(P \| Q)$ si la distribution $P$ (les données) est fixe.
+
+\textbf{Correction :}
+Par définition :
+$$D_{KL}(P \| Q) = \int p(x) \ln\left( \frac{p(x)}{q(x)} \right) dx$$
+$$D_{KL}(P \| Q) = \int p(x) \ln p(x) dx - \int p(x) \ln q(x) dx$$
+Le premier terme est l'entropie négative de $P$ : $-H(P)$.
+Le second terme est l'entropie croisée : $H(P, Q)$.
+Ainsi, $D_{KL}(P \| Q) = -H(P) + H(P, Q)$.
+Comme $P$ est fixe, $H(P)$ est constant. Donc, minimiser $D_{KL}(P \| Q)$ par rapport aux paramètres de $Q$ revient exactement à minimiser l'entropie croisée $H(P, Q)$.

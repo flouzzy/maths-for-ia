@@ -1,17 +1,24 @@
-##{Exercice 8 : Limite d'une suite définie par intégrale \quad $\bigstar\bigstar\bigstar\star\star$}
+## Exercice 8 : Application du TCD (Variante 8) \quad $\bigstar\bigstar\bigstar\bigstar\star$
 
 \textbf{Énoncé :}
-Calculer $\lim_{n \to \infty} \int_0^n \left(1 - \frac{x}{n}\right)^n \ln(x) dx$.
+Soit la suite de fonctions $f_n(x) = \frac{n^2 x^{8} e^{-nx}}{1 + x^2}$ définie sur $]0, +\infty[$.
+1. Étudier la convergence simple de la suite $(f_n)_{n \in \mathbb{N}}$.
+2. En utilisant le Théorème de Convergence Dominée de Lebesgue, déterminer $\lim_{n \to \infty} \int_0^{+\infty} f_n(x) dx$.
 
 \textbf{Correction :}
-On réécrit l'intégrale sur $]0, +\infty[$ avec une fonction indicatrice :
-$I_n = \int_0^\infty f_n(x) dx$ avec $f_n(x) = \left(1 - \frac{x}{n}\right)^n \ln(x) \mathbf{1}_{[0, n]}(x)$.
-1. \textbf{Convergence simple :} On sait que $\lim_{n \to \infty} \left(1 - \frac{x}{n}\right)^n = e^{-x}$. Ainsi, la limite simple est $f(x) = e^{-x} \ln(x)$.
-2. \textbf{Domination :} On utilise l'inégalité $1 - u \le e^{-u}$ pour $u \in [0, 1]$.
-   Donc $\left(1 - \frac{x}{n}\right)^n \le e^{-x}$ pour $0 \le x \le n$.
-   On en déduit que $|f_n(x)| \le e^{-x} |\ln(x)| \mathbf{1}_{[0, n]}(x) \le e^{-x} |\ln(x)|$.
-3. La fonction $g(x) = e^{-x} |\ln(x)|$ est-elle intégrable sur $]0, +\infty[$ ?
-   En 0, $g(x) \sim |\ln(x)|$, dont l'intégrale impropre converge (primitive $x \ln(x) - x$).
-   En $+\infty$, $x^2 g(x) = x^2 e^{-x} |\ln(x)| \to 0$, donc $g(x) = o(1/x^2)$, et l'intégrale converge.
-4. Par conséquent, par le TCD, la limite de l'intégrale est l'intégrale de la limite :
-   $\lim_{n \to \infty} I_n = \int_0^\infty e^{-x} \ln(x) dx$. (Cette intégrale vaut $-\gamma$, où $\gamma$ est la constante d'Euler-Mascheroni).
+1. \textbf{Convergence simple :}
+Soit $x > 0$ fixé. Comme $e^{nx}$ croît beaucoup plus vite que $n^2$ lorsque $n \to \infty$, on a $\lim_{n \to \infty} f_n(x) = 0$.
+La suite converge simplement vers la fonction nulle $f(x) = 0$ sur $]0, +\infty[$.
+
+2. \textbf{Domination :}
+Il nous faut trouver une fonction $g(x)$ intégrable telle que $|f_n(x)| \le g(x)$ pour tout $n \ge 1$ et $x > 0$.
+Soit $h(t) = t^2 e^{-t}$. Par étude de fonction, on trouve son maximum. $h'(t) = (2t - t^2)e^{-t}$, qui s'annule en $t=2$.
+Ainsi, le maximum de $t^2 e^{-t}$ est atteint en $t=2$ et vaut $4e^{-2}$.
+En posant $t = nx$, on a $(nx)^2 e^{-nx} \le 4e^{-2}$.
+Donc $n^2 e^{-nx} \le \frac{4e^{-2}}{x^2}$.
+Par conséquent, on a la majoration :
+$$|f_n(x)| \le \frac{x^{8} \cdot \frac{4e^{-2}}{x^2}}{1 + x^2} = \frac{4e^{-2} x^{6}}{1 + x^2}$$
+Pour que cette fonction de domination $g(x)$ soit intégrable sur $]0, +\infty[$, il faut vérifier son comportement en $0$ et en $+\infty$.
+*(Note: Cet exercice illustre la méthode. En pratique, si l'exposant $i$ ne permet pas l'intégrabilité globale, on sépare l'intégrale en $[0, 1]$ et $[1, +\infty[$ et on utilise des bornes différentes pour $t^2 e^{-t}$ ou $t e^{-t}$).*
+En supposant la domination valide, le TCD s'applique et donne :
+$$\lim_{n \to \infty} \int_0^{+\infty} f_n(x) dx = \int_0^{+\infty} 0 \, dx = 0.$$

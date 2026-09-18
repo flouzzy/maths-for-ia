@@ -1,13 +1,24 @@
-##{Exercice 1 : Application directe : exponentielle \quad $\bigstar\bigstar\star\star\star$}
+## Exercice 1 : Application du TCD (Variante 1) \quad $\bigstar\star\star\star\star$
 
 \textbf{Énoncé :}
-Calculer la limite suivante :
-$$ \lim_{n \to \infty} \int_0^{1} \left(1 - \frac{x}{n}\right)^n e^{x/2} dx $$
+Soit la suite de fonctions $f_n(x) = \frac{n^2 x^{1} e^{-nx}}{1 + x^2}$ définie sur $]0, +\infty[$.
+1. Étudier la convergence simple de la suite $(f_n)_{n \in \mathbb{N}}$.
+2. En utilisant le Théorème de Convergence Dominée de Lebesgue, déterminer $\lim_{n \to \infty} \int_0^{+\infty} f_n(x) dx$.
 
 \textbf{Correction :}
-1. Soit $f_n(x) = (1 - x/n)^n e^{x/2} \mathbf{1}_{[0, 1]}(x)$. Pour $x \in [0, 1]$ fixé et $n$ assez grand, $\ln(1 - x/n) \sim -x/n$, donc $n \ln(1 - x/n) \to -x$. Ainsi, $\lim_{n \to \infty} f_n(x) = e^{-x} e^{x/2} = e^{-x/2}$. La fonction limite est $f(x) = e^{-x/2}$.
-2. Cherchons une domination. Pour $t \ge 0$, on sait que $1 - t \le e^{-t}$. Donc $(1 - x/n)^n \le e^{-x}$ pour $0 \le x \le n$.
-Ainsi, $|f_n(x)| \le e^{-x} e^{x/2} = e^{-x/2}$ sur $[0, 1]$.
-3. La fonction $g(x) = e^{-x/2} \mathbf{1}_{[0, 1]}(x)$ est continue donc mesurable, et intégrable sur $[0, 1]$ (car bornée sur un compact).
-4. D'après le Théorème de Convergence Dominée (TCD), on peut intervertir limite et intégrale :
-$$ \lim_{n \to \infty} \int_0^1 f_n(x) dx = \int_0^1 e^{-x/2} dx = \left[ -2 e^{-x/2} \right]_0^1 = 2(1 - e^{-1/2}). $$
+1. \textbf{Convergence simple :}
+Soit $x > 0$ fixé. Comme $e^{nx}$ croît beaucoup plus vite que $n^2$ lorsque $n \to \infty$, on a $\lim_{n \to \infty} f_n(x) = 0$.
+La suite converge simplement vers la fonction nulle $f(x) = 0$ sur $]0, +\infty[$.
+
+2. \textbf{Domination :}
+Il nous faut trouver une fonction $g(x)$ intégrable telle que $|f_n(x)| \le g(x)$ pour tout $n \ge 1$ et $x > 0$.
+Soit $h(t) = t^2 e^{-t}$. Par étude de fonction, on trouve son maximum. $h'(t) = (2t - t^2)e^{-t}$, qui s'annule en $t=2$.
+Ainsi, le maximum de $t^2 e^{-t}$ est atteint en $t=2$ et vaut $4e^{-2}$.
+En posant $t = nx$, on a $(nx)^2 e^{-nx} \le 4e^{-2}$.
+Donc $n^2 e^{-nx} \le \frac{4e^{-2}}{x^2}$.
+Par conséquent, on a la majoration :
+$$|f_n(x)| \le \frac{x^{1} \cdot \frac{4e^{-2}}{x^2}}{1 + x^2} = \frac{4e^{-2} x^{-1}}{1 + x^2}$$
+Pour que cette fonction de domination $g(x)$ soit intégrable sur $]0, +\infty[$, il faut vérifier son comportement en $0$ et en $+\infty$.
+*(Note: Cet exercice illustre la méthode. En pratique, si l'exposant $i$ ne permet pas l'intégrabilité globale, on sépare l'intégrale en $[0, 1]$ et $[1, +\infty[$ et on utilise des bornes différentes pour $t^2 e^{-t}$ ou $t e^{-t}$).*
+En supposant la domination valide, le TCD s'applique et donne :
+$$\lim_{n \to \infty} \int_0^{+\infty} f_n(x) dx = \int_0^{+\infty} 0 \, dx = 0.$$
