@@ -428,6 +428,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
+- [2026-09-19] : [Upsert] du Jalon 74 - Inégalités fondamentales. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-18] : [Upsert/Création] du Jalon 73 - Espaces Lp et passage au quotient. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-17] : [Upsert/Création] du Jalon 72 - Livrable IA T6 : Formalisation de la divergence de Kullback-Leibler. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-15] : [Upsert/Création] du Jalon 71 - Théorèmes de Fubini-Tonelli. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
