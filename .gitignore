@@ -16,3 +16,6 @@ update_readme.py
 *.log
 *.toc
 *.out
+jalon-74/*.aux
+jalon-74/*.log
+jalon-74/*.toc
