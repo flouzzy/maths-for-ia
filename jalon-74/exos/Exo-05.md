@@ -1,19 +1,14 @@
-### Exercice 5 : Inégalité de Hölder généralisée (3 fonctions) $\bigstar\bigstar\bigstar$
+---
+title: "Exercice 5 : Application des Inégalités"
+difficulty: "★★★★☆"
+---
 
-**Énoncé :** Soient $p, q, r \in [1, +\infty]$ tels que $\frac{1}{p} + \frac{1}{q} + \frac{1}{r} = 1$. Montrer que pour $f \in L^p, g \in L^q, h \in L^r$, on a $\|fgh\|_1 \le \|f\|_p \|g\|_q \|h\|_r$.
+# Exercice 5 : Application des Inégalités
+
+**Niveau :** ★★★★☆
+
+**Énoncé :**
+Démontrer que sur un espace probabilisé, la norme $L^p$ d'une variable aléatoire $X$ est une fonction croissante de $p$ : $\|X\|_p \le \|X\|_q$ pour $1 \le p \le q$.
 
 **Correction Détaillée :**
-*Analyse :* L'idée est d'appliquer Hölder de manière récursive en groupant deux fonctions.
-*Résolution pas-à-pas :*
-1. Considérons la fonction $gh$. Nous cherchons un exposant $s$ tel que $gh \in L^s$ pour utiliser Hölder avec $f \in L^p$.
-2. L'exposant conjugué de $p$ est $s$ tel que $\frac{1}{p} + \frac{1}{s} = 1$. Donc $\frac{1}{s} = 1 - \frac{1}{p} = \frac{1}{q} + \frac{1}{r}$.
-3. Par Hölder sur $f$ et $gh$ avec les exposants $p$ et $s$ :
-   $$\int |f(gh)| \le \|f\|_p \|gh\|_s = \|f\|_p \left( \int |g|^s |h|^s \right)^{1/s}$$
-4. Il reste à majorer $\|gh\|_s = (\int |g|^s |h|^s)^{1/s}$. On applique à nouveau Hölder à l'intégrale $\int |g|^s |h|^s$.
-5. Cherchons des exposants $u, v$ conjugués ($\frac{1}{u} + \frac{1}{v} = 1$) tels que $|g|^s \in L^u$ et $|h|^s \in L^v$. Il faut $su = q$ et $sv = r$.
-6. Vérifions si $u = q/s$ et $v = r/s$ sont conjugués : $\frac{1}{u} + \frac{1}{v} = \frac{s}{q} + \frac{s}{r} = s(\frac{1}{q} + \frac{1}{r}) = s(\frac{1}{s}) = 1$. Oui.
-7. On applique Hölder avec $u, v$ :
-   $$\int |g|^s |h|^s \le \left(\int (|g|^s)^u\right)^{1/u} \left(\int (|h|^s)^v\right)^{1/v} = \left(\int |g|^q\right)^{s/q} \left(\int |h|^r\right)^{s/r}$$
-8. En élevant à la puissance $1/s$ :
-   $$\|gh\|_s \le \left( \int |g|^q \right)^{1/q} \left( \int |h|^r \right)^{1/r} = \|g\|_q \|h\|_r$$
-9. En combinant avec l'étape 3 : $\|fgh\|_1 \le \|f\|_p \|g\|_q \|h\|_r$.
+On souhaite montrer que $\left(\int |X|^p dP\right)^{1/p} \le \left(\int |X|^q dP\right)^{1/q}$ sachant $\int 1 dP = 1$.<br>Considérons la fonction $\phi(t) = |t|^{q/p}$. Comme $q/p \ge 1$, sa dérivée seconde contient un facteur $\frac{q}{p}(\frac{q}{p}-1) \ge 0$, donc $\phi$ est convexe sur $\mathbb{R}$.<br>Appliquons l'inégalité de Jensen à la variable aléatoire $Y = |X|^p$ avec la fonction $\phi$ :<br>$\phi(\mathbb{E}[Y]) \le \mathbb{E}[\phi(Y)]$.<br>Ceci se traduit par : $(\mathbb{E}[|X|^p])^{q/p} \le \mathbb{E}[(|X|^p)^{q/p}] = \mathbb{E}[|X|^q]$.<br>En prenant la puissance $1/q$ des deux côtés, on obtient :<br>$(\mathbb{E}[|X|^p])^{1/p} \le (\mathbb{E}[|X|^q])^{1/q}$.<br>Soit exactement $\|X\|_p \le \|X\|_q$.<br>Note : ce résultat nécessite que la mesure totale soit 1 (ou finie avec ajustement).

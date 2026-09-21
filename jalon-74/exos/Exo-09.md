@@ -1,15 +1,14 @@
-### Exercice 9 : Inégalité de Jensen pour les espérances conditionnelles $\bigstar\bigstar\star\star$
+---
+title: "Exercice 9 : Application des Inégalités"
+difficulty: "★★★★★"
+---
 
-**Énoncé :** Soit $X$ une variable aléatoire dans $L^1(\Omega, \mathcal{A}, P)$ et $\mathcal{B}$ une sous-tribu de $\mathcal{A}$. Soit $\phi$ une fonction convexe telle que $\phi(X) \in L^1$. Montrer que $\phi(\mathbb{E}[X|\mathcal{B}]) \le \mathbb{E}[\phi(X)|\mathcal{B}]$ presque sûrement.
+# Exercice 9 : Application des Inégalités
+
+**Niveau :** ★★★★★
+
+**Énoncé :**
+Optimisation : Dans le cas de l'algorithme k-Means, montrer formellement par l'inégalité de Jensen que l'assignation d'un point au centroïde le plus proche minimise l'erreur quadratique sous une affectation de type distribution de probabilité molle.
 
 **Correction Détaillée :**
-*Analyse :* C'est une application directe de la définition par les droites d'appui de la convexité (sous-gradients), combinée à la monotonie de l'espérance conditionnelle.
-*Résolution pas-à-pas :*
-1. Toute fonction convexe $\phi$ sur $\mathbb{R}$ peut s'écrire comme l'enveloppe supérieure d'une famille dénombrable de fonctions affines : $\phi(x) = \sup_{n \in \mathbb{N}} (a_n x + b_n)$.
-2. Pour tout $n$, $\phi(X) \ge a_n X + b_n$ presque sûrement.
-3. Par croissance de l'espérance conditionnelle (qui préserve l'inégalité presque sûrement) :
-   $$\mathbb{E}[\phi(X) | \mathcal{B}] \ge \mathbb{E}[a_n X + b_n | \mathcal{B}] = a_n \mathbb{E}[X | \mathcal{B}] + b_n \quad p.s.$$
-4. Cette inégalité est vraie $P$-p.s. pour chaque $n$. Une union dénombrable d'ensembles négligeables étant négligeable, elle est vraie $P$-p.s. simultanément pour tous les $n \in \mathbb{N}$.
-5. Sur cet événement de probabilité 1, on peut prendre le supremum sur $n$ du membre de droite :
-   $$\mathbb{E}[\phi(X) | \mathcal{B}] \ge \sup_{n \in \mathbb{N}} (a_n \mathbb{E}[X | \mathcal{B}] + b_n) = \phi(\mathbb{E}[X | \mathcal{B}])$$
-6. Ce qui termine la démonstration.
+L'erreur k-Means pour un point $x$ sous des probabilités d'affectation $q(k)$ telles que $\sum q(k) = 1$ est $\mathbb{E}_{k \sim q} [\|x - \mu_k\|^2] = \sum_k q(k) \|x - \mu_k\|^2$.<br>On cherche à minimiser cette quantité sur toutes les distributions $q$.<br>Soit $k^* = \arg\min_k \|x - \mu_k\|^2$.<br>Pour toute distribution $q$, comme $\|x - \mu_{k^*}\|^2 \le \|x - \mu_k\|^2$ pour tout $k$, on a par sommation (linéarité) :<br>$\sum_k q(k) \|x - \mu_{k^*}\|^2 \le \sum_k q(k) \|x - \mu_k\|^2$.<br>Comme $\sum_k q(k) = 1$, le terme de gauche vaut $\|x - \mu_{k^*}\|^2$.<br>Donc $\min_k \|x - \mu_k\|^2 \le \sum_k q(k) \|x - \mu_k\|^2$.<br>La borne inférieure est atteinte précisément par la distribution déterministe $q(k) = 1$ si $k=k^*$, et $0$ sinon.<br>Bien que ce soit un cas trivial d'optimisation linéaire sur un simplexe (qui est convexe), cela illustre comment des espérances (Jensen) sur des choix discrets forcent des solutions de type Dirac (Hard-assignement).

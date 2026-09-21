@@ -1,19 +1,14 @@
-### Exercice 10 : Inégalité de Clarkson $\bigstar\bigstar\star\star\star$
+---
+title: "Exercice 10 : Application des Inégalités"
+difficulty: "★★★★★"
+---
 
-**Énoncé :** Pour $p \ge 2$, on pose $q = \frac{p}{p-1}$. Soient $f, g \in L^p(\mu)$. Démontrer l'inégalité de Clarkson :
-$\|\frac{f+g}{2}\|_p^p + \|\frac{f-g}{2}\|_p^p \le \frac{1}{2}(\|f\|_p^p + \|g\|_p^p)$.
+# Exercice 10 : Application des Inégalités
+
+**Niveau :** ★★★★★
+
+**Énoncé :**
+Démontrer que si $f \in L^1(\mathbb{R}) \cap L^\infty(\mathbb{R})$, alors $f \in L^p(\mathbb{R})$ pour tout $1 < p < \infty$ et $\lim_{p \to \infty} \|f\|_p = \|f\|_\infty$.
 
 **Correction Détaillée :**
-*Analyse :* Cette inégalité quantifie l'uniforme convexité de $L^p$. Elle se déduit de l'inégalité ponctuelle $\left|\frac{a+b}{2}\right|^p + \left|\frac{a-b}{2}\right|^p \le \frac{1}{2}(|a|^p + |b|^p)$.
-*Résolution pas-à-pas :*
-1. On fixe $a, b \in \mathbb{R}$. Il faut d'abord prouver l'inégalité pour ces réels :
-   $$\left|\frac{a+b}{2}\right|^p + \left|\frac{a-b}{2}\right|^p \le \frac{1}{2}(|a|^p + |b|^p)$$
-2. La fonction $\phi(x) = |x|^p$ est convexe. De plus, sa dérivée seconde est $\phi''(x) = p(p-1)|x|^{p-2}$, qui est croissante sur $\mathbb{R}_+$.
-3. Une méthode élégante consiste à utiliser l'identité $|x+y|^p + |x-y|^p$ et développer. Plus simplement, pour $p \ge 2$, la fonction $h(t) = \frac{(1+t)^p + (1-t)^p}{2} - (1+t^p)$ est positive sur $[0,1]$ par étude de fonction.
-4. En posant $a = x+y, b = x-y$, on obtient $|x|^p + |y|^p \le \frac{1}{2}(|x+y|^p + |x-y|^p)$ pour $x, y$. En réinversant les rôles $x=(a+b)/2, y=(a-b)/2$, on obtient exactement l'inégalité ponctuelle cherchée.
-5. On applique cette inégalité ponctuellement pour presque tout $x \in X$ aux fonctions $f(x)$ et $g(x)$ :
-   $$\left|\frac{f(x)+g(x)}{2}\right|^p + \left|\frac{f(x)-g(x)}{2}\right|^p \le \frac{1}{2}(|f(x)|^p + |g(x)|^p)$$
-6. Les fonctions étant mesurables et positives, on peut intégrer cette inégalité par rapport à la mesure $\mu$ :
-   $$\int_X \left|\frac{f+g}{2}\right|^p d\mu + \int_X \left|\frac{f-g}{2}\right|^p d\mu \le \frac{1}{2} \left(\int_X |f|^p d\mu + \int_X |g|^p d\mu \right)$$
-7. Ce qui est exactement la définition avec les normes :
-   $$\|\frac{f+g}{2}\|_p^p + \|\frac{f-g}{2}\|_p^p \le \frac{1}{2}(\|f\|_p^p + \|g\|_p^p)$$
+Pour $f \in L^1 \cap L^\infty$, notons $\|f\|_\infty$ son supremum essentiel.<br>Pour tout $p > 1$, on peut majorer l'intégrande $|f|^p = |f|^{p-1}|f| \le \|f\|_\infty^{p-1} |f|$ presque partout.<br>En intégrant : $\int |f|^p \le \|f\|_\infty^{p-1} \int |f|$.<br>Puisque $\int |f| = \|f\|_1 < \infty$ et $\|f\|_\infty < \infty$, l'intégrale est finie. Donc $f \in L^p$.<br>Prenons la puissance $1/p$ : $\|f\|_p \le \|f\|_\infty^{1 - 1/p} \|f\|_1^{1/p}$.<br>En passant à la limite supérieure $p \to \infty$, le membre de droite tend vers $\|f\|_\infty^1 \times \|f\|_1^0 = \|f\|_\infty$. Donc $\limsup_{p \to \infty} \|f\|_p \le \|f\|_\infty$.<br>Pour minorer, soit $0 < \epsilon < \|f\|_\infty$. L'ensemble $A_\epsilon = \{x : |f(x)| > \|f\|_\infty - \epsilon\}$ a une mesure strictement positive, $0 < \mu(A_\epsilon) < \infty$ (car $f \in L^1$).<br>$\int |f|^p \ge \int_{A_\epsilon} |f|^p \ge \int_{A_\epsilon} (\|f\|_\infty - \epsilon)^p = \mu(A_\epsilon) (\|f\|_\infty - \epsilon)^p$.<br>D'où $\|f\|_p \ge \mu(A_\epsilon)^{1/p} (\|f\|_\infty - \epsilon)$.<br>En passant à la limite inférieure $p \to \infty$, $\mu(A_\epsilon)^{1/p} \to 1$, donc $\liminf_{p \to \infty} \|f\|_p \ge \|f\|_\infty - \epsilon$.<br>Comme ceci est vrai pour tout $\epsilon > 0$, $\liminf \|f\|_p \ge \|f\|_\infty$.<br>Les limites inf et sup coïncidant, la limite existe et vaut $\|f\|_\infty.

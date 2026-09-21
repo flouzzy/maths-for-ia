@@ -1,17 +1,14 @@
-### Exercice 6 : Continuité de l'opérateur de translation dans $L^p$ $\bigstar\bigstar\bigstar$
+---
+title: "Exercice 6 : Application des Inégalités"
+difficulty: "★★★★☆"
+---
 
-**Énoncé :** Soit $f \in L^p(\mathbb{R})$ avec $p \in [1, +\infty[$. Pour $h \in \mathbb{R}$, on définit la translation $\tau_h f(x) = f(x-h)$. Montrer que $\lim_{h \to 0} \|\tau_h f - f\|_p = 0$.
+# Exercice 6 : Application des Inégalités
+
+**Niveau :** ★★★★☆
+
+**Énoncé :**
+Inégalité d'interpolation (Hölder itéré) : Si $p < r < q$, prouver que $\|f\|_r \le \|f\|_p^{1-\theta} \|f\|_q^\theta$ pour un certain $\theta \in ]0,1[$. Préciser $\theta$.
 
 **Correction Détaillée :**
-*Analyse :* Le résultat est vrai pour les fonctions continues à support compact. L'espace $C_c(\mathbb{R})$ étant dense dans $L^p(\mathbb{R})$, on utilise un argument de densité (inégalité en $\epsilon/3$). On a besoin de Minkowski pour séparer les normes.
-*Résolution pas-à-pas :*
-1. Soit $\epsilon > 0$. Par densité, il existe $g \in C_c(\mathbb{R})$ telle que $\|f - g\|_p \le \epsilon/3$.
-2. On écrit $\tau_h f - f = (\tau_h f - \tau_h g) + (\tau_h g - g) + (g - f)$.
-3. On applique l'inégalité de Minkowski :
-   $$\|\tau_h f - f\|_p \le \|\tau_h (f - g)\|_p + \|\tau_h g - g\|_p + \|g - f\|_p$$
-4. Par invariance de la mesure de Lebesgue par translation, $\|\tau_h (f - g)\|_p = \|f - g\|_p \le \epsilon/3$.
-5. On a donc $\|\tau_h f - f\|_p \le 2\epsilon/3 + \|\tau_h g - g\|_p$.
-6. La fonction $g$ est continue à support compact, donc uniformément continue (théorème de Heine). Pour $h$ assez petit, $|g(x-h) - g(x)|$ est arbitrairement petit pour tout $x$. De plus, toutes ces fonctions ont leur support contenu dans un compact fixe $K$ pour $|h| \le 1$.
-7. Ainsi, $\|\tau_h g - g\|_p^p = \int_K |g(x-h) - g(x)|^p dx \to 0$ quand $h \to 0$ par convergence dominée (ou uniforme).
-8. Il existe $\delta > 0$ tel que pour $|h| < \delta$, $\|\tau_h g - g\|_p \le \epsilon/3$.
-9. Pour $|h| < \delta$, $\|\tau_h f - f\|_p \le \epsilon$, ce qui prouve la limite.
+Puisque $p < r < q$, on peut écrire $r$ comme une combinaison convexe de $p$ et $q$ sous la forme $\frac{1}{r} = \frac{1-\theta}{p} + \frac{\theta}{q}$ pour un certain $\theta \in ]0,1[$.<br>On a $r = r(1-\theta) + r\theta$.<br>L'intégrale de $\|f\|_r^r$ est $\int |f|^r = \int |f|^{r(1-\theta)} |f|^{r\theta}$.<br>Appliquons Hölder avec les exposants conjugués $u$ et $v$. On veut $u$ tel que $r(1-\theta)u = p$, donc $u = \frac{p}{r(1-\theta)}$.<br>Vérifions le conjugué $v$ : $1 - \frac{1}{u} = 1 - \frac{r(1-\theta)}{p}$.<br>Or $\frac{1-\theta}{p} = \frac{1}{r} - \frac{\theta}{q}$, donc $\frac{r(1-\theta)}{p} = 1 - \frac{r\theta}{q}$.<br>Ainsi $1 - \frac{1}{u} = 1 - (1 - \frac{r\theta}{q}) = \frac{r\theta}{q}$. Soit $v = \frac{q}{r\theta}$.<br>On applique Hölder : $\int |f|^r \le (\int (|f|^{r(1-\theta)})^u)^{1/u} (\int (|f|^{r\theta})^v)^{1/v}$.<br>$\int |f|^r \le (\int |f|^p)^{r(1-\theta)/p} (\int |f|^q)^{r\theta/q}$.<br>En élevant à la puissance $1/r$ : $\|f\|_r \le (\|f\|_p^p)^{\frac{1-\theta}{p}} (\|f\|_q^q)^{\frac{\theta}{q}} = \|f\|_p^{1-\theta} \|f\|_q^\theta$.<br>Cette inégalité garantit que $L^p \cap L^q \subset L^r$.

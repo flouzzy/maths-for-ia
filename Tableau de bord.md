@@ -85,7 +85,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-72/Jalon-72.md|Jalon 72 : Livrable IA]] : Livrable IA T6 : Formalisation de la divergence de Kullback-Leibler entre deux distributions de probabilités continues complexes. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 ### Trimestre 7 : espaces $L^p$ et analyse de Fourier
 - [x] [[jalon-73/Jalon-73.md|Jalon 73 : Définition des espaces $\mathcal{L}^p$ et passage à l'espace quotient $L^p$]] : Définition des espaces $\mathcal{L}^p$ et passage à l'espace quotient $L^p$ (égalité presque partout). 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [x] [[jalon-74/Jalon-74.md|Jalon 74 : Inégalités fondamentales]] : Inégalités fondamentales de l'analyse fonctionnelle : Hölder, Minkowski et Jensen. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [x] [[jalon-74/Jalon-74.md|Jalon 74 : Inégalités fondamentales de l'analyse fonctionnelle]] : Inégalités fondamentales de l'analyse fonctionnelle : Hölder et Minkowski. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-75/Jalon 75 (Preuve de la complétude des espaces -L^p-).md|Jalon 75 : Preuve de la complétude des espaces $L^p$]] : Preuve de la complétude des espaces $L^p$ (Théorème de Riesz-Fischer) : structure de Banach.
 - [ ] [[jalon-76/Jalon 76 (Propriétés géométriques de l'espace de Hilbert -L^2-).md|Jalon 76 : Propriétés géométriques de l'espace de Hilbert $L^2$]] : Propriétés géométriques de l'espace de Hilbert $L^2$, produit scalaire et identité du parallélogramme.
 - [ ] [[jalon-77/Jalon 77 (Densité des fonctions simples).md|Jalon 77 : Densité des fonctions simples]] : Densité des fonctions simples, des fonctions continues à support compact et des fonctions lisses dans $L^p$.

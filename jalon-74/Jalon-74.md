@@ -10,134 +10,177 @@ prev: "[[Jalon 73 (Définition des espaces Lp).md]]"
 next: "[[Jalon 75 (Preuve de la complétude des espaces Lp).md]]"
 ---
 
-# Jalon 74 : Inégalités fondamentales (Hölder, Minkowski, Jensen)
+# Jalon 74 : Inégalités fondamentales : Hölder, Minkowski, Jensen
 
-## 1. Introduction
+## 1. Genèse des Inégalités en Analyse Fonctionnelle
 
-Les inégalités jouent un rôle fondamental en analyse mathématique, particulièrement dans la théorie de l'intégration et l'analyse fonctionnelle. Historiquement, l'étude des espaces de fonctions a nécessité de comprendre comment mesurer la "taille" d'une fonction et comment ces tailles interagissent lors d'opérations algébriques comme l'addition ou la multiplication.
+L'analyse fonctionnelle s'intéresse aux espaces de dimension infinie, en particulier les espaces de fonctions. Historiquement, l'étude des séries de Fourier par Dirichlet et Riemann a révélé la nécessité de quantifier la "taille" d'une fonction, non plus par son maximum (norme uniforme), mais par la somme ou l'intégrale de ses valeurs. Les espaces $L^p$, introduits par Henri Lebesgue et Frigyes Riesz au début du XXe siècle, formalisent cette idée.
 
-L'inégalité de Hölder, généralisant celle de Cauchy-Schwarz, établit une limite absolue sur le produit de deux fonctions appartenant à des espaces $L^p$ différents mais complémentaires. Elle traduit l'idée physique qu'une certaine quantité d'énergie ou de ressource ne peut être amplifiée indéfiniment par combinaison.
+Cependant, pour que ces ensembles de fonctions constituent de véritables espaces vectoriels normés, il fallait prouver des propriétés algébriques et topologiques fondamentales, notamment l'inégalité triangulaire. Hermann Minkowski, géomètre dans l'âme, a généralisé l'inégalité triangulaire euclidienne aux espaces $L^p$. Avant lui, Otto Hölder avait découvert une inégalité reliant les intégrales de produits de fonctions, indispensable pour majorer des termes croisés. Enfin, Johan Jensen, mathématicien danois, a formalisé les conséquences intégrales de la convexité géométrique, un concept qui trouve ses racines dans les travaux d'Archimède sur les barycentres.
 
-L'inégalité de Minkowski, quant à elle, est la traduction analytique de l'inégalité triangulaire géométrique classique : le chemin le plus court entre deux points reste la ligne droite, même dans des espaces de dimension infinie mesurant des déviations à la puissance $p$.
+Ces trois inégalités ne sont pas de simples astuces calculatoires ; elles sont les piliers de l'architecture des espaces fonctionnels, permettant de passer de la géométrie élémentaire à l'analyse moderne, et constituent aujourd'hui le socle théorique de l'optimisation convexe et de la théorie de l'apprentissage statistique.
 
-Enfin, l'inégalité de Jensen formalise le comportement des fonctions convexes face à l'intégration, traduisant le fait que la moyenne des images par une fonction convexe est toujours supérieure ou égale à l'image de la moyenne. C'est un principe de minoration qui s'avère omniprésent en théorie des probabilités et en optimisation.
+## 2. Inégalité de Jensen : Convexité et Barycentres Intégraux
 
-## 2. Définitions, Théorèmes et Exemples
+L'inégalité de Jensen est l'expression analytique du fait qu'une fonction convexe se situe toujours "en dessous" de ses cordes.
 
-### A. Exposants Conjugués et Inégalité de Hölder
+### A. Fonctions convexes
 
-**Définition (Exposants conjugués) :** Deux réels $p, q \in [1, +\infty]$ sont dits conjugués si et seulement si :
-$$\frac{1}{p} + \frac{1}{q} = 1$$
-Par convention, si $p=1$, alors $q=+\infty$, et inversement.
+> **Définition (Fonction convexe) :**
+> Soit $I \subset \mathbb{R}$ un intervalle. Une fonction $\phi : I \to \mathbb{R}$ est dite convexe si, pour tout $x, y \in I$ et pour tout $\lambda \in [0, 1]$ :
+> $$\phi(\lambda x + (1 - \lambda)y) \le \lambda \phi(x) + (1 - \lambda)\phi(y)$$
+> La fonction est dite strictement convexe si l'inégalité est stricte pour $x \neq y$ et $\lambda \in ]0, 1[$.
 
-**Théorème (Inégalité de Hölder) :** Soit $(X, \mathcal{F}, \mu)$ un espace mesuré, et soient $p, q \in [1, +\infty]$ deux exposants conjugués. Pour toutes fonctions mesurables $f \in L^p(\mu)$ et $g \in L^q(\mu)$, le produit $fg$ appartient à $L^1(\mu)$ et on a :
+**Exemple concret immédiat :**
+Soit $\phi(x) = x^2$ sur $\mathbb{R}$. Prenons $x=0, y=2, \lambda=0.5$.
+$\lambda x + (1-\lambda)y = 0.5(0) + 0.5(2) = 1$.
+$\phi(1) = 1^2 = 1$.
+$\lambda \phi(x) + (1-\lambda)\phi(y) = 0.5(0^2) + 0.5(2^2) = 0.5(4) = 2$.
+On a bien $1 \le 2$.
+
+### B. Énoncé du Théorème de Jensen
+
+> **Théorème (Inégalité de Jensen) :**
+> Soit $(X, \mathcal{A}, \mu)$ un espace mesuré tel que $\mu(X) = 1$ (c'est-à-dire une mesure de probabilité). Soit $f \in L^1(\mu)$ une fonction à valeurs réelles telles que $f(x) \in I$ pour presque tout $x \in X$, où $I$ est un intervalle de $\mathbb{R}$.
+> Si $\phi : I \to \mathbb{R}$ est une fonction convexe, et si $\phi \circ f$ est $\mu$-intégrable, alors :
+> $$\phi\left(\int_X f(x) d\mu(x)\right) \le \int_X \phi(f(x)) d\mu(x)$$
+
+*Remarque typologique :* $\int_X f d\mu$ est un réel (l'espérance $\mathbb{E}[f]$ en probabilités). L'inégalité s'écrit formellement : $\phi(\mathbb{E}[f]) \le \mathbb{E}[\phi(f)]$.
+
+**Exemple concret immédiat :**
+Considérons un espace fini $X = \{1, 2\}$, avec probabilités $\mu(\{1\}) = 0.5, \mu(\{2\}) = 0.5$. Soit $f(1) = a, f(2) = b$. L'intégrale est la moyenne arithmétique $\frac{a+b}{2}$.
+Si $\phi(x) = e^x$ (fonction convexe), l'inégalité donne :
+$$e^{\frac{a+b}{2}} \le \frac{1}{2} e^a + \frac{1}{2} e^b$$
+Pour $a=0, b=2$, $e^1 \approx 2.718$. Et $\frac{1+e^2}{2} \approx \frac{1+7.389}{2} = 4.1945$. L'inégalité est largement vérifiée.
+
+**Cas pathologique :**
+Si $\mu(X) \neq 1$, l'inégalité est fausse. Par exemple, si $\mu$ est la mesure de Lebesgue sur $[0, 2]$, $\mu([0,2]) = 2$. Prenons $f(x) = x$ et $\phi(x) = x^2$.
+$\int_0^2 x dx = [\frac{x^2}{2}]_0^2 = 2$. Donc $\phi(\int_0^2 x dx) = \phi(2) = 4$.
+$\int_0^2 \phi(x) dx = \int_0^2 x^2 dx = [\frac{x^3}{3}]_0^2 = \frac{8}{3} \approx 2.66$.
+Ici $4 \not\le 2.66$. La normalisation par la masse totale est cruciale.
+
+## 3. Inégalité de Hölder : Majorations Produit
+
+L'inégalité de Hölder est un outil fondamental pour majorer l'intégrale d'un produit. Elle repose sur la notion d'exposants conjugués.
+
+### A. Exposants conjugués et Lemme de Young
+
+> **Définition (Exposants conjugués) :**
+> Deux réels $p, q \in [1, +\infty]$ sont dits conjugués si :
+> $$\frac{1}{p} + \frac{1}{q} = 1$$
+> avec la convention $\frac{1}{+\infty} = 0$. Ainsi, $1$ et $+\infty$ sont conjugués, et $2$ est son propre conjugué.
+
+> **Lemme (Inégalité de Young) :**
+> Soient $p, q \in ]1, +\infty[$ conjugués. Pour tous $a, b \ge 0$ :
+> $$ab \le \frac{a^p}{p} + \frac{b^q}{q}$$
+> L'égalité a lieu si et seulement si $a^p = b^q$.
+
+### B. Énoncé du Théorème de Hölder
+
+> **Théorème (Inégalité de Hölder) :**
+> Soit $(X, \mathcal{A}, \mu)$ un espace mesuré. Soient $p, q \in [1, +\infty]$ des exposants conjugués.
+> Si $f \in L^p(\mu)$ et $g \in L^q(\mu)$, alors le produit $fg \in L^1(\mu)$ et :
+> $$\|fg\|_1 = \int_X |f(x)g(x)| d\mu(x) \le \|f\|_p \|g\|_q$$
+
+**Exemple concret immédiat :**
+Soit $X = \{1, 2\}$ avec la mesure de comptage. Considérons les vecteurs $x = (x_1, x_2) = (1, 8)$ et $y = (y_1, y_2) = (4, 1)$. Prenons $p = \frac{4}{3}$ et $q = 4$ ($\frac{3}{4} + \frac{1}{4} = 1$).
+$\|x\|_p = (|1|^{4/3} + |8|^{4/3})^{3/4} = (1 + 16)^{3/4} = 17^{3/4} \approx 8.35$
+$\|y\|_q = (|4|^4 + |1|^4)^{1/4} = (256 + 1)^{1/4} = 257^{1/4} \approx 4.004$
+Produit des normes : $8.35 \times 4.004 \approx 33.43$.
+$\|xy\|_1 = |1\times 4| + |8\times 1| = 4 + 8 = 12$.
+On a bien $12 \le 33.43$.
+
+**Cas particulier (Cauchy-Schwarz) :**
+Si $p = q = 2$, l'inégalité de Hölder devient l'inégalité de Cauchy-Schwarz : $\|fg\|_1 \le \|f\|_2 \|g\|_2$.
+
+## 4. Inégalité de Minkowski : L'inégalité triangulaire dans $L^p$
+
+L'inégalité de Minkowski garantit que la somme de deux fonctions $L^p$ reste dans $L^p$, et qu'elle satisfait la sous-additivité.
+
+> **Théorème (Inégalité de Minkowski) :**
+> Soit $(X, \mathcal{A}, \mu)$ un espace mesuré. Soit $p \in [1, +\infty]$.
+> Si $f, g \in L^p(\mu)$, alors $f+g \in L^p(\mu)$ et :
+> $$\|f+g\|_p \le \|f\|_p + \|g\|_p$$
+
+**Exemple concret immédiat :**
+Dans $\mathbb{R}^2$ avec $p=2$, pour $x=(1,0)$ et $y=(0,1)$. $\|x\|_2 = 1$, $\|y\|_2 = 1$. $\|x+y\|_2 = \|(1,1)\|_2 = \sqrt{1^2+1^2} = \sqrt{2} \approx 1.414$.
+$1.414 \le 1 + 1 = 2$.
+Pour $p=1$ (norme Manhattan) : $\|(1,1)\|_1 = 1+1=2$, et $\|x\|_1 + \|y\|_1 = 1+1=2$. On a l'égalité.
+
+**Cas limite :**
+Pour $0 < p < 1$, l'inégalité s'inverse sur les termes strictement positifs : $\|f+g\|_p \ge \|f\|_p + \|g\|_p$. L'application $\|\cdot\|_p$ n'est donc pas une norme pour $p < 1$.
+
+## 5. Démonstrations Complètes et Rigoureuses
+
+### Preuve du Lemme de Young
+
+Pour $a=0$ ou $b=0$, l'inégalité $0 \le 0$ est triviale. Supposons $a > 0$ et $b > 0$.
+La fonction logarithme népérien $\ln : \mathbb{R}_{>0} \to \mathbb{R}$ est strictement concave (sa dérivée seconde est $-1/x^2 < 0$).
+Par définition de la concavité (ou convexité de $-\ln$), pour $x, y > 0$ et $\lambda \in [0,1]$ :
+$$\ln(\lambda x + (1-\lambda)y) \ge \lambda \ln(x) + (1-\lambda)\ln(y)$$
+Posons $x = a^p$, $y = b^q$ et $\lambda = \frac{1}{p}$. Puisque $\frac{1}{p} + \frac{1}{q} = 1$, nous avons $(1-\lambda) = \frac{1}{q}$.
+$$\ln\left( \frac{1}{p}a^p + \frac{1}{q}b^q \right) \ge \frac{1}{p}\ln(a^p) + \frac{1}{q}\ln(b^q)$$
+$$\ln\left( \frac{1}{p}a^p + \frac{1}{q}b^q \right) \ge \ln(a) + \ln(b) = \ln(ab)$$
+La fonction exponentielle étant strictement croissante sur $\mathbb{R}$, on applique $\exp$ aux deux membres :
+$$\frac{a^p}{p} + \frac{b^q}{q} \ge ab$$
+Ce qui clôt la preuve. L'égalité est stricte sauf si $x=y$, soit $a^p = b^q$.
+
+### Preuve de l'Inégalité de Hölder
+
+Soient $f \in L^p(\mu)$ et $g \in L^q(\mu)$.
+**Cas 1 :** Si $\|f\|_p = 0$ ou $\|g\|_q = 0$. Alors $f=0$ presque partout ou $g=0$ presque partout. Donc $fg=0$ p.p. et $\|fg\|_1 = 0$. L'inégalité $0 \le 0$ est vérifiée.
+**Cas 2 :** Supposons $\|f\|_p > 0$ et $\|g\|_q > 0$.
+Définissons les fonctions normalisées :
+$$u(x) = \frac{|f(x)|}{\|f\|_p} \quad \text{et} \quad v(x) = \frac{|g(x)|}{\|g\|_q}$$
+Pour tout $x \in X$, appliquons l'inégalité de Young à $u(x)$ et $v(x)$ :
+$$u(x)v(x) \le \frac{u(x)^p}{p} + \frac{v(x)^q}{q}$$
+soit :
+$$\frac{|f(x)g(x)|}{\|f\|_p \|g\|_q} \le \frac{1}{p}\frac{|f(x)|^p}{\|f\|_p^p} + \frac{1}{q}\frac{|g(x)|^q}{\|g\|_q^q}$$
+Les fonctions à droite sont intégrables. En intégrant cette inégalité sur $X$ par rapport à la mesure $\mu$, par monotonie et linéarité de l'intégrale :
+$$\int_X \frac{|f(x)g(x)|}{\|f\|_p \|g\|_q} d\mu \le \frac{1}{p} \int_X \frac{|f(x)|^p}{\|f\|_p^p} d\mu + \frac{1}{q} \int_X \frac{|g(x)|^q}{\|g\|_q^q} d\mu$$
+Par définition de la norme, $\int_X |f|^p = \|f\|_p^p$ et $\int_X |g|^q = \|g\|_q^q$. Donc :
+$$\frac{1}{\|f\|_p \|g\|_q} \int_X |f(x)g(x)| d\mu \le \frac{1}{p}(1) + \frac{1}{q}(1)$$
+Comme $\frac{1}{p} + \frac{1}{q} = 1$ :
+$$\frac{\|fg\|_1}{\|f\|_p \|g\|_q} \le 1$$
+En multipliant par le dénominateur strictement positif :
 $$\|fg\|_1 \le \|f\|_p \|g\|_q$$
-Autrement dit, $\int_X |fg| d\mu \le \left( \int_X |f|^p d\mu \right)^{1/p} \left( \int_X |g|^q d\mu \right)^{1/q}$.
+Ce qui démontre le théorème.
 
-**Exemples concrets et cas limites :**
-1. **Cas $p=2, q=2$ (Cauchy-Schwarz) :** Pour les vecteurs $(3, 4)$ et $(1, 2)$ dans $\mathbb{R}^2$, $|3(1) + 4(2)| = 11$. Les normes 2 sont $\sqrt{9+16}=5$ et $\sqrt{1+4}=\sqrt{5}$. On a bien $11 \le 5\sqrt{5} \approx 11.18$.
-2. **Cas $p=1, q=+\infty$ :** Soit $f(x)=x$ sur $[0,1]$ et $g(x)=2$. $\|f\|_1 = 1/2$, $\|g\|_\infty = 2$. Le produit $fg(x)=2x$ a pour norme $\|fg\|_1 = 1$. On a exactement $\|fg\|_1 \le \|f\|_1 \|g\|_\infty \implies 1 \le (1/2) \times 2 = 1$.
-3. **Cas $p=3, q=3/2$ sur $\mathbb{R}^2$ :** $u=(1, 2)$, $v=(2, 1)$. $\sum |u_i v_i| = 2 + 2 = 4$. $\|u\|_3 = (1+8)^{1/3} = 9^{1/3}$. $\|v\|_{3/2} = (2^{3/2} + 1)^{2/3}$. $4 \le 9^{1/3} \times (2\sqrt{2}+1)^{2/3}$.
-4. **Matrices :** L'inégalité s'applique aux normes de Schatten pour les matrices. $\|AB\|_1 \le \|A\|_p \|B\|_q$.
-5. **Edge case (Fonction nulle) :** Si $f=0$ presque partout, $\|fg\|_1 = 0$, et $\|f\|_p \|g\|_q = 0 \times \|g\|_q = 0$. L'inégalité est triviale.
-6. **Edge case (Non intégrabilité) :** Si $p, q$ ne sont pas conjugués (ex: $p=2, q=3$), l'inégalité de Hölder standard ne s'applique pas directement pour borner $L^1$, il faut utiliser une version généralisée.
+### Preuve de l'Inégalité de Minkowski
 
-### B. Inégalité de Minkowski
-
-**Théorème (Inégalité de Minkowski) :** Soit $(X, \mathcal{F}, \mu)$ un espace mesuré et $p \in [1, +\infty]$. Pour toutes fonctions $f, g \in L^p(\mu)$, la somme $f+g \in L^p(\mu)$ et :
+Pour $p=1$, c'est une conséquence immédiate de l'inégalité triangulaire dans $\mathbb{R}$ : $|f(x)+g(x)| \le |f(x)| + |g(x)|$, que l'on intègre.
+Pour $p=+\infty$, c'est également immédiat : $|f(x)+g(x)| \le \|f\|_\infty + \|g\|_\infty$ p.p., donc $\|f+g\|_\infty \le \|f\|_\infty + \|g\|_\infty$.
+Considérons $1 < p < +\infty$.
+On remarque d'abord que $f+g \in L^p$. En effet, $|f+g|^p \le (|f|+|g|)^p \le (2\max(|f|,|g|))^p \le 2^p(|f|^p + |g|^p)$, qui est intégrable.
+Si $\|f+g\|_p = 0$, l'inégalité est évidente. Supposons $\|f+g\|_p > 0$.
+Écrivons :
+$$|f+g|^p = |f+g| \cdot |f+g|^{p-1} \le (|f| + |g|) |f+g|^{p-1} = |f||f+g|^{p-1} + |g||f+g|^{p-1}$$
+Soit $q$ l'exposant conjugué de $p$, c'est-à-dire $q = \frac{p}{p-1}$.
+La fonction $|f+g|^{p-1}$ appartient à $L^q(\mu)$ car :
+$$\int (|f+g|^{p-1})^q = \int |f+g|^{(p-1)\frac{p}{p-1}} = \int |f+g|^p < +\infty$$
+Nous appliquons l'inégalité de Hölder à chaque terme :
+$$\int |f||f+g|^{p-1} \le \|f\|_p \| |f+g|^{p-1} \|_q$$
+$$\int |g||f+g|^{p-1} \le \|g\|_p \| |f+g|^{p-1} \|_q$$
+Or, $\| |f+g|^{p-1} \|_q = (\int |f+g|^p)^{1/q} = \|f+g\|_p^{p/q} = \|f+g\|_p^{p(1-1/p)} = \|f+g\|_p^{p-1}$.
+En sommant et en intégrant l'inégalité initiale :
+$$\int |f+g|^p \le \|f\|_p \|f+g\|_p^{p-1} + \|g\|_p \|f+g\|_p^{p-1}$$
+$$\|f+g\|_p^p \le (\|f\|_p + \|g\|_p) \|f+g\|_p^{p-1}$$
+En divisant par $\|f+g\|_p^{p-1}$ (qui est strictement positif par hypothèse), on obtient :
 $$\|f+g\|_p \le \|f\|_p + \|g\|_p$$
+La preuve est achevée.
 
-**Exemples concrets et cas limites :**
-1. **Dimension 1, $p=2$ :** $|a+b|^2 \le (|a|+|b|)^2$. Pour $a=3, b=-1$, $|2|^2 = 4$, et $(|3|+|-1|)^2 = 16$. $2 \le 4$.
-2. **Vecteurs de $\mathbb{R}^2$, $p=1$ :** $u = (1, -2), v = (3, 4)$. $u+v = (4, 2)$. $\|u+v\|_1 = 4+2=6$. $\|u\|_1 = 1+2=3$. $\|v\|_1 = 3+4=7$. $6 \le 3+7 = 10$.
-3. **Vecteurs de $\mathbb{R}^2$, $p=2$ :** $\|u+v\|_2 = \sqrt{16+4} = \sqrt{20} \approx 4.47$. $\|u\|_2 = \sqrt{5} \approx 2.23$. $\|v\|_2 = 5$. $4.47 \le 2.23 + 5 = 7.23$.
-4. **Vecteurs de $\mathbb{R}^2$, $p=\infty$ :** $\|u+v\|_\infty = \max(4, 2) = 4$. $\|u\|_\infty = 2$, $\|v\|_\infty = 4$. $4 \le 2+4=6$.
-5. **Espaces de fonctions continues :** $f(x)=x, g(x)=1-x$ sur $[0,1]$ avec $p=2$. $\|f+g\|_2 = \|1\|_2 = 1$. $\|f\|_2 = \sqrt{1/3} \approx 0.57$. $\|g\|_2 = \sqrt{1/3} \approx 0.57$. $1 \le 1.15$.
-6. **Cas d'égalité :** L'égalité se produit si et seulement si les fonctions sont colinéaires et de même signe (presque partout).
-7. **Échec pour $p < 1$ :** Si $p=1/2$, $u=(1,0), v=(0,1)$. $\|u+v\|_{1/2} = (1^{1/2} + 1^{1/2})^2 = 4$. Mais $\|u\|_{1/2} + \|v\|_{1/2} = 1 + 1 = 2$. $4 \not\le 2$. Minkowski n'est vraie que pour $p \ge 1$.
+## 6. Applications en Intelligence Artificielle et Théorie de l'Information
 
-### C. Inégalité de Jensen
+Les inégalités développées dans ce jalon ne sont pas confinées à l'analyse pure ; elles forment le socle algorithmique des modèles génératifs et de la théorie du transport.
 
-**Théorème (Inégalité de Jensen) :** Soit $(X, \mathcal{F}, \mu)$ un espace de probabilité (c'est-à-dire $\mu(X)=1$). Soit $f \in L^1(\mu)$ une fonction à valeurs dans un intervalle $I \subset \mathbb{R}$, et $\phi : I \to \mathbb{R}$ une fonction convexe. Alors $\phi(f)$ est mesurable et :
-$$\phi \left( \int_X f d\mu \right) \le \int_X \phi(f) d\mu$$
+- **Variational Auto-Encoders (VAE) et ELBO :** En apprentissage génératif, on cherche à maximiser la vraisemblance marginale $p(x) = \int p(x, z) dz$. Calculer cette intégrale est souvent intraitable en grande dimension. L'inégalité de Jensen permet de borner inférieurement la log-vraisemblance (la fonction logarithme étant concave). En introduisant une distribution variationnelle $q(z|x)$ :
+  $$\ln p(x) = \ln \int q(z|x) \frac{p(x, z)}{q(z|x)} dz = \ln \mathbb{E}_{z \sim q}\left[\frac{p(x, z)}{q(z|x)}\right]$$
+  Par l'inégalité de Jensen (pour la fonction concave $\ln$) :
+  $$\ln p(x) \ge \mathbb{E}_{z \sim q}\left[\ln \frac{p(x, z)}{q(z|x)}\right]$$
+  Le terme de droite est l'**ELBO** (Evidence Lower Bound), qui sert de fonction objectif dans l'entraînement des VAE.
 
-**Exemples concrets et cas limites :**
-1. **Fonction carré ($x \mapsto x^2$) :** Pour un dé équilibré, $X \in \{1,2,3,4,5,6\}$. $\mathbb{E}[X] = 3.5$. $\phi(\mathbb{E}[X]) = 12.25$. $\mathbb{E}[X^2] = (1+4+9+16+25+36)/6 = 91/6 \approx 15.16$. On a bien $12.25 \le 15.16$.
-2. **Fonction inverse ($x \mapsto 1/x$) sur $\mathbb{R}_+^*$ :** Soit $X$ valant $2$ ou $4$ avec probabilité $1/2$. $\mathbb{E}[X] = 3$, $1/\mathbb{E}[X] = 1/3 \approx 0.33$. $\mathbb{E}[1/X] = (1/2+1/4)/2 = 3/8 = 0.375$. On a $0.33 \le 0.375$.
-3. **Fonction exponentielle ($x \mapsto e^x$) :** $X$ uniforme sur $[0,1]$. $\mathbb{E}[X] = 1/2$. $e^{1/2} \approx 1.648$. $\mathbb{E}[e^X] = \int_0^1 e^x dx = e - 1 \approx 1.718$. $1.648 \le 1.718$.
-4. **Moyenne arithmético-géométrique :** Avec $\phi(x) = -\ln(x)$ (convexe), on prouve que la moyenne géométrique est bornée par la moyenne arithmétique.
-5. **Cas discret pondéré :** Pour $x_1=1, x_2=4$, poids $\lambda_1=1/4, \lambda_2=3/4$. $\phi(x)=x^2$. $\phi(1/4 \times 1 + 3/4 \times 4) = \phi(13/4) = 169/16 = 10.56$. Et $1/4 \phi(1) + 3/4 \phi(4) = 1/4 + 48/4 = 49/4 = 12.25$. $10.56 \le 12.25$.
-6. **Échec si non convexe :** Si $\phi(x) = \sin(x)$ sur $[0, \pi]$ (concave). $X \in \{0, \pi\}$ avec proba $1/2$. $\mathbb{E}[X] = \pi/2$. $\sin(\pi/2) = 1$. $\mathbb{E}[\sin(X)] = 0$. $1 \not\le 0$. L'inégalité est inversée pour les fonctions concaves.
+- **Théorie de l'Information et Divergence KL :** L'inégalité de Jensen permet de prouver que la divergence de Kullback-Leibler entre deux distributions $P$ et $Q$ est toujours positive : $D_{KL}(P||Q) = \mathbb{E}_{P}\left[-\ln \frac{q(x)}{p(x)}\right] \ge -\ln(\mathbb{E}_{P}\left[\frac{q(x)}{p(x)}\right]) = -\ln(1) = 0$. C'est fondamental pour justifier l'utilisation de la Cross-Entropy comme fonction de perte en classification.
 
-## 3. Démonstrations
+- **Inégalités de Concentration (Hoeffding/McDiarmid) :** Les démonstrations des bornes de généralisation en PAC-learning reposent sur l'inégalité de Hölder (souvent sous la forme Cauchy-Schwarz ou de bornes sur la transformée de Laplace via l'inégalité de Markov, qui découle elle-même de l'intégration positive formelle).
 
-### A. Preuve du Lemme de Young
-
-**Lemme :** Pour tous $a, b \ge 0$ et $p, q \in ]1, +\infty[$ conjugués, $ab \le \frac{a^p}{p} + \frac{b^q}{q}$.
-
-**Démonstration :**
-1. Si $a=0$ ou $b=0$, l'inégalité est immédiate ($0 \le 0$). Supposons $a > 0$ et $b > 0$.
-2. La fonction logarithme népérien $\ln$ est strictement concave sur $\mathbb{R}_+^*$.
-3. On écrit $ab = \exp(\ln(a) + \ln(b)) = \exp \left( \frac{1}{p} \ln(a^p) + \frac{1}{q} \ln(b^q) \right)$.
-4. Puisque $\frac{1}{p} + \frac{1}{q} = 1$, la concavité de $\ln$ (ou convexité de $\exp$) donne :
-   $$\exp \left( \frac{1}{p} \ln(a^p) + \frac{1}{q} \ln(b^q) \right) \le \frac{1}{p} \exp(\ln(a^p)) + \frac{1}{q} \exp(\ln(b^q))$$
-5. Ce qui se simplifie en :
-   $$ab \le \frac{a^p}{p} + \frac{b^q}{q}$$
-
-### B. Preuve de l'inégalité de Hölder
-
-**Démonstration :**
-1. Si $\|f\|_p = 0$ ou $\|g\|_q = 0$, alors $f=0$ p.p. ou $g=0$ p.p., donc $fg=0$ p.p., et l'inégalité $0 \le 0$ est triviale.
-2. Si $\|f\|_p = +\infty$ ou $\|g\|_q = +\infty$, le membre de droite est $+\infty$, l'inégalité est évidente.
-3. Supposons $0 < \|f\|_p < +\infty$ et $0 < \|g\|_q < +\infty$. Définissons les fonctions normalisées :
-   $$u(x) = \frac{|f(x)|}{\|f\|_p}, \quad v(x) = \frac{|g(x)|}{\|g\|_q}$$
-4. Par construction, $\|u\|_p = 1$ et $\|v\|_q = 1$ car $\int |u|^p d\mu = \frac{1}{\|f\|_p^p} \int |f|^p d\mu = 1$.
-5. On applique le lemme de Young ponctuellement pour presque tout $x \in X$ :
-   $$u(x)v(x) \le \frac{u(x)^p}{p} + \frac{v(x)^q}{q}$$
-6. On intègre cette inégalité sur $X$ :
-   $$\int_X u(x)v(x) d\mu \le \frac{1}{p} \int_X u(x)^p d\mu + \frac{1}{q} \int_X v(x)^q d\mu$$
-7. En remplaçant les intégrales par $1$ :
-   $$\int_X \frac{|f(x)g(x)|}{\|f\|_p \|g\|_q} d\mu \le \frac{1}{p}(1) + \frac{1}{q}(1) = 1$$
-8. En multipliant par $\|f\|_p \|g\|_q$, on obtient :
-   $$\int_X |fg| d\mu \le \|f\|_p \|g\|_q$$
-
-### C. Preuve de l'inégalité de Minkowski
-
-**Démonstration :**
-1. Pour $p=1$, l'inégalité triangulaire classique $|f(x)+g(x)| \le |f(x)| + |g(x)|$ s'intègre directement. Supposons $p > 1$. Soit $q$ le conjugué de $p$ tel que $(p-1)q = p$.
-2. On remarque que $|f+g|^p = |f+g| \cdot |f+g|^{p-1} \le (|f| + |g|) |f+g|^{p-1} = |f||f+g|^{p-1} + |g||f+g|^{p-1}$.
-3. On intègre sur $X$ :
-   $$\int |f+g|^p d\mu \le \int |f| |f+g|^{p-1} d\mu + \int |g| |f+g|^{p-1} d\mu$$
-4. Appliquons l'inégalité de Hölder au premier terme avec $p$ et $q$ :
-   $$\int |f| |f+g|^{p-1} d\mu \le \|f\|_p \left( \int (|f+g|^{p-1})^q d\mu \right)^{1/q}$$
-5. Comme $(p-1)q = p$, cela donne :
-   $$\int |f| |f+g|^{p-1} d\mu \le \|f\|_p \left( \int |f+g|^p d\mu \right)^{1/q} = \|f\|_p \|f+g\|_p^{p/q}$$
-6. De même pour le second terme :
-   $$\int |g| |f+g|^{p-1} d\mu \le \|g\|_p \|f+g\|_p^{p/q}$$
-7. En sommant, on obtient :
-   $$\|f+g\|_p^p \le (\|f\|_p + \|g\|_p) \|f+g\|_p^{p/q}$$
-8. Si $\|f+g\|_p = 0$, l'inégalité est vraie. Sinon, on divise par $\|f+g\|_p^{p/q}$. Comme $p - p/q = p(1 - 1/q) = p(1/p) = 1$, il reste :
-   $$\|f+g\|_p \le \|f\|_p + \|g\|_p$$
-
-### D. Preuve de l'inégalité de Jensen
-
-**Démonstration :**
-1. Soit $t_0 = \int_X f d\mu$. Comme $f \in L^1$ et $\mu(X)=1$, $t_0 \in I$.
-2. La fonction $\phi$ étant convexe sur $I$, elle possède en tout point intérieur de $I$ une droite d'appui (sous-gradient). Il existe une constante $c \in \mathbb{R}$ (pente) telle que pour tout $t \in I$ :
-   $$\phi(t) \ge \phi(t_0) + c(t - t_0)$$
-3. On applique cette inégalité ponctuellement à la fonction $f(x)$ pour tout $x \in X$ :
-   $$\phi(f(x)) \ge \phi(t_0) + c(f(x) - t_0)$$
-4. On intègre cette relation par rapport à la mesure de probabilité $\mu$ :
-   $$\int_X \phi(f(x)) d\mu \ge \int_X \phi(t_0) d\mu + \int_X c(f(x) - t_0) d\mu$$
-5. Par linéarité de l'intégrale et comme $\mu(X)=1$, on a $\int_X \phi(t_0) d\mu = \phi(t_0)$. De plus :
-   $$\int_X c(f(x) - t_0) d\mu = c \left( \int_X f(x) d\mu - t_0 \int_X 1 d\mu \right) = c (t_0 - t_0) = 0$$
-6. On obtient donc l'inégalité voulue :
-   $$\int_X \phi(f) d\mu \ge \phi(t_0) = \phi \left( \int_X f d\mu \right)$$
-
-## 4. Applications en Intelligence Artificielle et Physique
-
-L'inégalité de Jensen est la clé de voûte des méthodes variationnelles en apprentissage profond. Dans les Auto-encodeurs Variationnels (VAE), on cherche à maximiser la vraisemblance marginale des données $\ln(p(x))$. Le logarithme étant une fonction concave, on applique l'inégalité de Jensen dans le sens inverse pour obtenir une borne inférieure (ELBO - Evidence Lower Bound) calculable.
-
-En théorie de l'information, Jensen garantit que la divergence de Kullback-Leibler, qui mesure la différence entre deux distributions de probabilité, est toujours positive ou nulle. C'est l'essence même de la notion de distance d'information en machine learning, justifiant l'usage de la Cross-Entropy comme fonction de perte fiable.
-
-Les inégalités de Hölder et Minkowski sont fondamentales pour la théorie de la régularisation en machine learning. Lors de l'apprentissage de réseaux de neurones, imposer des contraintes sur la norme $L^p$ des poids du réseau modifie la nature de l'espace de recherche. Hölder permet de borner les produits scalaires (qui représentent les activations des neurones) en séparant l'entrée et les poids dans des normes conjuguées optimales, garantissant la robustesse des modèles face aux perturbations de l'entrée.
+- **Optimisation et Gradient Proximal :** L'inégalité de Minkowski garantit la convexité des boules $L^p$ pour $p \ge 1$. Dans les algorithmes de régularisation (Lasso pour $L^1$, Ridge pour $L^2$), c'est la géométrie de ces boules induite par Minkowski qui dicte la parcimonie (sparsity) des poids appris par le modèle.

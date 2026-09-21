@@ -1,14 +1,14 @@
-### Exercice 1 : Inégalité de Young $\bigstar$
+---
+title: "Exercice 1 : Application des Inégalités"
+difficulty: "★☆☆☆☆"
+---
 
-**Énoncé :** Démontrer l'inégalité de Young pour $a, b \ge 0$ et $p, q > 1$ conjugués : $ab \le \frac{a^p}{p} + \frac{b^q}{q}$ en utilisant la convexité de la fonction exponentielle.
+# Exercice 1 : Application des Inégalités
+
+**Niveau :** ★☆☆☆☆
+
+**Énoncé :**
+Montrer, en utilisant l'inégalité de Cauchy-Schwarz ($L^2$ sur un espace discret fini), que pour tous réels $a,b,c$, on a $(a+b+c)^2 \le 3(a^2+b^2+c^2)$.
 
 **Correction Détaillée :**
-*Analyse :* La fonction $x \mapsto e^x$ est strictement convexe sur $\mathbb{R}$.
-*Résolution pas-à-pas :*
-1. Si $a=0$ ou $b=0$, l'inégalité est $0 \le \frac{a^p}{p} + \frac{b^q}{q}$, ce qui est vrai car $a^p \ge 0$ et $b^q \ge 0$. On suppose $a>0, b>0$.
-2. On écrit $ab = \exp(\ln(a) + \ln(b)) = \exp(\frac{1}{p}\ln(a^p) + \frac{1}{q}\ln(b^q))$.
-3. Comme $\frac{1}{p} + \frac{1}{q} = 1$ et $\frac{1}{p}, \frac{1}{q} \in ]0, 1[$, on peut appliquer la convexité de l'exponentielle aux points $x = \ln(a^p)$ et $y = \ln(b^q)$ avec les poids $\lambda_1 = \frac{1}{p}$ et $\lambda_2 = \frac{1}{q}$.
-4. L'inégalité de convexité $\exp(\lambda_1 x + \lambda_2 y) \le \lambda_1 \exp(x) + \lambda_2 \exp(y)$ donne :
-   $$\exp\left(\frac{1}{p}\ln(a^p) + \frac{1}{q}\ln(b^q)\right) \le \frac{1}{p}\exp(\ln(a^p)) + \frac{1}{q}\exp(\ln(b^q))$$
-5. En simplifiant :
-   $$ab \le \frac{1}{p}a^p + \frac{1}{q}b^q$$
+L'inégalité de Cauchy-Schwarz sur $\mathbb{R}^3$ s'écrit $|\sum_{i=1}^3 u_i v_i| \le \sqrt{\sum u_i^2} \sqrt{\sum v_i^2}$.<br>Posons le vecteur $u = (a, b, c)$ et le vecteur $v = (1, 1, 1)$.<br>Le produit scalaire est $u \cdot v = a(1) + b(1) + c(1) = a+b+c$.<br>Les normes euclidiennes au carré sont $\|u\|^2 = a^2+b^2+c^2$ et $\|v\|^2 = 1^2+1^2+1^2 = 3$.<br>En élevant Cauchy-Schwarz au carré : $(u \cdot v)^2 \le \|u\|^2 \|v\|^2$.<br>Soit $(a+b+c)^2 \le 3(a^2+b^2+c^2)$. La preuve est complète.

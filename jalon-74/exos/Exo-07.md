@@ -1,18 +1,14 @@
-### Exercice 7 : Interpolation des espaces $L^p$ $\bigstar\bigstar\bigstar$
+---
+title: "Exercice 7 : Application des Inégalités"
+difficulty: "★★★★★"
+---
 
-**Énoncé :** Soit $1 \le p \le r \le q \le +\infty$. Montrer que si $f \in L^p \cap L^q$, alors $f \in L^r$, et il existe $\theta \in [0, 1]$ tel que $\|f\|_r \le \|f\|_p^\theta \|f\|_q^{1-\theta}$. Expliciter $\theta$.
+# Exercice 7 : Application des Inégalités
+
+**Niveau :** ★★★★★
+
+**Énoncé :**
+Utiliser Minkowski pour montrer que l'espace $L^p$ muni de sa norme est un espace normé (vérifier l'axiome de séparation et l'homogénéité).
 
 **Correction Détaillée :**
-*Analyse :* On cherche à écrire $r$ comme une combinaison de $p$ et $q$. On utilise Hölder.
-*Résolution pas-à-pas :*
-1. Si $p=r=q$, c'est trivial avec $\theta = 1$. Supposons $p < r < q$.
-2. On cherche $\theta \in ]0, 1[$ tel que $\frac{1}{r} = \frac{\theta}{p} + \frac{1-\theta}{q}$. On trouve $\theta = \frac{1/r - 1/q}{1/p - 1/q}$.
-3. On écrit l'intégrale de $|f|^r$ en séparant l'exposant : $|f|^r = |f|^{\theta r} |f|^{(1-\theta)r}$.
-4. On applique Hölder à ce produit. Il faut choisir des exposants conjugués $u, v$. On prend $u = \frac{p}{\theta r}$ et $v = \frac{q}{(1-\theta)r}$.
-5. Vérifions que $u, v$ sont conjugués : $\frac{1}{u} + \frac{1}{v} = \frac{\theta r}{p} + \frac{(1-\theta)r}{q} = r(\frac{\theta}{p} + \frac{1-\theta}{q}) = r(\frac{1}{r}) = 1$.
-6. L'inégalité de Hölder donne :
-   $$\int |f|^r = \int |f|^{\theta r} |f|^{(1-\theta)r} \le \left( \int (|f|^{\theta r})^u \right)^{1/u} \left( \int (|f|^{(1-\theta)r})^v \right)^{1/v}$$
-7. On remplace $u$ et $v$ :
-   $$\int |f|^r \le \left( \int |f|^p \right)^{\frac{\theta r}{p}} \left( \int |f|^q \right)^{\frac{(1-\theta)r}{q}}$$
-8. On élève à la puissance $1/r$ :
-   $$\|f\|_r \le \left( \int |f|^p \right)^{\frac{\theta}{p}} \left( \int |f|^q \right)^{\frac{1-\theta}{q}} = \|f\|_p^\theta \|f\|_q^{1-\theta}$$
+Pour que $(L^p, \|\cdot\|_p)$ soit un espace vectoriel normé, il faut vérifier trois axiomes.<br>1. Séparation : $\|f\|_p = 0 \iff \int |f|^p = 0$. Comme l'intégrale d'une fonction positive n'est nulle que si la fonction est nulle presque partout, $f = 0$ p.p. C'est l'intérêt du quotient de l'espace $\mathcal{L}^p$ par la relation d'équivalence $f \sim g$ ssi $f = g$ p.p.<br>2. Homogénéité absolue : $\|\lambda f\|_p = (\int |\lambda f|^p)^{1/p} = (\int |\lambda|^p |f|^p)^{1/p} = (|\lambda|^p \int |f|^p)^{1/p} = |\lambda| \|f\|_p$.<br>3. Inégalité triangulaire : C'est exactement le théorème de Minkowski, $\|f+g\|_p \le \|f\|_p + \|g\|_p$.<br>Les trois axiomes sont vérifiés, l'espace $L^p$ (au sens du quotient) est bien un espace vectoriel normé.

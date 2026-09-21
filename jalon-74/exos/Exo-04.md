@@ -1,14 +1,14 @@
-### Exercice 4 : Normes $L^p$ emboîtées $\bigstar\bigstar\star$
+---
+title: "Exercice 4 : Application des Inégalités"
+difficulty: "★★★☆☆"
+---
 
-**Énoncé :** Soit $(X, \mathcal{F}, \mu)$ un espace mesuré tel que $\mu(X)=1$. Montrer que pour $1 \le p < q < +\infty$, on a $\|f\|_p \le \|f\|_q$ pour toute fonction $f \in L^q(\mu)$.
+# Exercice 4 : Application des Inégalités
+
+**Niveau :** ★★★☆☆
+
+**Énoncé :**
+Montrer l'inégalité de Hölder généralisée pour 3 fonctions : si $\frac{1}{p} + \frac{1}{q} + \frac{1}{r} = 1$, alors $\|fgh\|_1 \le \|f\|_p \|g\|_q \|h\|_r$.
 
 **Correction Détaillée :**
-*Analyse :* On peut utiliser l'inégalité de Jensen car la mesure est de probabilité, ou Hölder avec des exposants bien choisis.
-*Méthode par Jensen :*
-1. On pose $\phi(x) = |x|^{q/p}$. Comme $q > p$, l'exposant $q/p$ est strictement supérieur à 1. La fonction $\phi$ est convexe sur $\mathbb{R}$.
-2. On applique Jensen à la fonction $|f|^p$, qui est dans $L^1$ puisque $f \in L^q \subset L^p$ (mesure finie).
-3. $\phi(\int_X |f|^p d\mu) \le \int_X \phi(|f|^p) d\mu$.
-4. Ce qui donne : $\left(\int_X |f|^p d\mu\right)^{q/p} \le \int_X (|f|^p)^{q/p} d\mu = \int_X |f|^q d\mu$.
-5. On élève les deux membres à la puissance $1/q$ (fonction croissante) :
-   $$\left(\int_X |f|^p d\mu\right)^{1/p} \le \left(\int_X |f|^q d\mu\right)^{1/q}$$
-6. Ce qui est exactement $\|f\|_p \le \|f\|_q$.
+L'idée est d'appliquer l'inégalité de Hölder classique deux fois.<br>Posons $\alpha$ tel que $\frac{1}{\alpha} = \frac{1}{p} + \frac{1}{q}$. Alors $\frac{1}{\alpha} + \frac{1}{r} = 1$.<br>Par l'inégalité de Hölder classique pour les exposants conjugués $\alpha$ et $r$ :<br>$\int |(fg)h| \le \|fg\|_\alpha \|h\|_r$.<br>Il nous reste à majorer $\|fg\|_\alpha$.<br>$\|fg\|_\alpha = (\int |fg|^\alpha)^{1/\alpha}$.<br>Appliquons Hölder à l'intégrale $\int |f|^\alpha |g|^\alpha$. Les exposants $p/\alpha$ et $q/\alpha$ sont conjugués car $\frac{\alpha}{p} + \frac{\alpha}{q} = \alpha(\frac{1}{p} + \frac{1}{q}) = \alpha \times \frac{1}{\alpha} = 1$.<br>Donc $\int |f|^\alpha |g|^\alpha \le (\int (|f|^\alpha)^{p/\alpha})^{\alpha/p} (\int (|g|^\alpha)^{q/\alpha})^{\alpha/q} = (\int |f|^p)^{\alpha/p} (\int |g|^q)^{\alpha/q}$.<br>En élevant à la puissance $1/\alpha$ :<br>$\|fg\|_\alpha = (\int |f|^\alpha |g|^\alpha)^{1/\alpha} \le (\int |f|^p)^{1/p} (\int |g|^q)^{1/q} = \|f\|_p \|g\|_q$.<br>On substitue cela dans la première inégalité :<br>$\|fgh\|_1 \le (\|f\|_p \|g\|_q) \|h\|_r = \|f\|_p \|g\|_q \|h\|_r$.

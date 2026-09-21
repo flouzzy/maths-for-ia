@@ -1,19 +1,14 @@
-### Exercice 8 : Minkowski pour les intégrales (Continue) $\bigstar\bigstar\star\star$
+---
+title: "Exercice 8 : Application des Inégalités"
+difficulty: "★★★★★"
+---
 
-**Énoncé :** Soit $f(x,y)$ mesurable positive sur $X \times Y$. Pour $1 \le p < +\infty$, montrer l'inégalité de Minkowski continue :
-$\left[ \int_X \left( \int_Y f(x,y) dy \right)^p dx \right]^{1/p} \le \int_Y \left( \int_X f(x,y)^p dx \right)^{1/p} dy$.
+# Exercice 8 : Application des Inégalités
+
+**Niveau :** ★★★★★
+
+**Énoncé :**
+Soit $f$ mesurable positive. Montrer que la fonction $p \mapsto \ln(\int f^p d\mu)$ est convexe sur l'ensemble où l'intégrale est finie (Application de Hölder).
 
 **Correction Détaillée :**
-*Analyse :* C'est la généralisation de $\| \sum_j f_j \|_p \le \sum_j \| f_j \|_p$ où la somme discrète est remplacée par une intégrale sur $y$. On utilise la même technique que pour Minkowski discret : dualité et Hölder.
-*Résolution pas-à-pas :*
-1. Posons $F(x) = \int_Y f(x,y) dy$. Nous cherchons à majorer $\|F\|_p$.
-2. Écrivons $F(x)^p = F(x) F(x)^{p-1} = \left(\int_Y f(x,y) dy\right) F(x)^{p-1} = \int_Y f(x,y) F(x)^{p-1} dy$.
-3. On intègre sur $x$ et on utilise Tonelli pour inverser l'ordre (fonctions positives) :
-   $$\|F\|_p^p = \int_X F(x)^p dx = \int_X \left( \int_Y f(x,y) F(x)^{p-1} dy \right) dx = \int_Y \left( \int_X f(x,y) F(x)^{p-1} dx \right) dy$$
-4. Pour l'intégrale intérieure sur $X$, on applique Hölder en $x$ avec $p$ et $q$ (tels que $\frac{1}{p}+\frac{1}{q}=1$) :
-   $$\int_X f(x,y) F(x)^{p-1} dx \le \left(\int_X f(x,y)^p dx\right)^{1/p} \left(\int_X F(x)^{(p-1)q} dx\right)^{1/q}$$
-5. Comme $(p-1)q = p$, on a $\left(\int_X F(x)^{(p-1)q} dx\right)^{1/q} = \|F\|_p^{p/q}$.
-6. En reportant dans l'intégrale sur $Y$ :
-   $$\|F\|_p^p \le \int_Y \left(\int_X f(x,y)^p dx\right)^{1/p} \|F\|_p^{p/q} dy = \|F\|_p^{p/q} \int_Y \left(\int_X f(x,y)^p dx\right)^{1/p} dy$$
-7. Si $0 < \|F\|_p < \infty$, on divise par $\|F\|_p^{p/q}$. Sachant que $p - p/q = 1$, on obtient :
-   $$\|F\|_p \le \int_Y \left(\int_X f(x,y)^p dx\right)^{1/p} dy$$
+Soit $p_0, p_1$ dans l'ensemble où l'intégrale est finie, et $\lambda \in ]0, 1[$. Posons $p_\lambda = (1-\lambda)p_0 + \lambda p_1$.<br>Nous voulons évaluer $\int f^{p_\lambda} = \int f^{(1-\lambda)p_0} f^{\lambda p_1}$.<br>Appliquons Hölder avec les exposants conjugués $u = \frac{1}{1-\lambda}$ et $v = \frac{1}{\lambda}$ (on a bien $1/u + 1/v = 1-\lambda + \lambda = 1$).<br>$\int f^{p_\lambda} \le \left( \int (f^{(1-\lambda)p_0})^{\frac{1}{1-\lambda}} \right)^{1-\lambda} \left( \int (f^{\lambda p_1})^{\frac{1}{\lambda}} \right)^{\lambda}$<br>$\int f^{p_\lambda} \le \left( \int f^{p_0} \right)^{1-\lambda} \left( \int f^{p_1} \right)^{\lambda}$.<br>En appliquant le logarithme naturel (strictement croissant) aux deux membres :<br>$\ln\left(\int f^{p_\lambda}\right) \le \ln\left( \left( \int f^{p_0} \right)^{1-\lambda} \left( \int f^{p_1} \right)^{\lambda} \right)$<br>$\ln\left(\int f^{p_\lambda}\right) \le (1-\lambda)\ln\left(\int f^{p_0}\right) + \lambda\ln\left(\int f^{p_1}\right)$.<br>Ce qui est exactement la définition de la convexité de la fonction $p \mapsto \ln(\int f^p d\mu)$.
