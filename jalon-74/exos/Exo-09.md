@@ -1,17 +1,14 @@
 ---
-title: "Exercice 9 : Continuité de la norme p en fonction de p"
-difficulty: "$\bigstar\bigstar\bigstar\bigstar\bigstar$"
+title: "Exercice 9 : Application des Inégalités"
+difficulty: "★★★★★"
 ---
 
-# Exercice 9 : Continuité de la norme p en fonction de p
+# Exercice 9 : Application des Inégalités
 
-## Énoncé
-Soit $f \in L^p(X) \cap L^q(X)$ avec $1 \le p < q \le \infty$. Démontrer que l'application $r \mapsto \|f\|_r$ est continue sur l'intervalle $[p, q]$. (Indic : utiliser l'interpolation).
+**Niveau :** ★★★★★
 
-## Corrigé
-Soit $r_0 \in [p, q]$. On veut montrer la continuité en $r_0$.
-L'exercice sur l'interpolation montrait que pour $r \le r_0 \le s$, $\|f\|_{r_0} \le \|f\|_r^\theta \|f\|_s^{1-\theta}$ avec $\frac{1}{r_0} = \frac{\theta}{r} + \frac{1-\theta}{s}$.
-De plus, par le théorème de convergence dominée (ou par Hölder), on peut montrer que la fonction $r \mapsto \int |f|^r d\mu$ est continue.
-En effet, pour $r$ proche de $r_0$, $|f|^r \le |f|^p + |f|^q \in L^1$. Comme $r \mapsto |f(x)|^r$ est continue pp, par le théorème de convergence dominée, $\lim_{r\to r_0} \int |f|^r d\mu = \int |f|^{r_0} d\mu$.
-Comme l'application $x \mapsto x^{1/r}$ est continue conjointement avec $r$, la limite de $(\int |f|^r)^{1/r}$ est bien $(\int |f|^{r_0})^{1/r_0}$.
-Donc $r \mapsto \|f\|_r$ est bien continue sur $[p, q]$.
+**Énoncé :**
+Optimisation : Dans le cas de l'algorithme k-Means, montrer formellement par l'inégalité de Jensen que l'assignation d'un point au centroïde le plus proche minimise l'erreur quadratique sous une affectation de type distribution de probabilité molle.
+
+**Correction Détaillée :**
+L'erreur k-Means pour un point $x$ sous des probabilités d'affectation $q(k)$ telles que $\sum q(k) = 1$ est $\mathbb{E}_{k \sim q} [\|x - \mu_k\|^2] = \sum_k q(k) \|x - \mu_k\|^2$.<br>On cherche à minimiser cette quantité sur toutes les distributions $q$.<br>Soit $k^* = \arg\min_k \|x - \mu_k\|^2$.<br>Pour toute distribution $q$, comme $\|x - \mu_{k^*}\|^2 \le \|x - \mu_k\|^2$ pour tout $k$, on a par sommation (linéarité) :<br>$\sum_k q(k) \|x - \mu_{k^*}\|^2 \le \sum_k q(k) \|x - \mu_k\|^2$.<br>Comme $\sum_k q(k) = 1$, le terme de gauche vaut $\|x - \mu_{k^*}\|^2$.<br>Donc $\min_k \|x - \mu_k\|^2 \le \sum_k q(k) \|x - \mu_k\|^2$.<br>La borne inférieure est atteinte précisément par la distribution déterministe $q(k) = 1$ si $k=k^*$, et $0$ sinon.<br>Bien que ce soit un cas trivial d'optimisation linéaire sur un simplexe (qui est convexe), cela illustre comment des espérances (Jensen) sur des choix discrets forcent des solutions de type Dirac (Hard-assignement).

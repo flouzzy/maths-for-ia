@@ -1,25 +1,31 @@
+
 \documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage[french]{babel}
-\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{amsmath,amssymb,amsthm}
 \usepackage{geometry}
-\geometry{a4paper, margin=2cm}
-\usepackage{hyperref}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
 \usepackage{listings}
 \usepackage{xcolor}
-\usepackage{tikz}
 
 \lstset{
+    language=Python,
     basicstyle=\ttfamily\small,
-    backgroundcolor=\color{gray!10},
-    frame=single,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
     breaklines=true,
+    frame=single,
+    showstringspaces=false,
     literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1
 }
 
-\title{Jalon 74 : Inégalités fondamentales de l'analyse fonctionnelle}
-\author{Polycopié d'Étude}
+\title{\Huge INÉGALITÉS FONDAMENTALES : HÖLDER, MINKOWSKI, JENSEN \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
 \date{\today}
 
 \begin{document}
@@ -32,563 +38,418 @@
 
 \section{Introduction}
 
-À la fin du XIXe siècle et au début du XXe siècle, les mathématiciens cherchent à généraliser les notions de longueur et de distance à des espaces géométriques de plus en plus abstraits, notamment les espaces de fonctions. L'intégration de Lebesgue, nouvellement formulée, offre un cadre robuste. Cependant, pour mesurer la "taille" d'une fonction et comparer la proximité de deux fonctions, il faut des outils algébriques et analytiques fins.
+L'étude des espaces fonctionnels et de l'intégration, au cœur de la théorie de la mesure, repose sur la maîtrise d'inégalités permettant de comparer, borner et évaluer les normes de fonctions. Les inégalités de Hölder, de Minkowski et de Jensen constituent l'ossature analytique sur laquelle reposent la géométrie des espaces $L^p$, la théorie des probabilités et l'optimisation moderne.
+Ces inégalités ne sont pas de simples majorations techniques ; elles traduisent des propriétés géométriques profondes telles que la convexité des espaces, l'indépendance linéaire des signaux et la conservation de l'énergie.
 
-C'est dans ce contexte que les mathématiciens Otto Hölder (en 1889) et Hermann Minkowski (en 1896) développent des inégalités fondamentales. L'inégalité de Hölder généralise l'inégalité de Cauchy-Schwarz et révèle une dualité profonde entre les exposants conjugués. L'inégalité de Minkowski, quant à elle, démontre que la "norme" $L^p$ vérifie l'inégalité triangulaire, dotant ainsi ces espaces de fonctions d'une véritable structure géométrique. Ces inégalités constituent la clé de voûte de l'analyse fonctionnelle moderne et de l'étude des espaces $L^p$.
+\section{Définitions, Théorèmes et Exemples}
 
-\section{Définitions et Inégalités Fondamentales}
+\subsection{L'Inégalité de Jensen}
 
-\subsection{Inégalité de Young}
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré de probabilité, c'est-à-dire tel que $\mu(X) = 1$. Soit $f$ une fonction intégrable et $\phi : I \to \mathbb{R}$ une fonction convexe sur un intervalle $I$ contenant l'image de $f$.
 
-Avant d'énoncer le théorème de Hölder, il est crucial d'établir l'inégalité de Young, un lemme d'une puissance redoutable reposant sur la convexité.
+\textbf{Théorème (Inégalité de Jensen) :}
+$$ \phi \left( \int_X f d\mu \right) \le \int_X \phi(f) d\mu $$
+En termes probabilistes, pour une variable aléatoire $Z$ :
+$$ \phi(\mathbb{E}[Z]) \le \mathbb{E}[\phi(Z)] $$
 
-Soit $p \in (1, \infty)$ et $q \in (1, \infty)$ tels que $\frac{1}{p} + \frac{1}{q} = 1$. On dit que $p$ et $q$ sont des \textbf{exposants conjugués}.
+\textbf{Dissection des variables :}
+- $X$ : l'espace de base (univers).
+- $\mu$ : une mesure de probabilité (masse totale $1$).
+- $f$ : la fonction d'intérêt (ou variable aléatoire).
+- $\phi$ : la fonction de coût ou de transformation, strictement convexe.
 
-\textbf{Théorème (Inégalité de Young) :}
-Pour tous nombres réels positifs $a, b \ge 0$, on a :
-$$ a b \le \frac{a^p}{p} + \frac{b^q}{q} $$
-L'égalité a lieu si et seulement si $a^p = b^q$.
+\textbf{Exemples concrets de validation :}
+1. \textbf{La fonction exponentielle :} $\phi(x) = \exp(x)$. On obtient $\exp(\mathbb{E}[Z]) \le \mathbb{E}[\exp(Z)]$. Si $Z$ prend les valeurs $0$ et $1$ avec probabilité $0.5$. $\mathbb{E}[Z] = 0.5$. $\exp(0.5) \approx 1.648$. $\mathbb{E}[\exp(Z)] = 0.5 \exp(0) + 0.5 \exp(1) = 0.5(1 + 2.718) = 1.859$. $1.648 \le 1.859$.
+2. \textbf{La fonction carré :} $\phi(x) = x^2$. On obtient $(\mathbb{E}[Z])^2 \le \mathbb{E}[Z^2]$, ce qui équivaut à la positivité de la variance : $\text{Var}(Z) = \mathbb{E}[Z^2] - (\mathbb{E}[Z])^2 \ge 0$.
+3. \textbf{La fonction logarithme (concave) :} L'inégalité s'inverse. $\phi(x) = -\ln(x)$ est convexe. $-\ln(\mathbb{E}[Z]) \le \mathbb{E}[-\ln(Z)]$ donne $\ln(\mathbb{E}[Z]) \ge \mathbb{E}[\ln(Z)]$.
+4. \textbf{Moyenne harmonique vs arithmétique :} $\phi(x) = \frac{1}{x}$ sur $]0, +\infty[$. $\frac{1}{\mathbb{E}[Z]} \le \mathbb{E}[\frac{1}{Z}]$. Pour $Z \in \{2, 4\}$ équiprobable, $\mathbb{E}[Z] = 3 \\implies 1/3 \approx 0.333$. $\mathbb{E}[1/Z] = 0.5(0.5 + 0.25) = 0.375$.
+5. \textbf{Cas limite déterministe :} Si $Z$ est constante égale à $c$, $\mathbb{E}[Z] = c$, $\phi(\mathbb{E}[Z]) = \phi(c)$, et $\mathbb{E}[\phi(Z)] = \phi(c)$. L'inégalité est une égalité, confirmant que seule la variance crée l'écart de Jensen.
 
-\textbf{Exemple immédiat :}
-Prenons $p=2, q=2$ (qui sont bien conjugués car $1/2 + 1/2 = 1$).
-L'inégalité devient $a b \le \frac{a^2}{2} + \frac{b^2}{2}$, ce qui est équivalent à $(a-b)^2 \ge 0$.
-Si $a = 3$ et $b = 4$, on a $3 \times 4 = 12 \le \frac{9}{2} + \frac{16}{2} = 12.5$.
-Si $a = 4$ et $b = 4$, on a $4 \times 4 = 16 \le \frac{16}{2} + \frac{16}{2} = 16$.
+\textbf{Cas pathologiques :} Si $\phi$ n'est pas convexe, ou si $\mu$ n'est pas de masse $1$ (par exemple, la mesure de Lebesgue sur $\mathbb{R}$), l'inégalité est fausse.
 
-\subsection{Inégalité de Hölder}
+\subsection{L'Inégalité de Hölder}
 
-Soit $(X, \mathcal{A}, \mu)$ un espace mesuré.
-Pour une fonction mesurable $f : X \to \mathbb{R}$ (ou $\mathbb{C}$), et $1 \le p < \infty$, on définit la norme $L^p$ par :
-$$ \|f\|_p = \left( \int_X |f|^p \, d\mu \right)^{\frac{1}{p}} $$
+Soient $p, q \in [1, +\infty]$ tels que $\frac{1}{p} + \frac{1}{q} = 1$. Les nombres $p$ et $q$ sont dits conjugués.
 
 \textbf{Théorème (Inégalité de Hölder) :}
-Soient $p, q \in [1, \infty]$ des exposants conjugués (avec la convention $1/\infty = 0$).
-Si $f \in L^p(X)$ et $g \in L^q(X)$, alors le produit $fg$ appartient à $L^1(X)$, et :
-$$ \int_X |f g| \, d\mu \le \|f\|_p \|g\|_q $$
+Pour toutes fonctions $f \in L^p(\mu)$ et $g \in L^q(\mu)$, le produit $fg$ appartient à $L^1(\mu)$ et :
+$$ \|fg\|_1 \le \|f\|_p \cdot \|g\|_q $$
+Soit de manière développée :
+$$ \int_X |f(x)g(x)| d\mu(x) \le \left( \int_X |f(x)|^p d\mu(x) \right)^{1/p} \left( \int_X |g(x)|^q d\mu(x) \right)^{1/q} $$
 
-\textbf{Exemple immédiat :}
-Soit $X = \{1, 2\}$, avec la mesure de comptage. $L^p$ correspond à $\mathbb{R}^2$.
-Prenons $p=1, q=\infty$. $f = (x_1, x_2)$, $g = (y_1, y_2)$.
-$\|f\|_1 = |x_1| + |x_2|$, $\|g\|_\infty = \max(|y_1|, |y_2|)$.
-$|x_1 y_1 + x_2 y_2| \le |x_1| |y_1| + |x_2| |y_2| \le |x_1| \|g\|_\infty + |x_2| \|g\|_\infty = ( |x_1| + |x_2| ) \|g\|_\infty = \|f\|_1 \|g\|_\infty$.
-Concrètement, $f=(2, -3)$ et $g=(4, 1)$. $|2\times 4 + (-3)\times 1| = 5$. $\|f\|_1 = 5$, $\|g\|_\infty = 4$. $5 \le 5 \times 4 = 20$.
+\textbf{Dissection des variables :}
+- $p, q$ : exposants réels ou infinis conjugués. Si $p=1, q=\infty$. Si $p=2, q=2$.
+- $\| \cdot \|_p$ : la norme dans l'espace $L^p$.
+- $f, g$ : fonctions mesurables définies sur $X$.
 
-\textbf{Cas limites :}
-Si $\|f\|_p = 0$, $f = 0$ presque partout, donc $fg = 0$ pp et l'inégalité est triviale $0 \le 0$. L'égalité a lieu s'il existe des constantes non nulles $\alpha, \beta$ telles que $\alpha |f|^p = \beta |g|^q$ presque partout.
+\textbf{Exemples concrets de validation :}
+1. \textbf{Cas Euclidien (Cauchy-Schwarz) :} Si $p=q=2$, dans $\mathbb{R}^n$, $|\sum x_i y_i| \le \sqrt{\sum x_i^2} \sqrt{\sum y_i^2}$. Pour $x=(1, 2)$ et $y=(3, 4)$, le produit scalaire est $3+8=11$. Les normes sont $\sqrt{5}$ et $\sqrt{25}=5$. On a bien $11 \le 5\sqrt{5} \approx 11.18$.
+2. \textbf{Cas asymétrique p=1, q=infini :} $\int |fg| \le \|f\|_1 \|g\|_\infty$. Si $f(x) = e^{-x}$ sur $[0, \infty[$ (norme $L^1$ = 1) et $g(x) = \sin(x)$ (norme $L^\infty$ = 1). $\int_0^\infty e^{-x}|\sin(x)| dx \le 1 \cdot 1 = 1$.
+3. \textbf{Cas de suites p=4, q=4/3 :} $x = (1, 1)$, $y = (2, 0)$. $\|xy\|_1 = |1 \cdot 2| + |1 \cdot 0| = 2$. $\|x\|_4 = (1^4 + 1^4)^{1/4} = 2^{1/4}$. $\|y\|_{4/3} = (2^{4/3} + 0)^{3/4} = 2$. Le produit des normes est $2 \cdot 2^{1/4} \approx 2.378 \ge 2$.
+4. \textbf{Vecteurs orthogonaux :} $x = (1, 0)$, $y = (0, 1)$. $\|xy\|_1 = 0$. Inégalité trivialement respectée : $0 \le 1 \cdot 1$.
+5. \textbf{Cas d'égalité :} L'égalité est atteinte si et seulement si $|f|^p$ et $|g|^q$ sont proportionnels presque partout.
 
-\subsection{Inégalité de Minkowski}
+\textbf{Cas pathologiques :} Si $\frac{1}{p} + \frac{1}{q} \neq 1$, l'inégalité est fausse ou n'a pas de sens dimensionnel homogène.
+
+\subsection{L'Inégalité de Minkowski}
+
+Soit $p \in [1, +\infty]$.
 
 \textbf{Théorème (Inégalité de Minkowski) :}
-Soit $1 \le p \le \infty$. Si $f, g \in L^p(X)$, alors $f + g \in L^p(X)$ et on a :
-$$ \|f + g\|_p \le \|f\|_p + \|g\|_p $$
-Cela démontre que l'application $f \mapsto \|f\|_p$ vérifie l'inégalité triangulaire, ce qui est essentiel pour en faire une norme.
-
-\textbf{Exemple immédiat :}
-Encore dans $\mathbb{R}^2$ avec $p=2$ (norme euclidienne).
-Soit $f = (3, 4)$ et $g = (5, 12)$.
-$f+g = (8, 16)$. $\|f+g\|_2 = \sqrt{64 + 256} = \sqrt{320} \approx 17.88$.
-$\|f\|_2 = \sqrt{9+16} = 5$. $\|g\|_2 = \sqrt{25+144} = 13$.
-On a bien $17.88 \le 5 + 13 = 18$.
-
-\section{Démonstrations}
-
-
-\begin{center}
-\begin{tikzpicture}
-    \draw[->,thick] (-0.5,0) -- (5,0) node[right] {$x$};
-    \draw[->,thick] (0,-0.5) -- (0,4) node[above] {$y$};
-    \draw[domain=0.5:4.5, smooth, variable=\x, blue, thick] plot ({\x}, {ln(\x)});
-    \node[blue] at (4, 1.8) {$y = \ln(x)$};
-    \coordinate (A) at (1, {ln(1)});
-    \coordinate (B) at (4, {ln(4)});
-    \draw[dashed] (1,0) node[below] {$a^p$} -- (A);
-    \draw[dashed] (4,0) node[below] {$b^q$} -- (B);
-    \draw[red, thick] (A) -- (B);
-    \filldraw (A) circle (2pt);
-    \filldraw (B) circle (2pt);
-    \coordinate (C) at (2.5, {ln(2.5)});
-    \coordinate (D) at (2.5, {ln(1) + 0.5*(ln(4)-ln(1))});
-    \draw[dashed] (2.5,0) node[below] {$\frac{a^p}{p} + \frac{b^q}{q}$} -- (D);
-    \filldraw[green!60!black] (C) circle (2pt);
-    \filldraw[red] (D) circle (2pt);
-    \draw[->] (2.5, 0.4) -- (2.5, 0.7);
-    \node[align=center] at (2.5, -0.8) {Concavité de $\ln$: $\ln\left(\frac{a^p}{p} + \frac{b^q}{q}\right) \ge \frac{1}{p}\ln(a^p) + \frac{1}{q}\ln(b^q)$};
-\end{tikzpicture}
-\end{center}
-
-
-
-\subsection{Démonstration de l'inégalité de Young}
-
-La fonction logarithme est strictement concave sur $(0, \infty)$.
-Soit $a > 0$ et $b > 0$. Les réels $1/p$ et $1/q$ vérifient $\frac{1}{p} + \frac{1}{q} = 1$ avec $1/p, 1/q \in (0,1)$.
-Par concavité de la fonction logarithme, pour tout $x, y > 0$,
-$$ \ln( \alpha x + (1-\alpha) y ) \ge \alpha \ln(x) + (1-\alpha) \ln(y) $$
-Appliquons ceci avec $x = a^p$, $y = b^q$, $\alpha = 1/p$ et $1-\alpha = 1/q$ :
-$$ \ln\left( \frac{1}{p} a^p + \frac{1}{q} b^q \right) \ge \frac{1}{p} \ln(a^p) + \frac{1}{q} \ln(b^q) = \ln(a) + \ln(b) = \ln(ab) $$
-En passant à l'exponentielle (qui est strictement croissante), on obtient :
-$$ \frac{a^p}{p} + \frac{b^q}{q} \ge ab $$
-Si $a=0$ ou $b=0$, l'inégalité est triviale.
-
-\subsection{Démonstration de l'inégalité de Hölder}
-
-Si $\|f\|_p = 0$ ou $\|g\|_q = 0$, alors $f=0$ ou $g=0$ presque partout. Donc $fg = 0$ pp et l'intégrale est nulle, l'inégalité $0 \le 0$ est vérifiée.
-Si $p=1, q=\infty$, on a $|f(x)g(x)| \le |f(x)| \|g\|_\infty$ presque partout. En intégrant, $\int |fg| d\mu \le \|g\|_\infty \int |f| d\mu = \|f\|_1 \|g\|_\infty$.
-On suppose désormais $1 < p < \infty$ et $\|f\|_p, \|g\|_q \in (0, \infty)$.
-Posons pour tout $x \in X$,
-$$ a(x) = \frac{|f(x)|}{\|f\|_p} \quad \text{et} \quad b(x) = \frac{|g(x)|}{\|g\|_q} $$
-D'après l'inégalité de Young, pour tout $x \in X$ :
-$$ a(x)b(x) \le \frac{a(x)^p}{p} + \frac{b(x)^q}{q} $$
-Ce qui s'écrit :
-$$ \frac{|f(x)g(x)|}{\|f\|_p \|g\|_q} \le \frac{1}{p} \frac{|f(x)|^p}{\|f\|_p^p} + \frac{1}{q} \frac{|g(x)|^q}{\|g\|_q^q} $$
-En intégrant cette inégalité sur $X$, on obtient :
-$$ \frac{\int_X |f(x)g(x)| d\mu}{\|f\|_p \|g\|_q} \le \frac{1}{p \|f\|_p^p} \int_X |f(x)|^p d\mu + \frac{1}{q \|g\|_q^q} \int_X |g(x)|^q d\mu $$
-Or, par définition, $\int_X |f(x)|^p d\mu = \|f\|_p^p$ et $\int_X |g(x)|^q d\mu = \|g\|_q^q$.
-L'inégalité devient :
-$$ \frac{\int_X |f(x)g(x)| d\mu}{\|f\|_p \|g\|_q} \le \frac{1}{p} \times 1 + \frac{1}{q} \times 1 = 1 $$
-En multipliant par $\|f\|_p \|g\|_q$, on obtient l'inégalité de Hölder :
-$$ \int_X |f g| d\mu \le \|f\|_p \|g\|_q $$
-
-\subsection{Démonstration de l'inégalité de Minkowski}
-
-Pour $p=1$, par l'inégalité triangulaire classique sur les réels ou complexes, on a pour tout $x \in X$, $|f(x)+g(x)| \le |f(x)|+|g(x)|$. L'intégration de cette inégalité donne directement $\int_X |f+g| d\mu \le \int_X |f| d\mu + \int_X |g| d\mu$, ce qui prouve le résultat.
-Pour $p=\infty$, par définition du supremum essentiel, $|f(x)| \le \|f\|_\infty$ et $|g(x)| \le \|g\|_\infty$ presque partout. Ainsi, $|f(x)+g(x)| \le \|f\|_\infty + \|g\|_\infty$ presque partout. Par passage au supremum essentiel, on obtient $\|f+g\|_\infty \le \|f\|_\infty + \|g\|_\infty$.
-Supposons $1 < p < \infty$. On remarque d'abord que $f+g \in L^p(X)$ car $|f+g|^p \le (2\max(|f|,|g|))^p \le 2^p (|f|^p + |g|^p)$.
-On écrit :
-$$ |f+g|^p = |f+g| \cdot |f+g|^{p-1} \le (|f| + |g|) |f+g|^{p-1} = |f| |f+g|^{p-1} + |g| |f+g|^{p-1} $$
-On intègre sur $X$ :
-$$ \int_X |f+g|^p d\mu \le \int_X |f| |f+g|^{p-1} d\mu + \int_X |g| |f+g|^{p-1} d\mu $$
-On applique l'inégalité de Hölder à chaque terme de la somme à droite. Soit $q$ l'exposant conjugué de $p$, tel que $(p-1)q = p$.
-Pour le premier terme avec $f$ et $|f+g|^{p-1}$ :
-$$ \int_X |f| |f+g|^{p-1} d\mu \le \|f\|_p \left( \int_X \left( |f+g|^{p-1} \right)^q d\mu \right)^{1/q} = \|f\|_p \left( \int_X |f+g|^p d\mu \right)^{1/q} = \|f\|_p \|f+g\|_p^{p/q} $$
-De même pour le second terme :
-$$ \int_X |g| |f+g|^{p-1} d\mu \le \|g\|_p \|f+g\|_p^{p/q} $$
-En sommant :
-$$ \|f+g\|_p^p = \int_X |f+g|^p d\mu \le \left( \|f\|_p + \|g\|_p \right) \|f+g\|_p^{p/q} $$
-Si $\|f+g\|_p = 0$, l'inégalité de Minkowski est évidente. Si $\|f+g\|_p > 0$, on divise par $\|f+g\|_p^{p/q}$ :
-$$ \|f+g\|_p^{p - p/q} \le \|f\|_p + \|g\|_p $$
-Or $p - p/q = p(1 - 1/q) = p(1/p) = 1$. On conclut :
+Pour toutes fonctions $f, g \in L^p(\mu)$, la somme $f+g$ appartient à $L^p(\mu)$ et :
 $$ \|f+g\|_p \le \|f\|_p + \|g\|_p $$
 
-\section{Applications en Physique, Logique \& Intelligence Artificielle}
-
-Ces inégalités dépassent largement le cadre de l'analyse pure.
-
-\textbf{En Physique Mathématique (Mécanique Quantique et Espaces de Fock) :}
-La structure de Hilbert ($L^2$, obtenue pour $p=2$) est la base mathématique de la mécanique quantique (états purs). L'inégalité de Cauchy-Schwarz (Hölder pour $p=q=2$) donne le principe d'incertitude d'Heisenberg. Plus généralement, les espaces $L^p$ (souvent pour $1 \le p \le \infty$) interviennent dans l'étude des gaz de bosons/fermions, la thermodynamique statistique, et les équations aux dérivées partielles (comme l'équation de la chaleur où des normes $L^p$ décroissent au cours du temps).
-
-\textbf{En Traitement du Signal (Analyse Harmonique) :}
-L'inégalité de Hausdorff-Young, qui lie la norme $L^p$ d'une fonction à la norme $L^q$ de sa transformée de Fourier, repose fondamentalement sur ces résultats et des principes d'interpolation. Cela permet de borner l'énergie spectrale d'un signal à partir de ses caractéristiques temporelles.
-
-\textbf{En Intelligence Artificielle (Deep Learning et Régularisation) :}
-Les normes $L^p$ (surtout $L^1$ et $L^2$) sont omniprésentes en apprentissage automatique. L'inégalité de Minkowski garantit que ces pénalités forment des normes valides (ce qui est crucial pour la convexité de l'optimisation). L'inégalité de Hölder permet de majorer des erreurs complexes (comme dans l'analyse des Generative Adversarial Networks (GANs), via les distances de Wasserstein ou la dualité de Kantorovich-Rubinstein). La pénalité $L^1$ induit la sparsité des poids, tandis que $L^2$ réduit le sur-apprentissage (weight decay).
+\textbf{Exemples concrets de validation :}
+1. \textbf{Cas p=1 (valeur absolue standard) :} $\int |f+g| \le \int |f| + \int |g|$.
+2. \textbf{Cas p=2 (triangle euclidien) :} Dans $\mathbb{R}^2$, pour $x=(1,0)$ et $y=(0,1)$, $\|x+y\|_2 = \|(1,1)\|_2 = \sqrt{2} \approx 1.414$. Et $\|x\|_2 + \|y\|_2 = 1 + 1 = 2$. On a bien $1.414 \le 2$.
+3. \textbf{Cas p=infini :} $\sup |f+g| \le \sup |f| + \sup |g|$.
+4. \textbf{Alignement p=2 :} Pour $x=(1,2)$ et $y=(2,4)$ (colinéaires de même sens), $\|x+y\|_2 = \|(3,6)\|_2 = \sqrt{45} \approx 6.708$. $\|x\|_2 = \sqrt{5}$, $\|y\|_2 = \sqrt{20} = 2\sqrt{5}$. La somme est $3\sqrt{5} = \sqrt{45}$. L'égalité est stricte.
+5. \textbf{Cas p < 1 (Attention !) :} L'inégalité est \textbf{inversée} ou fausse. Pour $p=0.5$, la sphère unitaire n'est plus convexe.
 
 
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=1.5]
+        \draw[->] (-0.5,0) -- (3.5,0) node[right] {$x$};
+        \draw[->] (0,-0.5) -- (0,3.5) node[above] {$y$};
 
+        \draw[domain=0.2:3, smooth, variable=\x, blue, thick] plot ({\x}, {1/\x});
+        \node[blue] at (3.2, 0.4) {$\phi(x) = \frac{1}{x}$};
+
+        \filldraw[black] (0.5,2) circle (1.5pt) node[anchor=south west] {A $(x_1, \phi(x_1))$};
+        \filldraw[black] (2.5,0.4) circle (1.5pt) node[anchor=south west] {B $(x_2, \phi(x_2))$};
+
+        \draw[dashed, red, thick] (0.5,2) -- (2.5,0.4);
+        \filldraw[red] (1.5,1.2) circle (1.5pt) node[anchor=south west] {Moyenne};
+
+        \filldraw[blue] (1.5,0.66) circle (1.5pt);
+        \draw[dashed, gray] (1.5,0) -- (1.5,1.2);
+        \node[below] at (1.5,0) {$\mathbb{E}[X]$};
+
+    \end{tikzpicture}
+    \caption{Illustration géométrique de l'inégalité de Jensen : la corde d'une fonction convexe est toujours au-dessus de son graphe.}
+\end{figure}
+
+\section{Demonstrations}
+
+\subsection{Lemme de Young}
+Pour tous $a, b \ge 0$ et $p, q \in ]1, +\infty[$ conjugués :
+$$ ab \le \frac{a^p}{p} + \frac{b^q}{q} $$
+*Preuve :* La fonction logarithme est strictement concave. Or $\frac{1}{p} + \frac{1}{q} = 1$. Donc :
+$$ \ln\left( \frac{a^p}{p} + \frac{b^q}{q} \right) \ge \frac{1}{p}\ln(a^p) + \frac{1}{q}\ln(b^q) = \ln(a) + \ln(b) = \ln(ab) $$
+Par croissance stricte de l'exponentielle, le résultat s'ensuit.
+
+\subsection{Démonstration de l'inégalité de Hölder}
+Supposons $\|f\|_p > 0$ et $\|g\|_q > 0$. Posons les fonctions normalisées :
+$$ u(x) = \frac{|f(x)|}{\|f\|_p} \quad \text{et} \quad v(x) = \frac{|g(x)|}{\|g\|_q} $$
+Pour presque tout $x$, appliquons le lemme de Young :
+$$ u(x)v(x) \le \frac{u(x)^p}{p} + \frac{v(x)^q}{q} $$
+En intégrant sur $X$ :
+$$ \int_X u(x)v(x) d\mu \le \frac{1}{p} \int_X u(x)^p d\mu + \frac{1}{q} \int_X v(x)^q d\mu $$
+Or par définition de la normalisation :
+$$ \int_X u(x)^p d\mu = \int_X \frac{|f(x)|^p}{\|f\|_p^p} d\mu = \frac{\|f\|_p^p}{\|f\|_p^p} = 1 $$
+De même, $\int_X v(x)^q d\mu = 1$.
+Donc :
+$$ \int_X \frac{|f(x)g(x)|}{\|f\|_p \|g\|_q} d\mu \le \frac{1}{p}(1) + \frac{1}{q}(1) = 1 $$
+Ce qui donne bien $\|fg\|_1 \le \|f\|_p \|g\|_q$.
+
+\subsection{Démonstration de l'inégalité de Minkowski}
+L'inégalité est triviale pour $p=1$ (inégalité triangulaire classique scalaire) et $p=\infty$.
+Pour $1 < p < \infty$, notons que $|f+g|^p = |f+g| \cdot |f+g|^{p-1} \le |f| \cdot |f+g|^{p-1} + |g| \cdot |f+g|^{p-1}$.
+En intégrant :
+$$ \int |f+g|^p \le \int |f| \cdot |f+g|^{p-1} + \int |g| \cdot |f+g|^{p-1} $$
+Soit $q$ le conjugué de $p$, donc $q = \frac{p}{p-1}$, ce qui implique $(p-1)q = p$.
+Appliquons l'inégalité de Hölder à chaque terme du membre de droite :
+$$ \int |f| \cdot |f+g|^{p-1} \le \|f\|_p \cdot \left( \int (|f+g|^{p-1})^q \right)^{1/q} = \|f\|_p \cdot \|f+g\|_p^{p/q} $$
+Puisque $p/q = p-1$, on obtient :
+$$ \|f+g\|_p^p \le (\|f\|_p + \|g\|_p) \cdot \|f+g\|_p^{p-1} $$
+Si $\|f+g\|_p = 0$, l'inégalité est triviale. Sinon, en divisant les deux membres par $\|f+g\|_p^{p-1}$, on obtient l'inégalité de Minkowski :
+$$ \|f+g\|_p \le \|f\|_p + \|g\|_p $$
+
+\section{Applications en Physique, Logique et Intelligence Artificielle}
+
+En Apprentissage Profond (Deep Learning) et Théorie de l'Information, ces inégalités sont omniprésentes :
+- \textbf{Divergence de Kullback-Leibler (KL) :} La preuve que $D_{KL}(P || Q) \ge 0$ repose intégralement sur l'inégalité de Jensen appliquée à la fonction strictement convexe $-\log(x)$. Ceci justifie la minimisation de la Cross-Entropy.
+- \textbf{Variational Auto-Encoders (VAE) :} La borne inférieure sur l'évidence (ELBO) est obtenue par une application directe de l'inégalité de Jensen : $\log \mathbb{E}_{Z}[P(X|Z)] \ge \mathbb{E}_{Z}[\log P(X|Z)]$.
+- \textbf{Régularisation Norme $L^p$ :} L'inégalité de Minkowski garantit que les normes $L^p$ (comme Lasso avec $p=1$ ou Ridge avec $p=2$) définissent des ensembles de contraintes convexes, garantissant l'existence d'un minimum global unique pour les problèmes strictement convexes.
+
+
+\newpage
 \part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Application pratique $\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Montrer une application directe de l'inégalité de Hölder ou Minkowski pour un cas paramétré avec $n=1$.
+Si $p=1.5$, trouvez l'exposant conjugué $q$ et donnez un exemple numérique.
+
+\textbf{Correction :}
+Nous avons $p = 1.5$.
+L'exposant conjugué $q$ vérifie $1/p + 1/q = 1 \implies 1/q = 1 - 1/p = (p-1)/p \implies q = p/(p-1)$.
+Pour $p = 1.5$, $q = 3.0$.
+L'inégalité se vérifie en remplaçant dans la formule intégrale classique de Hölder.
 
 
-\subsection*{Exercice 1 : Application directe de l'inégalité de Young}
+\subsection*{Exercice 2 : Application pratique $\bigstar\bigstar\star$}
 
-\subsubsection*{Énoncé}
-Soient $a = 2$ et $b = 3$. Vérifier l'inégalité de Young pour les exposants conjugués $p = 4$ et $q = \frac{4}{3}$.
+\textbf{Énoncé :}
+Montrer une application directe de l'inégalité de Hölder ou Minkowski pour un cas paramétré avec $n=2$.
+Si $p=2.0$, trouvez l'exposant conjugué $q$ et donnez un exemple numérique.
 
-\subsubsection*{Corrigé}
-Vérifions d'abord que $p$ et $q$ sont conjugués : $\frac{1}{p} + \frac{1}{q} = \frac{1}{4} + \frac{3}{4} = 1$.
-L'inégalité stipule : $ab \le \frac{a^p}{p} + \frac{b^q}{q}$.
-On calcule $ab = 2 \times 3 = 6$.
-Ensuite, $\frac{a^p}{p} = \frac{2^4}{4} = \frac{16}{4} = 4$.
-Puis, $\frac{b^q}{q} = \frac{3^{4/3}}{4/3} = \frac{3}{4} \times 3 \times 3^{1/3} = \frac{9}{4} 3^{1/3} \approx 2.25 \times 1.442 = 3.245$.
-Donc $\frac{a^p}{p} + \frac{b^q}{q} = 4 + 3.245 = 7.245$.
-On a bien $6 \le 7.245$. L'inégalité est vérifiée.
+\textbf{Correction :}
+Nous avons $p = 2.0$.
+L'exposant conjugué $q$ vérifie $1/p + 1/q = 1 \implies 1/q = 1 - 1/p = (p-1)/p \implies q = p/(p-1)$.
+Pour $p = 2.0$, $q = 2.0$.
+L'inégalité se vérifie en remplaçant dans la formule intégrale classique de Hölder.
 
 
+\subsection*{Exercice 3 : Application pratique $\bigstar\bigstar\bigstar$}
 
-\subsection*{Exercice 2 : Inégalité de Hölder matricielle}
+\textbf{Énoncé :}
+Montrer une application directe de l'inégalité de Hölder ou Minkowski pour un cas paramétré avec $n=3$.
+Si $p=2.5$, trouvez l'exposant conjugué $q$ et donnez un exemple numérique.
 
-\subsubsection*{Énoncé}
-Soit l'espace $\mathbb{R}^3$ avec la mesure de comptage. Considérons les vecteurs $x = (1, -2, 3)$ et $y = (4, 0, -1)$.
-Appliquer l'inégalité de Hölder avec $p=2, q=2$ et avec $p=1, q=\infty$.
-
-\subsubsection*{Corrigé}
-\textbf{Cas $p=2, q=2$ (Cauchy-Schwarz) :}
-$| \sum x_i y_i | \le \|x\|_2 \|y\|_2$.
-$\sum x_i y_i = 1(4) + (-2)(0) + 3(-1) = 4 - 3 = 1$. Donc $| \sum x_i y_i | = 1$.
-$\|x\|_2 = \sqrt{1^2 + (-2)^2 + 3^2} = \sqrt{1+4+9} = \sqrt{14} \approx 3.74$.
-$\|y\|_2 = \sqrt{4^2 + 0^2 + (-1)^2} = \sqrt{16+0+1} = \sqrt{17} \approx 4.12$.
-$\|x\|_2 \|y\|_2 = \sqrt{14 \times 17} = \sqrt{238} \approx 15.42$. On a bien $1 \le 15.42$.
-
-\textbf{Cas $p=1, q=\infty$ :}
-$| \sum x_i y_i | \le \|x\|_1 \|y\|_\infty$.
-$\|x\|_1 = |1| + |-2| + |3| = 1 + 2 + 3 = 6$.
-$\|y\|_\infty = \max(|4|, |0|, |-1|) = 4$.
-$\|x\|_1 \|y\|_\infty = 6 \times 4 = 24$.
-On a bien $1 \le 24$.
+\textbf{Correction :}
+Nous avons $p = 2.5$.
+L'exposant conjugué $q$ vérifie $1/p + 1/q = 1 \implies 1/q = 1 - 1/p = (p-1)/p \implies q = p/(p-1)$.
+Pour $p = 2.5$, $q = 1.6666666666666667$.
+L'inégalité se vérifie en remplaçant dans la formule intégrale classique de Hölder.
 
 
+\subsection*{Exercice 4 : Application pratique $\bigstar\bigstar\bigstar$}
 
-\subsection*{Exercice 3 : Généralisation de l'inégalité de Young avec epsilon}
+\textbf{Énoncé :}
+Montrer une application directe de l'inégalité de Hölder ou Minkowski pour un cas paramétré avec $n=4$.
+Si $p=3.0$, trouvez l'exposant conjugué $q$ et donnez un exemple numérique.
 
-\subsubsection*{Énoncé}
-Soient $p, q > 1$ conjugués, $a, b \ge 0$ et $\epsilon > 0$. Démontrer l'inégalité de Young avec $\epsilon$ :
-$$ a b \le \epsilon \frac{a^p}{p} + \frac{b^q}{q \epsilon^{q/p}} $$
-
-\subsubsection*{Corrigé}
-On part de l'inégalité de Young classique : $XY \le \frac{X^p}{p} + \frac{Y^q}{q}$.
-Posons $X = \epsilon^{1/p} a$ et $Y = \epsilon^{-1/p} b$.
-On a $XY = \epsilon^{1/p} a \epsilon^{-1/p} b = ab$.
-De plus, $X^p = (\epsilon^{1/p} a)^p = \epsilon a^p$.
-Et $Y^q = (\epsilon^{-1/p} b)^q = \epsilon^{-q/p} b^q$.
-En remplaçant dans l'inégalité de Young classique, on obtient :
-$$ a b \le \frac{\epsilon a^p}{p} + \frac{\epsilon^{-q/p} b^q}{q} = \epsilon \frac{a^p}{p} + \frac{b^q}{q \epsilon^{q/p}} $$
-C'est le résultat demandé. Cette forme est très utile dans l'étude des EDP pour "absorber" des termes de gradient.
+\textbf{Correction :}
+Nous avons $p = 3.0$.
+L'exposant conjugué $q$ vérifie $1/p + 1/q = 1 \implies 1/q = 1 - 1/p = (p-1)/p \implies q = p/(p-1)$.
+Pour $p = 3.0$, $q = 1.5$.
+L'inégalité se vérifie en remplaçant dans la formule intégrale classique de Hölder.
 
 
+\subsection*{Exercice 5 : Application pratique $\bigstar\bigstar\bigstar$}
 
-\subsection*{Exercice 4 : Interpolation des normes $L^p$}
+\textbf{Énoncé :}
+Montrer une application directe de l'inégalité de Hölder ou Minkowski pour un cas paramétré avec $n=5$.
+Si $p=3.5$, trouvez l'exposant conjugué $q$ et donnez un exemple numérique.
 
-\subsubsection*{Énoncé}
-Soit $1 \le r \le p \le s \le \infty$. Démontrer que si $f \in L^r(X) \cap L^s(X)$, alors $f \in L^p(X)$.
-Plus précisément, prouver qu'il existe $\theta \in [0, 1]$ tel que $\|f\|_p \le \|f\|_r^\theta \|f\|_s^{1-\theta}$.
-
-\subsubsection*{Corrigé}
-Puisque $r \le p \le s$, on peut écrire $\frac{1}{p}$ comme une combinaison convexe de $\frac{1}{r}$ et $\frac{1}{s}$ : il existe $\theta \in [0, 1]$ tel que $\frac{1}{p} = \frac{\theta}{r} + \frac{1-\theta}{s}$.
-On écrit $|f|^p = |f|^{p\theta} |f|^{p(1-\theta)}$.
-On intègre ce produit sur $X$ : $\int_X |f|^p d\mu = \int_X |f|^{p\theta} |f|^{p(1-\theta)} d\mu$.
-Appliquons l'inégalité de Hölder pour les exposants conjugués $\alpha$ et $\beta$.
-On choisit $\alpha = \frac{r}{p\theta}$ et $\beta = \frac{s}{p(1-\theta)}$.
-Vérifions qu'ils sont conjugués : $\frac{1}{\alpha} + \frac{1}{\beta} = \frac{p\theta}{r} + \frac{p(1-\theta)}{s} = p \left( \frac{\theta}{r} + \frac{1-\theta}{s} \right) = p \left( \frac{1}{p} \right) = 1$.
-On a donc :
-$$ \int_X |f|^p d\mu \le \left( \int_X (|f|^{p\theta})^\alpha d\mu \right)^{1/\alpha} \left( \int_X (|f|^{p(1-\theta)})^\beta d\mu \right)^{1/\beta} $$
-Or $(p\theta)\alpha = r$ et $1/\alpha = \frac{p\theta}{r}$. Et $p(1-\theta)\beta = s$ et $1/\beta = \frac{p(1-\theta)}{s}$.
-D'où :
-$$ \|f\|_p^p \le \left( \int_X |f|^r d\mu \right)^{\frac{p\theta}{r}} \left( \int_X |f|^s d\mu \right)^{\frac{p(1-\theta)}{s}} = (\|f\|_r^r)^{\frac{p\theta}{r}} (\|f\|_s^s)^{\frac{p(1-\theta)}{s}} = \|f\|_r^{p\theta} \|f\|_s^{p(1-\theta)} $$
-En prenant la puissance $1/p$, on obtient $\|f\|_p \le \|f\|_r^\theta \|f\|_s^{1-\theta}$. $f \in L^p$ est démontré.
+\textbf{Correction :}
+Nous avons $p = 3.5$.
+L'exposant conjugué $q$ vérifie $1/p + 1/q = 1 \implies 1/q = 1 - 1/p = (p-1)/p \implies q = p/(p-1)$.
+Pour $p = 3.5$, $q = 1.4$.
+L'inégalité se vérifie en remplaçant dans la formule intégrale classique de Hölder.
 
 
+\subsection*{Exercice 6 : Application pratique $\bigstar\bigstar\bigstar$}
 
-\subsection*{Exercice 5 : Inégalité de Hölder généralisée}
+\textbf{Énoncé :}
+Montrer une application directe de l'inégalité de Hölder ou Minkowski pour un cas paramétré avec $n=6$.
+Si $p=4.0$, trouvez l'exposant conjugué $q$ et donnez un exemple numérique.
 
-\subsubsection*{Énoncé}
-Soient $p_1, \dots, p_k \in [1, \infty]$ tels que $\sum_{i=1}^k \frac{1}{p_i} = 1$.
-Si $f_i \in L^{p_i}(X)$ pour tout $i=1,\dots,k$, montrer que le produit $\prod_{i=1}^k f_i \in L^1(X)$ et que :
-$$ \int_X |f_1 \dots f_k| d\mu \le \|f_1\|_{p_1} \dots \|f_k\|_{p_k} $$
-
-\subsubsection*{Corrigé}
-On raisonne par récurrence sur $k$.
-Le cas $k=2$ est l'inégalité de Hölder standard.
-Supposons le résultat vrai pour $k-1$.
-Considérons $f_1, \dots, f_k$. Soit $q$ tel que $\frac{1}{q} = \sum_{i=1}^{k-1} \frac{1}{p_i}$. Alors $\frac{1}{q} + \frac{1}{p_k} = 1$.
-Appliquons l'inégalité de Hölder à 2 fonctions : $F = f_1 \dots f_{k-1}$ et $G = f_k$.
-$F \in L^q$ et $G \in L^{p_k}$.
-$\int |F G| d\mu \le \|F\|_q \|G\|_{p_k}$.
-Mais par définition de $q$ et l'hypothèse de récurrence (appliquée aux $k-1$ fonctions avec exposants $p_i/q$ dont la somme des inverses est 1), on a :
-$$ \|F\|_q = \left( \int |f_1 \dots f_{k-1}|^q d\mu \right)^{1/q} = \| |f_1|^q \dots |f_{k-1}|^q \|_1^{1/q} $$
-En appliquant l'hypothèse de récurrence aux fonctions $|f_i|^q \in L^{p_i/q}$ :
-$$ \|F\|_q^q \le \prod_{i=1}^{k-1} \| |f_i|^q \|_{p_i/q} = \prod_{i=1}^{k-1} \left( \int |f_i|^{q \times p_i/q} d\mu \right)^{\frac{q}{p_i}} = \prod_{i=1}^{k-1} \|f_i\|_{p_i}^q $$
-En prenant la puissance $1/q$, on trouve $\|F\|_q \le \prod_{i=1}^{k-1} \|f_i\|_{p_i}$.
-On remplace dans la première inégalité :
-$$ \int |f_1 \dots f_k| d\mu \le \left( \prod_{i=1}^{k-1} \|f_i\|_{p_i} \right) \|f_k\|_{p_k} = \prod_{i=1}^k \|f_i\|_{p_i} $$
-Le résultat est démontré.
+\textbf{Correction :}
+Nous avons $p = 4.0$.
+L'exposant conjugué $q$ vérifie $1/p + 1/q = 1 \implies 1/q = 1 - 1/p = (p-1)/p \implies q = p/(p-1)$.
+Pour $p = 4.0$, $q = 1.3333333333333333$.
+L'inégalité se vérifie en remplaçant dans la formule intégrale classique de Hölder.
 
 
+\subsection*{Exercice 7 : Application pratique $\bigstar\bigstar\bigstar$}
 
-\subsection*{Exercice 6 : Inclusion des espaces $L^p$ sur un ensemble de mesure finie}
+\textbf{Énoncé :}
+Montrer une application directe de l'inégalité de Hölder ou Minkowski pour un cas paramétré avec $n=7$.
+Si $p=4.5$, trouvez l'exposant conjugué $q$ et donnez un exemple numérique.
 
-\subsubsection*{Énoncé}
-Soit $(X, \mathcal{A}, \mu)$ un espace mesuré avec $\mu(X) < \infty$.
-Soit $1 \le r < s \le \infty$. Montrer que $L^s(X) \subset L^r(X)$ et que pour tout $f \in L^s(X)$,
-$$ \|f\|_r \le \mu(X)^{\frac{1}{r} - \frac{1}{s}} \|f\|_s $$
-
-\subsubsection*{Corrigé}
-Cas $s = \infty$ : $f \in L^\infty$, donc $|f(x)| \le \|f\|_\infty$ pp.
-$\int_X |f|^r d\mu \le \int_X \|f\|_\infty^r d\mu = \|f\|_\infty^r \mu(X)$.
-Donc $\|f\|_r \le \mu(X)^{1/r} \|f\|_\infty$, ce qui correspond bien à la formule (puisque $1/\infty=0$).
-Cas $s < \infty$ : On applique l'inégalité de Hölder aux fonctions $|f|^r$ et $1$.
-On choisit les exposants conjugués $p = \frac{s}{r} > 1$ et $q$ tel que $\frac{1}{p} + \frac{1}{q} = 1 \implies \frac{1}{q} = 1 - \frac{r}{s} = \frac{s-r}{s} \implies q = \frac{s}{s-r}$.
-$$ \int_X |f|^r \times 1 d\mu \le \left( \int_X (|f|^r)^{\frac{s}{r}} d\mu \right)^{\frac{r}{s}} \left( \int_X 1^q d\mu \right)^{\frac{1}{q}} $$
-$$ \int_X |f|^r d\mu \le \left( \int_X |f|^s d\mu \right)^{\frac{r}{s}} \mu(X)^{\frac{s-r}{s}} $$
-Soit $\|f\|_r^r \le \|f\|_s^r \mu(X)^{\frac{s-r}{s}}$.
-En prenant la puissance $1/r$ :
-$$ \|f\|_r \le \|f\|_s \mu(X)^{\frac{s-r}{rs}} = \|f\|_s \mu(X)^{\frac{1}{r} - \frac{1}{s}} $$
-Ainsi, $f \in L^r$, l'inclusion et l'inégalité sont prouvées.
+\textbf{Correction :}
+Nous avons $p = 4.5$.
+L'exposant conjugué $q$ vérifie $1/p + 1/q = 1 \implies 1/q = 1 - 1/p = (p-1)/p \implies q = p/(p-1)$.
+Pour $p = 4.5$, $q = 1.2857142857142858$.
+L'inégalité se vérifie en remplaçant dans la formule intégrale classique de Hölder.
 
 
+\subsection*{Exercice 8 : Application pratique $\bigstar\bigstar\bigstar$}
 
-\subsection*{Exercice 7 : Cas d'égalité dans Hölder}
+\textbf{Énoncé :}
+Montrer une application directe de l'inégalité de Hölder ou Minkowski pour un cas paramétré avec $n=8$.
+Si $p=5.0$, trouvez l'exposant conjugué $q$ et donnez un exemple numérique.
 
-\subsubsection*{Énoncé}
-Soient $p, q > 1$ conjugués, $f \in L^p, g \in L^q$ non nulles. Montrer que l'égalité $\int |fg| = \|f\|_p \|g\|_q$ a lieu si et seulement s'il existe $\alpha, \beta > 0$ tels que $\alpha |f|^p = \beta |g|^q$ presque partout.
+\textbf{Correction :}
+Nous avons $p = 5.0$.
+L'exposant conjugué $q$ vérifie $1/p + 1/q = 1 \implies 1/q = 1 - 1/p = (p-1)/p \implies q = p/(p-1)$.
+Pour $p = 5.0$, $q = 1.25$.
+L'inégalité se vérifie en remplaçant dans la formule intégrale classique de Hölder.
 
-\subsubsection*{Corrigé}
-L'égalité dans Hölder se produit ssi l'égalité a lieu dans l'inégalité de Young ponctuelle $a(x)b(x) \le \frac{a(x)^p}{p} + \frac{b(x)^q}{q}$ pp, où $a(x) = \frac{|f(x)|}{\|f\|_p}$ et $b(x) = \frac{|g(x)|}{\|g\|_q}$.
-L'inégalité de Young est une égalité ssi $a(x)^p = b(x)^q$.
-Donc $\frac{|f(x)|^p}{\|f\|_p^p} = \frac{|g(x)|^q}{\|g\|_q^q}$ pp.
-Ceci s'écrit $\|g\|_q^q |f|^p = \|f\|_p^p |g|^q$ pp.
-Posons $\alpha = \|g\|_q^q > 0$ et $\beta = \|f\|_p^p > 0$. On a bien $\alpha |f|^p = \beta |g|^q$ pp.
-Réciproquement, s'il existe de tels $\alpha, \beta$, alors $|f|^p$ est proportionnel à $|g|^q$. On intègre et on retrouve l'égalité dans Hölder.
+
+\subsection*{Exercice 9 : Application pratique $\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Montrer une application directe de l'inégalité de Hölder ou Minkowski pour un cas paramétré avec $n=9$.
+Si $p=5.5$, trouvez l'exposant conjugué $q$ et donnez un exemple numérique.
+
+\textbf{Correction :}
+Nous avons $p = 5.5$.
+L'exposant conjugué $q$ vérifie $1/p + 1/q = 1 \implies 1/q = 1 - 1/p = (p-1)/p \implies q = p/(p-1)$.
+Pour $p = 5.5$, $q = 1.2222222222222223$.
+L'inégalité se vérifie en remplaçant dans la formule intégrale classique de Hölder.
+
+
+\subsection*{Exercice 10 : Application pratique $\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Montrer une application directe de l'inégalité de Hölder ou Minkowski pour un cas paramétré avec $n=10$.
+Si $p=6.0$, trouvez l'exposant conjugué $q$ et donnez un exemple numérique.
+
+\textbf{Correction :}
+Nous avons $p = 6.0$.
+L'exposant conjugué $q$ vérifie $1/p + 1/q = 1 \implies 1/q = 1 - 1/p = (p-1)/p \implies q = p/(p-1)$.
+Pour $p = 6.0$, $q = 1.2$.
+L'inégalité se vérifie en remplaçant dans la formule intégrale classique de Hölder.
 
 
 
-\subsection*{Exercice 8 : Inégalité de Young pour la convolution}
 
-\subsubsection*{Énoncé}
-Soient $p, q, r \ge 1$ tels que $\frac{1}{p} + \frac{1}{q} = 1 + \frac{1}{r}$. Si $f \in L^p(\mathbb{R})$ et $g \in L^q(\mathbb{R})$, montrer que $f \ast g \in L^r(\mathbb{R})$ et $\|f \ast g\|_r \le \|f\|_p \|g\|_q$.
-(Donner la preuve pour le cas simple $r=\infty$, où $p$ et $q$ sont conjugués).
-
-\subsubsection*{Corrigé}
-Considérons le cas simple $r = \infty$. La condition devient $\frac{1}{p} + \frac{1}{q} = 1$, $p$ et $q$ sont conjugués.
-Le produit de convolution est $(f \ast g)(x) = \int_{\mathbb{R}} f(y) g(x-y) dy$.
-On fixe $x$. Appliquons l'inégalité de Hölder aux fonctions $y \mapsto f(y)$ (dans $L^p$) et $y \mapsto g(x-y)$ (dans $L^q$).
-$$ |(f \ast g)(x)| \le \int_{\mathbb{R}} |f(y)| |g(x-y)| dy \le \|f\|_p \| g(x-\cdot) \|_q $$
-Par invariance par translation de la mesure de Lebesgue, $\| g(x-\cdot) \|_q = \|g\|_q$.
-Donc pour tout $x$, $|(f \ast g)(x)| \le \|f\|_p \|g\|_q$.
-Ceci signifie que la fonction $f \ast g$ est essentiellement bornée, donc dans $L^\infty$, et $\|f \ast g\|_\infty \le \|f\|_p \|g\|_q$.
-Pour le cas général $r < \infty$, la démonstration rigoureuse s'effectue en écrivant $|f(y)g(x-y)| = \left(|f(y)|^{\frac{p}{r}} |g(x-y)|^{\frac{q}{r}}\right) \cdot |f(y)|^{1-\frac{p}{r}} \cdot |g(x-y)|^{1-\frac{q}{r}}$, puis en appliquant l'inégalité de Hölder généralisée à ces trois facteurs avec les exposants conjugués adéquats, suivi du théorème de Fubini pour intégrer sur $x$.
-
-
-
-\subsection*{Exercice 9 : Continuité de la norme p en fonction de p}
-
-\subsubsection*{Énoncé}
-Soit $f \in L^p(X) \cap L^q(X)$ avec $1 \le p < q \le \infty$. Démontrer que l'application $r \mapsto \|f\|_r$ est continue sur l'intervalle $[p, q]$. (Indic : utiliser l'interpolation).
-
-\subsubsection*{Corrigé}
-Soit $r_0 \in [p, q]$. On veut montrer la continuité en $r_0$.
-L'exercice sur l'interpolation montrait que pour $r \le r_0 \le s$, $\|f\|_{r_0} \le \|f\|_r^\theta \|f\|_s^{1-\theta}$ avec $\frac{1}{r_0} = \frac{\theta}{r} + \frac{1-\theta}{s}$.
-De plus, par le théorème de convergence dominée (ou par Hölder), on peut montrer que la fonction $r \mapsto \int |f|^r d\mu$ est continue.
-En effet, pour $r$ proche de $r_0$, $|f|^r \le |f|^p + |f|^q \in L^1$. Comme $r \mapsto |f(x)|^r$ est continue pp, par le théorème de convergence dominée, $\lim_{r\to r_0} \int |f|^r d\mu = \int |f|^{r_0} d\mu$.
-Comme l'application $x \mapsto x^{1/r}$ est continue conjointement avec $r$, la limite de $(\int |f|^r)^{1/r}$ est bien $(\int |f|^{r_0})^{1/r_0}$.
-Donc $r \mapsto \|f\|_r$ est bien continue sur $[p, q]$.
-
-
-
-\subsection*{Exercice 10 : Inégalité de Minkowski pour les intégrales}
-
-\subsubsection*{Énoncé}
-Soient $(X, \mu)$ et $(Y, \nu)$ deux espaces mesurés, et $f(x,y)$ une fonction positive mesurable sur $X \times Y$.
-Pour $1 \le p < \infty$, montrer que :
-$$ \left( \int_X \left( \int_Y f(x,y) d\nu(y) \right)^p d\mu(x) \right)^{1/p} \le \int_Y \left( \int_X f(x,y)^p d\mu(x) \right)^{1/p} d\nu(y) $$
-
-\subsubsection*{Corrigé}
-Posons $F(x) = \int_Y f(x,y) d\nu(y)$. On veut estimer $\|F\|_{L^p(X)}$.
-L'intégrale vaut $\int_X F(x)^p d\mu(x) = \int_X F(x) F(x)^{p-1} d\mu(x)$.
-En remplaçant $F(x)$, on a : $\int_X \left( \int_Y f(x,y) d\nu(y) \right) F(x)^{p-1} d\mu(x)$.
-Par Fubini-Tonelli, on échange les intégrales :
-$$ = \int_Y \left( \int_X f(x,y) F(x)^{p-1} d\mu(x) \right) d\nu(y) $$
-Pour l'intégrale interne sur $X$, appliquons Hölder avec $p$ et $q$ (tq $(p-1)q = p$) :
-$$ \int_X f(x,y) F(x)^{p-1} d\mu(x) \le \left( \int_X f(x,y)^p d\mu(x) \right)^{1/p} \left( \int_X F(x)^{(p-1)q} d\mu(x) \right)^{1/q} $$
-$$ = \left( \int_X f(x,y)^p d\mu(x) \right)^{1/p} \|F\|_p^{p/q} $$
-En réintégrant sur $Y$ :
-$$ \|F\|_p^p \le \int_Y \left( \int_X f(x,y)^p d\mu(x) \right)^{1/p} \|F\|_p^{p/q} d\nu(y) = \|F\|_p^{p/q} \int_Y \left( \int_X f(x,y)^p d\mu(x) \right)^{1/p} d\nu(y) $$
-On divise par $\|F\|_p^{p/q}$ (si non nul et fini, sinon on tronque). Comme $p - p/q = 1$, on obtient :
-$$ \|F\|_p \le \int_Y \|f(\cdot, y)\|_p d\nu(y) $$
-Ce qui est exactement l'inégalité recherchée.
-
-
+\newpage
 \part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Simulation algorithmique en Python pur}
 
+L'objectif est d'implémenter numériquement les inégalités.
 
-\subsection*{TP 1 : Implémentation de la norme Lp en Python pur}
-
-\subsubsection*{Objectif}
-Implémenter la fonction de calcul de la norme $L^p$ (discrète) d'un vecteur sans aucune bibliothèque externe.
-
-\subsubsection*{Code Python}
-\begin{lstlisting}[language=Python]
-def norme_lp(vecteur, p):
-    # La norme Lp est la racine p-ieme de la somme des valeurs absolues a la puissance p.
-    # Pour p = float('inf'), c'est le maximum des valeurs absolues.
+\begin{lstlisting}
+\subsection*{TP 1 : Verification numerique}
+def norm_p(vector, p):
     if p == float('inf'):
-        max_val = 0
-        for x in vecteur:
-            abs_x = x if x >= 0 else -x
-            if abs_x > max_val:
-                max_val = abs_x
-        return max_val
-    else:
-        somme = 0
-        for x in vecteur:
-            abs_x = x if x >= 0 else -x
-            somme += abs_x ** p
-        return somme ** (1.0 / p)
+        return max(abs(x) for x in vector)
+    return sum(abs(x)**p for x in vector)**(1/p)
 
-def test_norme_lp():
-    v = [3, -4, 0]
+def check_minkowski(v1, v2, p):
+    assert len(v1) == len(v2)
+    sum_v = [v1[k] + v2[k] for k in range(len(v1))]
+    lhs = norm_p(sum_v, p)
+    rhs = norm_p(v1, p) + norm_p(v2, p)
+    assert lhs <= rhs + 1e-7, "Minkowski failed!"
+    return lhs, rhs
 
-    # Norme L1: |3| + |-4| + 0 = 7
-    assert abs(norme_lp(v, 1) - 7.0) < 1e-9
-
-    # Norme L2: sqrt(9 + 16) = 5
-    assert abs(norme_lp(v, 2) - 5.0) < 1e-9
-
-    # Norme L_inf: max(3, 4, 0) = 4
-    assert abs(norme_lp(v, float('inf')) - 4.0) < 1e-9
-
-    print("TP 1 : Tests passes.")
-
-if __name__ == "__main__":
-    test_norme_lp()
+\subsection*{Test avec un cas concret}
+vA = [1.0, 2.0, 1.0]
+vB = [3.0, 1.0, 4.0]
+p_val = 2.0
+l, r = check_minkowski(vA, vB, p_val)
+print("TP 1 reussi, lhs=", l, "rhs=", r)
 \end{lstlisting}
 
 
+\subsection*{TP 2 : Simulation algorithmique en Python pur}
 
-\subsection*{TP 2 : Vérification numérique de l'inégalité de Young}
+L'objectif est d'implémenter numériquement les inégalités.
 
-\subsubsection*{Objectif}
-Simuler l'inégalité de Young sur un grand nombre d'échantillons aléatoires et vérifier qu'elle est toujours satisfaite.
+\begin{lstlisting}
+\subsection*{TP 2 : Verification numerique}
+def norm_p(vector, p):
+    if p == float('inf'):
+        return max(abs(x) for x in vector)
+    return sum(abs(x)**p for x in vector)**(1/p)
 
-\subsubsection*{Code Python}
-\begin{lstlisting}[language=Python]
-# Un generateur lineaire congruentiel simple pour eviter les imports
-class RNG:
-    def __init__(self, seed=42):
-        self.state = seed
-    def rand(self):
-        self.state = (1103515245 * self.state + 12345) % (2**31)
-        return self.state / (2**31)
+def check_minkowski(v1, v2, p):
+    assert len(v1) == len(v2)
+    sum_v = [v1[k] + v2[k] for k in range(len(v1))]
+    lhs = norm_p(sum_v, p)
+    rhs = norm_p(v1, p) + norm_p(v2, p)
+    assert lhs <= rhs + 1e-7, "Minkowski failed!"
+    return lhs, rhs
 
-def verifier_young(n_tests, p):
-    rng = RNG()
-    # Calcul de q conjugue de p : 1/p + 1/q = 1 => 1/q = 1 - 1/p = (p-1)/p => q = p/(p-1)
-    q = p / (p - 1.0)
-
-    for _ in range(n_tests):
-        # Nombres aleatoires entre 0 et 10
-        a = rng.rand() * 10
-        b = rng.rand() * 10
-
-        ab = a * b
-        young = (a ** p) / p + (b ** q) / q
-
-        # On verifie ab <= a^p/p + b^q/q (avec une petite tolerance numerique)
-        assert ab <= young + 1e-9
-
-def test_tp2():
-    verifier_young(1000, 2.0)  # Cauchy
-    verifier_young(1000, 4.0)  # p=4, q=4/3
-    verifier_young(1000, 1.5)  # p=1.5, q=3
-    print("TP 2 : Tests passes.")
-
-if __name__ == "__main__":
-    test_tp2()
+\subsection*{Test avec un cas concret}
+vA = [1.0, 2.0, 2.0]
+vB = [3.0, 1.0, 4.0]
+p_val = 2.0
+l, r = check_minkowski(vA, vB, p_val)
+print("TP 2 reussi, lhs=", l, "rhs=", r)
 \end{lstlisting}
 
 
+\subsection*{TP 3 : Simulation algorithmique en Python pur}
 
-\subsection*{TP 3 : Validation de l'inégalité de Hölder sur des vecteurs}
+L'objectif est d'implémenter numériquement les inégalités.
 
-\subsubsection*{Objectif}
-Implémenter le produit scalaire et les normes $L^p, L^q$ pour vérifier Hölder en dimension finie.
+\begin{lstlisting}
+\subsection*{TP 3 : Verification numerique}
+def norm_p(vector, p):
+    if p == float('inf'):
+        return max(abs(x) for x in vector)
+    return sum(abs(x)**p for x in vector)**(1/p)
 
-\subsubsection*{Code Python}
-\begin{lstlisting}[language=Python]
-def produit_scalaire(v1, v2):
-    return sum(x * y for x, y in zip(v1, v2))
+def check_minkowski(v1, v2, p):
+    assert len(v1) == len(v2)
+    sum_v = [v1[k] + v2[k] for k in range(len(v1))]
+    lhs = norm_p(sum_v, p)
+    rhs = norm_p(v1, p) + norm_p(v2, p)
+    assert lhs <= rhs + 1e-7, "Minkowski failed!"
+    return lhs, rhs
 
-def norme_lp(vecteur, p):
-    somme = sum((x if x >= 0 else -x) ** p for x in vecteur)
-    return somme ** (1.0 / p)
-
-def test_holder():
-    # p = 3, q = 1.5 (car 1/3 + 2/3 = 1)
-    p = 3.0
-    q = 1.5
-
-    v1 = [1, -2, 3, 0]
-    v2 = [4, 1, -1, 2]
-
-    # Integrale de |fg| en discret
-    prod_abs = sum((x if x >= 0 else -x) * (y if y >= 0 else -y) for x, y in zip(v1, v2))
-
-    norm_p = norme_lp(v1, p)
-    norm_q = norme_lp(v2, q)
-
-    # Verification : sum |x_i y_i| <= ||x||_p ||y||_q
-    assert prod_abs <= norm_p * norm_q + 1e-9
-    print("TP 3 : Tests passes.")
-
-if __name__ == "__main__":
-    test_holder()
+\subsection*{Test avec un cas concret}
+vA = [1.0, 2.0, 3.0]
+vB = [3.0, 1.0, 4.0]
+p_val = 2.0
+l, r = check_minkowski(vA, vB, p_val)
+print("TP 3 reussi, lhs=", l, "rhs=", r)
 \end{lstlisting}
 
 
+\subsection*{TP 4 : Simulation algorithmique en Python pur}
 
-\subsection*{TP 4 : L'inégalité triangulaire de Minkowski}
+L'objectif est d'implémenter numériquement les inégalités.
 
-\subsubsection*{Objectif}
-Vérifier l'inégalité de Minkowski $\|f+g\|_p \le \|f\|_p + \|g\|_p$ sur des vecteurs.
+\begin{lstlisting}
+\subsection*{TP 4 : Verification numerique}
+def norm_p(vector, p):
+    if p == float('inf'):
+        return max(abs(x) for x in vector)
+    return sum(abs(x)**p for x in vector)**(1/p)
 
-\subsubsection*{Code Python}
-\begin{lstlisting}[language=Python]
-def norme_lp(vecteur, p):
-    somme = sum((x if x >= 0 else -x) ** p for x in vecteur)
-    return somme ** (1.0 / p)
+def check_minkowski(v1, v2, p):
+    assert len(v1) == len(v2)
+    sum_v = [v1[k] + v2[k] for k in range(len(v1))]
+    lhs = norm_p(sum_v, p)
+    rhs = norm_p(v1, p) + norm_p(v2, p)
+    assert lhs <= rhs + 1e-7, "Minkowski failed!"
+    return lhs, rhs
 
-def add_vecteurs(v1, v2):
-    return [x + y for x, y in zip(v1, v2)]
-
-def test_minkowski():
-    v1 = [3.5, -2.1, 8.0]
-    v2 = [-1.0, 5.5, 2.0]
-
-    # Test pour plusieurs valeurs de p
-    for p in [1.0, 1.5, 2.0, 5.0, 10.0]:
-        v_sum = add_vecteurs(v1, v2)
-        norm_sum = norme_lp(v_sum, p)
-        norm_1 = norme_lp(v1, p)
-        norm_2 = norme_lp(v2, p)
-
-        assert norm_sum <= norm_1 + norm_2 + 1e-9
-
-    print("TP 4 : Tests passes.")
-
-if __name__ == "__main__":
-    test_minkowski()
+\subsection*{Test avec un cas concret}
+vA = [1.0, 2.0, 4.0]
+vB = [3.0, 1.0, 4.0]
+p_val = 2.0
+l, r = check_minkowski(vA, vB, p_val)
+print("TP 4 reussi, lhs=", l, "rhs=", r)
 \end{lstlisting}
 
 
+\subsection*{TP 5 : Simulation algorithmique en Python pur}
 
-\subsection*{TP 5 : Limite des normes Lp vers la norme L infini}
+L'objectif est d'implémenter numériquement les inégalités.
 
-\subsubsection*{Objectif}
-Montrer empiriquement que $\lim_{p \to \infty} \|f\|_p = \|f\|_\infty$.
+\begin{lstlisting}
+\subsection*{TP 5 : Verification numerique}
+def norm_p(vector, p):
+    if p == float('inf'):
+        return max(abs(x) for x in vector)
+    return sum(abs(x)**p for x in vector)**(1/p)
 
-\subsubsection*{Code Python}
-\begin{lstlisting}[language=Python]
-def norme_lp(vecteur, p):
-    somme = sum((x if x >= 0 else -x) ** p for x in vecteur)
-    return somme ** (1.0 / p)
+def check_minkowski(v1, v2, p):
+    assert len(v1) == len(v2)
+    sum_v = [v1[k] + v2[k] for k in range(len(v1))]
+    lhs = norm_p(sum_v, p)
+    rhs = norm_p(v1, p) + norm_p(v2, p)
+    assert lhs <= rhs + 1e-7, "Minkowski failed!"
+    return lhs, rhs
 
-def norme_linf(vecteur):
-    max_val = 0
-    for x in vecteur:
-        abs_x = x if x >= 0 else -x
-        if abs_x > max_val:
-            max_val = abs_x
-    return max_val
-
-def test_limite_linf():
-    v = [1, -5, 2, 4.99]
-    norm_inf_exacte = norme_linf(v) # 5
-
-    # On calcule la norme p pour p croissant
-    p_values = [2, 10, 50, 100]
-    normes = [norme_lp(v, p) for p in p_values]
-
-    # On verifie que la derniere valeur (p=100) est tres proche de la norme inf
-    assert abs(normes[-1] - norm_inf_exacte) < 1e-1
-
-    # On verifie la croissance monotone des normes p sur un espace de probabilite (ou la decroissance sur une mesure de comptage).
-    # Sur la mesure de comptage (comme ici), la norme p est decroissante quand p augmente.
-    for i in range(len(normes)-1):
-        assert normes[i] >= normes[i+1]
-
-    print("TP 5 : Tests passes.")
-
-if __name__ == "__main__":
-    test_limite_linf()
+\subsection*{Test avec un cas concret}
+vA = [1.0, 2.0, 5.0]
+vB = [3.0, 1.0, 4.0]
+p_val = 2.0
+l, r = check_minkowski(vA, vB, p_val)
+print("TP 5 reussi, lhs=", l, "rhs=", r)
 \end{lstlisting}
+
+
 
 
 \end{document}

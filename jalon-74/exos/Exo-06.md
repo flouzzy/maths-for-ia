@@ -1,24 +1,14 @@
 ---
-title: "Exercice 6 : Inclusion des espaces Lp sur un ensemble de mesure finie"
-difficulty: "$\bigstar\bigstar\bigstar\bigstar\star$"
+title: "Exercice 6 : Application des Inégalités"
+difficulty: "★★★★☆"
 ---
 
-# Exercice 6 : Inclusion des espaces $L^p$ sur un ensemble de mesure finie
+# Exercice 6 : Application des Inégalités
 
-## Énoncé
-Soit $(X, \mathcal{A}, \mu)$ un espace mesuré avec $\mu(X) < \infty$.
-Soit $1 \le r < s \le \infty$. Montrer que $L^s(X) \subset L^r(X)$ et que pour tout $f \in L^s(X)$,
-$$ \|f\|_r \le \mu(X)^{\frac{1}{r} - \frac{1}{s}} \|f\|_s $$
+**Niveau :** ★★★★☆
 
-## Corrigé
-Cas $s = \infty$ : $f \in L^\infty$, donc $|f(x)| \le \|f\|_\infty$ pp.
-$\int_X |f|^r d\mu \le \int_X \|f\|_\infty^r d\mu = \|f\|_\infty^r \mu(X)$.
-Donc $\|f\|_r \le \mu(X)^{1/r} \|f\|_\infty$, ce qui correspond bien à la formule (puisque $1/\infty=0$).
-Cas $s < \infty$ : On applique l'inégalité de Hölder aux fonctions $|f|^r$ et $1$.
-On choisit les exposants conjugués $p = \frac{s}{r} > 1$ et $q$ tel que $\frac{1}{p} + \frac{1}{q} = 1 \implies \frac{1}{q} = 1 - \frac{r}{s} = \frac{s-r}{s} \implies q = \frac{s}{s-r}$.
-$$ \int_X |f|^r \times 1 d\mu \le \left( \int_X (|f|^r)^{\frac{s}{r}} d\mu \right)^{\frac{r}{s}} \left( \int_X 1^q d\mu \right)^{\frac{1}{q}} $$
-$$ \int_X |f|^r d\mu \le \left( \int_X |f|^s d\mu \right)^{\frac{r}{s}} \mu(X)^{\frac{s-r}{s}} $$
-Soit $\|f\|_r^r \le \|f\|_s^r \mu(X)^{\frac{s-r}{s}}$.
-En prenant la puissance $1/r$ :
-$$ \|f\|_r \le \|f\|_s \mu(X)^{\frac{s-r}{rs}} = \|f\|_s \mu(X)^{\frac{1}{r} - \frac{1}{s}} $$
-Ainsi, $f \in L^r$, l'inclusion et l'inégalité sont prouvées.
+**Énoncé :**
+Inégalité d'interpolation (Hölder itéré) : Si $p < r < q$, prouver que $\|f\|_r \le \|f\|_p^{1-\theta} \|f\|_q^\theta$ pour un certain $\theta \in ]0,1[$. Préciser $\theta$.
+
+**Correction Détaillée :**
+Puisque $p < r < q$, on peut écrire $r$ comme une combinaison convexe de $p$ et $q$ sous la forme $\frac{1}{r} = \frac{1-\theta}{p} + \frac{\theta}{q}$ pour un certain $\theta \in ]0,1[$.<br>On a $r = r(1-\theta) + r\theta$.<br>L'intégrale de $\|f\|_r^r$ est $\int |f|^r = \int |f|^{r(1-\theta)} |f|^{r\theta}$.<br>Appliquons Hölder avec les exposants conjugués $u$ et $v$. On veut $u$ tel que $r(1-\theta)u = p$, donc $u = \frac{p}{r(1-\theta)}$.<br>Vérifions le conjugué $v$ : $1 - \frac{1}{u} = 1 - \frac{r(1-\theta)}{p}$.<br>Or $\frac{1-\theta}{p} = \frac{1}{r} - \frac{\theta}{q}$, donc $\frac{r(1-\theta)}{p} = 1 - \frac{r\theta}{q}$.<br>Ainsi $1 - \frac{1}{u} = 1 - (1 - \frac{r\theta}{q}) = \frac{r\theta}{q}$. Soit $v = \frac{q}{r\theta}$.<br>On applique Hölder : $\int |f|^r \le (\int (|f|^{r(1-\theta)})^u)^{1/u} (\int (|f|^{r\theta})^v)^{1/v}$.<br>$\int |f|^r \le (\int |f|^p)^{r(1-\theta)/p} (\int |f|^q)^{r\theta/q}$.<br>En élevant à la puissance $1/r$ : $\|f\|_r \le (\|f\|_p^p)^{\frac{1-\theta}{p}} (\|f\|_q^q)^{\frac{\theta}{q}} = \|f\|_p^{1-\theta} \|f\|_q^\theta$.<br>Cette inégalité garantit que $L^p \cap L^q \subset L^r$.

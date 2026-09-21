@@ -1,17 +1,14 @@
 ---
-title: "Exercice 7 : Cas d'égalité dans Hölder"
-difficulty: "$\bigstar\bigstar\bigstar\bigstar\star$"
+title: "Exercice 7 : Application des Inégalités"
+difficulty: "★★★★★"
 ---
 
-# Exercice 7 : Cas d'égalité dans Hölder
+# Exercice 7 : Application des Inégalités
 
-## Énoncé
-Soient $p, q > 1$ conjugués, $f \in L^p, g \in L^q$ non nulles. Montrer que l'égalité $\int |fg| = \|f\|_p \|g\|_q$ a lieu si et seulement s'il existe $\alpha, \beta > 0$ tels que $\alpha |f|^p = \beta |g|^q$ presque partout.
+**Niveau :** ★★★★★
 
-## Corrigé
-L'égalité dans Hölder se produit ssi l'égalité a lieu dans l'inégalité de Young ponctuelle $a(x)b(x) \le \frac{a(x)^p}{p} + \frac{b(x)^q}{q}$ pp, où $a(x) = \frac{|f(x)|}{\|f\|_p}$ et $b(x) = \frac{|g(x)|}{\|g\|_q}$.
-L'inégalité de Young est une égalité ssi $a(x)^p = b(x)^q$.
-Donc $\frac{|f(x)|^p}{\|f\|_p^p} = \frac{|g(x)|^q}{\|g\|_q^q}$ pp.
-Ceci s'écrit $\|g\|_q^q |f|^p = \|f\|_p^p |g|^q$ pp.
-Posons $\alpha = \|g\|_q^q > 0$ et $\beta = \|f\|_p^p > 0$. On a bien $\alpha |f|^p = \beta |g|^q$ pp.
-Réciproquement, s'il existe de tels $\alpha, \beta$, alors $|f|^p$ est proportionnel à $|g|^q$. On intègre et on retrouve l'égalité dans Hölder.
+**Énoncé :**
+Utiliser Minkowski pour montrer que l'espace $L^p$ muni de sa norme est un espace normé (vérifier l'axiome de séparation et l'homogénéité).
+
+**Correction Détaillée :**
+Pour que $(L^p, \|\cdot\|_p)$ soit un espace vectoriel normé, il faut vérifier trois axiomes.<br>1. Séparation : $\|f\|_p = 0 \iff \int |f|^p = 0$. Comme l'intégrale d'une fonction positive n'est nulle que si la fonction est nulle presque partout, $f = 0$ p.p. C'est l'intérêt du quotient de l'espace $\mathcal{L}^p$ par la relation d'équivalence $f \sim g$ ssi $f = g$ p.p.<br>2. Homogénéité absolue : $\|\lambda f\|_p = (\int |\lambda f|^p)^{1/p} = (\int |\lambda|^p |f|^p)^{1/p} = (|\lambda|^p \int |f|^p)^{1/p} = |\lambda| \|f\|_p$.<br>3. Inégalité triangulaire : C'est exactement le théorème de Minkowski, $\|f+g\|_p \le \|f\|_p + \|g\|_p$.<br>Les trois axiomes sont vérifiés, l'espace $L^p$ (au sens du quotient) est bien un espace vectoriel normé.

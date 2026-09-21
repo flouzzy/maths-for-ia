@@ -1,132 +1,186 @@
 ---
-uuid: jalon-74
-title: "Jalon 74 : Inégalités fondamentales de l'analyse fonctionnelle"
-tags: [analyse, fonctionnelle, lebesgue, holder, minkowski, lp]
+uuid: "jalon-74"
+title: "Inégalités fondamentales : Hölder, Minkowski, Jensen"
+year: 2
+trimester: 7
+tags:
+  - math/analyse
+  - ia/optimisation
+prev: "[[Jalon 73 (Définition des espaces Lp).md]]"
+next: "[[Jalon 75 (Preuve de la complétude des espaces Lp).md]]"
 ---
 
-# 1. Introduction
+# Jalon 74 : Inégalités fondamentales : Hölder, Minkowski, Jensen
 
-À la fin du XIXe siècle et au début du XXe siècle, les mathématiciens cherchent à généraliser les notions de longueur et de distance à des espaces géométriques de plus en plus abstraits, notamment les espaces de fonctions. L'intégration de Lebesgue, nouvellement formulée, offre un cadre robuste. Cependant, pour mesurer la "taille" d'une fonction et comparer la proximité de deux fonctions, il faut des outils algébriques et analytiques fins.
+## 1. Genèse des Inégalités en Analyse Fonctionnelle
 
-C'est dans ce contexte que les mathématiciens Otto Hölder (en 1889) et Hermann Minkowski (en 1896) développent des inégalités fondamentales. L'inégalité de Hölder généralise l'inégalité de Cauchy-Schwarz et révèle une dualité profonde entre les exposants conjugués. L'inégalité de Minkowski, quant à elle, démontre que la "norme" $L^p$ vérifie l'inégalité triangulaire, dotant ainsi ces espaces de fonctions d'une véritable structure géométrique. Ces inégalités constituent la clé de voûte de l'analyse fonctionnelle moderne et de l'étude des espaces $L^p$.
+L'analyse fonctionnelle s'intéresse aux espaces de dimension infinie, en particulier les espaces de fonctions. Historiquement, l'étude des séries de Fourier par Dirichlet et Riemann a révélé la nécessité de quantifier la "taille" d'une fonction, non plus par son maximum (norme uniforme), mais par la somme ou l'intégrale de ses valeurs. Les espaces $L^p$, introduits par Henri Lebesgue et Frigyes Riesz au début du XXe siècle, formalisent cette idée.
 
-# 2. Définitions et Inégalités Fondamentales
+Cependant, pour que ces ensembles de fonctions constituent de véritables espaces vectoriels normés, il fallait prouver des propriétés algébriques et topologiques fondamentales, notamment l'inégalité triangulaire. Hermann Minkowski, géomètre dans l'âme, a généralisé l'inégalité triangulaire euclidienne aux espaces $L^p$. Avant lui, Otto Hölder avait découvert une inégalité reliant les intégrales de produits de fonctions, indispensable pour majorer des termes croisés. Enfin, Johan Jensen, mathématicien danois, a formalisé les conséquences intégrales de la convexité géométrique, un concept qui trouve ses racines dans les travaux d'Archimède sur les barycentres.
 
-## Inégalité de Young
+Ces trois inégalités ne sont pas de simples astuces calculatoires ; elles sont les piliers de l'architecture des espaces fonctionnels, permettant de passer de la géométrie élémentaire à l'analyse moderne, et constituent aujourd'hui le socle théorique de l'optimisation convexe et de la théorie de l'apprentissage statistique.
 
-Avant d'énoncer le théorème de Hölder, il est crucial d'établir l'inégalité de Young, un lemme d'une puissance redoutable reposant sur la convexité.
+## 2. Inégalité de Jensen : Convexité et Barycentres Intégraux
 
-Soit $p \in (1, \infty)$ et $q \in (1, \infty)$ tels que $\frac{1}{p} + \frac{1}{q} = 1$. On dit que $p$ et $q$ sont des **exposants conjugués**.
+L'inégalité de Jensen est l'expression analytique du fait qu'une fonction convexe se situe toujours "en dessous" de ses cordes.
 
-**Théorème (Inégalité de Young) :**
-Pour tous nombres réels positifs $a, b \ge 0$, on a :
-$$ a b \le \frac{a^p}{p} + \frac{b^q}{q} $$
-L'égalité a lieu si et seulement si $a^p = b^q$.
+### A. Fonctions convexes
 
-**Exemple immédiat :**
-Prenons $p=2, q=2$ (qui sont bien conjugués car $1/2 + 1/2 = 1$).
-L'inégalité devient $a b \le \frac{a^2}{2} + \frac{b^2}{2}$, ce qui est équivalent à $(a-b)^2 \ge 0$.
-Si $a = 3$ et $b = 4$, on a $3 \times 4 = 12 \le \frac{9}{2} + \frac{16}{2} = 12.5$.
-Si $a = 4$ et $b = 4$, on a $4 \times 4 = 16 \le \frac{16}{2} + \frac{16}{2} = 16$.
+> **Définition (Fonction convexe) :**
+> Soit $I \subset \mathbb{R}$ un intervalle. Une fonction $\phi : I \to \mathbb{R}$ est dite convexe si, pour tout $x, y \in I$ et pour tout $\lambda \in [0, 1]$ :
+> $$\phi(\lambda x + (1 - \lambda)y) \le \lambda \phi(x) + (1 - \lambda)\phi(y)$$
+> La fonction est dite strictement convexe si l'inégalité est stricte pour $x \neq y$ et $\lambda \in ]0, 1[$.
 
-## Inégalité de Hölder
+**Exemple concret immédiat :**
+Soit $\phi(x) = x^2$ sur $\mathbb{R}$. Prenons $x=0, y=2, \lambda=0.5$.
+$\lambda x + (1-\lambda)y = 0.5(0) + 0.5(2) = 1$.
+$\phi(1) = 1^2 = 1$.
+$\lambda \phi(x) + (1-\lambda)\phi(y) = 0.5(0^2) + 0.5(2^2) = 0.5(4) = 2$.
+On a bien $1 \le 2$.
 
-Soit $(X, \mathcal{A}, \mu)$ un espace mesuré.
-Pour une fonction mesurable $f : X \to \mathbb{R}$ (ou $\mathbb{C}$), et $1 \le p < \infty$, on définit la norme $L^p$ par :
-$$ \|f\|_p = \left( \int_X |f|^p \, d\mu \right)^{\frac{1}{p}} $$
+### B. Énoncé du Théorème de Jensen
 
-**Théorème (Inégalité de Hölder) :**
-Soient $p, q \in [1, \infty]$ des exposants conjugués (avec la convention $1/\infty = 0$).
-Si $f \in L^p(X)$ et $g \in L^q(X)$, alors le produit $fg$ appartient à $L^1(X)$, et :
-$$ \int_X |f g| \, d\mu \le \|f\|_p \|g\|_q $$
+> **Théorème (Inégalité de Jensen) :**
+> Soit $(X, \mathcal{A}, \mu)$ un espace mesuré tel que $\mu(X) = 1$ (c'est-à-dire une mesure de probabilité). Soit $f \in L^1(\mu)$ une fonction à valeurs réelles telles que $f(x) \in I$ pour presque tout $x \in X$, où $I$ est un intervalle de $\mathbb{R}$.
+> Si $\phi : I \to \mathbb{R}$ est une fonction convexe, et si $\phi \circ f$ est $\mu$-intégrable, alors :
+> $$\phi\left(\int_X f(x) d\mu(x)\right) \le \int_X \phi(f(x)) d\mu(x)$$
 
-**Exemple immédiat :**
-Soit $X = \{1, 2\}$, avec la mesure de comptage. $L^p$ correspond à $\mathbb{R}^2$.
-Prenons $p=1, q=\infty$. $f = (x_1, x_2)$, $g = (y_1, y_2)$.
-$\|f\|_1 = |x_1| + |x_2|$, $\|g\|_\infty = \max(|y_1|, |y_2|)$.
-$|x_1 y_1 + x_2 y_2| \le |x_1| |y_1| + |x_2| |y_2| \le |x_1| \|g\|_\infty + |x_2| \|g\|_\infty = ( |x_1| + |x_2| ) \|g\|_\infty = \|f\|_1 \|g\|_\infty$.
-Concrètement, $f=(2, -3)$ et $g=(4, 1)$. $|2\times 4 + (-3)\times 1| = 5$. $\|f\|_1 = 5$, $\|g\|_\infty = 4$. $5 \le 5 \times 4 = 20$.
+*Remarque typologique :* $\int_X f d\mu$ est un réel (l'espérance $\mathbb{E}[f]$ en probabilités). L'inégalité s'écrit formellement : $\phi(\mathbb{E}[f]) \le \mathbb{E}[\phi(f)]$.
 
-**Cas limites :**
-Si $\|f\|_p = 0$, $f = 0$ presque partout, donc $fg = 0$ pp et l'inégalité est triviale $0 \le 0$. L'égalité a lieu s'il existe des constantes non nulles $\alpha, \beta$ telles que $\alpha |f|^p = \beta |g|^q$ presque partout.
+**Exemple concret immédiat :**
+Considérons un espace fini $X = \{1, 2\}$, avec probabilités $\mu(\{1\}) = 0.5, \mu(\{2\}) = 0.5$. Soit $f(1) = a, f(2) = b$. L'intégrale est la moyenne arithmétique $\frac{a+b}{2}$.
+Si $\phi(x) = e^x$ (fonction convexe), l'inégalité donne :
+$$e^{\frac{a+b}{2}} \le \frac{1}{2} e^a + \frac{1}{2} e^b$$
+Pour $a=0, b=2$, $e^1 \approx 2.718$. Et $\frac{1+e^2}{2} \approx \frac{1+7.389}{2} = 4.1945$. L'inégalité est largement vérifiée.
 
-## Inégalité de Minkowski
+**Cas pathologique :**
+Si $\mu(X) \neq 1$, l'inégalité est fausse. Par exemple, si $\mu$ est la mesure de Lebesgue sur $[0, 2]$, $\mu([0,2]) = 2$. Prenons $f(x) = x$ et $\phi(x) = x^2$.
+$\int_0^2 x dx = [\frac{x^2}{2}]_0^2 = 2$. Donc $\phi(\int_0^2 x dx) = \phi(2) = 4$.
+$\int_0^2 \phi(x) dx = \int_0^2 x^2 dx = [\frac{x^3}{3}]_0^2 = \frac{8}{3} \approx 2.66$.
+Ici $4 \not\le 2.66$. La normalisation par la masse totale est cruciale.
 
-**Théorème (Inégalité de Minkowski) :**
-Soit $1 \le p \le \infty$. Si $f, g \in L^p(X)$, alors $f + g \in L^p(X)$ et on a :
-$$ \|f + g\|_p \le \|f\|_p + \|g\|_p $$
-Cela démontre que l'application $f \mapsto \|f\|_p$ vérifie l'inégalité triangulaire, ce qui est essentiel pour en faire une norme.
+## 3. Inégalité de Hölder : Majorations Produit
 
-**Exemple immédiat :**
-Encore dans $\mathbb{R}^2$ avec $p=2$ (norme euclidienne).
-Soit $f = (3, 4)$ et $g = (5, 12)$.
-$f+g = (8, 16)$. $\|f+g\|_2 = \sqrt{64 + 256} = \sqrt{320} \approx 17.88$.
-$\|f\|_2 = \sqrt{9+16} = 5$. $\|g\|_2 = \sqrt{25+144} = 13$.
-On a bien $17.88 \le 5 + 13 = 18$.
+L'inégalité de Hölder est un outil fondamental pour majorer l'intégrale d'un produit. Elle repose sur la notion d'exposants conjugués.
 
-# 3. Démonstrations
+### A. Exposants conjugués et Lemme de Young
 
-## Démonstration de l'inégalité de Young
+> **Définition (Exposants conjugués) :**
+> Deux réels $p, q \in [1, +\infty]$ sont dits conjugués si :
+> $$\frac{1}{p} + \frac{1}{q} = 1$$
+> avec la convention $\frac{1}{+\infty} = 0$. Ainsi, $1$ et $+\infty$ sont conjugués, et $2$ est son propre conjugué.
 
-La fonction logarithme est strictement concave sur $(0, \infty)$.
-Soit $a > 0$ et $b > 0$. Les réels $1/p$ et $1/q$ vérifient $\frac{1}{p} + \frac{1}{q} = 1$ avec $1/p, 1/q \in (0,1)$.
-Par concavité de la fonction logarithme, pour tout $x, y > 0$,
-$$ \ln( \alpha x + (1-\alpha) y ) \ge \alpha \ln(x) + (1-\alpha) \ln(y) $$
-Appliquons ceci avec $x = a^p$, $y = b^q$, $\alpha = 1/p$ et $1-\alpha = 1/q$ :
-$$ \ln\left( \frac{1}{p} a^p + \frac{1}{q} b^q \right) \ge \frac{1}{p} \ln(a^p) + \frac{1}{q} \ln(b^q) = \ln(a) + \ln(b) = \ln(ab) $$
-En passant à l'exponentielle (qui est strictement croissante), on obtient :
-$$ \frac{a^p}{p} + \frac{b^q}{q} \ge ab $$
-Si $a=0$ ou $b=0$, l'inégalité est triviale.
+> **Lemme (Inégalité de Young) :**
+> Soient $p, q \in ]1, +\infty[$ conjugués. Pour tous $a, b \ge 0$ :
+> $$ab \le \frac{a^p}{p} + \frac{b^q}{q}$$
+> L'égalité a lieu si et seulement si $a^p = b^q$.
 
-## Démonstration de l'inégalité de Hölder
+### B. Énoncé du Théorème de Hölder
 
-Si $\|f\|_p = 0$ ou $\|g\|_q = 0$, alors $f=0$ ou $g=0$ presque partout. Donc $fg = 0$ pp et l'intégrale est nulle, l'inégalité $0 \le 0$ est vérifiée.
-Si $p=1, q=\infty$, on a $|f(x)g(x)| \le |f(x)| \|g\|_\infty$ presque partout. En intégrant, $\int |fg| d\mu \le \|g\|_\infty \int |f| d\mu = \|f\|_1 \|g\|_\infty$.
-On suppose désormais $1 < p < \infty$ et $\|f\|_p, \|g\|_q \in (0, \infty)$.
-Posons pour tout $x \in X$,
-$$ a(x) = \frac{|f(x)|}{\|f\|_p} \quad \text{et} \quad b(x) = \frac{|g(x)|}{\|g\|_q} $$
-D'après l'inégalité de Young, pour tout $x \in X$ :
-$$ a(x)b(x) \le \frac{a(x)^p}{p} + \frac{b(x)^q}{q} $$
-Ce qui s'écrit :
-$$ \frac{|f(x)g(x)|}{\|f\|_p \|g\|_q} \le \frac{1}{p} \frac{|f(x)|^p}{\|f\|_p^p} + \frac{1}{q} \frac{|g(x)|^q}{\|g\|_q^q} $$
-En intégrant cette inégalité sur $X$, on obtient :
-$$ \frac{\int_X |f(x)g(x)| d\mu}{\|f\|_p \|g\|_q} \le \frac{1}{p \|f\|_p^p} \int_X |f(x)|^p d\mu + \frac{1}{q \|g\|_q^q} \int_X |g(x)|^q d\mu $$
-Or, par définition, $\int_X |f(x)|^p d\mu = \|f\|_p^p$ et $\int_X |g(x)|^q d\mu = \|g\|_q^q$.
-L'inégalité devient :
-$$ \frac{\int_X |f(x)g(x)| d\mu}{\|f\|_p \|g\|_q} \le \frac{1}{p} \times 1 + \frac{1}{q} \times 1 = 1 $$
-En multipliant par $\|f\|_p \|g\|_q$, on obtient l'inégalité de Hölder :
-$$ \int_X |f g| d\mu \le \|f\|_p \|g\|_q $$
+> **Théorème (Inégalité de Hölder) :**
+> Soit $(X, \mathcal{A}, \mu)$ un espace mesuré. Soient $p, q \in [1, +\infty]$ des exposants conjugués.
+> Si $f \in L^p(\mu)$ et $g \in L^q(\mu)$, alors le produit $fg \in L^1(\mu)$ et :
+> $$\|fg\|_1 = \int_X |f(x)g(x)| d\mu(x) \le \|f\|_p \|g\|_q$$
 
-## Démonstration de l'inégalité de Minkowski
+**Exemple concret immédiat :**
+Soit $X = \{1, 2\}$ avec la mesure de comptage. Considérons les vecteurs $x = (x_1, x_2) = (1, 8)$ et $y = (y_1, y_2) = (4, 1)$. Prenons $p = \frac{4}{3}$ et $q = 4$ ($\frac{3}{4} + \frac{1}{4} = 1$).
+$\|x\|_p = (|1|^{4/3} + |8|^{4/3})^{3/4} = (1 + 16)^{3/4} = 17^{3/4} \approx 8.35$
+$\|y\|_q = (|4|^4 + |1|^4)^{1/4} = (256 + 1)^{1/4} = 257^{1/4} \approx 4.004$
+Produit des normes : $8.35 \times 4.004 \approx 33.43$.
+$\|xy\|_1 = |1\times 4| + |8\times 1| = 4 + 8 = 12$.
+On a bien $12 \le 33.43$.
 
-Pour $p=1$, par l'inégalité triangulaire classique sur les réels ou complexes, on a pour tout $x \in X$, $|f(x)+g(x)| \le |f(x)|+|g(x)|$. L'intégration de cette inégalité donne directement $\int_X |f+g| d\mu \le \int_X |f| d\mu + \int_X |g| d\mu$, ce qui prouve le résultat.
-Pour $p=\infty$, par définition du supremum essentiel, $|f(x)| \le \|f\|_\infty$ et $|g(x)| \le \|g\|_\infty$ presque partout. Ainsi, $|f(x)+g(x)| \le \|f\|_\infty + \|g\|_\infty$ presque partout. Par passage au supremum essentiel, on obtient $\|f+g\|_\infty \le \|f\|_\infty + \|g\|_\infty$.
-Supposons $1 < p < \infty$. On remarque d'abord que $f+g \in L^p(X)$ car $|f+g|^p \le (2\max(|f|,|g|))^p \le 2^p (|f|^p + |g|^p)$.
-On écrit :
-$$ |f+g|^p = |f+g| \cdot |f+g|^{p-1} \le (|f| + |g|) |f+g|^{p-1} = |f| |f+g|^{p-1} + |g| |f+g|^{p-1} $$
-On intègre sur $X$ :
-$$ \int_X |f+g|^p d\mu \le \int_X |f| |f+g|^{p-1} d\mu + \int_X |g| |f+g|^{p-1} d\mu $$
-On applique l'inégalité de Hölder à chaque terme de la somme à droite. Soit $q$ l'exposant conjugué de $p$, tel que $(p-1)q = p$.
-Pour le premier terme avec $f$ et $|f+g|^{p-1}$ :
-$$ \int_X |f| |f+g|^{p-1} d\mu \le \|f\|_p \left( \int_X \left( |f+g|^{p-1} \right)^q d\mu \right)^{1/q} = \|f\|_p \left( \int_X |f+g|^p d\mu \right)^{1/q} = \|f\|_p \|f+g\|_p^{p/q} $$
-De même pour le second terme :
-$$ \int_X |g| |f+g|^{p-1} d\mu \le \|g\|_p \|f+g\|_p^{p/q} $$
-En sommant :
-$$ \|f+g\|_p^p = \int_X |f+g|^p d\mu \le \left( \|f\|_p + \|g\|_p \right) \|f+g\|_p^{p/q} $$
-Si $\|f+g\|_p = 0$, l'inégalité de Minkowski est évidente. Si $\|f+g\|_p > 0$, on divise par $\|f+g\|_p^{p/q}$ :
-$$ \|f+g\|_p^{p - p/q} \le \|f\|_p + \|g\|_p $$
-Or $p - p/q = p(1 - 1/q) = p(1/p) = 1$. On conclut :
-$$ \|f+g\|_p \le \|f\|_p + \|g\|_p $$
+**Cas particulier (Cauchy-Schwarz) :**
+Si $p = q = 2$, l'inégalité de Hölder devient l'inégalité de Cauchy-Schwarz : $\|fg\|_1 \le \|f\|_2 \|g\|_2$.
 
-# 4. Applications en Physique, Logique & Intelligence Artificielle
+## 4. Inégalité de Minkowski : L'inégalité triangulaire dans $L^p$
 
-Ces inégalités dépassent largement le cadre de l'analyse pure.
+L'inégalité de Minkowski garantit que la somme de deux fonctions $L^p$ reste dans $L^p$, et qu'elle satisfait la sous-additivité.
 
-**En Physique Mathématique (Mécanique Quantique et Espaces de Fock) :**
-La structure de Hilbert ($L^2$, obtenue pour $p=2$) est la base mathématique de la mécanique quantique (états purs). L'inégalité de Cauchy-Schwarz (Hölder pour $p=q=2$) donne le principe d'incertitude d'Heisenberg. Plus généralement, les espaces $L^p$ (souvent pour $1 \le p \le \infty$) interviennent dans l'étude des gaz de bosons/fermions, la thermodynamique statistique, et les équations aux dérivées partielles (comme l'équation de la chaleur où des normes $L^p$ décroissent au cours du temps).
+> **Théorème (Inégalité de Minkowski) :**
+> Soit $(X, \mathcal{A}, \mu)$ un espace mesuré. Soit $p \in [1, +\infty]$.
+> Si $f, g \in L^p(\mu)$, alors $f+g \in L^p(\mu)$ et :
+> $$\|f+g\|_p \le \|f\|_p + \|g\|_p$$
 
-**En Traitement du Signal (Analyse Harmonique) :**
-L'inégalité de Hausdorff-Young, qui lie la norme $L^p$ d'une fonction à la norme $L^q$ de sa transformée de Fourier, repose fondamentalement sur ces résultats et des principes d'interpolation. Cela permet de borner l'énergie spectrale d'un signal à partir de ses caractéristiques temporelles.
+**Exemple concret immédiat :**
+Dans $\mathbb{R}^2$ avec $p=2$, pour $x=(1,0)$ et $y=(0,1)$. $\|x\|_2 = 1$, $\|y\|_2 = 1$. $\|x+y\|_2 = \|(1,1)\|_2 = \sqrt{1^2+1^2} = \sqrt{2} \approx 1.414$.
+$1.414 \le 1 + 1 = 2$.
+Pour $p=1$ (norme Manhattan) : $\|(1,1)\|_1 = 1+1=2$, et $\|x\|_1 + \|y\|_1 = 1+1=2$. On a l'égalité.
 
-**En Intelligence Artificielle (Deep Learning et Régularisation) :**
-Les normes $L^p$ (surtout $L^1$ et $L^2$) sont omniprésentes en apprentissage automatique. L'inégalité de Minkowski garantit que ces pénalités forment des normes valides (ce qui est crucial pour la convexité de l'optimisation). L'inégalité de Hölder permet de majorer des erreurs complexes (comme dans l'analyse des Generative Adversarial Networks (GANs), via les distances de Wasserstein ou la dualité de Kantorovich-Rubinstein). La pénalité $L^1$ induit la sparsité des poids, tandis que $L^2$ réduit le sur-apprentissage (weight decay).
+**Cas limite :**
+Pour $0 < p < 1$, l'inégalité s'inverse sur les termes strictement positifs : $\|f+g\|_p \ge \|f\|_p + \|g\|_p$. L'application $\|\cdot\|_p$ n'est donc pas une norme pour $p < 1$.
+
+## 5. Démonstrations Complètes et Rigoureuses
+
+### Preuve du Lemme de Young
+
+Pour $a=0$ ou $b=0$, l'inégalité $0 \le 0$ est triviale. Supposons $a > 0$ et $b > 0$.
+La fonction logarithme népérien $\ln : \mathbb{R}_{>0} \to \mathbb{R}$ est strictement concave (sa dérivée seconde est $-1/x^2 < 0$).
+Par définition de la concavité (ou convexité de $-\ln$), pour $x, y > 0$ et $\lambda \in [0,1]$ :
+$$\ln(\lambda x + (1-\lambda)y) \ge \lambda \ln(x) + (1-\lambda)\ln(y)$$
+Posons $x = a^p$, $y = b^q$ et $\lambda = \frac{1}{p}$. Puisque $\frac{1}{p} + \frac{1}{q} = 1$, nous avons $(1-\lambda) = \frac{1}{q}$.
+$$\ln\left( \frac{1}{p}a^p + \frac{1}{q}b^q \right) \ge \frac{1}{p}\ln(a^p) + \frac{1}{q}\ln(b^q)$$
+$$\ln\left( \frac{1}{p}a^p + \frac{1}{q}b^q \right) \ge \ln(a) + \ln(b) = \ln(ab)$$
+La fonction exponentielle étant strictement croissante sur $\mathbb{R}$, on applique $\exp$ aux deux membres :
+$$\frac{a^p}{p} + \frac{b^q}{q} \ge ab$$
+Ce qui clôt la preuve. L'égalité est stricte sauf si $x=y$, soit $a^p = b^q$.
+
+### Preuve de l'Inégalité de Hölder
+
+Soient $f \in L^p(\mu)$ et $g \in L^q(\mu)$.
+**Cas 1 :** Si $\|f\|_p = 0$ ou $\|g\|_q = 0$. Alors $f=0$ presque partout ou $g=0$ presque partout. Donc $fg=0$ p.p. et $\|fg\|_1 = 0$. L'inégalité $0 \le 0$ est vérifiée.
+**Cas 2 :** Supposons $\|f\|_p > 0$ et $\|g\|_q > 0$.
+Définissons les fonctions normalisées :
+$$u(x) = \frac{|f(x)|}{\|f\|_p} \quad \text{et} \quad v(x) = \frac{|g(x)|}{\|g\|_q}$$
+Pour tout $x \in X$, appliquons l'inégalité de Young à $u(x)$ et $v(x)$ :
+$$u(x)v(x) \le \frac{u(x)^p}{p} + \frac{v(x)^q}{q}$$
+soit :
+$$\frac{|f(x)g(x)|}{\|f\|_p \|g\|_q} \le \frac{1}{p}\frac{|f(x)|^p}{\|f\|_p^p} + \frac{1}{q}\frac{|g(x)|^q}{\|g\|_q^q}$$
+Les fonctions à droite sont intégrables. En intégrant cette inégalité sur $X$ par rapport à la mesure $\mu$, par monotonie et linéarité de l'intégrale :
+$$\int_X \frac{|f(x)g(x)|}{\|f\|_p \|g\|_q} d\mu \le \frac{1}{p} \int_X \frac{|f(x)|^p}{\|f\|_p^p} d\mu + \frac{1}{q} \int_X \frac{|g(x)|^q}{\|g\|_q^q} d\mu$$
+Par définition de la norme, $\int_X |f|^p = \|f\|_p^p$ et $\int_X |g|^q = \|g\|_q^q$. Donc :
+$$\frac{1}{\|f\|_p \|g\|_q} \int_X |f(x)g(x)| d\mu \le \frac{1}{p}(1) + \frac{1}{q}(1)$$
+Comme $\frac{1}{p} + \frac{1}{q} = 1$ :
+$$\frac{\|fg\|_1}{\|f\|_p \|g\|_q} \le 1$$
+En multipliant par le dénominateur strictement positif :
+$$\|fg\|_1 \le \|f\|_p \|g\|_q$$
+Ce qui démontre le théorème.
+
+### Preuve de l'Inégalité de Minkowski
+
+Pour $p=1$, c'est une conséquence immédiate de l'inégalité triangulaire dans $\mathbb{R}$ : $|f(x)+g(x)| \le |f(x)| + |g(x)|$, que l'on intègre.
+Pour $p=+\infty$, c'est également immédiat : $|f(x)+g(x)| \le \|f\|_\infty + \|g\|_\infty$ p.p., donc $\|f+g\|_\infty \le \|f\|_\infty + \|g\|_\infty$.
+Considérons $1 < p < +\infty$.
+On remarque d'abord que $f+g \in L^p$. En effet, $|f+g|^p \le (|f|+|g|)^p \le (2\max(|f|,|g|))^p \le 2^p(|f|^p + |g|^p)$, qui est intégrable.
+Si $\|f+g\|_p = 0$, l'inégalité est évidente. Supposons $\|f+g\|_p > 0$.
+Écrivons :
+$$|f+g|^p = |f+g| \cdot |f+g|^{p-1} \le (|f| + |g|) |f+g|^{p-1} = |f||f+g|^{p-1} + |g||f+g|^{p-1}$$
+Soit $q$ l'exposant conjugué de $p$, c'est-à-dire $q = \frac{p}{p-1}$.
+La fonction $|f+g|^{p-1}$ appartient à $L^q(\mu)$ car :
+$$\int (|f+g|^{p-1})^q = \int |f+g|^{(p-1)\frac{p}{p-1}} = \int |f+g|^p < +\infty$$
+Nous appliquons l'inégalité de Hölder à chaque terme :
+$$\int |f||f+g|^{p-1} \le \|f\|_p \| |f+g|^{p-1} \|_q$$
+$$\int |g||f+g|^{p-1} \le \|g\|_p \| |f+g|^{p-1} \|_q$$
+Or, $\| |f+g|^{p-1} \|_q = (\int |f+g|^p)^{1/q} = \|f+g\|_p^{p/q} = \|f+g\|_p^{p(1-1/p)} = \|f+g\|_p^{p-1}$.
+En sommant et en intégrant l'inégalité initiale :
+$$\int |f+g|^p \le \|f\|_p \|f+g\|_p^{p-1} + \|g\|_p \|f+g\|_p^{p-1}$$
+$$\|f+g\|_p^p \le (\|f\|_p + \|g\|_p) \|f+g\|_p^{p-1}$$
+En divisant par $\|f+g\|_p^{p-1}$ (qui est strictement positif par hypothèse), on obtient :
+$$\|f+g\|_p \le \|f\|_p + \|g\|_p$$
+La preuve est achevée.
+
+## 6. Applications en Intelligence Artificielle et Théorie de l'Information
+
+Les inégalités développées dans ce jalon ne sont pas confinées à l'analyse pure ; elles forment le socle algorithmique des modèles génératifs et de la théorie du transport.
+
+- **Variational Auto-Encoders (VAE) et ELBO :** En apprentissage génératif, on cherche à maximiser la vraisemblance marginale $p(x) = \int p(x, z) dz$. Calculer cette intégrale est souvent intraitable en grande dimension. L'inégalité de Jensen permet de borner inférieurement la log-vraisemblance (la fonction logarithme étant concave). En introduisant une distribution variationnelle $q(z|x)$ :
+  $$\ln p(x) = \ln \int q(z|x) \frac{p(x, z)}{q(z|x)} dz = \ln \mathbb{E}_{z \sim q}\left[\frac{p(x, z)}{q(z|x)}\right]$$
+  Par l'inégalité de Jensen (pour la fonction concave $\ln$) :
+  $$\ln p(x) \ge \mathbb{E}_{z \sim q}\left[\ln \frac{p(x, z)}{q(z|x)}\right]$$
+  Le terme de droite est l'**ELBO** (Evidence Lower Bound), qui sert de fonction objectif dans l'entraînement des VAE.
+
+- **Théorie de l'Information et Divergence KL :** L'inégalité de Jensen permet de prouver que la divergence de Kullback-Leibler entre deux distributions $P$ et $Q$ est toujours positive : $D_{KL}(P||Q) = \mathbb{E}_{P}\left[-\ln \frac{q(x)}{p(x)}\right] \ge -\ln(\mathbb{E}_{P}\left[\frac{q(x)}{p(x)}\right]) = -\ln(1) = 0$. C'est fondamental pour justifier l'utilisation de la Cross-Entropy comme fonction de perte en classification.
+
+- **Inégalités de Concentration (Hoeffding/McDiarmid) :** Les démonstrations des bornes de généralisation en PAC-learning reposent sur l'inégalité de Hölder (souvent sous la forme Cauchy-Schwarz ou de bornes sur la transformée de Laplace via l'inégalité de Markov, qui découle elle-même de l'intégration positive formelle).
+
+- **Optimisation et Gradient Proximal :** L'inégalité de Minkowski garantit la convexité des boules $L^p$ pour $p \ge 1$. Dans les algorithmes de régularisation (Lasso pour $L^1$, Ridge pour $L^2$), c'est la géométrie de ces boules induite par Minkowski qui dicte la parcimonie (sparsity) des poids appris par le modèle.

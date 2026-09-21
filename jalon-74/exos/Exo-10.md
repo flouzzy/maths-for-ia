@@ -1,26 +1,14 @@
 ---
-title: "Exercice 10 : Inégalité de Minkowski pour les intégrales"
-difficulty: "$\bigstar\bigstar\bigstar\bigstar\bigstar$"
+title: "Exercice 10 : Application des Inégalités"
+difficulty: "★★★★★"
 ---
 
-# Exercice 10 : Inégalité de Minkowski pour les intégrales
+# Exercice 10 : Application des Inégalités
 
-## Énoncé
-Soient $(X, \mu)$ et $(Y, \nu)$ deux espaces mesurés, et $f(x,y)$ une fonction positive mesurable sur $X \times Y$.
-Pour $1 \le p < \infty$, montrer que :
-$$ \left( \int_X \left( \int_Y f(x,y) d\nu(y) \right)^p d\mu(x) \right)^{1/p} \le \int_Y \left( \int_X f(x,y)^p d\mu(x) \right)^{1/p} d\nu(y) $$
+**Niveau :** ★★★★★
 
-## Corrigé
-Posons $F(x) = \int_Y f(x,y) d\nu(y)$. On veut estimer $\|F\|_{L^p(X)}$.
-L'intégrale vaut $\int_X F(x)^p d\mu(x) = \int_X F(x) F(x)^{p-1} d\mu(x)$.
-En remplaçant $F(x)$, on a : $\int_X \left( \int_Y f(x,y) d\nu(y) \right) F(x)^{p-1} d\mu(x)$.
-Par Fubini-Tonelli, on échange les intégrales :
-$$ = \int_Y \left( \int_X f(x,y) F(x)^{p-1} d\mu(x) \right) d\nu(y) $$
-Pour l'intégrale interne sur $X$, appliquons Hölder avec $p$ et $q$ (tq $(p-1)q = p$) :
-$$ \int_X f(x,y) F(x)^{p-1} d\mu(x) \le \left( \int_X f(x,y)^p d\mu(x) \right)^{1/p} \left( \int_X F(x)^{(p-1)q} d\mu(x) \right)^{1/q} $$
-$$ = \left( \int_X f(x,y)^p d\mu(x) \right)^{1/p} \|F\|_p^{p/q} $$
-En réintégrant sur $Y$ :
-$$ \|F\|_p^p \le \int_Y \left( \int_X f(x,y)^p d\mu(x) \right)^{1/p} \|F\|_p^{p/q} d\nu(y) = \|F\|_p^{p/q} \int_Y \left( \int_X f(x,y)^p d\mu(x) \right)^{1/p} d\nu(y) $$
-On divise par $\|F\|_p^{p/q}$ (si non nul et fini, sinon on tronque). Comme $p - p/q = 1$, on obtient :
-$$ \|F\|_p \le \int_Y \|f(\cdot, y)\|_p d\nu(y) $$
-Ce qui est exactement l'inégalité recherchée.
+**Énoncé :**
+Démontrer que si $f \in L^1(\mathbb{R}) \cap L^\infty(\mathbb{R})$, alors $f \in L^p(\mathbb{R})$ pour tout $1 < p < \infty$ et $\lim_{p \to \infty} \|f\|_p = \|f\|_\infty$.
+
+**Correction Détaillée :**
+Pour $f \in L^1 \cap L^\infty$, notons $\|f\|_\infty$ son supremum essentiel.<br>Pour tout $p > 1$, on peut majorer l'intégrande $|f|^p = |f|^{p-1}|f| \le \|f\|_\infty^{p-1} |f|$ presque partout.<br>En intégrant : $\int |f|^p \le \|f\|_\infty^{p-1} \int |f|$.<br>Puisque $\int |f| = \|f\|_1 < \infty$ et $\|f\|_\infty < \infty$, l'intégrale est finie. Donc $f \in L^p$.<br>Prenons la puissance $1/p$ : $\|f\|_p \le \|f\|_\infty^{1 - 1/p} \|f\|_1^{1/p}$.<br>En passant à la limite supérieure $p \to \infty$, le membre de droite tend vers $\|f\|_\infty^1 \times \|f\|_1^0 = \|f\|_\infty$. Donc $\limsup_{p \to \infty} \|f\|_p \le \|f\|_\infty$.<br>Pour minorer, soit $0 < \epsilon < \|f\|_\infty$. L'ensemble $A_\epsilon = \{x : |f(x)| > \|f\|_\infty - \epsilon\}$ a une mesure strictement positive, $0 < \mu(A_\epsilon) < \infty$ (car $f \in L^1$).<br>$\int |f|^p \ge \int_{A_\epsilon} |f|^p \ge \int_{A_\epsilon} (\|f\|_\infty - \epsilon)^p = \mu(A_\epsilon) (\|f\|_\infty - \epsilon)^p$.<br>D'où $\|f\|_p \ge \mu(A_\epsilon)^{1/p} (\|f\|_\infty - \epsilon)$.<br>En passant à la limite inférieure $p \to \infty$, $\mu(A_\epsilon)^{1/p} \to 1$, donc $\liminf_{p \to \infty} \|f\|_p \ge \|f\|_\infty - \epsilon$.<br>Comme ceci est vrai pour tout $\epsilon > 0$, $\liminf \|f\|_p \ge \|f\|_\infty$.<br>Les limites inf et sup coïncidant, la limite existe et vaut $\|f\|_\infty.

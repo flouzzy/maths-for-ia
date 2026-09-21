@@ -1,18 +1,14 @@
 ---
-title: "Exercice 1 : Application directe de l'inégalité de Young"
-difficulty: "$\bigstar\star\star\star\star$"
+title: "Exercice 1 : Application des Inégalités"
+difficulty: "★☆☆☆☆"
 ---
 
-# Exercice 1 : Application directe de l'inégalité de Young
+# Exercice 1 : Application des Inégalités
 
-## Énoncé
-Soient $a = 2$ et $b = 3$. Vérifier l'inégalité de Young pour les exposants conjugués $p = 4$ et $q = \frac{4}{3}$.
+**Niveau :** ★☆☆☆☆
 
-## Corrigé
-Vérifions d'abord que $p$ et $q$ sont conjugués : $\frac{1}{p} + \frac{1}{q} = \frac{1}{4} + \frac{3}{4} = 1$.
-L'inégalité stipule : $ab \le \frac{a^p}{p} + \frac{b^q}{q}$.
-On calcule $ab = 2 \times 3 = 6$.
-Ensuite, $\frac{a^p}{p} = \frac{2^4}{4} = \frac{16}{4} = 4$.
-Puis, $\frac{b^q}{q} = \frac{3^{4/3}}{4/3} = \frac{3}{4} \times 3 \times 3^{1/3} = \frac{9}{4} 3^{1/3} \approx 2.25 \times 1.442 = 3.245$.
-Donc $\frac{a^p}{p} + \frac{b^q}{q} = 4 + 3.245 = 7.245$.
-On a bien $6 \le 7.245$. L'inégalité est vérifiée.
+**Énoncé :**
+Montrer, en utilisant l'inégalité de Cauchy-Schwarz ($L^2$ sur un espace discret fini), que pour tous réels $a,b,c$, on a $(a+b+c)^2 \le 3(a^2+b^2+c^2)$.
+
+**Correction Détaillée :**
+L'inégalité de Cauchy-Schwarz sur $\mathbb{R}^3$ s'écrit $|\sum_{i=1}^3 u_i v_i| \le \sqrt{\sum u_i^2} \sqrt{\sum v_i^2}$.<br>Posons le vecteur $u = (a, b, c)$ et le vecteur $v = (1, 1, 1)$.<br>Le produit scalaire est $u \cdot v = a(1) + b(1) + c(1) = a+b+c$.<br>Les normes euclidiennes au carré sont $\|u\|^2 = a^2+b^2+c^2$ et $\|v\|^2 = 1^2+1^2+1^2 = 3$.<br>En élevant Cauchy-Schwarz au carré : $(u \cdot v)^2 \le \|u\|^2 \|v\|^2$.<br>Soit $(a+b+c)^2 \le 3(a^2+b^2+c^2)$. La preuve est complète.
