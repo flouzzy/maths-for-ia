@@ -1,15 +1,14 @@
-### Exercice 8 : Un cas de non-équivalence stricte \quad $\bigstar\bigstar\bigstar\bigstar\star$
+---
+title: "Exercice 8 : Application des Inégalités"
+difficulty: "★★★★★"
+---
+
+# Exercice 8 : Application des Inégalités
+
+**Niveau :** ★★★★★
 
 **Énoncé :**
-Donner un exemple dans l'espace $\mathbb{R}^2$ de vecteurs non nuls $x$ et $y$ pour lesquels l'inégalité de Minkowski pour $p=1$ est stricte : $\|x+y\|_1 < \|x\|_1 + \|y\|_1$. Quel est le cas d'égalité ?
+Soit $f$ mesurable positive. Montrer que la fonction $p \mapsto \ln(\int f^p d\mu)$ est convexe sur l'ensemble où l'intégrale est finie (Application de Hölder).
 
 **Correction Détaillée :**
-1. Considérons les vecteurs $x = (1, 0)$ et $y = (-1, 0)$.
-2. Les normes 1 sont $\|x\|_1 = |1| + |0| = 1$ et $\|y\|_1 = |-1| + |0| = 1$.
-3. La somme des normes est $\|x\|_1 + \|y\|_1 = 2$.
-4. Le vecteur somme est $x+y = (0, 0)$. Sa norme est $\|x+y\|_1 = 0$.
-5. On a bien $0 < 2$, l'inégalité est stricte.
-6. Considérons maintenant $x = (1, 0)$ et $z = (0, 1)$.
-   $\|x\|_1 + \|z\|_1 = 1 + 1 = 2$.
-   $x+z = (1, 1) \implies \|x+z\|_1 = |1| + |1| = 2$. On a l'égalité.
-7. **Condition d'égalité pour la norme 1 :** L'égalité $\|x+y\|_1 = \|x\|_1 + \|y\|_1$ se produit si et seulement si pour chaque composante $i$, $x_i$ et $y_i$ ont le même signe (ou l'un est nul). Autrement dit, $x_i y_i \ge 0$ pour tout $i$.
+Soit $p_0, p_1$ dans l'ensemble où l'intégrale est finie, et $\lambda \in ]0, 1[$. Posons $p_\lambda = (1-\lambda)p_0 + \lambda p_1$.<br>Nous voulons évaluer $\int f^{p_\lambda} = \int f^{(1-\lambda)p_0} f^{\lambda p_1}$.<br>Appliquons Hölder avec les exposants conjugués $u = \frac{1}{1-\lambda}$ et $v = \frac{1}{\lambda}$ (on a bien $1/u + 1/v = 1-\lambda + \lambda = 1$).<br>$\int f^{p_\lambda} \le \left( \int (f^{(1-\lambda)p_0})^{\frac{1}{1-\lambda}} \right)^{1-\lambda} \left( \int (f^{\lambda p_1})^{\frac{1}{\lambda}} \right)^{\lambda}$<br>$\int f^{p_\lambda} \le \left( \int f^{p_0} \right)^{1-\lambda} \left( \int f^{p_1} \right)^{\lambda}$.<br>En appliquant le logarithme naturel (strictement croissant) aux deux membres :<br>$\ln\left(\int f^{p_\lambda}\right) \le \ln\left( \left( \int f^{p_0} \right)^{1-\lambda} \left( \int f^{p_1} \right)^{\lambda} \right)$<br>$\ln\left(\int f^{p_\lambda}\right) \le (1-\lambda)\ln\left(\int f^{p_0}\right) + \lambda\ln\left(\int f^{p_1}\right)$.<br>Ce qui est exactement la définition de la convexité de la fonction $p \mapsto \ln(\int f^p d\mu)$.

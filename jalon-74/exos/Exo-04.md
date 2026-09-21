@@ -1,18 +1,14 @@
-### Exercice 4 : Interpolation des normes $L^p$ \quad $\bigstar\bigstar\bigstar\star\star$
+---
+title: "Exercice 4 : Application des Inégalités"
+difficulty: "★★★☆☆"
+---
+
+# Exercice 4 : Application des Inégalités
+
+**Niveau :** ★★★☆☆
 
 **Énoncé :**
-Soit $f \in L^1(\mu) \cap L^\infty(\mu)$. Montrer que pour tout $p > 1$, $f \in L^p(\mu)$ et que $\|f\|_p \le \|f\|_1^{1/p} \|f\|_\infty^{1 - 1/p}$.
+Montrer l'inégalité de Hölder généralisée pour 3 fonctions : si $\frac{1}{p} + \frac{1}{q} + \frac{1}{r} = 1$, alors $\|fgh\|_1 \le \|f\|_p \|g\|_q \|h\|_r$.
 
 **Correction Détaillée :**
-1. Par définition, $|f(x)| \le \|f\|_\infty$ presque pour tout $x$.
-2. Écrivons $|f(x)|^p$ en le scindant : $|f(x)|^p = |f(x)| \cdot |f(x)|^{p-1}$.
-3. Puisque $|f(x)| \le \|f\|_\infty$ p.p., on a $|f(x)|^{p-1} \le \|f\|_\infty^{p-1}$ p.p.
-4. Ainsi, $|f(x)|^p \le |f(x)| \cdot \|f\|_\infty^{p-1}$.
-5. Intégrons cette inégalité sur $X$ :
-$$\int_X |f(x)|^p d\mu \le \int_X |f(x)| \cdot \|f\|_\infty^{p-1} d\mu$$
-$$\int_X |f(x)|^p d\mu \le \|f\|_\infty^{p-1} \int_X |f(x)| d\mu$$
-$$\|f\|_p^p \le \|f\|_\infty^{p-1} \|f\|_1$$
-6. Prenons la racine $p$-ième des deux membres :
-$$\|f\|_p \le (\|f\|_\infty^{p-1} \|f\|_1)^{1/p} = \|f\|_\infty^{\frac{p-1}{p}} \|f\|_1^{\frac{1}{p}}$$
-$$\|f\|_p \le \|f\|_1^{\frac{1}{p}} \|f\|_\infty^{1 - \frac{1}{p}}$$
-Ce qui démontre la relation d'interpolation et prouve que $f \in L^p(\mu)$ puisque la borne droite est finie.
+L'idée est d'appliquer l'inégalité de Hölder classique deux fois.<br>Posons $\alpha$ tel que $\frac{1}{\alpha} = \frac{1}{p} + \frac{1}{q}$. Alors $\frac{1}{\alpha} + \frac{1}{r} = 1$.<br>Par l'inégalité de Hölder classique pour les exposants conjugués $\alpha$ et $r$ :<br>$\int |(fg)h| \le \|fg\|_\alpha \|h\|_r$.<br>Il nous reste à majorer $\|fg\|_\alpha$.<br>$\|fg\|_\alpha = (\int |fg|^\alpha)^{1/\alpha}$.<br>Appliquons Hölder à l'intégrale $\int |f|^\alpha |g|^\alpha$. Les exposants $p/\alpha$ et $q/\alpha$ sont conjugués car $\frac{\alpha}{p} + \frac{\alpha}{q} = \alpha(\frac{1}{p} + \frac{1}{q}) = \alpha \times \frac{1}{\alpha} = 1$.<br>Donc $\int |f|^\alpha |g|^\alpha \le (\int (|f|^\alpha)^{p/\alpha})^{\alpha/p} (\int (|g|^\alpha)^{q/\alpha})^{\alpha/q} = (\int |f|^p)^{\alpha/p} (\int |g|^q)^{\alpha/q}$.<br>En élevant à la puissance $1/\alpha$ :<br>$\|fg\|_\alpha = (\int |f|^\alpha |g|^\alpha)^{1/\alpha} \le (\int |f|^p)^{1/p} (\int |g|^q)^{1/q} = \|f\|_p \|g\|_q$.<br>On substitue cela dans la première inégalité :<br>$\|fgh\|_1 \le (\|f\|_p \|g\|_q) \|h\|_r = \|f\|_p \|g\|_q \|h\|_r$.

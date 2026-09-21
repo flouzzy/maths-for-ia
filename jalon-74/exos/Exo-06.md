@@ -1,18 +1,14 @@
-### Exercice 6 : Inclusion des espaces $L^p$ en probabilité \quad $\bigstar\bigstar\bigstar\star\star$
+---
+title: "Exercice 6 : Application des Inégalités"
+difficulty: "★★★★☆"
+---
+
+# Exercice 6 : Application des Inégalités
+
+**Niveau :** ★★★★☆
 
 **Énoncé :**
-Soit $(X, \mathcal{A}, \mathbb{P})$ un espace de probabilité. Soient $1 \le p < q \le \infty$.
-Montrer que $L^q(\mathbb{P}) \subset L^p(\mathbb{P})$ et que $\|X\|_p \le \|X\|_q$.
+Inégalité d'interpolation (Hölder itéré) : Si $p < r < q$, prouver que $\|f\|_r \le \|f\|_p^{1-\theta} \|f\|_q^\theta$ pour un certain $\theta \in ]0,1[$. Préciser $\theta$.
 
 **Correction Détaillée :**
-1. L'idée est d'utiliser Hölder en scindant $|X|^p$ en le produit de $|X|^p$ par la fonction constante $1$.
-2. On applique l'inégalité de Hölder à $|X|^p \in L^r$ et $1 \in L^s$, avec $\frac{1}{r} + \frac{1}{s} = 1$.
-3. On choisit $r$ tel que le produit $pr$ donne $q$. Donc $r = \frac{q}{p}$. Puisque $q > p \ge 1$, on a $r > 1$. Le conjugué est $s = \frac{r}{r-1} = \frac{q/p}{q/p - 1} = \frac{q}{q-p}$.
-4. Appliquons Hölder sur l'espace de probabilité :
-$$\int_X |X|^p \cdot 1 d\mathbb{P} \le \left( \int_X (|X|^p)^r d\mathbb{P} \right)^{\frac{1}{r}} \left( \int_X 1^s d\mathbb{P} \right)^{\frac{1}{s}}$$
-5. Puisque la mesure de l'espace entier est $\mathbb{P}(X) = 1$, l'intégrale de 1 est 1, donc $(1)^{\frac{1}{s}} = 1$.
-6. L'inégalité devient :
-$$\int_X |X|^p d\mathbb{P} \le \left( \int_X |X|^{pr} d\mathbb{P} \right)^{\frac{1}{r}} = \left( \int_X |X|^q d\mathbb{P} \right)^{\frac{p}{q}}$$
-7. En élevant tout à la puissance $1/p$ :
-$$\|X\|_p = \left( \int_X |X|^p d\mathbb{P} \right)^{\frac{1}{p}} \le \left( \int_X |X|^q d\mathbb{P} \right)^{\frac{1}{q}} = \|X\|_q$$
-Ceci montre que la norme $p$ est dominée par la norme $q$, et donc l'inclusion topologique $L^q \subset L^p$ pour les espaces de probabilité.
+Puisque $p < r < q$, on peut écrire $r$ comme une combinaison convexe de $p$ et $q$ sous la forme $\frac{1}{r} = \frac{1-\theta}{p} + \frac{\theta}{q}$ pour un certain $\theta \in ]0,1[$.<br>On a $r = r(1-\theta) + r\theta$.<br>L'intégrale de $\|f\|_r^r$ est $\int |f|^r = \int |f|^{r(1-\theta)} |f|^{r\theta}$.<br>Appliquons Hölder avec les exposants conjugués $u$ et $v$. On veut $u$ tel que $r(1-\theta)u = p$, donc $u = \frac{p}{r(1-\theta)}$.<br>Vérifions le conjugué $v$ : $1 - \frac{1}{u} = 1 - \frac{r(1-\theta)}{p}$.<br>Or $\frac{1-\theta}{p} = \frac{1}{r} - \frac{\theta}{q}$, donc $\frac{r(1-\theta)}{p} = 1 - \frac{r\theta}{q}$.<br>Ainsi $1 - \frac{1}{u} = 1 - (1 - \frac{r\theta}{q}) = \frac{r\theta}{q}$. Soit $v = \frac{q}{r\theta}$.<br>On applique Hölder : $\int |f|^r \le (\int (|f|^{r(1-\theta)})^u)^{1/u} (\int (|f|^{r\theta})^v)^{1/v}$.<br>$\int |f|^r \le (\int |f|^p)^{r(1-\theta)/p} (\int |f|^q)^{r\theta/q}$.<br>En élevant à la puissance $1/r$ : $\|f\|_r \le (\|f\|_p^p)^{\frac{1-\theta}{p}} (\|f\|_q^q)^{\frac{\theta}{q}} = \|f\|_p^{1-\theta} \|f\|_q^\theta$.<br>Cette inégalité garantit que $L^p \cap L^q \subset L^r$.

@@ -1,18 +1,14 @@
-### Exercice 9 : Continuité du produit scalaire via Cauchy-Schwarz \quad $\bigstar\bigstar\bigstar\bigstar\star$
+---
+title: "Exercice 9 : Application des Inégalités"
+difficulty: "★★★★★"
+---
+
+# Exercice 9 : Application des Inégalités
+
+**Niveau :** ★★★★★
 
 **Énoncé :**
-Soit un espace de Hilbert $H$. En utilisant l'inégalité de Cauchy-Schwarz, montrer que le produit scalaire $\langle \cdot, \cdot \rangle : H \times H \to \mathbb{R}$ est continu conjointement.
+Optimisation : Dans le cas de l'algorithme k-Means, montrer formellement par l'inégalité de Jensen que l'assignation d'un point au centroïde le plus proche minimise l'erreur quadratique sous une affectation de type distribution de probabilité molle.
 
 **Correction Détaillée :**
-1. Pour montrer la continuité, on doit borner la différence $|\langle x_n, y_n \rangle - \langle x, y \rangle|$ lorsque $x_n \to x$ et $y_n \to y$ dans $H$.
-2. On utilise l'astuce classique d'ajout/soustraction d'un terme croisé :
-$$\langle x_n, y_n \rangle - \langle x, y \rangle = \langle x_n, y_n \rangle - \langle x_n, y \rangle + \langle x_n, y \rangle - \langle x, y \rangle$$
-3. Par bilinéarité du produit scalaire :
-$$= \langle x_n, y_n - y \rangle + \langle x_n - x, y \rangle$$
-4. En prenant la valeur absolue et en appliquant l'inégalité triangulaire :
-$$|\langle x_n, y_n \rangle - \langle x, y \rangle| \le |\langle x_n, y_n - y \rangle| + |\langle x_n - x, y \rangle|$$
-5. On applique l'inégalité de Cauchy-Schwarz (cas $p=2$ de Hölder) à chaque terme :
-$$\le \|x_n\| \|y_n - y\| + \|x_n - x\| \|y\|$$
-6. Puisque $x_n \to x$, la suite $(x_n)$ est convergente donc bornée : il existe $M > 0$ tel que $\|x_n\| \le M$ pour tout $n$.
-7. Ainsi, $|\langle x_n, y_n \rangle - \langle x, y \rangle| \le M \|y_n - y\| + \|y\| \|x_n - x\|$.
-8. Comme $\|y_n - y\| \to 0$ et $\|x_n - x\| \to 0$, le membre de droite tend vers 0. Ceci prouve la continuité conjointe.
+L'erreur k-Means pour un point $x$ sous des probabilités d'affectation $q(k)$ telles que $\sum q(k) = 1$ est $\mathbb{E}_{k \sim q} [\|x - \mu_k\|^2] = \sum_k q(k) \|x - \mu_k\|^2$.<br>On cherche à minimiser cette quantité sur toutes les distributions $q$.<br>Soit $k^* = \arg\min_k \|x - \mu_k\|^2$.<br>Pour toute distribution $q$, comme $\|x - \mu_{k^*}\|^2 \le \|x - \mu_k\|^2$ pour tout $k$, on a par sommation (linéarité) :<br>$\sum_k q(k) \|x - \mu_{k^*}\|^2 \le \sum_k q(k) \|x - \mu_k\|^2$.<br>Comme $\sum_k q(k) = 1$, le terme de gauche vaut $\|x - \mu_{k^*}\|^2$.<br>Donc $\min_k \|x - \mu_k\|^2 \le \sum_k q(k) \|x - \mu_k\|^2$.<br>La borne inférieure est atteinte précisément par la distribution déterministe $q(k) = 1$ si $k=k^*$, et $0$ sinon.<br>Bien que ce soit un cas trivial d'optimisation linéaire sur un simplexe (qui est convexe), cela illustre comment des espérances (Jensen) sur des choix discrets forcent des solutions de type Dirac (Hard-assignement).

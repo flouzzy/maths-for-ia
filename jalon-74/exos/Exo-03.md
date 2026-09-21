@@ -1,12 +1,14 @@
-### Exercice 3 : L'inégalité de Jensen pour la variance \quad $\bigstar\bigstar\star\star\star$
+---
+title: "Exercice 3 : Application des Inégalités"
+difficulty: "★★★☆☆"
+---
+
+# Exercice 3 : Application des Inégalités
+
+**Niveau :** ★★★☆☆
 
 **Énoncé :**
-Montrer que pour toute variable aléatoire $X$ admettant un moment d'ordre 2, $\mathbb{E}[X^2] \ge (\mathbb{E}[X])^2$.
+En utilisant l'inégalité de Jensen, prouver l'inégalité arithmético-géométrique : pour tous réels strictement positifs $x_1, \dots, x_n$, $\sqrt[n]{x_1 x_2 \dots x_n} \le \frac{x_1 + \dots + x_n}{n}$.
 
 **Correction Détaillée :**
-1. Soit la fonction $\phi(x) = x^2$. Cette fonction est deux fois dérivable sur $\mathbb{R}$ et $\phi''(x) = 2 > 0$, donc elle est strictement convexe.
-2. L'inégalité de Jensen stipule que pour une fonction convexe $\phi$, $\phi(\mathbb{E}[X]) \le \mathbb{E}[\phi(X)]$.
-3. Appliquons ceci à notre fonction carré :
-$$(\mathbb{E}[X])^2 \le \mathbb{E}[X^2]$$
-4. En corollaire direct, la variance $\text{Var}(X) = \mathbb{E}[X^2] - (\mathbb{E}[X])^2$ est nécessairement positive ou nulle.
-5. De plus, le cas d'égalité dans Jensen stricte se produit si et seulement si la variable aléatoire est constante presque sûrement. Donc $\text{Var}(X) = 0 \iff X = \mathbb{E}[X]$ p.s.
+La fonction $t \mapsto -\ln(t)$ est strictement convexe sur $\mathbb{R}_{>0}$ (sa dérivée seconde est $1/t^2 > 0$).<br>Considérons l'espace fini $\{1, 2, \dots, n\}$ avec la mesure de probabilité uniforme $\mu(\{i\}) = 1/n$.<br>Définissons la variable aléatoire (ou fonction) $X(i) = x_i$.<br>L'espérance de $X$ est $\mathbb{E}[X] = \frac{1}{n} \sum_{i=1}^n x_i$.<br>L'inégalité de Jensen énonce que $\phi(\mathbb{E}[X]) \le \mathbb{E}[\phi(X)]$.<br>$-\ln\left( \frac{1}{n} \sum_{i=1}^n x_i \right) \le \frac{1}{n} \sum_{i=1}^n -\ln(x_i)$.<br>$-\ln\left( \frac{x_1 + \dots + x_n}{n} \right) \le -\frac{1}{n} \ln(x_1 x_2 \dots x_n) = -\ln\left( (x_1 \dots x_n)^{1/n} \right)$.<br>En multipliant par $-1$ (l'inégalité change de sens) : $\ln\left( \frac{x_1 + \dots + x_n}{n} \right) \ge \ln\left( \sqrt[n]{x_1 \dots x_n} \right)$.<br>La fonction exponentielle étant strictement croissante, on déduit le résultat voulu.
