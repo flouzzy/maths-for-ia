@@ -16,3 +16,8 @@ update_readme.py
 *.log
 *.toc
 *.out
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.toc
