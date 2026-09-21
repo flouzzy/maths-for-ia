@@ -1,22 +1,14 @@
-# Exercice 6 : Hölder généralisé pour trois fonctions
+---
+title: "Exercice 6 : Application des Inégalités"
+difficulty: "★★★★☆"
+---
 
-**Difficulté :** ★★★☆☆
+# Exercice 6 : Application des Inégalités
 
+**Niveau :** ★★★★☆
 
-## Énoncé
-Soient $p, q, r \in [1, +\infty]$ tels que $\frac{1}{p} + \frac{1}{q} + \frac{1}{r} = 1$. Démontrer que pour $f \in L^p$, $g \in L^q$ et $h \in L^r$, l'on a :
-$$ \|fgh\|_1 \le \|f\|_p \|g\|_q \|h\|_r $$
+**Énoncé :**
+Inégalité d'interpolation (Hölder itéré) : Si $p < r < q$, prouver que $\|f\|_r \le \|f\|_p^{1-\theta} \|f\|_q^\theta$ pour un certain $\theta \in ]0,1[$. Préciser $\theta$.
 
-## Correction Détaillée
-Posons $s$ tel que $\frac{1}{s} = \frac{1}{p} + \frac{1}{q}$. Puisque $\frac{1}{p} + \frac{1}{q} + \frac{1}{r} = 1$, il s'ensuit que $\frac{1}{s} + \frac{1}{r} = 1$, ce qui signifie que $s$ et $r$ sont des exposants conjugués.
-De plus, $\frac{p}{s} + \frac{q}{s} = 1$, ce qui implique que $p/s$ et $q/s$ sont également conjugués.
-Commençons par appliquer l'inégalité de Hölder classique à $|f|^s$ et $|g|^s$ avec les exposants conjugués $p/s$ et $q/s$ :
-$$ \int |fg|^s = \int |f|^s |g|^s \le \left( \int (|f|^s)^{p/s} \right)^{s/p} \left( \int (|g|^s)^{q/s} \right)^{s/q} = \left(\int |f|^p\right)^{s/p} \left(\int |g|^q\right)^{s/q} $$
-En élevant à la puissance $1/s$, on obtient :
-$$ \left( \int |fg|^s \right)^{1/s} \le \left(\int |f|^p\right)^{1/p} \left(\int |g|^q\right)^{1/q} $$
-C'est-à-dire $\|fg\|_s \le \|f\|_p \|g\|_q$. Le produit $fg$ appartient donc à $L^s$.
-Appliquons maintenant l'inégalité de Hölder au produit $(fg)$ et $h$, avec les exposants conjugués $s$ et $r$ :
-$$ \|fgh\|_1 = \|(fg)h\|_1 \le \|fg\|_s \|h\|_r $$
-En substituant la majoration obtenue précédemment pour $\|fg\|_s$, on arrive au résultat final :
-$$ \|fgh\|_1 \le \|f\|_p \|g\|_q \|h\|_r $$
-La preuve est ainsi rigoureusement établie par application itérée de l'inégalité classique.
+**Correction Détaillée :**
+Puisque $p < r < q$, on peut écrire $r$ comme une combinaison convexe de $p$ et $q$ sous la forme $\frac{1}{r} = \frac{1-\theta}{p} + \frac{\theta}{q}$ pour un certain $\theta \in ]0,1[$.<br>On a $r = r(1-\theta) + r\theta$.<br>L'intégrale de $\|f\|_r^r$ est $\int |f|^r = \int |f|^{r(1-\theta)} |f|^{r\theta}$.<br>Appliquons Hölder avec les exposants conjugués $u$ et $v$. On veut $u$ tel que $r(1-\theta)u = p$, donc $u = \frac{p}{r(1-\theta)}$.<br>Vérifions le conjugué $v$ : $1 - \frac{1}{u} = 1 - \frac{r(1-\theta)}{p}$.<br>Or $\frac{1-\theta}{p} = \frac{1}{r} - \frac{\theta}{q}$, donc $\frac{r(1-\theta)}{p} = 1 - \frac{r\theta}{q}$.<br>Ainsi $1 - \frac{1}{u} = 1 - (1 - \frac{r\theta}{q}) = \frac{r\theta}{q}$. Soit $v = \frac{q}{r\theta}$.<br>On applique Hölder : $\int |f|^r \le (\int (|f|^{r(1-\theta)})^u)^{1/u} (\int (|f|^{r\theta})^v)^{1/v}$.<br>$\int |f|^r \le (\int |f|^p)^{r(1-\theta)/p} (\int |f|^q)^{r\theta/q}$.<br>En élevant à la puissance $1/r$ : $\|f\|_r \le (\|f\|_p^p)^{\frac{1-\theta}{p}} (\|f\|_q^q)^{\frac{\theta}{q}} = \|f\|_p^{1-\theta} \|f\|_q^\theta$.<br>Cette inégalité garantit que $L^p \cap L^q \subset L^r$.

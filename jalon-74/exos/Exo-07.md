@@ -1,18 +1,14 @@
-# Exercice 7 : Cas d'égalité dans l'inégalité de Hölder
+---
+title: "Exercice 7 : Application des Inégalités"
+difficulty: "★★★★★"
+---
 
-**Difficulté :** ★★★★☆
+# Exercice 7 : Application des Inégalités
 
+**Niveau :** ★★★★★
 
-## Énoncé
-Soient $p, q \in ]1, \infty[$ des exposants conjugués. Déterminer les conditions nécessaires et suffisantes sur $f \in L^p$ et $g \in L^q$ pour que $\|fg\|_1 = \|f\|_p \|g\|_q$.
+**Énoncé :**
+Utiliser Minkowski pour montrer que l'espace $L^p$ muni de sa norme est un espace normé (vérifier l'axiome de séparation et l'homogénéité).
 
-## Correction Détaillée
-La preuve de l'inégalité de Hölder repose fondamentalement sur le lemme de Young. Pour que l'inégalité globale soit une égalité, l'inégalité ponctuelle de Young doit être une égalité presque partout (p.p.).
-Rappelons que pour les fonctions normalisées $u = |f|/\|f\|_p$ et $v = |g|/\|g\|_q$, l'égalité dans le lemme de Young $uv = \frac{u^p}{p} + \frac{v^q}{q}$ a lieu si et seulement si $u^p = v^q$.
-En remplaçant $u$ et $v$ par leurs expressions :
-$$ \frac{|f(x)|^p}{\|f\|_p^p} = \frac{|g(x)|^q}{\|g\|_q^q} \quad \text{p.p.} $$
-Ceci implique qu'il existe une constante $c > 0$ telle que $|f(x)|^p = c |g(x)|^q$ presque partout (avec $c = \|f\|_p^p / \|g\|_q^q$).
-De plus, dans la preuve de Hölder, nous avons utilisé l'inégalité ponctuelle $|f(x)g(x)| \le |f(x)||g(x)|$, qui n'est une égalité que si $f(x)g(x)$ a un argument (un signe) constant p.p. sur le support commun.
-En résumé, l'égalité dans Hölder se produit si et seulement si :
-1. $|f|^p$ et $|g|^q$ sont proportionnelles presque partout.
-2. $\text{sgn}(f(x)g(x))$ est constant presque partout où le produit est non nul.
+**Correction Détaillée :**
+Pour que $(L^p, \|\cdot\|_p)$ soit un espace vectoriel normé, il faut vérifier trois axiomes.<br>1. Séparation : $\|f\|_p = 0 \iff \int |f|^p = 0$. Comme l'intégrale d'une fonction positive n'est nulle que si la fonction est nulle presque partout, $f = 0$ p.p. C'est l'intérêt du quotient de l'espace $\mathcal{L}^p$ par la relation d'équivalence $f \sim g$ ssi $f = g$ p.p.<br>2. Homogénéité absolue : $\|\lambda f\|_p = (\int |\lambda f|^p)^{1/p} = (\int |\lambda|^p |f|^p)^{1/p} = (|\lambda|^p \int |f|^p)^{1/p} = |\lambda| \|f\|_p$.<br>3. Inégalité triangulaire : C'est exactement le théorème de Minkowski, $\|f+g\|_p \le \|f\|_p + \|g\|_p$.<br>Les trois axiomes sont vérifiés, l'espace $L^p$ (au sens du quotient) est bien un espace vectoriel normé.

@@ -1,25 +1,14 @@
-# Exercice 1 : Application directe du lemme de Young
+---
+title: "Exercice 1 : Application des Inégalités"
+difficulty: "★☆☆☆☆"
+---
 
-**Difficulté :** ★☆☆☆☆
+# Exercice 1 : Application des Inégalités
 
+**Niveau :** ★☆☆☆☆
 
-## Énoncé
-Soient $a = 2$, $b = 3$, $p = 3$ et $q = 3/2$.
-1. Vérifier que $p$ et $q$ sont conjugués.
-2. Calculer $ab$ et $\frac{a^p}{p} + \frac{b^q}{q}$.
-3. Vérifier l'inégalité de Young.
+**Énoncé :**
+Montrer, en utilisant l'inégalité de Cauchy-Schwarz ($L^2$ sur un espace discret fini), que pour tous réels $a,b,c$, on a $(a+b+c)^2 \le 3(a^2+b^2+c^2)$.
 
-## Correction Détaillée
-1. Vérification des exposants conjugués :
-$$ \frac{1}{p} + \frac{1}{q} = \frac{1}{3} + \frac{2}{3} = \frac{3}{3} = 1 $$
-Les exposants sont bien conjugués.
-
-2. Calcul des termes :
-- $ab = 2 \times 3 = 6$.
-- $a^p/p = 2^3/3 = 8/3 \approx 2.667$.
-- $b^q/q = 3^{3/2} / (3/2) = \frac{2}{3} \times 3\sqrt{3} = 2\sqrt{3} \approx 2 \times 1.732 = 3.464$.
-- Somme : $8/3 + 2\sqrt{3} \approx 2.667 + 3.464 = 6.131$.
-
-3. Vérification de l'inégalité :
-On a $ab = 6$ et $\frac{a^p}{p} + \frac{b^q}{q} \approx 6.131$.
-Puisque $6 \le 6.131$, l'inégalité $ab \le \frac{a^p}{p} + \frac{b^q}{q}$ est bien vérifiée.
+**Correction Détaillée :**
+L'inégalité de Cauchy-Schwarz sur $\mathbb{R}^3$ s'écrit $|\sum_{i=1}^3 u_i v_i| \le \sqrt{\sum u_i^2} \sqrt{\sum v_i^2}$.<br>Posons le vecteur $u = (a, b, c)$ et le vecteur $v = (1, 1, 1)$.<br>Le produit scalaire est $u \cdot v = a(1) + b(1) + c(1) = a+b+c$.<br>Les normes euclidiennes au carré sont $\|u\|^2 = a^2+b^2+c^2$ et $\|v\|^2 = 1^2+1^2+1^2 = 3$.<br>En élevant Cauchy-Schwarz au carré : $(u \cdot v)^2 \le \|u\|^2 \|v\|^2$.<br>Soit $(a+b+c)^2 \le 3(a^2+b^2+c^2)$. La preuve est complète.

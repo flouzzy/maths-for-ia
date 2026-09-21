@@ -1,24 +1,14 @@
-# Exercice 5 : Inégalité arithmético-géométrique via Jensen
+---
+title: "Exercice 5 : Application des Inégalités"
+difficulty: "★★★★☆"
+---
 
-**Difficulté :** ★★★☆☆
+# Exercice 5 : Application des Inégalités
 
+**Niveau :** ★★★★☆
 
-## Énoncé
-Utiliser l'inégalité de Jensen pour démontrer l'inégalité arithmético-géométrique pour $n$ réels strictement positifs $x_1, \dots, x_n$ :
-$$ (x_1 x_2 \dots x_n)^{1/n} \le \frac{x_1 + \dots + x_n}{n} $$
+**Énoncé :**
+Démontrer que sur un espace probabilisé, la norme $L^p$ d'une variable aléatoire $X$ est une fonction croissante de $p$ : $\|X\|_p \le \|X\|_q$ pour $1 \le p \le q$.
 
-## Correction Détaillée
-Soit $I = ]0, +\infty[$ et $\varphi(t) = -\ln(t)$. La fonction $\varphi$ est strictement convexe sur $I$ car sa dérivée seconde $\varphi''(t) = \frac{1}{t^2} > 0$.
-Soit $X$ une variable aléatoire discrète qui prend les valeurs $x_i$ de manière équiprobable, c'est-à-dire avec $\mathbb{P}(X = x_i) = \frac{1}{n}$.
-Appliquons l'inégalité de Jensen : $\varphi(\mathbb{E}[X]) \le \mathbb{E}[\varphi(X)]$.
-1. Calcul de $\varphi(\mathbb{E}[X])$ :
-$$ \mathbb{E}[X] = \frac{1}{n}\sum_{i=1}^n x_i \quad \implies \quad \varphi(\mathbb{E}[X]) = -\ln\left( \frac{1}{n}\sum_{i=1}^n x_i \right) $$
-2. Calcul de $\mathbb{E}[\varphi(X)]$ :
-$$ \mathbb{E}[\varphi(X)] = \sum_{i=1}^n \frac{1}{n} \varphi(x_i) = \frac{1}{n} \sum_{i=1}^n (-\ln(x_i)) = -\frac{1}{n} \ln\left( \prod_{i=1}^n x_i \right) = -\ln\left( \left(\prod_{i=1}^n x_i\right)^{1/n} \right) $$
-L'inégalité de Jensen donne donc :
-$$ -\ln\left( \frac{1}{n}\sum_{i=1}^n x_i \right) \le -\ln\left( \left(\prod_{i=1}^n x_i\right)^{1/n} \right) $$
-En multipliant par $-1$ (ce qui inverse le sens de l'inégalité) :
-$$ \ln\left( \frac{1}{n}\sum_{i=1}^n x_i \right) \ge \ln\left( \left(\prod_{i=1}^n x_i\right)^{1/n} \right) $$
-La fonction exponentielle étant strictement croissante, on compose par l'exponentielle des deux côtés pour obtenir :
-$$ \frac{x_1 + \dots + x_n}{n} \ge (x_1 x_2 \dots x_n)^{1/n} $$
-Ce qui achève la démonstration.
+**Correction Détaillée :**
+On souhaite montrer que $\left(\int |X|^p dP\right)^{1/p} \le \left(\int |X|^q dP\right)^{1/q}$ sachant $\int 1 dP = 1$.<br>Considérons la fonction $\phi(t) = |t|^{q/p}$. Comme $q/p \ge 1$, sa dérivée seconde contient un facteur $\frac{q}{p}(\frac{q}{p}-1) \ge 0$, donc $\phi$ est convexe sur $\mathbb{R}$.<br>Appliquons l'inégalité de Jensen à la variable aléatoire $Y = |X|^p$ avec la fonction $\phi$ :<br>$\phi(\mathbb{E}[Y]) \le \mathbb{E}[\phi(Y)]$.<br>Ceci se traduit par : $(\mathbb{E}[|X|^p])^{q/p} \le \mathbb{E}[(|X|^p)^{q/p}] = \mathbb{E}[|X|^q]$.<br>En prenant la puissance $1/q$ des deux côtés, on obtient :<br>$(\mathbb{E}[|X|^p])^{1/p} \le (\mathbb{E}[|X|^q])^{1/q}$.<br>Soit exactement $\|X\|_p \le \|X\|_q$.<br>Note : ce résultat nécessite que la mesure totale soit 1 (ou finie avec ajustement).

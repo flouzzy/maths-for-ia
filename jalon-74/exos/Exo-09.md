@@ -1,25 +1,14 @@
-# Exercice 9 : Inégalité de Jensen pour les espérances conditionnelles
+---
+title: "Exercice 9 : Application des Inégalités"
+difficulty: "★★★★★"
+---
 
-**Difficulté :** ★★★★★
+# Exercice 9 : Application des Inégalités
 
+**Niveau :** ★★★★★
 
-## Énoncé
-Dans le cadre de la théorie probabiliste moderne, prouver l'inégalité de Jensen conditionnelle : si $\varphi$ est convexe et $X$ intégrable, alors pour toute sous-tribu $\mathcal{G}$, on a presque sûrement :
-$$ \varphi(\mathbb{E}[X|\mathcal{G}]) \le \mathbb{E}[\varphi(X)|\mathcal{G}] $$
+**Énoncé :**
+Optimisation : Dans le cas de l'algorithme k-Means, montrer formellement par l'inégalité de Jensen que l'assignation d'un point au centroïde le plus proche minimise l'erreur quadratique sous une affectation de type distribution de probabilité molle.
 
-## Correction Détaillée
-Toute fonction convexe $\varphi : \mathbb{R} \to \mathbb{R}$ peut s'écrire comme l'enveloppe supérieure d'une famille dénombrable de fonctions affines. Plus précisément, il existe des suites réelles $(a_n)_{n\in\mathbb{N}}$ et $(b_n)_{n\in\mathbb{N}}$ telles que pour tout $x \in \mathbb{R}$ :
-$$ \varphi(x) = \sup_{n \in \mathbb{N}} (a_n x + b_n) $$
-Pour un $n$ fixé, considérons l'inégalité triviale $a_n X + b_n \le \varphi(X)$.
-L'opérateur d'espérance conditionnelle par rapport à $\mathcal{G}$ possède deux propriétés fondamentales : la croissance (monotonie) et la linéarité.
-En appliquant l'espérance conditionnelle aux deux membres de l'inégalité, nous obtenons presque sûrement :
-$$ \mathbb{E}[a_n X + b_n | \mathcal{G}] \le \mathbb{E}[\varphi(X) | \mathcal{G}] $$
-Par linéarité de $\mathbb{E}[\cdot | \mathcal{G}]$ :
-$$ a_n \mathbb{E}[X | \mathcal{G}] + b_n \le \mathbb{E}[\varphi(X) | \mathcal{G}] $$
-Cette inégalité est vraie presque sûrement pour *chaque* $n \in \mathbb{N}$. L'union dénombrable d'ensembles de mesure nulle étant de mesure nulle, cette inégalité est vraie simultanément pour tous les $n$ presque sûrement.
-Ainsi, nous pouvons prendre le supremum sur $n$ du côté gauche tout en conservant l'inégalité :
-$$ \sup_{n \in \mathbb{N}} \left( a_n \mathbb{E}[X | \mathcal{G}] + b_n \right) \le \mathbb{E}[\varphi(X) | \mathcal{G}] \quad \text{p.s.} $$
-Par définition de l'enveloppe affine, le terme de gauche n'est autre que l'évaluation de $\varphi$ en la variable aléatoire $\mathbb{E}[X | \mathcal{G}]$.
-D'où le résultat final :
-$$ \varphi(\mathbb{E}[X|\mathcal{G}]) \le \mathbb{E}[\varphi(X)|\mathcal{G}] \quad \text{p.s.} $$
-La démonstration met en lumière la puissance de la dualité (fonction comme supremum de minorantes) couplée à la monotonie de l'intégrale.
+**Correction Détaillée :**
+L'erreur k-Means pour un point $x$ sous des probabilités d'affectation $q(k)$ telles que $\sum q(k) = 1$ est $\mathbb{E}_{k \sim q} [\|x - \mu_k\|^2] = \sum_k q(k) \|x - \mu_k\|^2$.<br>On cherche à minimiser cette quantité sur toutes les distributions $q$.<br>Soit $k^* = \arg\min_k \|x - \mu_k\|^2$.<br>Pour toute distribution $q$, comme $\|x - \mu_{k^*}\|^2 \le \|x - \mu_k\|^2$ pour tout $k$, on a par sommation (linéarité) :<br>$\sum_k q(k) \|x - \mu_{k^*}\|^2 \le \sum_k q(k) \|x - \mu_k\|^2$.<br>Comme $\sum_k q(k) = 1$, le terme de gauche vaut $\|x - \mu_{k^*}\|^2$.<br>Donc $\min_k \|x - \mu_k\|^2 \le \sum_k q(k) \|x - \mu_k\|^2$.<br>La borne inférieure est atteinte précisément par la distribution déterministe $q(k) = 1$ si $k=k^*$, et $0$ sinon.<br>Bien que ce soit un cas trivial d'optimisation linéaire sur un simplexe (qui est convexe), cela illustre comment des espérances (Jensen) sur des choix discrets forcent des solutions de type Dirac (Hard-assignement).
