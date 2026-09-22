@@ -188,7 +188,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 
 - **[Jalon 73](jalon-73/Jalon-73.md)** : Définition des espaces $\mathcal{L}^p$ et passage à l'espace quotient $L^p$ (égalité presque partout). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 74](jalon-74/Jalon-74.md)** : Inégalités fondamentales de l'analyse fonctionnelle : Hölder et Minkowski.
-- **[Jalon 75](jalon-75/Jalon%2075%20%28Preuve%20de%20la%20compl%C3%A9tude%20des%20espaces%20-L%5Ep-%29.md)** : Preuve de la complétude des espaces $L^p$ (Théorème de Riesz-Fischer) : structure de Banach.
+- **[Jalon 75](jalon-75/Jalon-75.md)** : Preuve de la complétude des espaces $L^p$ (Théorème de Riesz-Fischer) : structure de Banach. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 76](jalon-76/Jalon%2076%20%28Propri%C3%A9t%C3%A9s%20g%C3%A9om%C3%A9triques%20de%20l%27espace%20de%20Hilbert%20-L%5E2-%29.md)** : Propriétés géométriques de l'espace de Hilbert $L^2$, produit scalaire et identité du parallélogramme.
 - **[Jalon 77](jalon-77/Jalon%2077%20%28Densit%C3%A9%20des%20fonctions%20simples%29.md)** : Densité des fonctions simples, des fonctions continues à support compact et des fonctions lisses dans $L^p$.
 - **[Jalon 78](jalon-78/Jalon%2078%20%28S%C3%A9ries%20de%20Fourier%29.md)** : Séries de Fourier, calcul des coefficients, convergence ponctuelle (théorème de Dirichlet).
