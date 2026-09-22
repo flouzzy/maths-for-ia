@@ -21,3 +21,6 @@ update_readme.py
 *.aux
 *.log
 *.toc
+*.aux
+*.log
+*.toc
