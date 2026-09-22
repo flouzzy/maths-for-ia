@@ -1,15 +1,18 @@
-# Exercice 3 : Extraction de sous-suite convergente p.p.
-**Difficulté :** $\bigstar\bigstar\star\star\star$
-
+\subsection*{Exercice 3 : Complétude d'une suite de fonctions géométriques \quad $\bigstar\bigstar$}
 **Énoncé :**
-En reprenant la suite $(f_n)$ de l'exercice 2, extraire explicitement une sous-suite $(f_{\varphi(n)})$ qui converge presque partout vers $0$.
+Sur l'espace $\mathbb{R}$ muni de la mesure de Lebesgue, on considère la suite de fonctions $f_n(x) = e^{-n|x|}$.
+1. Calculer $\|f_n\|_1$.
+2. Montrer que la série $\sum_{n=1}^\infty f_n(x)$ converge presque partout vers une fonction limite $F(x)$.
+3. Montrer que la somme de la série converge dans $L^1(\mathbb{R})$.
 
-**Correction :**
-La suite est $f_n = \mathbf{1}_{I_{k,j}}$ avec $n = \frac{k(k-1)}{2} + j + 1$.
-Pour extraire une sous-suite convergente presque partout vers 0, il suffit de choisir, pour chaque $k$, le premier intervalle $I_{k,0} = [0, 1/k]$.
-Posons $\varphi(k) = \frac{k(k-1)}{2} + 1$ (ce qui correspond à $j=0$).
-Alors $g_k = f_{\varphi(k)} = \mathbf{1}_{[0, 1/k]}$.
-Soit $x \in ]0, 1]$. Par la propriété d'Archimède, il existe $K \in \mathbb{N}^*$ tel que $1/K < x$. Pour tout $k \ge K$, $1/k \le 1/K < x$, donc $x \notin [0, 1/k]$. Ainsi $g_k(x) = 0$ pour tout $k \ge K$.
-La suite $(g_k(x))$ est nulle à partir d'un certain rang, donc elle converge vers 0.
-La seule exception est $x=0$, où $g_k(0) = 1$ pour tout $k$, donc $g_k(0) \to 1$.
-Ainsi, $(f_{\varphi(k)})$ converge vers $0$ ponctuellement sur $]0, 1]$, c'est-à-dire presque partout (puisque $\{0\}$ est de mesure nulle).
+**Correction détaillée :**
+1. On calcule la norme $L^1$ de $f_n$ :
+   $\|f_n\|_1 = \int_{-\infty}^{\infty} e^{-n|x|} \, dx = 2 \int_0^\infty e^{-nx} \, dx = 2 \left[ \frac{-e^{-nx}}{n} \right]_0^\infty = \frac{2}{n}$.
+2. D'après le théorème de convergence de Riesz-Fischer (via convergence absolue), si $\sum \|f_n\|_1 < \infty$, alors on a convergence presque partout. Ici, $\sum \|f_n\|_1 = 2 \sum \frac{1}{n} = +\infty$. On ne peut donc pas utiliser Riesz-Fischer directement !
+   Cependant, on peut calculer directement. Pour $x \neq 0$, $|e^{-|x|}| < 1$. C'est une suite géométrique de raison $q = e^{-|x|} < 1$.
+   La série $\sum_{n=1}^\infty (e^{-|x|})^n$ converge pour tout $x \neq 0$, c'est-à-dire presque partout (en dehors de l'ensemble de mesure nulle $\{0\}$).
+   La limite vaut $F(x) = \frac{e^{-|x|}}{1 - e^{-|x|}} = \frac{1}{e^{|x|} - 1}$.
+3. Montrons que $F \in L^1(\mathbb{R})$.
+   Au voisinage de $0$, $e^{|x|} - 1 \sim |x|$, donc $F(x) \sim \frac{1}{|x|}$, qui N'EST PAS intégrable en 0.
+   L'intégrale $\int_0^1 \frac{dx}{x} = \infty$.
+   Donc $F \notin L^1(\mathbb{R})$. La série des normes divergeait, ce n'est donc pas une contradiction. La somme dans $L^1$ ne converge pas. Cet exercice illustre la nécessité de l'hypothèse $\sum \|f_n\| < \infty$ pour obtenir la complétude dans l'espace. \qed

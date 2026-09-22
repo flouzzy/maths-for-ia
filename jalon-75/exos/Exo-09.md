@@ -1,19 +1,16 @@
-# Exercice 9 : Convergence Rapide et Extraction
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
-
+\subsection*{Exercice 9 : Contre-exemple sur l'inclusion inverse $L^p \subset L^q$ \quad $\bigstar\bigstar\bigstar$}
 **Énoncé :**
-Soit $(f_n)$ une suite dans $L^p(X)$ convergeant vers $f \in L^p(X)$.
-1. Montrer qu'il existe une sous-suite $(f_{n_k})$ telle que $\|f_{n_{k+1}} - f_{n_k}\|_p \le 2^{-k}$.
-2. En déduire directement l'existence d'une sous-suite convergeant presque partout vers $f$.
+Sur l'espace $\mathbb{R}$ muni de la mesure de Lebesgue.
+1. Trouver $f$ telle que $f \in L^1(\mathbb{R})$ mais $f \notin L^2(\mathbb{R})$.
+2. Trouver $g$ telle que $g \in L^2(\mathbb{R})$ mais $g \notin L^1(\mathbb{R})$.
 
-**Correction :**
-1. Puisque $f_n \to f$, c'est une suite de Cauchy. Pour $\varepsilon = 1/2$, il existe $n_1$ tel que $m \ge n_1 \implies \|f_m - f_{n_1}\|_p \le 1/2$.
-Par récurrence, ayant choisi $n_k$, il existe $n_{k+1} > n_k$ tel que $m \ge n_{k+1} \implies \|f_m - f\|_p \le 2^{-(k+2)}$.
-Alors $\|f_{n_{k+1}} - f_{n_k}\|_p \le \|f_{n_{k+1}} - f\|_p + \|f - f_{n_k}\|_p \le 2^{-(k+2)} + 2^{-(k+1)} < 2^{-k}$.
-2. Soit $u_k = f_{n_{k+1}} - f_{n_k}$. On a $\sum_{k=1}^\infty \|u_k\|_p \le \sum 2^{-k} = 1 < \infty$.
-Par l'argument vu au Théorème de Riesz-Fischer, la série $\sum u_k(x)$ converge absolument pour presque tout $x$.
-Or $f_{n_{K+1}}(x) = f_{n_1}(x) + \sum_{k=1}^K u_k(x)$.
-Donc $f_{n_K}(x)$ converge p.p. vers une limite finie $\tilde{f}(x)$.
-Puisque $f_{n_K}$ converge vers $\tilde{f}$ p.p., on a par le lemme de Fatou que $\tilde{f} \in L^p$ et $f_{n_K} \to \tilde{f}$ dans $L^p$.
-Mais on sait déjà que $f_{n_K} \to f$ dans $L^p$. Par unicité de la limite dans $L^p$, $f = \tilde{f}$ p.p.
-Donc $f_{n_K}(x) \to f(x)$ p.p.
+**Correction détaillée :**
+1. Pour avoir $f \in L^1$ mais hors de $L^2$, il faut créer une singularité violente mais d'aire finie. On regarde au voisinage de 0.
+   Soit $f(x) = \frac{1}{\sqrt{x}} \mathbf{1}_{]0, 1]}(x)$.
+   $\int f = \int_0^1 x^{-1/2} \, dx = [2x^{1/2}]_0^1 = 2 < \infty$. Donc $f \in L^1(\mathbb{R})$.
+   $\int |f|^2 = \int_0^1 \frac{1}{x} \, dx = [\ln x]_0^1 = \infty$. Donc $f \notin L^2(\mathbb{R})$.
+2. Pour avoir $g \in L^2$ mais hors de $L^1$, il faut une fonction qui décroît lentement à l'infini (les singularités sont lissées).
+   Soit $g(x) = \frac{1}{x} \mathbf{1}_{[1, \infty[}(x)$.
+   $\int |g|^2 = \int_1^\infty \frac{1}{x^2} \, dx = 1 < \infty$. Donc $g \in L^2(\mathbb{R})$.
+   $\int |g| = \int_1^\infty \frac{1}{x} \, dx = \infty$. Donc $g \notin L^1(\mathbb{R})$.
+Ces contre-exemples illustrent qu'il n'y a pas d'inclusion stricte entre espaces $L^p$ sur un espace de mesure infinie comme $\mathbb{R}$. \qed

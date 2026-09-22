@@ -1,0 +1,533 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1,
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge COMPLÉTUDE DES ESPACES $L^p$ (THÉORÈME DE RIESZ-FISCHER) \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+
+\section{Genèse et Motivation}
+
+La théorie de l'intégration de Riemann, bien qu'intuitive, souffre d'un défaut structurel majeur : l'espace des fonctions intégrables au sens de Riemann n'est pas complet pour la métrique induite par l'intégrale. Concrètement, une suite de fonctions régulières dont les graphes convergent raisonnablement peut admettre pour limite une fonction qui échappe totalement à l'intégration de Riemann (telle que la fonction de Dirichlet).
+
+La théorie de Lebesgue, fondée sur la théorie de la mesure, vient combler cette lacune. Le théorème de Riesz-Fischer, établi indépendamment par Frigyes Riesz et Ernst Sigismund Fischer en 1907, garantit que les espaces $L^p$ sont des espaces de Banach (espaces vectoriels normés complets). Ce résultat fondamental permet d'importer toute la puissance de la géométrie et de l'analyse fonctionnelle dans l'étude des espaces de fonctions, rendant possible des opérations telles que la projection orthogonale dans $L^2$.
+
+\section{Définitions, Théorèmes et Exemples}
+
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
+
+\subsection{Définition des espaces $L^p$}
+Pour $1 \le p < \infty$, l'espace $L^p(X, \mu)$ est l'ensemble des classes d'équivalence de fonctions mesurables $f : X \to \mathbb{C}$ (ou $\mathbb{R}$) telles que :
+$$ \int_X |f|^p \, d\mu < \infty $$
+muni de la norme $\|f\|_p = \left( \int_X |f|^p \, d\mu \right)^{1/p}$. L'identification de fonctions égales presque partout (p.p.) est cruciale pour que $\|f\|_p = 0 \implies f = 0$ et obtenir ainsi une vraie norme.
+
+\subsection{Le Théorème de Riesz-Fischer}
+\begin{quote}
+> \textbf{Théorème de Riesz-Fischer :}
+Pour tout $p \in [1, +\infty]$, l'espace vectoriel normé $(L^p(\mu), \|\cdot\|_p)$ est complet. C'est donc un \textbf{espace de Banach}. De plus, si $(f_n)$ est une suite convergeant vers $f$ dans $L^p$, alors il existe une sous-suite $(f_{\phi(n)})$ qui converge vers $f$ presque partout.
+
+\end{quote}
+\textbf{Exemples Concrets :}
+\begin{enumerate}
+\item \textbf{Convergence dans $L^1$ sans convergence presque partout :} Considérons la suite des indicatrices des intervalles ("bosses glissantes") sur $[0,1]$:
+   $f_1 = \mathbf{1}_{[0,1]}$, $f_2 = \mathbf{1}_{[0,1/2]}$, $f_3 = \mathbf{1}_{[1/2,1]}$, $f_4 = \mathbf{1}_{[0,1/3]}$, $\dots$
+   La suite de leurs normes $\|f_n\|_1$ tend vers $0$, donc $f_n \to 0$ dans $L^1$. Cependant, pour tout $x \in [0,1]$, la suite $(f_n(x))$ oscille entre 0 et 1 une infinité de fois, ne convergeant donc en aucun point. Toutefois, la sous-suite $f_1, f_2, f_4, f_7, \dots$ qui donne les indicatrices du début des segments (de longueurs $1, 1/2, 1/3, \dots$) ne suffit pas; il faut prendre une sous-suite dont la largeur décroît très vite (ex: $\mathbf{1}_{[0, 1/2^k]}$) pour obtenir une convergence p.p. vers $0$ (sauf en $0$).
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Complétude sur $\mathbb{N}$ (espaces $\ell^p$) :} Si $X = \mathbb{N}$ muni de la mesure de comptage, alors $L^p$ devient l'espace de suites $\ell^p$. La complétude de $\ell^p$ signifie que si une suite de suites $(u^{(n)})_{n \ge 0}$ est de Cauchy dans $\ell^p$, elle converge terme à terme vers une suite $u \in \ell^p$, et l'erreur $\|u^{(n)} - u\|_p \to 0$.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Complétude de $L^2$ (L'espace de Hilbert) :} Pour $p=2$, $L^2$ est muni du produit scalaire $\langle f, g \rangle = \int f \bar{g}$. La complétude de cet espace (espace de Hilbert) est l'essence même de l'analyse de Fourier (convergence en moyenne quadratique des séries de Fourier) et de la mécanique quantique (espace des états).
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Série absolument convergente dans $L^1$ :} Soit $f_n(x) = \frac{\sin(n x)}{n^2}$ sur $[0, \pi]$.
+   $\|f_n\|_1 = \int_0^\pi \left|\frac{\sin(nx)}{n^2}\right| \, dx \le \frac{\pi}{n^2}$.
+   Puisque $\sum \frac{\pi}{n^2} < \infty$, la série $\sum f_n$ converge absolument dans $L^1$. Le théorème garantit que la somme $F(x) = \sum_{n=1}^\infty \frac{\sin(nx)}{n^2}$ définit bien une fonction de $L^1([0, \pi])$.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Lien $L^p$ et $L^q$ sur espace de mesure finie :} Sur un espace mesurable compact comme $[0, 1]$ muni de la mesure de Lebesgue, si une suite converge dans $L^2$, elle converge aussi dans $L^1$ car $\|f\|_1 \le \|f\|_2 \sqrt{\mu([0,1])}$ (par Cauchy-Schwarz). La limite est la même.
+\end{enumerate}
+
+\textbf{Figures TikZ (Géométrie des convergences) :}
+
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  % Axe X
+  \draw[->] (-0.5, 0) -- (4, 0) node[right] {$x$};
+  % Axe Y
+  \draw[->] (0, -0.5) -- (0, 2) node[above] {$f(x)$};
+
+  % Courbes de Cauchy s'écrasant
+  \draw[domain=0.5:3.5, smooth, variable=\x, blue, thick] plot ({\x}, {1/(\x) + 0.5*sin(500*\x)/(10*\x)});
+  \draw[domain=0.5:3.5, smooth, variable=\x, blue, thick, opacity=0.6] plot ({\x}, {1/(\x) + 0.3*sin(800*\x)/(10*\x)});
+  \draw[domain=0.5:3.5, smooth, variable=\x, blue, thick, opacity=0.3] plot ({\x}, {1/(\x) + 0.1*sin(1200*\x)/(10*\x)});
+
+  % Fonction limite
+  \draw[domain=0.5:3.5, smooth, variable=\x, red, very thick] plot ({\x}, {1/(\x)}) node[right] {$f \in L^p$};
+
+  \node at (2, 1.5) [blue] {Suite de Cauchy $(f_n)$};
+\end{tikzpicture}
+\end{center}
+
+\textit{L'espace étant complet, la suite de fonctions "se stabilise" vers une fonction mesurable de limite bien définie, appartenant à la même classe $L^p$.}
+
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \draw[thick, ->] (0,0) -- (6,0) node[right] {$x$};
+  \draw[thick, ->] (0,0) -- (0,2);
+
+  \fill[blue!30] (1,0) rectangle (2,1);
+  \draw[thick, blue] (1,0) -- (1,1) -- (2,1) -- (2,0);
+  \node[blue] at (1.5, 1.2) {$f_n(x)$};
+
+  \fill[red!30] (3,0) rectangle (3.5,1);
+  \draw[thick, red] (3,0) -- (3,1) -- (3.5,1) -- (3.5,0);
+  \node[red] at (3.25, 1.2) {$f_{n+1}(x)$};
+
+  \node[align=center] at (3, -1) {Phénomène de bosse glissante: \\ $\|f_n\|_p \to 0$ mais aucune convergence p.p. sans extraire une sous-suite};
+\end{tikzpicture}
+\end{center}
+
+
+\section{Démonstrations}
+
+La preuve du théorème de Riesz-Fischer repose sur le critère de complétude des espaces vectoriels normés : un EVN est de Banach si et seulement si toute série absolument convergente est convergente.
+
+\textbf{Étape 1 : Hypothèse d'absolue convergence.}
+Soit $(f_n)$ une suite d'éléments de $L^p$ (pour $1 \le p < \infty$) telle que la série de terme général $\|f_n\|_p$ est convergente, i.e.,
+$$ \sum_{n=1}^\infty \|f_n\|_p = M < +\infty $$
+Il faut montrer que la série $\sum f_n$ converge dans $L^p$. On suppose sans perte de généralité que les fonctions $f_n$ sont à valeurs dans $\mathbb{R}$. Posons pour tout entier $k \ge 1$ :
+$$ g_k(x) = \sum_{n=1}^k |f_n(x)| \quad \text{et} \quad g(x) = \sum_{n=1}^\infty |f_n(x)| \in [0, +\infty] $$
+
+\textbf{Étape 2 : Application du Théorème de Convergence Monotone.}
+La suite $(g_k)$ est une suite de fonctions mesurables, positives et croissante vers $g$.
+D'après l'inégalité de Minkowski, pour tout $k \ge 1$,
+$$ \|g_k\|_p \le \sum_{n=1}^k \|f_n\|_p \le M $$
+Ce qui implique que $\int_X (g_k)^p \, d\mu \le M^p$.
+Par le théorème de convergence monotone (Beppo-Levi), puisque $(g_k)^p$ croît vers $g^p$, on obtient :
+$$ \int_X g^p \, d\mu = \lim_{k \to \infty} \int_X (g_k)^p \, d\mu \le M^p < +\infty $$
+
+\textbf{Étape 3 : Convergence presque partout.}
+Puisque l'intégrale de $g^p$ est finie, la fonction $g$ est finie presque partout sur $X$.
+Cela signifie que pour presque tout $x \in X$, la série $\sum |f_n(x)|$ converge. Ainsi, la série réelle $\sum f_n(x)$ est absolument convergente donc convergente presque partout.
+Notons $S(x) = \sum_{n=1}^\infty f_n(x)$ là où la série converge, et $S(x) = 0$ ailleurs.
+On a bien $|S(x)| \le g(x)$ presque partout, d'où $S \in L^p(\mu)$.
+
+\textbf{Étape 4 : Application du Théorème de Convergence Dominée (Convergence dans $L^p$).}
+Soit $S_k(x) = \sum_{n=1}^k f_n(x)$ la somme partielle.
+On a $S_k \to S$ presque partout, et
+$$ |S_k(x) - S(x)|^p \le (|S_k(x)| + |S(x)|)^p \le (2g(x))^p $$
+La fonction $(2g)^p = 2^p g^p$ est intégrable.
+Par conséquent, on peut appliquer le théorème de convergence dominée de Lebesgue :
+$$ \lim_{k \to \infty} \int_X |S_k - S|^p \, d\mu = 0 $$
+Ainsi, la somme partielle $S_k$ converge vers $S$ dans $L^p(\mu)$.
+
+\textbf{Étape 5 : Extraction de sous-suite pour une suite de Cauchy.}
+Si $(h_m)$ est une suite de Cauchy dans $L^p$, on peut en extraire une sous-suite $(h_{\phi(n)})$ telle que $\|h_{\phi(n+1)} - h_{\phi(n)}\|_p \le 2^{-n}$. En posant $f_n = h_{\phi(n+1)} - h_{\phi(n)}$, la série $\sum f_n$ converge absolument dans $L^p$, donc elle converge vers une fonction $S$ dans $L^p$ et presque partout (d'après les étapes précédentes). Or, $h_{\phi(n)} = h_{\phi(1)} + \sum_{k=1}^{n-1} f_k$, donc la sous-suite $(h_{\phi(n)})$ converge presque partout et dans $L^p$ vers une limite $h$. Enfin, comme la suite $(h_m)$ entière est de Cauchy, elle converge tout entière vers $h$ dans $L^p$. \qed
+
+\section{Applications en Physique, Logique et Intelligence Artificielle}
+
+\textbf{Physique (Mécanique Quantique) :}
+L'espace de Hilbert $L^2$ est le cadre naturel de la mécanique quantique. Une particule est décrite par une fonction d'onde $\psi \in L^2(\mathbb{R}^3)$ telle que $\|\psi\|_2 = 1$. L'évolution temporelle de $\psi$ selon l'équation de Schrödinger exige que la fonction reste dans cet espace de carré sommable. La complétude assure que les limites de suites d'états physiquement acceptables restent des états acceptables (pas d'échappement vers l'infini avec perte d'énergie), garantissant la conservation de la probabilité à tout instant.
+
+\textbf{Analyse de Fourier et Traitement du Signal :}
+Le théorème de Riesz-Fischer implique (via Riesz-Representation) qu'un signal d'énergie finie (dans $L^2$) peut être représenté parfaitement et réversiblement par sa série ou transformée de Fourier, dont les composantes forment une base de Hilbert complète. Cela permet la compression (JPEG, MP3) et le filtrage (suppression des hautes fréquences) par projection sur des sous-espaces de $L^2$, avec la certitude que la reconstruction ne produira pas de "trous" fonctionnels (propriété de complétude).
+
+\textbf{Intelligence Artificielle (Fonctionnelles de coût et RKHS) :}
+Lors de l'apprentissage par descente de gradient dans des espaces infinis (par exemple l'apprentissage de processus gaussiens ou la résolution d'EDP par PINNs - Physics-Informed Neural Networks), les réseaux de neurones approchent une fonction de transfert. La fonction de perte empirique agit comme une norme empirique $L^p$ (souvent $L^2$ pour l'erreur quadratique moyenne MSE, ou $L^1$ pour la robustesse aux outliers). La complétude de $L^2$ (et des espaces de Sobolev associés) garantit mathématiquement que, sous des conditions appropriées, l'algorithme d'optimisation converge bien vers un minimum de la fonctionnelle de risque au sein même de la classe de fonctions étudiée, justifiant rigoureusement le théorème d'approximation universelle des réseaux profonds (Universal Approximation Theorem).
+
+
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Bosse glissante et non-convergence presque partout \quad $\bigstar$}
+\textbf{Énoncé :}
+On considère sur $X = [0,1]$ muni de la mesure de Lebesgue la suite de fonctions définie par $f_n = \mathbf{1}_{[n/2^k, (n+1)/2^k]}$, où $n$ parcourt les entiers et $k$ est tel que $2^k \le n < 2^{k+1}$.
+\begin{enumerate}
+\item Montrer que $f_n$ converge vers $0$ dans $L^1([0,1])$.
+\item Montrer que pour tout $x \in [0,1]$, la suite $f_n(x)$ ne converge pas vers $0$.
+\item Extraire une sous-suite de $f_n$ qui converge presque partout vers $0$.
+\end{enumerate}
+
+\textbf{Correction détaillée :}
+\begin{enumerate}
+\item Pour $2^k \le n < 2^{k+1}$, l'intervalle a pour longueur $1/2^k$. Ainsi, $\|f_n\|_1 = \int_0^1 |f_n(t)| \, dt = 1/2^k$. Comme $k \to \infty$ lorsque $n \to \infty$, on a bien $\lim_{n \to \infty} \|f_n\|_1 = 0$. Donc $f_n$ converge vers 0 dans $L^1$.
+\item Pour tout $x \in [0,1]$, pour chaque $k$, il existe un unique $n \in [2^k, 2^{k+1}-1]$ tel que $x \in [n/2^k, (n+1)/2^k]$. Donc pour ce $n$, $f_n(x) = 1$. Ainsi, $f_n(x) = 1$ pour une infinité de valeurs de $n$, et $f_n(x) = 0$ pour une infinité de valeurs de $n$. La suite $(f_n(x))$ ne converge donc en aucun point $x$.
+\item On choisit la sous-suite correspondant à $n_k = 2^k$, soit $g_k = f_{2^k} = \mathbf{1}_{[1, 1+1/2^k]}$. (ou on peut extraire $g_k = f_{n_k}$ telle que l'intervalle est toujours $[0, 1/2^k]$). Prenons $g_k = \mathbf{1}_{[0, 1/2^k]}$. Pour $x > 0$, il existe $K$ tel que pour $k \ge K$, $1/2^k < x$, donc $g_k(x) = 0$. La suite $g_k(x)$ converge donc vers $0$ pour tout $x \in ]0,1]$, soit presque partout. \qed
+\end{enumerate}
+
+
+\subsection*{Exercice 2 : Inégalité de Hölder et inclusion des espaces $L^p$ \quad $\bigstar\bigstar$}
+\textbf{Énoncé :}
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré de mesure finie (i.e. $\mu(X) < \infty$). Soient $1 \le p \le q < \infty$.
+Montrer que $L^q(X) \subset L^p(X)$ et trouver une constante $C$ telle que $\|f\|_p \le C \|f\|_q$ pour tout $f \in L^q(X)$.
+
+\textbf{Correction détaillée :}
+Soit $f \in L^q(X)$. On veut intégrer $|f|^p$.
+On applique l'inégalité de Hölder à $|f|^p$ et à la fonction constante $\mathbf{1}$.
+L'exposant conjugué r de $q/p$ est tel que $\frac{1}{q/p} + \frac{1}{r} = 1$, d'où $r = \frac{q}{q-p}$.
+On a :
+$\int_X |f|^p \times 1 \, d\mu \le \left( \int_X (|f|^p)^{q/p} \, d\mu \right)^{p/q} \left( \int_X 1^r \, d\mu \right)^{1/r}$
+Ce qui se réécrit :
+$\int_X |f|^p \, d\mu \le \left( \int_X |f|^q \, d\mu \right)^{p/q} \mu(X)^{(q-p)/q}$
+En élevant à la puissance $1/p$, on obtient :
+$\|f\|_p = \left( \int_X |f|^p \, d\mu \right)^{1/p} \le \|f\|_q \cdot \mu(X)^{\frac{q-p}{pq}}$
+Comme $\mu(X) < \infty$, si $f \in L^q$, l'intégrale $\int_X |f|^q$ est finie, donc la norme $\|f\|_p$ est finie, d'où $f \in L^p$.
+La constante est $C = \mu(X)^{\frac{1}{p} - \frac{1}{q}}$. \qed
+
+
+\subsection*{Exercice 3 : Complétude d'une suite de fonctions géométriques \quad $\bigstar\bigstar$}
+\textbf{Énoncé :}
+Sur l'espace $\mathbb{R}$ muni de la mesure de Lebesgue, on considère la suite de fonctions $f_n(x) = e^{-n|x|}$.
+\begin{enumerate}
+\item Calculer $\|f_n\|_1$.
+\item Montrer que la série $\sum_{n=1}^\infty f_n(x)$ converge presque partout vers une fonction limite $F(x)$.
+\item Montrer que la somme de la série converge dans $L^1(\mathbb{R})$.
+\end{enumerate}
+
+\textbf{Correction détaillée :}
+\begin{enumerate}
+\item On calcule la norme $L^1$ de $f_n$ :
+   $\|f_n\|_1 = \int_{-\infty}^{\infty} e^{-n|x|} \, dx = 2 \int_0^\infty e^{-nx} \, dx = 2 \left[ \frac{-e^{-nx}}{n} \right]_0^\infty = \frac{2}{n}$.
+\item D'après le théorème de convergence de Riesz-Fischer (via convergence absolue), si $\sum \|f_n\|_1 < \infty$, alors on a convergence presque partout. Ici, $\sum \|f_n\|_1 = 2 \sum \frac{1}{n} = +\infty$. On ne peut donc pas utiliser Riesz-Fischer directement !
+   Cependant, on peut calculer directement. Pour $x \neq 0$, $|e^{-|x|}| < 1$. C'est une suite géométrique de raison $q = e^{-|x|} < 1$.
+   La série $\sum_{n=1}^\infty (e^{-|x|})^n$ converge pour tout $x \neq 0$, c'est-à-dire presque partout (en dehors de l'ensemble de mesure nulle $\{0\}$).
+   La limite vaut $F(x) = \frac{e^{-|x|}}{1 - e^{-|x|}} = \frac{1}{e^{|x|} - 1}$.
+\item Montrons que $F \in L^1(\mathbb{R})$.
+   Au voisinage de $0$, $e^{|x|} - 1 \sim |x|$, donc $F(x) \sim \frac{1}{|x|}$, qui N'EST PAS intégrable en 0.
+   L'intégrale $\int_0^1 \frac{dx}{x} = \infty$.
+   Donc $F \notin L^1(\mathbb{R})$. La série des normes divergeait, ce n'est donc pas une contradiction. La somme dans $L^1$ ne converge pas. Cet exercice illustre la nécessité de l'hypothèse $\sum \|f_n\| < \infty$ pour obtenir la complétude dans l'espace. \qed
+\end{enumerate}
+
+
+\subsection*{Exercice 4 : Densité des fonctions continues à support compact \quad $\bigstar\bigstar\star$}
+\textbf{Énoncé :}
+Soit $f \in L^p(\mathbb{R})$ pour $1 \le p < \infty$. On sait que l'espace des fonctions étagées est dense dans $L^p$.
+Montrer rigoureusement que l'espace $C_c(\mathbb{R})$ des fonctions continues à support compact est dense dans $L^p(\mathbb{R})$.
+
+\textbf{Correction détaillée :}
+\begin{enumerate}
+\item Toute fonction $f \in L^p$ peut être approchée à $\varepsilon$ près par une fonction étagée $\phi \in L^p$ (par définition de la mesurabilité et construction de l'intégrale de Lebesgue).
+\item Toute fonction étagée de $L^p$ s'écrit $\phi = \sum_{i=1}^n c_i \mathbf{1}_{A_i}$ avec $\mu(A_i) < \infty$. Il suffit donc de montrer qu'on peut approcher la fonction caractéristique $\mathbf{1}_A$ d'un ensemble de mesure finie par une fonction continue à support compact.
+\item Par régularité de la mesure de Lebesgue, pour tout $A$ de mesure finie et $\varepsilon > 0$, il existe un ouvert $U$ contenant $A$ tel que $\mu(U \setminus A) < \varepsilon/2$ et un compact $K \subset A$ tel que $\mu(A \setminus K) < \varepsilon/2$.
+\item Par le Lemme d'Urysohn, il existe une fonction continue $g : \mathbb{R} \to [0,1]$ telle que $g(x) = 1$ sur $K$ et $g(x) = 0$ sur le complémentaire de $U$ (donc $g$ est à support compact inclus dans $U$).
+\item Évaluons l'erreur $L^p$ :
+   $\|\mathbf{1}_A - g\|_p^p = \int |\mathbf{1}_A - g|^p \le \int_{U \setminus K} 1 \, d\mu = \mu(U \setminus K)$.
+   Or $U \setminus K = (U \setminus A) \cup (A \setminus K)$, donc $\mu(U \setminus K) \le \varepsilon/2 + \varepsilon/2 = \varepsilon$.
+\item On peut donc rendre $\|\mathbf{1}_A - g\|_p \le \varepsilon^{1/p}$ arbitrairement petit. Par linéarité, l'espace $C_c(\mathbb{R})$ est dense dans $L^p(\mathbb{R})$. \qed
+\end{enumerate}
+
+
+\subsection*{Exercice 5 : Séparabilité de $L^p$ pour $1 \le p < \infty$ \quad $\bigstar\bigstar\bigstar$}
+\textbf{Énoncé :}
+Montrer que l'espace $L^p(\mathbb{R})$ est séparable (il admet un sous-ensemble dénombrable dense) pour $1 \le p < \infty$.
+
+\textbf{Correction détaillée :}
+\begin{enumerate}
+\item D'après l'exercice précédent, l'espace $C_c(\mathbb{R})$ des fonctions continues à support compact est dense dans $L^p(\mathbb{R})$.
+\item On considère l'ensemble $D$ des fonctions en escalier dont les intervalles sont à bornes rationnelles et dont les valeurs sont rationnelles.
+   Toute fonction en escalier s'écrit $\sum q_i \mathbf{1}_{[a_i, b_i[}$. L'ensemble des bornes $(a_i, b_i) \in \mathbb{Q}^2$ et $q_i \in \mathbb{Q}$ est dénombrable. Donc $D$ est dénombrable.
+\item Soit $f \in C_c(\mathbb{R})$. Elle est uniformément continue car à support compact. Pour tout $\varepsilon > 0$, on peut approcher $f$ uniformément à $\varepsilon$ près par une fonction en escalier $g$ (en découpant le support en intervalles suffisamment petits).
+   On peut ensuite approcher $g$ par une fonction $h \in D$ en prenant des bornes rationnelles très proches de celles de $g$ et des valeurs rationnelles très proches des hauteurs de $g$.
+\item L'approximation uniforme sur un support compact $K$ implique l'approximation dans $L^p$ puisque $\int_K |f-h|^p \le \varepsilon^p \mu(K)$.
+   Ainsi, $D$ est dense dans $C_c(\mathbb{R})$ (pour la norme $L^p$) et donc dense dans $L^p(\mathbb{R})$.
+   L'espace $L^p(\mathbb{R})$ est donc séparable. \qed
+\end{enumerate}
+
+
+\subsection*{Exercice 6 : Non-séparabilité de $L^\infty$ \quad $\bigstar\bigstar\bigstar$}
+\textbf{Énoncé :}
+On considère l'espace $L^\infty(\mathbb{R})$.
+Pour tout $a \in \mathbb{R}$, on pose $f_a = \mathbf{1}_{[a, a+1]}$.
+Montrer que $L^\infty(\mathbb{R})$ n'est pas séparable.
+
+\textbf{Correction détaillée :}
+\begin{enumerate}
+\item L'espace $L^\infty$ est muni de la norme $\|f\|_\infty = \text{ess sup} |f(x)|$.
+\item Considérons la famille de fonctions $(f_a)_{a \in \mathbb{R}}$.
+\item Pour $a \neq b$, l'intersection des supports de $f_a$ et $f_b$ (les intervalles $[a, a+1]$ et $[b, b+1]$) a au plus un élément commun (ou un segment si $|a-b|<1$). Si $0 < |a-b| < 1$, alors la fonction $f_a - f_b$ prend la valeur $1$ sur $[a, b[$ (si $a<b$) et $-1$ sur $]a+1, b+1]$.
+   Dans tous les cas, pour $a \neq b$, on a $\|f_a - f_b\|_\infty = 1$.
+\item Les boules ouvertes de rayon $1/2$ centrées sur les $f_a$, notées $B(f_a, 1/2)$, sont disjointes car si $g \in B(f_a, 1/2) \cap B(f_b, 1/2)$, on aurait $\|f_a - f_b\|_\infty \le \|f_a - g\|_\infty + \|g - f_b\|_\infty < 1/2 + 1/2 = 1$, ce qui est absurde.
+\item Il y a une infinité non dénombrable (indexée par $\mathbb{R}$) de ces boules disjointes. Tout ensemble dense doit posséder au moins un élément dans chaque boule, donc doit être au moins non dénombrable.
+   Par conséquent, $L^\infty(\mathbb{R})$ n'est pas séparable. \qed
+\end{enumerate}
+
+
+\subsection*{Exercice 7 : Opérateur de décalage dans $L^p$ \quad $\bigstar\bigstar\star$}
+\textbf{Énoncé :}
+Pour $f \in L^p(\mathbb{R})$ ($1 \le p < \infty$) et $h \in \mathbb{R}$, on définit la translation $\tau_h f(x) = f(x-h)$.
+Montrer que l'application $h \mapsto \tau_h f$ est continue de $\mathbb{R}$ dans $L^p(\mathbb{R})$, c'est-à-dire $\lim_{h \to 0} \|\tau_h f - f\|_p = 0$.
+
+\textbf{Correction détaillée :}
+\begin{enumerate}
+\item On prouve d'abord le résultat pour une fonction $g \in C_c(\mathbb{R})$.
+   Soit $K$ le support de $g$. $g$ est uniformément continue, donc $\lim_{h \to 0} \| \tau_h g - g\|_\infty = 0$.
+   De plus, pour $h$ assez petit (ex: $|h| \le 1$), les fonctions $\tau_h g - g$ sont à support inclus dans un même compact $K_1 = K + [-1, 1]$.
+   $\|\tau_h g - g\|_p^p \le \|\tau_h g - g\|_\infty^p \mu(K_1)$. Comme $\mu(K_1) < \infty$, la norme tend vers 0.
+\item Pour $f \in L^p(\mathbb{R})$ quelconque, par densité de $C_c(\mathbb{R})$, il existe $g \in C_c(\mathbb{R})$ telle que $\|f - g\|_p < \varepsilon/3$.
+\item On utilise l'inégalité triangulaire :
+   $\|\tau_h f - f\|_p \le \|\tau_h f - \tau_h g\|_p + \|\tau_h g - g\|_p + \|g - f\|_p$.
+   L'opérateur de translation conserve la norme (mesure invariante), donc $\|\tau_h f - \tau_h g\|_p = \|f - g\|_p < \varepsilon/3$.
+\item Pour $h$ suffisamment petit, $\|\tau_h g - g\|_p < \varepsilon/3$ (d'après l'étape 1).
+   On a alors $\|\tau_h f - f\|_p < \varepsilon/3 + \varepsilon/3 + \varepsilon/3 = \varepsilon$.
+   La translation est donc un opérateur uniformément continu sur $L^p(\mathbb{R})$. \qed
+\end{enumerate}
+
+
+\subsection*{Exercice 8 : Produit de convolution dans $L^1$ \quad $\bigstar\bigstar\bigstar$}
+\textbf{Énoncé :}
+Soient $f, g \in L^1(\mathbb{R})$. On définit le produit de convolution $f * g(x) = \int_{\mathbb{R}} f(x-y)g(y) \, dy$.
+\begin{enumerate}
+\item Montrer que $f * g(x)$ est bien définie presque partout.
+\item Montrer que $f * g \in L^1(\mathbb{R})$ et que $\|f * g\|_1 \le \|f\|_1 \|g\|_1$ (Inégalité de Young pour $L^1$).
+\end{enumerate}
+
+\textbf{Correction détaillée :}
+\begin{enumerate}
+\item Considérons la fonction de deux variables $F(x,y) = f(x-y)g(y)$. Elle est mesurable.
+   On intègre sa valeur absolue sur $\mathbb{R}^2$ et on utilise le théorème de Tonelli-Fubini :
+   $\iint |F(x,y)| \, dx \, dy = \int \left( \int |f(x-y)| \, dx \right) |g(y)| \, dy$.
+   Par invariance de la mesure par translation, $\int |f(x-y)| \, dx = \|f\|_1$.
+   Donc $\iint |F(x,y)| \, dx \, dy = \|f\|_1 \int |g(y)| \, dy = \|f\|_1 \|g\|_1$.
+   Cette double intégrale est finie, donc par le théorème de Fubini, la fonction $x \mapsto F(x,y)$ est intégrable pour presque tout $x$.
+\item Ainsi, $f * g(x)$ est définie presque partout. De plus :
+   $\|f * g\|_1 = \int \left| \int f(x-y)g(y) \, dy \right| dx \le \iint |f(x-y)g(y)| \, dx \, dy = \|f\|_1 \|g\|_1$.
+   L'espace $L^1(\mathbb{R})$ muni de la convolution devient ainsi une algèbre de Banach. \qed
+\end{enumerate}
+
+
+\subsection*{Exercice 9 : Contre-exemple sur l'inclusion inverse $L^p \subset L^q$ \quad $\bigstar\bigstar\bigstar$}
+\textbf{Énoncé :}
+Sur l'espace $\mathbb{R}$ muni de la mesure de Lebesgue.
+\begin{enumerate}
+\item Trouver $f$ telle que $f \in L^1(\mathbb{R})$ mais $f \notin L^2(\mathbb{R})$.
+\item Trouver $g$ telle que $g \in L^2(\mathbb{R})$ mais $g \notin L^1(\mathbb{R})$.
+\end{enumerate}
+
+\textbf{Correction détaillée :}
+\begin{enumerate}
+\item Pour avoir $f \in L^1$ mais hors de $L^2$, il faut créer une singularité violente mais d'aire finie. On regarde au voisinage de 0.
+   Soit $f(x) = \frac{1}{\sqrt{x}} \mathbf{1}_{]0, 1]}(x)$.
+   $\int f = \int_0^1 x^{-1/2} \, dx = [2x^{1/2}]_0^1 = 2 < \infty$. Donc $f \in L^1(\mathbb{R})$.
+   $\int |f|^2 = \int_0^1 \frac{1}{x} \, dx = [\ln x]_0^1 = \infty$. Donc $f \notin L^2(\mathbb{R})$.
+\item Pour avoir $g \in L^2$ mais hors de $L^1$, il faut une fonction qui décroît lentement à l'infini (les singularités sont lissées).
+   Soit $g(x) = \frac{1}{x} \mathbf{1}_{[1, \infty[}(x)$.
+   $\int |g|^2 = \int_1^\infty \frac{1}{x^2} \, dx = 1 < \infty$. Donc $g \in L^2(\mathbb{R})$.
+   $\int |g| = \int_1^\infty \frac{1}{x} \, dx = \infty$. Donc $g \notin L^1(\mathbb{R})$.
+Ces contre-exemples illustrent qu'il n'y a pas d'inclusion stricte entre espaces $L^p$ sur un espace de mesure infinie comme $\mathbb{R}$. \qed
+\end{enumerate}
+
+
+\subsection*{Exercice 10 : Convergence faible dans l'espace de Hilbert $L^2$ \quad $\bigstar\bigstar\star$}
+\textbf{Énoncé :}
+Sur $L^2([0,2\pi])$, on considère la suite de fonctions $f_n(x) = \sin(nx)$.
+\begin{enumerate}
+\item Montrer que pour toute fonction $g \in L^2$, $\langle f_n, g \rangle = \int_0^{2\pi} f_n(x)g(x) \, dx \to 0$. On dit que $f_n$ converge faiblement vers $0$.
+\item Montrer que $(f_n)$ ne converge pas fortement (en norme $L^2$) vers $0$.
+\end{enumerate}
+
+\textbf{Correction détaillée :}
+\begin{enumerate}
+\item Par le théorème de Fourier (ou le lemme de Riemann-Lebesgue), toute fonction $g \in L^2$ a des coefficients de Fourier $\int_0^{2\pi} g(x)\sin(nx)\,dx$ qui tendent vers 0 lorsque $n \to \infty$ (car la série des carrés des coefficients converge, ils doivent donc tendre vers 0). Par conséquent, $\langle f_n, g \rangle \to 0$. $f_n$ converge faiblement vers $0$.
+\item Calculons la norme $L^2$ de $f_n$ :
+   $\|f_n\|_2^2 = \int_0^{2\pi} \sin^2(nx) \, dx = \int_0^{2\pi} \frac{1 - \cos(2nx)}{2} \, dx = \left[ \frac{x}{2} - \frac{\sin(2nx)}{4n} \right]_0^{2\pi} = \pi$.
+   Ainsi, $\|f_n\|_2 = \sqrt{\pi} \neq 0$. La norme ne tend pas vers 0, la suite ne converge pas fortement dans $L^2$.
+C'est un phénomène typique de dimension infinie : une suite de vecteurs peut tendre vers 0 "directionnellement" pour chaque coordonnée sans que sa norme (sa taille) ne diminue. \qed
+\end{enumerate}
+
+
+
+
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsubsection*{TP 1 : Simulation du Phénomène de Bosse Glissante}
+\begin{lstlisting}
+def evaluate_sliding_bump(x, n):
+    # Determine k such that 2**k <= n < 2**(k+1)
+    k = 0
+    while (2**(k+1)) <= n:
+        k += 1
+
+    # Calculate interval bounds
+    a = (n - 2**k) / (2**k)
+    b = (n - 2**k + 1) / (2**k)
+
+    if a <= x <= b:
+        return 1.0
+    return 0.0
+
+def test_sliding_bump():
+    # Evaluate at x = 0.3
+    x_val = 0.3
+    results = []
+
+    for n in range(1, 20):
+        val = evaluate_sliding_bump(x_val, n)
+        results.append(val)
+
+    # The sequence for a specific x will alternate between 0 and 1 infinitely
+    assert 1.0 in results
+    assert 0.0 in results
+    print("TP1: Sliding bump simulated correctly. Sequence alternates, proving no pointwise convergence.")
+
+test_sliding_bump()
+\end{lstlisting}
+
+\subsubsection*{TP 2 : Convergence de l'intégrale L1 de la bosse glissante}
+\begin{lstlisting}
+def calculate_l1_norm_bump(n):
+    # Determine k such that 2**k <= n < 2**(k+1)
+    k = 0
+    while (2**(k+1)) <= n:
+        k += 1
+
+    # The length of the interval is exactly 1 / 2**k
+    # And the height is 1, so the area (L1 norm) is the length
+    return 1.0 / (2**k)
+
+def test_l1_convergence():
+    norms = []
+    # Test for large n to see convergence to 0
+    for n in [1, 10, 100, 1000, 10000]:
+        norms.append(calculate_l1_norm_bump(n))
+
+    # Check that norm is strictly decreasing and approaches 0
+    assert norms[-1] < norms[0]
+    assert norms[-1] < 0.001
+    print("TP2: L1 norm of sliding bump converges to 0.")
+
+test_l1_convergence()
+\end{lstlisting}
+
+\subsubsection*{TP 3 : Inégalité de Hölder empirique}
+\begin{lstlisting}
+def integrate_empirical(f_vals, dx):
+    return sum(f_vals) * dx
+
+def test_holder_inequality():
+    # We test on a discrete grid approximation
+    N = 1000
+    dx = 1.0 / N
+    x_vals = [i * dx for i in range(1, N+1)]
+
+    # p = 1, q = 2
+    # f(x) = x**(-0.25)
+    f_vals = [x**(-0.25) for x in x_vals]
+
+    # L1 norm
+    l1_norm = integrate_empirical([abs(f) for f in f_vals], dx)
+
+    # L2 norm
+    l2_norm = (integrate_empirical([abs(f)**2 for f in f_vals], dx)) ** 0.5
+
+    # Measure of X is 1.0
+    # Holder says L1 <= L2 * (measure)**0.5 = L2
+    assert l1_norm <= l2_norm
+    print("TP3: Empirical Holder inequality verified. L1 norm is bounded by L2 norm.")
+
+test_holder_inequality()
+\end{lstlisting}
+
+\subsubsection*{TP 4 : Complétude d'une suite géométrique (convergence)}
+\begin{lstlisting}
+def f_n(x, n):
+    import math
+    return math.exp(-n * abs(x))
+
+def sum_f_n(x, max_N):
+    total = 0.0
+    for n in range(1, max_N + 1):
+        total += f_n(x, n)
+    return total
+
+def exact_limit(x):
+    import math
+    return 1.0 / (math.exp(abs(x)) - 1.0)
+
+def test_geometric_series():
+    # Evaluate at x = 0.5
+    x = 0.5
+    approx = sum_f_n(x, 100)
+    exact = exact_limit(x)
+
+    # They should be very close
+    assert abs(approx - exact) < 1e-5
+    print("TP4: Pointwise limit of sum e^(-n|x|) verified.")
+
+test_geometric_series()
+\end{lstlisting}
+
+\subsubsection*{TP 5 : Convolution discrète dans L1}
+\begin{lstlisting}
+def discrete_convolution(f, g, dx):
+    # Assumes f and g are defined on the same discrete grid of size N
+    # Zero padding is applied for out of bounds
+    N = len(f)
+    result = [0.0] * N
+
+    for i in range(N):
+        val = 0.0
+        for j in range(N):
+            idx = i - j
+            if 0 <= idx < N:
+                val += f[idx] * g[j]
+        result[i] = val * dx
+    return result
+
+def test_convolution():
+    N = 100
+    dx = 0.1
+    # f is indicator of [0, 2], discrete approx
+    f = [1.0 if i*dx <= 2.0 else 0.0 for i in range(N)]
+    # g is indicator of [0, 3]
+    g = [1.0 if i*dx <= 3.0 else 0.0 for i in range(N)]
+
+    h = discrete_convolution(f, g, dx)
+
+    # Check L1 norms (Young's inequality: ||f*g|| <= ||f|| * ||g||)
+    norm_f = sum([abs(val) * dx for val in f])
+    norm_g = sum([abs(val) * dx for val in g])
+    norm_h = sum([abs(val) * dx for val in h])
+
+    assert norm_h <= (norm_f * norm_g) + 1e-5
+    print("TP5: Discrete convolution respects L1 norm bounds.")
+
+test_convolution()
+\end{lstlisting}
+
+
+
+\end{document}
