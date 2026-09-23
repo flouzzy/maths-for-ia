@@ -1,0 +1,603 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1
+}
+
+\title{\Huge Jalon 76 : Propriétés géométriques de l'espace de Hilbert $L^2$ \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+
+\section{Présentation du concept clé}
+
+    - L'espace \textbf{$L^2$} est le seul sac de fonctions qui se comporte exactement comme notre espace 3D habituel.
+    - On peut y dire que deux fonctions sont "perpendiculaires" (\textbf{orthogonales}). Par exemple, une note de musique Grave et une note Aiguë sont orthogonales : elles ne se mélangent pas, elles sont indépendantes.
+    - On peut y utiliser le \textbf{Théorème de Pythagore} : l'énergie totale de deux sons orthogonaux joués ensemble est la somme des énergies de chaque son.
+
+\section{Formalisation}
+
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré.
+
+\subsection{Le Produit Scalaire dans $L^2$}
+
+\begin{quote}\textbf{Définition 1 (Produit Scalaire) :}
+Pour deux fonctions $f, g \in L^2(\mu)$ à valeurs complexes, on définit :
+\end{quote}$$\langle f, g \rangle = \int_X f(x) \overline{g(x)} d\mu(x)$$
+\begin{quote}C'est une forme hermitienne positive dont la norme associée est la norme $L^2$ : $\|f\|_2 = \sqrt{\langle f, f \rangle}$.\end{quote}
+
+\textbf{Exemple Concret (Produit scalaire usuel sur $[a,b]$) :}
+Prenons l'espace $L^2([0,1])$ muni de la mesure de Lebesgue.
+Soient $f(x) = x$ et $g(x) = x^2$. Ces deux fonctions sont de carré intégrable.
+Calculons pas à pas leur produit scalaire :
+$$ \langle f, g \rangle = \int_0^1 f(x) \overline{g(x)} dx = \int_0^1 x \cdot x^2 dx = \int_0^1 x^3 dx $$
+$$ = \left[ \frac{x^4}{4} \right]_0^1 = \frac{1}{4} - 0 = \frac{1}{4} $$
+Le produit scalaire est bien défini et vaut $\frac{1}{4}$.
+
+\begin{quote}\textbf{Définition 2 (Espace de Hilbert) :}
+Un espace vectoriel muni d'un produit scalaire qui est complet pour la norme associée est appelé un \textbf{Espace de Hilbert}. $L^2(\mu)$ est l'exemple type.\end{quote}
+
+\subsection{Identités Géométriques}
+
+\begin{quote}\textbf{Théorème (Identité du parallélogramme) :}
+Dans tout espace muni d'un produit scalaire :
+\end{quote}$$\|f+g\|^2 + \|f-g\|^2 = 2(\|f\|^2 + \|g\|^2)$$
+\begin{quote}\textit{Réciproque :} Si une norme vérifie cette identité, alors elle provient d'un produit scalaire (Théorème de Fréchet-von Neumann-Jordan).\end{quote}
+
+\begin{quote}\textbf{Théorème de Pythagore :}
+$f \perp g \iff \langle f, g \rangle = 0 \implies \|f+g\|^2 = \|f\|^2 + \|g\|^2$.\end{quote}
+
+\textbf{Exemple Concret (Vecteurs orthogonaux et Pythagore) :}
+Dans $L^2([-1,1])$, considérons les fonctions paires et impaires. Soit $f(x) = 1$ et $g(x) = x$.
+Vérifions leur orthogonalité :
+$$ \langle f, g \rangle = \int_{-1}^1 1 \cdot x dx = \left[ \frac{x^2}{2} \right]_{-1}^1 = \frac{1}{2} - \frac{1}{2} = 0 $$
+Ainsi $f \perp g$. Calculons les normes au carré :
+$\|f\|^2 = \int_{-1}^1 1^2 dx = 2$.
+$\|g\|^2 = \int_{-1}^1 x^2 dx = \left[ \frac{x^3}{3} \right]_{-1}^1 = \frac{2}{3}$.
+$\|f+g\|^2 = \int_{-1}^1 (1+x)^2 dx = \int_{-1}^1 (1 + 2x + x^2) dx = 2 + 0 + \frac{2}{3} = \frac{8}{3}$.
+On observe bien que $\|f+g\|^2 = \|f\|^2 + \|g\|^2 = 2 + \frac{2}{3} = \frac{8}{3}$. L'égalité de Pythagore est parfaitement vérifiée.
+
+\section{Démonstrations}
+
+\subsection{Démonstration de l'identité du parallélogramme}
+
+\begin{enumerate}
+\item \textbf{Développement du premier terme :}
+\end{enumerate}
+   $\|f+g\|^2 = \langle f+g, f+g \rangle = \langle f, f \rangle + \langle f, g \rangle + \langle g, f \rangle + \langle g, g \rangle$.
+   $\|f+g\|^2 = \|f\|^2 + \|g\|^2 + \langle f, g \rangle + \langle g, f \rangle$.
+\begin{enumerate}
+\item \textbf{Développement du second terme :}
+\end{enumerate}
+   $\|f-g\|^2 = \langle f-g, f-g \rangle = \langle f, f \rangle - \langle f, g \rangle - \langle g, f \rangle + \langle g, g \rangle$.
+   $\|f-g\|^2 = \|f\|^2 + \|g\|^2 - \langle f, g \rangle - \langle g, f \rangle$.
+\begin{enumerate}
+\item \textbf{Somme des deux :}
+\end{enumerate}
+   En additionnant les deux lignes, les termes croisés $\langle f, g \rangle$ et $\langle g, f \rangle$ s'annulent exactement.
+\begin{enumerate}
+\item \textbf{Conclusion :}
+\end{enumerate}
+   $\|f+g\|^2 + \|f-g\|^2 = 2\|f\|^2 + 2\|g\|^2$.
+
+\subsection{Théorème de Projection sur un convexe fermé}
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1.5]
+  % Sous-espace M (plan ou droite)
+  \draw[thick, blue] (-2, 0) -- (2, 0) node[right] {$M$};
+
+  % Vecteur x
+  \draw[->, thick, red] (0, 0) -- (1, 1.5) node[above right] {$x$};
+
+  % Projection p
+  \draw[->, thick, green!70!black] (0, 0) -- (1, 0) node[below] {$p$};
+
+  % Vecteur x-p
+  \draw[->, thick, orange] (1, 0) -- (1, 1.5) node[midway, right] {$x-p \in M^\perp$};
+
+  % Angle droit
+  \draw (1, 0.2) -- (0.8, 0.2) -- (0.8, 0);
+
+  % Origine
+  \filldraw[black] (0,0) circle (1pt) node[below left] {$0$};
+\end{tikzpicture}
+\caption{Projection orthogonale d'un vecteur $x$ sur un sous-espace fermé $M$}
+\end{figure}
+
+
+C'est la propriété géométrique la plus puissante. Dans un Hilbert $H$, pour tout point $x$ et tout sous-espace fermé $M$, il existe un unique point $p \in M$ tel que $\|x-p\|$ soit minimal. Ce point est caractérisé par $\langle x-p, m \rangle = 0$ pour tout $m \in M$.
+
+\section{Application en Intelligence Artificielle}
+
+\begin{itemize}
+\item Le Pont Théorique : Le Machine Learning "classique" (linéaire) n'est rien d'autre que de la géométrie dans un espace de Hilbert.
+
+\item \textbf{Example Concret :}
+\end{itemize}
+    - \textbf{Régression Linéaire (MSE) :} Chercher les poids $w$ qui minimisent $\sum (y_i - w^T x_i)^2$, c'est exactement projeter le vecteur des étiquettes $y$ sur le sous-espace engendré par les données $x$. La solution (équations normales) est la caractérisation de la projection orthogonale.
+    - \textbf{Kernel Trick (RKHS) :} Dans les SVM, on envoie les données dans un espace de dimension infinie où le produit scalaire est facile à calculer (le noyau). Cet espace est un espace de Hilbert. On y fait de la géométrie simple (séparation par un plan) pour résoudre des problèmes complexes.
+    - \textbf{Analyse en Composantes Principales (PCA) :} On cherche les directions (vecteurs propres) qui capturent le maximum d'énergie (norme $L^2$) des données. C'est une décomposition orthogonale dans un espace de Hilbert.
+
+\section{Liens Sémantiques}
+
+\begin{itemize}
+\item \textbf{Concepts Précédents requis :} [[Jalon 75 (Preuve de la complétude des espaces Lp).md]], [[Jalon 26 (Espaces euclidiens).md]]
+
+\item \textbf{Concepts Futurs dépendants :} [[Jalon 103 (Espaces de Hilbert généraux).md]], [[Jalon 126 (Noyaux définis positifs).md]]
+\end{itemize}
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Produit scalaire usuel et orthogonalité \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Dans $L^2([0, \pi])$, on considère les fonctions $f(x) = \sin(x)$ et $g(x) = \cos(x)$. Montrer que $f$ et $g$ sont orthogonales pour le produit scalaire standard de $L^2$.
+
+\textbf{Correction Détaillée :}
+\begin{enumerate}
+\item \textbf{Analyse de l'énoncé :} L'espace est $L^2([0, \pi])$ muni de la mesure de Lebesgue. Le produit scalaire est donné par $\langle f, g \rangle = \int_0^\pi f(x)\overline{g(x)}dx$. Les fonctions étant à valeurs réelles, la conjugaison disparaît.
+
+\item \textbf{Calcul de l'intégrale :}
+\end{enumerate}
+   $$ \langle f, g \rangle = \int_0^\pi \sin(x)\cos(x) dx $$
+\begin{enumerate}
+\item \textbf{Astuce trigonométrique :} On utilise l'identité $\sin(2x) = 2\sin(x)\cos(x)$, d'où $\sin(x)\cos(x) = \frac{1}{2}\sin(2x)$.
+
+\item \textbf{Intégration pas-à-pas :}
+\end{enumerate}
+   $$ \langle f, g \rangle = \int_0^\pi \frac{1}{2}\sin(2x) dx = \frac{1}{2} \left[ -\frac{1}{2}\cos(2x) \right]_0^\pi $$
+   $$ \langle f, g \rangle = -\frac{1}{4} ( \cos(2\pi) - \cos(0) ) = -\frac{1}{4} (1 - 1) = 0 $$
+\begin{enumerate}
+\item \textbf{Conclusion :} Le produit scalaire est nul, donc les fonctions $f(x) = \sin(x)$ et $g(x) = \cos(x)$ sont orthogonales dans $L^2([0, \pi])$.
+\end{enumerate}
+
+
+
+\subsection*{Exercice 2 : Calcul de norme et inégalité de Cauchy-Schwarz \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Soit $f(x) = x$ et $g(x) = e^x$ sur l'intervalle $[0, 1]$. Calculer $\|f\|_2, \|g\|_2$ et vérifier numériquement que $\langle f, g \rangle \le \|f\|_2 \|g\|_2$.
+
+\textbf{Correction Détaillée :}
+\begin{enumerate}
+\item \textbf{Calcul de $\|f\|_2$ :}
+\end{enumerate}
+   $$ \|f\|_2^2 = \int_0^1 x^2 dx = \left[ \frac{x^3}{3} \right]_0^1 = \frac{1}{3} $$
+   Donc $\|f\|_2 = \frac{1}{\sqrt{3}}$.
+\begin{enumerate}
+\item \textbf{Calcul de $\|g\|_2$ :}
+\end{enumerate}
+   $$ \|g\|_2^2 = \int_0^1 (e^x)^2 dx = \int_0^1 e^{2x} dx = \left[ \frac{e^{2x}}{2} \right]_0^1 = \frac{e^2 - 1}{2} $$
+   Donc $\|g\|_2 = \sqrt{\frac{e^2 - 1}{2}}$.
+\begin{enumerate}
+\item \textbf{Calcul de $\langle f, g \rangle$ :}
+\end{enumerate}
+   $$ \langle f, g \rangle = \int_0^1 x e^x dx $$
+   On procède par intégration par parties avec $u = x$ ($du = dx$) et $dv = e^x dx$ ($v = e^x$) :
+   $$ \langle f, g \rangle = \left[ x e^x \right]_0^1 - \int_0^1 e^x dx = (1\cdot e^1 - 0) - \left[ e^x \right]_0^1 = e - (e - 1) = 1 $$
+\begin{enumerate}
+\item \textbf{Vérification de Cauchy-Schwarz :}
+\end{enumerate}
+   On veut vérifier que $1 \le \frac{1}{\sqrt{3}} \sqrt{\frac{e^2 - 1}{2}} = \sqrt{\frac{e^2 - 1}{6}}$.
+   En élevant au carré, on vérifie si $1 \le \frac{e^2 - 1}{6} \iff 6 \le e^2 - 1 \iff 7 \le e^2$.
+   Sachant que $e \approx 2.718$, on a $e^2 \approx 7.389$. L'inégalité $7 \le 7.389$ est vraie. Cauchy-Schwarz est bien respectée.
+
+
+
+\subsection*{Exercice 3 : Vérification de l'identité du parallélogramme \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Soient $f(x) = 1$ et $g(x) = x^2$ dans $L^2([0,1])$. Calculer $\|f+g\|_2^2 + \|f-g\|_2^2$ et $2(\|f\|_2^2 + \|g\|_2^2)$ pour vérifier l'identité du parallélogramme.
+
+\textbf{Correction Détaillée :}
+\begin{enumerate}
+\item \textbf{Calcul des normes individuelles :}
+\end{enumerate}
+   $$ \|f\|_2^2 = \int_0^1 1^2 dx = 1 $$
+   $$ \|g\|_2^2 = \int_0^1 (x^2)^2 dx = \int_0^1 x^4 dx = \left[ \frac{x^5}{5} \right]_0^1 = \frac{1}{5} $$
+   Le membre de droite de l'identité vaut donc : $2(1 + \frac{1}{5}) = 2(\frac{6}{5}) = \frac{12}{5}$.
+\begin{enumerate}
+\item \textbf{Calcul de $\|f+g\|_2^2$ :}
+\end{enumerate}
+   $$ \|f+g\|_2^2 = \int_0^1 (1+x^2)^2 dx = \int_0^1 (1 + 2x^2 + x^4) dx $$
+   $$ = \left[ x + \frac{2x^3}{3} + \frac{x^5}{5} \right]_0^1 = 1 + \frac{2}{3} + \frac{1}{5} = \frac{15}{15} + \frac{10}{15} + \frac{3}{15} = \frac{28}{15} $$
+\begin{enumerate}
+\item \textbf{Calcul de $\|f-g\|_2^2$ :}
+\end{enumerate}
+   $$ \|f-g\|_2^2 = \int_0^1 (1-x^2)^2 dx = \int_0^1 (1 - 2x^2 + x^4) dx $$
+   $$ = \left[ x - \frac{2x^3}{3} + \frac{x^5}{5} \right]_0^1 = 1 - \frac{2}{3} + \frac{1}{5} = \frac{15}{15} - \frac{10}{15} + \frac{3}{15} = \frac{8}{15} $$
+\begin{enumerate}
+\item \textbf{Vérification finale :}
+\end{enumerate}
+   $$ \|f+g\|_2^2 + \|f-g\|_2^2 = \frac{28}{15} + \frac{8}{15} = \frac{36}{15} = \frac{12 \cdot 3}{5 \cdot 3} = \frac{12}{5} $$
+   Les deux membres sont égaux à $\frac{12}{5}$. L'identité du parallélogramme est parfaitement vérifiée.
+
+
+
+\subsection*{Exercice 4 : Projection orthogonale sur la fonction constante \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Dans $L^2([0,1])$, déterminer la projection orthogonale de la fonction $f(x) = e^x$ sur le sous-espace $M$ engendré par la fonction constante $\mathbf{1}$ (où $\mathbf{1}(x) = 1$).
+
+\textbf{Correction Détaillée :}
+\begin{enumerate}
+\item \textbf{Analyse de l'énoncé :} $M = \text{Vect}(\mathbf{1})$. La projection orthogonale $p$ de $f$ sur $M$ est de la forme $p = \alpha \mathbf{1}$ où $\alpha \in \mathbb{R}$. Elle est caractérisée par $(f - p) \perp \mathbf{1}$.
+
+\item \textbf{Écriture de l'orthogonalité :}
+\end{enumerate}
+   $$ \langle f - \alpha \mathbf{1}, \mathbf{1} \rangle = 0 \iff \langle f, \mathbf{1} \rangle - \alpha \langle \mathbf{1}, \mathbf{1} \rangle = 0 $$
+\begin{enumerate}
+\item \textbf{Calcul des produits scalaires :}
+\end{enumerate}
+   $$ \langle \mathbf{1}, \mathbf{1} \rangle = \int_0^1 1 \cdot 1 dx = 1 $$
+   $$ \langle f, \mathbf{1} \rangle = \int_0^1 e^x \cdot 1 dx = \left[ e^x \right]_0^1 = e - 1 $$
+\begin{enumerate}
+\item \textbf{Déduction de la projection :}
+\end{enumerate}
+   $$ \alpha \cdot 1 = e - 1 \implies \alpha = e - 1 $$
+   La projection orthogonale de $e^x$ sur les fonctions constantes est la fonction constante $p(x) = e - 1$. C'est en fait la valeur moyenne de $f$ sur l'intervalle.
+
+
+
+\subsection*{Exercice 5 : Procédé de Gram-Schmidt dans $L^2$ \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Dans $L^2([-1,1])$, appliquer le procédé d'orthogonalisation de Gram-Schmidt à la famille $(1, x, x^2)$ pour obtenir une famille orthogonale $(P_0, P_1, P_2)$.
+
+\textbf{Correction Détaillée :}
+\begin{enumerate}
+\item \textbf{Initialisation :} Soit $e_0(x) = 1, e_1(x) = x, e_2(x) = x^2$.
+\end{enumerate}
+   On pose $P_0(x) = e_0(x) = 1$.
+\begin{enumerate}
+\item \textbf{Calcul de $P_1$ :}
+\end{enumerate}
+   $$ P_1 = e_1 - \frac{\langle e_1, P_0 \rangle}{\|P_0\|^2} P_0 $$
+   Calculs intermédiaires :
+   $\|P_0\|^2 = \int_{-1}^1 1 dx = 2$.
+   $\langle e_1, P_0 \rangle = \int_{-1}^1 x \cdot 1 dx = \left[ \frac{x^2}{2} \right]_{-1}^1 = 0$.
+   Donc $P_1(x) = x - 0 = x$.
+\begin{enumerate}
+\item \textbf{Calcul de $P_2$ :}
+\end{enumerate}
+   $$ P_2 = e_2 - \frac{\langle e_2, P_0 \rangle}{\|P_0\|^2} P_0 - \frac{\langle e_2, P_1 \rangle}{\|P_1\|^2} P_1 $$
+   Calculs intermédiaires :
+   $\|P_1\|^2 = \int_{-1}^1 x^2 dx = \left[ \frac{x^3}{3} \right]_{-1}^1 = \frac{2}{3}$.
+   $\langle e_2, P_0 \rangle = \int_{-1}^1 x^2 \cdot 1 dx = \frac{2}{3}$.
+   $\langle e_2, P_1 \rangle = \int_{-1}^1 x^2 \cdot x dx = \int_{-1}^1 x^3 dx = 0$ (fonction impaire).
+   En substituant :
+   $$ P_2(x) = x^2 - \frac{2/3}{2} \cdot 1 - 0 = x^2 - \frac{1}{3} $$
+\begin{enumerate}
+\item \textbf{Conclusion :} La famille orthogonale obtenue est $(1, x, x^2 - \frac{1}{3})$. (Ce sont, à des constantes multiplicatives près, les polynômes de Legendre).
+\end{enumerate}
+
+
+
+\subsection*{Exercice 6 : L'espace orthogonal d'un sous-espace dense \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $H = L^2(\mathbb{R})$. Soit $M = C_c^\infty(\mathbb{R})$ l'espace des fonctions lisses à support compact. On sait que $M$ est dense dans $H$. Montrer rigoureusement que $M^\perp = \{0\}$.
+
+\textbf{Correction Détaillée :}
+\begin{enumerate}
+\item \textbf{Définition de l'orthogonal :} $M^\perp = \{ f \in H \mid \forall g \in M, \langle f, g \rangle = 0 \}$.
+
+\item \textbf{Hypothèse de densité :} Puisque $M$ est dense dans $H$, pour tout $f \in H$, il existe une suite $(g_n)_{n \in \mathbb{N}}$ d'éléments de $M$ telle que $\lim_{n \to \infty} \|f - g_n\|_2 = 0$.
+
+\item \textbf{Soit $f \in M^\perp$.} Montrons que $f = 0$.
+\end{enumerate}
+   Puisque $f \in H$, prenons une suite $(g_n)$ dans $M$ convergeant vers $f$.
+   Par continuité du produit scalaire, on a :
+   $$ \|f\|_2^2 = \langle f, f \rangle = \langle f, \lim_{n \to \infty} g_n \rangle = \lim_{n \to \infty} \langle f, g_n \rangle $$
+\begin{enumerate}
+\item \textbf{Utilisation de l'orthogonalité :}
+\end{enumerate}
+   Comme $f \in M^\perp$ et $g_n \in M$ pour tout $n$, on a $\langle f, g_n \rangle = 0$ pour tout $n$.
+   Par passage à la limite, $\lim_{n \to \infty} \langle f, g_n \rangle = 0$.
+\begin{enumerate}
+\item \textbf{Conclusion :}
+\end{enumerate}
+   On en déduit que $\|f\|_2^2 = 0$, et par séparation de la norme, $f = 0$ (presque partout). Ainsi $M^\perp = \{0\}$.
+
+
+
+\subsection*{Exercice 7 : Calcul de distance à un sous-espace vectoriel \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Dans $L^2([-1,1])$, calculer la distance de la fonction $f(x) = x^3$ au sous-espace $M = \text{Vect}(1, x)$.
+
+\textbf{Correction Détaillée :}
+\begin{enumerate}
+\item \textbf{Caractérisation de la distance :} La distance $d(f, M)$ est égale à $\|f - p_M(f)\|_2$, où $p_M(f)$ est la projection orthogonale de $f$ sur $M$.
+
+\item \textbf{Recherche de la projection :} Les vecteurs $e_0(x)=1$ et $e_1(x)=x$ forment une base orthogonale de $M$ car $\int_{-1}^1 1 \cdot x dx = 0$.
+\end{enumerate}
+   On peut donc calculer $p_M(f)$ directement :
+   $$ p_M(f) = \frac{\langle f, e_0 \rangle}{\|e_0\|^2} e_0 + \frac{\langle f, e_1 \rangle}{\|e_1\|^2} e_1 $$
+\begin{enumerate}
+\item \textbf{Calcul des coefficients :}
+\end{enumerate}
+   $\|e_0\|^2 = 2$. $\|e_1\|^2 = \frac{2}{3}$.
+   $\langle f, e_0 \rangle = \int_{-1}^1 x^3 dx = 0$ (fonction impaire).
+   $\langle f, e_1 \rangle = \int_{-1}^1 x^4 dx = \left[ \frac{x^5}{5} \right]_{-1}^1 = \frac{2}{5}$.
+\begin{enumerate}
+\item \textbf{Forme de la projection :}
+\end{enumerate}
+   $$ p_M(f) = 0 \cdot 1 + \frac{2/5}{2/3} x = \frac{3}{5} x $$
+\begin{enumerate}
+\item \textbf{Calcul de la distance au carré :}
+\end{enumerate}
+   $$ d(f, M)^2 = \|f - p_M(f)\|_2^2 = \int_{-1}^1 \left(x^3 - \frac{3}{5} x\right)^2 dx = \int_{-1}^1 \left(x^6 - \frac{6}{5}x^4 + \frac{9}{25}x^2\right) dx $$
+   $$ = \left[ \frac{x^7}{7} - \frac{6}{25}x^5 + \frac{3}{25}x^3 \right]_{-1}^1 = 2 \left( \frac{1}{7} - \frac{6}{25} + \frac{3}{25} \right) = 2 \left( \frac{1}{7} - \frac{3}{25} \right) = 2 \left( \frac{25 - 21}{175} \right) = \frac{8}{175} $$
+   La distance est donc $\sqrt{\frac{8}{175}} = \frac{2\sqrt{2}}{5\sqrt{7}}$.
+
+
+
+\subsection*{Exercice 8 : Théorème de Riesz-Fréchet (Cas simple) \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Soit $H = L^2([0,1])$. On définit l'application $\phi: H \to \mathbb{R}$ par $\phi(f) = \int_0^1 f(x) x dx$. Montrer que $\phi$ est une forme linéaire continue et trouver l'unique vecteur $g \in H$ tel que $\forall f \in H, \phi(f) = \langle f, g \rangle$.
+
+\textbf{Correction Détaillée :}
+\begin{enumerate}
+\item \textbf{Linéarité :} $\phi(\lambda f + \mu h) = \int_0^1 (\lambda f(x) + \mu h(x))x dx = \lambda \int_0^1 f(x)x dx + \mu \int_0^1 h(x)x dx = \lambda \phi(f) + \mu \phi(h)$.
+
+\item \textbf{Continuité :} Par l'inégalité de Cauchy-Schwarz :
+\end{enumerate}
+   $$ |\phi(f)| = \left| \int_0^1 f(x) x dx \right| = |\langle f, \text{Id} \rangle| \le \|f\|_2 \|\text{Id}\|_2 $$
+   où $\text{Id}(x) = x$. Comme $\|\text{Id}\|_2 = \sqrt{\int_0^1 x^2 dx} = \frac{1}{\sqrt{3}} < \infty$, l'application est continue.
+\begin{enumerate}
+\item \textbf{Application du Théorème de Riesz :} Puisque $\phi \in H^*$, le théorème de représentation de Riesz garantit l'existence et l'unicité de $g \in H$ tel que $\phi(f) = \langle f, g \rangle$.
+
+\item \textbf{Identification de $g$ :}
+\end{enumerate}
+   On a $\langle f, g \rangle = \int_0^1 f(x) \overline{g(x)} dx$.
+   Par définition $\phi(f) = \int_0^1 f(x) x dx$.
+   En identifiant pour tout $f$, on trouve que $\overline{g(x)} = x$, et comme $x$ est réel, $g(x) = x$.
+   Le vecteur de Riesz est donc la fonction identité $g(x) = x$.
+
+
+
+\subsection*{Exercice 9 : Base hilbertienne et identité de Parseval \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Dans $L^2([-\pi, \pi])$, la famille $e_n(x) = \frac{1}{\sqrt{2\pi}} e^{inx}$ pour $n \in \mathbb{Z}$ est une base hilbertienne. Soit $f(x) = x$. Calculer les coefficients de Fourier $c_n = \langle f, e_n \rangle$ et en déduire la valeur de la série $\sum_{n=1}^\infty \frac{1}{n^2}$.
+
+\textbf{Correction Détaillée :}
+\begin{enumerate}
+\item \textbf{Calcul des coefficients de Fourier :}
+\end{enumerate}
+   $$ c_n = \langle f, e_n \rangle = \int_{-\pi}^\pi x \frac{1}{\sqrt{2\pi}} e^{-inx} dx $$
+   Pour $n=0$ : $c_0 = \frac{1}{\sqrt{2\pi}} \int_{-\pi}^\pi x dx = 0$ (impaire).
+   Pour $n \ne 0$ : Intégration par parties avec $u=x, dv=e^{-inx}dx \implies du=dx, v=\frac{e^{-inx}}{-in}$.
+   $$ c_n = \frac{1}{\sqrt{2\pi}} \left( \left[ x \frac{e^{-inx}}{-in} \right]_{-\pi}^\pi - \int_{-\pi}^\pi \frac{e^{-inx}}{-in} dx \right) $$
+   L'intégrale de droite est nulle car on intègre une période complète.
+   $$ c_n = \frac{1}{\sqrt{2\pi}} \frac{1}{-in} ( \pi e^{-in\pi} - (-\pi) e^{in\pi} ) $$
+   Puisque $e^{in\pi} = e^{-in\pi} = (-1)^n$, on a $c_n = \frac{1}{\sqrt{2\pi}} \frac{2\pi (-1)^n}{-in} = i \sqrt{2\pi} \frac{(-1)^n}{n}$.
+\begin{enumerate}
+\item \textbf{Calcul de la norme de $f$ :}
+\end{enumerate}
+   $$ \|f\|_2^2 = \int_{-\pi}^\pi x^2 dx = \left[ \frac{x^3}{3} \right]_{-\pi}^\pi = \frac{2\pi^3}{3} $$
+\begin{enumerate}
+\item \textbf{Application de l'identité de Parseval :}
+\end{enumerate}
+   $\|f\|_2^2 = \sum_{n \in \mathbb{Z}} |c_n|^2$.
+   $|c_n|^2 = \left| i \sqrt{2\pi} \frac{(-1)^n}{n} \right|^2 = 2\pi \frac{1}{n^2}$ pour $n \ne 0$.
+   Donc $\frac{2\pi^3}{3} = \sum_{n \in \mathbb{Z}, n \ne 0} \frac{2\pi}{n^2} = 4\pi \sum_{n=1}^\infty \frac{1}{n^2}$ (par symétrie).
+\begin{enumerate}
+\item \textbf{Conclusion :}
+\end{enumerate}
+   $$ \sum_{n=1}^\infty \frac{1}{n^2} = \frac{2\pi^3 / 3}{4\pi} = \frac{\pi^2}{6} $$
+   C'est la résolution du célèbre problème de Bâle !
+
+
+
+\subsection*{Exercice 10 : Sous-espaces fermés et somme directe \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Soit $H$ un espace de Hilbert et $M$ un sous-espace vectoriel de $H$. Montrer que $M$ est fermé si et seulement si $H = M \oplus M^\perp$.
+
+\textbf{Correction Détaillée :}
+\begin{enumerate}
+\item \textbf{Condition suffisante (Si $H = M \oplus M^\perp$) :}
+\end{enumerate}
+   Si $H = M \oplus M^\perp$, alors tout élément $x \in H$ s'écrit de manière unique $x = m + n$ avec $m \in M$ et $n \in M^\perp$.
+   Considérons le projecteur $P_M: H \to H$ défini par $P_M(x) = m$. $P_M$ est linéaire et continu (car $\|x\|^2 = \|m\|^2 + \|n\|^2 \ge \|m\|^2 = \|P_M(x)\|^2$).
+   Le noyau de $I - P_M$ est l'ensemble des $x$ tels que $x - m = 0$, donc $x \in M$.
+   $M = \ker(I - P_M)$. Puisque $I - P_M$ est continue, son noyau est un fermé. Donc $M$ est fermé.
+\begin{enumerate}
+\item \textbf{Condition nécessaire (Si $M$ est fermé) :}
+\end{enumerate}
+   Puisque $M$ est un sous-espace vectoriel fermé et convexe d'un espace de Hilbert, le théorème de projection orthogonale s'applique.
+   Pour tout $x \in H$, il existe un unique $p \in M$ minimisant la distance. La caractérisation de cette projection est que $(x-p) \in M^\perp$.
+   On peut donc écrire $x = p + (x-p)$, avec $p \in M$ et $(x-p) \in M^\perp$. Donc $H = M + M^\perp$.
+   De plus, si $y \in M \cap M^\perp$, alors $\langle y, y \rangle = 0 \implies y=0$. La somme est donc directe : $H = M \oplus M^\perp$.
+\begin{enumerate}
+\item \textbf{Conclusion :} L'équivalence est démontrée rigoureusement.
+\end{enumerate}
+
+
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Produit scalaire usuel L2 (Riemann)}
+Voici une implémentation pure Python démontrant ce concept :
+\begin{lstlisting}
+def produit_scalaire_L2(f, g, a, b, n=1000):
+    # Approximation du produit scalaire L2 par somme de Riemann
+    # integral f(x)g(x) dx sur [a,b]
+    dx = (b - a) / n
+    somme = 0
+    for i in range(n):
+        x = a + i * dx
+        somme += f(x) * g(x) * dx
+    return somme
+
+def f1(x): return x
+def f2(x): return x * x
+
+res = produit_scalaire_L2(f1, f2, 0, 1)
+print(f"Produit scalaire (x, x^2) sur [0,1] : {res} (Attendu : 0.25)")
+assert abs(res - 0.25) < 0.01
+\end{lstlisting}
+
+\subsection*{TP 2 : Vérification de l'orthogonalité (sin/cos)}
+Voici une implémentation pure Python démontrant ce concept :
+\begin{lstlisting}
+import math
+
+def produit_scalaire_L2(f, g, a, b, n=2000):
+    dx = (b - a) / n
+    somme = 0
+    for i in range(n):
+        x = a + i * dx
+        somme += f(x) * g(x) * dx
+    return somme
+
+def f_sin(x): return math.sin(x)
+def f_cos(x): return math.cos(x)
+
+res = produit_scalaire_L2(f_sin, f_cos, 0, math.pi)
+print(f"Produit scalaire (sin, cos) sur [0,pi] : {res} (Attendu : 0)")
+assert abs(res) < 0.01
+\end{lstlisting}
+
+\subsection*{TP 3 : Identité du parallélogramme (vecteurs)}
+Voici une implémentation pure Python démontrant ce concept :
+\begin{lstlisting}
+def norme_carree(v):
+    return sum(x * x for x in v)
+
+def add_vec(u, v):
+    return [x + y for x, y in zip(u, v)]
+
+def sub_vec(u, v):
+    return [x - y for x, y in zip(u, v)]
+
+u = [1.5, 2.0, -1.0]
+v = [0.5, -1.0, 3.0]
+
+u_plus_v = add_vec(u, v)
+u_minus_v = sub_vec(u, v)
+
+gauche = norme_carree(u_plus_v) + norme_carree(u_minus_v)
+droite = 2 * (norme_carree(u) + norme_carree(v))
+
+print(f"||u+v||^2 + ||u-v||^2 = {gauche}")
+print(f"2(||u||^2 + ||v||^2) = {droite}")
+assert abs(gauche - droite) < 1e-9
+\end{lstlisting}
+
+\subsection*{TP 4 : Projection orthogonale discrète 1D}
+Voici une implémentation pure Python démontrant ce concept :
+\begin{lstlisting}
+def dot_product(u, v):
+    return sum(x * y for x, y in zip(u, v))
+
+def norm(u):
+    return dot_product(u, u) ** 0.5
+
+# Projection de u sur la direction donnee par v
+def projection(u, v):
+    # p = (<u,v> / ||v||^2) * v
+    v_norm_sq = dot_product(v, v)
+    if v_norm_sq == 0:
+        return [0] * len(u)
+    coeff = dot_product(u, v) / v_norm_sq
+    return [coeff * x for x in v]
+
+u = [3, 4]
+v = [1, 0] # axe des abscisses
+p = projection(u, v)
+print(f"Projection de {u} sur {v} = {p}")
+
+u2 = [1, 1, 1]
+v2 = [1, 1, 0]
+p2 = projection(u2, v2)
+print(f"Projection de {u2} sur {v2} = {p2}")
+\end{lstlisting}
+
+\subsection*{TP 5 : Procédé de Gram-Schmidt 3D}
+Voici une implémentation pure Python démontrant ce concept :
+\begin{lstlisting}
+def dot_product(u, v):
+    return sum(x * y for x, y in zip(u, v))
+
+def multiply_vec(coeff, v):
+    return [coeff * x for x in v]
+
+def sub_vec(u, v):
+    return [x - y for x, y in zip(u, v)]
+
+def gram_schmidt(e1, e2, e3):
+    # u1 = e1
+    u1 = e1
+
+    # u2 = e2 - (<e2, u1>/||u1||^2)u1
+    coeff2 = dot_product(e2, u1) / dot_product(u1, u1)
+    proj2 = multiply_vec(coeff2, u1)
+    u2 = sub_vec(e2, proj2)
+
+    # u3 = e3 - (<e3, u1>/||u1||^2)u1 - (<e3, u2>/||u2||^2)u2
+    coeff3_1 = dot_product(e3, u1) / dot_product(u1, u1)
+    proj3_1 = multiply_vec(coeff3_1, u1)
+
+    coeff3_2 = dot_product(e3, u2) / dot_product(u2, u2)
+    proj3_2 = multiply_vec(coeff3_2, u2)
+
+    u3 = sub_vec(sub_vec(e3, proj3_1), proj3_2)
+
+    return u1, u2, u3
+
+e1 = [1, 1, 0]
+e2 = [1, 0, 1]
+e3 = [0, 1, 1]
+
+u1, u2, u3 = gram_schmidt(e1, e2, e3)
+print(f"Base orthogonale :")
+print(f"u1 = {u1}")
+print(f"u2 = {u2}")
+print(f"u3 = {u3}")
+
+# Verification
+assert abs(dot_product(u1, u2)) < 1e-9
+assert abs(dot_product(u1, u3)) < 1e-9
+assert abs(dot_product(u2, u3)) < 1e-9
+print("Verification d'orthogonalite : Succes")
+\end{lstlisting}
+
+
+
+\end{document}
