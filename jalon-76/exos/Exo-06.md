@@ -1,17 +1,25 @@
-## Exercice 6 : L'espace orthogonal d'un sous-espace dense \quad $\bigstar\bigstar\bigstar\star\star$
+# Exercice 6 : Espace $L^2$ (★★★☆☆)
 
 **Énoncé :**
-Soit $H = L^2(\mathbb{R})$. Soit $M = C_c^\infty(\mathbb{R})$ l'espace des fonctions lisses à support compact. On sait que $M$ est dense dans $H$. Montrer rigoureusement que $M^\perp = \{0\}$.
+On considère l'espace hilbertien $L^2(0, +\infty)$ muni de la mesure $e^{-x} dx$. Le produit scalaire est $\langle f, g \rangle = \int_0^{+\infty} f(x)g(x)e^{-x} dx$.
+Vérifier que les polynômes $L_0(x) = 1$ et $L_1(x) = 1 - x$ forment une famille orthogonale de norme 1 (début de la famille des polynômes de Laguerre).
 
 **Correction Détaillée :**
-1. **Définition de l'orthogonal :** $M^\perp = \{ f \in H \mid \forall g \in M, \langle f, g \rangle = 0 \}$.
-2. **Hypothèse de densité :** Puisque $M$ est dense dans $H$, pour tout $f \in H$, il existe une suite $(g_n)_{n \in \mathbb{N}}$ d'éléments de $M$ telle que $\lim_{n \to \infty} \|f - g_n\|_2 = 0$.
-3. **Soit $f \in M^\perp$.** Montrons que $f = 0$.
-   Puisque $f \in H$, prenons une suite $(g_n)$ dans $M$ convergeant vers $f$.
-   Par continuité du produit scalaire, on a :
-   $$ \|f\|_2^2 = \langle f, f \rangle = \langle f, \lim_{n \to \infty} g_n \rangle = \lim_{n \to \infty} \langle f, g_n \rangle $$
-4. **Utilisation de l'orthogonalité :**
-   Comme $f \in M^\perp$ et $g_n \in M$ pour tout $n$, on a $\langle f, g_n \rangle = 0$ pour tout $n$.
-   Par passage à la limite, $\lim_{n \to \infty} \langle f, g_n \rangle = 0$.
-5. **Conclusion :**
-   On en déduit que $\|f\|_2^2 = 0$, et par séparation de la norme, $f = 0$ (presque partout). Ainsi $M^\perp = \{0\}$.
+*Analyse de l'énoncé :* Il faut calculer la norme de $L_0$, la norme de $L_1$ et leur produit scalaire avec la mesure donnée (fonction de pondération $e^{-x}$). On rappelle que $\int_0^\infty x^n e^{-x} dx = n!$.
+
+*Résolution pas-à-pas :*
+1. **Norme de $L_0$ :**
+   $$ \|L_0\|^2 = \int_0^{+\infty} 1^2 e^{-x} dx = [-e^{-x}]_0^{+\infty} = (0) - (-1) = 1 $$
+
+2. **Orthogonalité :**
+   $$ \langle L_0, L_1 \rangle = \int_0^{+\infty} 1 \cdot (1 - x) e^{-x} dx = \int_0^{+\infty} e^{-x} dx - \int_0^{+\infty} x e^{-x} dx $$
+   La première intégrale vaut $1$. La seconde se fait par parties ($u=x, v'=-e^{-x}$) et vaut $1! = 1$.
+   Donc $\langle L_0, L_1 \rangle = 1 - 1 = 0$.
+
+3. **Norme de $L_1$ :**
+   $$ \|L_1\|^2 = \int_0^{+\infty} (1 - x)^2 e^{-x} dx = \int_0^{+\infty} (1 - 2x + x^2) e^{-x} dx $$
+   Par linéarité de l'intégrale :
+   $$ \|L_1\|^2 = \int_0^{+\infty} e^{-x} dx - 2\int_0^{+\infty} x e^{-x} dx + \int_0^{+\infty} x^2 e^{-x} dx $$
+   $$ \|L_1\|^2 = 1 - 2(1!) + 2! = 1 - 2 + 2 = 1 $$
+
+La famille $(L_0, L_1)$ est donc bien orthonormale dans cet espace pondéré.

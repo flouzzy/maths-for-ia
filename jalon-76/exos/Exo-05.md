@@ -1,23 +1,32 @@
-## Exercice 5 : Procédé de Gram-Schmidt dans $L^2$ \quad $\bigstar\bigstar\bigstar\star\star$
+# Exercice 5 : Espace $L^2$ (★★★☆☆)
 
 **Énoncé :**
-Dans $L^2([-1,1])$, appliquer le procédé d'orthogonalisation de Gram-Schmidt à la famille $(1, x, x^2)$ pour obtenir une famille orthogonale $(P_0, P_1, P_2)$.
+Dans $L^2([0, 1])$, soit $V$ le sous-espace vectoriel des polynômes de degré inférieur ou égal à 1, i.e., $V = \text{Vect}(1, x)$.
+Trouver la projection orthogonale de la fonction $f(x) = x^2$ sur le sous-espace $V$.
 
 **Correction Détaillée :**
-1. **Initialisation :** Soit $e_0(x) = 1, e_1(x) = x, e_2(x) = x^2$.
-   On pose $P_0(x) = e_0(x) = 1$.
-2. **Calcul de $P_1$ :**
-   $$ P_1 = e_1 - \frac{\langle e_1, P_0 \rangle}{\|P_0\|^2} P_0 $$
-   Calculs intermédiaires :
-   $\|P_0\|^2 = \int_{-1}^1 1 dx = 2$.
-   $\langle e_1, P_0 \rangle = \int_{-1}^1 x \cdot 1 dx = \left[ \frac{x^2}{2} \right]_{-1}^1 = 0$.
-   Donc $P_1(x) = x - 0 = x$.
-3. **Calcul de $P_2$ :**
-   $$ P_2 = e_2 - \frac{\langle e_2, P_0 \rangle}{\|P_0\|^2} P_0 - \frac{\langle e_2, P_1 \rangle}{\|P_1\|^2} P_1 $$
-   Calculs intermédiaires :
-   $\|P_1\|^2 = \int_{-1}^1 x^2 dx = \left[ \frac{x^3}{3} \right]_{-1}^1 = \frac{2}{3}$.
-   $\langle e_2, P_0 \rangle = \int_{-1}^1 x^2 \cdot 1 dx = \frac{2}{3}$.
-   $\langle e_2, P_1 \rangle = \int_{-1}^1 x^2 \cdot x dx = \int_{-1}^1 x^3 dx = 0$ (fonction impaire).
-   En substituant :
-   $$ P_2(x) = x^2 - \frac{2/3}{2} \cdot 1 - 0 = x^2 - \frac{1}{3} $$
-4. **Conclusion :** La famille orthogonale obtenue est $(1, x, x^2 - \frac{1}{3})$. (Ce sont, à des constantes multiplicatives près, les polynômes de Legendre).
+*Analyse de l'énoncé :* La projection $p$ est de la forme $ax + b$. La différence $f - p$ doit être orthogonale à $V$, donc orthogonale à $1$ et à $x$.
+
+*Résolution pas-à-pas :*
+On cherche $p(x) = ax + b$ tel que pour tout $g \in V$, $\langle f - p, g \rangle = 0$.
+Il suffit de vérifier l'orthogonalité pour la base de $V$ :
+1. $\langle f - p, 1 \rangle = 0$
+2. $\langle f - p, x \rangle = 0$
+
+Équation 1 :
+$$ \int_0^1 (x^2 - (ax + b)) dx = 0 \implies \left[ \frac{x^3}{3} - a\frac{x^2}{2} - bx \right]_0^1 = 0 \implies \frac{1}{3} - \frac{a}{2} - b = 0 $$
+Soit $3a + 6b = 2$.
+
+Équation 2 :
+$$ \int_0^1 x(x^2 - (ax + b)) dx = 0 \implies \int_0^1 (x^3 - ax^2 - bx) dx = 0 $$
+$$ \left[ \frac{x^4}{4} - a\frac{x^3}{3} - b\frac{x^2}{2} \right]_0^1 = 0 \implies \frac{1}{4} - \frac{a}{3} - \frac{b}{2} = 0 $$
+Soit $4a + 6b = 3$.
+
+On a donc un système :
+$4a + 6b = 3$
+$3a + 6b = 2$
+
+En soustrayant, $a = 1$.
+En remplaçant, $3(1) + 6b = 2 \implies 6b = -1 \implies b = -1/6$.
+
+La projection orthogonale est donc $p(x) = x - 1/6$.

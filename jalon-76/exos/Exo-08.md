@@ -1,16 +1,26 @@
-## Exercice 8 : Théorème de Riesz-Fréchet (Cas simple) \quad $\bigstar\bigstar\bigstar\bigstar\star$
+# Exercice 8 : Espace $L^2$ (★★★★☆)
 
 **Énoncé :**
-Soit $H = L^2([0,1])$. On définit l'application $\phi: H \to \mathbb{R}$ par $\phi(f) = \int_0^1 f(x) x dx$. Montrer que $\phi$ est une forme linéaire continue et trouver l'unique vecteur $g \in H$ tel que $\forall f \in H, \phi(f) = \langle f, g \rangle$.
+Soit $K(x, y)$ une fonction continue sur $[0, 1] \times [0, 1]$.
+On définit l'opérateur intégral $T$ sur $L^2([0, 1])$ par :
+$$ Tf(x) = \int_0^1 K(x, y) f(y) dy $$
+Montrer que $Tf \in L^2([0, 1])$ pour tout $f \in L^2([0, 1])$ et donner une majoration de $\|Tf\|_{L^2}$ en fonction de $K$ et $\|f\|_{L^2}$.
 
 **Correction Détaillée :**
-1. **Linéarité :** $\phi(\lambda f + \mu h) = \int_0^1 (\lambda f(x) + \mu h(x))x dx = \lambda \int_0^1 f(x)x dx + \mu \int_0^1 h(x)x dx = \lambda \phi(f) + \mu \phi(h)$.
-2. **Continuité :** Par l'inégalité de Cauchy-Schwarz :
-   $$ |\phi(f)| = \left| \int_0^1 f(x) x dx \right| = |\langle f, \text{Id} \rangle| \le \|f\|_2 \|\text{Id}\|_2 $$
-   où $\text{Id}(x) = x$. Comme $\|\text{Id}\|_2 = \sqrt{\int_0^1 x^2 dx} = \frac{1}{\sqrt{3}} < \infty$, l'application est continue.
-3. **Application du Théorème de Riesz :** Puisque $\phi \in H^*$, le théorème de représentation de Riesz garantit l'existence et l'unicité de $g \in H$ tel que $\phi(f) = \langle f, g \rangle$.
-4. **Identification de $g$ :**
-   On a $\langle f, g \rangle = \int_0^1 f(x) \overline{g(x)} dx$.
-   Par définition $\phi(f) = \int_0^1 f(x) x dx$.
-   En identifiant pour tout $f$, on trouve que $\overline{g(x)} = x$, et comme $x$ est réel, $g(x) = x$.
-   Le vecteur de Riesz est donc la fonction identité $g(x) = x$.
+*Analyse de l'énoncé :* On doit majorer $|Tf(x)|$ puis intégrer. L'inégalité de Cauchy-Schwarz va être essentielle.
+
+*Résolution pas-à-pas :*
+Soit $f \in L^2([0, 1])$. Fixons $x \in [0, 1]$.
+Appliquons l'inégalité de Cauchy-Schwarz dans $L^2$ par rapport à la variable $y$ pour la fonction produit $y \mapsto K(x, y) \cdot f(y)$ :
+$$ |Tf(x)| = \left| \int_0^1 K(x, y) f(y) dy \right| \le \left( \int_0^1 |K(x, y)|^2 dy \right)^{1/2} \left( \int_0^1 |f(y)|^2 dy \right)^{1/2} $$
+On note $\|f\|_{L^2}$ la norme de $f$, indépendante de $x$.
+$$ |Tf(x)|^2 \le \left( \int_0^1 |K(x, y)|^2 dy \right) \|f\|_{L^2}^2 $$
+
+Pour vérifier que $Tf \in L^2$, intégrons sur $x \in [0, 1]$ :
+$$ \|Tf\|_{L^2}^2 = \int_0^1 |Tf(x)|^2 dx \le \int_0^1 \left( \int_0^1 |K(x, y)|^2 dy \right) \|f\|_{L^2}^2 dx $$
+$$ \|Tf\|_{L^2}^2 \le \|f\|_{L^2}^2 \int_0^1 \int_0^1 |K(x, y)|^2 dy dx $$
+
+$K$ étant continue sur un compact, elle y est bornée par $M = \max |K(x, y)|$, ou simplement de carré intégrable. Soit $C = \left( \int_0^1 \int_0^1 |K(x, y)|^2 dy dx \right)^{1/2}$ la norme de Hilbert-Schmidt de $K$.
+On a alors :
+$$ \|Tf\|_{L^2}^2 \le C^2 \|f\|_{L^2}^2 \implies \|Tf\|_{L^2} \le C \|f\|_{L^2} $$
+L'intégrale converge, donc $Tf \in L^2$, et l'opérateur est borné de norme au plus $C$.

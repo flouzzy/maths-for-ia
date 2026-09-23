@@ -1,19 +1,21 @@
-## Exercice 3 : Vérification de l'identité du parallélogramme \quad $\bigstar\bigstar\star\star\star$
+# Exercice 3 : Espace $L^2$ (★★☆☆☆)
 
 **Énoncé :**
-Soient $f(x) = 1$ et $g(x) = x^2$ dans $L^2([0,1])$. Calculer $\|f+g\|_2^2 + \|f-g\|_2^2$ et $2(\|f\|_2^2 + \|g\|_2^2)$ pour vérifier l'identité du parallélogramme.
+Dans $L^2([-1, 1])$, déterminer la constante $c \in \mathbb{R}$ pour que la fonction $h(x) = x^2 - c$ soit orthogonale à la fonction constante $f(x) = 1$.
 
 **Correction Détaillée :**
-1. **Calcul des normes individuelles :**
-   $$ \|f\|_2^2 = \int_0^1 1^2 dx = 1 $$
-   $$ \|g\|_2^2 = \int_0^1 (x^2)^2 dx = \int_0^1 x^4 dx = \left[ \frac{x^5}{5} \right]_0^1 = \frac{1}{5} $$
-   Le membre de droite de l'identité vaut donc : $2(1 + \frac{1}{5}) = 2(\frac{6}{5}) = \frac{12}{5}$.
-2. **Calcul de $\|f+g\|_2^2$ :**
-   $$ \|f+g\|_2^2 = \int_0^1 (1+x^2)^2 dx = \int_0^1 (1 + 2x^2 + x^4) dx $$
-   $$ = \left[ x + \frac{2x^3}{3} + \frac{x^5}{5} \right]_0^1 = 1 + \frac{2}{3} + \frac{1}{5} = \frac{15}{15} + \frac{10}{15} + \frac{3}{15} = \frac{28}{15} $$
-3. **Calcul de $\|f-g\|_2^2$ :**
-   $$ \|f-g\|_2^2 = \int_0^1 (1-x^2)^2 dx = \int_0^1 (1 - 2x^2 + x^4) dx $$
-   $$ = \left[ x - \frac{2x^3}{3} + \frac{x^5}{5} \right]_0^1 = 1 - \frac{2}{3} + \frac{1}{5} = \frac{15}{15} - \frac{10}{15} + \frac{3}{15} = \frac{8}{15} $$
-4. **Vérification finale :**
-   $$ \|f+g\|_2^2 + \|f-g\|_2^2 = \frac{28}{15} + \frac{8}{15} = \frac{36}{15} = \frac{12 \cdot 3}{5 \cdot 3} = \frac{12}{5} $$
-   Les deux membres sont égaux à $\frac{12}{5}$. L'identité du parallélogramme est parfaitement vérifiée.
+*Analyse de l'énoncé :* On écrit la condition d'orthogonalité $\langle h, f \rangle = 0$ et on résout l'équation pour trouver $c$.
+
+*Résolution pas-à-pas :*
+La condition d'orthogonalité s'écrit :
+$$ \langle h, f \rangle = \int_{-1}^1 (x^2 - c) \cdot 1 dx = 0 $$
+$$ \int_{-1}^1 x^2 dx - \int_{-1}^1 c dx = 0 $$
+
+On évalue les intégrales :
+$$ \int_{-1}^1 x^2 dx = \left[ \frac{x^3}{3} \right]_{-1}^1 = \frac{1}{3} - \left(-\frac{1}{3}\right) = \frac{2}{3} $$
+$$ \int_{-1}^1 c dx = [cx]_{-1}^1 = c - (-c) = 2c $$
+
+On a donc :
+$$ \frac{2}{3} - 2c = 0 \implies 2c = \frac{2}{3} \implies c = \frac{1}{3} $$
+
+La constante cherchée est $c = 1/3$. C'est le début de la construction des polynômes de Legendre.

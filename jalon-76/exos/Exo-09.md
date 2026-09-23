@@ -1,23 +1,30 @@
-## Exercice 9 : Base hilbertienne et identité de Parseval \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
+# Exercice 9 : Espace $L^2$ (★★★★★)
 
-**Énoncé :**
-Dans $L^2([-\pi, \pi])$, la famille $e_n(x) = \frac{1}{\sqrt{2\pi}} e^{inx}$ pour $n \in \mathbb{Z}$ est une base hilbertienne. Soit $f(x) = x$. Calculer les coefficients de Fourier $c_n = \langle f, e_n \rangle$ et en déduire la valeur de la série $\sum_{n=1}^\infty \frac{1}{n^2}$.
+**Énoncé (Théorème de Riesz-Fischer partiel) :**
+Soit $(e_n)_{n \ge 1}$ une base hilbertienne de $L^2([0, 1])$. Soit $f \in L^2$. On note $c_n = \langle f, e_n \rangle$ ses coefficients de Fourier généralisés.
+Prouver l'inégalité de Bessel : $\sum_{n=1}^\infty |c_n|^2 \le \|f\|^2$.
 
 **Correction Détaillée :**
-1. **Calcul des coefficients de Fourier :**
-   $$ c_n = \langle f, e_n \rangle = \int_{-\pi}^\pi x \frac{1}{\sqrt{2\pi}} e^{-inx} dx $$
-   Pour $n=0$ : $c_0 = \frac{1}{\sqrt{2\pi}} \int_{-\pi}^\pi x dx = 0$ (impaire).
-   Pour $n \ne 0$ : Intégration par parties avec $u=x, dv=e^{-inx}dx \implies du=dx, v=\frac{e^{-inx}}{-in}$.
-   $$ c_n = \frac{1}{\sqrt{2\pi}} \left( \left[ x \frac{e^{-inx}}{-in} \right]_{-\pi}^\pi - \int_{-\pi}^\pi \frac{e^{-inx}}{-in} dx \right) $$
-   L'intégrale de droite est nulle car on intègre une période complète.
-   $$ c_n = \frac{1}{\sqrt{2\pi}} \frac{1}{-in} ( \pi e^{-in\pi} - (-\pi) e^{in\pi} ) $$
-   Puisque $e^{in\pi} = e^{-in\pi} = (-1)^n$, on a $c_n = \frac{1}{\sqrt{2\pi}} \frac{2\pi (-1)^n}{-in} = i \sqrt{2\pi} \frac{(-1)^n}{n}$.
-2. **Calcul de la norme de $f$ :**
-   $$ \|f\|_2^2 = \int_{-\pi}^\pi x^2 dx = \left[ \frac{x^3}{3} \right]_{-\pi}^\pi = \frac{2\pi^3}{3} $$
-3. **Application de l'identité de Parseval :**
-   $\|f\|_2^2 = \sum_{n \in \mathbb{Z}} |c_n|^2$.
-   $|c_n|^2 = \left| i \sqrt{2\pi} \frac{(-1)^n}{n} \right|^2 = 2\pi \frac{1}{n^2}$ pour $n \ne 0$.
-   Donc $\frac{2\pi^3}{3} = \sum_{n \in \mathbb{Z}, n \ne 0} \frac{2\pi}{n^2} = 4\pi \sum_{n=1}^\infty \frac{1}{n^2}$ (par symétrie).
-4. **Conclusion :**
-   $$ \sum_{n=1}^\infty \frac{1}{n^2} = \frac{2\pi^3 / 3}{4\pi} = \frac{\pi^2}{6} $$
-   C'est la résolution du célèbre problème de Bâle !
+*Analyse de l'énoncé :* On considère une somme partielle $S_N = \sum_{n=1}^N c_n e_n$. On va utiliser l'orthogonalité de $f - S_N$ avec l'espace engendré par les $e_n$.
+
+*Résolution pas-à-pas :*
+Soit $N \ge 1$ un entier. Posons $S_N = \sum_{n=1}^N c_n e_n$.
+Évaluons la norme au carré du reste $R_N = f - S_N$ :
+$$ 0 \le \|f - S_N\|^2 = \langle f - S_N, f - S_N \rangle $$
+$$ = \|f\|^2 - \langle f, S_N \rangle - \langle S_N, f \rangle + \|S_N\|^2 $$
+
+Calculons les termes impliquant $S_N$ :
+$$ \langle f, S_N \rangle = \left\langle f, \sum_{n=1}^N c_n e_n \right\rangle = \sum_{n=1}^N \overline{c_n} \langle f, e_n \rangle = \sum_{n=1}^N \overline{c_n} c_n = \sum_{n=1}^N |c_n|^2 $$
+Par symétrie hermitienne, $\langle S_N, f \rangle = \sum_{n=1}^N |c_n|^2$.
+
+Pour $\|S_N\|^2$, on utilise le théorème de Pythagore car la famille $(e_n)$ est orthonormale :
+$$ \|S_N\|^2 = \left\| \sum_{n=1}^N c_n e_n \right\|^2 = \sum_{n=1}^N \|c_n e_n\|^2 = \sum_{n=1}^N |c_n|^2 \|e_n\|^2 = \sum_{n=1}^N |c_n|^2 $$
+
+En remettant tout dans l'équation de départ :
+$$ 0 \le \|f\|^2 - \sum_{n=1}^N |c_n|^2 - \sum_{n=1}^N |c_n|^2 + \sum_{n=1}^N |c_n|^2 $$
+$$ 0 \le \|f\|^2 - \sum_{n=1}^N |c_n|^2 $$
+$$ \sum_{n=1}^N |c_n|^2 \le \|f\|^2 $$
+
+Cette majoration est vraie pour tout $N$. La suite des sommes partielles (qui est croissante car les termes sont positifs) est majorée, donc elle converge. Par passage à la limite quand $N \to \infty$ :
+$$ \sum_{n=1}^\infty |c_n|^2 \le \|f\|^2 $$
+Ce qui démontre l'inégalité de Bessel.
