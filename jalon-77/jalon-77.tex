@@ -1,0 +1,617 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1
+}
+
+\title{\Huge DENSITÉ DANS LP \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+\section{Introduction à la Densité dans $L^p$}
+
+Le concept de densité est fondamental en analyse fonctionnelle. Historiquement, l'étude des espaces de Lebesgue $L^p$ pour $1 \le p < \infty$ s'est heurtée à la complexité structurelle des fonctions qui les composent. Ces fonctions peuvent présenter des discontinuités denses, des variations infinies ou des comportements locaux pathologiques.
+
+La notion de densité offre une solution élégante : elle permet d'approcher arbitrairement près (au sens de la norme $L^p$) n'importe quelle fonction complexe de l'espace par des fonctions appartenant à une classe beaucoup plus "régulière" et maniable, telles que les fonctions étagées (ou simples), les fonctions continues, ou encore les fonctions indéfiniment dérivables à support compact.
+
+En termes géométriques, dire qu'un sous-espace $A$ est dense dans un espace $E$ signifie que l'adhérence de $A$ est égale à $E$. Ainsi, tout point de $E$ est limite d'une suite d'éléments de $A$.
+
+\subsection{Exemple 1 : Intuition de l'approximation par des fonctions en escalier}
+Considérons une fonction continue $f(x) = x^2$ sur l'intervalle $[0,1]$.
+Si l'on cherche à l'approcher par une fonction étagée $s_n(x)$ constante sur les intervalles $[k/n, (k+1)/n[$ en prenant la valeur $(k/n)^2$, l'erreur maximale entre $f(x)$ et $s_n(x)$ sur cet intervalle est :
+$$ \sup_{x} |f(x) - s_n(x)| \le \frac{2}{n} $$
+Ainsi, la distance en norme $L^1$ est majorée par $2/n$, qui tend vers $0$ lorsque $n \to \infty$.
+
+\section{Définitions, Théorèmes et Exemples}
+
+Soit $(X, \mathcal{F}, \mu)$ un espace mesuré et $1 \le p < \infty$. L'espace $L^p(\mu)$ est l'ensemble des classes d'équivalence de fonctions mesurables $f : X \to \mathbb{R}$ ou $\mathbb{C}$ telles que $\int_X |f|^p \, d\mu < \infty$.
+
+\subsection{Densité des fonctions simples (étagées)}
+
+\textbf{Définition (Fonction simple) :}
+Une fonction simple (ou étagée) $s$ est une combinaison linéaire finie de fonctions indicatrices d'ensembles mesurables :
+$$ s(x) = \sum_{i=1}^k c_i \mathbf{1}_{A_i}(x) $$
+où $c_i \in \mathbb{R}$ (ou $\mathbb{C}$) et les $A_i \in \mathcal{F}$ sont deux à deux disjoints.
+
+\textbf{Théorème 1 (Densité des fonctions simples dans $L^p$) :}
+Pour tout $1 \le p < \infty$, l'espace vectoriel des fonctions simples intégrables est dense dans $L^p(\mu)$.
+Autrement dit, pour tout $f \in L^p(\mu)$ et tout $\epsilon > 0$, il existe une fonction simple $s \in L^p(\mu)$ telle que :
+$$ \| f - s \|_p < \epsilon $$
+
+\textbf{Exemple 2 : Calcul de l'approximation d'une fonction continue par une fonction simple}
+Considérons $f(x) = x$ sur $[0,1]$ muni de la mesure de Lebesgue.
+Définissons la fonction simple $s(x) = \frac{1}{2} \mathbf{1}_{[0, 1/2[}(x) + 1 \cdot \mathbf{1}_{[1/2, 1]}(x)$.
+Calculons la norme $L^2$ de l'erreur :
+$$ \| f - s \|_2^2 = \int_0^{1/2} (x - 1/2)^2 \, dx + \int_{1/2}^1 (x - 1)^2 \, dx $$
+$$ \int_0^{1/2} (x - 1/2)^2 \, dx = \left[ \frac{(x-1/2)^3}{3} \right]_0^{1/2} = 0 - \left(\frac{-1/8}{3}\right) = \frac{1}{24} $$
+$$ \int_{1/2}^1 (x - 1)^2 \, dx = \left[ \frac{(x-1)^3}{3} \right]_{1/2}^1 = 0 - \left(\frac{-1/8}{3}\right) = \frac{1}{24} $$
+Ainsi, $\| f - s \|_2^2 = \frac{1}{12}$, ce qui donne $\| f - s \|_2 = \frac{1}{\sqrt{12}} \approx 0.288$.
+
+\subsection{Densité des fonctions continues à support compact}
+
+Soit $\Omega$ un ouvert de $\mathbb{R}^n$ muni de la mesure de Lebesgue. On note $C_c(\Omega)$ l'espace vectoriel des fonctions continues sur $\Omega$ à support compact contenu dans $\Omega$.
+
+\textbf{Théorème 2 (Densité de $C_c$ dans $L^p$) :}
+Pour tout $1 \le p < \infty$, l'espace $C_c(\Omega)$ est dense dans $L^p(\Omega)$.
+
+\textbf{Exemple 3 : Approximation d'une indicatrice par des fonctions continues}
+Soit $f = \mathbf{1}_{[0,1]} \in L^1(\mathbb{R})$.
+Définissons une suite de fonctions continues $g_n(x)$ :
+$$
+g_n(x) = \begin{cases}
+0 & \text{si } x \le -1/n \\
+nx + 1 & \text{si } -1/n < x < 0 \\
+1 & \text{si } 0 \le x \le 1 \\
+-nx + n + 1 & \text{si } 1 < x < 1+1/n \\
+0 & \text{si } x \ge 1+1/n
+\end{cases}
+$$
+L'intégrale de la différence $|f - g_n|$ est géométriquement la somme des aires de deux petits triangles de base $1/n$ et de hauteur $1$.
+$$ \| f - g_n \|_1 = 2 \times \left( \frac{1}{2} \times \frac{1}{n} \times 1 \right) = \frac{1}{n} $$
+Ainsi, quand $n \to \infty$, $\| f - g_n \|_1 \to 0$.
+
+\subsection{Densité des fonctions régulières}
+
+On note $C_c^\infty(\Omega)$ l'espace des fonctions de classe $C^\infty$ à support compact (aussi appelées fonctions tests).
+
+\textbf{Théorème 3 (Densité de $C_c^\infty$ dans $L^p$) :}
+Pour tout $1 \le p < \infty$, l'espace $C_c^\infty(\Omega)$ est dense dans $L^p(\Omega)$.
+
+\textbf{Exemple 4 : Construction d'une fonction plateau régulière}
+On considère la fonction de base $\varphi(x) = e^{-\frac{1}{1-x^2}} \mathbf{1}_{]-1,1[}(x)$, qui est $C^\infty$ à support compact $[-1, 1]$.
+Par changement d'échelle et translation, on peut construire une fonction $\psi \in C_c^\infty$ valant $1$ sur un compact $K$ et s'annulant hors d'un voisinage $U$ de $K$. On l'utilise ensuite pour lisser les fonctions indicatrices par convolution.
+
+\section{Démonstrations}
+
+\subsection{Démonstration du Théorème 1 (Densité des fonctions simples)}
+
+Soit $f \in L^p(\mu)$ pour $1 \le p < \infty$.
+Écrivons $f = f^+ - f^-$, où $f^+ = \max(f, 0)$ et $f^- = \max(-f, 0)$. Il suffit de démontrer le résultat pour les fonctions positives, puis d'appliquer la linéarité.
+Supposons donc $f \ge 0$ et $f \in L^p(\mu)$.
+
+Il existe une suite $(s_n)$ de fonctions simples mesurables, positives et croissantes telle que pour tout $x \in X$, $\lim_{n \to \infty} s_n(x) = f(x)$.
+Puisque $0 \le s_n(x) \le f(x)$, nous avons $s_n \in L^p(\mu)$ (car $s_n^p \le f^p$ et $f \in L^p$).
+Considérons la suite de fonctions $g_n = |f - s_n|^p = (f - s_n)^p$.
+1. $g_n(x) \to 0$ pour presque tout $x$.
+2. $|g_n(x)| \le f(x)^p$ pour tout $n$, et $f^p \in L^1(\mu)$.
+Par le Théorème de Convergence Dominée de Lebesgue, nous déduisons que :
+$$ \lim_{n \to \infty} \int_X |f - s_n|^p \, d\mu = \lim_{n \to \infty} \int_X g_n \, d\mu = 0 $$
+Ainsi, $s_n \to f$ dans $L^p(\mu)$. Le théorème est démontré.
+
+\subsection{Idée de la démonstration pour la densité de $C_c(\Omega)$ (Théorème 2)}
+
+D'après le théorème 1, il suffit de montrer que toute fonction simple intégrable peut être approchée par une fonction de $C_c(\Omega)$. Par linéarité, il suffit de l'établir pour l'indicatrice $\mathbf{1}_A$ d'un ensemble mesurable $A$ de mesure finie.
+En utilisant la régularité de la mesure de Lebesgue, pour tout $\epsilon > 0$, il existe un compact $K$ et un ouvert $U$ tels que $K \subset A \subset U$ et $\mu(U \setminus K) < \epsilon$.
+Par le Lemme d'Urysohn, il existe une fonction continue $g \in C_c(\Omega)$ telle que $0 \le g \le 1$, $g|_K = 1$ et $g|_{U^c} = 0$.
+On a alors $\mathbf{1}_A - g = 0$ sur $K$ et sur $U^c$. L'erreur est concentrée sur $U \setminus K$, dont la mesure est très petite.
+$$ \int_\Omega |\mathbf{1}_A - g|^p \, d\mu \le \mu(U \setminus K) < \epsilon $$
+Ceci conclut l'approximation par des fonctions continues.
+
+\subsection{Illustration vectorielle : Schéma de densité}
+
+\begin{tikzpicture}
+\draw[->] (-0.5, 0) -- (6, 0) node[right] {$x$};
+\draw[->] (0, -0.5) -- (0, 3) node[above] {$y$};
+\draw[blue, thick] (0.5, 0) -- (0.5, 2) -- (2.5, 2) -- (2.5, 0.5) -- (4, 0.5) -- (4, 0);
+\draw[red, dashed, thick] (0, 0) -- (0.5, 2) -- (2.5, 2) -- (2.7, 0.5) -- (4, 0.5) -- (4.5, 0);
+\node[blue] at (1.5, 2.3) {$f$ (fonction simple)};
+\node[red] at (3.5, 1) {$g$ (fonction continue)};
+\end{tikzpicture}
+
+\section{Applications en Physique, Logique et IA}
+
+\subsection{Physique et mécanique quantique}
+En mécanique quantique, l'espace d'états d'une particule est un espace de Hilbert $L^2(\mathbb{R}^d)$. La densité des fonctions régulières ($C_c^\infty$) permet d'affirmer que des observables comme l'opérateur impulsion $-i\hbar\nabla$ peuvent être définies sur un domaine dense (les fonctions tests). Ainsi, l'opérateur est densément défini, ce qui est une condition sine qua non pour étudier ses propriétés d'auto-adjonction.
+
+\subsection{Analyse des signaux}
+En traitement du signal, un signal physique appartient à $L^2$. Les théorèmes de densité assurent qu'on peut approcher ce signal avec une précision infinie par des sommes finies d'harmoniques (séries de Fourier) ou par des ondelettes lisses, ce qui est le fondement de la compression de données (MP3, JPEG).
+
+\subsection{Intelligence Artificielle et Réseaux de Neurones}
+Le Théorème d'Approximation Universelle repose fondamentalement sur la densité. Un réseau de neurones multicouches avec une fonction d'activation non polynomiale génère un sous-espace vectoriel de fonctions. Démontrer l'universalité revient à démontrer que ce sous-espace est dense dans l'espace des fonctions continues $C(K)$, et par extension, dense dans $L^p(K)$.
+La garantie qu'un réseau de neurones de taille finie peut approcher n'importe quelle fonction d'erreur mesurable $L^p$ à une erreur arbitrairement petite $\epsilon$ provient de ces théorèmes fondamentaux de la théorie de la mesure.
+
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Approximation d'une indicatrice par une fonction continue \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Soit $f = \mathbf{1}_{[0, 1]} \in L^1(\mathbb{R})$.
+Proposer une fonction $g \in C_c(\mathbb{R})$ (continue à support compact) telle que $\| f - g \|_1 \le \epsilon$, pour un $\epsilon > 0$ donné. Calculer explicitement l'intégrale pour prouver la majoration.
+
+\textbf{Correction :}
+Nous cherchons à construire une fonction $g$ continue qui interpole $f$. Définissons $g_\delta$ pour $\delta > 0$ :
+$g_\delta(x) = 1$ pour $x \in [0, 1]$
+$g_\delta(x) = 1 + \frac{x}{\delta}$ pour $x \in [-\delta, 0]$
+$g_\delta(x) = 1 - \frac{x-1}{\delta}$ pour $x \in [1, 1+\delta]$
+$g_\delta(x) = 0$ ailleurs.
+
+La fonction $g_\delta$ est continue sur $\mathbb{R}$ et son support est $[-\delta, 1+\delta]$, qui est compact.
+L'écart est $f(x) - g_\delta(x) = -g_\delta(x)$ sur $[-\delta, 0[ \cup ]1, 1+\delta]$.
+La norme $L^1$ de la différence est l'aire sous les deux "triangles" latéraux :
+$\| f - g_\delta \|_1 = \int_{-\delta}^0 \left(1 + \frac{x}{\delta}\right) dx + \int_1^{1+\delta} \left(1 - \frac{x-1}{\delta}\right) dx$
+L'aire d'un tel triangle de base $\delta$ et de hauteur $1$ est $\frac{1 \times \delta}{2} = \frac{\delta}{2}$.
+Ainsi, $\| f - g_\delta \|_1 = \frac{\delta}{2} + \frac{\delta}{2} = \delta$.
+Pour obtenir $\| f - g_\delta \|_1 \le \epsilon$, il suffit de choisir $\delta = \epsilon$.
+La fonction correspondante est bien un élément de $C_c(\mathbb{R})$.
+
+
+\subsection*{Exercice 2 : Densité et limite en moyenne quadratique \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Soit $f \in L^2([0,1])$. Sachant que les polynômes sont denses dans $C([0,1])$ (Théorème de Weierstrass) et que $C([0,1])$ est dense dans $L^2([0,1])$, montrer que pour tout $\epsilon > 0$, il existe un polynôme $P$ tel que $\|f - P\|_2 < \epsilon$.
+
+\textbf{Correction :}
+Fixons $\epsilon > 0$.
+Puisque $C([0,1])$ est dense dans $L^2([0,1])$, il existe une fonction continue $g \in C([0,1])$ telle que :
+$\| f - g \|_2 < \frac{\epsilon}{2}$
+
+Par le théorème d'approximation de Weierstrass, l'ensemble des polynômes est dense dans $C([0,1])$ pour la norme uniforme $\| \cdot \|_\infty$.
+Ainsi, il existe un polynôme $P$ tel que pour tout $x \in [0,1]$, $|g(x) - P(x)| < \frac{\epsilon}{2}$.
+Cela implique que $\| g - P \|_\infty < \frac{\epsilon}{2}$.
+
+Or, sur l'intervalle $[0,1]$ de mesure finie (égale à 1), la norme $L^2$ est dominée par la norme uniforme :
+$\| g - P \|_2 = \left( \int_0^1 |g(x) - P(x)|^2 dx \right)^{1/2} \le \left( \int_0^1 \left(\frac{\epsilon}{2}\right)^2 dx \right)^{1/2} = \frac{\epsilon}{2}$.
+
+Par l'inégalité triangulaire dans $L^2$ :
+$\| f - P \|_2 \le \| f - g \|_2 + \| g - P \|_2 < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$.
+Le polynôme $P$ répond donc au problème posé, prouvant la densité des polynômes dans $L^2([0,1])$.
+
+
+\subsection*{Exercice 3 : Non-densité dans $L^\infty$ \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit l'espace $L^\infty(\mathbb{R})$ muni de la norme du supremum essentiel.
+Montrer que l'espace des fonctions continues à support compact $C_c(\mathbb{R})$ \textbf{n'est pas} dense dans $L^\infty(\mathbb{R})$.
+Donner un contre-exemple explicite et calculer la distance minimale à $C_c(\mathbb{R})$.
+
+\textbf{Correction :}
+La norme dans $L^\infty(\mathbb{R})$ est définie par $\| h \|_\infty = \text{ess sup}_{x \in \mathbb{R}} |h(x)|$.
+Considérons la fonction constante $f(x) = 1$ pour tout $x \in \mathbb{R}$. Il est clair que $f \in L^\infty(\mathbb{R})$ car $\| f \|_\infty = 1 < \infty$.
+
+Soit $g \in C_c(\mathbb{R})$ une fonction continue à support compact quelconque.
+Puisque le support de $g$ est compact, il est borné. Il existe donc $M > 0$ tel que pour tout $|x| > M$, $g(x) = 0$.
+
+Pour tout $x$ tel que $|x| > M$, nous avons :
+$|f(x) - g(x)| = |1 - 0| = 1$.
+Ainsi, le supremum essentiel de $|f - g|$ sur $\mathbb{R}$ est au moins $1$.
+$$ \| f - g \|_\infty = \text{ess sup}_{x \in \mathbb{R}} |f(x) - g(x)| \ge 1 $$
+
+Cette inégalité étant vraie pour \textit{toute} fonction $g \in C_c(\mathbb{R})$, la distance entre $f$ et $C_c(\mathbb{R})$ est exactement $1$.
+Il est donc impossible de trouver une suite de fonctions dans $C_c(\mathbb{R})$ qui converge vers $f$ en norme $L^\infty$. $C_c(\mathbb{R})$ n'est pas dense dans $L^\infty(\mathbb{R})$.
+
+
+\subsection*{Exercice 4 : Densité par convolution (Mollification) \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $f \in L^1(\mathbb{R})$. On considère une fonction test positive $\varphi \in C_c^\infty(\mathbb{R})$ telle que $\int_{\mathbb{R}} \varphi(x) dx = 1$.
+Pour $\epsilon > 0$, on pose $\varphi_\epsilon(x) = \frac{1}{\epsilon}\varphi(\frac{x}{\epsilon})$.
+La fonction régularisée est $f_\epsilon = f * \varphi_\epsilon$, soit $f_\epsilon(x) = \int_{\mathbb{R}} f(x-y)\varphi_\epsilon(y) dy$.
+Montrer que si $f$ est uniformément continue et bornée, alors $f_\epsilon \to f$ uniformément sur $\mathbb{R}$ quand $\epsilon \to 0$.
+
+\textbf{Correction :}
+Puisque $\int_{\mathbb{R}} \varphi_\epsilon(y) dy = \int_{\mathbb{R}} \frac{1}{\epsilon}\varphi(\frac{y}{\epsilon}) dy = 1$ (par le changement de variable $z = y/\epsilon$), nous pouvons écrire pour tout $x \in \mathbb{R}$ :
+$f(x) = \int_{\mathbb{R}} f(x) \varphi_\epsilon(y) dy$.
+
+La différence s'écrit alors :
+$f_\epsilon(x) - f(x) = \int_{\mathbb{R}} (f(x-y) - f(x)) \varphi_\epsilon(y) dy$.
+
+La fonction $f$ étant uniformément continue, pour tout $\eta > 0$, il existe $\delta > 0$ tel que $|z| < \delta \implies |f(w-z) - f(w)| < \eta$ pour tout $w$.
+Le support de $\varphi$ est compact, disons inclus dans $[-M, M]$.
+Ainsi, le support de $\varphi_\epsilon$ est inclus dans $[-\epsilon M, \epsilon M]$.
+Pour $\epsilon < \frac{\delta}{M}$, si $y$ est dans le support de $\varphi_\epsilon$, alors $|y| \le \epsilon M < \delta$.
+
+Pour un tel $\epsilon$, et pour tout $x \in \mathbb{R}$ :
+$|f_\epsilon(x) - f(x)| \le \int_{-\epsilon M}^{\epsilon M} |f(x-y) - f(x)| \varphi_\epsilon(y) dy$
+Puisque $|y| < \delta$, $|f(x-y) - f(x)| < \eta$.
+$|f_\epsilon(x) - f(x)| \le \eta \int_{-\epsilon M}^{\epsilon M} \varphi_\epsilon(y) dy = \eta \times 1 = \eta$.
+
+Comme cette majoration est indépendante de $x$, nous avons $\| f_\epsilon - f \|_\infty \le \eta$ pour tout $\epsilon < \delta/M$.
+Ceci démontre la convergence uniforme $f_\epsilon \to f$ sur $\mathbb{R}$.
+
+
+\subsection*{Exercice 5 : Invariance par translation et continuité en moyenne \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Pour $f \in L^p(\mathbb{R})$ ($1 \le p < \infty$) et $h \in \mathbb{R}$, on définit la fonction translatée $\tau_h f(x) = f(x - h)$.
+Démontrer que l'application $h \mapsto \tau_h f$ est continue de $\mathbb{R}$ dans $L^p(\mathbb{R})$.
+C'est-à-dire : $\lim_{h \to 0} \| \tau_h f - f \|_p = 0$. On utilisera la densité de $C_c(\mathbb{R})$.
+
+\textbf{Correction :}
+Fixons $\epsilon > 0$.
+Puisque $C_c(\mathbb{R})$ est dense dans $L^p(\mathbb{R})$, il existe $g \in C_c(\mathbb{R})$ telle que $\| f - g \|_p < \frac{\epsilon}{3}$.
+Par l'inégalité triangulaire dans $L^p$, on a :
+$\| \tau_h f - f \|_p \le \| \tau_h f - \tau_h g \|_p + \| \tau_h g - g \|_p + \| g - f \|_p$.
+
+1. Par invariance de la mesure de Lebesgue par translation, $\| \tau_h f - \tau_h g \|_p = \| f - g \|_p < \frac{\epsilon}{3}$.
+2. Le terme de droite $\| g - f \|_p$ est strictement inférieur à $\frac{\epsilon}{3}$.
+Il reste à borner $\| \tau_h g - g \|_p$.
+
+La fonction $g$ est continue à support compact. Elle est donc uniformément continue sur $\mathbb{R}$ (Théorème de Heine).
+Soit $K$ un compact contenant le support de $g$. Si $|h| \le 1$, le support de $\tau_h g - g$ est inclus dans un compact fixe $K' = K + [-1, 1]$.
+Par continuité uniforme, $\lim_{h \to 0} \sup_{x \in \mathbb{R}} |g(x-h) - g(x)| = 0$.
+Ainsi, pour $h$ suffisamment petit, $|g(x-h) - g(x)| < \eta$, où $\eta = \frac{\epsilon}{3 \mu(K')^{1/p}}$.
+Alors,
+$\| \tau_h g - g \|_p = \left( \int_{K'} |g(x-h) - g(x)|^p dx \right)^{1/p} \le \left( \eta^p \mu(K') \right)^{1/p} = \eta \mu(K')^{1/p} = \frac{\epsilon}{3}$.
+
+En additionnant les trois termes, pour $h$ suffisamment petit,
+$\| \tau_h f - f \|_p < \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} = \epsilon$.
+La continuité en moyenne d'ordre $p$ est ainsi démontrée.
+
+
+\subsection*{Exercice 6 : Théorème de Riemann-Lebesgue \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+En utilisant la densité des fonctions en escalier, prouver le Lemme de Riemann-Lebesgue pour $L^1(\mathbb{R})$ :
+Pour toute fonction $f \in L^1(\mathbb{R})$, on a $\lim_{|n| \to \infty} \int_{\mathbb{R}} f(x) e^{-inx} dx = 0$.
+
+\textbf{Correction :}
+Soit $f \in L^1(\mathbb{R})$ et $\epsilon > 0$.
+L'ensemble des fonctions en escalier à support compact est dense dans $L^1(\mathbb{R})$.
+Il existe donc une fonction en escalier $s = \sum_{j=1}^k c_j \mathbf{1}_{[a_j, b_j]}$ telle que $\| f - s \|_1 < \frac{\epsilon}{2}$.
+
+Par linéarité, évaluons l'intégrale pour la fonction $s$ :
+$I_n(s) = \int_{\mathbb{R}} s(x) e^{-inx} dx = \sum_{j=1}^k c_j \int_{a_j}^{b_j} e^{-inx} dx$.
+Calculons l'intégrale pour un intervalle $[a_j, b_j]$ pour $n \neq 0$ :
+$\int_{a_j}^{b_j} e^{-inx} dx = \left[ \frac{e^{-inx}}{-in} \right]_{a_j}^{b_j} = \frac{e^{-inb_j} - e^{-ina_j}}{-in}$.
+La valeur absolue de ce terme est majorée par :
+$\left| \frac{e^{-inb_j} - e^{-ina_j}}{-in} \right| \le \frac{|e^{-inb_j}| + |e^{-ina_j}|}{|n|} = \frac{2}{|n|}$.
+Donc, $|I_n(s)| \le \sum_{j=1}^k |c_j| \frac{2}{|n|}$.
+Il est évident que $\lim_{|n| \to \infty} |I_n(s)| = 0$. Il existe donc $N$ tel que pour tout $|n| \ge N$, $|I_n(s)| < \frac{\epsilon}{2}$.
+
+Maintenant, appliquons l'inégalité triangulaire pour l'intégrale de $f$ :
+$|I_n(f)| = \left| \int_{\mathbb{R}} f(x) e^{-inx} dx \right| \le \left| \int_{\mathbb{R}} (f(x) - s(x)) e^{-inx} dx \right| + \left| \int_{\mathbb{R}} s(x) e^{-inx} dx \right|$.
+Le premier terme se majore en valeur absolue par l'intégrale de la valeur absolue :
+$\int_{\mathbb{R}} |f(x) - s(x)| |e^{-inx}| dx = \int_{\mathbb{R}} |f(x) - s(x)| \times 1 dx = \| f - s \|_1 < \frac{\epsilon}{2}$.
+Ainsi, pour tout $|n| \ge N$, $|I_n(f)| \le \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$.
+La limite est bien $0$.
+
+
+\subsection*{Exercice 7 : Fonctions de classe $C^1$ denses dans $W^{1,p}$ (Théorie de Sobolev) \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Donner un aperçu de la manière dont la densité des fonctions régulières est étendue aux espaces de Sobolev. On considère l'espace $W^{1,p}(\mathbb{R}) = \{u \in L^p(\mathbb{R}) \mid u' \in L^p(\mathbb{R})\}$ où $u'$ est la dérivée faible. Pourquoi les fonctions lisses sont-elles denses dans cet espace ?
+
+\textbf{Correction :}
+La norme de l'espace de Sobolev $W^{1,p}(\mathbb{R})$ est $\| u \|_{W^{1,p}} = \| u \|_p + \| u' \|_p$.
+Pour montrer que les fonctions lisses $C_c^\infty(\mathbb{R})$ sont denses, la technique standard est la régularisation par convolution (ou mollification).
+
+Soit $u \in W^{1,p}(\mathbb{R})$. Soit $\rho_\epsilon$ un mollifieur standard de classe $C_c^\infty$.
+On pose $u_\epsilon = u * \rho_\epsilon$.
+Par les propriétés de la convolution, $u_\epsilon$ est infiniment dérivable (de classe $C^\infty$) et $u_\epsilon \in L^p$.
+De plus, on a la commutation fondamentale des dérivées et de la convolution pour les dérivées faibles :
+$(u_\epsilon)' = (u * \rho_\epsilon)' = u' * \rho_\epsilon$.
+
+En utilisant les théorèmes de densité standards dans $L^p$ (similaires à l'exercice 4 pour $L^p$) :
+1. $u_\epsilon \to u$ dans $L^p(\mathbb{R})$.
+2. $(u_\epsilon)' = u' * \rho_\epsilon \to u'$ dans $L^p(\mathbb{R})$ car $u' \in L^p(\mathbb{R})$.
+
+Ainsi, par définition de la norme de Sobolev :
+$\| u_\epsilon - u \|_{W^{1,p}} = \| u_\epsilon - u \|_p + \| (u_\epsilon)' - u' \|_p \to 0$ lorsque $\epsilon \to 0$.
+Une fonction de $W^{1,p}$ peut donc toujours être approchée par une fonction de classe $C^\infty$, et par troncature supplémentaire, par des fonctions de $C_c^\infty$. C'est le théorème de Meyers-Serrin.
+
+
+\subsection*{Exercice 8 : Approximation de fonctions caractéristiques d'ouverts \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $U$ un ouvert de mesure finie dans $\mathbb{R}$. Construire explicitement une suite de fonctions continues $g_n$ qui approxime $\mathbf{1}_U$ dans $L^1(\mathbb{R})$ en utilisant la notion géométrique de distance à la frontière.
+
+\textbf{Correction :}
+Puisque $U$ est ouvert, son complémentaire $F = \mathbb{R} \setminus U$ est fermé.
+Considérons la fonction distance au fermé $F$ :
+$d(x, F) = \inf_{y \in F} |x - y|$.
+La fonction $d(\cdot, F)$ est continue (et même $1$-lipschitzienne). De plus, $d(x, F) = 0$ si et seulement si $x \in F$, c'est-à-dire si $x \notin U$.
+Ainsi, $d(x, F) > 0$ pour tout $x \in U$.
+
+Définissons la suite de fonctions $g_n(x) = \min(1, n \cdot d(x, F))$.
+Pour tout $n$, $g_n$ est continue, car elle est le minimum de deux fonctions continues.
+Si $x \notin U$ ($x \in F$), $d(x, F) = 0$, donc $g_n(x) = 0$.
+Si $x \in U$, $d(x, F) > 0$. Pour $n$ suffisamment grand (dès que $n > 1/d(x, F)$), $n \cdot d(x, F) > 1$, donc $g_n(x) = 1$.
+La suite $(g_n)$ converge ponctuellement vers $\mathbf{1}_U(x)$ pour tout $x \in \mathbb{R}$.
+
+La suite est dominée : $0 \le g_n(x) \le \mathbf{1}_U(x)$ pour tout $x$.
+Puisque $\mathbf{1}_U \in L^1(\mathbb{R})$ (car $U$ est de mesure finie), le Théorème de Convergence Dominée s'applique.
+$\lim_{n \to \infty} \int_{\mathbb{R}} |g_n(x) - \mathbf{1}_U(x)| dx = \int_{\mathbb{R}} \lim_{n \to \infty} (\mathbf{1}_U(x) - g_n(x)) dx = \int_{\mathbb{R}} 0 \, dx = 0$.
+Ainsi, $\| g_n - \mathbf{1}_U \|_1 \to 0$. Ceci démontre constructivement la densité des fonctions continues pour l'indicatrice d'un ouvert.
+
+
+\subsection*{Exercice 9 : Problème de complétude et densité \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+L'espace vectoriel des fonctions continues à support compact $C_c(\mathbb{R})$, muni de la norme $\| \cdot \|_1$, est-il un espace de Banach (complet) ? Justifier rigoureusement à l'aide de la notion de densité.
+
+\textbf{Correction :}
+La réponse est \textbf{non}.
+Par définition de la complétude, un espace métrique est complet si et seulement si toute suite de Cauchy y converge vers une limite appartenant à cet espace.
+Si $C_c(\mathbb{R})$ était complet pour la norme $L^1$, alors étant donné qu'il est dense dans $L^1(\mathbb{R})$, il devrait coïncider avec $L^1(\mathbb{R})$.
+Or, il est facile de trouver des fonctions qui sont dans $L^1(\mathbb{R})$ mais qui ne sont pas dans $C_c(\mathbb{R})$.
+
+Prenons un exemple explicite de suite de Cauchy dans $C_c(\mathbb{R})$ qui ne converge pas dans $C_c(\mathbb{R})$.
+Considérons la fonction porte $f = \mathbf{1}_{[0,1]}$, qui est dans $L^1$ mais discontinue, donc $f \notin C_c(\mathbb{R})$.
+Construisons une suite de fonctions $g_n \in C_c(\mathbb{R})$ définies comme dans l'Exercice 1, telles que $\| f - g_n \|_1 \to 0$.
+Puisque la suite $(g_n)$ converge vers $f$ dans $L^1$, c'est obligatoirement une suite de Cauchy pour la norme $L^1$.
+Supposons par l'absurde que $C_c(\mathbb{R})$ soit complet. Alors la suite de Cauchy $(g_n)$ devrait avoir une limite $g \in C_c(\mathbb{R})$ telle que $\| g_n - g \|_1 \to 0$.
+Par unicité de la limite dans un espace normé (ou par l'inégalité triangulaire $\| f - g \|_1 \le \| f - g_n \|_1 + \| g_n - g \|_1 \to 0$), nous aurions $\| f - g \|_1 = 0$.
+Cela implique que $f = g$ presque partout.
+Or $g$ est continue. Mais $f$ a une discontinuité de saut indélébile en $0$ et en $1$ : elle ne peut être égale presque partout à aucune fonction continue.
+C'est une contradiction. Donc $C_c(\mathbb{R})$ muni de la norme $\| \cdot \|_1$ n'est pas complet.
+$L^1(\mathbb{R})$ est précisément le complété de $C_c(\mathbb{R})$ pour cette norme.
+
+
+\subsection*{Exercice 10 : Lemme d'Urysohn et approximation de compacts \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Le théorème de régularité des mesures de Borel-Lebesgue sur $\mathbb{R}^n$ stipule que pour tout ensemble mesurable $A$ et tout $\epsilon > 0$, il existe un fermé $F \subset A$ et un ouvert $U \supset A$ tels que $\mu(U \setminus F) < \epsilon$.
+Utiliser ce résultat conjointement avec le lemme d'Urysohn (ou son équivalent métrique) pour prouver rigoureusement la densité de $C_c(\mathbb{R})$ dans $L^1(\mathbb{R})$ pour l'indicatrice $f = \mathbf{1}_A$, où $\mu(A) < \infty$.
+
+\textbf{Correction :}
+Soit $A \subset \mathbb{R}$ mesurable avec $\mu(A) < \infty$, et $\epsilon > 0$.
+1. Par régularité de Lebesgue (approximations intérieures par des compacts), il existe un compact $K \subset A$ tel que $\mu(A \setminus K) < \frac{\epsilon}{2}$.
+2. Par régularité (approximations extérieures), il existe un ouvert $U \supset K$ tel que $\mu(U \setminus K) < \frac{\epsilon}{2}$. Quitte à réduire $U$, on peut le supposer borné car $K$ l'est.
+L'objectif est de lisser l'indicatrice entre $K$ et $U$.
+Le lemme d'Urysohn pour les espaces métriques donne l'existence d'une fonction continue $g : \mathbb{R} \to [0,1]$ telle que :
+$g(x) = 1$ pour tout $x \in K$,
+$g(x) = 0$ pour tout $x \notin U$.
+De plus, le support de $g$ est inclus dans l'adhérence de $U$. Comme $U$ est borné, le support est compact. Ainsi $g \in C_c(\mathbb{R})$.
+
+Évaluons l'erreur en norme $L^1$ : $\| \mathbf{1}_A - g \|_1 = \int_{\mathbb{R}} |\mathbf{1}_A(x) - g(x)| dx$.
+Découpons l'intégrale sur trois domaines : $K$, $U \setminus K$, et $U^c$.
+\begin{itemize}
+\item Sur $K$ : $\mathbf{1}_A(x) = 1$ (car $K \subset A$) et $g(x) = 1$. La différence est $0$.
+
+\item Sur $U^c$ : $\mathbf{1}_A(x)$ vaut $0$ (sauf sur $A \setminus U$, mais $A \setminus U \subset A \setminus K$ qui est de mesure petite) et $g(x) = 0$. Plus précisément, l'erreur est majorée par $\mu(A \setminus U) \le \mu(A \setminus K) < \frac{\epsilon}{2}$.
+
+\item Sur $U \setminus K$ : les fonctions $\mathbf{1}_A$ et $g$ sont à valeurs dans $[0,1]$, donc $|\mathbf{1}_A(x) - g(x)| \le 1$.
+\end{itemize}
+L'intégrale sur ce domaine est majorée par $\int_{U \setminus K} 1 \, dx = \mu(U \setminus K) < \frac{\epsilon}{2}$.
+
+Par union disjointe, $\| \mathbf{1}_A - g \|_1 \le \mu(A \setminus K) + \mu(U \setminus K) < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$.
+L'indicatrice d'un ensemble mesurable de mesure finie peut donc être approchée arbitrairement près par une fonction continue à support compact, ce qui est la pierre angulaire de la densité générale dans $L^1$.
+
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Approximation d'une indicatrice par des fonctions continues}
+
+Dans ce TP, nous allons implémenter la méthode d'approximation d'une fonction indicatrice par une suite de fonctions continues.
+
+\subsubsection*{Objectif}
+Implémenter la fonction indicatrice du segment [0.25, 0.75] et une fonction continue l'approchant avec une tolérance donnee.
+
+\subsubsection*{Code Python}
+
+\begin{lstlisting}
+def indicatrice(x):
+    if 0.25 <= x <= 0.75:
+        return 1.0
+    return 0.0
+
+def approx_continue(x, epsilon):
+    if x <= 0.25 - epsilon:
+        return 0.0
+    elif 0.25 - epsilon < x < 0.25:
+        return (x - (0.25 - epsilon)) / epsilon
+    elif 0.25 <= x <= 0.75:
+        return 1.0
+    elif 0.75 < x < 0.75 + epsilon:
+        return 1.0 - (x - 0.75) / epsilon
+    else:
+        return 0.0
+
+def calcul_erreur_L1(epsilon, nb_points=10000):
+    dx = 1.0 / nb_points
+    erreur = 0.0
+    for i in range(nb_points + 1):
+        x = i * dx
+        erreur += abs(indicatrice(x) - approx_continue(x, epsilon)) * dx
+    return erreur
+
+# Validation
+epsilon_test = 0.05
+erreur = calcul_erreur_L1(epsilon_test)
+# L'erreur theorique L1 est l'aire des deux petits triangles : 2 * (1/2 * epsilon * 1) = epsilon
+assert abs(erreur - epsilon_test) < 1e-3, "L'erreur numerique L1 ne correspond pas a la theorie."
+print(f"Erreur L1 calculee : {erreur:.4f} pour epsilon = {epsilon_test}")
+\end{lstlisting}
+
+
+\subsection*{TP 2 : Convergence d'une suite de fonctions en escalier}
+
+Nous vérifions expérimentalement la convergence de fonctions en escalier vers une fonction continue.
+
+\subsubsection*{Code Python}
+
+\begin{lstlisting}
+import math
+
+def fonction_cible(x):
+    return x * x  # x au carre
+
+def fonction_escalier(x, n):
+    # Decoupage de [0, 1] en n intervalles
+    if x == 1.0:
+        return 1.0
+    intervalle_index = int(x * n)
+    return fonction_cible(intervalle_index / n)
+
+def erreur_sup(n, nb_points=1000):
+    dx = 1.0 / nb_points
+    max_err = 0.0
+    for i in range(nb_points):
+        x = i * dx
+        err = abs(fonction_cible(x) - fonction_escalier(x, n))
+        if err > max_err:
+            max_err = err
+    return max_err
+
+# La theorie dit que l'erreur sup sur [0,1] pour f(x)=x^2 est bornee par 2/n.
+n_test = 50
+err_calculee = erreur_sup(n_test)
+assert err_calculee <= 2 / n_test, "Borne theorique depassee."
+print(f"Erreur sup pour n={n_test} : {err_calculee:.4f} <= 2/n ({2/n_test:.4f})")
+\end{lstlisting}
+
+
+\subsection*{TP 3 : Mollification (Convolution) par une fonction porte}
+
+On simule la régularisation d'une fonction avec un noyau. Bien que le noyau gaussien soit usuel, on utilise ici un noyau rectangulaire (moyenne glissante) pour simplifier l'intégration.
+
+\subsubsection*{Code Python}
+
+\begin{lstlisting}
+def f_bruit(x):
+    # Fonction porte
+    if 0.4 <= x <= 0.6:
+        return 1.0
+    return 0.0
+
+def convolution_rect(x, epsilon, nb_points=1000):
+    # Noyau rectangulaire de largeur 2*epsilon, hauteur 1/(2*epsilon)
+    integrale = 0.0
+    dx = 2 * epsilon / nb_points
+    for i in range(nb_points):
+        y = -epsilon + i * dx
+        integrale += f_bruit(x - y) * dx
+    return integrale / (2 * epsilon)
+
+def test_convolution():
+    # En x = 0.5 (milieu), la convolution doit etre proche de 1 si epsilon est petit
+    res = convolution_rect(0.5, 0.05)
+    assert abs(res - 1.0) < 0.05, "La convolution ne reproduit pas le plateau."
+
+    # En x = 0.4 (bord), la convolution doit valoir environ 0.5 (moyenne de 0 et 1)
+    res_bord = convolution_rect(0.4, 0.05)
+    assert abs(res_bord - 0.5) < 0.05, "La convolution sur le bord est incorrecte."
+    print("Mollification validee aux points cles.")
+
+test_convolution()
+\end{lstlisting}
+
+
+\subsection*{TP 4 : Estimation de la densite par des fonctions de base}
+
+On implémente l'idée que les monômes (polynômes) sont denses dans l'espace des fonctions continues, en calculant une projection naive (approximation de Taylor locale pour remplacer la vraie projection L2 complexe).
+
+\subsubsection*{Code Python}
+
+\begin{lstlisting}
+def f_expo(x):
+    # Fonction exponentielle
+    somme = 1.0
+    terme = 1.0
+    for i in range(1, 20):
+        terme *= x / i
+        somme += terme
+    return somme
+
+def approx_poly_deg3(x):
+    # Developpement limite a l'ordre 3 en 0 de exp(x)
+    return 1.0 + x + (x**2)/2.0 + (x**3)/6.0
+
+def evaluer_approximation():
+    erreur_max = 0.0
+    for i in range(101):
+        x = i / 100.0  # x dans [0, 1]
+        err = abs(f_expo(x) - approx_poly_deg3(x))
+        if err > erreur_max:
+            erreur_max = err
+
+    # Le reste de Taylor de exp(x) d'ordre 3 sur [0,1] est bornee par e/24 < 3/24 = 0.125
+    assert erreur_max < 0.125, "L'erreur de l'approximation polynomiale est trop grande."
+    print(f"Erreur max sur [0,1] pour degre 3 : {erreur_max:.4f}")
+
+evaluer_approximation()
+\end{lstlisting}
+
+
+\subsection*{TP 5 : Translation et continuite en moyenne}
+
+Nous vérifions informatiquement la continuité de l'opérateur de translation sur une fonction L1 (Exercice 5).
+
+\subsubsection*{Code Python}
+
+\begin{lstlisting}
+def indicatrice_intervalle(x, a, b):
+    if a <= x <= b:
+        return 1.0
+    return 0.0
+
+def translatee(x, h, a, b):
+    return indicatrice_intervalle(x - h, a, b)
+
+def norme_difference_translatee(h, a, b, dx=0.001):
+    # Integre l'erreur sur un domaine suffisamment grand [-2, 2]
+    integrale = 0.0
+    x = -2.0
+    while x <= 2.0:
+        err = abs(translatee(x, h, a, b) - indicatrice_intervalle(x, a, b))
+        integrale += err * dx
+        x += dx
+    return integrale
+
+def test_translation():
+    a, b = -0.5, 0.5
+    h = 0.1
+    err = norme_difference_translatee(h, a, b)
+    # Pour l'indicatrice d'un intervalle, l'erreur L1 de la transalation de h est exactement 2*|h|
+    theorie = 2.0 * abs(h)
+    assert abs(err - theorie) < 0.01, f"Erreur {err} differente de la theorie {theorie}"
+    print(f"Norme L1 pour translation h={h} : {err:.4f} (Theorie: {theorie})")
+
+test_translation()
+\end{lstlisting}
+
+
+
+
+\end{document}
