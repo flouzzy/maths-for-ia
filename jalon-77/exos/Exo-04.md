@@ -1,18 +1,27 @@
-# Exercice 4 : Densité de l'espace des polynômes $\star\star\star\mathstrut\mathstrut$
+## Exercice 4 : Densité par convolution (Mollification) \quad $\bigstar\bigstar\bigstar\star\star$
 
 **Énoncé :**
-Montrer que l'espace vectoriel des fonctions polynomiales est dense dans l'espace $L^p([a, b])$, où $[a,b]$ est un intervalle compact de $\mathbb{R}$ et $1 \le p < \infty$.
+Soit $f \in L^1(\mathbb{R})$. On considère une fonction test positive $\varphi \in C_c^\infty(\mathbb{R})$ telle que $\int_{\mathbb{R}} \varphi(x) dx = 1$.
+Pour $\epsilon > 0$, on pose $\varphi_\epsilon(x) = \frac{1}{\epsilon}\varphi(\frac{x}{\epsilon})$.
+La fonction régularisée est $f_\epsilon = f * \varphi_\epsilon$, soit $f_\epsilon(x) = \int_{\mathbb{R}} f(x-y)\varphi_\epsilon(y) dy$.
+Montrer que si $f$ est uniformément continue et bornée, alors $f_\epsilon \to f$ uniformément sur $\mathbb{R}$ quand $\epsilon \to 0$.
 
-**Correction détaillée :**
-Cette preuve procède par un argument de composition de densités.
-1. D'après le théorème de densité dans les espaces mesurés, l'espace des fonctions continues $C([a, b])$ est dense dans $L^p([a, b])$.
-Formellement, pour tout $f \in L^p([a, b])$ et tout $\varepsilon > 0$, il existe $g \in C([a, b])$ telle que :
-$$ \|f - g\|_{L^p} < \frac{\varepsilon}{2} $$
-2. Le théorème d'approximation de Weierstrass stipule que toute fonction continue sur un segment $[a, b]$ peut être approchée uniformément par une suite de polynômes.
-Ainsi, pour notre $g$ continue et pour $\eta > 0$, il existe un polynôme $P$ tel que $\sup_{x \in [a, b]} |g(x) - P(x)| < \eta$.
-3. Évaluons la norme $L^p$ de la différence entre $g$ et $P$ :
-$$ \|g - P\|_{L^p} = \left( \int_a^b |g(x) - P(x)|^p \, dx \right)^{1/p} \le \left( \int_a^b \eta^p \, dx \right)^{1/p} = \eta (b - a)^{1/p} $$
-4. En choisissant $\eta = \frac{\varepsilon}{2(b-a)^{1/p}}$, on garantit que $\|g - P\|_{L^p} \le \frac{\varepsilon}{2}$.
-5. Par l'inégalité de Minkowski, on conclut :
-$$ \|f - P\|_{L^p} \le \|f - g\|_{L^p} + \|g - P\|_{L^p} < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon $$
-L'espace des polynômes est donc dense dans $L^p([a, b])$. $\blacksquare$
+**Correction :**
+Puisque $\int_{\mathbb{R}} \varphi_\epsilon(y) dy = \int_{\mathbb{R}} \frac{1}{\epsilon}\varphi(\frac{y}{\epsilon}) dy = 1$ (par le changement de variable $z = y/\epsilon$), nous pouvons écrire pour tout $x \in \mathbb{R}$ :
+$f(x) = \int_{\mathbb{R}} f(x) \varphi_\epsilon(y) dy$.
+
+La différence s'écrit alors :
+$f_\epsilon(x) - f(x) = \int_{\mathbb{R}} (f(x-y) - f(x)) \varphi_\epsilon(y) dy$.
+
+La fonction $f$ étant uniformément continue, pour tout $\eta > 0$, il existe $\delta > 0$ tel que $|z| < \delta \implies |f(w-z) - f(w)| < \eta$ pour tout $w$.
+Le support de $\varphi$ est compact, disons inclus dans $[-M, M]$.
+Ainsi, le support de $\varphi_\epsilon$ est inclus dans $[-\epsilon M, \epsilon M]$.
+Pour $\epsilon < \frac{\delta}{M}$, si $y$ est dans le support de $\varphi_\epsilon$, alors $|y| \le \epsilon M < \delta$.
+
+Pour un tel $\epsilon$, et pour tout $x \in \mathbb{R}$ :
+$|f_\epsilon(x) - f(x)| \le \int_{-\epsilon M}^{\epsilon M} |f(x-y) - f(x)| \varphi_\epsilon(y) dy$
+Puisque $|y| < \delta$, $|f(x-y) - f(x)| < \eta$.
+$|f_\epsilon(x) - f(x)| \le \eta \int_{-\epsilon M}^{\epsilon M} \varphi_\epsilon(y) dy = \eta \times 1 = \eta$.
+
+Comme cette majoration est indépendante de $x$, nous avons $\| f_\epsilon - f \|_\infty \le \eta$ pour tout $\epsilon < \delta/M$.
+Ceci démontre la convergence uniforme $f_\epsilon \to f$ sur $\mathbb{R}$.

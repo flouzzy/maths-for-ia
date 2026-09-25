@@ -1,21 +1,22 @@
-# Exercice 7 : Approximation par convolution de fonctions indicatrices $\star\star\star\star\star$
+## Exercice 7 : Fonctions de classe $C^1$ denses dans $W^{1,p}$ (Théorie de Sobolev) \quad $\bigstar\bigstar\bigstar\star\star$
 
 **Énoncé :**
-Soit $f = \mathbf{1}_{[a, b]}$. Construire une suite de fonctions $(f_n)_{n \in \mathbb{N}} \in C_c^\infty(\mathbb{R})$ convergeant vers $f$ dans $L^p(\mathbb{R})$ ($1 \le p < \infty$) en utilisant l'outil de la convolution avec une approximation de l'identité usuelle (mollifier).
+Donner un aperçu de la manière dont la densité des fonctions régulières est étendue aux espaces de Sobolev. On considère l'espace $W^{1,p}(\mathbb{R}) = \{u \in L^p(\mathbb{R}) \mid u' \in L^p(\mathbb{R})\}$ où $u'$ est la dérivée faible. Pourquoi les fonctions lisses sont-elles denses dans cet espace ?
 
-**Correction détaillée :**
-1. **La fonction mollifier (régularisante) standard :** On définit $\rho(x) = c \exp\left(-\frac{1}{1-x^2}\right)$ si $|x| < 1$, et $0$ sinon, où $c$ est choisi de sorte que $\int_{\mathbb{R}} \rho(x) \, dx = 1$. Il est bien connu que $\rho \in C_c^\infty(\mathbb{R})$ avec un support $[-1, 1]$.
-On construit l'approximation de l'identité : $\rho_n(x) = n \rho(nx)$. Son support est $[-1/n, 1/n]$ et son intégrale vaut $1$.
-2. **La suite d'approximation :** On définit $f_n = f * \rho_n$.
-Comme la convolution d'une fonction localement intégrable $f$ à support compact et d'une fonction de $C_c^\infty(\mathbb{R})$ donne une fonction $C_c^\infty(\mathbb{R})$, on a bien $f_n \in C_c^\infty(\mathbb{R})$.
-Le support de $f_n$ est inclus dans le compact $[a - 1/n, b + 1/n]$.
-3. **Calcul explicite et convergence :**
-$f_n(x) = (f * \rho_n)(x) = \int_{\mathbb{R}} \mathbf{1}_{[a, b]}(y) \rho_n(x-y) \, dy = \int_a^b \rho_n(x-y) \, dy = \int_{x-b}^{x-a} \rho_n(u) \, du$.
-- Si $x$ est un point intérieur de $[a, b]$, alors pour $n$ assez grand (tel que $x-a > 1/n$ et $b-x > 1/n$), l'intervalle d'intégration $[x-b, x-a]$ contient le support $[-1/n, 1/n]$ de $\rho_n$. Donc $f_n(x) = \int_{-1/n}^{1/n} \rho_n(u) \, du = 1 = f(x)$.
-- Si $x \notin [a, b]$ (point extérieur), pour $n$ assez grand, $[x-b, x-a]$ ne rencontre pas $[-1/n, 1/n]$, donc $f_n(x) = 0 = f(x)$.
-Ainsi $f_n(x)$ converge simplement vers $f(x)$ presque partout (sauf aux bords $a$ et $b$).
-4. **Conclusion par le TCD :**
-Comme $\rho_n \ge 0$ et d'intégrale $1$, on a $0 \le f_n(x) \le \int_{\mathbb{R}} \rho_n = 1$ pour tout $x$.
-On peut dominer l'intégrande : $|f_n(x) - f(x)|^p \le 2^p$ sur un intervalle borné commun contenant tous les supports des $f_n$ (par exemple $[a-1, b+1]$), et $0$ en dehors.
-La majorante constante sur un compact est intégrable.
-Par le Théorème de Convergence Dominée de Lebesgue, $\int_{\mathbb{R}} |f_n - f|^p \, dx \to 0$. Les $f_n$ sont infiniment dérivables à support compact et convergent vers $f$ dans $L^p$. $\blacksquare$
+**Correction :**
+La norme de l'espace de Sobolev $W^{1,p}(\mathbb{R})$ est $\| u \|_{W^{1,p}} = \| u \|_p + \| u' \|_p$.
+Pour montrer que les fonctions lisses $C_c^\infty(\mathbb{R})$ sont denses, la technique standard est la régularisation par convolution (ou mollification).
+
+Soit $u \in W^{1,p}(\mathbb{R})$. Soit $\rho_\epsilon$ un mollifieur standard de classe $C_c^\infty$.
+On pose $u_\epsilon = u * \rho_\epsilon$.
+Par les propriétés de la convolution, $u_\epsilon$ est infiniment dérivable (de classe $C^\infty$) et $u_\epsilon \in L^p$.
+De plus, on a la commutation fondamentale des dérivées et de la convolution pour les dérivées faibles :
+$(u_\epsilon)' = (u * \rho_\epsilon)' = u' * \rho_\epsilon$.
+
+En utilisant les théorèmes de densité standards dans $L^p$ (similaires à l'exercice 4 pour $L^p$) :
+1. $u_\epsilon \to u$ dans $L^p(\mathbb{R})$.
+2. $(u_\epsilon)' = u' * \rho_\epsilon \to u'$ dans $L^p(\mathbb{R})$ car $u' \in L^p(\mathbb{R})$.
+
+Ainsi, par définition de la norme de Sobolev :
+$\| u_\epsilon - u \|_{W^{1,p}} = \| u_\epsilon - u \|_p + \| (u_\epsilon)' - u' \|_p \to 0$ lorsque $\epsilon \to 0$.
+Une fonction de $W^{1,p}$ peut donc toujours être approchée par une fonction de classe $C^\infty$, et par troncature supplémentaire, par des fonctions de $C_c^\infty$. C'est le théorème de Meyers-Serrin.

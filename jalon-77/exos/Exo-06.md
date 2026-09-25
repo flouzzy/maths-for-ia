@@ -1,21 +1,26 @@
-# Exercice 6 : Non-densité dans $L^\infty$ $\star\star\star\star\mathstrut$
+## Exercice 6 : Théorème de Riemann-Lebesgue \quad $\bigstar\bigstar\bigstar\star\star$
 
 **Énoncé :**
-Montrer que $C_c(\mathbb{R})$ n'est pas dense dans $L^\infty(\mathbb{R})$. Quelle est la clôture (adhérence) de $C_c(\mathbb{R})$ dans l'espace $L^\infty(\mathbb{R})$ muni de la norme $\| \cdot \|_\infty$ ?
+En utilisant la densité des fonctions en escalier, prouver le Lemme de Riemann-Lebesgue pour $L^1(\mathbb{R})$ :
+Pour toute fonction $f \in L^1(\mathbb{R})$, on a $\lim_{|n| \to \infty} \int_{\mathbb{R}} f(x) e^{-inx} dx = 0$.
 
-**Correction détaillée :**
-1. **Contre-exemple pour la densité :** Soit la fonction constante $f(x) = 1$ pour tout $x \in \mathbb{R}$. Il est clair que $f \in L^\infty(\mathbb{R})$ et $\|f\|_\infty = 1$.
-Soit $\varphi \in C_c(\mathbb{R})$. Par définition, $\varphi$ a un support compact $K \subset [-R, R]$. Donc pour $|x| > R$, $\varphi(x) = 0$.
-Évaluons la distance en norme $L^\infty$ entre $f$ et $\varphi$ :
-$$ \|f - \varphi\|_\infty = \text{ess sup}_{x \in \mathbb{R}} |1 - \varphi(x)| $$
-Pour tout $x > R$, $|1 - \varphi(x)| = |1 - 0| = 1$.
-Donc le supremum essentiel est nécessairement au moins $1$, ce qui implique $\|f - \varphi\|_\infty \ge 1$.
-Il est impossible de trouver une suite de $C_c(\mathbb{R})$ convergeant vers $f$ avec la norme uniforme : $C_c(\mathbb{R})$ n'est pas dense dans $L^\infty(\mathbb{R})$.
-2. **Identification de la clôture :** Soit $\overline{C_c(\mathbb{R})}$ la clôture pour la norme $\|\cdot\|_\infty$. La convergence au sens de $L^\infty$ implique la convergence uniforme.
-Une limite uniforme de fonctions continues est continue.
-De plus, soit $g$ dans la clôture. Il existe $\varphi_n \in C_c(\mathbb{R})$ telle que $\|g - \varphi_n\|_\infty \to 0$.
-Pour $\varepsilon > 0$, soit $N$ tel que $\|g - \varphi_N\|_\infty \le \varepsilon$.
-Comme $\varphi_N$ est à support compact, il existe un rayon $R$ tel que $\varphi_N(x) = 0$ pour $|x| > R$.
-Ainsi, pour tout $|x| > R$, on a $|g(x)| = |g(x) - \varphi_N(x)| \le \varepsilon$.
-Ceci prouve que $\lim_{|x| \to \infty} g(x) = 0$.
-L'adhérence est l'espace $C_0(\mathbb{R})$, l'espace des fonctions continues s'annulant à l'infini. $\blacksquare$
+**Correction :**
+Soit $f \in L^1(\mathbb{R})$ et $\epsilon > 0$.
+L'ensemble des fonctions en escalier à support compact est dense dans $L^1(\mathbb{R})$.
+Il existe donc une fonction en escalier $s = \sum_{j=1}^k c_j \mathbf{1}_{[a_j, b_j]}$ telle que $\| f - s \|_1 < \frac{\epsilon}{2}$.
+
+Par linéarité, évaluons l'intégrale pour la fonction $s$ :
+$I_n(s) = \int_{\mathbb{R}} s(x) e^{-inx} dx = \sum_{j=1}^k c_j \int_{a_j}^{b_j} e^{-inx} dx$.
+Calculons l'intégrale pour un intervalle $[a_j, b_j]$ pour $n \neq 0$ :
+$\int_{a_j}^{b_j} e^{-inx} dx = \left[ \frac{e^{-inx}}{-in} \right]_{a_j}^{b_j} = \frac{e^{-inb_j} - e^{-ina_j}}{-in}$.
+La valeur absolue de ce terme est majorée par :
+$\left| \frac{e^{-inb_j} - e^{-ina_j}}{-in} \right| \le \frac{|e^{-inb_j}| + |e^{-ina_j}|}{|n|} = \frac{2}{|n|}$.
+Donc, $|I_n(s)| \le \sum_{j=1}^k |c_j| \frac{2}{|n|}$.
+Il est évident que $\lim_{|n| \to \infty} |I_n(s)| = 0$. Il existe donc $N$ tel que pour tout $|n| \ge N$, $|I_n(s)| < \frac{\epsilon}{2}$.
+
+Maintenant, appliquons l'inégalité triangulaire pour l'intégrale de $f$ :
+$|I_n(f)| = \left| \int_{\mathbb{R}} f(x) e^{-inx} dx \right| \le \left| \int_{\mathbb{R}} (f(x) - s(x)) e^{-inx} dx \right| + \left| \int_{\mathbb{R}} s(x) e^{-inx} dx \right|$.
+Le premier terme se majore en valeur absolue par l'intégrale de la valeur absolue :
+$\int_{\mathbb{R}} |f(x) - s(x)| |e^{-inx}| dx = \int_{\mathbb{R}} |f(x) - s(x)| \times 1 dx = \| f - s \|_1 < \frac{\epsilon}{2}$.
+Ainsi, pour tout $|n| \ge N$, $|I_n(f)| \le \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$.
+La limite est bien $0$.

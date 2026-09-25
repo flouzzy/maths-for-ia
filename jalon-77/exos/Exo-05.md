@@ -1,14 +1,27 @@
-# Exercice 5 : Inégalité de Tchebychev et espace de Schwartz $\star\star\star\star\mathstrut$
+## Exercice 5 : Invariance par translation et continuité en moyenne \quad $\bigstar\bigstar\bigstar\star\star$
 
 **Énoncé :**
-Montrer que l'espace de Schwartz $\mathcal{S}(\mathbb{R})$ des fonctions à décroissance rapide est dense dans $L^p(\mathbb{R})$ pour $1 \le p < \infty$.
+Pour $f \in L^p(\mathbb{R})$ ($1 \le p < \infty$) et $h \in \mathbb{R}$, on définit la fonction translatée $\tau_h f(x) = f(x - h)$.
+Démontrer que l'application $h \mapsto \tau_h f$ est continue de $\mathbb{R}$ dans $L^p(\mathbb{R})$.
+C'est-à-dire : $\lim_{h \to 0} \| \tau_h f - f \|_p = 0$. On utilisera la densité de $C_c(\mathbb{R})$.
 
-**Correction détaillée :**
-L'espace de Schwartz $\mathcal{S}(\mathbb{R})$ est constitué des fonctions infiniment dérivables dont toutes les dérivées décroissent plus vite que n'importe quelle puissance de l'inverse de la distance.
-1. On sait par les théorèmes fondamentaux que l'espace des fonctions infiniment dérivables à support compact $C_c^\infty(\mathbb{R}) = \mathcal{D}(\mathbb{R})$ est dense dans $L^p(\mathbb{R})$.
-2. Une fonction à support compact est nulle en dehors d'un certain segment. Par conséquent, elle appartient trivialement à $\mathcal{S}(\mathbb{R})$ car en dehors du compact, la fonction et toutes ses dérivées sont strictement nulles, vérifiant ainsi la condition de décroissance plus rapide que n'importe quel polynôme inverse.
-3. Donc, l'inclusion suivante est stricte : $\mathcal{D}(\mathbb{R}) \subset \mathcal{S}(\mathbb{R}) \subset L^p(\mathbb{R})$.
-*(L'inclusion $\mathcal{S}(\mathbb{R}) \subset L^p(\mathbb{R})$ est justifiée car une fonction de $\mathcal{S}(\mathbb{R})$ est bornée, disons par $C$, et décroît au moins comme $|x|^{-2}$ pour $|x| \ge 1$. Ainsi $|f(x)|^p$ est intégrable près de l'infini).*
-4. Soit $f \in L^p(\mathbb{R})$ et $\varepsilon > 0$. Puisque $\mathcal{D}(\mathbb{R})$ est dense dans $L^p(\mathbb{R})$, il existe $\varphi \in \mathcal{D}(\mathbb{R})$ telle que $\|f - \varphi\|_p < \varepsilon$.
-5. Comme $\varphi \in \mathcal{D}(\mathbb{R}) \subset \mathcal{S}(\mathbb{R})$, on a trouvé un élément de l'espace de Schwartz à une distance $\varepsilon$ de $f$.
-La densité de $\mathcal{S}(\mathbb{R})$ dans $L^p(\mathbb{R})$ est donc une conséquence immédiate de la densité de $\mathcal{D}(\mathbb{R})$. $\blacksquare$
+**Correction :**
+Fixons $\epsilon > 0$.
+Puisque $C_c(\mathbb{R})$ est dense dans $L^p(\mathbb{R})$, il existe $g \in C_c(\mathbb{R})$ telle que $\| f - g \|_p < \frac{\epsilon}{3}$.
+Par l'inégalité triangulaire dans $L^p$, on a :
+$\| \tau_h f - f \|_p \le \| \tau_h f - \tau_h g \|_p + \| \tau_h g - g \|_p + \| g - f \|_p$.
+
+1. Par invariance de la mesure de Lebesgue par translation, $\| \tau_h f - \tau_h g \|_p = \| f - g \|_p < \frac{\epsilon}{3}$.
+2. Le terme de droite $\| g - f \|_p$ est strictement inférieur à $\frac{\epsilon}{3}$.
+Il reste à borner $\| \tau_h g - g \|_p$.
+
+La fonction $g$ est continue à support compact. Elle est donc uniformément continue sur $\mathbb{R}$ (Théorème de Heine).
+Soit $K$ un compact contenant le support de $g$. Si $|h| \le 1$, le support de $\tau_h g - g$ est inclus dans un compact fixe $K' = K + [-1, 1]$.
+Par continuité uniforme, $\lim_{h \to 0} \sup_{x \in \mathbb{R}} |g(x-h) - g(x)| = 0$.
+Ainsi, pour $h$ suffisamment petit, $|g(x-h) - g(x)| < \eta$, où $\eta = \frac{\epsilon}{3 \mu(K')^{1/p}}$.
+Alors,
+$\| \tau_h g - g \|_p = \left( \int_{K'} |g(x-h) - g(x)|^p dx \right)^{1/p} \le \left( \eta^p \mu(K') \right)^{1/p} = \eta \mu(K')^{1/p} = \frac{\epsilon}{3}$.
+
+En additionnant les trois termes, pour $h$ suffisamment petit,
+$\| \tau_h f - f \|_p < \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} = \epsilon$.
+La continuité en moyenne d'ordre $p$ est ainsi démontrée.

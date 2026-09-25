@@ -428,7 +428,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
-- [2026-09-24] : [Upsert/Création] du Jalon 77 - Densité des fonctions simples. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-09-24] : [Upsert/Création] du Jalon 77 - Densité dans Lp. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-22] : [Upsert/Création] du Jalon 76 - Propriétés géométriques de l'espace de Hilbert L^2. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-21] : [Upsert/Création] du Jalon 75 - Preuve de la complétude des espaces L^p. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-19] : [Upsert/Création] du Jalon 74 - Inégalités fondamentales de l'analyse fonctionnelle. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*

@@ -1,16 +1,22 @@
-# Exercice 8 : Produit scalaire dans $L^2$ et régularisation $\star\star\star\star\star$
+## Exercice 8 : Approximation de fonctions caractéristiques d'ouverts \quad $\bigstar\bigstar\bigstar\star\star$
 
 **Énoncé :**
-Montrer que si $f \in L^2(\mathbb{R})$ vérifie $\int_{\mathbb{R}} f(x)\varphi(x) \, dx = 0$ pour tout $\varphi \in C_c^\infty(\mathbb{R})$, alors $f = 0$ presque partout.
+Soit $U$ un ouvert de mesure finie dans $\mathbb{R}$. Construire explicitement une suite de fonctions continues $g_n$ qui approxime $\mathbf{1}_U$ dans $L^1(\mathbb{R})$ en utilisant la notion géométrique de distance à la frontière.
 
-**Correction détaillée :**
-Cette preuve souligne l'importance des fonctions tests (l'espace $\mathcal{D}(\mathbb{R})$) pour "lire" les éléments de $L^2$.
-1. Soit $f \in L^2(\mathbb{R})$ satisfaisant l'hypothèse de l'énoncé. On note $\langle u, v \rangle_{L^2} = \int_{\mathbb{R}} u(x)v(x) \, dx$ le produit scalaire sur $L^2(\mathbb{R})$ (fonctions à valeurs réelles).
-L'hypothèse indique que $f$ est orthogonale à tous les sous-espaces engendrés par les fonctions tests : $\langle f, \varphi \rangle_{L^2} = 0$, $\forall \varphi \in C_c^\infty(\mathbb{R})$.
-2. Par le théorème fondamental, $C_c^\infty(\mathbb{R})$ est un sous-espace dense dans l'espace de Hilbert $L^2(\mathbb{R})$.
-3. Rappel d'un résultat général sur les espaces de Hilbert : Soit $H$ un espace de Hilbert et $V$ un sous-espace vectoriel de $H$. L'orthogonal $V^\perp$ se réduit au vecteur nul $\{0\}$ si et seulement si $V$ est dense dans $H$.
-4. Ici, posons $H = L^2(\mathbb{R})$ et $V = C_c^\infty(\mathbb{R})$.
-Comme $V$ est dense dans $H$ par théorème d'approximation, $V^\perp = \{0\}$.
-5. L'hypothèse de l'exercice affirme précisément que $f \in V^\perp$.
-On déduit immédiatement que $f = 0$ en tant qu'élément de $L^2(\mathbb{R})$.
-Par définition des espaces $L^p$, l'élément nul est la classe d'équivalence des fonctions nulles presque partout. Donc $f = 0$ presque partout. $\blacksquare$
+**Correction :**
+Puisque $U$ est ouvert, son complémentaire $F = \mathbb{R} \setminus U$ est fermé.
+Considérons la fonction distance au fermé $F$ :
+$d(x, F) = \inf_{y \in F} |x - y|$.
+La fonction $d(\cdot, F)$ est continue (et même $1$-lipschitzienne). De plus, $d(x, F) = 0$ si et seulement si $x \in F$, c'est-à-dire si $x \notin U$.
+Ainsi, $d(x, F) > 0$ pour tout $x \in U$.
+
+Définissons la suite de fonctions $g_n(x) = \min(1, n \cdot d(x, F))$.
+Pour tout $n$, $g_n$ est continue, car elle est le minimum de deux fonctions continues.
+Si $x \notin U$ ($x \in F$), $d(x, F) = 0$, donc $g_n(x) = 0$.
+Si $x \in U$, $d(x, F) > 0$. Pour $n$ suffisamment grand (dès que $n > 1/d(x, F)$), $n \cdot d(x, F) > 1$, donc $g_n(x) = 1$.
+La suite $(g_n)$ converge ponctuellement vers $\mathbf{1}_U(x)$ pour tout $x \in \mathbb{R}$.
+
+La suite est dominée : $0 \le g_n(x) \le \mathbf{1}_U(x)$ pour tout $x$.
+Puisque $\mathbf{1}_U \in L^1(\mathbb{R})$ (car $U$ est de mesure finie), le Théorème de Convergence Dominée s'applique.
+$\lim_{n \to \infty} \int_{\mathbb{R}} |g_n(x) - \mathbf{1}_U(x)| dx = \int_{\mathbb{R}} \lim_{n \to \infty} (\mathbf{1}_U(x) - g_n(x)) dx = \int_{\mathbb{R}} 0 \, dx = 0$.
+Ainsi, $\| g_n - \mathbf{1}_U \|_1 \to 0$. Ceci démontre constructivement la densité des fonctions continues pour l'indicatrice d'un ouvert.
