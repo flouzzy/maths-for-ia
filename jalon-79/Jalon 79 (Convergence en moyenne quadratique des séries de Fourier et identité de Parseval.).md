@@ -6,7 +6,7 @@ trimester: 7
 tags:
   - math/analyse
   - ia/traitement-du-signal
-prev: "[[Jalon 78 (Séries de Fourier).md]]"
+prev: "[[Jalon-78.md]]"
 next: "[[Jalon 80 (Transformée de Fourier dans L1).md]]"
 ---
 
@@ -82,5 +82,5 @@ Comme $\int f = 0$, alors $c_0 = 0$. Pour $n \neq 0$, $n^2 \ge 1$, donc $\sum n^
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 78 (Séries de Fourier).md]], [[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L2).md]]
+- **Concepts Précédents requis :** [[Jalon-78.md]], [[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L2).md]]
 - **Concepts Futurs dépendants :** [[Jalon 81 (Transformée de Fourier dans L2).md]], [[Jalon 116 (Variétés riemanniennes).md]]
