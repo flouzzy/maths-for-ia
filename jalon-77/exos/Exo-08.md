@@ -1,22 +1,28 @@
-## Exercice 8 : Approximation de fonctions caractéristiques d'ouverts \quad $\bigstar\bigstar\bigstar\star\star$
+# Exercice 8 : Séparabilité de $L^p(\mathbb{R})$
+
+**Niveau :** \bigstar\bigstar\bigstar\bigstar\bigstar
 
 **Énoncé :**
-Soit $U$ un ouvert de mesure finie dans $\mathbb{R}$. Construire explicitement une suite de fonctions continues $g_n$ qui approxime $\mathbf{1}_U$ dans $L^1(\mathbb{R})$ en utilisant la notion géométrique de distance à la frontière.
+Un espace est séparable s'il admet une partie dénombrable dense.
+Montrer que pour $1 \le p < +\infty$, $L^p(\mathbb{R})$ est séparable.
+(Astuce : Utiliser la densité des fonctions en escalier, puis rationaliser les coefficients et les bornes).
 
-**Correction :**
-Puisque $U$ est ouvert, son complémentaire $F = \mathbb{R} \setminus U$ est fermé.
-Considérons la fonction distance au fermé $F$ :
-$d(x, F) = \inf_{y \in F} |x - y|$.
-La fonction $d(\cdot, F)$ est continue (et même $1$-lipschitzienne). De plus, $d(x, F) = 0$ si et seulement si $x \in F$, c'est-à-dire si $x \notin U$.
-Ainsi, $d(x, F) > 0$ pour tout $x \in U$.
+**Correction Détaillée :**
+1. **Étape 1 : Densité des fonctions en escalier**
+   On sait que l'ensemble $\mathcal{E}$ des fonctions en escalier (combinaisons linéaires d'indicatrices d'intervalles bornés) est dense dans $L^p(\mathbb{R})$.
+   Or $\mathcal{E}$ n'est pas dénombrable.
 
-Définissons la suite de fonctions $g_n(x) = \min(1, n \cdot d(x, F))$.
-Pour tout $n$, $g_n$ est continue, car elle est le minimum de deux fonctions continues.
-Si $x \notin U$ ($x \in F$), $d(x, F) = 0$, donc $g_n(x) = 0$.
-Si $x \in U$, $d(x, F) > 0$. Pour $n$ suffisamment grand (dès que $n > 1/d(x, F)$), $n \cdot d(x, F) > 1$, donc $g_n(x) = 1$.
-La suite $(g_n)$ converge ponctuellement vers $\mathbf{1}_U(x)$ pour tout $x \in \mathbb{R}$.
+2. **Étape 2 : Restrictions rationnelles**
+   Considérons le sous-ensemble $\mathcal{E}_{\mathbb{Q}}$ constitué des fonctions de la forme :
+   $s(x) = \sum_{k=1}^m q_k \mathbf{1}_{[a_k, b_k]}(x)$
+   où les coefficients $q_k \in \mathbb{Q}$, les bornes des intervalles $a_k, b_k \in \mathbb{Q}$, et $m \in \mathbb{N}$.
+   L'ensemble $\mathcal{E}_{\mathbb{Q}}$ est une union dénombrable de produits finis d'ensembles dénombrables, il est donc dénombrable.
 
-La suite est dominée : $0 \le g_n(x) \le \mathbf{1}_U(x)$ pour tout $x$.
-Puisque $\mathbf{1}_U \in L^1(\mathbb{R})$ (car $U$ est de mesure finie), le Théorème de Convergence Dominée s'applique.
-$\lim_{n \to \infty} \int_{\mathbb{R}} |g_n(x) - \mathbf{1}_U(x)| dx = \int_{\mathbb{R}} \lim_{n \to \infty} (\mathbf{1}_U(x) - g_n(x)) dx = \int_{\mathbb{R}} 0 \, dx = 0$.
-Ainsi, $\| g_n - \mathbf{1}_U \|_1 \to 0$. Ceci démontre constructivement la densité des fonctions continues pour l'indicatrice d'un ouvert.
+3. **Étape 3 : Densité de $\mathcal{E}_{\mathbb{Q}}$ dans $\mathcal{E}$**
+   Soit $s \in \mathcal{E}$. Écrivons $s = \sum_{k=1}^m \alpha_k \mathbf{1}_{[A_k, B_k]}$.
+   Pour tout $\varepsilon > 0$, on peut approcher chaque réel $\alpha_k$ par un rationnel $q_k$, et chaque réel $A_k, B_k$ par des rationnels $a_k, b_k$.
+   En choisissant ces rationnels suffisamment proches, la norme $L^p$ de la différence s'écrit comme une somme d'aires de petits "décalages" horizontaux et verticaux.
+   La norme $\|s - s_q\|_p$ peut être rendue arbitrairement petite.
+
+4. **Étape 4 : Conclusion**
+   Puisque $\mathcal{E}_{\mathbb{Q}}$ est dense dans $\mathcal{E}$, et que $\mathcal{E}$ est dense dans $L^p(\mathbb{R})$, par transitivité de la densité, $\mathcal{E}_{\mathbb{Q}}$ (qui est dénombrable) est dense dans $L^p(\mathbb{R})$. L'espace est séparable.

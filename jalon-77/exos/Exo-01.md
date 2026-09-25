@@ -1,21 +1,28 @@
-## Exercice 1 : Approximation d'une indicatrice par une fonction continue \quad $\bigstar\star\star\star\star$
+# Exercice 1 : Approximation d'une fonction simple dans $L^1$
+
+**Niveau :** \bigstar\star\star\star\star
 
 **Énoncé :**
-Soit $f = \mathbf{1}_{[0, 1]} \in L^1(\mathbb{R})$.
-Proposer une fonction $g \in C_c(\mathbb{R})$ (continue à support compact) telle que $\| f - g \|_1 \le \epsilon$, pour un $\epsilon > 0$ donné. Calculer explicitement l'intégrale pour prouver la majoration.
+Soit $f(x) = \mathbf{1}_{[0, 1]}(x) - \mathbf{1}_{[2, 3]}(x)$. Montrer que $f \in L^1(\mathbb{R})$ (muni de la mesure de Lebesgue). Construire explicitement une fonction continue à support compact $g_\varepsilon$ telle que $\|f - g_\varepsilon\|_1 \le \varepsilon$.
 
-**Correction :**
-Nous cherchons à construire une fonction $g$ continue qui interpole $f$. Définissons $g_\delta$ pour $\delta > 0$ :
-$g_\delta(x) = 1$ pour $x \in [0, 1]$
-$g_\delta(x) = 1 + \frac{x}{\delta}$ pour $x \in [-\delta, 0]$
-$g_\delta(x) = 1 - \frac{x-1}{\delta}$ pour $x \in [1, 1+\delta]$
-$g_\delta(x) = 0$ ailleurs.
+**Correction Détaillée :**
+1. **Intégrabilité :**
+   $f$ est une fonction étagée. Calculons sa norme $L^1$ :
+   $\|f\|_1 = \int_{\mathbb{R}} |f(x)| dx = \int_0^1 1 dx + \int_2^3 |-1| dx = 1 + 1 = 2 < +\infty$.
+   Donc $f \in L^1(\mathbb{R})$.
 
-La fonction $g_\delta$ est continue sur $\mathbb{R}$ et son support est $[-\delta, 1+\delta]$, qui est compact.
-L'écart est $f(x) - g_\delta(x) = -g_\delta(x)$ sur $[-\delta, 0[ \cup ]1, 1+\delta]$.
-La norme $L^1$ de la différence est l'aire sous les deux "triangles" latéraux :
-$\| f - g_\delta \|_1 = \int_{-\delta}^0 \left(1 + \frac{x}{\delta}\right) dx + \int_1^{1+\delta} \left(1 - \frac{x-1}{\delta}\right) dx$
-L'aire d'un tel triangle de base $\delta$ et de hauteur $1$ est $\frac{1 \times \delta}{2} = \frac{\delta}{2}$.
-Ainsi, $\| f - g_\delta \|_1 = \frac{\delta}{2} + \frac{\delta}{2} = \delta$.
-Pour obtenir $\| f - g_\delta \|_1 \le \epsilon$, il suffit de choisir $\delta = \epsilon$.
-La fonction correspondante est bien un élément de $C_c(\mathbb{R})$.
+2. **Construction de $g_\varepsilon$ :**
+   On va construire $g_\varepsilon$ en lissant les sauts de $f$ à l'aide de fonctions affines sur des intervalles de longueur $\delta > 0$ à définir.
+   Posons $g_\varepsilon(x) = 0$ en dehors de $[-\delta, 1+\delta] \cup [2-\delta, 3+\delta]$.
+   Sur $[0, 1]$, $g_\varepsilon(x) = 1$. Sur $[2, 3]$, $g_\varepsilon(x) = -1$.
+   Pour relier de $0$ à $1$ autour de $x=0$, on pose $g_\varepsilon(x) = 1 + \frac{x}{\delta}$ pour $x \in [-\delta, 0]$.
+   Pour relier de $1$ à $0$ autour de $x=1$, on pose $g_\varepsilon(x) = 1 - \frac{x-1}{\delta}$ pour $x \in [1, 1+\delta]$.
+   De même, on relie continûment vers $-1$ sur $[2-\delta, 2]$ et on remonte à $0$ sur $[3, 3+\delta]$.
+   La fonction $g_\varepsilon$ est par construction continue, et son support est inclus dans $[-1, 4]$ (si $\delta \le 1$), donc compact.
+
+3. **Calcul de l'erreur :**
+   L'erreur n'a lieu que sur les zones de "pente".
+   $\|f - g_\varepsilon\|_1 = \int_{-\delta}^0 |0 - (1+x/\delta)| dx + \int_1^{1+\delta} |0 - (1-(x-1)/\delta)| dx + \text{symétriques}$.
+   L'aire sous chaque "triangle" est $\frac{\text{base} \times \text{hauteur}}{2} = \frac{\delta \times 1}{2} = \frac{\delta}{2}$.
+   Il y a 4 triangles, donc l'erreur totale est $4 \times \frac{\delta}{2} = 2\delta$.
+   Pour avoir $\|f - g_\varepsilon\|_1 \le \varepsilon$, il suffit de choisir $\delta = \frac{\varepsilon}{2}$.

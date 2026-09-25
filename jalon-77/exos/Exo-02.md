@@ -1,20 +1,26 @@
-## Exercice 2 : Densité et limite en moyenne quadratique \quad $\bigstar\bigstar\star\star\star$
+# Exercice 2 : Densité et limite uniforme
+
+**Niveau :** \bigstar\bigstar\star\star\star
 
 **Énoncé :**
-Soit $f \in L^2([0,1])$. Sachant que les polynômes sont denses dans $C([0,1])$ (Théorème de Weierstrass) et que $C([0,1])$ est dense dans $L^2([0,1])$, montrer que pour tout $\epsilon > 0$, il existe un polynôme $P$ tel que $\|f - P\|_2 < \epsilon$.
+Montrer que si $(f_n)$ est une suite de $L^p([0,1])$ ($1 \le p < +\infty$) qui converge uniformément vers $f$ sur $[0,1]$, alors $f \in L^p([0,1])$ et $f_n$ converge vers $f$ dans $L^p([0,1])$.
 
-**Correction :**
-Fixons $\epsilon > 0$.
-Puisque $C([0,1])$ est dense dans $L^2([0,1])$, il existe une fonction continue $g \in C([0,1])$ telle que :
-$\| f - g \|_2 < \frac{\epsilon}{2}$
+**Correction Détaillée :**
+1. **Appartenance à $L^p$ :**
+   La suite $(f_n)$ converge uniformément vers $f$.
+   Par définition, il existe $N \in \mathbb{N}$ tel que pour tout $n \ge N$, $\sup_{x \in [0,1]} |f_n(x) - f(x)| \le 1$.
+   En particulier, pour $n=N$, on a $|f(x)| \le |f_N(x)| + 1$.
+   Puisque $[0,1]$ est de mesure finie (valant 1), la fonction constante 1 est dans $L^p$.
+   Comme $f_N \in L^p$, par l'inégalité de Minkowski, $f_N + 1 \in L^p$.
+   Donc $f \in L^p([0,1])$.
 
-Par le théorème d'approximation de Weierstrass, l'ensemble des polynômes est dense dans $C([0,1])$ pour la norme uniforme $\| \cdot \|_\infty$.
-Ainsi, il existe un polynôme $P$ tel que pour tout $x \in [0,1]$, $|g(x) - P(x)| < \frac{\epsilon}{2}$.
-Cela implique que $\| g - P \|_\infty < \frac{\epsilon}{2}$.
+2. **Convergence dans $L^p$ :**
+   Calculons la distance en norme $L^p$ :
+   $\|f_n - f\|_p^p = \int_0^1 |f_n(x) - f(x)|^p dx$.
+   Par convergence uniforme, soit $\varepsilon > 0$. Il existe $N$ tel que pour $n \ge N$, pour tout $x \in [0,1]$, $|f_n(x) - f(x)| \le \varepsilon$.
+   Ainsi, pour $n \ge N$ :
+   $\int_0^1 |f_n(x) - f(x)|^p dx \le \int_0^1 \varepsilon^p dx = \varepsilon^p$.
+   Donc $\|f_n - f\|_p \le \varepsilon$.
+   Ceci prouve que $\|f_n - f\|_p \to 0$ lorsque $n \to +\infty$.
 
-Or, sur l'intervalle $[0,1]$ de mesure finie (égale à 1), la norme $L^2$ est dominée par la norme uniforme :
-$\| g - P \|_2 = \left( \int_0^1 |g(x) - P(x)|^2 dx \right)^{1/2} \le \left( \int_0^1 \left(\frac{\epsilon}{2}\right)^2 dx \right)^{1/2} = \frac{\epsilon}{2}$.
-
-Par l'inégalité triangulaire dans $L^2$ :
-$\| f - P \|_2 \le \| f - g \|_2 + \| g - P \|_2 < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$.
-Le polynôme $P$ répond donc au problème posé, prouvant la densité des polynômes dans $L^2([0,1])$.
+*Note géométrique :* Sur un espace de mesure finie, la topologie de la convergence uniforme est strictement plus forte que la topologie $L^p$.

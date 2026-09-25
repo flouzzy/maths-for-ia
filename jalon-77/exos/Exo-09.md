@@ -1,21 +1,27 @@
-## Exercice 9 : Problème de complétude et densité \quad $\bigstar\bigstar\bigstar\bigstar\star$
+# Exercice 9 : Non-séparabilité de $L^\infty(\mathbb{R})$
+
+**Niveau :** \bigstar\bigstar\bigstar\bigstar\bigstar
 
 **Énoncé :**
-L'espace vectoriel des fonctions continues à support compact $C_c(\mathbb{R})$, muni de la norme $\| \cdot \|_1$, est-il un espace de Banach (complet) ? Justifier rigoureusement à l'aide de la notion de densité.
+Montrer que contrairement aux espaces $L^p$ pour $p < +\infty$, l'espace $L^\infty(\mathbb{R})$ (muni de la norme du supremum essentiel) n'est pas séparable.
 
-**Correction :**
-La réponse est **non**.
-Par définition de la complétude, un espace métrique est complet si et seulement si toute suite de Cauchy y converge vers une limite appartenant à cet espace.
-Si $C_c(\mathbb{R})$ était complet pour la norme $L^1$, alors étant donné qu'il est dense dans $L^1(\mathbb{R})$, il devrait coïncider avec $L^1(\mathbb{R})$.
-Or, il est facile de trouver des fonctions qui sont dans $L^1(\mathbb{R})$ mais qui ne sont pas dans $C_c(\mathbb{R})$.
+**Correction Détaillée :**
+1. **Définition d'une famille non-dénombrable non séparable :**
+   Considérons la famille de fonctions $f_a = \mathbf{1}_{[0, a]}$ pour $a \in ]0, 1]$.
+   Cette famille est indicée par $]0, 1]$, elle est donc non-dénombrable.
 
-Prenons un exemple explicite de suite de Cauchy dans $C_c(\mathbb{R})$ qui ne converge pas dans $C_c(\mathbb{R})$.
-Considérons la fonction porte $f = \mathbf{1}_{[0,1]}$, qui est dans $L^1$ mais discontinue, donc $f \notin C_c(\mathbb{R})$.
-Construisons une suite de fonctions $g_n \in C_c(\mathbb{R})$ définies comme dans l'Exercice 1, telles que $\| f - g_n \|_1 \to 0$.
-Puisque la suite $(g_n)$ converge vers $f$ dans $L^1$, c'est obligatoirement une suite de Cauchy pour la norme $L^1$.
-Supposons par l'absurde que $C_c(\mathbb{R})$ soit complet. Alors la suite de Cauchy $(g_n)$ devrait avoir une limite $g \in C_c(\mathbb{R})$ telle que $\| g_n - g \|_1 \to 0$.
-Par unicité de la limite dans un espace normé (ou par l'inégalité triangulaire $\| f - g \|_1 \le \| f - g_n \|_1 + \| g_n - g \|_1 \to 0$), nous aurions $\| f - g \|_1 = 0$.
-Cela implique que $f = g$ presque partout.
-Or $g$ est continue. Mais $f$ a une discontinuité de saut indélébile en $0$ et en $1$ : elle ne peut être égale presque partout à aucune fonction continue.
-C'est une contradiction. Donc $C_c(\mathbb{R})$ muni de la norme $\| \cdot \|_1$ n'est pas complet.
-$L^1(\mathbb{R})$ est précisément le complété de $C_c(\mathbb{R})$ pour cette norme.
+2. **Distance entre deux éléments :**
+   Prenons $a, b \in ]0, 1]$ avec $a \neq b$. Supposons $a < b$.
+   $f_b(x) - f_a(x) = \mathbf{1}_{]a, b]}(x)$.
+   La valeur essentielle maximale de cette différence est $1$ sur l'intervalle $]a, b]$ (qui est de mesure strictement positive $b-a > 0$).
+   Donc $\|f_b - f_a\|_\infty = 1$.
+
+3. **Boules disjointes :**
+   Considérons les boules ouvertes $B_a = B(f_a, 1/3)$ dans $L^\infty(\mathbb{R})$.
+   Puisque pour $a \neq b$, $\|f_a - f_b\|_\infty = 1 > 2(1/3)$, les boules $B_a$ et $B_b$ sont disjointes.
+   Nous avons ainsi construit une famille non-dénombrable de boules disjointes dans $L^\infty(\mathbb{R})$.
+
+4. **Conclusion :**
+   Si $L^\infty(\mathbb{R})$ admettait une partie dénombrable dense $D$, chaque boule $B_a$ devrait contenir au moins un point de $D$.
+   Comme les boules sont disjointes, cela définirait une injection de l'ensemble non-dénombrable des indices vers l'ensemble dénombrable $D$, ce qui est impossible.
+   $L^\infty(\mathbb{R})$ n'est donc pas séparable.

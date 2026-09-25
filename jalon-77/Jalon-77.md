@@ -10,126 +10,146 @@ prev: "[[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L2).md]]"
 next: "[[Jalon 78 (Séries de Fourier).md]]"
 ---
 
-# Jalon 77 : Densité dans $L^p$
+# Jalon 77 : Densité des fonctions simples dans $L^p$
 
-## 1. Introduction à la Densité dans $L^p$
+## 1. Introduction à la Densité dans les Espaces de Lebesgue
 
-Le concept de densité est fondamental en analyse fonctionnelle. Historiquement, l'étude des espaces de Lebesgue $L^p$ pour $1 \le p < \infty$ s'est heurtée à la complexité structurelle des fonctions qui les composent. Ces fonctions peuvent présenter des discontinuités denses, des variations infinies ou des comportements locaux pathologiques.
+L'analyse fonctionnelle moderne, particulièrement depuis les travaux fondateurs d'Henri Lebesgue et de Frigyes Riesz au début du XXe siècle, traite d'espaces de fonctions dont les éléments peuvent présenter des comportements extrêmement pathologiques : singularités, oscillations infinies, ou absences totales de continuité. L'espace $L^p(\mu)$, qui regroupe les fonctions dont la puissance $p$-ième est intégrable, est le cadre naturel de la physique quantique (avec $L^2$) et des probabilités. Cependant, manipuler directement de telles fonctions, qui ne sont définies que presque partout, s'avère souvent délicat.
 
-La notion de densité offre une solution élégante : elle permet d'approcher arbitrairement près (au sens de la norme $L^p$) n'importe quelle fonction complexe de l'espace par des fonctions appartenant à une classe beaucoup plus "régulière" et maniable, telles que les fonctions étagées (ou simples), les fonctions continues, ou encore les fonctions indéfiniment dérivables à support compact.
+C'est ici qu'intervient la notion de densité. L'idée est géométrique : tout comme n'importe quel nombre réel peut être approché d'aussi près que l'on veut par un nombre rationnel (densité de $\mathbb{Q}$ dans $\mathbb{R}$), toute fonction compliquée de $L^p$ peut être approximée par des fonctions "simples" ou "lisses". Ces fonctions régulières (fonctions étagées, continues, infiniment dérivables) forment une ossature sur laquelle on peut asseoir les démonstrations. On établit d'abord une propriété (une inégalité, une convergence) sur cet ensemble restreint, plus commode à manipuler, puis on l'étend à tout l'espace $L^p$ par passage à la limite, grâce à la densité. Ce principe d'extension continue est le moteur principal de l'analyse dans les espaces de Banach.
 
-En termes géométriques, dire qu'un sous-espace $A$ est dense dans un espace $E$ signifie que l'adhérence de $A$ est égale à $E$. Ainsi, tout point de $E$ est limite d'une suite d'éléments de $A$.
+## 2. Définitions et Théorèmes de Densité
 
-### Exemple 1 : Intuition de l'approximation par des fonctions en escalier
-Considérons une fonction continue $f(x) = x^2$ sur l'intervalle $[0,1]$.
-Si l'on cherche à l'approcher par une fonction étagée $s_n(x)$ constante sur les intervalles $[k/n, (k+1)/n[$ en prenant la valeur $(k/n)^2$, l'erreur maximale entre $f(x)$ et $s_n(x)$ sur cet intervalle est :
-$$ \sup_{x} |f(x) - s_n(x)| \le \frac{2}{n} $$
-Ainsi, la distance en norme $L^1$ est majorée par $2/n$, qui tend vers $0$ lorsque $n \to \infty$.
+### Densité des Fonctions Étagées Intégrables
 
-## 2. Définitions, Théorèmes et Exemples
+Soit $(X, \mathcal{A}, \mu)$ un espace mesuré et $p \in [1, +\infty[$.
+On note $\mathcal{E}$ l'espace vectoriel des fonctions étagées (ou simples), c'est-à-dire les fonctions de la forme $s = \sum_{i=1}^n \alpha_i \mathbf{1}_{A_i}$ où les $\alpha_i \in \mathbb{R}$ (ou $\mathbb{C}$) et les $A_i \in \mathcal{A}$ sont deux à deux disjoints. On désigne par $\mathcal{E} \cap L^p(\mu)$ le sous-espace des fonctions étagées appartenant à $L^p(\mu)$ (ce qui équivaut à exiger que $\mu(A_i) < +\infty$ dès que $\alpha_i \neq 0$).
 
-Soit $(X, \mathcal{F}, \mu)$ un espace mesuré et $1 \le p < \infty$. L'espace $L^p(\mu)$ est l'ensemble des classes d'équivalence de fonctions mesurables $f : X \to \mathbb{R}$ ou $\mathbb{C}$ telles que $\int_X |f|^p \, d\mu < \infty$.
+**Théorème 1 (Densité des fonctions étagées).**
+Pour tout $p \in [1, +\infty[$, l'espace $\mathcal{E} \cap L^p(\mu)$ est dense dans $L^p(\mu)$.
+Formellement :
+$$ \forall f \in L^p(\mu), \forall \varepsilon > 0, \exists s \in \mathcal{E} \cap L^p(\mu) \text{ tel que } \|f - s\|_p < \varepsilon. $$
 
-### 2.1 Densité des fonctions simples (étagées)
+**Exemple Concret :**
+Soit $f(x) = \frac{1}{\sqrt{x}}$ sur $]0, 1]$, et $f(0) = 0$. Montrons que $f \in L^1(]0, 1])$ et approchons-la par une fonction étagée.
+L'intégrale vaut $\int_0^1 x^{-1/2} dx = [2\sqrt{x}]_0^1 = 2 < +\infty$.
+Construisons une approximation $s$. Coupons $]0, 1]$ en deux : $A_1 = ]1/4, 1]$ et $A_2 = ]0, 1/4]$.
+Sur $A_1$, $f(x)$ varie de $1$ à $2$. Posons $s(x) = 1$ sur $A_1$.
+Sur $A_2$, $f(x)$ varie de $2$ à $+\infty$. Posons $s(x) = 2$ sur $A_2$.
+$s = \mathbf{1}_{]1/4, 1]} + 2 \cdot \mathbf{1}_{]0, 1/4]}$.
+L'erreur $L^1$ est :
+$$ \|f - s\|_1 = \int_0^{1/4} \left|\frac{1}{\sqrt{x}} - 2\right| dx + \int_{1/4}^1 \left|\frac{1}{\sqrt{x}} - 1\right| dx $$
+$$ = \left( [2\sqrt{x}]_0^{1/4} - 2(1/4) \right) + \left( [2\sqrt{x}]_{1/4}^1 - (1-1/4) \right) = (1 - 0.5) + (2 - 1 - 0.75) = 0.5 + 0.25 = 0.75 $$
+En raffinant la partition, on peut rendre $\|f - s\|_1$ arbitrairement petit.
 
-**Définition (Fonction simple) :**
-Une fonction simple (ou étagée) $s$ est une combinaison linéaire finie de fonctions indicatrices d'ensembles mesurables :
-$$ s(x) = \sum_{i=1}^k c_i \mathbf{1}_{A_i}(x) $$
-où $c_i \in \mathbb{R}$ (ou $\mathbb{C}$) et les $A_i \in \mathcal{F}$ sont deux à deux disjoints.
+### Densité des Fonctions Continues à Support Compact (Cas de la mesure de Lebesgue)
 
-**Théorème 1 (Densité des fonctions simples dans $L^p$) :**
-Pour tout $1 \le p < \infty$, l'espace vectoriel des fonctions simples intégrables est dense dans $L^p(\mu)$.
-Autrement dit, pour tout $f \in L^p(\mu)$ et tout $\epsilon > 0$, il existe une fonction simple $s \in L^p(\mu)$ telle que :
-$$ \| f - s \|_p < \epsilon $$
+Plaçons-nous maintenant dans l'espace $\mathbb{R}^d$ muni de la tribu borélienne et de la mesure de Lebesgue $\lambda$. Soit $\mathcal{C}_c(\mathbb{R}^d)$ l'espace des fonctions continues à support compact.
 
-**Exemple 2 : Calcul de l'approximation d'une fonction continue par une fonction simple**
-Considérons $f(x) = x$ sur $[0,1]$ muni de la mesure de Lebesgue.
-Définissons la fonction simple $s(x) = \frac{1}{2} \mathbf{1}_{[0, 1/2[}(x) + 1 \cdot \mathbf{1}_{[1/2, 1]}(x)$.
-Calculons la norme $L^2$ de l'erreur :
-$$ \| f - s \|_2^2 = \int_0^{1/2} (x - 1/2)^2 \, dx + \int_{1/2}^1 (x - 1)^2 \, dx $$
-$$ \int_0^{1/2} (x - 1/2)^2 \, dx = \left[ \frac{(x-1/2)^3}{3} \right]_0^{1/2} = 0 - \left(\frac{-1/8}{3}\right) = \frac{1}{24} $$
-$$ \int_{1/2}^1 (x - 1)^2 \, dx = \left[ \frac{(x-1)^3}{3} \right]_{1/2}^1 = 0 - \left(\frac{-1/8}{3}\right) = \frac{1}{24} $$
-Ainsi, $\| f - s \|_2^2 = \frac{1}{12}$, ce qui donne $\| f - s \|_2 = \frac{1}{\sqrt{12}} \approx 0.288$.
+**Théorème 2 (Densité des fonctions continues).**
+Pour tout $p \in [1, +\infty[$, l'espace $\mathcal{C}_c(\mathbb{R}^d)$ est dense dans $L^p(\mathbb{R}^d)$.
 
-### 2.2 Densité des fonctions continues à support compact
+**Exemple Concret :**
+Soit $f = \mathbf{1}_{[0, 1]}$. C'est une fonction de $L^1(\mathbb{R})$. Elle n'est pas continue (sauts en $0$ et $1$).
+Approchons-la par $g_n \in \mathcal{C}_c(\mathbb{R})$ définie par :
+$g_n(x) = 1$ si $x \in [0, 1]$.
+$g_n(x) = 1 + n x$ si $x \in [-1/n, 0]$.
+$g_n(x) = 1 - n (x-1)$ si $x \in [1, 1+1/n]$.
+$g_n(x) = 0$ ailleurs.
+$g_n$ est un "trapèze" qui encadre l'indicatrice.
+L'erreur $L^1$ est la surface des deux petits triangles ajoutés :
+$$ \|f - g_n\|_1 = \int_{-1/n}^0 (1+nx) dx + \int_1^{1+1/n} (1-n(x-1)) dx = \frac{1}{2n} + \frac{1}{2n} = \frac{1}{n} $$
+Pour $\varepsilon > 0$, il suffit de choisir $n > 1/\varepsilon$ pour obtenir $\|f - g_n\|_1 < \varepsilon$.
 
-Soit $\Omega$ un ouvert de $\mathbb{R}^n$ muni de la mesure de Lebesgue. On note $C_c(\Omega)$ l'espace vectoriel des fonctions continues sur $\Omega$ à support compact contenu dans $\Omega$.
+**Contre-exemple (Cas pathologique $p = \infty$) :**
+Le théorème est **faux** pour $p = \infty$.
+Soit $f = \mathbf{1}_{[0, 1]}$. Si $\mathcal{C}_c$ était dense dans $L^\infty$, il existerait $g \in \mathcal{C}_c$ telle que $\|f - g\|_\infty < 1/3$.
+Cela impliquerait $|g(x) - 1| < 1/3$ presque partout sur $[0, 1]$ et $|g(x)| < 1/3$ presque partout sur $\mathbb{R} \setminus [0, 1]$.
+Par continuité de $g$, $g(0)$ devrait satisfaire à la fois $|g(0) - 1| \le 1/3$ (donc $g(0) \ge 2/3$) et $|g(0)| \le 1/3$. C'est une contradiction. Donc l'indicatrice ne peut être approchée uniformément par une fonction continue. L'adhérence de $\mathcal{C}_c$ dans $L^\infty$ est l'espace $\mathcal{C}_0$ des fonctions continues qui tendent vers $0$ à l'infini, qui est strictement inclus dans $L^\infty$.
 
-**Théorème 2 (Densité de $C_c$ dans $L^p$) :**
-Pour tout $1 \le p < \infty$, l'espace $C_c(\Omega)$ est dense dans $L^p(\Omega)$.
+## 3. Démonstrations Complètes
 
-**Exemple 3 : Approximation d'une indicatrice par des fonctions continues**
-Soit $f = \mathbf{1}_{[0,1]} \in L^1(\mathbb{R})$.
-Définissons une suite de fonctions continues $g_n(x)$ :
-$$
-g_n(x) = \begin{cases}
-0 & \text{si } x \le -1/n \\
-nx + 1 & \text{si } -1/n < x < 0 \\
-1 & \text{si } 0 \le x \le 1 \\
--nx + n + 1 & \text{si } 1 < x < 1+1/n \\
-0 & \text{si } x \ge 1+1/n
-\end{cases}
-$$
-L'intégrale de la différence $|f - g_n|$ est géométriquement la somme des aires de deux petits triangles de base $1/n$ et de hauteur $1$.
-$$ \| f - g_n \|_1 = 2 \times \left( \frac{1}{2} \times \frac{1}{n} \times 1 \right) = \frac{1}{n} $$
-Ainsi, quand $n \to \infty$, $\| f - g_n \|_1 \to 0$.
+### Démonstration du Théorème 1 : Densité des fonctions étagées
 
-### 2.3 Densité des fonctions régulières
+On procède par étapes pour montrer la densité dans $L^p(\mu)$.
 
-On note $C_c^\infty(\Omega)$ l'espace des fonctions de classe $C^\infty$ à support compact (aussi appelées fonctions tests).
+**Étape 1 : Le cas des fonctions positives mesurables**
+Soit $f \in L^p(\mu)$ telle que $f(x) \ge 0$ pour presque tout $x$.
+Par le théorème d'approximation mesurable (Jalon 65), il existe une suite croissante $(s_n)_{n \in \mathbb{N}}$ de fonctions étagées positives convergeant simplement vers $f$ :
+$$ \forall x \in X, \quad 0 \le s_1(x) \le s_2(x) \le \dots \le f(x) \quad \text{et} \quad \lim_{n \to \infty} s_n(x) = f(x). $$
+Puisque $0 \le s_n \le f$ et $f \in L^p$, on a $s_n^p \le f^p$. En intégrant, $\int s_n^p d\mu \le \int f^p d\mu < +\infty$, donc chaque $s_n$ appartient à $\mathcal{E} \cap L^p(\mu)$.
 
-**Théorème 3 (Densité de $C_c^\infty$ dans $L^p$) :**
-Pour tout $1 \le p < \infty$, l'espace $C_c^\infty(\Omega)$ est dense dans $L^p(\Omega)$.
+**Étape 2 : Convergence dans $L^p$ par le TCD**
+On souhaite montrer que $\|f - s_n\|_p \to 0$.
+Considérons la suite de fonctions $g_n = (f - s_n)^p$.
+- Convergence ponctuelle : $\lim_{n \to \infty} g_n(x) = (f(x) - f(x))^p = 0$ partout.
+- Domination : On a $0 \le s_n \le f$, donc $0 \le f - s_n \le f$.
+  Ainsi, $|g_n| = (f - s_n)^p \le f^p$.
+  La fonction dominante $f^p$ est intégrable car $f \in L^p(\mu)$.
+D'après le Théorème de Convergence Dominée (TCD), on peut intervertir la limite et l'intégrale :
+$$ \lim_{n \to \infty} \int_X (f - s_n)^p d\mu = \int_X 0 \, d\mu = 0. $$
+Ce qui signifie exactement que $\|f - s_n\|_p \to 0$.
 
-**Exemple 4 : Construction d'une fonction plateau régulière**
-On considère la fonction de base $\varphi(x) = e^{-\frac{1}{1-x^2}} \mathbf{1}_{]-1,1[}(x)$, qui est $C^\infty$ à support compact $[-1, 1]$.
-Par changement d'échelle et translation, on peut construire une fonction $\psi \in C_c^\infty$ valant $1$ sur un compact $K$ et s'annulant hors d'un voisinage $U$ de $K$. On l'utilise ensuite pour lisser les fonctions indicatrices par convolution.
+**Étape 3 : Cas général d'une fonction à valeurs réelles**
+Soit $f \in L^p(\mu)$. On décompose $f$ en ses parties positive et négative : $f = f^+ - f^-$, où $f^+ = \max(f, 0)$ et $f^- = \max(-f, 0)$.
+Comme $|f^+| \le |f|$ et $|f^-| \le |f|$, on a $f^+, f^- \in L^p(\mu)$.
+D'après l'Étape 2, il existe des suites d'étagées $s_n^{(+)}$ et $s_n^{(-)}$ telles que $\|f^+ - s_n^{(+)}\|_p \to 0$ et $\|f^- - s_n^{(-)}\|_p \to 0$.
+Posons $s_n = s_n^{(+)} - s_n^{(-)}$. La fonction $s_n$ est étagée et appartient à $L^p$.
+Par l'inégalité de Minkowski (inégalité triangulaire de la norme $L^p$) :
+$$ \|f - s_n\|_p = \|(f^+ - f^-) - (s_n^{(+)} - s_n^{(-)})\|_p \le \|f^+ - s_n^{(+)}\|_p + \|f^- - s_n^{(-)}\|_p. $$
+Cette somme tend vers $0$ quand $n \to \infty$.
 
-## 3. Démonstrations
+**Étape 4 : Cas complexe**
+Si $f$ est à valeurs complexes, on applique le même raisonnement aux parties réelle et imaginaire $f = \text{Re}(f) + i\text{Im}(f)$.
+La densité de $\mathcal{E} \cap L^p$ est donc démontrée en toute généralité. $\blacksquare$
 
-### 3.1 Démonstration du Théorème 1 (Densité des fonctions simples)
+### Démonstration du Théorème 2 : Densité des fonctions continues
 
-Soit $f \in L^p(\mu)$ pour $1 \le p < \infty$.
-Écrivons $f = f^+ - f^-$, où $f^+ = \max(f, 0)$ et $f^- = \max(-f, 0)$. Il suffit de démontrer le résultat pour les fonctions positives, puis d'appliquer la linéarité.
-Supposons donc $f \ge 0$ et $f \in L^p(\mu)$.
+La preuve procède par approximations successives, justifiées rigoureusement.
 
-Il existe une suite $(s_n)$ de fonctions simples mesurables, positives et croissantes telle que pour tout $x \in X$, $\lim_{n \to \infty} s_n(x) = f(x)$.
-Puisque $0 \le s_n(x) \le f(x)$, nous avons $s_n \in L^p(\mu)$ (car $s_n^p \le f^p$ et $f \in L^p$).
-Considérons la suite de fonctions $g_n = |f - s_n|^p = (f - s_n)^p$.
-1. $g_n(x) \to 0$ pour presque tout $x$.
-2. $|g_n(x)| \le f(x)^p$ pour tout $n$, et $f^p \in L^1(\mu)$.
-Par le Théorème de Convergence Dominée de Lebesgue, nous déduisons que :
-$$ \lim_{n \to \infty} \int_X |f - s_n|^p \, d\mu = \lim_{n \to \infty} \int_X g_n \, d\mu = 0 $$
-Ainsi, $s_n \to f$ dans $L^p(\mu)$. Le théorème est démontré.
+**Étape 1 : Réduction à une fonction indicatrice d'un ensemble de mesure finie**
+Par le Théorème 1, les fonctions étagées intégrables sont denses dans $L^p(\mathbb{R}^d)$.
+Ainsi, pour $f \in L^p(\mathbb{R}^d)$ et $\varepsilon > 0$, il existe une fonction étagée $s = \sum_{k=1}^m \alpha_k \mathbf{1}_{A_k}$ (où les $A_k$ sont disjoints et de mesure finie) telle que $\|f - s\|_p \le \frac{\varepsilon}{3}$.
+Par l'inégalité triangulaire de la norme $L^p$ (Minkowski), si nous pouvons approcher chaque indicatrice $\mathbf{1}_{A_k}$ par une fonction continue à support compact $g_k$ telle que $\|\mathbf{1}_{A_k} - g_k\|_p \le \frac{\varepsilon}{3m|\alpha_k|}$, alors la fonction $g = \sum_{k=1}^m \alpha_k g_k$ sera continue à support compact et vérifiera $\|s - g\|_p \le \sum_{k=1}^m |\alpha_k| \|\mathbf{1}_{A_k} - g_k\|_p \le \frac{\varepsilon}{3}$.
+Finalement, $\|f - g\|_p \le \|f - s\|_p + \|s - g\|_p \le \frac{2\varepsilon}{3} < \varepsilon$.
+Il suffit donc de prouver le théorème pour $f = \mathbf{1}_A$ avec $\lambda(A) < +\infty$.
 
-### 3.2 Idée de la démonstration pour la densité de $C_c(\Omega)$ (Théorème 2)
+**Étape 2 : Régularité de la mesure de Lebesgue et approximation par un ouvert et un compact**
+La mesure de Lebesgue sur $\mathbb{R}^d$ est régulière. Pour tout ensemble mesurable $A$ tel que $\lambda(A) < +\infty$, et pour tout $\eta > 0$, il existe un compact $K$ et un ouvert $U$ tels que $K \subset A \subset U$ et $\lambda(U \setminus K) < \eta$.
+Choisissons $\eta = \left( \frac{\varepsilon}{3m|\alpha_k|} \right)^p$. Nous avons donc $K \subset A \subset U$ avec $\lambda(U \setminus K) < \eta$.
 
-D'après le théorème 1, il suffit de montrer que toute fonction simple intégrable peut être approchée par une fonction de $C_c(\Omega)$. Par linéarité, il suffit de l'établir pour l'indicatrice $\mathbf{1}_A$ d'un ensemble mesurable $A$ de mesure finie.
-En utilisant la régularité de la mesure de Lebesgue, pour tout $\epsilon > 0$, il existe un compact $K$ et un ouvert $U$ tels que $K \subset A \subset U$ et $\mu(U \setminus K) < \epsilon$.
-Par le Lemme d'Urysohn, il existe une fonction continue $g \in C_c(\Omega)$ telle que $0 \le g \le 1$, $g|_K = 1$ et $g|_{U^c} = 0$.
-On a alors $\mathbf{1}_A - g = 0$ sur $K$ et sur $U^c$. L'erreur est concentrée sur $U \setminus K$, dont la mesure est très petite.
-$$ \int_\Omega |\mathbf{1}_A - g|^p \, d\mu \le \mu(U \setminus K) < \epsilon $$
-Ceci conclut l'approximation par des fonctions continues.
+**Étape 3 : Construction de la fonction continue (Lemme d'Urysohn pour $\mathbb{R}^d$)**
+Puisque $K$ est compact et $U$ est ouvert (donc $U^c$ est fermé), et que $K \cap U^c = \emptyset$, la distance entre $K$ et $U^c$, définie par $d(K, U^c) = \inf_{x \in K, y \in U^c} \|x - y\|$, est strictement positive car $K$ est compact.
+Définissons la fonction $g(x)$ par :
+$$ g(x) = \frac{d(x, U^c)}{d(x, K) + d(x, U^c)} $$
+Cette fonction est continue car la fonction distance à un ensemble est lipschitzienne (donc continue).
+Évaluons ses valeurs :
+- Si $x \in K$, $d(x, K) = 0$, donc $g(x) = 1$.
+- Si $x \in U^c$, $d(x, U^c) = 0$, donc $g(x) = 0$.
+- Pour tout $x \in \mathbb{R}^d$, $0 \le g(x) \le 1$.
+Le support de $g$ est inclus dans l'adhérence de $U$. Puisque $K$ est compact, on peut choisir $U$ borné, de sorte que $\bar{U}$ est compact. Ainsi, $g$ est continue à support compact : $g \in \mathcal{C}_c(\mathbb{R}^d)$.
 
-### 3.3 Illustration vectorielle : Schéma de densité
+**Étape 4 : Calcul de l'erreur d'approximation $L^p$**
+Nous devons évaluer $\|\mathbf{1}_A - g\|_p$.
+Observons que :
+- Sur $K$, $\mathbf{1}_A(x) = 1$ et $g(x) = 1$, donc $\mathbf{1}_A(x) - g(x) = 0$.
+- Sur $U^c$, $\mathbf{1}_A(x) = 0$ (car $A \subset U$) et $g(x) = 0$, donc $\mathbf{1}_A(x) - g(x) = 0$.
+Ainsi, la fonction $\mathbf{1}_A - g$ est non nulle uniquement sur l'ensemble $U \setminus K$.
+De plus, $|\mathbf{1}_A(x) - g(x)| \le 1$ pour tout $x$.
+Par conséquent,
+$$ \|\mathbf{1}_A - g\|_p^p = \int_{\mathbb{R}^d} |\mathbf{1}_A(x) - g(x)|^p dx = \int_{U \setminus K} |\mathbf{1}_A(x) - g(x)|^p dx \le \int_{U \setminus K} 1^p dx = \lambda(U \setminus K). $$
+Comme nous avons choisi $\lambda(U \setminus K) < \eta$, il s'ensuit que $\|\mathbf{1}_A - g\|_p < \eta^{1/p} = \frac{\varepsilon}{3m|\alpha_k|}$.
+Ceci achève la démonstration rigoureuse de la densité de $\mathcal{C}_c(\mathbb{R}^d)$ dans $L^p(\mathbb{R}^d)$. $\blacksquare$
 
-\begin{tikzpicture}
-\draw[->] (-0.5, 0) -- (6, 0) node[right] {$x$};
-\draw[->] (0, -0.5) -- (0, 3) node[above] {$y$};
-\draw[blue, thick] (0.5, 0) -- (0.5, 2) -- (2.5, 2) -- (2.5, 0.5) -- (4, 0.5) -- (4, 0);
-\draw[red, dashed, thick] (0, 0) -- (0.5, 2) -- (2.5, 2) -- (2.7, 0.5) -- (4, 0.5) -- (4.5, 0);
-\node[blue] at (1.5, 2.3) {$f$ (fonction simple)};
-\node[red] at (3.5, 1) {$g$ (fonction continue)};
-\end{tikzpicture}
+## 4. Applications en Physique, Logique et Intelligence Artificielle
 
-## 4. Applications en Physique, Logique et IA
+### Convolution et Régularisation
+En physique du signal, on convolutionne souvent un signal bruité $f \in L^p$ avec une famille de fonctions "molles" (mollifiers) infiniment dérivables, comme une gaussienne $G_\sigma$.
+On montre que le produit de convolution $f * G_\sigma$ est une fonction de classe $\mathcal{C}^\infty$, et par un théorème fondamental de densité, $\|f - f * G_\sigma\|_p \to 0$ lorsque $\sigma \to 0$. Cela permet de lisser n'importe quelle fonction $L^p$, ce qui est crucial pour la résolution des EDP (Équations aux Dérivées Partielles) comme l'équation de la chaleur.
 
-### 4.1 Physique et mécanique quantique
-En mécanique quantique, l'espace d'états d'une particule est un espace de Hilbert $L^2(\mathbb{R}^d)$. La densité des fonctions régulières ($C_c^\infty$) permet d'affirmer que des observables comme l'opérateur impulsion $-i\hbar\nabla$ peuvent être définies sur un domaine dense (les fonctions tests). Ainsi, l'opérateur est densément défini, ce qui est une condition sine qua non pour étudier ses propriétés d'auto-adjonction.
+### Intelligence Artificielle et Théorème d'Approximation Universelle
+Le célèbre théorème d'approximation universelle stipule qu'un réseau de neurones avec une seule couche cachée, utilisant des fonctions d'activation non polynomiales (comme ReLU ou Sigmoïde), peut approximer n'importe quelle fonction continue sur un compact avec une erreur arbitrairement petite (dans l'espace des fonctions continues).
+Puisque les fonctions continues sont elles-mêmes denses dans $L^p(\mathbb{R}^d)$ par rapport aux mesures de probabilité régulières, un réseau de neurones est en réalité un approximateur universel pour **toute fonction mesurable de $L^p$**. C'est le fondement théorique absolu justifiant pourquoi l'apprentissage profond (Deep Learning) est capable d'apprendre des mappings complexes comme la classification d'images ou la traduction linguistique.
 
-### 4.2 Analyse des signaux
-En traitement du signal, un signal physique appartient à $L^2$. Les théorèmes de densité assurent qu'on peut approcher ce signal avec une précision infinie par des sommes finies d'harmoniques (séries de Fourier) ou par des ondelettes lisses, ce qui est le fondement de la compression de données (MP3, JPEG).
-
-### 4.3 Intelligence Artificielle et Réseaux de Neurones
-Le Théorème d'Approximation Universelle repose fondamentalement sur la densité. Un réseau de neurones multicouches avec une fonction d'activation non polynomiale génère un sous-espace vectoriel de fonctions. Démontrer l'universalité revient à démontrer que ce sous-espace est dense dans l'espace des fonctions continues $C(K)$, et par extension, dense dans $L^p(K)$.
-La garantie qu'un réseau de neurones de taille finie peut approcher n'importe quelle fonction d'erreur mesurable $L^p$ à une erreur arbitrairement petite $\epsilon$ provient de ces théorèmes fondamentaux de la théorie de la mesure.
+### Méthode des Éléments Finis (FEM)
+En mécanique des fluides ou en calcul de structure, la méthode de Galerkin consiste à chercher la solution faible d'une équation différentielle non pas dans un vaste espace infini-dimensionnel (un espace de Sobolev), mais dans un sous-espace de dimension finie, souvent engendré par des fonctions polynomiales par morceaux (qui sont continues ou simples). L'erreur commise entre la solution exacte et la solution approchée tend vers zéro à mesure que l'on raffine le maillage, ce qui est une conséquence géométrique directe des théorèmes de densité dans les espaces $L^p$ et les espaces de Sobolev.
