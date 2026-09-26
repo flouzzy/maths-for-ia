@@ -191,7 +191,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 75](jalon-75/Jalon-75.md)** : Preuve de la complétude des espaces $L^p$ (Théorème de Riesz-Fischer) : structure de Banach. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 76](jalon-76/Jalon-76.md)** : Propriétés géométriques de l'espace de Hilbert $L^2$, produit scalaire et identité du parallélogramme.
 - **[Jalon 77](jalon-77/Jalon-77.md)** : Densité des fonctions simples, des fonctions continues à support compact et des fonctions lisses dans $L^p$.
-- **[Jalon 78](jalon-78/Jalon%2078%20%28S%C3%A9ries%20de%20Fourier%29.md)** : Séries de Fourier, calcul des coefficients, convergence ponctuelle (théorème de Dirichlet).
+- **[Jalon 78](jalon-78/Jalon-78.md)** : Séries de Fourier, calcul des coefficients, convergence ponctuelle (théorème de Dirichlet).
 - **[Jalon 79](jalon-79/Jalon%2079%20%28Convergence%20en%20moyenne%20quadratique%20des%20s%C3%A9ries%20de%20Fourier%20et%20identit%C3%A9%20de%20Parseval.%29.md)** : Convergence en moyenne quadratique des séries de Fourier et identité de Parseval.
 - **[Jalon 80](jalon-80/Jalon%2080%20%28Transform%C3%A9e%20de%20Fourier%20dans%20-L%5E1-%29.md)** : Transformée de Fourier dans $L^1$, propriétés algébriques, Riemann-Lebesgue et produit de convolution.
 - **[Jalon 81](jalon-81/Jalon%2081%20%28Transform%C3%A9e%20de%20Fourier%20dans%20-L%5E2-%29.md)** : Transformée de Fourier dans $L^2$, prolongement par densité et théorème d'isométrie de Plancherel.
@@ -428,6 +428,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
+- [2026-10-15] : [Upsert/Création] du Jalon 78 - Séries de Fourier. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-25] : [Upsert/Création] du Jalon 77 - Densité des fonctions simples dans L^p. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-22] : [Upsert/Création] du Jalon 76 - Propriétés géométriques de l'espace de Hilbert L^2. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-21] : [Upsert/Création] du Jalon 75 - Preuve de la complétude des espaces L^p. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
