@@ -12,118 +12,95 @@ next: "[[Jalon 79 (Convergence en moyenne quadratique des séries de Fourier et 
 
 # Jalon 78 : Séries de Fourier
 
-## 1. Genèse et Intuition Physique
+## 1. Genèse du concept et intuition physique
 
-Historiquement, le concept des séries de Fourier prend racine dans les travaux de Joseph Fourier (1822) sur la propagation de la chaleur. À cette époque, la communauté scientifique, menée par Lagrange et Laplace, considérait qu'une fonction arbitraire, surtout si elle présentait des discontinuités ou des points anguleux (comme un signal en "dents de scie"), ne pouvait pas être représentée par une unique expression analytique sur tout son domaine.
+Historiquement, la théorie des séries de Fourier prend racine dans l'étude de l'équation de la chaleur par Joseph Fourier en 1822. Face à l'impossibilité de résoudre de manière exacte l'évolution de la température dans un corps solide en utilisant les outils classiques de l'analyse, Fourier postula une idée profondément révolutionnaire : tout signal périodique, aussi complexe ou irrégulier soit-il, peut être décomposé en une somme infinie d'ondes sinusoïdales pures.
 
-Fourier bouleverse cette conception en postulant que *tout* profil de température initial (périodique) peut être décomposé en une somme infinie d'ondes sinusoïdales pures. Géométriquement, cela revient à affirmer que les fonctions trigonométriques forment une "base" de l'espace des fonctions périodiques, tout comme les vecteurs de base engendrent un espace vectoriel. Ainsi, un signal complexe dans le domaine temporel est transformé en un spectre discret dans le domaine fréquentiel. Chaque onde composante est caractérisée par sa fréquence, son amplitude (l'intensité de cette fréquence dans le signal) et sa phase. Cette découverte a fondé l'analyse harmonique, ouvrant la voie non seulement à la thermodynamique, mais aussi au traitement du signal moderne et à la mécanique quantique.
+Physiquement et géométriquement, cela revient à percevoir un signal compliqué non plus dans le domaine temporel ou spatial, mais dans le domaine fréquentiel. Au lieu de voir la variation de l'amplitude au cours du temps, nous observons le spectre des fréquences qui le composent : chaque onde élémentaire est caractérisée par une fréquence spécifique (sa "vitesse" d'oscillation) et une amplitude (son "poids" dans le signal global).
 
-## 2. Définitions, Théorèmes et Exemples
+Mathématiquement, cette décomposition n'est autre qu'un changement de base dans un espace vectoriel de dimension infinie. Les fonctions trigonométriques forment une base orthogonale de l'espace des fonctions périodiques de carré intégrable. Les coefficients de Fourier apparaissent alors naturellement comme les coordonnées du signal projeté sur cette base de fonctions pures.
 
-### Espace des fonctions et produit scalaire
+## 2. Définitions et Théorèmes Fondamentaux
 
-Soit $T > 0$. On note $L^2_{per}(0, T)$ l'espace des fonctions $f : \mathbb{R} \to \mathbb{C}$ qui sont $T$-périodiques et de carré intégrable sur une période, c'est-à-dire telles que $\int_0^T |f(t)|^2 dt < +\infty$. On munit cet espace du produit scalaire hermitien suivant (en prenant $T=2\pi$ pour simplifier les notations) :
+### A. Espace des fonctions périodiques et produit scalaire
 
-$$ \langle f, g \rangle = \frac{1}{2\pi} \int_0^{2\pi} \overline{f(t)} g(t) dt $$
+Considérons $E$, l'espace vectoriel des fonctions $f : \mathbb{R} \to \mathbb{C}$ qui sont $T$-périodiques (pour simplifier, nous prendrons $T = 2\pi$) et localement intégrables sur $[0, 2\pi]$. Pour les fonctions à valeurs complexes, nous munissons cet espace (quotienté par la relation d'égalité presque partout) du produit scalaire hermitien usuel :
 
-**Théorème 1 (Famille orthonormale) :**
-La famille de fonctions $(e_n)_{n \in \mathbb{Z}}$ définie par $e_n(t) = e^{int}$ forme une famille orthonormale pour ce produit scalaire. C'est-à-dire :
-$$ \langle e_m, e_n \rangle = \delta_{m,n} $$
-où $\delta_{m,n}$ est le symbole de Kronecker (1 si $m=n$, 0 sinon).
+> **Définition (Produit scalaire sur $L^2([0, 2\pi])$) :**
+> Soient $f, g \in L^2([0, 2\pi])$. Le produit scalaire hermitien est défini par :
+> $$\langle f, g \rangle = \frac{1}{2\pi} \int_0^{2\pi} f(t) \overline{g(t)} dt$$
 
-**Exemple de calcul d'orthogonalité :**
-Vérifions que $e_1(t) = e^{it}$ et $e_2(t) = e^{2it}$ sont orthogonales.
-$$ \langle e_1, e_2 \rangle = \frac{1}{2\pi} \int_0^{2\pi} \overline{e^{it}} e^{2it} dt = \frac{1}{2\pi} \int_0^{2\pi} e^{-it} e^{2it} dt = \frac{1}{2\pi} \int_0^{2\pi} e^{it} dt $$
-$$ \langle e_1, e_2 \rangle = \frac{1}{2\pi} \left[ \frac{e^{it}}{i} \right]_0^{2\pi} = \frac{1}{2\pi i} (e^{2i\pi} - e^0) = \frac{1}{2\pi i} (1 - 1) = 0 $$
+La famille de fonctions $(e_n)_{n \in \mathbb{Z}}$ définie par $e_n(t) = e^{int}$ forme une famille orthonormale pour ce produit scalaire.
 
-### Coefficients de Fourier
+### B. Coefficients de Fourier
 
-**Définition 1 (Coefficients complexes) :**
-Pour tout entier $n \in \mathbb{Z}$, on définit le $n$-ième coefficient de Fourier exponentiel de $f \in L^1_{per}(0, 2\pi)$ par :
-$$ c_n(f) = \frac{1}{2\pi} \int_0^{2\pi} f(t) e^{-int} dt $$
+> **Définition (Coefficients complexes) :**
+> Soit $f$ une fonction $2\pi$-périodique et intégrable sur une période. Pour tout entier $n \in \mathbb{Z}$, le $n$-ième coefficient de Fourier complexe de $f$, noté $c_n(f)$, est la projection de $f$ sur le vecteur de base $e_n$ :
+> $$c_n(f) = \langle f, e_n \rangle = \frac{1}{2\pi} \int_0^{2\pi} f(t) e^{-int} dt$$
 
-**Définition 2 (Coefficients trigonométriques réels) :**
-Si $f$ est à valeurs réelles, on peut également utiliser la décomposition en cosinus et sinus. On définit les coefficients réels pour $n \in \mathbb{N}$ par :
-$$ a_n(f) = \frac{1}{\pi} \int_0^{2\pi} f(t) \cos(nt) dt \quad \text{et} \quad b_n(f) = \frac{1}{\pi} \int_0^{2\pi} f(t) \sin(nt) dt $$
-Avec la relation $c_n = \frac{a_n - i b_n}{2}$ (pour $n>0$) et $c_0 = \frac{a_0}{2}$.
+Pour les fonctions à valeurs réelles, il est souvent plus commode d'utiliser la décomposition trigonométrique réelle.
 
-**Exemple de calcul de coefficients :**
-Considérons le signal créneau pair, $f(t) = 1$ pour $t \in [-\pi/2, \pi/2]$ et $f(t) = -1$ pour $t \in ]\pi/2, 3\pi/2]$ (sur une période de $2\pi$ centrée en 0).
-Puisque $f$ est paire, $b_n = 0$ pour tout $n$.
-Calculons $a_0$ :
-$$ a_0 = \frac{1}{\pi} \int_{-\pi}^\pi f(t) dt = \frac{1}{\pi} \left( \int_{-\pi}^{-\pi/2} (-1) dt + \int_{-\pi/2}^{\pi/2} (1) dt + \int_{\pi/2}^{\pi} (-1) dt \right) $$
-$$ a_0 = \frac{1}{\pi} \left( -\frac{\pi}{2} + \pi - \frac{\pi}{2} \right) = 0 $$
-Pour $n \geq 1$ :
-$$ a_n = \frac{2}{\pi} \int_0^\pi f(t) \cos(nt) dt = \frac{2}{\pi} \left( \int_0^{\pi/2} \cos(nt) dt - \int_{\pi/2}^\pi \cos(nt) dt \right) $$
-$$ a_n = \frac{2}{\pi} \left( \left[ \frac{\sin(nt)}{n} \right]_0^{\pi/2} - \left[ \frac{\sin(nt)}{n} \right]_{\pi/2}^\pi \right) = \frac{2}{n\pi} \left( \sin\left(\frac{n\pi}{2}\right) - (\sin(n\pi) - \sin\left(\frac{n\pi}{2}\right)) \right) $$
-$$ a_n = \frac{4}{n\pi} \sin\left(\frac{n\pi}{2}\right) $$
-Ainsi, $a_n = 0$ si $n$ est pair, $a_n = \frac{4}{n\pi}$ si $n = 1, 5, 9\dots$ et $a_n = -\frac{4}{n\pi}$ si $n = 3, 7, 11\dots$.
+> **Définition (Coefficients réels) :**
+> Si $f : \mathbb{R} \to \mathbb{R}$ est $2\pi$-périodique, ses coefficients de Fourier réels $a_n$ et $b_n$ sont donnés par :
+> $$a_0 = \frac{1}{\pi} \int_0^{2\pi} f(t) dt \quad \text{ (à noter que } c_0 = \frac{a_0}{2} \text{) }$$
+> $$a_n = \frac{1}{\pi} \int_0^{2\pi} f(t) \cos(nt) dt \quad \text{pour } n \ge 1$$
+> $$b_n = \frac{1}{\pi} \int_0^{2\pi} f(t) \sin(nt) dt \quad \text{pour } n \ge 1$$
+> La relation entre les coefficients est : $c_n = \frac{a_n - i b_n}{2}$ pour $n \ge 1$, et $c_{-n} = \overline{c_n}$.
 
-### Convergence ponctuelle : Le Théorème de Dirichlet
+### C. Série de Fourier et Théorème de Dirichlet
 
-La série de Fourier (partielle) d'ordre $N$ est la fonction :
-$$ S_N(f)(t) = \sum_{n=-N}^{N} c_n(f) e^{int} = \frac{a_0}{2} + \sum_{n=1}^N (a_n \cos(nt) + b_n \sin(nt)) $$
+> **Définition (Série de Fourier) :**
+> La série de Fourier associée à $f$ est la série de fonctions dont les sommes partielles sont :
+> $$S_N(f)(t) = \sum_{n=-N}^N c_n(f) e^{int} = \frac{a_0}{2} + \sum_{n=1}^N \left( a_n \cos(nt) + b_n \sin(nt) \right)$$
 
-**Théorème 2 (Théorème de Dirichlet) :**
-Soit $f : \mathbb{R} \to \mathbb{C}$ une fonction $2\pi$-périodique, continue par morceaux et de classe $C^1$ par morceaux sur $\mathbb{R}$.
-Alors, pour tout réel $t$, la série de Fourier de $f$ converge, et sa somme vaut la moyenne des limites à gauche et à droite de $f$ en $t$ :
-$$ \lim_{N \to +\infty} S_N(f)(t) = \frac{f(t^+) + f(t^-)}{2} $$
-En particulier, si $f$ est continue en $t$, la série converge vers $f(t)$.
+Un point fondamental est de déterminer en quel sens cette série converge vers $f$. Le théorème suivant, dû à Peter Gustav Lejeune Dirichlet, donne une condition suffisante pour la convergence ponctuelle.
 
-**Exemple d'application du Théorème de Dirichlet :**
-Reprenons le signal en dents de scie défini par $f(t) = t$ sur $]-\pi, \pi]$ et périodisé. En $t=0$, $f$ est continue et $f(0) = 0$. La série de Fourier converge bien vers 0. En $t=\pi$, qui est un point de discontinuité, les limites sont $f(\pi^-) = \pi$ et $f(\pi^+) = -\pi$. La série de Fourier au point $\pi$ converge donc vers $\frac{\pi - \pi}{2} = 0$.
+> **Théorème de Dirichlet :**
+> Soit $f : \mathbb{R} \to \mathbb{R}$ une fonction $2\pi$-périodique. Si $f$ est de classe $C^1$ par morceaux sur $\mathbb{R}$, alors pour tout $t \in \mathbb{R}$, la série de Fourier de $f$ converge et sa somme vaut la moyenne des limites à gauche et à droite de $f$ en $t$ :
+> $$\lim_{N \to +\infty} S_N(f)(t) = \frac{f(t^+) + f(t^-)}{2}$$
+> En particulier, si $f$ est continue en $t$, la série converge vers $f(t)$.
+
+**Exemple Concret 1 : Calcul sur un signal en créneau**
+Considérons le signal en créneau $2\pi$-périodique défini sur $]-\pi, \pi]$ par :
+$$f(t) = \begin{cases} -1 & \text{si } t \in ]-\pi, 0[ \\ 1 & \text{si } t \in ]0, \pi] \end{cases}$$
+La fonction est impaire, donc tous les coefficients $a_n$ sont nuls pour $n \ge 0$.
+Calculons les coefficients $b_n$ pour $n \ge 1$ :
+$$b_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(t) \sin(nt) dt = \frac{1}{\pi} \left( \int_{-\pi}^{0} (-1) \sin(nt) dt + \int_{0}^{\pi} (1) \sin(nt) dt \right)$$
+La fonction $t \mapsto f(t)\sin(nt)$ est paire, donc :
+$$b_n = \frac{2}{\pi} \int_{0}^{\pi} \sin(nt) dt = \frac{2}{\pi} \left[ -\frac{\cos(nt)}{n} \right]_0^\pi = \frac{2}{\pi n} \left( 1 - (-1)^n \right)$$
+Ainsi, si $n = 2k$ est pair, $b_{2k} = 0$.
+Si $n = 2k+1$ est impair, $b_{2k+1} = \frac{4}{\pi (2k+1)}$.
+La série de Fourier de $f$ s'écrit donc :
+$$S(f)(t) = \frac{4}{\pi} \sum_{k=0}^{+\infty} \frac{\sin((2k+1)t)}{2k+1} = \frac{4}{\pi} \left( \sin(t) + \frac{\sin(3t)}{3} + \frac{\sin(5t)}{5} + \dots \right)$$
+Le théorème de Dirichlet nous assure que pour $t \in ]0, \pi[$, la série converge vers $1$.
+Pour $t = 0$ ou $t = \pi$, les limites à gauche et à droite sont $1$ et $-1$, la demi-somme vaut $0$, ce qui est cohérent avec le fait que tous les $\sin(nt)$ sont nuls en ces points.
 
 ## 3. Démonstrations
 
-### Démonstration du Théorème d'orthonormalité
+### Démonstration de l'orthonormalité de la famille $(e_n)_{n \in \mathbb{Z}}$
 
-Nous voulons prouver que la famille $(e_n)_{n\in\mathbb{Z}}$ définie par $e_n(t) = e^{int}$ est orthonormale pour le produit scalaire $\langle \cdot, \cdot \rangle$.
+Nous devons prouver que $\langle e_n, e_m \rangle = \delta_{n,m}$, où $\delta_{n,m}$ est le symbole de Kronecker.
+Par définition du produit scalaire sur $L^2([0, 2\pi])$ :
+$$\langle e_n, e_m \rangle = \frac{1}{2\pi} \int_0^{2\pi} e_n(t) \overline{e_m(t)} dt = \frac{1}{2\pi} \int_0^{2\pi} e^{int} e^{-imt} dt = \frac{1}{2\pi} \int_0^{2\pi} e^{i(n-m)t} dt$$
+Séparons en deux cas :
+1. **Si $n = m$ :**
+   Alors $n-m = 0$, d'où $e^{i(n-m)t} = e^0 = 1$.
+   L'intégrale devient :
+   $$\langle e_n, e_n \rangle = \frac{1}{2\pi} \int_0^{2\pi} 1 dt = \frac{1}{2\pi} \left[ t \right]_0^{2\pi} = \frac{2\pi}{2\pi} = 1$$
+2. **Si $n \neq m$ :**
+   Alors $n-m \neq 0$. La primitive de $t \mapsto e^{i(n-m)t}$ est $t \mapsto \frac{e^{i(n-m)t}}{i(n-m)}$.
+   L'intégrale devient :
+   $$\langle e_n, e_m \rangle = \frac{1}{2\pi} \left[ \frac{e^{i(n-m)t}}{i(n-m)} \right]_0^{2\pi} = \frac{1}{2\pi i (n-m)} \left( e^{i(n-m)2\pi} - e^0 \right)$$
+   Puisque $n-m$ est un entier non nul, la fonction complexe $z \mapsto e^{iz}$ est $2\pi$-périodique, d'où $e^{i(n-m)2\pi} = 1$.
+   Ainsi :
+   $$\langle e_n, e_m \rangle = \frac{1}{2\pi i (n-m)} (1 - 1) = 0$$
 
-Soient $m, n \in \mathbb{Z}$. Évaluons le produit scalaire :
-$$ \langle e_m, e_n \rangle = \frac{1}{2\pi} \int_0^{2\pi} \overline{e^{imt}} e^{int} dt $$
-
-Par définition de l'exponentielle complexe conjuguée, $\overline{e^{imt}} = e^{-imt}$.
-$$ \langle e_m, e_n \rangle = \frac{1}{2\pi} \int_0^{2\pi} e^{-imt} e^{int} dt = \frac{1}{2\pi} \int_0^{2\pi} e^{i(n-m)t} dt $$
-
-Distinguons deux cas.
-**Cas 1 : $m = n$.**
-L'exposant est nul.
-$$ \langle e_n, e_n \rangle = \frac{1}{2\pi} \int_0^{2\pi} e^{0} dt = \frac{1}{2\pi} \int_0^{2\pi} 1 dt = \frac{1}{2\pi} [t]_0^{2\pi} = \frac{2\pi}{2\pi} = 1 $$
-La famille est donc normée.
-
-**Cas 2 : $m \neq n$.**
-Posons $k = n - m$. Puisque $m \neq n$, $k \in \mathbb{Z}^*$ (entier non nul).
-$$ \langle e_m, e_n \rangle = \frac{1}{2\pi} \int_0^{2\pi} e^{ikt} dt $$
-La primitive de $e^{ikt}$ (pour $k \neq 0$) est $\frac{e^{ikt}}{ik}$.
-$$ \langle e_m, e_n \rangle = \frac{1}{2\pi} \left[ \frac{e^{ikt}}{ik} \right]_0^{2\pi} = \frac{1}{2\pi ik} (e^{2ik\pi} - e^0) $$
-Puisque $k$ est un entier, $e^{2ik\pi} = \cos(2k\pi) + i\sin(2k\pi) = 1 + i(0) = 1$.
-$$ \langle e_m, e_n \rangle = \frac{1}{2\pi ik} (1 - 1) = 0 $$
-La famille est donc orthogonale.
-
-Cela achève la démonstration. \square
-
-### Justification heuristique de l'extraction des coefficients
-
-Supposons qu'une fonction périodique $f$ puisse s'écrire comme une somme infinie (avec convergence suffisamment forte pour permettre l'interversion série/intégrale) :
-$$ f(t) = \sum_{k=-\infty}^{+\infty} c_k e^{ikt} $$
-Comment isoler un coefficient spécifique $c_n$ ? On multiplie les deux membres de l'équation par $e^{-int}$ et on intègre sur une période :
-$$ \frac{1}{2\pi} \int_0^{2\pi} f(t) e^{-int} dt = \frac{1}{2\pi} \int_0^{2\pi} \left( \sum_{k=-\infty}^{+\infty} c_k e^{ikt} \right) e^{-int} dt $$
-En supposant la convergence uniforme de la série, on permute la somme et l'intégrale :
-$$ \frac{1}{2\pi} \int_0^{2\pi} f(t) e^{-int} dt = \sum_{k=-\infty}^{+\infty} c_k \left( \frac{1}{2\pi} \int_0^{2\pi} e^{i(k-n)t} dt \right) $$
-L'intégrale entre parenthèses n'est autre que le produit scalaire $\langle e_n, e_k \rangle$. D'après le théorème d'orthonormalité prouvé précédemment, ce terme vaut $0$ pour tout $k \neq n$, et $1$ pour $k = n$.
-Ainsi, tous les termes de la somme infinie s'annulent, à l'exception du terme où $k=n$. On obtient donc :
-$$ \frac{1}{2\pi} \int_0^{2\pi} f(t) e^{-int} dt = c_n $$
-Ceci constitue la définition fondamentale des coefficients de Fourier.
+Cela prouve que la famille $(e_n)_{n \in \mathbb{Z}}$ est bien orthonormale. De cette orthonormalité découle directement l'unicité des coefficients pour un polynôme trigonométrique. Si $f(t) = \sum_{k=-N}^N \alpha_k e^{ikt}$, alors la projection de $f$ sur $e_n$ donne $\langle f, e_n \rangle = \sum_{k=-N}^N \alpha_k \langle e_k, e_n \rangle = \alpha_n$. Les coefficients de Fourier sont ainsi les seules composantes possibles d'un signal sur la base fréquentielle.
 
 ## 4. Applications en Physique, Logique et Intelligence Artificielle
 
-L'analyse de Fourier n'est pas qu'une abstraction mathématique ; c'est le socle de nombreuses technologies modernes.
+L'analyse de Fourier dépasse largement le cadre des mathématiques pures et constitue le socle du traitement moderne du signal et de l'intelligence artificielle.
 
-### En Physique : Optique et Équation de la Chaleur
-La résolution de l'équation de la chaleur de Fourier, $\frac{\partial u}{\partial t} = \alpha \frac{\partial^2 u}{\partial x^2}$, se fait naturellement en décomposant la distribution de température initiale $u(x,0)$ en série de Fourier. Chaque harmonique spatiale décroît exponentiellement dans le temps à une vitesse proportionnelle au carré de sa fréquence. Les hautes fréquences (les variations brusques de température) s'estompent donc très rapidement, lissant le profil de température. Ce même principe s'applique en optique physique pour l'étude de la diffraction (Transformée de Fourier bidimensionnelle).
-
-### En Intelligence Artificielle : Convolutions, Biais Spectral et Traitement Audio
-En IA et traitement du signal, les séries de Fourier et la FFT (Fast Fourier Transform) sont omniprésentes :
-1.  **Traitement Audio et ASR (Automatic Speech Recognition) :** Les réseaux de neurones analysant le son (comme ceux de Siri ou Whisper) ne prennent généralement pas le signal brut (amplitudes au cours du temps) en entrée. Le signal est d'abord converti via une transformée de Fourier à court terme (STFT) en un spectrogramme, révélant la répartition des fréquences temporelles. Ce spectrogramme est ensuite traité par des réseaux convolutifs (CNN) ou des Transformers.
-2.  **Accélération des Convolutions :** Le théorème de convolution énonce que le produit de convolution dans le domaine temporel/spatial équivaut à un produit terme à terme dans le domaine fréquentiel. Pour de très grands filtres (kernels) en Deep Learning, il est computationnellement plus efficace de passer les images et les filtres dans le domaine de Fourier, de les multiplier, puis de faire la transformée inverse.
-3.  **Le Biais Spectral des Réseaux de Neurones :** La théorie de Fourier permet de comprendre la dynamique d'apprentissage des réseaux de neurones profonds. Le "spectral bias" (ou F-principle) stipule que lors de l'entraînement par descente de gradient, un réseau de neurones apprend naturellement les composantes de basse fréquence (la tendance globale de la fonction) avant de s'adapter aux composantes de haute fréquence (les détails ou le bruit). Cette propriété inhérente aide à expliquer pourquoi les réseaux de neurones généralisent bien sans surapprendre immédiatement le bruit des données d'entraînement.
+- **Traitement du Signal et Acoustique :** En physique des ondes, toute vibration (sonore, lumineuse, sismique) est analysée par ses composantes de Fourier. Les algorithmes de compression comme le format MP3 exploitent cette décomposition : l'oreille humaine étant insensible à certaines hautes et basses fréquences, l'algorithme calcule les coefficients de Fourier du signal audio, supprime les fréquences inaudibles (mettant les coefficients correspondants à zéro), puis transmet un signal reconstitué, réduisant drastiquement la taille du fichier.
+- **Réseaux de Neurones et Biais Spectral :** En Intelligence Artificielle, les réseaux de neurones profonds exhibent un phénomène connu sous le nom de "biais spectral" (spectral bias). Lorsqu'un réseau de neurones apprend une fonction, il apprend d'abord les composantes à basse fréquence de cette fonction avant de s'adapter aux composantes à haute fréquence. L'analyse de Fourier permet aux chercheurs en IA d'étudier la dynamique d'apprentissage et explique pourquoi les réseaux sont robustes au bruit haute-fréquence, mais peinent parfois à modéliser des détails très fins sans architectures adaptées (comme les Positional Encodings dans les Transformers).
+- **Transformée de Fourier Rapide (FFT) en Convolution :** Les réseaux de neurones convolutifs (CNN) appliquent des filtres sur des images de manière spatiale. Pour des filtres de grande taille, le calcul direct de la convolution est coûteux (complexité quadratique). Grâce au théorème de convolution (qui stipule que la transformée de Fourier d'une convolution est le produit des transformées de Fourier), il est possible de calculer les CNN de manière extrêmement rapide en utilisant la FFT, réduisant la complexité computationnelle et permettant le traitement en temps réel d'images haute résolution.

@@ -1,34 +1,19 @@
-# Exo 08 : Identité de Parseval approchée sur l'exponentielle complexe
+# Exercice 8 : Produit de convolution de séries de Fourier
 
 **Difficulté :** \bigstar\bigstar\bigstar\bigstar\star
 
+**Énoncé :**
+Soient $f$ et $g$ deux fonctions $2\pi$-périodiques continues. On définit leur produit de convolution $h = f * g$ par :
+$$h(x) = \frac{1}{2\pi} \int_0^{2\pi} f(t) g(x-t) dt$$
+Montrer que $c_n(h) = c_n(f) c_n(g)$ pour tout $n \in \mathbb{Z}$.
 
-Soit $f$ la fonction $2\pi$-périodique définie sur $]-\pi, \pi]$ par $f(t) = e^{at}$ avec $a \in \mathbb{R}^*$.
-Calculer ses coefficients de Fourier complexes $c_n(f)$.
-
-## Correction
-
-La fonction est $2\pi$-périodique. Les coefficients sont donnés par :
-$$ c_n(f) = \frac{1}{2\pi} \int_{-\pi}^\pi f(t) e^{-int} dt = \frac{1}{2\pi} \int_{-\pi}^\pi e^{at} e^{-int} dt $$
-$$ c_n(f) = \frac{1}{2\pi} \int_{-\pi}^\pi e^{(a - in)t} dt $$
-
-La fonction à intégrer est l'exponentielle complexe, sa primitive immédiate est $\frac{e^{(a-in)t}}{a-in}$ :
-$$ c_n(f) = \frac{1}{2\pi} \left[ \frac{e^{(a-in)t}}{a-in} \right]_{-\pi}^\pi $$
-$$ c_n(f) = \frac{1}{2\pi (a-in)} \left( e^{(a-in)\pi} - e^{-(a-in)\pi} \right) $$
-
-Simplifions le terme $e^{\pm in\pi}$ :
-$e^{in\pi} = \cos(n\pi) + i\sin(n\pi) = (-1)^n$.
-De même $e^{-in\pi} = (-1)^n$.
-Donc :
-$$ e^{(a-in)\pi} = e^{a\pi} e^{-in\pi} = e^{a\pi} (-1)^n $$
-$$ e^{-(a-in)\pi} = e^{-a\pi} e^{in\pi} = e^{-a\pi} (-1)^n $$
-
-En remplaçant :
-$$ c_n(f) = \frac{(-1)^n}{2\pi (a-in)} (e^{a\pi} - e^{-a\pi}) $$
-Sachant que $\sinh(x) = \frac{e^x - e^{-x}}{2}$, on a $e^{a\pi} - e^{-a\pi} = 2\sinh(a\pi)$.
-$$ c_n(f) = \frac{(-1)^n \sinh(a\pi)}{\pi(a-in)} $$
-
-Pour mettre sous la forme $x+iy$, on multiplie par le conjugué $a+in$ au numérateur et au dénominateur :
-$$ c_n(f) = \frac{(-1)^n \sinh(a\pi) (a+in)}{\pi(a^2+n^2)} $$
-
-Cette expression analytique compacte permet de développer n'importe quelle exponentielle en série de Fourier.
+**Correction :**
+Calculons le coefficient de Fourier de $h$ :
+$$c_n(h) = \frac{1}{2\pi} \int_0^{2\pi} h(x) e^{-inx} dx = \frac{1}{2\pi} \int_0^{2\pi} \left( \frac{1}{2\pi} \int_0^{2\pi} f(t) g(x-t) dt \right) e^{-inx} dx$$
+En invoquant le théorème de Fubini (les fonctions étant continues, l'intégrale double est absolument convergente), on intervertit les intégrales :
+$$c_n(h) = \frac{1}{(2\pi)^2} \int_0^{2\pi} f(t) \left( \int_0^{2\pi} g(x-t) e^{-inx} dx \right) dt$$
+Faisons le changement de variable $u = x - t$ dans l'intégrale interne (donc $dx = du$). Puisque les fonctions à intégrer sont $2\pi$-périodiques, l'intégrale sur $[ -t, 2\pi-t ]$ est égale à l'intégrale sur $[ 0, 2\pi ]$.
+$$\int_0^{2\pi} g(x-t) e^{-inx} dx = \int_0^{2\pi} g(u) e^{-in(u+t)} du = e^{-int} \int_0^{2\pi} g(u) e^{-inu} du = 2\pi e^{-int} c_n(g)$$
+On réinjecte cette expression dans l'intégrale externe :
+$$c_n(h) = \frac{1}{(2\pi)^2} \int_0^{2\pi} f(t) \left( 2\pi e^{-int} c_n(g) \right) dt = c_n(g) \frac{1}{2\pi} \int_0^{2\pi} f(t) e^{-int} dt = c_n(g) c_n(f)$$
+Ainsi, $c_n(h) = c_n(f) c_n(g)$. Ce résultat fondamental justifie l'utilisation des séries de Fourier dans l'étude des filtres linéaires.

@@ -1,29 +1,20 @@
-# Exo 02 : Coefficient complexes d'un décalage
+# Exercice 2 : Calcul élémentaire pour un signal impair
 
-**Difficulté :** \bigstar\bigstar\star\star\star
+**Difficulté :** \bigstar\star\star\star\star
 
+**Énoncé :**
+Soit $f$ la fonction $2\pi$-périodique, impaire, définie sur $]0, \pi[$ par $f(t) = \pi - t$. On pose $f(0) = f(\pi) = 0$.
+1. Calculer les coefficients de Fourier trigonométriques de $f$.
+2. Écrire la série de Fourier associée.
 
-Soit $f \in L^1_{per}(0, 2\pi)$ de coefficients de Fourier complexes $c_n(f)$.
-On définit la fonction décalée $g(t) = f(t - \tau)$ pour un certain réel $\tau$.
-
-Calculer les coefficients de Fourier $c_n(g)$ en fonction des $c_n(f)$.
-
-## Correction
-
-Par définition, le $n$-ième coefficient complexe de $g$ est :
-$$ c_n(g) = \frac{1}{2\pi} \int_0^{2\pi} g(t) e^{-int} dt = \frac{1}{2\pi} \int_0^{2\pi} f(t - \tau) e^{-int} dt $$
-
-Effectuons le changement de variable $u = t - \tau$.
-Les bornes d'intégration deviennent $-\tau$ et $2\pi - \tau$.
-La différentielle est $dt = du$.
-Le terme exponentiel devient $e^{-in(u + \tau)} = e^{-inu} e^{-in\tau}$.
-L'intégrale se réécrit :
-$$ c_n(g) = \frac{1}{2\pi} \int_{-\tau}^{2\pi-\tau} f(u) e^{-in(u+\tau)} du = e^{-in\tau} \left( \frac{1}{2\pi} \int_{-\tau}^{2\pi-\tau} f(u) e^{-inu} du \right) $$
-
-Puisque la fonction $u \mapsto f(u) e^{-inu}$ est $2\pi$-périodique, son intégrale sur n'importe quel intervalle de longueur $2\pi$ est la même. En particulier, elle est égale à l'intégrale sur $[0, 2\pi]$.
-$$ c_n(g) = e^{-in\tau} \left( \frac{1}{2\pi} \int_0^{2\pi} f(u) e^{-inu} du \right) $$
-
-On reconnaît l'expression de $c_n(f)$. Par conséquent :
-$$ c_n(g) = e^{-in\tau} c_n(f) $$
-
-Un décalage temporel d'un signal correspond donc à une multiplication par une phase pure $e^{-in\tau}$ dans le domaine spectral, sans modification de l'amplitude $|c_n|$.
+**Correction :**
+1. La fonction étant impaire sur $[-\pi, \pi]$ à un ensemble de mesure nulle près, tous les coefficients $a_n$ ($n \ge 0$) sont nuls.
+   Calculons les coefficients $b_n$ pour $n \ge 1$ :
+   $$b_n = \frac{1}{\pi} \int_{-\pi}^\pi f(t) \sin(nt) dt = \frac{2}{\pi} \int_0^\pi (\pi - t) \sin(nt) dt$$
+   On utilise une intégration par parties avec $u(t) = \pi - t$ et $v'(t) = \sin(nt)$, ce qui donne $u'(t) = -1$ et $v(t) = -\frac{\cos(nt)}{n}$.
+   $$b_n = \frac{2}{\pi} \left( \left[ -(\pi - t) \frac{\cos(nt)}{n} \right]_0^\pi - \int_0^\pi (-1) \left(-\frac{\cos(nt)}{n}\right) dt \right)$$
+   En $t=\pi$, le terme est $0$. En $t=0$, le terme est $-\pi \frac{1}{n}$. Ainsi :
+   $$b_n = \frac{2}{\pi} \left( \frac{\pi}{n} - \int_0^\pi \frac{\cos(nt)}{n} dt \right)$$
+   $$b_n = \frac{2}{n} - \frac{2}{\pi} \left[ \frac{\sin(nt)}{n^2} \right]_0^\pi = \frac{2}{n}$$
+2. La série de Fourier est :
+   $$S(f)(t) = \sum_{n=1}^{+\infty} \frac{2}{n} \sin(nt)$$

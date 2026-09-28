@@ -1,51 +1,22 @@
-# Exo 10 : Problème de Synthèse : Chaleur sur un anneau
+# Exercice 10 : Phénomène de Gibbs
 
 **Difficulté :** \bigstar\bigstar\bigstar\bigstar\bigstar
 
+**Énoncé :**
+Le signal carré impair est donné par $f(t) = 1$ sur $]0, \pi[$ et $f(t) = -1$ sur $]-\pi, 0[$. La série de Fourier de $f$ est $S(f)(t) = \frac{4}{\pi} \sum_{k=0}^{+\infty} \frac{\sin((2k+1)t)}{2k+1}$.
+Considérons la somme partielle $S_N(f)(t) = \frac{4}{\pi} \sum_{k=0}^N \frac{\sin((2k+1)t)}{2k+1}$.
+Montrer que $S_N(f)'(t) = \frac{2}{\pi} \frac{\sin(2(N+1)t)}{\sin(t)}$ et en déduire l'abscisse du premier maximum local de $S_N$ sur $]0, \pi[$.
 
-Considérons une tige métallique circulaire de longueur $2\pi$ (paramétrée par un angle $x \in [-\pi, \pi]$).
-La température à la position $x$ et au temps $t \ge 0$ est $u(x,t)$. Elle vérifie l'équation de la chaleur :
-$$ \frac{\partial u}{\partial t}(x,t) = \alpha \frac{\partial^2 u}{\partial x^2}(x,t) $$
-avec $\alpha > 0$.
-La condition initiale est un profil de température $u(x,0) = f(x)$.
-
-En supposant qu'à chaque instant $t$, la fonction $x \mapsto u(x,t)$ peut être développée en série de Fourier spatiale, déterminer l'expression formelle de $u(x,t)$ en fonction des $c_n(f)$.
-
-## Correction
-
-Puisque la tige est circulaire de longueur $2\pi$, la fonction $x \mapsto u(x,t)$ est $2\pi$-périodique en $x$.
-On peut écrire pour tout instant $t$, si on suppose la régularité nécessaire :
-$$ u(x,t) = \sum_{n=-\infty}^{+\infty} C_n(t) e^{inx} $$
-Les coefficients de Fourier $C_n$ dépendent désormais du temps $t$.
-
-Injectons cette forme supposée dans l'équation de la chaleur.
-On calcule la dérivée temporelle (en dérivant terme à terme, ce qu'on suppose légitime) :
-$$ \frac{\partial u}{\partial t}(x,t) = \sum_{n=-\infty}^{+\infty} C_n'(t) e^{inx} $$
-
-On calcule la dérivée spatiale seconde :
-La dérivée première en $x$ multiplie le terme par $in$.
-La dérivée seconde en $x$ multiplie par $(in)^2 = -n^2$.
-$$ \frac{\partial^2 u}{\partial x^2}(x,t) = \sum_{n=-\infty}^{+\infty} (-n^2) C_n(t) e^{inx} $$
-
-L'équation de la chaleur devient :
-$$ \sum_{n=-\infty}^{+\infty} C_n'(t) e^{inx} = \alpha \sum_{n=-\infty}^{+\infty} (-n^2) C_n(t) e^{inx} $$
-$$ \sum_{n=-\infty}^{+\infty} \left( C_n'(t) + \alpha n^2 C_n(t) \right) e^{inx} = 0 $$
-
-Puisque la famille $(e^{inx})$ forme une base (les fonctions sont orthogonales), la seule façon pour que cette série soit nulle pour tout $x$ est que chaque coefficient soit nul.
-Pour tout $n \in \mathbb{Z}$ :
-$$ C_n'(t) + \alpha n^2 C_n(t) = 0 $$
-
-C'est une équation différentielle linéaire ordinaire d'ordre 1 en $t$, à coefficients constants. Sa solution générale est :
-$$ C_n(t) = C_n(0) e^{-\alpha n^2 t} $$
-
-Or, à $t=0$, la condition initiale est $u(x,0) = f(x)$. La série de Fourier de $f$ est $f(x) = \sum c_n(f) e^{inx}$.
-Donc, par identification, $C_n(0) = c_n(f)$.
-
-La solution générale du problème de diffusion de la chaleur est formellement :
-$$ u(x,t) = \sum_{n=-\infty}^{+\infty} c_n(f) e^{-\alpha n^2 t} e^{inx} $$
-
-**Analyse Physique :**
-- Le terme $e^{-\alpha n^2 t}$ est un facteur d'atténuation.
-- Pour $n=0$ (la moyenne de la température), le terme est $c_0(f) e^0 = c_0(f)$. La température moyenne se conserve.
-- Pour $n$ grand (les hautes fréquences, représentant des pics et des creux très rapprochés), le terme $n^2$ rend l'atténuation $e^{-\alpha n^2 t}$ extrêmement rapide.
-- C'est l'essence du lissage de la chaleur : les variations brutales spatiales (grand $n$) s'estompent presque instantanément, conduisant rapidement à une température uniforme $c_0(f)$.
+**Correction :**
+1. Dérivons la somme partielle :
+   $$S_N(f)'(t) = \frac{4}{\pi} \sum_{k=0}^N \cos((2k+1)t)$$
+2. Pour calculer cette somme, multiplions par $\sin(t)$ et utilisons la formule trigonométrique $2 \cos(A) \sin(B) = \sin(A+B) - \sin(A-B)$ :
+   $$\sin(t) S_N(f)'(t) = \frac{2}{\pi} \sum_{k=0}^N 2 \cos((2k+1)t) \sin(t) = \frac{2}{\pi} \sum_{k=0}^N \left( \sin((2k+2)t) - \sin(2kt) \right)$$
+   C'est une somme télescopique :
+   $$\sin(t) S_N(f)'(t) = \frac{2}{\pi} \left( \sin(2(N+1)t) - \sin(0) \right) = \frac{2}{\pi} \sin(2(N+1)t)$$
+   D'où $S_N(f)'(t) = \frac{2}{\pi} \frac{\sin(2(N+1)t)}{\sin(t)}$.
+3. Le premier maximum local sur $]0, \pi[$ correspond à la première racine positive de la dérivée.
+   La dérivée s'annule quand $\sin(2(N+1)t) = 0$, donc pour $2(N+1)t = \pi, 2\pi, \dots$
+   La première racine strictement positive est obtenue pour :
+   $$t_N = \frac{\pi}{2(N+1)}$$
+   À ce point, la valeur du signal approche $\frac{2}{\pi} \int_0^\pi \frac{\sin(x)}{x} dx \approx 1.1789$, soit un dépassement brutal d'environ 18% au-dessus du plafond $1$. C'est le célèbre phénomène de Gibbs.
