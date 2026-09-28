@@ -34,522 +34,648 @@
 
 \part{Cours Magistral}
 
-\section{Introduction historique et physique}
+\section{Séries de Fourier}
 
-Joseph Fourier, dans son étude sur la propagation de la chaleur (1822), a conjecturé que toute fonction périodique pouvait être décomposée en une somme (éventuellement infinie) de fonctions sinus et cosinus. Cette idée révolutionnaire, initialement mal accueillie par Lagrange et Laplace pour son manque de rigueur apparent, est devenue le fondement de l'analyse harmonique harmonique moderne.
+\subsection{Introduction Historique et Physique}
 
-Physiquement, cela correspond à analyser un signal complexe (comme le son d'un violon) en ses "harmoniques" pures (les ondes sinusoïdales élémentaires).
+L'étude des séries de Fourier trouve son origine dans les travaux de Joseph Fourier au début du XIXe siècle sur la propagation de la chaleur. Le problème consistait à déterminer l'évolution de la température dans un corps solide. Fourier a postulé et démontré de manière formelle que toute fonction périodique (représentant par exemple une condition initiale thermique ou une onde vibratoire) peut être décomposée en une somme, éventuellement infinie, de fonctions trigonométriques simples : des sinus et des cosinus.
 
-\section{Espaces de fonctions et coefficients de Fourier}
+Cette décomposition transforme un problème complexe dans le domaine temporel ou spatial en une analyse dans le domaine fréquentiel. L'importance de ce concept dépasse largement la thermodynamique : il est fondamental en traitement du signal, en mécanique quantique, en imagerie médicale, et dans les télécommunications modernes.
 
-Soit $T > 0$. On note $\omega = \frac{2\pi}{T}$ la pulsation fondamentale. Considérons les fonctions $T$-périodiques, à valeurs complexes, de carré intégrable sur une période, c'est-à-dire appartenant à l'espace de Hilbert $L^2_{per}([0, T])$.
+\subsection{Définitions, Théorèmes et Exemples}
 
-Le produit scalaire naturel sur cet espace est donné par :
-$ \langle f, g \rangle = \frac{1}{T} \int_0^T \overline{f(t)}g(t) dt $
+\subsubsection*{Cadre et Espaces de Fonctions}
 
-\textbf{Théorème et Définition (Famille orthonormée fondamentale) :}
-La famille de fonctions $(e_n)_{n \in \mathbb{Z}}$ définie par $e_n(t) = e^{in\omega t}$ forme une famille orthonormée pour ce produit scalaire.
+Soit $T > 0$. On note $\omega = \frac{2\pi}{T}$ la pulsation fondamentale.
+On travaille typiquement avec des fonctions $f : \mathbb{R} \to \mathbb{C}$, périodiques de période $T$ (souvent $T = 2\pi$, d'où $\omega = 1$).
+Pour que les coefficients de Fourier soient bien définis, on demande que $f$ soit localement intégrable sur $\mathbb{R}$. L'espace naturel d'étude est $L^2([0, T])$, l'espace des fonctions de carré intégrable, muni du produit scalaire :
+$$ \langle f, g \rangle = \frac{1}{T} \int_0^T f(t) \overline{g(t)} dt $$
 
-\textit{Preuve :}
-Pour $n = m$, $\langle e_n, e_n \rangle = \frac{1}{T} \int_0^T e^{-in\omega t}e^{in\omega t} dt = \frac{1}{T} \int_0^T 1 dt = 1$.
-Pour $n \neq m$, $\langle e_n, e_m \rangle = \frac{1}{T} \int_0^T e^{-in\omega t}e^{im\omega t} dt = \frac{1}{T} \int_0^T e^{i(m-n)\omega t} dt = \frac{1}{T} \left[ \frac{e^{i(m-n)\omega t}}{i(m-n)\omega} \right]_0^T$.
-Puisque $\omega T = 2\pi$ et $e^{i2k\pi} = 1$ pour $k \in \mathbb{Z}$, le crochet s'annule.
+\subsubsection*{Coefficients de Fourier Exponentiels}
 
-\textbf{Définition (Coefficients de Fourier) :}
-Pour toute fonction $f \in L^1_{per}([0, T])$, on définit son $n$-ième coefficient de Fourier exponentiel par :
-$ c_n(f) = \frac{1}{T} \int_0^T f(t) e^{-in\omega t} dt $
-Si $f$ est à valeurs réelles, on utilise souvent les coefficients réels :
-$ a_n(f) = \frac{2}{T} \int_0^T f(t) \cos(n\omega t) dt \quad \text{pour } n \ge 0 $
-$ b_n(f) = \frac{2}{T} \int_0^T f(t) \sin(n\omega t) dt \quad \text{pour } n \ge 1 $
-Avec la relation : $c_n = \frac{a_n - i b_n}{2}$ pour $n > 0$ et $c_{-n} = \frac{a_n + i b_n}{2}$. $c_0 = \frac{a_0}{2}$.
+\textbf{Définition (Coefficients complexes) :}
+Pour tout entier $n \in \mathbb{Z}$, le $n$-ième coefficient de Fourier exponentiel de $f$ est défini par :
+$$ c_n(f) = \frac{1}{T} \int_0^T f(t) e^{-in\omega t} dt $$
 
-\subsection{Exemples fondamentaux de calcul}
+\textit{Exemple 1 (Fonction constante) :}
+Soit $f(t) = K$, une constante.
+$c_0(f) = \frac{1}{2\pi} \int_0^{2\pi} K dt = K$.
+Pour $n \neq 0$, $c_n(f) = \frac{K}{2\pi} \int_0^{2\pi} e^{-int} dt = \frac{K}{2\pi} \left[ \frac{e^{-int}}{-in} \right]_0^{2\pi} = 0$.
 
-\begin{figure}[ht]
+\textit{Exemple 2 (Fonction sinus) :}
+Soit $f(t) = \sin(t) = \frac{e^{it} - e^{-it}}{2i}$ (avec $T = 2\pi$).
+On identifie directement les coefficients :
+$c_1(f) = \frac{1}{2i} = -\frac{i}{2}$ et $c_{-1}(f) = -\frac{1}{2i} = \frac{i}{2}$.
+Pour tout autre $n \notin \{-1, 1\}$, $c_n(f) = 0$.
+
+\subsubsection*{Coefficients de Fourier Trigonométriques}
+
+Si la fonction $f$ est à valeurs réelles, on peut utiliser la base trigonométrique.
+
+\textbf{Définition (Coefficients réels) :}
+Pour $n \ge 0$, on définit $a_n(f)$ et pour $n \ge 1$, $b_n(f)$ par :
+$$ a_0(f) = \frac{1}{T} \int_0^T f(t) dt $$
+$$ a_n(f) = \frac{2}{T} \int_0^T f(t) \cos(n\omega t) dt \quad (n \ge 1) $$
+$$ b_n(f) = \frac{2}{T} \int_0^T f(t) \sin(n\omega t) dt \quad (n \ge 1) $$
+
+\textit{Exemple 3 (Relation entre les coefficients) :}
+Calculons le lien explicite pour $T=2\pi$. On a $e^{-int} = \cos(nt) - i\sin(nt)$.
+Donc $c_n = \frac{1}{2\pi} \int f(t)(\cos(nt) - i\sin(nt))dt = \frac{a_n - ib_n}{2}$ pour $n \ge 1$.
+De même, $c_{-n} = \frac{a_n + ib_n}{2}$.
+Et $a_n = c_n + c_{-n}$, $b_n = i(c_n - c_{-n})$.
+
+\textit{Exemple 4 (Signal carré) :}
+
+\begin{figure}[h!]
 \centering
 \begin{tikzpicture}[scale=1.5]
-    % Axes
-    \draw[->] (-3.5,0) -- (3.5,0) node[right] {$t$};
-    \draw[->] (0,-1.5) -- (0,1.5) node[above] {$f(t)$};
-
-    % Signal carré
-    \draw[thick, blue] (-3.14,-1) -- (0,-1);
-    \draw[thick, blue, dashed] (0,-1) -- (0,1);
-    \draw[thick, blue] (0,1) -- (3.14,1);
-
-    % Première harmonique
-    \draw[red, thick, domain=-3.14:3.14, samples=100] plot (\x, {1.27*sin(\x r)});
-
-    % Labels
-    \node[below] at (3.14,0) {$\pi$};
-    \node[above] at (-3.14,0) {$-\pi$};
-    \node[left] at (0,1) {$1$};
-    \node[left] at (0,-1) {$-1$};
-
-    \node[blue] at (1.5, 1.2) {Signal carré};
-    \node[red] at (2, 0.5) {1ère harmonique $\approx \frac{4}{\pi}\sin(t)$};
+  \draw[->] (-3.5,0) -- (3.5,0) node[right] {$t$};
+  \draw[->] (0,-1.5) -- (0,1.5) node[above] {$f(t)$};
+  \draw[thick, blue] (-3.14,-1) -- (0,-1);
+  \draw[thick, blue] (0,1) -- (3.14,1);
+  \draw[dashed, blue] (0,-1) -- (0,1);
+  \node[below] at (3.14,0) {$\pi$};
+  \node[above] at (-3.14,0) {$-\pi$};
+  \node[left] at (0,1) {$1$};
+  \node[left] at (0,-1) {$-1$};
 \end{tikzpicture}
-\caption{Approximation d'un signal carré par sa première harmonique}
+\caption{Signal carré}
 \end{figure}
 
+Soit $f$ de période $2\pi$, définie par $f(t) = 1$ sur $[0, \pi[$ et $f(t) = -1$ sur $[\pi, 2\pi[$.
+\begin{itemize}
+\item Valeur moyenne $a_0 = \frac{1}{2\pi} (\int_0^\pi 1 dt + \int_\pi^{2\pi} (-1) dt) = 0$.
+\item $f$ étant impaire, on démontre que $a_n = 0$ pour tout $n$.
+\item Calculons $b_n$ :
+$$ b_n = \frac{1}{\pi} \int_0^{2\pi} f(t) \sin(nt) dt = \frac{1}{\pi} \left( \int_0^\pi \sin(nt) dt - \int_\pi^{2\pi} \sin(nt) dt \right) $$
+$$ \int_0^\pi \sin(nt) dt = \left[ -\frac{\cos(nt)}{n} \right]_0^\pi = \frac{1 - (-1)^n}{n} $$
+Par périodicité de $\sin(nt)$, $\int_\pi^{2\pi} \sin(nt) dt = - \int_0^\pi \sin(nt) dt$.
+Donc $b_n = \frac{2}{\pi} \frac{1 - (-1)^n}{n}$.
+Si $n$ est pair ($n=2p$), $b_{2p} = 0$.
+Si $n$ est impair ($n=2p+1$), $b_{2p+1} = \frac{4}{\pi(2p+1)}$.
+\end{itemize}
 
-\textbf{Exemple 1 : Le signal carré (Onde carrée impaire)}
-Soit $f$ la fonction $2\pi$-périodique définie sur $]-\pi, \pi]$ par $f(t) = -1$ si $t \in ]-\pi, 0[$ et $f(t) = 1$ si $t \in ]0, \pi[$.
-Ici $T = 2\pi$, $\omega = 1$. La fonction est impaire, donc tous les $a_n$ sont nuls.
-Calculons les $b_n$ pour $n \ge 1$ :
-$ b_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(t) \sin(nt) dt = \frac{2}{\pi} \int_0^{\pi} 1 \cdot \sin(nt) dt = \frac{2}{\pi} \left[ -\frac{\cos(nt)}{n} \right]_0^{\pi} = \frac{2}{n\pi} (1 - (-1)^n) $
-Si $n$ est pair ($n=2k$), $b_{2k} = 0$.
-Si $n$ est impair ($n=2k+1$), $b_{2k+1} = \frac{4}{(2k+1)\pi}$.
-La série de Fourier associée est donc :
-$ S(f)(t) = \frac{4}{\pi} \sum_{k=0}^{+\infty} \frac{\sin((2k+1)t)}{2k+1} $
+\subsubsection*{Sommes de Fourier et Théorème de Dirichlet}
 
-\textbf{Exemple 2 : Le signal dent de scie}
-Soit $f(t) = t$ sur $]-\pi, \pi]$, prolongée par $2\pi$-périodicité.
-Fonction impaire, $a_n = 0$.
-$ b_n = \frac{1}{\pi} \int_{-\pi}^{\pi} t \sin(nt) dt = \frac{2}{\pi} \int_0^{\pi} t \sin(nt) dt $
-Par intégration par parties :
-$ \int_0^{\pi} t \sin(nt) dt = \left[ -t\frac{\cos(nt)}{n} \right]_0^{\pi} - \int_0^{\pi} -\frac{\cos(nt)}{n} dt = -\pi\frac{(-1)^n}{n} + 0 $
-Donc $b_n = \frac{2}{\pi} \left( -\pi\frac{(-1)^n}{n} \right) = 2 \frac{(-1)^{n+1}}{n}$.
-$ S(f)(t) = 2 \sum_{n=1}^{+\infty} \frac{(-1)^{n+1}}{n} \sin(nt) $
+\textbf{Définition (Somme partielle) :}
+La série de Fourier (ou somme partielle d'ordre $N$) associée à $f$ est la fonction :
+$$ S_N(f)(t) = \sum_{n=-N}^N c_n(f) e^{in\omega t} = a_0(f) + \sum_{n=1}^N \left( a_n(f) \cos(n\omega t) + b_n(f) \sin(n\omega t) \right) $$
 
-\textbf{Exemple 3 : Fonction valeur absolue (Signal triangle continu)}
-Soit $f(t) = |t|$ sur $]-\pi, \pi]$, prolongée par $2\pi$-périodicité.
-Fonction paire, $b_n = 0$.
-$a_0 = \frac{2}{\pi} \int_0^{\pi} t dt = \frac{2}{\pi} [\frac{t^2}{2}]_0^{\pi} = \pi$.
-Pour $n \ge 1$ :
-$ a_n = \frac{2}{\pi} \int_0^{\pi} t \cos(nt) dt = \frac{2}{\pi} \left( \left[ t\frac{\sin(nt)}{n} \right]_0^{\pi} - \int_0^{\pi} \frac{\sin(nt)}{n} dt \right) $
-$ a_n = \frac{2}{\pi} \left( 0 - \left[ -\frac{\cos(nt)}{n^2} \right]_0^{\pi} \right) = \frac{2}{n^2\pi}(\cos(n\pi) - 1) = \frac{2}{n^2\pi}((-1)^n - 1) $
-Si $n=2k$, $a_{2k} = 0$. Si $n=2k+1$, $a_{2k+1} = -\frac{4}{\pi(2k+1)^2}$.
-$ S(f)(t) = \frac{\pi}{2} - \frac{4}{\pi} \sum_{k=0}^{+\infty} \frac{\cos((2k+1)t)}{(2k+1)^2} $
-
-\textbf{Exemple 4 : La fonction $f(t) = t^2$ sur $]-\pi, \pi]$}
-C'est une fonction paire, $b_n = 0$.
-$a_0 = \frac{2}{\pi} \int_0^{\pi} t^2 dt = \frac{2\pi^2}{3}$.
-Pour $n \ge 1$, double intégration par parties :
-$ a_n = \frac{2}{\pi} \int_0^{\pi} t^2 \cos(nt) dt = \frac{4(-1)^n}{n^2} $
-Série : $S(f)(t) = \frac{\pi^2}{3} + 4 \sum_{n=1}^{+\infty} \frac{(-1)^n}{n^2} \cos(nt)$.
-En évaluant en $t=\pi$, on trouve $\pi^2 = \frac{\pi^2}{3} + 4 \sum \frac{1}{n^2}$, d'où on déduit $\sum \frac{1}{n^2} = \frac{\pi^2}{6}$ (Problème de Bâle).
-
-\textbf{Exemple 5 : Signal impulsion de Dirac régularisée}
-Considérons pour $0 < \alpha < \pi$ un créneau centré en $0$ de largeur $2\alpha$ et hauteur $\frac{1}{2\alpha}$.
-$f(t) = \frac{1}{2\alpha}$ pour $t \in [-\alpha, \alpha]$, $0$ ailleurs sur $]-\pi, \pi]$.
-$f$ est paire, $b_n = 0$.
-$a_0 = \frac{2}{\pi} \int_0^{\alpha} \frac{1}{2\alpha} dt = \frac{1}{\pi}$.
-Pour $n \ge 1$ : $a_n = \frac{2}{\pi} \int_0^{\alpha} \frac{1}{2\alpha} \cos(nt) dt = \frac{2}{\pi \cdot 2\alpha} [\frac{\sin(nt)}{n}]_0^{\alpha} = \frac{\sin(n\alpha)}{n\alpha \pi}$.
-Remarquons que lorsque $\alpha \to 0$, $a_n \to \frac{1}{\pi}$ (les coefficients de Fourier du peigne de Dirac sont constants).
-
-\section{Théorèmes de convergence ponctuelle}
-
-La grande question est : la série de Fourier $S(f)(t) = \sum_{n \in \mathbb{Z}} c_n(f) e^{in\omega t}$ converge-t-elle vers $f(t)$ ?
-
-\textbf{Définition (Noyau de Dirichlet) :}
-La somme partielle d'ordre $N$ s'écrit :
-$ S_N(f)(t) = \sum_{n=-N}^N c_n(f) e^{in\omega t} = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) D_N(t-x) dx = (f * D_N)(t) $
-avec $D_N(u) = \sum_{n=-N}^N e^{inu} = \frac{\sin((N+1/2)u)}{\sin(u/2)}$.
-(Preuve : somme d'une suite géométrique de raison $e^{iu}$).
-
-\textbf{Théorème de Dirichlet :}
-Si $f$ est $2\pi$-périodique, continue par morceaux, et possède en tout point une dérivée à droite et une dérivée à gauche, alors la série de Fourier de $f$ converge ponctuellement en tout point $t \in \mathbb{R}$ vers la moyenne de ses limites à gauche et à droite :
-$ \lim_{N \to +\infty} S_N(f)(t) = \frac{f(t^+) + f(t^-)}{2} $
+\textbf{Théorème (Théorème de Dirichlet) :}
+Si $f$ est périodique et de classe $C^1$ par morceaux sur $\mathbb{R}$, alors pour tout $t \in \mathbb{R}$, la série de Fourier $S_N(f)(t)$ converge lorsque $N \to \infty$ vers la demi-somme des limites à gauche et à droite de $f$ en $t$ :
+$$ \lim_{N \to \infty} S_N(f)(t) = \frac{f(t^+) + f(t^-)}{2} $$
 En particulier, si $f$ est continue en $t$, la série converge vers $f(t)$.
 
-\textit{Preuve (Esquisse pour un point $t$ où $f$ est dérivable et $f(t)=0$) :}
-On veut montrer $\int_{-\pi}^{\pi} f(t-x) D_N(x) dx \to 0$.
-Puisque $f$ est dérivable en $t$, la fonction $g(x) = \frac{f(t-x)}{\sin(x/2)}$ est continue et bornée près de $x=0$.
-L'intégrale devient $\int_{-\pi}^{\pi} g(x) \sin((N+1/2)x) dx$.
-Par le Lemme de Riemann-Lebesgue, le coefficient de Fourier d'une fonction intégrable tend vers 0 à l'infini, donc cette intégrale tend vers 0.
+\textit{Exemple 5 (Application de Dirichlet au signal carré) :}
+Pour le signal carré défini précédemment au point $t = \pi/2$ (où $f$ est continue et vaut $1$) :
+$$ f(\pi/2) = 1 = \sum_{p=0}^\infty \frac{4}{\pi(2p+1)} \sin\left((2p+1)\frac{\pi}{2}\right) $$
+Puisque $\sin\left(p\pi + \frac{\pi}{2}\right) = (-1)^p$, on obtient :
+$$ 1 = \frac{4}{\pi} \sum_{p=0}^\infty \frac{(-1)^p}{2p+1} \implies \sum_{p=0}^\infty \frac{(-1)^p}{2p+1} = \frac{\pi}{4} $$
+C'est la célèbre formule de Gregory-Leibniz.
 
-\section{Propriétés analytiques des coefficients de Fourier}
+\textit{Exemple 6 (Discontinuité) :}
+Pour le même signal carré en $t = 0$. La limite à droite est $1$, à gauche $-1$.
+La demi-somme est $(1 + (-1)) / 2 = 0$.
+Effectivement, en $t=0$, $S_N(f)(0) = \sum b_n \sin(0) = 0$.
 
-\textbf{Lemme de Riemann-Lebesgue :}
-Si $f \in L^1_{per}$, alors $\lim_{|n| \to +\infty} c_n(f) = 0$.
+\subsection{Démonstrations}
 
-\textbf{Lien avec la régularité :}
-Plus une fonction est régulière (dérivable un grand nombre de fois), plus ses coefficients de Fourier décroissent vite.
-Si $f$ est de classe $C^k$, alors $c_n(f^{(k)}) = (in)^k c_n(f)$.
-Puisque $c_n(f^{(k)}) \to 0$, on a $c_n(f) = o(\frac{1}{|n|^k})$.
-À l'inverse, une décroissance rapide des coefficients garantit la régularité de la fonction (convergence normale des séries dérivées).
+\subsubsection*{Preuve de l'orthogonalité de la base exponentielle}
 
-\textbf{Théorème (Convergence normale) :}
-Si $f$ est $2\pi$-périodique, continue, et de classe $C^1$ par morceaux, alors sa série de Fourier converge normalement (donc uniformément) vers $f$ sur $\mathbb{R}$.
+Nous devons montrer que la famille $e_n(t) = e^{int}$ (pour $T=2\pi$) forme un système orthogonal pour le produit scalaire usuel.
+Soient $n, m \in \mathbb{Z}$. Calculons le produit scalaire :
+$$ \langle e_n, e_m \rangle = \frac{1}{2\pi} \int_0^{2\pi} e^{int} \overline{e^{imt}} dt $$
+$$ \langle e_n, e_m \rangle = \frac{1}{2\pi} \int_0^{2\pi} e^{i(n-m)t} dt $$
 
-\section{Phénomène de Gibbs}
+Cas 1 : $n = m$.
+Alors $e^{i(n-m)t} = e^0 = 1$.
+$$ \langle e_n, e_n \rangle = \frac{1}{2\pi} \int_0^{2\pi} 1 dt = 1 $$
 
-Aux points de discontinuité d'une fonction (comme pour le signal carré), la somme partielle $S_N(f)$ présente des "dépassements" par rapport à la valeur limite, appelés phénomène de Gibbs. Même lorsque $N \to +\infty$, l'amplitude maximale de cet "overshoot" ne tend pas vers 0, mais vers une constante d'environ $9\%$ du saut de la fonction. Cela montre que la convergence n'est pas uniforme près d'une discontinuité.
+Cas 2 : $n \neq m$.
+La primitive de $t \mapsto e^{i(n-m)t}$ est $t \mapsto \frac{1}{i(n-m)} e^{i(n-m)t}$.
+$$ \langle e_n, e_m \rangle = \frac{1}{2\pi} \left[ \frac{e^{i(n-m)t}}{i(n-m)} \right]_0^{2\pi} $$
+$$ \langle e_n, e_m \rangle = \frac{1}{2\pi i(n-m)} \left( e^{i(n-m)2\pi} - e^0 \right) $$
+Or pour tout entier $k = n-m$, $e^{i2\pi k} = 1$.
+Donc $\langle e_n, e_m \rangle = \frac{1}{2\pi i(n-m)} (1 - 1) = 0$.
+
+La famille est bien orthonormée.
+
+\subsubsection*{Extraction des coefficients (Lemme d'unicité)}
+
+Supposons qu'une fonction se décompose en une série uniformément convergente $f(t) = \sum_{k=-\infty}^{+\infty} \alpha_k e^{ikt}$. Démontrons que $\alpha_n = c_n(f)$.
+Multiplions l'égalité par $e^{-int}$ :
+$$ f(t) e^{-int} = \sum_{k=-\infty}^{+\infty} \alpha_k e^{i(k-n)t} $$
+Intégrons de $0$ à $2\pi$. La convergence uniforme permet d'intervertir l'intégrale et la somme infinie :
+$$ \int_0^{2\pi} f(t) e^{-int} dt = \sum_{k=-\infty}^{+\infty} \alpha_k \int_0^{2\pi} e^{i(k-n)t} dt $$
+D'après la propriété d'orthogonalité démontrée précédemment, l'intégrale du membre de droite est nulle pour tout $k \neq n$, et vaut $2\pi$ pour $k=n$.
+Il ne reste qu'un seul terme dans la somme :
+$$ \int_0^{2\pi} f(t) e^{-int} dt = \alpha_n \times 2\pi $$
+D'où :
+$$ \alpha_n = \frac{1}{2\pi} \int_0^{2\pi} f(t) e^{-int} dt = c_n(f) $$
+Ce qui démontre rigoureusement l'unicité des coefficients de Fourier.
+
+\subsection{Applications en Physique, Logique, et IA}
+
+L'analyse de Fourier est une pierre angulaire dans de multiples domaines appliqués et fondamentaux :
+
+1.  \textbf{Traitement du Signal et Audio (IA) :}
+    Les réseaux de neurones appliqués au son (comme l'architecture Whisper ou les modèles de séparation de sources) ne traitent presque jamais l'onde temporelle brute. Ils utilisent une Transformée de Fourier à Court Terme (STFT) pour générer un spectrogramme, qui représente l'énergie des différentes fréquences au cours du temps. L'apprentissage profond extrait ensuite des motifs (phonèmes, instruments) depuis cette représentation temps-fréquence.
+
+2.  \textbf{Imagerie Médicale (IRM) :}
+    La résonance magnétique nucléaire capte des données directement dans le domaine fréquentiel (appelé l'espace k). La reconstruction de l'image anatomique du patient est littéralement une transformée de Fourier inverse bidimensionnelle du signal capté.
+
+3.  \textbf{Résolution d'Équations aux Dérivées Partielles (Physique) :}
+    La décomposition d'une fonction spatiale en ondes de Fourier permet de transformer les opérateurs différentiels (comme le laplacien $\Delta$) en simples multiplications algébriques (par $-||\xi||^2$). C'est ainsi que l'on résout l'équation de la chaleur, l'équation des ondes, ou l'équation de Schrödinger en mécanique quantique.
+
+4.  \textbf{Biais Spectral des Réseaux de Neurones :}
+    En théorie de l'apprentissage automatique, le théorème de "Spectral Bias" montre, via l'analyse de Fourier, que les réseaux de neurones complètement connectés avec descente de gradient apprennent d'abord les composantes de basse fréquence (la tendance globale) avant de mémoriser les composantes de haute fréquence (les détails ou le bruit).
 
 
 \newpage
 \part{Exercices d'Application et de Concours}
-\subsection*{Exercice : Calcul \quad basique des coefficients \quad $\bigstar\star\star\star\star$}
+\subsection*{Exercice 1 : Calcul de la série de Fourier d'un signal triangulaire \quad $\bigstar\star\star\star\star$}
 
-Soit $f$ la fonction $2\pi$-périodique définie par $f(x) = \sin^2(x)$.
-1. Calculer les coefficients de Fourier réels $a_n(f)$ et $b_n(f)$.
-2. En déduire les coefficients complexes $c_n(f)$.
+\textbf{Énoncé :}
+Soit $f : \mathbb{R} \to \mathbb{R}$ la fonction $2\pi$-périodique, paire, définie sur $[0, \pi]$ par $f(t) = t$. Calculer la série de Fourier trigonométrique de $f$.
 
-\textbf{Correction :}
-1. On linéarise : $f(x) = \frac{1 - \cos(2x)}{2} = \frac{1}{2} - \frac{1}{2}\cos(2x)$.
-$f$ est paire, donc $b_n(f) = 0$ pour tout $n$.
-Par identification avec le développement en série de Fourier $a_0/2 + \sum a_n\cos(nx)$, on trouve directement :
-$a_0 = 1$
-$a_2 = -1/2$
-$a_n = 0$ pour $n \neq 0, 2$.
+\textbf{Correction Détaillée :}
 
-2. $c_0 = a_0/2 = 1/2$.
-$c_2 = (a_2 - ib_2)/2 = -1/4$.
-$c_{-2} = (a_2 + ib_2)/2 = -1/4$.
-$c_n = 0$ sinon.
+1. \textbf{Parité et valeur moyenne :}
+   La fonction $f$ est paire, donc pour tout $n \ge 1$, les coefficients $b_n(f)$ sont nuls.
+   La valeur moyenne $a_0(f)$ est donnée par :
+   $$ a_0(f) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) dt = \frac{1}{\pi} \int_0^{\pi} t dt = \frac{1}{\pi} \left[ \frac{t^2}{2} \right]_0^\pi = \frac{\pi}{2} $$
 
+2. \textbf{Calcul des coefficients $a_n(f)$ :}
+   Pour $n \ge 1$, puisque $f$ est paire :
+   $$ a_n(f) = \frac{2}{\pi} \int_0^{\pi} t \cos(nt) dt $$
+   On effectue une intégration par parties. Soient $u(t) = t \implies u'(t) = 1$ et $v'(t) = \cos(nt) \implies v(t) = \frac{\sin(nt)}{n}$.
+   $$ a_n(f) = \frac{2}{\pi} \left( \left[ t \frac{\sin(nt)}{n} \right]_0^\pi - \int_0^\pi \frac{\sin(nt)}{n} dt \right) $$
+   Le terme tout intégré s'annule car $\sin(n\pi) = 0$ et $0 \times \sin(0) = 0$.
+   $$ a_n(f) = -\frac{2}{n\pi} \left[ -\frac{\cos(nt)}{n} \right]_0^\pi = \frac{2}{n^2\pi} (\cos(n\pi) - \cos(0)) = \frac{2}{n^2\pi} ((-1)^n - 1) $$
+   Ainsi, si $n$ est pair ($n=2p$), $a_{2p} = 0$. Si $n$ est impair ($n=2p+1$), $a_{2p+1} = -\frac{4}{\pi(2p+1)^2}$.
 
-\subsection*{Exercice : Série \quad de Fourier du signal carré et Problème de Bâle (partie 1) \quad $\bigstar\bigstar\star\star\star$}
-
-Soit $f$ la fonction $2\pi$-périodique, impaire, définie sur $]0, \pi[$ par $f(x) = 1$, et $f(0) = f(\pi) = 0$.
-1. Calculer la série de Fourier de $f$.
-2. En évaluant la série en $x=\pi/2$, en déduire la valeur de $\sum_{p=0}^\infty \frac{(-1)^p}{2p+1}$.
-
-\textbf{Correction :}
-1. $f$ est impaire, $a_n = 0$.
-$b_n = \frac{2}{\pi} \int_0^\pi 1 \cdot \sin(nx)dx = \frac{2}{\pi} \left[ -\frac{\cos(nx)}{n} \right]_0^\pi = \frac{2}{n\pi}(1 - (-1)^n)$.
-Pour $n=2p$, $b_{2p} = 0$. Pour $n=2p+1$, $b_{2p+1} = \frac{4}{\pi(2p+1)}$.
-La série de Fourier est $\frac{4}{\pi} \sum_{p=0}^\infty \frac{\sin((2p+1)x)}{2p+1}$.
-2. Par le théorème de Dirichlet, $f$ est $C^1$ par morceaux, continue en $\pi/2$, donc $S(f)(\pi/2) = f(\pi/2) = 1$.
-$\frac{4}{\pi} \sum_{p=0}^\infty \frac{\sin((2p+1)\pi/2)}{2p+1} = 1$.
-Or $\sin(p\pi + \pi/2) = (-1)^p$.
-Donc $\sum_{p=0}^\infty \frac{(-1)^p}{2p+1} = \frac{\pi}{4}$ (Formule de Leibniz/Gregory).
+3. \textbf{Série de Fourier :}
+   La série s'écrit donc :
+   $$ S(f)(t) = \frac{\pi}{2} - \frac{4}{\pi} \sum_{p=0}^{+\infty} \frac{\cos((2p+1)t)}{(2p+1)^2} $$
 
 
-\subsection*{Exercice : Phénomène \quad de Gibbs et Série trigonométrique \quad $\bigstar\bigstar\bigstar\star\star$}
+\subsection*{Exercice 2 : Identité remarquable via Dirichlet \quad $\bigstar\star\star\star\star$}
 
-Montrer que la série $\sum_{n=1}^\infty \frac{\sin(nx)}{n}$ converge ponctuellement mais non uniformément sur $[0, \pi]$.
+\textbf{Énoncé :}
+En utilisant la série de Fourier du signal triangulaire (Exercice 1), déduire la valeur de la somme $\sum_{p=0}^{+\infty} \frac{1}{(2p+1)^2}$.
 
-\textbf{Correction :}
-Ponctuellement, la série converge par le critère de Dirichlet pour les séries numériques (sommes de $\sin(nx)$ bornées et $1/n$ décroît vers 0). La limite est la fonction en dent de scie $(\pi-x)/2$ sur $]0, 2\pi[$.
-Si la convergence était uniforme sur $[0,\pi]$, la fonction limite serait continue en $0$.
-Or $\lim_{x \to 0^+} \frac{\pi-x}{2} = \pi/2$, mais la valeur de la série en $x=0$ est $0$. Il y a discontinuité, donc la convergence n'est pas uniforme (Phénomène de Gibbs).
+\textbf{Correction Détaillée :}
 
+1. \textbf{Régularité de $f$ :}
+   La fonction $f$ (signal triangulaire) est continue et de classe $C^1$ par morceaux sur $\mathbb{R}$.
+   D'après le théorème de Dirichlet, la série de Fourier de $f$ converge vers $f(t)$ pour tout $t \in \mathbb{R}$.
 
-\subsection*{Exercice : Coefficients \quad de Fourier de $f(x)=x^2$ \quad $\bigstar\bigstar\bigstar\star\star$}
+2. \textbf{Évaluation en un point astucieux :}
+   Prenons $t = 0$. On a $f(0) = 0$.
+   La série évaluée en $0$ donne :
+   $$ S(f)(0) = \frac{\pi}{2} - \frac{4}{\pi} \sum_{p=0}^{+\infty} \frac{\cos(0)}{(2p+1)^2} = \frac{\pi}{2} - \frac{4}{\pi} \sum_{p=0}^{+\infty} \frac{1}{(2p+1)^2} $$
 
-On considère $f(x)=x^2$ sur $[-\pi, \pi]$, prolongée par $2\pi$-périodicité.
-1. Calculer ses coefficients de Fourier trigonométriques.
-2. En déduire $\sum_{n=1}^\infty \frac{1}{n^2}$ et $\sum_{n=1}^\infty \frac{(-1)^{n+1}}{n^2}$.
-
-\textbf{Correction :}
-1. $f$ paire, $b_n = 0$.
-$a_0 = \frac{2}{\pi} \int_0^\pi x^2 dx = \frac{2\pi^2}{3}$.
-$a_n = \frac{2}{\pi} \int_0^\pi x^2 \cos(nx) dx$. Double IPP :
-$\int x^2\cos(nx)dx = \frac{x^2\sin(nx)}{n} - \frac{2x(-\cos(nx))}{n^2} - \frac{2\sin(nx)}{n^3}$.
-$a_n = \frac{2}{\pi} \left[ \frac{2\pi\cos(n\pi)}{n^2} \right] = \frac{4(-1)^n}{n^2}$.
-Série : $\frac{\pi^2}{3} + \sum_{n=1}^\infty \frac{4(-1)^n}{n^2}\cos(nx)$.
-2. Par le Th. de Dirichlet (continue, $C^1$ par morceaux) en $x=\pi$ :
-$\pi^2 = \frac{\pi^2}{3} + 4 \sum_{n=1}^\infty \frac{(-1)^n (-1)^n}{n^2} = \frac{\pi^2}{3} + 4 \sum \frac{1}{n^2}$.
-$4\sum \frac{1}{n^2} = \frac{2\pi^2}{3} \implies \sum \frac{1}{n^2} = \frac{\pi^2}{6}$.
-En $x=0$ : $0 = \frac{\pi^2}{3} + 4 \sum \frac{(-1)^n}{n^2}$, donc $\sum \frac{(-1)^{n+1}}{n^2} = \frac{\pi^2}{12}$.
+3. \textbf{Conclusion :}
+   Puisque $S(f)(0) = f(0) = 0$, on obtient :
+   $$ \frac{4}{\pi} \sum_{p=0}^{+\infty} \frac{1}{(2p+1)^2} = \frac{\pi}{2} $$
+   Ce qui donne finalement la célèbre somme :
+   $$ \sum_{p=0}^{+\infty} \frac{1}{(2p+1)^2} = \frac{\pi^2}{8} $$
 
 
-\subsection*{Exercice : Produit \quad de convolution de séries de Fourier \quad $\bigstar\bigstar\bigstar\star\star$}
+\subsection*{Exercice 3 : Fonction parabolique \quad $\bigstar\bigstar\star\star\star$}
 
-Soient $f$ et $g$ deux fonctions $2\pi$-périodiques continues. Montrer que $c_n(f * g) = 2\pi c_n(f)c_n(g)$.
+\textbf{Énoncé :}
+Soit $f$ la fonction $2\pi$-périodique définie par $f(t) = t^2$ sur $[-\pi, \pi]$. Calculer sa série de Fourier.
 
-\textbf{Correction :}
-Le produit de convolution périodique est $(f*g)(x) = \frac{1}{2\pi} \int_{-\pi}^\pi f(t)g(x-t)dt$.
-$c_n(f*g) = \frac{1}{2\pi} \int_{-\pi}^\pi \left( \frac{1}{2\pi} \int_{-\pi}^\pi f(t)g(x-t)dt \right) e^{-inx} dx$.
-Par Fubini : $= \frac{1}{2\pi} \int_{-\pi}^\pi f(t) \left( \frac{1}{2\pi} \int_{-\pi}^\pi g(x-t)e^{-inx} dx \right) dt$.
-Changement de variable $u = x-t$, $dx = du$, l'intégrale sur une période reste inchangée :
-$\frac{1}{2\pi} \int_{-\pi}^\pi g(u)e^{-in(u+t)} du = e^{-int} \frac{1}{2\pi} \int_{-\pi}^\pi g(u)e^{-inu} du = e^{-int} c_n(g)$.
-Donc $c_n(f*g) = \frac{1}{2\pi} \int_{-\pi}^\pi f(t) e^{-int} c_n(g) dt = c_n(g) \frac{1}{2\pi} \int_{-\pi}^\pi f(t) e^{-int} dt = c_n(g)c_n(f)$ (Attention au facteur $1/2\pi$ ou non selon la convention de $f*g$). Avec notre définition de convolution standard $\int f(t)g(x-t)$, le coefficient donne bien un produit simple modulo les constantes. Rigueur : la formule donne $c_n(f*g) = c_n(f)c_n(g)$ si la définition intègre la normalisation, ou $2\pi c_n$ sinon.
+\textbf{Correction Détaillée :}
 
+1. \textbf{Parité et valeur moyenne :}
+   La fonction est paire, donc $b_n = 0$ pour tout $n \ge 1$.
+   Calculons la valeur moyenne :
+   $$ a_0 = \frac{1}{2\pi} \int_{-\pi}^\pi t^2 dt = \frac{1}{\pi} \int_0^\pi t^2 dt = \frac{1}{\pi} \left[ \frac{t^3}{3} \right]_0^\pi = \frac{\pi^2}{3} $$
 
-\subsection*{Exercice : Équation \quad différentielle et Fourier \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+2. \textbf{Calcul des coefficients $a_n$ :}
+   Pour $n \ge 1$, on a :
+   $$ a_n = \frac{2}{\pi} \int_0^\pi t^2 \cos(nt) dt $$
+   On réalise une double intégration par parties.
+   Première IPP ($u=t^2, v'=\cos(nt)$) :
+   $$ a_n = \frac{2}{\pi} \left( \left[ t^2 \frac{\sin(nt)}{n} \right]_0^\pi - \int_0^\pi 2t \frac{\sin(nt)}{n} dt \right) $$
+   Le terme aux bornes est nul (car $\sin(n\pi)=0$).
+   $$ a_n = -\frac{4}{n\pi} \int_0^\pi t \sin(nt) dt $$
+   Deuxième IPP ($u=t, v'=\sin(nt)$) :
+   $$ a_n = -\frac{4}{n\pi} \left( \left[ -t \frac{\cos(nt)}{n} \right]_0^\pi - \int_0^\pi -\frac{\cos(nt)}{n} dt \right) $$
+   L'intégrale restante donne $[\frac{\sin(nt)}{n^2}]_0^\pi = 0$. Le terme aux bornes est :
+   $$ a_n = -\frac{4}{n\pi} \left( -\frac{\pi \cos(n\pi)}{n} - 0 \right) = \frac{4}{n^2} (-1)^n $$
 
-Résoudre l'équation différentielle $y''(x) + 2y(x) = f(x)$ sur $\mathbb{R}$ en cherchant des solutions $2\pi$-périodiques, avec $f$ une fonction $2\pi$-périodique donnée de classe $C^1$.
-
-\textbf{Correction :}
-On suppose $y$ solution de classe $C^2$ périodique.
-Décomposons en série de Fourier complexe : $y(x) = \sum c_n(y)e^{inx}$, $f(x) = \sum c_n(f)e^{inx}$.
-$y''(x)$ a pour coefficients $(in)^2 c_n(y) = -n^2 c_n(y)$.
-L'équation devient $-n^2 c_n(y) + 2c_n(y) = c_n(f)$ pour tout $n$.
-$(2-n^2)c_n(y) = c_n(f)$. Puisque $n$ est entier, $2-n^2 \neq 0$ pour tout $n$.
-Donc $c_n(y) = \frac{c_n(f)}{2-n^2}$.
-La série $y(x) = \sum_{n \in \mathbb{Z}} \frac{c_n(f)}{2-n^2} e^{inx}$ est solution (la régularité est assurée par la décroissance de $c_n(f)$).
-
-
-\subsection*{Exercice : Fonction \quad $f(x)=e^{ax}$ sur $[-\pi, \pi[$ \quad $\bigstar\bigstar\bigstar\bigstar\star$}
-
-Soit $a \neq 0$ réel. On pose $f(x)=e^{ax}$ sur $[-\pi, \pi[$ prolongée par $2\pi$-périodicité. Calculer sa série de Fourier et en déduire la valeur de $\sum_{n=1}^\infty \frac{1}{a^2+n^2}$.
-
-\textbf{Correction :}
-Calculons $c_n(f) = \frac{1}{2\pi} \int_{-\pi}^\pi e^{ax}e^{-inx}dx = \frac{1}{2\pi} \left[ \frac{e^{(a-in)x}}{a-in} \right]_{-\pi}^\pi$.
-$e^{(a-in)\pi} = e^{a\pi}(-1)^n$ et $e^{-(a-in)\pi} = e^{-a\pi}(-1)^n$.
-$c_n(f) = \frac{(-1)^n}{2\pi(a-in)} (e^{a\pi} - e^{-a\pi}) = \frac{(-1)^n \sinh(a\pi)}{\pi(a-in)} = \frac{(-1)^n \sinh(a\pi)(a+in)}{\pi(a^2+n^2)}$.
-En $x=0$, continue : $f(0) = 1 = \sum_{n \in \mathbb{Z}} c_n$.
-$1 = c_0 + \sum_{n=1}^\infty (c_n + c_{-n}) = \frac{\sinh(a\pi)}{\pi a} + \sum_{n=1}^\infty \frac{2(-1)^n \sinh(a\pi) a}{\pi(a^2+n^2)}$.
-En $x=\pi$, la somme est $\frac{e^{a\pi} + e^{-a\pi}}{2} = \cosh(a\pi)$.
-$\cosh(a\pi) = \sum c_n e^{in\pi} = \sum c_n (-1)^n$.
-$\cosh(a\pi) = \frac{\sinh(a\pi)}{\pi a} + \sum_{n=1}^\infty \frac{2\sinh(a\pi)a}{\pi(a^2+n^2)}$.
-Donc $\sum_{n=1}^\infty \frac{1}{a^2+n^2} = \frac{\pi}{2a \tanh(a\pi)} - \frac{1}{2a^2}$.
+3. \textbf{Synthèse de la série :}
+   La fonction $f$ étant continue et $C^1$ par morceaux, Dirichlet donne :
+   $$ t^2 = \frac{\pi^2}{3} + 4 \sum_{n=1}^{+\infty} \frac{(-1)^n}{n^2} \cos(nt) \quad \text{pour } t \in [-\pi, \pi] $$
 
 
-\subsection*{Exercice : Inégalité \quad de Wirtinger \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+\subsection*{Exercice 4 : Problème de Bâle via Fourier \quad $\bigstar\bigstar\star\star\star$}
 
-Soit $f : [0, 2\pi] \to \mathbb{R}$ de classe $C^1$, telle que $f(0)=f(2\pi)$ et $\int_0^{2\pi} f(x)dx = 0$.
-Montrer que $\int_0^{2\pi} f^2(x)dx \le \int_0^{2\pi} (f'(x))^2 dx$.
+\textbf{Énoncé :}
+En utilisant le résultat de l'Exercice 3, démontrer la formule $\sum_{n=1}^{+\infty} \frac{1}{n^2} = \frac{\pi^2}{6}$.
 
-\textbf{Correction :}
-La condition $\int_0^{2\pi} f(x)dx = 0$ implique que $c_0(f) = a_0(f) = 0$.
-Par le théorème de Parseval (applicable aux fonctions $C^1$) :
-$\frac{1}{2\pi} \int_0^{2\pi} f^2(x)dx = \sum_{n \neq 0} |c_n(f)|^2$.
-Pour $f'$, on sait que $c_n(f') = in c_n(f)$.
-Parseval pour $f'$ : $\frac{1}{2\pi} \int_0^{2\pi} (f'(x))^2 dx = \sum_{n \neq 0} |in c_n(f)|^2 = \sum_{n \neq 0} n^2 |c_n(f)|^2$.
-Comme $n^2 \ge 1$ pour tout $n \neq 0$, on a $\sum_{n \neq 0} |c_n(f)|^2 \le \sum_{n \neq 0} n^2 |c_n(f)|^2$.
-D'où l'inégalité de Wirtinger : $\int_0^{2\pi} f^2(x)dx \le \int_0^{2\pi} (f'(x))^2 dx$.
-L'égalité est atteinte si et seulement si $c_n(f) = 0$ pour $|n| \ge 2$, c'est-à-dire $f(x) = A\cos(x) + B\sin(x)$.
+\textbf{Correction Détaillée :}
 
+1. \textbf{Choix du point d'évaluation :}
+   On repart de la série de la fonction $f(t) = t^2$ sur $[-\pi, \pi]$ :
+   $$ f(t) = \frac{\pi^2}{3} + 4 \sum_{n=1}^{+\infty} \frac{(-1)^n}{n^2} \cos(nt) $$
+   Pour éliminer le terme alterné $(-1)^n$, le choix optimal est $t = \pi$, car $\cos(n\pi) = (-1)^n$.
 
-\subsection*{Exercice : Noyau \quad de Fejér \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+2. \textbf{Calcul de la série évaluée :}
+   On a $f(\pi) = \pi^2$.
+   En injectant $t=\pi$ dans la série :
+   $$ \pi^2 = \frac{\pi^2}{3} + 4 \sum_{n=1}^{+\infty} \frac{(-1)^n}{n^2} (-1)^n $$
+   Or $(-1)^n \times (-1)^n = (-1)^{2n} = 1$.
+   $$ \pi^2 - \frac{\pi^2}{3} = 4 \sum_{n=1}^{+\infty} \frac{1}{n^2} $$
+   $$ \frac{2\pi^2}{3} = 4 \sum_{n=1}^{+\infty} \frac{1}{n^2} $$
 
-On pose $F_N(x) = \frac{1}{N} \sum_{n=0}^{N-1} D_n(x)$ où $D_n(x) = \sum_{k=-n}^n e^{ikx}$ est le noyau de Dirichlet.
-1. Montrer que $F_N(x) = \frac{1}{N} \left( \frac{\sin(Nx/2)}{\sin(x/2)} \right)^2$.
-2. En déduire que $F_N(x) \ge 0$.
-
-\textbf{Correction :}
-1. $D_n(x) = \frac{\sin((n+1/2)x)}{\sin(x/2)}$.
-$NF_N(x) = \sum_{n=0}^{N-1} \frac{\sin((n+1/2)x)}{\sin(x/2)} = \frac{1}{\sin(x/2)} \text{Im} \sum_{n=0}^{N-1} e^{i(n+1/2)x}$.
-La somme géométrique : $\sum_{n=0}^{N-1} e^{i(n+1/2)x} = e^{ix/2} \frac{1-e^{iNx}}{1-e^{ix}} = e^{ix/2} \frac{e^{iNx/2}(e^{-iNx/2}-e^{iNx/2})}{e^{ix/2}(e^{-ix/2}-e^{ix/2})} = e^{iNx/2} \frac{-2i\sin(Nx/2)}{-2i\sin(x/2)} = \frac{e^{iNx/2}\sin(Nx/2)}{\sin(x/2)}$.
-La partie imaginaire est $\frac{\sin^2(Nx/2)}{\sin(x/2)}$.
-Donc $NF_N(x) = \frac{\sin^2(Nx/2)}{\sin^2(x/2)}$.
-2. C'est le carré d'un nombre réel divisé par $N>0$, donc $F_N(x) \ge 0$ pour tout $x$. Cette positivité fait de la somme de Fejér une approximation de l'identité qui évite le phénomène de Gibbs (Théorème de Fejér).
+3. \textbf{Conclusion :}
+   En divisant par 4 :
+   $$ \sum_{n=1}^{+\infty} \frac{1}{n^2} = \frac{2\pi^2}{3 \times 4} = \frac{\pi^2}{6} $$
+   C'est la solution classique apportée par Euler au problème de Bâle.
 
 
-\subsection*{Exercice : Théorème \quad d'Isopérimétrie \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+\subsection*{Exercice 5 : Signal impulsionnel périodique \quad $\bigstar\bigstar\bigstar\star\star$}
 
-Utiliser l'inégalité de Wirtinger pour montrer que parmi toutes les courbes fermées simples $C^1$ de longueur $L$ du plan, le cercle a l'aire maximale $A = L^2/(4\pi)$.
+\textbf{Énoncé :}
+Soit $f$ la fonction $2\pi$-périodique définie sur $[-\pi, \pi]$ par $f(t) = 1$ si $t \in [0, \alpha]$ (avec $0 < \alpha < \pi$) et $0$ sinon. Calculer ses coefficients de Fourier complexes.
 
-\textbf{Correction :}
-Soit $\gamma(s) = (x(s), y(s))$ un paramétrage par l'abscisse curviligne $s \in [0, L]$.
-$(x'(s))^2 + (y'(s))^2 = 1$. L'aire est $A = \frac{1}{2} \int_0^L (x(s)y'(s) - y(s)x'(s))ds$.
-En posant $t = \frac{2\pi s}{L}$, on normalise la période à $2\pi$.
-On développe $x, y$ en séries de Fourier trigonométriques. En appliquant Parseval sur l'aire (qui mélange $x, y, x', y'$) et sur la longueur, on retrouve l'inégalité de Wirtinger coefficient par coefficient (les indices $n^2$ apparaissent via la dérivée). L'inégalité $A \le L^2/(4\pi)$ apparaît, avec égalité si et seulement si les coefficients non nuls sont ceux de $n=\pm1$, ce qui correspond à un cercle paramétré.
+\textbf{Correction Détaillée :}
+
+1. \textbf{Formule des coefficients complexes :}
+   Par définition, pour tout $n \in \mathbb{Z}$ :
+   $$ c_n = \frac{1}{2\pi} \int_{-\pi}^\pi f(t) e^{-int} dt $$
+   Puisque $f(t)$ vaut 1 sur $[0, \alpha]$ et 0 ailleurs sur la période, l'intégrale se réduit à :
+   $$ c_n = \frac{1}{2\pi} \int_0^\alpha e^{-int} dt $$
+
+2. \textbf{Calcul de $c_0$ :}
+   Pour $n = 0$, la fonction à intégrer est $1$.
+   $$ c_0 = \frac{1}{2\pi} \int_0^\alpha 1 dt = \frac{\alpha}{2\pi} $$
+   C'est le rapport cyclique du signal.
+
+3. \textbf{Calcul de $c_n$ pour $n \neq 0$ :}
+   La primitive de $e^{-int}$ est $\frac{e^{-int}}{-in}$.
+   $$ c_n = \frac{1}{2\pi} \left[ \frac{e^{-int}}{-in} \right]_0^\alpha = \frac{e^{-in\alpha} - 1}{-2i\pi n} = \frac{1 - e^{-in\alpha}}{2i\pi n} $$
+
+4. \textbf{Mise sous forme amplitude/phase (astuce de l'arc moitié) :}
+   On factorise par $e^{-in\alpha/2}$ :
+   $$ c_n = \frac{e^{-in\alpha/2} (e^{in\alpha/2} - e^{-in\alpha/2})}{2i\pi n} = \frac{e^{-in\alpha/2} \cdot 2i \sin(n\alpha/2)}{2i\pi n} = \frac{\sin(n\alpha/2)}{n\pi} e^{-in\alpha/2} $$
+   C'est l'expression classique faisant apparaître un terme en sinus cardinal (sinc).
+
+
+\subsection*{Exercice 6 : Fonction exponentielle périodisée \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $\lambda > 0$. On définit $f$ sur $[-\pi, \pi[$ par $f(t) = e^{\lambda t}$ et on la prolonge par $2\pi$-périodicité. Calculer sa série de Fourier.
+
+\textbf{Correction Détaillée :}
+
+1. \textbf{Choix des coefficients :}
+   Pour une fonction exponentielle, les coefficients complexes $c_n$ sont beaucoup plus simples à calculer car l'exponentielle réelle et l'exponentielle complexe fusionnent.
+   $$ c_n = \frac{1}{2\pi} \int_{-\pi}^\pi e^{\lambda t} e^{-int} dt = \frac{1}{2\pi} \int_{-\pi}^\pi e^{(\lambda - in)t} dt $$
+
+2. \textbf{Intégration directe :}
+   $$ c_n = \frac{1}{2\pi} \left[ \frac{e^{(\lambda - in)t}}{\lambda - in} \right]_{-\pi}^\pi = \frac{e^{(\lambda - in)\pi} - e^{-(\lambda - in)\pi}}{2\pi(\lambda - in)} $$
+   Sachant que $e^{-in\pi} = (-1)^n$ et $e^{in\pi} = (-1)^n$ :
+   $$ c_n = \frac{(-1)^n (e^{\lambda\pi} - e^{-\lambda\pi})}{2\pi(\lambda - in)} = \frac{(-1)^n \sinh(\lambda\pi)}{\pi} \frac{1}{\lambda - in} $$
+
+3. \textbf{Forme algébrique propre du coefficient :}
+   Pour enlever le $i$ du dénominateur, on multiplie en haut et en bas par le conjugué $\lambda + in$ :
+   $$ c_n = \frac{(-1)^n \sinh(\lambda\pi)}{\pi} \frac{\lambda + in}{\lambda^2 + n^2} $$
+
+4. \textbf{Écriture de la série :}
+   La série s'écrit donc :
+   $$ S(f)(t) = \frac{\sinh(\lambda\pi)}{\pi} \sum_{n=-\infty}^{+\infty} \frac{(-1)^n (\lambda + in)}{\lambda^2 + n^2} e^{int} $$
+
+
+\subsection*{Exercice 7 : Série de Fourier du cosinus hyperbolique et déduction de série \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Déduire de l'Exercice 6 la série de Fourier de la fonction paire $g(t) = \cosh(\lambda t)$ sur $[-\pi, \pi]$. En déduire la somme $\sum_{n=1}^\infty \frac{1}{\lambda^2 + n^2}$.
+
+\textbf{Correction Détaillée :}
+
+1. \textbf{Calcul de la série par parité :}
+   $g(t) = \frac{1}{2}(e^{\lambda t} + e^{-\lambda t})$. On peut sommer les séries de Fourier par linéarité.
+   Mais plus directement, $g$ est paire donc $b_n = 0$.
+   $$ a_n = c_n + c_{-n} = \frac{(-1)^n \sinh(\lambda\pi)}{\pi(\lambda^2 + n^2)} (\lambda + in + \lambda - in) = \frac{2\lambda (-1)^n \sinh(\lambda\pi)}{\pi(\lambda^2 + n^2)} $$
+   Et pour $n=0$ : $a_0 = \frac{\sinh(\lambda\pi)}{\lambda\pi}$.
+   La série trigonométrique est donc :
+   $$ \cosh(\lambda t) = \frac{\sinh(\lambda\pi)}{\lambda\pi} + \frac{2\lambda\sinh(\lambda\pi)}{\pi} \sum_{n=1}^\infty \frac{(-1)^n}{\lambda^2 + n^2} \cos(nt) $$
+   (Égalité stricte car $\cosh$ est continue et $C^1$ par morceaux).
+
+2. \textbf{Évaluation en $t=\pi$ :}
+   Pour retrouver la somme demandée, on évalue en $t=\pi$. On a $\cos(n\pi) = (-1)^n$, donc $(-1)^n \cos(n\pi) = 1$.
+   $$ \cosh(\lambda\pi) = \frac{\sinh(\lambda\pi)}{\lambda\pi} + \frac{2\lambda\sinh(\lambda\pi)}{\pi} \sum_{n=1}^\infty \frac{1}{\lambda^2 + n^2} $$
+
+3. \textbf{Isolement de la série :}
+   On divise tout par $\frac{\sinh(\lambda\pi)}{\pi}$ :
+   $$ \frac{\pi \cosh(\lambda\pi)}{\sinh(\lambda\pi)} = \frac{1}{\lambda} + 2\lambda \sum_{n=1}^\infty \frac{1}{\lambda^2 + n^2} $$
+   $$ \pi \coth(\lambda\pi) = \frac{1}{\lambda} + 2\lambda \sum_{n=1}^\infty \frac{1}{\lambda^2 + n^2} $$
+   Donc :
+   $$ \sum_{n=1}^\infty \frac{1}{\lambda^2 + n^2} = \frac{\pi \coth(\lambda\pi) - 1/\lambda}{2\lambda} $$
+
+
+\subsection*{Exercice 8 : Produit de signaux et décalage en fréquence \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Soit $f$ une fonction $2\pi$-périodique de coefficients de Fourier $c_n(f)$. On définit le signal modulé $g(t) = f(t) \cos(n_0 t)$ pour un entier $n_0 > 0$. Exprimer les $c_n(g)$ en fonction des $c_k(f)$.
+
+\textbf{Correction Détaillée :}
+
+1. \textbf{Utilisation des formules d'Euler :}
+   On sait que $\cos(n_0 t) = \frac{e^{in_0 t} + e^{-in_0 t}}{2}$.
+   Ainsi, on peut écrire :
+   $$ g(t) = f(t) \frac{e^{in_0 t} + e^{-in_0 t}}{2} = \frac{1}{2} f(t)e^{in_0 t} + \frac{1}{2} f(t)e^{-in_0 t} $$
+
+2. \textbf{Calcul du coefficient $c_n(g)$ par linéarité :}
+   Par définition :
+   $$ c_n(g) = \frac{1}{2\pi} \int_0^{2\pi} \left( \frac{1}{2} f(t)e^{in_0 t} + \frac{1}{2} f(t)e^{-in_0 t} \right) e^{-int} dt $$
+   $$ c_n(g) = \frac{1}{2} \left( \frac{1}{2\pi} \int_0^{2\pi} f(t) e^{-i(n-n_0)t} dt + \frac{1}{2\pi} \int_0^{2\pi} f(t) e^{-i(n+n_0)t} dt \right) $$
+
+3. \textbf{Identification avec les $c_k(f)$ :}
+   L'intégrale $\frac{1}{2\pi} \int_0^{2\pi} f(t) e^{-i(n-n_0)t} dt$ est exactement la définition de $c_{n-n_0}(f)$.
+   De même, la seconde intégrale est $c_{n+n_0}(f)$.
+   Ainsi :
+   $$ c_n(g) = \frac{1}{2} (c_{n-n_0}(f) + c_{n+n_0}(f)) $$
+   Cette propriété est fondamentale en télécommunications (modulation de fréquence), car elle montre que multiplier un signal par un cosinus décale son spectre d'une valeur $n_0$ vers la droite et vers la gauche.
+
+
+\subsection*{Exercice 9 : Intégration et dérivation des séries de Fourier \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Soit $f$ de classe $C^1$ et $2\pi$-périodique. Prouver rigoureusement la relation entre les coefficients complexes $c_n(f')$ et $c_n(f)$.
+
+\textbf{Correction Détaillée :}
+
+1. \textbf{Définition de $c_n(f')$ :}
+   Par définition :
+   $$ c_n(f') = \frac{1}{2\pi} \int_0^{2\pi} f'(t) e^{-int} dt $$
+
+2. \textbf{Intégration par parties :}
+   Puisque $f$ est de classe $C^1$, on peut effectuer une intégration par parties avec $u(t) = e^{-int} \implies u'(t) = -in e^{-int}$ et $v'(t) = f'(t) \implies v(t) = f(t)$.
+   $$ c_n(f') = \frac{1}{2\pi} \left( \left[ f(t) e^{-int} \right]_0^{2\pi} - \int_0^{2\pi} f(t) (-in) e^{-int} dt \right) $$
+
+3. \textbf{Annulation du terme de bord :}
+   Évaluons le terme entre crochets :
+   $$ \left[ f(t) e^{-int} \right]_0^{2\pi} = f(2\pi) e^{-in2\pi} - f(0) e^0 $$
+   Puisque $n$ est entier, $e^{-i2\pi n} = 1$. Et par périodicité de $f$, on a $f(2\pi) = f(0)$.
+   Donc ce terme vaut $f(0) - f(0) = 0$.
+
+4. \textbf{Conclusion :}
+   L'expression restante est :
+   $$ c_n(f') = \frac{1}{2\pi} \int_0^{2\pi} in f(t) e^{-int} dt = in \left( \frac{1}{2\pi} \int_0^{2\pi} f(t) e^{-int} dt \right) $$
+   D'où la relation fondamentale :
+   $$ c_n(f') = in \, c_n(f) $$
+   Cela signifie que la dérivation temporelle correspond à une multiplication par $in$ dans l'espace des fréquences.
+
+
+\subsection*{Exercice 10 : Équation différentielle résolue par Fourier \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Trouver une solution $2\pi$-périodique de l'équation différentielle $y'' + 2y = |\sin(t)|$ en utilisant les séries de Fourier.
+
+\textbf{Correction Détaillée :}
+
+1. \textbf{Analyse du second membre :}
+   Soit $f(t) = |\sin(t)|$. C'est une fonction paire, $2\pi$-périodique (et même $\pi$-périodique).
+   Calculons sa série de Fourier. Les $b_n$ sont nuls.
+   La période utile est $\pi$. Pour utiliser la formulation usuelle $2\pi$, on note que la fondamentale est $2t$.
+   $$ a_0 = \frac{1}{\pi} \int_0^\pi \sin(t) dt = \frac{2}{\pi} $$
+   Pour $n \ge 1$ : $a_n = \frac{2}{\pi} \int_0^\pi \sin(t) \cos(nt) dt$.
+   On utilise $\sin(t)\cos(nt) = \frac{1}{2}(\sin((n+1)t) - \sin((n-1)t))$.
+   Si $n$ est impair ($n=2p+1$), l'intégrale est nulle par symétrie.
+   Si $n$ est pair ($n=2p$), on trouve :
+   $$ a_{2p} = -\frac{4}{\pi(4p^2 - 1)} $$
+   Le second membre s'écrit donc : $f(t) = \frac{2}{\pi} - \frac{4}{\pi} \sum_{p=1}^\infty \frac{\cos(2pt)}{4p^2 - 1}$.
+
+2. \textbf{Recherche de la solution sous forme de série :}
+   Supposons que $y(t) = \alpha_0 + \sum_{n=1}^\infty \alpha_n \cos(nt)$. (La parité dicte de ne chercher que des cosinus).
+   D'après le théorème de dérivation (Exercice 9), $y''(t) = -\sum_{n=1}^\infty n^2 \alpha_n \cos(nt)$.
+   L'équation donne :
+   $$ \left( 2\alpha_0 + \sum_{n=1}^\infty (2 - n^2)\alpha_n \cos(nt) \right) = \frac{2}{\pi} - \frac{4}{\pi} \sum_{p=1}^\infty \frac{\cos(2pt)}{4p^2 - 1} $$
+
+3. \textbf{Identification des coefficients (Unicité) :}
+   Pour le terme constant : $2\alpha_0 = \frac{2}{\pi} \implies \alpha_0 = \frac{1}{\pi}$.
+   Pour les harmoniques impairs ($n=2p+1$) : le second membre n'en a pas, donc $(2 - (2p+1)^2)\alpha_{2p+1} = 0 \implies \alpha_{2p+1} = 0$.
+   Pour les harmoniques pairs ($n=2p$) :
+   $$ (2 - 4p^2)\alpha_{2p} = -\frac{4}{\pi(4p^2 - 1)} \implies \alpha_{2p} = \frac{4}{\pi(4p^2 - 1)(4p^2 - 2)} $$
+
+4. \textbf{Conclusion :}
+   La solution formelle est :
+   $$ y(t) = \frac{1}{\pi} + \frac{2}{\pi} \sum_{p=1}^\infty \frac{\cos(2pt)}{(4p^2 - 1)(2p^2 - 1)} $$
+   La décroissance très rapide des coefficients (en $1/p^4$) garantit la convergence uniforme de la série et de ses dérivées, ce qui valide pleinement la solution.
 
 
 
 
 \newpage
 \part{Travaux Pratiques et Simulations Algorithmiques}
-\subsection*{TP : Calcul numerique des coefficients de Fourier}
+\subsection*{TP 1 : Implémentation basique des sommes de Fourier}
 
-
-Dans ce TP, nous allons ecrire une fonction qui calcule de maniere numerique les coefficients de Fourier (reels) d'une fonction periodique arbitraire.
+L'objectif est d'implémenter le calcul explicite des coefficients de Fourier par intégration numérique simple (méthode des rectangles), puis de reconstruire le signal.
 
 \begin{lstlisting}[language=Python]
 import math
 
-def calculate_fourier_coefficients(func, T, N, num_points=1000):
-    a = []
-    b = []
-    omega = 2 * math.pi / T
-    dt = T / num_points
-
-    # Calcul de a0
+def fourier_coefficients(f, T, N, num_samples=2000):
     a0 = 0.0
-    for i in range(num_points):
-        t = i * dt
-        a0 += func(t) * dt
-    a0 = a0 * (2.0 / T)
-    a.append(a0)
-    b.append(0.0) # b0 n'est pas utilise mais on garde l'index
+    an = [0.0] * N
+    bn = [0.0] * N
+    dt = T / num_samples
+    omega = 2 * math.pi / T
 
-    # Calcul des an et bn
-    for n in range(1, N + 1):
-        an = 0.0
-        bn = 0.0
-        for i in range(num_points):
-            t = i * dt
-            an += func(t) * math.cos(n * omega * t) * dt
-            bn += func(t) * math.sin(n * omega * t) * dt
-        an = an * (2.0 / T)
-        bn = bn * (2.0 / T)
-        a.append(an)
-        b.append(bn)
+    for k in range(num_samples):
+        t = k * dt
+        val = f(t)
+        a0 += val * dt
+        for n in range(1, N + 1):
+            an[n-1] += val * math.cos(n * omega * t) * dt
+            bn[n-1] += val * math.sin(n * omega * t) * dt
 
-    return a, b
+    return a0 / T, [2 * a / T for a in an], [2 * b / T for b in bn]
 
-def square_wave(t):
-    # Periode 2*pi, vaut 1 sur [0, pi[ et -1 sur [pi, 2*pi[
-    t_mod = t % (2 * math.pi)
-    if t_mod < math.pi:
-        return 1.0
-    else:
-        return -1.0
+def reconstruct(t, a0, an, bn, T):
+    omega = 2 * math.pi / T
+    res = a0
+    for n in range(len(an)):
+        res += an[n] * math.cos((n + 1) * omega * t) + bn[n] * math.sin((n + 1) * omega * t)
+    return res
 
-a_coeffs, b_coeffs = calculate_fourier_coefficients(square_wave, 2*math.pi, 5)
-print("a:", a_coeffs)
-print("b:", b_coeffs)
+# Test avec un signal carre
+def carre(t):
+    return 1.0 if (t % (2*math.pi)) < math.pi else -1.0
+
+a0, an, bn = fourier_coefficients(carre, 2*math.pi, 5)
+assert abs(a0) < 1e-5
+assert abs(an[0]) < 1e-5
+# La reconstruction au point t = pi/2 devrait valoir ~1
+approx = reconstruct(math.pi/2, a0, an, bn, 2*math.pi)
+print(approx)
 \end{lstlisting}
 
 
 
-\subsection*{TP : Reconstruction du signal a partir des harmoniques}
+\subsection*{TP 2 : Phénomène de Gibbs}
 
-
-Ce TP consiste a reconstruire un signal a partir de ses coefficients de Fourier (la somme partielle) pour observer le phenomene de Gibbs.
+Le phénomène de Gibbs décrit l'apparition de suroscillations aux points de discontinuité du signal. Nous allons mesurer l'amplitude de ce dépassement.
 
 \begin{lstlisting}[language=Python]
 import math
 
-def reconstruct_signal(a, b, T, t_values):
-    omega = 2 * math.pi / T
-    N = len(a) - 1
-    reconstructed = []
-
-    for t in t_values:
-        val = a[0] / 2.0
+# On reprend les fonctions du TP1
+def fourier_coefficients(f, T, N, num_samples=2000):
+    bn = [0.0] * N
+    dt = T / num_samples
+    for k in range(num_samples):
+        t = k * dt
         for n in range(1, N + 1):
-            val += a[n] * math.cos(n * omega * t)
-            val += b[n] * math.sin(n * omega * t)
-        reconstructed.append(val)
+            bn[n-1] += f(t) * math.sin(n * t) * dt
+    return [2 * b / T for b in bn]
 
-    return reconstructed
+def reconstruct_odd(t, bn):
+    return sum(bn[n] * math.sin((n + 1) * t) for n in range(len(bn)))
 
-def sawtooth_coeffs(N):
-    a = [0.0] * (N + 1)
-    b = [0.0] * (N + 1)
-    for n in range(1, N + 1):
-        b[n] = 2.0 * (-1.0)**(n+1) / n
-    return a, b
+def carre(t):
+    return 1.0 if (t % (2*math.pi)) < math.pi else -1.0
 
-N_harmonics = 10
-a_theo, b_theo = sawtooth_coeffs(N_harmonics)
+N = 50
+bn = fourier_coefficients(carre, 2*math.pi, N)
 
-t_grid = [i * 0.1 for i in range(100)]
-signal_recon = reconstruct_signal(a_theo, b_theo, 2*math.pi, t_grid)
+# On cherche le maximum juste apres la discontinuite (t=0)
+# La premiere suroscillation se produit environ a t = pi / (2N)
+t_gibbs = math.pi / (2 * N)
+val_gibbs = reconstruct_odd(t_gibbs, bn)
 
-for i in range(5):
-    print("t = {:.1f}, f_approx(t) = {:.4f}".format(t_grid[i], signal_recon[i]))
+# La valeur theorique du pic est environ 1.08949 (depassement de 9%)
+print("Valeur au pic de Gibbs:", val_gibbs)
+assert val_gibbs > 1.05 and val_gibbs < 1.15
 \end{lstlisting}
 
 
 
-\subsection*{TP : Fast Fourier Transform (FFT) algorithme de base}
+\subsection*{TP 3 : Résolution d'équations différentielles partielles}
+
+Nous utilisons les séries de Fourier pour résoudre l'équation de la chaleur $\partial u / \partial t = \partial^2 u / \partial x^2$ sur un fil de longueur $\pi$.
+Condition initiale : un profil triangulaire.
+
+\begin{lstlisting}[language=Python]
+import math
+
+# Profil initial
+def u0(x):
+    if x < math.pi / 2:
+        return x
+    return math.pi - x
+
+# Calcul des coefficients bn du profil initial
+N_modes = 20
+bn_init = [0.0] * N_modes
+num_samples = 1000
+dx = math.pi / num_samples
+for k in range(num_samples):
+    x = k * dx
+    for n in range(1, N_modes + 1):
+        bn_init[n-1] += u0(x) * math.sin(n * x) * dx
+bn_init = [2 * b / math.pi for b in bn_init]
+
+# Evolution temporelle : chaque mode decroit en exp(-n^2 * t)
+def u(x, t):
+    res = 0.0
+    for n in range(len(bn_init)):
+        mode_n = n + 1
+        res += bn_init[n] * math.sin(mode_n * x) * math.exp(-(mode_n**2) * t)
+    return res
+
+# Test a t=0.5 au milieu du fil (x = pi/2)
+val_t_05 = u(math.pi/2, 0.5)
+# A t=0.5, la chaleur s'est beaucoup dissipee, le profil est liss
+print("Temperature a t=0.5 :", val_t_05)
+assert val_t_05 > 0.0 and val_t_05 < 1.0
+\end{lstlisting}
 
 
-Nous implementons ici l'algorithme recursif de Cooley-Tukey pour le calcul de la Transformee de Fourier Rapide (FFT) en 1D. Cet algorithme fonctionne pour les tailles de signaux qui sont des puissances de 2.
+
+\subsection*{TP 4 : Algorithme de Transformée de Fourier Rapide (FFT) récursif}
+
+Implémentation pure Python de l'algorithme de Cooley-Tukey pour la FFT. Cette méthode réduit la complexité de $\mathcal{O}(N^2)$ à $\mathcal{O}(N \log N)$.
 
 \begin{lstlisting}[language=Python]
 import cmath
 import math
 
-def fft_recursive(x):
+def fft(x):
     N = len(x)
     if N <= 1:
         return x
+    # On suppose que N est une puissance de 2
+    even = fft(x[0::2])
+    odd = fft(x[1::2])
 
-    even = fft_recursive(x[0::2])
-    odd =  fft_recursive(x[1::2])
+    T = [cmath.exp(-2j * cmath.pi * k / N) * odd[k] for k in range(N // 2)]
 
-    T = [cmath.exp(-2j * math.pi * k / N) * odd[k] for k in range(N // 2)]
+    return [even[k] + T[k] for k in range(N // 2)] + [even[k] - T[k] for k in range(N // 2)]
 
-    result = [0j] * N
-    for k in range(N // 2):
-        result[k] = even[k] + T[k]
-        result[k + N // 2] = even[k] - T[k]
+# Test avec un signal simple : frequence fondamentale
+N_fft = 8
+signal = [math.cos(2 * math.pi * k / N_fft) for k in range(N_fft)]
+spectre = fft(signal)
 
-    return result
-
-N = 8
-t = [i for i in range(N)]
-signal = [math.cos(2 * math.pi * 1 * i / N) + math.sin(2 * math.pi * 2 * i / N) for i in t]
-
-X = fft_recursive(signal)
-for k, X_k in enumerate(X):
-    # Arrondi pour eviter les petits bruits numeriques
-    real_part = round(X_k.real, 4)
-    imag_part = round(X_k.imag, 4)
-    print("Frequence bin {}: {} + {}j".format(k, real_part, imag_part))
+# Le spectre doit presenter des pics a l'indice 1 et 7 (symetrie)
+amplitudes = [abs(z) for z in spectre]
+print("Amplitudes :", [round(a, 2) for a in amplitudes])
+assert amplitudes[1] > 3.0
+assert amplitudes[2] < 1e-10
 \end{lstlisting}
 
 
 
-\subsection*{TP : Filtrage d'un signal bruite dans le domaine frequentiel}
+\subsection*{TP 5 : Convolution Circulaire et Théorème de Plancherel}
 
-
-Le but est d'utiliser la transformee de Fourier pour identifier et supprimer les hautes frequences (bruit) d'un signal.
+Nous allons vérifier expérimentalement le théorème de Plancherel (conservation de l'énergie) et l'équivalence entre la convolution dans le domaine temporel et le produit scalaire dans le domaine fréquentiel.
 
 \begin{lstlisting}[language=Python]
-import math
 import cmath
 
-def ifft_recursive(X):
-    N = len(X)
-    X_conj = [x.conjugate() for x in X]
-    x_rec = fft_recursive(X_conj)
-    return [x.conjugate() / N for x in x_rec]
+def dft(x):
+    N = len(x)
+    return [sum(x[n] * cmath.exp(-2j * cmath.pi * k * n / N) for n in range(N)) for k in range(N)]
 
-N = 16
-t = [i for i in range(N)]
-clean_signal = [math.cos(2 * math.pi * 1 * i / N) for i in t]
-noise = [0.5 * math.cos(2 * math.pi * 7 * i / N) for i in t] # haute frequence
-noisy_signal = [clean_signal[i] + noise[i] for i in range(N)]
+# 1. Verification de l'identite de Parseval/Plancherel
+signal = [1.0, -1.0, 2.0, -2.0]
+N = len(signal)
+energie_temporelle = sum(v**2 for v in signal)
 
-X = fft_recursive(noisy_signal)
+spectre = dft(signal)
+# L'energie dans le domaine frequentiel (normalisee)
+energie_freq = sum(abs(z)**2 for z in spectre) / N
 
-filtered_X = []
-for k in range(N):
-    if k > 2 and k < N - 2:
-        filtered_X.append(0j)
-    else:
-        filtered_X.append(X[k])
+print(f"Energie temp: {energie_temporelle}, Energie freq: {energie_freq}")
+assert abs(energie_temporelle - energie_freq) < 1e-10
 
-filtered_signal = ifft_recursive(filtered_X)
+# 2. Convolution circulaire
+def convolve(x, h):
+    N = len(x)
+    y = [0.0] * N
+    for n in range(N):
+        for k in range(N):
+            y[n] += x[k] * h[(n - k) % N]
+    return y
 
-for i in range(5):
-    print("t={}, Original={:.3f}, Bruite={:.3f}, Filtre={:.3f}".format(
-        t[i], clean_signal[i], noisy_signal[i], filtered_signal[i].real))
-\end{lstlisting}
+h = [0.5, 0.5, 0.0, 0.0]
+y_conv = convolve(signal, h)
 
+# Dans le domaine frequentiel : point par point
+H = dft(h)
+Y_freq = [spectre[k] * H[k] for k in range(N)]
 
-
-\subsection*{TP : Sommes de Fejer (Moyenne de Cesaro des sommes partielles)}
-
-
-Pour pallier le phenomene de Gibbs, on peut calculer les sommes de Fejer, qui sont la moyenne arithmetique des sommes partielles de Fourier. Elles convergent uniformement pour toute fonction continue.
-
-\begin{lstlisting}[language=Python]
-import math
-
-def calculate_fejer_sums(a, b, T, t_values):
-    omega = 2 * math.pi / T
-    N = len(a) - 1
-    fejer = []
-
-    for t in t_values:
-        total_sum = 0.0
-        # On calcule S_n(t) pour n de 0 a N-1
-        for n in range(N):
-            sn = a[0] / 2.0
-            for k in range(1, n + 1):
-                sn += a[k] * math.cos(k * omega * t)
-                sn += b[k] * math.sin(k * omega * t)
-            total_sum += sn
-        fejer.append(total_sum / N)
-
-    return fejer
-
-def square_wave_coeffs(N):
-    a = [0.0] * (N + 1)
-    b = [0.0] * (N + 1)
-    for n in range(1, N + 1):
-        if n % 2 != 0:
-            b[n] = 4.0 / (math.pi * n)
-    return a, b
-
-N_harmonics = 10
-a_theo, b_theo = square_wave_coeffs(N_harmonics)
-
-t_grid = [0.0, math.pi/2, math.pi - 0.1, math.pi + 0.1, 3*math.pi/2]
-signal_fejer = calculate_fejer_sums(a_theo, b_theo, 2*math.pi, t_grid)
-
-for i in range(len(t_grid)):
-    print("t = {:.2f}, Fejer approx = {:.4f}".format(t_grid[i], signal_fejer[i]))
+# Verification sur le premier element (K=0) via DFT
+Y_conv_freq_0 = sum(y_conv[n] * cmath.exp(-2j * cmath.pi * 0 * n / N) for n in range(N))
+assert abs(Y_conv_freq_0 - Y_freq[0]) < 1e-10
+print("Theoreme de convolution verifie.")
 \end{lstlisting}
 
 

@@ -1,12 +1,20 @@
-## Exercice 6 : Équation différentielle et Fourier \quad \bigstar\bigstar\bigstar\bigstar\star
+# Exercice 6 : Calcul de la série $\sum 1/(n^2+1)$
 
-Résoudre l'équation différentielle $y''(x) + 2y(x) = f(x)$ sur $\mathbb{R}$ en cherchant des solutions $2\pi$-périodiques, avec $f$ une fonction $2\pi$-périodique donnée de classe $C^1$.
+**Difficulté :** \bigstar\bigstar\bigstar\star\star
+
+**Énoncé :**
+En utilisant le résultat de l'exercice précédent pour la fonction $f(t)=e^t$ sur $]-\pi, \pi[$, déduire la valeur de $\sum_{n=1}^{+\infty} \frac{1}{n^2+1}$.
 
 **Correction :**
-On suppose $y$ solution de classe $C^2$ périodique.
-Décomposons en série de Fourier complexe : $y(x) = \sum c_n(y)e^{inx}$, $f(x) = \sum c_n(f)e^{inx}$.
-$y''(x)$ a pour coefficients $(in)^2 c_n(y) = -n^2 c_n(y)$.
-L'équation devient $-n^2 c_n(y) + 2c_n(y) = c_n(f)$ pour tout $n$.
-$(2-n^2)c_n(y) = c_n(f)$. Puisque $n$ est entier, $2-n^2 \neq 0$ pour tout $n$.
-Donc $c_n(y) = \frac{c_n(f)}{2-n^2}$.
-La série $y(x) = \sum_{n \in \mathbb{Z}} \frac{c_n(f)}{2-n^2} e^{inx}$ est solution (la régularité est assurée par la décroissance de $c_n(f)$).
+La série de Fourier est :
+$$S(f)(t) = \frac{\sinh(\pi)}{\pi} + \frac{2\sinh(\pi)}{\pi} \sum_{n=1}^{+\infty} \frac{(-1)^n}{1+n^2} (\cos(nt) - n \sin(nt))$$
+En évaluant en $t=\pi$, nous savons par le théorème de Dirichlet que $S(f)(\pi) = \cosh(\pi)$.
+Par ailleurs, en insérant $t=\pi$ dans la série :
+$$S(f)(\pi) = \frac{\sinh(\pi)}{\pi} + \frac{2\sinh(\pi)}{\pi} \sum_{n=1}^{+\infty} \frac{(-1)^n}{1+n^2} (\cos(n\pi) - n \sin(n\pi))$$
+Or $\cos(n\pi) = (-1)^n$ et $\sin(n\pi) = 0$. Donc $(-1)^n \cos(n\pi) = (-1)^{2n} = 1$.
+$$\cosh(\pi) = \frac{\sinh(\pi)}{\pi} + \frac{2\sinh(\pi)}{\pi} \sum_{n=1}^{+\infty} \frac{1}{1+n^2}$$
+On divise le tout par $\frac{\sinh(\pi)}{\pi}$ :
+$$\frac{\pi \cosh(\pi)}{\sinh(\pi)} = 1 + 2 \sum_{n=1}^{+\infty} \frac{1}{1+n^2}$$
+Soit $\pi \coth(\pi) = 1 + 2 \sum_{n=1}^{+\infty} \frac{1}{1+n^2}$.
+On isole la somme :
+$$\sum_{n=1}^{+\infty} \frac{1}{1+n^2} = \frac{\pi \coth(\pi) - 1}{2}$$
