@@ -1,26 +1,19 @@
-# Exercice 7 : Série de Fourier du cosinus hyperbolique et déduction de série \quad $\bigstar\bigstar\bigstar\bigstar\star$
+# Exercice 7 : Action de l'opérateur de dérivation
+
+**Difficulté :** \bigstar\bigstar\bigstar\bigstar\star
 
 **Énoncé :**
-Déduire de l'Exercice 6 la série de Fourier de la fonction paire $g(t) = \cosh(\lambda t)$ sur $[-\pi, \pi]$. En déduire la somme $\sum_{n=1}^\infty \frac{1}{\lambda^2 + n^2}$.
+Soit $f : \mathbb{R} \to \mathbb{C}$ une fonction $2\pi$-périodique, de classe $C^1$.
+1. Montrer que $c_n(f') = in c_n(f)$ pour tout $n \in \mathbb{Z}$.
+2. En déduire que les coefficients de Fourier de $f$ vérifient $c_n(f) = o(1/n)$ lorsque $|n| \to +\infty$.
 
-**Correction Détaillée :**
-
-1. \textbf{Calcul de la série par parité :}
-   $g(t) = \frac{1}{2}(e^{\lambda t} + e^{-\lambda t})$. On peut sommer les séries de Fourier par linéarité.
-   Mais plus directement, $g$ est paire donc $b_n = 0$.
-   $$ a_n = c_n + c_{-n} = \frac{(-1)^n \sinh(\lambda\pi)}{\pi(\lambda^2 + n^2)} (\lambda + in + \lambda - in) = \frac{2\lambda (-1)^n \sinh(\lambda\pi)}{\pi(\lambda^2 + n^2)} $$
-   Et pour $n=0$ : $a_0 = \frac{\sinh(\lambda\pi)}{\lambda\pi}$.
-   La série trigonométrique est donc :
-   $$ \cosh(\lambda t) = \frac{\sinh(\lambda\pi)}{\lambda\pi} + \frac{2\lambda\sinh(\lambda\pi)}{\pi} \sum_{n=1}^\infty \frac{(-1)^n}{\lambda^2 + n^2} \cos(nt) $$
-   (Égalité stricte car $\cosh$ est continue et $C^1$ par morceaux).
-
-2. \textbf{Évaluation en $t=\pi$ :}
-   Pour retrouver la somme demandée, on évalue en $t=\pi$. On a $\cos(n\pi) = (-1)^n$, donc $(-1)^n \cos(n\pi) = 1$.
-   $$ \cosh(\lambda\pi) = \frac{\sinh(\lambda\pi)}{\lambda\pi} + \frac{2\lambda\sinh(\lambda\pi)}{\pi} \sum_{n=1}^\infty \frac{1}{\lambda^2 + n^2} $$
-
-3. \textbf{Isolement de la série :}
-   On divise tout par $\frac{\sinh(\lambda\pi)}{\pi}$ :
-   $$ \frac{\pi \cosh(\lambda\pi)}{\sinh(\lambda\pi)} = \frac{1}{\lambda} + 2\lambda \sum_{n=1}^\infty \frac{1}{\lambda^2 + n^2} $$
-   $$ \pi \coth(\lambda\pi) = \frac{1}{\lambda} + 2\lambda \sum_{n=1}^\infty \frac{1}{\lambda^2 + n^2} $$
-   Donc :
-   $$ \sum_{n=1}^\infty \frac{1}{\lambda^2 + n^2} = \frac{\pi \coth(\lambda\pi) - 1/\lambda}{2\lambda} $$
+**Correction :**
+1. Par définition, les coefficients de Fourier de la dérivée $f'$ sont :
+   $$c_n(f') = \frac{1}{2\pi} \int_0^{2\pi} f'(t) e^{-int} dt$$
+   Puisque $f$ est de classe $C^1$, nous effectuons une intégration par parties avec $u = e^{-int}$ et $v' = f'$, de sorte que $u' = -in e^{-int}$ et $v = f$.
+   $$c_n(f') = \frac{1}{2\pi} \left( \left[ f(t) e^{-int} \right]_0^{2\pi} - \int_0^{2\pi} f(t) (-in) e^{-int} dt \right)$$
+   Le terme tout intégré s'écrit $\frac{1}{2\pi} (f(2\pi) e^{-in 2\pi} - f(0) e^0)$. Puisque $f$ est $2\pi$-périodique, $f(2\pi) = f(0)$ et $e^{-2in\pi} = 1$, le terme s'annule strictement.
+   $$c_n(f') = \frac{in}{2\pi} \int_0^{2\pi} f(t) e^{-int} dt = in c_n(f)$$
+2. La fonction $f'$ est continue, donc de carré intégrable. Par le Lemme de Riemann-Lebesgue (ou l'inégalité de Bessel appliquée à $f'$), on sait que les coefficients de Fourier $c_n(f')$ tendent vers $0$ quand $|n| \to \infty$.
+   Or, $c_n(f') = in c_n(f) \implies c_n(f) = \frac{c_n(f')}{in}$.
+   Comme $c_n(f') \to 0$, nous avons $n c_n(f) \to 0$, ce qui signifie exactement que $c_n(f) = o(1/n)$.

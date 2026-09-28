@@ -1,23 +1,19 @@
-# Exercice 8 : Produit de signaux et décalage en fréquence \quad $\bigstar\bigstar\bigstar\bigstar\star$
+# Exercice 8 : Produit de convolution de séries de Fourier
+
+**Difficulté :** \bigstar\bigstar\bigstar\bigstar\star
 
 **Énoncé :**
-Soit $f$ une fonction $2\pi$-périodique de coefficients de Fourier $c_n(f)$. On définit le signal modulé $g(t) = f(t) \cos(n_0 t)$ pour un entier $n_0 > 0$. Exprimer les $c_n(g)$ en fonction des $c_k(f)$.
+Soient $f$ et $g$ deux fonctions $2\pi$-périodiques continues. On définit leur produit de convolution $h = f * g$ par :
+$$h(x) = \frac{1}{2\pi} \int_0^{2\pi} f(t) g(x-t) dt$$
+Montrer que $c_n(h) = c_n(f) c_n(g)$ pour tout $n \in \mathbb{Z}$.
 
-**Correction Détaillée :**
-
-1. \textbf{Utilisation des formules d'Euler :}
-   On sait que $\cos(n_0 t) = \frac{e^{in_0 t} + e^{-in_0 t}}{2}$.
-   Ainsi, on peut écrire :
-   $$ g(t) = f(t) \frac{e^{in_0 t} + e^{-in_0 t}}{2} = \frac{1}{2} f(t)e^{in_0 t} + \frac{1}{2} f(t)e^{-in_0 t} $$
-
-2. \textbf{Calcul du coefficient $c_n(g)$ par linéarité :}
-   Par définition :
-   $$ c_n(g) = \frac{1}{2\pi} \int_0^{2\pi} \left( \frac{1}{2} f(t)e^{in_0 t} + \frac{1}{2} f(t)e^{-in_0 t} \right) e^{-int} dt $$
-   $$ c_n(g) = \frac{1}{2} \left( \frac{1}{2\pi} \int_0^{2\pi} f(t) e^{-i(n-n_0)t} dt + \frac{1}{2\pi} \int_0^{2\pi} f(t) e^{-i(n+n_0)t} dt \right) $$
-
-3. \textbf{Identification avec les $c_k(f)$ :}
-   L'intégrale $\frac{1}{2\pi} \int_0^{2\pi} f(t) e^{-i(n-n_0)t} dt$ est exactement la définition de $c_{n-n_0}(f)$.
-   De même, la seconde intégrale est $c_{n+n_0}(f)$.
-   Ainsi :
-   $$ c_n(g) = \frac{1}{2} (c_{n-n_0}(f) + c_{n+n_0}(f)) $$
-   Cette propriété est fondamentale en télécommunications (modulation de fréquence), car elle montre que multiplier un signal par un cosinus décale son spectre d'une valeur $n_0$ vers la droite et vers la gauche.
+**Correction :**
+Calculons le coefficient de Fourier de $h$ :
+$$c_n(h) = \frac{1}{2\pi} \int_0^{2\pi} h(x) e^{-inx} dx = \frac{1}{2\pi} \int_0^{2\pi} \left( \frac{1}{2\pi} \int_0^{2\pi} f(t) g(x-t) dt \right) e^{-inx} dx$$
+En invoquant le théorème de Fubini (les fonctions étant continues, l'intégrale double est absolument convergente), on intervertit les intégrales :
+$$c_n(h) = \frac{1}{(2\pi)^2} \int_0^{2\pi} f(t) \left( \int_0^{2\pi} g(x-t) e^{-inx} dx \right) dt$$
+Faisons le changement de variable $u = x - t$ dans l'intégrale interne (donc $dx = du$). Puisque les fonctions à intégrer sont $2\pi$-périodiques, l'intégrale sur $[ -t, 2\pi-t ]$ est égale à l'intégrale sur $[ 0, 2\pi ]$.
+$$\int_0^{2\pi} g(x-t) e^{-inx} dx = \int_0^{2\pi} g(u) e^{-in(u+t)} du = e^{-int} \int_0^{2\pi} g(u) e^{-inu} du = 2\pi e^{-int} c_n(g)$$
+On réinjecte cette expression dans l'intégrale externe :
+$$c_n(h) = \frac{1}{(2\pi)^2} \int_0^{2\pi} f(t) \left( 2\pi e^{-int} c_n(g) \right) dt = c_n(g) \frac{1}{2\pi} \int_0^{2\pi} f(t) e^{-int} dt = c_n(g) c_n(f)$$
+Ainsi, $c_n(h) = c_n(f) c_n(g)$. Ce résultat fondamental justifie l'utilisation des séries de Fourier dans l'étude des filtres linéaires.

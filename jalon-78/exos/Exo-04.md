@@ -1,24 +1,21 @@
-# Exercice 4 : Problème de Bâle via Fourier \quad $\bigstar\bigstar\star\star\star$
+# Exercice 4 : Application aux séries alternées
+
+**Difficulté :** \bigstar\bigstar\star\star\star
 
 **Énoncé :**
-En utilisant le résultat de l'Exercice 3, démontrer la formule $\sum_{n=1}^{+\infty} \frac{1}{n^2} = \frac{\pi^2}{6}$.
+Soit $f$ la fonction $2\pi$-périodique, telle que $f(t) = t^2$ sur $[-\pi, \pi]$.
+1. Évaluer la série de Fourier de $f$ en $t=0$.
+2. En déduire la valeur de la somme de la série alternée $\sum_{n=1}^{+\infty} \frac{(-1)^{n+1}}{n^2}$.
 
-**Correction Détaillée :**
-
-1. \textbf{Choix du point d'évaluation :}
-   On repart de la série de la fonction $f(t) = t^2$ sur $[-\pi, \pi]$ :
-   $$ f(t) = \frac{\pi^2}{3} + 4 \sum_{n=1}^{+\infty} \frac{(-1)^n}{n^2} \cos(nt) $$
-   Pour éliminer le terme alterné $(-1)^n$, le choix optimal est $t = \pi$, car $\cos(n\pi) = (-1)^n$.
-
-2. \textbf{Calcul de la série évaluée :}
-   On a $f(\pi) = \pi^2$.
-   En injectant $t=\pi$ dans la série :
-   $$ \pi^2 = \frac{\pi^2}{3} + 4 \sum_{n=1}^{+\infty} \frac{(-1)^n}{n^2} (-1)^n $$
-   Or $(-1)^n \times (-1)^n = (-1)^{2n} = 1$.
-   $$ \pi^2 - \frac{\pi^2}{3} = 4 \sum_{n=1}^{+\infty} \frac{1}{n^2} $$
-   $$ \frac{2\pi^2}{3} = 4 \sum_{n=1}^{+\infty} \frac{1}{n^2} $$
-
-3. \textbf{Conclusion :}
-   En divisant par 4 :
-   $$ \sum_{n=1}^{+\infty} \frac{1}{n^2} = \frac{2\pi^2}{3 \times 4} = \frac{\pi^2}{6} $$
-   C'est la solution classique apportée par Euler au problème de Bâle.
+**Correction :**
+1. La série de Fourier de $f$ a été calculée :
+   $$S(f)(t) = \frac{\pi^2}{3} + 4 \sum_{n=1}^{+\infty} \frac{(-1)^n}{n^2} \cos(nt)$$
+   La fonction est continue en $0$, donc par le théorème de Dirichlet, $S(f)(0) = f(0) = 0$.
+2. En évaluant à $t=0$, on obtient $\cos(0) = 1$. L'égalité s'écrit :
+   $$\frac{\pi^2}{3} + 4 \sum_{n=1}^{+\infty} \frac{(-1)^n}{n^2} = 0$$
+   On réarrange pour isoler la somme :
+   $$4 \sum_{n=1}^{+\infty} \frac{(-1)^n}{n^2} = -\frac{\pi^2}{3}$$
+   En multipliant par $-1$ de chaque côté :
+   $$4 \sum_{n=1}^{+\infty} \frac{(-1)^{n+1}}{n^2} = \frac{\pi^2}{3}$$
+   D'où :
+   $$\sum_{n=1}^{+\infty} \frac{(-1)^{n+1}}{n^2} = \frac{\pi^2}{12}$$
