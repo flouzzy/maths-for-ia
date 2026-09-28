@@ -1,23 +1,19 @@
-# Équation différentielle et Fourier
+# Exercice 7 : Action de l'opérateur de dérivation
 
-$\bigstar\bigstar\bigstar\bigstar\star$
+**Difficulté :** \bigstar\bigstar\bigstar\bigstar\star
 
-Trouver toutes les solutions $2\pi$-périodiques et de classe $C^2$ de l'équation différentielle :
-$$ y''(t) + 2y'(t) + 2y(t) = \sin^2(t) $$
+**Énoncé :**
+Soit $f : \mathbb{R} \to \mathbb{C}$ une fonction $2\pi$-périodique, de classe $C^1$.
+1. Montrer que $c_n(f') = in c_n(f)$ pour tout $n \in \mathbb{Z}$.
+2. En déduire que les coefficients de Fourier de $f$ vérifient $c_n(f) = o(1/n)$ lorsque $|n| \to +\infty$.
 
-**Correction détaillée :**
-1. Étude du second membre. On linéarise $\sin^2(t) = \frac{1 - \cos(2t)}{2} = \frac{1}{2} - \frac{1}{2}\cos(2t)$.
-2. Recherche de solutions en série de Fourier. Si $y$ est une solution $2\pi$-périodique $C^2$, elle se développe en série de Fourier (qui converge normalement vers $y$).
-   Posons $y(t) = \sum_{n \in \mathbb{Z}} c_n e^{int}$.
-   Alors $y'(t) = \sum_{n \in \mathbb{Z}} (in) c_n e^{int}$ et $y''(t) = \sum_{n \in \mathbb{Z}} (-n^2) c_n e^{int}$.
-   L'équation devient :
-   $$ \sum_{n \in \mathbb{Z}} c_n (-n^2 + 2in + 2) e^{int} = \frac{1}{2} e^{i0t} - \frac{1}{4} e^{i2t} - \frac{1}{4} e^{-i2t} $$
-3. Par unicité des coefficients de Fourier, on identifie terme à terme.
-   - Pour $n=0$ : $c_0(2) = 1/2 \implies c_0 = 1/4$.
-   - Pour $n=2$ : $c_2(-4 + 4i + 2) = -1/4 \implies c_2(-2 + 4i) = -1/4 \implies c_2 = \frac{-1}{4(-2+4i)} = \frac{-1}{8(-1+2i)} = \frac{-( -1 - 2i )}{8(1^2 + 2^2)} = \frac{1+2i}{40}$.
-   - Pour $n=-2$ : $c_{-2}(-4 - 4i + 2) = -1/4 \implies c_{-2} = \frac{-1}{4(-2-4i)} = \frac{1-2i}{40}$.
-   - Pour $n \notin \{-2, 0, 2\}$ : le second membre est nul, donc $c_n(-n^2+2in+2) = 0$. Comme $-n^2+2$ n'est jamais nul pour $n$ entier, $c_n = 0$.
-4. Recomposition de la solution réelle.
-   $$ y(t) = \frac{1}{4} + c_2 e^{i2t} + c_{-2} e^{-i2t} = \frac{1}{4} + \frac{1+2i}{40}(\cos 2t + i\sin 2t) + \frac{1-2i}{40}(\cos 2t - i\sin 2t) $$
-   $$ y(t) = \frac{1}{4} + 2 \text{Re}(c_2 e^{i2t}) = \frac{1}{4} + \frac{2}{40} (\cos(2t) - 2\sin(2t)) = \frac{1}{4} + \frac{1}{20}\cos(2t) - \frac{1}{10}\sin(2t) $$
-   L'unique solution périodique est $y(t) = \frac{1}{4} + \frac{1}{20}\cos(2t) - \frac{1}{10}\sin(2t)$.
+**Correction :**
+1. Par définition, les coefficients de Fourier de la dérivée $f'$ sont :
+   $$c_n(f') = \frac{1}{2\pi} \int_0^{2\pi} f'(t) e^{-int} dt$$
+   Puisque $f$ est de classe $C^1$, nous effectuons une intégration par parties avec $u = e^{-int}$ et $v' = f'$, de sorte que $u' = -in e^{-int}$ et $v = f$.
+   $$c_n(f') = \frac{1}{2\pi} \left( \left[ f(t) e^{-int} \right]_0^{2\pi} - \int_0^{2\pi} f(t) (-in) e^{-int} dt \right)$$
+   Le terme tout intégré s'écrit $\frac{1}{2\pi} (f(2\pi) e^{-in 2\pi} - f(0) e^0)$. Puisque $f$ est $2\pi$-périodique, $f(2\pi) = f(0)$ et $e^{-2in\pi} = 1$, le terme s'annule strictement.
+   $$c_n(f') = \frac{in}{2\pi} \int_0^{2\pi} f(t) e^{-int} dt = in c_n(f)$$
+2. La fonction $f'$ est continue, donc de carré intégrable. Par le Lemme de Riemann-Lebesgue (ou l'inégalité de Bessel appliquée à $f'$), on sait que les coefficients de Fourier $c_n(f')$ tendent vers $0$ quand $|n| \to \infty$.
+   Or, $c_n(f') = in c_n(f) \implies c_n(f) = \frac{c_n(f')}{in}$.
+   Comme $c_n(f') \to 0$, nous avons $n c_n(f) \to 0$, ce qui signifie exactement que $c_n(f) = o(1/n)$.

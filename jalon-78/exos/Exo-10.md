@@ -1,28 +1,22 @@
-# Théorème de Féjèr et moyenne de Cesàro
+# Exercice 10 : Phénomène de Gibbs
 
-$\bigstar\bigstar\bigstar\bigstar\bigstar$
+**Difficulté :** \bigstar\bigstar\bigstar\bigstar\bigstar
 
-Soit $f$ une fonction continue et $2\pi$-périodique. On note $S_k(f)$ la somme partielle de sa série de Fourier.
-On définit les sommes de Cesàro $\sigma_N(f)(x) = \frac{1}{N} \sum_{k=0}^{N-1} S_k(f)(x)$.
-Montrer que $\sigma_N(f)$ converge uniformément vers $f$ sur $\mathbb{R}$.
+**Énoncé :**
+Le signal carré impair est donné par $f(t) = 1$ sur $]0, \pi[$ et $f(t) = -1$ sur $]-\pi, 0[$. La série de Fourier de $f$ est $S(f)(t) = \frac{4}{\pi} \sum_{k=0}^{+\infty} \frac{\sin((2k+1)t)}{2k+1}$.
+Considérons la somme partielle $S_N(f)(t) = \frac{4}{\pi} \sum_{k=0}^N \frac{\sin((2k+1)t)}{2k+1}$.
+Montrer que $S_N(f)'(t) = \frac{2}{\pi} \frac{\sin(2(N+1)t)}{\sin(t)}$ et en déduire l'abscisse du premier maximum local de $S_N$ sur $]0, \pi[$.
 
-**Correction détaillée :**
-1. Noyau de Féjèr. On sait que $S_k(f)(x) = \frac{1}{2\pi} \int_{-\pi}^\pi f(x-t) D_k(t) dt$ où $D_k(t) = \frac{\sin((k+1/2)t)}{\sin(t/2)}$.
-   Par linéarité, $\sigma_N(f)(x) = \frac{1}{2\pi} \int_{-\pi}^\pi f(x-t) K_N(t) dt$ où $K_N(t) = \frac{1}{N} \sum_{k=0}^{N-1} D_k(t)$ est le noyau de Féjèr.
-2. Calcul de $K_N(t)$.
-   $$ K_N(t) = \frac{1}{N \sin(t/2)} \sum_{k=0}^{N-1} \sin((k+1/2)t) $$
-   C'est la partie imaginaire de $\sum e^{i(k+1/2)t} = e^{it/2} \frac{1 - e^{iNt}}{1 - e^{it}} = e^{it/2} \frac{e^{iNt/2}(-2i\sin(Nt/2))}{-2i\sin(t/2) e^{it/2}} = \frac{e^{iNt/2} \sin(Nt/2)}{\sin(t/2)}$.
-   Sa partie imaginaire est $\frac{\sin^2(Nt/2)}{\sin(t/2)}$.
-   Donc $K_N(t) = \frac{1}{N} \left( \frac{\sin(Nt/2)}{\sin(t/2)} \right)^2$.
-3. Propriétés cruciales de $K_N$ :
-   - $K_N(t) \ge 0$ pour tout $t$. C'est fondamental car cela évite le phénomène de Gibbs causé par l'oscillation du noyau de Dirichlet.
-   - $\frac{1}{2\pi} \int_{-\pi}^\pi K_N(t) dt = \frac{1}{N} \sum \frac{1}{2\pi} \int D_k = \frac{1}{N} \sum_{k=0}^{N-1} 1 = 1$.
-   - Pour tout $\delta \in ]0, \pi[$, $\lim_{N \to \infty} \sup_{t \in [\delta, \pi]} K_N(t) = 0$ car le numérateur est majoré par 1, et le dénominateur est minoré par $\sin^2(\delta/2) > 0$, avec le facteur $1/N$ qui fait tendre vers 0.
-4. Convergence.
-   $$ |\sigma_N(f)(x) - f(x)| = \left| \frac{1}{2\pi} \int_{-\pi}^\pi (f(x-t) - f(x)) K_N(t) dt \right| \le \frac{1}{2\pi} \int_{-\pi}^\pi |f(x-t) - f(x)| K_N(t) dt $$
-   Soit $\epsilon > 0$. $f$ est continue sur le compact $[-\pi, \pi]$, donc uniformément continue (théorème de Heine). Il existe $\delta > 0$ tel que $|t| \le \delta \implies |f(x-t) - f(x)| \le \epsilon/2$.
-   On coupe l'intégrale en deux : $|t| \le \delta$ et $\delta \le |t| \le \pi$.
-   - Sur $[-\delta, \delta]$ : $\frac{1}{2\pi} \int |f-f| K_N \le \frac{\epsilon}{2} \frac{1}{2\pi} \int K_N \le \frac{\epsilon}{2}$.
-   - Sur $[\delta, \pi] \cup [-\pi, -\delta]$ : $f$ est bornée par $M$. $|f(x-t) - f(x)| \le 2M$.
-     L'intégrale est majorée par $2M \times (\sup_{|t| \ge \delta} K_N(t))$. Puisque ce sup tend vers 0, il existe $N_0$ tel que pour $N \ge N_0$, $2M \sup K_N < \epsilon/2$.
-   Finalement, pour $N \ge N_0$, $|\sigma_N(f)(x) - f(x)| \le \epsilon$, indépendamment de $x$. La convergence est bien uniforme.
+**Correction :**
+1. Dérivons la somme partielle :
+   $$S_N(f)'(t) = \frac{4}{\pi} \sum_{k=0}^N \cos((2k+1)t)$$
+2. Pour calculer cette somme, multiplions par $\sin(t)$ et utilisons la formule trigonométrique $2 \cos(A) \sin(B) = \sin(A+B) - \sin(A-B)$ :
+   $$\sin(t) S_N(f)'(t) = \frac{2}{\pi} \sum_{k=0}^N 2 \cos((2k+1)t) \sin(t) = \frac{2}{\pi} \sum_{k=0}^N \left( \sin((2k+2)t) - \sin(2kt) \right)$$
+   C'est une somme télescopique :
+   $$\sin(t) S_N(f)'(t) = \frac{2}{\pi} \left( \sin(2(N+1)t) - \sin(0) \right) = \frac{2}{\pi} \sin(2(N+1)t)$$
+   D'où $S_N(f)'(t) = \frac{2}{\pi} \frac{\sin(2(N+1)t)}{\sin(t)}$.
+3. Le premier maximum local sur $]0, \pi[$ correspond à la première racine positive de la dérivée.
+   La dérivée s'annule quand $\sin(2(N+1)t) = 0$, donc pour $2(N+1)t = \pi, 2\pi, \dots$
+   La première racine strictement positive est obtenue pour :
+   $$t_N = \frac{\pi}{2(N+1)}$$
+   À ce point, la valeur du signal approche $\frac{2}{\pi} \int_0^\pi \frac{\sin(x)}{x} dx \approx 1.1789$, soit un dépassement brutal d'environ 18% au-dessus du plafond $1$. C'est le célèbre phénomène de Gibbs.

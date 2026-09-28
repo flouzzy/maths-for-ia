@@ -1,23 +1,24 @@
-# Régularité et décroissance des coefficients
+# Exercice 5 : Calcul avec un signal non centré
 
-$\bigstar\bigstar\bigstar\star\star$
+**Difficulté :** \bigstar\bigstar\bigstar\star\star
 
-Soit $f$ une fonction $2\pi$-périodique de classe $C^k$ sur $\mathbb{R}$.
-1. Démontrer, à l'aide d'intégrations par parties, que $c_n(f') = in c_n(f)$.
-2. En déduire que $c_n(f^{(k)}) = (in)^k c_n(f)$.
-3. Montrer que $c_n(f) = o(1/n^k)$ quand $|n| \to +\infty$.
+**Énoncé :**
+Soit $f$ la fonction $2\pi$-périodique définie par $f(t) = e^t$ sur $]-\pi, \pi[$.
+1. Calculer les coefficients complexes de Fourier $c_n$ de $f$.
+2. Écrire la série de Fourier en utilisant la notation réelle.
+3. Que vaut la série en $t=\pi$ ?
 
-**Correction détaillée :**
-1. Calculons $c_n(f')$ par définition :
-   $$ c_n(f') = \frac{1}{2\pi} \int_{-\pi}^\pi f'(t) e^{-int} dt $$
-   On intègre par parties avec $u = e^{-int}$ et $v' = f'(t)$. Les fonctions sont $C^1$.
-   $$ c_n(f') = \frac{1}{2\pi} \left( [f(t) e^{-int}]_{-\pi}^\pi - \int_{-\pi}^\pi f(t) (-in) e^{-int} dt \right) $$
-   Puisque $f$ et $t \mapsto e^{-int}$ sont $2\pi$-périodiques, leurs valeurs en $\pi$ et $-\pi$ sont égales. Donc $[f(t) e^{-int}]_{-\pi}^\pi = 0$.
-   $$ c_n(f') = \frac{in}{2\pi} \int_{-\pi}^\pi f(t) e^{-int} dt = in \, c_n(f) $$
-2. Par une récurrence immédiate. C'est vrai pour $k=1$. Supposons $c_n(f^{(p)}) = (in)^p c_n(f)$. Alors pour $f^{(p+1)} = (f^{(p)})'$, la fonction est $C^1$ car $f \in C^k$ et $p < k$.
-   $$ c_n(f^{(p+1)}) = in \, c_n(f^{(p)}) = in (in)^p c_n(f) = (in)^{p+1} c_n(f) $$
-   Donc $c_n(f^{(k)}) = (in)^k c_n(f)$.
-3. Puisque $f^{(k)}$ est continue sur $[-\pi, \pi]$, elle est intégrable, et on peut lui appliquer le lemme de Riemann-Lebesgue :
-   $$ \lim_{|n| \to +\infty} c_n(f^{(k)}) = 0 $$
-   Or $c_n(f^{(k)}) = (in)^k c_n(f)$, ce qui implique que $|n|^k |c_n(f)| \to 0$ quand $|n| \to +\infty$.
-   Ceci se réécrit exactement : $|c_n(f)| = o(\frac{1}{|n|^k})$, ce qui montre que la décroissance des coefficients de Fourier est d'autant plus rapide que la fonction est régulière (indéfiniment dérivable implique décroissance plus rapide que toute puissance inverse).
+**Correction :**
+1. Calcul des coefficients complexes $c_n$ :
+   $$c_n = \frac{1}{2\pi} \int_{-\pi}^\pi e^t e^{-int} dt = \frac{1}{2\pi} \int_{-\pi}^\pi e^{(1-in)t} dt$$
+   $$c_n = \frac{1}{2\pi} \left[ \frac{e^{(1-in)t}}{1-in} \right]_{-\pi}^\pi = \frac{1}{2\pi (1-in)} (e^{(1-in)\pi} - e^{-(1-in)\pi})$$
+   Or, $e^{-in\pi} = (-1)^n = e^{in\pi}$. On obtient donc :
+   $$c_n = \frac{(-1)^n}{2\pi (1-in)} (e^\pi - e^{-\pi}) = \frac{(-1)^n \sinh(\pi)}{\pi (1-in)}$$
+   En multipliant le dénominateur par son conjugué $1+in$ :
+   $$c_n = \frac{(-1)^n \sinh(\pi)}{\pi (1+n^2)} (1+in)$$
+2. Pour repasser aux coefficients réels, on a $a_n = c_n + c_{-n}$ et $b_n = i(c_n - c_{-n})$.
+   $$a_n = 2 \text{Re}(c_n) = \frac{2(-1)^n \sinh(\pi)}{\pi (1+n^2)}$$
+   $$b_n = -2 \text{Im}(c_n) = -\frac{2(-1)^n n \sinh(\pi)}{\pi (1+n^2)}$$
+   La série s'écrit (avec $a_0 = 2\frac{\sinh(\pi)}{\pi}$) :
+   $$S(f)(t) = \frac{\sinh(\pi)}{\pi} + \frac{2\sinh(\pi)}{\pi} \sum_{n=1}^{+\infty} \frac{(-1)^n}{1+n^2} (\cos(nt) - n \sin(nt))$$
+3. La fonction est de classe $C^1$ par morceaux, avec une discontinuité en $\pi$. Selon le théorème de Dirichlet, la série en $t=\pi$ converge vers $\frac{f(\pi^-) + f(-\pi^+)}{2} = \frac{e^\pi + e^{-\pi}}{2} = \cosh(\pi)$.

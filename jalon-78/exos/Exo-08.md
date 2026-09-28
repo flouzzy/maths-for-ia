@@ -1,21 +1,19 @@
-# Phénomène de Gibbs pour un signal créneau
+# Exercice 8 : Produit de convolution de séries de Fourier
 
-$\bigstar\bigstar\bigstar\bigstar\star$
+**Difficulté :** \bigstar\bigstar\bigstar\bigstar\star
 
-Soit $f$ impaire, $2\pi$-périodique, valant $1$ sur $]0, \pi[$.
-On note $S_N(t) = \frac{4}{\pi} \sum_{k=0}^N \frac{\sin((2k+1)t)}{2k+1}$.
-Montrer que $S_N' (t) = \frac{2}{\pi} \frac{\sin(2(N+1)t)}{\sin(t)}$ et en déduire que le maximum local de $S_N$ sur $]0, \pi[$ se trouve en $t_N = \frac{\pi}{2(N+1)}$, et tend vers une valeur strictement supérieure à 1.
+**Énoncé :**
+Soient $f$ et $g$ deux fonctions $2\pi$-périodiques continues. On définit leur produit de convolution $h = f * g$ par :
+$$h(x) = \frac{1}{2\pi} \int_0^{2\pi} f(t) g(x-t) dt$$
+Montrer que $c_n(h) = c_n(f) c_n(g)$ pour tout $n \in \mathbb{Z}$.
 
-**Correction détaillée :**
-1. Dérivation de la somme partielle :
-   $$ S_N'(t) = \frac{4}{\pi} \sum_{k=0}^N \cos((2k+1)t) $$
-   C'est la partie réelle de $\frac{4}{\pi} \sum_{k=0}^N e^{i(2k+1)t}$.
-   $$ \sum_{k=0}^N e^{i(2k+1)t} = e^{it} \sum_{k=0}^N e^{2ikt} = e^{it} \frac{1 - e^{i2(N+1)t}}{1 - e^{2it}} = e^{it} \frac{e^{i(N+1)t}(e^{-i(N+1)t} - e^{i(N+1)t})}{e^{it}(e^{-it} - e^{it})} $$
-   $$ = \frac{-2i\sin((N+1)t) e^{i(N+1)t}}{-2i\sin(t)} = e^{i(N+1)t} \frac{\sin((N+1)t)}{\sin(t)} $$
-   En prenant la partie réelle : $\cos((N+1)t) \frac{\sin((N+1)t)}{\sin(t)} = \frac{1}{2} \frac{\sin(2(N+1)t)}{\sin(t)}$.
-   Donc $S_N'(t) = \frac{4}{\pi} \times \frac{1}{2} \frac{\sin(2(N+1)t)}{\sin(t)} = \frac{2}{\pi} \frac{\sin(2(N+1)t)}{\sin(t)}$.
-2. Recherche du maximum. $S_N'$ s'annule en changeant de signe (de + à -) pour la première fois sur $]0, \pi[$ lorsque $2(N+1)t = \pi$, soit $t_N = \frac{\pi}{2(N+1)}$.
-3. Valeur du maximum en $t_N$ :
-   $$ S_N(t_N) = \frac{4}{\pi} \sum_{k=0}^N \frac{\sin((2k+1)\frac{\pi}{2(N+1)})}{2k+1} = \frac{2}{\pi} \sum_{k=0}^N \frac{\sin(\frac{2k+1}{2N+2}\pi)}{\frac{2k+1}{2N+2}} \frac{2}{2N+2} $$
-   Ceci est une somme de Riemann pour l'intégrale $\frac{2}{\pi} \int_0^1 \frac{\sin(\pi x)}{x} dx = \frac{2}{\pi} \int_0^\pi \frac{\sin(u)}{u} du$.
-   Numériquement, $\int_0^\pi \frac{\sin(u)}{u} du \approx 1.85$. Ainsi, le pic tend vers $\frac{2}{\pi} \times 1.85 \approx 1.18$. Le "dépassement" (overshoot) aux abords de la discontinuité est donc d'environ $9\%$. C'est le phénomène de Gibbs.
+**Correction :**
+Calculons le coefficient de Fourier de $h$ :
+$$c_n(h) = \frac{1}{2\pi} \int_0^{2\pi} h(x) e^{-inx} dx = \frac{1}{2\pi} \int_0^{2\pi} \left( \frac{1}{2\pi} \int_0^{2\pi} f(t) g(x-t) dt \right) e^{-inx} dx$$
+En invoquant le théorème de Fubini (les fonctions étant continues, l'intégrale double est absolument convergente), on intervertit les intégrales :
+$$c_n(h) = \frac{1}{(2\pi)^2} \int_0^{2\pi} f(t) \left( \int_0^{2\pi} g(x-t) e^{-inx} dx \right) dt$$
+Faisons le changement de variable $u = x - t$ dans l'intégrale interne (donc $dx = du$). Puisque les fonctions à intégrer sont $2\pi$-périodiques, l'intégrale sur $[ -t, 2\pi-t ]$ est égale à l'intégrale sur $[ 0, 2\pi ]$.
+$$\int_0^{2\pi} g(x-t) e^{-inx} dx = \int_0^{2\pi} g(u) e^{-in(u+t)} du = e^{-int} \int_0^{2\pi} g(u) e^{-inu} du = 2\pi e^{-int} c_n(g)$$
+On réinjecte cette expression dans l'intégrale externe :
+$$c_n(h) = \frac{1}{(2\pi)^2} \int_0^{2\pi} f(t) \left( 2\pi e^{-int} c_n(g) \right) dt = c_n(g) \frac{1}{2\pi} \int_0^{2\pi} f(t) e^{-int} dt = c_n(g) c_n(f)$$
+Ainsi, $c_n(h) = c_n(f) c_n(g)$. Ce résultat fondamental justifie l'utilisation des séries de Fourier dans l'étude des filtres linéaires.
