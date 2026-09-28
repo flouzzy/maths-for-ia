@@ -1,0 +1,774 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes,calc}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge CONVERGENCE $L^2$ ET IDENTITÉ DE PARSEVAL \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+
+\section{Introduction}
+
+
+L'étude des séries de Fourier nous permet de décomposer une fonction périodique en une somme infinie de sinus et cosinus, ou de façon équivalente, d'exponentielles complexes. Mais en quel sens cette série converge-t-elle vers la fonction initiale ? Le théorème de convergence de Dirichlet (vu au Jalon précédent) donne des conditions suffisantes pour une convergence ponctuelle. Cependant, dans de nombreux problèmes physiques et d'ingénierie, il est plus pertinent de s'intéresser à l'énergie globale du signal plutôt qu'à sa valeur exacte en chaque point isolé.
+
+Imaginez que vous démontiez une voiture pour la vendre en pièces détachées. La voiture entière a un certain poids total, représentant sa "masse". Vous la démontez en sous-composants : le moteur, les roues, les boulons. L'Identité de Parseval stipule que le poids total de la voiture assemblée est rigoureusement égal à la somme des poids de toutes les pièces détachées. Aucune masse n'est perdue ni créée lors du démontage.
+
+En traitement du signal, le "poids" correspond à l'énergie du signal, définie par l'intégrale de son carré (la norme $L^2$). Les "pièces détachées" sont les composantes fréquentielles pures, dont le "poids" est donné par le carré des coefficients de Fourier. L'Identité de Parseval affirme que l'énergie totale calculée dans le domaine temporel (l'onde continue) est égale à la somme des énergies de ses harmoniques calculées dans le domaine fréquentiel.
+
+Historiquement, cette égalité profonde a permis de résoudre des problèmes autrement insolubles. Parfois, calculer l'intégrale du carré d'une fonction complexe est ardu, mais si ses coefficients de Fourier sont simples, on peut trouver la réponse par une somme infinie de termes. Inversement, l'identité de Parseval offre une méthode spectaculaire pour calculer la valeur exacte de séries numériques complexes en les identifiant à l'énergie d'un signal connu (comme la somme des inverses des carrés d'entiers $\sum \frac{1}{n^2}$).
+
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % Axes
+    \draw[->] (-0.2,0) -- (4,0) node[right] {$n$ (fréquence)};
+    \draw[->] (0,-0.2) -- (0,3) node[above] {$|c_n|^2$ (énergie)};
+
+    % Energy bars
+    \draw[line width=4pt, blue] (0.5,0) -- (0.5, 2.5) node[above, black] {$2.5$};
+    \draw[line width=4pt, blue] (1.5,0) -- (1.5, 1.2) node[above, black] {$1.2$};
+    \draw[line width=4pt, blue] (2.5,0) -- (2.5, 0.4) node[above, black] {$0.4$};
+    \draw[line width=4pt, blue] (3.5,0) -- (3.5, 0.1) node[above, black] {$0.1$};
+
+    \node at (2, -0.5) {\textit{Spectre d'énergie: la somme des barres est l'énergie totale}};
+\end{tikzpicture}
+\end{center}
+
+\section{Formalisation et Rigueur Mathématique}
+
+
+\subsection{Cadre Hilbertien des fonctions de carré intégrable}
+
+
+Nous considérons l'espace $H = L^2([0, 2\pi], \mathbb{C})$, l'espace des fonctions mesurables $2\pi$-périodiques, de carré intégrable sur une période, à valeurs complexes, quotienté par la relation d'égalité presque partout.
+
+Cet espace est muni du produit scalaire hermitien canonique :
+$$\forall f, g \in L^2, \quad \langle f, g \rangle = \frac{1}{2\pi} \int_0^{2\pi} f(t) \overline{g(t)} \, dt$$
+et de la norme associée (la norme quadratique) :
+$$\|f\|_2 = \sqrt{\langle f, f \rangle} = \left( \frac{1}{2\pi} \int_0^{2\pi} |f(t)|^2 \, dt \right)^{1/2}$$
+
+La famille des fonctions exponentielles complexes $(e_n)_{n \in \mathbb{Z}}$ définies par $e_n(t) = e^{int}$ forme une famille orthonormée dans $H$ car :
+$$\langle e_n, e_m \rangle = \frac{1}{2\pi} \int_0^{2\pi} e^{int} e^{-imt} \, dt = \delta_{n,m}$$
+
+Pour tout $f \in L^2$, les coefficients de Fourier exponentiels sont définis par les produits scalaires :
+$$c_n(f) = \langle f, e_n \rangle = \frac{1}{2\pi} \int_0^{2\pi} f(t) e^{-int} \, dt$$
+
+La $N$-ième somme partielle de la série de Fourier de $f$ est la fonction :
+$$S_N(f)(t) = \sum_{n=-N}^{N} c_n(f) e^{int}$$
+Géométriquement, $S_N(f)$ est la projection orthogonale de la fonction $f$ sur le sous-espace de dimension finie $H_N = \text{Vect}(e_{-N}, e_{-N+1}, \dots, e_0, \dots, e_N)$.
+
+
+\subsection{Théorème de Convergence en Moyenne Quadratique}
+
+
+\begin{quote}\textbf{Théorème (Convergence $L^2$) :}
+Soit $f \in L^2([0, 2\pi])$. La série de Fourier de $f$ converge vers $f$ au sens de la norme quadratique $L^2$, c'est-à-dire :
+$$\lim_{N \to \infty} \| f - S_N(f) \|_2 = 0$$
+Ce qui s'écrit explicitement :
+$$\lim_{N \to \infty} \frac{1}{2\pi} \int_0^{2\pi} \left| f(t) - \sum_{n=-N}^N c_n(f) e^{int} \right|^2 dt = 0$$\end{quote}
+
+Ce théorème énonce que la famille $(e_n)_{n \in \mathbb{Z}}$ est "totale" dans $L^2$, elle constitue donc une base hilbertienne de l'espace $L^2([0, 2\pi])$.
+
+\subsection{L'Identité de Parseval}
+
+
+\begin{quote}\textbf{Théorème (Identité de Parseval) :}
+Pour toute fonction $f \in L^2([0, 2\pi])$, l'énergie totale (norme au carré) est égale à la somme de la série des carrés des modules de ses coefficients de Fourier :
+$$\frac{1}{2\pi} \int_0^{2\pi} |f(t)|^2 \, dt = \sum_{n=-\infty}^{+\infty} |c_n(f)|^2$$
+> En utilisant la convention des coefficients trigonométriques réels ($a_n, b_n$) définis pour une fonction réelle par :
+$$a_n(f) = \frac{1}{\pi} \int_0^{2\pi} f(t) \cos(nt) \, dt \quad (n \ge 0)$$
+$$b_n(f) = \frac{1}{\pi} \int_0^{2\pi} f(t) \sin(nt) \, dt \quad (n \ge 1)$$
+L'identité de Parseval s'écrit de manière équivalente :
+$$\frac{1}{2\pi} \int_0^{2\pi} |f(t)|^2 \, dt = \frac{a_0(f)^2}{4} + \frac{1}{2} \sum_{n=1}^\infty \left( a_n(f)^2 + b_n(f)^2 \right)$$\end{quote}
+
+\textbf{Exemple 1 : Signal constant}
+Soit $f(t) = 5$.
+Calculons son énergie temporelle :
+$$\frac{1}{2\pi} \int_0^{2\pi} 5^2 dt = \frac{1}{2\pi} [25t]_0^{2\pi} = 25$$
+Ses coefficients de Fourier : $c_0 = \frac{1}{2\pi} \int_0^{2\pi} 5 e^0 dt = 5$. Pour $n \neq 0$, $c_n = 0$.
+Somme des carrés fréquentiels : $\sum |c_n|^2 = |c_0|^2 = 5^2 = 25$.
+Les deux membres sont égaux.
+
+\textbf{Exemple 2 : Fonction sinusoïdale simple}
+Soit $f(t) = 3 \cos(t)$.
+Énergie temporelle :
+$$\frac{1}{2\pi} \int_0^{2\pi} 9 \cos^2(t) dt = \frac{9}{2\pi} \int_0^{2\pi} \frac{1 + \cos(2t)}{2} dt = \frac{9}{2\pi} \left[ \frac{t}{2} + \frac{\sin(2t)}{4} \right]_0^{2\pi} = \frac{9}{2\pi} \times \pi = 4.5$$
+Coefficients de Fourier : $f(t) = 3 \left(\frac{e^{it} + e^{-it}}{2}\right) = 1.5 e^{it} + 1.5 e^{-it}$.
+Donc $c_1 = 1.5$, $c_{-1} = 1.5$, et tous les autres $c_n = 0$.
+Somme des carrés : $|c_{-1}|^2 + |c_1|^2 = 1.5^2 + 1.5^2 = 2.25 + 2.25 = 4.5$.
+L'égalité est bien vérifiée.
+
+\textbf{Exemple 3 : Onde carrée modifiée}
+Soit $f(t)$ qui vaut $1$ sur $[0, \pi[$ et $-1$ sur $[\pi, 2\pi[$.
+Énergie temporelle :
+$$\frac{1}{2\pi} \int_0^{2\pi} |f(t)|^2 dt = \frac{1}{2\pi} \left( \int_0^{\pi} 1 dt + \int_{\pi}^{2\pi} (-1)^2 dt \right) = \frac{1}{2\pi} (\pi + \pi) = 1$$
+Coefficients de Fourier :
+$c_0 = 0$. Pour $n \neq 0$ :
+$$c_n = \frac{1}{2\pi} \left( \int_0^{\pi} e^{-int} dt - \int_{\pi}^{2\pi} e^{-int} dt \right) = \frac{1}{2\pi} \left( \left[ \frac{e^{-int}}{-in} \right]_0^\pi - \left[ \frac{e^{-int}}{-in} \right]_\pi^{2\pi} \right)$$
+$$c_n = \frac{i}{2\pi n} \left( (e^{-in\pi} - 1) - (1 - e^{-in\pi}) \right) = \frac{i}{2\pi n} (2(-1)^n - 2) = \frac{i( (-1)^n - 1 )}{\pi n}$$
+Si $n$ est pair ($n=2p$), $c_{2p} = 0$.
+Si $n$ est impair ($n=2p+1$), $c_{2p+1} = \frac{-2i}{\pi(2p+1)}$.
+L'énergie fréquentielle est la somme sur tous les $n$ impairs (positifs et négatifs) :
+$$\sum_{k=-\infty}^\infty \left| \frac{-2i}{\pi(2k+1)} \right|^2 = \sum_{k=-\infty}^\infty \frac{4}{\pi^2 (2k+1)^2} = \frac{8}{\pi^2} \sum_{k=0}^\infty \frac{1}{(2k+1)^2}$$
+Puisque la somme de l'énergie vaut $1$, on en déduit la relation remarquable :
+$$\sum_{k=0}^\infty \frac{1}{(2k+1)^2} = \frac{\pi^2}{8}$$
+Une illustration élégante de l'utilité du théorème de Parseval.
+
+\textbf{Exemple 4 : La fonction "triangle"}
+Soit $f(t) = |t|$ sur $[-\pi, \pi]$. C'est une fonction paire. L'intégrale sur $[-\pi, \pi]$ est égale à celle sur $[0, 2\pi]$ pour le carré.
+Énergie temporelle :
+$$\frac{1}{2\pi} \int_{-\pi}^\pi t^2 dt = \frac{1}{2\pi} \left[ \frac{t^3}{3} \right]_{-\pi}^\pi = \frac{1}{2\pi} \frac{2\pi^3}{3} = \frac{\pi^2}{3}$$
+Le coefficient $a_0 = \frac{1}{\pi} \int_{-\pi}^\pi |t| dt = \pi$.
+Les coefficients $a_n = \frac{1}{\pi} \int_{-\pi}^\pi |t| \cos(nt) dt = \frac{2}{\pi} \int_0^\pi t \cos(nt) dt$. Par intégration par parties ($u=t, v'=\cos(nt), u'=1, v=\frac{\sin(nt)}{n}$) :
+$$a_n = \frac{2}{\pi} \left[ t \frac{\sin(nt)}{n} \right]_0^\pi - \frac{2}{\pi} \int_0^\pi \frac{\sin(nt)}{n} dt = 0 - \frac{2}{\pi} \left[ \frac{-\cos(nt)}{n^2} \right]_0^\pi = \frac{2}{\pi n^2} ((-1)^n - 1)$$
+Ainsi $a_{2p} = 0$ et $a_{2p+1} = \frac{-4}{\pi(2p+1)^2}$.
+Par Parseval avec la convention réelle : $\frac{a_0^2}{4} + \frac{1}{2} \sum_{n=1}^\infty a_n^2 = \frac{\pi^2}{3}$
+$$\frac{\pi^2}{4} + \frac{1}{2} \sum_{p=0}^\infty \frac{16}{\pi^2(2p+1)^4} = \frac{\pi^2}{3}$$
+$$\frac{8}{\pi^2} \sum_{p=0}^\infty \frac{1}{(2p+1)^4} = \frac{\pi^2}{3} - \frac{\pi^2}{4} = \frac{\pi^2}{12}$$
+On trouve ainsi la somme $\sum_{p=0}^\infty \frac{1}{(2p+1)^4} = \frac{\pi^4}{96}$.
+
+\textbf{Exemple 5 : Signal impulsion de Dirac lissée}
+Prenons la suite de fonctions $D_N(t) = \sum_{n=-N}^N e^{int} = \frac{\sin((N+1/2)t)}{\sin(t/2)}$ (Noyau de Dirichlet).
+C'est un polynôme trigonométrique, il est égal à sa propre somme de Fourier.
+$c_n(D_N) = 1$ pour $-N \le n \le N$, et $0$ sinon.
+Énergie fréquentielle : $\sum_{n=-N}^N |1|^2 = 2N + 1$.
+Par Parseval, cela signifie immédiatement que l'intégrale de son carré (très fastidieuse à calculer directement) est :
+$$\frac{1}{2\pi} \int_0^{2\pi} \left( \frac{\sin((N+1/2)t)}{\sin(t/2)} \right)^2 dt = 2N + 1$$
+
+
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    \coordinate (O) at (0,0);
+    \coordinate (F) at (3,4);
+    \coordinate (Proj) at (3,0);
+
+    \draw[->, thick] (O) -- (4,0) node[right] {$H_N = \text{Vect}(e_{-N}, \dots, e_N)$};
+    \draw[->, thick] (O) -- (F) node[above] {$f$};
+    \draw[->, thick, blue] (O) -- (Proj) node[below] {$S_N(f)$};
+    \draw[->, thick, red, dashed] (Proj) -- (F) node[midway, right] {$f - S_N(f)$};
+
+    \draw (2.8,0) -- (2.8,0.2) -- (3,0.2);
+
+    \node at (2, -1) {Théorème de Pythagore: $\|f\|^2 = \|S_N(f)\|^2 + \|f - S_N(f)\|^2$};
+\end{tikzpicture}
+\end{center}
+
+\section{Démonstrations Pas-à-Pas}
+
+
+\subsection{Démonstration de l'Identité de Parseval}
+
+
+Cette preuve repose sur la géométrie hilbertienne, en exploitant l'orthonormalité de la base exponentielle et le Théorème de Pythagore généralisé, combinés à la densité des polynômes trigonométriques.
+
+1. \textbf{Calcul de l'énergie de la projection orthogonale (somme partielle $S_N(f)$) :}
+   Considérons la somme partielle de Fourier $S_N(f)(t) = \sum_{n=-N}^N c_n e_n(t)$.
+   Calculons sa norme $L^2$ au carré :
+   $$\|S_N(f)\|_2^2 = \langle S_N(f), S_N(f) \rangle = \langle \sum_{n=-N}^N c_n e_n, \sum_{m=-N}^N c_m e_m \rangle$$
+   Par la bilinéarité (linéarité à gauche et antilinéarité à droite) du produit scalaire hermitien :
+   $$\|S_N(f)\|_2^2 = \sum_{n=-N}^N \sum_{m=-N}^N c_n \overline{c_m} \langle e_n, e_m \rangle$$
+
+2. \textbf{Exploitation de l'orthonormalité :}
+   Or, le système exponentiel est orthonormé : $\langle e_n, e_m \rangle = \delta_{n,m}$. L'expression double ne garde donc que les termes "diagonaux" où $n = m$, réduisant la double somme à une simple somme :
+   $$\|S_N(f)\|_2^2 = \sum_{n=-N}^N c_n \overline{c_n} \cdot 1 = \sum_{n=-N}^N |c_n|^2$$
+   Ceci est le théorème de Pythagore classique en dimension finie.
+
+3. \textbf{Inégalité de Bessel (Étape intermédiaire) :}
+   Le signal $f$ se décompose orthogonalement en $f = S_N(f) + (f - S_N(f))$.
+   La somme $S_N(f)$ appartient au sous-espace engendré par $\{e_{-N}, \dots, e_N\}$, et le "reste" $f - S_N(f)$ est orthogonal à ce sous-espace par propriété de la projection orthogonale, donc $\langle S_N(f), f - S_N(f) \rangle = 0$.
+   En appliquant le théorème de Pythagore dans $L^2$ :
+   $$\|f\|_2^2 = \|S_N(f) + (f - S_N(f))\|_2^2 = \|S_N(f)\|_2^2 + \|f - S_N(f)\|_2^2$$
+   Puisque $\|f - S_N(f)\|_2^2 \ge 0$, on en déduit immédiatement :
+   $$\|S_N(f)\|_2^2 \le \|f\|_2^2 \implies \sum_{n=-N}^N |c_n|^2 \le \frac{1}{2\pi} \int_0^{2\pi} |f(t)|^2 dt$$
+   C'est l'\textbf{Inégalité de Bessel}, valable pour tout $N$. La série des carrés est croissante et majorée, elle converge donc formellement vers une valeur finie $\le \|f\|_2^2$.
+
+4. \textbf{Passage à la limite via la convergence $L^2$ :}
+   Le théorème de convergence en moyenne quadratique (basé sur la densité des fonctions continues et le théorème de Fejér) stipule que la limite de l'erreur est nulle :
+   $$\lim_{N \to \infty} \|f - S_N(f)\|_2^2 = 0$$
+   Reprenons l'égalité du théorème de Pythagore :
+   $$\|f\|_2^2 = \sum_{n=-N}^N |c_n|^2 + \|f - S_N(f)\|_2^2$$
+   En passant à la limite lorsque $N \to \infty$, le terme de l'erreur s'annule, et il reste :
+   $$\|f\|_2^2 = \lim_{N \to \infty} \sum_{n=-N}^N |c_n|^2 = \sum_{n=-\infty}^\infty |c_n|^2$$
+   C'est exactement l'Identité de Parseval.
+
+
+\section{Exercices d'Application}
+
+
+\subsection{Exercice 1 : Calcul de la somme de Bâle $\sum \frac{1}{n^2}$}
+
+\textbf{Énoncé :} En étudiant la fonction $f(t) = t$ sur $]-\pi, \pi]$ étendue par périodicité, démontrer que $\sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6}$.
+
+\textbf{Correction Détaillée :}
+\textit{ }Calcul de l'énergie temporelle :*
+  La fonction $f(t)$ est définie sur $]-\pi, \pi]$ et $2\pi$-périodique.
+  $$\frac{1}{2\pi} \int_{-\pi}^\pi (t)^2 dt = \frac{1}{2\pi} \left[ \frac{t^3}{3} \right]_{-\pi}^\pi = \frac{1}{2\pi} \left( \frac{\pi^3}{3} - \frac{-\pi^3}{3} \right) = \frac{1}{2\pi} \frac{2\pi^3}{3} = \frac{\pi^2}{3}$$
+\textit{ }Calcul des coefficients de Fourier complexes :*
+  La fonction est impaire, $c_0 = \frac{1}{2\pi}\int_{-\pi}^\pi t dt = 0$.
+  Pour $n \neq 0$ :
+  $$c_n = \frac{1}{2\pi} \int_{-\pi}^\pi t e^{-int} dt$$
+  On réalise une intégration par parties, avec $u=t \implies u'=1$ et $v'=e^{-int} \implies v = \frac{e^{-int}}{-in}$ :
+  $$c_n = \frac{1}{2\pi} \left( \left[ t \frac{e^{-int}}{-in} \right]_{-\pi}^\pi - \int_{-\pi}^\pi \frac{e^{-int}}{-in} dt \right)$$
+  $$c_n = \frac{1}{2\pi} \left( \frac{\pi e^{-in\pi}}{-in} - \frac{(-\pi) e^{in\pi}}{-in} - \left[ \frac{e^{-int}}{-(in)^2} \right]_{-\pi}^\pi \right)$$
+  Sachant que $e^{-in\pi} = e^{in\pi} = (-1)^n$. Et l'intégrale résiduelle s'annule car $e^{-int}$ a une intégrale nulle sur une période.
+  $$c_n = \frac{1}{2\pi} \left( \frac{\pi (-1)^n}{-in} + \frac{\pi (-1)^n}{-in} \right) = \frac{1}{2\pi} \frac{2\pi (-1)^n}{-in} = \frac{i (-1)^n}{n}$$
+\textit{ }Identité de Parseval :*
+  On applique $\frac{1}{2\pi} \int_{-\pi}^\pi |f(t)|^2 dt = \sum_{n=-\infty}^\infty |c_n|^2$.
+  On calcule le carré du module des coefficients : $|c_n|^2 = \left|\frac{i (-1)^n}{n}\right|^2 = \frac{1}{n^2}$.
+  La somme bilatérale (pour $n \in \mathbb{Z}^*$ car $c_0=0$) est :
+  $$\sum_{n \neq 0} \frac{1}{n^2} = \sum_{n=1}^\infty \frac{1}{n^2} + \sum_{n=1}^\infty \frac{1}{(-n)^2} = 2 \sum_{n=1}^\infty \frac{1}{n^2}$$
+  En injectant dans l'équation de Parseval :
+  $$\frac{\pi^2}{3} = 2 \sum_{n=1}^\infty \frac{1}{n^2}$$
+  D'où le résultat exceptionnel d'Euler : $\sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6}$.
+
+
+\subsection{Exercice 2 : Inégalité de Wirtinger (Poincaré en dimension 1)}
+
+\textbf{Énoncé :} Soit $f \in \mathcal{C}^1([0, 2\pi])$ telle que $f(0)=f(2\pi)$ (fonction $2\pi$-périodique de classe $C^1$) et de moyenne nulle : $\int_0^{2\pi} f(t) dt = 0$.
+Montrer rigoureusement l'inégalité optimale : $\int_0^{2\pi} |f(t)|^2 dt \le \int_0^{2\pi} |f'(t)|^2 dt$.
+Dans quels cas y a-t-il égalité ?
+
+\textbf{Correction Détaillée :}
+\textit{ }Utilisation des séries de Fourier de la dérivée :*
+  On exprime les coefficients de $f'$ en fonction de ceux de $f$.
+  $$c_n(f') = \frac{1}{2\pi} \int_0^{2\pi} f'(t) e^{-int} dt$$
+  Intégration par parties ($u = e^{-int}, u' = -in e^{-int}$ et $v' = f', v = f$) :
+  $$c_n(f') = \frac{1}{2\pi} \left[ f(t) e^{-int} \right]_0^{2\pi} - \frac{1}{2\pi} \int_0^{2\pi} f(t) (-in e^{-int}) dt$$
+  Comme $f(2\pi) = f(0)$ et $e^{-i n 2\pi} = 1 = e^0$, le terme de bord s'annule strictement.
+  Il reste $c_n(f') = in c_n(f)$.
+\textit{ }Application de Parseval aux deux fonctions :*
+  Pour $f'$ : $\frac{1}{2\pi} \int_0^{2\pi} |f'(t)|^2 dt = \sum_{n \in \mathbb{Z}} |c_n(f')|^2 = \sum_{n \in \mathbb{Z}} |in c_n(f)|^2 = \sum_{n \in \mathbb{Z}} n^2 |c_n(f)|^2$
+  Pour $f$ : $\frac{1}{2\pi} \int_0^{2\pi} |f(t)|^2 dt = \sum_{n \in \mathbb{Z}} |c_n(f)|^2$
+\textit{ }Comparaison des spectres :*
+  Par hypothèse de moyenne nulle, le terme constant de Fourier est nul :
+  $$c_0(f) = \frac{1}{2\pi} \int_0^{2\pi} f(t) dt = 0$$
+  On compare les sommes terme à terme. Pour tout $n \in \mathbb{Z} \setminus \{0\}$, on a clairement $n^2 \ge 1$.
+  Donc $\forall n \neq 0, |c_n(f)|^2 \le n^2 |c_n(f)|^2$.
+  En sommant ces inégalités sur tous les $n \neq 0$ :
+  $$\sum_{n \neq 0} |c_n(f)|^2 \le \sum_{n \neq 0} n^2 |c_n(f)|^2$$
+  On réécrit avec les intégrales via Parseval :
+  $$\frac{1}{2\pi} \int_0^{2\pi} |f(t)|^2 dt \le \frac{1}{2\pi} \int_0^{2\pi} |f'(t)|^2 dt$$
+  Ce qui prouve $\int_0^{2\pi} |f(t)|^2 dt \le \int_0^{2\pi} |f'(t)|^2 dt$.
+\textit{ }Cas d'égalité :*
+  Il y a égalité ssi la somme des différences est nulle : $\sum_{n \neq 0} (n^2 - 1) |c_n(f)|^2 = 0$.
+  Comme $n^2 - 1 > 0$ pour $|n| \ge 2$, l'égalité impose impérativement $c_n(f) = 0$ pour tout $n \notin \{-1, 0, 1\}$.
+  Comme $c_0 = 0$, la fonction $f$ doit s'écrire uniquement avec les harmoniques de fréquence 1 : $f(t) = c_1 e^{it} + c_{-1} e^{-it}$.
+  Donc $f(t) = a \cos(t) + b \sin(t)$, c'est-à-dire une combinaison linéaire des ondes fondamentales.
+
+
+\section{Application en Intelligence Artificielle}
+
+
+L'Identité de Parseval est la clé de voûte de l'optimisation dans l'espace des fréquences en Machine Learning. Elle stipule que la distance quadratique (l'erreur MSE - Mean Squared Error) entre deux fonctions est exactement identique dans le domaine d'origine (temporel/spatial) et dans le domaine spectral (Fourier). Si on minimise l'erreur entre les coefficients de Fourier de deux signaux, on garantit mathématiquement que la différence physique temporelle est minimisée de la même quantité. L'espace $L^2$ et son espace spectral dual isomorphe sont indiscernables du point de vue de la norme.
+
+Dans le développement de modèles génératifs audio basés sur la diffusion (comme WaveGrad ou DiffWave), l'objectif est d'apprendre à débruiter une onde sonore en générant $\hat{y}(t)$ pour approcher le son réel $y(t)$.
+La fonction de coût naïve est $\mathcal{L}_{time} = \int_0^T (y(t) - \hat{y}(t))^2 dt$.
+Cependant, les erreurs sur les hautes et basses fréquences ne sont pas perceptibles de la même manière par l'oreille humaine. Grâce à l'identité de Parseval, les ingénieurs remplacent $\mathcal{L}_{time}$ par sa formulation spectrale équivalente :
+$$\mathcal{L}_{freq} = \sum_{n} (c_n(y) - c_n(\hat{y}))^2$$
+L'avantage majeur de ce changement de point de vue est qu'ils peuvent attribuer des \textit{poids} $\lambda_n$ à chaque bande de fréquence pour orienter l'IA à accorder plus d'importance aux fréquences de la voix humaine (0.3 à 3 kHz), définissant ainsi une Loss modifiée : $\mathcal{L}_{weighted} = \sum_{n} \lambda_n (c_n(y) - c_n(\hat{y}))^2$. Le modèle converge plus vite et produit un son infiniment plus naturel, car la géométrie euclidienne canonique a été déformée pour imiter la psycho-acoustique.
+
+\section{Liens Sémantiques}
+
+- \textbf{Concepts Précédents requis :} [[Jalon-78.md]], [[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L2).md]]
+- \textbf{Concepts Futurs dépendants :} [[Jalon 81 (Transformée de Fourier dans L2).md]], [[Jalon 116 (Variétés riemanniennes).md]]
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Calcul de somme (Série de Fourier de la fonction créneau) $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :} Soit la fonction $f$ impaire, $2\pi$-périodique, telle que $f(t) = 1$ pour $t \in ]0, \pi[$. En appliquant l'identité de Parseval, calculer la somme $S = \sum_{p=0}^\infty \frac{1}{(2p+1)^2}$.
+
+\textbf{Correction Détaillée :}
+\textit{Étape 1 : Calcul des coefficients de Fourier.}
+La fonction est impaire, donc $a_n = 0$ pour tout $n \ge 0$.
+Pour $n \ge 1$ :
+$$b_n = \frac{2}{\pi} \int_0^\pi 1 \cdot \sin(nt) dt = \frac{2}{\pi} \left[ \frac{-\cos(nt)}{n} \right]_0^\pi = \frac{2}{\pi n} (1 - (-1)^n)$$
+Si $n$ est pair ($n=2p$), $b_{2p} = 0$.
+Si $n$ est impair ($n=2p+1$), $b_{2p+1} = \frac{4}{\pi(2p+1)}$.
+
+\textit{Étape 2 : Calcul de l'énergie temporelle.}
+L'intégrale du carré de la fonction sur une période est :
+$$\frac{1}{2\pi} \int_{-\pi}^\pi |f(t)|^2 dt = \frac{1}{2\pi} \int_{-\pi}^\pi 1 dt = 1$$
+
+\textit{Étape 3 : Application de l'identité de Parseval.}
+Parseval (version réelle) donne :
+$$\frac{1}{2\pi} \int_{-\pi}^\pi |f(t)|^2 dt = \frac{a_0^2}{4} + \frac{1}{2} \sum_{n=1}^\infty (a_n^2 + b_n^2)$$
+$$1 = \frac{1}{2} \sum_{p=0}^\infty b_{2p+1}^2 = \frac{1}{2} \sum_{p=0}^\infty \frac{16}{\pi^2(2p+1)^2} = \frac{8}{\pi^2} \sum_{p=0}^\infty \frac{1}{(2p+1)^2}$$
+On en déduit immédiatement :
+$$\sum_{p=0}^\infty \frac{1}{(2p+1)^2} = \frac{\pi^2}{8}$$
+
+\vspace{1cm}
+\subsection*{Exercice 2 : Calcul de somme via la fonction $t^2$ $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :} Soit la fonction $f$ paire, $2\pi$-périodique, telle que $f(t) = t^2$ pour $t \in [-\pi, \pi]$.
+Montrer que $a_0 = \frac{2\pi^2}{3}$ et $a_n = \frac{4(-1)^n}{n^2}$ pour $n \ge 1$.
+En déduire la valeur de $\sum_{n=1}^\infty \frac{1}{n^4}$.
+
+\textbf{Correction Détaillée :}
+\textit{Étape 1 : Calcul des coefficients de Fourier.}
+$f$ est paire, donc $b_n = 0$.
+$$a_0 = \frac{2}{\pi} \int_0^\pi t^2 dt = \frac{2}{\pi} \left[ \frac{t^3}{3} \right]_0^\pi = \frac{2\pi^2}{3}$$
+Pour $n \ge 1$, on intègre par parties deux fois :
+$$a_n = \frac{2}{\pi} \int_0^\pi t^2 \cos(nt) dt = \frac{2}{\pi} \left( \left[ t^2 \frac{\sin(nt)}{n} \right]_0^\pi - \int_0^\pi 2t \frac{\sin(nt)}{n} dt \right)$$
+Le premier terme est nul.
+$$a_n = -\frac{4}{n\pi} \int_0^\pi t \sin(nt) dt = -\frac{4}{n\pi} \left( \left[ t \frac{-\cos(nt)}{n} \right]_0^\pi - \int_0^\pi \frac{-\cos(nt)}{n} dt \right)$$
+$$a_n = -\frac{4}{n\pi} \left( -\frac{\pi (-1)^n}{n} - 0 \right) = \frac{4(-1)^n}{n^2}$$
+
+\textit{Étape 2 : Calcul de l'énergie temporelle.}
+$$\frac{1}{2\pi} \int_{-\pi}^\pi (t^2)^2 dt = \frac{1}{\pi} \int_0^\pi t^4 dt = \frac{1}{\pi} \frac{\pi^5}{5} = \frac{\pi^4}{5}$$
+
+\textit{Étape 3 : Application de l'identité de Parseval.}
+$$\frac{\pi^4}{5} = \frac{a_0^2}{4} + \frac{1}{2} \sum_{n=1}^\infty a_n^2 = \frac{4\pi^4}{36} + \frac{1}{2} \sum_{n=1}^\infty \frac{16}{n^4} = \frac{\pi^4}{9} + 8 \sum_{n=1}^\infty \frac{1}{n^4}$$
+$$8 \sum_{n=1}^\infty \frac{1}{n^4} = \frac{\pi^4}{5} - \frac{\pi^4}{9} = \frac{9\pi^4 - 5\pi^4}{45} = \frac{4\pi^4}{45}$$
+$$\sum_{n=1}^\infty \frac{1}{n^4} = \frac{\pi^4}{90}$$
+
+\vspace{1cm}
+\subsection*{Exercice 3 : Énergie d'un signal exponentiel $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :} Soit $\alpha > 0$. On définit $f(t) = e^{\alpha t}$ sur $[-\pi, \pi[$, que l'on prolonge par $2\pi$-périodicité.
+1. Calculer les coefficients de Fourier complexes $c_n(f)$.
+2. En utilisant l'identité de Parseval, démontrer la relation :
+   $$\sum_{n=-\infty}^\infty \frac{1}{\alpha^2 + n^2} = \frac{\pi}{\alpha \tanh(\alpha \pi)}$$
+
+\textbf{Correction Détaillée :}
+\textit{Étape 1 : Calcul des coefficients $c_n(f)$.}
+$$c_n(f) = \frac{1}{2\pi} \int_{-\pi}^\pi e^{\alpha t} e^{-int} dt = \frac{1}{2\pi} \int_{-\pi}^\pi e^{(\alpha - in)t} dt$$
+$$c_n(f) = \frac{1}{2\pi (\alpha - in)} \left[ e^{(\alpha - in)t} \right]_{-\pi}^\pi = \frac{1}{2\pi (\alpha - in)} (e^{\alpha \pi} e^{-in\pi} - e^{-\alpha \pi} e^{in\pi})$$
+Puisque $e^{in\pi} = e^{-in\pi} = (-1)^n$, on a :
+$$c_n(f) = \frac{(-1)^n}{2\pi (\alpha - in)} (e^{\alpha \pi} - e^{-\alpha \pi}) = \frac{(-1)^n \sinh(\alpha \pi)}{\pi (\alpha - in)}$$
+
+\textit{Étape 2 : Énergie fréquentielle.}
+Le module au carré du coefficient est :
+$$|c_n(f)|^2 = \frac{\sinh^2(\alpha \pi)}{\pi^2 (\alpha^2 + n^2)}$$
+La somme de la série est donc $\sum_{n=-\infty}^\infty \frac{\sinh^2(\alpha \pi)}{\pi^2 (\alpha^2 + n^2)}$.
+
+\textit{Étape 3 : Énergie temporelle.}
+$$\frac{1}{2\pi} \int_{-\pi}^\pi |e^{\alpha t}|^2 dt = \frac{1}{2\pi} \int_{-\pi}^\pi e^{2\alpha t} dt = \frac{1}{2\pi} \left[ \frac{e^{2\alpha t}}{2\alpha} \right]_{-\pi}^\pi = \frac{e^{2\alpha \pi} - e^{-2\alpha \pi}}{4\pi \alpha} = \frac{\sinh(2\alpha \pi)}{2\pi \alpha}$$
+
+\textit{Étape 4 : Conclusion par Parseval.}
+$$\frac{\sinh(2\alpha \pi)}{2\pi \alpha} = \frac{\sinh^2(\alpha \pi)}{\pi^2} \sum_{n=-\infty}^\infty \frac{1}{\alpha^2 + n^2}$$
+Or $\sinh(2\alpha \pi) = 2 \sinh(\alpha \pi) \cosh(\alpha \pi)$.
+$$\frac{2 \sinh(\alpha \pi) \cosh(\alpha \pi)}{2\pi \alpha} = \frac{\sinh^2(\alpha \pi)}{\pi^2} \sum_{n=-\infty}^\infty \frac{1}{\alpha^2 + n^2}$$
+$$\frac{\cosh(\alpha \pi)}{\pi \alpha} = \frac{\sinh(\alpha \pi)}{\pi^2} \sum_{n=-\infty}^\infty \frac{1}{\alpha^2 + n^2}$$
+$$\sum_{n=-\infty}^\infty \frac{1}{\alpha^2 + n^2} = \frac{\pi \cosh(\alpha \pi)}{\alpha \sinh(\alpha \pi)} = \frac{\pi}{\alpha \tanh(\alpha \pi)}$$
+
+\vspace{1cm}
+\subsection*{Exercice 4 : Densité spectrale de puissance $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :} Soit $f(t) = \sin^3(t)$.
+1. Sans calculer l'intégrale temporelle, déterminer l'énergie $L^2$ de $f$ en utilisant Parseval.
+2. Vérifier le résultat en calculant l'intégrale temporelle.
+
+\textbf{Correction Détaillée :}
+\textit{Étape 1 : Linéarisation de $\sin^3(t)$.}
+On utilise la formule d'Euler : $\sin(t) = \frac{e^{it} - e^{-it}}{2i}$.
+$$\sin^3(t) = \frac{1}{-8i} (e^{it} - e^{-it})^3 = \frac{i}{8} (e^{3it} - 3e^{it} + 3e^{-it} - e^{-3it})$$
+$$= \frac{i}{8} (e^{3it} - e^{-3it}) - \frac{3i}{8} (e^{it} - e^{-it}) = -\frac{1}{4} \frac{e^{3it} - e^{-3it}}{2i} + \frac{3}{4} \frac{e^{it} - e^{-it}}{2i}$$
+$$f(t) = \frac{3}{4} \sin(t) - \frac{1}{4} \sin(3t)$$
+
+\textit{Étape 2 : Coefficients de Fourier et Parseval.}
+Les seuls coefficients non nuls sont :
+$b_1 = \frac{3}{4}$, et $b_3 = -\frac{1}{4}$. (Les $a_n$ sont tous nuls).
+Par Parseval :
+$$\frac{1}{2\pi} \int_{-\pi}^\pi f(t)^2 dt = \frac{1}{2} (b_1^2 + b_3^2) = \frac{1}{2} \left( \frac{9}{16} + \frac{1}{16} \right) = \frac{1}{2} \frac{10}{16} = \frac{5}{16}$$
+
+\textit{Étape 3 : Vérification par l'intégrale.}
+$$\frac{1}{2\pi} \int_{-\pi}^\pi \sin^6(t) dt$$
+On sait que $\int_0^{2\pi} \sin^2(t) dt = \pi$ et par linéarisation de $\sin^6(t)$ on obtiendrait le même résultat de $\frac{5}{16}$. (Alternativement on peut utiliser les intégrales de Wallis modifiées).
+
+\vspace{1cm}
+\subsection*{Exercice 5 : Estimation de l'erreur quadratique $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :} Soit $f(t) = \pi - t$ sur $]0, 2\pi[$.
+On approche $f(t)$ par son polynôme trigonométrique partiel $S_N(f)(t) = \sum_{n=1}^N \frac{2}{n} \sin(nt)$.
+Calculer l'erreur quadratique moyenne $E_N = \frac{1}{2\pi} \int_0^{2\pi} (f(t) - S_N(f)(t))^2 dt$ en fonction de $N$. Quelle est sa limite quand $N \to \infty$ ?
+
+\textbf{Correction Détaillée :}
+\textit{Étape 1 : Coefficients de Fourier de $f$.}
+On a $a_0 = \frac{1}{\pi} \int_0^{2\pi} (\pi - t) dt = \frac{1}{\pi} [\pi t - t^2/2]_0^{2\pi} = \frac{1}{\pi} (2\pi^2 - 2\pi^2) = 0$.
+$a_n = 0$ car la fonction, translatée, se comporte comme une fonction impaire.
+$$b_n = \frac{1}{\pi} \int_0^{2\pi} (\pi - t) \sin(nt) dt = \frac{1}{\pi} \left[ (\pi - t) \frac{-\cos(nt)}{n} \right]_0^{2\pi} - \frac{1}{\pi} \int_0^{2\pi} (-1) \frac{-\cos(nt)}{n} dt$$
+$$b_n = \frac{1}{\pi} \left( (\pi - 2\pi) \frac{-1}{n} - \pi \frac{-1}{n} \right) - 0 = \frac{1}{\pi} \left( \frac{\pi}{n} + \frac{\pi}{n} \right) = \frac{2}{n}$$
+Donc $S_N(f)$ est bien la somme partielle de Fourier de $f$.
+
+\textit{Étape 2 : Énergie totale de $f$.}
+$$\frac{1}{2\pi} \int_0^{2\pi} (\pi - t)^2 dt = \frac{1}{2\pi} \left[ \frac{-(\pi - t)^3}{3} \right]_0^{2\pi} = \frac{1}{2\pi} \left( \frac{-(-\pi)^3}{3} - \frac{-\pi^3}{3} \right) = \frac{1}{2\pi} \frac{2\pi^3}{3} = \frac{\pi^2}{3}$$
+
+\textit{Étape 3 : Calcul de l'erreur quadratique $E_N$.}
+Par le théorème de Pythagore (ou identité de Parseval tronquée) :
+$$E_N = \| f - S_N(f) \|_2^2 = \| f \|_2^2 - \| S_N(f) \|_2^2$$
+Or $\| S_N(f) \|_2^2 = \frac{1}{2} \sum_{n=1}^N b_n^2 = \frac{1}{2} \sum_{n=1}^N \frac{4}{n^2} = 2 \sum_{n=1}^N \frac{1}{n^2}$.
+Donc $E_N = \frac{\pi^2}{3} - 2 \sum_{n=1}^N \frac{1}{n^2}$.
+
+\textit{Étape 4 : Limite.}
+Quand $N \to \infty$, la série $\sum \frac{1}{n^2}$ converge vers $\frac{\pi^2}{6}$.
+Donc $\lim E_N = \frac{\pi^2}{3} - 2 \left( \frac{\pi^2}{6} \right) = \frac{\pi^2}{3} - \frac{\pi^2}{3} = 0$.
+Ceci confirme bien le théorème de convergence en moyenne quadratique.
+
+\vspace{1cm}
+\subsection*{Exercice 6 : Lemme de Riemann-Lebesgue via Parseval $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :} Soit $f \in L^2([0, 2\pi])$. Montrer, en utilisant uniquement l'identité de Parseval, que ses coefficients de Fourier complexes vérifient : $\lim_{|n| \to \infty} c_n(f) = 0$.
+
+\textbf{Correction Détaillée :}
+\textit{Étape 1 : Rappel de l'Identité de Parseval.}
+Pour $f \in L^2$, l'identité de Parseval stipule que :
+$$\sum_{n=-\infty}^{+\infty} |c_n(f)|^2 = \frac{1}{2\pi} \int_0^{2\pi} |f(t)|^2 dt$$
+
+\textit{Étape 2 : Finitude de l'énergie.}
+Puisque $f \in L^2$, l'intégrale $\int_0^{2\pi} |f(t)|^2 dt$ est un nombre réel fini, que l'on note $M$.
+Ainsi, la série infinie $\sum_{n=-\infty}^{+\infty} |c_n(f)|^2$ est convergente, et sa somme vaut $M$.
+
+\textit{Étape 3 : Terme général d'une série convergente.}
+Dans toute série numérique convergente $\sum u_n$, une condition nécessaire stricte est que le terme général tende vers $0$ lorsque l'indice tend vers l'infini.
+Ici, $u_n = |c_n(f)|^2$.
+Puisque la série converge bilatéralement, on a nécessairement :
+$$\lim_{|n| \to \infty} |c_n(f)|^2 = 0$$
+
+\textit{Étape 4 : Conclusion.}
+La limite du carré du module étant nulle, le module lui-même tend vers $0$ :
+$$\lim_{|n| \to \infty} |c_n(f)| = 0$$
+Ce qui équivaut à $\lim_{|n| \to \infty} c_n(f) = 0$.
+C'est le lemme de Riemann-Lebesgue pour les fonctions $L^2$, démontré de manière presque immédiate grâce à la structure hilbertienne.
+
+\vspace{1cm}
+\subsection*{Exercice 7 : Optimisation dans un sous-espace de dimension finie $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :} Soit $f(t) = |t|$ sur $[-\pi, \pi]$.
+On cherche les coefficients $\alpha, \beta, \gamma \in \mathbb{R}$ qui minimisent l'intégrale :
+$$I(\alpha, \beta, \gamma) = \int_{-\pi}^\pi ( |t| - \alpha - \beta \cos(t) - \gamma \sin(t) )^2 dt$$
+En justifiant par la géométrie hilbertienne, trouver $\alpha, \beta, \gamma$.
+
+\textbf{Correction Détaillée :}
+\textit{Étape 1 : Interprétation géométrique.}
+On se place dans l'espace de Hilbert $L^2([-\pi, \pi])$ avec le produit scalaire standard.
+L'intégrale $I(\alpha, \beta, \gamma)$ représente (à un facteur de normalisation $2\pi$ près) le carré de la distance $L^2$ entre la fonction $f(t) = |t|$ et une fonction $g(t) = \alpha \cdot 1 + \beta \cos(t) + \gamma \sin(t)$.
+La fonction $g$ appartient au sous-espace $H_1 = \text{Vect}(1, \cos(t), \sin(t))$.
+
+\textit{Étape 2 : Projection orthogonale.}
+Le théorème de projection sur un sous-espace fermé (ici de dimension finie) d'un espace de Hilbert garantit que la distance est minimisée de manière unique lorsque $g$ est la projection orthogonale de $f$ sur $H_1$.
+Or, on sait que la projection orthogonale d'une fonction sur les harmoniques trigonométriques est donnée précisément par la somme partielle de Fourier d'ordre 1.
+Ainsi, les coefficients optimaux sont exactement les coefficients de Fourier correspondants :
+- $\alpha = \frac{a_0(f)}{2}$
+- $\beta = a_1(f)$
+- $\gamma = b_1(f)$
+
+\textit{Étape 3 : Calcul des coefficients.}
+$f(t) = |t|$ est paire, donc $\gamma = b_1 = 0$.
+$$a_0 = \frac{1}{\pi} \int_{-\pi}^\pi |t| dt = \frac{2}{\pi} \int_0^\pi t dt = \frac{2}{\pi} \frac{\pi^2}{2} = \pi$$
+Donc $\alpha = \frac{\pi}{2}$.
+$$a_1 = \frac{2}{\pi} \int_0^\pi t \cos(t) dt$$
+Par intégration par parties ($u=t, v'=\cos(t)$) :
+$$a_1 = \frac{2}{\pi} \left( [t \sin(t)]_0^\pi - \int_0^\pi \sin(t) dt \right) = \frac{2}{\pi} ( 0 - [-\cos(t)]_0^\pi ) = \frac{2}{\pi} ( 0 - (1 - (-1)) ) = -\frac{4}{\pi}$$
+Donc $\beta = -\frac{4}{\pi}$.
+
+\textit{Étape 4 : Conclusion.}
+Le minimum de l'intégrale est atteint pour $(\alpha, \beta, \gamma) = \left(\frac{\pi}{2}, -\frac{4}{\pi}, 0\right)$.
+
+\vspace{1cm}
+\subsection*{Exercice 8 : Équation différentielle et Parseval $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :} Soit $y \in \mathcal{C}^2([0, 2\pi])$ une solution $2\pi$-périodique de l'équation différentielle :
+$$y''(t) + k^2 y(t) = f(t)$$
+où $k$ est un entier non nul, et $f \in L^2([0, 2\pi])$ est $2\pi$-périodique avec $c_k(f) = c_{-k}(f) = 0$.
+Exprimer l'énergie $L^2$ de la solution $y$ en fonction des coefficients de Fourier de $f$.
+
+\textbf{Correction Détaillée :}
+\textit{Étape 1 : Passage dans le domaine de Fourier.}
+On décompose $y$ et $f$ en séries de Fourier exponentielles.
+$y(t) = \sum c_n(y) e^{int}$, $y''(t) = \sum (-n^2) c_n(y) e^{int}$.
+L'équation devient :
+$$\sum_{n} (-n^2 c_n(y) + k^2 c_n(y)) e^{int} = \sum_{n} c_n(f) e^{int}$$
+Par unicité des coefficients de Fourier, on a pour tout $n \in \mathbb{Z}$ :
+$$(k^2 - n^2) c_n(y) = c_n(f)$$
+
+\textit{Étape 2 : Résolution pour $c_n(y)$.}
+- Si $n = k$ ou $n = -k$, l'équation donne $0 = c_{\pm k}(f)$. Ceci est cohérent avec l'hypothèse. Les coefficients $c_k(y)$ et $c_{-k}(y)$ sont libres (correspondant à la solution homogène $A \cos(kt) + B \sin(kt)$). Pour trouver l'énergie minimale ou spécifique, supposons que l'on prenne la solution d'énergie minimale (donc $c_k(y) = c_{-k}(y) = 0$).
+- Pour $n \neq \pm k$, on a $c_n(y) = \frac{c_n(f)}{k^2 - n^2}$.
+
+\textit{Étape 3 : Énergie par Parseval.}
+L'énergie de $y$ (en supposant la solution de norme minimale) est :
+$$\|y\|_2^2 = \sum_{n \neq \pm k} |c_n(y)|^2 = \sum_{n \neq \pm k} \frac{|c_n(f)|^2}{(k^2 - n^2)^2}$$
+On voit que l'équation différentielle agit comme un filtre qui atténue fortement les hautes fréquences ($n \to \infty$, l'atténuation est en $1/n^4$).
+
+\vspace{1cm}
+\subsection*{Exercice 9 : Inégalité isopérimétrique (Le problème de Didon) $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :} Soit une courbe fermée simple dans le plan $\mathbb{R}^2$, paramétrée par $s \in [0, 2\pi]$, longueur de l'arc. La longueur totale de la courbe est donc $L = 2\pi$. Soient $(x(s), y(s))$ les coordonnées, qui sont des fonctions $2\pi$-périodiques.
+On admet que l'aire enclose $A$ est donnée par $A = \frac{1}{2} \int_0^{2\pi} (x(s)y'(s) - x'(s)y(s)) ds$.
+De plus, la paramétrisation par longueur d'arc implique $(x'(s))^2 + (y'(s))^2 = 1$.
+En utilisant les séries de Fourier et l'identité de Parseval, démontrer que $A \le \pi$, avec égalité si et seulement si la courbe est un cercle.
+
+\textbf{Correction Détaillée :}
+\textit{Étape 1 : Énergie des dérivées.}
+Puisque $x'^2 + y'^2 = 1$, on a $\int_0^{2\pi} (x'^2 + y'^2) ds = 2\pi$.
+Par Parseval sur $x'$ et $y'$ (avec coefficients réels $a_n, b_n$ pour $x$, et $c_n, d_n$ pour $y$) :
+$\|x'\|_2^2 + \|y'\|_2^2 = \frac{1}{2\pi} 2\pi = 1$.
+Pour la dérivée, les coefficients sont $a_n(x') = n b_n(x)$ et $b_n(x') = -n a_n(x)$.
+L'énergie est donc $\frac{1}{2} \sum_{n=1}^\infty n^2 (a_n^2 + b_n^2 + c_n^2 + d_n^2) = 1$.
+
+\textit{Étape 2 : Formule de l'aire par Fourier.}
+$A = \pi \frac{1}{2\pi} \int_0^{2\pi} (x y' - x' y) ds$. Par Parseval généralisé (produit scalaire),
+$\frac{1}{2\pi} \int_0^{2\pi} x y' = \frac{a_0 c_0(y')}{4} + \frac{1}{2} \sum (a_n a_n(y') + b_n b_n(y')) = \frac{1}{2} \sum n (a_n d_n - b_n c_n)$.
+On obtient $A = \pi \sum_{n=1}^\infty n (a_n d_n - b_n c_n)$.
+
+\textit{Étape 3 : Majoration algébrique.}
+On utilise $2(a_n d_n - b_n c_n) \le a_n^2 + d_n^2 + b_n^2 + c_n^2$.
+Donc $A \le \frac{\pi}{2} \sum_{n=1}^\infty n (a_n^2 + b_n^2 + c_n^2 + d_n^2)$.
+Puisque $n \le n^2$ pour $n \ge 1$,
+$A \le \frac{\pi}{2} \sum_{n=1}^\infty n^2 (a_n^2 + b_n^2 + c_n^2 + d_n^2) = \pi \times 1 = \pi$.
+Donc $A \le \pi$. (L'inégalité isopérimétrique classique $4\pi A \le L^2$ donne $4\pi A \le 4\pi^2 \implies A \le \pi$).
+
+\textit{Étape 4 : Cas d'égalité.}
+Il faut $n = n^2$ pour tout $n$ où les coefficients sont non nuls, donc $n=1$.
+Et $a_1 = d_1$, $b_1 = -c_1$.
+Ceci paramètre exactement un cercle !
+
+\vspace{1cm}
+\subsection*{Exercice 10 : Produit de Convolution dans $L^2$ $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :} Soient $f, g \in L^2([0, 2\pi])$. On définit leur produit de convolution $h(t) = (f * g)(t) = \frac{1}{2\pi} \int_0^{2\pi} f(\tau) g(t - \tau) d\tau$.
+Montrer que $c_n(h) = c_n(f) c_n(g)$. En déduire, en utilisant Parseval, que la série de Fourier de $h$ converge absolument.
+
+\textbf{Correction Détaillée :}
+\textit{Étape 1 : Coefficients du produit de convolution.}
+$$c_n(h) = \frac{1}{2\pi} \int_0^{2\pi} h(t) e^{-int} dt = \frac{1}{4\pi^2} \int_0^{2\pi} \int_0^{2\pi} f(\tau) g(t - \tau) e^{-int} d\tau dt$$
+On pose $u = t - \tau$, $dt = du$. L'intégrale sur une période est invariante.
+$$c_n(h) = \frac{1}{2\pi} \int_0^{2\pi} f(\tau) e^{-in\tau} d\tau \times \frac{1}{2\pi} \int_0^{2\pi} g(u) e^{-inu} du = c_n(f) c_n(g)$$
+
+\textit{Étape 2 : Majoration et convergence absolue.}
+La série de Fourier de $h$ (si elle est continue) est $\sum c_n(h) e^{int}$.
+On veut montrer que $\sum |c_n(h)| < \infty$.
+$\sum |c_n(h)| = \sum |c_n(f) c_n(g)|$.
+On applique l'inégalité de Cauchy-Schwarz aux suites $(|c_n(f)|)$ et $(|c_n(g)|)$ dans $\ell^2(\mathbb{Z})$ :
+$$\sum |c_n(f) c_n(g)| \le \left( \sum |c_n(f)|^2 \right)^{1/2} \left( \sum |c_n(g)|^2 \right)^{1/2}$$
+
+\textit{Étape 3 : Application de Parseval.}
+Puisque $f, g \in L^2$, l'identité de Parseval affirme que $\sum |c_n(f)|^2 = \|f\|_2^2 < \infty$ et $\sum |c_n(g)|^2 = \|g\|_2^2 < \infty$.
+Ainsi, $\sum |c_n(h)| \le \|f\|_2 \|g\|_2 < \infty$.
+La série de Fourier de la convolution $h$ converge absolument (et donc uniformément) vers $h$. La convolution de deux fonctions $L^2$ est continue !
+
+\vspace{1cm}
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Vérification numérique de l'Identité de Parseval}
+
+
+Dans ce TP, nous allons créer un signal synthétique (onde créneau), calculer numériquement ses coefficients de Fourier par intégration numérique naïve, et vérifier l'égalité de Parseval empiriquement en augmentant le nombre d'harmoniques.
+
+\begin{lstlisting}[language=Python]
+import math
+
+# 1. Definition du signal (Onde creneau sur [0, 2pi])
+def signal(t):
+    # Ramene t dans [0, 2pi]
+    t = t % (2 * math.pi)
+    if t < math.pi:
+        return 1.0
+    else:
+        return -1.0
+
+# 2. Integration numerique (Methode des rectangles)
+def integrate(func, a, b, steps=1000):
+    dt = (b - a) / steps
+    integral = 0
+    for i in range(steps):
+        integral += func(a + i * dt) * dt
+    return integral
+
+# 3. Calcul de l'energie temporelle L2
+def energy_temporal():
+    return (1 / (2 * math.pi)) * integrate(lambda t: signal(t)**2, 0, 2 * math.pi)
+
+# 4. Calcul des coefficients de Fourier (a_n, b_n)
+def calc_a_n(n):
+    if n == 0:
+        return (1 / math.pi) * integrate(lambda t: signal(t), 0, 2 * math.pi)
+    return (1 / math.pi) * integrate(lambda t: signal(t) * math.cos(n * t), 0, 2 * math.pi)
+
+def calc_b_n(n):
+    return (1 / math.pi) * integrate(lambda t: signal(t) * math.sin(n * t), 0, 2 * math.pi)
+
+# 5. Verification de Parseval
+E_temp = energy_temporal()
+print(f"Energie temporelle L2: {E_temp:.4f}")
+
+E_freq = (calc_a_n(0)**2) / 4
+N_harmonics = 50
+
+for n in range(1, N_harmonics + 1):
+    an = calc_a_n(n)
+    bn = calc_b_n(n)
+    E_freq += 0.5 * (an**2 + bn**2)
+
+print(f"Energie frequentielle (N={N_harmonics}): {E_freq:.4f}")
+assert abs(E_temp - E_freq) < 0.05, "L'identite de Parseval n'est pas verifiee."
+print("Validation : L'energie approche bien l'energie totale.")
+\end{lstlisting}
+
+\vspace{1cm}
+\subsection*{TP 2 : Le problème de Gibbs et l'énergie résiduelle}
+
+
+L'erreur quadratique $\|f - S_N(f)\|_2^2$ doit tendre vers $0$. Nous allons tracer l'évolution de cette erreur quadratique en fonction de $N$ pour l'onde en dent de scie $f(t) = t$.
+
+\begin{lstlisting}[language=Python]
+import math
+
+def f(t):
+    t = (t + math.pi) % (2 * math.pi) - math.pi
+    return t
+
+# Vraie energie de t sur [-pi, pi] : integrale(t^2)/(2pi) = pi^2 / 3
+true_energy = (math.pi**2) / 3
+
+# Coefficients b_n connus theoriquement : b_n = 2*(-1)^(n+1)/n
+def b_n(n):
+    return 2.0 * ((-1)**(n+1)) / n
+
+# Calcul de l'erreur quadratique
+errors = []
+current_energy = 0.0
+
+for n in range(1, 101):
+    current_energy += 0.5 * (b_n(n)**2)
+    error = true_energy - current_energy
+    errors.append(error)
+
+print(f"Erreur avec N=10 : {errors[9]:.4f}")
+print(f"Erreur avec N=100 : {errors[99]:.4f}")
+
+# On verifie que l'erreur decroit (convergence L2)
+assert errors[99] < errors[9], "L'erreur quadratique ne decroit pas !"
+assert errors[99] < 0.05, "L'erreur ne converge pas assez vite vers 0"
+print("L'energie residuelle decroit bien vers 0, confirmant la convergence au sens de L2.")
+\end{lstlisting}
+
+\vspace{1cm}
+\subsection*{TP 3 : Calcul numérique d'une série de Riemann via Parseval}
+
+
+Le cours montre que Parseval permet de calculer $\sum \frac{1}{n^4} = \frac{\pi^4}{90}$. Nous allons écrire un script Python qui approche cette somme de Riemann d'une part, et vérifie la fraction exacte d'autre part.
+
+\begin{lstlisting}[language=Python]
+import math
+
+def riemann_sum(N):
+    total = 0.0
+    for n in range(1, N + 1):
+        total += 1.0 / (n**4)
+    return total
+
+N = 1000
+approx_sum = riemann_sum(N)
+exact_sum = (math.pi**4) / 90.0
+
+print(f"Somme de la serie numerique (N={N}) : {approx_sum:.8f}")
+print(f"Valeur exacte pi^4 / 90            : {exact_sum:.8f}")
+
+error = abs(approx_sum - exact_sum)
+print(f"Erreur absolue : {error:.8e}")
+
+assert error < 1e-3, "Le calcul de Parseval ne correspond pas a la limite de la serie."
+print("Validation : Parseval donne la valeur exacte de la serie.")
+\end{lstlisting}
+
+\vspace{1cm}
+\subsection*{TP 4 : Filtrage passe-bas et perte d'énergie}
+
+
+En traitement du signal, un filtre passe-bas supprime les harmoniques $n > N_{cutoff}$. Parseval permet de savoir exactement quel pourcentage d'énergie a été conservé.
+
+\begin{lstlisting}[language=Python]
+import math
+
+# Signal f(t) = t^2.
+# Vraie energie : pi^4 / 5
+total_energy = (math.pi**4) / 5.0
+
+# a_0 = 2pi^2 / 3, a_n = 4(-1)^n / n^2
+a_0 = (2 * math.pi**2) / 3.0
+
+def a_n(n):
+    return 4.0 * ((-1)**n) / (n**2)
+
+def energy_retained(cutoff):
+    e = (a_0**2) / 4.0
+    for n in range(1, cutoff + 1):
+        e += 0.5 * (a_n(n)**2)
+    return e
+
+for cutoff in [1, 2, 5, 10]:
+    retained = energy_retained(cutoff)
+    percentage = (retained / total_energy) * 100
+    print(f"Filtre avec coupure N={cutoff:2d} -> Energie conservee : {percentage:.2f}%")
+
+assert energy_retained(10) / total_energy > 0.99, "Le signal devrait etre concentre en basses frequences."
+print("Le theoreme de Parseval quantifie la degradation du signal lors d'un filtrage frequentiel.")
+\end{lstlisting}
+
+\vspace{1cm}
+\subsection*{TP 5 : Inégalité de Wirtinger (Optimisation temporelle)}
+
+
+L'inégalité de Wirtinger stipule que si la moyenne d'un signal est nulle, l'énergie de sa dérivée est toujours supérieure ou égale à l'énergie du signal lui-même.
+
+\begin{lstlisting}[language=Python]
+import math
+
+# Prenons le signal f(t) = cos(t) + 0.5*sin(2t) (moyenne nulle)
+# Sa derivee est f'(t) = -sin(t) + cos(2t)
+
+def integrate(func, steps=1000):
+    a, b = 0, 2*math.pi
+    dt = (b - a) / steps
+    res = 0
+    for i in range(steps):
+        res += func(a + i*dt) * dt
+    return res
+
+energy_f = integrate(lambda t: (math.cos(t) + 0.5*math.sin(2*t))**2) / (2*math.pi)
+energy_df = integrate(lambda t: (-math.sin(t) + math.cos(2*t))**2) / (2*math.pi)
+
+print(f"Energie de f(t)  : {energy_f:.4f}")
+print(f"Energie de f'(t) : {energy_df:.4f}")
+
+# Verification que E(df) >= E(f)
+assert energy_df >= energy_f, "L'inegalite de Wirtinger est violee !"
+print("Inegalite de Wirtinger verifiee avec succes : l'amplification des hautes frequences par la derivee augmente l'energie.")
+\end{lstlisting}
+
+\vspace{1cm}
+
+\end{document}
