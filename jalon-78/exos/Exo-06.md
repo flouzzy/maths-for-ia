@@ -1,25 +1,20 @@
-# Exercice 6 : L'équation de la chaleur avec condition initiale $\bigstar\bigstar\bigstar\bigstar\star$
+# Exercice 6 : Calcul de la série $\sum 1/(n^2+1)$
+
+**Difficulté :** \bigstar\bigstar\bigstar\star\star
 
 **Énoncé :**
-On cherche une solution $u(x,t)$ à l'équation de la chaleur $\frac{\partial u}{\partial t} = \frac{\partial^2 u}{\partial x^2}$ sur $[0, \pi] \times \mathbb{R}^+$ avec :
-$u(0, t) = u(\pi, t) = 0$ et condition initiale $u(x,0) = x(\pi - x)$.
-Proposer une solution sous forme de série.
+En utilisant le résultat de l'exercice précédent pour la fonction $f(t)=e^t$ sur $]-\pi, \pi[$, déduire la valeur de $\sum_{n=1}^{+\infty} \frac{1}{n^2+1}$.
 
-**Correction Détaillée :**
-1. **Séparation des variables :**
-On cherche des solutions fondamentales $u_n(x,t) = X(x)T(t)$.
-Les conditions aux bords $X(0)=X(\pi)=0$ imposent $X_n(x) = \sin(nx)$ pour $n \in \mathbb{N}^*$.
-L'équation en temps donne $T'(t) = -n^2 T(t) \implies T_n(t) = e^{-n^2 t}$.
-La solution générale est $u(x,t) = \sum_{n=1}^\infty b_n \sin(nx) e^{-n^2 t}$.
-
-2. **Identification des $b_n$ par Fourier :**
-En $t=0$, $u(x,0) = \sum_{n=1}^\infty b_n \sin(nx) = x(\pi-x)$.
-$b_n$ sont les coefficients de Fourier de la fonction impaire $2\pi$-périodique coïncidant avec $x(\pi-x)$ sur $[0,\pi]$.
-$$ b_n = \frac{2}{\pi} \int_0^\pi (x\pi - x^2) \sin(nx) dx $$
-Par double IPP :
-Pour $x\pi \sin(nx)$, l'IPP donne $\frac{\pi}{n}$.
-Pour $x^2 \sin(nx)$, la double IPP donne $\frac{\pi^2}{n} - \frac{2\pi}{n^3}(1 - (-1)^n)$ (calcul classique).
-Finalement, $b_n = \frac{4}{\pi n^3} (1 - (-1)^n)$.
-$$ b_{2k} = 0, \quad b_{2k+1} = \frac{8}{\pi (2k+1)^3} $$
-La solution est :
-$$ u(x,t) = \frac{8}{\pi} \sum_{k=0}^\infty \frac{\sin((2k+1)x)}{(2k+1)^3} e^{-(2k+1)^2 t} $$
+**Correction :**
+La série de Fourier est :
+$$S(f)(t) = \frac{\sinh(\pi)}{\pi} + \frac{2\sinh(\pi)}{\pi} \sum_{n=1}^{+\infty} \frac{(-1)^n}{1+n^2} (\cos(nt) - n \sin(nt))$$
+En évaluant en $t=\pi$, nous savons par le théorème de Dirichlet que $S(f)(\pi) = \cosh(\pi)$.
+Par ailleurs, en insérant $t=\pi$ dans la série :
+$$S(f)(\pi) = \frac{\sinh(\pi)}{\pi} + \frac{2\sinh(\pi)}{\pi} \sum_{n=1}^{+\infty} \frac{(-1)^n}{1+n^2} (\cos(n\pi) - n \sin(n\pi))$$
+Or $\cos(n\pi) = (-1)^n$ et $\sin(n\pi) = 0$. Donc $(-1)^n \cos(n\pi) = (-1)^{2n} = 1$.
+$$\cosh(\pi) = \frac{\sinh(\pi)}{\pi} + \frac{2\sinh(\pi)}{\pi} \sum_{n=1}^{+\infty} \frac{1}{1+n^2}$$
+On divise le tout par $\frac{\sinh(\pi)}{\pi}$ :
+$$\frac{\pi \cosh(\pi)}{\sinh(\pi)} = 1 + 2 \sum_{n=1}^{+\infty} \frac{1}{1+n^2}$$
+Soit $\pi \coth(\pi) = 1 + 2 \sum_{n=1}^{+\infty} \frac{1}{1+n^2}$.
+On isole la somme :
+$$\sum_{n=1}^{+\infty} \frac{1}{1+n^2} = \frac{\pi \coth(\pi) - 1}{2}$$

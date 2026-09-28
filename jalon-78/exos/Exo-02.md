@@ -1,24 +1,20 @@
-# Exercice 2 : Signal triangulaire et convergence uniforme $\bigstar\bigstar\star\star\star$
+# Exercice 2 : Calcul élémentaire pour un signal impair
+
+**Difficulté :** \bigstar\star\star\star\star
 
 **Énoncé :**
-Soit $g$ la fonction $2\pi$-périodique définie par $g(t) = |t|$ sur $]-\pi, \pi]$.
-1. Calculer ses coefficients de Fourier réels.
-2. Déterminer la somme de la série $\sum_{k=0}^{+\infty} \frac{1}{(2k+1)^2}$.
+Soit $f$ la fonction $2\pi$-périodique, impaire, définie sur $]0, \pi[$ par $f(t) = \pi - t$. On pose $f(0) = f(\pi) = 0$.
+1. Calculer les coefficients de Fourier trigonométriques de $f$.
+2. Écrire la série de Fourier associée.
 
-**Correction Détaillée :**
-1. **Coefficients :**
-La fonction $g$ est paire, donc $b_n = 0$ pour tout $n \ge 1$.
-Calculons $a_0 = \frac{1}{\pi} \int_{-\pi}^{\pi} |t| dt = \frac{2}{\pi} \int_0^\pi t dt = \frac{2}{\pi} \left[\frac{t^2}{2}\right]_0^\pi = \pi$.
-Pour $n \ge 1$, $a_n = \frac{2}{\pi} \int_0^\pi t \cos(nt) dt$.
-Par intégration par parties : $u=t, v'=\cos(nt) \implies u'=1, v=\frac{\sin(nt)}{n}$.
-$$ a_n = \frac{2}{\pi} \left( \left[ t\frac{\sin(nt)}{n} \right]_0^\pi - \int_0^\pi \frac{\sin(nt)}{n} dt \right) $$
-Le terme crochet est nul car $\sin(n\pi)=0$. Reste :
-$$ a_n = -\frac{2}{n\pi} \left[ \frac{-\cos(nt)}{n} \right]_0^\pi = \frac{2}{n^2\pi} (\cos(n\pi) - 1) = \frac{2}{n^2\pi} ((-1)^n - 1) $$
-Si $n=2k$, $a_{2k} = 0$. Si $n=2k+1$, $a_{2k+1} = \frac{-4}{(2k+1)^2\pi}$.
-La série s'écrit :
-$$ S(g)(t) = \frac{\pi}{2} - \frac{4}{\pi} \sum_{k=0}^{+\infty} \frac{\cos((2k+1)t)}{(2k+1)^2} $$
-
-2. **Somme de série numérique :**
-$g$ est continue et de classe $C^1$ par morceaux, donc la série converge ponctuellement vers $g(t)$ pour tout $t$ (Théorème de Dirichlet).
-Évaluons en $t=0$ : $g(0) = 0$.
-$$ 0 = \frac{\pi}{2} - \frac{4}{\pi} \sum_{k=0}^{+\infty} \frac{1}{(2k+1)^2} \implies \sum_{k=0}^{+\infty} \frac{1}{(2k+1)^2} = \frac{\pi^2}{8} $$
+**Correction :**
+1. La fonction étant impaire sur $[-\pi, \pi]$ à un ensemble de mesure nulle près, tous les coefficients $a_n$ ($n \ge 0$) sont nuls.
+   Calculons les coefficients $b_n$ pour $n \ge 1$ :
+   $$b_n = \frac{1}{\pi} \int_{-\pi}^\pi f(t) \sin(nt) dt = \frac{2}{\pi} \int_0^\pi (\pi - t) \sin(nt) dt$$
+   On utilise une intégration par parties avec $u(t) = \pi - t$ et $v'(t) = \sin(nt)$, ce qui donne $u'(t) = -1$ et $v(t) = -\frac{\cos(nt)}{n}$.
+   $$b_n = \frac{2}{\pi} \left( \left[ -(\pi - t) \frac{\cos(nt)}{n} \right]_0^\pi - \int_0^\pi (-1) \left(-\frac{\cos(nt)}{n}\right) dt \right)$$
+   En $t=\pi$, le terme est $0$. En $t=0$, le terme est $-\pi \frac{1}{n}$. Ainsi :
+   $$b_n = \frac{2}{\pi} \left( \frac{\pi}{n} - \int_0^\pi \frac{\cos(nt)}{n} dt \right)$$
+   $$b_n = \frac{2}{n} - \frac{2}{\pi} \left[ \frac{\sin(nt)}{n^2} \right]_0^\pi = \frac{2}{n}$$
+2. La série de Fourier est :
+   $$S(f)(t) = \sum_{n=1}^{+\infty} \frac{2}{n} \sin(nt)$$

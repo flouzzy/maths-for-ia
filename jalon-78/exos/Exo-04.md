@@ -1,16 +1,21 @@
-# Exercice 4 : Phénomène de Gibbs analytique $\bigstar\bigstar\bigstar\star\star$
+# Exercice 4 : Application aux séries alternées
+
+**Difficulté :** \bigstar\bigstar\star\star\star
 
 **Énoncé :**
-Reprenons le signal en dents de scie $f(t) = t$ sur $]-\pi, \pi]$.
-On admet que $S(f)(t) = 2 \sum_{n=1}^\infty \frac{(-1)^{n+1}}{n} \sin(nt)$.
-Calculer la somme partielle $S_N(f)(t)$ sous forme d'une intégrale.
+Soit $f$ la fonction $2\pi$-périodique, telle que $f(t) = t^2$ sur $[-\pi, \pi]$.
+1. Évaluer la série de Fourier de $f$ en $t=0$.
+2. En déduire la valeur de la somme de la série alternée $\sum_{n=1}^{+\infty} \frac{(-1)^{n+1}}{n^2}$.
 
-**Correction Détaillée :**
-Pour étudier la forme analytique de $S_N(f)$, on utilise le noyau de Dirichlet $D_N(t) = \sum_{k=-N}^N e^{ikt}$.
-La somme partielle d'une fonction s'écrit comme un produit de convolution :
-$$ S_N(f)(t) = \frac{1}{2\pi} \int_{-\pi}^\pi f(u) D_N(t-u) du $$
-Pour $D_N(t)$, nous avons :
-$$ D_N(t) = \frac{\sin((N+\frac{1}{2})t)}{\sin(t/2)} $$
-Ainsi :
-$$ S_N(f)(t) = \frac{1}{2\pi} \int_{-\pi}^\pi u \frac{\sin((N+\frac{1}{2})(t-u))}{\sin((t-u)/2)} du $$
-Le point d'intérêt est près de $t=\pi$, où $f$ a un saut. Le comportement de cette intégrale près du saut démontre que le dépassement (l'overshoot) ne tend pas vers zéro avec $N$, mais vers une limite stricte d'environ 9% du saut. C'est l'essence du phénomène de Gibbs.
+**Correction :**
+1. La série de Fourier de $f$ a été calculée :
+   $$S(f)(t) = \frac{\pi^2}{3} + 4 \sum_{n=1}^{+\infty} \frac{(-1)^n}{n^2} \cos(nt)$$
+   La fonction est continue en $0$, donc par le théorème de Dirichlet, $S(f)(0) = f(0) = 0$.
+2. En évaluant à $t=0$, on obtient $\cos(0) = 1$. L'égalité s'écrit :
+   $$\frac{\pi^2}{3} + 4 \sum_{n=1}^{+\infty} \frac{(-1)^n}{n^2} = 0$$
+   On réarrange pour isoler la somme :
+   $$4 \sum_{n=1}^{+\infty} \frac{(-1)^n}{n^2} = -\frac{\pi^2}{3}$$
+   En multipliant par $-1$ de chaque côté :
+   $$4 \sum_{n=1}^{+\infty} \frac{(-1)^{n+1}}{n^2} = \frac{\pi^2}{3}$$
+   D'où :
+   $$\sum_{n=1}^{+\infty} \frac{(-1)^{n+1}}{n^2} = \frac{\pi^2}{12}$$
