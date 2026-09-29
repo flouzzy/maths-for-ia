@@ -192,7 +192,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 76](jalon-76/Jalon-76.md)** : Propriétés géométriques de l'espace de Hilbert $L^2$, produit scalaire et identité du parallélogramme.
 - **[Jalon 77](jalon-77/Jalon-77.md)** : Densité des fonctions simples, des fonctions continues à support compact et des fonctions lisses dans $L^p$.
 - **[Jalon 78](jalon-78/Jalon-78.md)** : Séries de Fourier, calcul des coefficients, convergence ponctuelle (théorème de Dirichlet). 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 79](jalon-79/Jalon%2079%20%28Convergence%20en%20moyenne%20quadratique%20des%20s%C3%A9ries%20de%20Fourier%20et%20identit%C3%A9%20de%20Parseval.%29.md)** : Convergence en moyenne quadratique des séries de Fourier et identité de Parseval.
+- **[Jalon 79](jalon-79/Jalon-79.md)** : Convergence en moyenne quadratique des séries de Fourier et identité de Parseval. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 80](jalon-80/Jalon%2080%20%28Transform%C3%A9e%20de%20Fourier%20dans%20-L%5E1-%29.md)** : Transformée de Fourier dans $L^1$, propriétés algébriques, Riemann-Lebesgue et produit de convolution.
 - **[Jalon 81](jalon-81/Jalon%2081%20%28Transform%C3%A9e%20de%20Fourier%20dans%20-L%5E2-%29.md)** : Transformée de Fourier dans $L^2$, prolongement par densité et théorème d'isométrie de Plancherel.
 - **[Jalon 82](jalon-82/Jalon%2082%20%28Introduction%20%C3%A0%20la%20th%C3%A9orie%20des%20distributions%20de%20Schwartz%29.md)** : Introduction à la théorie des distributions de Schwartz, espace des fonctions tests $\mathcal{D}(\mathbb{R})$.
