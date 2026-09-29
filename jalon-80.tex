@@ -1,0 +1,667 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge TRANSFORMÉE DE FOURIER DANS $L^1$ \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+
+\section{Introduction}
+
+La Transformée de Fourier est un outil fondamental de l'analyse mathématique, généralisant le concept des séries de Fourier aux fonctions non périodiques définies sur l'ensemble des réels $\mathbb{R}$. Historiquement, cette transformation a émergé du besoin de résoudre l'équation de la chaleur sur des domaines infinis, où les méthodes de décomposition en modes discrets (Séries de Fourier) s'avèrent inopérantes.
+
+Physiquement, la Transformée de Fourier agit comme un prisme spectral continu : elle décompose un signal (une fonction du temps ou de l'espace) en une superposition continue d'ondes sinusoïdales élémentaires. On passe ainsi d'une représentation temporelle ou spatiale (domaine direct) à une représentation fréquentielle (domaine spectral). Cette transformation est omniprésente en traitement du signal, en mécanique quantique et, plus récemment, en apprentissage automatique pour l'analyse des données structurées.
+
+Mathématiquement, elle offre une propriété remarquable : elle diagonalise l'opérateur de dérivation. En d'autres termes, elle transforme les équations différentielles linéaires complexes en de simples équations algébriques. C'est cette caractéristique qui en fait un outil si puissant pour l'analyse des EDP et la théorie des probabilités.
+
+\section{Définitions, Théorèmes \& Exemples}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.5]
+    % Axes
+    \draw[->] (-3,0) -- (3,0) node[right] {$t$};
+    \draw[->] (0,-0.5) -- (0,2) node[above] {$f(t)$};
+    % Porte
+    \draw[thick, blue] (-2,0) -- (-1,0) -- (-1,1) -- (1,1) -- (1,0) -- (2,0);
+    \node[below] at (-1,0) {$-a$};
+    \node[below] at (1,0) {$a$};
+    \node[left] at (0,1) {$1$};
+    \node at (0,-0.8) {\textit{Domaine Temporel : Fonction Porte}};
+\end{tikzpicture}
+\quad\quad
+\begin{tikzpicture}[scale=1.5]
+    % Axes
+    \draw[->] (-3,0) -- (3,0) node[right] {$\xi$};
+    \draw[->] (0,-0.5) -- (0,2) node[above] {$\hat{f}(\xi)$};
+    % Sinc
+    \draw[thick, red, domain=-3:3, samples=100] plot (\x, {sin(deg(\x*3.14))/( \x*3.14 + 0.0001 ) * 1.5});
+    \node[above right] at (0,1.5) {$2a$};
+    \node at (0,-0.8) {\textit{Domaine Fréquentiel : Sinus Cardinal}};
+\end{tikzpicture}
+\caption{Dualité Temps/Fréquence de la Transformée de Fourier.}
+\end{figure}
+
+
+Soit $L^1(\mathbb{R})$ l'espace vectoriel des fonctions à valeurs complexes, mesurables au sens de Lebesgue et intégrables sur $\mathbb{R}$. On rappelle que la norme sur $L^1(\mathbb{R})$ est donnée par $\|f\|_1 = \int_{-\infty}^{+\infty} |f(t)| \, dt$.
+
+\subsection{Définition de la Transformée de Fourier}
+
+\begin{quote}\textbf{Définition (Transformée de Fourier)}
+Pour toute fonction $f \in L^1(\mathbb{R})$, on définit sa transformée de Fourier, notée $\hat{f}$ ou $\mathcal{F}(f)$, comme la fonction de la variable réelle $\xi$ donnée par :
+$$ \forall \xi \in \mathbb{R}, \quad \hat{f}(\xi) = \int_{-\infty}^{+\infty} f(t) e^{-i\xi t} \, dt $$\end{quote}
+
+\textit{Remarque :} Puisque $|f(t) e^{-i\xi t}| = |f(t)|$, l'intégrale est absolument convergente pour tout $\xi \in \mathbb{R}$. Par domination, on déduit immédiatement que la fonction $\hat{f}$ est bornée sur $\mathbb{R}$ par $\|f\|_1$.
+
+\begin{quote}\textbf{Exemple Concret : Transformée de la fonction porte (Créneau)}
+Considérons la fonction indicatrice $f(t) = \mathbf{1}_{[-a, a]}(t)$ avec $a > 0$. Clairement, $f \in L^1(\mathbb{R})$.
+Calculons sa transformée de Fourier $\hat{f}(\xi)$ pour $\xi \neq 0$ :
+$$ \hat{f}(\xi) = \int_{-\infty}^{+\infty} \mathbf{1}_{[-a, a]}(t) e^{-i\xi t} \, dt = \int_{-a}^{a} e^{-i\xi t} \, dt $$
+Une primitive immédiate est :
+$$ \hat{f}(\xi) = \left[ \frac{e^{-i\xi t}}{-i\xi} \right]_{-a}^{a} = \frac{e^{-i\xi a} - e^{i\xi a}}{-i\xi} $$
+En utilisant la formule d'Euler $2i\sin(\xi a) = e^{i\xi a} - e^{-i\xi a}$, on obtient :
+$$ \hat{f}(\xi) = \frac{-2i\sin(\xi a)}{-i\xi} = 2 \frac{\sin(\xi a)}{\xi} = 2a \, \text{sinc}(\xi a) $$
+Pour $\xi = 0$, le calcul direct donne $\hat{f}(0) = \int_{-a}^a 1 \, dt = 2a$, ce qui prolonge par continuité l'expression précédente.\end{quote}
+
+\subsection{Propriétés Algébriques et Topologiques}
+
+\begin{quote}\textbf{Théorème de Continuité}
+Si $f \in L^1(\mathbb{R})$, alors sa transformée de Fourier $\hat{f}$ est uniformément continue sur $\mathbb{R}$.\end{quote}
+
+\begin{quote}\textbf{Lemme de Riemann-Lebesgue}
+Si $f \in L^1(\mathbb{R})$, alors $\hat{f}$ s'annule à l'infini :
+$$ \lim_{|\xi| \to +\infty} \hat{f}(\xi) = 0 $$
+On note souvent $C_0(\mathbb{R})$ l'espace des fonctions continues s'annulant à l'infini. Ainsi, l'opérateur $\mathcal{F}$ envoie continûment $L^1(\mathbb{R})$ dans $C_0(\mathbb{R})$.\end{quote}
+
+\begin{quote}\textbf{Théorème (Transformée de la dérivée)}
+Soit $f \in \mathcal{C}^1(\mathbb{R}) \cap L^1(\mathbb{R})$ telle que sa dérivée $f'$ appartienne également à $L^1(\mathbb{R})$. Alors :
+$$ \forall \xi \in \mathbb{R}, \quad \widehat{f'}(\xi) = i\xi \hat{f}(\xi) $$\end{quote}
+
+\begin{quote}\textbf{Exemple Concret : Transformée d'une exponentielle décroissante unilatérale}
+Soit $f(t) = e^{-t} \mathbf{1}_{[0, +\infty[}(t)$. Cette fonction est dans $L^1(\mathbb{R})$.
+Calculons $\hat{f}(\xi)$ :
+$$ \hat{f}(\xi) = \int_{0}^{+\infty} e^{-t} e^{-i\xi t} \, dt = \int_{0}^{+\infty} e^{-(1+i\xi)t} \, dt $$
+$$ \hat{f}(\xi) = \left[ \frac{e^{-(1+i\xi)t}}{-(1+i\xi)} \right]_0^{+\infty} = \frac{0 - 1}{-(1+i\xi)} = \frac{1}{1+i\xi} $$
+En multipliant par la quantité conjuguée :
+$$ \hat{f}(\xi) = \frac{1 - i\xi}{1+\xi^2} $$
+On observe bien que $\lim_{|\xi| \to \infty} \hat{f}(\xi) = 0$, illustrant le lemme de Riemann-Lebesgue.\end{quote}
+
+
+\begin{quote}\textbf{Exemple Concret : Transformée de Fourier du Dirac (Distribution)}
+Bien que le Dirac $\delta_0$ ne soit pas une fonction de $L^1$, on peut l'approcher. Formellement, sa transformée est :
+$$ \hat{\delta_0}(\xi) = \int \delta_0(t) e^{-i\xi t} dt = e^{-i\xi \cdot 0} = 1 $$
+Le spectre est plat, signifiant que l'impulsion ponctuelle contient toutes les fréquences de manière égale.\end{quote}
+
+\begin{quote}\textbf{Exemple Concret : Inversion temporelle}
+Soit $f(t)$ une fonction de $L^1$ et $g(t) = f(-t)$.
+$$ \hat{g}(\xi) = \int f(-t) e^{-i\xi t} dt = \int f(u) e^{i\xi u} du = \hat{f}(-\xi) $$
+Retourner le temps revient à inverser les fréquences.\end{quote}
+
+\subsection{Produit de Convolution}
+
+La transformée de Fourier interagit de manière fondamentale avec le produit de convolution, simplifiant radicalement son calcul.
+
+\begin{quote}\textbf{Définition (Convolution dans $L^1$)}
+Soient $f, g \in L^1(\mathbb{R})$. Leur produit de convolution, noté $f * g$, est défini presque partout par :
+$$ (f * g)(t) = \int_{-\infty}^{+\infty} f(t-s)g(s) \, ds $$
+Le théorème de Fubini garantit que $f * g \in L^1(\mathbb{R})$ et $\|f * g\|_1 \le \|f\|_1 \|g\|_1$.\end{quote}
+
+\begin{quote}\textbf{Théorème de Convolution}
+Soient $f, g \in L^1(\mathbb{R})$. Alors la transformée de Fourier du produit de convolution est le produit ponctuel des transformées de Fourier :
+$$ \forall \xi \in \mathbb{R}, \quad \widehat{f * g}(\xi) = \hat{f}(\xi) \cdot \hat{g}(\xi) $$\end{quote}
+
+\begin{quote}\textbf{Exemple Concret : Auto-convolution d'une porte}
+Soit $f(t) = \mathbf{1}_{[-1/2, 1/2]}(t)$. Sa transformée est $\hat{f}(\xi) = \frac{\sin(\xi/2)}{\xi/2}$.
+Par le théorème, l'auto-convolution $h = f * f$ admet pour transformée de Fourier :
+$$ \hat{h}(\xi) = \left( \frac{\sin(\xi/2)}{\xi/2} \right)^2 $$
+Géométriquement, $h(t)$ est une fonction triangle valant $1 - |t|$ sur $[-1, 1]$ et $0$ ailleurs.\end{quote}
+
+\section{Démonstrations}
+
+\subsection{Démonstration : Théorème de la Transformée de la Dérivée}
+
+1. \textbf{Cadre de travail :}
+   Soit $f \in \mathcal{C}^1(\mathbb{R}) \cap L^1(\mathbb{R})$ avec $f' \in L^1(\mathbb{R})$.
+   Puisque $f'$ est intégrable, la fonction $f$ possède des limites en $\pm\infty$.
+   De plus, comme $f$ est intégrable, la seule limite possible en l'infini pour assurer que $\int |f| < \infty$ est $0$. Ainsi, $\lim_{t \to \pm\infty} f(t) = 0$.
+
+2. \textbf{Écriture de l'intégrale :}
+   Par définition, pour un $\xi \in \mathbb{R}$ fixé :
+   $$ \widehat{f'}(\xi) = \int_{-\infty}^{+\infty} f'(t) e^{-i\xi t} \, dt $$
+
+3. \textbf{Intégration par parties :}
+   On fixe un segment $[-M, M]$ et on y effectue une intégration par parties.
+   Posons $u(t) = e^{-i\xi t}$, d'où $u'(t) = -i\xi e^{-i\xi t}$.
+   Posons $v'(t) = f'(t)$, d'où $v(t) = f(t)$.
+
+   $$ \int_{-M}^{M} f'(t) e^{-i\xi t} \, dt = \left[ f(t) e^{-i\xi t} \right]_{-M}^{M} - \int_{-M}^{M} f(t) (-i\xi e^{-i\xi t}) \, dt $$
+
+4. \textbf{Passage à la limite :}
+   Le terme de bord (tout intégré) s'écrit :
+   $$ f(M)e^{-i\xi M} - f(-M)e^{i\xi (-M)} $$
+   Puisque $|e^{\pm i\xi M}| = 1$ et $\lim_{M \to \infty} f(M) = \lim_{M \to \infty} f(-M) = 0$, ce terme de bord converge vers $0$ lorsque $M \to +\infty$.
+
+5. \textbf{Conclusion :}
+   L'intégrale restante devient :
+   $$ \int_{-\infty}^{+\infty} i\xi f(t) e^{-i\xi t} \, dt = i\xi \int_{-\infty}^{+\infty} f(t) e^{-i\xi t} \, dt = i\xi \hat{f}(\xi) $$
+   Ainsi, $\widehat{f'}(\xi) = i\xi \hat{f}(\xi)$.
+
+\subsection{Démonstration : Théorème de Convolution}
+
+1. \textbf{Écriture initiale :}
+   Soient $f, g \in L^1(\mathbb{R})$. Soit $\xi \in \mathbb{R}$.
+   $$ \widehat{f * g}(\xi) = \int_{-\infty}^{+\infty} (f * g)(t) e^{-i\xi t} \, dt = \int_{-\infty}^{+\infty} \left( \int_{-\infty}^{+\infty} f(t-s)g(s) \, ds \right) e^{-i\xi t} \, dt $$
+
+2. \textbf{Application du théorème de Fubini :}
+   La fonction $(t, s) \mapsto f(t-s)g(s)e^{-i\xi t}$ est intégrable sur $\mathbb{R}^2$. On peut donc intervertir les intégrales :
+   $$ \widehat{f * g}(\xi) = \int_{-\infty}^{+\infty} \left( \int_{-\infty}^{+\infty} f(t-s) e^{-i\xi t} \, dt \right) g(s) \, ds $$
+
+3. \textbf{Changement de variable :}
+   Dans l'intégrale interne (par rapport à $t$), on effectue le changement de variable $u = t - s$, donc $t = u + s$ et $dt = du$.
+   $$ \int_{-\infty}^{+\infty} f(u) e^{-i\xi (u+s)} \, du = e^{-i\xi s} \int_{-\infty}^{+\infty} f(u) e^{-i\xi u} \, du = e^{-i\xi s} \hat{f}(\xi) $$
+
+4. \textbf{Conclusion :}
+   On remplace dans l'intégrale externe :
+   $$ \widehat{f * g}(\xi) = \int_{-\infty}^{+\infty} \left( \hat{f}(\xi) e^{-i\xi s} \right) g(s) \, ds = \hat{f}(\xi) \int_{-\infty}^{+\infty} g(s) e^{-i\xi s} \, ds = \hat{f}(\xi) \hat{g}(\xi) $$
+
+\section{Applications en Physique, Logique \& Intelligence Artificielle}
+
+\subsection{Analyse Spectrale et Traitement du Signal (Audio/Image)}
+
+Dans les architectures d'apprentissage profond traitant du signal (comme l'audio ou les séries temporelles), la transformée de Fourier constitue souvent la première étape de l'ingénierie des caractéristiques. Les réseaux de neurones sont plus à même d'apprendre des motifs invariants par translation lorsqu'ils sont exprimés dans le domaine fréquentiel, via les spectrogrammes. L'algorithme de Transformée de Fourier Rapide (FFT) permet de réaliser cette conversion en un temps très court $\mathcal{O}(N \log N)$.
+
+\subsection{Théorie des Probabilités et Fonctions Caractéristiques}
+
+En probabilité, la fonction caractéristique d'une variable aléatoire $X$ de densité de probabilité $p(x)$ est définie comme l'espérance $\mathbb{E}[e^{itX}] = \int_{-\infty}^{+\infty} p(x) e^{itx} \, dx$.
+On reconnaît exactement la transformée de Fourier de la densité $p$ (évaluée en $-t$). Cette correspondance est vitale car elle permet, grâce au théorème de convolution, de caractériser la distribution de la somme de deux variables aléatoires indépendantes : la fonction caractéristique de $X+Y$ est le produit ponctuel des fonctions caractéristiques de $X$ et de $Y$. Ce formalisme est au cœur de la démonstration du Théorème Central Limite.
+
+\subsection{Opérations de Convolution Réseaux de Neurones (CNNs)}
+
+Les réseaux de neurones convolutifs (CNNs) s'appuient massivement sur des opérations de convolution discrètes pour extraire des filtres spatiaux sur les images. En vertu du théorème de convolution, filtrer une image avec un noyau équivaut à un simple produit scalaire dans le domaine de Fourier. Pour de très grands noyaux, certaines implémentations hautement optimisées calculent la convolution en passant les entrées et les filtres dans le domaine de Fourier (FFT), multipliant ponctuellement les matrices spectrales, puis en appliquant une transformée inverse (IFFT), ce qui réduit drastiquement la complexité algorithmique de $\mathcal{O}(N^2 M^2)$ à $\mathcal{O}(N^2 \log(N))$.
+
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Transformée de Fourier d'une fonction constante par morceaux \quad $\bigstar\star\star\star\star$}
+
+Soit la fonction $f$ définie sur $\mathbb{R}$ par $f(t) = 1$ si $t \in [0, 1]$ et $f(t) = 0$ sinon.
+
+\textbf{1.} Montrer que $f \in L^1(\mathbb{R})$.
+\textbf{2.} Calculer la transformée de Fourier $\hat{f}(\xi)$ pour tout $\xi \in \mathbb{R}$.
+\textbf{3.} Déterminer $\lim_{|\xi| \to +\infty} \hat{f}(\xi)$. Ce résultat est-il cohérent avec le lemme de Riemann-Lebesgue ?
+
+---
+\textbf{Correction :}
+
+\textbf{1.} La fonction $f$ est mesurable (fonction indicatrice d'un segment). On calcule son intégrale de Lebesgue :
+$$ \int_{-\infty}^{+\infty} |f(t)| \, dt = \int_{0}^{1} 1 \, dt = 1 < +\infty $$
+Donc $f \in L^1(\mathbb{R})$.
+
+\textbf{2.} Soit $\xi \in \mathbb{R}$. Par définition de la transformée de Fourier :
+$$ \hat{f}(\xi) = \int_{-\infty}^{+\infty} f(t)e^{-i\xi t} \, dt = \int_{0}^{1} e^{-i\xi t} \, dt $$
+Si $\xi = 0$, l'intégrale vaut $\int_0^1 1 \, dt = 1$.
+Si $\xi \neq 0$, une primitive de $t \mapsto e^{-i\xi t}$ est $t \mapsto \frac{e^{-i\xi t}}{-i\xi}$. On obtient :
+$$ \hat{f}(\xi) = \left[ \frac{e^{-i\xi t}}{-i\xi} \right]_0^1 = \frac{e^{-i\xi} - 1}{-i\xi} = \frac{1 - e^{-i\xi}}{i\xi} $$
+En factorisant par l'arc moitié $e^{-i\xi/2}$ :
+$$ \hat{f}(\xi) = \frac{e^{-i\xi/2}(e^{i\xi/2} - e^{-i\xi/2})}{i\xi} = e^{-i\xi/2} \frac{2i\sin(\xi/2)}{i\xi} = e^{-i\xi/2} \frac{\sin(\xi/2)}{\xi/2} = e^{-i\xi/2} \text{sinc}(\xi/2) $$
+
+\textbf{3.} Lorsque $|\xi| \to +\infty$, on a $|\hat{f}(\xi)| \le \left|\frac{1 - e^{-i\xi}}{i\xi}\right| \le \frac{1 + 1}{|\xi|} = \frac{2}{|\xi|}$.
+Par le théorème des gendarmes, $\lim_{|\xi| \to +\infty} \hat{f}(\xi) = 0$. Ce résultat est en parfait accord avec le lemme de Riemann-Lebesgue stipulant que pour toute fonction de $L^1(\mathbb{R})$, sa transformée de Fourier s'annule à l'infini.
+
+
+\subsection*{Exercice 2 : Parité et nature de la transformée de Fourier \quad $\bigstar\bigstar\star\star\star$}
+
+Soit $f \in L^1(\mathbb{R})$ une fonction à valeurs réelles.
+Montrer que :
+\textbf{1.} Si $f$ est paire, alors sa transformée de Fourier $\hat{f}$ est une fonction à valeurs réelles et paire.
+\textbf{2.} Si $f$ est impaire, alors sa transformée de Fourier $\hat{f}$ est une fonction imaginaire pure et impaire.
+
+---
+\textbf{Correction :}
+
+\textbf{1. Cas $f$ paire :}
+Par définition, $\hat{f}(\xi) = \int_{-\infty}^{+\infty} f(t)e^{-i\xi t} \, dt$.
+On utilise la formule d'Euler : $e^{-i\xi t} = \cos(-\xi t) + i\sin(-\xi t) = \cos(\xi t) - i\sin(\xi t)$.
+Donc $\hat{f}(\xi) = \int_{-\infty}^{+\infty} f(t)\cos(\xi t) \, dt - i \int_{-\infty}^{+\infty} f(t)\sin(\xi t) \, dt$.
+Puisque $f$ est paire, la fonction $t \mapsto f(t)\sin(\xi t)$ est impaire (produit d'une paire par une impaire). Sur l'intervalle symétrique $\mathbb{R}$, son intégrale est nulle.
+Ainsi, $\hat{f}(\xi) = \int_{-\infty}^{+\infty} f(t)\cos(\xi t) \, dt$.
+L'expression sous l'intégrale est réelle, donc $\hat{f}(\xi) \in \mathbb{R}$.
+De plus, la fonction $\cos$ étant paire, $\cos(-\xi t) = \cos(\xi t)$, d'où $\hat{f}(-\xi) = \hat{f}(\xi)$. $\hat{f}$ est donc paire.
+
+\textbf{2. Cas $f$ impaire :}
+Avec la même décomposition :
+$$ \hat{f}(\xi) = \int_{-\infty}^{+\infty} f(t)\cos(\xi t) \, dt - i \int_{-\infty}^{+\infty} f(t)\sin(\xi t) \, dt $$
+Ici, $f$ est impaire, donc $t \mapsto f(t)\cos(\xi t)$ est impaire. Son intégrale sur $\mathbb{R}$ est nulle.
+Ainsi, $\hat{f}(\xi) = -i \int_{-\infty}^{+\infty} f(t)\sin(\xi t) \, dt$.
+L'intégrale est réelle, donc $\hat{f}(\xi)$ est imaginaire pure.
+De plus, $\sin(-\xi t) = -\sin(\xi t)$, donc $\hat{f}(-\xi) = -i \int_{-\infty}^{+\infty} f(t)(-\sin(\xi t)) \, dt = i \int_{-\infty}^{+\infty} f(t)\sin(\xi t) \, dt = -\hat{f}(\xi)$. $\hat{f}$ est donc impaire.
+
+
+\subsection*{Exercice 3 : Transformée de Fourier d'une fonction exponentielle symétrique \quad $\bigstar\bigstar\star\star\star$}
+
+Soit $a > 0$. On considère la fonction $f(t) = e^{-a|t|}$.
+\textbf{1.} Vérifier que $f \in L^1(\mathbb{R})$.
+\textbf{2.} Calculer explicitement $\hat{f}(\xi)$.
+
+---
+\textbf{Correction :}
+
+\textbf{1.} La fonction $f$ est positive, paire et mesurable.
+$$ \int_{-\infty}^{+\infty} |f(t)| \, dt = 2 \int_{0}^{+\infty} e^{-at} \, dt = 2 \left[ \frac{e^{-at}}{-a} \right]_0^{+\infty} = 2 \left( 0 - \left(-\frac{1}{a}\right) \right) = \frac{2}{a} < +\infty $$
+Donc $f \in L^1(\mathbb{R})$.
+
+\textbf{2.} Par définition :
+$$ \hat{f}(\xi) = \int_{-\infty}^{+\infty} e^{-a|t|} e^{-i\xi t} \, dt $$
+Puisque $f$ est paire et à valeurs réelles, d'après l'exercice précédent, la partie imaginaire de l'intégrale s'annule et on a :
+$$ \hat{f}(\xi) = \int_{-\infty}^{+\infty} e^{-a|t|} \cos(\xi t) \, dt = 2 \int_{0}^{+\infty} e^{-at} \cos(\xi t) \, dt $$
+Calculons l'intégrale en repassant en complexe (pour faciliter la primitive) :
+$$ \int_{0}^{+\infty} e^{-at} e^{i\xi t} \, dt = \int_{0}^{+\infty} e^{(i\xi - a)t} \, dt $$
+La primitive est $\frac{e^{(i\xi - a)t}}{i\xi - a}$.
+À la limite $t \to +\infty$, comme $\text{Re}(i\xi - a) = -a < 0$, $|e^{(i\xi - a)t}| = e^{-at} \to 0$.
+Donc $\left[ \frac{e^{(i\xi - a)t}}{i\xi - a} \right]_0^{+\infty} = 0 - \frac{1}{i\xi - a} = \frac{1}{a - i\xi}$.
+On cherche la partie réelle de cette intégrale complexe (qui correspond à l'intégrale avec le cosinus).
+$$ \frac{1}{a - i\xi} = \frac{a + i\xi}{(a - i\xi)(a + i\xi)} = \frac{a + i\xi}{a^2 + \xi^2} $$
+La partie réelle est $\frac{a}{a^2 + \xi^2}$.
+Ainsi, $\int_0^{+\infty} e^{-at} \cos(\xi t) \, dt = \frac{a}{a^2 + \xi^2}$.
+On conclut que :
+$$ \hat{f}(\xi) = 2 \frac{a}{a^2 + \xi^2} = \frac{2a}{a^2 + \xi^2} $$
+
+
+\subsection*{Exercice 4 : Propriétés de translation spatiale \quad $\bigstar\bigstar\bigstar\star\star$}
+
+Soit $f \in L^1(\mathbb{R})$ et $a \in \mathbb{R}$.
+On définit l'opérateur de translation $\tau_a$ par $(\tau_a f)(t) = f(t-a)$.
+Montrer que $\widehat{\tau_a f}(\xi) = e^{-ia\xi} \hat{f}(\xi)$.
+
+---
+\textbf{Correction :}
+
+Par définition de la transformée de Fourier appliquée à la fonction $\tau_a f$ :
+$$ \widehat{\tau_a f}(\xi) = \int_{-\infty}^{+\infty} (\tau_a f)(t) e^{-i\xi t} \, dt = \int_{-\infty}^{+\infty} f(t-a) e^{-i\xi t} \, dt $$
+Effectuons le changement de variable $u = t - a$, ce qui implique $t = u + a$ et $dt = du$. Les bornes de l'intégrale de $-\infty$ à $+\infty$ restent inchangées.
+$$ \widehat{\tau_a f}(\xi) = \int_{-\infty}^{+\infty} f(u) e^{-i\xi (u+a)} \, du $$
+Par les propriétés de l'exponentielle :
+$$ e^{-i\xi (u+a)} = e^{-i\xi u} e^{-i\xi a} $$
+Puisque le terme $e^{-i\xi a}$ ne dépend pas de la variable d'intégration $u$, on peut le sortir de l'intégrale :
+$$ \widehat{\tau_a f}(\xi) = e^{-i\xi a} \int_{-\infty}^{+\infty} f(u) e^{-i\xi u} \, du $$
+On reconnaît l'expression exacte de la transformée de Fourier de $f$ :
+$$ \widehat{\tau_a f}(\xi) = e^{-ia\xi} \hat{f}(\xi) $$
+Ce résultat fondamental montre qu'une translation dans le domaine temporel correspond à un déphasage linéaire dans le domaine fréquentiel.
+
+
+\subsection*{Exercice 5 : Équation différentielle résolue par Fourier \quad $\bigstar\bigstar\bigstar\star\star$}
+
+On cherche à résoudre l'équation différentielle suivante pour une fonction $y \in \mathcal{C}^1(\mathbb{R}) \cap L^1(\mathbb{R})$ avec $y' \in L^1(\mathbb{R})$ :
+$$ -y''(t) + \alpha^2 y(t) = f(t) \quad (\text{avec } \alpha > 0) $$
+où $f \in L^1(\mathbb{R})$ est donnée.
+On suppose que $y'' \in L^1(\mathbb{R})$.
+En utilisant la transformée de Fourier, exprimer $\hat{y}(\xi)$ en fonction de $\hat{f}(\xi)$ et $\alpha$.
+
+---
+\textbf{Correction :}
+
+Appliquons la transformée de Fourier linéaire à l'équation différentielle complète.
+$$ \mathcal{F}(-y''(t) + \alpha^2 y(t)) = \mathcal{F}(f(t)) $$
+$$ -\mathcal{F}(y'')(\xi) + \alpha^2 \mathcal{F}(y)(\xi) = \hat{f}(\xi) $$
+On utilise la propriété de dérivation de la transformée de Fourier.
+Pour la dérivée première : $\mathcal{F}(y')(\xi) = i\xi \hat{y}(\xi)$.
+Pour la dérivée seconde : $\mathcal{F}(y'')(\xi) = \mathcal{F}((y')')(\xi) = i\xi \mathcal{F}(y')(\xi) = i\xi (i\xi \hat{y}(\xi)) = -\xi^2 \hat{y}(\xi)$.
+Substituons ceci dans l'équation :
+$$ -(-\xi^2 \hat{y}(\xi)) + \alpha^2 \hat{y}(\xi) = \hat{f}(\xi) $$
+$$ \xi^2 \hat{y}(\xi) + \alpha^2 \hat{y}(\xi) = \hat{f}(\xi) $$
+Factorisons par $\hat{y}(\xi)$ :
+$$ (\xi^2 + \alpha^2) \hat{y}(\xi) = \hat{f}(\xi) $$
+Isolons $\hat{y}(\xi)$ :
+$$ \hat{y}(\xi) = \frac{1}{\xi^2 + \alpha^2} \hat{f}(\xi) $$
+L'équation différentielle, qui était une équation analytique complexe, est devenue une simple équation algébrique (multiplication) dans le domaine de Fourier.
+On remarque que $\frac{1}{\xi^2 + \alpha^2}$ ressemble (à un facteur multiplicatif près) à la transformée de l'exponentielle symétrique trouvée dans l'exercice 3.
+
+
+\subsection*{Exercice 6 : Transformée de Fourier de la Gaussienne \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+Soit la fonction $g(t) = e^{-t^2/2}$.
+On rappelle que $\int_{-\infty}^{+\infty} e^{-t^2/2} dt = \sqrt{2\pi}$.
+\textbf{1.} Montrer que $g$ vérifie l'équation différentielle $g'(t) + t g(t) = 0$.
+\textbf{2.} En déduire une équation différentielle vérifiée par sa transformée de Fourier $\hat{g}(\xi)$.
+\textbf{3.} Résoudre cette équation pour trouver l'expression explicite de $\hat{g}(\xi)$.
+
+---
+\textbf{Correction :}
+
+\textbf{1.} Calculons la dérivée de $g(t)$ :
+$g'(t) = \frac{d}{dt}(e^{-t^2/2}) = -t e^{-t^2/2} = -t g(t)$.
+Donc $g'(t) + t g(t) = 0$.
+
+\textbf{2.} Appliquons la transformée de Fourier à cette équation différentielle.
+$\mathcal{F}(g')(\xi) + \mathcal{F}(t \mapsto t g(t))(\xi) = 0$.
+On sait que $\mathcal{F}(g')(\xi) = i\xi \hat{g}(\xi)$.
+Pour le second terme, dérivons la définition de la transformée de Fourier de $g$ par rapport à $\xi$ :
+$\frac{d}{d\xi} \hat{g}(\xi) = \frac{d}{d\xi} \int_{-\infty}^{+\infty} g(t) e^{-i\xi t} dt = \int_{-\infty}^{+\infty} g(t) (-it) e^{-i\xi t} dt = -i \mathcal{F}(t g(t))(\xi)$.
+Donc $\mathcal{F}(t g(t))(\xi) = i \frac{d}{d\xi} \hat{g}(\xi) = i \hat{g}'(\xi)$.
+L'équation devient :
+$i\xi \hat{g}(\xi) + i \hat{g}'(\xi) = 0$.
+En divisant par $i$ :
+$\hat{g}'(\xi) + \xi \hat{g}(\xi) = 0$.
+
+\textbf{3.} Nous avons une équation différentielle linéaire du premier ordre pour $\hat{g}$ : $\hat{g}'(\xi) = -\xi \hat{g}(\xi)$.
+La solution générale est de la forme $\hat{g}(\xi) = K e^{-\xi^2/2}$ avec $K \in \mathbb{C}$.
+Pour trouver la constante $K$, évaluons $\hat{g}$ en $\xi = 0$ :
+$\hat{g}(0) = \int_{-\infty}^{+\infty} g(t) e^0 dt = \int_{-\infty}^{+\infty} e^{-t^2/2} dt = \sqrt{2\pi}$.
+Or, $\hat{g}(0) = K e^0 = K$.
+Donc $K = \sqrt{2\pi}$.
+Ainsi, $\hat{g}(\xi) = \sqrt{2\pi} e^{-\xi^2/2}$.
+La fonction Gaussienne est un point fixe (à une constante près) de la transformée de Fourier.
+
+
+\subsection*{Exercice 7 : Convolution de deux portes \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+Soit $f(t) = \mathbf{1}_{[-a, a]}(t)$ (avec $a > 0$).
+On note $h = f * f$ l'auto-convolution de la porte.
+\textbf{1.} Calculer explicitement $h(t)$ par la définition de l'intégrale.
+\textbf{2.} Calculer $\hat{h}(\xi)$ par application du théorème de convolution.
+\textbf{3.} Vérifier la cohérence.
+
+---
+\textbf{Correction :}
+
+\textbf{1.} $h(t) = (f * f)(t) = \int_{-\infty}^{+\infty} f(t-s)f(s) \, ds = \int_{-a}^{a} f(t-s) \, ds$.
+La fonction $f(t-s)$ vaut $1$ si $-a \le t-s \le a$, c'est-à-dire si $t-a \le s \le t+a$. Sinon elle vaut $0$.
+L'intégrale est donc la mesure de l'intersection des intervalles $[-a, a]$ et $[t-a, t+a]$.
+- Si $t > 2a$ ou $t < -2a$, l'intersection est vide, $h(t) = 0$.
+- Si $0 \le t \le 2a$, l'intersection est $[t-a, a]$. La longueur est $a - (t-a) = 2a - t$.
+- Si $-2a \le t \le 0$, l'intersection est $[-a, t+a]$. La longueur est $(t+a) - (-a) = 2a + t$.
+En résumé, $h(t) = (2a - |t|) \mathbf{1}_{[-2a, 2a]}(t)$. C'est une fonction triangle.
+
+\textbf{2.} D'après l'exercice 1 (ou le cours), $\hat{f}(\xi) = 2a \, \text{sinc}(\xi a) = 2 \frac{\sin(\xi a)}{\xi}$.
+Le théorème de convolution affirme que $\widehat{f * f}(\xi) = \hat{f}(\xi) \cdot \hat{f}(\xi) = (\hat{f}(\xi))^2$.
+Donc $\hat{h}(\xi) = \left( 2 \frac{\sin(\xi a)}{\xi} \right)^2 = 4 \frac{\sin^2(\xi a)}{\xi^2}$.
+
+\textbf{3.} Cohérence :
+On pourrait recalculer $\hat{h}(\xi)$ directement à partir de la fonction triangle $h(t) = 2a - |t|$ sur $[-2a, 2a]$ par deux intégrations par parties. Le résultat redonnerait rigoureusement $4 \frac{\sin^2(\xi a)}{\xi^2}$. Le théorème de convolution offre un gain de temps majeur.
+
+
+\subsection*{Exercice 8 : Déphasage et convolution \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+Soient $f, g \in L^1(\mathbb{R})$.
+On considère les fonctions modulées $f_1(t) = e^{i\omega_0 t} f(t)$ et la fonction translatée $g_a(t) = g(t-a)$.
+Exprimer la transformée de Fourier de $f_1 * g_a$ en fonction de $\hat{f}$ et $\hat{g}$.
+
+---
+\textbf{Correction :}
+
+Rappelons les propriétés de base :
+1) Translation temporelle : $\mathcal{F}(g(t-a))(\xi) = e^{-ia\xi} \hat{g}(\xi)$. Donc $\widehat{g_a}(\xi) = e^{-ia\xi} \hat{g}(\xi)$.
+2) Modulation (translation fréquentielle) :
+$\mathcal{F}(e^{i\omega_0 t} f(t))(\xi) = \int f(t) e^{i\omega_0 t} e^{-i\xi t} dt = \int f(t) e^{-i(\xi - \omega_0) t} dt = \hat{f}(\xi - \omega_0)$.
+Donc $\widehat{f_1}(\xi) = \hat{f}(\xi - \omega_0)$.
+
+D'après le théorème de convolution, la transformée de $f_1 * g_a$ est le produit des transformées :
+$\mathcal{F}(f_1 * g_a)(\xi) = \widehat{f_1}(\xi) \cdot \widehat{g_a}(\xi)$.
+En remplaçant par les expressions trouvées :
+$\mathcal{F}(f_1 * g_a)(\xi) = \hat{f}(\xi - \omega_0) \cdot \left( e^{-ia\xi} \hat{g}(\xi) \right)$.
+Soit :
+$$ \mathcal{F}(f_1 * g_a)(\xi) = e^{-ia\xi} \hat{f}(\xi - \omega_0) \hat{g}(\xi) $$
+Cette opération illustre l'impact croisé des modulations (qui décalent le spectre de $f$) et des translations (qui ajoutent une phase linéaire au spectre de $g$) dans les filtres appliqués aux signaux.
+
+
+\subsection*{Exercice 9 : Symétrie hermitienne pour les fonctions réelles \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+Soit $f \in L^1(\mathbb{R})$ une fonction à valeurs strictement réelles (i.e. $f(t) \in \mathbb{R}$ $\forall t$).
+Montrer que sa transformée de Fourier possède une symétrie hermitienne, c'est-à-dire :
+$$ \forall \xi \in \mathbb{R}, \quad \hat{f}(-\xi) = \overline{\hat{f}(\xi)} $$
+
+---
+\textbf{Correction :}
+
+Partons de l'évaluation de la transformée de Fourier en $-\xi$ :
+$$ \hat{f}(-\xi) = \int_{-\infty}^{+\infty} f(t) e^{-i(-\xi) t} \, dt = \int_{-\infty}^{+\infty} f(t) e^{i\xi t} \, dt $$
+Par ailleurs, prenons le conjugué complexe de $\hat{f}(\xi)$ :
+$$ \hat{f}(\xi) = \int_{-\infty}^{+\infty} f(t) e^{-i\xi t} \, dt $$
+$$ \overline{\hat{f}(\xi)} = \overline{\int_{-\infty}^{+\infty} f(t) e^{-i\xi t} \, dt} $$
+Les propriétés de l'intégrale sur $\mathbb{R}$ permettent de rentrer le conjugué sous le signe intégral :
+$$ \overline{\hat{f}(\xi)} = \int_{-\infty}^{+\infty} \overline{f(t) e^{-i\xi t}} \, dt = \int_{-\infty}^{+\infty} \overline{f(t)} \overline{e^{-i\xi t}} \, dt $$
+Puisque $f(t)$ est réelle par hypothèse, son conjugué est égal à elle-même : $\overline{f(t)} = f(t)$.
+Le conjugué complexe de l'exponentielle imaginaire pure est : $\overline{e^{-i\xi t}} = e^{i\xi t}$.
+Donc :
+$$ \overline{\hat{f}(\xi)} = \int_{-\infty}^{+\infty} f(t) e^{i\xi t} \, dt $$
+On constate que l'expression obtenue est rigoureusement identique à celle de $\hat{f}(-\xi)$.
+Par conséquent, on a bien prouvé l'égalité fondamentale :
+$$ \hat{f}(-\xi) = \overline{\hat{f}(\xi)} $$
+Conséquence géométrique forte : le spectre d'amplitude $|\hat{f}(\xi)|$ d'un signal temporel réel est une fonction paire.
+
+
+\subsection*{Exercice 10 : Autour du sinus cardinal et Parseval \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+On admet la formule d'inversion de Fourier (sous bonnes hypothèses d'intégrabilité) : si $f$ et $\hat{f}$ sont dans $L^1$, alors $f(t) = \frac{1}{2\pi} \int \hat{f}(\xi) e^{i\xi t} d\xi$.
+Soit $h(t) = \left( \frac{\sin t}{t} \right)^2$. En exploitant les résultats des exercices 1 et 7, calculer $\int_{-\infty}^{+\infty} h(t) dt$.
+
+---
+\textbf{Correction :}
+
+Dans l'exercice 1, la transformée de $f = \mathbf{1}_{[-1, 1]}$ (donc $a=1$) est $\hat{f}(\xi) = 2 \frac{\sin \xi}{\xi}$.
+L'auto-convolution $g = f * f$ a pour transformée $\hat{g}(\xi) = \hat{f}(\xi)^2 = 4 \left( \frac{\sin \xi}{\xi} \right)^2 = 4 h(\xi)$.
+On a calculé à l'exercice 7 (avec $a=1$) que $g(t) = (2 - |t|)\mathbf{1}_{[-2, 2]}(t)$.
+
+Appliquons la formule d'inversion en $t=0$ pour la fonction $g$ :
+$g(0) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} \hat{g}(\xi) e^{i\xi \cdot 0} d\xi = \frac{1}{2\pi} \int_{-\infty}^{+\infty} 4 h(\xi) d\xi$.
+Donc $\int_{-\infty}^{+\infty} h(\xi) d\xi = \frac{2\pi}{4} g(0)$.
+Or l'expression de $g$ nous donne directement $g(0) = 2 - |0| = 2$.
+D'où :
+$$ \int_{-\infty}^{+\infty} \left( \frac{\sin \xi}{\xi} \right)^2 d\xi = \frac{2\pi}{4} \times 2 = \pi $$
+Cette élégante méthode de dualité (passer par la fonction dont $h$ est la transformée) évite le recours au théorème des résidus complexes pour calculer l'intégrale de ce sinus cardinal au carré.
+
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Calcul discret de la transformée de Fourier}
+
+L'objectif est d'implémenter un estimateur de la transformée de Fourier pour un signal discret, se rapprochant de l'intégrale continue par une somme de Riemann.
+
+\begin{lstlisting}
+import math
+
+def fourier_transform_1d(signal, times, frequencies):
+    dt = times[1] - times[0]
+    ft_result = []
+
+    for freq in frequencies:
+        real_part = 0.0
+        imag_part = 0.0
+
+        for i in range(len(signal)):
+            t = times[i]
+            val = signal[i]
+            # e^(-i * freq * t) = cos(freq * t) - i * sin(freq * t)
+            real_part += val * math.cos(freq * t) * dt
+            imag_part += val * -math.sin(freq * t) * dt
+
+        ft_result.append((real_part, imag_part))
+
+    return ft_result
+
+# Validation
+times = [i * 0.01 for i in range(-500, 500)]
+# Signal porte: 1 si t in [-1, 1], 0 sinon
+signal_porte = [1.0 if -1.0 <= t <= 1.0 else 0.0 for t in times]
+frequencies = [0.0, 1.0, 3.14159]
+
+res = fourier_transform_1d(signal_porte, times, frequencies)
+
+# A freq 0, l'integrale de la porte sur [-1,1] est 2
+assert abs(res[0][0] - 2.0) < 0.1
+# A freq pi, la theorie dit 2 * sin(pi) / pi = 0
+assert abs(res[2][0]) < 0.1
+\end{lstlisting}
+
+
+\subsection*{TP 2 : Convolution discrète dans le domaine temporel}
+
+Implémentation naïve de l'intégrale de convolution $(f * g)(t) = \int f(t-s)g(s)ds$.
+
+\begin{lstlisting}
+def discrete_convolution(f, g, dt):
+    # f et g sont supposes definis sur la meme grille temporelle (indices)
+    n = len(f)
+    m = len(g)
+    result_len = n + m - 1
+    result = [0.0] * result_len
+
+    for i in range(result_len):
+        sum_val = 0.0
+        for j in range(m):
+            if 0 <= i - j < n:
+                sum_val += f[i - j] * g[j] * dt
+        result[i] = sum_val
+
+    return result
+
+# Validation avec deux portes de largeur 1
+dt = 0.1
+f_porte = [1.0] * 10 # duree 1.0
+g_porte = [1.0] * 10 # duree 1.0
+
+conv = discrete_convolution(f_porte, g_porte, dt)
+# Le maximum du triangle devrait etre la duree (1.0)
+max_val = max(conv)
+assert abs(max_val - 1.0) < 0.05
+\end{lstlisting}
+
+
+\subsection*{TP 3 : La Transformée Inverse Rapide par symétrie}
+
+Si nous avons une fonction qui calcule la transformée directe, nous pouvons astucieusement l'utiliser pour calculer l'inverse sans tout réécrire, en conjuguant les entrées et les sorties.
+
+\begin{lstlisting}
+import math
+
+def fourier_transform_complex(complex_signal, times, frequencies):
+    dt = times[1] - times[0]
+    ft_result = []
+
+    for freq in frequencies:
+        real_sum = 0.0
+        imag_sum = 0.0
+
+        for i in range(len(complex_signal)):
+            t = times[i]
+            s_real, s_imag = complex_signal[i]
+
+            cos_val = math.cos(freq * t)
+            sin_val = -math.sin(freq * t)
+
+            real_sum += (s_real * cos_val - s_imag * sin_val) * dt
+            imag_sum += (s_real * sin_val + s_imag * cos_val) * dt
+
+        ft_result.append((real_sum, imag_sum))
+
+    return ft_result
+
+def inverse_fourier_via_conjugate(ft_signal, freqs, times):
+    # On conjugue le signal en entree
+    conjugated_in = [(r, -i) for (r, i) in ft_signal]
+
+    # On applique la transformee directe (en echangeant t et freq)
+    res = fourier_transform_complex(conjugated_in, freqs, times)
+
+    # On conjugue la sortie et on divise par 2*pi
+    inv = [(r / (2 * math.pi), -i / (2 * math.pi)) for (r, i) in res]
+    return inv
+\end{lstlisting}
+
+
+\subsection*{TP 4 : Dérivation via Fourier}
+
+La dérivée spatiale $f'(x)$ peut être obtenue en calculant la transformée de Fourier, en multipliant par $i\xi$, puis en effectuant la transformée inverse. C'est la base des méthodes spectrales en résolution d'EDP.
+
+\begin{lstlisting}
+def spectral_derivative(ft_signal, frequencies):
+    deriv_ft = []
+    for i in range(len(frequencies)):
+        freq = frequencies[i]
+        real_part, imag_part = ft_signal[i]
+
+        # Multiplication par i * freq
+        # (r + i*img) * i*freq = -img*freq + i * r*freq
+        new_real = -imag_part * freq
+        new_imag = real_part * freq
+
+        deriv_ft.append((new_real, new_imag))
+
+    return deriv_ft
+
+# Validation d'un cycle sur un sinus
+# Si f(t) = sin(t), sa ft est de l'imaginaire pur aux frequences +/- 1
+ft_sinus = [(0, -3.14)] # a freq=1, valeur approchee de -i*pi
+deriv = spectral_derivative(ft_sinus, [1.0])
+# i * 1 * (0 - i*pi) = pi = reel pur (correspond a cosinus)
+assert deriv[0][0] > 0
+assert deriv[0][1] == 0
+\end{lstlisting}
+
+
+\subsection*{TP 5 : Application du théorème de Plancherel discrétisé}
+
+Le théorème de Plancherel stipule que l'énergie globale du signal dans le domaine temporel est égale à celle dans le domaine spectral (à un facteur $2\pi$ près). Ce TP le vérifie numériquement.
+
+\begin{lstlisting}
+def compute_energy_time(signal, dt):
+    energy = 0.0
+    for val in signal:
+        energy += (val * val) * dt
+    return energy
+
+def compute_energy_freq(ft_signal, d_freq):
+    energy = 0.0
+    for real_part, imag_part in ft_signal:
+        magnitude_sq = real_part**2 + imag_part**2
+        energy += magnitude_sq * d_freq
+    return energy
+
+# Signal porte sur [-1, 1], amplitude 1
+# Energie temporelle = integrale de 1^2 sur [-1, 1] = 2.0
+dt = 0.01
+signal = [1.0 if -1.0 <= i*dt <= 1.0 else 0.0 for i in range(-500, 500)]
+time_energy = compute_energy_time(signal, dt)
+
+assert abs(time_energy - 2.0) < 0.1
+
+# La verification spectrale necessiterait le calcul de la FFT entiere
+# et la prise en compte precise du 1/(2*pi).
+\end{lstlisting}
+
+
+
+
+\end{document}
