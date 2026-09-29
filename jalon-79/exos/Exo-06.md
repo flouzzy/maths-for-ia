@@ -1,23 +1,37 @@
-# Exercice 6 : Lemme de Riemann-Lebesgue via Parseval $\bigstar\bigstar\bigstar\star\star$
-**Énoncé :** Soit $f \in L^2([0, 2\pi])$. Montrer, en utilisant uniquement l'identité de Parseval, que ses coefficients de Fourier complexes vérifient : $\lim_{|n| \to \infty} c_n(f) = 0$.
+---
+title: "Exercice 6 : Synthèse de signaux"
+difficulty: "$\bigstar\bigstar\bigstar\bigstar\star$"
+---
 
-**Correction Détaillée :**
-*Étape 1 : Rappel de l'Identité de Parseval.*
-Pour $f \in L^2$, l'identité de Parseval stipule que :
-$$\sum_{n=-\infty}^{+\infty} |c_n(f)|^2 = \frac{1}{2\pi} \int_0^{2\pi} |f(t)|^2 dt$$
+# Exercice 6 : Le signal $t(\pi-|t|)$
 
-*Étape 2 : Finitude de l'énergie.*
-Puisque $f \in L^2$, l'intégrale $\int_0^{2\pi} |f(t)|^2 dt$ est un nombre réel fini, que l'on note $M$.
-Ainsi, la série infinie $\sum_{n=-\infty}^{+\infty} |c_n(f)|^2$ est convergente, et sa somme vaut $M$.
+**Niveau :** $\bigstar\bigstar\bigstar\bigstar\star$
 
-*Étape 3 : Terme général d'une série convergente.*
-Dans toute série numérique convergente $\sum u_n$, une condition nécessaire stricte est que le terme général tende vers $0$ lorsque l'indice tend vers l'infini.
-Ici, $u_n = |c_n(f)|^2$.
-Puisque la série converge bilatéralement, on a nécessairement :
-$$\lim_{|n| \to \infty} |c_n(f)|^2 = 0$$
+## Énoncé
 
-*Étape 4 : Conclusion.*
-La limite du carré du module étant nulle, le module lui-même tend vers $0$ :
-$$\lim_{|n| \to \infty} |c_n(f)| = 0$$
-Ce qui équivaut à $\lim_{|n| \to \infty} c_n(f) = 0$.
-C'est le lemme de Riemann-Lebesgue pour les fonctions $L^2$, démontré de manière presque immédiate grâce à la structure hilbertienne.
+On considère $f$ la fonction $2\pi$-périodique, impaire, définie sur $[0, \pi]$ par $f(t) = t(\pi - t)$.
+1. Calculer ses coefficients de Fourier trigonométriques.
+2. Déduire de l'identité de Parseval la valeur de $\sum_{p=0}^\infty \frac{1}{(2p+1)^6}$.
+
+## Correction Détaillée
+
+1. **Calcul des coefficients de Fourier :**
+La fonction est impaire, donc $a_n = 0$.
+Pour $n \ge 1$, $b_n = \frac{2}{\pi} \int_0^\pi t(\pi-t) \sin(nt) dt$.
+Réalisons une double intégration par parties :
+$u = t(\pi-t) \implies u' = \pi - 2t$, et $v' = \sin(nt) \implies v = -\frac{\cos(nt)}{n}$.
+$$ b_n = \frac{2}{\pi} \left[ -t(\pi-t)\frac{\cos(nt)}{n} \right]_0^\pi + \frac{2}{\pi n} \int_0^\pi (\pi-2t)\cos(nt) dt $$
+Le premier crochet est nul.
+Deuxième IPP : $u = \pi-2t \implies u' = -2$, $v' = \cos(nt) \implies v = \frac{\sin(nt)}{n}$.
+$$ \int_0^\pi (\pi-2t)\cos(nt) dt = \left[ (\pi-2t)\frac{\sin(nt)}{n} \right]_0^\pi + \frac{2}{n} \int_0^\pi \sin(nt) dt $$
+Le crochet est nul. Il reste :
+$$ \frac{2}{n} \left[ -\frac{\cos(nt)}{n} \right]_0^\pi = \frac{-2}{n^2} ((-1)^n - 1) $$
+Ainsi, $b_n = \frac{2}{\pi n} \frac{-2}{n^2} ((-1)^n - 1) = \frac{4(1 - (-1)^n)}{\pi n^3}$.
+$b_{2p} = 0$, et $b_{2p+1} = \frac{8}{\pi (2p+1)^3}$.
+
+2. **Parseval :**
+Énergie totale :
+$$ \|f\|_{L^2}^2 = \frac{1}{\pi} \int_0^\pi (t\pi - t^2)^2 dt = \frac{1}{\pi} \int_0^\pi (\pi^2 t^2 - 2\pi t^3 + t^4) dt = \frac{\pi^4}{30} $$
+D'après Parseval :
+$$ \frac{1}{2} \sum_{n=1}^\infty b_n^2 = \frac{\pi^4}{30} \implies \sum_{p=0}^\infty \left( \frac{8}{\pi (2p+1)^3} \right)^2 = \frac{\pi^4}{15} $$
+$$ \frac{64}{\pi^2} \sum_{p=0}^\infty \frac{1}{(2p+1)^6} = \frac{\pi^4}{15} \implies \sum_{p=0}^\infty \frac{1}{(2p+1)^6} = \frac{\pi^6}{960} $$

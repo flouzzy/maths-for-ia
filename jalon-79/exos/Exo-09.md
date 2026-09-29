@@ -1,30 +1,34 @@
-# Exercice 9 : Inégalité isopérimétrique (Le problème de Didon) $\bigstar\bigstar\bigstar\bigstar\bigstar$
-**Énoncé :** Soit une courbe fermée simple dans le plan $\mathbb{R}^2$, paramétrée par $s \in [0, 2\pi]$, longueur de l'arc. La longueur totale de la courbe est donc $L = 2\pi$. Soient $(x(s), y(s))$ les coordonnées, qui sont des fonctions $2\pi$-périodiques.
-On admet que l'aire enclose $A$ est donnée par $A = \frac{1}{2} \int_0^{2\pi} (x(s)y'(s) - x'(s)y(s)) ds$.
-De plus, la paramétrisation par longueur d'arc implique $(x'(s))^2 + (y'(s))^2 = 1$.
-En utilisant les séries de Fourier et l'identité de Parseval, démontrer que $A \le \pi$, avec égalité si et seulement si la courbe est un cercle.
+---
+title: "Exercice 9 : Polynôme impair"
+difficulty: "$\bigstar\bigstar\bigstar\bigstar\bigstar$"
+---
 
-**Correction Détaillée :**
-*Étape 1 : Énergie des dérivées.*
-Puisque $x'^2 + y'^2 = 1$, on a $\int_0^{2\pi} (x'^2 + y'^2) ds = 2\pi$.
-Par Parseval sur $x'$ et $y'$ (avec coefficients réels $a_n, b_n$ pour $x$, et $c_n, d_n$ pour $y$) :
-$\|x'\|_2^2 + \|y'\|_2^2 = \frac{1}{2\pi} 2\pi = 1$.
-Pour la dérivée, les coefficients sont $a_n(x') = n b_n(x)$ et $b_n(x') = -n a_n(x)$.
-L'énergie est donc $\frac{1}{2} \sum_{n=1}^\infty n^2 (a_n^2 + b_n^2 + c_n^2 + d_n^2) = 1$.
+# Exercice 9 : Le polynôme $t^3 - \pi^2 t$
 
-*Étape 2 : Formule de l'aire par Fourier.*
-$A = \pi \frac{1}{2\pi} \int_0^{2\pi} (x y' - x' y) ds$. Par Parseval généralisé (produit scalaire),
-$\frac{1}{2\pi} \int_0^{2\pi} x y' = \frac{a_0 c_0(y')}{4} + \frac{1}{2} \sum (a_n a_n(y') + b_n b_n(y')) = \frac{1}{2} \sum n (a_n d_n - b_n c_n)$.
-On obtient $A = \pi \sum_{n=1}^\infty n (a_n d_n - b_n c_n)$.
+**Niveau :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-*Étape 3 : Majoration algébrique.*
-On utilise $2(a_n d_n - b_n c_n) \le a_n^2 + d_n^2 + b_n^2 + c_n^2$.
-Donc $A \le \frac{\pi}{2} \sum_{n=1}^\infty n (a_n^2 + b_n^2 + c_n^2 + d_n^2)$.
-Puisque $n \le n^2$ pour $n \ge 1$,
-$A \le \frac{\pi}{2} \sum_{n=1}^\infty n^2 (a_n^2 + b_n^2 + c_n^2 + d_n^2) = \pi \times 1 = \pi$.
-Donc $A \le \pi$. (L'inégalité isopérimétrique classique $4\pi A \le L^2$ donne $4\pi A \le 4\pi^2 \implies A \le \pi$).
+## Énoncé
 
-*Étape 4 : Cas d'égalité.*
-Il faut $n = n^2$ pour tout $n$ où les coefficients sont non nuls, donc $n=1$.
-Et $a_1 = d_1$, $b_1 = -c_1$.
-Ceci paramètre exactement un cercle !
+Soit $f$ $2\pi$-périodique définie sur $]-\pi, \pi]$ par $f(t) = t(t^2 - \pi^2)$.
+1. Calculer les coefficients de Fourier de $f$.
+2. En déduire la valeur de $\zeta(6) = \sum_{n=1}^\infty \frac{1}{n^6}$.
+
+## Correction Détaillée
+
+1. **Coefficients :**
+$f$ est impaire, $a_n = 0$.
+$b_n = \frac{2}{\pi} \int_0^\pi (t^3 - \pi^2 t) \sin(nt) dt$.
+Par IPP successives (ou en utilisant les résultats sur $t^3$ et $t$), on trouve :
+$b_n = \frac{12(-1)^n}{n^3}$.
+Détail de l'IPP pour $t^3$ : $\int_0^\pi t^3 \sin(nt) = [t^3 \frac{-\cos}{n}] - \int 3t^2 \frac{-\cos}{n} = \dots$
+Pour $f(t)$ qui s'annule aux bords ainsi que ses dérivées secondes :
+$\int_0^\pi (t^3 - \pi^2 t) \sin(nt) dt = \frac{6(-1)^n \pi}{n^3}$.
+D'où $b_n = \frac{12(-1)^n}{n^3}$.
+
+2. **Parseval :**
+$\|f\|_{L^2}^2 = \frac{1}{2\pi} \int_{-\pi}^\pi (t^3 - \pi^2 t)^2 dt = \frac{1}{\pi} \int_0^\pi (t^6 - 2\pi^2 t^4 + \pi^4 t^2) dt$.
+$= \frac{1}{\pi} (\frac{\pi^7}{7} - \frac{2\pi^7}{5} + \frac{\pi^7}{3}) = \pi^6 (\frac{15 - 42 + 35}{105}) = \frac{8\pi^6}{105}$.
+Parseval : $\frac{1}{2} \sum_{n=1}^\infty b_n^2 = \frac{8\pi^6}{105}$.
+$\frac{1}{2} \sum_{n=1}^\infty \frac{144}{n^6} = \frac{8\pi^6}{105}$.
+$72 \sum_{n=1}^\infty \frac{1}{n^6} = \frac{8\pi^6}{105}$.
+$\sum_{n=1}^\infty \frac{1}{n^6} = \frac{\pi^6}{945}$.

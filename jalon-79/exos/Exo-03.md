@@ -1,27 +1,37 @@
-# Exercice 3 : Énergie d'un signal exponentiel $\bigstar\bigstar\star\star\star$
-**Énoncé :** Soit $\alpha > 0$. On définit $f(t) = e^{\alpha t}$ sur $[-\pi, \pi[$, que l'on prolonge par $2\pi$-périodicité.
-1. Calculer les coefficients de Fourier complexes $c_n(f)$.
-2. En utilisant l'identité de Parseval, démontrer la relation :
-   $$\sum_{n=-\infty}^\infty \frac{1}{\alpha^2 + n^2} = \frac{\pi}{\alpha \tanh(\alpha \pi)}$$
+---
+title: "Exercice 3 : La parabole périodisée"
+difficulty: "$\bigstar\bigstar\star\star\star$"
+---
 
-**Correction Détaillée :**
-*Étape 1 : Calcul des coefficients $c_n(f)$.*
-$$c_n(f) = \frac{1}{2\pi} \int_{-\pi}^\pi e^{\alpha t} e^{-int} dt = \frac{1}{2\pi} \int_{-\pi}^\pi e^{(\alpha - in)t} dt$$
-$$c_n(f) = \frac{1}{2\pi (\alpha - in)} \left[ e^{(\alpha - in)t} \right]_{-\pi}^\pi = \frac{1}{2\pi (\alpha - in)} (e^{\alpha \pi} e^{-in\pi} - e^{-\alpha \pi} e^{in\pi})$$
-Puisque $e^{in\pi} = e^{-in\pi} = (-1)^n$, on a :
-$$c_n(f) = \frac{(-1)^n}{2\pi (\alpha - in)} (e^{\alpha \pi} - e^{-\alpha \pi}) = \frac{(-1)^n \sinh(\alpha \pi)}{\pi (\alpha - in)}$$
+# Exercice 3 : La parabole périodisée et $\zeta(4)$
 
-*Étape 2 : Énergie fréquentielle.*
-Le module au carré du coefficient est :
-$$|c_n(f)|^2 = \frac{\sinh^2(\alpha \pi)}{\pi^2 (\alpha^2 + n^2)}$$
-La somme de la série est donc $\sum_{n=-\infty}^\infty \frac{\sinh^2(\alpha \pi)}{\pi^2 (\alpha^2 + n^2)}$.
+**Niveau :** $\bigstar\bigstar\star\star\star$
 
-*Étape 3 : Énergie temporelle.*
-$$\frac{1}{2\pi} \int_{-\pi}^\pi |e^{\alpha t}|^2 dt = \frac{1}{2\pi} \int_{-\pi}^\pi e^{2\alpha t} dt = \frac{1}{2\pi} \left[ \frac{e^{2\alpha t}}{2\alpha} \right]_{-\pi}^\pi = \frac{e^{2\alpha \pi} - e^{-2\alpha \pi}}{4\pi \alpha} = \frac{\sinh(2\alpha \pi)}{2\pi \alpha}$$
+## Énoncé
 
-*Étape 4 : Conclusion par Parseval.*
-$$\frac{\sinh(2\alpha \pi)}{2\pi \alpha} = \frac{\sinh^2(\alpha \pi)}{\pi^2} \sum_{n=-\infty}^\infty \frac{1}{\alpha^2 + n^2}$$
-Or $\sinh(2\alpha \pi) = 2 \sinh(\alpha \pi) \cosh(\alpha \pi)$.
-$$\frac{2 \sinh(\alpha \pi) \cosh(\alpha \pi)}{2\pi \alpha} = \frac{\sinh^2(\alpha \pi)}{\pi^2} \sum_{n=-\infty}^\infty \frac{1}{\alpha^2 + n^2}$$
-$$\frac{\cosh(\alpha \pi)}{\pi \alpha} = \frac{\sinh(\alpha \pi)}{\pi^2} \sum_{n=-\infty}^\infty \frac{1}{\alpha^2 + n^2}$$
-$$\sum_{n=-\infty}^\infty \frac{1}{\alpha^2 + n^2} = \frac{\pi \cosh(\alpha \pi)}{\alpha \sinh(\alpha \pi)} = \frac{\pi}{\alpha \tanh(\alpha \pi)}$$
+Soit $f$, $2\pi$-périodique, telle que $f(t) = t^2$ sur $[-\pi, \pi]$.
+1. Calculer sa série de Fourier.
+2. Déduire de l'identité de Parseval la valeur de $\zeta(4) = \sum_{n=1}^\infty \frac{1}{n^4}$.
+
+## Correction Détaillée
+
+1. **Coefficients :**
+La fonction est paire, $b_n = 0$.
+$a_0 = \frac{1}{\pi} \int_{-\pi}^\pi t^2 dt = \frac{2\pi^2}{3}$.
+Pour $n \ge 1$ :
+$$a_n = \frac{2}{\pi} \int_0^\pi t^2 \cos(nt) dt$$
+Double intégration par parties :
+$$a_n = \frac{2}{\pi} \left( \left[ t^2 \frac{\sin(nt)}{n} \right]_0^\pi - \frac{2}{n} \int_0^\pi t \sin(nt) dt \right) = \frac{-4}{\pi n} \int_0^\pi t \sin(nt) dt$$
+Deuxième IPP :
+$$a_n = \frac{-4}{\pi n} \left( \left[ t \frac{-\cos(nt)}{n} \right]_0^\pi - \int_0^\pi \frac{-\cos(nt)}{n} dt \right)$$
+$$a_n = \frac{-4}{\pi n} \left( -\pi \frac{(-1)^n}{n} \right) = \frac{4(-1)^n}{n^2}$$
+
+2. **Parseval :**
+Énergie :
+$$\|f\|_{L^2}^2 = \frac{1}{2\pi} \int_{-\pi}^\pi t^4 dt = \frac{1}{2\pi} \left[ \frac{t^5}{5} \right]_{-\pi}^\pi = \frac{\pi^4}{5}$$
+Formule de Parseval :
+$$\frac{a_0^2}{4} + \frac{1}{2} \sum_{n=1}^\infty a_n^2 = \frac{\pi^4}{5}$$
+$$\frac{1}{4} \frac{4\pi^4}{9} + \frac{1}{2} \sum_{n=1}^\infty \frac{16}{n^4} = \frac{\pi^4}{5}$$
+$$\frac{\pi^4}{9} + 8 \sum_{n=1}^\infty \frac{1}{n^4} = \frac{\pi^4}{5}$$
+$$8 \sum_{n=1}^\infty \frac{1}{n^4} = \frac{\pi^4}{5} - \frac{\pi^4}{9} = \frac{4\pi^4}{45}$$
+$$\sum_{n=1}^\infty \frac{1}{n^4} = \frac{\pi^4}{90}$$

@@ -1,31 +1,36 @@
-# Exercice 7 : Optimisation dans un sous-espace de dimension finie $\bigstar\bigstar\bigstar\bigstar\star$
-**Énoncé :** Soit $f(t) = |t|$ sur $[-\pi, \pi]$.
-On cherche les coefficients $\alpha, \beta, \gamma \in \mathbb{R}$ qui minimisent l'intégrale :
-$$I(\alpha, \beta, \gamma) = \int_{-\pi}^\pi ( |t| - \alpha - \beta \cos(t) - \gamma \sin(t) )^2 dt$$
-En justifiant par la géométrie hilbertienne, trouver $\alpha, \beta, \gamma$.
+---
+title: "Exercice 7 : Signal redressé simple alternance"
+difficulty: "$\bigstar\bigstar\bigstar\bigstar\star$"
+---
 
-**Correction Détaillée :**
-*Étape 1 : Interprétation géométrique.*
-On se place dans l'espace de Hilbert $L^2([-\pi, \pi])$ avec le produit scalaire standard.
-L'intégrale $I(\alpha, \beta, \gamma)$ représente (à un facteur de normalisation $2\pi$ près) le carré de la distance $L^2$ entre la fonction $f(t) = |t|$ et une fonction $g(t) = \alpha \cdot 1 + \beta \cos(t) + \gamma \sin(t)$.
-La fonction $g$ appartient au sous-espace $H_1 = \text{Vect}(1, \cos(t), \sin(t))$.
+# Exercice 7 : Redressement simple alternance d'un sinus
 
-*Étape 2 : Projection orthogonale.*
-Le théorème de projection sur un sous-espace fermé (ici de dimension finie) d'un espace de Hilbert garantit que la distance est minimisée de manière unique lorsque $g$ est la projection orthogonale de $f$ sur $H_1$.
-Or, on sait que la projection orthogonale d'une fonction sur les harmoniques trigonométriques est donnée précisément par la somme partielle de Fourier d'ordre 1.
-Ainsi, les coefficients optimaux sont exactement les coefficients de Fourier correspondants :
-- $\alpha = \frac{a_0(f)}{2}$
-- $\beta = a_1(f)$
-- $\gamma = b_1(f)$
+**Niveau :** $\bigstar\bigstar\bigstar\bigstar\star$
 
-*Étape 3 : Calcul des coefficients.*
-$f(t) = |t|$ est paire, donc $\gamma = b_1 = 0$.
-$$a_0 = \frac{1}{\pi} \int_{-\pi}^\pi |t| dt = \frac{2}{\pi} \int_0^\pi t dt = \frac{2}{\pi} \frac{\pi^2}{2} = \pi$$
-Donc $\alpha = \frac{\pi}{2}$.
-$$a_1 = \frac{2}{\pi} \int_0^\pi t \cos(t) dt$$
-Par intégration par parties ($u=t, v'=\cos(t)$) :
-$$a_1 = \frac{2}{\pi} \left( [t \sin(t)]_0^\pi - \int_0^\pi \sin(t) dt \right) = \frac{2}{\pi} ( 0 - [-\cos(t)]_0^\pi ) = \frac{2}{\pi} ( 0 - (1 - (-1)) ) = -\frac{4}{\pi}$$
-Donc $\beta = -\frac{4}{\pi}$.
+## Énoncé
 
-*Étape 4 : Conclusion.*
-Le minimum de l'intégrale est atteint pour $(\alpha, \beta, \gamma) = \left(\frac{\pi}{2}, -\frac{4}{\pi}, 0\right)$.
+Soit $f$ $2\pi$-périodique définie par $f(t) = \sin(t)$ sur $[0, \pi]$ et $0$ sur $]-\pi, 0[$.
+1. Calculer ses coefficients de Fourier $a_n$ et $b_n$.
+2. Utiliser Parseval pour calculer $\sum_{p=1}^\infty \frac{1}{(4p^2-1)^2}$.
+
+## Correction Détaillée
+
+1. **Coefficients :**
+$a_0 = \frac{1}{\pi} \int_0^\pi \sin(t) dt = \frac{2}{\pi}$.
+$a_n = \frac{1}{\pi} \int_0^\pi \sin(t)\cos(nt) dt = \frac{1}{2\pi} \int_0^\pi (\sin((1+n)t) + \sin((1-n)t)) dt$.
+Si $n=1$, $a_1 = \frac{1}{2\pi} \int_0^\pi \sin(2t) dt = 0$.
+Si $n>1$, $a_n = \frac{1}{2\pi} \left[ -\frac{\cos((n+1)t)}{n+1} + \frac{\cos((n-1)t)}{n-1} \right]_0^\pi$.
+$a_n = \frac{1}{2\pi} \left( \frac{1 - (-1)^{n+1}}{n+1} - \frac{1 - (-1)^{n-1}}{n-1} \right)$.
+Pour $n$ impair, $(-1)^{n+1}=1$, $a_n = 0$.
+Pour $n$ pair ($n=2p$), $(-1)^{n+1}=-1$, $a_{2p} = \frac{1}{2\pi} \left( \frac{2}{2p+1} - \frac{2}{2p-1} \right) = \frac{-2}{\pi(4p^2-1)}$.
+
+Pour $b_n$ : $b_n = \frac{1}{\pi} \int_0^\pi \sin(t)\sin(nt) dt$.
+$b_1 = \frac{1}{\pi} \int_0^\pi \sin^2(t) dt = \frac{1}{2}$.
+Pour $n>1$, $b_n = \frac{1}{2\pi} \int_0^\pi (\cos((n-1)t) - \cos((n+1)t)) dt = 0$.
+
+2. **Parseval :**
+$\|f\|_{L^2}^2 = \frac{1}{2\pi} \int_0^\pi \sin^2(t) dt = \frac{1}{4}$.
+Parseval : $\frac{a_0^2}{4} + \frac{1}{2} a_1^2 + \frac{1}{2} b_1^2 + \frac{1}{2} \sum_{p=1}^\infty a_{2p}^2 = \frac{1}{4}$.
+$\frac{1}{\pi^2} + 0 + \frac{1}{8} + \frac{1}{2} \sum_{p=1}^\infty \frac{4}{\pi^2(4p^2-1)^2} = \frac{1}{4}$.
+$\frac{2}{\pi^2} \sum_{p=1}^\infty \frac{1}{(4p^2-1)^2} = \frac{1}{8} - \frac{1}{\pi^2}$.
+$\sum_{p=1}^\infty \frac{1}{(4p^2-1)^2} = \frac{\pi^2}{16} - \frac{1}{2}$.

@@ -1,26 +1,34 @@
-# Exercice 5 : Estimation de l'erreur quadratique $\bigstar\bigstar\bigstar\star\star$
-**Énoncé :** Soit $f(t) = \pi - t$ sur $]0, 2\pi[$.
-On approche $f(t)$ par son polynôme trigonométrique partiel $S_N(f)(t) = \sum_{n=1}^N \frac{2}{n} \sin(nt)$.
-Calculer l'erreur quadratique moyenne $E_N = \frac{1}{2\pi} \int_0^{2\pi} (f(t) - S_N(f)(t))^2 dt$ en fonction de $N$. Quelle est sa limite quand $N \to \infty$ ?
+---
+title: "Exercice 5 : La fonction exponentielle"
+difficulty: "$\bigstar\bigstar\bigstar\star\star$"
+---
 
-**Correction Détaillée :**
-*Étape 1 : Coefficients de Fourier de $f$.*
-On a $a_0 = \frac{1}{\pi} \int_0^{2\pi} (\pi - t) dt = \frac{1}{\pi} [\pi t - t^2/2]_0^{2\pi} = \frac{1}{\pi} (2\pi^2 - 2\pi^2) = 0$.
-$a_n = 0$ car la fonction, translatée, se comporte comme une fonction impaire.
-$$b_n = \frac{1}{\pi} \int_0^{2\pi} (\pi - t) \sin(nt) dt = \frac{1}{\pi} \left[ (\pi - t) \frac{-\cos(nt)}{n} \right]_0^{2\pi} - \frac{1}{\pi} \int_0^{2\pi} (-1) \frac{-\cos(nt)}{n} dt$$
-$$b_n = \frac{1}{\pi} \left( (\pi - 2\pi) \frac{-1}{n} - \pi \frac{-1}{n} \right) - 0 = \frac{1}{\pi} \left( \frac{\pi}{n} + \frac{\pi}{n} \right) = \frac{2}{n}$$
-Donc $S_N(f)$ est bien la somme partielle de Fourier de $f$.
+# Exercice 5 : La fonction exponentielle et Parseval
 
-*Étape 2 : Énergie totale de $f$.*
-$$\frac{1}{2\pi} \int_0^{2\pi} (\pi - t)^2 dt = \frac{1}{2\pi} \left[ \frac{-(\pi - t)^3}{3} \right]_0^{2\pi} = \frac{1}{2\pi} \left( \frac{-(-\pi)^3}{3} - \frac{-\pi^3}{3} \right) = \frac{1}{2\pi} \frac{2\pi^3}{3} = \frac{\pi^2}{3}$$
+**Niveau :** $\bigstar\bigstar\bigstar\star\star$
 
-*Étape 3 : Calcul de l'erreur quadratique $E_N$.*
-Par le théorème de Pythagore (ou identité de Parseval tronquée) :
-$$E_N = \| f - S_N(f) \|_2^2 = \| f \|_2^2 - \| S_N(f) \|_2^2$$
-Or $\| S_N(f) \|_2^2 = \frac{1}{2} \sum_{n=1}^N b_n^2 = \frac{1}{2} \sum_{n=1}^N \frac{4}{n^2} = 2 \sum_{n=1}^N \frac{1}{n^2}$.
-Donc $E_N = \frac{\pi^2}{3} - 2 \sum_{n=1}^N \frac{1}{n^2}$.
+## Énoncé
 
-*Étape 4 : Limite.*
-Quand $N \to \infty$, la série $\sum \frac{1}{n^2}$ converge vers $\frac{\pi^2}{6}$.
-Donc $\lim E_N = \frac{\pi^2}{3} - 2 \left( \frac{\pi^2}{6} \right) = \frac{\pi^2}{3} - \frac{\pi^2}{3} = 0$.
-Ceci confirme bien le théorème de convergence en moyenne quadratique.
+Soit $a \in \mathbb{R}^*$. $f$ est définie par $f(t) = e^{at}$ sur $]-\pi, \pi]$ et $2\pi$-périodique.
+1. Calculer les coefficients de Fourier complexes $c_n$.
+2. En appliquant l'identité de Parseval, évaluer la somme $\sum_{n=1}^\infty \frac{1}{a^2 + n^2}$.
+
+## Correction Détaillée
+
+1. **Coefficients de Fourier complexes :**
+$$c_n = \frac{1}{2\pi} \int_{-\pi}^\pi e^{at} e^{-int} dt = \frac{1}{2\pi} \int_{-\pi}^\pi e^{(a-in)t} dt$$
+$$c_n = \frac{1}{2\pi} \left[ \frac{e^{(a-in)t}}{a-in} \right]_{-\pi}^\pi = \frac{e^{(a-in)\pi} - e^{-(a-in)\pi}}{2\pi(a-in)}$$
+Puisque $e^{\pm in\pi} = (-1)^n$, on obtient :
+$$c_n = (-1)^n \frac{e^{a\pi} - e^{-a\pi}}{2\pi(a-in)} = (-1)^n \frac{\sinh(a\pi)}{\pi(a-in)}$$
+Son module au carré est :
+$$|c_n|^2 = \frac{\sinh^2(a\pi)}{\pi^2 (a^2 + n^2)}$$
+
+2. **Identité de Parseval :**
+Énergie :
+$$\|f\|_{L^2}^2 = \frac{1}{2\pi} \int_{-\pi}^\pi |e^{at}|^2 dt = \frac{1}{2\pi} \int_{-\pi}^\pi e^{2at} dt = \frac{e^{2a\pi} - e^{-2a\pi}}{4a\pi} = \frac{\sinh(2a\pi)}{2a\pi}$$
+Parseval donne : $\sum_{n=-\infty}^\infty |c_n|^2 = \|f\|_{L^2}^2$.
+$$ \sum_{n=-\infty}^\infty \frac{\sinh^2(a\pi)}{\pi^2 (a^2 + n^2)} = \frac{\sinh(2a\pi)}{2a\pi} $$
+On sépare le terme $n=0$ :
+$$ \frac{\sinh^2(a\pi)}{\pi^2 a^2} + 2 \sum_{n=1}^\infty \frac{\sinh^2(a\pi)}{\pi^2 (a^2 + n^2)} = \frac{2\sinh(a\pi)\cosh(a\pi)}{2a\pi} $$
+En simplifiant et en utilisant $\sinh(2a\pi) = 2\sinh(a\pi)\cosh(a\pi)$, et en divisant par $\frac{2\sinh^2(a\pi)}{\pi^2}$ :
+$$ \sum_{n=1}^\infty \frac{1}{a^2+n^2} = \frac{\pi \coth(a\pi)}{2a} - \frac{1}{2a^2} $$
