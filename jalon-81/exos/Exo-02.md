@@ -1,33 +1,34 @@
-## Exercice 2 : Théorème d'inversion pour des fonctions affines par morceaux \quad $\bigstar\bigstar\star\star\star$
+## Transformation d'un signal triangulaire
 
-**Énoncé :**
-Soit la fonction "triangle" $f(t) = \max(1 - |t|, 0)$.
-1. Montrer que $f \in L^1(\mathbb{R}) \cap L^2(\mathbb{R})$.
-2. Calculer sa transformée de Fourier $\hat{f}(\xi)$.
-3. Utiliser le théorème d'inversion de Fourier pour calculer l'intégrale $\int_{-\infty}^{+\infty} \frac{\sin^2(\xi/2)}{(\xi/2)^2} d\xi$.
+**Difficulté :** $\bigstar\star\star\star\star$
 
-**Correction :**
-1. **Appartenance à $L^1$ et $L^2$ :**
-La fonction est continue, à support compact $[-1, 1]$, et bornée par $1$.
-Elle est trivialement dans $L^1(\mathbb{R})$ : $\|f\|_1 = \int_{-1}^1 (1-|t|) dt = 2 \int_0^1 (1-t) dt = 2 \left[ t - \frac{t^2}{2} \right]_0^1 = 1$.
-Elle est aussi dans $L^2(\mathbb{R})$ : $\|f\|_2^2 = 2 \int_0^1 (1-t)^2 dt = 2 \left[ \frac{-(1-t)^3}{3} \right]_0^1 = \frac{2}{3} < \infty$.
 
-2. **Transformée de Fourier :**
-$f$ peut s'écrire comme l'auto-convolution de la fonction porte $p(t) = \mathbf{1}_{[-1/2, 1/2]}(t)$.
-En effet, $(p * p)(t) = \int p(\tau) p(t-\tau) d\tau = \int_{-1/2}^{1/2} \mathbf{1}_{[-1/2, 1/2]}(t-\tau) d\tau$.
-L'intégrande est non nul si $-1/2 \leq t-\tau \leq 1/2$, soit $t-1/2 \leq \tau \leq t+1/2$.
-L'intersection de $[-1/2, 1/2]$ et $[t-1/2, t+1/2]$ a pour longueur $\max(1-|t|, 0)$. Donc $f = p * p$.
-Par propriété de la transformée de Fourier, $\mathcal{F}(p * p)(\xi) = (\mathcal{F}(p)(\xi))^2$.
-Or, $\mathcal{F}(p)(\xi) = \int_{-1/2}^{1/2} e^{-i\xi t} dt = \left[ \frac{e^{-i\xi t}}{-i\xi} \right]_{-1/2}^{1/2} = \frac{e^{i\xi/2} - e^{-i\xi/2}}{i\xi} = \frac{2\sin(\xi/2)}{\xi}$.
-Donc, $\hat{f}(\xi) = \left( \frac{2\sin(\xi/2)}{\xi} \right)^2 = \left( \frac{\sin(\xi/2)}{\xi/2} \right)^2 = \text{sinc}^2(\xi/2)$.
+Considérons le signal triangulaire (ou fonction tente) $T(x) = \max(0, 1-|x|)$.
+1. Montrer que $T(x)$ est l'autocorrélation de la fonction porte $P(x) = \mathbb{1}_{[-1/2, 1/2]}(x)$. (C'est-à-dire $T = P * P$).
+2. En déduire la transformée de Fourier $\hat{T}(\xi)$.
+3. Utiliser le théorème de Plancherel pour évaluer $\int_{\mathbb{R}} \frac{\sin^4(\xi/2)}{(\xi/2)^4} d\xi$.
 
-3. **Inversion de Fourier :**
-Comme $\hat{f}(\xi) \ge 0$ et $\int \hat{f}(\xi) d\xi$ est lié à $f(0)$, vérifions l'intégrabilité de $\hat{f}$.
-$\hat{f}(\xi) \sim 1$ en $0$, et $\hat{f}(\xi) \le \frac{4}{\xi^2}$ à l'infini, donc $\hat{f} \in L^1(\mathbb{R})$.
-On peut donc appliquer le théorème d'inversion ponctuelle pour toute fonction $f$ continue dont la transformée est dans $L^1$ :
-$$ f(t) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} \hat{f}(\xi) e^{i\xi t} d\xi $$
-Évaluons cette identité en $t=0$ :
-$$ f(0) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} \hat{f}(\xi) e^0 d\xi = \frac{1}{2\pi} \int_{-\infty}^{+\infty} \frac{\sin^2(\xi/2)}{(\xi/2)^2} d\xi $$
-Or $f(0) = \max(1-0, 0) = 1$.
-On en déduit donc immédiatement :
-$$ \int_{-\infty}^{+\infty} \frac{\sin^2(\xi/2)}{(\xi/2)^2} d\xi = 2\pi $$
+### Correction :
+
+1. Calculons le produit de convolution $P * P(x) = \int_{\mathbb{R}} P(y) P(x-y) dy$.
+La fonction $P(y)$ vaut $1$ si $y \in [-1/2, 1/2]$ et $0$ sinon.
+Ainsi, $P(x-y)$ vaut $1$ si $x-y \in [-1/2, 1/2]$, c'est-à-dire $y \in [x-1/2, x+1/2]$.
+L'intégrale devient la mesure de l'intersection des intervalles $[-1/2, 1/2]$ et $[x-1/2, x+1/2]$.
+- Si $x > 1$ ou $x < -1$, l'intersection est vide, l'intégrale est nulle.
+- Si $x \in [0, 1]$, l'intersection est $[x-1/2, 1/2]$. La longueur est $1/2 - (x-1/2) = 1-x$.
+- Si $x \in [-1, 0]$, l'intersection est $[-1/2, x+1/2]$. La longueur est $x+1/2 - (-1/2) = x+1 = 1-|x|$.
+Dans tous les cas, on a bien $P * P(x) = \max(0, 1-|x|) = T(x)$.
+
+2. La transformée de Fourier convertit la convolution en produit (car $P \in L^1$).
+$$ \hat{T}(\xi) = \widehat{(P * P)}(\xi) = \hat{P}(\xi) \cdot \hat{P}(\xi) = (\hat{P}(\xi))^2 $$
+Or, d'après l'exercice 1 (avec $a=1/2$), on a $\hat{P}(\xi) = \frac{\sin(\xi/2)}{\xi/2}$.
+Donc :
+$$ \hat{T}(\xi) = \left( \frac{\sin(\xi/2)}{\xi/2} \right)^2 $$
+
+3. Appliquons Plancherel à la fonction $T$. Son énergie est :
+$$ \|T\|_{L^2}^2 = \int_{-1}^1 (1-|x|)^2 dx = 2 \int_0^1 (1-x)^2 dx = 2 \left[ -\frac{(1-x)^3}{3} \right]_0^1 = 2 \left( 0 - \left(-\frac{1}{3}\right) \right) = \frac{2}{3} $$
+D'autre part :
+$$ \|\hat{T}\|_{L^2}^2 = \int_{\mathbb{R}} \left( \frac{\sin(\xi/2)}{\xi/2} \right)^4 d\xi $$
+D'après Plancherel, $\|T\|_{L^2}^2 = \frac{1}{2\pi} \|\hat{T}\|_{L^2}^2$.
+Donc :
+$$ \frac{2}{3} = \frac{1}{2\pi} \int_{\mathbb{R}} \frac{\sin^4(\xi/2)}{(\xi/2)^4} d\xi \implies \int_{\mathbb{R}} \frac{\sin^4(\xi/2)}{(\xi/2)^4} d\xi = \frac{4\pi}{3} $$

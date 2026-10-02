@@ -1,30 +1,34 @@
-## Exercice 9 : Propriété de lissage du projecteur idéal \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
+## Bande Passante et conservation d'énergie partielle
 
-**Énoncé :**
-Soit un signal $f \in L^2(\mathbb{R})$. On définit le signal filtré $f_c$ tel que $\hat{f}_c(\xi) = \hat{f}(\xi) \mathbf{1}_{[-\omega_c, \omega_c]}(\xi)$.
-1. Montrer que $f_c \in L^2(\mathbb{R})$.
-2. Montrer que $f_c$ est une fonction continue.
-3. Calculer l'erreur d'approximation $\|f - f_c\|_2^2$ en fonction de la queue du spectre de $f$.
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Correction :**
-1. **Filtrage dans $L^2$ :**
-Puisque $f \in L^2$, $\hat{f} \in L^2$ par l'isomorphisme de Plancherel.
-L'indicatrice $\mathbf{1}_{[-\omega_c, \omega_c]}$ est une fonction bornée (par 1).
-Le produit de $\hat{f}$ par une fonction bornée reste dans $L^2$. Donc $\hat{f}_c \in L^2$.
-Par la surjectivité de l'isomorphisme de Fourier, il existe une unique $f_c \in L^2$ correspondant à cette transformée.
 
-2. **Continuité par injection :**
-Nous avons $\hat{f}_c \in L^2$. De plus, le support de $\hat{f}_c$ est compact (inclus dans $[-\omega_c, \omega_c]$).
-Or, par Cauchy-Schwarz sur cet intervalle compact :
-$$ \int_{-\omega_c}^{\omega_c} |\hat{f}_c(\xi)| d\xi \le \left( \int_{-\omega_c}^{\omega_c} 1^2 d\xi \right)^{1/2} \left( \int_{-\omega_c}^{\omega_c} |\hat{f}_c(\xi)|^2 d\xi \right)^{1/2} = \sqrt{2\omega_c} \|\hat{f}_c\|_{L^2} < \infty $$
-Donc $\hat{f}_c \in L^1(\mathbb{R})$.
-Or, le théorème d'inversion implique que si $\hat{f}_c \in L^1$, alors son inverse de Fourier (qui est $f_c$) est une fonction continue tendant vers zéro à l'infini (lemme de Riemann-Lebesgue).
-Donc, un filtrage passe-bas idéal "régularise" n'importe quel signal $L^2$ en un signal continu (il élimine les singularités arbitrairement pointues portées par les hautes fréquences).
+Soit $f \in L^2(\mathbb{R})$. On fait passer ce signal dans un filtre passe-bas idéal de fréquence de coupure $\Omega$. Le signal filtré $f_{\Omega}$ est défini par sa transformée de Fourier :
+$$ \widehat{f_{\Omega}}(\xi) = \hat{f}(\xi) \mathbb{1}_{[-\Omega, \Omega]}(\xi) $$
+1. Exprimer $\|f_{\Omega}\|_{L^2}^2$ sous forme d'intégrale.
+2. Montrer que $\lim_{\Omega \to \infty} \|f - f_{\Omega}\|_{L^2} = 0$. (Indication : Utiliser le théorème de convergence dominée et Plancherel).
+3. En déduire que le signal filtré converge en norme $L^2$ vers le signal d'origine.
 
-3. **Erreur d'énergie :**
-L'erreur est le signal $e = f - f_c$.
-Sa transformée est $\hat{e}(\xi) = \hat{f}(\xi) - \hat{f}_c(\xi) = \hat{f}(\xi)(1 - \mathbf{1}_{[-\omega_c, \omega_c]}(\xi))$.
-Cela correspond à la partie hors bande du signal : $\hat{e}(\xi) = \hat{f}(\xi)$ pour $|\xi| > \omega_c$ et $0$ sinon.
-L'énergie de l'erreur dans le domaine temporel se calcule par Plancherel :
-$$ \|f - f_c\|_2^2 = \frac{1}{2\pi} \|\hat{f} - \hat{f}_c\|_2^2 = \frac{1}{2\pi} \int_{|\xi| > \omega_c} |\hat{f}(\xi)|^2 d\xi $$
-Cette expression quantifie précisément l'énergie perdue par la troncature fréquentielle. Comme $\hat{f} \in L^2$, les "restes d'intégrales convergentes" tendent vers 0, donc $\|f - f_c\|_2 \to 0$ lorsque $\omega_c \to +\infty$.
+### Correction :
+
+1. Par le théorème de Plancherel appliqué à $f_{\Omega}$ :
+$$ \|f_{\Omega}\|_{L^2}^2 = \frac{1}{2\pi} \int_{\mathbb{R}} |\widehat{f_{\Omega}}(\xi)|^2 d\xi = \frac{1}{2\pi} \int_{\mathbb{R}} |\hat{f}(\xi)|^2 \mathbb{1}_{[-\Omega, \Omega]}(\xi)^2 d\xi $$
+Puisque l'indicatrice au carré vaut l'indicatrice, on obtient l'énergie contenue dans la bande de fréquences :
+$$ \|f_{\Omega}\|_{L^2}^2 = \frac{1}{2\pi} \int_{-\Omega}^{\Omega} |\hat{f}(\xi)|^2 d\xi $$
+
+2. Intéressons-nous à la différence temporelle $e_{\Omega} = f - f_{\Omega}$.
+Sa transformée de Fourier, par linéarité, est :
+$$ \widehat{e_{\Omega}}(\xi) = \hat{f}(\xi) - \widehat{f_{\Omega}}(\xi) = \hat{f}(\xi) (1 - \mathbb{1}_{[-\Omega, \Omega]}(\xi)) $$
+Ce qui correspond aux fréquences extérieures à la bande passante :
+$$ |\widehat{e_{\Omega}}(\xi)|^2 = |\hat{f}(\xi)|^2 \mathbb{1}_{|\xi| > \Omega} $$
+Par Plancherel, on a :
+$$ \|f - f_{\Omega}\|_{L^2}^2 = \frac{1}{2\pi} \int_{|\xi| > \Omega} |\hat{f}(\xi)|^2 d\xi $$
+Posons la suite de fonctions intégrables $g_n(\xi) = |\hat{f}(\xi)|^2 \mathbb{1}_{|\xi| > n}$.
+- Pour presque tout $\xi \in \mathbb{R}$, il existe $N$ tel que pour $n > N$, $n > |\xi|$. Ainsi, $\mathbb{1}_{|\xi| > n} = 0$. Donc $g_n(\xi) \to 0$ ponctuellement.
+- On a la majoration uniforme par une fonction intégrable : $|g_n(\xi)| \le |\hat{f}(\xi)|^2$ pour tout $n$. Et $|\hat{f}|^2 \in L^1(\mathbb{R})$ car $\hat{f} \in L^2(\mathbb{R})$.
+Par le théorème de convergence dominée de Lebesgue :
+$$ \lim_{n \to \infty} \int_{\mathbb{R}} g_n(\xi) d\xi = \int_{\mathbb{R}} 0 d\xi = 0 $$
+Ainsi, $\lim_{\Omega \to \infty} \frac{1}{2\pi} \int_{|\xi| > \Omega} |\hat{f}(\xi)|^2 d\xi = 0$.
+Ce qui prouve que $\lim_{\Omega \to \infty} \|f - f_{\Omega}\|_{L^2}^2 = 0$.
+
+3. Le résultat de la question 2 implique directement que la limite de l'erreur en norme $L^2$ est nulle. Ainsi, lorsque la largeur de la bande passante tend vers l'infini, le signal filtré $f_{\Omega}$ converge vers le signal original $f$ dans l'espace de Hilbert $L^2(\mathbb{R})$.
