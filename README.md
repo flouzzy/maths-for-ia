@@ -194,7 +194,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 78](jalon-78/Jalon-78.md)** : Séries de Fourier, calcul des coefficients, convergence ponctuelle (théorème de Dirichlet). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 79](jalon-79/Jalon-79.md)** : Convergence en moyenne quadratique des séries de Fourier et identité de Parseval. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 80](jalon-80/Jalon-80.md)** : Transformée de Fourier dans $L^1$, propriétés algébriques, Riemann-Lebesgue et produit de convolution. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 81](jalon-81/Jalon%2081%20%28Transform%C3%A9e%20de%20Fourier%20dans%20-L%5E2-%29.md)** : Transformée de Fourier dans $L^2$, prolongement par densité et théorème d'isométrie de Plancherel.
+- **[Jalon 81](jalon-81/Jalon-81.md)** : Transformée de Fourier dans $L^2$, prolongement par densité et théorème d'isométrie de Plancherel. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 82](jalon-82/Jalon%2082%20%28Introduction%20%C3%A0%20la%20th%C3%A9orie%20des%20distributions%20de%20Schwartz%29.md)** : Introduction à la théorie des distributions de Schwartz, espace des fonctions tests $\mathcal{D}(\mathbb{R})$.
 - **[Jalon 83](jalon-83/Jalon%2083%20%28D%C3%A9rivation%20au%20sens%20des%20distributions%29.md)** : Dérivation au sens des distributions, distribution de Dirac et introduction aux espaces de Sobolev $H^1(\mathbb{R})$.
 - **[Jalon 84](jalon-84/Jalon%2084%20%28Livrable%20IA%29.md)** : Livrable IA T7 : Création d'un module d'analyse spectrale pour l'extraction de caractéristiques audio à partir de la transformée de Fourier dans $L^2$.

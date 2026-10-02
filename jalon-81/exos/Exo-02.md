@@ -1,34 +1,32 @@
-## Transformation d'un signal triangulaire
+# Exercice 2 : Transformation d'un signal triangulaire
+$\bigstar\star\star\star\star$
 
-**Difficulté :** $\bigstar\star\star\star\star$
+**Énoncé :**
+Soit la fonction triangulaire définie par $f(t) = (1-|t|) \mathbf{1}_{[-1, 1]}(t)$.
+1. Montrer que la transformée de Fourier de $f$ est $\hat{f}(\xi) = \left(\frac{\sin(\xi/2)}{\xi/2}\right)^2$.
+2. En déduire la valeur de l'intégrale $\int_{-\infty}^{+\infty} \frac{\sin^4(x)}{x^4} dx$ en utilisant le théorème de Plancherel.
 
+---
+**Correction :**
+**Question 1 : Transformée de Fourier**
+La fonction $f$ est la convolution de la fonction porte avec elle-même, à un facteur près.
+Posons $p(t) = \mathbf{1}_{[-1/2, 1/2]}(t)$. Alors $(p * p)(t) = \int_{-\infty}^{+\infty} p(\tau) p(t-\tau) d\tau = (1-|t|) \mathbf{1}_{[-1, 1]}(t) = f(t)$.
+Par les propriétés de la transformée de Fourier, la transformée d'un produit de convolution est le produit des transformées :
+$$ \hat{f}(\xi) = \widehat{p * p}(\xi) = \hat{p}(\xi) \cdot \hat{p}(\xi) = (\hat{p}(\xi))^2 $$
+Calculons $\hat{p}(\xi)$ :
+$$ \hat{p}(\xi) = \int_{-1/2}^{1/2} e^{-i\xi t} dt = \left[ \frac{e^{-i\xi t}}{-i\xi} \right]_{-1/2}^{1/2} = \frac{e^{-i\xi/2} - e^{i\xi/2}}{-i\xi} = \frac{2\sin(\xi/2)}{\xi} = \frac{\sin(\xi/2)}{\xi/2} $$
+Ainsi,
+$$ \hat{f}(\xi) = \left(\frac{\sin(\xi/2)}{\xi/2}\right)^2 = \text{sinc}^2(\xi/2) $$
 
-Considérons le signal triangulaire (ou fonction tente) $T(x) = \max(0, 1-|x|)$.
-1. Montrer que $T(x)$ est l'autocorrélation de la fonction porte $P(x) = \mathbb{1}_{[-1/2, 1/2]}(x)$. (C'est-à-dire $T = P * P$).
-2. En déduire la transformée de Fourier $\hat{T}(\xi)$.
-3. Utiliser le théorème de Plancherel pour évaluer $\int_{\mathbb{R}} \frac{\sin^4(\xi/2)}{(\xi/2)^4} d\xi$.
-
-### Correction :
-
-1. Calculons le produit de convolution $P * P(x) = \int_{\mathbb{R}} P(y) P(x-y) dy$.
-La fonction $P(y)$ vaut $1$ si $y \in [-1/2, 1/2]$ et $0$ sinon.
-Ainsi, $P(x-y)$ vaut $1$ si $x-y \in [-1/2, 1/2]$, c'est-à-dire $y \in [x-1/2, x+1/2]$.
-L'intégrale devient la mesure de l'intersection des intervalles $[-1/2, 1/2]$ et $[x-1/2, x+1/2]$.
-- Si $x > 1$ ou $x < -1$, l'intersection est vide, l'intégrale est nulle.
-- Si $x \in [0, 1]$, l'intersection est $[x-1/2, 1/2]$. La longueur est $1/2 - (x-1/2) = 1-x$.
-- Si $x \in [-1, 0]$, l'intersection est $[-1/2, x+1/2]$. La longueur est $x+1/2 - (-1/2) = x+1 = 1-|x|$.
-Dans tous les cas, on a bien $P * P(x) = \max(0, 1-|x|) = T(x)$.
-
-2. La transformée de Fourier convertit la convolution en produit (car $P \in L^1$).
-$$ \hat{T}(\xi) = \widehat{(P * P)}(\xi) = \hat{P}(\xi) \cdot \hat{P}(\xi) = (\hat{P}(\xi))^2 $$
-Or, d'après l'exercice 1 (avec $a=1/2$), on a $\hat{P}(\xi) = \frac{\sin(\xi/2)}{\xi/2}$.
-Donc :
-$$ \hat{T}(\xi) = \left( \frac{\sin(\xi/2)}{\xi/2} \right)^2 $$
-
-3. Appliquons Plancherel à la fonction $T$. Son énergie est :
-$$ \|T\|_{L^2}^2 = \int_{-1}^1 (1-|x|)^2 dx = 2 \int_0^1 (1-x)^2 dx = 2 \left[ -\frac{(1-x)^3}{3} \right]_0^1 = 2 \left( 0 - \left(-\frac{1}{3}\right) \right) = \frac{2}{3} $$
-D'autre part :
-$$ \|\hat{T}\|_{L^2}^2 = \int_{\mathbb{R}} \left( \frac{\sin(\xi/2)}{\xi/2} \right)^4 d\xi $$
-D'après Plancherel, $\|T\|_{L^2}^2 = \frac{1}{2\pi} \|\hat{T}\|_{L^2}^2$.
-Donc :
-$$ \frac{2}{3} = \frac{1}{2\pi} \int_{\mathbb{R}} \frac{\sin^4(\xi/2)}{(\xi/2)^4} d\xi \implies \int_{\mathbb{R}} \frac{\sin^4(\xi/2)}{(\xi/2)^4} d\xi = \frac{4\pi}{3} $$
+**Question 2 : Application du théorème de Plancherel**
+Appliquons l'égalité de Plancherel à $f$ : $\int_{-\infty}^{+\infty} |\hat{f}(\xi)|^2 d\xi = 2\pi \int_{-\infty}^{+\infty} |f(t)|^2 dt$.
+Calculons d'abord $\|f\|_2^2$ :
+$$ \|f\|_2^2 = \int_{-1}^{1} (1-|t|)^2 dt = 2 \int_{0}^{1} (1-t)^2 dt = 2 \left[ \frac{-(1-t)^3}{3} \right]_0^1 = 2 \left( 0 - \left(-\frac{1}{3}\right) \right) = \frac{2}{3} $$
+Donc, $2\pi \|f\|_2^2 = \frac{4\pi}{3}$.
+Exprimons $\|\hat{f}\|_2^2$ :
+$$ \|\hat{f}\|_2^2 = \int_{-\infty}^{+\infty} \left(\frac{\sin(\xi/2)}{\xi/2}\right)^4 d\xi $$
+Effectuons le changement de variable $x = \xi/2$, $dx = d\xi/2 \implies d\xi = 2dx$ :
+$$ \|\hat{f}\|_2^2 = \int_{-\infty}^{+\infty} \frac{\sin^4(x)}{x^4} (2dx) = 2 \int_{-\infty}^{+\infty} \frac{\sin^4(x)}{x^4} dx $$
+D'après Plancherel, $\|\hat{f}\|_2^2 = \frac{4\pi}{3}$, donc :
+$$ 2 \int_{-\infty}^{+\infty} \frac{\sin^4(x)}{x^4} dx = \frac{4\pi}{3} $$
+$$ \int_{-\infty}^{+\infty} \frac{\sin^4(x)}{x^4} dx = \frac{2\pi}{3} $$

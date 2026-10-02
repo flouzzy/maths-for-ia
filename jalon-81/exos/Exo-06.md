@@ -1,28 +1,36 @@
-## Application à une équation différentielle avec second membre discontinu
+# Exercice 6 : Dérivée au sens L2 et énergie spectrale
+$\bigstar\bigstar\bigstar\star\star$
 
-**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
+**Énoncé :**
+Soit $f \in L^2(\mathbb{R})$ telle que sa dérivée faible $f'$ appartienne également à $L^2(\mathbb{R})$.
+1. Exprimer $\widehat{f'}$ en fonction de $\hat{f}$.
+2. Montrer que l'intégrale $\int_{-\infty}^{+\infty} \xi^2 |\hat{f}(\xi)|^2 d\xi$ est finie, et donner son interprétation physique en termes d'énergie de la dérivée.
+3. Si $\|f\|_2 = 1$, prouver l'inégalité de Heisenberg-Weyl : $\left(\int_{-\infty}^{+\infty} t^2 |f(t)|^2 dt\right) \left(\int_{-\infty}^{+\infty} \xi^2 |\hat{f}(\xi)|^2 d\xi\right) \ge \frac{\pi}{2}$.
 
+---
+**Correction :**
+**Question 1 : Transformée de $f'$**
+Pour $f \in \mathcal{S}(\mathbb{R})$, l'intégration par parties montre que :
+$$ \widehat{f'}(\xi) = \int_{-\infty}^{+\infty} f'(t) e^{-i\xi t} dt = \left[ f(t) e^{-i\xi t} \right]_{-\infty}^{+\infty} - \int_{-\infty}^{+\infty} f(t) (-i\xi) e^{-i\xi t} dt $$
+Comme $f \in \mathcal{S}(\mathbb{R})$, le terme tout intégré s'annule à l'infini, d'où :
+$$ \widehat{f'}(\xi) = i\xi \int_{-\infty}^{+\infty} f(t) e^{-i\xi t} dt = i\xi \hat{f}(\xi) $$
+Ce résultat s'étend par densité aux fonctions $f \in L^2(\mathbb{R})$ admettant une dérivée faible dans $L^2(\mathbb{R})$.
 
-Considérons l'équation différentielle $-u''(x) + u(x) = f(x)$ sur $\mathbb{R}$, où $f(x) = e^{-|x|}$.
-1. En supposant que $u$ et ses dérivées s'annulent à l'infini, passer l'équation dans le domaine de Fourier.
-2. Déterminer $\hat{u}(\xi)$ en fonction de $\xi$. (On utilisera $\hat{f}(\xi) = \frac{2}{1+\xi^2}$).
-3. Vérifier que $u \in L^2(\mathbb{R})$ en étudiant $\hat{u}$.
+**Question 2 : Finitude de l'intégrale et interprétation**
+Par hypothèse, $f' \in L^2(\mathbb{R})$. D'après le théorème de Plancherel appliqué à $f'$, nous avons $\widehat{f'} \in L^2(\mathbb{R})$ et :
+$$ \int_{-\infty}^{+\infty} |\widehat{f'}(\xi)|^2 d\xi = 2\pi \int_{-\infty}^{+\infty} |f'(t)|^2 dt $$
+Or, $|\widehat{f'}(\xi)|^2 = |i\xi \hat{f}(\xi)|^2 = \xi^2 |\hat{f}(\xi)|^2$. En remplaçant, on obtient :
+$$ \int_{-\infty}^{+\infty} \xi^2 |\hat{f}(\xi)|^2 d\xi = 2\pi \|f'\|_2^2 $$
+Puisque $f' \in L^2(\mathbb{R})$, le terme de droite est fini.
+*Interprétation physique :* L'énergie de la dérivée temporelle du signal (qui quantifie la vitesse de variation du signal) est proportionnelle au second moment (la variance) de sa densité spectrale d'énergie. Plus un signal varie vite, plus son énergie s'étale vers les hautes fréquences.
 
-### Correction :
-
-1. En appliquant la transformée de Fourier à l'équation différentielle, et en utilisant la propriété $\widehat{u'}(\xi) = i\xi \hat{u}(\xi)$, on a :
-$$ \widehat{-u''}(\xi) = -(i\xi)^2 \hat{u}(\xi) = \xi^2 \hat{u}(\xi) $$
-L'équation devient donc :
-$$ \xi^2 \hat{u}(\xi) + \hat{u}(\xi) = \hat{f}(\xi) $$
-$$ (\xi^2 + 1) \hat{u}(\xi) = \hat{f}(\xi) $$
-
-2. On sait que pour $f(x) = e^{-|x|}$, la transformée de Fourier est $\hat{f}(\xi) = \frac{2}{1+\xi^2}$.
-On isole $\hat{u}(\xi)$ :
-$$ \hat{u}(\xi) = \frac{\hat{f}(\xi)}{\xi^2 + 1} = \frac{2}{(1+\xi^2)^2} $$
-
-3. Pour vérifier que $u \in L^2(\mathbb{R})$, il suffit, d'après le théorème de Plancherel, de vérifier que $\hat{u} \in L^2(\mathbb{R})$.
-Calculons la norme au carré de $\hat{u}$ :
-$$ \|\hat{u}\|_{L^2}^2 = \int_{\mathbb{R}} \left( \frac{2}{(1+\xi^2)^2} \right)^2 d\xi = \int_{\mathbb{R}} \frac{4}{(1+\xi^2)^4} d\xi $$
-La fonction sous l'intégrale est continue sur $\mathbb{R}$. En $\pm\infty$, elle est équivalente à $\frac{4}{\xi^8}$.
-Puisque l'exposant est $8 > 1$, l'intégrale converge (critère de Riemann à l'infini).
-Ainsi $\hat{u} \in L^2(\mathbb{R})$, ce qui implique que $u \in L^2(\mathbb{R})$.
+**Question 3 : Inégalité de Heisenberg-Weyl**
+L'inégalité d'incertitude stipule que pour $f \in \mathcal{S}(\mathbb{R})$ avec $\|f\|_2 = 1$ :
+$$ \left( \int_{-\infty}^{+\infty} t^2 |f(t)|^2 dt \right) \left( \int_{-\infty}^{+\infty} \omega^2 |F(\omega)|^2 d\omega \right) \ge \frac{1}{4} $$
+où $F(\omega) = \frac{1}{\sqrt{2\pi}} \hat{f}(\omega)$ est la transformée normalisée pour que $\|F\|_2 = 1$.
+Dans notre convention $\hat{f}(\xi)$, on a $F(\xi) = \frac{1}{\sqrt{2\pi}} \hat{f}(\xi)$. L'intégrale de droite devient $\frac{1}{2\pi} \int \xi^2 |\hat{f}(\xi)|^2 d\xi$.
+Ainsi,
+$$ \left( \int t^2 |f(t)|^2 dt \right) \left( \frac{1}{2\pi} \int \xi^2 |\hat{f}(\xi)|^2 d\xi \right) \ge \frac{1}{4} $$
+Ce qui se réécrit, en multipliant par $2\pi$ :
+$$ \left( \int t^2 |f(t)|^2 dt \right) \left( \int \xi^2 |\hat{f}(\xi)|^2 d\xi \right) \ge \frac{2\pi}{4} = \frac{\pi}{2} $$
+La démonstration repose sur l'intégration par parties de $\|f\|_2^2 = \int f \bar{f} dt = \int t f(t) \bar{f}'(t) dt + \int t f'(t) \bar{f}(t) dt$, suivie d'une application de l'inégalité de Cauchy-Schwarz, puis de Plancherel.
