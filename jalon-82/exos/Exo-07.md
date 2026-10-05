@@ -1,23 +1,20 @@
-# Exercice 7 : Valeur Principale de Cauchy (Introduction)
-
+# Exercice 7 : Continuité de la masse de Dirac
 **Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
 
-**Énoncé :**
-On définit l'action de $vp(1/x)$ sur $\phi \in \mathcal{D}(\mathbb{R})$ par :
-$$ \langle vp(1/x), \phi \rangle = \lim_{\epsilon \to 0^+} \left( \int_{-\infty}^{-\epsilon} \frac{\phi(x)}{x} dx + \int_{\epsilon}^{+\infty} \frac{\phi(x)}{x} dx \right) $$
-Montrer que cette limite existe bien et qu'elle définit une distribution sur $\mathbb{R}$.
+## Énoncé
+Prouver rigoureusement que la forme linéaire définie par $\delta_0 : \varphi \mapsto \varphi(0)$ satisfait la condition de continuité séquentielle sur $\mathcal{D}(\mathbb{R})$.
 
-**Correction Détaillée :**
-1. **Existence de la limite :**
-   Par symétrie, $\int_{-R}^{-\epsilon} \frac{1}{x} dx + \int_{\epsilon}^R \frac{1}{x} dx = 0$.
-   Donc $\int_{-\infty}^{-\epsilon} \frac{\phi(x)}{x} dx + \int_{\epsilon}^{+\infty} \frac{\phi(x)}{x} dx = \int_{|x| \ge \epsilon} \frac{\phi(x) - \phi(0)}{x} dx + \phi(0) \int_{|x| \ge \epsilon} \frac{1}{x} dx$.
-   Le deuxième terme s'annule par symétrie pour des bornes infinies (puisque le support est borné, prenons un $R$ tel que $\text{supp}(\phi) \subset [-R, R]$).
-   On a donc $\int_{|x| \ge \epsilon} \frac{\phi(x)}{x} dx = \int_{|x| \ge \epsilon, |x| \le R} \frac{\phi(x) - \phi(0)}{x} dx$.
-   Or, d'après l'inégalité des accroissements finis, $\left| \frac{\phi(x) - \phi(0)}{x} \right| \le \sup_{t \in [-R,R]} |\phi'(t)| = \|\phi'\|_\infty$.
-   La fonction $x \mapsto \frac{\phi(x) - \phi(0)}{x}$ (prolongée par $\phi'(0)$ en 0) est continue, donc intégrable sur $[-R, R]$.
-   La limite quand $\epsilon \to 0$ existe bien.
-2. **Linéarité et Continuité :**
-   La linéarité est évidente. Pour la continuité, si $\phi_n \to 0$ dans $\mathcal{D}(\mathbb{R})$, il existe un compact $K=[-R, R]$ contenant tous les supports.
-   $|\langle vp(1/x), \phi_n \rangle| \le \int_{-R}^R |\frac{\phi_n(x) - \phi_n(0)}{x}| dx \le \int_{-R}^R \|\phi_n'\|_\infty dx = 2R \|\phi_n'\|_\infty$.
-   Comme $\phi_n \to 0$ dans $\mathcal{D}(\mathbb{R})$, on a $\|\phi_n'\|_\infty \to 0$.
-   Ainsi, $\langle vp(1/x), \phi_n \rangle \to 0$. $vp(1/x)$ est bien une distribution.
+## Correction Détaillée
+1. Il faut montrer que si une suite $(\varphi_n)$ converge vers $0$ dans $\mathcal{D}(\mathbb{R})$, alors la suite de nombres complexes $\langle \delta_0, \varphi_n \rangle$ converge vers 0 dans $\mathbb{C}$.
+2. Soit $(\varphi_n)$ une suite convergeant vers $0$ dans $\mathcal{D}(\mathbb{R})$. Par définition de cette topologie, deux conditions sont remplies :
+   - (A) Il existe un compact fixe $K$ contenant le support de tous les $\varphi_n$.
+   - (B) Pour tout $k \ge 0$, la suite des dérivées $\varphi_n^{(k)}$ converge uniformément vers 0 sur $K$.
+3. Evaluons l'action de $\delta_0$ sur $\varphi_n$ :
+   $$ \langle \delta_0, \varphi_n \rangle = \varphi_n(0) $$
+4. Nous devons prouver que $\varphi_n(0) \to 0$ lorsque $n \to +\infty$.
+5. Utilisons la condition (B) avec $k = 0$ (la fonction elle-même). La convergence uniforme sur $K$ implique que :
+   $$ \lim_{n \to \infty} \sup_{x \in K} |\varphi_n(x)| = 0 $$
+6. Or, $| \varphi_n(0) | \le \sup_{x \in K} |\varphi_n(x)|$. (Même si $0 \notin K$, alors $\varphi_n(0) = 0$ et l'inégalité est vérifiée trivialement).
+7. Par le théorème d'encadrement (gendarmes), puisque la norme infinie de la suite tend vers 0, on a inéluctablement :
+   $$ \lim_{n \to \infty} |\varphi_n(0)| = 0 $$
+8. Par conséquent, $\lim_{n \to \infty} \langle \delta_0, \varphi_n \rangle = 0$. La forme linéaire $\delta_0$ est bien continue, c'est une authentique distribution.

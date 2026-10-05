@@ -1,22 +1,19 @@
-# Exercice 9 : Multiplication par une fonction lisse
-
+# Exercice 9 : Support d'une distribution
 **Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :**
-Montrer que si $T \in \mathcal{D}'(\mathbb{R})$ et $\alpha \in \mathcal{C}^\infty(\mathbb{R})$, alors on peut définir le produit $\alpha T$ comme une distribution par : $\langle \alpha T, \phi \rangle = \langle T, \alpha \phi \rangle$.
-Calculer ensuite $x \delta_0$.
+## Énoncé
+On dit qu'une distribution $T$ est nulle sur un ouvert $\Omega$ si pour toute $\varphi \in \mathcal{D}(\mathbb{R})$ dont le support est inclus dans $\Omega$, on a $\langle T, \varphi \rangle = 0$. Le support de $T$ est le complémentaire de la réunion de tous les ouverts où $T$ est nulle. Déterminer rigoureusement le support du Dirac $\delta_0$.
 
-**Correction Détaillée :**
-1. **Légitimité de la définition :**
-   Si $\phi \in \mathcal{D}(\mathbb{R})$, son support est compact. La fonction $\alpha \phi$ est le produit de deux fonctions indéfiniment dérivables, donc elle l'est aussi. Son support est inclus dans celui de $\phi$, donc compact.
-   Ainsi, $\alpha \phi \in \mathcal{D}(\mathbb{R})$. L'évaluation $\langle T, \alpha \phi \rangle$ a bien un sens.
-2. **Vérification de la continuité :**
-   La linéarité de l'application $\phi \mapsto \langle T, \alpha \phi \rangle$ est évidente.
-   Si $\phi_n \to 0$ dans $\mathcal{D}(\mathbb{R})$, tous les supports sont inclus dans un même compact $K$.
-   Les dérivées de $\alpha \phi_n$ se calculent par la formule de Leibniz. Sur $K$, $\alpha$ et ses dérivées sont bornées.
-   On peut déduire que la convergence uniforme de toutes les dérivées de $\phi_n$ vers 0 entraîne celle de toutes les dérivées de $\alpha \phi_n$.
-   Ainsi, $\alpha \phi_n \to 0$ dans $\mathcal{D}(\mathbb{R})$, ce qui donne par continuité de $T$ : $\langle T, \alpha \phi_n \rangle \to 0$. $\alpha T$ est bien une distribution.
-3. **Calcul de $x \delta_0$ :**
-   Posons $\alpha(x) = x$.
-   $\langle x \delta_0, \phi \rangle = \langle \delta_0, x \mapsto x\phi(x) \rangle = 0 \cdot \phi(0) = 0$.
-   Donc $x \delta_0 = 0$ (la distribution nulle).
+## Correction Détaillée
+1. Soit un ouvert $\Omega \subset \mathbb{R}$ tel que $0 \notin \Omega$. Montrons que $\delta_0$ est nulle sur $\Omega$.
+2. Soit $\varphi \in \mathcal{D}(\mathbb{R})$ telle que $\text{supp}(\varphi) \subset \Omega$.
+3. Comme $0 \notin \Omega$, on a $0 \notin \text{supp}(\varphi)$. Or, par définition du support, en dehors de $\text{supp}(\varphi)$, la fonction $\varphi$ vaut rigoureusement $0$.
+4. Ainsi, $\varphi(0) = 0$.
+5. L'évaluation donne : $\langle \delta_0, \varphi \rangle = \varphi(0) = 0$. Donc $\delta_0$ est nulle sur $\Omega = \mathbb{R} \setminus \{0\}$.
+6. Le complémentaire de cet ouvert est le singleton $\{0\}$. Le support de $\delta_0$ est donc inclus dans $\{0\}$.
+7. Pour montrer que le support n'est pas l'ensemble vide, il faut prouver que $\delta_0$ n'est pas nulle sur tout ouvert contenant $0$.
+8. Considérons un ouvert quelconque $U$ contenant $0$.
+9. Construisons une fonction test "bosse" $\varphi_0 \in \mathcal{D}(\mathbb{R})$ telle que $\varphi_0(0) = 1$ et $\text{supp}(\varphi_0) \subset U$ (possible en adaptant la fonction $\rho$ de l'Exemple 1 du cours).
+10. Pour cette fonction, $\langle \delta_0, \varphi_0 \rangle = \varphi_0(0) = 1 \neq 0$.
+11. Donc $\delta_0$ n'est pas nulle sur $U$. Le point $0$ ne peut pas être retiré du support.
+12. En conclusion, le support de la distribution $\delta_0$ est exactement le singleton $\{0\}$. C'est une distribution à support ponctuel.

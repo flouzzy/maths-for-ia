@@ -1,21 +1,22 @@
-# Exercice 1 : Distributions et Fonctions Tests
-
+# Exercice 1 : Action d'une distribution régulière simple
 **Difficulté :** $\bigstar\star\star\star\star$
 
-**Énoncé :**
-Montrer que la fonction $\phi(x) = \begin{cases} e^{-1/x} & \text{si } x > 0 \\ 0 & \text{si } x \le 0 \end{cases}$ est de classe $\mathcal{C}^\infty$ sur $\mathbb{R}$. Cette propriété est cruciale pour construire les fonctions tests de $\mathcal{D}(\mathbb{R})$. Évaluer ensuite $\langle \delta_0, \phi \rangle$.
+## Énoncé
+Soit $f(x) = x^2$ sur $\mathbb{R}$. Calculer l'action de la distribution régulière associée $T_f$ sur la fonction test $\varphi \in \mathcal{D}(\mathbb{R})$ définie par $\varphi(x) = 1 - x^2$ pour $x \in [-1, 1]$ et $0$ ailleurs.
 
-**Correction Détaillée :**
-1. **Régularité sur $\mathbb{R}^*$ :**
-   Pour $x < 0$, $\phi(x) = 0$, donc $\phi$ est indéfiniment dérivable sur $]-\infty, 0[$ et toutes ses dérivées y sont nulles.
-   Pour $x > 0$, $\phi(x) = e^{-1/x}$. Par composition de fonctions $\mathcal{C}^\infty$ sur $]0, +\infty[$, $\phi$ y est $\mathcal{C}^\infty$. On peut montrer par récurrence que pour tout $n \in \mathbb{N}^*$, il existe un polynôme $P_n$ tel que $\phi^{(n)}(x) = \frac{P_n(x)}{x^{2n}} e^{-1/x}$ pour $x > 0$.
-
-2. **Régularité en $x=0$ :**
-   Nous devons montrer que toutes les dérivées à droite de $\phi$ en 0 existent et valent 0.
-   - **Continuité en 0 :** $\lim_{x \to 0^+} e^{-1/x} = \lim_{X \to +\infty} e^{-X} = 0 = \phi(0)$. Donc $\phi$ est continue.
-   - **Dérivabilité en 0 :** Le taux d'accroissement est $\frac{\phi(x) - \phi(0)}{x} = \frac{e^{-1/x}}{x}$. Posons $X = 1/x$. La limite lorsque $x \to 0^+$ est $\lim_{X \to +\infty} X e^{-X} = 0$ par croissances comparées. Donc $\phi'(0) = 0$.
-   - **Récurrence :** Supposons $\phi^{(n)}(0) = 0$. Le taux d'accroissement de $\phi^{(n)}$ en 0 est $\frac{\phi^{(n)}(x)}{x} = \frac{P_n(x)}{x^{2n+1}} e^{-1/x}$. La limite en $0^+$ correspond à $\lim_{X \to +\infty} X^{2n+1} P_n(1/X) e^{-X}$. Comme $X^{2n+1} P_n(1/X)$ est une fonction polynomiale en $X$, l'exponentielle l'emporte et la limite est $0$. Ainsi, $\phi^{(n+1)}(0) = 0$.
-   Par récurrence, $\phi$ est $\mathcal{C}^\infty$ sur $\mathbb{R}$.
-
-3. **Évaluation :**
-   La distribution de Dirac en $0$ évaluée en $\phi$ donne $\langle \delta_0, \phi \rangle = \phi(0) = 0$.
+## Correction Détaillée
+1. La fonction $f$ est continue sur $\mathbb{R}$, elle est donc localement intégrable ($L^1_{loc}(\mathbb{R})$). Elle définit bien une distribution régulière $T_f$.
+2. Par définition, l'action de $T_f$ sur $\varphi$ est donnée par :
+   $$ \langle T_f, \varphi \rangle = \int_{\mathbb{R}} f(x)\varphi(x) \,dx $$
+3. Puisque le support de $\varphi$ est inclus dans $[-1, 1]$, l'intégrale se réduit à cet intervalle :
+   $$ \langle T_f, \varphi \rangle = \int_{-1}^{1} x^2 (1 - x^2) \,dx $$
+4. Développons l'intégrand : $x^2 (1 - x^2) = x^2 - x^4$.
+5. La fonction à intégrer est paire, et l'intervalle est symétrique, donc :
+   $$ \langle T_f, \varphi \rangle = 2 \int_{0}^{1} (x^2 - x^4) \,dx $$
+6. Calculons les primitives : la primitive de $x^2$ est $\frac{x^3}{3}$ et celle de $x^4$ est $\frac{x^5}{5}$.
+7. Évaluons aux bornes :
+   $$ \langle T_f, \varphi \rangle = 2 \left[ \frac{x^3}{3} - \frac{x^5}{5} \right]_0^1 = 2 \left( \frac{1}{3} - \frac{1}{5} \right) $$
+8. Réduction au même dénominateur :
+   $$ \frac{1}{3} - \frac{1}{5} = \frac{5 - 3}{15} = \frac{2}{15} $$
+9. Finalement, en multipliant par 2 :
+   $$ \langle T_f, \varphi \rangle = \frac{4}{15} $$

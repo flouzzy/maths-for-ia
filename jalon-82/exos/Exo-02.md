@@ -1,20 +1,19 @@
-# Exercice 2 : Distribution régulière et locale intégrabilité
-
+# Exercice 2 : Action d'une combinaison de Diracs
 **Difficulté :** $\bigstar\bigstar\star\star\star$
 
-**Énoncé :**
-Montrer que la fonction $f(x) = \frac{1}{\sqrt{|x|}}$ définit une distribution régulière sur $\mathbb{R}$, c'est-à-dire que $f \in L^1_{loc}(\mathbb{R})$. Calculer l'action de $T_f$ sur une fonction test paire.
+## Énoncé
+On considère la distribution $T = \delta_{\pi} - 2\delta_{-\pi} + 3\delta_0$. Calculer $\langle T, \varphi \rangle$ pour la fonction test $\varphi(x) = \sin(x) \cos(x)$.
 
-**Correction Détaillée :**
-1. **Intégrabilité locale :**
-   La fonction $f$ est continue sur $\mathbb{R}^*$. La seule singularité est en $x=0$. Nous devons vérifier que $f$ est intégrable au voisinage de 0.
-   L'intégrale sur $[0, a]$ (pour $a>0$) est $\int_0^a x^{-1/2} dx = \left[ 2x^{1/2} \right]_0^a = 2\sqrt{a}$.
-   L'intégrale est finie. Par symétrie, l'intégrale sur $[-a, 0]$ est aussi $2\sqrt{a}$.
-   Ainsi, pour tout segment $[c, d]$, $f$ est intégrable. Donc $f \in L^1_{loc}(\mathbb{R})$, et $T_f$ est bien une distribution.
-
-2. **Action sur une fonction test paire :**
-   Soit $\phi \in \mathcal{D}(\mathbb{R})$ une fonction paire (i.e., $\phi(-x) = \phi(x)$).
-   $$ \langle T_f, \phi \rangle = \int_{-\infty}^{+\infty} \frac{1}{\sqrt{|x|}} \phi(x) dx $$
-   Comme $f$ est paire et $\phi$ est paire, le produit $f \phi$ est pair. On peut donc restreindre l'intégrale à $\mathbb{R}^+$ et multiplier par 2 :
-   $$ \langle T_f, \phi \rangle = 2 \int_0^{+\infty} \frac{\phi(x)}{\sqrt{x}} dx $$
-   Cette intégrale est bien définie car $\phi$ est bornée et à support compact, et l'intégrale converge en 0.
+## Correction Détaillée
+1. Par linéarité des distributions, l'action de $T$ sur $\varphi$ se décompose comme suit :
+   $$ \langle T, \varphi \rangle = \langle \delta_{\pi}, \varphi \rangle - 2\langle \delta_{-\pi}, \varphi \rangle + 3\langle \delta_0, \varphi \rangle $$
+2. Par définition de la distribution de Dirac $\delta_a$, $\langle \delta_a, \varphi \rangle = \varphi(a)$.
+3. On remplace par les évaluations de $\varphi$ aux points donnés :
+   $$ \langle T, \varphi \rangle = \varphi(\pi) - 2\varphi(-\pi) + 3\varphi(0) $$
+4. Calculons les valeurs de $\varphi$ à ces points :
+   - Pour $x = \pi$ : $\varphi(\pi) = \sin(\pi) \cos(\pi) = 0 \times (-1) = 0$.
+   - Pour $x = -\pi$ : $\varphi(-\pi) = \sin(-\pi) \cos(-\pi) = 0 \times (-1) = 0$.
+   - Pour $x = 0$ : $\varphi(0) = \sin(0) \cos(0) = 0 \times 1 = 0$.
+5. En remplaçant ces valeurs dans l'expression de $\langle T, \varphi \rangle$ :
+   $$ \langle T, \varphi \rangle = 0 - 2(0) + 3(0) = 0 $$
+6. L'action de la distribution $T$ sur cette fonction test particulière est donc nulle.
