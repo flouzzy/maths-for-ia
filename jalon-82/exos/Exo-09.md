@@ -1,19 +1,19 @@
-\subsection*{Exercice 9 : Translater une distribution \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+# Exercice 9 : Support d'une distribution
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :**
-Soit la distribution $T$ et un réel $b$. Définir rigoureusement la distribution translatée $\tau_b T$ et vérifier que $\tau_b \delta_0 = \delta_b$.
+## Énoncé
+On dit qu'une distribution $T$ est nulle sur un ouvert $\Omega$ si pour toute $\varphi \in \mathcal{D}(\mathbb{R})$ dont le support est inclus dans $\Omega$, on a $\langle T, \varphi \rangle = 0$. Le support de $T$ est le complémentaire de la réunion de tous les ouverts où $T$ est nulle. Déterminer rigoureusement le support du Dirac $\delta_0$.
 
-**Correction :**
-Si $f$ est une fonction localement intégrable, sa translatée est $f(x-b)$. L'action de la distribution régulière associée est :
-$$\langle T_{f(\cdot - b)}, \phi \rangle = \int_{-\infty}^{+\infty} f(x-b) \phi(x) dx$$
-Faisons le changement de variable $y = x - b \implies x = y + b, dx = dy$.
-$$\langle T_{f(\cdot - b)}, \phi \rangle = \int_{-\infty}^{+\infty} f(y) \phi(y+b) dy = \langle T_f, \phi(\cdot + b) \rangle$$
-On utilise cette propriété pour définir la translation de n'importe quelle distribution. On définit la distribution $\tau_b T$ par :
-$$\langle \tau_b T, \phi \rangle = \langle T, \tau_{-b} \phi \rangle = \langle T, x \mapsto \phi(x+b) \rangle$$
-Appliquons cette définition à la distribution de Dirac en $0$, $\delta_0$.
-$$\langle \tau_b \delta_0, \phi \rangle = \langle \delta_0, x \mapsto \phi(x+b) \rangle$$
-L'action de $\delta_0$ est d'évaluer la fonction test en $x=0$ :
-$$= \phi(0+b) = \phi(b)$$
-Or, $\phi(b)$ est exactement la définition de l'action de $\delta_b$ sur $\phi$.
-$$\langle \tau_b \delta_0, \phi \rangle = \langle \delta_b, \phi \rangle$$
-L'égalité est vraie pour toute fonction $\phi$, d'où $\tau_b \delta_0 = \delta_b$.
+## Correction Détaillée
+1. Soit un ouvert $\Omega \subset \mathbb{R}$ tel que $0 \notin \Omega$. Montrons que $\delta_0$ est nulle sur $\Omega$.
+2. Soit $\varphi \in \mathcal{D}(\mathbb{R})$ telle que $\text{supp}(\varphi) \subset \Omega$.
+3. Comme $0 \notin \Omega$, on a $0 \notin \text{supp}(\varphi)$. Or, par définition du support, en dehors de $\text{supp}(\varphi)$, la fonction $\varphi$ vaut rigoureusement $0$.
+4. Ainsi, $\varphi(0) = 0$.
+5. L'évaluation donne : $\langle \delta_0, \varphi \rangle = \varphi(0) = 0$. Donc $\delta_0$ est nulle sur $\Omega = \mathbb{R} \setminus \{0\}$.
+6. Le complémentaire de cet ouvert est le singleton $\{0\}$. Le support de $\delta_0$ est donc inclus dans $\{0\}$.
+7. Pour montrer que le support n'est pas l'ensemble vide, il faut prouver que $\delta_0$ n'est pas nulle sur tout ouvert contenant $0$.
+8. Considérons un ouvert quelconque $U$ contenant $0$.
+9. Construisons une fonction test "bosse" $\varphi_0 \in \mathcal{D}(\mathbb{R})$ telle que $\varphi_0(0) = 1$ et $\text{supp}(\varphi_0) \subset U$ (possible en adaptant la fonction $\rho$ de l'Exemple 1 du cours).
+10. Pour cette fonction, $\langle \delta_0, \varphi_0 \rangle = \varphi_0(0) = 1 \neq 0$.
+11. Donc $\delta_0$ n'est pas nulle sur $U$. Le point $0$ ne peut pas être retiré du support.
+12. En conclusion, le support de la distribution $\delta_0$ est exactement le singleton $\{0\}$. C'est une distribution à support ponctuel.

@@ -1,17 +1,20 @@
-\subsection*{Exercice 7 : Approximation gaussienne de l'identité \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+# Exercice 7 : Continuité de la masse de Dirac
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
 
-**Énoncé :**
-Soit $g_n(x) = \frac{n}{\sqrt{\pi}} e^{-n^2 x^2}$. Montrer que $g_n$ converge vers $\delta_0$ au sens des distributions.
+## Énoncé
+Prouver rigoureusement que la forme linéaire définie par $\delta_0 : \varphi \mapsto \varphi(0)$ satisfait la condition de continuité séquentielle sur $\mathcal{D}(\mathbb{R})$.
 
-**Correction :**
-Rappelons que l'intégrale de Gauss donne $\int_{-\infty}^{+\infty} e^{-u^2} du = \sqrt{\pi}$, donc $\int_{-\infty}^{+\infty} g_n(x) dx = 1$ pour tout $n$.
-Soit $\phi \in \mathcal{D}(\mathbb{R})$. Evaluons :
-$$\langle T_{g_n}, \phi \rangle = \int_{-\infty}^{+\infty} \frac{n}{\sqrt{\pi}} e^{-n^2 x^2} \phi(x) dx$$
-Effectuons le changement de variable $u = nx$, $dx = \frac{du}{n}$ :
-$$\langle T_{g_n}, \phi \rangle = \int_{-\infty}^{+\infty} \frac{1}{\sqrt{\pi}} e^{-u^2} \phi(u/n) du$$
-La fonction $u \mapsto \frac{1}{\sqrt{\pi}} e^{-u^2} \phi(u/n)$ est majorée en valeur absolue par $C e^{-u^2}$ (où $C = \frac{1}{\sqrt{\pi}} \sup |\phi|$). Cette majorante est intégrable et indépendante de $n$.
-On peut donc appliquer le théorème de convergence dominée de Lebesgue pour inverser limite et intégrale.
-Pour chaque $u$ fixé, par continuité de $\phi$, $\lim_{n \to \infty} \phi(u/n) = \phi(0)$.
-$$\lim_{n \to \infty} \langle T_{g_n}, \phi \rangle = \int_{-\infty}^{+\infty} \frac{1}{\sqrt{\pi}} e^{-u^2} \lim_{n \to \infty} \phi(u/n) du$$
-$$\lim_{n \to \infty} \langle T_{g_n}, \phi \rangle = \phi(0) \int_{-\infty}^{+\infty} \frac{1}{\sqrt{\pi}} e^{-u^2} du = \phi(0) \times 1 = \phi(0)$$
-C'est exactement la définition de la convergence vers $\delta_0$.
+## Correction Détaillée
+1. Il faut montrer que si une suite $(\varphi_n)$ converge vers $0$ dans $\mathcal{D}(\mathbb{R})$, alors la suite de nombres complexes $\langle \delta_0, \varphi_n \rangle$ converge vers 0 dans $\mathbb{C}$.
+2. Soit $(\varphi_n)$ une suite convergeant vers $0$ dans $\mathcal{D}(\mathbb{R})$. Par définition de cette topologie, deux conditions sont remplies :
+   - (A) Il existe un compact fixe $K$ contenant le support de tous les $\varphi_n$.
+   - (B) Pour tout $k \ge 0$, la suite des dérivées $\varphi_n^{(k)}$ converge uniformément vers 0 sur $K$.
+3. Evaluons l'action de $\delta_0$ sur $\varphi_n$ :
+   $$ \langle \delta_0, \varphi_n \rangle = \varphi_n(0) $$
+4. Nous devons prouver que $\varphi_n(0) \to 0$ lorsque $n \to +\infty$.
+5. Utilisons la condition (B) avec $k = 0$ (la fonction elle-même). La convergence uniforme sur $K$ implique que :
+   $$ \lim_{n \to \infty} \sup_{x \in K} |\varphi_n(x)| = 0 $$
+6. Or, $| \varphi_n(0) | \le \sup_{x \in K} |\varphi_n(x)|$. (Même si $0 \notin K$, alors $\varphi_n(0) = 0$ et l'inégalité est vérifiée trivialement).
+7. Par le théorème d'encadrement (gendarmes), puisque la norme infinie de la suite tend vers 0, on a inéluctablement :
+   $$ \lim_{n \to \infty} |\varphi_n(0)| = 0 $$
+8. Par conséquent, $\lim_{n \to \infty} \langle \delta_0, \varphi_n \rangle = 0$. La forme linéaire $\delta_0$ est bien continue, c'est une authentique distribution.

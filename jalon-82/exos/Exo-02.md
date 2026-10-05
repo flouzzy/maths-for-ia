@@ -1,18 +1,19 @@
-\subsection*{Exercice 2 : Linéarité des distributions \quad $\bigstar\bigstar\star\star\star$}
+# Exercice 2 : Action d'une combinaison de Diracs
+**Difficulté :** $\bigstar\bigstar\star\star\star$
 
-**Énoncé :**
-Soit $T = 4\delta_0 - 5\delta_1 + 2\delta_{-1}$. Calculer $\langle T, \phi \rangle$ où $\phi(x) = e^x \cos(\pi x)$.
+## Énoncé
+On considère la distribution $T = \delta_{\pi} - 2\delta_{-\pi} + 3\delta_0$. Calculer $\langle T, \varphi \rangle$ pour la fonction test $\varphi(x) = \sin(x) \cos(x)$.
 
-**Correction :**
-Par définition, l'espace des distributions $\mathcal{D}'(\mathbb{R})$ est un espace vectoriel, l'action sur une fonction test est linéaire.
-$$\langle T, \phi \rangle = \langle 4\delta_0 - 5\delta_1 + 2\delta_{-1}, \phi \rangle$$
-Par linéarité de l'application $\phi \mapsto \langle \cdot, \phi \rangle$ :
-$$\langle T, \phi \rangle = 4\langle \delta_0, \phi \rangle - 5\langle \delta_1, \phi \rangle + 2\langle \delta_{-1}, \phi \rangle$$
-On applique la définition du Dirac :
-$$\langle T, \phi \rangle = 4\phi(0) - 5\phi(1) + 2\phi(-1)$$
-Calculons les valeurs de $\phi$ :
-$\phi(0) = e^0 \cos(0) = 1 \cdot 1 = 1$
-$\phi(1) = e^1 \cos(\pi) = e \cdot (-1) = -e$
-$\phi(-1) = e^{-1} \cos(-\pi) = \frac{1}{e} \cdot (-1) = -\frac{1}{e}$
-En substituant :
-$$\langle T, \phi \rangle = 4(1) - 5(-e) + 2\left(-\frac{1}{e}\right) = 4 + 5e - \frac{2}{e}$$
+## Correction Détaillée
+1. Par linéarité des distributions, l'action de $T$ sur $\varphi$ se décompose comme suit :
+   $$ \langle T, \varphi \rangle = \langle \delta_{\pi}, \varphi \rangle - 2\langle \delta_{-\pi}, \varphi \rangle + 3\langle \delta_0, \varphi \rangle $$
+2. Par définition de la distribution de Dirac $\delta_a$, $\langle \delta_a, \varphi \rangle = \varphi(a)$.
+3. On remplace par les évaluations de $\varphi$ aux points donnés :
+   $$ \langle T, \varphi \rangle = \varphi(\pi) - 2\varphi(-\pi) + 3\varphi(0) $$
+4. Calculons les valeurs de $\varphi$ à ces points :
+   - Pour $x = \pi$ : $\varphi(\pi) = \sin(\pi) \cos(\pi) = 0 \times (-1) = 0$.
+   - Pour $x = -\pi$ : $\varphi(-\pi) = \sin(-\pi) \cos(-\pi) = 0 \times (-1) = 0$.
+   - Pour $x = 0$ : $\varphi(0) = \sin(0) \cos(0) = 0 \times 1 = 0$.
+5. En remplaçant ces valeurs dans l'expression de $\langle T, \varphi \rangle$ :
+   $$ \langle T, \varphi \rangle = 0 - 2(0) + 3(0) = 0 $$
+6. L'action de la distribution $T$ sur cette fonction test particulière est donc nulle.

@@ -9,164 +9,157 @@ tags:
 prev: "[[Jalon 81 (Transformée de Fourier dans L2).md]]"
 next: "[[Jalon 83 (Dérivation au sens des distributions).md]]"
 ---
+# Jalon 82 : Introduction à la théorie des distributions de Schwartz
 
-# Introduction aux distributions de Schwartz
+## 1. Introduction historique et physique
 
-## 1. Introduction historique et genèse physique
+La notion de fonction mathématique classique s'est trouvée mise en défaut au cours du $XX^\text{ème}$ siècle face à des besoins physiques concrets. Comment décrire la densité d'une masse ponctuelle ? Comment modéliser mathématiquement une impulsion électrique de durée nulle mais d'intensité infinie, telle qu'une charge ponctuelle ou un choc mécanique instantané ? Les fonctions habituelles, pour lesquelles une valeur non nulle en un seul point n'a aucune influence sur l'intégrale (qui vaut 0), sont incapables de capter ce phénomène.
 
-La notion de fonction, bien qu'extraordinairement utile en mathématiques classiques, a montré ses limites au début du XXe siècle, particulièrement en physique. Comment décrire mathématiquement une force ponctuelle (un coup de marteau), une charge électrique ponctuelle, ou encore une source lumineuse infiniment petite mais d'intensité finie ?
-
-Si l'on tente d'utiliser une fonction classique $f(x)$ pour modéliser un "pic" à l'origine (par exemple une masse ponctuelle unitaire en $0$), cette fonction devrait satisfaire $f(x) = 0$ pour tout $x \neq 0$ et $\int_{-\infty}^{+\infty} f(x) dx = 1$. Or, d'après la théorie de l'intégration de Lebesgue, une fonction nulle presque partout a une intégrale nulle. Il y a donc une contradiction fondamentale.
-
-C'est Laurent Schwartz (médaille Fields en 1950) qui a rigoureusement formalisé ces objets, appelés **distributions**. L'idée géniale de Schwartz est de ne plus regarder un objet mathématique par ses "valeurs ponctuelles" $f(x)$ (qui peuvent ne pas avoir de sens), mais par sa "réaction" lorsqu'on le teste avec des fonctions très régulières, appelées **fonctions tests**.
-
-\begin{tikzpicture}[scale=1]
-  \draw[->] (-3,0) -- (3,0) node[right] {$x$};
-  \draw[->] (0,-0.5) -- (0,3) node[above] {$y$};
-  \draw[thick, blue] (-2.5,0) -- (-0.5,0) -- (0, 2.5) -- (0.5, 0) -- (2.5,0);
-  \node at (0, -0.3) {$0$};
-  \node at (2, 2) {Approximation de $\delta_0$};
-\end{tikzpicture}
+L'idée fondatrice, théorisée notamment par le mathématicien français Laurent Schwartz (médaille Fields 1950) et pressentie par le physicien Paul Dirac, est de cesser d'évaluer une fonction point par point. Au lieu de s'intéresser à la valeur ponctuelle $f(x)$, on va "tester" l'objet par le biais de fonctions très régulières, dites fonctions tests. Un objet mathématique (une distribution) ne sera plus défini par ses valeurs, mais par son action, via une intégrale, sur toutes les fonctions tests possibles. Cette approche constructiviste et globale étend drastiquement la notion de fonction, permettant de donner un sens rigoureux à la "masse de Dirac" et ouvrant la voie à la dérivation de fonctions discontinues.
 
 ## 2. Définitions, Théorèmes et Exemples
 
-### A. L'espace des fonctions tests $\mathcal{D}(\mathbb{R})$
+### 2.1 L'espace des fonctions tests $\mathcal{D}(\mathbb{R})$
 
-Pour définir une distribution, nous devons d'abord définir l'espace des fonctions qui vont servir à "tester" ou "sondes" ces distributions.
+Avant de définir les distributions, il faut construire l'espace des fonctions "sondes", qui vont venir tester notre objet.
 
-> **Définition 1 (Espace des fonctions tests $\mathcal{D}(\mathbb{R})$) :**
-> L'espace $\mathcal{D}(\mathbb{R})$ (aussi noté $C_c^\infty(\mathbb{R})$) est l'ensemble des fonctions $\phi : \mathbb{R} \to \mathbb{C}$ qui satisfont simultanément deux conditions :
-> 1. Elles sont infiniment dérivables sur $\mathbb{R}$ ($\phi \in C^\infty(\mathbb{R})$).
-> 2. Elles sont à support compact, c'est-à-dire qu'il existe un segment borné $[-A, A]$ en dehors duquel la fonction est identiquement nulle.
+**Définition (Espace des fonctions tests) :**
+L'espace $\mathcal{D}(\mathbb{R})$ (ou $C^\infty_c(\mathbb{R})$) est l'espace vectoriel des fonctions $\varphi : \mathbb{R} \to \mathbb{C}$ qui satisfont simultanément deux conditions :
+1. Elles sont indéfiniment dérivables, c'est-à-dire $\varphi \in C^\infty(\mathbb{R})$.
+2. Elles sont à support compact. Le support, noté $\text{supp}(\varphi) = \overline{\{ x \in \mathbb{R} \mid \varphi(x) \neq 0 \}}$, doit être un sous-ensemble borné de $\mathbb{R}$.
 
-**Exemple 1 : La fonction "bosse" (bump function)**
-Considérons la fonction :
-$$\phi(x) = \begin{cases} \exp\left(-\frac{1}{1-x^2}\right) & \text{si } |x| < 1 \\ 0 & \text{si } |x| \ge 1 \end{cases}$$
-Calculons ses dérivées. Pour $x \in (-1, 1)$, $\phi'(x) = -\frac{2x}{(1-x^2)^2} \exp\left(-\frac{1}{1-x^2}\right)$. Lorsque $x \to 1^-$ ou $x \to -1^+$, l'exponentielle l'emporte sur toute fraction rationnelle, donc toutes les dérivées tendent vers $0$. La fonction se recolle de manière $C^\infty$ avec la constante $0$ sur $|x| \ge 1$. Son support est exactement $[-1, 1]$. C'est une fonction test typique.
+**Exemple 1 (Fonction test bulle) :**
+Construisons explicitement une fonction test non triviale. Soit $\rho : \mathbb{R} \to \mathbb{R}$ définie par :
+$$ \rho(x) = \begin{cases} \exp\left(-\frac{1}{1-x^2}\right) & \text{si } |x| < 1 \\ 0 & \text{si } |x| \ge 1 \end{cases} $$
+- **Support :** Par définition, $\rho(x) = 0$ pour $|x| \ge 1$. Donc, $\text{supp}(\rho) \subset [-1, 1]$, qui est compact.
+- **Régularité :** Sur $]-1, 1[$, la fonction est une composée de fonctions $C^\infty$. En $x=1$ (et $x=-1$), on peut vérifier que toutes les dérivées à gauche de $x \mapsto \exp\left(-\frac{1}{1-x^2}\right)$ tendent vers $0$. Par conséquent, toutes les dérivées se recollent continûment à $0$, ce qui prouve que $\rho \in C^\infty(\mathbb{R})$.
+Ainsi, $\rho \in \mathcal{D}(\mathbb{R})$.
 
-**Exemple 2 : Une fonction non test**
-La fonction gaussienne $f(x) = e^{-x^2}$ est bien infiniment dérivable, mais son support est $\mathbb{R}$ tout entier (elle ne s'annule jamais). Donc $f \notin \mathcal{D}(\mathbb{R})$.
+### 2.2 Notion de Topologie sur $\mathcal{D}(\mathbb{R})$ (Convergence)
 
-### B. Notion de convergence dans $\mathcal{D}(\mathbb{R})$
+Pour parler de la continuité d'une forme linéaire sur $\mathcal{D}(\mathbb{R})$, il nous faut définir ce que signifie la convergence d'une suite de fonctions tests vers zéro.
 
-Pour pouvoir définir des formes linéaires *continues* (qui seront nos distributions), il faut doter $\mathcal{D}(\mathbb{R})$ d'une notion de convergence.
+**Définition (Convergence dans $\mathcal{D}(\mathbb{R})$) :**
+Une suite $(\varphi_n)_{n \in \mathbb{N}}$ de fonctions de $\mathcal{D}(\mathbb{R})$ converge vers $0$ dans $\mathcal{D}(\mathbb{R})$ si les deux conditions suivantes sont réunies :
+1. Il existe un compact fixe $K \subset \mathbb{R}$ tel que pour tout $n \in \mathbb{N}$, $\text{supp}(\varphi_n) \subset K$. (Leurs supports ne s'échappent pas à l'infini).
+2. Pour tout entier $k \ge 0$, la suite des dérivées $k$-ièmes $(\varphi_n^{(k)})_{n \in \mathbb{N}}$ converge uniformément vers $0$ sur $K$.
 
-> **Définition 2 (Convergence dans $\mathcal{D}(\mathbb{R})$) :**
-> Soit $(\phi_n)_{n \in \mathbb{N}}$ une suite de fonctions de $\mathcal{D}(\mathbb{R})$ et $\phi \in \mathcal{D}(\mathbb{R})$. On dit que $\phi_n \to \phi$ dans $\mathcal{D}(\mathbb{R})$ si :
-> 1. Il existe un compact (un intervalle fermé borné) $K \subset \mathbb{R}$ qui contient le support de toutes les $\phi_n$ ainsi que celui de $\phi$.
-> 2. Pour tout entier $k \ge 0$, la suite des dérivées d'ordre $k$, $(\phi_n^{(k)})_{n \in \mathbb{N}}$, converge uniformément vers $\phi^{(k)}$ sur $K$.
+**Exemple 2 (Suite de fonctions tests tendant vers $0$) :**
+Posons $\varphi_n(x) = \frac{1}{n} \rho(x)$, où $\rho$ est la fonction définie dans l'Exemple 1.
+- Pour tout $n$, $\text{supp}(\varphi_n) \subset [-1, 1]$. On pose donc $K = [-1, 1]$.
+- Pour un entier $k$ fixé, $\varphi_n^{(k)}(x) = \frac{1}{n} \rho^{(k)}(x)$. Comme $\rho^{(k)}$ est continue sur le compact $K$, elle est bornée par une constante $M_k$.
+- Ainsi, $\| \varphi_n^{(k)} \|_\infty \le \frac{M_k}{n}$, qui tend vers $0$ quand $n \to +\infty$.
+La suite $(\varphi_n)$ converge donc vers $0$ dans $\mathcal{D}(\mathbb{R})$.
 
-### C. Définition des Distributions
+### 2.3 Définition des Distributions $\mathcal{D}'(\mathbb{R})$
 
-> **Définition 3 (Distribution de Schwartz) :**
-> Une **distribution** sur $\mathbb{R}$ est une application linéaire continue de $\mathcal{D}(\mathbb{R})$ dans $\mathbb{C}$. L'espace vectoriel de toutes les distributions est noté $\mathcal{D}'(\mathbb{R})$.
-> Si $T \in \mathcal{D}'(\mathbb{R})$ et $\phi \in \mathcal{D}(\mathbb{R})$, l'image de $\phi$ par $T$ est souvent notée par le crochet de dualité $\langle T, \phi \rangle$ au lieu de $T(\phi)$.
+Nous pouvons maintenant définir rigoureusement ce qu'est une distribution.
 
-Dire que $T$ est linéaire et continue signifie :
-1. **Linéarité :** $\langle T, \lambda \phi + \mu \psi \rangle = \lambda \langle T, \phi \rangle + \mu \langle T, \psi \rangle$.
-2. **Continuité (séquentielle) :** Si $\phi_n \to \phi$ dans $\mathcal{D}(\mathbb{R})$, alors la suite de nombres complexes $\langle T, \phi_n \rangle$ converge vers le nombre $\langle T, \phi \rangle$ dans $\mathbb{C}$.
+**Définition (Distribution) :**
+Une distribution $T$ sur $\mathbb{R}$ est une forme linéaire continue sur l'espace $\mathcal{D}(\mathbb{R})$. L'ensemble des distributions est noté $\mathcal{D}'(\mathbb{R})$ (le dual topologique de $\mathcal{D}(\mathbb{R})$).
+Plus précisément, $T : \mathcal{D}(\mathbb{R}) \to \mathbb{C}$ vérifie :
+1. **Linéarité :** Pour tout $\lambda, \mu \in \mathbb{C}$ et $\varphi, \psi \in \mathcal{D}(\mathbb{R})$,
+   $$ \langle T, \lambda\varphi + \mu\psi \rangle = \lambda\langle T, \varphi \rangle + \mu\langle T, \psi \rangle $$
+2. **Continuité séquentielle :** Pour toute suite $(\varphi_n)$ tendant vers $0$ dans $\mathcal{D}(\mathbb{R})$, la suite complexe $\langle T, \varphi_n \rangle$ tend vers $0$ dans $\mathbb{C}$.
 
-### D. Distributions régulières et singulières
+*Remarque typographique :* On note souvent l'action de la distribution $T$ sur la fonction test $\varphi$ par le crochet de dualité $\langle T, \varphi \rangle$ au lieu de $T(\varphi)$.
 
-**1. Distributions régulières**
+### 2.4 Distributions régulières associées aux fonctions $L^1_{loc}$
 
-Toute fonction $f$ "raisonnable" peut être identifiée à une distribution. Une fonction est raisonnable si on peut l'intégrer localement.
+Toute fonction "classique" raisonnable peut être vue comme une distribution.
 
-> **Définition 4 (Fonction localement intégrable) :**
-> Une fonction $f : \mathbb{R} \to \mathbb{C}$ (mesurable) est dite localement intégrable (noté $f \in L^1_{loc}(\mathbb{R})$) si pour tout segment compact $[a, b]$, l'intégrale $\int_a^b |f(x)| dx < +\infty$.
+**Définition (Fonction localement intégrable) :**
+Une fonction $f : \mathbb{R} \to \mathbb{C}$ est dite localement intégrable, notée $f \in L^1_{loc}(\mathbb{R})$, si pour tout compact $K \subset \mathbb{R}$, l'intégrale de Lebesgue $\int_K |f(x)| \,dx$ est finie.
 
-> **Proposition 1 :**
-> À toute fonction $f \in L^1_{loc}(\mathbb{R})$, on associe canoniquement une distribution $T_f$ définie par :
-> $$\langle T_f, \phi \rangle = \int_{-\infty}^{+\infty} f(x) \phi(x) dx \quad \text{pour tout } \phi \in \mathcal{D}(\mathbb{R})$$
-> Une telle distribution est appelée **distribution régulière**.
+**Théorème et Définition (Distribution régulière) :**
+Soit $f \in L^1_{loc}(\mathbb{R})$. L'application $T_f : \mathcal{D}(\mathbb{R}) \to \mathbb{C}$ définie par
+$$ \langle T_f, \varphi \rangle = \int_{\mathbb{R}} f(x)\varphi(x) \,dx $$
+est une distribution sur $\mathbb{R}$, appelée distribution régulière.
 
-**Exemple 3 : Distribution associée à la fonction constante**
-Soit $f(x) = 1$ pour tout $x$. C'est une fonction $L^1_{loc}$. La distribution associée est :
-$$\langle T_1, \phi \rangle = \int_{-\infty}^{+\infty} 1 \cdot \phi(x) dx = \int_{\text{supp}(\phi)} \phi(x) dx$$
+**Exemple 3 (La fonction constante 1) :**
+Soit $f(x) = 1$ pour tout $x \in \mathbb{R}$. Bien que $f$ ne soit pas globalement intégrable (elle n'est pas dans $L^1(\mathbb{R})$), elle est localement intégrable car l'intégrale sur un compact $[a,b]$ donne $b-a < +\infty$.
+La distribution associée est :
+$$ \langle T_1, \varphi \rangle = \int_{\mathbb{R}} 1 \cdot \varphi(x) \,dx = \int_{-\infty}^{+\infty} \varphi(x) \,dx $$
+Cette intégrale est bien définie car $\varphi$ est continue et à support compact.
 
-**Exemple 4 : La fonction d'Heaviside**
-La fonction d'Heaviside (échelon unité) est définie par $H(x) = 1$ si $x > 0$, et $H(x) = 0$ si $x \le 0$. C'est une fonction localement intégrable. La distribution associée agit ainsi :
-$$\langle T_H, \phi \rangle = \int_{-\infty}^{+\infty} H(x) \phi(x) dx = \int_0^{+\infty} \phi(x) dx$$
+**Exemple 4 (La fonction échelon de Heaviside) :**
+Considérons la fonction $H(x) = 1$ si $x > 0$, et $0$ sinon. Elle est dans $L^1_{loc}(\mathbb{R})$. Sa distribution associée opère ainsi :
+$$ \langle T_H, \varphi \rangle = \int_{\mathbb{R}} H(x)\varphi(x) \,dx = \int_{0}^{+\infty} \varphi(x) \,dx $$
+Encore une fois, l'intégrale converge car le support de $\varphi$ borne l'intervalle d'intégration.
 
-**2. Distributions singulières**
+### 2.5 Distributions singulières : La masse de Dirac
 
-Une distribution est dite **singulière** s'il n'existe aucune fonction $f \in L^1_{loc}$ telle que $T = T_f$.
+Les distributions singulières sont celles qui ne peuvent pas être représentées par l'intégration d'une fonction $L^1_{loc}$.
 
-> **Définition 5 (La distribution de Dirac) :**
-> Pour tout $a \in \mathbb{R}$, on définit la distribution de Dirac en $a$, notée $\delta_a$, par :
-> $$\langle \delta_a, \phi \rangle = \phi(a) \quad \text{pour tout } \phi \in \mathcal{D}(\mathbb{R})$$
-> En particulier, pour $a = 0$, $\langle \delta_0, \phi \rangle = \phi(0)$.
+**Définition (Distribution de Dirac) :**
+Soit $a \in \mathbb{R}$. La distribution de Dirac au point $a$, notée $\delta_a$, est définie par son action sur une fonction test $\varphi \in \mathcal{D}(\mathbb{R})$ :
+$$ \langle \delta_a, \varphi \rangle = \varphi(a) $$
+En particulier, l'impulsion à l'origine est $\delta_0$, définie par $\langle \delta_0, \varphi \rangle = \varphi(0)$.
 
-**Exemple 5 : Combinaison de Diracs**
-Soit $T = 3\delta_1 - 2\delta_{-1}$. Son action sur une fonction test $\phi$ est :
-$$\langle T, \phi \rangle = 3\phi(1) - 2\phi(-1)$$
+**Exemple 5 (Action d'une somme de Diracs) :**
+Soit $T = 3\delta_1 - 2\delta_{-1}$. Pour $\varphi \in \mathcal{D}(\mathbb{R})$ :
+$$ \langle T, \varphi \rangle = 3\langle \delta_1, \varphi \rangle - 2\langle \delta_{-1}, \varphi \rangle = 3\varphi(1) - 2\varphi(-1) $$
+C'est une évaluation ponctuelle pondérée.
 
-## 3. Démonstrations
+**Contre-exemple (Distribution non définie) :**
+L'expression $\langle T, \varphi \rangle = \sum_{n=1}^\infty \varphi^{(n)}(0)$ ne définit pas une distribution. Bien que chaque terme soit bien défini (puisque $\varphi \in C^\infty$), la somme n'a aucune raison de converger pour une fonction test arbitraire. La continuité d'une distribution impose qu'elle ne fasse intervenir localement qu'un nombre fini de dérivées.
 
-### Démonstration 1 : $\delta_0$ est bien une distribution
+## 3. Démonstrations Fondamentales
 
-Nous devons prouver que l'application $\phi \mapsto \phi(0)$ est linéaire et continue sur $\mathcal{D}(\mathbb{R})$.
+### 3.1 Démonstration de la continuité de la distribution régulière $T_f$
 
-**Étape 1 : Linéarité**
-Soient $\phi, \psi \in \mathcal{D}(\mathbb{R})$ et $\lambda, \mu \in \mathbb{C}$.
-$\langle \delta_0, \lambda\phi + \mu\psi \rangle = (\lambda\phi + \mu\psi)(0) = \lambda\phi(0) + \mu\psi(0) = \lambda\langle \delta_0, \phi \rangle + \mu\langle \delta_0, \psi \rangle$.
-La linéarité est immédiate.
+**Théorème :** Si $f \in L^1_{loc}(\mathbb{R})$, la forme linéaire $T_f : \varphi \mapsto \int_{\mathbb{R}} f(x)\varphi(x) \,dx$ est continue sur $\mathcal{D}(\mathbb{R})$, et est donc bien une distribution.
 
-**Étape 2 : Continuité**
-Soit $(\phi_n)_{n \in \mathbb{N}}$ une suite de fonctions de $\mathcal{D}(\mathbb{R})$ convergeant vers $\phi$ dans $\mathcal{D}(\mathbb{R})$.
-Par définition de la convergence dans $\mathcal{D}(\mathbb{R})$, la suite $(\phi_n)_{n \in \mathbb{N}}$ converge uniformément vers $\phi$ sur un certain compact $K$.
-La convergence uniforme implique la convergence simple, en particulier au point $x=0$.
-Donc $\lim_{n \to \infty} \phi_n(0) = \phi(0)$, ce qui se réécrit :
-$\lim_{n \to \infty} \langle \delta_0, \phi_n \rangle = \langle \delta_0, \phi \rangle$.
-L'application est donc continue séquentiellement. $\delta_0$ est bien une distribution.
+*Preuve détaillée ligne par ligne :*
+1. La linéarité découle immédiatement de la linéarité de l'intégrale.
+2. Pour la continuité, soit $(\varphi_n)$ une suite de fonctions de $\mathcal{D}(\mathbb{R})$ convergeant vers $0$ dans $\mathcal{D}(\mathbb{R})$.
+3. Par définition de cette convergence, il existe un compact $K$ tel que pour tout $n$, $\text{supp}(\varphi_n) \subset K$.
+4. De plus, la suite $(\varphi_n)$ converge uniformément vers $0$ sur $K$. C'est-à-dire que $\| \varphi_n \|_{\infty, K} = \sup_{x \in K} |\varphi_n(x)| \xrightarrow[n \to \infty]{} 0$.
+5. Majorons la valeur absolue de l'action de $T_f$ sur $\varphi_n$ :
+   $$ |\langle T_f, \varphi_n \rangle| = \left| \int_{\mathbb{R}} f(x)\varphi_n(x) \,dx \right| $$
+6. Puisque $\text{supp}(\varphi_n) \subset K$, l'intégrale se réduit à $K$ :
+   $$ |\langle T_f, \varphi_n \rangle| = \left| \int_K f(x)\varphi_n(x) \,dx \right| \le \int_K |f(x)| |\varphi_n(x)| \,dx $$
+7. On extrait le terme constant de la fonction borne sur $K$ :
+   $$ \int_K |f(x)| |\varphi_n(x)| \,dx \le \| \varphi_n \|_{\infty, K} \int_K |f(x)| \,dx $$
+8. Comme $f \in L^1_{loc}(\mathbb{R})$ et $K$ est compact, l'intégrale $C_K = \int_K |f(x)| \,dx$ est une constante finie fixée indépendante de $n$.
+9. On a donc : $|\langle T_f, \varphi_n \rangle| \le C_K \| \varphi_n \|_{\infty, K}$.
+10. Comme $\| \varphi_n \|_{\infty, K} \to 0$, le théorème des gendarmes impose que $|\langle T_f, \varphi_n \rangle| \to 0$.
+11. $T_f$ est donc une forme linéaire continue, d'où $T_f \in \mathcal{D}'(\mathbb{R})$. $\blacksquare$
 
-### Démonstration 2 : Le caractère singulier de $\delta_0$ (Le Dirac n'est pas une fonction)
+### 3.2 Démonstration : La masse de Dirac $\delta_0$ n'est pas une distribution régulière
 
-Nous allons démontrer rigoureusement par l'absurde qu'il n'existe aucune fonction $f \in L^1_{loc}(\mathbb{R})$ telle que $T_f = \delta_0$.
+**Théorème :** Il n'existe aucune fonction $f \in L^1_{loc}(\mathbb{R})$ telle que pour tout $\varphi \in \mathcal{D}(\mathbb{R})$, on ait $\int_{\mathbb{R}} f(x)\varphi(x) \,dx = \varphi(0)$.
 
-**Étape 1 : Hypothèse absurde**
-Supposons qu'il existe une fonction $f \in L^1_{loc}(\mathbb{R})$ telle que pour tout $\phi \in \mathcal{D}(\mathbb{R})$, on ait :
-$$\int_{-\infty}^{+\infty} f(x) \phi(x) dx = \phi(0)$$
+*Preuve détaillée par l'absurde :*
+1. Supposons qu'il existe $f \in L^1_{loc}(\mathbb{R})$ telle que $T_f = \delta_0$.
+2. Considérons une fonction plateau $\rho \in \mathcal{D}(\mathbb{R})$ telle que $0 \le \rho \le 1$, $\rho(0) = 1$ et $\text{supp}(\rho) \subset [-1, 1]$.
+3. Pour tout entier $n \ge 1$, définissons la suite de fonctions tests "rétrécies" : $\varphi_n(x) = \rho(nx)$.
+4. Vérifions les propriétés de $\varphi_n$ : $\varphi_n(0) = \rho(0) = 1$, et $\text{supp}(\varphi_n) \subset [-1/n, 1/n]$. De plus, $0 \le \varphi_n(x) \le 1$ partout.
+5. Évaluons $\delta_0$ sur $\varphi_n$ :
+   $$ \langle \delta_0, \varphi_n \rangle = \varphi_n(0) = 1 $$
+6. Évaluons $T_f$ sur $\varphi_n$ :
+   $$ \langle T_f, \varphi_n \rangle = \int_{\mathbb{R}} f(x)\varphi_n(x) \,dx = \int_{-1/n}^{1/n} f(x)\varphi_n(x) \,dx $$
+7. Majorons cette intégrale :
+   $$ |\langle T_f, \varphi_n \rangle| \le \int_{-1/n}^{1/n} |f(x)| |\varphi_n(x)| \,dx $$
+8. Comme $|\varphi_n(x)| \le 1$, on obtient l'inégalité :
+   $$ |\langle T_f, \varphi_n \rangle| \le \int_{-1/n}^{1/n} |f(x)| \,dx $$
+9. Puisque $f \in L^1_{loc}(\mathbb{R})$, $|f|$ est localement intégrable (donc intégrable sur un compact contenant $[-1,1]$).
+10. L'ensemble d'intégration $A_n = [-1/n, 1/n]$ a pour mesure de Lebesgue $\mu(A_n) = \frac{2}{n}$.
+11. Lorsque $n \to +\infty$, $\mu(A_n) \to 0$. Le théorème de la convergence dominée (ou la continuité absolue de l'intégrale de Lebesgue) stipule que si l'on intègre une fonction $L^1$ sur un ensemble dont la mesure tend vers $0$, l'intégrale tend vers $0$.
+12. Donc, $\lim_{n \to \infty} \int_{-1/n}^{1/n} |f(x)| \,dx = 0$.
+13. On aboutit à la conclusion que $\lim_{n \to \infty} |\langle T_f, \varphi_n \rangle| = 0$.
+14. Or, par notre hypothèse d'égalité $T_f = \delta_0$, nous avions $\langle T_f, \varphi_n \rangle = 1$ pour tout $n$, ce qui force $1 = 0$.
+15. Cette contradiction démontre que la masse de Dirac ne peut en aucun cas être identifiée à une fonction usuelle. C'est une authentique distribution singulière. $\blacksquare$
 
-**Étape 2 : Construction d'une suite de fonctions tests**
-Soit $\psi \in \mathcal{D}(\mathbb{R})$ une fonction "bosse" (comme celle de l'Exemple 1) vérifiant :
-1. $\psi(x) \ge 0$ pour tout $x$.
-2. $\psi(0) = 1$.
-3. Le support de $\psi$ est inclus dans $[-1, 1]$.
+## 4. Applications en Physique, Logique et IA
 
-Pour chaque entier $n \ge 1$, on définit $\phi_n(x) = \psi(nx)$.
-Propriétés de $\phi_n$ :
-- $\phi_n \in \mathcal{D}(\mathbb{R})$.
-- $\phi_n(0) = \psi(0) = 1$.
-- Le support de $\phi_n$ est inclus dans $[-1/n, 1/n]$.
-- $0 \le \phi_n(x) \le \max(\psi)$ pour tout $x$. Posons $M = \max(\psi) = 1$.
+**Physique et Traitement du Signal**
+En traitement du signal, la masse de Dirac (aussi appelée impulsion unité) est cruciale. Elle permet de définir la réponse impulsionnelle d'un système. Lorsqu'un système physique linéaire (comme un filtre électrique ou un amortisseur mécanique) est frappé par un choc instantané (modélisé par $\delta_0$), la fonction de sortie qui en résulte caractérise intégralement le système. Par le formalisme des convolutions de distributions, la réponse du système à toute entrée arbitraire $e(t)$ sera donnée par $s(t) = (e * h)(t)$, où $h$ est la réponse impulsionnelle.
 
-**Étape 3 : Évaluation par la distribution supposée**
-D'une part, par notre hypothèse absurde :
-$$\langle T_f, \phi_n \rangle = \phi_n(0) = 1 \quad \text{pour tout } n \ge 1$$
-Donc la limite de $\langle T_f, \phi_n \rangle$ quand $n \to \infty$ est $1$.
-
-**Étape 4 : Majoration de l'intégrale**
-D'autre part, évaluons l'intégrale correspondante :
-$$\langle T_f, \phi_n \rangle = \int_{-\infty}^{+\infty} f(x) \phi_n(x) dx = \int_{-1/n}^{1/n} f(x) \phi_n(x) dx$$
-Prenons la valeur absolue :
-$$|\langle T_f, \phi_n \rangle| \le \int_{-1/n}^{1/n} |f(x)| |\phi_n(x)| dx \le \int_{-1/n}^{1/n} |f(x)| \cdot 1 dx$$
-Puisque $f \in L^1_{loc}(\mathbb{R})$, la fonction $|f|$ est intégrable. Par le théorème de convergence dominée de Lebesgue (ou la continuité absolue de l'intégrale de Lebesgue), l'intégrale d'une fonction intégrable sur un domaine de mesure tendant vers 0 tend vers 0.
-Ainsi, $\lim_{n \to \infty} \int_{-1/n}^{1/n} |f(x)| dx = 0$.
-
-**Étape 5 : Contradiction**
-Nous avons d'un côté $\lim_{n \to \infty} \langle T_f, \phi_n \rangle = 1$ et de l'autre $|\langle T_f, \phi_n \rangle| \to 0$.
-C'est une contradiction flagrante ($1 = 0$). L'hypothèse de départ est donc fausse. La distribution de Dirac ne peut pas être représentée par une fonction localement intégrable.
-
-## 4. Applications en Physique, Logique et Intelligence Artificielle
-
-**Physique (Mécanique et Électromagnétisme)**
-La distribution de Dirac est fondamentale pour décrire les charges ponctuelles. La densité de charge $\rho(x)$ d'une particule de charge $q$ située en $x=a$ est précisément $q \delta_a$. De même, une force impulsionnelle (un choc d'une fraction de seconde) se modélise par $F(t) = P \delta(t-t_0)$ où $P$ est la variation de quantité de mouvement.
-
-**Traitement du signal et Analyse Spectrale**
-Le Dirac permet d'étendre la transformée de Fourier aux fonctions périodiques. La transformée de Fourier de la fonction constante $f(t) = 1$ n'a pas de sens avec l'intégrale classique de Lebesgue, mais au sens des distributions, $\mathcal{F}(1) = 2\pi \delta_0$. Un signal pur (une sinusoïde de fréquence $\nu_0$) possède un spectre composé de deux pics de Dirac en $\pm \nu_0$.
-
-**Intelligence Artificielle et Mesures Empiriques**
-Dans l'apprentissage automatique, lorsqu'on dispose d'un jeu de données fini de $N$ points $x_1, \dots, x_N$, on modélise souvent la distribution de probabilité des données par la mesure empirique :
-$$\hat{p}(x) = \frac{1}{N} \sum_{i=1}^N \delta_{x_i}(x)$$
-Cette "densité de probabilité" est une distribution de Schwartz. Les fonctions de perte (comme la Negative Log-Likelihood) calculées sur ce jeu de données reviennent mathématiquement à évaluer des fonctions tests (les prédictions du modèle) contre cette distribution empirique de Diracs.
+**Intelligence Artificielle et Statistiques**
+Dans le domaine du Machine Learning, nous manipulons constamment des distributions de Dirac sans toujours le dire.
+- **Probabilités empiriques :** Lorsque nous disposons d'un jeu de données d'apprentissage fini $\{x_1, x_2, \dots, x_N\}$, la "vraie" distribution des données est inconnue. L'algorithme se base sur la distribution empirique des données, qui s'écrit formelusement comme une somme de Diracs :
+  $$ \hat{\mathbb{P}}(x) = \frac{1}{N} \sum_{i=1}^N \delta_{x_i}(x) $$
+- **Espérance et Loss :** L'espérance mathématique d'une fonction (par exemple, la fonction de perte $L(x)$) sous cette distribution empirique se traduit par l'action de la distribution sur la fonction :
+  $$ \mathbb{E}_{x \sim \hat{\mathbb{P}}}[L(x)] = \langle \hat{\mathbb{P}}, L \rangle = \frac{1}{N} \sum_{i=1}^N L(x_i) $$
+Cela donne un cadre analytique rigoureux justifiant pourquoi l'optimisation stochastique (SGD) travaille au sens des distributions sur la surface d'erreur définie par un ensemble fini de points singuliers. L'extension continue de ces Dirac (par ajout de bruit gaussien) s'appelle le lissage de la distribution, une technique utilisée pour rendre les surfaces de perte différentiables.

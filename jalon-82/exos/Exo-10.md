@@ -1,21 +1,30 @@
-\subsection*{Exercice 10 : Non-multiplicabilité des distributions \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+# Exercice 10 : Résolution d'une équation distributionnelle simple
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :**
-La multiplication de deux distributions n'est pas définie en général. Montrer cela en exhibant une contradiction si l'on suppose que le produit suit l'associativité usuelle, en considérant le produit de $\delta_0$, $x$, et la distribution Valeur Principale (v.p. $1/x$). Note : on admet que $x \delta_0 = 0$ et $x \cdot \text{v.p.}(1/x) = 1$.
+## Énoncé
+Trouver toutes les distributions $T \in \mathcal{D}'(\mathbb{R})$ vérifiant l'équation $x \cdot T = 0$. (Indice : utiliser une fonction plateau $\theta \in \mathcal{D}(\mathbb{R})$ avec $\theta(0) = 1$, et écrire toute fonction test $\varphi$ sous la forme $\varphi(x) = \varphi(0)\theta(x) + x\psi(x)$ avec $\psi \in \mathcal{D}(\mathbb{R})$).
 
-**Correction :**
-Si la multiplication était bien définie sur l'ensemble des distributions et associative, on aurait pour trois distributions $T, U, V$ :
-$$(T \times U) \times V = T \times (U \times V)$$
-Prenons $T = \delta_0$, $U = x$ (la fonction $f(x)=x$ vue comme distribution), et $V = \text{v.p.}(1/x)$ (qui est la distribution associée à la fonction $1/x$ en gérant la singularité en 0).
-Calculons le terme de gauche :
-$$(\delta_0 \times x) \times \text{v.p.}(1/x)$$
-On admet que $\delta_0 \times x = 0$ (car $\langle x\delta_0, \phi \rangle = \langle \delta_0, x\phi \rangle = 0 \cdot \phi(0) = 0$). Donc le terme de gauche vaut $0 \times \text{v.p.}(1/x) = 0$.
-Calculons le terme de droite :
-$$\delta_0 \times (x \times \text{v.p.}(1/x))$$
-On admet que $x \times \text{v.p.}(1/x) = 1$ (la fonction constante 1, car on annule la singularité). Donc le terme de droite vaut :
-$$\delta_0 \times 1$$
-Le produit d'une distribution $T$ par une fonction infiniment dérivable $\alpha$ (ici $\alpha(x)=1$) est défini par $\langle \alpha T, \phi \rangle = \langle T, \alpha \phi \rangle$.
-Donc $\langle 1 \cdot \delta_0, \phi \rangle = \langle \delta_0, 1 \cdot \phi \rangle = \phi(0) = \langle \delta_0, \phi \rangle$. D'où $\delta_0 \times 1 = \delta_0$.
-Nous obtenons :
-$$0 = \delta_0$$
-Ce qui est une contradiction absolue (l'action sur une fonction valant $1$ en $0$ donne $0=1$). Ainsi, on ne peut pas définir de manière cohérente la multiplication de deux distributions quelconques.
+## Correction Détaillée
+1. Soit $T$ une distribution telle que $x \cdot T = 0$. Par définition du produit par une fonction régulière, cela signifie que pour toute fonction test $\phi$, $\langle x \cdot T, \phi \rangle = \langle T, x\phi \rangle = 0$.
+2. Soit $\varphi \in \mathcal{D}(\mathbb{R})$ une fonction test quelconque.
+3. Fixons une fonction test $\theta \in \mathcal{D}(\mathbb{R})$ telle que $\theta(x) = 1$ sur un voisinage de $0$. (Cela implique $\theta(0) = 1$).
+4. On peut toujours écrire l'identité algébrique :
+   $$ \varphi(x) = \varphi(0)\theta(x) + (\varphi(x) - \varphi(0)\theta(x)) $$
+5. Étudions le terme $r(x) = \varphi(x) - \varphi(0)\theta(x)$. Cette fonction appartient à $\mathcal{D}(\mathbb{R})$ (combinaison linéaire de fonctions $C^\infty$ à support compact).
+6. De plus, évaluons en $0$ : $r(0) = \varphi(0) - \varphi(0)\theta(0) = \varphi(0) - \varphi(0) = 0$.
+7. Puisque $r(0) = 0$ et que $r \in C^\infty$, le théorème de Taylor avec reste intégral (ou simplement le lemme de division de Hadamard) garantit l'existence d'une fonction $\psi \in C^\infty(\mathbb{R})$ telle que $r(x) = x\psi(x)$.
+8. Comme $r$ est à support compact, $\psi$ l'est aussi (hors du support de $r$, $x\psi(x) = 0$, donc $\psi(x) = 0$ pour $x \neq 0$). Ainsi $\psi \in \mathcal{D}(\mathbb{R})$.
+9. On a donc la décomposition :
+   $$ \varphi(x) = \varphi(0)\theta(x) + x\psi(x) $$
+10. Évaluons l'action de la distribution $T$ sur la fonction test $\varphi$ :
+    $$ \langle T, \varphi \rangle = \langle T, \varphi(0)\theta + x\psi \rangle $$
+11. Par linéarité de la distribution $T$ :
+    $$ \langle T, \varphi \rangle = \varphi(0)\langle T, \theta \rangle + \langle T, x\psi \rangle $$
+12. Par l'hypothèse de départ, l'action de $T$ sur une fonction de la forme $x \mapsto x\psi(x)$ est nulle, donc $\langle T, x\psi \rangle = 0$.
+13. Il reste :
+    $$ \langle T, \varphi \rangle = \varphi(0) \langle T, \theta \rangle $$
+14. La quantité $\langle T, \theta \rangle$ est un nombre complexe fixe, appelons-le $C$.
+15. L'équation devient :
+    $$ \langle T, \varphi \rangle = C \varphi(0) = C \langle \delta_0, \varphi \rangle = \langle C\delta_0, \varphi \rangle $$
+16. Puisque cela est vrai pour toute fonction test $\varphi$, on conclut que la distribution $T$ est proportionnelle à la masse de Dirac.
+17. Conclusion : les solutions de l'équation $x \cdot T = 0$ sont exactement les distributions de la forme $T = C\delta_0$, où $C$ est une constante arbitraire.

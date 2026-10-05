@@ -93,7 +93,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-79/Jalon-79.md|Jalon 79 : Convergence en moyenne quadratique des séries de Fourier et identité de Parseval.]] : Convergence en moyenne quadratique des séries de Fourier et identité de Parseval. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-80/Jalon-80.md|Jalon 80 : Transformée de Fourier dans $L^1$]] : Transformée de Fourier dans $L^1$, propriétés algébriques, Riemann-Lebesgue et produit de convolution. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-81/Jalon-81.md|Jalon 81 : Transformée de Fourier dans $L^2$]] : Transformée de Fourier dans $L^2$, prolongement par densité et théorème d'isométrie de Plancherel. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [x] [[jalon-82/Jalon-82.md|Jalon 82 : Introduction à la théorie des distributions de Schwartz]] : Introduction à la théorie des distributions de Schwartz, espace des fonctions tests $\mathcal{D}(\mathbb{R})$. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [x] [[jalon-82/Jalon-82.md|Jalon 82 : Introduction à la théorie des distributions de Schwartz]] : Introduction à la théorie des distributions de Schwartz, espace des fonctions tests $\\mathcal{D}(\\mathbb{R})$. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-83/Jalon 83 (Dérivation au sens des distributions).md|Jalon 83 : Dérivation au sens des distributions]] : Dérivation au sens des distributions, distribution de Dirac et introduction aux espaces de Sobolev $H^1(\\mathbb{R})$.
 - [ ] [[jalon-84/Jalon 84 (Livrable IA).md|Jalon 84 : Livrable IA]] : Livrable IA T7 : Création d'un module d'analyse spectrale pour l'extraction de caractéristiques audio à partir de la transformée de Fourier dans $L^2$.
 ### Trimestre 8 : probabilités axiomatiques et statistiques fondamentales
