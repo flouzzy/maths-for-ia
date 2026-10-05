@@ -9,164 +9,123 @@ tags:
 prev: "[[Jalon 80 (Transformée de Fourier dans L1).md]]"
 next: "[[Jalon 82 (Introduction à la théorie des distributions de Schwartz).md]]"
 ---
-# Jalon 81 : Transformée de Fourier dans $L^2$ et Plancherel
 
-## 1. Introduction à la transformée de Fourier sur l'espace $L^2$
+# Jalon 81 : Transformée de Fourier dans $L^2$ et Isométrie de Plancherel
 
-La théorie de l'intégrale de Lebesgue développée pour l'espace $L^1(\mathbb{R})$ a permis de définir la transformée de Fourier $\mathcal{F}(f)$ pour des fonctions dont l'intégrale de la valeur absolue converge. Cependant, en physique et en traitement du signal, l'espace naturel de travail est $L^2(\mathbb{R})$, l'espace des fonctions de carré intégrable, qui modélise les signaux d'énergie finie. Or, une fonction de $L^2(\mathbb{R})$ n'est pas nécessairement dans $L^1(\mathbb{R})$ (par exemple, la fonction $x \mapsto \frac{\sin(x)}{x}$ n'est pas intégrable au sens de Lebesgue sur $\mathbb{R}$).
+## 1. Introduction à l'énergie spectrale
 
-Le défi fondamental est donc d'étendre la transformée de Fourier à tout l'espace $L^2(\mathbb{R})$. Cette extension repose sur la densité de $L^1(\mathbb{R}) \cap L^2(\mathbb{R})$ dans $L^2(\mathbb{R})$ et sur le théorème de Plancherel, qui affirme que la transformée de Fourier conserve l'énergie du signal, agissant comme une isométrie (à un facteur multiplicatif près) sur l'espace de Hilbert $L^2(\mathbb{R})$.
+Dans le cadre du jalon précédent, nous avons bâti la transformée de Fourier sur l'espace $L^1(\mathbb{R})$, c'est-à-classiquement les signaux intégrables, pour lesquels l'intégrale définissant la transformée convergeait absolument. C'était une première victoire conceptuelle, mais physiquement insuffisante.
+
+L'immense majorité des signaux d'intérêt physique, optique ou quantique (ondes électromagnétiques, signaux de télécommunication périodiques amortis, états quantiques) ne vivent pas naturellement dans $L^1$, mais dans $L^2(\mathbb{R})$, l'espace des fonctions de carré intégrable. Cet espace, un espace de Hilbert, encode une grandeur physique cardinale : **l'énergie totale** du signal, donnée par $\|f\|_2^2 = \int |f(t)|^2 dt$.
+
+La quête fondatrice des mathématiciens (comme Plancherel et Parseval) fut de se demander si la décomposition spectrale conservait cette énergie. Autrement dit, si l'on éclate un faisceau de lumière en un spectre de couleurs, la somme des énergies de chaque couleur est-elle égale à l'énergie du faisceau incident ? La réponse est positive, et s'incarne mathématiquement par l'extension de l'opérateur de Fourier à $L^2$ via un argument profond de densité et de complétude. C'est le triomphe de l'analyse fonctionnelle qui permet de définir une transformée même lorsque l'intégrale classique de Fourier diverge.
 
 ## 2. Définitions, Théorèmes et Exemples
 
-### A. L'opérateur de Fourier sur $L^1 \cap L^2$
+### Isométrie de Plancherel sur un sous-espace dense
 
-\begin{tikzpicture}[scale=1]
-  \draw[->] (-3,0) -- (3,0) node[right] {Temps $t$};
-  \draw[->] (0,-1) -- (0,2) node[above] {$f(t)$};
-  \draw[domain=-2.5:2.5,smooth,variable=\x,blue,thick] plot ({\x},{exp(-\x*\x)});
-  \node[blue] at (1.5,1.5) {$f \in L^1 \cap L^2$};
+L'approche de la théorie commence par l'observation de ce qui se passe sur un espace très régulier : l'espace de Schwartz $\mathcal{S}(\mathbb{R})$ (ou alternativement, $L^1(\mathbb{R}) \cap L^2(\mathbb{R})$).
 
-  \draw[thick, ->] (3.5, 0.5) -- (4.5, 0.5) node[midway, above] {$\mathcal{F}$};
+> **Théorème (Identité de Plancherel sur $L^1 \cap L^2$) :**
+> Soit $f \in L^1(\mathbb{R}) \cap L^2(\mathbb{R})$. Alors sa transformée de Fourier $\mathcal{F}(f) = \hat{f}$, définie par la formule intégrale de Lebesgue $\hat{f}(\xi) = \int_{\mathbb{R}} f(t) e^{-i\xi t} dt$, appartient également à $L^2(\mathbb{R})$ (bien qu'elle ne soit pas toujours dans $L^1$).
+> De plus, on a l'égalité stricte des énergies (à un facteur de normalisation près dépendant de la convention) :
+> $$ \|\hat{f}\|_{L^2}^2 = 2\pi \|f\|_{L^2}^2 $$
 
-  \begin{scope}[shift={(8,0)}]
-  \draw[->] (-3,0) -- (3,0) node[right] {Fréquence $\xi$};
-  \draw[->] (0,-1) -- (0,2) node[above] {$\hat{f}(\xi)$};
-  \draw[domain=-2.5:2.5,smooth,variable=\x,red,thick] plot ({\x},{sqrt(pi)*exp(-\x*\x/4)/1.5});
-  \node[red] at (1.5,1.5) {$\hat{f} \in L^2$};
-  \end{scope}
-\end{tikzpicture}
+**Exemple concret de vérification analytique :**
+Considérons le signal "porte" (la fente rectangulaire en optique) : $f(t) = \mathbf{1}_{[-a, a]}(t)$ pour $a > 0$.
+Clairement, $f \in L^1 \cap L^2$.
+1. Calcul de l'énergie temporelle :
+   $$ \|f\|_2^2 = \int_{-a}^{a} 1^2 dt = 2a $$
+2. Calcul de la transformée de Fourier (vue au Jalon 80) :
+   $$ \hat{f}(\xi) = \int_{-a}^{a} e^{-i\xi t} dt = \left[ \frac{e^{-i\xi t}}{-i\xi} \right]_{-a}^{a} = \frac{e^{ia\xi} - e^{-ia\xi}}{i\xi} = 2 \frac{\sin(a\xi)}{\xi} $$
+3. Calcul de l'énergie spectrale :
+   $$ \|\hat{f}\|_2^2 = \int_{-\infty}^{\infty} 4 \frac{\sin^2(a\xi)}{\xi^2} d\xi $$
+   En posant le changement de variable $u = a\xi$, $d\xi = \frac{du}{a}$, on obtient :
+   $$ \|\hat{f}\|_2^2 = \int_{-\infty}^{\infty} 4 \frac{\sin^2(u)}{(u/a)^2} \frac{du}{a} = 4a \int_{-\infty}^{\infty} \frac{\sin^2(u)}{u^2} du $$
+   On sait (par l'analyse complexe ou l'identité de Parseval que l'on est en train de vérifier) que $\int_{-\infty}^{\infty} \frac{\sin^2(u)}{u^2} du = \pi$.
+   Ainsi :
+   $$ \|\hat{f}\|_2^2 = 4a \pi $$
+   On vérifie exactement que $\|\hat{f}\|_2^2 = 2\pi (2a) = 2\pi \|f\|_2^2$. Le théorème est confirmé sur cet exemple.
 
-**Définition 1.** Soit $f \in L^1(\mathbb{R}) \cap L^2(\mathbb{R})$. La transformée de Fourier de $f$ est définie par l'intégrale convergente :
-$$ \hat{f}(\xi) = \int_{-\infty}^{+\infty} f(t) e^{-i\xi t} dt $$
 
-**Exemple 1 : La fonction porte.**
-Considérons la fonction $f(t) = \mathbf{1}_{[-1, 1]}(t)$. Elle appartient à $L^1(\mathbb{R}) \cap L^2(\mathbb{R})$.
-Calculons sa transformée de Fourier :
-$$ \hat{f}(\xi) = \int_{-1}^{1} e^{-i\xi t} dt = \left[ \frac{e^{-i\xi t}}{-i\xi} \right]_{-1}^{1} = \frac{e^{-i\xi} - e^{i\xi}}{-i\xi} = \frac{2\sin(\xi)}{\xi} = 2\text{sinc}(\xi) $$
-La fonction $\xi \mapsto 2\text{sinc}(\xi)$ appartient à $L^2(\mathbb{R})$ mais n'appartient pas à $L^1(\mathbb{R})$.
+### Prolongement à l'espace $L^2$ complet
 
-**Exemple 2 : Fonction exponentielle décroissante unilatérale.**
-Considérons $f(t) = e^{-at} \mathbf{1}_{[0, +\infty[}(t)$ avec $a > 0$.
-$f \in L^1(\mathbb{R}) \cap L^2(\mathbb{R})$.
-$$ \hat{f}(\xi) = \int_{0}^{+\infty} e^{-at} e^{-i\xi t} dt = \int_{0}^{+\infty} e^{-(a+i\xi)t} dt $$
-$$ \hat{f}(\xi) = \left[ \frac{e^{-(a+i\xi)t}}{-(a+i\xi)} \right]_{0}^{+\infty} = \frac{1}{a+i\xi} = \frac{a - i\xi}{a^2 + \xi^2} $$
-On vérifie que $\hat{f} \in L^2(\mathbb{R})$. En effet, $|\hat{f}(\xi)|^2 = \frac{1}{a^2 + \xi^2}$ dont l'intégrale sur $\mathbb{R}$ est finie (elle vaut $\frac{\pi}{a}$).
+Nous avons une application $\mathcal{F} : L^1 \cap L^2 \to L^2$ qui, divisée par $\sqrt{2\pi}$, préserve la norme $\|\cdot\|_2$. C'est une isométrie.
 
-### B. Le Théorème de Plancherel
+> **Théorème de Plancherel-Parseval (Global) :**
+> L'opérateur de Fourier $\mathcal{F}$, défini sur le sous-espace dense $L^1(\mathbb{R}) \cap L^2(\mathbb{R})$, se prolonge de manière unique en un opérateur linéaire borné et bijectif de $L^2(\mathbb{R})$ dans $L^2(\mathbb{R})$.
+> Ce prolongement continu, noté encore $\mathcal{F}$ (ou $\hat{f}$ pour l'image), vérifie pour tout $f, g \in L^2(\mathbb{R})$ :
+> 1. L'isométrie : $\|\hat{f}\|_2 = \sqrt{2\pi} \|f\|_2$
+> 2. La conservation du produit scalaire : $\langle \hat{f}, \hat{g} \rangle = 2\pi \langle f, g \rangle$
+> 3. L'inversion : $f(t) = \frac{1}{2\pi} \mathcal{F}(\hat{f})(-t)$ au sens de $L^2$.
 
-**Théorème 1 (Plancherel).**
-Pour toute fonction $f \in L^1(\mathbb{R}) \cap L^2(\mathbb{R})$, on a :
-$$ \|\hat{f}\|_2^2 = 2\pi \|f\|_2^2 $$
-C'est-à-dire :
-$$ \int_{-\infty}^{+\infty} |\hat{f}(\xi)|^2 d\xi = 2\pi \int_{-\infty}^{+\infty} |f(t)|^2 dt $$
+**Cas pathologique et subtilité absolue :**
+Si $f \in L^2 \setminus L^1$, l'intégrale classique $\int_{\mathbb{R}} f(t) e^{-i\xi t} dt$ **ne converge pas** au sens de Lebesgue (puisque $\int |f(t)| dt = +\infty$). Par exemple $f(t) = \frac{\sin(t)}{t}$ est dans $L^2$ mais pas dans $L^1$.
+La transformée de Fourier dans $L^2$ est alors définie **comme une limite** dans l'espace de Hilbert. On définit $\hat{f}$ comme la limite en norme $L^2$ de la suite $\hat{f}_n$ où $f_n(t) = f(t)\mathbf{1}_{[-n, n]}(t)$.
+On écrit formellement : $\hat{f} = L^2\text{-}\lim_{n \to \infty} \int_{-n}^{n} f(t) e^{-i\xi t} dt$. On ne peut évaluer $\hat{f}(\xi)$ "point par point" de façon classique sans précautions.
 
-**Exemple 3 : Vérification du théorème de Plancherel sur la fonction porte.**
-Reprenons $f(t) = \mathbf{1}_{[-1, 1]}(t)$ et $\hat{f}(\xi) = 2\frac{\sin(\xi)}{\xi}$.
-Calculons $\|f\|_2^2$ :
-$$ \|f\|_2^2 = \int_{-1}^{1} 1^2 dt = 2 $$
-Calculons $\|\hat{f}\|_2^2$ :
-$$ \|\hat{f}\|_2^2 = \int_{-\infty}^{+\infty} 4\frac{\sin^2(\xi)}{\xi^2} d\xi $$
-Or, on sait par l'intégrale de Dirichlet que $\int_{-\infty}^{+\infty} \frac{\sin^2(\xi)}{\xi^2} d\xi = \pi$.
-Donc $\|\hat{f}\|_2^2 = 4\pi$.
-On a bien $4\pi = 2\pi \times 2$, soit $\|\hat{f}\|_2^2 = 2\pi \|f\|_2^2$. L'isométrie est vérifiée.
-
-**Exemple 4 : Vérification du théorème de Plancherel sur l'exponentielle décroissante unilatérale.**
-Reprenons $f(t) = e^{-at} \mathbf{1}_{[0, +\infty[}(t)$ avec $a > 0$ et $\hat{f}(\xi) = \frac{1}{a+i\xi}$.
-Calcul de $\|f\|_2^2$ :
-$$ \|f\|_2^2 = \int_{0}^{+\infty} e^{-2at} dt = \left[ \frac{e^{-2at}}{-2a} \right]_0^{+\infty} = \frac{1}{2a} $$
-Calcul de $\|\hat{f}\|_2^2$ :
-$$ \|\hat{f}\|_2^2 = \int_{-\infty}^{+\infty} \frac{1}{a^2 + \xi^2} d\xi $$
-Effectuons le changement de variable $\xi = a u$, $d\xi = a du$ :
-$$ \|\hat{f}\|_2^2 = \int_{-\infty}^{+\infty} \frac{1}{a^2(1+u^2)} a du = \frac{1}{a} \int_{-\infty}^{+\infty} \frac{du}{1+u^2} = \frac{1}{a} \left[ \arctan(u) \right]_{-\infty}^{+\infty} = \frac{\pi}{a} $$
-On a bien $\|\hat{f}\|_2^2 = \frac{\pi}{a} = 2\pi \times \frac{1}{2a} = 2\pi \|f\|_2^2$.
-
-### C. Le prolongement à $L^2$ tout entier
-
-L'application $\mathcal{F} : f \mapsto \hat{f}$, définie sur $L^1(\mathbb{R}) \cap L^2(\mathbb{R})$, à valeurs dans $L^2(\mathbb{R})$, est linéaire et vérifie $\|\mathcal{F}(f)\|_2 = \sqrt{2\pi}\|f\|_2$. Elle est donc continue pour la norme $\|\cdot\|_2$.
-Comme l'espace $L^1(\mathbb{R}) \cap L^2(\mathbb{R})$ est un sous-espace vectoriel dense dans l'espace de Banach $L^2(\mathbb{R})$, le théorème de prolongement des applications linéaires continues permet d'affirmer l'existence d'un unique prolongement continu de $\mathcal{F}$ à $L^2(\mathbb{R})$.
-
-**Théorème 2 (Prolongement de la transformée de Fourier).**
-Il existe un unique opérateur linéaire continu $\widetilde{\mathcal{F}} : L^2(\mathbb{R}) \to L^2(\mathbb{R})$ tel que pour tout $f \in L^1(\mathbb{R}) \cap L^2(\mathbb{R})$, $\widetilde{\mathcal{F}}(f) = \mathcal{F}(f)$.
-De plus, pour tout $f \in L^2(\mathbb{R})$, on a :
-$$ \|\widetilde{\mathcal{F}}(f)\|_2^2 = 2\pi \|f\|_2^2 $$
-Cet opérateur est défini, pour tout $f \in L^2(\mathbb{R})$, par la limite dans $L^2(\mathbb{R})$ :
-$$ \widetilde{\mathcal{F}}(f)(\xi) = \lim_{R \to +\infty} \int_{-R}^{R} f(t) e^{-i\xi t} dt $$
-(Par abus de notation, on note toujours cet opérateur $\mathcal{F}$ et on écrit $\hat{f}$).
-
-**Exemple 5 : Fonction sinc (Sinus cardinal).**
-La fonction $f(t) = \frac{\sin(t)}{t}$ appartient à $L^2(\mathbb{R})$ mais pas à $L^1(\mathbb{R})$. On ne peut donc pas écrire $\int_{-\infty}^{+\infty} \frac{\sin(t)}{t} e^{-i\xi t} dt$ au sens de Lebesgue.
-Cependant, la transformée de Fourier $\hat{f}$ existe dans $L^2(\mathbb{R})$. Elle correspond à $\hat{f}(\xi) = \pi \mathbf{1}_{[-1, 1]}(\xi)$, presque partout.
-Vérifions Plancherel :
-$\|f\|_2^2 = \int_{-\infty}^{+\infty} \frac{\sin^2(t)}{t^2} dt = \pi$.
-$\|\hat{f}\|_2^2 = \int_{-1}^1 \pi^2 d\xi = 2\pi^2$.
-On a bien $2\pi^2 = 2\pi \times \pi$.
-
-### D. La Formule d'Inversion dans $L^2$
-
-**Théorème 3 (Inversion dans $L^2$).**
-L'opérateur de transformée de Fourier $\mathcal{F}$ est un isomorphisme de $L^2(\mathbb{R})$ dans lui-même. Son application inverse $\mathcal{F}^{-1}$ est donnée, pour tout $g \in L^2(\mathbb{R})$, par :
-$$ \mathcal{F}^{-1}(g)(t) = \frac{1}{2\pi} \lim_{R \to +\infty} \int_{-R}^{R} g(\xi) e^{i\xi t} d\xi $$
-limite au sens de la norme de $L^2(\mathbb{R})$.
-
-**Exemple 6 : Récupération de l'exponentielle décroissante.**
-Soit $\hat{f}(\xi) = \frac{1}{a+i\xi}$ pour $a>0$. $\hat{f} \in L^2(\mathbb{R})$.
-Appliquons la formule d'inversion :
-$$ f(t) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} \frac{1}{a+i\xi} e^{i\xi t} d\xi $$
-Pour $t < 0$, en fermant un contour d'intégration dans le demi-plan inférieur du plan complexe, on n'entoure aucun pôle (le seul pôle de $\frac{1}{a+i\xi} = \frac{-i}{\xi-ia}$ est en $\xi = ia$, situé dans le demi-plan supérieur). L'intégrale vaut 0.
-Pour $t > 0$, en fermant le contour dans le demi-plan supérieur, on entoure le pôle $\xi = ia$. Par le théorème des résidus :
-$$ \int_{-\infty}^{+\infty} \frac{-i}{\xi-ia} e^{i\xi t} d\xi = 2i\pi \text{Res}\left( \frac{-i e^{i\xi t}}{\xi-ia}, ia \right) = 2i\pi (-i) e^{i(ia)t} = 2\pi e^{-at} $$
-Ainsi, $f(t) = e^{-at}$ pour $t>0$, et 0 pour $t<0$. On retrouve bien $f(t) = e^{-at} \mathbf{1}_{]0, +\infty[}(t)$, confirmant la formule d'inversion.
+**Exemple concret du Sinus Cardinal :**
+Considérons $f(t) = \frac{\sin(t)}{t} = \text{sinc}(t)$.
+Ce signal n'est pas dans $L^1$. Comment trouver sa transformée de Fourier ?
+Nous utiliserons l'opérateur inverse de Plancherel. Prenons une fonction porte en fréquence : $\hat{g}(\xi) = \pi \mathbf{1}_{[-1, 1]}(\xi)$.
+Clairement $\hat{g} \in L^1 \cap L^2$. Sa transformée inverse classique donne un signal temporel $g(t)$ :
+$$ g(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} \hat{g}(\xi) e^{i\xi t} d\xi = \frac{1}{2\pi} \int_{-1}^{1} \pi e^{i\xi t} d\xi = \frac{1}{2} \left[ \frac{e^{i\xi t}}{it} \right]_{-1}^{1} = \frac{\sin(t)}{t} $$
+Donc $g(t) = f(t)$.
+Puisque l'opérateur de Fourier est une bijection de $L^2$, si l'inverse donne $f$, cela implique catégoriquement que $\hat{f}(\xi) = \pi \mathbf{1}_{[-1, 1]}(\xi)$ au sens de $L^2$ (presque partout).
 
 ## 3. Démonstrations
 
-**Démonstration du Théorème de Plancherel pour $f \in \mathcal{S}(\mathbb{R})$ (Espace de Schwartz).**
-On considère l'espace de Schwartz $\mathcal{S}(\mathbb{R})$ des fonctions infiniment dérivables à décroissance rapide, qui est inclus dans $L^1(\mathbb{R}) \cap L^2(\mathbb{R})$.
-Soit $f \in \mathcal{S}(\mathbb{R})$. Définissons la fonction $g(t) = \overline{f(-t)}$.
-La transformée de Fourier de $g$ est :
-$$ \hat{g}(\xi) = \int_{-\infty}^{+\infty} \overline{f(-t)} e^{-i\xi t} dt $$
-Changement de variable $u = -t$, $du = -dt$ :
-$$ \hat{g}(\xi) = \int_{+\infty}^{-\infty} \overline{f(u)} e^{i\xi u} (-du) = \int_{-\infty}^{+\infty} \overline{f(u) e^{-i\xi u}} du = \overline{\hat{f}(\xi)} $$
-Considérons le produit de convolution $h = f * g$. Par les propriétés de la transformée de Fourier, on a :
-$$ \hat{h}(\xi) = \hat{f}(\xi) \hat{g}(\xi) = \hat{f}(\xi) \overline{\hat{f}(\xi)} = |\hat{f}(\xi)|^2 $$
-La fonction $f$ et la fonction $g$ sont dans $\mathcal{S}(\mathbb{R})$, donc $h \in \mathcal{S}(\mathbb{R})$ et $\hat{h} \in \mathcal{S}(\mathbb{R}) \subset L^1(\mathbb{R})$.
-On peut donc appliquer la formule d'inversion de Fourier à $h$ évaluée en $t=0$ :
-$$ h(0) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} \hat{h}(\xi) e^{i\xi \times 0} d\xi $$
-$$ h(0) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} |\hat{f}(\xi)|^2 d\xi $$
-Par ailleurs, exprimons $h(0)$ à partir de la définition du produit de convolution $h = f * g$ :
-$$ h(t) = (f * g)(t) = \int_{-\infty}^{+\infty} f(\tau) g(t - \tau) d\tau $$
-Pour $t = 0$ :
-$$ h(0) = \int_{-\infty}^{+\infty} f(\tau) g(-\tau) d\tau = \int_{-\infty}^{+\infty} f(\tau) \overline{f(-(-\tau))} d\tau = \int_{-\infty}^{+\infty} f(\tau) \overline{f(\tau)} d\tau $$
-$$ h(0) = \int_{-\infty}^{+\infty} |f(\tau)|^2 d\tau = \|f\|_2^2 $$
-En égalant les deux expressions de $h(0)$, on obtient :
-$$ \|f\|_2^2 = \frac{1}{2\pi} \int_{-\infty}^{+\infty} |\hat{f}(\xi)|^2 d\xi $$
-Soit :
-$$ \int_{-\infty}^{+\infty} |\hat{f}(\xi)|^2 d\xi = 2\pi \int_{-\infty}^{+\infty} |f(t)|^2 dt $$
-Ce qui est exactement l'égalité de Plancherel pour $f \in \mathcal{S}(\mathbb{R})$.
+### Démonstration rigoureuse du prolongement isométrique (Théorème de Plancherel)
 
-**Démonstration du Théorème de Prolongement (Densité).**
-Soit $f \in L^2(\mathbb{R})$.
-Comme $\mathcal{S}(\mathbb{R})$ est dense dans $L^2(\mathbb{R})$, il existe une suite $(f_n)_{n \in \mathbb{N}}$ d'éléments de $\mathcal{S}(\mathbb{R})$ telle que $\lim_{n \to +\infty} \|f_n - f\|_2 = 0$.
-La suite $(f_n)_{n \in \mathbb{N}}$ est une suite convergente dans $L^2(\mathbb{R})$, donc c'est une suite de Cauchy.
-Pour tout $\epsilon > 0$, il existe $N \in \mathbb{N}$ tel que pour tout $n, m \ge N$, $\|f_n - f_m\|_2 \le \frac{\epsilon}{\sqrt{2\pi}}$.
-Considérons la suite des transformées de Fourier $(\hat{f}_n)_{n \in \mathbb{N}}$.
-Par la linéarité de la transformée de Fourier sur $\mathcal{S}(\mathbb{R})$, on a $\mathcal{F}(f_n - f_m) = \hat{f}_n - \hat{f}_m$.
-Appliquons l'égalité de Plancherel (déjà démontrée sur $\mathcal{S}(\mathbb{R})$) à la fonction $f_n - f_m \in \mathcal{S}(\mathbb{R})$ :
-$$ \|\hat{f}_n - \hat{f}_m\|_2 = \sqrt{2\pi} \|f_n - f_m\|_2 $$
-Ainsi, pour tout $n, m \ge N$, on a :
-$$ \|\hat{f}_n - \hat{f}_m\|_2 \le \sqrt{2\pi} \frac{\epsilon}{\sqrt{2\pi}} = \epsilon $$
-La suite $(\hat{f}_n)_{n \in \mathbb{N}}$ est donc une suite de Cauchy dans l'espace $L^2(\mathbb{R})$.
-Or, d'après le théorème de Riesz-Fischer, l'espace $L^2(\mathbb{R})$ est un espace de Banach (il est complet).
-Par conséquent, la suite $(\hat{f}_n)_{n \in \mathbb{N}}$ admet une limite dans $L^2(\mathbb{R})$. On définit la transformée de Fourier de $f$, notée $\widetilde{\mathcal{F}}(f)$, comme cette limite :
-$$ \widetilde{\mathcal{F}}(f) = \lim_{n \to +\infty} \hat{f}_n $$
-Il reste à vérifier que cette limite ne dépend pas du choix de la suite approximante. Si $(g_n)_{n \in \mathbb{N}}$ est une autre suite de $\mathcal{S}(\mathbb{R})$ convergeant vers $f$, alors la suite mélangée $f_1, g_1, f_2, g_2, \dots$ converge vers $f$ et est de Cauchy, donc la suite de ses transformées converge, imposant $\lim \hat{f}_n = \lim \hat{g}_n$.
-Enfin, la norme passant à la limite, $\|\widetilde{\mathcal{F}}(f)\|_2 = \lim \|\hat{f}_n\|_2 = \lim \sqrt{2\pi}\|f_n\|_2 = \sqrt{2\pi}\|f\|_2$. L'isométrie est ainsi étendue à $L^2(\mathbb{R})$ tout entier.
+Le but est d'établir l'existence et l'unicité de ce prolongement sur l'espace complet $L^2(\mathbb{R})$.
 
-## 4. Applications en Physique, Logique et Intelligence Artificielle
+**Étape 1 : Hypothèse de densité**
+Soit $E = L^1(\mathbb{R}) \cap L^2(\mathbb{R})$. L'espace $E$ est dense dans $L^2(\mathbb{R})$. En effet, pour toute fonction $f \in L^2(\mathbb{R})$, la suite tronquée $f_n = f \cdot \mathbf{1}_{[-n, n]}$ appartient à $E$ (car à support compact et de carré intégrable, donc intégrable) et $f_n \xrightarrow{L^2} f$ par le théorème de convergence dominée.
 
-L'opérateur de transformée de Fourier sur $L^2(\mathbb{R})$ est l'outil fondateur du traitement du signal et, par extension, d'une grande partie des réseaux de neurones modernes traitant l'audio ou les séries temporelles.
+**Étape 2 : L'opérateur initial**
+Définissons $\Phi : E \to L^2(\mathbb{R})$ par $\Phi(f) = \frac{1}{\sqrt{2\pi}} \mathcal{F}(f)$.
+Nous admettons l'identité de Parseval sur l'espace de Schwartz (ou sur $E$ par régularisation), ce qui nous donne :
+$$ \forall f \in E, \quad \|\Phi(f)\|_2 = \|f\|_2 $$
+Ainsi, $\Phi$ est une application linéaire isométrique sur le sous-espace $E$. Une isométrie est nécessairement continue, et sa norme d'opérateur est $\|\Phi\|_{op} = 1$.
 
-Le théorème de Plancherel y joue un rôle conceptuel fondamental car il établit que l'énergie totale d'un signal dans le domaine temporel est strictement conservée lors du passage dans le domaine fréquentiel (Densité Spectrale de Puissance). L'apprentissage des caractéristiques (features) peut donc se faire sans perte d'information énergétique.
-Dans les réseaux de neurones, la contrainte de norme spectrale (Spectral Normalization), utilisée notamment pour stabiliser la fonction d'apprentissage des réseaux génératifs adverses (GANs), s'appuie directement sur cette isométrie. En bornant la norme $L^2$ de la transformée de Fourier de l'opérateur de convolution du réseau, on garantit que celui-ci est lipschitzien globalement sur $L^2(\mathbb{R})$, empêchant la divergence de l'optimisation par rétropropagation du gradient.
+**Étape 3 : Construction de l'image pour $f \notin E$ via suites de Cauchy**
+Soit $f \in L^2(\mathbb{R})$. Par la densité de $E$, il existe une suite $(f_n)_{n \in \mathbb{N}} \in E^{\mathbb{N}}$ telle que $f_n \xrightarrow{L^2} f$.
+Puisque $(f_n)$ converge dans $L^2$, c'est une **suite de Cauchy** dans $L^2$ :
+$$ \forall \varepsilon > 0, \exists N \in \mathbb{N}, \forall p,q \geq N, \quad \|f_p - f_q\|_2 < \varepsilon $$
+Appliquons $\Phi$ aux éléments de cette suite pour former la suite $(\Phi(f_n))$.
+Évaluons la distance entre deux termes de cette suite image :
+$$ \|\Phi(f_p) - \Phi(f_q)\|_2 = \|\Phi(f_p - f_q)\|_2 $$
+Par l'isométrie de $\Phi$ sur $E$ :
+$$ \|\Phi(f_p - f_q)\|_2 = \|f_p - f_q\|_2 < \varepsilon \quad \text{pour } p,q \geq N $$
+Ainsi, la suite $(\Phi(f_n))$ est elle-même une suite de Cauchy dans $L^2(\mathbb{R})$.
 
-L'isométrie de Plancherel garantit également que le produit scalaire (et donc la notion d'angle entre deux signaux, ou la similarité cosinus) est préservé, ce qui est crucial lors du calcul des couches d'attention (Self-Attention) appliquées sur des embeddings fréquentiels.
+**Étape 4 : Utilisation de la complétude**
+C'est ici qu'intervient la nature hilbertienne de l'espace. $L^2(\mathbb{R})$ est un espace **complet** (Théorème de Riesz-Fischer, Jalon 75).
+Toute suite de Cauchy dans un espace complet converge vers une limite dans cet espace.
+Donc, la suite $(\Phi(f_n))$ converge vers un élément $F \in L^2(\mathbb{R})$.
+Nous posons par définition : $\widetilde{\Phi}(f) = F$.
+Le prolongement de la transformée de Fourier de $f$ est alors $\hat{f} = \sqrt{2\pi} F$.
+
+**Étape 5 : Indépendance vis-à-vis de la suite et unicité**
+Supposons qu'il existe une autre suite $(g_n) \in E^{\mathbb{N}}$ convergeant vers $f$.
+Considérons la suite combinée $(h_n)$ définie par $h_{2n} = f_n$ et $h_{2n+1} = g_n$.
+La suite $(h_n)$ converge vers $f$. C'est une suite de Cauchy, donc $(\Phi(h_n))$ converge vers une limite unique $H$.
+Les sous-suites $(\Phi(f_n))$ et $(\Phi(g_n))$ doivent converger vers la même limite $H = F$. La définition de $\widetilde{\Phi}(f)$ ne dépend donc pas du choix de la suite. L'unicité du prolongement continu d'une application uniformément continue d'un sous-espace dense dans un espace complet conclut la démonstration.
+
+## 4. Applications en Physique, Logique & Intelligence Artificielle
+
+### Analyse de densité spectrale (Spectral Norm) dans les GANs
+
+Dans les réseaux génératifs adversariaux (GANs), le discriminateur doit mesurer la distance entre la vraie distribution de données et la distribution générée, souvent en utilisant la distance de Wasserstein. Pour que cette distance soit calculable, la fonction réseau neuronal (le discriminateur) doit être globalement Lipschitzienne (contrainte de gradient borné).
+La **Normalisation Spectrale (Spectral Normalization)**, inventée par Miyato et al. (2018), consiste à diviser les poids de chaque couche convolutive par leur plus grande valeur singulière.
+D'un point de vue continu, un noyau de convolution $k$ agit comme $f \mapsto k * f$. L'opérateur de Fourier transforme cette convolution en produit simple : $\mathcal{F}(k * f) = \mathcal{F}(k) \cdot \mathcal{F}(f)$.
+La norme d'opérateur de cette convolution sur $L^2$ (qui borne la constante de Lipschitz globale) est exactement donnée par l'isométrie de Plancherel :
+$$ \|k * f\|_2 \leq \sup_{\xi} |\hat{k}(\xi)| \cdot \|f\|_2 $$
+La plus grande valeur singulière de l'opérateur de convolution correspond au maximum de l'amplitude de sa transformée de Fourier, $\|\hat{k}\|_\infty$. Plancherel établit ce pont fondamental entre le domaine spatial (les poids du filtre) et la borne de stabilité fréquentielle.
+
+### Théorème de Nyquist-Shannon et compression de l'information (Audio/Image)
+
+Lorsqu'une intelligence artificielle traite un signal brut (comme une seconde d'audio .wav à 44100 Hz), l'espace d'entrée est gigantesque.
+Grâce à Plancherel, l'énergie du signal (ce qui importe perceptuellement et mathématiquement) est conservée si l'on bascule dans le domaine fréquentiel $L^2$.
+Si le signal a un spectre concentré (c'est-à-dire que $\hat{f}$ est nulle en dehors de $[-\Omega, \Omega]$), Plancherel nous assure que le signal peut être reconstruit sans perte d'énergie à partir de points d'échantillons discrets espacés de $\pi / \Omega$.
+Ceci permet de projeter la donnée sur un espace de dimension finie sans aucune fuite d'information avant de l'injecter dans un réseau de neurones. L'orthogonalité préservée permet de compresser la donnée sans altérer les produits scalaires (qui sont la base des similarités cosinus mesurées par l'IA).

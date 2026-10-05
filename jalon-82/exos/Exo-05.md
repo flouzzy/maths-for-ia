@@ -1,28 +1,25 @@
-# Exercice 5 : Produit d'une distribution par une fonction lisse
-Difficulté : $\bigstar\bigstar\bigstar\star\star$
+# Exercice 5 : Valeur principale de Cauchy
+**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
 
-**Énoncé :**
-Soit $T \in \mathcal{D}'(\mathbb{R})$ une distribution et $\alpha \in C^\infty(\mathbb{R})$ une fonction indéfiniment dérivable.
-On définit le produit $\alpha T$ par son action sur toute fonction test $\varphi \in \mathcal{D}(\mathbb{R})$ par :
-$$ \langle \alpha T, \varphi \rangle = \langle T, \alpha \varphi \rangle $$
-1. Justifiez rigoureusement pourquoi cette définition a un sens mathématique.
-2. Calculez explicitement l'action de la distribution $x \delta_0$ sur une fonction test quelconque et simplifiez. Que peut-on conclure sur la distribution $x \delta_0$ ?
+## Énoncé
+La fonction $x \mapsto 1/x$ n'est pas localement intégrable en 0. On définit la Valeur Principale (vp) de $1/x$ par son action sur $\varphi \in \mathcal{D}(\mathbb{R})$ : $\langle \text{vp}(1/x), \varphi \rangle = \lim_{\epsilon \to 0^+} \int_{|x| > \epsilon} \frac{\varphi(x)}{x} \,dx$. Montrer que la limite existe toujours pour $\varphi \in \mathcal{D}(\mathbb{R})$.
 
-**Correction Détaillée :**
-1. **Justification de la définition du produit :**
-   Pour que l'expression $\langle T, \alpha \varphi \rangle$ ait un sens, il est impératif que la fonction $\alpha \varphi$ appartienne à l'espace des fonctions tests $\mathcal{D}(\mathbb{R})$.
-   Vérifions les deux conditions d'appartenance à $\mathcal{D}(\mathbb{R})$ pour $\psi = \alpha \varphi$ :
-   *   **Régularité :** Par hypothèse, $\alpha \in C^\infty(\mathbb{R})$ et $\varphi \in C^\infty(\mathbb{R})$. Le produit de deux fonctions indéfiniment dérivables est indéfiniment dérivable (formule de Leibniz). Donc $\psi \in C^\infty(\mathbb{R})$.
-   *   **Support compact :** Le support du produit est inclus dans l'intersection des supports. $\text{supp}(\alpha \varphi) \subset \text{supp}(\alpha) \cap \text{supp}(\varphi) \subset \text{supp}(\varphi)$.
-       Comme $\varphi \in \mathcal{D}(\mathbb{R})$, son support est compact. Or, tout sous-ensemble fermé d'un compact est compact dans $\mathbb{R}$. Le support de $\psi$ est donc fermé (par définition du support) et borné (inclus dans le compact $\text{supp}(\varphi)$), il est donc compact.
-   Ainsi, $\alpha \varphi \in \mathcal{D}(\mathbb{R})$. La forme linéaire agissant par $\varphi \mapsto \langle T, \alpha \varphi \rangle$ est bien définie (et on peut montrer qu'elle est continue), donc $\alpha T$ est bien une distribution.
-
-2. **Calcul de $x \delta_0$ :**
-   Soit $\varphi \in \mathcal{D}(\mathbb{R})$. En appliquant la définition précédente avec $\alpha(x) = x$ et $T = \delta_0$ :
-   $$ \langle x \delta_0, \varphi \rangle = \langle \delta_0, x \varphi \rangle $$
-   Par définition de l'action de la masse de Dirac en 0, elle évalue la fonction test à l'origine $x=0$. La fonction test ici est la fonction $g(x) = x \varphi(x)$.
-   $$ \langle \delta_0, g \rangle = g(0) = 0 \cdot \varphi(0) = 0 $$
-   Nous obtenons donc que pour toute fonction test $\varphi$, l'action de $x \delta_0$ renvoie 0.
-   En théorie des distributions, l'égalité de deux distributions signifie l'égalité de leur action sur toute fonction test.
-   Nous pouvons donc conclure de manière formelle que :
-   $$ x \delta_0 = 0 $$
+## Correction Détaillée
+1. Puisque $\varphi \in \mathcal{D}(\mathbb{R})$, son support est contenu dans un compact $[-R, R]$. L'intégrale s'écrit donc, pour $0 < \epsilon < R$ :
+   $$ I_\epsilon = \int_{[-R, -\epsilon] \cup [\epsilon, R]} \frac{\varphi(x)}{x} \,dx $$
+2. Séparons l'intégrale en deux parties : sur $[-R, -\epsilon]$ et sur $[\epsilon, R]$.
+   $$ I_\epsilon = \int_{-R}^{-\epsilon} \frac{\varphi(x)}{x} \,dx + \int_{\epsilon}^{R} \frac{\varphi(x)}{x} \,dx $$
+3. Dans la première intégrale, faisons le changement de variable $u = -x$. Alors $dx = -du$, les bornes deviennent $R$ et $\epsilon$.
+   $$ \int_{-R}^{-\epsilon} \frac{\varphi(x)}{x} \,dx = \int_{R}^{\epsilon} \frac{\varphi(-u)}{-u} (-du) = \int_{R}^{\epsilon} \frac{\varphi(-u)}{u} \,du = - \int_{\epsilon}^{R} \frac{\varphi(-u)}{u} \,du $$
+4. En regroupant les deux intégrales sur le même intervalle $[\epsilon, R]$ avec la variable $x$ :
+   $$ I_\epsilon = \int_{\epsilon}^{R} \frac{\varphi(x)}{x} \,dx - \int_{\epsilon}^{R} \frac{\varphi(-x)}{x} \,dx = \int_{\epsilon}^{R} \frac{\varphi(x) - \varphi(-x)}{x} \,dx $$
+5. Maintenant, étudions le comportement de l'intégrand lorsque $x \to 0$. Puisque $\varphi \in C^\infty$, elle admet un développement de Taylor-Lagrange à l'ordre 1 autour de 0.
+   $$ \varphi(x) = \varphi(0) + x\varphi'(0) + \frac{x^2}{2}\varphi''(c_1) $$
+   $$ \varphi(-x) = \varphi(0) - x\varphi'(0) + \frac{x^2}{2}\varphi''(c_2) $$
+6. Formons la différence :
+   $$ \varphi(x) - \varphi(-x) = 2x\varphi'(0) + \frac{x^2}{2}(\varphi''(c_1) - \varphi''(c_2)) $$
+7. Divisons par $x$ :
+   $$ \frac{\varphi(x) - \varphi(-x)}{x} = 2\varphi'(0) + \frac{x}{2}(\varphi''(c_1) - \varphi''(c_2)) $$
+8. Lorsque $x \to 0$, cette expression admet une limite finie qui vaut $2\varphi'(0)$. La fonction $x \mapsto \frac{\varphi(x) - \varphi(-x)}{x}$ est donc prolongeable par continuité en 0.
+9. Sur l'intervalle d'intégration compact $[0, R]$, cette fonction prolongée est continue. Par conséquent, elle y est Riemann-intégrable.
+10. La limite de l'intégrale $I_\epsilon$ lorsque $\epsilon \to 0^+$ est exactement l'intégrale de cette fonction continue sur $[0, R]$. L'intégrale (et donc la limite) est finie. La Valeur Principale est bien définie.
