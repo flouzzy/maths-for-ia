@@ -1,16 +1,25 @@
-# Exercice 5 : Convergence vers Dirac via des portes
+# Exercice 5 : Valeur principale de Cauchy
+**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
 
-\subsection*{Exercice 5 : Convergence vers Dirac via des portes \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+## Énoncé
+La fonction $x \mapsto 1/x$ n'est pas localement intégrable en 0. On définit la Valeur Principale (vp) de $1/x$ par son action sur $\varphi \in \mathcal{D}(\mathbb{R})$ : $\langle \text{vp}(1/x), \varphi \rangle = \lim_{\epsilon \to 0^+} \int_{|x| > \epsilon} \frac{\varphi(x)}{x} \,dx$. Montrer que la limite existe toujours pour $\varphi \in \mathcal{D}(\mathbb{R})$.
 
-**Énoncé :**
-Soit $f_n(x) = \frac{n}{2} \mathbf{1}_{[-1/n, 1/n]}(x)$. Montrer que la suite de distributions régulières $T_{f_n}$ converge vers $\delta_0$ dans $\mathcal{D}'(\mathbb{R})$.
-
-**Démonstration pas à pas :**
-1. **Action de $T_{f_n}$ :** Pour $\phi \in \mathcal{D}(\mathbb{R})$,
-   $$ \langle T_{f_n}, \phi \rangle = \int_{-1/n}^{1/n} \frac{n}{2} \phi(x) dx $$
-2. **Théorème de la moyenne :** La fonction $\phi$ est continue. Par le théorème de la moyenne, il existe $c_n \in [-1/n, 1/n]$ tel que :
-   $$ \int_{-1/n}^{1/n} \phi(x) dx = \frac{2}{n} \phi(c_n) $$
-3. **Passage à la limite :** On a donc $\langle T_{f_n}, \phi \rangle = \frac{n}{2} \cdot \frac{2}{n} \phi(c_n) = \phi(c_n)$.
-   Lorsque $n \to +\infty$, l'intervalle $[-1/n, 1/n]$ se réduit à $\{0\}$, donc $c_n \to 0$.
-   Par continuité de $\phi$, $\phi(c_n) \to \phi(0) = \langle \delta_0, \phi \rangle$.
-   La convergence au sens des distributions est établie. $\blacksquare$
+## Correction Détaillée
+1. Puisque $\varphi \in \mathcal{D}(\mathbb{R})$, son support est contenu dans un compact $[-R, R]$. L'intégrale s'écrit donc, pour $0 < \epsilon < R$ :
+   $$ I_\epsilon = \int_{[-R, -\epsilon] \cup [\epsilon, R]} \frac{\varphi(x)}{x} \,dx $$
+2. Séparons l'intégrale en deux parties : sur $[-R, -\epsilon]$ et sur $[\epsilon, R]$.
+   $$ I_\epsilon = \int_{-R}^{-\epsilon} \frac{\varphi(x)}{x} \,dx + \int_{\epsilon}^{R} \frac{\varphi(x)}{x} \,dx $$
+3. Dans la première intégrale, faisons le changement de variable $u = -x$. Alors $dx = -du$, les bornes deviennent $R$ et $\epsilon$.
+   $$ \int_{-R}^{-\epsilon} \frac{\varphi(x)}{x} \,dx = \int_{R}^{\epsilon} \frac{\varphi(-u)}{-u} (-du) = \int_{R}^{\epsilon} \frac{\varphi(-u)}{u} \,du = - \int_{\epsilon}^{R} \frac{\varphi(-u)}{u} \,du $$
+4. En regroupant les deux intégrales sur le même intervalle $[\epsilon, R]$ avec la variable $x$ :
+   $$ I_\epsilon = \int_{\epsilon}^{R} \frac{\varphi(x)}{x} \,dx - \int_{\epsilon}^{R} \frac{\varphi(-x)}{x} \,dx = \int_{\epsilon}^{R} \frac{\varphi(x) - \varphi(-x)}{x} \,dx $$
+5. Maintenant, étudions le comportement de l'intégrand lorsque $x \to 0$. Puisque $\varphi \in C^\infty$, elle admet un développement de Taylor-Lagrange à l'ordre 1 autour de 0.
+   $$ \varphi(x) = \varphi(0) + x\varphi'(0) + \frac{x^2}{2}\varphi''(c_1) $$
+   $$ \varphi(-x) = \varphi(0) - x\varphi'(0) + \frac{x^2}{2}\varphi''(c_2) $$
+6. Formons la différence :
+   $$ \varphi(x) - \varphi(-x) = 2x\varphi'(0) + \frac{x^2}{2}(\varphi''(c_1) - \varphi''(c_2)) $$
+7. Divisons par $x$ :
+   $$ \frac{\varphi(x) - \varphi(-x)}{x} = 2\varphi'(0) + \frac{x}{2}(\varphi''(c_1) - \varphi''(c_2)) $$
+8. Lorsque $x \to 0$, cette expression admet une limite finie qui vaut $2\varphi'(0)$. La fonction $x \mapsto \frac{\varphi(x) - \varphi(-x)}{x}$ est donc prolongeable par continuité en 0.
+9. Sur l'intervalle d'intégration compact $[0, R]$, cette fonction prolongée est continue. Par conséquent, elle y est Riemann-intégrable.
+10. La limite de l'intégrale $I_\epsilon$ lorsque $\epsilon \to 0^+$ est exactement l'intégrale de cette fonction continue sur $[0, R]$. L'intégrale (et donc la limite) est finie. La Valeur Principale est bien définie.

@@ -1,19 +1,25 @@
-# Exercice 6 : Convergence vers Dirac via la Gaussienne
+# Exercice 6 : Produit d'une distribution par une fonction C-infinie
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
 
-\subsection*{Exercice 6 : Convergence vers Dirac via la Gaussienne \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+## Énoncé
+Soit $T \in \mathcal{D}'(\mathbb{R})$ et $\alpha \in C^\infty(\mathbb{R})$. On définit le produit $\alpha T$ par $\langle \alpha T, \varphi \rangle = \langle T, \alpha\varphi \rangle$. Calculer $x \cdot \delta_0$ et $x \cdot \text{vp}(1/x)$.
 
-**Énoncé :**
-Soit $g_n(x) = \frac{n}{\sqrt{\pi}} e^{-n^2 x^2}$. Montrer que $T_{g_n} \to \delta_0$.
+## Correction Détaillée
+1. Calculons d'abord le produit $x \cdot \delta_0$. Soit $\varphi \in \mathcal{D}(\mathbb{R})$ une fonction test quelconque.
+2. Par la définition du produit d'une distribution par une fonction $C^\infty$, posons $\alpha(x) = x$. On a :
+   $$ \langle x \cdot \delta_0, \varphi \rangle = \langle \delta_0, \alpha\varphi \rangle $$
+3. L'action du Dirac en 0 consiste à évaluer la fonction à l'intérieur du crochet en $x=0$.
+   $$ \langle \delta_0, \alpha\varphi \rangle = (\alpha\varphi)(0) = \alpha(0)\varphi(0) $$
+4. Puisque $\alpha(x) = x$, on a $\alpha(0) = 0$. Donc :
+   $$ 0 \times \varphi(0) = 0 $$
+5. Ceci étant vrai pour toute fonction test $\varphi$, on conclut que la distribution $x \cdot \delta_0$ est la distribution nulle : $x \cdot \delta_0 = 0$.
 
-**Démonstration pas à pas :**
-1. **Intégrale de Gauss :** On sait que $\int_{-\infty}^{+\infty} e^{-x^2} dx = \sqrt{\pi}$. Le changement de variable $y = nx$ donne $\int_{-\infty}^{+\infty} g_n(x) dx = 1$.
-2. **Décomposition :** Pour $\phi \in \mathcal{D}(\mathbb{R})$ :
-   $$ \langle T_{g_n}, \phi \rangle - \phi(0) = \int_{-\infty}^{+\infty} g_n(x) (\phi(x) - \phi(0)) dx $$
-3. **Majoration :** Soit $\epsilon > 0$. La fonction $\phi$ est continue en 0, donc il existe $\delta > 0$ tel que $|x| < \delta \implies |\phi(x) - \phi(0)| < \epsilon$.
-   On coupe l'intégrale en deux : $|x| < \delta$ et $|x| \ge \delta$.
-   $$ \left| \int_{|x| < \delta} g_n(x)(\phi(x)-\phi(0)) dx \right| \le \epsilon \int_{-\infty}^{+\infty} g_n(x) dx = \epsilon $$
-   Pour $|x| \ge \delta$, $\phi$ est bornée (soit $M = \sup |\phi|$).
-   $$ \left| \int_{|x| \ge \delta} g_n(x)(\phi(x)-\phi(0)) dx \right| \le 2M \int_{|x| \ge \delta} g_n(x) dx $$
-   Le changement $y = nx$ donne $2M \int_{|y| \ge n\delta} \frac{1}{\sqrt{\pi}} e^{-y^2} dy$, qui est le reste d'une intégrale convergente, et tend donc vers 0.
-   Ainsi, pour $n$ assez grand, la différence totale est $\le 2\epsilon$.
-   Donc $\langle T_{g_n}, \phi \rangle \to \phi(0)$. $\blacksquare$
+6. Calculons maintenant $x \cdot \text{vp}(1/x)$. Pour $\varphi \in \mathcal{D}(\mathbb{R})$ :
+   $$ \langle x \cdot \text{vp}(1/x), \varphi \rangle = \langle \text{vp}(1/x), x\varphi \rangle $$
+7. Par définition de la Valeur Principale :
+   $$ \langle \text{vp}(1/x), x\varphi \rangle = \lim_{\epsilon \to 0^+} \int_{|x| > \epsilon} \frac{x\varphi(x)}{x} \,dx $$
+8. On simplifie la fraction pour $x \neq 0$ :
+   $$ \lim_{\epsilon \to 0^+} \int_{|x| > \epsilon} \varphi(x) \,dx $$
+9. La fonction $\varphi$ étant continue et à support compact, elle est intégrable sur $\mathbb{R}$. La limite de l'intégrale sur $\{|x| > \epsilon\}$ correspond simplement à l'intégrale de Lebesgue complète sur $\mathbb{R}$ (puisque le point 0 est de mesure nulle) :
+   $$ \int_{\mathbb{R}} \varphi(x) \,dx = \langle T_1, \varphi \rangle $$
+10. La distribution $x \cdot \text{vp}(1/x)$ est donc égale à la distribution constante $1$ (régulière). $x \cdot \text{vp}(1/x) = 1$.

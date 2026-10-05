@@ -1,15 +1,19 @@
-# Exercice 9 : Produit $\alpha(x) \delta_0$
+# Exercice 9 : Support d'une distribution
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-\subsection*{Exercice 9 : Produit $\alpha(x) \delta_0$ \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+## Énoncé
+On dit qu'une distribution $T$ est nulle sur un ouvert $\Omega$ si pour toute $\varphi \in \mathcal{D}(\mathbb{R})$ dont le support est inclus dans $\Omega$, on a $\langle T, \varphi \rangle = 0$. Le support de $T$ est le complémentaire de la réunion de tous les ouverts où $T$ est nulle. Déterminer rigoureusement le support du Dirac $\delta_0$.
 
-**Énoncé :**
-Montrer que si $\alpha \in C^\infty(\mathbb{R})$, alors $\alpha(x) \delta_0 = \alpha(0) \delta_0$. En déduire l'équation $x T = 0$.
-
-**Démonstration pas à pas :**
-1. **Le produit avec le Dirac :** Pour $\phi \in \mathcal{D}(\mathbb{R})$ :
-   $$ \langle \alpha \delta_0, \phi \rangle = \langle \delta_0, \alpha \phi \rangle = (\alpha \phi)(0) = \alpha(0) \phi(0) = \alpha(0) \langle \delta_0, \phi \rangle = \langle \alpha(0) \delta_0, \phi \rangle $$
-   On a bien $\alpha(x) \delta_0 = \alpha(0) \delta_0$.
-2. **Conséquence de l'équation $x T = 0$ :** Si $T = c \delta_0$, alors $x \cdot (c \delta_0) = c (0) \delta_0 = 0$.
-   Réciproquement, soit $T$ solution de $xT = 0$. Pour $\phi \in \mathcal{D}(\mathbb{R})$ vérifiant $\phi(0) = 0$, il existe (par la formule de Taylor avec reste intégral) une fonction $\psi \in \mathcal{D}(\mathbb{R})$ telle que $\phi(x) = x \psi(x)$.
-   Alors $\langle T, \phi \rangle = \langle T, x \psi \rangle = \langle xT, \psi \rangle = 0$.
-   La distribution $T$ est donc proportionnelle au Dirac : on peut montrer que toute distribution annulée par des fonctions s'annulant en 0 est de la forme $c \delta_0$. $\blacksquare$
+## Correction Détaillée
+1. Soit un ouvert $\Omega \subset \mathbb{R}$ tel que $0 \notin \Omega$. Montrons que $\delta_0$ est nulle sur $\Omega$.
+2. Soit $\varphi \in \mathcal{D}(\mathbb{R})$ telle que $\text{supp}(\varphi) \subset \Omega$.
+3. Comme $0 \notin \Omega$, on a $0 \notin \text{supp}(\varphi)$. Or, par définition du support, en dehors de $\text{supp}(\varphi)$, la fonction $\varphi$ vaut rigoureusement $0$.
+4. Ainsi, $\varphi(0) = 0$.
+5. L'évaluation donne : $\langle \delta_0, \varphi \rangle = \varphi(0) = 0$. Donc $\delta_0$ est nulle sur $\Omega = \mathbb{R} \setminus \{0\}$.
+6. Le complémentaire de cet ouvert est le singleton $\{0\}$. Le support de $\delta_0$ est donc inclus dans $\{0\}$.
+7. Pour montrer que le support n'est pas l'ensemble vide, il faut prouver que $\delta_0$ n'est pas nulle sur tout ouvert contenant $0$.
+8. Considérons un ouvert quelconque $U$ contenant $0$.
+9. Construisons une fonction test "bosse" $\varphi_0 \in \mathcal{D}(\mathbb{R})$ telle que $\varphi_0(0) = 1$ et $\text{supp}(\varphi_0) \subset U$ (possible en adaptant la fonction $\rho$ de l'Exemple 1 du cours).
+10. Pour cette fonction, $\langle \delta_0, \varphi_0 \rangle = \varphi_0(0) = 1 \neq 0$.
+11. Donc $\delta_0$ n'est pas nulle sur $U$. Le point $0$ ne peut pas être retiré du support.
+12. En conclusion, le support de la distribution $\delta_0$ est exactement le singleton $\{0\}$. C'est une distribution à support ponctuel.
