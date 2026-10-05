@@ -428,7 +428,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
-- [2026-10-01] : [Upsert/Création] du Jalon 81 - Transformée de Fourier dans $L^2$. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-10-02] : [Upsert/Création] du Jalon 81 - Transformée de Fourier dans $L^2$. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-29] : [Upsert/Création] du Jalon 80 - Transformée de Fourier dans $L^1$. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-29] : [Upsert/Création] du Jalon 79 - Convergence en moyenne quadratique des séries de Fourier et identité de Parseval. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-26] : [Upsert/Création] du Jalon 78 - Séries de Fourier. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
