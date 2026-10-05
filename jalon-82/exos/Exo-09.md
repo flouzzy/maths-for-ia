@@ -1,23 +1,19 @@
-\subsection*{Exercice 9 : Égalité de distributions : vp et partie réelle \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+# Exercice 9 : Support d'une distribution
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-Soit $\epsilon > 0$ et $f_\epsilon(x) = \frac{1}{x + i\epsilon}$.
-Montrer que, au sens des distributions (c'est-à-dire la limite de l'action de $f_\epsilon$ sur une fonction test quand $\epsilon \to 0^+$) :
-$\lim_{\epsilon \to 0^+} \frac{1}{x + i\epsilon} = \text{vp}\left(\frac{1}{x}\right) - i \pi \delta_0$
-(C'est l'identité de Sokhotski-Plemelj).
+## Énoncé
+On dit qu'une distribution $T$ est nulle sur un ouvert $\Omega$ si pour toute $\varphi \in \mathcal{D}(\mathbb{R})$ dont le support est inclus dans $\Omega$, on a $\langle T, \varphi \rangle = 0$. Le support de $T$ est le complémentaire de la réunion de tous les ouverts où $T$ est nulle. Déterminer rigoureusement le support du Dirac $\delta_0$.
 
-**Correction Détaillée :**
-Séparons la partie réelle et la partie imaginaire de $f_\epsilon$ :
-$\frac{1}{x + i\epsilon} = \frac{x - i\epsilon}{x^2 + \epsilon^2} = \frac{x}{x^2 + \epsilon^2} - i \frac{\epsilon}{x^2 + \epsilon^2}$
-Soit $\phi \in \mathcal{D}(\mathbb{R})$.
-Partie imaginaire : $-\int_{-\infty}^{+\infty} \frac{\epsilon}{x^2 + \epsilon^2} \phi(x) dx$.
-On reconnaît une approximation de l'identité proportionnelle au noyau de Poisson (cf. Ex 5).
-Posons $y = x/\epsilon$. L'intégrale devient $-\int_{-\infty}^{+\infty} \frac{\epsilon}{\epsilon^2 y^2 + \epsilon^2} \phi(\epsilon y) \epsilon dy = - \int_{-\infty}^{+\infty} \frac{1}{y^2 + 1} \phi(\epsilon y) dy$.
-Par convergence dominée (la fonction est dominée par $C/(1+y^2)$ et $\phi(\epsilon y) \to \phi(0)$), l'intégrale tend vers $-\int_{-\infty}^{+\infty} \frac{1}{y^2+1} \phi(0) dy = -\pi \phi(0) = \langle -i\pi \delta_0, \phi \rangle$.
-Partie réelle : $\int_{-\infty}^{+\infty} \frac{x}{x^2 + \epsilon^2} \phi(x) dx$.
-Le terme $\frac{x}{x^2 + \epsilon^2}$ est impair. On peut donc injecter $\phi(0)$ en remarquant que son intégrale avec une fonction impaire sur un domaine symétrique est nulle :
-$\int_{-\infty}^{+\infty} \frac{x}{x^2 + \epsilon^2} (\phi(x) - \phi(0)) dx$.
-La fonction $\psi(x) = (\phi(x)-\phi(0))/x$ est lisse et à support compact (prolongeable en 0).
-L'intégrale s'écrit $\int_{-\infty}^{+\infty} \frac{x^2}{x^2+\epsilon^2} \psi(x) dx$.
-Quand $\epsilon \to 0^+$, l'intégrande converge vers $\psi(x)$ presque partout et est dominé.
-La limite est donc $\int_{-\infty}^{+\infty} \psi(x) dx = \int_{-\infty}^{+\infty} \frac{\phi(x)-\phi(0)}{x} dx$, qui est l'expression équivalente de $\text{vp}(1/x)$ démontrée dans l'exercice 7.
-La combinaison des deux parties donne la relation de Sokhotski-Plemelj. $\blacksquare$
+## Correction Détaillée
+1. Soit un ouvert $\Omega \subset \mathbb{R}$ tel que $0 \notin \Omega$. Montrons que $\delta_0$ est nulle sur $\Omega$.
+2. Soit $\varphi \in \mathcal{D}(\mathbb{R})$ telle que $\text{supp}(\varphi) \subset \Omega$.
+3. Comme $0 \notin \Omega$, on a $0 \notin \text{supp}(\varphi)$. Or, par définition du support, en dehors de $\text{supp}(\varphi)$, la fonction $\varphi$ vaut rigoureusement $0$.
+4. Ainsi, $\varphi(0) = 0$.
+5. L'évaluation donne : $\langle \delta_0, \varphi \rangle = \varphi(0) = 0$. Donc $\delta_0$ est nulle sur $\Omega = \mathbb{R} \setminus \{0\}$.
+6. Le complémentaire de cet ouvert est le singleton $\{0\}$. Le support de $\delta_0$ est donc inclus dans $\{0\}$.
+7. Pour montrer que le support n'est pas l'ensemble vide, il faut prouver que $\delta_0$ n'est pas nulle sur tout ouvert contenant $0$.
+8. Considérons un ouvert quelconque $U$ contenant $0$.
+9. Construisons une fonction test "bosse" $\varphi_0 \in \mathcal{D}(\mathbb{R})$ telle que $\varphi_0(0) = 1$ et $\text{supp}(\varphi_0) \subset U$ (possible en adaptant la fonction $\rho$ de l'Exemple 1 du cours).
+10. Pour cette fonction, $\langle \delta_0, \varphi_0 \rangle = \varphi_0(0) = 1 \neq 0$.
+11. Donc $\delta_0$ n'est pas nulle sur $U$. Le point $0$ ne peut pas être retiré du support.
+12. En conclusion, le support de la distribution $\delta_0$ est exactement le singleton $\{0\}$. C'est une distribution à support ponctuel.

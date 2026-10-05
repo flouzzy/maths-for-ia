@@ -22,7 +22,7 @@
     showstringspaces=false
 }
 
-\title{\Huge INTRODUCTION AUX DISTRIBUTIONS DE SCHWARTZ \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\title{\Huge Introduction aux distributions de Schwartz \\ \large Cours magistral, exercices corrigés et travaux pratiques}
 \author{\Large Charles EDOU NZE}
 \date{\today}
 
@@ -33,639 +33,650 @@
 
 \part{Cours Magistral}
 
-\section*{Jalon 82 : Introduction aux distributions de Schwartz}
 
-\section{Introduction : Genèse physique et mathématique}
+\section{Introduction historique et conceptuelle}
 
-L'étude des phénomènes physiques impulsifs ou ponctuels a longtemps posé un défi majeur à l'analyse mathématique classique. Considérons, par exemple, le choc instantané d'un marteau sur une corde vibrante, ou encore la modélisation d'une charge électrique ponctuelle. Dans ces situations, on observe une quantité totale non nulle (comme une impulsion ou une charge) concentrée en un unique point de l'espace ou du temps.
+La théorie des distributions a été formellement introduite par le mathématicien français Laurent Schwartz au milieu du vingtième siècle. Elle a été motivée par des problèmes physiques concrets que l'analyse classique peinait à formaliser rigoureusement. En particulier, la description d'une charge électrique ponctuelle, d'une force d'impact instantanée ou d'un dipôle nécessitait des objets mathématiques plus généraux que les fonctions classiques, qui associent à chaque point de l'espace une valeur finie.
 
-Si l'on cherche à représenter une telle densité par une fonction classique $f(x)$, cette fonction devrait être nulle partout sauf en ce point précis (disons, l'origine $x=0$), où elle devrait tendre vers l'infini. Or, l'intégrale de Lebesgue d'une fonction nulle presque partout est nulle, ce qui contredit l'idée que l'intégrale totale représente la charge globale (qui vaut 1). Les ingénieurs et physiciens, tels que Paul Dirac au début du XXe siècle, utilisaient des objets formels comme la "fonction" $\delta$ (qui porte désormais son nom), la manipulant avec succès dans des calculs sans justification mathématique rigoureuse.
+L'approche de Schwartz, influencée par les travaux antérieurs de Sergueï Sobolev en Union Soviétique et de Paul Dirac en physique quantique, repose sur un changement de perspective fondamental : au lieu d'étudier un objet mathématique par ses valeurs ponctuelles (ce qui n'a pas toujours de sens), on l'étudie par son "effet" sur une classe de fonctions très régulières, appelées "fonctions tests". Cette idée de la dualité, issue de l'analyse fonctionnelle, permet d'étendre la notion de dérivée à des fonctions qui ne sont pas différentiables au sens usuel.
 
-La théorie des distributions, développée par le mathématicien français Laurent Schwartz (médaille Fields 1950), apporte une solution élégante et définitive à ce paradoxe. L'idée fondatrice est de changer de perspective : au lieu de considérer une "fonction" ponctuellement, on l'étudie par son interaction (son intégrale) avec des fonctions dites "tests", très régulières. Les objets mathématiques ne sont plus étudiés par leurs valeurs ponctuelles, mais par la manière dont ils "mesurent" d'autres fonctions. Cette approche généralise la notion de fonction et donne un cadre rigoureux à la masse de Dirac et à ses dérivées.
+\section{L'espace des fonctions tests}
+
+Pour définir rigoureusement les distributions, nous devons d'abord construire l'espace des fonctions tests, qui serviront de "sondes" ou de "mesures" pour nos nouveaux objets.
+
+\textbf{Définition (Support d'une fonction) :} Soit $\phi : \mathbb{R} \to \mathbb{C}$ une fonction continue. Le support de $\phi$, noté $\text{supp}(\phi)$, est l'adhérence de l'ensemble des points où $\phi$ ne s'annule pas :
+$$\text{supp}(\phi) = \overline{\{ x \in \mathbb{R} \mid \phi(x) \neq 0 \}}$$
+
+\textbf{Définition (Espace des fonctions tests $\mathcal{D}(\mathbb{R})$) :} L'espace $\mathcal{D}(\mathbb{R})$, également noté $C_c^\infty(\mathbb{R})$, est l'espace vectoriel des fonctions $\phi : \mathbb{R} \to \mathbb{C}$ indéfiniment dérivables ($C^\infty$) et à support compact.
+
+\textbf{Exemple 1 : La fonction "bosse" (bump function) standard.}
+Un exemple fondamental d'une fonction dans $\mathcal{D}(\mathbb{R})$ est la fonction $\phi_0$ définie par :
+$$
+\phi_0(x) =
+\begin{cases}
+e^{-\frac{1}{1-x^2}} & \text{si } |x| < 1 \\
+0 & \text{si } |x| \ge 1
+\end{cases}
+$$
+Vérifions que $\phi_0 \in \mathcal{D}(\mathbb{R})$.
+\begin{enumerate}
+\item Le support de $\phi_0$ est clairement l'intervalle compact $[-1, 1]$.
+\item Pour $|x| < 1$, $\phi_0$ est la composée de fonctions $C^\infty$, donc elle est $C^\infty$.
+\item Le seul point délicat est la régularité aux bords, en $x=1$ et $x=-1$. Montrons que toutes les dérivées à gauche en $x=1$ s'annulent.
+   Posons $u = \frac{1}{1-x^2}$. Lorsque $x \to 1^-$, $u \to +\infty$.
+   Pour $x \in (-1, 1)$, la dérivée de $\phi_0$ est :
+   $\phi_0'(x) = e^{-u} \cdot \left(- \frac{-2x}{(1-x^2)^2}\right) = \frac{-2x}{(1-x^2)^2} e^{-\frac{1}{1-x^2}} = -2x u^2 e^{-u}$.
+   Lorsque $x \to 1^-$, $u \to +\infty$, et par croissance comparée, $u^2 e^{-u} \to 0$. Donc $\lim_{x \to 1^-} \phi_0'(x) = 0$.
+   Par une récurrence immédiate, on peut montrer que pour tout entier $k \ge 1$, la dérivée d'ordre $k$ est de la forme $\phi_0^{(k)}(x) = P_k(x, u) e^{-u}$ où $P_k$ est un polynôme. Ainsi, $\lim_{x \to 1^-} \phi_0^{(k)}(x) = 0$.
+   Toutes les dérivées coïncident avec celles de la fonction identiquement nulle à droite de $x=1$. La fonction $\phi_0$ est donc de classe $C^\infty$ sur $\mathbb{R}$.
+\end{enumerate}
 
 \begin{center}
-\begin{tikzpicture}[scale=1]
-  \draw[->] (-3,0) -- (3,0) node[right] {$x$};
-  \draw[->] (0,-0.5) -- (0,4) node[above] {$y$};
+\begin{tikzpicture}[scale=1.5]
+    % Axes
+    \draw[->, thick] (-2, 0) -- (2, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.2) -- (0, 1.2) node[above] {$y$};
 
-  % Suite de fonctions approchant Dirac
-  \draw[blue, thick] (-2,0) -- (-0.5,0) -- (-0.5, 1) -- (0.5, 1) -- (0.5, 0) -- (2,0);
-  \node[blue] at (1, 1.2) {$f_1$};
+    % Ticks
+    \draw[thick] (-1, 0.05) -- (-1, -0.05) node[below] {$-1$};
+    \draw[thick] (1, 0.05) -- (1, -0.05) node[below] {$1$};
+    \draw[thick] (0.05, 1) -- (-0.05, 1) node[left] {$1$};
 
-  \draw[red, thick] (-2,0) -- (-0.25,0) -- (-0.25, 2) -- (0.25, 2) -- (0.25, 0) -- (2,0);
-  \node[red] at (0.6, 2.2) {$f_2$};
+    % The bump function graph
+    \draw[domain=-0.999:0.999, smooth, variable=\x, blue, thick] plot ({\x}, {exp(-1/(1-\x*\x))/exp(-1)});
 
-  \draw[green!60!black, thick] (-2,0) -- (-0.125,0) -- (-0.125, 4) -- (0.125, 4) -- (0.125, 0) -- (2,0);
-  \node[green!60!black] at (0.4, 3.8) {$f_3$};
+    % Zero parts
+    \draw[blue, thick] (-2, 0) -- (-1, 0);
+    \draw[blue, thick] (1, 0) -- (2, 0);
 
-  \node[below] at (0,0) {$0$};
+    % Labels
+    \node[blue] at (1.2, 0.5) {$\phi_0(x)$};
 \end{tikzpicture}
-\\ \textit{Figure 1 : Fonctions "portes" d'aire 1 dont la limite au sens des distributions est la distribution de Dirac $\delta_0$.}
 \end{center}
 
-\section{Définitions, Théorèmes \& Exemples}
+\section{Notion de convergence dans $\mathcal{D}(\mathbb{R})$}
 
-Pour définir le concept de distribution, il faut préalablement définir l'espace des fonctions sur lequel ces distributions vont agir. Ces fonctions doivent être suffisamment régulières pour absorber les irrégularités des objets qu'on étudie.
+Pour définir une distribution comme une forme linéaire continue, il faut préciser la topologie de $\mathcal{D}(\mathbb{R})$. Nous définirons ici la continuité de manière séquentielle.
 
-\begin{quote}\textbf{Définition 1 (Support d'une fonction) :} Soit \end{quote}$f : \mathbb{R}^n \to \mathbb{C}$ une fonction continue. Le support de $f$, noté $\text{supp}(f)$, est l'adhérence de l'ensemble des points où $f$ est non nulle :
-\begin{quote}\end{quote}$$\text{supp}(f) = \overline{\{ x \in \mathbb{R}^n \mid f(x) \neq 0 \}}$$
-\begin{quote}Une fonction est dite à \textbf{support compact} si son support est un sous-ensemble compact (fermé et borné) de \end{quote}$\mathbb{R}^n$.
+\textbf{Définition (Convergence dans $\mathcal{D}(\mathbb{R})$) :} On dit qu'une suite $(\phi_n)_{n \in \mathbb{N}}$ de fonctions de $\mathcal{D}(\mathbb{R})$ converge vers $\phi \in \mathcal{D}(\mathbb{R})$ (et on note $\phi_n \xrightarrow{\mathcal{D}} \phi$) si les deux conditions suivantes sont vérifiées :
+\begin{enumerate}
+\item \textbf{Support commun borné :} Il existe un compact $K \subset \mathbb{R}$ tel que pour tout $n \in \mathbb{N}$, $\text{supp}(\phi_n) \subset K$ et $\text{supp}(\phi) \subset K$.
+\item \textbf{Convergence uniforme de toutes les dérivées :} Pour tout entier $k \ge 0$, la suite des dérivées $(\phi_n^{(k)})_{n \in \mathbb{N}}$ converge uniformément vers $\phi^{(k)}$ sur $K$ :
+   $$\lim_{n \to +\infty} \sup_{x \in K} |\phi_n^{(k)}(x) - \phi^{(k)}(x)| = 0$$
+\end{enumerate}
 
-\textbf{Exemple concret de calcul de support :}
-Considérons la fonction en une dimension :
-$f(x) = 1$ si $x \in ]-1, 1[$, et $f(x) = 0$ sinon.
-L'ensemble des points où $f$ est non nulle est l'ouvert $]-1, 1[$.
-L'adhérence de cet ouvert est le segment $[-1, 1]$.
-Ainsi, $\text{supp}(f) = [-1, 1]$, qui est un compact (fermé et borné).
+\textbf{Exemple 2 : Une suite convergente dans $\mathcal{D}(\mathbb{R})$.}
+Soit $\phi_0$ la fonction bosse définie dans l'Exemple 1. Considérons la suite de fonctions $\phi_n(x) = \frac{1}{n} \phi_0(x)$.
+\begin{enumerate}
+\item Pour tout $n \ge 1$, $\text{supp}(\phi_n) = \text{supp}(\phi_0) = [-1, 1]$. La condition du support commun est vérifiée avec $K = [-1, 1]$.
+\item Pour un entier $k \ge 0$ fixé, $\phi_n^{(k)}(x) = \frac{1}{n} \phi_0^{(k)}(x)$. Comme $\phi_0^{(k)}$ est continue sur le compact $[-1, 1]$, elle est bornée. Posons $M_k = \sup_{x \in [-1, 1]} |\phi_0^{(k)}(x)|$.
+   Alors $\sup_{x \in [-1, 1]} |\phi_n^{(k)}(x) - 0| = \frac{M_k}{n}$, qui tend vers $0$ lorsque $n \to +\infty$.
+Ainsi, $\phi_n \xrightarrow{\mathcal{D}} 0$.
+\end{enumerate}
 
-\begin{quote}**Définition 2 (Espace des fonctions tests \end{quote}$\mathcal{D}(\mathbb{R}^n)$) :**
-\begin{quote}L'espace \end{quote}$\mathcal{D}(\mathbb{R}^n)$ (souvent noté $\mathcal{C}_c^\infty(\mathbb{R}^n)$) est l'espace vectoriel des fonctions $\phi : \mathbb{R}^n \to \mathbb{C}$ qui sont :
-\begin{quote}1. Infiniment dérivables (de classe \end{quote}$\mathcal{C}^\infty$).
-\begin{quote}2. À support compact.\end{quote}
+\textbf{Exemple 3 : Une suite ne convergeant PAS dans $\mathcal{D}(\mathbb{R})$ malgré une convergence uniforme.}
+Considérons $\phi_n(x) = \frac{1}{n} \phi_0\left(\frac{x}{n}\right)$.
+La fonction $\phi_n$ tend uniformément vers $0$, ainsi que toutes ses dérivées.
+Cependant, $\text{supp}(\phi_n) = [-n, n]$. Il n'existe aucun compact $K$ tel que tous les supports y soient inclus pour tout $n$.
+Ainsi, la suite $(\phi_n)_{n \in \mathbb{N}}$ ne converge pas vers la fonction nulle au sens de la topologie de $\mathcal{D}(\mathbb{R})$.
 
-Il n'est pas immédiat qu'il existe des fonctions non nulles dans $\mathcal{D}(\mathbb{R})$. Les polynômes, par exemple, sont $\mathcal{C}^\infty$ mais n'ont jamais un support compact (sauf le polynôme nul).
+\section{Définition des distributions}
 
-\textbf{Exemple fondamental de fonction test (la fonction plateau) :}
-Soit $\phi(x) = \exp\left(-\frac{1}{1-x^2}\right)$ pour $|x| < 1$, et $\phi(x) = 0$ pour $|x| \ge 1$.
-Cette fonction est infiniment dérivable sur tout $\mathbb{R}$ (en particulier en $-1$ et en $1$, car toutes ses dérivées tendent vers $0$) et son support est $[-1, 1]$, qui est compact. Ainsi, $\phi \in \mathcal{D}(\mathbb{R})$.
+Nous sommes maintenant en mesure de définir rigoureusement ce qu'est une distribution.
 
-Avant de définir rigoureusement les distributions en tant que formes linéaires continues, nous devons définir la notion de convergence sur l'espace $\mathcal{D}(\mathbb{R}^n)$.
+\textbf{Définition (Distribution) :} Une distribution $T$ sur $\mathbb{R}$ est une forme linéaire continue sur l'espace des fonctions tests $\mathcal{D}(\mathbb{R})$.
+L'ensemble des distributions sur $\mathbb{R}$ est noté $\mathcal{D}'(\mathbb{R})$.
+Cela signifie que $T$ vérifie les deux conditions suivantes :
+\begin{enumerate}
+\item \textbf{Linéarité :} Pour tous $\alpha, \beta \in \mathbb{C}$ et pour toutes $\phi, \psi \in \mathcal{D}(\mathbb{R})$,
+   $$T(\alpha \phi + \beta \psi) = \alpha T(\phi) + \beta T(\psi)$$
+\item \textbf{Continuité séquentielle :} Si $(\phi_n)_{n \in \mathbb{N}}$ est une suite dans $\mathcal{D}(\mathbb{R})$ telle que $\phi_n \xrightarrow{\mathcal{D}} \phi$, alors
+   $$\lim_{n \to +\infty} T(\phi_n) = T(\phi)$$
+\end{enumerate}
 
-\begin{quote}**Définition 3 (Convergence dans \end{quote}$\mathcal{D}$) :**
-\begin{quote}Une suite \end{quote}$(\phi_j)_{j \in \mathbb{N}}$ de fonctions de $\mathcal{D}(\mathbb{R}^n)$ converge vers une fonction $\phi \in \mathcal{D}(\mathbb{R}^n)$ si :
-\begin{quote}1. Il existe un compact fixe \end{quote}$K \subset \mathbb{R}^n$ tel que, pour tout $j \in \mathbb{N}$, $\text{supp}(\phi_j) \subset K$ et $\text{supp}(\phi) \subset K$.
-\begin{quote}2. Pour tout multi-indice \end{quote}$\alpha$, la suite des dérivées partielles $\left( \partial^\alpha \phi_j \right)$ converge uniformément vers $\partial^\alpha \phi$ sur $K$.
+*Notation :* On utilise couramment la notation en crochet de dualité : $\langle T, \phi \rangle$ au lieu de $T(\phi)$.
 
-\begin{quote}\textbf{Définition 4 (Distribution de Schwartz) :} Une \textbf{distribution} sur \end{quote}$\mathbb{R}^n$ est une forme linéaire $T$ sur l'espace vectoriel $\mathcal{D}(\mathbb{R}^n)$, c'est-à-dire une application $T : \mathcal{D}(\mathbb{R}^n) \to \mathbb{C}$ telle que :
-\begin{quote}1. \textbf{Linéarité :} \end{quote}$\forall \phi, \psi \in \mathcal{D}$, $\forall \lambda, \mu \in \mathbb{C}$, $T(\lambda \phi + \mu \psi) = \lambda T(\phi) + \mu T(\psi)$.
-\begin{quote}2. \textbf{Continuité séquentielle :} Pour toute suite \end{quote}$(\phi_j)$ convergeant vers $0$ dans $\mathcal{D}$, on a $\lim_{j \to +\infty} T(\phi_j) = 0$.
-\begin{quote}L'ensemble de toutes les distributions sur \end{quote}$\mathbb{R}^n$ est noté $\mathcal{D}'(\mathbb{R}^n)$. L'action d'une distribution $T$ sur une fonction test $\phi$ s'écrit souvent sous forme de crochet de dualité : $\langle T, \phi \rangle$.
+\section{Distributions régulières associées aux fonctions}
 
-\textbf{Exemple 1 : La distribution de Dirac (Distribution singulière)}
-Soit $a \in \mathbb{R}^n$. On définit l'application $\delta_a : \mathcal{D}(\mathbb{R}^n) \to \mathbb{C}$ par :
-$$\langle \delta_a, \phi \rangle = \phi(a)$$
-Montrons que c'est une distribution.
-- Linéarité : $\langle \delta_a, \lambda \phi + \mu \psi \rangle = (\lambda \phi + \mu \psi)(a) = \lambda \phi(a) + \mu \psi(a) = \lambda \langle \delta_a, \phi \rangle + \mu \langle \delta_a, \psi \rangle$.
-- Continuité : Si $\phi_j \to 0$ dans $\mathcal{D}$, cela implique la convergence uniforme (en particulier ponctuelle) vers $0$, donc $\phi_j(a) \to 0$, d'où $\langle \delta_a, \phi_j \rangle \to 0$.
-Ainsi, $\delta_a \in \mathcal{D}'(\mathbb{R}^n)$.
+Le concept de distribution doit généraliser la notion de fonction. Nous allons voir comment "plonger" les fonctions classiques dans l'espace des distributions.
 
-\textbf{Exemple 2 : Distributions régulières (généralisation des fonctions)}
-Soit $f \in L^1_{loc}(\mathbb{R}^n)$, c'est-à-dire une fonction localement intégrable (son intégrale de Lebesgue est finie sur tout compact de $\mathbb{R}^n$). On lui associe $T_f$ par :
-$$\langle T_f, \phi \rangle = \int_{\mathbb{R}^n} f(x) \phi(x) dx$$
-- Linéarité : par la linéarité de l'intégrale.
-- Continuité : Soit $\phi_j \to 0$ dans $\mathcal{D}$. Toutes les $\phi_j$ ont leur support inclus dans un compact $K$. Alors,
-  $$\left| \langle T_f, \phi_j \rangle \right| \le \int_K |f(x)| |\phi_j(x)| dx \le \|\phi_j\|_{\infty, K} \int_K |f(x)| dx$$
-  Or, la convergence uniforme implique $\|\phi_j\|_{\infty, K} \to 0$, et comme $f \in L^1_{loc}$, l'intégrale sur $K$ est finie. Donc $\langle T_f, \phi_j \rangle \to 0$.
-Toute fonction (assez régulière) peut donc être identifiée à une distribution.
+\textbf{Définition (Fonction localement intégrable) :} Une fonction $f : \mathbb{R} \to \mathbb{C}$ (mesurable) est dite localement intégrable si, pour tout compact $K \subset \mathbb{R}$, l'intégrale de Lebesgue $\int_K |f(x)| \, dx$ est finie.
+L'espace de ces fonctions est noté $L^1_{\text{loc}}(\mathbb{R})$.
 
-\begin{quote}\textbf{Définition 5 (Convergence au sens des distributions) :} Une suite de distributions \end{quote}$(T_j)_{j \in \mathbb{N}}$ de $\mathcal{D}'(\mathbb{R}^n)$ converge vers une distribution $T \in \mathcal{D}'(\mathbb{R}^n)$ si, pour toute fonction test $\phi \in \mathcal{D}(\mathbb{R}^n)$ :
-\begin{quote}\end{quote}$$\lim_{j \to +\infty} \langle T_j, \phi \rangle = \langle T, \phi \rangle$$
-\begin{quote}C'est une convergence simple (dite convergence faible-*).\end{quote}
+\textbf{Théorème 1 (Distribution régulière) :} Toute fonction $f \in L^1_{\text{loc}}(\mathbb{R})$ définit une distribution, notée $T_f$, par l'action suivante :
+Pour toute $\phi \in \mathcal{D}(\mathbb{R})$,
+$$\langle T_f, \phi \rangle = \int_{-\infty}^{+\infty} f(x) \phi(x) \, dx$$
 
-\textbf{Exemple 3 : Convergence vers le Dirac}
-Posons la fonction porte (illustrée en Figure 1) : $f_j(x) = j$ si $x \in [-1/(2j), 1/(2j)]$ et $f_j(x) = 0$ sinon.
-Calculons l'action de $T_{f_j}$ sur une fonction test $\phi \in \mathcal{D}(\mathbb{R})$ :
-$$\langle T_{f_j}, \phi \rangle = \int_{\mathbb{R}} f_j(x)\phi(x) dx = j \int_{-1/(2j)}^{1/(2j)} \phi(x) dx$$
-Par le théorème de la moyenne pour les intégrales, il existe $c_j \in [-1/(2j), 1/(2j)]$ tel que l'intégrale vaut la largeur du domaine $(1/j)$ multipliée par la valeur au point $c_j$.
-$$\langle T_{f_j}, \phi \rangle = j \times \left( \frac{1}{j} \phi(c_j) \right) = \phi(c_j)$$
-Lorsque $j \to +\infty$, l'intervalle se resserre vers $0$, donc $c_j \to 0$. Puisque $\phi$ est continue en $0$, $\phi(c_j) \to \phi(0) = \langle \delta_0, \phi \rangle$.
-Ainsi, au sens des distributions, $\lim_{j \to +\infty} T_{f_j} = \delta_0$.
+*Démonstration :*
+Vérifions d'abord que l'intégrale est bien définie. Soit $\phi \in \mathcal{D}(\mathbb{R})$ et $K = \text{supp}(\phi)$. L'intégrale se réduit à $\int_K f(x) \phi(x) \, dx$.
+La fonction $\phi$ est continue sur le compact $K$, donc elle est bornée par une constante $M$.
+$$ \left| \int_K f(x) \phi(x) \, dx \right| \le \int_K |f(x)| |\phi(x)| \, dx \le M \int_K |f(x)| \, dx < +\infty $$
+car $f \in L^1_{\text{loc}}(\mathbb{R})$. La forme $T_f$ est donc bien définie à valeurs dans $\mathbb{C}$.
 
-\textbf{Exemple 4 : La Valeur Principale de Cauchy}
-La fonction $x \mapsto 1/x$ n'est pas localement intégrable autour de $0$, elle ne définit donc pas une distribution régulière. On peut définir une distribution singulière appelée "Valeur principale", notée $\text{vp}(1/x)$, par la limite d'intégrales évitant la singularité :
-$$\langle \text{vp}\left(\frac{1}{x}\right), \phi \rangle = \lim_{\epsilon \to 0^+} \int_{|x| > \epsilon} \frac{\phi(x)}{x} dx$$
+\begin{enumerate}
+\item \textbf{Linéarité :} Elle découle de la linéarité de l'intégrale.
+   $$ \langle T_f, \alpha \phi + \beta \psi \rangle = \int_{\mathbb{R}} f(x) (\alpha \phi(x) + \beta \psi(x)) \, dx = \alpha \langle T_f, \phi \rangle + \beta \langle T_f, \psi \rangle $$
+\item \textbf{Continuité :} Soit $(\phi_n)$ une suite convergeant vers $0$ dans $\mathcal{D}(\mathbb{R})$.
+   Il existe un compact $K$ tel que $\text{supp}(\phi_n) \subset K$ pour tout $n$, et la suite converge uniformément vers $0$ sur $K$.
+   $$ |\langle T_f, \phi_n \rangle| = \left| \int_K f(x) \phi_n(x) \, dx \right| \le \left( \sup_{x \in K} |\phi_n(x)| \right) \int_K |f(x)| \, dx $$
+   Puisque $\phi_n$ tend uniformément vers $0$, $\sup_{x \in K} |\phi_n(x)|$ tend vers $0$.
+   L'intégrale $\int_K |f(x)| \, dx$ est une constante finie. Donc $\lim_{n \to \infty} \langle T_f, \phi_n \rangle = 0$.
+   $T_f$ est bien une distribution.
+$\blacksquare$
+\end{enumerate}
 
-\section{Démonstrations}
+\textbf{Remarque :} L'application $f \mapsto T_f$ est linéaire et injective (presque partout). Ainsi, on identifie souvent $f$ et $T_f$. On écrira alors $\langle f, \phi \rangle$ au lieu de $\langle T_f, \phi \rangle$.
 
-\subsection{Proposition : Le Dirac n'est pas une distribution régulière}
-Nous allons démontrer de manière exhaustive, par l'absurde, qu'il n'existe aucune fonction $f \in L^1_{loc}(\mathbb{R})$ qui puisse représenter la distribution de Dirac $\delta_0$.
+\textbf{Exemple 4 : La distribution de Heaviside.}
+La fonction de Heaviside $H$, définie par $H(x) = 1$ si $x \ge 0$ et $H(x) = 0$ si $x < 0$, est localement intégrable (car bornée).
+Elle définit la distribution régulière $T_H$ :
+$$ \langle T_H, \phi \rangle = \int_{-\infty}^{+\infty} H(x) \phi(x) \, dx = \int_0^{+\infty} \phi(x) \, dx $$
+Calculons l'action de $T_H$ sur notre fonction bosse $\phi_0$ (Exemple 1) :
+L'intégrale $\int_0^{+\infty} \phi_0(x) \, dx$ représente l'aire sous la moitié droite de la courbe, ce qui est un nombre réel positif bien défini, bien qu'il n'ait pas d'expression fermée simple à l'aide de fonctions élémentaires.
 
-\textbf{Démonstration :}
-Supposons par l'absurde qu'il existe une fonction $f \in L^1_{loc}(\mathbb{R})$ telle que $T_f = \delta_0$, ce qui signifie que pour toute fonction test $\phi \in \mathcal{D}(\mathbb{R})$, nous avons :
-$$\int_{-\infty}^{+\infty} f(x) \phi(x) dx = \phi(0)$$
+\section{Distributions singulières : l'exemple canonique de la masse de Dirac}
 
-Étape 1 : Construction d'une suite de fonctions tests appropriée.
-Considérons une fonction test "bosse" standard, notée $\theta \in \mathcal{D}(\mathbb{R})$, possédant les propriétés suivantes :
-- $0 \le \theta(x) \le 1$ pour tout $x \in \mathbb{R}$.
-- $\theta(0) = 1$.
-- $\text{supp}(\theta) \subset [-1, 1]$.
-À partir de $\theta$, nous construisons une suite de fonctions tests concentrées autour de $0$ :
-$$\phi_j(x) = \theta(jx)$$
-Vérifions les propriétés de $\phi_j$ :
-- $\phi_j \in \mathcal{D}(\mathbb{R})$ car la composition par une dilatation conserve le caractère $\mathcal{C}^\infty$ et le support compact.
-- $\phi_j(0) = \theta(0) = 1$ pour tout $j$.
-- Le support de $\phi_j$ est l'ensemble des points $x$ tels que $jx \in [-1, 1]$, soit $x \in [-1/j, 1/j]$.
+Les distributions singulières sont des distributions qui ne peuvent pas s'écrire sous la forme d'une intégrale avec une fonction localement intégrable. L'exemple le plus fondamental est la masse de Dirac, notée $\delta_0$.
 
-Étape 2 : Évaluation des deux membres de notre égalité hypothétique pour $\phi_j$.
-D'une part, puisque $T_f = \delta_0$, on a par définition de l'action de $\delta_0$ sur $\phi_j$ :
-$$\langle \delta_0, \phi_j \rangle = \phi_j(0) = 1$$
-Et ceci est strictement égal à 1 pour tout entier $j \ge 1$.
+\textbf{Définition (Distribution de Dirac) :} La distribution de Dirac en un point $a \in \mathbb{R}$, notée $\delta_a$, est définie par son action sur une fonction test $\phi \in \mathcal{D}(\mathbb{R})$ :
+$$ \langle \delta_a, \phi \rangle = \phi(a) $$
 
-D'autre part, en utilisant la forme intégrale avec notre fonction $f \in L^1_{loc}(\mathbb{R})$ :
-$$\langle T_f, \phi_j \rangle = \int_{-\infty}^{+\infty} f(x) \phi_j(x) dx = \int_{-1/j}^{1/j} f(x) \phi_j(x) dx$$
-(Puisque $\phi_j(x) = 0$ en dehors de $[-1/j, 1/j]$).
+\textbf{Exemple 5 : Preuve que $\delta_a$ est une distribution.}
+\begin{enumerate}
+\item L'application $\phi \mapsto \phi(a)$ est trivialement linéaire.
+\item Pour la continuité, soit $(\phi_n)$ convergeant vers $0$ dans $\mathcal{D}(\mathbb{R})$.
+   La convergence de $(\phi_n)$ vers $0$ implique la convergence uniforme (donc ponctuelle) vers $0$.
+   Ainsi, $\langle \delta_a, \phi_n \rangle = \phi_n(a) \to 0$ lorsque $n \to +\infty$.
+   $\delta_a$ est donc bien une distribution.
+\end{enumerate}
 
-Prenons la valeur absolue de cette intégrale et majorons-la :
-$$\left| \int_{-1/j}^{1/j} f(x) \phi_j(x) dx \right| \le \int_{-1/j}^{1/j} |f(x)| |\phi_j(x)| dx$$
-Étant donné que $0 \le \phi_j(x) \le 1$ pour tout $x$, on peut majorer par :
-$$\left| \langle T_f, \phi_j \rangle \right| \le \int_{-1/j}^{1/j} |f(x)| dx$$
+\textbf{Exemple 6 : Calculs avec des Diracs.}
+Calculons l'action de différentes distributions sur une fonction test $\phi(x) = e^{-x^2} \sin(x)$ (remarquez que $\phi$ n'est pas à support compact, mais en physique on autorise souvent une plus grande classe de fonctions tests comme la classe de Schwartz $\mathcal{S}(\mathbb{R})$ ; pour cet exemple nous restreignons implicitement $\phi$ à un support compact très grand).
+- Action de $\delta_0$ sur $\phi$ : $\langle \delta_0, \phi \rangle = \phi(0) = e^0 \sin(0) = 0$.
+- Action de $\delta_{\pi/2}$ sur $\phi$ : $\langle \delta_{\pi/2}, \phi \rangle = \phi(\pi/2) = e^{-(\pi/2)^2} \sin(\pi/2) = e^{-\pi^2/4}$.
+- Considérons $T = 3\delta_0 - 2\delta_\pi$. $T \in \mathcal{D}'(\mathbb{R})$ par combinaison linéaire.
+  $\langle T, \phi \rangle = 3\langle \delta_0, \phi \rangle - 2\langle \delta_\pi, \phi \rangle = 3\phi(0) - 2\phi(\pi) = 3(0) - 2(0) = 0$.
 
-Étape 3 : Passage à la limite quand $j \to +\infty$.
-La fonction $f$ étant localement intégrable, la fonction $|f|$ est une fonction positive dont l'intégrale sur le compact $[-1, 1]$ est finie.
-Par le théorème de continuité absolue de l'intégrale de Lebesgue, si on intègre une telle fonction sur un domaine dont la mesure de Lebesgue tend vers $0$, la valeur de l'intégrale tend vers $0$.
-Ici, l'intervalle d'intégration est $[-1/j, 1/j]$, dont la mesure (la longueur) est $2/j$, qui tend rigoureusement vers $0$ lorsque $j \to +\infty$.
-Par conséquent :
-$$\lim_{j \to +\infty} \int_{-1/j}^{1/j} |f(x)| dx = 0$$
-Ce qui implique :
-$$\lim_{j \to +\infty} \langle T_f, \phi_j \rangle = 0$$
+\textbf{Théorème 2 :} La distribution de Dirac $\delta_0$ n'est pas une distribution régulière. Autrement dit, il n'existe aucune fonction localement intégrable $f$ telle que pour toute $\phi \in \mathcal{D}(\mathbb{R})$, $\int_{-\infty}^{+\infty} f(x)\phi(x) \, dx = \phi(0)$.
 
-Étape 4 : Conclusion.
-Nous avons obtenu, par la représentation intégrale, une limite valant $0$. Mais par définition de l'égalité supposée avec $\delta_0$, cette même quantité devait valoir exactement $1$ pour tout $j$. Nous obtenons $0 = 1$, ce qui est une contradiction manifeste. L'hypothèse de départ est fausse : la masse de Dirac ne peut pas être représentée par une fonction localement intégrable. C'est un objet mathématique intrinsèquement différent, une "distribution singulière". $\blacksquare$
+*Démonstration :*
+Supposons par l'absurde qu'une telle fonction $f \in L^1_{\text{loc}}(\mathbb{R})$ existe.
+Considérons une fonction test $\psi \in \mathcal{D}(\mathbb{R})$ telle que $\psi(x) = 1$ pour $|x| \le 1$, $\psi(x) = 0$ pour $|x| \ge 2$, et $0 \le \psi(x) \le 1$ partout.
+Pour $n \ge 1$, définissons la suite de fonctions tests $\phi_n(x) = \psi(nx)$.
+Le support de $\phi_n$ est $\left[-\frac{2}{n}, \frac{2}{n}\right]$. De plus, $\phi_n(0) = \psi(0) = 1$.
+Par hypothèse, nous aurions :
+$$ \phi_n(0) = \int_{-\infty}^{+\infty} f(x) \phi_n(x) \, dx $$
+Donc :
+$$ 1 = \int_{-\frac{2}{n}}^{\frac{2}{n}} f(x) \phi_n(x) \, dx $$
+En prenant la valeur absolue :
+$$ 1 = \left| \int_{-\frac{2}{n}}^{\frac{2}{n}} f(x) \phi_n(x) \, dx \right| \le \int_{-\frac{2}{n}}^{\frac{2}{n}} |f(x)| |\phi_n(x)| \, dx \le \int_{-\frac{2}{n}}^{\frac{2}{n}} |f(x)| \, dx $$
+car $0 \le \phi_n(x) \le 1$.
+Puisque $f \in L^1_{\text{loc}}(\mathbb{R})$, $f$ est intégrable sur le segment $[-2, 2]$.
+La mesure de Lebesgue de l'intervalle $\left[-\frac{2}{n}, \frac{2}{n}\right]$ tend vers 0 lorsque $n \to +\infty$.
+Par le théorème de convergence dominée (ou la continuité absolue de l'intégrale de Lebesgue), on a :
+$$ \lim_{n \to +\infty} \int_{-\frac{2}{n}}^{\frac{2}{n}} |f(x)| \, dx = 0 $$
+Nous obtenons alors $1 \le 0$, ce qui est une contradiction manifeste.
+Par conséquent, une telle fonction $f$ n'existe pas. La masse de Dirac $\delta_0$ est véritablement une distribution singulière.
+$\blacksquare$
 
-\section{Applications en Intelligence Artificielle}
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % Axes
+    \draw[->, thick] (-2, 0) -- (2, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.2) -- (0, 2) node[above] {$\phi_n(x)$};
 
-En intelligence artificielle, et plus particulièrement en apprentissage statistique (Machine Learning), la théorie des distributions intervient de manière structurelle, bien que souvent implicite dans l'écriture des équations au quotidien.
+    % The function psi for n=1
+    \draw[domain=1:2, smooth, variable=\x, blue, thick] plot ({\x}, {cos((\x-1)*90)^2});
+    \draw[domain=-2:-1, smooth, variable=\x, blue, thick] plot ({\x}, {cos((-\x-1)*90)^2});
+    \draw[blue, thick] (-1, 1) -- (1, 1);
+    \draw[blue, thick] (-2.5, 0) -- (-2, 0);
+    \draw[blue, thick] (2, 0) -- (2.5, 0);
 
-\textbf{Modélisation des densités de probabilité empiriques :}
-Lorsqu'un réseau de neurones est entraîné par apprentissage supervisé, le jeu de données d'entraînement est constitué d'un ensemble fini de couples $(x_i, y_i)$. La distribution sous-jacente des données génératrices n'est pas connue. L'algorithme d'optimisation (par exemple la descente de gradient stochastique) tente de minimiser l'espérance de la perte (le risque réel) définie formellement par rapport à une mesure de probabilité $P$ :
-$$R(w) = \int \mathcal{L}(f_w(x), y) dP(x,y)$$
-Mais $P$ étant inconnue, on approxime cette intégrale par l'espérance sur une mesure empirique $\hat{P}$, qui est une combinaison convexe de distributions de Dirac centrées sur les points d'entraînement :
-$$\hat{P} = \frac{1}{N} \sum_{i=1}^N \delta_{(x_i, y_i)}$$
-La mesure de probabilité empirique est donc une distribution au sens de Schwartz. Son action sur la fonction de perte $\mathcal{L}$ (agissant comme la "fonction test" dans ce contexte d'intégration de Lebesgue généralisée) redonne bien la moyenne arithmétique de la perte sur l'échantillon, le risque empirique que l'on minimise effectivement.
+    % The function phi_n for n=2
+    \draw[domain=0.5:1, smooth, variable=\x, red, thick] plot ({\x}, {cos((\x*2-1)*90)^2});
+    \draw[domain=-1:-0.5, smooth, variable=\x, red, thick] plot ({\x}, {cos((-\x*2-1)*90)^2});
+    \draw[red, thick] (-0.5, 1) -- (0.5, 1);
 
-\textbf{Calcul des gradients aux singularités :}
-Les fonctions d'activation modernes, telles que le ReLU ($f(x) = \max(0, x)$), présentent des points de non-dérivabilité classique (en $0$). Les algorithmes de rétropropagation calculent implicitement des dérivées au sens des distributions. La dérivée d'une fonction échelon (de Heaviside) est rigoureusement définie dans le cadre des distributions comme étant la distribution de Dirac. L'élargissement de l'espace des fonctions aux distributions est la fondation théorique autorisant le succès massif des réseaux profonds non lisses optimisés par sous-gradients.
+    % The function phi_n for n=4
+    \draw[domain=0.25:0.5, smooth, variable=\x, green!70!black, thick] plot ({\x}, {cos((\x*4-1)*90)^2});
+    \draw[domain=-0.5:-0.25, smooth, variable=\x, green!70!black, thick] plot ({\x}, {cos((-\x*4-1)*90)^2});
+    \draw[green!70!black, thick] (-0.25, 1) -- (0.25, 1);
+
+    % Labels
+    \node[blue] at (1.5, 1.2) {$n=1$};
+    \node[red] at (0.7, 1.2) {$n=2$};
+    \node[green!70!black] at (0.3, 1.2) {$n=4$};
+
+    \node[below] at (2,0) {$2$};
+    \node[below] at (-2,0) {$-2$};
+\end{tikzpicture}
+\end{center}
+
+\section{Ordre d'une distribution}
+
+Les distributions sont des formes linéaires continues sur $\mathcal{D}(\mathbb{R})$. On peut quantifier cette continuité à travers la notion d'ordre.
+
+\textbf{Définition (Distribution d'ordre $k$) :} Soit $T \in \mathcal{D}'(\mathbb{R})$. On dit que $T$ est d'ordre $k$ (où $k \in \mathbb{N}$) si pour tout compact $K \subset \mathbb{R}$, il existe une constante $C_K \ge 0$ telle que pour toute fonction test $\phi \in \mathcal{D}(\mathbb{R})$ dont le support est inclus dans $K$ :
+$$ |\langle T, \phi \rangle| \le C_K \sum_{j=0}^k \sup_{x \in K} |\phi^{(j)}(x)| $$
+L'ordre d'une distribution $T$ est le plus petit entier $k$ vérifiant cette propriété. Si aucun tel entier n'existe, la distribution est dite d'ordre infini.
+
+\textbf{Exemple 7 : Ordre de $T_f$ pour $f \in L^1_{\text{loc}}$.}
+Pour une distribution régulière $T_f$, si le support de $\phi$ est dans $K$ :
+$$ |\langle T_f, \phi \rangle| = \left| \int_K f(x) \phi(x) \, dx \right| \le \left( \sup_{x \in K} |\phi(x)| \right) \int_K |f(x)| \, dx = C_K \sup_{x \in K} |\phi(x)| $$
+avec $C_K = \int_K |f(x)| \, dx$.
+Ici $k=0$. Toute distribution régulière associée à une fonction localement intégrable est d'ordre $0$.
+
+\textbf{Exemple 8 : Ordre de la distribution de Dirac $\delta_a$.}
+Pour $\phi$ à support dans $K$ :
+$$ |\langle \delta_a, \phi \rangle| = |\phi(a)| $$
+Si $a \in K$, on a $|\phi(a)| \le \sup_{x \in K} |\phi(x)|$. La constante est $C_K = 1$.
+Si $a \notin K$, $\phi(a) = 0$ et l'inégalité est trivialement vérifiée avec $C_K = 0$.
+Ainsi, l'inégalité est vérifiée pour $k=0$. La distribution de Dirac est donc d'ordre $0$.
+
+\textbf{Exemple 9 : Une distribution d'ordre 1.}
+La forme linéaire définie par $T(\phi) = \phi'(0)$ (la dérivée évaluée en 0) est une distribution.
+Elle est d'ordre 1, car on a besoin de contrôler la norme infini de la première dérivée : $|\langle T, \phi \rangle| = |\phi'(0)| \le \sup_{x \in K} |\phi'(x)|$.
+On ne peut pas borner $|\phi'(0)|$ uniquement en utilisant $\sup_{x \in K} |\phi(x)|$ car une fonction peut être très petite mais avoir une pente très raide en 0 (pensez à $\frac{1}{n}\sin(n^2 x)$). L'ordre est donc exactement 1.
+
+\section{Applications en Intelligence Artificielle et Analyse de données}
+
+En modélisation et en apprentissage automatique, le formalisme des distributions intervient de façon sous-jacente dès qu'on manipule des probabilités discrètes ou continues dans un cadre unifié.
+
+\begin{enumerate}
+\item \textbf{Mesures empiriques :}
+Lors de l'entraînement d'un réseau de neurones, on observe un ensemble fini de données d'apprentissage $\{x_1, \dots, x_N\}$. La véritable loi générative des données est inconnue. L'approximation naturelle est la mesure empirique, qui est une distribution :
+$$ \hat{\mathbb{P}}_N = \frac{1}{N} \sum_{i=1}^N \delta_{x_i} $$
+Cette distribution, somme de Diracs, s'intègre parfaitement dans le formalisme. Le risque empirique d'un modèle (la perte moyenne) est alors l'action de cette distribution sur la fonction de perte $L$ (vue comme fonction test sur l'espace des paramètres fixés) :
+$$ \mathcal{R}_{\text{emp}} = \langle \hat{\mathbb{P}}_N, L \rangle = \frac{1}{N} \sum_{i=1}^N L(x_i) $$
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Densités non régulières en Probabilité :}
+Les variables aléatoires discrètes n'ont pas de fonction de densité classique (au sens de Lebesgue). En utilisant la théorie des distributions, toute variable aléatoire $X$, qu'elle soit continue ou discrète, possède une densité "généralisée". Par exemple, une variable de Bernoulli $B \sim \mathcal{B}(p)$ possède la "densité" au sens des distributions $p \delta_1 + (1-p) \delta_0$. Cela permet d'unifier le calcul des espérances sous forme d'intégrales pour tous les types de variables aléatoires.
+\end{enumerate}
+
+
 
 \newpage
 \part{Exercices d'Application et de Concours}
-\subsection*{Exercice 1 : Action d'une distribution sur une fonction test de base \quad $\bigstar\star\star\star\star$}
-
-Soit la distribution de Dirac $\delta_1$ et la fonction test $\phi(x) = \exp(-x^2)$.
-1. Vérifier que $\phi$ n'est pas strictement dans $\mathcal{D}(\mathbb{R})$. Quelle restriction appliquer pour que $\langle \delta_1, \phi \rangle$ ait un sens rigoureux ?
-2. Calculer l'action de $\delta_1$ sur une fonction test modifiée $\tilde{\phi}$ qui coïncide avec $\phi$ sur $[-2, 2]$ et est nulle en dehors de $[-3, 3]$.
-
-\textbf{Correction Détaillée :}
-1. La fonction $\phi(x) = \exp(-x^2)$ est infiniment dérivable sur $\mathbb{R}$ car la fonction exponentielle et les polynômes le sont (composition de fonctions $\mathcal{C}^\infty$). Cependant, $\phi(x) > 0$ pour tout $x \in \mathbb{R}$. Son support n'est donc pas compact, ce n'est pas une fonction test de $\mathcal{D}(\mathbb{R})$. $\delta_1$ étant une distribution, elle agit par définition sur $\mathcal{D}(\mathbb{R})$.
-2. On définit une nouvelle fonction test $\tilde{\phi} \in \mathcal{D}(\mathbb{R})$ telle que $\tilde{\phi}(x) = \exp(-x^2)$ pour $x \in [-2, 2]$. L'action de la distribution de Dirac en $1$ sur une fonction test est l'évaluation de cette fonction au point $1$.
-Puisque $1 \in [-2, 2]$, on a $\tilde{\phi}(1) = \exp(-1^2) = e^{-1}$.
-Par conséquent, $\langle \delta_1, \tilde{\phi} \rangle = e^{-1}$. $\blacksquare$
 
 
-\subsection*{Exercice 2 : La fonction de Heaviside \quad $\bigstar\star\star\star\star$}
+\subsection*{Exercice 1 : La fonction de Heaviside \quad $\bigstar\star\star\star\star$}
 
-Soit la fonction de Heaviside $H(x) = 1$ si $x \ge 0$ et $H(x) = 0$ si $x < 0$.
-1. Justifier que $H$ définit une distribution régulière $T_H$.
-2. Évaluer $\langle T_H, \phi \rangle$ pour une fonction test générale $\phi \in \mathcal{D}(\mathbb{R})$.
+\textbf{Énoncé :}
+Soit $H$ la fonction de Heaviside définie par $H(x) = 1$ si $x > 0$ et $H(x) = 0$ sinon. Montrer que $H$ définit une distribution régulière et expliciter son action sur une fonction test $\phi \in \mathcal{D}(\mathbb{R})$.
 
-\textbf{Correction Détaillée :}
-1. Pour qu'une fonction $f$ définisse une distribution régulière, il faut et il suffit qu'elle soit localement intégrable, c'est-à-dire $f \in L^1_{loc}(\mathbb{R})$.
-Pour tout compact $K = [a, b]$ de $\mathbb{R}$, on a :
-$\int_K |H(x)| dx = \int_a^b |H(x)| dx$.
-Puisque $0 \le H(x) \le 1$, l'intégrale est majorée par $b-a$, qui est fini. Donc $H \in L^1_{loc}(\mathbb{R})$ et $H$ définit bien une distribution régulière $T_H$.
-2. L'action de $T_H$ sur une fonction test $\phi \in \mathcal{D}(\mathbb{R})$ est donnée par :
-$\langle T_H, \phi \rangle = \int_{-\infty}^{+\infty} H(x) \phi(x) dx$
-Comme $H(x) = 0$ sur $]-\infty, 0[$ et $H(x) = 1$ sur $[0, +\infty[$, on obtient :
-$\langle T_H, \phi \rangle = \int_0^{+\infty} 1 \cdot \phi(x) dx = \int_0^{+\infty} \phi(x) dx$.
-Puisque $\phi$ est à support compact, l'intégrale converge (elle se réduit en fait à une intégrale sur un segment fermé et borné). $\blacksquare$
+\textbf{Démonstration pas à pas :}
+\begin{enumerate}
+\item \textbf{Intégrabilité locale :} $H$ est mesurable et bornée, donc sur tout compact $K$, $\int_K |H(x)| dx \le \int_K 1 dx < +\infty$. Ainsi, $H \in L^1_{loc}(\mathbb{R})$.
+\item \textbf{Action sur $\phi$ :} Par définition d'une distribution régulière, on a pour toute $\phi \in \mathcal{D}(\mathbb{R})$ :
+   $$ \langle T_H, \phi \rangle = \int_{-\infty}^{+\infty} H(x) \phi(x) dx = \int_0^{+\infty} 1 \cdot \phi(x) dx = \int_0^{+\infty} \phi(x) dx $$
+\item \textbf{Continuité :} Si $\phi_n \to 0$ dans $\mathcal{D}(\mathbb{R})$, il existe $K$ contenant les supports. L'intégrale devient $\int_{K \cap [0, +\infty[} \phi_n(x) dx$, qui tend vers 0 par convergence uniforme.
+\textbf{Conclusion :} $T_H$ est bien une distribution régulière, son action est l'intégrale de la fonction test sur $[0, +\infty[$. $\blacksquare$
+\end{enumerate}
 
 
-\subsection*{Exercice 3 : Linéarité des distributions singulières \quad $\bigstar\bigstar\star\star\star$}
-
-On définit $T = 3\delta_{-2} - 5\delta_{4}$.
-1. Montrer que $T$ est une distribution.
-2. Calculer $\langle T, \phi \rangle$ où $\phi(x) = x^2$ restreinte de manière adéquate à un compact.
-
-\textbf{Correction Détaillée :}
-1. L'espace $\mathcal{D}'(\mathbb{R})$ est un espace vectoriel. Puisque $\delta_{-2}$ et $\delta_{4}$ sont des distributions (le Dirac est une forme linéaire continue), toute combinaison linéaire scalaire l'est également. Ainsi, la somme $T = 3\delta_{-2} - 5\delta_{4}$ est une forme linéaire continue sur $\mathcal{D}(\mathbb{R})$, c'est donc une distribution.
-2. Soit $\tilde{\phi}$ une fonction de $\mathcal{D}(\mathbb{R})$ telle que $\tilde{\phi}(x) = x^2$ sur un intervalle compact contenant à la fois $-2$ et $4$, par exemple $[-5, 5]$.
-On calcule l'action de $T$ sur $\tilde{\phi}$ par linéarité :
-$\langle T, \tilde{\phi} \rangle = \langle 3\delta_{-2} - 5\delta_{4}, \tilde{\phi} \rangle$
-$\langle T, \tilde{\phi} \rangle = 3 \langle \delta_{-2}, \tilde{\phi} \rangle - 5 \langle \delta_{4}, \tilde{\phi} \rangle$
-En utilisant la définition du Dirac, l'action est l'évaluation au point :
-$\langle T, \tilde{\phi} \rangle = 3 \tilde{\phi}(-2) - 5 \tilde{\phi}(4)$
-Puisque $\tilde{\phi}(x) = x^2$ en ces points :
-$\langle T, \tilde{\phi} \rangle = 3(-2)^2 - 5(4)^2 = 3(4) - 5(16) = 12 - 80 = -68$. $\blacksquare$
 
 
-\subsection*{Exercice 4 : Translation d'une distribution régulière \quad $\bigstar\bigstar\star\star\star$}
+\subsection*{Exercice 2 : La fonction Signe \quad $\bigstar\bigstar\star\star\star$}
 
-Soit $f \in L^1_{loc}(\mathbb{R})$ et $T_f$ sa distribution régulière associée. On définit la fonction translatée $\tau_a f(x) = f(x - a)$ pour $a \in \mathbb{R}$.
-1. Calculer l'action de $T_{\tau_a f}$ sur une fonction test $\phi$.
-2. En déduire une définition générale pour la translatée d'une distribution quelconque $\tau_a T$, et l'appliquer à $\delta_0$.
+\textbf{Énoncé :}
+Soit $\text{sgn}(x) = 1$ si $x > 0$, $-1$ si $x < 0$ et $0$ si $x = 0$. Expliciter la distribution associée $T_{\text{sgn}}$. L'exprimer en fonction de la distribution de Heaviside $T_H$.
 
-\textbf{Correction Détaillée :}
-1. L'action de la distribution régulière associée à $f(x-a)$ est :
-$\langle T_{\tau_a f}, \phi \rangle = \int_{-\infty}^{+\infty} f(x - a) \phi(x) dx$
-Effectuons le changement de variable affine (donc bijectif et $\mathcal{C}^\infty$) $y = x - a$. On a $dx = dy$ :
-$\langle T_{\tau_a f}, \phi \rangle = \int_{-\infty}^{+\infty} f(y) \phi(y + a) dy$
-On peut réécrire cette intégrale en utilisant l'action de $T_f$ :
-$\langle T_{\tau_a f}, \phi \rangle = \langle T_f, \phi(\cdot + a) \rangle$.
-Ou en posant $\tau_{-a}\phi(y) = \phi(y+a)$ :
-$\langle T_{\tau_a f}, \phi \rangle = \langle T_f, \tau_{-a}\phi \rangle$.
-2. Cette formule n'utilise plus explicitement d'intégrale de Lebesgue, elle dépend uniquement de l'action de la distribution sur la fonction test translatée (qui est toujours dans $\mathcal{D}(\mathbb{R})$). On peut donc généraliser et définir la translatée d'une distribution $T$ par :
-$\langle \tau_a T, \phi \rangle = \langle T, \tau_{-a}\phi \rangle$
-Appliquons cela à $\delta_0$ :
-$\langle \tau_a \delta_0, \phi \rangle = \langle \delta_0, \phi(\cdot + a) \rangle$
-L'action de $\delta_0$ sur une fonction est l'évaluation de cette fonction en $0$ :
-$\langle \tau_a \delta_0, \phi \rangle = \phi(0 + a) = \phi(a)$
-Or $\phi(a) = \langle \delta_a, \phi \rangle$.
-On conclut que la translatée de $\delta_0$ par un vecteur $a$ est $\delta_a$ : $\tau_a \delta_0 = \delta_a$. $\blacksquare$
+\textbf{Démonstration pas à pas :}
+\begin{enumerate}
+\item \textbf{Intégrabilité locale :} La fonction signe est bornée par 1, donc localement intégrable.
+\item \textbf{Action sur $\phi$ :} Pour $\phi \in \mathcal{D}(\mathbb{R})$ :
+   $$ \langle T_{\text{sgn}}, \phi \rangle = \int_{-\infty}^{0} (-1)\phi(x) dx + \int_{0}^{+\infty} (1)\phi(x) dx $$
+\item \textbf{Lien avec $H$ :} On remarque que $\text{sgn}(x) = 2H(x) - 1$ pour tout $x \ne 0$ (qui est de mesure de Lebesgue nulle).
+   L'action devient donc :
+   $$ \langle T_{\text{sgn}}, \phi \rangle = \int_{-\infty}^{+\infty} (2H(x) - 1)\phi(x) dx = 2\langle T_H, \phi \rangle - \int_{-\infty}^{+\infty} \phi(x) dx $$
+   On reconnait l'action de la distribution constante égale à 1 : $\langle T_1, \phi \rangle = \int \phi(x) dx$.
+   Donc $T_{\text{sgn}} = 2T_H - T_1$. $\blacksquare$
+\end{enumerate}
 
 
-\subsection*{Exercice 5 : Convergence de suite de fonctions vers un Dirac \quad $\bigstar\bigstar\bigstar\star\star$}
-
-Soit la suite de fonctions $f_n(x) = \frac{n}{\pi (1 + n^2 x^2)}$.
-Montrer que $f_n \to \delta_0$ au sens des distributions quand $n \to +\infty$.
-
-\textbf{Correction Détaillée :}
-Soit $\phi \in \mathcal{D}(\mathbb{R})$. Nous devons montrer que $\lim_{n \to +\infty} \int_{-\infty}^{+\infty} f_n(x) \phi(x) dx = \phi(0)$.
-Séparons l'intégrale en deux parties (on injecte $\phi(0)$) :
-$\int_{-\infty}^{+\infty} f_n(x) \phi(x) dx = \int_{-\infty}^{+\infty} \frac{n}{\pi (1 + n^2 x^2)} (\phi(x) - \phi(0) + \phi(0)) dx$
-$ = \phi(0) \int_{-\infty}^{+\infty} \frac{n}{\pi (1 + n^2 x^2)} dx + \int_{-\infty}^{+\infty} \frac{n}{\pi (1 + n^2 x^2)} (\phi(x) - \phi(0)) dx$
-
-Calculons la première intégrale (on effectue $y = nx$, $dy = n dx$) :
-$\int_{-\infty}^{+\infty} \frac{n}{\pi (1 + n^2 x^2)} dx = \frac{1}{\pi} \int_{-\infty}^{+\infty} \frac{1}{1 + y^2} dy = \frac{1}{\pi} [\arctan(y)]_{-\infty}^{+\infty} = \frac{1}{\pi} \left( \frac{\pi}{2} - \left(-\frac{\pi}{2}\right) \right) = 1$.
-La première partie vaut donc exactement $\phi(0)$.
-
-Il reste à montrer que le second terme tend vers 0. Soit $I_n = \int_{-\infty}^{+\infty} \frac{n}{\pi (1 + n^2 x^2)} (\phi(x) - \phi(0)) dx$.
-Par le théorème des accroissements finis, puisque $\phi \in \mathcal{C}^\infty$ et est à support compact, sa dérivée $\phi'$ est bornée sur $\mathbb{R}$. Soit $M = \sup_{\mathbb{R}} |\phi'(x)|$.
-On a $|\phi(x) - \phi(0)| \le M |x|$ pour tout $x$.
-On scinde l'intégrale en $|x| \le A/\sqrt{n}$ et $|x| > A/\sqrt{n}$ pour un $A>0$ bien choisi.
-Alternativement (plus rapide), on effectue le changement de variable $y = nx$ :
-$I_n = \frac{1}{\pi} \int_{-\infty}^{+\infty} \frac{1}{1 + y^2} \left( \phi\left(\frac{y}{n}\right) - \phi(0) \right) dy$
-Pour chaque $y$ fixé, la fonction intégrande tend vers $0$ car $\phi$ est continue en $0$.
-De plus, la fonction intégrande est majorée en valeur absolue par $\frac{2 \|\phi\|_\infty}{1+y^2}$, qui est une fonction dans $L^1(\mathbb{R})$ indépendante de $n$.
-On peut donc appliquer le Théorème de Convergence Dominée de Lebesgue : l'intégrale de la limite est la limite de l'intégrale, ce qui donne $0$.
-Ainsi, $\lim_{n \to +\infty} \langle T_{f_n}, \phi \rangle = \phi(0) + 0 = \langle \delta_0, \phi \rangle$.
-La suite converge bien vers $\delta_0$. $\blacksquare$
 
 
-\subsection*{Exercice 6 : Multiplication par une fonction de classe C-infini \quad $\bigstar\bigstar\bigstar\star\star$}
+\subsection*{Exercice 3 : Translation de la masse de Dirac \quad $\bigstar\bigstar\bigstar\star\star$}
 
-Soit $T \in \mathcal{D}'(\mathbb{R})$ et $\alpha \in \mathcal{C}^\infty(\mathbb{R})$.
-1. Comment définir l'action de la distribution $\alpha T$ sur une fonction test $\phi$ ?
-2. Montrer que l'équation $x T = 0$ admet pour solution générale $T = c \delta_0$ (où $c$ est une constante complexe).
+\textbf{Énoncé :}
+Soit $a \in \mathbb{R}$. Définir la distribution $\delta_a$ et montrer qu'elle correspond à une fonctionnelle linéaire continue d'ordre 0.
 
-\textbf{Correction Détaillée :}
-1. Si $T$ était une distribution régulière associée à $f \in L^1_{loc}$, l'action serait :
-$\langle \alpha T_f, \phi \rangle = \int (\alpha(x) f(x)) \phi(x) dx = \int f(x) (\alpha(x) \phi(x)) dx$.
-Pour que cette forme intégrale s'étende aux distributions, il faut que $\alpha \phi$ soit une fonction test. Comme $\phi \in \mathcal{D}(\mathbb{R})$ (elle est $\mathcal{C}^\infty$ à support compact) et $\alpha \in \mathcal{C}^\infty(\mathbb{R})$, le produit $\alpha \phi$ reste $\mathcal{C}^\infty$ et le support de $\alpha \phi$ est inclus dans le support de $\phi$, donc compact.
-On définit formellement : $\langle \alpha T, \phi \rangle = \langle T, \alpha \phi \rangle$.
-2. L'équation est $x T = 0$, ce qui signifie que pour tout $\phi \in \mathcal{D}(\mathbb{R})$, $\langle x T, \phi \rangle = 0$, soit $\langle T, x\phi \rangle = 0$.
-Soit une fonction test $\phi$. On peut écrire $\phi(x) = \phi(0)\theta(x) + x \psi(x)$ où $\theta \in \mathcal{D}(\mathbb{R})$ est une fonction test valant $1$ au voisinage de $0$, et $\psi \in \mathcal{D}(\mathbb{R})$.
-En effet, $\psi(x) = \frac{\phi(x) - \phi(0)\theta(x)}{x}$. Par le théorème de Taylor, cette fonction est bien prolongeable par continuité (et régularité $\mathcal{C}^\infty$) en $0$.
-Appliquons $T$ :
-$\langle T, \phi \rangle = \langle T, \phi(0)\theta \rangle + \langle T, x\psi \rangle$
-Par hypothèse, $\langle T, x\psi \rangle = \langle xT, \psi \rangle = 0$.
-Ainsi, $\langle T, \phi \rangle = \phi(0) \langle T, \theta \rangle$.
-La quantité $\langle T, \theta \rangle$ est une constante fixe que nous noterons $c$.
-D'où $\langle T, \phi \rangle = c \phi(0) = \langle c \delta_0, \phi \rangle$.
-La solution est bien $T = c \delta_0$. $\blacksquare$
+\textbf{Démonstration pas à pas :}
+\begin{enumerate}
+\item \textbf{Définition :} On pose $\langle \delta_a, \phi \rangle = \phi(a)$.
+\item \textbf{Linéarité :} $\langle \delta_a, \alpha \phi + \beta \psi \rangle = (\alpha \phi + \beta \psi)(a) = \alpha \phi(a) + \beta \psi(a) = \alpha \langle \delta_a, \phi \rangle + \beta \langle \delta_a, \psi \rangle$.
+\item \textbf{Continuité :} Pour $\phi$ à support dans un compact $K$, $|\langle \delta_a, \phi \rangle| = |\phi(a)| \le \sup_{x \in K} |\phi(x)|$.
+   Cela montre la continuité (si $\phi_n \to 0$ uniformément sur $K$, alors $\phi_n(a) \to 0$) et donne directement la majoration de l'ordre :
+   $$ |\langle \delta_a, \phi \rangle| \le C \sup_{x \in K} |\phi(x)| $$ avec $C=1$ si $a \in K$ et $C=0$ sinon.
+   L'ordre est donc $0$. $\blacksquare$
+\end{enumerate}
 
 
-\subsection*{Exercice 7 : La distribution Valeur Principale (vp) \quad $\bigstar\bigstar\bigstar\bigstar\star$}
-
-On définit pour $\phi \in \mathcal{D}(\mathbb{R})$ la forme linéaire $\text{vp}(1/x)$ par :
-$$\langle \text{vp}\left(\frac{1}{x}\right), \phi \rangle = \lim_{\epsilon \to 0^+} \int_{|x|>\epsilon} \frac{\phi(x)}{x} dx$$
-Montrer que cette limite existe bien pour toute fonction test, démontrant ainsi qu'il s'agit d'une distribution.
-
-\textbf{Correction Détaillée :}
-Pour contourner la divergence au voisinage de zéro due à $1/x$, on exploite la symétrie.
-L'intégrale se sépare sur deux domaines :
-$\int_{|x|>\epsilon} \frac{\phi(x)}{x} dx = \int_{-\infty}^{-\epsilon} \frac{\phi(x)}{x} dx + \int_{\epsilon}^{+\infty} \frac{\phi(x)}{x} dx$
-Dans la première intégrale, on effectue le changement de variable $x \to -x$ :
-$\int_{-\infty}^{-\epsilon} \frac{\phi(x)}{x} dx = \int_{+\infty}^{\epsilon} \frac{\phi(-x)}{-x} (-dx) = -\int_{\epsilon}^{+\infty} \frac{\phi(-x)}{x} dx$
-En recombinant avec la seconde intégrale :
-$\int_{|x|>\epsilon} \frac{\phi(x)}{x} dx = \int_{\epsilon}^{+\infty} \frac{\phi(x) - \phi(-x)}{x} dx$
-Par le théorème des accroissements finis appliqué entre $-x$ et $x$, $\phi(x) - \phi(-x) = 2x \phi'(c_x)$ avec $c_x \in [-x, x]$.
-Puisque $\phi$ est $\mathcal{C}^\infty$, sa dérivée est bornée, disons par $M$.
-Donc $\left| \frac{\phi(x) - \phi(-x)}{x} \right| \le \frac{2|x|M}{|x|} = 2M$.
-La fonction intégrande $\frac{\phi(x) - \phi(-x)}{x}$ est bornée au voisinage de $0$.
-De plus, son intégration se fait sur un ensemble compact puisque $\phi$ est à support compact. L'intégrale $\int_{0}^{+\infty} \frac{\phi(x) - \phi(-x)}{x} dx$ est donc parfaitement convergente (absolument convergente).
-La limite quand $\epsilon \to 0^+$ existe donc bel et bien. $\text{vp}(1/x)$ est une distribution bien définie. $\blacksquare$
 
 
-\subsection*{Exercice 8 : Distribution issue du logarithme \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+\subsection*{Exercice 4 : La valeur principale de Cauchy \quad $\bigstar\bigstar\bigstar\bigstar\star$}
 
-On note $f(x) = \ln|x|$.
-1. Montrer que $f \in L^1_{loc}(\mathbb{R})$. En déduire que $T_f$ est une distribution.
-2. (Préparation au jalon suivant) Si l'on calculait formellement $\langle T_f', \phi \rangle = - \langle T_f, \phi' \rangle$, quelle distribution singulière reconnaîtrait-on ?
+\textbf{Énoncé :}
+On définit l'action de la valeur principale de $1/x$, notée $vp(1/x)$, par : $\langle vp(1/x), \phi \rangle = \lim_{\epsilon \to 0} \int_{|x| > \epsilon} \frac{\phi(x)}{x} dx$. Montrer que cette limite existe pour tout $\phi \in \mathcal{D}(\mathbb{R})$.
 
-\textbf{Correction Détaillée :}
-1. La fonction logarithme est mesurable. Son seul point de singularité est $0$. Étudions l'intégrabilité locale en $0$.
-Il s'agit de voir si l'intégrale $\int_{-\epsilon}^{\epsilon} |\ln|x|| dx$ converge pour $\epsilon > 0$.
-Par symétrie, l'intégrale vaut $2 \int_0^{\epsilon} (-\ln(x)) dx$.
-Une primitive de $\ln(x)$ est $x \ln(x) - x$.
-En évaluant de $\delta > 0$ à $\epsilon$ puis en passant à la limite $\delta \to 0^+$ :
-$\lim_{\delta \to 0^+} [\delta \ln(\delta) - \delta] = 0$. (Croissance comparée usuelle).
-L'intégrale vaut donc $2(\epsilon - \epsilon\ln(\epsilon))$, ce qui est fini.
-Ainsi, $f$ est localement intégrable et $T_f$ est une distribution bien définie (régulière).
-2. Calculons $-\langle T_f, \phi' \rangle$ :
-$-\langle T_f, \phi' \rangle = - \int_{-\infty}^{+\infty} \ln|x| \phi'(x) dx = - \lim_{\epsilon \to 0^+} \left( \int_{-\infty}^{-\epsilon} \ln(-x) \phi'(x) dx + \int_{\epsilon}^{+\infty} \ln(x) \phi'(x) dx \right)$
-Intégrons par parties sur les domaines ne contenant pas 0. Le terme de bord à l'infini s'annule car $\phi$ est à support compact.
-$- \left[ \ln(-x)\phi(x) \right]_{-\infty}^{-\epsilon} + \int_{-\infty}^{-\epsilon} \frac{\phi(x)}{x} dx - \left[ \ln(x)\phi(x) \right]_{\epsilon}^{+\infty} + \int_{\epsilon}^{+\infty} \frac{\phi(x)}{x} dx$
-$- \ln(\epsilon)\phi(-\epsilon) + \ln(\epsilon)\phi(\epsilon) + \int_{|x| > \epsilon} \frac{\phi(x)}{x} dx$
-Le terme de bord s'écrit $\ln(\epsilon)(\phi(\epsilon) - \phi(-\epsilon))$. Or $\phi(\epsilon) - \phi(-\epsilon) \sim 2\epsilon \phi'(0)$ quand $\epsilon \to 0$.
-Donc $\ln(\epsilon) \times 2\epsilon \phi'(0) \to 0$ par croissance comparée.
-Il reste l'intégrale, qui, à la limite, n'est autre que la définition de la valeur principale.
-On trouve ainsi formellement que la dérivée du logarithme au sens des distributions est $\text{vp}(1/x)$. $\blacksquare$
+\textbf{Démonstration pas à pas :}
+\begin{enumerate}
+\item \textbf{Analyse du problème :} La fonction $1/x$ n'est pas dans $L^1_{loc}$ autour de 0, donc l'intégrale classique diverge.
+\item \textbf{Astuce de symétrie :} L'intégrale sur $|x| > \epsilon$ se décompose en $\int_{-R}^{-\epsilon} \frac{\phi(x)}{x} dx + \int_{\epsilon}^{R} \frac{\phi(x)}{x} dx$ (où $[-R, R]$ contient le support de $\phi$).
+   Par le changement de variable $x \mapsto -x$ dans la première intégrale, on obtient :
+   $$ \int_{\epsilon}^{R} \frac{\phi(x) - \phi(-x)}{x} dx $$
+\item \textbf{Limites :} Par le théorème des accroissements finis ou un développement de Taylor, $\phi(x) - \phi(-x) = 2x \phi'(0) + o(x)$.
+   Donc $\frac{\phi(x) - \phi(-x)}{x}$ est continue en 0 (et prolongeable par la valeur $2\phi'(0)$).
+   La fonction à intégrer est donc continue sur le compact $[0, R]$, l'intégrale a donc une limite finie quand $\epsilon \to 0$.
+   L'existence est démontrée. $\blacksquare$
+\end{enumerate}
 
 
-\subsection*{Exercice 9 : Égalité de distributions : vp et partie réelle \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
-
-Soit $\epsilon > 0$ et $f_\epsilon(x) = \frac{1}{x + i\epsilon}$.
-Montrer que, au sens des distributions (c'est-à-dire la limite de l'action de $f_\epsilon$ sur une fonction test quand $\epsilon \to 0^+$) :
-$\lim_{\epsilon \to 0^+} \frac{1}{x + i\epsilon} = \text{vp}\left(\frac{1}{x}\right) - i \pi \delta_0$
-(C'est l'identité de Sokhotski-Plemelj).
-
-\textbf{Correction Détaillée :}
-Séparons la partie réelle et la partie imaginaire de $f_\epsilon$ :
-$\frac{1}{x + i\epsilon} = \frac{x - i\epsilon}{x^2 + \epsilon^2} = \frac{x}{x^2 + \epsilon^2} - i \frac{\epsilon}{x^2 + \epsilon^2}$
-Soit $\phi \in \mathcal{D}(\mathbb{R})$.
-Partie imaginaire : $-\int_{-\infty}^{+\infty} \frac{\epsilon}{x^2 + \epsilon^2} \phi(x) dx$.
-On reconnaît une approximation de l'identité proportionnelle au noyau de Poisson (cf. Ex 5).
-Posons $y = x/\epsilon$. L'intégrale devient $-\int_{-\infty}^{+\infty} \frac{\epsilon}{\epsilon^2 y^2 + \epsilon^2} \phi(\epsilon y) \epsilon dy = - \int_{-\infty}^{+\infty} \frac{1}{y^2 + 1} \phi(\epsilon y) dy$.
-Par convergence dominée (la fonction est dominée par $C/(1+y^2)$ et $\phi(\epsilon y) \to \phi(0)$), l'intégrale tend vers $-\int_{-\infty}^{+\infty} \frac{1}{y^2+1} \phi(0) dy = -\pi \phi(0) = \langle -i\pi \delta_0, \phi \rangle$.
-Partie réelle : $\int_{-\infty}^{+\infty} \frac{x}{x^2 + \epsilon^2} \phi(x) dx$.
-Le terme $\frac{x}{x^2 + \epsilon^2}$ est impair. On peut donc injecter $\phi(0)$ en remarquant que son intégrale avec une fonction impaire sur un domaine symétrique est nulle :
-$\int_{-\infty}^{+\infty} \frac{x}{x^2 + \epsilon^2} (\phi(x) - \phi(0)) dx$.
-La fonction $\psi(x) = (\phi(x)-\phi(0))/x$ est lisse et à support compact (prolongeable en 0).
-L'intégrale s'écrit $\int_{-\infty}^{+\infty} \frac{x^2}{x^2+\epsilon^2} \psi(x) dx$.
-Quand $\epsilon \to 0^+$, l'intégrande converge vers $\psi(x)$ presque partout et est dominé.
-La limite est donc $\int_{-\infty}^{+\infty} \psi(x) dx = \int_{-\infty}^{+\infty} \frac{\phi(x)-\phi(0)}{x} dx$, qui est l'expression équivalente de $\text{vp}(1/x)$ démontrée dans l'exercice 7.
-La combinaison des deux parties donne la relation de Sokhotski-Plemelj. $\blacksquare$
 
 
-\subsection*{Exercice 10 : L'équation différentielle $x T' = 0$ \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+\subsection*{Exercice 5 : Convergence vers Dirac via des portes \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
 
-(Exercice d'ouverture vers le Jalon 83).
-Déterminer toutes les distributions $T \in \mathcal{D}'(\mathbb{R})$ telles que $x T' = 0$, sachant que par définition l'action de $T'$ est $\langle T', \phi \rangle = - \langle T, \phi' \rangle$.
+\textbf{Énoncé :}
+Soit $f_n(x) = \frac{n}{2} \mathbf{1}_{[-1/n, 1/n]}(x)$. Montrer que la suite de distributions régulières $T_{f_n}$ converge vers $\delta_0$ dans $\mathcal{D}'(\mathbb{R})$.
 
-\textbf{Correction Détaillée :}
-D'après l'exercice 6, si $S \in \mathcal{D}'$ vérifie $xS = 0$, alors $S = c \delta_0$ pour une constante $c$.
-Ici on a $x T' = 0$, donc $T' = c_1 \delta_0$.
-Il faut alors chercher les primitives de la distribution de Dirac.
-Par définition de la dérivée, on veut : $\langle T, -\phi' \rangle = c_1 \phi(0)$ pour toute fonction test.
-Soit $\psi$ une fonction test qui s'écrit sous la forme d'une dérivée : $\psi = \phi'$ pour une certaine $\phi \in \mathcal{D}(\mathbb{R})$.
-Une fonction test $\psi$ est la dérivée d'une fonction test $\phi$ (i.e. $\phi(x) = \int_{-\infty}^x \psi(t)dt \in \mathcal{D}(\mathbb{R})$) si et seulement si l'intégrale totale de $\psi$ est nulle : $\int_{-\infty}^{+\infty} \psi(t) dt = 0$.
-On sait d'autre part (Exercice 1) que la dérivée de la fonction de Heaviside est le Dirac. Prouvons-le rigoureusement : $\langle H', \phi \rangle = - \langle H, \phi' \rangle = - \int_0^{+\infty} \phi'(x) dx = - (0 - \phi(0)) = \phi(0) = \langle \delta_0, \phi \rangle$.
-Donc $H$ est UNE solution.
-Par linéarité de la dérivation, la solution générale sera de la forme $c_1 H + c_2$ (une constante). Une distribution constante est la distribution régulière associée à une fonction constante $f(x) = c_2$.
-Vérifions : $T = c_1 T_H + c_2 T_1$.
-$\langle (c_1 T_H + c_2 T_1)', \phi \rangle = -c_1 \langle T_H, \phi' \rangle - c_2 \int 1 \cdot \phi'(x) dx$.
-L'intégrale de $\phi'$ est nulle car $\phi$ est à support compact.
-On a bien $(c_1 T_H + c_2 T_1)' = c_1 \delta_0$.
-Puis $x(c_1 \delta_0) = 0$.
-L'ensemble des distributions solutions est donc l'ensemble des formes $T = c_1 T_H + c_2 T_1$, c'est-à-dire des "marches d'escalier" dont le saut est en 0. $\blacksquare$
+\textbf{Démonstration pas à pas :}
+\begin{enumerate}
+\item \textbf{Action de $T_{f_n}$ :} Pour $\phi \in \mathcal{D}(\mathbb{R})$,
+   $$ \langle T_{f_n}, \phi \rangle = \int_{-1/n}^{1/n} \frac{n}{2} \phi(x) dx $$
+\item \textbf{Théorème de la moyenne :} La fonction $\phi$ est continue. Par le théorème de la moyenne, il existe $c_n \in [-1/n, 1/n]$ tel que :
+   $$ \int_{-1/n}^{1/n} \phi(x) dx = \frac{2}{n} \phi(c_n) $$
+\item \textbf{Passage à la limite :} On a donc $\langle T_{f_n}, \phi \rangle = \frac{n}{2} \cdot \frac{2}{n} \phi(c_n) = \phi(c_n)$.
+   Lorsque $n \to +\infty$, l'intervalle $[-1/n, 1/n]$ se réduit à $\{0\}$, donc $c_n \to 0$.
+   Par continuité de $\phi$, $\phi(c_n) \to \phi(0) = \langle \delta_0, \phi \rangle$.
+   La convergence au sens des distributions est établie. $\blacksquare$
+\end{enumerate}
 
+
+
+
+\subsection*{Exercice 6 : Convergence vers Dirac via la Gaussienne \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Soit $g_n(x) = \frac{n}{\sqrt{\pi}} e^{-n^2 x^2}$. Montrer que $T_{g_n} \to \delta_0$.
+
+\textbf{Démonstration pas à pas :}
+\begin{enumerate}
+\item \textbf{Intégrale de Gauss :} On sait que $\int_{-\infty}^{+\infty} e^{-x^2} dx = \sqrt{\pi}$. Le changement de variable $y = nx$ donne $\int_{-\infty}^{+\infty} g_n(x) dx = 1$.
+\item \textbf{Décomposition :} Pour $\phi \in \mathcal{D}(\mathbb{R})$ :
+   $$ \langle T_{g_n}, \phi \rangle - \phi(0) = \int_{-\infty}^{+\infty} g_n(x) (\phi(x) - \phi(0)) dx $$
+\item \textbf{Majoration :} Soit $\epsilon > 0$. La fonction $\phi$ est continue en 0, donc il existe $\delta > 0$ tel que $|x| < \delta \implies |\phi(x) - \phi(0)| < \epsilon$.
+   On coupe l'intégrale en deux : $|x| < \delta$ et $|x| \ge \delta$.
+   $$ \left| \int_{|x| < \delta} g_n(x)(\phi(x)-\phi(0)) dx \right| \le \epsilon \int_{-\infty}^{+\infty} g_n(x) dx = \epsilon $$
+   Pour $|x| \ge \delta$, $\phi$ est bornée (soit $M = \sup |\phi|$).
+   $$ \left| \int_{|x| \ge \delta} g_n(x)(\phi(x)-\phi(0)) dx \right| \le 2M \int_{|x| \ge \delta} g_n(x) dx $$
+   Le changement $y = nx$ donne $2M \int_{|y| \ge n\delta} \frac{1}{\sqrt{\pi}} e^{-y^2} dy$, qui est le reste d'une intégrale convergente, et tend donc vers 0.
+   Ainsi, pour $n$ assez grand, la différence totale est $\le 2\epsilon$.
+   Donc $\langle T_{g_n}, \phi \rangle \to \phi(0)$. $\blacksquare$
+\end{enumerate}
+
+
+
+
+\subsection*{Exercice 7 : Série de Diracs (Peigne de Dirac) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Montrer que la somme formelle $T = \sum_{k=-\infty}^{+\infty} \delta_k$ définit bien une distribution. Quel est son ordre ?
+
+\textbf{Démonstration pas à pas :}
+\begin{enumerate}
+\item \textbf{Définition de l'action :} Pour $\phi \in \mathcal{D}(\mathbb{R})$, le support de $\phi$ est compact, disons inclus dans $[-R, R]$.
+   La somme devient $\langle T, \phi \rangle = \sum_{k=-\infty}^{+\infty} \phi(k)$.
+   Comme $\phi(k) = 0$ pour $|k| > R$, cette somme est en réalité finie, donc elle a un sens et est bien définie.
+\item \textbf{Linéarité et Continuité :} Soit un compact $K$. Le nombre d'entiers dans $K$ est majoré par la longueur de $K$ plus 1, disons $N_K$.
+   $$ |\langle T, \phi \rangle| \le \sum_{k \in K} |\phi(k)| \le N_K \sup_{x \in K} |\phi(x)| $$
+   Cette inégalité prouve la continuité séquentielle.
+\item \textbf{Ordre :} L'inégalité fait intervenir uniquement la borne supérieure de $\phi$ sur le compact $K$ (la dérivée d'ordre 0). L'ordre du peigne de Dirac est donc 0. $\blacksquare$
+\end{enumerate}
+
+
+
+
+\subsection*{Exercice 8 : Produit d'une distribution par une fonction C-infinie \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Soit $T \in \mathcal{D}'(\mathbb{R})$ et $\alpha \in C^\infty(\mathbb{R})$. Montrer que le produit $\alpha T$ défini par $\langle \alpha T, \phi \rangle = \langle T, \alpha \phi \rangle$ est une distribution.
+
+\textbf{Démonstration pas à pas :}
+\begin{enumerate}
+\item \textbf{Action bien définie :} Pour $\phi \in \mathcal{D}(\mathbb{R})$, la fonction produit $\alpha \phi$ est le produit de deux fonctions $C^\infty$, donc elle est $C^\infty$.
+   De plus, $\text{supp}(\alpha \phi) \subset \text{supp}(\phi)$, donc $\alpha \phi$ est à support compact. Ainsi $\alpha \phi \in \mathcal{D}(\mathbb{R})$, et l'action est bien définie.
+\item \textbf{Linéarité :} Immédiate par la bilinéarité du produit et de la forme $T$.
+\item \textbf{Continuité :} Supposons $\phi_n \xrightarrow{\mathcal{D}} 0$. Les supports des $\phi_n$ sont dans un compact commun $K$.
+   Les supports des $\alpha \phi_n$ sont donc aussi dans $K$.
+   Toute dérivée de $\alpha \phi_n$ fait intervenir la formule de Leibniz : $(\alpha \phi_n)^{(k)} = \sum_{j=0}^k \binom{k}{j} \alpha^{(j)} \phi_n^{(k-j)}$.
+   Sur le compact $K$, les fonctions $\alpha^{(j)}$ sont bornées. Puisque toutes les dérivées de $\phi_n$ tendent uniformément vers 0 sur $K$, il en est de même pour $(\alpha \phi_n)^{(k)}$.
+   Donc $\alpha \phi_n \xrightarrow{\mathcal{D}} 0$. Par la continuité de $T$, $\langle T, \alpha \phi_n \rangle \to 0$.
+   La forme $\alpha T$ est bien continue. $\blacksquare$
+\end{enumerate}
+
+
+
+
+\subsection*{Exercice 9 : Produit $\alpha(x) \delta_0$ \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Montrer que si $\alpha \in C^\infty(\mathbb{R})$, alors $\alpha(x) \delta_0 = \alpha(0) \delta_0$. En déduire l'équation $x T = 0$.
+
+\textbf{Démonstration pas à pas :}
+\begin{enumerate}
+\item \textbf{Le produit avec le Dirac :} Pour $\phi \in \mathcal{D}(\mathbb{R})$ :
+   $$ \langle \alpha \delta_0, \phi \rangle = \langle \delta_0, \alpha \phi \rangle = (\alpha \phi)(0) = \alpha(0) \phi(0) = \alpha(0) \langle \delta_0, \phi \rangle = \langle \alpha(0) \delta_0, \phi \rangle $$
+   On a bien $\alpha(x) \delta_0 = \alpha(0) \delta_0$.
+\item \textbf{Conséquence de l'équation $x T = 0$ :} Si $T = c \delta_0$, alors $x \cdot (c \delta_0) = c (0) \delta_0 = 0$.
+   Réciproquement, soit $T$ solution de $xT = 0$. Pour $\phi \in \mathcal{D}(\mathbb{R})$ vérifiant $\phi(0) = 0$, il existe (par la formule de Taylor avec reste intégral) une fonction $\psi \in \mathcal{D}(\mathbb{R})$ telle que $\phi(x) = x \psi(x)$.
+   Alors $\langle T, \phi \rangle = \langle T, x \psi \rangle = \langle xT, \psi \rangle = 0$.
+   La distribution $T$ est donc proportionnelle au Dirac : on peut montrer que toute distribution annulée par des fonctions s'annulant en 0 est de la forme $c \delta_0$. $\blacksquare$
+\end{enumerate}
+
+
+
+
+\subsection*{Exercice 10 : Indépendance de la base et convergence singulière \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Soit $T_n(x) = e^{inx}$. Montrer que $T_n$ converge vers 0 au sens des distributions.
+
+\textbf{Démonstration pas à pas :}
+\begin{enumerate}
+\item \textbf{Action d'une exponentielle oscillante :} Pour $\phi \in \mathcal{D}(\mathbb{R})$ :
+   $$ \langle T_n, \phi \rangle = \int_{-\infty}^{+\infty} e^{inx} \phi(x) dx $$
+\item \textbf{Lemme de Riemann-Lebesgue :} La fonction test $\phi$ est de classe $C^\infty$ et à support compact, donc elle appartient à $L^1(\mathbb{R})$.
+   L'intégrale $\int e^{inx} \phi(x) dx$ est exactement la transformée de Fourier de $\phi$ évaluée en $-n$.
+   D'après le lemme de Riemann-Lebesgue, pour toute fonction $L^1$, sa transformée de Fourier tend vers 0 à l'infini.
+   Ainsi, $\lim_{n \to \pm \infty} \int e^{inx} \phi(x) dx = 0$.
+\item \textbf{Intégration par parties alternative :} On peut aussi intégrer par parties. $e^{inx} = \frac{1}{in} \frac{d}{dx} (e^{inx})$.
+   $$ \int e^{inx} \phi(x) dx = \left[ \frac{1}{in} e^{inx} \phi(x) \right]_{-\infty}^{+\infty} - \frac{1}{in} \int e^{inx} \phi'(x) dx $$
+   Le terme de bord est nul car $\phi$ est à support compact. L'intégrale est majorée par $\frac{1}{n} \int |\phi'(x)| dx$, qui tend clairement vers 0.
+   La convergence dans $\mathcal{D}'(\mathbb{R})$ est démontrée. $\blacksquare$
+\end{enumerate}
 
 
 \newpage
 \part{Travaux Pratiques et Simulations Algorithmiques}
-\subsection*{TP 1 : Simulation de la convergence vers la distribution de Dirac}
-
-L'objectif de ce TP est de simuler numeriquement l'action d'une suite de fonctions (portes) convergeant vers la distribution de Dirac sur une fonction test choisie analytiquement, pour verifier que l'integrale numerique converge bien vers la valeur de la fonction en zero.
-
-\begin{lstlisting}[language=Python]
-import math
-
-def fonction_test_cloche(x):
-    # Fonction lisse a support compact [-1, 1]
-    if abs(x) >= 1.0:
-        return 0.0
-    return math.exp(-1.0 / (1.0 - x**2))
-
-def fonction_porte(x, n):
-    # Porte d'aire 1 et de largeur 1/n centree en 0
-    if abs(x) <= 1.0 / (2.0 * n):
-        return n
-    return 0.0
-
-def integration_trapezes(f, a, b, N=10000):
-    h = (b - a) / N
-    s = 0.5 * (f(a) + f(b))
-    for i in range(1, N):
-        s += f(a + i * h)
-    return s * h
-
-def action_sur_test(n):
-    # L'integrale se limite au support de la porte [-1/(2n), 1/(2n)]
-    a = -1.0 / (2.0 * n)
-    b = 1.0 / (2.0 * n)
-    # L'integrande est porte(x)*test(x)
-    integrande = lambda x: fonction_porte(x, n) * fonction_test_cloche(x)
-    return integration_trapezes(integrande, a, b)
-
-valeur_theorique = fonction_test_cloche(0.0)
-print(f"Valeur theorique (Dirac en 0) : {valeur_theorique}")
-
-for n in [1, 10, 100, 1000]:
-    valeur_approx = action_sur_test(n)
-    erreur = abs(valeur_approx - valeur_theorique)
-    print(f"n={n:4d} | Approx: {valeur_approx:.6f} | Erreur: {erreur:.6e}")
-    # Verification mathematique de la convergence
-    assert erreur < 2.0 / n, "La convergence est trop lente ou incorrecte"
-
-print("Convergence validee : la suite de portes agit comme un Dirac.")
-\end{lstlisting}
 
 
-\subsection*{TP 2 : Action de la translatée d'une distribution}
+\subsection*{TP 1 : Approximation de Dirac par des portes}
 
-Nous allons implementer et verifier numeriquement la formule de translation d'une distribution. La translatee du Dirac en 0 par un vecteur 'a' doit etre le Dirac en 'a'.
-
-\begin{lstlisting}[language=Python]
-import math
-
-def fonction_test_sinus(x):
-    # Support [-math.pi, math.pi]
-    if abs(x) >= math.pi:
-        return 0.0
-    return math.sin(x) * math.exp(-1.0 / (math.pi**2 - x**2))
-
-def fonction_gaussienne_dirac(x, epsilon):
-    # Approximation lisse du Dirac d'aire 1
-    return (1.0 / (math.sqrt(2 * math.pi) * epsilon)) * math.exp(-0.5 * (x / epsilon)**2)
-
-def integration_simpson(f, a, b, N=1000):
-    if N % 2 != 0:
-        N += 1
-    h = (b - a) / N
-    s = f(a) + f(b)
-    for i in range(1, N, 2):
-        s += 4 * f(a + i * h)
-    for i in range(2, N-1, 2):
-        s += 2 * f(a + i * h)
-    return s * h / 3.0
-
-# On decale la distribution de a = 1.5
-a_trans = 1.5
-epsilon = 0.01
-
-# Methode 1 : Integrale de (f(x-a) * phi(x))
-def integrande_1(x):
-    return fonction_gaussienne_dirac(x - a_trans, epsilon) * fonction_test_sinus(x)
-
-# Methode 2 : Integrale de (f(x) * phi(x+a))
-def integrande_2(x):
-    return fonction_gaussienne_dirac(x, epsilon) * fonction_test_sinus(x + a_trans)
-
-# Le support utile pour l'integrale est centre autour du pic de la gaussienne
-val1 = integration_simpson(integrande_1, a_trans - 5*epsilon, a_trans + 5*epsilon)
-val2 = integration_simpson(integrande_2, -5*epsilon, +5*epsilon)
-val_theorique = fonction_test_sinus(a_trans)
-
-print(f"Action theorique (Dirac en {a_trans}) : {val_theorique:.6f}")
-print(f"Action integrale directe : {val1:.6f}")
-print(f"Action sur fonction translatee : {val2:.6f}")
-
-assert abs(val1 - val2) < 1e-5, "Les deux formulations integrales doivent coincider"
-assert abs(val1 - val_theorique) < 1e-3, "L'approximation gaussienne doit etre proche du Dirac"
-\end{lstlisting}
-
-
-\subsection*{TP 3 : Calcul numérique de la Valeur Principale (vp)}
-
-La distribution vp(1/x) est definie par une limite en evitant la singularite. Ce TP calcule cette limite numeriquement sur une fonction test asymetrique.
-
-\begin{lstlisting}[language=Python]
-import math
-
-def fonction_test_asymetrique(x):
-    if abs(x) >= 2.0:
-        return 0.0
-    # Fonction lisse non nulle et non paire
-    return (x**2 - 4)**2 * math.exp(x)
-
-def integrande_vp(x):
-    # La fonction vp : phi(x)/x. Pas de division par zero car evaluee hors de 0
-    return fonction_test_asymetrique(x) / x
-
-def integration_vp(epsilon, a=-2.0, b=2.0):
-    # On integre sur [a, -epsilon] et [epsilon, b]
-    N = 10000
-
-    # Partie negative
-    h1 = (-epsilon - a) / N
-    s1 = 0.5 * (integrande_vp(a) + integrande_vp(-epsilon))
-    for i in range(1, N):
-        s1 += integrande_vp(a + i * h1)
-    s1 *= h1
-
-    # Partie positive
-    h2 = (b - epsilon) / N
-    s2 = 0.5 * (integrande_vp(epsilon) + integrande_vp(b))
-    for i in range(1, N):
-        s2 += integrande_vp(epsilon + i * h2)
-    s2 *= h2
-
-    return s1 + s2
-
-epsilons = [0.1, 0.01, 0.001, 0.0001]
-valeurs_vp = []
-
-for eps in epsilons:
-    val = integration_vp(eps)
-    valeurs_vp.append(val)
-    print(f"Epsilon = {eps:.4f} -> Action vp = {val:.5f}")
-
-# Verification de la stabilite de la limite (Convergence de Cauchy)
-diff = abs(valeurs_vp[-1] - valeurs_vp[-2])
-assert diff < 1e-3, "La valeur principale ne converge pas numeriquement"
-print("La limite de la valeur principale est stable.")
-\end{lstlisting}
-
-
-\subsection*{TP 4 : Preuve numérique de l'identité de Sokhotski-Plemelj}
-
-Nous allons simuler l'identite 1/(x+iepsilon) = vp(1/x) - i pi Dirac(0) en evaluant l'action de ces distributions sur une fonction test.
+Simulation numérique.
 
 \begin{lstlisting}[language=Python]
 import math
 
 def fonction_test(x):
-    if abs(x) >= 1.0:
+    if x <= 0 or x >= 2:
         return 0.0
-    return math.exp(x) * (1 - x**2)**3
+    return math.exp(-1.0 / (1.0 - (x - 1.0)**2))
 
-def integration_complexe(epsilon, N=10000):
-    a, b = -1.0, 1.0
+def integrer_simpson(f, a, b, N=1000):
+    if N % 2 == 1: N += 1
     h = (b - a) / N
-    sum_real = 0.0
-    sum_imag = 0.0
+    somme = f(a) + f(b)
+    for k in range(1, N):
+        xk = a + k * h
+        somme += 2 * f(xk) if k % 2 == 0 else 4 * f(xk)
+    return (h / 3.0) * somme
 
-    for i in range(N + 1):
-        x = a + i * h
-        poids = 0.5 if (i == 0 or i == N) else 1.0
-        phi_val = fonction_test(x)
+def porte(n, x, a=1.0):
+    return n / 2.0 if (a - 1.0/n <= x <= a + 1.0/n) else 0.0
 
-        # Denominateur : x^2 + epsilon^2
-        den = x**2 + epsilon**2
-        real_part = (x / den) * phi_val
-        imag_part = (-epsilon / den) * phi_val
+def action_porte(n):
+    return integrer_simpson(lambda x: porte(n, x, 1.0) * fonction_test(x), 1.0 - 1.0/n, 1.0 + 1.0/n, 100)
 
-        sum_real += poids * real_part
-        sum_imag += poids * imag_part
-
-    return sum_real * h, sum_imag * h
-
-val_dirac = fonction_test(0.0)
-theorique_imag = -math.pi * val_dirac
-
-print(f"Partie imaginaire theorique (-pi * phi(0)) : {theorique_imag:.5f}")
-
-for eps in [0.1, 0.01, 0.001]:
-    r, c = integration_complexe(eps)
-    print(f"Eps={eps:.3f} | Reelle (vp)={r:.5f} | Imaginaire={c:.5f}")
-    if eps == 0.001:
-        assert abs(c - theorique_imag) < 1e-2, "La partie imaginaire ne tend pas vers -pi * Dirac"
-
-print("Identite verifiee avec succes au sens des distributions.")
+val_theorique = fonction_test(1.0)
+erreur = abs(val_theorique - action_porte(50))
+assert erreur < 1e-3, "Convergence non atteinte"
+print("TP1: Convergence par portes validee.")
 \end{lstlisting}
 
 
-\subsection*{TP 5 : Résolution matricielle de l'équation différentielle xT=0 discretisée}
 
-Nous simulons le theoreme qui stipule que si xT = 0, alors T est proportionnel au Dirac. Nous discretisons l'espace et resolvons le systeme lineaire associe.
+
+\subsection*{TP 2 : Approximation de Dirac par des gaussiennes}
+
+Simulation numérique.
 
 \begin{lstlisting}[language=Python]
-# Pas de module externe complexe pour rester pur Python
-# On construit une grille 1D de -1 a 1 avec N points
-N = 11
-x_grid = [ -1.0 + i * (2.0 / (N - 1)) for i in range(N) ]
+import math
 
-# Une distribution T discretisee est un vecteur d'evaluations
-# L'equation (x * T) = 0 devient x_i * T_i = 0 pour chaque i
-# Pour un systeme lineaire simple, on regarde le noyau de l'operateur de multiplication.
+def fonction_test(x):
+    return math.cos(x) * math.exp(-x*x)
 
-T_solution = [0.0] * N
+def integrer_simpson(f, a, b, N=2000):
+    if N % 2 == 1: N += 1
+    h = (b - a) / N
+    somme = f(a) + f(b)
+    for k in range(1, N):
+        xk = a + k * h
+        somme += 2 * f(xk) if k % 2 == 0 else 4 * f(xk)
+    return (h / 3.0) * somme
 
-for i in range(N):
-    x = x_grid[i]
-    # Si x n'est pas nul, T_i doit etre nul pour que x_i * T_i = 0
-    # A cause de la precision flottante, on regarde si |x| est tres petit
-    if abs(x) > 1e-10:
-        T_solution[i] = 0.0
-    else:
-        # En x=0, n'importe quelle valeur est solution (proportionnalite au Dirac)
-        T_solution[i] = 1.0 # On fixe arbitrairement c=1
+def gaussienne(n, x):
+    return (n / math.sqrt(math.pi)) * math.exp(-n*n * x*x)
 
-print("Grille X   :", [round(x, 2) for x in x_grid])
-print("Solution T :", T_solution)
+def action_gaussienne(n):
+    # L'essentiel de l'integrale de la gaussienne est dans [-3/n, 3/n]
+    return integrer_simpson(lambda x: gaussienne(n, x) * fonction_test(x), -3.0/n, 3.0/n, 200)
 
-# Verification de l'equation
-for i in range(N):
-    produit = x_grid[i] * T_solution[i]
-    assert abs(produit) < 1e-10, "L'equation xT=0 n'est pas respectee"
+val_theorique = fonction_test(0.0)
+erreur = abs(val_theorique - action_gaussienne(40))
+assert erreur < 1e-3, "Convergence non atteinte pour la gaussienne"
+print("TP2: Convergence par gaussiennes validee.")
+\end{lstlisting}
 
-# On verifie que seul le point central (indice 5 pour N=11, correspondant a x=0) est non nul
-index_zero = N // 2
-assert T_solution[index_zero] == 1.0, "Le Dirac doit etre au centre"
-for i in range(N):
-    if i != index_zero:
-        assert T_solution[i] == 0.0, "Les autres valeurs doivent etre nulles"
 
-print("Le noyau de l'operateur de multiplication par X est bien engendre par le Dirac discret.")
+
+
+\subsection*{TP 3 : Simulation du Peigne de Dirac}
+
+Simulation numérique.
+
+\begin{lstlisting}[language=Python]
+import math
+
+def fonction_test(x):
+    # Support [-5, 5]
+    if x <= -5 or x >= 5: return 0.0
+    return math.exp(-x*x / 2.0)
+
+def action_peigne():
+    somme = 0.0
+    # Le support est inclus dans [-4, 4] pour les entiers
+    for k in range(-4, 5):
+        somme += fonction_test(k)
+    return somme
+
+valeur_peigne = action_peigne()
+# Verification manuelle de la symetrie
+valeur_attendue = fonction_test(0) + 2*fonction_test(1) + 2*fonction_test(2) + 2*fonction_test(3) + 2*fonction_test(4)
+assert abs(valeur_peigne - valeur_attendue) < 1e-6
+print(f"TP3: Action du Peigne de Dirac = {valeur_peigne:.4f}")
+\end{lstlisting}
+
+
+
+
+\subsection*{TP 4 : Valeur principale de Cauchy 1/x}
+
+Simulation numérique.
+
+\begin{lstlisting}[language=Python]
+import math
+
+def fonction_test(x):
+    # Fonction asymetrique pour que l'integrale vp ne soit pas trivialement nulle
+    if x <= -2 or x >= 2: return 0.0
+    return (x + 1) * math.exp(-x*x)
+
+def integrer_simpson(f, a, b, N=500):
+    if N % 2 == 1: N += 1
+    h = (b - a) / N
+    somme = f(a) + f(b)
+    for k in range(1, N):
+        xk = a + k * h
+        somme += 2 * f(xk) if k % 2 == 0 else 4 * f(xk)
+    return (h / 3.0) * somme
+
+def action_vp(epsilon):
+    # Integrer sur [-2, -epsilon] et [epsilon, 2]
+    int_neg = integrer_simpson(lambda x: fonction_test(x)/x, -2.0, -epsilon)
+    int_pos = integrer_simpson(lambda x: fonction_test(x)/x, epsilon, 2.0)
+    return int_neg + int_pos
+
+vp_01 = action_vp(0.1)
+vp_001 = action_vp(0.01)
+vp_0001 = action_vp(0.001)
+
+# L'integrale vp(1/x) sur la partie paire exp(-x*x) est 0.
+# Sur la partie impaire x*exp(-x*x), vp(1/x) devient integrale(exp(-x*x))
+vp_theorique = integrer_simpson(lambda x: math.exp(-x*x), -2.0, 2.0, 1000)
+
+erreur = abs(vp_0001 - vp_theorique)
+assert erreur < 1e-2, "Calcul de VP incorrect"
+print(f"TP4: Calcul de VP de 1/x reussi. Erreur : {erreur:.4f}")
+\end{lstlisting}
+
+
+
+
+\subsection*{TP 5 : Illustration de Riemann-Lebesgue}
+
+Simulation numérique.
+
+\begin{lstlisting}[language=Python]
+import math
+
+def fonction_test(x):
+    # Support compact sur [0, pi]
+    if x <= 0 or x >= math.pi: return 0.0
+    return math.sin(x)
+
+def integrer_simpson(f, a, b, N=1000):
+    if N % 2 == 1: N += 1
+    h = (b - a) / N
+    somme = f(a) + f(b)
+    for k in range(1, N):
+        xk = a + k * h
+        somme += 2 * f(xk) if k % 2 == 0 else 4 * f(xk)
+    return (h / 3.0) * somme
+
+def fourier_action(n):
+    # Action de exp(i n x) -> on prend la partie reelle cos(nx)
+    return integrer_simpson(lambda x: math.cos(n*x) * fonction_test(x), 0, math.pi, 2000)
+
+action_1 = fourier_action(1)
+action_10 = fourier_action(10)
+action_50 = fourier_action(50)
+
+assert abs(action_50) < abs(action_10) < abs(action_1), "La decroissance n'est pas verifiee"
+assert abs(action_50) < 0.1, "L'action ne tend pas vers 0"
+print(f"TP5: Riemann-Lebesgue valide. n=1: {action_1:.3f}, n=10: {action_10:.3f}, n=50: {action_50:.3f}")
 \end{lstlisting}
 
 

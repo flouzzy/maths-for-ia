@@ -1,21 +1,30 @@
-\subsection*{Exercice 10 : L'équation différentielle $x T' = 0$ \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+# Exercice 10 : Résolution d'une équation distributionnelle simple
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-(Exercice d'ouverture vers le Jalon 83).
-Déterminer toutes les distributions $T \in \mathcal{D}'(\mathbb{R})$ telles que $x T' = 0$, sachant que par définition l'action de $T'$ est $\langle T', \phi \rangle = - \langle T, \phi' \rangle$.
+## Énoncé
+Trouver toutes les distributions $T \in \mathcal{D}'(\mathbb{R})$ vérifiant l'équation $x \cdot T = 0$. (Indice : utiliser une fonction plateau $\theta \in \mathcal{D}(\mathbb{R})$ avec $\theta(0) = 1$, et écrire toute fonction test $\varphi$ sous la forme $\varphi(x) = \varphi(0)\theta(x) + x\psi(x)$ avec $\psi \in \mathcal{D}(\mathbb{R})$).
 
-**Correction Détaillée :**
-D'après l'exercice 6, si $S \in \mathcal{D}'$ vérifie $xS = 0$, alors $S = c \delta_0$ pour une constante $c$.
-Ici on a $x T' = 0$, donc $T' = c_1 \delta_0$.
-Il faut alors chercher les primitives de la distribution de Dirac.
-Par définition de la dérivée, on veut : $\langle T, -\phi' \rangle = c_1 \phi(0)$ pour toute fonction test.
-Soit $\psi$ une fonction test qui s'écrit sous la forme d'une dérivée : $\psi = \phi'$ pour une certaine $\phi \in \mathcal{D}(\mathbb{R})$.
-Une fonction test $\psi$ est la dérivée d'une fonction test $\phi$ (i.e. $\phi(x) = \int_{-\infty}^x \psi(t)dt \in \mathcal{D}(\mathbb{R})$) si et seulement si l'intégrale totale de $\psi$ est nulle : $\int_{-\infty}^{+\infty} \psi(t) dt = 0$.
-On sait d'autre part (Exercice 1) que la dérivée de la fonction de Heaviside est le Dirac. Prouvons-le rigoureusement : $\langle H', \phi \rangle = - \langle H, \phi' \rangle = - \int_0^{+\infty} \phi'(x) dx = - (0 - \phi(0)) = \phi(0) = \langle \delta_0, \phi \rangle$.
-Donc $H$ est UNE solution.
-Par linéarité de la dérivation, la solution générale sera de la forme $c_1 H + c_2$ (une constante). Une distribution constante est la distribution régulière associée à une fonction constante $f(x) = c_2$.
-Vérifions : $T = c_1 T_H + c_2 T_1$.
-$\langle (c_1 T_H + c_2 T_1)', \phi \rangle = -c_1 \langle T_H, \phi' \rangle - c_2 \int 1 \cdot \phi'(x) dx$.
-L'intégrale de $\phi'$ est nulle car $\phi$ est à support compact.
-On a bien $(c_1 T_H + c_2 T_1)' = c_1 \delta_0$.
-Puis $x(c_1 \delta_0) = 0$.
-L'ensemble des distributions solutions est donc l'ensemble des formes $T = c_1 T_H + c_2 T_1$, c'est-à-dire des "marches d'escalier" dont le saut est en 0. $\blacksquare$
+## Correction Détaillée
+1. Soit $T$ une distribution telle que $x \cdot T = 0$. Par définition du produit par une fonction régulière, cela signifie que pour toute fonction test $\phi$, $\langle x \cdot T, \phi \rangle = \langle T, x\phi \rangle = 0$.
+2. Soit $\varphi \in \mathcal{D}(\mathbb{R})$ une fonction test quelconque.
+3. Fixons une fonction test $\theta \in \mathcal{D}(\mathbb{R})$ telle que $\theta(x) = 1$ sur un voisinage de $0$. (Cela implique $\theta(0) = 1$).
+4. On peut toujours écrire l'identité algébrique :
+   $$ \varphi(x) = \varphi(0)\theta(x) + (\varphi(x) - \varphi(0)\theta(x)) $$
+5. Étudions le terme $r(x) = \varphi(x) - \varphi(0)\theta(x)$. Cette fonction appartient à $\mathcal{D}(\mathbb{R})$ (combinaison linéaire de fonctions $C^\infty$ à support compact).
+6. De plus, évaluons en $0$ : $r(0) = \varphi(0) - \varphi(0)\theta(0) = \varphi(0) - \varphi(0) = 0$.
+7. Puisque $r(0) = 0$ et que $r \in C^\infty$, le théorème de Taylor avec reste intégral (ou simplement le lemme de division de Hadamard) garantit l'existence d'une fonction $\psi \in C^\infty(\mathbb{R})$ telle que $r(x) = x\psi(x)$.
+8. Comme $r$ est à support compact, $\psi$ l'est aussi (hors du support de $r$, $x\psi(x) = 0$, donc $\psi(x) = 0$ pour $x \neq 0$). Ainsi $\psi \in \mathcal{D}(\mathbb{R})$.
+9. On a donc la décomposition :
+   $$ \varphi(x) = \varphi(0)\theta(x) + x\psi(x) $$
+10. Évaluons l'action de la distribution $T$ sur la fonction test $\varphi$ :
+    $$ \langle T, \varphi \rangle = \langle T, \varphi(0)\theta + x\psi \rangle $$
+11. Par linéarité de la distribution $T$ :
+    $$ \langle T, \varphi \rangle = \varphi(0)\langle T, \theta \rangle + \langle T, x\psi \rangle $$
+12. Par l'hypothèse de départ, l'action de $T$ sur une fonction de la forme $x \mapsto x\psi(x)$ est nulle, donc $\langle T, x\psi \rangle = 0$.
+13. Il reste :
+    $$ \langle T, \varphi \rangle = \varphi(0) \langle T, \theta \rangle $$
+14. La quantité $\langle T, \theta \rangle$ est un nombre complexe fixe, appelons-le $C$.
+15. L'équation devient :
+    $$ \langle T, \varphi \rangle = C \varphi(0) = C \langle \delta_0, \varphi \rangle = \langle C\delta_0, \varphi \rangle $$
+16. Puisque cela est vrai pour toute fonction test $\varphi$, on conclut que la distribution $T$ est proportionnelle à la masse de Dirac.
+17. Conclusion : les solutions de l'équation $x \cdot T = 0$ sont exactement les distributions de la forme $T = C\delta_0$, où $C$ est une constante arbitraire.

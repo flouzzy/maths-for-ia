@@ -1,20 +1,20 @@
-\subsection*{Exercice 7 : La distribution Valeur Principale (vp) \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+# Exercice 7 : Continuité de la masse de Dirac
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
 
-On définit pour $\phi \in \mathcal{D}(\mathbb{R})$ la forme linéaire $\text{vp}(1/x)$ par :
-$$\langle \text{vp}\left(\frac{1}{x}\right), \phi \rangle = \lim_{\epsilon \to 0^+} \int_{|x|>\epsilon} \frac{\phi(x)}{x} dx$$
-Montrer que cette limite existe bien pour toute fonction test, démontrant ainsi qu'il s'agit d'une distribution.
+## Énoncé
+Prouver rigoureusement que la forme linéaire définie par $\delta_0 : \varphi \mapsto \varphi(0)$ satisfait la condition de continuité séquentielle sur $\mathcal{D}(\mathbb{R})$.
 
-**Correction Détaillée :**
-Pour contourner la divergence au voisinage de zéro due à $1/x$, on exploite la symétrie.
-L'intégrale se sépare sur deux domaines :
-$\int_{|x|>\epsilon} \frac{\phi(x)}{x} dx = \int_{-\infty}^{-\epsilon} \frac{\phi(x)}{x} dx + \int_{\epsilon}^{+\infty} \frac{\phi(x)}{x} dx$
-Dans la première intégrale, on effectue le changement de variable $x \to -x$ :
-$\int_{-\infty}^{-\epsilon} \frac{\phi(x)}{x} dx = \int_{+\infty}^{\epsilon} \frac{\phi(-x)}{-x} (-dx) = -\int_{\epsilon}^{+\infty} \frac{\phi(-x)}{x} dx$
-En recombinant avec la seconde intégrale :
-$\int_{|x|>\epsilon} \frac{\phi(x)}{x} dx = \int_{\epsilon}^{+\infty} \frac{\phi(x) - \phi(-x)}{x} dx$
-Par le théorème des accroissements finis appliqué entre $-x$ et $x$, $\phi(x) - \phi(-x) = 2x \phi'(c_x)$ avec $c_x \in [-x, x]$.
-Puisque $\phi$ est $\mathcal{C}^\infty$, sa dérivée est bornée, disons par $M$.
-Donc $\left| \frac{\phi(x) - \phi(-x)}{x} \right| \le \frac{2|x|M}{|x|} = 2M$.
-La fonction intégrande $\frac{\phi(x) - \phi(-x)}{x}$ est bornée au voisinage de $0$.
-De plus, son intégration se fait sur un ensemble compact puisque $\phi$ est à support compact. L'intégrale $\int_{0}^{+\infty} \frac{\phi(x) - \phi(-x)}{x} dx$ est donc parfaitement convergente (absolument convergente).
-La limite quand $\epsilon \to 0^+$ existe donc bel et bien. $\text{vp}(1/x)$ est une distribution bien définie. $\blacksquare$
+## Correction Détaillée
+1. Il faut montrer que si une suite $(\varphi_n)$ converge vers $0$ dans $\mathcal{D}(\mathbb{R})$, alors la suite de nombres complexes $\langle \delta_0, \varphi_n \rangle$ converge vers 0 dans $\mathbb{C}$.
+2. Soit $(\varphi_n)$ une suite convergeant vers $0$ dans $\mathcal{D}(\mathbb{R})$. Par définition de cette topologie, deux conditions sont remplies :
+   - (A) Il existe un compact fixe $K$ contenant le support de tous les $\varphi_n$.
+   - (B) Pour tout $k \ge 0$, la suite des dérivées $\varphi_n^{(k)}$ converge uniformément vers 0 sur $K$.
+3. Evaluons l'action de $\delta_0$ sur $\varphi_n$ :
+   $$ \langle \delta_0, \varphi_n \rangle = \varphi_n(0) $$
+4. Nous devons prouver que $\varphi_n(0) \to 0$ lorsque $n \to +\infty$.
+5. Utilisons la condition (B) avec $k = 0$ (la fonction elle-même). La convergence uniforme sur $K$ implique que :
+   $$ \lim_{n \to \infty} \sup_{x \in K} |\varphi_n(x)| = 0 $$
+6. Or, $| \varphi_n(0) | \le \sup_{x \in K} |\varphi_n(x)|$. (Même si $0 \notin K$, alors $\varphi_n(0) = 0$ et l'inégalité est vérifiée trivialement).
+7. Par le théorème d'encadrement (gendarmes), puisque la norme infinie de la suite tend vers 0, on a inéluctablement :
+   $$ \lim_{n \to \infty} |\varphi_n(0)| = 0 $$
+8. Par conséquent, $\lim_{n \to \infty} \langle \delta_0, \varphi_n \rangle = 0$. La forme linéaire $\delta_0$ est bien continue, c'est une authentique distribution.

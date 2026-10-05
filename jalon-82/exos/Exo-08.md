@@ -1,24 +1,22 @@
-\subsection*{Exercice 8 : Distribution issue du logarithme \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+# Exercice 8 : Convergence du noyau de Fejér
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-On note $f(x) = \ln|x|$.
-1. Montrer que $f \in L^1_{loc}(\mathbb{R})$. En déduire que $T_f$ est une distribution.
-2. (Préparation au jalon suivant) Si l'on calculait formellement $\langle T_f', \phi \rangle = - \langle T_f, \phi' \rangle$, quelle distribution singulière reconnaîtrait-on ?
+## Énoncé
+En analyse de Fourier, le noyau de Fejér est donné par $F_n(x) = \frac{1}{2\pi n} \left( \frac{\sin(nx/2)}{\sin(x/2)} \right)^2$. Montrer que, vu comme suite de distributions sur $]-\pi, \pi[$, $F_n$ converge vers $\delta_0$. (On rappelle que $\int_{-\pi}^{\pi} F_n(x) dx = 1$ et que pour tout $\delta > 0$, $\lim_{n \to \infty} \int_{\delta < |x| < \pi} F_n(x) dx = 0$).
 
-**Correction Détaillée :**
-1. La fonction logarithme est mesurable. Son seul point de singularité est $0$. Étudions l'intégrabilité locale en $0$.
-Il s'agit de voir si l'intégrale $\int_{-\epsilon}^{\epsilon} |\ln|x|| dx$ converge pour $\epsilon > 0$.
-Par symétrie, l'intégrale vaut $2 \int_0^{\epsilon} (-\ln(x)) dx$.
-Une primitive de $\ln(x)$ est $x \ln(x) - x$.
-En évaluant de $\delta > 0$ à $\epsilon$ puis en passant à la limite $\delta \to 0^+$ :
-$\lim_{\delta \to 0^+} [\delta \ln(\delta) - \delta] = 0$. (Croissance comparée usuelle).
-L'intégrale vaut donc $2(\epsilon - \epsilon\ln(\epsilon))$, ce qui est fini.
-Ainsi, $f$ est localement intégrable et $T_f$ est une distribution bien définie (régulière).
-2. Calculons $-\langle T_f, \phi' \rangle$ :
-$-\langle T_f, \phi' \rangle = - \int_{-\infty}^{+\infty} \ln|x| \phi'(x) dx = - \lim_{\epsilon \to 0^+} \left( \int_{-\infty}^{-\epsilon} \ln(-x) \phi'(x) dx + \int_{\epsilon}^{+\infty} \ln(x) \phi'(x) dx \right)$
-Intégrons par parties sur les domaines ne contenant pas 0. Le terme de bord à l'infini s'annule car $\phi$ est à support compact.
-$- \left[ \ln(-x)\phi(x) \right]_{-\infty}^{-\epsilon} + \int_{-\infty}^{-\epsilon} \frac{\phi(x)}{x} dx - \left[ \ln(x)\phi(x) \right]_{\epsilon}^{+\infty} + \int_{\epsilon}^{+\infty} \frac{\phi(x)}{x} dx$
-$- \ln(\epsilon)\phi(-\epsilon) + \ln(\epsilon)\phi(\epsilon) + \int_{|x| > \epsilon} \frac{\phi(x)}{x} dx$
-Le terme de bord s'écrit $\ln(\epsilon)(\phi(\epsilon) - \phi(-\epsilon))$. Or $\phi(\epsilon) - \phi(-\epsilon) \sim 2\epsilon \phi'(0)$ quand $\epsilon \to 0$.
-Donc $\ln(\epsilon) \times 2\epsilon \phi'(0) \to 0$ par croissance comparée.
-Il reste l'intégrale, qui, à la limite, n'est autre que la définition de la valeur principale.
-On trouve ainsi formellement que la dérivée du logarithme au sens des distributions est $\text{vp}(1/x)$. $\blacksquare$
+## Correction Détaillée
+1. Soit $\varphi \in \mathcal{D}(]-\pi, \pi[)$ une fonction test. Nous devons évaluer la limite de $I_n = \langle T_{F_n}, \varphi \rangle = \int_{-\pi}^{\pi} F_n(x)\varphi(x) \,dx$.
+2. Écrivons $I_n$ sous la forme :
+   $$ I_n = \int_{-\pi}^{\pi} F_n(x) [\varphi(x) - \varphi(0)] \,dx + \int_{-\pi}^{\pi} F_n(x)\varphi(0) \,dx $$
+3. Puisque $\int_{-\pi}^{\pi} F_n(x) dx = 1$, la deuxième intégrale vaut exactement $\varphi(0)$. Il reste à montrer que le premier terme tend vers 0.
+4. Notons $J_n = \int_{-\pi}^{\pi} F_n(x) |\varphi(x) - \varphi(0)| \,dx$.
+5. La fonction test $\varphi$ est continue. Par définition de la continuité en 0, pour tout $\epsilon > 0$, il existe $\delta > 0$ tel que pour tout $|x| \le \delta$, $|\varphi(x) - \varphi(0)| < \epsilon/2$.
+6. On décompose l'intégrale $J_n$ en deux parties : la région "centrale" $|x| \le \delta$ et la région "extérieure" $\delta < |x| < \pi$.
+   $$ J_n = \int_{|x| \le \delta} F_n(x) |\varphi(x) - \varphi(0)| \,dx + \int_{\delta < |x| < \pi} F_n(x) |\varphi(x) - \varphi(0)| \,dx $$
+7. Majorons la partie centrale. Sur $|x| \le \delta$, on a $|\varphi(x) - \varphi(0)| < \epsilon/2$. De plus, $F_n(x) \ge 0$. Donc :
+   $$ \int_{|x| \le \delta} F_n(x) |\varphi(x) - \varphi(0)| \,dx \le \frac{\epsilon}{2} \int_{|x| \le \delta} F_n(x) \,dx \le \frac{\epsilon}{2} \int_{-\pi}^{\pi} F_n(x) \,dx = \frac{\epsilon}{2} \times 1 = \frac{\epsilon}{2} $$
+8. Majorons la partie extérieure. $\varphi$ est continue sur un compact, elle est donc bornée. Soit $M = \sup |\varphi(x)|$. On a $|\varphi(x) - \varphi(0)| \le 2M$.
+   $$ \int_{\delta < |x| < \pi} F_n(x) |\varphi(x) - \varphi(0)| \,dx \le 2M \int_{\delta < |x| < \pi} F_n(x) \,dx $$
+9. Par hypothèse (propriété de concentration du noyau de Fejér), cette dernière intégrale tend vers 0 quand $n \to \infty$. Il existe donc un rang $N$ tel que pour tout $n > N$, $2M \int_{\delta < |x| < \pi} F_n(x) \,dx < \epsilon/2$.
+10. Finalement, pour $n > N$, $J_n < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$. Ceci prouve que $\lim_{n \to \infty} J_n = 0$.
+11. On conclut que $\lim_{n \to \infty} I_n = \varphi(0) + 0 = \langle \delta_0, \varphi \rangle$. La suite $(F_n)$ converge bien vers $\delta_0$ au sens des distributions.

@@ -1,21 +1,25 @@
-\subsection*{Exercice 6 : Multiplication par une fonction de classe C-infini \quad $\bigstar\bigstar\bigstar\star\star$}
+# Exercice 6 : Produit d'une distribution par une fonction C-infinie
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
 
-Soit $T \in \mathcal{D}'(\mathbb{R})$ et $\alpha \in \mathcal{C}^\infty(\mathbb{R})$.
-1. Comment définir l'action de la distribution $\alpha T$ sur une fonction test $\phi$ ?
-2. Montrer que l'équation $x T = 0$ admet pour solution générale $T = c \delta_0$ (où $c$ est une constante complexe).
+## Énoncé
+Soit $T \in \mathcal{D}'(\mathbb{R})$ et $\alpha \in C^\infty(\mathbb{R})$. On définit le produit $\alpha T$ par $\langle \alpha T, \varphi \rangle = \langle T, \alpha\varphi \rangle$. Calculer $x \cdot \delta_0$ et $x \cdot \text{vp}(1/x)$.
 
-**Correction Détaillée :**
-1. Si $T$ était une distribution régulière associée à $f \in L^1_{loc}$, l'action serait :
-$\langle \alpha T_f, \phi \rangle = \int (\alpha(x) f(x)) \phi(x) dx = \int f(x) (\alpha(x) \phi(x)) dx$.
-Pour que cette forme intégrale s'étende aux distributions, il faut que $\alpha \phi$ soit une fonction test. Comme $\phi \in \mathcal{D}(\mathbb{R})$ (elle est $\mathcal{C}^\infty$ à support compact) et $\alpha \in \mathcal{C}^\infty(\mathbb{R})$, le produit $\alpha \phi$ reste $\mathcal{C}^\infty$ et le support de $\alpha \phi$ est inclus dans le support de $\phi$, donc compact.
-On définit formellement : $\langle \alpha T, \phi \rangle = \langle T, \alpha \phi \rangle$.
-2. L'équation est $x T = 0$, ce qui signifie que pour tout $\phi \in \mathcal{D}(\mathbb{R})$, $\langle x T, \phi \rangle = 0$, soit $\langle T, x\phi \rangle = 0$.
-Soit une fonction test $\phi$. On peut écrire $\phi(x) = \phi(0)\theta(x) + x \psi(x)$ où $\theta \in \mathcal{D}(\mathbb{R})$ est une fonction test valant $1$ au voisinage de $0$, et $\psi \in \mathcal{D}(\mathbb{R})$.
-En effet, $\psi(x) = \frac{\phi(x) - \phi(0)\theta(x)}{x}$. Par le théorème de Taylor, cette fonction est bien prolongeable par continuité (et régularité $\mathcal{C}^\infty$) en $0$.
-Appliquons $T$ :
-$\langle T, \phi \rangle = \langle T, \phi(0)\theta \rangle + \langle T, x\psi \rangle$
-Par hypothèse, $\langle T, x\psi \rangle = \langle xT, \psi \rangle = 0$.
-Ainsi, $\langle T, \phi \rangle = \phi(0) \langle T, \theta \rangle$.
-La quantité $\langle T, \theta \rangle$ est une constante fixe que nous noterons $c$.
-D'où $\langle T, \phi \rangle = c \phi(0) = \langle c \delta_0, \phi \rangle$.
-La solution est bien $T = c \delta_0$. $\blacksquare$
+## Correction Détaillée
+1. Calculons d'abord le produit $x \cdot \delta_0$. Soit $\varphi \in \mathcal{D}(\mathbb{R})$ une fonction test quelconque.
+2. Par la définition du produit d'une distribution par une fonction $C^\infty$, posons $\alpha(x) = x$. On a :
+   $$ \langle x \cdot \delta_0, \varphi \rangle = \langle \delta_0, \alpha\varphi \rangle $$
+3. L'action du Dirac en 0 consiste à évaluer la fonction à l'intérieur du crochet en $x=0$.
+   $$ \langle \delta_0, \alpha\varphi \rangle = (\alpha\varphi)(0) = \alpha(0)\varphi(0) $$
+4. Puisque $\alpha(x) = x$, on a $\alpha(0) = 0$. Donc :
+   $$ 0 \times \varphi(0) = 0 $$
+5. Ceci étant vrai pour toute fonction test $\varphi$, on conclut que la distribution $x \cdot \delta_0$ est la distribution nulle : $x \cdot \delta_0 = 0$.
+
+6. Calculons maintenant $x \cdot \text{vp}(1/x)$. Pour $\varphi \in \mathcal{D}(\mathbb{R})$ :
+   $$ \langle x \cdot \text{vp}(1/x), \varphi \rangle = \langle \text{vp}(1/x), x\varphi \rangle $$
+7. Par définition de la Valeur Principale :
+   $$ \langle \text{vp}(1/x), x\varphi \rangle = \lim_{\epsilon \to 0^+} \int_{|x| > \epsilon} \frac{x\varphi(x)}{x} \,dx $$
+8. On simplifie la fraction pour $x \neq 0$ :
+   $$ \lim_{\epsilon \to 0^+} \int_{|x| > \epsilon} \varphi(x) \,dx $$
+9. La fonction $\varphi$ étant continue et à support compact, elle est intégrable sur $\mathbb{R}$. La limite de l'intégrale sur $\{|x| > \epsilon\}$ correspond simplement à l'intégrale de Lebesgue complète sur $\mathbb{R}$ (puisque le point 0 est de mesure nulle) :
+   $$ \int_{\mathbb{R}} \varphi(x) \,dx = \langle T_1, \varphi \rangle $$
+10. La distribution $x \cdot \text{vp}(1/x)$ est donc égale à la distribution constante $1$ (régulière). $x \cdot \text{vp}(1/x) = 1$.

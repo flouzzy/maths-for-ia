@@ -1,26 +1,25 @@
-\subsection*{Exercice 5 : Convergence de suite de fonctions vers un Dirac \quad $\bigstar\bigstar\bigstar\star\star$}
+# Exercice 5 : Valeur principale de Cauchy
+**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
 
-Soit la suite de fonctions $f_n(x) = \frac{n}{\pi (1 + n^2 x^2)}$.
-Montrer que $f_n \to \delta_0$ au sens des distributions quand $n \to +\infty$.
+## Énoncé
+La fonction $x \mapsto 1/x$ n'est pas localement intégrable en 0. On définit la Valeur Principale (vp) de $1/x$ par son action sur $\varphi \in \mathcal{D}(\mathbb{R})$ : $\langle \text{vp}(1/x), \varphi \rangle = \lim_{\epsilon \to 0^+} \int_{|x| > \epsilon} \frac{\varphi(x)}{x} \,dx$. Montrer que la limite existe toujours pour $\varphi \in \mathcal{D}(\mathbb{R})$.
 
-**Correction Détaillée :**
-Soit $\phi \in \mathcal{D}(\mathbb{R})$. Nous devons montrer que $\lim_{n \to +\infty} \int_{-\infty}^{+\infty} f_n(x) \phi(x) dx = \phi(0)$.
-Séparons l'intégrale en deux parties (on injecte $\phi(0)$) :
-$\int_{-\infty}^{+\infty} f_n(x) \phi(x) dx = \int_{-\infty}^{+\infty} \frac{n}{\pi (1 + n^2 x^2)} (\phi(x) - \phi(0) + \phi(0)) dx$
-$ = \phi(0) \int_{-\infty}^{+\infty} \frac{n}{\pi (1 + n^2 x^2)} dx + \int_{-\infty}^{+\infty} \frac{n}{\pi (1 + n^2 x^2)} (\phi(x) - \phi(0)) dx$
-
-Calculons la première intégrale (on effectue $y = nx$, $dy = n dx$) :
-$\int_{-\infty}^{+\infty} \frac{n}{\pi (1 + n^2 x^2)} dx = \frac{1}{\pi} \int_{-\infty}^{+\infty} \frac{1}{1 + y^2} dy = \frac{1}{\pi} [\arctan(y)]_{-\infty}^{+\infty} = \frac{1}{\pi} \left( \frac{\pi}{2} - \left(-\frac{\pi}{2}\right) \right) = 1$.
-La première partie vaut donc exactement $\phi(0)$.
-
-Il reste à montrer que le second terme tend vers 0. Soit $I_n = \int_{-\infty}^{+\infty} \frac{n}{\pi (1 + n^2 x^2)} (\phi(x) - \phi(0)) dx$.
-Par le théorème des accroissements finis, puisque $\phi \in \mathcal{C}^\infty$ et est à support compact, sa dérivée $\phi'$ est bornée sur $\mathbb{R}$. Soit $M = \sup_{\mathbb{R}} |\phi'(x)|$.
-On a $|\phi(x) - \phi(0)| \le M |x|$ pour tout $x$.
-On scinde l'intégrale en $|x| \le A/\sqrt{n}$ et $|x| > A/\sqrt{n}$ pour un $A>0$ bien choisi.
-Alternativement (plus rapide), on effectue le changement de variable $y = nx$ :
-$I_n = \frac{1}{\pi} \int_{-\infty}^{+\infty} \frac{1}{1 + y^2} \left( \phi\left(\frac{y}{n}\right) - \phi(0) \right) dy$
-Pour chaque $y$ fixé, la fonction intégrande tend vers $0$ car $\phi$ est continue en $0$.
-De plus, la fonction intégrande est majorée en valeur absolue par $\frac{2 \|\phi\|_\infty}{1+y^2}$, qui est une fonction dans $L^1(\mathbb{R})$ indépendante de $n$.
-On peut donc appliquer le Théorème de Convergence Dominée de Lebesgue : l'intégrale de la limite est la limite de l'intégrale, ce qui donne $0$.
-Ainsi, $\lim_{n \to +\infty} \langle T_{f_n}, \phi \rangle = \phi(0) + 0 = \langle \delta_0, \phi \rangle$.
-La suite converge bien vers $\delta_0$. $\blacksquare$
+## Correction Détaillée
+1. Puisque $\varphi \in \mathcal{D}(\mathbb{R})$, son support est contenu dans un compact $[-R, R]$. L'intégrale s'écrit donc, pour $0 < \epsilon < R$ :
+   $$ I_\epsilon = \int_{[-R, -\epsilon] \cup [\epsilon, R]} \frac{\varphi(x)}{x} \,dx $$
+2. Séparons l'intégrale en deux parties : sur $[-R, -\epsilon]$ et sur $[\epsilon, R]$.
+   $$ I_\epsilon = \int_{-R}^{-\epsilon} \frac{\varphi(x)}{x} \,dx + \int_{\epsilon}^{R} \frac{\varphi(x)}{x} \,dx $$
+3. Dans la première intégrale, faisons le changement de variable $u = -x$. Alors $dx = -du$, les bornes deviennent $R$ et $\epsilon$.
+   $$ \int_{-R}^{-\epsilon} \frac{\varphi(x)}{x} \,dx = \int_{R}^{\epsilon} \frac{\varphi(-u)}{-u} (-du) = \int_{R}^{\epsilon} \frac{\varphi(-u)}{u} \,du = - \int_{\epsilon}^{R} \frac{\varphi(-u)}{u} \,du $$
+4. En regroupant les deux intégrales sur le même intervalle $[\epsilon, R]$ avec la variable $x$ :
+   $$ I_\epsilon = \int_{\epsilon}^{R} \frac{\varphi(x)}{x} \,dx - \int_{\epsilon}^{R} \frac{\varphi(-x)}{x} \,dx = \int_{\epsilon}^{R} \frac{\varphi(x) - \varphi(-x)}{x} \,dx $$
+5. Maintenant, étudions le comportement de l'intégrand lorsque $x \to 0$. Puisque $\varphi \in C^\infty$, elle admet un développement de Taylor-Lagrange à l'ordre 1 autour de 0.
+   $$ \varphi(x) = \varphi(0) + x\varphi'(0) + \frac{x^2}{2}\varphi''(c_1) $$
+   $$ \varphi(-x) = \varphi(0) - x\varphi'(0) + \frac{x^2}{2}\varphi''(c_2) $$
+6. Formons la différence :
+   $$ \varphi(x) - \varphi(-x) = 2x\varphi'(0) + \frac{x^2}{2}(\varphi''(c_1) - \varphi''(c_2)) $$
+7. Divisons par $x$ :
+   $$ \frac{\varphi(x) - \varphi(-x)}{x} = 2\varphi'(0) + \frac{x}{2}(\varphi''(c_1) - \varphi''(c_2)) $$
+8. Lorsque $x \to 0$, cette expression admet une limite finie qui vaut $2\varphi'(0)$. La fonction $x \mapsto \frac{\varphi(x) - \varphi(-x)}{x}$ est donc prolongeable par continuité en 0.
+9. Sur l'intervalle d'intégration compact $[0, R]$, cette fonction prolongée est continue. Par conséquent, elle y est Riemann-intégrable.
+10. La limite de l'intégrale $I_\epsilon$ lorsque $\epsilon \to 0^+$ est exactement l'intégrale de cette fonction continue sur $[0, R]$. L'intégrale (et donc la limite) est finie. La Valeur Principale est bien définie.
