@@ -97,7 +97,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-83/Jalon-83.md|Jalon 83 : Dérivation au sens des distributions]] : Dérivation au sens des distributions, distribution de Dirac et introduction aux espaces de Sobolev $H^1(\\mathbb{R})$. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-84/Jalon-84.md|Jalon 84 : Livrable IA]] : Livrable IA T7 : Création d'un module d'analyse spectrale pour l'extraction de caractéristiques audio à partir de la transformée de Fourier dans $L^2$. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 ### Trimestre 8 : probabilités axiomatiques et statistiques fondamentales
-- [ ] [[jalon-85/Jalon 85 (Axiomes de Kolmogorov).md|Jalon 85 : Axiomes de Kolmogorov]] : Axiomes de Kolmogorov, espace de probabilité $(\\Omega, \\mathcal{F}, \\mathbb{P})$ comme un espace mesuré de masse 1.
+- [x] [[jalon-85/Jalon-85.md|Jalon 85 : Axiomes de Kolmogorov]] : Axiomes de Kolmogorov, espace de probabilité $(\\Omega, \\mathcal{F}, \\mathbb{P})$ comme un espace mesuré de masse 1. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-86/Jalon 86 (Variables aléatoires vues comme des applications mesurables).md|Jalon 86 : Variables aléatoires vues comme des applications mesurables]] : Variables aléatoires vues comme des applications mesurables, loi d'une variable et mesure de probabilité image.
 - [ ] [[jalon-87/Jalon 87 (Intégration des variables aléatoires).md|Jalon 87 : Intégration des variables aléatoires]] : Intégration des variables aléatoires, espérance, variance et moments d'ordre supérieur.
 - [ ] [[jalon-88/Jalon 88 (Indépendance d'événements).md|Jalon 88 : Indépendance d'événements]] : Indépendance d'événements, de tribus et de variables aléatoires.

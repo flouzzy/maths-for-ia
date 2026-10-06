@@ -428,6 +428,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
+- [2026-10-06] : [Upsert/Création] du Jalon 85 - Axiomes de Kolmogorov. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-06] : [Upsert/Création] du Jalon 84 - Livrable IA T7 : Création d'un module d'analyse spectrale pour l'extraction de caractéristiques audio à partir de la transformée de Fourier dans $L^2$. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-05] : Upsert du Jalon 83 - Dérivation au sens des distributions. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-03] : [Upsert/Création] du Jalon 82 - Introduction à la théorie des distributions de Schwartz. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*

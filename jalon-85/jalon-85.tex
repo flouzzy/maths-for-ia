@@ -1,0 +1,873 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge Axiomes de Kolmogorov \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+\section{Introduction historique et genèse géométrique}
+
+Avant 1933, la théorie des probabilités était vue par beaucoup de mathématiciens comme une collection de recettes empiriques sans fondement rigoureux. Andreï Kolmogorov a radicalement changé ce paradigme en réalisant qu'une probabilité n'est fondamentalement rien d'autre qu'une mesure (comme une longueur, une aire, ou une masse) définie sur un espace abstrait, normalisée à 1.
+
+Géométriquement, imaginez un univers $\Omega$ (le gâteau) représentant l'ensemble de tous les événements possibles. La probabilité d'un événement $A$ est la fraction du "poids" total de l'univers concentrée sur cet événement, le poids total de $\Omega$ valant exactement 1. Cette approche constructive a permis d'appliquer les outils puissants de la théorie de la mesure de Lebesgue et de Borel aux probabilités.
+
+\section{Définitions, Théorèmes \& Exemples}
+
+\subsection{L'Espace de Probabilité}
+
+Soit $\Omega$ un ensemble appelé univers (l'ensemble des résultats possibles).
+
+\begin{quote}\textbf{Définition 1 (Espace de Probabilité) :}\end{quote}
+\begin{quote}Un espace de probabilité est un triplet $(\Omega, \mathcal{F}, \mathbb{P})$ où :\end{quote}
+\begin{quote}1. $\mathcal{F}$ est une tribu sur $\Omega$ (le catalogue de tous les événements mesurables).\end{quote}
+\begin{quote}2. $\mathbb{P}$ est une mesure de probabilité sur $(\Omega, \mathcal{F})$ vérifiant la condition stricte de normalisation : $\mathbb{P}(\Omega) = 1$.\end{quote}
+
+\begin{quote}\textbf{Définition 2 (Les Axiomes de Kolmogorov) :}\end{quote}
+\begin{quote}Une application $\mathbb{P} : \mathcal{F} \to [0, 1]$ est une probabilité si et seulement si elle vérifie :\end{quote}
+\begin{quote}1. Positivité : $\forall A \in \mathcal{F}, \mathbb{P}(A) \ge 0$.\end{quote}
+\begin{quote}2. Masse totale : $\mathbb{P}(\Omega) = 1$.\end{quote}
+\begin{quote}3. $\sigma$-additivité : Pour toute suite d'événements $(A_n)_{n \in \mathbb{N}^*}$ deux à deux disjoints (i.e. $i \neq j \implies A_i \cap A_j = \emptyset$) :\end{quote}
+\begin{quote}$$ \mathbb{P}\left( \bigcup_{n=1}^\infty A_n \right) = \sum_{n=1}^\infty \mathbb{P}(A_n) $$\end{quote}
+
+\textbf{Exemple 1 : Lancer d'un dé parfait}
+Considérons le jet d'un dé à 6 faces. L'univers est $\Omega = \{1, 2, 3, 4, 5, 6\}$.
+La tribu est $\mathcal{F} = \mathcal{P}(\Omega)$, l'ensemble de toutes les parties.
+La mesure de probabilité pour chaque face singleton est $\mathbb{P}(\{k\}) = \frac{1}{6}$.
+L'événement $A = \text{"Obtenir un résultat pair"} = \{2, 4, 6\}$.
+Comme les éléments sont disjoints, par $\sigma$-additivité finie :
+$$ \mathbb{P}(A) = \mathbb{P}(\{2\}) + \mathbb{P}(\{4\}) + \mathbb{P}(\{6\}) = \frac{1}{6} + \frac{1}{6} + \frac{1}{6} = \frac{3}{6} = \frac{1}{2} $$
+Cet exemple simple illustre la conservation de la masse totale.
+
+\subsection{Propriétés géométriques fondamentales}
+
+\begin{quote}\textbf{Théorème (Conséquences directes des axiomes) :}\end{quote}
+\begin{quote}Soient $A, B \in \mathcal{F}$. Les propriétés suivantes sont vérifiées :\end{quote}
+\begin{quote}1. $\mathbb{P}(\emptyset) = 0$.\end{quote}
+\begin{quote}2. $\mathbb{P}(A^c) = 1 - \mathbb{P}(A)$.\end{quote}
+\begin{quote}3. Monotonie : Si $A \subset B$, alors $\mathbb{P}(A) \le \mathbb{P}(B)$ et $\mathbb{P}(B \setminus A) = \mathbb{P}(B) - \mathbb{P}(A)$.\end{quote}
+\begin{quote}4. Formule du crible pour deux événements : $\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B)$.\end{quote}
+\begin{quote}5. Continuité monotone : Si $(A_n)$ est une suite croissante d'événements ($A_1 \subset A_2 \subset \dots$), alors $\mathbb{P}(\bigcup A_n) = \lim_{n \to \infty} \mathbb{P}(A_n)$.\end{quote}
+
+\textbf{Exemple 2 : L'implication et événements inclus}
+Si on lance un dé, soit $A = \text{"Obtenir 2"}$ et $B = \text{"Obtenir un nombre pair"}$.
+Clairement, $A \subset B$, car si $A$ est réalisé, $B$ l'est automatiquement. L'implication logique "Si j'ai fait 2, alors j'ai fait un nombre pair" se traduit ensemblistement par une inclusion.
+Ainsi, par monotonie, $\mathbb{P}(A) = \frac{1}{6} \le \mathbb{P}(B) = \frac{3}{6}$. L'aire de $A$ est entièrement contenue dans l'aire de $B$.
+
+\textbf{Exemple 3 : Événement complémentaire}
+Pour une loi exponentielle $\mathcal{E}(\lambda)$ sur $\Omega = \mathbb{R}_+$, on a $\mathbb{P}([0, t]) = 1 - e^{-\lambda t}$.
+L'événement "La durée de vie dépasse $t$" est le complémentaire $([0, t])^c = ]t, \infty[$.
+Par le théorème : $\mathbb{P}(]t, \infty[) = 1 - \mathbb{P}([0, t]) = 1 - (1 - e^{-\lambda t}) = e^{-\lambda t}$.
+
+\textbf{Exemple 4 : La formule du crible (Union)}
+Prenons un jeu de 32 cartes, on tire une carte au hasard.
+Soit $A = \text{"Tirer un As"}$ (4 cartes) et $B = \text{"Tirer un Cœur"}$ (8 cartes).
+L'intersection $A \cap B = \text{"Tirer l'As de Cœur"}$ (1 carte).
+$\mathbb{P}(A \cup B) = \frac{4}{32} + \frac{8}{32} - \frac{1}{32} = \frac{11}{32}$.
+La soustraction de $\mathbb{P}(A \cap B)$ empêche de compter deux fois l'As de Cœur.
+
+\textbf{Exemple 5 : Borne de l'union (Boole)}
+Souvent, on ne connait pas l'intersection exacte. Dans ce cas on utilise :
+$\mathbb{P}(A \cup B) \le \mathbb{P}(A) + \mathbb{P}(B)$. Si $A$ et $B$ ont de très faibles chances d'arriver (ex: $0.01$ chacun), la probabilité qu'au moins l'un arrive est majorée par $0.02$.
+
+\begin{center}
+\begin{tikzpicture}
+    \draw (0,0) circle (1.5cm) node[above left=0.7cm] {$A$};
+    \draw (2,0) circle (1.5cm) node[above right=0.7cm] {$B$};
+    \node at (1,0) {$A \cap B$};
+    \draw[dashed, thick] (-2,-2) rectangle (4,2);
+    \node at (3.5, 1.5) {$\Omega$};
+\end{tikzpicture}
+\end{center}
+
+\section{Démonstrations}
+
+\subsection{Démonstration de la Formule de l'Union}
+
+Nous allons démontrer la propriété fondamentale $\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B)$ pas à pas en utilisant l'additivité finie.
+
+1. \textbf{Décomposition en sous-ensembles disjoints :}
+   Nous ne pouvons pas directement utiliser l'axiome d'additivité sur $A$ et $B$ car ils ne sont pas nécessairement disjoints. Il faut découper $A \cup B$ en régions sans chevauchement.
+   On remarque que $B$ peut s'écrire comme l'union de deux ensembles disjoints : la partie de $B$ qui est dans $A$, et la partie de $B$ qui n'est pas dans $A$.
+   $$B = (A \cap B) \cup (B \setminus A)$$
+   Ces deux ensembles sont disjoints, donc par additivité (cas $n=2$ des axiomes de Kolmogorov) :
+   $$\mathbb{P}(B) = \mathbb{P}(A \cap B) + \mathbb{P}(B \setminus A)$$
+   D'où nous isolons :
+   $$\mathbb{P}(B \setminus A) = \mathbb{P}(B) - \mathbb{P}(A \cap B)$$
+
+2. \textbf{Écriture de l'union :}
+   De la même manière, on peut exprimer $A \cup B$ comme une union disjointe. Tout élément de l'union appartient soit à $A$, soit à la partie de $B$ qui n'est pas dans $A$ :
+   $$A \cup B = A \cup (B \setminus A)$$
+   Puisque $A$ et $(B \setminus A)$ sont disjoints, on peut à nouveau appliquer l'additivité :
+   $$\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B \setminus A)$$
+
+3. \textbf{Substitution et conclusion :}
+   Il suffit de substituer l'expression de $\mathbb{P}(B \setminus A)$ obtenue à l'étape 1 dans la formule de l'étape 2 :
+   $$\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B)$$
+   Ce qui clôt la preuve. La surface d'intersection, comptée dans $\mathbb{P}(A)$ et de nouveau dans $\mathbb{P}(B)$, est ainsi soustraite une fois pour obtenir la mesure géométrique exacte de l'union.
+
+\subsection{Démonstration : Probabilité de l'ensemble vide}
+
+Prouvons que $\mathbb{P}(\emptyset) = 0$.
+Soit une suite d'événements $A_n$ définie par $A_n = \emptyset$ pour tout $n \in \mathbb{N}^*$.
+Ces événements sont deux à deux disjoints (puisque $\emptyset \cap \emptyset = \emptyset$).
+La réunion de ces événements est : $\bigcup_{n=1}^\infty \emptyset = \emptyset$.
+D'après l'axiome de $\sigma$-additivité :
+$$ \mathbb{P}(\emptyset) = \mathbb{P}\left(\bigcup_{n=1}^\infty \emptyset \right) = \sum_{n=1}^\infty \mathbb{P}(\emptyset) $$
+La seule possibilité pour qu'une série de termes réels positifs constants converge et soit égale au terme constant initial est que ce terme vaille $0$.
+Ainsi, $\mathbb{P}(\emptyset) = 0$.
+
+\section{Applications en Physique, Logique \& IA}
+
+\subsection{En Mathématiques et IA}
+
+L'Intelligence Artificielle moderne, particulièrement le domaine de l'apprentissage profond (Deep Learning) et des modèles de langage, repose fondamentalement sur la théorie probabiliste.
+
+Lorsqu'un réseau de neurones avec une couche de sortie Softmax traite une image ou un mot, il ne produit pas directement un résultat scalaire arbitraire, mais il génère un vecteur $(p_1, p_2, \dots, p_k)$ qui vérifie scrupuleusement $p_i \ge 0$ et $\sum p_i = 1$. Cette sortie est donc formellement une mesure de probabilité définie sur un espace discret de classes.
+
+Les axiomes de Kolmogorov assurent que l'espace des modèles probabilistes est structuré correctement. En apprentissage automatique, le fait que la probabilité d'un événement rare puisse être formellement majorée par la somme de ses constituants permet d'établir des bornes mathématiques dures sur le risque d'erreur en généralisation (théorie PAC - Probably Approximately Correct).
+
+\subsection{Théorème de Continuité en Apprentissage (Continuité Monotone)}
+
+En IA, de nombreuses preuves de convergence s'appuient sur l'axiome de $\sigma$-additivité. Considérons par exemple la probabilité qu'un algorithme dépasse un certain seuil d'erreur. Si on note $E_n$ l'événement où l'algorithme fait une erreur avec $n$ données d'entraînement, et que $E_{n+1} \subset E_n$ (l'ajout de données rend l'erreur stricte moins probable), alors l'intersection $\bigcap E_n$ correspond à l'événement de faire toujours des erreurs même avec une infinité de données. La théorie de la mesure de Kolmogorov nous garantit la continuité descendante :
+$$ \mathbb{P}\left(\bigcap_{n=1}^\infty E_n\right) = \lim_{n \to \infty} \mathbb{P}(E_n) $$
+Si le membre de gauche est nul (le modèle apprend asymptotiquement), alors les erreurs tendent vers zéro, confirmant ainsi la convergence théorique de l'apprentissage.
+
+\subsection{Continuité croissante et descendante des probabilités}
+
+\begin{quote}\textbf{Théorème (Continuité des probabilités) :}\end{quote}
+\begin{quote}1. Si $(A_n)$ est une suite croissante d'événements ($A_1 \subset A_2 \subset \dots$), alors :\end{quote}
+\begin{quote}$$ \mathbb{P}\left(\bigcup_{n=1}^\infty A_n\right) = \lim_{n \to \infty} \mathbb{P}(A_n) $$\end{quote}
+\begin{quote}2. Si $(A_n)$ est une suite décroissante d'événements ($A_1 \supset A_2 \supset \dots$), alors :\end{quote}
+\begin{quote}$$ \mathbb{P}\left(\bigcap_{n=1}^\infty A_n\right) = \lim_{n \to \infty} \mathbb{P}(A_n) $$\end{quote}
+
+\textbf{Exemple 6 : Continuité descendante géométrique}
+Considérons une cible de fléchettes de rayon $R=1$ (aire totale $\pi$, normalisons pour que $\mathbb{P}(\Omega) = 1$). On s'intéresse à la probabilité de toucher le centre exact.
+Soit $A_n$ l'événement "La fléchette tombe à une distance inférieure ou égale à $1/n$ du centre".
+Géométriquement, $A_n$ est un disque de rayon $1/n$.
+Nous avons $A_1 \supset A_2 \supset A_3 \dots$
+L'aire (probabilité) de $A_n$ est $\mathbb{P}(A_n) = \frac{\pi (1/n)^2}{\pi} = \frac{1}{n^2}$.
+L'événement "Toucher exactement le centre" est l'intersection infinie $\bigcap_{n=1}^\infty A_n$.
+Par le théorème de continuité descendante :
+$$ \mathbb{P}\left( \text{Centre} \right) = \mathbb{P}\left( \bigcap_{n=1}^\infty A_n \right) = \lim_{n \to \infty} \frac{1}{n^2} = 0 $$
+Ainsi, la probabilité d'atteindre un point mathématique précis (une cible d'aire nulle) est de $0$, bien que l'événement ne soit pas strictement impossible au sens physique.
+
+\begin{center}
+\begin{tikzpicture}
+    \draw (0,0) circle (2cm);
+    \draw (0,0) circle (1.2cm);
+    \draw (0,0) circle (0.6cm);
+    \draw (0,0) circle (0.2cm);
+    \fill[black] (0,0) circle (2pt) node[below=0.2cm] {Centre};
+    \node at (1.5, 1.5) {$A_1$};
+    \node at (0.8, 0.8) {$A_2$};
+    \node at (0.3, 0.4) {$A_3$};
+    \draw[->, thick] (2.5, 0) -- (3.5, 0) node[midway, above] {$n \to \infty$};
+    \fill[black] (4.5,0) circle (2pt) node[below=0.2cm] {$\bigcap A_n$};
+\end{tikzpicture}
+\end{center}
+
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Événements incompatibles et probabilités simples}
+$\bigstar\star\star\star\star$
+
+\subsubsection*{Énoncé}
+
+On lance un dé équilibré à $6$ faces. Soit l'univers $\Omega = \{1, 2, 3, 4, 5, 6\}$.
+On considère les événements suivants :
+$A$ : « Obtenir un résultat pair »
+$B$ : « Obtenir un multiple de $3$ »
+$C$ : « Obtenir un $5$ »
+
+1. Décrire de manière ensembliste les événements $A$, $B$ et $C$.
+2. Les événements $A$ et $B$ sont-ils incompatibles ? Justifier avec l'intersection ensembliste.
+3. Calculer $\mathbb{P}(A)$, $\mathbb{P}(B)$ et $\mathbb{P}(A \cup B)$ en utilisant la formule de l'union. Vérifier que la formule donne bien le même résultat qu'un dénombrement direct.
+
+
+\subsubsection*{Correction Détaillée}
+
+1. \textbf{Description ensembliste :}
+$A = \{2, 4, 6\}$
+$B = \{3, 6\}$
+$C = \{5\}$
+
+2. \textbf{Incompatibilité de $A$ et $B$ :}
+Deux événements sont incompatibles si et seulement si leur intersection est vide.
+$A \cap B = \{2, 4, 6\} \cap \{3, 6\} = \{6\}$.
+Puisque $A \cap B \neq \emptyset$, les événements $A$ et $B$ ne sont pas incompatibles. Ils peuvent se réaliser simultanément (si le dé tombe sur $6$).
+
+3. \textbf{Calcul des probabilités :}
+L'univers $\Omega$ contient $6$ issues équiprobables. Ainsi, pour tout événement $E$, $\mathbb{P}(E) = \frac{\text{Card}(E)}{\text{Card}(\Omega)}$.
+- $\mathbb{P}(A) = \frac{3}{6} = \frac{1}{2}$
+- $\mathbb{P}(B) = \frac{2}{6} = \frac{1}{3}$
+- $\mathbb{P}(A \cap B) = \frac{1}{6}$
+
+D'après la formule de l'union :
+$\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B) = \frac{3}{6} + \frac{2}{6} - \frac{1}{6} = \frac{4}{6} = \frac{2}{3}$.
+
+\textbf{Vérification par dénombrement direct :}
+L'événement $A \cup B$ est « Obtenir un résultat pair ou un multiple de $3$ ».
+$A \cup B = \{2, 3, 4, 6\}$.
+Donc $\mathbb{P}(A \cup B) = \frac{4}{6} = \frac{2}{3}$. Les résultats correspondent.
+
+
+
+\subsection*{Exercice 2 : Inégalité de Boole-Bonferroni simple}
+$\bigstar\star\star\star\star$
+
+\subsubsection*{Énoncé}
+
+Soient $A$ et $B$ deux événements d'un espace probabilisé $(\Omega, \mathcal{F}, \mathbb{P})$.
+On donne $\mathbb{P}(A) = 0.9$ et $\mathbb{P}(B) = 0.8$.
+1. Montrer rigoureusement que la probabilité de l'intersection $\mathbb{P}(A \cap B)$ est au moins égale à $0.7$.
+2. Donner un exemple concret (avec un jeu de cartes par exemple) où cette borne inférieure est atteinte de façon exacte.
+
+
+\subsubsection*{Correction Détaillée}
+
+1. \textbf{Démonstration de la borne inférieure :}
+D'après les axiomes de Kolmogorov, pour tout événement $E$, on a $\mathbb{P}(E) \le 1$.
+En particulier pour l'union $A \cup B$, on a :
+$\mathbb{P}(A \cup B) \le 1$
+
+Or, par la formule de l'union (ou formule de Poincaré pour deux événements) :
+$\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B)$
+
+En substituant cette expression dans l'inégalité :
+$\mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B) \le 1$
+
+En isolant $\mathbb{P}(A \cap B)$, nous obtenons :
+$\mathbb{P}(A \cap B) \ge \mathbb{P}(A) + \mathbb{P}(B) - 1$
+
+Application numérique :
+$\mathbb{P}(A \cap B) \ge 0.9 + 0.8 - 1 = 1.7 - 1 = 0.7$.
+Ainsi, $\mathbb{P}(A \cap B) \ge 0.7$.
+
+2. \textbf{Exemple où la borne est atteinte :}
+Pour que $\mathbb{P}(A \cap B) = 0.7$, il faut que l'inégalité initiale soit une égalité, c'est-à-dire que $\mathbb{P}(A \cup B) = 1$.
+Prenons une urne de $10$ boules numérotées de $1$ à $10$.
+Soit $A = \{1, 2, 3, 4, 5, 6, 7, 8, 9\}$ (les $9$ premières boules, $\mathbb{P}(A) = 0.9$).
+Soit $B = \{3, 4, 5, 6, 7, 8, 9, 10\}$ (les $8$ dernières boules, $\mathbb{P}(B) = 0.8$).
+On a $A \cup B = \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10\} = \Omega$, donc $\mathbb{P}(A \cup B) = 1$.
+Et $A \cap B = \{3, 4, 5, 6, 7, 8, 9\}$. Il y a exactement $7$ boules dans l'intersection.
+Donc $\mathbb{P}(A \cap B) = \frac{7}{10} = 0.7$. La borne est exactement atteinte.
+
+
+
+\subsection*{Exercice 3 : Sous-additivité pour une suite d'événements}
+$\bigstar\bigstar\star\star\star$
+
+\subsubsection*{Énoncé}
+
+Montrer rigoureusement par récurrence l'inégalité de Boole (ou borne de l'union) pour $n$ événements $(A_1, \dots, A_n)$ :
+$$ \mathbb{P}\left(\bigcup_{i=1}^n A_i\right) \le \sum_{i=1}^n \mathbb{P}(A_i) $$
+Ensuite, justifier que cela reste vrai pour une union dénombrable infinie (inégalité $\sigma$-sous-additive) en utilisant le théorème de continuité monotone croissante.
+
+
+\subsubsection*{Correction Détaillée}
+
+\textbf{Démonstration par récurrence pour l'union finie :}
+
+\textbf{Initialisation :}
+Pour $n=1$, l'inégalité s'écrit $\mathbb{P}(A_1) \le \mathbb{P}(A_1)$, ce qui est trivialement vrai avec égalité.
+Pour $n=2$, par la formule de l'union, nous avons :
+$\mathbb{P}(A_1 \cup A_2) = \mathbb{P}(A_1) + \mathbb{P}(A_2) - \mathbb{P}(A_1 \cap A_2)$.
+Puisque $\mathbb{P}(A_1 \cap A_2) \ge 0$ (premier axiome de Kolmogorov : positivité de la mesure de probabilité), nous en déduisons :
+$\mathbb{P}(A_1 \cup A_2) \le \mathbb{P}(A_1) + \mathbb{P}(A_2)$.
+
+\textbf{Hérédité :}
+Supposons l'inégalité vraie au rang $n$. Soient $n+1$ événements.
+$\mathbb{P}\left(\bigcup_{i=1}^{n+1} A_i\right) = \mathbb{P}\left(\left(\bigcup_{i=1}^n A_i\right) \cup A_{n+1}\right)$.
+Appliquons l'inégalité au rang $2$ avec l'événement $U_n = \bigcup_{i=1}^n A_i$ et $A_{n+1}$ :
+$\mathbb{P}(U_n \cup A_{n+1}) \le \mathbb{P}(U_n) + \mathbb{P}(A_{n+1})$.
+Par l'hypothèse de récurrence, $\mathbb{P}(U_n) \le \sum_{i=1}^n \mathbb{P}(A_i)$.
+Ainsi :
+$\mathbb{P}\left(\bigcup_{i=1}^{n+1} A_i\right) \le \sum_{i=1}^n \mathbb{P}(A_i) + \mathbb{P}(A_{n+1}) = \sum_{i=1}^{n+1} \mathbb{P}(A_i)$.
+La propriété est héréditaire, donc vraie pour tout $n \ge 1$.
+
+\textbf{Généralisation à l'union dénombrable infinie :}
+Soit $(A_n)_{n \ge 1}$ une suite infinie d'événements.
+Posons $B_n = \bigcup_{i=1}^n A_i$.
+La suite $(B_n)$ est une suite croissante d'événements car $B_1 \subset B_2 \subset B_3 \dots$
+Sa limite (union sur tous les entiers) est $B = \bigcup_{i=1}^\infty A_i$.
+Par le théorème de continuité croissante (axiome de $\sigma$-additivité étendu), on a :
+$\mathbb{P}(B) = \lim_{n \to \infty} \mathbb{P}(B_n)$.
+Or, pour tout $n$, d'après le résultat précédent :
+$\mathbb{P}(B_n) \le \sum_{i=1}^n \mathbb{P}(A_i)$.
+En passant à la limite quand $n \to \infty$ (la limite préserve les inégalités larges) :
+$\mathbb{P}\left(\bigcup_{i=1}^\infty A_i\right) \le \lim_{n \to \infty} \sum_{i=1}^n \mathbb{P}(A_i) = \sum_{i=1}^\infty \mathbb{P}(A_i)$.
+L'inégalité est démontrée dans le cas dénombrable.
+
+
+
+\subsection*{Exercice 4 : Continuité descendante et probabilité d'un singleton}
+$\bigstar\bigstar\star\star\star$
+
+\subsubsection*{Énoncé}
+
+Soit $\Omega = [0, 1]$ muni de la tribu borélienne et de la mesure de Lebesgue (c'est-à-dire que pour tout intervalle $[a, b]$, $\mathbb{P}([a, b]) = b - a$).
+1. Soit un point fixe $x \in [0, 1]$. On pose pour tout entier $n \ge 1$, $A_n = [x - \frac{1}{n}, x + \frac{1}{n}] \cap [0, 1]$. Calculer $\mathbb{P}(A_n)$ pour $n$ assez grand.
+2. Montrer, en utilisant le théorème de continuité descendante de Kolmogorov, que la probabilité de tirer exactement le nombre $x$ est rigoureusement nulle : $\mathbb{P}(\{x\}) = 0$.
+
+
+\subsubsection*{Correction Détaillée}
+
+1. \textbf{Calcul de la probabilité de l'intervalle :}
+Soit $x \in ]0, 1[$. Pour $n$ suffisamment grand (tel que $x - \frac{1}{n} \ge 0$ et $x + \frac{1}{n} \le 1$), l'intervalle $A_n$ est entièrement inclus dans $[0, 1]$.
+$A_n = [x - \frac{1}{n}, x + \frac{1}{n}]$.
+La mesure de cet intervalle est simplement sa longueur.
+$\mathbb{P}(A_n) = \left(x + \frac{1}{n}\right) - \left(x - \frac{1}{n}\right) = \frac{2}{n}$.
+
+2. \textbf{Application de la continuité descendante :}
+Considérons la suite d'événements $(A_n)$.
+On remarque que $A_1 \supset A_2 \supset A_3 \dots$ car si $n \le m$, l'intervalle avec une marge de $1/m$ est inclus dans celui avec une marge de $1/n$.
+La suite $(A_n)$ est donc une suite décroissante d'événements.
+Quelle est l'intersection infinie de tous ces intervalles ?
+$\bigcap_{n=1}^\infty A_n = \bigcap_{n=1}^\infty [x - \frac{1}{n}, x + \frac{1}{n}]$.
+L'unique point qui appartient à tous ces intervalles est $x$. En effet, si $y \neq x$, il existe un entier $N$ tel que $|y - x| > \frac{1}{N}$, donc $y \notin A_N$, ce qui exclut $y$ de l'intersection infinie.
+Ainsi, $\bigcap_{n=1}^\infty A_n = \{x\}$.
+
+Par le théorème de continuité descendante (qui dérive de l'axiome de $\sigma$-additivité) :
+$\mathbb{P}(\{x\}) = \mathbb{P}\left(\bigcap_{n=1}^\infty A_n\right) = \lim_{n \to \infty} \mathbb{P}(A_n)$.
+$\mathbb{P}(\{x\}) = \lim_{n \to \infty} \frac{2}{n} = 0$.
+La probabilité de n'importe quel singleton dans l'intervalle $[0, 1]$ muni de la mesure de Lebesgue uniforme est rigoureusement de zéro.
+
+
+
+\subsection*{Exercice 5 : La formule de Poincaré (Principe d'inclusion-exclusion)}
+$\bigstar\bigstar\bigstar\star\star$
+
+\subsubsection*{Énoncé}
+
+1. Démontrer, à partir des axiomes de Kolmogorov, la formule de l'union pour $3$ événements $A, B, C$ :
+$$ \mathbb{P}(A \cup B \cup C) = \mathbb{P}(A) + \mathbb{P}(B) + \mathbb{P}(C) - \mathbb{P}(A \cap B) - \mathbb{P}(A \cap C) - \mathbb{P}(B \cap C) + \mathbb{P}(A \cap B \cap C) $$
+2. Application : On tire une carte dans un jeu de 52 cartes. Quelle est la probabilité que ce soit un As, un Cœur, ou une Figure (Valet, Dame, Roi) ?
+
+
+\subsubsection*{Correction Détaillée}
+
+1. \textbf{Démonstration de la formule pour 3 événements :}
+Posons $D = B \cup C$.
+L'événement $A \cup B \cup C$ peut s'écrire $A \cup D$.
+Par la formule de l'union pour deux événements, on a :
+$\mathbb{P}(A \cup D) = \mathbb{P}(A) + \mathbb{P}(D) - \mathbb{P}(A \cap D)$
+
+Exprimons $\mathbb{P}(D)$ avec la formule de l'union :
+$\mathbb{P}(D) = \mathbb{P}(B \cup C) = \mathbb{P}(B) + \mathbb{P}(C) - \mathbb{P}(B \cap C)$.
+
+Exprimons le terme d'intersection $\mathbb{P}(A \cap D)$ :
+L'événement $A \cap D = A \cap (B \cup C)$. Par distributivité de l'intersection sur l'union, ceci équivaut à $(A \cap B) \cup (A \cap C)$.
+Appliquons la formule de l'union pour deux événements sur cette union :
+$\mathbb{P}(A \cap D) = \mathbb{P}((A \cap B) \cup (A \cap C)) = \mathbb{P}(A \cap B) + \mathbb{P}(A \cap C) - \mathbb{P}((A \cap B) \cap (A \cap C))$.
+L'intersection de $(A \cap B)$ et $(A \cap C)$ est simplement $A \cap B \cap C$.
+Donc :
+$\mathbb{P}(A \cap D) = \mathbb{P}(A \cap B) + \mathbb{P}(A \cap C) - \mathbb{P}(A \cap B \cap C)$.
+
+Substituons les deux expressions obtenues dans l'équation initiale :
+$\mathbb{P}(A \cup B \cup C) = \mathbb{P}(A) + \left[ \mathbb{P}(B) + \mathbb{P}(C) - \mathbb{P}(B \cap C) \right] - \left[ \mathbb{P}(A \cap B) + \mathbb{P}(A \cap C) - \mathbb{P}(A \cap B \cap C) \right]$.
+En développant le signe moins, on trouve exactement :
+$\mathbb{P}(A \cup B \cup C) = \mathbb{P}(A) + \mathbb{P}(B) + \mathbb{P}(C) - \mathbb{P}(A \cap B) - \mathbb{P}(A \cap C) - \mathbb{P}(B \cap C) + \mathbb{P}(A \cap B \cap C)$.
+
+2. \textbf{Application au tirage de cartes :}
+Soit $\Omega$ l'ensemble des 52 cartes. $\text{Card}(\Omega) = 52$. On utilise la probabilité uniforme.
+$A$ = "Tirer un As". $\mathbb{P}(A) = \frac{4}{52}$.
+$B$ = "Tirer un Cœur". $\mathbb{P}(B) = \frac{13}{52}$.
+$C$ = "Tirer une Figure". $\mathbb{P}(C) = \frac{12}{52}$ (3 figures $\times$ 4 couleurs).
+
+Calculons les intersections 2 à 2 :
+$A \cap B$ = "As de Cœur". $\mathbb{P}(A \cap B) = \frac{1}{52}$.
+$A \cap C$ = "Tirer un As ET une Figure". Impossible, donc $\mathbb{P}(A \cap C) = 0$.
+$B \cap C$ = "Tirer une Figure de Cœur" (Valet, Dame, Roi de Cœur). $\mathbb{P}(B \cap C) = \frac{3}{52}$.
+
+Calculons l'intersection 3 à 3 :
+$A \cap B \cap C$ = "Tirer un As de Cœur qui soit une Figure". C'est impossible, donc $\mathbb{P}(A \cap B \cap C) = 0$.
+
+Appliquons la formule :
+$\mathbb{P}(A \cup B \cup C) = \frac{4}{52} + \frac{13}{52} + \frac{12}{52} - \frac{1}{52} - 0 - \frac{3}{52} + 0 = \frac{25}{52}$.
+La probabilité est de $25 / 52$.
+
+
+
+\subsection*{Exercice 6 : Le Paradoxe des Anniversaires (Probabilité d'un complémentaire)}
+$\bigstar\bigstar\bigstar\star\star$
+
+\subsubsection*{Énoncé}
+
+Dans une classe de $k$ étudiants, on s'intéresse à la probabilité $P_k$ qu'au moins deux étudiants partagent la même date d'anniversaire (en supposant $365$ jours par an, équiprobables et indépendants).
+1. Au lieu de calculer directement $P_k$, définir rigoureusement l'événement complémentaire $E_k^c$ et calculer sa probabilité.
+2. En déduire la formule de $P_k$ en fonction de $k$.
+3. Vérifier numériquement que pour $k=23$, $P_{23} \approx 0.507$ (plus de $50\%$).
+
+
+\subsubsection*{Correction Détaillée}
+
+1. \textbf{Définition de l'événement complémentaire :}
+L'événement $E_k$ est : "Au moins deux étudiants ont la même date d'anniversaire".
+Le complémentaire $E_k^c$ est : "Aucun étudiant ne partage sa date d'anniversaire avec un autre". Autrement dit, tous les $k$ étudiants ont des dates d'anniversaire distinctes.
+
+\textbf{Calcul de $\mathbb{P}(E_k^c)$ :}
+Il y a $365^k$ issues possibles au total (chaque étudiant peut naître n'importe lequel des $365$ jours). C'est le cardinal de l'univers $\Omega$.
+Pour compter le nombre d'issues favorables à $E_k^c$ :
+- Le 1er étudiant a $365$ choix possibles.
+- Le 2ème étudiant doit naître un jour différent, il a $364$ choix.
+- Le 3ème étudiant doit naître un jour différent des deux premiers, il a $363$ choix.
+- ...
+- Le $k$-ième étudiant a $365 - (k - 1) = 365 - k + 1$ choix.
+Le nombre total de configurations où tout le monde est né un jour différent est donné par le produit (arrangements) : $A_{365}^k = 365 \times 364 \times \dots \times (365 - k + 1)$.
+La probabilité est le ratio :
+$\mathbb{P}(E_k^c) = \frac{365 \times 364 \times \dots \times (365 - k + 1)}{365^k}$.
+Cette formule peut aussi s'écrire de manière plus compacte avec des factorielles :
+$\mathbb{P}(E_k^c) = \frac{365!}{(365-k)! \cdot 365^k}$.
+
+2. \textbf{Formule pour $P_k$ :}
+Par l'axiome fondamental des probabilités, la somme de la probabilité d'un événement et de son complémentaire vaut $1$.
+$P_k = \mathbb{P}(E_k) = 1 - \mathbb{P}(E_k^c)$.
+$P_k = 1 - \frac{365 \times 364 \times \dots \times (365 - k + 1)}{365^k}$.
+On peut aussi l'écrire comme un produit de fractions :
+$P_k = 1 - \left( \frac{365}{365} \cdot \frac{364}{365} \cdot \frac{363}{365} \dots \frac{365 - k + 1}{365} \right) = 1 - \prod_{i=0}^{k-1} \left(1 - \frac{i}{365}\right)$.
+
+3. \textbf{Vérification pour $k=23$ :}
+$P_{23} = 1 - \left(1 \times \frac{364}{365} \times \frac{363}{365} \times \dots \times \frac{343}{365} \right)$.
+En effectuant le calcul produit terme à terme :
+$\mathbb{P}(E_{23}^c) \approx 0.4927$.
+Donc $P_{23} = 1 - 0.4927 = 0.5073$.
+Il y a donc plus d'une chance sur deux (environ $50.7\%$) que deux étudiants soient nés le même jour dans une classe de $23$ élèves.
+
+
+
+\subsection*{Exercice 7 : L'ensemble de Cantor et la limite de probabilité}
+$\bigstar\bigstar\bigstar\bigstar\star$
+
+\subsubsection*{Énoncé}
+
+On construit l'ensemble de Cantor $C$ sur $[0, 1]$.
+- Étape 0 : On part de $I_0 = [0, 1]$. La longueur est $L_0 = 1$.
+- Étape 1 : On enlève le tiers central ouvert $]1/3, 2/3[$. Il reste $I_1 = [0, 1/3] \cup [2/3, 1]$.
+- Étape $n$ : On enlève le tiers central de chaque segment restant à l'étape $n-1$ pour former $I_n$.
+L'ensemble de Cantor est défini par l'intersection infinie : $C = \bigcap_{n=0}^\infty I_n$.
+En utilisant les axiomes de Kolmogorov sur la mesure de Lebesgue $\lambda$ (où $\lambda([a,b]) = b-a$), calculer la probabilité $\mathbb{P}(C)$ de tirer un nombre au hasard dans l'ensemble de Cantor.
+
+
+\subsubsection*{Correction Détaillée}
+
+\textbf{Étape 1 : Analyser la suite des événements $I_n$.}
+L'événement $I_n$ représente l'union de tous les intervalles restants à l'étape $n$.
+On tire un réel uniformly dans $[0, 1]$, donc la probabilité $\mathbb{P}(I_n)$ correspond à la somme des longueurs des intervalles constituant $I_n$.
+- À l'étape 0 : $\mathbb{P}(I_0) = 1$.
+- À l'étape 1 : On enlève un tiers de la longueur de chaque intervalle, donc il reste $2/3$ de la longueur. $I_1$ est composé de 2 segments de longueur $1/3$. $\mathbb{P}(I_1) = 2 \times (1/3) = 2/3$.
+- À l'étape 2 : $I_2$ est composé de 4 segments de longueur $1/9$. $\mathbb{P}(I_2) = 4 \times (1/9) = (2/3)^2$.
+Par une récurrence immédiate, à l'étape $n$, $I_n$ est composé de $2^n$ segments, chacun de longueur $(1/3)^n$.
+Donc la probabilité (la longueur totale) est :
+$\mathbb{P}(I_n) = 2^n \times \left(\frac{1}{3}\right)^n = \left(\frac{2}{3}\right)^n$.
+
+\textbf{Étape 2 : Appliquer le théorème de continuité descendante.}
+Par construction, l'ensemble à l'étape $n$ est strictement inclus dans l'ensemble à l'étape $n-1$.
+Ainsi, la suite d'événements $(I_n)_{n \in \mathbb{N}}$ est décroissante :
+$I_0 \supset I_1 \supset I_2 \dots$
+L'ensemble de Cantor $C$ est l'intersection dénombrable décroissante de ces ensembles : $C = \bigcap_{n=0}^\infty I_n$.
+D'après l'axiome de $\sigma$-additivité, qui induit la continuité descendante, la probabilité de l'intersection est la limite des probabilités :
+$\mathbb{P}(C) = \mathbb{P}\left(\bigcap_{n=0}^\infty I_n\right) = \lim_{n \to \infty} \mathbb{P}(I_n)$.
+$\mathbb{P}(C) = \lim_{n \to \infty} \left(\frac{2}{3}\right)^n$.
+
+\textbf{Étape 3 : Conclusion.}
+Puisque $\frac{2}{3} < 1$, la suite géométrique converge vers $0$.
+$\mathbb{P}(C) = 0$.
+Bien que l'ensemble de Cantor contienne une infinité non-dénombrable de points (il a la puissance du continu, comme $\mathbb{R}$), sa "taille" géométrique (sa probabilité sous la mesure de Lebesgue) est rigoureusement nulle.
+
+
+
+\subsection*{Exercice 8 : L'inégalité de Bonferroni Généralisée}
+$\bigstar\bigstar\bigstar\bigstar\star$
+
+\subsubsection*{Énoncé}
+
+Soient $A_1, A_2, \dots, A_n$ des événements. Posons $S_1 = \sum_{i=1}^n \mathbb{P}(A_i)$ et $S_2 = \sum_{1 \le i < j \le n} \mathbb{P}(A_i \cap A_j)$.
+Démontrer que :
+$$ \mathbb{P}\left(\bigcup_{i=1}^n A_i\right) \ge S_1 - S_2 $$
+*Indication : Procéder par récurrence sur n en utilisant la formule de l'union à chaque étape.*
+
+
+\subsubsection*{Correction Détaillée}
+
+\textbf{Démonstration par récurrence :}
+
+\textbf{Initialisation :}
+Pour $n=1$, l'inégalité s'écrit $\mathbb{P}(A_1) \ge \mathbb{P}(A_1) - 0$, ce qui est vrai avec égalité.
+Pour $n=2$, l'inégalité s'écrit $\mathbb{P}(A_1 \cup A_2) \ge \mathbb{P}(A_1) + \mathbb{P}(A_2) - \mathbb{P}(A_1 \cap A_2)$. En fait, d'après la formule de l'union, il y a égalité exacte. La propriété est donc vraie au rang $2$.
+
+\textbf{Hérédité :}
+Supposons l'inégalité vraie au rang $n$. Montrons-la au rang $n+1$.
+Posons $U_n = \bigcup_{i=1}^n A_i$. On s'intéresse à $\mathbb{P}(U_n \cup A_{n+1})$.
+Par la formule de l'union pour deux événements :
+$\mathbb{P}(U_n \cup A_{n+1}) = \mathbb{P}(U_n) + \mathbb{P}(A_{n+1}) - \mathbb{P}(U_n \cap A_{n+1})$.
+
+Par hypothèse de récurrence, $\mathbb{P}(U_n) \ge \sum_{i=1}^n \mathbb{P}(A_i) - \sum_{1 \le i < j \le n} \mathbb{P}(A_i \cap A_j)$.
+Remplaçons dans l'équation :
+$\mathbb{P}(U_n \cup A_{n+1}) \ge \sum_{i=1}^{n+1} \mathbb{P}(A_i) - \sum_{1 \le i < j \le n} \mathbb{P}(A_i \cap A_j) - \mathbb{P}(U_n \cap A_{n+1})$.  \textbf{(Équation $\star$)}
+
+Maintenant, nous devons majorer le terme soustractif $\mathbb{P}(U_n \cap A_{n+1})$.
+L'événement $U_n \cap A_{n+1}$ peut s'écrire, par distributivité de l'intersection sur l'union :
+$U_n \cap A_{n+1} = \left(\bigcup_{i=1}^n A_i\right) \cap A_{n+1} = \bigcup_{i=1}^n (A_i \cap A_{n+1})$.
+Appliquons l'inégalité de Boole (ou sous-additivité) à cette union :
+$\mathbb{P}(U_n \cap A_{n+1}) = \mathbb{P}\left(\bigcup_{i=1}^n (A_i \cap A_{n+1})\right) \le \sum_{i=1}^n \mathbb{P}(A_i \cap A_{n+1})$.
+
+Comme ce terme est soustrait dans l'équation $\star$, une majoration de $\mathbb{P}(U_n \cap A_{n+1})$ donne une minoration de la différence globale :
+$- \mathbb{P}(U_n \cap A_{n+1}) \ge - \sum_{i=1}^n \mathbb{P}(A_i \cap A_{n+1})$.
+
+En substituant dans $\star$, nous obtenons :
+$\mathbb{P}(U_n \cup A_{n+1}) \ge \sum_{i=1}^{n+1} \mathbb{P}(A_i) - \sum_{1 \le i < j \le n} \mathbb{P}(A_i \cap A_j) - \sum_{i=1}^n \mathbb{P}(A_i \cap A_{n+1})$.
+Les deux derniers termes se regroupent exactement pour former toutes les paires $\mathbb{P}(A_i \cap A_j)$ pour $1 \le i < j \le n+1$. En effet, le dernier terme ajoute toutes les paires impliquant le nouvel élément $A_{n+1}$.
+Ainsi :
+$\mathbb{P}\left(\bigcup_{i=1}^{n+1} A_i\right) \ge \sum_{i=1}^{n+1} \mathbb{P}(A_i) - \sum_{1 \le i < j \le n+1} \mathbb{P}(A_i \cap A_j)$.
+L'inégalité est prouvée par récurrence. Cette minoration est très utilisée en statistiques pour les tests multiples.
+
+
+
+\subsection*{Exercice 9 : Indépendance et Axiomes croisés}
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
+
+\subsubsection*{Énoncé}
+
+Soient deux événements indépendants $A$ et $B$ dans $(\Omega, \mathcal{F}, \mathbb{P})$. (Rappel : par définition de l'indépendance, $\mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B)$).
+1. En utilisant uniquement les axiomes de Kolmogorov et les propriétés ensemblistes (complémentaires, unions disjointes), prouver rigoureusement que $A$ et le complémentaire $B^c$ sont également indépendants.
+2. Démontrer que si $A$ est indépendant de lui-même, alors $\mathbb{P}(A) = 0$ ou $\mathbb{P}(A) = 1$. (Les seuls événements indépendants d'eux-mêmes sont les événements presques sûrs ou presques impossibles).
+
+
+\subsubsection*{Correction Détaillée}
+
+1. \textbf{Indépendance de $A$ et $B^c$ :}
+Pour prouver que $A$ et $B^c$ sont indépendants, nous devons démontrer que :
+$\mathbb{P}(A \cap B^c) = \mathbb{P}(A)\mathbb{P}(B^c)$.
+
+Décomposons l'événement $A$ en deux parties disjointes selon $B$ :
+La partie de $A$ qui est dans $B$, et la partie de $A$ qui n'est pas dans $B$.
+$A = (A \cap B) \cup (A \cap B^c)$.
+Puisque $(A \cap B)$ et $(A \cap B^c)$ sont disjoints, l'axiome d'additivité finie donne :
+$\mathbb{P}(A) = \mathbb{P}(A \cap B) + \mathbb{P}(A \cap B^c)$.
+
+Isolons le terme qui nous intéresse :
+$\mathbb{P}(A \cap B^c) = \mathbb{P}(A) - \mathbb{P}(A \cap B)$.
+
+Par hypothèse, $A$ et $B$ sont indépendants, donc $\mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B)$. On substitue :
+$\mathbb{P}(A \cap B^c) = \mathbb{P}(A) - \mathbb{P}(A)\mathbb{P}(B)$.
+
+Factorisons par $\mathbb{P}(A)$ :
+$\mathbb{P}(A \cap B^c) = \mathbb{P}(A) (1 - \mathbb{P}(B))$.
+
+D'après la propriété du complémentaire (dérivée de l'axiome de la masse totale), $1 - \mathbb{P}(B) = \mathbb{P}(B^c)$. Donc :
+$\mathbb{P}(A \cap B^c) = \mathbb{P}(A)\mathbb{P}(B^c)$.
+La propriété est démontrée : l'indépendance est préservée par passage au complémentaire.
+
+2. \textbf{Événement indépendant de lui-même :}
+Par hypothèse, $A$ est indépendant de $A$. La définition de l'indépendance donne :
+$\mathbb{P}(A \cap A) = \mathbb{P}(A)\mathbb{P}(A) = \mathbb{P}(A)^2$.
+
+Or, d'un point de vue ensembliste (idempotence de l'intersection), on a trivialement $A \cap A = A$.
+Donc la probabilité est aussi :
+$\mathbb{P}(A \cap A) = \mathbb{P}(A)$.
+
+En égalisant les deux expressions, on obtient l'équation :
+$\mathbb{P}(A)^2 = \mathbb{P}(A)$.
+$\mathbb{P}(A)^2 - \mathbb{P}(A) = 0$.
+$\mathbb{P}(A) (\mathbb{P}(A) - 1) = 0$.
+
+C'est un polynôme du second degré ayant pour seules racines réelles :
+Soit $\mathbb{P}(A) = 0$.
+Soit $\mathbb{P}(A) = 1$.
+Les événements déterministes (presque sûrs ou presque impossibles) sont les seuls à ne dépendre que d'eux-mêmes en termes d'information probabiliste.
+
+
+
+\subsection*{Exercice 10 : Construction d'un paradoxe géométrique (Vitali restreint)}
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
+
+\subsubsection*{Énoncé}
+
+Pourquoi exige-t-on que la tribu $\mathcal{F}$ ne soit pas toujours égale à l'ensemble des parties $\mathcal{P}(\Omega)$ lorsque l'univers $\Omega$ est continu (comme $[0, 1]$) ?
+Le paradoxe de Vitali montre qu'il est impossible de définir une mesure de probabilité sur $\mathcal{P}([0, 1])$ qui soit simultanément :
+- $\sigma$-additive.
+- Invariante par translation (la probabilité d'un intervalle ne dépend que de sa longueur).
+- Normalisée ($\mathbb{P}([0, 1]) = 1$).
+
+On construit une relation d'équivalence sur $[0, 1[$ : $x \sim y \iff x - y \in \mathbb{Q}$. On choisit un représentant unique par classe pour former un ensemble $V$.
+Justifier pourquoi, si l'on suppose par l'absurde que $\mathbb{P}(V)$ existe, le fait de sommer les translations rationnelles de $V$ aboutit à une contradiction insoluble avec les axiomes de Kolmogorov, rendant $V$ "non-mesurable".
+
+
+\subsubsection*{Correction Détaillée}
+
+Cet exercice illustre l'impérieuse nécessité de la notion de "tribu" $\mathcal{F}$ dans la définition axiomatique de Kolmogorov, empêchant de mesurer des ensembles "pathologiques".
+
+\textbf{Étape 1 : Construction des translations dénombrables}
+L'ensemble $V$ contient un et un seul représentant de chaque classe de l'équivalence $x \sim y \iff x-y \in \mathbb{Q}$.
+L'ensemble des rationnels dans $[-1, 1]$ est dénombrable. Énumérons-les : $\{q_1, q_2, q_3, \dots\}$.
+Pour chaque rationnel $q_n$, on définit le translaté : $V_n = \{v + q_n \pmod 1 \mid v \in V\}$. (Le modulo 1 assure qu'on reste dans $[0, 1[$).
+
+\textbf{Étape 2 : Disjonction et Couverture}
+1. \textbf{Les $V_n$ sont disjoints deux à deux.} Supposons par l'absurde que $x \in V_n \cap V_m$ (avec $n \neq m$). Alors $x = v_1 + q_n = v_2 + q_m$ (modulo 1). Ainsi $v_1 - v_2 = q_m - q_n \in \mathbb{Q}$. Par définition de la relation d'équivalence, $v_1 \sim v_2$. Mais $V$ ne contient qu'un seul représentant par classe, donc $v_1 = v_2$. Il s'ensuit que $q_n = q_m$, contradiction.
+2. \textbf{L'union des $V_n$ couvre l'espace.} Tout réel $x \in [0, 1[$ appartient à une classe d'équivalence, donc il diffère d'un certain élément de $V$ par un rationnel $q_n$. Donc $x \in V_n$.
+Ainsi, $\bigcup_{n=1}^\infty V_n = [0, 1[$.
+
+\textbf{Étape 3 : La contradiction via les axiomes de Kolmogorov}
+Supposons que $V$ soit un événement mesurable et possède une probabilité $p = \mathbb{P}(V)$.
+Puisque la mesure de Lebesgue est invariante par translation, chaque $V_n$ a la même probabilité : $\mathbb{P}(V_n) = \mathbb{P}(V) = p$.
+
+D'après le troisième axiome de Kolmogorov ($\sigma$-additivité sur des ensembles disjoints), la probabilité de l'union infinie est la somme des probabilités :
+$\mathbb{P}\left(\bigcup_{n=1}^\infty V_n\right) = \sum_{n=1}^\infty \mathbb{P}(V_n)$.
+
+Or, l'union des $V_n$ est exactement l'univers $[0, 1[$. D'après le deuxième axiome de Kolmogorov, sa probabilité est de $1$ :
+$1 = \sum_{n=1}^\infty p = p + p + p + \dots$
+
+Il y a maintenant deux cas, tous les deux absurdes :
+- Cas 1 : Si $p = 0$, alors la somme infinie vaut $0$, ce qui contredit $1 = 0$.
+- Cas 2 : Si $p > 0$, alors la série somme d'une infinité de termes constants strictement positifs diverge vers l'infini, ce qui contredit $1 = +\infty$.
+
+\textbf{Conclusion :}
+L'hypothèse initiale "l'ensemble $V$ possède une probabilité mesurable" est obligatoirement fausse. Il existe des ensembles dans $\mathcal{P}([0, 1])$ auxquels on ne peut pas attribuer de probabilité respectant les axiomes. D'où la nécessité de restreindre l'application $\mathbb{P}$ à une tribu mathématiquement sage (comme la tribu borélienne).
+
+
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Vérification expérimentale de la loi des grands nombres et de la masse totale}
+
+Dans ce premier TP, nous allons simuler informatiquement une expérience aléatoire simple (le lancer d'un dé) et vérifier empiriquement le deuxième axiome de Kolmogorov : la somme des probabilités de l'univers vaut 1.
+
+\subsubsection*{Implémentation Python}
+
+\begin{lstlisting}
+import random
+
+def simuler_de_axiomatique(nombre_lancers):
+    # Dictionnaire representant les occurrences des faces
+    frequences = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0}
+
+    # Simulation
+    for _ in range(nombre_lancers):
+        face_obtenue = random.randint(1, 6)
+        frequences[face_obtenue] += 1
+
+    # Calcul des probabilites empiriques (mesures)
+    probabilites = {}
+    for face, compte in frequences.items():
+        probabilites[face] = compte / nombre_lancers
+
+    return probabilites
+
+def verifier_axiome_masse(probabilites):
+    somme_totale = sum(probabilites.values())
+    print("Somme empirique des probabilites :", somme_totale)
+    # Verification avec une marge d'erreur due aux flottants
+    assert abs(somme_totale - 1.0) < 1e-9, "L'axiome de masse n'est pas respecte !"
+
+# Execution
+n_simulations = 100000
+mesure_empirique = simuler_de_axiomatique(n_simulations)
+
+for face, proba in mesure_empirique.items():
+    print("Face", face, "- Probabilite empirique :", round(proba, 4))
+
+verifier_axiome_masse(mesure_empirique)
+\end{lstlisting}
+
+
+
+\subsection*{TP 2 : Illustration du principe d'inclusion-exclusion}
+
+Nous allons vérifier empiriquement la formule du crible (union) pour deux événements. Soit l'univers des entiers de 1 à 1000. L'événement A est "être multiple de 3" et l'événement B est "être multiple de 5".
+
+\subsubsection*{Implémentation Python}
+
+\begin{lstlisting}
+def calculer_mesure_union():
+    univers = set(range(1, 1001))
+
+    # Construction des evenements comme des ensembles (Tribus discretes)
+    evenement_A = {x for x in univers if x % 3 == 0}
+    evenement_B = {x for x in univers if x % 5 == 0}
+
+    # Operations ensemblistes
+    union_A_B = evenement_A.union(evenement_B)
+    intersection_A_B = evenement_A.intersection(evenement_B)
+
+    # Mesures (Probabilite uniforme = cardinal_evenement / cardinal_univers)
+    mesure_A = len(evenement_A) / len(univers)
+    mesure_B = len(evenement_B) / len(univers)
+    mesure_inter = len(intersection_A_B) / len(univers)
+    mesure_union_directe = len(union_A_B) / len(univers)
+
+    # Application du theoreme issu des axiomes de Kolmogorov
+    mesure_calculee = mesure_A + mesure_B - mesure_inter
+
+    print("Probabilite de A :", mesure_A)
+    print("Probabilite de B :", mesure_B)
+    print("Probabilite de l'intersection :", mesure_inter)
+    print("Probabilite de l'union (directe ensembliste) :", mesure_union_directe)
+    print("Probabilite de l'union (via formule) :", mesure_calculee)
+
+    # Validation
+    assert abs(mesure_union_directe - mesure_calculee) < 1e-9
+    print("La formule d'inclusion-exclusion est mathematiquement verifiee sur l'echantillon.")
+
+calculer_mesure_union()
+\end{lstlisting}
+
+
+
+\subsection*{TP 3 : Simulation du Paradoxe des Anniversaires}
+
+Nous implémentons une fonction pour calculer la probabilité empirique (via simulation Monte-Carlo) et la probabilité théorique (via la formule du complémentaire vue en exercice) que deux personnes aient la même date d'anniversaire dans un groupe de taille k.
+
+\subsubsection*{Implémentation Python}
+
+\begin{lstlisting}
+import random
+
+def probabilite_empirique_anniversaire(k, iterations=10000):
+    succes = 0
+    for _ in range(iterations):
+        # Generer k anniversaires au hasard entre le jour 1 et 365
+        anniversaires = [random.randint(1, 365) for _ in range(k)]
+
+        # Si la longueur de l'ensemble (sans doublons) est plus petite, il y a eu collision
+        if len(set(anniversaires)) < k:
+            succes += 1
+
+    return succes / iterations
+
+def probabilite_theorique_anniversaire(k):
+    # Utilisation du complementaire (Axiome de Kolmogorov)
+    # P(Au moins 2) = 1 - P(Tous differents)
+    proba_tous_differents = 1.0
+    for i in range(k):
+        proba_tous_differents *= (365 - i) / 365
+    return 1.0 - proba_tous_differents
+
+# Test pour k = 23
+k_test = 23
+p_empirique = probabilite_empirique_anniversaire(k_test)
+p_theorique = probabilite_theorique_anniversaire(k_test)
+
+print("Taille du groupe :", k_test)
+print("Probabilite theorique (Axiomes) :", round(p_theorique, 4))
+print("Probabilite empirique (Monte-Carlo) :", round(p_empirique, 4))
+
+assert abs(p_empirique - p_theorique) < 0.02, "L'ecart entre theorie et empirisme est trop grand."
+\end{lstlisting}
+
+
+
+\subsection*{TP 4 : Borne de l'union (Boole-Bonferroni)}
+
+Ce TP vérifie numériquement la sous-additivité (inégalité de Boole) pour une union de plusieurs événements générés aléatoirement, qui n'est pas disjointe.
+
+\subsubsection*{Implémentation Python}
+
+\begin{lstlisting}
+import random
+
+def verifier_invergalite_boole(nb_evenements=5, taille_univers=100):
+    univers = set(range(1, taille_univers + 1))
+    evenements = []
+
+    # Creation d'evenements aleatoires
+    for _ in range(nb_evenements):
+        taille_evt = random.randint(10, 40)
+        # Echantillonnage sans remise pour creer un sous-ensemble
+        evt = set(random.sample(list(univers), k=taille_evt))
+        evenements.append(evt)
+
+    # Calcul de la mesure de l'union globale
+    union_globale = set()
+    somme_mesures = 0.0
+
+    for evt in evenements:
+        union_globale = union_globale.union(evt)
+        # Mesure d'un evt individuel
+        mesure_evt = len(evt) / taille_univers
+        somme_mesures += mesure_evt
+
+    mesure_union = len(union_globale) / taille_univers
+
+    print("Mesure exacte de l'union :", mesure_union)
+    print("Somme brute des mesures (borne superieure) :", somme_mesures)
+
+    # L'inegalite dicte que la mesure de l'union est inferieure ou egale a la somme des mesures
+    assert mesure_union <= somme_mesures, "L'inegalite de Boole est violee !"
+    print("L'inegalite de Boole est validee mathematiquement.")
+
+verifier_invergalite_boole()
+\end{lstlisting}
+
+
+
+\subsection*{TP 5 : Continuité descendante et convergence vers zéro}
+
+Nous illustrons géométriquement l'exemple de la continuité descendante en calculant l'aire de disques concentriques de plus en plus petits (suite décroissante d'événements), et nous observons la probabilité tendre asymptotiquement vers zéro.
+
+\subsubsection*{Implémentation Python}
+
+\begin{lstlisting}
+import math
+
+def simuler_continuite_descendante(iterations_max=20):
+    rayon_initial = 1.0
+    aire_univers = math.pi * (rayon_initial ** 2)
+
+    probabilites = []
+
+    for n in range(1, iterations_max + 1):
+        # L'evenement An est de rayon 1/n
+        rayon_n = 1.0 / n
+        aire_An = math.pi * (rayon_n ** 2)
+
+        # Probabilite de l'evenement An dans l'univers de rayon 1
+        probabilite_An = aire_An / aire_univers
+        probabilites.append(probabilite_An)
+
+        print(f"Etape n={n:02d} | Rayon = {rayon_n:.4f} | Probabilite P(A_n) = {probabilite_An:.6f}")
+
+    # Verification asymptotique (Continuite de Kolmogorov)
+    assert probabilites[-1] < 1e-2, "La limite ne semble pas converger vers 0"
+    print("\nLa suite des probabilites des evenements decroissants tend bien vers l'aire du centre, soit 0.")
+
+simuler_continuite_descendante()
+\end{lstlisting}
+
+
+
+
+
+\end{document}
