@@ -1,0 +1,766 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    extendedchars=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ç}{{\c{c}}}1 {œ}{{\oe}}1 {ù}{{\`u}}1 {É}{{\'E}}1 {È}{{\`E}}1 {À}{{\`A}}1 {Ç}{{\c{C}}}1 {Œ}{{\OE}}1 {Ê}{{\^E}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+}
+
+\title{\Huge DÉRIVATION AU SENS DES DISTRIBUTIONS \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+
+\section{Introduction et Genèse Physique}
+
+Historiquement, le besoin de dériver des fonctions non différentiables ou discontinues s'est fait sentir en physique, notamment avec les travaux de Paul Dirac en mécanique quantique et d'Oliver Heaviside en ingénierie électrique. Lorsqu'on étudie un signal qui s'allume instantanément (un interrupteur parfait), le signal est modélisé par la fonction de Heaviside. La dérivée de ce signal, représentant par exemple une intensité transitoire infinie sur un temps nul, ne peut pas être décrite par une fonction classique.
+
+La théorie des distributions de Laurent Schwartz offre un cadre rigoureux (celui de l'analyse fonctionnelle) pour justifier et étendre ces manipulations formelles. L'idée fondatrice est de transférer la dérivation du "signal" (l'objet rugueux) vers une "fonction test" (un objet infiniment lisse et à support compact) via une intégration par parties formelle.
+
+Ainsi, on ne regarde plus la fonction point par point, mais on l'observe à travers son action (intégrale) sur des fonctions tests de la classe $\mathcal{D}(\mathbb{R})$. Cela permet de définir une dérivée pour tout objet localement intégrable, et plus généralement pour toute distribution, prolongeant ainsi l'opérateur de dérivation de manière universelle et continue.
+
+\section{Définitions, Théorèmes \& Exemples}
+
+\subsection{Dérivée d'une distribution}
+
+Soit $\mathcal{D}(\mathbb{R})$ l'espace des fonctions tests (fonctions $C^\infty$ à support compact) et $\mathcal{D}'(\mathbb{R})$ l'espace des distributions (formes linéaires continues sur $\mathcal{D}(\mathbb{R})$).
+
+\textbf{Définition (Dérivée au sens des distributions) :}
+Soit $T \in \mathcal{D}'(\mathbb{R})$. On définit la dérivée de $T$, notée $T'$ (ou $\frac{dT}{dx}$), comme la distribution agissant sur toute fonction test $\phi \in \mathcal{D}(\mathbb{R})$ par la formule :
+$$ \langle T', \phi \rangle = - \langle T, \phi' \rangle $$
+
+Par récurrence, on définit la dérivée $k$-ième $T^{(k)}$ par :
+$$ \langle T^{(k)}, \phi \rangle = (-1)^k \langle T, \phi^{(k)} \rangle $$
+
+\textbf{Exemple Concret} 1 : Dérivation d'une fonction $C^1$.
+Soit $f \in C^1(\mathbb{R})$. Identifions $f$ à la distribution régulière $T_f$. Pour $\phi \in \mathcal{D}(\mathbb{R})$, on a :
+$$ \langle (T_f)', \phi \rangle = - \langle T_f, \phi' \rangle = - \int_{\mathbb{R}} f(x) \phi'(x) dx $$
+Par intégration par parties, sachant que $\phi$ est à support compact (donc le terme de bord $[f(x)\phi(x)]_{-\infty}^{+\infty}$ est nul) :
+$$ \langle (T_f)', \phi \rangle = \int_{\mathbb{R}} f'(x) \phi(x) dx = \langle T_{f'}, \phi \rangle $$
+On retrouve bien la dérivée usuelle.
+
+\subsection{Formule des sauts}
+
+La formule des sauts permet de calculer la dérivée distributionnelle d'une fonction continue par morceaux.
+
+\textbf{Théorème (Formule des sauts en dimension 1) :}
+Soit $f : \mathbb{R} \to \mathbb{R}$ une fonction de classe $C^1$ par morceaux, présentant des discontinuités de première espèce (des sauts) aux points isolés $a_1, a_2, \dots, a_n$.
+Notons $\{f'\}$ la dérivée de $f$ au sens usuel (définie presque partout sur $\mathbb{R} \setminus \{a_1, \dots, a_n\}$).
+Si $\{f'\}$ est localement intégrable sur $\mathbb{R}$, alors la dérivée de $f$ au sens des distributions est donnée par :
+$$ T_f' = T_{\{f'\}} + \sum_{i=1}^n \sigma_{a_i} \delta_{a_i} $$
+où $\sigma_{a_i} = f(a_i^+) - f(a_i^-)$ est le saut de la fonction $f$ au point $a_i$, et $\delta_{a_i}$ est la distribution de Dirac centrée en $a_i$.
+
+\textbf{Exemple Concret 2 : Application à la fonction signe.}
+Considérons la fonction signe définie par $f(x) = 1$ si $x > 0$ et $f(x) = -1$ si $x < 0$.
+- La dérivée usuelle $\{f'\}$ est nulle partout où elle est définie ($x \neq 0$).
+- En $x = 0$, $f$ présente un saut de $\sigma_0 = f(0^+) - f(0^-) = 1 - (-1) = 2$.
+D'après la formule des sauts, la dérivée au sens des distributions est :
+$$ f' = 0 + 2\delta_0 = 2\delta_0 $$
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  % Axe
+  \draw[->, thick] (-2,0) -- (2,0) node[right] {$x$};
+  \draw[->, thick] (0,-1.5) -- (0,1.5) node[above] {$f(x)$};
+
+  % Fonction saut (ex: Heaviside modifiée)
+  \draw[thick, blue] (-1.5, -1) -- (0, -1);
+  \draw[thick, blue] (0, 1) -- (1.5, 1);
+
+  % Pointille saut
+  \draw[dashed, blue] (0,-1) -- (0,1);
+
+  % Points
+  \fill[blue] (0,1) circle (2pt);
+  \fill[white, draw=blue, thick] (0,-1) circle (2pt);
+
+  % Fleche saut
+  \draw[<->, red, thick] (0.2, -1) -- (0.2, 1) node[midway, right] {Saut $\sigma$};
+
+  % Distribution derivee (Dirac)
+  \draw[->, red, ultra thick] (0,0) -- (0,1.4) node[above right] {$\sigma \delta_0$};
+\end{tikzpicture}
+\end{center}
+
+
+\subsection{Espaces de Sobolev  $H^1(\mathbb{R})$}
+
+La dérivation distributionnelle permet d'introduire des espaces fonctionnels adaptés à l'étude des équations aux dérivées partielles.
+
+Définition (Espace de Sobolev $H^1$) :
+L'espace de Sobolev $H^1(\mathbb{R})$ (ou $W^{1,2}(\mathbb{R})$) est défini comme l'espace des fonctions $f \in L^2(\mathbb{R})$ dont la dérivée première au sens des distributions $f'$ appartient également à $L^2(\mathbb{R})$.
+$$ H^1(\mathbb{R}) = \left\{ f \in L^2(\mathbb{R}) \mid f' \in L^2(\mathbb{R}) \right\} $$
+Cet espace est muni du produit scalaire :
+$$ \langle f, g \rangle_{H^1} = \int_{\mathbb{R}} f(x)g(x) dx + \int_{\mathbb{R}} f'(x)g'(x) dx $$
+
+\textbf{Exemple Concret} 3 : Inappartenance de la fonction échelon à $H^1$.
+Considérons la fonction $f(x) = e^{-|x|}$.
+Elle est continue, son intégrale $\int e^{-2|x|}dx$ est finie donc $f \in L^2(\mathbb{R})$.
+Sa dérivée distributionnelle est $f'(x) = -\text{sgn}(x)e^{-|x|}$. On a $f' \in L^2(\mathbb{R})$. Ainsi, $f \in H^1(\mathbb{R})$.
+En revanche, la fonction $g(x) = \mathbf{1}_{[0,1]}(x)$ est dans $L^2(\mathbb{R})$, mais sa dérivée est $g' = \delta_0 - \delta_1$. Les distributions de Dirac n'appartenant pas à $L^2(\mathbb{R})$, on conclut que $g \notin H^1(\mathbb{R})$.
+
+\textbf{Exemple Concret 4 : Dérivée de la valeur absolue.}
+La fonction $f(x) = |x|$ est continue partout, et continûment dérivable sur $\mathbb{R}^*$ de dérivée $f'(x) = \text{sgn}(x)$.
+En $x=0$, $f$ est continue ($f(0^+) = f(0^-) = 0$), donc le saut est nul ($\sigma_0 = 0$).
+D'après la formule des sauts :
+$$ f' = \text{sgn}(x) + 0 \cdot \delta_0 = \text{sgn}(x) $$
+
+\textbf{Exemple Concret 5 : Dérivée d'un Dirac translaté.}
+Soit $T = \delta_a$. Calculons sa dérivée $T'$.
+Pour toute fonction test $\phi \in \mathcal{D}(\mathbb{R})$ :
+$$ \langle \delta_a', \phi \rangle = - \langle \delta_a, \phi' \rangle = - \phi'(a) $$
+La dérivée d'un Dirac en $a$ évalue l'opposé de la dérivée de la fonction test en $a$.
+
+\textbf{Exemple Concret} 6 : L'équation $x T = 1$.
+On cherche les distributions $T$ vérifiant $xT = 1$. L'une des solutions est la valeur principale de Cauchy, notée $\text{vp}(\frac{1}{x})$, définie par :
+$$ \langle \text{vp}\left(\frac{1}{x}\right), \phi \rangle = \lim_{\epsilon \to 0^+} \int_{|x|>\epsilon} \frac{\phi(x)}{x} dx $$
+Une propriété remarquable est que la dérivée distributionnelle du logarithme donne cette distribution :
+$$ (\ln|x|)' = \text{vp}\left(\frac{1}{x}\right) $$
+
+
+\section{Démonstrations}
+
+\subsection{Dérivée de la fonction de Heaviside}
+
+La fonction de Heaviside est définie par $H(x) = 1$ pour $x > 0$ et $H(x) = 0$ pour $x \le 0$.
+Montrons rigoureusement que $H' = \delta_0$.
+
+\textbf{Preuve :}
+Soit $\phi \in \mathcal{D}(\mathbb{R})$ une fonction test. Par définition de la dérivée distributionnelle :
+$$ \langle H', \phi \rangle = - \langle H, \phi' \rangle $$
+En identifiant $H$ à son action intégrale :
+$$ \langle H', \phi \rangle = - \int_{\mathbb{R}} H(x) \phi'(x) dx = - \int_0^{+\infty} 1 \cdot \phi'(x) dx $$
+Par le théorème fondamental de l'analyse :
+$$ \int_0^{+\infty} \phi'(x) dx = \lim_{R \to +\infty} \phi(R) - \phi(0) $$
+Puisque $\phi$ est à support compact, elle s'annule en dehors d'un intervalle $[-A, A]$, donc pour $R > A$, $\phi(R) = 0$.
+Ainsi, l'intégrale vaut $-\phi(0)$.
+En substituant :
+$$ \langle H', \phi \rangle = - ( - \phi(0) ) = \phi(0) $$
+Or, par définition de la distribution de Dirac en 0, on a $\langle \delta_0, \phi \rangle = \phi(0)$.
+Par conséquent, pour toute fonction test $\phi \in \mathcal{D}(\mathbb{R})$, $\langle H', \phi \rangle = \langle \delta_0, \phi \rangle$.
+Ce qui prouve que $H' = \delta_0$ au sens des distributions. $\blacksquare$
+
+\subsection{Formule des sauts avec un unique point de saut}
+
+Soit $f$ de classe $C^1$ sur $\mathbb{R}^*$, continue à gauche et à droite en 0, et dont la dérivée usuelle $\{f'\}$ est localement intégrable. Montrons que $T_f' = T_{\{f'\}} + \sigma_0 \delta_0$.
+
+\textbf{Preuve :}
+Soit $\phi \in \mathcal{D}(\mathbb{R})$. Le support de $\phi$ est inclus dans un segment $[-A, A]$.
+$$ \langle f', \phi \rangle = - \langle f, \phi' \rangle = - \int_{-\infty}^{+\infty} f(x) \phi'(x) dx $$
+On découpe l'intégrale en $x=0$ :
+$$ \langle f', \phi \rangle = - \int_{-\infty}^{0} f(x) \phi'(x) dx - \int_{0}^{+\infty} f(x) \phi'(x) dx $$
+Appliquons une intégration par parties sur $]-\infty, 0[$ et sur $]0, +\infty[$ :
+Pour $]-\infty, 0[$ :
+$$ \int_{-\infty}^{0} f(x) \phi'(x) dx = [f(x)\phi(x)]_{-\infty}^{0^-} - \int_{-\infty}^{0} f'(x) \phi(x) dx $$
+$$ = f(0^-)\phi(0) - 0 - \int_{-\infty}^{0} f'(x) \phi(x) dx $$
+Pour $]0, +\infty[$ :
+$$ \int_{0}^{+\infty} f(x) \phi'(x) dx = [f(x)\phi(x)]_{0^+}^{+\infty} - \int_{0}^{+\infty} f'(x) \phi(x) dx $$
+$$ = 0 - f(0^+)\phi(0) - \int_{0}^{+\infty} f'(x) \phi(x) dx $$
+En sommant ces deux expressions :
+$$ \langle f', \phi \rangle = - \left( f(0^-)\phi(0) - \int_{-\infty}^{0} f'(x) \phi(x) dx - f(0^+)\phi(0) - \int_{0}^{+\infty} f'(x) \phi(x) dx \right) $$
+$$ \langle f', \phi \rangle = \left( f(0^+) - f(0^-) \right)\phi(0) + \int_{-\infty}^{+\infty} \{f'\}(x) \phi(x) dx $$
+Soit :
+$$ \langle f', \phi \rangle = \sigma_0 \langle \delta_0, \phi \rangle + \langle T_{\{f'\}}, \phi \rangle $$
+On a bien démontré que $f' = \{f'\} + \sigma_0 \delta_0$. $\blacksquare$
+
+\section{Applications en Physique, Logique, \& IA}
+
+La dérivation au sens des distributions possède un impact majeur en Intelligence Artificielle et en Physique Computationnelle.
+
+- \textbf{Fonctions d'activation non-lisses (Deep Learning) :}
+L'une des fonctions d'activation les plus utilisées est la ReLU ($f(x) = \max(0,x)$). Bien qu'elle soit continue, elle n'est pas dérivable classiquement en $x=0$. Au sens des distributions, sa dérivée est la fonction de Heaviside $H(x)$. Sa dérivée seconde est la distribution de Dirac $\delta_0$. Cette formalisation justifie mathématiquement les algorithmes de rétro-propagation du gradient (backpropagation) qui traitent des points de non-différentiabilité. En informatique, on choisit conventionnellement $H(0)=0$ ou $H(0)=0.5$, ce qui correspond en réalité à la notion de sous-différentiel (lié aux distributions).
+
+- \textbf{Traitement d'Image et Détection de Contours :}
+En vision par ordinateur, une image est un signal 2D discontinu. Un contour correspond à un saut brutal d'intensité. L'application d'un opérateur de dérivation spatiale (comme le filtre de Sobel, approximation discrète du gradient) fait ressortir ces discontinuités sous forme de pics élevés. C'est l'incarnation visuelle et algorithmique de la formule des sauts : la composante impulsionnelle $\sigma \delta$ domine le signal dérivé.
+
+- \textbf{Physics-Informed Neural Networks (PINNs) :}
+Dans la modélisation de phénomènes physiques complexes par réseaux de neurones (mécanique des fluides, propagation d'ondes avec chocs), la solution présente fréquemment des discontinuités. La fonction de perte associée à l'Équation aux Dérivées Partielles doit donc évaluer des dérivées d'ordre supérieur. L'utilisation d'une formulation faible, s'appuyant sur la dérivation distributionnelle (intégration contre des fonctions tests ou utilisation d'espaces de Sobolev $H^s$), permet d'optimiser le réseau même en présence de chocs réguliers.
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Dérivée première de la valeur absolue  \quad$\bigstar\star\star\star\star$}
+
+
+\subsubsection*{Énoncé}
+Soit la fonction $f(x) = |x|$.
+1. Tracer l'allure de la fonction $f$.
+2. Calculer sa dérivée au sens des distributions, notée $f'$.
+
+\subsubsection*{Correction}
+1. La fonction $f(x) = |x|$ est la fonction valeur absolue. Elle est continue sur $\mathbb{R}$, vaut $x$ pour $x \ge 0$, et $-x$ pour $x \le 0$. Son graphe est en forme de "V" avec une pointe à l'origine.
+
+2. On utilise la formule des sauts pour calculer sa dérivée au sens des distributions.
+La fonction $f$ est de classe $C^1$ par morceaux sur $\mathbb{R} \setminus \{0\}$.
+Sa dérivée usuelle $\{f'\}$ est définie par :
+$$
+\{f'\}(x) = \begin{cases}
+1 \& \text{si } x > 0 \\
+-1 \& \text{si } x < 0
+\end{cases}
+$$
+Cette fonction est exactement la fonction signe, notée $\text{sgn}(x)$.
+Étudions le saut de la fonction $f$ en $x = 0$ :
+- Limite à droite : $f(0^+) = \lim_{x \to 0, x>0} x = 0$
+- Limite à gauche : $f(0^-) = \lim_{x \to 0, x<0} (-x) = 0$
+La fonction $f$ étant continue en $0$, le saut est $\sigma_0 = f(0^+) - f(0^-) = 0 - 0 = 0$.
+
+Par la formule des sauts, on a :
+$$ f' = \{f'\} + \sigma_0 \delta_0 = \text{sgn}(x) + 0 \cdot \delta_0 = \text{sgn}(x) $$
+La dérivée au sens des distributions de la fonction valeur absolue est donc la fonction signe.
+
+
+\subsection*{Exercice 2 : Dérivée seconde de la valeur absolue  \quad$\bigstar\bigstar\star\star\star$}
+
+
+\subsubsection*{Énoncé}
+En utilisant le résultat de l'exercice précédent, calculer la dérivée seconde au sens des distributions de la fonction $f(x) = |x|$.
+
+\subsubsection*{Correction}
+D'après l'exercice 1, on a $f'(x) = \text{sgn}(x)$ au sens des distributions, où $\text{sgn}(x)$ vaut $1$ si $x > 0$ et $-1$ si $x < 0$.
+Pour calculer $f''(x)$, il faut dériver la distribution $\text{sgn}(x)$.
+La fonction $\text{sgn}(x)$ est de classe $C^1$ par morceaux sur $\mathbb{R} \setminus \{0\}$.
+Sa dérivée usuelle est nulle presque partout :
+$$ \{\text{sgn}'\}(x) = 0 \quad \text{pour tout } x \neq 0 $$
+Étudions le saut de la fonction signe en $x = 0$ :
+- Limite à droite : $\text{sgn}(0^+) = 1$
+- Limite à gauche : $\text{sgn}(0^-) = -1$
+Le saut en $0$ est $\sigma_0 = \text{sgn}(0^+) - \text{sgn}(0^-) = 1 - (-1) = 2$.
+
+Par la formule des sauts, on a :
+$$ \text{sgn}' = \{\text{sgn}'\} + \sigma_0 \delta_0 = 0 + 2\delta_0 = 2\delta_0 $$
+
+On conclut donc que :
+$$ f''(x) = (|x|)'' = 2\delta_0 $$
+La "pointe" de la valeur absolue génère une impulsion de Dirac (avec une masse de 2) dans la dérivée seconde.
+
+
+\subsection*{Exercice 3 : Dérivée d'une fonction exponentielle tronquée  \quad$\bigstar\bigstar\star\star\star$}
+
+
+\subsubsection*{Énoncé}
+Soit la fonction $f(x) = e^x \mathbf{1}_{[0, +\infty[}(x)$, où $\mathbf{1}_{[0, +\infty[}$ est la fonction indicatrice (fonction de Heaviside $H$).
+Calculer la dérivée de $f$ au sens des distributions, notée $T_f'$.
+
+\subsubsection*{Correction}
+La fonction $f$ est donnée par :
+$$
+f(x) = \begin{cases}
+e^x \& \text{si } x > 0 \\
+0 \& \text{si } x < 0
+\end{cases}
+$$
+$f$ est de classe $C^\infty$ sur $]-\infty, 0[$ et sur $]0, +\infty[$.
+Sa dérivée usuelle $\{f'\}$ est :
+$$
+\{f'\}(x) = \begin{cases}
+e^x \& \text{si } x > 0 \\
+0 \& \text{si } x < 0
+\end{cases}
+$$
+On remarque que $\{f'\}(x) = f(x)$.
+
+Étudions la continuité en $x = 0$ :
+- Limite à droite : $f(0^+) = e^0 = 1$
+- Limite à gauche : $f(0^-) = 0$
+La fonction $f$ présente un saut en $x=0$ de valeur $\sigma_0 = 1 - 0 = 1$.
+
+D'après la formule des sauts :
+$$ T_f' = T_{\{f'\}} + \sigma_0 \delta_0 $$
+Donc, au sens des distributions :
+$$ f' = f + \delta_0 $$
+
+Cette relation montre que $f$ est solution au sens des distributions de l'équation différentielle $y' - y = \delta_0$. C'est ce qu'on appelle la solution fondamentale de l'opérateur $L = \frac{d}{dx} - \text{id}$.
+
+
+\subsection*{Exercice 4 : Produit d'une fonction}$C^\infty$ par une distribution  \quad $\bigstar\bigstar\bigstar\star\star$
+
+
+\subsubsection*{Énoncé}
+Soit $\alpha \in C^\infty(\mathbb{R})$ et $T \in \mathcal{D}'(\mathbb{R})$.
+On définit le produit $\alpha T$ par : $\langle \alpha T, \phi \rangle = \langle T, \alpha \phi \rangle$ pour toute fonction test $\phi \in \mathcal{D}(\mathbb{R})$.
+Montrer la règle de Leibniz pour la dérivation :
+$$ (\alpha T)' = \alpha' T + \alpha T' $$
+
+\subsubsection*{Correction}
+Soit $\phi \in \mathcal{D}(\mathbb{R})$.
+Par définition de la dérivée d'une distribution :
+$$ \langle (\alpha T)', \phi \rangle = - \langle \alpha T, \phi' \rangle $$
+Par définition du produit d'une fonction lisse par une distribution :
+$$ \langle \alpha T, \phi' \rangle = \langle T, \alpha \phi' \rangle $$
+D'autre part, évaluons le membre de droite de l'égalité à démontrer :
+$$ \langle \alpha' T + \alpha T', \phi \rangle = \langle \alpha' T, \phi \rangle + \langle \alpha T', \phi \rangle $$
+$$ = \langle T, \alpha' \phi \rangle + \langle T', \alpha \phi \rangle $$
+Par définition de la dérivée de $T$ appliquée à la fonction test $(\alpha \phi)$ (qui est bien dans $\mathcal{D}(\mathbb{R})$ car $\alpha \in C^\infty$ et $\phi$ a un support compact) :
+$$ \langle T', \alpha \phi \rangle = - \langle T, (\alpha \phi)' \rangle $$
+Or, par la règle de Leibniz usuelle sur les fonctions différentiables :
+$$ (\alpha \phi)' = \alpha' \phi + \alpha \phi' $$
+Donc :
+$$ \langle T', \alpha \phi \rangle = - \langle T, \alpha' \phi + \alpha \phi' \rangle = - \langle T, \alpha' \phi \rangle - \langle T, \alpha \phi' \rangle $$
+Revenons au membre de droite complet :
+$$ \langle \alpha' T + \alpha T', \phi \rangle = \langle T, \alpha' \phi \rangle - \langle T, \alpha' \phi \rangle - \langle T, \alpha \phi' \rangle $$
+Les termes $\langle T, \alpha' \phi \rangle$ s'annulent :
+$$ \langle \alpha' T + \alpha T', \phi \rangle = - \langle T, \alpha \phi' \rangle $$
+Nous avons ainsi montré que pour tout $\phi \in \mathcal{D}(\mathbb{R})$ :
+$$ \langle (\alpha T)', \phi \rangle = \langle \alpha' T + \alpha T', \phi \rangle $$
+L'égalité au sens des distributions est donc vérifiée : $(\alpha T)' = \alpha' T + \alpha T'$.
+
+
+\subsection*{Exercice 5 : Dérivée de}$x \delta_0$  \quad $\bigstar\bigstar\bigstar\star\star$
+
+
+\subsubsection*{Énoncé}
+1. Démontrer que pour toute distribution de Dirac en $0$, on a $x \delta_0 = 0$.
+2. En utilisant la règle de Leibniz pour les distributions (démontrée dans l'exercice 4), en déduire une relation liant $\delta_0$ et $x \delta_0'$.
+
+\subsubsection*{Correction}
+1. Soit $\phi \in \mathcal{D}(\mathbb{R})$.
+Calculons l'action de $x \delta_0$ sur $\phi$ :
+$$ \langle x \delta_0, \phi \rangle = \langle \delta_0, x \phi(x) \rangle $$
+Par définition de $\delta_0$, cela vaut la fonction test évaluée en $0$ :
+$$ \langle x \delta_0, \phi \rangle = (0 \cdot \phi(0)) = 0 $$
+Ceci est vrai pour toute $\phi$, donc $x \delta_0 = 0$ au sens des distributions.
+
+2. On sait que $x \delta_0 = 0$.
+Dérivons cette égalité des deux côtés au sens des distributions :
+$$ (x \delta_0)' = 0' = 0 $$
+Appliquons la règle de Leibniz $(\alpha T)' = \alpha' T + \alpha T'$ avec $\alpha(x) = x$ et $T = \delta_0$ :
+$$ (x \delta_0)' = (x)' \delta_0 + x \delta_0' $$
+Or $(x)' = 1$, donc :
+$$ (x \delta_0)' = 1 \cdot \delta_0 + x \delta_0' = \delta_0 + x \delta_0' $$
+Puisque $(x \delta_0)' = 0$, on obtient l'égalité :
+$$ \delta_0 + x \delta_0' = 0 \implies x \delta_0' = - \delta_0 $$
+Cette relation remarquable est typique du calcul avec les distributions.
+
+
+\subsection*{Exercice 6 : Équation différentielle}$T' = 0$  \quad $\bigstar\bigstar\bigstar\star\star$
+
+
+\subsubsection*{Énoncé}
+Soit $T \in \mathcal{D}'(\mathbb{R})$ une distribution vérifiant $T' = 0$.
+Montrer que $T$ est une distribution constante, c'est-à-dire qu'il existe $C \in \mathbb{R}$ tel que pour toute $\phi \in \mathcal{D}(\mathbb{R})$, $\langle T, \phi \rangle = C \int_{\mathbb{R}} \phi(x) dx$.
+
+\subsubsection*{Correction}
+Soit $\phi \in \mathcal{D}(\mathbb{R})$.
+Nous devons trouver une fonction $\psi \in \mathcal{D}(\mathbb{R})$ telle que $\psi' = \phi$.
+Si une telle fonction $\psi$ à support compact existe, alors par définition du théorème fondamental de l'analyse, il est nécessaire que l'intégrale de sa dérivée sur $\mathbb{R}$ soit nulle :
+$$ \int_{\mathbb{R}} \phi(x) dx = \int_{\mathbb{R}} \psi'(x) dx = [\psi(x)]_{-\infty}^{+\infty} = 0 $$
+Soit $\phi_0 \in \mathcal{D}(\mathbb{R})$ une fonction fixée d'intégrale 1, par exemple une "bosse" (bump function) bien choisie telle que $\int \phi_0(x)dx = 1$.
+Toute fonction test $\phi \in \mathcal{D}(\mathbb{R})$ peut se décomposer sous la forme :
+$$ \phi(x) = \left( \int_{\mathbb{R}} \phi(t)dt \right) \phi_0(x) + \chi(x) $$
+où $\chi(x) = \phi(x) - \left( \int_{\mathbb{R}} \phi(t)dt \right) \phi_0(x)$.
+Vérifions l'intégrale de $\chi$ :
+$$ \int_{\mathbb{R}} \chi(x) dx = \int_{\mathbb{R}} \phi(x) dx - \left( \int_{\mathbb{R}} \phi(t)dt \right) \int_{\mathbb{R}} \phi_0(x) dx = \int_{\mathbb{R}} \phi(x) dx - \int_{\mathbb{R}} \phi(x) dx \times 1 = 0 $$
+Puisque l'intégrale de $\chi$ est nulle, la fonction définie par $\psi(x) = \int_{-\infty}^x \chi(t) dt$ est à support compact, donc $\psi \in \mathcal{D}(\mathbb{R})$ et $\psi' = \chi$.
+
+Calculons maintenant l'action de $T$ sur $\phi$ :
+$$ \langle T, \phi \rangle = \left\langle T, \left( \int \phi \right) \phi_0 + \chi \right\rangle = \left( \int \phi \right) \langle T, \phi_0 \rangle + \langle T, \chi \rangle $$
+On sait que $\chi = \psi'$. Donc :
+$$ \langle T, \chi \rangle = \langle T, \psi' \rangle = - \langle T', \psi \rangle $$
+Mais par hypothèse, $T' = 0$. Donc $\langle T, \chi \rangle = 0$.
+Il reste :
+$$ \langle T, \phi \rangle = \left( \int_{\mathbb{R}} \phi(t)dt \right) \langle T, \phi_0 \rangle $$
+En posant la constante $C = \langle T, \phi_0 \rangle$, on obtient bien :
+$$ \langle T, \phi \rangle = C \int_{\mathbb{R}} \phi(x) dx $$
+$T$ est donc la distribution associée à la fonction constante $f(x) = C$.
+
+
+\subsection*{Exercice 7 : Fonction créneau et distribution peigne  \quad$\bigstar\bigstar\bigstar\bigstar\star$}
+
+
+\subsubsection*{Énoncé}
+Soit $f$ la fonction créneau périodique de période $2\pi$, définie sur $]-\pi, \pi]$ par :
+$$
+f(x) = \begin{cases}
+1 \& \text{si } 0 < x \le \pi \\
+-1 \& \text{si } -\pi < x \le 0
+\end{cases}
+$$
+Calculer la dérivée de $f$ au sens des distributions sur $\mathbb{R}$.
+
+\subsubsection*{Correction}
+La fonction $f$ est une fonction constante par morceaux sur $\mathbb{R}$.
+Sa dérivée usuelle $\{f'\}$ est nulle partout où elle est définie (c'est-à-dire sur $\mathbb{R} \setminus \{k\pi\}_{k \in \mathbb{Z}}$).
+Étudions les sauts de $f$. La fonction présente une discontinuité en chaque point $x_k = k\pi$.
+- Pour $k = 0$ : saut entre $-\pi$ et $\pi$. En $0^+$, $f$ vaut 1. En $0^-$, $f$ vaut -1. Saut $\sigma_0 = 1 - (-1) = 2$.
+- Pour $k = 1$ (point $\pi$) : en $\pi^+$, on passe dans le créneau $[-1]$ de la période suivante, donc $f(\pi^+) = -1$. En $\pi^-$, $f$ vaut 1. Saut $\sigma_1 = -1 - 1 = -2$.
+- Pour $k = 2$ (point $2\pi$) : en $(2\pi)^+$, $f$ vaut 1. En $(2\pi)^-$, $f$ vaut -1. Saut $\sigma_2 = 1 - (-1) = 2$.
+
+De manière générale, le saut au point $k\pi$ vaut :
+- $\sigma_k = 2$ si $k$ est pair (les sauts montants).
+- $\sigma_k = -2$ si $k$ est impair (les sauts descendants).
+On peut écrire $\sigma_k = 2(-1)^k$.
+
+Par la formule des sauts :
+$$ f' = \{f'\} + \sum_{k \in \mathbb{Z}} \sigma_k \delta_{k\pi} $$
+Puisque $\{f'\} = 0$, on obtient :
+$$ f' = \sum_{k \in \mathbb{Z}} 2(-1)^k \delta_{k\pi} $$
+La dérivée est une série de masses de Dirac, alternant positivement et négativement aux multiples de $\pi$. C'est une distribution apparentée au peigne de Dirac.
+
+
+\subsection*{Exercice 8 : Dérivée de la valeur principale  \quad$\bigstar\bigstar\bigstar\bigstar\star$}
+
+
+\subsubsection*{Énoncé}
+On définit la distribution $\text{vp}\left(\frac{1}{x}\right)$ (Valeur Principale de Cauchy) pour toute $\phi \in \mathcal{D}(\mathbb{R})$ par :
+$$ \langle \text{vp}\left(\frac{1}{x}\right), \phi \rangle = \lim_{\epsilon \to 0^+} \int_{|x|>\epsilon} \frac{\phi(x)}{x} dx $$
+Montrer que la dérivée au sens des distributions de la fonction $f(x) = \ln|x|$ (qui est localement intégrable) est exactement $\text{vp}\left(\frac{1}{x}\right)$.
+
+\subsubsection*{Correction}
+Soit $\phi \in \mathcal{D}(\mathbb{R})$.
+Par définition de la dérivée distributionnelle :
+$$ \langle (\ln|x|)', \phi \rangle = - \langle \ln|x|, \phi' \rangle = - \int_{\mathbb{R}} \ln|x| \phi'(x) dx $$
+L'intégrale est convergente car $\ln|x|$ est localement intégrable et $\phi'$ est à support compact.
+On peut l'écrire comme une limite :
+$$ - \lim_{\epsilon \to 0^+} \left( \int_{-\infty}^{-\epsilon} \ln(-x) \phi'(x) dx + \int_{\epsilon}^{+\infty} \ln(x) \phi'(x) dx \right) $$
+Appliquons une intégration par parties sur chaque morceau.
+Pour l'intégrale sur $]\epsilon, +\infty[$ :
+$$ \int_{\epsilon}^{+\infty} \ln(x) \phi'(x) dx = [\ln(x)\phi(x)]_{\epsilon}^{+\infty} - \int_{\epsilon}^{+\infty} \frac{1}{x} \phi(x) dx $$
+$$ = 0 - \ln(\epsilon)\phi(\epsilon) - \int_{\epsilon}^{+\infty} \frac{\phi(x)}{x} dx $$
+Pour l'intégrale sur $]-\infty, -\epsilon[$ :
+$$ \int_{-\infty}^{-\epsilon} \ln(-x) \phi'(x) dx = [\ln(-x)\phi(x)]_{-\infty}^{-\epsilon} - \int_{-\infty}^{-\epsilon} \frac{-1}{-x} \phi(x) dx $$
+$$ = \ln(\epsilon)\phi(-\epsilon) - 0 - \int_{-\infty}^{-\epsilon} \frac{\phi(x)}{x} dx $$
+
+En sommant les deux contributions avec le signe moins de départ :
+$$ \langle (\ln|x|)', \phi \rangle = - \lim_{\epsilon \to 0^+} \left( \ln(\epsilon)\phi(-\epsilon) - \ln(\epsilon)\phi(\epsilon) - \int_{|x|>\epsilon} \frac{\phi(x)}{x} dx \right) $$
+$$ = \lim_{\epsilon \to 0^+} \left( \ln(\epsilon)(\phi(\epsilon) - \phi(-\epsilon)) + \int_{|x|>\epsilon} \frac{\phi(x)}{x} dx \right) $$
+Or, comme $\phi$ est différentiable en $0$ (car $C^\infty$), par la formule de Taylor :
+$\phi(\epsilon) - \phi(-\epsilon) \approx 2\epsilon \phi'(0)$ pour $\epsilon$ petit.
+Donc le terme $\ln(\epsilon)(\phi(\epsilon) - \phi(-\epsilon)) \sim 2\epsilon \ln(\epsilon) \phi'(0)$.
+Or $\lim_{\epsilon \to 0^+} \epsilon \ln(\epsilon) = 0$.
+Ainsi, le terme de bord disparaît à la limite.
+Il reste :
+$$ \langle (\ln|x|)', \phi \rangle = \lim_{\epsilon \to 0^+} \int_{|x|>\epsilon} \frac{\phi(x)}{x} dx = \langle \text{vp}\left(\frac{1}{x}\right), \phi \rangle $$
+Ce qui démontre rigoureusement le résultat escompté.
+
+
+\subsection*{Exercice 9 : Espace de Sobolev et discontinuités  \quad$\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+
+\subsubsection*{Énoncé}
+Soit $f \in L^2(\mathbb{R})$.
+On rappelle que $f \in H^1(\mathbb{R})$ si et seulement si sa dérivée distributionnelle $f' \in L^2(\mathbb{R})$.
+Soit $f$ une fonction de classe $C^1$ par morceaux sur $\mathbb{R}$, à support compact, présentant au moins un saut de hauteur non nulle $\sigma \neq 0$ en un point $a$.
+Montrer rigoureusement que $f \notin H^1(\mathbb{R})$.
+
+\subsubsection*{Correction}
+Par la formule des sauts, la dérivée de $f$ au sens des distributions est de la forme :
+$$ f' = \{f'\} + \sigma \delta_a + \dots $$
+où $\{f'\}$ est la dérivée classique là où elle est définie, et $\sigma \delta_a$ correspond au saut en $a$.
+Pour que $f \in H^1(\mathbb{R})$, il faut que la distribution $f'$ soit une "vraie" fonction de $L^2(\mathbb{R})$.
+Supposons par l'absurde que $f' \in L^2(\mathbb{R})$. Cela signifie qu'il existe une fonction $g \in L^2(\mathbb{R})$ telle que la distribution $f'$ agit comme $g$ par intégration.
+Dans ce cas, l'action de $f'$ sur n'importe quelle fonction test $\phi \in \mathcal{D}(\mathbb{R})$ s'écrirait :
+$$ \langle f', \phi \rangle = \int_{\mathbb{R}} g(x)\phi(x)dx $$
+Cependant, nous savons que :
+$$ \langle f', \phi \rangle = \int_{\mathbb{R}} \{f'\}(x)\phi(x)dx + \sigma \phi(a) + \dots $$
+Considérons une suite de fonctions tests $\phi_n \in \mathcal{D}(\mathbb{R})$ telles que $\text{supp}(\phi_n) \subset [a - \frac{1}{n}, a + \frac{1}{n}]$, $0 \le \phi_n(x) \le 1$, et $\phi_n(a) = 1$.
+Par le théorème de convergence dominée (ou l'inégalité de Cauchy-Schwarz), comme l'aire sous $\phi_n$ tend vers 0, l'intégrale contre toute fonction $g \in L^2$ tend vers 0 :
+$$ \lim_{n \to \infty} \int_{\mathbb{R}} g(x)\phi_n(x)dx = 0 $$
+Ainsi que :
+$$ \lim_{n \to \infty} \int_{\mathbb{R}} \{f'\}(x)\phi_n(x)dx = 0 $$
+Mais de l'autre côté de l'équation des sauts, le terme lié au Dirac reste constant car $\phi_n(a) = 1$ :
+$$ \langle f', \phi_n \rangle = \int_{\mathbb{R}} \{f'\}(x)\phi_n(x)dx + \sigma \phi_n(a) \to 0 + \sigma $$
+Nous avons alors $0 = \sigma$, ce qui est absurde puisque par hypothèse le saut est non nul ($\sigma \neq 0$).
+Par conséquent, aucune fonction $g \in L^2(\mathbb{R})$ ne peut simuler un Dirac. La distribution $f'$ n'appartient donc pas à $L^2(\mathbb{R})$, ce qui implique $f \notin H^1(\mathbb{R})$.
+Les fonctions de $H^1(\mathbb{R})$ ne peuvent donc pas avoir de sauts ; elles sont continues (en dimension 1).
+
+
+\subsection*{Exercice 10 : Résolution de l'équation}$-u'' = \delta_0$  \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
+
+
+\subsubsection*{Énoncé}
+Dans le cadre de l'électrostatique (ou de la corde vibrante), le potentiel (ou le déplacement) $u$ créé par une charge ponctuelle (ou une force concentrée) à l'origine satisfait l'équation différentielle au sens des distributions :
+$$ -u'' = \delta_0 $$
+Trouver la solution générale de cette équation dans $\mathcal{D}'(\mathbb{R})$.
+
+\subsubsection*{Correction}
+On cherche $u \in \mathcal{D}'(\mathbb{R})$ telle que $u'' = -\delta_0$.
+Soit $H$ la fonction de Heaviside. On sait que $H' = \delta_0$ (Exercice 1 ou démonstration du cours).
+Donc l'équation s'écrit :
+$$ u'' = -H' $$
+Ceci implique que $(u' + H)' = 0$.
+D'après l'exercice 6, la dérivée d'une distribution est nulle si et seulement si cette distribution est constante.
+Il existe donc une constante $A \in \mathbb{R}$ telle que :
+$$ u' + H = A \implies u' = -H + A $$
+On cherche maintenant $u$.
+Trouvons une primitive de $H$. La fonction rampe définie par $R(x) = x \mathbf{1}_{x>0}$ (ou $R(x) = \max(0,x)$, la fonction ReLU) a pour dérivée faible $H(x)$.
+En effet, pour $x>0$, $R'(x)=1$, et pour $x<0$, $R'(x)=0$, avec $R$ continue en 0 (pas de saut). Donc $R' = H$.
+L'équation devient :
+$$ u' = -R' + A $$
+Soit $(u + R - Ax)' = 0$.
+De nouveau, cela implique qu'il existe une constante $B \in \mathbb{R}$ telle que :
+$$ u + R - Ax = B $$
+Ainsi, la solution générale est :
+$$ u(x) = -R(x) + Ax + B = -x \mathbf{1}_{x>0} + Ax + B $$
+En termes physiques, $u(x)$ est une fonction affine par morceaux. La "pointe" de la fonction en $x=0$ traduit l'action de la source ponctuelle (le Dirac).
+
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Approximation numerique de la fonction de Heaviside et du Dirac }
+\textbf{Objectif :} L'objectif est d'implementer une approximation lisse de la fonction de Heaviside et de verifier que sa derivee approche numeriquement la distribution de Dirac.
+
+\begin{lstlisting}
+import math
+
+def heaviside_approx(x, epsilon):
+    # Approximation par l'arctangente (lisse)
+    return 0.5 + (1 / math.pi) * math.atan(x / epsilon)
+
+def dirac_approx(x, epsilon):
+    # Derivee analytique de heaviside_approx
+    return epsilon / (math.pi * (x**2 + epsilon**2))
+
+def numeric_derivative(f, x, h=1e-5):
+    return (f(x + h) - f(x - h)) / (2 * h)
+
+def test_approximation():
+    x_val = 0.0
+    eps = 0.01
+
+    # Test heaviside au centre
+    assert abs(heaviside_approx(x_val, eps) - 0.5) < 1e-5
+
+    # Test loin du centre
+    assert abs(heaviside_approx(1.0, eps) - 1.0) < 1e-2
+    assert abs(heaviside_approx(-1.0, eps) - 0.0) < 1e-2
+
+    # Test derivee numerique vs analytique
+    der_num = numeric_derivative(lambda x: heaviside_approx(x, eps), x_val)
+    der_ana = dirac_approx(x_val, eps)
+    assert abs(der_num - der_ana) < 1e-3, "La derivee numerique doit correspondre a l'approximation de Dirac"
+    print("TP 1 valide.")
+
+test_approximation()
+\end{lstlisting}
+
+\subsection*{TP 2 : Integration numerique contre une fonction test }
+\textbf{Objectif :} Simuler l'action d'une distribution (le Dirac) sur une fonction test par integration numerique (methode des rectangles).
+
+\begin{lstlisting}
+import math
+
+def bump_function(x):
+    # Fonction lisse a support compact [-1, 1]
+    if abs(x) >= 1.0:
+        return 0.0
+    return math.exp(-1.0 / (1.0 - x**2))
+
+def dirac_sequence(x, n):
+    # Suite de fonctions qui converge vers le Dirac en 0
+    if abs(x) <= 1/(2*n):
+        return n
+    return 0.0
+
+def integrate(f, a, b, steps):
+    dx = (b - a) / steps
+    total = 0.0
+    for i in range(steps):
+        x = a + (i + 0.5) * dx
+        total += f(x) * dx
+    return total
+
+def test_integration_action():
+    # La valeur theorique est phi(0)
+    expected = bump_function(0.0)
+
+    # Integrer dirac_sequence * bump_function pour n grand
+    n = 100
+    integrand = lambda x: dirac_sequence(x, n) * bump_function(x)
+
+    # On integre sur [-1, 1]
+    result = integrate(integrand, -1.0, 1.0, 10000)
+
+    # L'erreur doit etre petite pour n grand
+    assert abs(result - expected) < 1e-2, "L'action integrale doit converger vers l'evaluation en 0"
+    print("TP 2 valide.")
+
+test_integration_action()
+\end{lstlisting}
+
+\subsection*{TP 3 : Verification numerique de la formule des sauts }
+\textbf{Objectif :} On considere la fonction signe. On va deriver numeriquement la fonction, et montrer que l'integrale de la derivee sur un intervalle contenant le saut correspond a la hauteur du saut.
+
+\begin{lstlisting}
+def sign_function(x):
+    if x > 0:
+        return 1.0
+    elif x < 0:
+        return -1.0
+    return 0.0
+
+def numeric_derivative(f, x, h=1e-5):
+    return (f(x + h) - f(x - h)) / (2 * h)
+
+def integrate(f, a, b, steps):
+    dx = (b - a) / steps
+    total = 0.0
+    for i in range(steps):
+        x = a + (i + 0.5) * dx
+        total += f(x) * dx
+    return total
+
+def test_sauts():
+    # On va integrer la derivee numerique de sign sur [-0.5, 0.5]
+    # Attention, la derivee numerique pres de 0 va exploser.
+    h = 1e-4
+    deriv = lambda x: numeric_derivative(sign_function, x, h)
+
+    # L'integrale de la derivee (qui approche 2*Dirac) doit valoir 2
+    integral_val = integrate(deriv, -0.5, 0.5, 50000)
+
+    # Le saut theorique est 1 - (-1) = 2
+    saut_theorique = 2.0
+
+    assert abs(integral_val - saut_theorique) < 1e-2, "L'integrale de la derivee doit egaler le saut"
+    print("TP 3 valide.")
+
+test_sauts()
+\end{lstlisting}
+
+\subsection*{TP 4 : Derivation d'un signal bruite (Regularisation) }
+\textbf{Objectif :} La derivation amplifie le bruit. En IA, on lisse le signal avant de deriver. Cela equivaut a deriver la fonction test lors du produit de convolution : $(f * \phi)' = f * \phi'$.
+
+\begin{lstlisting}
+import random
+import math
+
+def generate_signal(points):
+    # Signal: marche d'escalier + bruit
+    signal = []
+    for i in range(points):
+        x = -1.0 + 2.0 * i / points
+        # Heaviside
+        val = 1.0 if x > 0 else 0.0
+        # Bruit
+        val += (random.random() - 0.5) * 0.2
+        signal.append((x, val))
+    return signal
+
+def gaussian_kernel(x, sigma=0.05):
+    return (1 / (sigma * math.sqrt(2 * math.pi))) * math.exp(-0.5 * (x / sigma)**2)
+
+def gaussian_derivative(x, sigma=0.05):
+    return (-x / (sigma**2)) * gaussian_kernel(x, sigma)
+
+def convolution(signal, kernel, x_target, dx):
+    total = 0.0
+    for x, y in signal:
+        total += y * kernel(x_target - x) * dx
+    return total
+
+def test_regularized_derivative():
+    points = 200
+    signal = generate_signal(points)
+    dx = 2.0 / points
+
+    # Calcul direct par f * phi'
+    x_val = 0.0
+
+    # La derivee lissee au point de saut (0.0) devrait representer le pic de Dirac lisse,
+    # dont l'integrale vaut 1, donc la valeur au pic est de l'ordre de 1/(sigma * sqrt(2pi))
+    sigma = 0.05
+    peak_val = convolution(signal, lambda x: gaussian_derivative(x, sigma), x_val, dx)
+
+    expected_peak = 1 / (sigma * math.sqrt(2 * math.pi))
+
+    # Le pic doit etre positif et grand
+    assert peak_val > expected_peak * 0.5, "Le pic de derivee doit etre detecte et positif"
+    print("TP 4 valide.")
+
+test_regularized_derivative()
+\end{lstlisting}
+
+\subsection*{TP 5 : Simulation d'une equation aux derivees partielles avec Dirac source }
+\textbf{Objectif :} Resoudre numeriquement l'equation de Poisson 1D : $-u'' = \delta_0$ sur $[-1, 1]$ avec conditions aux limites $u(-1) = 0$ et $u(1) = 0$. La solution analytique est une fonction tente.
+
+\begin{lstlisting}
+def solve_poisson_1d_dirac(N):
+    # N intervals, N-1 points interieurs
+    dx = 2.0 / N
+
+    # Matrice du laplacien 1D discret
+    # (-u_{i-1} + 2u_i - u_{i+1}) / dx^2 = f_i
+
+    # Pour f_i, le Dirac en 0 correspond a diviser par dx au point central
+    # pour que l'integrale (somme_i f_i dx) vaille 1.
+    mid = N // 2
+    f = [0.0] * (N - 1)
+    f[mid - 1] = 1.0 / dx  # Indice mid-1 correspond au centre x=0
+
+    # Resolution par algo de Thomas (TDMA) pour matrice tridiagonale
+    a = [-1.0 / dx**2] * (N - 2)
+    b = [2.0 / dx**2] * (N - 1)
+    c = [-1.0 / dx**2] * (N - 2)
+    d = list(f)
+
+    n = len(d)
+    c_prime = [0.0] * n
+    d_prime = [0.0] * n
+
+    c_prime[0] = c[0] / b[0]
+    d_prime[0] = d[0] / b[0]
+
+    for i in range(1, n-1):
+        m = 1.0 / (b[i] - a[i-1] * c_prime[i-1])
+        c_prime[i] = c[i] * m
+        d_prime[i] = (d[i] - a[i-1] * d_prime[i-1]) * m
+
+    m = 1.0 / (b[n-1] - a[n-2] * c_prime[n-2])
+    d_prime[n-1] = (d[n-1] - a[n-2] * d_prime[n-2]) * m
+
+    u = [0.0] * n
+    u[n-1] = d_prime[n-1]
+
+    for i in range(n-2, -1, -1):
+        u[i] = d_prime[i] - c_prime[i] * u[i+1]
+
+    return u
+
+def test_poisson():
+    N = 100
+    u = solve_poisson_1d_dirac(N)
+
+    # La solution analytique sur [-1, 1] avec u(-1)=u(1)=0 et -u'' = delta
+    # est u(x) = 0.5 * (1 - |x|). Au centre (x=0), u(0) = 0.5.
+
+    mid_index = N // 2 - 1
+    u_center = u[mid_index]
+
+    assert abs(u_center - 0.5) < 1e-2, "La valeur au centre doit etre 0.5"
+    print("TP 5 valide.")
+
+test_poisson()
+\end{lstlisting}
+
+
+
+\end{document}
