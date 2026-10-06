@@ -94,7 +94,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-80/Jalon-80.md|Jalon 80 : Transformée de Fourier dans $L^1$]] : Transformée de Fourier dans $L^1$, propriétés algébriques, Riemann-Lebesgue et produit de convolution. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-81/Jalon 81 (Transformée de Fourier dans -L^2-).md|Jalon 81 : Transformée de Fourier dans $L^2$]] : Transformée de Fourier dans $L^2$, prolongement par densité et théorème d'isométrie de Plancherel.
 - [ ] [[jalon-82/Jalon 82 (Introduction à la théorie des distributions de Schwartz).md|Jalon 82 : Introduction à la théorie des distributions de Schwartz]] : Introduction à la théorie des distributions de Schwartz, espace des fonctions tests $\\mathcal{D}(\\mathbb{R})$.
-- [ ] [[jalon-83/Jalon 83 (Dérivation au sens des distributions).md|Jalon 83 : Dérivation au sens des distributions]] : Dérivation au sens des distributions, distribution de Dirac et introduction aux espaces de Sobolev $H^1(\\mathbb{R})$.
+- [x] [[jalon-83/Jalon-83.md|Jalon 83 : Dérivation au sens des distributions]] : Dérivation au sens des distributions, distribution de Dirac et introduction aux espaces de Sobolev $H^1(\\mathbb{R})$. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-84/Jalon 84 (Livrable IA).md|Jalon 84 : Livrable IA]] : Livrable IA T7 : Création d'un module d'analyse spectrale pour l'extraction de caractéristiques audio à partir de la transformée de Fourier dans $L^2$.
 ### Trimestre 8 : probabilités axiomatiques et statistiques fondamentales
 - [ ] [[jalon-85/Jalon 85 (Axiomes de Kolmogorov).md|Jalon 85 : Axiomes de Kolmogorov]] : Axiomes de Kolmogorov, espace de probabilité $(\\Omega, \\mathcal{F}, \\mathbb{P})$ comme un espace mesuré de masse 1.
