@@ -1,32 +1,31 @@
----
-uuid: jalon-83-exo-07
-title: "Exercice 07 - Dérivation des distributions"
----
+# Exercice 7 : Fonction créneau et distribution peigne  \quad $\bigstar\bigstar\bigstar\bigstar\star$
 
-# Exercice 07 $\bigstar\bigstar\bigstar\bigstar\star$
 
-**Énoncé :**
-L'espace de Sobolev $H^1(]0, 1[)$ est l'ensemble des fonctions $u \in L^2(]0, 1[)$ dont la dérivée distributionnelle $u'$ appartient à $L^2(]0, 1[)$.
-1. Soit $u(x) = x^{3/4}$. Démontrer que $u \in H^1(]0, 1[)$.
-2. Soit $v(x) = x^{1/4}$. Démontrer que $v \notin H^1(]0, 1[)$, bien que $v \in L^2(]0, 1[)$.
-3. Pourquoi la notion de "valeur au bord" (Trace) $u(0)$ est-elle bien définie pour les fonctions de $H^1$ (comme $u$) mais pas de manière évidente pour n'importe quelle fonction $L^2$ ? (Invoquez le théorème d'injection de Sobolev).
+## Énoncé
+Soit $f$ la fonction créneau périodique de période $2\pi$, définie sur $]-\pi, \pi]$ par :
+$$
+f(x) = \begin{cases}
+1 & \text{si } 0 < x \le \pi \\
+-1 & \text{si } -\pi < x \le 0
+\end{cases}
+$$
+Calculer la dérivée de $f$ au sens des distributions sur $\mathbb{R}$.
 
-**Correction pas à pas :**
-1. Vérifions d'abord que $u \in L^2$.
-$$ \int_0^1 |x^{3/4}|^2 dx = \int_0^1 x^{3/2} dx = \left[ \frac{x^{5/2}}{5/2} \right]_0^1 = \frac{2}{5} < +\infty $$
-Donc $u \in L^2(]0, 1[)$.
-La dérivée distributionnelle de $u$ coïncide avec sa dérivée usuelle car $u$ est lisse sur $]0, 1[$ et localement intégrable, sans discontinuités à l'intérieur de l'ouvert. $u'(x) = \frac{3}{4} x^{-1/4}$.
-Vérifions si $u' \in L^2$ :
-$$ \int_0^1 |u'(x)|^2 dx = \int_0^1 \frac{9}{16} x^{-1/2} dx = \frac{9}{16} \left[ 2 x^{1/2} \right]_0^1 = \frac{18}{16} = \frac{9}{8} < +\infty $$
-Donc $u' \in L^2$. En conclusion, $u \in H^1(]0, 1[)$.
+## Correction
+La fonction $f$ est une fonction constante par morceaux sur $\mathbb{R}$.
+Sa dérivée usuelle $\{f'\}$ est nulle partout où elle est définie (c'est-à-dire sur $\mathbb{R} \setminus \{k\pi\}_{k \in \mathbb{Z}}$).
+Étudions les sauts de $f$. La fonction présente une discontinuité en chaque point $x_k = k\pi$.
+- Pour $k = 0$ : saut entre $-\pi$ et $\pi$. En $0^+$, $f$ vaut 1. En $0^-$, $f$ vaut -1. Saut $\sigma_0 = 1 - (-1) = 2$.
+- Pour $k = 1$ (point $\pi$) : en $\pi^+$, on passe dans le créneau $[-1]$ de la période suivante, donc $f(\pi^+) = -1$. En $\pi^-$, $f$ vaut 1. Saut $\sigma_1 = -1 - 1 = -2$.
+- Pour $k = 2$ (point $2\pi$) : en $(2\pi)^+$, $f$ vaut 1. En $(2\pi)^-$, $f$ vaut -1. Saut $\sigma_2 = 1 - (-1) = 2$.
 
-2. Pour $v(x) = x^{1/4}$.
-$$ \int_0^1 |x^{1/4}|^2 dx = \int_0^1 x^{1/2} dx = \frac{2}{3} < +\infty $$ donc $v \in L^2$.
-Sa dérivée est $v'(x) = \frac{1}{4} x^{-3/4}$.
-Regardons l'intégrale de son carré :
-$$ \int_0^1 |v'(x)|^2 dx = \frac{1}{16} \int_0^1 x^{-3/2} dx $$
-Cette intégrale est de la forme $\int_0^1 \frac{1}{x^\alpha} dx$ avec $\alpha = 3/2 > 1$. Elle est donc divergente en 0 (intégrale de Riemann). L'intégrale vaut $+\infty$.
-Par conséquent, $v' \notin L^2(]0, 1[)$, donc $v \notin H^1(]0, 1[)$.
+De manière générale, le saut au point $k\pi$ vaut :
+- $\sigma_k = 2$ si $k$ est pair (les sauts montants).
+- $\sigma_k = -2$ si $k$ est impair (les sauts descendants).
+On peut écrire $\sigma_k = 2(-1)^k$.
 
-3. Dans $L^2$, une fonction n'est définie que "presque partout". Changer sa valeur en un seul point (comme $x=0$) ne change pas l'objet mathématique. L'expression $u(0)$ n'a donc rigoureusement aucun sens formel pour un élément pur de $L^2$.
-Cependant, le théorème d'injection de Sobolev (en dimension 1) stipule que $H^1(]0, 1[) \hookrightarrow C^0([0, 1])$. C'est-à-dire que toute fonction de $H^1$ admet un unique représentant continu sur l'intervalle fermé. C'est la régularité imposée par l'intégrabilité de la dérivée qui empêche la fonction d'osciller sauvagement. Pour ce représentant continu, l'évaluation au bord $u(0)$ a un sens mathématique strict. C'est crucial pour imposer des conditions de Dirichlet en EDP (ex: bout d'une corde attachée, potentiel nul à la surface). $\blacksquare$
+Par la formule des sauts :
+$$ f' = \{f'\} + \sum_{k \in \mathbb{Z}} \sigma_k \delta_{k\pi} $$
+Puisque $\{f'\} = 0$, on obtient :
+$$ f' = \sum_{k \in \mathbb{Z}} 2(-1)^k \delta_{k\pi} $$
+La dérivée est une série de masses de Dirac, alternant positivement et négativement aux multiples de $\pi$. C'est une distribution apparentée au peigne de Dirac.

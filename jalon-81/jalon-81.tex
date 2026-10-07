@@ -1,0 +1,961 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge TRANSFORMÉE DE FOURIER DANS $L^2$ ET PLANCHEREL \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+$L^2$ et Plancherel
+
+\section{Introduction à la transformée de Fourier sur l'espace $L^2$}
+
+La théorie de l'intégrale de Lebesgue développée pour l'espace $L^1(\mathbb{R})$ a permis de définir la transformée de Fourier $\mathcal{F}(f)$ pour des fonctions dont l'intégrale de la valeur absolue converge. Cependant, en physique et en traitement du signal, l'espace naturel de travail est $L^2(\mathbb{R})$, l'espace des fonctions de carré intégrable, qui modélise les signaux d'énergie finie. Or, une fonction de $L^2(\mathbb{R})$ n'est pas nécessairement dans $L^1(\mathbb{R})$ (par exemple, la fonction $x \mapsto \frac{\sin(x)}{x}$ n'est pas intégrable au sens de Lebesgue sur $\mathbb{R}$).
+
+Le défi fondamental est donc d'étendre la transformée de Fourier à tout l'espace $L^2(\mathbb{R})$. Cette extension repose sur la densité de $L^1(\mathbb{R}) \cap L^2(\mathbb{R})$ dans $L^2(\mathbb{R})$ et sur le théorème de Plancherel, qui affirme que la transformée de Fourier conserve l'énergie du signal, agissant comme une isométrie (à un facteur multiplicatif près) sur l'espace de Hilbert $L^2(\mathbb{R})$.
+
+\section{Définitions, Théorèmes et Exemples}
+
+\subsection{L'opérateur de Fourier sur $L^1 \cap L^2$}
+
+\begin{tikzpicture}[scale=1]
+  \draw[->] (-3,0) -- (3,0) node[right] {Temps $t$};
+  \draw[->] (0,-1) -- (0,2) node[above] {$f(t)$};
+  \draw[domain=-2.5:2.5,smooth,variable=\x,blue,thick] plot ({\x},{exp(-\x*\x)});
+  \node[blue] at (1.5,1.5) {$f \in L^1 \cap L^2$};
+
+  \draw[thick, ->] (3.5, 0.5) -- (4.5, 0.5) node[midway, above] {$\mathcal{F}$};
+
+  \begin{scope}[shift={(8,0)}]
+  \draw[->] (-3,0) -- (3,0) node[right] {Fréquence $\xi$};
+  \draw[->] (0,-1) -- (0,2) node[above] {$\hat{f}(\xi)$};
+  \draw[domain=-2.5:2.5,smooth,variable=\x,red,thick] plot ({\x},{sqrt(pi)*exp(-\x*\x/4)/1.5});
+  \node[red] at (1.5,1.5) {$\hat{f} \in L^2$};
+  \end{scope}
+\end{tikzpicture}
+
+\textbf{Définition 1.} Soit $f \in L^1(\mathbb{R}) \cap L^2(\mathbb{R})$. La transformée de Fourier de $f$ est définie par l'intégrale convergente :
+$$ \hat{f}(\xi) = \int_{-\infty}^{+\infty} f(t) e^{-i\xi t} dt $$
+
+\textbf{Exemple 1 : La fonction porte.}
+Considérons la fonction $f(t) = \mathbf{1}_{[-1, 1]}(t)$. Elle appartient à $L^1(\mathbb{R}) \cap L^2(\mathbb{R})$.
+Calculons sa transformée de Fourier :
+$$ \hat{f}(\xi) = \int_{-1}^{1} e^{-i\xi t} dt = \left[ \frac{e^{-i\xi t}}{-i\xi} \right]_{-1}^{1} = \frac{e^{-i\xi} - e^{i\xi}}{-i\xi} = \frac{2\sin(\xi)}{\xi} = 2\text{sinc}(\xi) $$
+La fonction $\xi \mapsto 2\text{sinc}(\xi)$ appartient à $L^2(\mathbb{R})$ mais n'appartient pas à $L^1(\mathbb{R})$.
+
+\textbf{Exemple 2 : Fonction exponentielle décroissante unilatérale.}
+Considérons $f(t) = e^{-at} \mathbf{1}_{[0, +\infty[}(t)$ avec $a > 0$.
+$f \in L^1(\mathbb{R}) \cap L^2(\mathbb{R})$.
+$$ \hat{f}(\xi) = \int_{0}^{+\infty} e^{-at} e^{-i\xi t} dt = \int_{0}^{+\infty} e^{-(a+i\xi)t} dt $$
+$$ \hat{f}(\xi) = \left[ \frac{e^{-(a+i\xi)t}}{-(a+i\xi)} \right]_{0}^{+\infty} = \frac{1}{a+i\xi} = \frac{a - i\xi}{a^2 + \xi^2} $$
+On vérifie que $\hat{f} \in L^2(\mathbb{R})$. En effet, $|\hat{f}(\xi)|^2 = \frac{1}{a^2 + \xi^2}$ dont l'intégrale sur $\mathbb{R}$ est finie (elle vaut $\frac{\pi}{a}$).
+
+\subsection{Le Théorème de Plancherel}
+
+\textbf{Théorème 1 (Plancherel).}
+Pour toute fonction $f \in L^1(\mathbb{R}) \cap L^2(\mathbb{R})$, on a :
+$$ \|\hat{f}\|_2^2 = 2\pi \|f\|_2^2 $$
+C'est-à-dire :
+$$ \int_{-\infty}^{+\infty} |\hat{f}(\xi)|^2 d\xi = 2\pi \int_{-\infty}^{+\infty} |f(t)|^2 dt $$
+
+\textbf{Exemple 3 : Vérification du théorème de Plancherel sur la fonction porte.}
+Reprenons $f(t) = \mathbf{1}_{[-1, 1]}(t)$ et $\hat{f}(\xi) = 2\frac{\sin(\xi)}{\xi}$.
+Calculons $\|f\|_2^2$ :
+$$ \|f\|_2^2 = \int_{-1}^{1} 1^2 dt = 2 $$
+Calculons $\|\hat{f}\|_2^2$ :
+$$ \|\hat{f}\|_2^2 = \int_{-\infty}^{+\infty} 4\frac{\sin^2(\xi)}{\xi^2} d\xi $$
+Or, on sait par l'intégrale de Dirichlet que $\int_{-\infty}^{+\infty} \frac{\sin^2(\xi)}{\xi^2} d\xi = \pi$.
+Donc $\|\hat{f}\|_2^2 = 4\pi$.
+On a bien $4\pi = 2\pi \times 2$, soit $\|\hat{f}\|_2^2 = 2\pi \|f\|_2^2$. L'isométrie est vérifiée.
+
+\textbf{Exemple 4 : Vérification du théorème de Plancherel sur l'exponentielle décroissante unilatérale.}
+Reprenons $f(t) = e^{-at} \mathbf{1}_{[0, +\infty[}(t)$ avec $a > 0$ et $\hat{f}(\xi) = \frac{1}{a+i\xi}$.
+Calcul de $\|f\|_2^2$ :
+$$ \|f\|_2^2 = \int_{0}^{+\infty} e^{-2at} dt = \left[ \frac{e^{-2at}}{-2a} \right]_0^{+\infty} = \frac{1}{2a} $$
+Calcul de $\|\hat{f}\|_2^2$ :
+$$ \|\hat{f}\|_2^2 = \int_{-\infty}^{+\infty} \frac{1}{a^2 + \xi^2} d\xi $$
+Effectuons le changement de variable $\xi = a u$, $d\xi = a du$ :
+$$ \|\hat{f}\|_2^2 = \int_{-\infty}^{+\infty} \frac{1}{a^2(1+u^2)} a du = \frac{1}{a} \int_{-\infty}^{+\infty} \frac{du}{1+u^2} = \frac{1}{a} \left[ \arctan(u) \right]_{-\infty}^{+\infty} = \frac{\pi}{a} $$
+On a bien $\|\hat{f}\|_2^2 = \frac{\pi}{a} = 2\pi \times \frac{1}{2a} = 2\pi \|f\|_2^2$.
+
+\subsection{Le prolongement à $L^2$} tout entier
+
+L'application $\mathcal{F} : f \mapsto \hat{f}$, définie sur $L^1(\mathbb{R}) \cap L^2(\mathbb{R})$, à valeurs dans $L^2(\mathbb{R})$, est linéaire et vérifie $\|\mathcal{F}(f)\|_2 = \sqrt{2\pi}\|f\|_2$. Elle est donc continue pour la norme $\|\cdot\|_2$.
+Comme l'espace $L^1(\mathbb{R}) \cap L^2(\mathbb{R})$ est un sous-espace vectoriel dense dans l'espace de Banach $L^2(\mathbb{R})$, le théorème de prolongement des applications linéaires continues permet d'affirmer l'existence d'un unique prolongement continu de $\mathcal{F}$ à $L^2(\mathbb{R})$.
+
+\textbf{Théorème 2 (Prolongement de la transformée de Fourier).}
+Il existe un unique opérateur linéaire continu $\widetilde{\mathcal{F}} : L^2(\mathbb{R}) \to L^2(\mathbb{R})$ tel que pour tout $f \in L^1(\mathbb{R}) \cap L^2(\mathbb{R})$, $\widetilde{\mathcal{F}}(f) = \mathcal{F}(f)$.
+De plus, pour tout $f \in L^2(\mathbb{R})$, on a :
+$$ \|\widetilde{\mathcal{F}}(f)\|_2^2 = 2\pi \|f\|_2^2 $$
+Cet opérateur est défini, pour tout $f \in L^2(\mathbb{R})$, par la limite dans $L^2(\mathbb{R})$ :
+$$ \widetilde{\mathcal{F}}(f)(\xi) = \lim_{R \to +\infty} \int_{-R}^{R} f(t) e^{-i\xi t} dt $$
+(Par abus de notation, on note toujours cet opérateur $\mathcal{F}$ et on écrit $\hat{f}$).
+
+\textbf{Exemple 5 : Fonction sinc (Sinus cardinal).}
+La fonction $f(t) = \frac{\sin(t)}{t}$ appartient à $L^2(\mathbb{R})$ mais pas à $L^1(\mathbb{R})$. On ne peut donc pas écrire $\int_{-\infty}^{+\infty} \frac{\sin(t)}{t} e^{-i\xi t} dt$ au sens de Lebesgue.
+Cependant, la transformée de Fourier $\hat{f}$ existe dans $L^2(\mathbb{R})$. Elle correspond à $\hat{f}(\xi) = \pi \mathbf{1}_{[-1, 1]}(\xi)$, presque partout.
+Vérifions Plancherel :
+$\|f\|_2^2 = \int_{-\infty}^{+\infty} \frac{\sin^2(t)}{t^2} dt = \pi$.
+$\|\hat{f}\|_2^2 = \int_{-1}^1 \pi^2 d\xi = 2\pi^2$.
+On a bien $2\pi^2 = 2\pi \times \pi$.
+
+\subsection{La Formule d'Inversion dans $L^2$}
+
+**Théorème 3 (Inversion dans $L^2$).**
+L'opérateur de transformée de Fourier $\mathcal{F}$ est un isomorphisme de $L^2(\mathbb{R})$ dans lui-même. Son application inverse $\mathcal{F}^{-1}$ est donnée, pour tout $g \in L^2(\mathbb{R})$, par :
+$$ \mathcal{F}^{-1}(g)(t) = \frac{1}{2\pi} \lim_{R \to +\infty} \int_{-R}^{R} g(\xi) e^{i\xi t} d\xi $$
+limite au sens de la norme de $L^2(\mathbb{R})$.
+
+\textbf{Exemple 6 : Récupération de l'exponentielle décroissante.}
+Soit $\hat{f}(\xi) = \frac{1}{a+i\xi}$ pour $a>0$. $\hat{f} \in L^2(\mathbb{R})$.
+Appliquons la formule d'inversion :
+$$ f(t) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} \frac{1}{a+i\xi} e^{i\xi t} d\xi $$
+Pour $t < 0$, en fermant un contour d'intégration dans le demi-plan inférieur du plan complexe, on n'entoure aucun pôle (le seul pôle de $\frac{1}{a+i\xi} = \frac{-i}{\xi-ia}$ est en $\xi = ia$, situé dans le demi-plan supérieur). L'intégrale vaut 0.
+Pour $t > 0$, en fermant le contour dans le demi-plan supérieur, on entoure le pôle $\xi = ia$. Par le théorème des résidus :
+$$ \int_{-\infty}^{+\infty} \frac{-i}{\xi-ia} e^{i\xi t} d\xi = 2i\pi \text{Res}\left( \frac{-i e^{i\xi t}}{\xi-ia}, ia \right) = 2i\pi (-i) e^{i(ia)t} = 2\pi e^{-at} $$
+Ainsi, $f(t) = e^{-at}$ pour $t>0$, et 0 pour $t<0$. On retrouve bien $f(t) = e^{-at} \mathbf{1}_{]0, +\infty[}(t)$, confirmant la formule d'inversion.
+
+\section{Démonstrations}
+
+**Démonstration du Théorème de Plancherel pour $f \in \mathcal{S}(\mathbb{R})$ (Espace de Schwartz).**
+On considère l'espace de Schwartz $\mathcal{S}(\mathbb{R})$ des fonctions infiniment dérivables à décroissance rapide, qui est inclus dans $L^1(\mathbb{R}) \cap L^2(\mathbb{R})$.
+Soit $f \in \mathcal{S}(\mathbb{R})$. Définissons la fonction $g(t) = \overline{f(-t)}$.
+La transformée de Fourier de $g$ est :
+$$ \hat{g}(\xi) = \int_{-\infty}^{+\infty} \overline{f(-t)} e^{-i\xi t} dt $$
+Changement de variable $u = -t$, $du = -dt$ :
+$$ \hat{g}(\xi) = \int_{+\infty}^{-\infty} \overline{f(u)} e^{i\xi u} (-du) = \int_{-\infty}^{+\infty} \overline{f(u) e^{-i\xi u}} du = \overline{\hat{f}(\xi)} $$
+Considérons le produit de convolution $h = f * g$. Par les propriétés de la transformée de Fourier, on a :
+$$ \hat{h}(\xi) = \hat{f}(\xi) \hat{g}(\xi) = \hat{f}(\xi) \overline{\hat{f}(\xi)} = |\hat{f}(\xi)|^2 $$
+La fonction $f$ et la fonction $g$ sont dans $\mathcal{S}(\mathbb{R})$, donc $h \in \mathcal{S}(\mathbb{R})$ et $\hat{h} \in \mathcal{S}(\mathbb{R}) \subset L^1(\mathbb{R})$.
+On peut donc appliquer la formule d'inversion de Fourier à $h$ évaluée en $t=0$ :
+$$ h(0) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} \hat{h}(\xi) e^{i\xi \times 0} d\xi $$
+$$ h(0) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} |\hat{f}(\xi)|^2 d\xi $$
+Par ailleurs, exprimons $h(0)$ à partir de la définition du produit de convolution $h = f * g$ :
+$$ h(t) = (f * g)(t) = \int_{-\infty}^{+\infty} f(\tau) g(t - \tau) d\tau $$
+Pour $t = 0$ :
+$$ h(0) = \int_{-\infty}^{+\infty} f(\tau) g(-\tau) d\tau = \int_{-\infty}^{+\infty} f(\tau) \overline{f(-(-\tau))} d\tau = \int_{-\infty}^{+\infty} f(\tau) \overline{f(\tau)} d\tau $$
+$$ h(0) = \int_{-\infty}^{+\infty} |f(\tau)|^2 d\tau = \|f\|_2^2 $$
+En égalant les deux expressions de $h(0)$, on obtient :
+$$ \|f\|_2^2 = \frac{1}{2\pi} \int_{-\infty}^{+\infty} |\hat{f}(\xi)|^2 d\xi $$
+Soit :
+$$ \int_{-\infty}^{+\infty} |\hat{f}(\xi)|^2 d\xi = 2\pi \int_{-\infty}^{+\infty} |f(t)|^2 dt $$
+Ce qui est exactement l'égalité de Plancherel pour $f \in \mathcal{S}(\mathbb{R})$.
+
+\textbf{Démonstration du Théorème de Prolongement (Densité).}
+Soit $f \in L^2(\mathbb{R})$.
+Comme $\mathcal{S}(\mathbb{R})$ est dense dans $L^2(\mathbb{R})$, il existe une suite $(f_n)_{n \in \mathbb{N}}$ d'éléments de $\mathcal{S}(\mathbb{R})$ telle que $\lim_{n \to +\infty} \|f_n - f\|_2 = 0$.
+La suite $(f_n)_{n \in \mathbb{N}}$ est une suite convergente dans $L^2(\mathbb{R})$, donc c'est une suite de Cauchy.
+Pour tout $\epsilon > 0$, il existe $N \in \mathbb{N}$ tel que pour tout $n, m \ge N$, $\|f_n - f_m\|_2 \le \frac{\epsilon}{\sqrt{2\pi}}$.
+Considérons la suite des transformées de Fourier $(\hat{f}_n)_{n \in \mathbb{N}}$.
+Par la linéarité de la transformée de Fourier sur $\mathcal{S}(\mathbb{R})$, on a $\mathcal{F}(f_n - f_m) = \hat{f}_n - \hat{f}_m$.
+Appliquons l'égalité de Plancherel (déjà démontrée sur $\mathcal{S}(\mathbb{R})$) à la fonction $f_n - f_m \in \mathcal{S}(\mathbb{R})$ :
+$$ \|\hat{f}_n - \hat{f}_m\|_2 = \sqrt{2\pi} \|f_n - f_m\|_2 $$
+Ainsi, pour tout $n, m \ge N$, on a :
+$$ \|\hat{f}_n - \hat{f}_m\|_2 \le \sqrt{2\pi} \frac{\epsilon}{\sqrt{2\pi}} = \epsilon $$
+La suite $(\hat{f}_n)_{n \in \mathbb{N}}$ est donc une suite de Cauchy dans l'espace $L^2(\mathbb{R})$.
+Or, d'après le théorème de Riesz-Fischer, l'espace $L^2(\mathbb{R})$ est un espace de Banach (il est complet).
+Par conséquent, la suite $(\hat{f}_n)_{n \in \mathbb{N}}$ admet une limite dans $L^2(\mathbb{R})$. On définit la transformée de Fourier de $f$, notée $\widetilde{\mathcal{F}}(f)$, comme cette limite :
+$$ \widetilde{\mathcal{F}}(f) = \lim_{n \to +\infty} \hat{f}_n $$
+Il reste à vérifier que cette limite ne dépend pas du choix de la suite approximante. Si $(g_n)_{n \in \mathbb{N}}$ est une autre suite de $\mathcal{S}(\mathbb{R})$ convergeant vers $f$, alors la suite mélangée $f_1, g_1, f_2, g_2, \dots$ converge vers $f$ et est de Cauchy, donc la suite de ses transformées converge, imposant $\lim \hat{f}_n = \lim \hat{g}_n$.
+Enfin, la norme passant à la limite, $\|\widetilde{\mathcal{F}}(f)\|_2 = \lim \|\hat{f}_n\|_2 = \lim \sqrt{2\pi}\|f_n\|_2 = \sqrt{2\pi}\|f\|_2$. L'isométrie est ainsi étendue à $L^2(\mathbb{R})$ tout entier.
+
+\section{Applications en Physique, Logique et Intelligence Artificielle}
+
+L'opérateur de transformée de Fourier sur $L^2(\mathbb{R})$ est l'outil fondateur du traitement du signal et, par extension, d'une grande partie des réseaux de neurones modernes traitant l'audio ou les séries temporelles.
+
+Le théorème de Plancherel y joue un rôle conceptuel fondamental car il établit que l'énergie totale d'un signal dans le domaine temporel est strictement conservée lors du passage dans le domaine fréquentiel (Densité Spectrale de Puissance). L'apprentissage des caractéristiques (features) peut donc se faire sans perte d'information énergétique.
+Dans les réseaux de neurones, la contrainte de norme spectrale (Spectral Normalization), utilisée notamment pour stabiliser la fonction d'apprentissage des réseaux génératifs adverses (GANs), s'appuie directement sur cette isométrie. En bornant la norme $L^2$ de la transformée de Fourier de l'opérateur de convolution du réseau, on garantit que celui-ci est lipschitzien globalement sur $L^2(\mathbb{R})$, empêchant la divergence de l'optimisation par rétropropagation du gradient.
+
+L'isométrie de Plancherel garantit également que le produit scalaire (et donc la notion d'angle entre deux signaux, ou la similarité cosinus) est préservé, ce qui est crucial lors du calcul des couches d'attention (Self-Attention) appliquées sur des embeddings fréquentiels.
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection{Exercice 1 : Calcul de norme $L^2$} et application directe de Plancherel
+$\bigstar\star\star\star\star$
+
+\textbf{Énoncé :}
+Soit la fonction $f(t) = e^{-2|t|}$.
+1. Montrer que $f \in L^1(\mathbb{R}) \cap L^2(\mathbb{R})$.
+2. Calculer sa transformée de Fourier $\hat{f}(\xi)$.
+3. Vérifier explicitement l'égalité de Plancherel pour cette fonction.
+
+---
+\textbf{Correction :}
+**Question 1 : Appartenance aux espaces $L^1$ et $L^2$**
+La fonction $f(t) = e^{-2|t|}$ est paire et continue sur $\mathbb{R}$.
+Calculons son intégrale sur $\mathbb{R}$ :
+$$ \|f\|_1 = \int_{-\infty}^{+\infty} e^{-2|t|} dt = 2 \int_{0}^{+\infty} e^{-2t} dt = 2 \left[ \frac{e^{-2t}}{-2} \right]_0^{+\infty} = 2 \times \frac{1}{2} = 1 $$
+Puisque $\|f\|_1 < +\infty$, $f \in L^1(\mathbb{R})$.
+Calculons la norme $L^2$ de $f$ :
+$$ \|f\|_2^2 = \int_{-\infty}^{+\infty} \left(e^{-2|t|}\right)^2 dt = \int_{-\infty}^{+\infty} e^{-4|t|} dt = 2 \int_{0}^{+\infty} e^{-4t} dt = 2 \left[ \frac{e^{-4t}}{-4} \right]_0^{+\infty} = 2 \times \frac{1}{4} = \frac{1}{2} $$
+Puisque $\|f\|_2^2 < +\infty$, $f \in L^2(\mathbb{R})$. Ainsi, $f \in L^1(\mathbb{R}) \cap L^2(\mathbb{R})$.
+
+\textbf{Question 2 : Transformée de Fourier}
+Par définition, $\hat{f}(\xi) = \int_{-\infty}^{+\infty} e^{-2|t|} e^{-i\xi t} dt$.
+En séparant l'intégrale sur $\mathbb{R}^-$ et $\mathbb{R}^+$ :
+$$ \hat{f}(\xi) = \int_{-\infty}^{0} e^{2t} e^{-i\xi t} dt + \int_{0}^{+\infty} e^{-2t} e^{-i\xi t} dt $$
+$$ \hat{f}(\xi) = \int_{-\infty}^{0} e^{(2-i\xi)t} dt + \int_{0}^{+\infty} e^{-(2+i\xi)t} dt $$
+$$ \hat{f}(\xi) = \left[ \frac{e^{(2-i\xi)t}}{2-i\xi} \right]_{-\infty}^0 + \left[ \frac{e^{-(2+i\xi)t}}{-(2+i\xi)} \right]_0^{+\infty} $$
+$$ \hat{f}(\xi) = \frac{1}{2-i\xi} + \frac{1}{2+i\xi} = \frac{2+i\xi + 2-i\xi}{(2-i\xi)(2+i\xi)} = \frac{4}{4+\xi^2} $$
+
+\textbf{Question 3 : Vérification de l'égalité de Plancherel}
+Le théorème de Plancherel stipule que $\|\hat{f}\|_2^2 = 2\pi \|f\|_2^2$.
+Nous savons que $\|f\|_2^2 = \frac{1}{2}$, donc $2\pi \|f\|_2^2 = \pi$.
+Calculons la norme $L^2$ de $\hat{f}$ :
+$$ \|\hat{f}\|_2^2 = \int_{-\infty}^{+\infty} \left(\frac{4}{4+\xi^2}\right)^2 d\xi = 16 \int_{-\infty}^{+\infty} \frac{1}{(4+\xi^2)^2} d\xi $$
+Effectuons le changement de variable $\xi = 2u$, $d\xi = 2du$ :
+$$ \|\hat{f}\|_2^2 = 16 \int_{-\infty}^{+\infty} \frac{1}{16(1+u^2)^2} (2du) = 2 \int_{-\infty}^{+\infty} \frac{du}{(1+u^2)^2} $$
+Utilisons la formule classique $\int_{-\infty}^{+\infty} \frac{du}{(1+u^2)^2} = \frac{\pi}{2}$ (obtenue par exemple par intégration par parties ou résidus) :
+$$ \|\hat{f}\|_2^2 = 2 \times \frac{\pi}{2} = \pi $$
+L'égalité $\|\hat{f}\|_2^2 = 2\pi \|f\|_2^2$ est rigoureusement vérifiée.
+
+
+\subsection*{Exercice 2 : Transformation d'un signal triangulaire}
+$\bigstar\star\star\star\star$
+
+\textbf{Énoncé :}
+Soit la fonction triangulaire définie par $f(t) = (1-|t|) \mathbf{1}_{[-1, 1]}(t)$.
+1. Montrer que la transformée de Fourier de $f$ est $\hat{f}(\xi) = \left(\frac{\sin(\xi/2)}{\xi/2}\right)^2$.
+2. En déduire la valeur de l'intégrale $\int_{-\infty}^{+\infty} \frac{\sin^4(x)}{x^4} dx$ en utilisant le théorème de Plancherel.
+
+---
+\textbf{Correction :}
+\textbf{Question 1 : Transformée de Fourier}
+La fonction $f$ est la convolution de la fonction porte avec elle-même, à un facteur près.
+Posons $p(t) = \mathbf{1}_{[-1/2, 1/2]}(t)$. Alors $(p * p)(t) = \int_{-\infty}^{+\infty} p(\tau) p(t-\tau) d\tau = (1-|t|) \mathbf{1}_{[-1, 1]}(t) = f(t)$.
+Par les propriétés de la transformée de Fourier, la transformée d'un produit de convolution est le produit des transformées :
+$$ \hat{f}(\xi) = \widehat{p * p}(\xi) = \hat{p}(\xi) \cdot \hat{p}(\xi) = (\hat{p}(\xi))^2 $$
+Calculons $\hat{p}(\xi)$ :
+$$ \hat{p}(\xi) = \int_{-1/2}^{1/2} e^{-i\xi t} dt = \left[ \frac{e^{-i\xi t}}{-i\xi} \right]_{-1/2}^{1/2} = \frac{e^{-i\xi/2} - e^{i\xi/2}}{-i\xi} = \frac{2\sin(\xi/2)}{\xi} = \frac{\sin(\xi/2)}{\xi/2} $$
+Ainsi,
+$$ \hat{f}(\xi) = \left(\frac{\sin(\xi/2)}{\xi/2}\right)^2 = \text{sinc}^2(\xi/2) $$
+
+\textbf{Question 2 : Application du théorème de Plancherel}
+Appliquons l'égalité de Plancherel à $f$ : $\int_{-\infty}^{+\infty} |\hat{f}(\xi)|^2 d\xi = 2\pi \int_{-\infty}^{+\infty} |f(t)|^2 dt$.
+Calculons d'abord $\|f\|_2^2$ :
+$$ \|f\|_2^2 = \int_{-1}^{1} (1-|t|)^2 dt = 2 \int_{0}^{1} (1-t)^2 dt = 2 \left[ \frac{-(1-t)^3}{3} \right]_0^1 = 2 \left( 0 - \left(-\frac{1}{3}\right) \right) = \frac{2}{3} $$
+Donc, $2\pi \|f\|_2^2 = \frac{4\pi}{3}$.
+Exprimons $\|\hat{f}\|_2^2$ :
+$$ \|\hat{f}\|_2^2 = \int_{-\infty}^{+\infty} \left(\frac{\sin(\xi/2)}{\xi/2}\right)^4 d\xi $$
+Effectuons le changement de variable $x = \xi/2$, $dx = d\xi/2 \implies d\xi = 2dx$ :
+$$ \|\hat{f}\|_2^2 = \int_{-\infty}^{+\infty} \frac{\sin^4(x)}{x^4} (2dx) = 2 \int_{-\infty}^{+\infty} \frac{\sin^4(x)}{x^4} dx $$
+D'après Plancherel, $\|\hat{f}\|_2^2 = \frac{4\pi}{3}$, donc :
+$$ 2 \int_{-\infty}^{+\infty} \frac{\sin^4(x)}{x^4} dx = \frac{4\pi}{3} $$
+$$ \int_{-\infty}^{+\infty} \frac{\sin^4(x)}{x^4} dx = \frac{2\pi}{3} $$
+
+
+\subsection*{Exercice 3 : Produit scalaire et identité de Parseval}
+$\bigstar\bigstar\star\star\star$
+
+\textbf{Énoncé :}
+Soient $f(t) = \mathbf{1}_{[-a, a]}(t)$ et $g(t) = \mathbf{1}_{[-b, b]}(t)$ avec $0 < a < b$.
+1. Déterminer $\hat{f}$ et $\hat{g}$.
+2. Utiliser l'identité de Parseval pour évaluer l'intégrale $I = \int_{-\infty}^{+\infty} \frac{\sin(a\xi)\sin(b\xi)}{\xi^2} d\xi$.
+
+---
+\textbf{Correction :}
+\textbf{Question 1 : Transformées de Fourier}
+Pour $f(t) = \mathbf{1}_{[-a, a]}(t)$,
+$$ \hat{f}(\xi) = \int_{-a}^{a} e^{-i\xi t} dt = \frac{2\sin(a\xi)}{\xi} $$
+De même, pour $g(t) = \mathbf{1}_{[-b, b]}(t)$,
+$$ \hat{g}(\xi) = \frac{2\sin(b\xi)}{\xi} $$
+
+\textbf{Question 2 : Évaluation de l'intégrale via Parseval}
+L'identité de Parseval s'écrit :
+$$ \int_{-\infty}^{+\infty} f(t) \overline{g(t)} dt = \frac{1}{2\pi} \int_{-\infty}^{+\infty} \hat{f}(\xi) \overline{\hat{g}(\xi)} d\xi $$
+Calculons le produit scalaire temporel $\langle f, g \rangle_{L^2}$ :
+Puisque $0 < a < b$, $[-a, a] \subset [-b, b]$. Le produit $f(t)\overline{g(t)}$ est simplement $\mathbf{1}_{[-a, a]}(t) \mathbf{1}_{[-b, b]}(t) = \mathbf{1}_{[-a, a]}(t)$.
+$$ \int_{-\infty}^{+\infty} f(t) \overline{g(t)} dt = \int_{-a}^{a} 1 dt = 2a $$
+Écrivons maintenant le produit scalaire fréquentiel :
+$$ \langle \hat{f}, \hat{g} \rangle_{L^2} = \int_{-\infty}^{+\infty} \frac{2\sin(a\xi)}{\xi} \frac{2\sin(b\xi)}{\xi} d\xi = 4 \int_{-\infty}^{+\infty} \frac{\sin(a\xi)\sin(b\xi)}{\xi^2} d\xi = 4I $$
+D'après Parseval, nous avons :
+$$ 2a = \frac{1}{2\pi} \times 4I \implies 2a = \frac{2}{\pi} I \implies I = \frac{2a\pi}{2} = a\pi $$
+Ainsi, la valeur de l'intégrale est :
+$$ \int_{-\infty}^{+\infty} \frac{\sin(a\xi)\sin(b\xi)}{\xi^2} d\xi = a\pi $$
+(Rappel : on a supposé $a < b$. Si $b < a$, le résultat serait $b\pi$. Plus généralement, c'est $\pi \min(a,b)$).
+
+
+\subsection*{Exercice 4 : Transformée inverse et fonctions à support compact}
+$\bigstar\bigstar\star\star\star$
+
+\textbf{Énoncé :}
+Soit $\hat{f}(\xi) = \mathbf{1}_{[-\Omega, \Omega]}(\xi)$.
+1. Calculer la fonction $f(t)$ dont la transformée de Fourier est $\hat{f}$.
+2. Vérifier que $f \notin L^1(\mathbb{R})$ mais que $f \in L^2(\mathbb{R})$.
+3. Vérifier le théorème de Plancherel pour ce couple $(f, \hat{f})$.
+
+---
+\textbf{Correction :}
+**Question 1 : Fonction originale $f(t)$**
+La fonction $\hat{f}$ appartient à $L^2(\mathbb{R})$ car elle est à support compact et bornée. On applique la formule d'inversion de Plancherel :
+$$ f(t) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} \hat{f}(\xi) e^{i\xi t} d\xi = \frac{1}{2\pi} \int_{-\Omega}^{\Omega} e^{i\xi t} d\xi $$
+Pour $t \neq 0$ :
+$$ f(t) = \frac{1}{2\pi} \left[ \frac{e^{i\xi t}}{it} \right]_{-\Omega}^{\Omega} = \frac{1}{2\pi} \frac{e^{i\Omega t} - e^{-i\Omega t}}{it} = \frac{1}{2\pi} \frac{2i\sin(\Omega t)}{it} = \frac{\sin(\Omega t)}{\pi t} $$
+Pour $t = 0$, $f(0) = \frac{1}{2\pi} \int_{-\Omega}^{\Omega} 1 d\xi = \frac{2\Omega}{2\pi} = \frac{\Omega}{\pi}$, ce qui prolonge continûment $\frac{\sin(\Omega t)}{\pi t}$ en $0$.
+
+**Question 2 : Appartenance aux espaces $L^p$**
+La fonction $|f(t)| = \frac{|\sin(\Omega t)|}{\pi |t|}$ se comporte asymptotiquement comme $\frac{1}{|t|}$.
+On sait que l'intégrale $\int_{1}^{+\infty} \frac{|\sin(\Omega t)|}{t} dt$ diverge (intégrale de Dirichlet modifiée en valeur absolue). Ainsi, $f \notin L^1(\mathbb{R})$.
+Cependant, $|f(t)|^2 = \frac{\sin^2(\Omega t)}{\pi^2 t^2} \le \frac{1}{\pi^2 t^2}$. L'intégrale $\int_{1}^{+\infty} \frac{1}{t^2} dt$ converge, et au voisinage de 0, la fonction est continue, donc bornée. Par conséquent, l'intégrale globale converge et $f \in L^2(\mathbb{R})$.
+
+\textbf{Question 3 : Vérification de Plancherel}
+D'une part, $\|\hat{f}\|_2^2 = \int_{-\Omega}^{\Omega} 1^2 d\xi = 2\Omega$.
+D'autre part, $\|f\|_2^2 = \int_{-\infty}^{+\infty} \frac{\sin^2(\Omega t)}{\pi^2 t^2} dt$.
+Effectuons le changement de variable $x = \Omega t$, $dx = \Omega dt$, d'où $dt = \frac{dx}{\Omega}$ :
+$$ \|f\|_2^2 = \int_{-\infty}^{+\infty} \frac{\sin^2(x)}{\pi^2 (x/\Omega)^2} \frac{dx}{\Omega} = \frac{\Omega^2}{\pi^2 \Omega} \int_{-\infty}^{+\infty} \frac{\sin^2(x)}{x^2} dx = \frac{\Omega}{\pi^2} \times \pi = \frac{\Omega}{\pi} $$
+On doit vérifier $\|\hat{f}\|_2^2 = 2\pi \|f\|_2^2$.
+On a bien $2\pi \|f\|_2^2 = 2\pi \frac{\Omega}{\pi} = 2\Omega = \|\hat{f}\|_2^2$. L'isométrie est vérifiée.
+
+
+\subsection*{Exercice 5 : Opérateur de translation temporelle et isométrie}
+$\bigstar\bigstar\bigstar\star\star$
+
+\textbf{Énoncé :}
+Soit $f \in L^2(\mathbb{R})$ et $a \in \mathbb{R}$. Soit $\tau_a f$ l'opérateur de translation défini par $(\tau_a f)(t) = f(t-a)$.
+1. Montrer que $\tau_a$ est une isométrie sur $L^2(\mathbb{R})$.
+2. Déterminer la transformée de Fourier de $\tau_a f$ en fonction de $\hat{f}$.
+3. Montrer que la multiplication par $e^{-i\xi a}$ dans le domaine fréquentiel est une isométrie sur $L^2(\mathbb{R})$.
+4. Vérifier la cohérence de ces résultats avec le théorème de Plancherel.
+
+---
+\textbf{Correction :}
+**Question 1 : $\tau_a$ est une isométrie sur $L^2(\mathbb{R})$**
+Calculons la norme $L^2$ de $\tau_a f$ :
+$$ \|\tau_a f\|_2^2 = \int_{-\infty}^{+\infty} |f(t-a)|^2 dt $$
+Effectuons le changement de variable $u = t - a$, $du = dt$ :
+$$ \|\tau_a f\|_2^2 = \int_{-\infty}^{+\infty} |f(u)|^2 du = \|f\|_2^2 $$
+Puisque $\|\tau_a f\|_2 = \|f\|_2$ pour tout $f \in L^2(\mathbb{R})$, l'opérateur linéaire $\tau_a$ est une isométrie.
+
+**Question 2 : Transformée de Fourier de $\tau_a f$**
+Pour des fonctions $f \in L^1 \cap L^2$, on calcule :
+$$ \widehat{\tau_a f}(\xi) = \int_{-\infty}^{+\infty} f(t-a) e^{-i\xi t} dt $$
+Posons $u = t - a \implies t = u + a, dt = du$ :
+$$ \widehat{\tau_a f}(\xi) = \int_{-\infty}^{+\infty} f(u) e^{-i\xi (u+a)} du = e^{-i\xi a} \int_{-\infty}^{+\infty} f(u) e^{-i\xi u} du = e^{-i\xi a} \hat{f}(\xi) $$
+Par prolongement par densité, cette relation reste vraie presque partout pour $f \in L^2(\mathbb{R})$.
+
+**Question 3 : Multiplication par $e^{-i\xi a}$ est une isométrie**
+Soit l'opérateur $M_a : g(\xi) \mapsto e^{-i\xi a} g(\xi)$ agissant sur $L^2(\mathbb{R})$.
+$$ \|M_a g\|_2^2 = \int_{-\infty}^{+\infty} |e^{-i\xi a} g(\xi)|^2 d\xi = \int_{-\infty}^{+\infty} |e^{-i\xi a}|^2 |g(\xi)|^2 d\xi $$
+Puisque $|e^{-i\xi a}| = 1$ pour tout $\xi \in \mathbb{R}$, on a :
+$$ \|M_a g\|_2^2 = \int_{-\infty}^{+\infty} 1 \cdot |g(\xi)|^2 d\xi = \|g\|_2^2 $$
+Donc $M_a$ est une isométrie sur $L^2(\mathbb{R})$.
+
+\textbf{Question 4 : Cohérence avec Plancherel}
+Appliquons Plancherel à $\tau_a f$ :
+$$ \|\widehat{\tau_a f}\|_2^2 = 2\pi \|\tau_a f\|_2^2 $$
+D'après la question 2, le terme de gauche est $\|M_a \hat{f}\|_2^2$, qui par la question 3 vaut $\|\hat{f}\|_2^2$.
+D'après la question 1, le terme de droite est $2\pi \|f\|_2^2$.
+On retrouve donc exactement $\|\hat{f}\|_2^2 = 2\pi \|f\|_2^2$, ce qui est la relation de Plancherel pour $f$. La structure isométrique globale est donc parfaitement cohérente et commutative.
+
+
+\subsection*{Exercice 6 : Dérivée au sens L2 et énergie spectrale}
+$\bigstar\bigstar\bigstar\star\star$
+
+\textbf{Énoncé :}
+Soit $f \in L^2(\mathbb{R})$ telle que sa dérivée faible $f'$ appartienne également à $L^2(\mathbb{R})$.
+1. Exprimer $\widehat{f'}$ en fonction de $\hat{f}$.
+2. Montrer que l'intégrale $\int_{-\infty}^{+\infty} \xi^2 |\hat{f}(\xi)|^2 d\xi$ est finie, et donner son interprétation physique en termes d'énergie de la dérivée.
+3. Si $\|f\|_2 = 1$, prouver l'inégalité de Heisenberg-Weyl : $\left(\int_{-\infty}^{+\infty} t^2 |f(t)|^2 dt\right) \left(\int_{-\infty}^{+\infty} \xi^2 |\hat{f}(\xi)|^2 d\xi\right) \ge \frac{\pi}{2}$.
+
+---
+\textbf{Correction :}
+**Question 1 : Transformée de $f'$**
+Pour $f \in \mathcal{S}(\mathbb{R})$, l'intégration par parties montre que :
+$$ \widehat{f'}(\xi) = \int_{-\infty}^{+\infty} f'(t) e^{-i\xi t} dt = \left[ f(t) e^{-i\xi t} \right]_{-\infty}^{+\infty} - \int_{-\infty}^{+\infty} f(t) (-i\xi) e^{-i\xi t} dt $$
+Comme $f \in \mathcal{S}(\mathbb{R})$, le terme tout intégré s'annule à l'infini, d'où :
+$$ \widehat{f'}(\xi) = i\xi \int_{-\infty}^{+\infty} f(t) e^{-i\xi t} dt = i\xi \hat{f}(\xi) $$
+Ce résultat s'étend par densité aux fonctions $f \in L^2(\mathbb{R})$ admettant une dérivée faible dans $L^2(\mathbb{R})$.
+
+\textbf{Question 2 : Finitude de l'intégrale et interprétation}
+Par hypothèse, $f' \in L^2(\mathbb{R})$. D'après le théorème de Plancherel appliqué à $f'$, nous avons $\widehat{f'} \in L^2(\mathbb{R})$ et :
+$$ \int_{-\infty}^{+\infty} |\widehat{f'}(\xi)|^2 d\xi = 2\pi \int_{-\infty}^{+\infty} |f'(t)|^2 dt $$
+Or, $|\widehat{f'}(\xi)|^2 = |i\xi \hat{f}(\xi)|^2 = \xi^2 |\hat{f}(\xi)|^2$. En remplaçant, on obtient :
+$$ \int_{-\infty}^{+\infty} \xi^2 |\hat{f}(\xi)|^2 d\xi = 2\pi \|f'\|_2^2 $$
+Puisque $f' \in L^2(\mathbb{R})$, le terme de droite est fini.
+*Interprétation physique :* L'énergie de la dérivée temporelle du signal (qui quantifie la vitesse de variation du signal) est proportionnelle au second moment (la variance) de sa densité spectrale d'énergie. Plus un signal varie vite, plus son énergie s'étale vers les hautes fréquences.
+
+\textbf{Question 3 : Inégalité de Heisenberg-Weyl}
+L'inégalité d'incertitude stipule que pour $f \in \mathcal{S}(\mathbb{R})$ avec $\|f\|_2 = 1$ :
+$$ \left( \int_{-\infty}^{+\infty} t^2 |f(t)|^2 dt \right) \left( \int_{-\infty}^{+\infty} \omega^2 |F(\omega)|^2 d\omega \right) \ge \frac{1}{4} $$
+où $F(\omega) = \frac{1}{\sqrt{2\pi}} \hat{f}(\omega)$ est la transformée normalisée pour que $\|F\|_2 = 1$.
+Dans notre convention $\hat{f}(\xi)$, on a $F(\xi) = \frac{1}{\sqrt{2\pi}} \hat{f}(\xi)$. L'intégrale de droite devient $\frac{1}{2\pi} \int \xi^2 |\hat{f}(\xi)|^2 d\xi$.
+Ainsi,
+$$ \left( \int t^2 |f(t)|^2 dt \right) \left( \frac{1}{2\pi} \int \xi^2 |\hat{f}(\xi)|^2 d\xi \right) \ge \frac{1}{4} $$
+Ce qui se réécrit, en multipliant par $2\pi$ :
+$$ \left( \int t^2 |f(t)|^2 dt \right) \left( \int \xi^2 |\hat{f}(\xi)|^2 d\xi \right) \ge \frac{2\pi}{4} = \frac{\pi}{2} $$
+La démonstration repose sur l'intégration par parties de $\|f\|_2^2 = \int f \bar{f} dt = \int t f(t) \bar{f}'(t) dt + \int t f'(t) \bar{f}(t) dt$, suivie d'une application de l'inégalité de Cauchy-Schwarz, puis de Plancherel.
+
+
+\subsection*{Exercice 7 : La Transformée de Fourier de la loi Normale}
+$\bigstar\bigstar\bigstar\star\star$
+
+\textbf{Énoncé :}
+Soit $f(t) = e^{-at^2}$ avec $a > 0$.
+1. Calculer l'équation différentielle du premier ordre vérifiée par $f$.
+2. En appliquant la transformée de Fourier sur cette équation différentielle (en supposant les propriétés d'échange dérivation/Fourier valides), déduire une équation différentielle pour $\hat{f}$.
+3. Résoudre cette équation pour $\hat{f}(\xi)$ sachant que $\hat{f}(0) = \sqrt{\frac{\pi}{a}}$.
+4. Vérifier que $\|\hat{f}\|_2^2 = 2\pi \|f\|_2^2$ par le calcul explicite.
+
+---
+\textbf{Correction :}
+**Question 1 : Équation différentielle pour $f$**
+Dérivons $f(t) = e^{-at^2}$ par rapport à $t$ :
+$f'(t) = -2at e^{-at^2} = -2at f(t)$.
+Donc $f$ est solution de l'EDO linéaire : $y'(t) + 2at y(t) = 0$.
+
+**Question 2 : Équation différentielle pour $\hat{f}$**
+Appliquons la transformée de Fourier $\mathcal{F}$ à chaque terme de l'EDO $f'(t) = -2at f(t)$.
+Nous savons que :
+- $\mathcal{F}(f')(\xi) = i\xi \hat{f}(\xi)$
+- $\mathcal{F}(tf(t))(\xi) = i \frac{d}{d\xi} \hat{f}(\xi)$
+Donc :
+$i\xi \hat{f}(\xi) = -2a \left( i \frac{d}{d\xi} \hat{f}(\xi) \right)$
+En simplifiant par $i$ (non nul) :
+$\xi \hat{f}(\xi) = -2a \hat{f}'(\xi) \implies \hat{f}'(\xi) = -\frac{\xi}{2a} \hat{f}(\xi)$
+Ainsi, $\hat{f}$ vérifie une EDO du premier ordre similaire.
+
+**Question 3 : Résolution de l'EDO pour $\hat{f}$**
+L'équation $\hat{f}'(\xi) + \frac{\xi}{2a} \hat{f}(\xi) = 0$ est à variables séparables :
+$$ \frac{\hat{f}'(\xi)}{\hat{f}(\xi)} = -\frac{\xi}{2a} \implies \ln(\hat{f}(\xi)) = -\frac{\xi^2}{4a} + C \implies \hat{f}(\xi) = K e^{-\frac{\xi^2}{4a}} $$
+On détermine la constante $K$ avec la condition initiale en $\xi = 0$ :
+$$ \hat{f}(0) = K e^0 = K $$
+Or, par définition, $\hat{f}(0) = \int_{-\infty}^{+\infty} e^{-at^2} dt = \sqrt{\frac{\pi}{a}}$ (intégrale de Gauss).
+Donc $K = \sqrt{\frac{\pi}{a}}$, et on obtient :
+$$ \hat{f}(\xi) = \sqrt{\frac{\pi}{a}} e^{-\frac{\xi^2}{4a}} $$
+
+\textbf{Question 4 : Vérification de Plancherel}
+Calcul de $\|f\|_2^2$ :
+$$ \|f\|_2^2 = \int_{-\infty}^{+\infty} (e^{-at^2})^2 dt = \int_{-\infty}^{+\infty} e^{-2at^2} dt $$
+C'est l'intégrale de Gauss avec paramètre $2a$, donc $\|f\|_2^2 = \sqrt{\frac{\pi}{2a}}$.
+Calcul de $\|\hat{f}\|_2^2$ :
+$$ \|\hat{f}\|_2^2 = \int_{-\infty}^{+\infty} \left( \sqrt{\frac{\pi}{a}} e^{-\frac{\xi^2}{4a}} \right)^2 d\xi = \frac{\pi}{a} \int_{-\infty}^{+\infty} e^{-\frac{\xi^2}{2a}} d\xi $$
+C'est l'intégrale de Gauss avec paramètre $\frac{1}{2a}$, dont la valeur est $\sqrt{\pi / (\frac{1}{2a})} = \sqrt{2\pi a}$.
+Donc $\|\hat{f}\|_2^2 = \frac{\pi}{a} \sqrt{2\pi a} = \pi \sqrt{\frac{2\pi}{a}}$.
+Vérifions $2\pi \|f\|_2^2$ :
+$$ 2\pi \|f\|_2^2 = 2\pi \sqrt{\frac{\pi}{2a}} = \sqrt{4\pi^2 \frac{\pi}{2a}} = \sqrt{\frac{2\pi^3}{a}} = \pi \sqrt{\frac{2\pi}{a}} $$
+Les deux quantités sont égales, Plancherel est respecté.
+
+
+\subsection*{Exercice 8 : Produit de convolution et inégalité de Young dans L2}
+$\bigstar\bigstar\bigstar\bigstar\star$
+
+\textbf{Énoncé :}
+Soit $f \in L^1(\mathbb{R})$ et $g \in L^2(\mathbb{R})$.
+1. Rappeler pourquoi $f * g \in L^2(\mathbb{R})$.
+2. Montrer rigoureusement que la transformée de Fourier de $f * g$ vérifie $\widehat{f * g}(\xi) = \hat{f}(\xi)\hat{g}(\xi)$ presque partout dans $L^2$.
+3. Déduire que $\|\widehat{f * g}\|_2 \le \|f\|_1 \|\hat{g}\|_2$.
+4. En conclure que $\|f * g\|_2 \le \|f\|_1 \|g\|_2$ (Cas particulier de l'inégalité de Young pour la convolution).
+
+---
+\textbf{Correction :}
+**Question 1 : Appartenance de la convolution à $L^2$**
+D'après l'inégalité de Young pour la convolution, si $f \in L^p(\mathbb{R})$ et $g \in L^q(\mathbb{R})$ avec $\frac{1}{p} + \frac{1}{q} = 1 + \frac{1}{r}$, alors $f * g \in L^r(\mathbb{R})$ et $\|f * g\|_r \le \|f\|_p \|g\|_q$.
+En choisissant $p = 1$, $q = 2$, l'équation devient $1 + \frac{1}{2} = 1 + \frac{1}{r} \implies r = 2$.
+Donc $f * g \in L^2(\mathbb{R})$ et $\|f * g\|_2 \le \|f\|_1 \|g\|_2$.
+
+\textbf{Question 2 : Transformée de Fourier du produit de convolution}
+Puisque $f * g \in L^2(\mathbb{R})$, on peut lui appliquer la transformée de Fourier sur $L^2$ (prolongée par densité).
+Soit $g_n \in L^1 \cap L^2$ une suite convergeant vers $g$ dans $L^2$.
+Pour $g_n$, le théorème usuel sur $L^1$ assure que $\widehat{f * g_n}(\xi) = \hat{f}(\xi)\hat{g_n}(\xi)$.
+Or, par continuité de la convolution $L^1 \times L^2 \to L^2$, $f * g_n \to f * g$ dans $L^2$.
+Par la continuité de l'opérateur de Plancherel sur $L^2$, $\widehat{f * g_n} \to \widehat{f * g}$ dans $L^2$.
+De plus, $\hat{f}$ est bornée (car $f \in L^1$), on a $\|\hat{f}\|_{\infty} \le \|f\|_1$.
+L'opérateur de multiplication par $\hat{f}$ est continu sur $L^2$, donc $\hat{f} \hat{g_n} \to \hat{f} \hat{g}$ dans $L^2$.
+Par unicité de la limite dans $L^2$, $\widehat{f * g} = \hat{f}\hat{g}$ presque partout.
+
+**Question 3 : Inégalité sur les normes $L^2$ des spectres**
+Calculons la norme $L^2$ de $\widehat{f * g}$ :
+$$ \|\widehat{f * g}\|_2^2 = \int_{-\infty}^{+\infty} |\hat{f}(\xi)\hat{g}(\xi)|^2 d\xi = \int_{-\infty}^{+\infty} |\hat{f}(\xi)|^2 |\hat{g}(\xi)|^2 d\xi $$
+Puisque $f \in L^1(\mathbb{R})$, $|\hat{f}(\xi)| = |\int f(t)e^{-i\xi t}dt| \le \int |f(t)|dt = \|f\|_1$.
+Ainsi, $|\hat{f}(\xi)|^2 \le \|f\|_1^2$ pour tout $\xi$.
+Donc :
+$$ \|\widehat{f * g}\|_2^2 \le \int_{-\infty}^{+\infty} \|f\|_1^2 |\hat{g}(\xi)|^2 d\xi = \|f\|_1^2 \int_{-\infty}^{+\infty} |\hat{g}(\xi)|^2 d\xi = \|f\|_1^2 \|\hat{g}\|_2^2 $$
+En prenant la racine carrée, $\|\widehat{f * g}\|_2 \le \|f\|_1 \|\hat{g}\|_2$.
+
+\textbf{Question 4 : Preuve de l'inégalité de Young (cas particulier)}
+Par le théorème de Plancherel, $\|\widehat{f * g}\|_2 = \sqrt{2\pi} \|f * g\|_2$ et $\|\hat{g}\|_2 = \sqrt{2\pi} \|g\|_2$.
+En remplaçant ces expressions dans l'inégalité de la question 3, on obtient :
+$$ \sqrt{2\pi} \|f * g\|_2 \le \|f\|_1 (\sqrt{2\pi} \|g\|_2) $$
+En simplifiant par $\sqrt{2\pi}$ (strictement positif), il reste :
+$$ \|f * g\|_2 \le \|f\|_1 \|g\|_2 $$
+On vient de redémontrer un cas particulier de l'inégalité de Young (souvent admise en analyse fonctionnelle) en utilisant la puissance de l'isométrie de Plancherel.
+
+
+\subsection*{Exercice 9 : Dualité Fourier et bases hilbertiennes}
+$\bigstar\bigstar\bigstar\bigstar\star$
+
+\textbf{Énoncé :}
+Soit $(e_n)_{n \in \mathbb{N}}$ une base hilbertienne de l'espace de Hilbert complexe $L^2(\mathbb{R})$.
+1. Rappeler ce que signifie le fait que $(e_n)$ soit une base hilbertienne.
+2. Définissons la suite de fonctions $E_n = \frac{1}{\sqrt{2\pi}} \widetilde{\mathcal{F}}(e_n)$. Montrer que $(E_n)_{n \in \mathbb{N}}$ forme également une base hilbertienne de $L^2(\mathbb{R})$.
+3. Exprimer les coefficients de Fourier généralisés d'une fonction $f \in L^2(\mathbb{R})$ dans la base $(E_n)$ en fonction des coefficients spectraux $\hat{f}$.
+
+---
+\textbf{Correction :}
+\textbf{Question 1 : Définition d'une base hilbertienne}
+La suite $(e_n)_{n \in \mathbb{N}}$ est une base hilbertienne de $L^2(\mathbb{R})$ si :
+- Elle est orthonormée : $\langle e_n, e_m \rangle_{L^2} = \delta_{n,m}$.
+- Elle est totale : l'espace engendré par des combinaisons linéaires finies de $e_n$ est dense dans $L^2(\mathbb{R})$. De façon équivalente, pour tout $f \in L^2$, $f = \sum_{n=0}^{+\infty} \langle f, e_n \rangle e_n$, avec convergence dans $L^2$.
+
+\textbf{Question 2 : Image par Fourier normalisée}
+Soit l'opérateur $\mathcal{U} = \frac{1}{\sqrt{2\pi}} \widetilde{\mathcal{F}}$. Le théorème de Plancherel stipule que $\|\widetilde{\mathcal{F}}(f)\|_2 = \sqrt{2\pi}\|f\|_2$, donc $\|\mathcal{U}(f)\|_2 = \|f\|_2$.
+L'opérateur $\mathcal{U}$ est donc une isométrie surjective de $L^2(\mathbb{R})$ sur lui-même (un isomorphisme unitaire).
+On sait qu'un opérateur unitaire préserve le produit scalaire :
+$$ \langle \mathcal{U}(e_n), \mathcal{U}(e_m) \rangle_{L^2} = \langle e_n, e_m \rangle_{L^2} = \delta_{n,m} $$
+Donc $E_n = \mathcal{U}(e_n)$ forme une famille orthonormée.
+Pour montrer qu'elle est totale, considérons $g \in L^2(\mathbb{R})$ telle que $\langle g, E_n \rangle_{L^2} = 0$ pour tout $n$.
+$$ 0 = \langle g, \mathcal{U}(e_n) \rangle = \langle \mathcal{U}^{-1}(g), e_n \rangle $$
+Puisque $(e_n)$ est totale, cela implique $\mathcal{U}^{-1}(g) = 0$, et comme $\mathcal{U}^{-1}$ est inversible, $g = 0$.
+Ainsi, l'orthogonal de $\text{Vect}(E_n)$ est réduit à $\{0\}$, ce qui signifie que $(E_n)$ est totale et constitue donc une base hilbertienne.
+
+**Question 3 : Coefficients de Fourier dans la base $(E_n)$**
+Pour tout $f \in L^2(\mathbb{R})$, on peut l'écrire dans la base $(E_n)$ :
+$$ f = \sum_{n=0}^{+\infty} c_n E_n \quad \text{avec} \quad c_n = \langle f, E_n \rangle_{L^2} $$
+Calculons $c_n$ :
+$$ c_n = \langle f, E_n \rangle_{L^2} = \langle f, \mathcal{U}(e_n) \rangle_{L^2} = \int_{-\infty}^{+\infty} f(\xi) \overline{\mathcal{U}(e_n)(\xi)} d\xi $$
+Par définition de $\mathcal{U}$, $\mathcal{U}(e_n)(\xi) = \frac{1}{\sqrt{2\pi}} \hat{e}_n(\xi)$. Or, l'opérateur unitaire a pour adjoint son inverse $\mathcal{U}^* = \mathcal{U}^{-1}$, qui correspond à la transformée de Fourier inverse.
+$$ c_n = \langle \mathcal{U}^{-1}(f), e_n \rangle_{L^2} = \langle \frac{1}{\sqrt{2\pi}} \mathcal{F}^{-1}(f), e_n \rangle_{L^2} $$
+Mais il est souvent plus direct d'utiliser la relation de Parseval :
+$$ \langle g, h \rangle_{L^2} = \langle \mathcal{U}(g), \mathcal{U}(h) \rangle_{L^2} $$
+Soit $g$ tel que $\mathcal{U}(g) = f$. Alors $g = \mathcal{U}^{-1}(f)$.
+$$ c_n = \langle \mathcal{U}(g), \mathcal{U}(e_n) \rangle_{L^2} = \langle g, e_n \rangle_{L^2} = \langle \mathcal{U}^{-1}(f), e_n \rangle_{L^2} $$
+Ce qui démontre que l'analyse d'un signal dans la base fréquentielle image de Fourier équivaut à décomposer la transformée inverse de ce signal dans la base d'origine.
+
+
+\subsection*{Exercice 10 : Résolution d'une EDP via Fourier L2 (Équation de la Chaleur)}
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
+
+\textbf{Énoncé :}
+On s'intéresse à l'équation de la chaleur unidimensionnelle sur la droite réelle entière :
+$$ \frac{\partial u}{\partial t}(x,t) = \alpha \frac{\partial^2 u}{\partial x^2}(x,t) \quad \text{pour } x \in \mathbb{R}, t > 0 $$
+avec condition initiale $u(x,0) = f(x) \in L^2(\mathbb{R})$.
+On suppose que pour tout $t \ge 0$, la fonction $x \mapsto u(x,t)$ appartient à $L^2(\mathbb{R})$.
+1. Appliquer la transformée de Fourier (par rapport à la variable spatiale $x$) pour convertir cette EDP en une famille d'équations différentielles ordinaires (EDO) dépendant du paramètre $\xi$.
+2. Résoudre cette EDO pour obtenir $\hat{u}(\xi, t)$ en fonction de $\hat{f}(\xi)$.
+3. Montrer que l'énergie spatiale de la solution, $E(t) = \int_{\mathbb{R}} |u(x,t)|^2 dx$, est une fonction décroissante du temps. Utiliser Plancherel.
+4. (Optionnel) En déduire une expression de $u(x,t)$ sous forme de produit de convolution.
+
+---
+\textbf{Correction :}
+\textbf{Question 1 : Transformation de Fourier spatiale}
+Soit $\hat{u}(\xi, t) = \int_{-\infty}^{+\infty} u(x,t) e^{-i\xi x} dx$.
+Appliquons la transformée de Fourier à l'EDP, en échangeant dérivation par rapport au temps et intégration spatiale (admis) :
+$$ \mathcal{F}\left(\frac{\partial u}{\partial t}\right) = \frac{\partial \hat{u}}{\partial t}(\xi, t) $$
+Pour la dérivée seconde spatiale, nous avons $\mathcal{F}(\frac{\partial^2 u}{\partial x^2}) = (i\xi)^2 \hat{u}(\xi, t) = -\xi^2 \hat{u}(\xi, t)$.
+L'EDP devient donc l'EDO suivante pour chaque fréquence $\xi$ fixée :
+$$ \frac{\partial \hat{u}}{\partial t}(\xi, t) = -\alpha \xi^2 \hat{u}(\xi, t) $$
+
+\textbf{Question 2 : Résolution de l'EDO}
+Pour $\xi$ fixé, c'est une EDO linéaire du premier ordre à coefficients constants. Sa solution générale est :
+$$ \hat{u}(\xi, t) = C(\xi) e^{-\alpha \xi^2 t} $$
+La condition initiale en $t=0$ donne $\hat{u}(\xi, 0) = \hat{f}(\xi)$. Ainsi, $C(\xi) = \hat{f}(\xi)$.
+La solution fréquentielle est donc :
+$$ \hat{u}(\xi, t) = \hat{f}(\xi) e^{-\alpha \xi^2 t} $$
+
+\textbf{Question 3 : Décroissance de l'énergie (Dissipation)}
+D'après le théorème de Plancherel :
+$$ E(t) = \int_{\mathbb{R}} |u(x,t)|^2 dx = \frac{1}{2\pi} \int_{\mathbb{R}} |\hat{u}(\xi, t)|^2 d\xi $$
+Substituons l'expression trouvée :
+$$ E(t) = \frac{1}{2\pi} \int_{\mathbb{R}} |\hat{f}(\xi)|^2 \left(e^{-\alpha \xi^2 t}\right)^2 d\xi = \frac{1}{2\pi} \int_{\mathbb{R}} |\hat{f}(\xi)|^2 e^{-2\alpha \xi^2 t} d\xi $$
+Puisque $f \in L^2(\mathbb{R})$, l'intégrale pour $t=0$ est finie et vaut $E(0)$.
+Pour tout $t > 0$, la fonction exponentielle $e^{-2\alpha \xi^2 t}$ est strictement comprise entre 0 et 1 (pour $\xi \neq 0$). De plus, elle est strictement décroissante par rapport au temps $t$.
+La fonction intégrée $|\hat{f}(\xi)|^2 e^{-2\alpha \xi^2 t}$ diminue ponctuellement avec $t$. Par le théorème de convergence dominée (ou simple monotonie de l'intégrale), l'énergie globale $E(t)$ est une fonction décroissante du temps. Le processus de chaleur est bien dissipatif et détruit les hautes fréquences (lissage exponentiel).
+
+\textbf{Question 4 : Retour dans l'espace (Noyau de la Chaleur)}
+Nous avons $\hat{u}(\xi, t) = \hat{f}(\xi) \cdot \hat{K_t}(\xi)$, avec $\hat{K_t}(\xi) = e^{-\alpha t \xi^2}$.
+Nous reconnaissons la transformée de Fourier d'une gaussienne. On sait que $\mathcal{F}(e^{-ax^2}) = \sqrt{\frac{\pi}{a}} e^{-\frac{\xi^2}{4a}}$.
+Identifions : $\frac{1}{4a} = \alpha t \implies a = \frac{1}{4\alpha t}$.
+Donc $\hat{K_t}(\xi)$ est la transformée de Fourier de $K_t(x) = \sqrt{\frac{1}{4\pi \alpha t}} e^{-\frac{x^2}{4\alpha t}}$.
+Par la propriété liant le produit de transformées de Fourier au produit de convolution, on en déduit que :
+$$ u(x,t) = (f * K_t)(x) = \frac{1}{\sqrt{4\pi \alpha t}} \int_{\mathbb{R}} f(y) e^{-\frac{(x-y)^2}{4\alpha t}} dy $$
+C'est la formule fondamentale de la chaleur par convolution avec le noyau de Gauss-Weierstrass.
+
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Vérification numérique de l'isométrie de Plancherel}
+
+\section{Implémentation Python}
+
+\begin{lstlisting}
+import math
+
+def generate_signal(N, dt):
+    # Generates a simple signal: exponential decay f(t) = exp(-t) for t > 0
+    t_values = [i * dt for i in range(N)]
+    f_values = [math.exp(-t) for t in t_values]
+    return t_values, f_values
+
+def compute_energy_time(f_values, dt):
+    # Riemann sum for L2 norm squared in time domain
+    energy = sum([f * f * dt for f in f_values])
+    return energy
+
+def compute_fourier_transform(f_values, dt, frequencies):
+    # Discrete approximation of continuous Fourier Transform
+    N = len(f_values)
+    F_values = []
+    for freq in frequencies:
+        real_part = 0.0
+        imag_part = 0.0
+        for k in range(N):
+            t = k * dt
+            # e^{-i * freq * t} = cos(freq * t) - i * sin(freq * t)
+            real_part += f_values[k] * math.cos(freq * t) * dt
+            imag_part -= f_values[k] * math.sin(freq * t) * dt
+        # Store squared magnitude |F(freq)|^2
+        F_values.append(real_part**2 + imag_part**2)
+    return F_values
+
+def compute_energy_freq(F_mag_squared, df):
+    # Riemann sum for L2 norm squared in frequency domain
+    energy = sum([F2 * df for F2 in F_mag_squared])
+    return energy
+
+def main():
+    N = 10000
+    dt = 0.001
+    t_values, f_values = generate_signal(N, dt)
+
+    # Compute theoretical time energy: int_0^infty exp(-2t) dt = 1/2
+    time_energy = compute_energy_time(f_values, dt)
+
+    # Generate frequency domain [-W, W]
+    W = 100.0
+    M = 4000
+    df = (2 * W) / M
+    frequencies = [-W + i * df for i in range(M)]
+
+    F_mag_squared = compute_fourier_transform(f_values, dt, frequencies)
+
+    # Compute frequency energy
+    freq_energy = compute_energy_freq(F_mag_squared, df)
+
+    # Plancherel says: ||F||_2^2 = 2 * pi * ||f||_2^2
+    # So (1 / (2 * pi)) * freq_energy should equal time_energy
+    scaled_freq_energy = freq_energy / (2 * math.pi)
+
+    print(f"Time Energy: {time_energy:.5f}")
+    print(f"Scaled Freq Energy: {scaled_freq_energy:.5f}")
+
+    # Assert they are close (tolerance for discrete approximation)
+    assert abs(time_energy - scaled_freq_energy) < 0.05, "Plancherel failed numerically"
+    print("Success: Plancherel isometry verified.")
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+
+\subsection*{TP 2 : Densité Spectrale de Puissance (PSD) d'un signal composite}
+
+\section{Implémentation Python}
+
+\begin{lstlisting}
+import math
+import random
+
+def generate_composite_signal(N, dt):
+    # Signal = low freq sine + high freq cosine + noise
+    t_values = [i * dt for i in range(N)]
+    f_values = []
+    for t in t_values:
+        clean = 2.0 * math.sin(2 * math.pi * 5 * t) + 0.5 * math.cos(2 * math.pi * 50 * t)
+        noise = random.uniform(-0.1, 0.1)
+        f_values.append(clean + noise)
+    return t_values, f_values
+
+def compute_psd(f_values, dt, max_freq, num_freqs):
+    # PSD is essentially the squared magnitude of the Fourier Transform
+    N = len(f_values)
+    df = max_freq / num_freqs
+    frequencies = [i * df for i in range(num_freqs)]
+    psd = []
+
+    for freq in frequencies:
+        real_part = 0.0
+        imag_part = 0.0
+        # Omega = 2 * pi * freq
+        omega = 2 * math.pi * freq
+        for k in range(N):
+            t = k * dt
+            real_part += f_values[k] * math.cos(omega * t) * dt
+            imag_part -= f_values[k] * math.sin(omega * t) * dt
+        psd.append(real_part**2 + imag_part**2)
+    return frequencies, psd
+
+def main():
+    random.seed(42)
+    N = 1000
+    dt = 0.002
+    t_values, f_values = generate_composite_signal(N, dt)
+
+    frequencies, psd = compute_psd(f_values, dt, max_freq=100.0, num_freqs=200)
+
+    # Find peaks in PSD
+    peaks = []
+    for i in range(1, len(psd)-1):
+        if psd[i] > psd[i-1] and psd[i] > psd[i+1] and psd[i] > 0.05:
+            peaks.append((frequencies[i], psd[i]))
+
+    # Sort peaks by power
+    peaks.sort(key=lambda x: x[1], reverse=True)
+
+    print("Top Frequencies detected:")
+    for i in range(min(2, len(peaks))):
+        print(f"Freq: {peaks[i][0]:.2f} Hz, Power: {peaks[i][1]:.4f}")
+
+    # Verify we found ~5Hz and ~50Hz
+    assert abs(peaks[0][0] - 5.0) < 1.0, "Low frequency peak not found"
+    assert abs(peaks[1][0] - 50.0) < 1.0, "High frequency peak not found"
+    print("PSD peaks successfully identified.")
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+
+\subsection*{TP 3 : Produit de Convolution et Transformée de Fourier}
+
+\section{Implémentation Python}
+
+\begin{lstlisting}
+import math
+
+def get_signal_f(t):
+    # Door function [-1, 1]
+    if -1 <= t <= 1:
+        return 1.0
+    return 0.0
+
+def get_signal_g(t):
+    # Exponential decay
+    if t >= 0:
+        return math.exp(-t)
+    return 0.0
+
+def convolve(f, g, t, dt, T_max):
+    # Compute integral of f(tau)g(t-tau) dtau
+    num_steps = int((2 * T_max) / dt)
+    integral = 0.0
+    for i in range(num_steps):
+        tau = -T_max + i * dt
+        integral += f(tau) * g(t - tau) * dt
+    return integral
+
+def fourier_transform(func, freq, dt, T_max):
+    num_steps = int((2 * T_max) / dt)
+    real_part = 0.0
+    imag_part = 0.0
+    for i in range(num_steps):
+        t = -T_max + i * dt
+        val = func(t)
+        real_part += val * math.cos(freq * t) * dt
+        imag_part -= val * math.sin(freq * t) * dt
+    return real_part, imag_part
+
+def main():
+    dt = 0.01
+    T_max = 10.0
+    freq_test = 2.5
+
+    # 1. Fourier of f
+    F_real, F_imag = fourier_transform(get_signal_f, freq_test, dt, T_max)
+
+    # 2. Fourier of g
+    G_real, G_imag = fourier_transform(get_signal_g, freq_test, dt, T_max)
+
+    # 3. Product of Fourier transforms: F(f) * F(g)
+    # (A + iB)(C + iD) = (AC - BD) + i(AD + BC)
+    prod_real = F_real * G_real - F_imag * G_imag
+    prod_imag = F_real * G_imag + F_imag * G_real
+
+    # 4. Fourier of (f * g)
+    def h(t):
+        return convolve(get_signal_f, get_signal_g, t, dt, T_max)
+
+    H_real, H_imag = fourier_transform(h, freq_test, dt, T_max)
+
+    print(f"Product F(f)F(g) : Real={prod_real:.4f}, Imag={prod_imag:.4f}")
+    print(f"Fourier of (f*g): Real={H_real:.4f}, Imag={H_imag:.4f}")
+
+    assert abs(prod_real - H_real) < 0.1, "Real parts do not match"
+    assert abs(prod_imag - H_imag) < 0.1, "Imag parts do not match"
+    print("Convolution theorem verified in L2.")
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+
+\subsection*{TP 4 : Principe d'Incertitude de Heisenberg-Weyl}
+
+\section{Implémentation Python}
+
+\begin{lstlisting}
+import math
+
+def generate_gaussian(N, dt, sigma):
+    # f(t) = exp(-t^2 / (2 * sigma^2))
+    # Note: ||f||_2^2 = sigma * sqrt(pi)
+    t_values = []
+    f_values = []
+    for i in range(N):
+        t = -10.0 + i * dt
+        t_values.append(t)
+        f_values.append(math.exp(- (t**2) / (2 * sigma**2)))
+    return t_values, f_values
+
+def get_spread_time(t_values, f_values, dt):
+    # int t^2 |f(t)|^2 dt / int |f(t)|^2 dt
+    norm_sq = 0.0
+    spread = 0.0
+    for i in range(len(t_values)):
+        t = t_values[i]
+        val_sq = f_values[i]**2
+        norm_sq += val_sq * dt
+        spread += (t**2) * val_sq * dt
+    return spread / norm_sq
+
+def fourier_transform_magnitude(t_values, f_values, dt, frequencies):
+    mag_sq = []
+    for freq in frequencies:
+        real_p = 0.0
+        imag_p = 0.0
+        for k in range(len(t_values)):
+            t = t_values[k]
+            real_p += f_values[k] * math.cos(freq * t) * dt
+            imag_p -= f_values[k] * math.sin(freq * t) * dt
+        mag_sq.append(real_p**2 + imag_p**2)
+    return mag_sq
+
+def get_spread_freq(frequencies, F_mag_sq, df):
+    norm_sq = 0.0
+    spread = 0.0
+    for i in range(len(frequencies)):
+        freq = frequencies[i]
+        val_sq = F_mag_sq[i]
+        norm_sq += val_sq * df
+        spread += (freq**2) * val_sq * df
+    return spread / norm_sq
+
+def main():
+    dt = 0.02
+    N = 1000
+    sigma = 1.0
+
+    t_values, f_values = generate_gaussian(N, dt, sigma)
+    var_t = get_spread_time(t_values, f_values, dt)
+
+    df = 0.1
+    M = 400
+    frequencies = [-20.0 + i * df for i in range(M)]
+
+    F_mag_sq = fourier_transform_magnitude(t_values, f_values, dt, frequencies)
+    var_w = get_spread_freq(frequencies, F_mag_sq, df)
+
+    product = var_t * var_w
+
+    print(f"Variance in Time: {var_t:.4f}")
+    print(f"Variance in Freq: {var_w:.4f}")
+    print(f"Uncertainty Product: {product:.4f}")
+
+    # For a Gaussian, the product should be exactly 0.5 (which is 1/2 in our normalized units)
+    assert product >= 0.45, "Heisenberg uncertainty violated"
+    print("Success: Uncertainty principle demonstrated.")
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+
+\subsection*{TP 5 : Résolution numérique de l'équation de la chaleur par domaine spectral}
+
+\section{Implémentation Python}
+
+\begin{lstlisting}
+import math
+
+def initial_condition(x):
+    # A box function representing initial heat
+    if -1 <= x <= 1:
+        return 1.0
+    return 0.0
+
+def fourier_transform_f(xi):
+    # Exact Fourier transform of the box function
+    if xi == 0:
+        return 2.0
+    return 2.0 * math.sin(xi) / xi
+
+def compute_heat_solution(x, t, alpha, xi_values, dxi):
+    # u(x,t) = (1/2pi) * int F(f)(xi) * exp(-alpha * xi^2 * t) * exp(i * xi * x) dxi
+    real_part = 0.0
+    for xi in xi_values:
+        f_xi = fourier_transform_f(xi)
+        decay = math.exp(-alpha * (xi**2) * t)
+        # exp(i * xi * x) = cos(xi * x) + i sin(xi * x)
+        # We only need the real part since the solution is real
+        real_part += f_xi * decay * math.cos(xi * x) * dxi
+    return (1.0 / (2.0 * math.pi)) * real_part
+
+def main():
+    alpha = 0.5
+    dxi = 0.05
+    M = 1000
+    xi_values = [-25.0 + i * dxi for i in range(M)]
+
+    x_test = 0.0
+
+    # Calculate heat at x=0 for different times
+    u_0 = compute_heat_solution(x_test, 0.01, alpha, xi_values, dxi)
+    u_1 = compute_heat_solution(x_test, 1.0, alpha, xi_values, dxi)
+    u_5 = compute_heat_solution(x_test, 5.0, alpha, xi_values, dxi)
+
+    print(f"Temperature at x=0, t=0.01 : {u_0:.4f}")
+    print(f"Temperature at x=0, t=1.0  : {u_1:.4f}")
+    print(f"Temperature at x=0, t=5.0  : {u_5:.4f}")
+
+    # The temperature at the origin should decrease as heat spreads
+    assert u_0 > u_1 > u_5, "Heat is not dissipating correctly"
+    assert u_5 > 0.0, "Temperature cannot be negative"
+
+    print("Success: Heat equation solved via spectral domain.")
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+
+
+
+\end{document}

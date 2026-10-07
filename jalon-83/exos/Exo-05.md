@@ -1,33 +1,25 @@
----
-uuid: jalon-83-exo-05
-title: "Exercice 05 - Dérivation des distributions"
----
+# Exercice 5 : Dérivée de $x \delta_0$  \quad $\bigstar\bigstar\bigstar\star\star$
 
-# Exercice 05 $\bigstar\bigstar\bigstar\star\star$
 
-**Énoncé :**
-Considérons la fonction $f(x) = \sin(x) H(x)$, où $H(x)$ est l'échelon de Heaviside.
-1. Calculer la dérivée première $f'$ au sens des distributions.
-2. Calculer la dérivée seconde $f''$ au sens des distributions.
-3. Résoudre l'équation différentielle $u'' + u = \delta_0$ au sens des distributions dans $\mathcal{D}'(\mathbb{R})$, en utilisant le résultat précédent (en supposant $u=0$ pour $x<0$).
+## Énoncé
+1. Démontrer que pour toute distribution de Dirac en $0$, on a $x \delta_0 = 0$.
+2. En utilisant la règle de Leibniz pour les distributions (démontrée dans l'exercice 4), en déduire une relation liant $\delta_0$ et $x \delta_0'$.
 
-**Correction pas à pas :**
-1. La fonction $f(x) = \sin(x) H(x)$ est continue partout. En effet, pour $x < 0, f(x)=0$ et pour $x>0, f(x)=\sin(x)$. En $x=0$, $f(0^-)=0$ et $f(0^+)=\sin(0)=0$. Le saut est nul.
-La fonction est de classe $C^1$ par morceaux. Sa dérivée usuelle est :
-$\{f'\}(x) = 0$ si $x<0$, et $\{f'\}(x) = \cos(x)$ si $x>0$.
-Soit $\{f'\}(x) = \cos(x) H(x)$.
-D'après la formule des sauts :
-$f' = \{f'\} + 0 \cdot \delta_0 = \cos(x) H(x)$.
+## Correction
+1. Soit $\phi \in \mathcal{D}(\mathbb{R})$.
+Calculons l'action de $x \delta_0$ sur $\phi$ :
+$$ \langle x \delta_0, \phi \rangle = \langle \delta_0, x \phi(x) \rangle $$
+Par définition de $\delta_0$, cela vaut la fonction test évaluée en $0$ :
+$$ \langle x \delta_0, \phi \rangle = (0 \cdot \phi(0)) = 0 $$
+Ceci est vrai pour toute $\phi$, donc $x \delta_0 = 0$ au sens des distributions.
 
-2. Calculons la dérivée de $g(x) = \cos(x) H(x)$.
-Cette fonction présente un saut en $x=0$.
-$g(0^+) = \cos(0) = 1$ et $g(0^-) = 0$. Le saut $\sigma = 1 - 0 = 1$.
-La dérivée usuelle (là où elle est définie) est $\{g'\}(x) = -\sin(x) H(x)$.
-En appliquant la formule des sauts à $g$ :
-$g' = \{g'\} + \sigma \delta_0 = -\sin(x) H(x) + 1 \cdot \delta_0$.
-Donc $f'' = -\sin(x) H(x) + \delta_0$.
-
-3. On cherche à résoudre $u'' + u = \delta_0$.
-On remarque que $f(x) = \sin(x) H(x)$ vérifie exactement cette équation :
-$f'' + f = (-\sin(x) H(x) + \delta_0) + (\sin(x) H(x)) = \delta_0$.
-Ainsi, $u(x) = \sin(x) H(x)$ est la solution fondamentale (aussi appelée fonction de Green causale) de l'opérateur $L = \frac{d^2}{dx^2} + I$. Cela signifie que la réponse d'un oscillateur harmonique libre initialement au repos (pour $t<0$) soumis à une impulsion instantanée (coup de marteau en $t=0$) se met à osciller indéfiniment selon un mode sinusoïdal. $\blacksquare$
+2. On sait que $x \delta_0 = 0$.
+Dérivons cette égalité des deux côtés au sens des distributions :
+$$ (x \delta_0)' = 0' = 0 $$
+Appliquons la règle de Leibniz $(\alpha T)' = \alpha' T + \alpha T'$ avec $\alpha(x) = x$ et $T = \delta_0$ :
+$$ (x \delta_0)' = (x)' \delta_0 + x \delta_0' $$
+Or $(x)' = 1$, donc :
+$$ (x \delta_0)' = 1 \cdot \delta_0 + x \delta_0' = \delta_0 + x \delta_0' $$
+Puisque $(x \delta_0)' = 0$, on obtient l'égalité :
+$$ \delta_0 + x \delta_0' = 0 \implies x \delta_0' = - \delta_0 $$
+Cette relation remarquable est typique du calcul avec les distributions.

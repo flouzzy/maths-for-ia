@@ -1,37 +1,29 @@
----
-uuid: jalon-83-exo-09
-title: "Exercice 09 - Dérivation des distributions"
----
+# Exercice 9 : Espace de Sobolev et discontinuités  \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-# Exercice 09 $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :**
-Le produit de convolution d'une distribution $T$ par une fonction test lisse $\phi \in \mathcal{D}(\mathbb{R})$ est défini par la fonction $(T * \phi)(x) = \langle T_y, \phi(x-y) \rangle$.
-Démontrer que le résultat $f = T * \phi$ est non seulement une fonction usuelle, mais qu'elle est de classe $C^\infty$, et que sa dérivée classique vérifie :
-$$ f' = T * \phi' = T' * \phi $$
-(On justifiera la permutation formelle des opérateurs).
+## Énoncé
+Soit $f \in L^2(\mathbb{R})$.
+On rappelle que $f \in H^1(\mathbb{R})$ si et seulement si sa dérivée distributionnelle $f' \in L^2(\mathbb{R})$.
+Soit $f$ une fonction de classe $C^1$ par morceaux sur $\mathbb{R}$, à support compact, présentant au moins un saut de hauteur non nulle $\sigma \neq 0$ en un point $a$.
+Montrer rigoureusement que $f \notin H^1(\mathbb{R})$.
 
-**Correction pas à pas :**
-Démontrons que $f$ est dérivable et que $f'(x) = (T * \phi')(x)$.
-Formons le taux d'accroissement de la fonction $f(x)$ :
-$$ \frac{f(x+h) - f(x)}{h} = \frac{1}{h} \Big( \langle T_y, \phi(x+h-y) \rangle - \langle T_y, \phi(x-y) \rangle \Big) $$
-Par linéarité de la distribution $T$ (agissant sur la variable $y$) :
-$$ = \langle T_y, \frac{\phi(x+h-y) - \phi(x-y)}{h} \rangle $$
-Puisque $\phi \in \mathcal{D}(\mathbb{R})$, elle est infiniment dérivable. Le taux d'accroissement de la fonction test converge vers sa dérivée par rapport à $x$, qui est $\phi'(x-y)$, uniformément et avec toutes ses dérivées sur un compact (car $\phi$ est à support compact).
-Par la continuité de l'opérateur distribution $T$, on peut intervertir la limite $h \to 0$ et le crochet de dualité (c'est le fondement de la topologie de $\mathcal{D}'$) :
-$$ \lim_{h \to 0} \frac{f(x+h) - f(x)}{h} = \langle T_y, \lim_{h \to 0} \frac{\phi(x+h-y) - \phi(x-y)}{h} \rangle $$
-$$ f'(x) = \langle T_y, \partial_x \phi(x-y) \rangle = (T * \phi')(x) $$
-Ceci prouve que $f$ est dérivable, et par récurrence, $C^\infty$.
-
-Maintenant, montrons que $(T * \phi')(x) = (T' * \phi)(x)$.
-Rappelons la règle de dérivation des fonctions composées par rapport à $y$ :
-$$ \partial_y (\phi(x-y)) = -\phi'(x-y) $$
-Donc $\phi'(x-y) = -\partial_y \phi(x-y)$.
-Remplaçons dans l'expression de $f'$ :
-$$ f'(x) = \langle T_y, \phi'(x-y) \rangle = \langle T_y, -\partial_y \phi(x-y) \rangle $$
-$$ = - \langle T_y, \partial_y (\phi(x-y)) \rangle $$
-Par définition de la dérivée distributionnelle d'une distribution $T$ (ici $T'$ par rapport à la variable $y$) :
-$$ - \langle T_y, \partial_y \psi \rangle = \langle T'_y, \psi \rangle $$
-En posant $\psi(y) = \phi(x-y)$, on obtient :
-$$ f'(x) = \langle T'_y, \phi(x-y) \rangle = (T' * \phi)(x) $$
-L'égalité est donc formellement établie, prouvant que la dérivation peut être "glissée" indifféremment sur la distribution ou sur la fonction de lissage. $\blacksquare$
+## Correction
+Par la formule des sauts, la dérivée de $f$ au sens des distributions est de la forme :
+$$ f' = \{f'\} + \sigma \delta_a + \dots $$
+où $\{f'\}$ est la dérivée classique là où elle est définie, et $\sigma \delta_a$ correspond au saut en $a$.
+Pour que $f \in H^1(\mathbb{R})$, il faut que la distribution $f'$ soit une "vraie" fonction de $L^2(\mathbb{R})$.
+Supposons par l'absurde que $f' \in L^2(\mathbb{R})$. Cela signifie qu'il existe une fonction $g \in L^2(\mathbb{R})$ telle que la distribution $f'$ agit comme $g$ par intégration.
+Dans ce cas, l'action de $f'$ sur n'importe quelle fonction test $\phi \in \mathcal{D}(\mathbb{R})$ s'écrirait :
+$$ \langle f', \phi \rangle = \int_{\mathbb{R}} g(x)\phi(x)dx $$
+Cependant, nous savons que :
+$$ \langle f', \phi \rangle = \int_{\mathbb{R}} \{f'\}(x)\phi(x)dx + \sigma \phi(a) + \dots $$
+Considérons une suite de fonctions tests $\phi_n \in \mathcal{D}(\mathbb{R})$ telles que $\text{supp}(\phi_n) \subset [a - \frac{1}{n}, a + \frac{1}{n}]$, $0 \le \phi_n(x) \le 1$, et $\phi_n(a) = 1$.
+Par le théorème de convergence dominée (ou l'inégalité de Cauchy-Schwarz), comme l'aire sous $\phi_n$ tend vers 0, l'intégrale contre toute fonction $g \in L^2$ tend vers 0 :
+$$ \lim_{n \to \infty} \int_{\mathbb{R}} g(x)\phi_n(x)dx = 0 $$
+Ainsi que :
+$$ \lim_{n \to \infty} \int_{\mathbb{R}} \{f'\}(x)\phi_n(x)dx = 0 $$
+Mais de l'autre côté de l'équation des sauts, le terme lié au Dirac reste constant car $\phi_n(a) = 1$ :
+$$ \langle f', \phi_n \rangle = \int_{\mathbb{R}} \{f'\}(x)\phi_n(x)dx + \sigma \phi_n(a) \to 0 + \sigma $$
+Nous avons alors $0 = \sigma$, ce qui est absurde puisque par hypothèse le saut est non nul ($\sigma \neq 0$).
+Par conséquent, aucune fonction $g \in L^2(\mathbb{R})$ ne peut simuler un Dirac. La distribution $f'$ n'appartient donc pas à $L^2(\mathbb{R})$, ce qui implique $f \notin H^1(\mathbb{R})$.
+Les fonctions de $H^1(\mathbb{R})$ ne peuvent donc pas avoir de sauts ; elles sont continues (en dimension 1).

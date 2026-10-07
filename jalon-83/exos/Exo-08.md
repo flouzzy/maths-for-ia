@@ -1,31 +1,34 @@
----
-uuid: jalon-83-exo-08
-title: "Exercice 08 - Dérivation des distributions"
----
+# Exercice 8 : Dérivée de la valeur principale  \quad $\bigstar\bigstar\bigstar\bigstar\star$
 
-# Exercice 08 $\bigstar\bigstar\bigstar\bigstar\star$
 
-**Énoncé :**
-Soit la fonction "partie fractionnaire" définie par $f(x) = x - \lfloor x \rfloor$, où $\lfloor x \rfloor$ est la partie entière.
-1. Tracer le graphe de $f$ sur $[-2, 2]$.
-2. Trouver l'expression de la dérivée usuelle $\{f'\}$.
-3. Localiser les discontinuités de $f$ et calculer les sauts associés.
-4. En déduire la dérivée de $f$ au sens des distributions et faire apparaître le Peigne de Dirac $\text{Ш} = \sum_{k \in \mathbb{Z}} \delta_k$.
+## Énoncé
+On définit la distribution $\text{vp}\left(\frac{1}{x}\right)$ (Valeur Principale de Cauchy) pour toute $\phi \in \mathcal{D}(\mathbb{R})$ par :
+$$ \langle \text{vp}\left(\frac{1}{x}\right), \phi \rangle = \lim_{\epsilon \to 0^+} \int_{|x|>\epsilon} \frac{\phi(x)}{x} dx $$
+Montrer que la dérivée au sens des distributions de la fonction $f(x) = \ln|x|$ (qui est localement intégrable) est exactement $\text{vp}\left(\frac{1}{x}\right)$.
 
-**Correction pas à pas :**
-1. La fonction $f(x) = x - \lfloor x \rfloor$ correspond à la "dents de scie". Sur l'intervalle $[k, k+1[$ (pour $k \in \mathbb{Z}$), $f(x) = x - k$. Le graphe est une succession de segments de pente 1, qui montent de 0 à 1, puis retombent brutalement à 0 pour chaque entier.
+## Correction
+Soit $\phi \in \mathcal{D}(\mathbb{R})$.
+Par définition de la dérivée distributionnelle :
+$$ \langle (\ln|x|)', \phi \rangle = - \langle \ln|x|, \phi' \rangle = - \int_{\mathbb{R}} \ln|x| \phi'(x) dx $$
+L'intégrale est convergente car $\ln|x|$ est localement intégrable et $\phi'$ est à support compact.
+On peut l'écrire comme une limite :
+$$ - \lim_{\epsilon \to 0^+} \left( \int_{-\infty}^{-\epsilon} \ln(-x) \phi'(x) dx + \int_{\epsilon}^{+\infty} \ln(x) \phi'(x) dx \right) $$
+Appliquons une intégration par parties sur chaque morceau.
+Pour l'intégrale sur $]\epsilon, +\infty[$ :
+$$ \int_{\epsilon}^{+\infty} \ln(x) \phi'(x) dx = [\ln(x)\phi(x)]_{\epsilon}^{+\infty} - \int_{\epsilon}^{+\infty} \frac{1}{x} \phi(x) dx $$
+$$ = 0 - \ln(\epsilon)\phi(\epsilon) - \int_{\epsilon}^{+\infty} \frac{\phi(x)}{x} dx $$
+Pour l'intégrale sur $]-\infty, -\epsilon[$ :
+$$ \int_{-\infty}^{-\epsilon} \ln(-x) \phi'(x) dx = [\ln(-x)\phi(x)]_{-\infty}^{-\epsilon} - \int_{-\infty}^{-\epsilon} \frac{-1}{-x} \phi(x) dx $$
+$$ = \ln(\epsilon)\phi(-\epsilon) - 0 - \int_{-\infty}^{-\epsilon} \frac{\phi(x)}{x} dx $$
 
-2. Sur chaque intervalle ouvert $]k, k+1[$, la fonction est affine de pente 1. Donc la dérivée usuelle (là où elle existe) est constante : $\{f'\}(x) = 1$. Soit la fonction constante égale à 1.
-
-3. La fonction est discontinue à chaque entier $k \in \mathbb{Z}$.
-Calculons la limite à gauche et à droite en $x = k$ :
-- À droite : $f(k^+) = k - \lfloor k \rfloor = k - k = 0$.
-- À gauche : $f(k^-) = \lim_{x \to k^-} (x - (k-1)) = k - k + 1 = 1$.
-Le saut en chaque entier $k$ est donc :
-$$ \sigma_k = f(k^+) - f(k^-) = 0 - 1 = -1 $$
-
-4. Appliquons la formule des sauts généralisée à une infinité dénombrable de points de discontinuité. La somme des sauts est une somme infinie (série de distributions), dont la convergence est assurée car sur tout compact, le nombre de sauts est fini.
-$$ f' = \{f'\} + \sum_{k \in \mathbb{Z}} \sigma_k \delta_k $$
-$$ f' = 1 + \sum_{k \in \mathbb{Z}} (-1) \delta_k $$
-$$ f' = 1 - \sum_{k \in \mathbb{Z}} \delta_k = 1 - \text{Ш} $$
-La dérivée distributionnelle de la dent de scie est donc la constante 1, moins un train d'impulsions (Peigne de Dirac) aux entiers. $\blacksquare$
+En sommant les deux contributions avec le signe moins de départ :
+$$ \langle (\ln|x|)', \phi \rangle = - \lim_{\epsilon \to 0^+} \left( \ln(\epsilon)\phi(-\epsilon) - \ln(\epsilon)\phi(\epsilon) - \int_{|x|>\epsilon} \frac{\phi(x)}{x} dx \right) $$
+$$ = \lim_{\epsilon \to 0^+} \left( \ln(\epsilon)(\phi(\epsilon) - \phi(-\epsilon)) + \int_{|x|>\epsilon} \frac{\phi(x)}{x} dx \right) $$
+Or, comme $\phi$ est différentiable en $0$ (car $C^\infty$), par la formule de Taylor :
+$\phi(\epsilon) - \phi(-\epsilon) \approx 2\epsilon \phi'(0)$ pour $\epsilon$ petit.
+Donc le terme $\ln(\epsilon)(\phi(\epsilon) - \phi(-\epsilon)) \sim 2\epsilon \ln(\epsilon) \phi'(0)$.
+Or $\lim_{\epsilon \to 0^+} \epsilon \ln(\epsilon) = 0$.
+Ainsi, le terme de bord disparaît à la limite.
+Il reste :
+$$ \langle (\ln|x|)', \phi \rangle = \lim_{\epsilon \to 0^+} \int_{|x|>\epsilon} \frac{\phi(x)}{x} dx = \langle \text{vp}\left(\frac{1}{x}\right), \phi \rangle $$
+Ce qui démontre rigoureusement le résultat escompté.
