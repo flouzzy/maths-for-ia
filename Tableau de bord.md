@@ -98,7 +98,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-84/Jalon-84.md|Jalon 84 : Livrable IA]] : Livrable IA T7 : Création d'un module d'analyse spectrale pour l'extraction de caractéristiques audio à partir de la transformée de Fourier dans $L^2$. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 ### Trimestre 8 : probabilités axiomatiques et statistiques fondamentales
 - [x] [[jalon-85/Jalon-85.md|Jalon 85 : Axiomes de Kolmogorov]] : Axiomes de Kolmogorov, espace de probabilité $(\\Omega, \\mathcal{F}, \\mathbb{P})$ comme un espace mesuré de masse 1. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [ ] [[jalon-86/Jalon 86 (Variables aléatoires vues comme des applications mesurables).md|Jalon 86 : Variables aléatoires vues comme des applications mesurables]] : Variables aléatoires vues comme des applications mesurables, loi d'une variable et mesure de probabilité image.
+- [x] [[jalon-86/Jalon-86.md|Jalon 86 : Variables aléatoires vues comme des applications mesurables]] : Variables aléatoires vues comme des applications mesurables, loi d'une variable et mesure de probabilité image. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-87/Jalon 87 (Intégration des variables aléatoires).md|Jalon 87 : Intégration des variables aléatoires]] : Intégration des variables aléatoires, espérance, variance et moments d'ordre supérieur.
 - [ ] [[jalon-88/Jalon 88 (Indépendance d'événements).md|Jalon 88 : Indépendance d'événements]] : Indépendance d'événements, de tribus et de variables aléatoires.
 - [ ] [[jalon-89/Jalon 89 (Lemmes de Borel-Cantelli).md|Jalon 89 : Lemmes de Borel-Cantelli]] : Lemmes de Borel-Cantelli (lois du tout ou rien) et applications aux comportements asymptotiques.
@@ -166,6 +166,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
+- [2026-10-07] : [Upsert/Création] du Jalon 86 - Variables aléatoires vues comme des applications mesurables. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-12] : [Upsert/Création] du Jalon 57 - Théorème du point fixe de Banach. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-05] : [Upsert/Création] du Jalon 48 - Livrable IA T4 : Formalisation mathématique de la Rétropropagation. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-04] : [Upsert/Création] du Jalon 46 - Matrice jacobienne. Status: Terminé.
