@@ -206,7 +206,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 <br>
 
 - **[Jalon 85](jalon-85/Jalon%2085%20%28Axiomes%20de%20Kolmogorov%29.md)** : Axiomes de Kolmogorov, espace de probabilité $(\Omega, \mathcal{F}, \mathbb{P})$ comme un espace mesuré de masse 1.
-- **[Jalon 86](jalon-86/Jalon%2086%20%28Variables%20al%C3%A9atoires%20vues%20comme%20des%20applications%20mesurables%29.md)** : Variables aléatoires vues comme des applications mesurables, loi d'une variable et mesure de probabilité image.
+- **[Jalon 86](jalon-86/Jalon-86.md)** : Variables aléatoires vues comme des applications mesurables, loi d'une variable et mesure de probabilité image.
 - **[Jalon 87](jalon-87/Jalon%2087%20%28Int%C3%A9gration%20des%20variables%20al%C3%A9atoires%29.md)** : Intégration des variables aléatoires, espérance, variance et moments d'ordre supérieur.
 - **[Jalon 88](jalon-88/Jalon%2088%20%28Ind%C3%A9pendance%20d%27%C3%A9v%C3%A9nements%29.md)** : Indépendance d'événements, de tribus et de variables aléatoires.
 - **[Jalon 89](jalon-89/Jalon%2089%20%28Lemmes%20de%20Borel-Cantelli%29.md)** : Lemmes de Borel-Cantelli (lois du tout ou rien) et applications aux comportements asymptotiques.
@@ -428,6 +428,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
+- [2026-10-08] : [Upsert/Création] du Jalon 86 - Variables aléatoires vues comme des applications mesurables. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-06] : [Upsert/Création] du Jalon 85 - Axiomes de Kolmogorov. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-06] : [Upsert/Création] du Jalon 84 - Livrable IA T7 : Création d'un module d'analyse spectrale pour l'extraction de caractéristiques audio à partir de la transformée de Fourier dans $L^2$. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-05] : Upsert du Jalon 83 - Dérivation au sens des distributions. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*

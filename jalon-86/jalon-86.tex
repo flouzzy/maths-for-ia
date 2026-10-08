@@ -1,0 +1,923 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge Jalon 86 : Variables aléatoires et Applications mesurables \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+\section{Introduction : Genèse physique et intuition géométrique}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.2]
+  % Omega space
+  \draw[thick, fill=blue!10] (-3, 0) ellipse (1.5 and 1);
+  \node at (-3, 1.2) {Univers $\Omega$};
+  \node[circle, fill=black, inner sep=1.5pt] (w) at (-3, 0) {};
+  \node[above] at (w) {$\omega$};
+
+  % Real line
+  \draw[thick, ->] (1, 0) -- (6, 0) node[right] {$\mathbb{R}$};
+  \draw[thick] (3.5, -0.1) -- (3.5, 0.1) node[below=0.2cm] {$X(\omega)$};
+  \node[circle, fill=red, inner sep=1.5pt] (x) at (3.5, 0) {};
+
+  % Mapping arrow
+  \draw[->, thick, dashed, bend left=20] (w) to node[above] {Variable aléatoire $X$} (x);
+
+  % Borel set
+  \draw[thick, red] (2.5, 0) -- (4.5, 0);
+  \draw[thick] (2.5, -0.15) -- (2.5, 0.15) node[below=0.2cm] {$a$};
+  \draw[thick] (4.5, -0.15) -- (4.5, 0.15) node[below=0.2cm] {$b$};
+  \node at (3.5, 0.3) {Borélien $B$};
+
+  % Preimage
+  \draw[thick, dashed, fill=red!20, opacity=0.5] (-3,0) ellipse (0.8 and 0.5);
+  \node at (-3, -0.7) {$X^{-1}(B) \in \mathcal{F}$};
+
+\end{tikzpicture}
+\caption{Une variable aléatoire est une application mesurable transférant la mesure de $\Omega$ vers $\mathbb{R}$.}
+\end{figure}
+
+L'étude des probabilités dans un cadre rigoureux repose sur l'abstraction des expériences aléatoires. Intuitivement, une expérience aléatoire (comme le lancer d'un dé ou la mesure du bruit thermique dans un circuit) produit un résultat brut, noté $\omega$, appartenant à un univers fondamental $\Omega$. Cependant, ces résultats bruts sont souvent de nature qualitative ou abstraite. Pour appliquer les outils de l'analyse mathématique, il est indispensable de les "traduire" en grandeurs numériques.
+
+C'est ici qu'intervient la notion de variable aléatoire. Historiquement formalisée par Andrey Kolmogorov en 1933, une variable aléatoire n'a en réalité rien d'"aléatoire" dans sa définition intrinsèque, et n'est pas non plus une "variable" au sens habituel, mais bien une \textbf{fonction déterministe}. Elle associe à chaque issue $\omega \in \Omega$ un nombre réel $X(\omega) \in \mathbb{R}$.
+
+Pour que cette traduction soit cohérente avec la théorie de la mesure, cette fonction ne peut pas être quelconque. Si nous souhaitons nous poser des questions probabilistes légitimes telles que "Quelle est la probabilité que $X$ soit supérieur à 5 ?", l'ensemble des issues $\{ \omega \in \Omega \mid X(\omega) > 5 \}$ doit impérativement être un événement mesurable (c'est-à-dire appartenir à la tribu $\mathcal{F}$ de notre espace de probabilité). Ainsi, la mesurabilité devient la clé de voûte permettant de transférer une mesure de probabilité abstraite depuis $\Omega$ vers l'espace bien connu des réels $\mathbb{R}$.
+
+\section{Définitions, Théorèmes \& Exemples}
+Soit $(\Omega, \mathcal{F}, \mathbb{P})$ un espace de probabilité. L'espace d'arrivée $\mathbb{R}$ est systématiquement muni de sa tribu borélienne $\mathcal{B}(\mathbb{R})$, engendrée par les intervalles ouverts.
+
+\begin{quote}
+\textbf{Définition 1 : Variable Aléatoire Réelle (V.A.R.)}
+Une fonction $X : \Omega \to \mathbb{R}$ est appelée \textbf{variable aléatoire réelle} si elle est mesurable de $(\Omega, \mathcal{F})$ dans $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$.
+Formellement, pour tout ensemble borélien $B \in \mathcal{B}(\mathbb{R})$, son image réciproque appartient à la tribu $\mathcal{F}$ :
+$$X^{-1}(B) = \{ \omega \in \Omega \mid X(\omega) \in B \} \in \mathcal{F}$$
+\end{quote}
+
+\textbf{Exemple Concret 1 : Lancer d'une pièce}
+Considérons le lancer d'une pièce : $\Omega = \{\text{Pile}, \text{Face}\}$. La tribu triviale maximale est $\mathcal{F} = \mathcal{P}(\Omega) = \{\emptyset, \{\text{Pile}\}, \{\text{Face}\}, \Omega\}$.
+Soit le jeu suivant : on gagne 10€ si Pile, on perd 5€ si Face.
+La variable aléatoire $X$ est définie par $X(\text{Pile}) = 10$ et $X(\text{Face}) = -5$.
+Vérifions la mesurabilité pour un intervalle $B = [0, 20]$.
+L'image réciproque est $X^{-1}([0, 20]) = \{ \omega \in \Omega \mid X(\omega) \in [0, 20] \} = \{\text{Pile}\}$.
+Or, $\{\text{Pile}\} \in \mathcal{F}$. Cette fonction est bien une variable aléatoire.
+
+\textbf{Exemple Concret 2 : Fonction non mesurable (Pathologie)}
+Considérons $\Omega = \{a, b, c, d\}$ et une tribu restreinte $\mathcal{F} = \{\emptyset, \{a, b\}, \{c, d\}, \Omega\}$.
+Définissons une fonction $Y : \Omega \to \mathbb{R}$ telle que $Y(a)=1, Y(b)=2, Y(c)=3, Y(d)=4$.
+Prenons le borélien $B = \{1\}$.
+L'image réciproque est $Y^{-1}(\{1\}) = \{a\}$.
+Cependant, $\{a\} \notin \mathcal{F}$. Ainsi, $Y$ n'est \textbf{pas} une variable aléatoire pour cet espace de probabilité : l'espace n'est pas "assez fin" pour observer la différence entre l'issue $a$ et l'issue $b$.
+
+\begin{quote}
+\textbf{Théorème 1 : Critère de mesurabilité sur les générateurs}
+Soit $\mathcal{C}$ une classe de sous-ensembles de $\mathbb{R}$ qui engendre la tribu borélienne, c'est-à-dire $\sigma(\mathcal{C}) = \mathcal{B}(\mathbb{R})$.
+Une fonction $X : \Omega \to \mathbb{R}$ est une variable aléatoire si et seulement si :
+$$\forall C \in \mathcal{C}, \quad X^{-1}(C) \in \mathcal{F}$$
+\end{quote}
+
+En pratique, on choisit souvent $\mathcal{C} = \{ ]-\infty, x] \mid x \in \mathbb{R} \}$. Il suffit donc de vérifier que pour tout $x \in \mathbb{R}$, l'ensemble $\{ \omega \in \Omega \mid X(\omega) \leq x \}$ est dans $\mathcal{F}$.
+
+\begin{quote}
+\textbf{Définition 2 : Loi de Probabilité et Mesure Image}
+Soit $X$ une V.A.R. sur $(\Omega, \mathcal{F}, \mathbb{P})$. L'application $X$ permet de transférer la mesure de probabilité $\mathbb{P}$ sur $\mathbb{R}$.
+On définit la \textbf{loi de probabilité} de $X$, notée $\mathbb{P}_X$, comme la mesure image sur $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$ donnée par :
+$$\forall B \in \mathcal{B}(\mathbb{R}), \quad \mathbb{P}_X(B) = \mathbb{P}(X^{-1}(B)) = \mathbb{P}(\{ \omega \in \Omega \mid X(\omega) \in B \})$$
+On note souvent abusivement $\mathbb{P}(X \in B)$.
+\end{quote}
+
+\textbf{Exemple Concret 3 : Calcul explicite d'une loi image}
+Soit un dé équilibré $\Omega = \{1, 2, 3, 4, 5, 6\}$, $\mathcal{F} = \mathcal{P}(\Omega)$ et $\mathbb{P}$ la mesure uniforme ($\mathbb{P}(\{\omega\}) = 1/6$).
+Définissons la variable aléatoire $X(\omega) = \omega \pmod 2$ (parité).
+Calculons la loi de $X$, $\mathbb{P}_X$ sur $\mathbb{R}$.
+$X$ prend les valeurs 0 ou 1.
+Pour $B = \{0\}$, $\mathbb{P}_X(\{0\}) = \mathbb{P}(X^{-1}(\{0\})) = \mathbb{P}(\{2, 4, 6\}) = \frac{3}{6} = \frac{1}{2}$.
+Pour $B = \{1\}$, $\mathbb{P}_X(\{1\}) = \mathbb{P}(X^{-1}(\{1\})) = \mathbb{P}(\{1, 3, 5\}) = \frac{3}{6} = \frac{1}{2}$.
+Ainsi, la loi $\mathbb{P}_X$ est une loi de Bernoulli de paramètre $p=1/2$.
+
+\begin{quote}
+\textbf{Définition 3 : Fonction de Répartition}
+Toute loi de probabilité sur $\mathbb{R}$ est entièrement caractérisée par sa \textbf{fonction de répartition} $F_X : \mathbb{R} \to [0, 1]$, définie par :
+$$F_X(x) = \mathbb{P}_X( ]-\infty, x] ) = \mathbb{P}(X \leq x)$$
+$F_X$ possède les propriétés fondamentales suivantes :
+\begin{enumerate}
+\item Croissante : Si $x \leq y$, alors $F_X(x) \leq F_X(y)$.
+\item Continue à droite : $\lim_{h \to 0, h0} F_X(x+h) = F_X(x)$.
+\item Limites aux bornes : $\lim_{x \to -\infty} F_X(x) = 0$ et $\lim_{x \to +\infty} F_X(x) = 1$.
+\end{enumerate}
+\end{quote}
+
+\textbf{Exemple Concret 4 : Fonction de répartition d'une variable uniforme}
+Soit $X$ suivant une loi uniforme sur l'intervalle $[a, b]$, notée $\mathcal{U}([a, b])$.
+Par définition, la probabilité de tomber dans un sous-intervalle $[c, d] \subset [a, b]$ est proportionnelle à sa longueur : $\frac{d-c}{b-a}$.
+Calculons $F_X(x) = \mathbb{P}(X \leq x)$ pas-à-pas :
+\begin{itemize}
+\item Si $x < a$ : L'événement $\{X \leq x\}$ est impossible (ensemble vide), donc $F_X(x) = 0$.
+\item Si $a \leq x \leq b$ : L'événement correspond à l'intervalle $[a, x]$. Ainsi, $F_X(x) = \frac{x-a}{b-a}$.
+\item Si $x > b$ : L'événement $\{X \leq x\}$ est certain (contient tout le support $[a, b]$), donc $F_X(x) = 1$.
+\end{itemize}
+C'est une fonction affine croissante sur $[a, b]$, recollée continuement en $0$ et $1$.
+
+\begin{quote}
+\textbf{Théorème 2 : Stabilité par composition}
+Si $X$ est une variable aléatoire réelle sur $(\Omega, \mathcal{F})$, et si $g : \mathbb{R} \to \mathbb{R}$ est une fonction mesurable au sens de Borel, alors la composée $Y = g(X) = g \circ X$ est également une variable aléatoire réelle.
+\end{quote}
+
+\textbf{Exemple Concret 5 : Loi d'une variable transformée géométriquement}
+Soit $X \sim \mathcal{U}([-1, 1])$. Déterminons la loi de $Y = X^2$.
+On note que $g(x) = x^2$ est continue, donc borélienne. $Y$ est donc une V.A.R.
+Calculons la fonction de répartition $F_Y(y)$ :
+\begin{itemize}
+\item Si $y < 0$ : $Y$ étant un carré, $Y \geq 0$, donc $F_Y(y) = \mathbb{P}(Y \leq y) = 0$.
+\item Si $y \in [0, 1]$ :
+\end{itemize}
+  $$F_Y(y) = \mathbb{P}(X^2 \leq y) = \mathbb{P}(-\sqrt{y} \leq X \leq \sqrt{y})$$
+  Comme $X \sim \mathcal{U}([-1, 1])$, sa densité est constante égale à $\frac{1}{1 - (-1)} = \frac{1}{2}$.
+  La probabilité est donc la longueur de l'intervalle multipliée par la densité :
+  $$F_Y(y) = \frac{\sqrt{y} - (-\sqrt{y})}{2} = \frac{2\sqrt{y}}{2} = \sqrt{y}$$
+\begin{itemize}
+\item Si $y > 1$ : L'événement $X^2 \leq y$ est certain car $X \in [-1, 1]$, donc $F_Y(y) = 1$.
+\end{itemize}
+Par dérivation, on obtient la densité de $Y$ sur $]0, 1[ : f_Y(y) = \frac{d}{dy}(\sqrt{y}) = \frac{1}{2\sqrt{y}}$. On observe une divergence en 0, caractéristique de cette transformation de mesure.
+
+
+
+\begin{quote}
+\textbf{Théorème 3 : L'Indicatrice d'un événement}
+Soit $A \subset \Omega$. La fonction indicatrice $\mathbf{1}_A : \Omega \to \mathbb{R}$ définie par $\mathbf{1}_A(\omega) = 1$ si $\omega \in A$ et $\mathbf{1}_A(\omega) = 0$ sinon, est une variable aléatoire réelle si et seulement si $A \in \mathcal{F}$ (c'est-à-dire si $A$ est un événement mesurable).
+\end{quote}
+
+\textbf{Exemple Concret 6 : L'indicatrice d'un jet de dé pair}
+Considérons $\Omega = \{1, 2, 3, 4, 5, 6\}$ avec $\mathcal{F} = \mathcal{P}(\Omega)$.
+Soit l'événement $A = \{2, 4, 6\}$ "le résultat est pair".
+Définissons $X = \mathbf{1}_A$. $X(\omega)$ vaut $1$ si $\omega \in A$ et $0$ sinon.
+Vérifions la mesurabilité. Prenons un intervalle $B = ]0.5, 1.5[$.
+L'image réciproque est $X^{-1}(]0.5, 1.5[) = \{ \omega \in \Omega \mid X(\omega) = 1 \} = A = \{2, 4, 6\}$.
+Puisque $A \in \mathcal{F}$, la condition est satisfaite sur ce borélien. Comme cela est vrai pour tout borélien, $X$ est une variable aléatoire.
+
+\textbf{Exemple Concret 7 : Loi d'une variable transformée affine}
+Soit $X$ une variable aléatoire suivant une loi normale standard $\mathcal{N}(0, 1)$. Sa densité est $f_X(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}$.
+Définissons une transformation affine $Y = \sigma X + \mu$ avec $\sigma > 0$. $Y$ est mesurable par stabilité de la composition avec des fonctions continues.
+Calculons la fonction de répartition de $Y$ :
+$$F_Y(y) = \mathbb{P}(Y \leq y) = \mathbb{P}(\sigma X + \mu \leq y) = \mathbb{P}\left(X \leq \frac{y - \mu}{\sigma}\right) = F_X\left(\frac{y - \mu}{\sigma}\right)$$
+Pour trouver la densité $f_Y$, on dérive cette fonction par rapport à $y$ :
+$$f_Y(y) = \frac{d}{dy} \left[ F_X\left(\frac{y - \mu}{\sigma}\right) \right] = \frac{1}{\sigma} f_X\left(\frac{y - \mu}{\sigma}\right) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(y - \mu)^2}{2\sigma^2}}$$
+On retrouve ainsi explicitement la densité de la loi $\mathcal{N}(\mu, \sigma^2)$, montrant la puissance du calcul sur les variables aléatoires.
+
+\section{Démonstrations}
+\subsection*{Démonstration 1 : Le critère de mesurabilité sur les générateurs (Théorème 1)}
+Nous voulons prouver que si $\mathcal{C}$ engendre $\mathcal{B}(\mathbb{R})$ (i.e. $\sigma(\mathcal{C}) = \mathcal{B}(\mathbb{R})$) et si $\forall C \in \mathcal{C}, X^{-1}(C) \in \mathcal{F}$, alors $X$ est mesurable.
+\begin{enumerate}
+\item \textbf{Condition Nécessaire :}
+\end{enumerate}
+   Si $X$ est mesurable, alors pour tout borélien $B \in \mathcal{B}(\mathbb{R})$, $X^{-1}(B) \in \mathcal{F}$. Puisque $\mathcal{C} \subset \mathcal{B}(\mathbb{R})$, il est évident que pour tout $C \in \mathcal{C}$, on a bien $X^{-1}(C) \in \mathcal{F}$.
+\begin{enumerate}
+\item \textbf{Condition Suffisante :}
+\end{enumerate}
+   Supposons que $\forall C \in \mathcal{C}, X^{-1}(C) \in \mathcal{F}$.
+   Considérons la classe d'ensembles $\mathcal{A}$ définie par l'image directe dans l'espace d'arrivée qui se comporte bien vis-à-vis de la tribu de départ :
+   $$\mathcal{A} = \{ B \subset \mathbb{R} \mid X^{-1}(B) \in \mathcal{F} \}$$
+
+   Montrons que $\mathcal{A}$ est une tribu sur $\mathbb{R}$ :
+\begin{itemize}
+\item \textbf{Ensemble total :} $X^{-1}(\mathbb{R}) = \Omega \in \mathcal{F}$, donc $\mathbb{R} \in \mathcal{A}$.
+\item \textbf{Stabilité par complémentation :} Soit $B \in \mathcal{A}$. Considérons son complémentaire $B^c = \mathbb{R} \setminus B$.
+\end{itemize}
+     Par propriété de l'image réciproque, $X^{-1}(B^c) = \Omega \setminus X^{-1}(B) = (X^{-1}(B))^c$.
+     Comme $\mathcal{F}$ est une tribu et que $X^{-1}(B) \in \mathcal{F}$, son complémentaire est aussi dans $\mathcal{F}$.
+     Ainsi, $X^{-1}(B^c) \in \mathcal{F}$, donc $B^c \in \mathcal{A}$.
+\begin{itemize}
+\item \textbf{Stabilité par union dénombrable :} Soit $(B_n)_{n \in \mathbb{N}}$ une suite d'éléments de $\mathcal{A}$.
+\end{itemize}
+     On a $X^{-1}\left( \bigcup_{n \in \mathbb{N}} B_n \right) = \bigcup_{n \in \mathbb{N}} X^{-1}(B_n)$.
+     Par hypothèse, chaque $X^{-1}(B_n) \in \mathcal{F}$. Comme $\mathcal{F}$ est une tribu, elle est stable par union dénombrable.
+     Donc $\bigcup X^{-1}(B_n) \in \mathcal{F}$, d'où $\bigcup_{n \in \mathbb{N}} B_n \in \mathcal{A}$.
+
+   Nous avons établi que $\mathcal{A}$ est une tribu sur $\mathbb{R}$.
+   Par hypothèse initiale, $\mathcal{C} \subset \mathcal{A}$.
+   Puisque $\mathcal{A}$ est une tribu contenant $\mathcal{C}$, elle contient nécessairement la plus petite tribu contenant $\mathcal{C}$, qui n'est autre que $\sigma(\mathcal{C})$.
+   Or, $\sigma(\mathcal{C}) = \mathcal{B}(\mathbb{R})$. Donc $\mathcal{B}(\mathbb{R}) \subset \mathcal{A}$.
+   Ceci implique que pour tout $B \in \mathcal{B}(\mathbb{R})$, $B \in \mathcal{A}$, c'est-à-dire $X^{-1}(B) \in \mathcal{F}$.
+   La fonction $X$ est donc mesurable. La preuve est achevée.
+
+\subsection*{Démonstration 2 : Stabilité par composition (Théorème 2)}
+Nous souhaitons montrer que si $X$ est $\mathcal{F}$-mesurable et $g$ est borélienne, alors $g \circ X$ est $\mathcal{F}$-mesurable.
+\begin{enumerate}
+\item Soit $B \in \mathcal{B}(\mathbb{R})$ un borélien quelconque de l'espace d'arrivée de $g$.
+\item Nous devons examiner l'image réciproque de $B$ par l'application composée $Y = g \circ X$ :
+\end{enumerate}
+   $$Y^{-1}(B) = (g \circ X)^{-1}(B)$$
+\begin{enumerate}
+\item Par les propriétés élémentaires des applications, l'image réciproque par une composée est la composée des images réciproques :
+\end{enumerate}
+   $$(g \circ X)^{-1}(B) = X^{-1}(g^{-1}(B))$$
+\begin{enumerate}
+\item Puisque $g$ est une fonction mesurable au sens de Borel (de $\mathbb{R}$ dans $\mathbb{R}$), et que $B$ est un borélien, l'image réciproque $g^{-1}(B)$ est, par définition, un ensemble borélien de $\mathbb{R}$. Notons $B' = g^{-1}(B) \in \mathcal{B}(\mathbb{R})$.
+\item Il reste alors à évaluer $X^{-1}(B')$. Puisque $X$ est une variable aléatoire mesurable, et que $B'$ est un borélien, $X^{-1}(B') \in \mathcal{F}$.
+\item En conclusion, $Y^{-1}(B) \in \mathcal{F}$ pour tout borélien $B$, ce qui démontre rigoureusement que la composée $Y = g \circ X$ est une variable aléatoire réelle.
+\end{enumerate}
+
+
+\subsection*{Démonstration 3 : L'Indicatrice d'un événement (Théorème 3)}
+Nous voulons prouver que la fonction indicatrice $\mathbf{1}_A : \Omega \to \mathbb{R}$ est une variable aléatoire si et seulement si $A \in \mathcal{F}$.
+\begin{enumerate}
+\item \textbf{Condition Nécessaire :}
+\end{enumerate}
+   Supposons que $\mathbf{1}_A$ soit une variable aléatoire. Cela signifie que pour tout borélien $B \in \mathcal{B}(\mathbb{R})$, l'image réciproque $\mathbf{1}_A^{-1}(B)$ appartient à $\mathcal{F}$.
+   Prenons le borélien $B = \{1\}$.
+   Calculons $\mathbf{1}_A^{-1}(\{1\}) = \{ \omega \in \Omega \mid \mathbf{1}_A(\omega) = 1 \} = A$.
+   Puisque l'image réciproque de tout borélien doit être dans $\mathcal{F}$, on a immédiatement que $A \in \mathcal{F}$.
+\begin{enumerate}
+\item \textbf{Condition Suffisante :}
+\end{enumerate}
+   Supposons que $A \in \mathcal{F}$. Nous devons montrer que pour tout borélien $B \in \mathcal{B}(\mathbb{R})$, l'image réciproque $\mathbf{1}_A^{-1}(B)$ est dans $\mathcal{F}$.
+   La fonction $\mathbf{1}_A$ ne peut prendre que les valeurs $0$ et $1$. Ainsi, pour un borélien quelconque $B$, il n'y a que quatre cas possibles :
+\begin{itemize}
+\item Cas 1 : $1 \in B$ et $0 \notin B$. Alors $\mathbf{1}_A^{-1}(B) = \{ \omega \in \Omega \mid \mathbf{1}_A(\omega) = 1 \} = A$. Or $A \in \mathcal{F}$ par hypothèse.
+\item Cas 2 : $0 \in B$ et $1 \notin B$. Alors $\mathbf{1}_A^{-1}(B) = \{ \omega \in \Omega \mid \mathbf{1}_A(\omega) = 0 \} = A^c$. Puisque $A \in \mathcal{F}$ et que $\mathcal{F}$ est une tribu, son complémentaire $A^c$ est aussi dans $\mathcal{F}$.
+\item Cas 3 : $0 \in B$ et $1 \in B$. Alors $\mathbf{1}_A^{-1}(B) = \Omega$. Et $\Omega \in \mathcal{F}$ par définition d'une tribu.
+\item Cas 4 : $0 \notin B$ et $1 \notin B$. Alors $\mathbf{1}_A^{-1}(B) = \emptyset$. Et $\emptyset \in \mathcal{F}$ par définition d'une tribu.
+\end{itemize}
+
+   Dans tous les cas possibles, $\mathbf{1}_A^{-1}(B) \in \mathcal{F}$. La fonction $\mathbf{1}_A$ est donc bien une variable aléatoire.
+
+\section{Applications en Physique, Logique, \& AI}
+\subsection*{Application à l'Intelligence Artificielle et l'Apprentissage Profond}
+Le formalisme des applications mesurables est l'échine dorsale théorique de l'apprentissage automatique moderne.
+\begin{enumerate}
+\item \textbf{Variables Aléatoires Multi-Dimensionnelles et Tenseurs :} En apprentissage profond, une image, un son, ou un texte vectorisé n'est rien d'autre qu'une réalisation complexe d'un vecteur aléatoire $\mathbf{X}$ (variable aléatoire à valeurs dans $\mathbb{R}^d$). La loi de probabilité abstraite du monde réel (ex: "la distribution des images de chats") est transférée par l'application mesurable de capture (les capteurs CCD de l'appareil photo) vers une mesure image dans $\mathbb{R}^d$.
+\item \textbf{Transformations Non-Linéaires (Fonctions d'Activation) :} Le théorème de stabilité par composition garantit que si notre tenseur d'entrée suit une certaine loi de probabilité, toute transformation mathématique appliquée par une couche de réseau de neurones engendre une nouvelle variable aléatoire valide.
+\end{enumerate}
+   Prenons la fonction ReLU : $g(x) = \max(0, x)$. Cette fonction est continue, donc borélienne. Par conséquent, si $Z$ est l'activation linéaire de la couche ($Z = WX+b$), la sortie de la couche $A = \text{ReLU}(Z)$ est une application mesurable stricte. Ce passage crée un "atome" de probabilité (une masse de Dirac) en $0$ car $\mathbb{P}(A=0) = \mathbb{P}(Z \leq 0)$, transformant ainsi une distribution continue en une distribution mixte, parfaitement gérable grâce à la rigueur de la théorie de la mesure.
+\begin{enumerate}
+\item \textbf{Modèles Génératifs (GANs et Diffusion) :} Les architectures génératives exploitent directement le transport de mesure. Dans un réseau antagoniste génératif (GAN), on se donne un bruit latent $Z$ de loi simple (ex: Normale univariée) sur $\mathbb{R}^k$. Le générateur est modélisé par un réseau de neurones $G_\theta : \mathbb{R}^k \to \mathbb{R}^d$. D'après les théorèmes démontrés, $G_\theta$ étant une composition de fonctions continues, c'est une application mesurable. L'objectif entier du réseau est de déformer l'espace pour que la loi image (le \textit{pushforward measure} noté $(G_\theta)_{\#}\mathbb{P}_Z$) coïncide asymptotiquement avec la mesure empirique des données d'apprentissage $\mathbb{P}_{data}$.
+\end{enumerate}
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Vérification de la mesurabilité d'une fonction simple \quad $\bigstar\star\star\star\star$}
+\textbf{Énoncé :}
+Soit un espace de probabilité $(\Omega, \mathcal{F}, \mathbb{P})$ où $\Omega = \{a, b, c, d\}$ et la tribu est $\mathcal{F} = \{\emptyset, \{a, b\}, \{c, d\}, \Omega\}$.
+On définit la fonction $X : \Omega \to \mathbb{R}$ par $X(a) = 1, X(b) = 1, X(c) = 2, X(d) = 2$.
+Démontrer rigoureusement que $X$ est une variable aléatoire réelle.
+
+\textbf{Correction Explicative :}
+\begin{enumerate}
+\item Pour prouver que $X$ est une variable aléatoire, il faut montrer que pour tout borélien $B \in \mathcal{B}(\mathbb{R})$, l'image réciproque $X^{-1}(B)$ appartient à la tribu $\mathcal{F}$.
+\item Analysons les valeurs prises par $X$. La fonction $X$ ne prend que deux valeurs : $1$ et $2$.
+\item Considérons un borélien quelconque $B \subset \mathbb{R}$. Selon que $B$ contienne ou non les valeurs $1$ et $2$, nous avons quatre cas mutuellement exclusifs pour l'image réciproque $X^{-1}(B) = \{ \omega \in \Omega \mid X(\omega) \in B \}$ :
+\end{enumerate}
+\begin{itemize}
+\item Cas 1 : $1 \notin B$ et $2 \notin B$.
+\end{itemize}
+     Alors aucune issue $\omega$ ne satisfait $X(\omega) \in B$. L'image réciproque est $X^{-1}(B) = \emptyset$.
+     Puisque $\mathcal{F}$ est une tribu, elle contient l'ensemble vide : $\emptyset \in \mathcal{F}$.
+\begin{itemize}
+\item Cas 2 : $1 \in B$ et $2 \notin B$.
+\end{itemize}
+     Les seules issues vérifiant $X(\omega) \in B$ sont celles pour lesquelles $X(\omega) = 1$.
+     Ainsi, $X^{-1}(B) = \{a, b\}$. Par définition de la tribu donnée, on a bien $\{a, b\} \in \mathcal{F}$.
+\begin{itemize}
+\item Cas 3 : $1 \notin B$ et $2 \in B$.
+\end{itemize}
+     Les seules issues vérifiant $X(\omega) \in B$ sont celles pour lesquelles $X(\omega) = 2$.
+     Ainsi, $X^{-1}(B) = \{c, d\}$. Par définition de la tribu donnée, on a bien $\{c, d\} \in \mathcal{F}$.
+\begin{itemize}
+\item Cas 4 : $1 \in B$ et $2 \in B$.
+\end{itemize}
+     Toutes les issues vérifient $X(\omega) \in B$. L'image réciproque est $X^{-1}(B) = \{a, b, c, d\} = \Omega$.
+     Puisque $\mathcal{F}$ est une tribu, $\Omega \in \mathcal{F}$.
+\begin{enumerate}
+\item Conclusion : Dans tous les cas possibles, pour n'importe quel borélien $B$, $X^{-1}(B) \in \mathcal{F}$. Par conséquent, la fonction $X$ est bien une application mesurable, et donc une variable aléatoire réelle sur l'espace $(\Omega, \mathcal{F})$.
+\end{enumerate}
+
+
+\subsection*{Calcul de loi image pour un dé  \quad $\bigstar\bigstar\star\star\star$}
+\textbf{Énoncé :}
+On lance un dé cubique parfaitement équilibré. L'univers est $\Omega = \{1, 2, 3, 4, 5, 6\}$, muni de la tribu $\mathcal{F} = \mathcal{P}(\Omega)$ et de la probabilité uniforme $\mathbb{P}$.
+Soit la variable aléatoire $X : \Omega \to \mathbb{R}$ définie par $X(\omega) = (\omega - 3)^2$.
+Calculer explicitement la loi de probabilité de $X$ sur $\mathbb{R}$.
+
+\textbf{Correction Explicative :}
+\begin{enumerate}
+\item La loi de probabilité de $X$, notée $\mathbb{P}_X$, est la mesure image de $\mathbb{P}$ par l'application $X$. Elle est définie sur $\mathcal{B}(\mathbb{R})$ par $\mathbb{P}_X(B) = \mathbb{P}(X \in B)$.
+\item Déterminons d'abord le support de $X$, c'est-à-dire l'ensemble des valeurs qu'elle peut prendre. Nous évaluons $X$ pour chaque issue $\omega \in \Omega$ :
+\end{enumerate}
+\begin{itemize}
+\item Pour $\omega = 1 : X(1) = (1 - 3)^2 = (-2)^2 = 4$
+\item Pour $\omega = 2 : X(2) = (2 - 3)^2 = (-1)^2 = 1$
+\item Pour $\omega = 3 : X(3) = (3 - 3)^2 = 0^2 = 0$
+\item Pour $\omega = 4 : X(4) = (4 - 3)^2 = 1^2 = 1$
+\item Pour $\omega = 5 : X(5) = (5 - 3)^2 = 2^2 = 4$
+\item Pour $\omega = 6 : X(6) = (6 - 3)^2 = 3^2 = 9$
+\end{itemize}
+   Le support de $X$ est donc $S_X = \{0, 1, 4, 9\}$.
+\begin{enumerate}
+\item Comme $X$ est une variable aléatoire discrète, sa loi de probabilité est entièrement caractérisée par les probabilités des singletons $\{x\}$ pour $x \in S_X$. Le dé étant équilibré, la probabilité d'une issue individuelle est $\mathbb{P}(\{\omega\}) = 1/6$.
+\item Calculons la probabilité pour chaque valeur du support :
+\end{enumerate}
+\begin{itemize}
+\item Pour $x = 0$ : $\mathbb{P}(X = 0) = \mathbb{P}(\{\omega \in \Omega \mid X(\omega) = 0\}) = \mathbb{P}(\{3\}) = \frac{1}{6}$.
+\item Pour $x = 1$ : $\mathbb{P}(X = 1) = \mathbb{P}(\{\omega \in \Omega \mid X(\omega) = 1\}) = \mathbb{P}(\{2, 4\}) = \frac{2}{6} = \frac{1}{3}$.
+\item Pour $x = 4$ : $\mathbb{P}(X = 4) = \mathbb{P}(\{\omega \in \Omega \mid X(\omega) = 4\}) = \mathbb{P}(\{1, 5\}) = \frac{2}{6} = \frac{1}{3}$.
+\item Pour $x = 9$ : $\mathbb{P}(X = 9) = \mathbb{P}(\{\omega \in \Omega \mid X(\omega) = 9\}) = \mathbb{P}(\{6\}) = \frac{1}{6}$.
+\end{itemize}
+\begin{enumerate}
+\item Vérification de cohérence : La somme des probabilités doit valoir $1$.
+\end{enumerate}
+   $\sum_{x \in S_X} \mathbb{P}(X = x) = \frac{1}{6} + \frac{2}{6} + \frac{2}{6} + \frac{1}{6} = \frac{6}{6} = 1$. Le calcul est correct.
+\begin{enumerate}
+\item Conclusion : La loi de probabilité $\mathbb{P}_X$ est une mesure de probabilité discrète concentrée sur l'ensemble $\{0, 1, 4, 9\}$, définie par $\mathbb{P}_X = \frac{1}{6}\delta_0 + \frac{1}{3}\delta_1 + \frac{1}{3}\delta_4 + \frac{1}{6}\delta_9$, où $\delta_a$ désigne la mesure de Dirac au point $a$.
+\end{enumerate}
+
+
+\subsection*{Fonction de répartition d'une variable discrète  \quad $\bigstar\bigstar\star\star\star$}
+\textbf{Énoncé :}
+Soit $X$ une variable aléatoire réelle discrète dont la loi est donnée par $\mathbb{P}(X = -1) = 0.2$, $\mathbb{P}(X = 0) = 0.5$ et $\mathbb{P}(X = 2) = 0.3$.
+Expliciter analytiquement et tracer l'allure de sa fonction de répartition $F_X$.
+
+\textbf{Correction Explicative :}
+\begin{enumerate}
+\item La fonction de répartition $F_X : \mathbb{R} \to [0, 1]$ d'une variable aléatoire $X$ est définie par $F_X(x) = \mathbb{P}(X \leq x)$.
+\item Pour une variable discrète, la fonction de répartition est une fonction constante par morceaux, dite en escalier, qui présente des sauts aux points de discontinuité correspondant aux valeurs du support. L'amplitude d'un saut en un point $a$ est exactement égale à $\mathbb{P}(X = a)$.
+\item Analysons $F_X(x)$ sur les différents intervalles formés par les points du support $S_X = \{-1, 0, 2\}$ :
+\end{enumerate}
+\begin{itemize}
+\item Intervalle $]-\infty, -1[$ :
+\end{itemize}
+     Si $x < -1$, alors il n'y a aucune valeur possible de $X$ qui soit inférieure ou égale à $x$. L'événement $\{X \leq x\}$ est impossible.
+     Donc, $F_X(x) = \mathbb{P}(\emptyset) = 0$.
+\begin{itemize}
+\item Intervalle $[-1, 0[$ :
+\end{itemize}
+     Si $-1 \leq x < 0$, la seule valeur de $X$ satisfaisant la condition est $-1$.
+     Donc, $F_X(x) = \mathbb{P}(X = -1) = 0.2$.
+\begin{itemize}
+\item Intervalle $[0, 2[$ :
+\end{itemize}
+     Si $0 \leq x < 2$, les valeurs de $X$ satisfaisant la condition sont $-1$ et $0$. Ces événements étant disjoints, on additionne leurs probabilités.
+     Donc, $F_X(x) = \mathbb{P}(X = -1) + \mathbb{P}(X = 0) = 0.2 + 0.5 = 0.7$.
+\begin{itemize}
+\item Intervalle $[2, +\infty[$ :
+\end{itemize}
+     Si $x \geq 2$, toutes les valeurs possibles de $X$ satisfont la condition. L'événement $\{X \leq x\}$ est l'événement certain.
+     Donc, $F_X(x) = \mathbb{P}(X = -1) + \mathbb{P}(X = 0) + \mathbb{P}(X = 2) = 0.2 + 0.5 + 0.3 = 1$.
+\begin{enumerate}
+\item Récapitulatif analytique :
+\end{enumerate}
+   $$F_X(x) = \begin{cases}
+   0 \& \text{si } x < -1 \\
+   0.2 \& \text{si } -1 \leq x < 0 \\
+   0.7 \& \text{si } 0 \leq x < 2 \\
+   1 \& \text{si } x \geq 2
+   \end{cases}$$
+\begin{enumerate}
+\item Propriétés caractéristiques :
+\end{enumerate}
+   On vérifie aisément que $F_X$ est une fonction croissante, qu'elle tend vers $0$ en $-\infty$ et vers $1$ en $+\infty$. De plus, on observe qu'elle est continue à droite en tout point. Par exemple, au point de saut $x=0$, $\lim_{x \to 0^+} F_X(x) = 0.7 = F_X(0)$, alors que $\lim_{x \to 0^-} F_X(x) = 0.2$.
+
+
+\subsection*{Transformation affine d'une loi continue  \quad $\bigstar\bigstar\bigstar\star\star$}
+\textbf{Énoncé :}
+Soit $X$ une variable aléatoire suivant une loi exponentielle de paramètre $\lambda > 0$, dont la densité de probabilité est donnée par $f_X(x) = \lambda e^{-\lambda x} \mathbf{1}_{[0, +\infty[}(x)$.
+On définit la variable aléatoire $Y = aX + b$, avec $a > 0$ et $b \in \mathbb{R}$.
+Déterminer la fonction de répartition et la densité de probabilité de $Y$.
+
+\textbf{Correction Explicative :}
+\begin{enumerate}
+\item La variable $Y$ est définie par une transformation affine strictement croissante (car $a > 0$).
+\item Exprimons d'abord la fonction de répartition de $X$, notée $F_X(x)$.
+\end{enumerate}
+   Par définition, $F_X(x) = \int_{-\infty}^{x} f_X(t) dt$.
+\begin{itemize}
+\item Si $x < 0$, $f_X(t) = 0$ sur $]-\infty, x]$, donc $F_X(x) = 0$.
+\item Si $x \geq 0$, $F_X(x) = \int_{0}^{x} \lambda e^{-\lambda t} dt = \left[-e^{-\lambda t}\right]_0^x = -e^{-\lambda x} - (-1) = 1 - e^{-\lambda x}$.
+\end{itemize}
+\begin{enumerate}
+\item Calculons maintenant la fonction de répartition de $Y$, notée $F_Y(y)$ :
+\end{enumerate}
+   Par définition, $F_Y(y) = \mathbb{P}(Y \leq y) = \mathbb{P}(aX + b \leq y)$.
+   Puisque $a > 0$, l'inégalité est préservée lorsqu'on isole $X$ :
+   $F_Y(y) = \mathbb{P}\left(X \leq \frac{y - b}{a}\right)$.
+   Ainsi, on relie $F_Y$ à $F_X$ : $F_Y(y) = F_X\left(\frac{y - b}{a}\right)$.
+\begin{enumerate}
+\item Évaluons cette expression en distinguant les cas, puisque $F_X$ est définie par morceaux :
+\end{enumerate}
+   La condition $\frac{y - b}{a} < 0$ est équivalente à $y < b$.
+\begin{itemize}
+\item Si $y < b$, alors $\frac{y - b}{a} < 0$, ce qui implique $F_X\left(\frac{y - b}{a}\right) = 0$. Donc $F_Y(y) = 0$.
+\item Si $y \geq b$, alors $\frac{y - b}{a} \geq 0$, ce qui implique $F_X\left(\frac{y - b}{a}\right) = 1 - e^{-\lambda \left(\frac{y - b}{a}\right)}$.
+\end{itemize}
+\begin{enumerate}
+\item Pour obtenir la densité de probabilité de $Y$, notée $f_Y(y)$, nous dérivons la fonction de répartition $F_Y(y)$ par rapport à $y$, en utilisant la règle de dérivation des fonctions composées (là où la fonction est dérivable) :
+\end{enumerate}
+\begin{itemize}
+\item Pour $y < b$, la dérivée est nulle.
+\item Pour $y > b$, on dérive l'expression $1 - e^{-\frac{\lambda}{a}(y - b)}$ :
+\end{itemize}
+     $$f_Y(y) = \frac{d}{dy} \left[ 1 - e^{-\frac{\lambda}{a}(y - b)} \right] = 0 - \left(-\frac{\lambda}{a}\right) e^{-\frac{\lambda}{a}(y - b)} = \frac{\lambda}{a} e^{-\frac{\lambda}{a}(y - b)}$$
+\begin{enumerate}
+\item Conclusion : La densité de probabilité de $Y$ est donnée par :
+\end{enumerate}
+   $$f_Y(y) = \frac{\lambda}{a} e^{-\frac{\lambda}{a}(y - b)} \mathbf{1}_{[b, +\infty[}(y)$$
+   On reconnait ici une loi exponentielle translatée (d'un paramètre de position $b$) et redimensionnée (avec un nouveau paramètre d'échelle $\lambda/a$).
+
+
+\subsection*{Mesurabilité de la somme de deux V.A.R.  \quad $\bigstar\bigstar\bigstar\star\star$}
+\textbf{Énoncé :}
+Soient $X_1$ et $X_2$ deux variables aléatoires réelles sur l'espace $(\Omega, \mathcal{F}, \mathbb{P})$.
+Démontrer rigoureusement que la somme $S = X_1 + X_2$ est également une variable aléatoire réelle.
+\textit{Indication : On pourra utiliser le fait que l'ensemble des nombres rationnels $\mathbb{Q}$ est dénombrable et dense dans $\mathbb{R}$.}
+
+\textbf{Correction Explicative :}
+\begin{enumerate}
+\item Pour démontrer que $S$ est une variable aléatoire réelle, il est suffisant, d'après le critère sur les générateurs de la tribu borélienne, de montrer que pour tout réel $a$, l'ensemble $A_a = \{ \omega \in \Omega \mid (X_1 + X_2)(\omega) < a \}$ appartient à la tribu $\mathcal{F}$.
+\item Analysons l'inégalité définissant l'ensemble $A_a$ :
+\end{enumerate}
+   $X_1(\omega) + X_2(\omega) < a \iff X_1(\omega) < a - X_2(\omega)$.
+\begin{enumerate}
+\item Entre deux nombres réels distincts ($X_1(\omega)$ et $a - X_2(\omega)$), on peut toujours intercaler un nombre rationnel en raison de la densité de $\mathbb{Q}$ dans $\mathbb{R}$. Ainsi, l'inégalité stricte est équivalente à l'existence d'un rationnel $q \in \mathbb{Q}$ tel que :
+\end{enumerate}
+   $X_1(\omega) < q < a - X_2(\omega)$.
+\begin{enumerate}
+\item L'inégalité $q < a - X_2(\omega)$ peut se réécrire comme $X_2(\omega) < a - q$.
+\end{enumerate}
+   Par conséquent, la condition s'exprime comme la conjonction de deux conditions faisant intervenir $X_1$ et $X_2$ séparément :
+   $X_1(\omega) < q \quad \text{ET} \quad X_2(\omega) < a - q$.
+\begin{enumerate}
+\item Traduisons cette condition ensemblistiquement. L'existence d'un tel rationnel s'exprime par une union sur tous les rationnels de l'intersection de deux événements :
+\end{enumerate}
+   $$A_a = \bigcup_{q \in \mathbb{Q}} \left( \{ \omega \in \Omega \mid X_1(\omega) < q \} \cap \{ \omega \in \Omega \mid X_2(\omega) < a - q \} \right)$$
+\begin{enumerate}
+\item Vérifions que cet ensemble appartient à la tribu $\mathcal{F}$ :
+\end{enumerate}
+\begin{itemize}
+\item Par hypothèse, $X_1$ est une variable aléatoire, donc l'ensemble $\{ \omega \in \Omega \mid X_1(\omega) < q \}$ est dans $\mathcal{F}$ pour tout rationnel $q$.
+\item Par hypothèse, $X_2$ est une variable aléatoire, donc l'ensemble $\{ \omega \in \Omega \mid X_2(\omega) < a - q \}$ est dans $\mathcal{F}$ pour tout rationnel $q$ (puisque $a-q$ est un nombre réel).
+\item L'intersection de ces deux ensembles appartenant à la tribu appartient également à la tribu par stabilité de $\mathcal{F}$ par intersection finie.
+\item L'ensemble $\mathbb{Q}$ des nombres rationnels est dénombrable. Ainsi, l'union sur $q \in \mathbb{Q}$ est une union dénombrable d'ensembles mesurables.
+\item Par définition d'une tribu ($\sigma$-algèbre), elle est stable par union dénombrable.
+\end{itemize}
+\begin{enumerate}
+\item Conclusion : L'ensemble $A_a = \{ \omega \in \Omega \mid S(\omega) < a \}$ appartient bien à $\mathcal{F}$ pour tout réel $a$. Cela prouve de manière exhaustive que $S = X_1 + X_2$ est une application mesurable, et donc une variable aléatoire réelle.
+\end{enumerate}
+
+
+\subsection*{La méthode de la fonction muette  \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+\textbf{Énoncé :}
+Soit $X$ une variable aléatoire de densité $f_X(x)$. On pose $Y = e^X$.
+Déterminer la densité de probabilité de $Y$, notée $f_Y$, en utilisant la méthode de la fonction test (ou fonction muette).
+
+\textbf{Correction Explicative :}
+\begin{enumerate}
+\item La méthode de la fonction muette (ou fonction test) consiste à caractériser la loi d'une variable aléatoire $Y$ en calculant l'espérance d'une fonction arbitraire bornée et mesurable $h(Y)$, puis à identifier la densité dans l'intégrale résultante.
+\item Écrivons l'espérance de $h(Y)$ de deux manières différentes :
+\end{enumerate}
+\begin{itemize}
+\item D'une part, par définition de la densité de $Y$ (que l'on cherche à déterminer) :
+\end{itemize}
+     $$\mathbb{E}[h(Y)] = \int_{-\infty}^{+\infty} h(y) f_Y(y) dy$$
+\begin{itemize}
+\item D'autre part, en utilisant le théorème de transfert (puisque $Y = e^X$) avec la densité connue de $X$ :
+\end{itemize}
+     $$\mathbb{E}[h(Y)] = \mathbb{E}[h(e^X)] = \int_{-\infty}^{+\infty} h(e^x) f_X(x) dx$$
+\begin{enumerate}
+\item Notre objectif est de transformer la seconde intégrale pour qu'elle prenne la forme de la première. Pour cela, nous effectuons le changement de variable $y = e^x$.
+\end{enumerate}
+\begin{itemize}
+\item Bijection : L'application $x \mapsto e^x$ est un difféomorphisme strictement croissant de $\mathbb{R}$ vers $]0, +\infty[$. Le changement de variable est donc parfaitement justifié.
+\item Inverse : $x = \ln(y)$.
+\item Différentielle : $dy = e^x dx = y dx$, ce qui implique que $dx = \frac{dy}{y}$.
+\item Bornes d'intégration : Lorsque $x \to -\infty$, $y \to 0$. Lorsque $x \to +\infty$, $y \to +\infty$.
+\end{itemize}
+\begin{enumerate}
+\item Appliquons ce changement de variable à l'intégrale issue du théorème de transfert :
+\end{enumerate}
+   $$\mathbb{E}[h(Y)] = \int_{0}^{+\infty} h(y) f_X(\ln(y)) \frac{dy}{y}$$
+\begin{enumerate}
+\item Afin de pouvoir identifier la densité $f_Y(y)$ sur tout $\mathbb{R}$, nous prolongeons l'intégrale sur $\mathbb{R}$ en utilisant la fonction indicatrice $\mathbf{1}_{]0, +\infty[}(y)$ :
+\end{enumerate}
+   $$\mathbb{E}[h(Y)] = \int_{-\infty}^{+\infty} h(y) \left( f_X(\ln(y)) \frac{1}{y} \mathbf{1}_{]0, +\infty[}(y) \right) dy$$
+\begin{enumerate}
+\item Identifions maintenant les deux expressions de $\mathbb{E}[h(Y)]$. L'égalité doit être vraie pour toute fonction test $h$ mesurable bornée :
+\end{enumerate}
+   $$\int_{-\infty}^{+\infty} h(y) f_Y(y) dy = \int_{-\infty}^{+\infty} h(y) \left( \frac{1}{y} f_X(\ln(y)) \mathbf{1}_{]0, +\infty[}(y) \right) dy$$
+   Cela implique que les fonctions intégrées contre $h(y)$ sont presque partout égales.
+\begin{enumerate}
+\item Conclusion : La densité de probabilité de la variable aléatoire $Y = e^X$ est :
+\end{enumerate}
+   $$f_Y(y) = \frac{1}{y} f_X(\ln y) \mathbf{1}_{]0, +\infty[}(y)$$
+   Cette méthode, fondée sur la théorie de la mesure, est extrêmement puissante et évite de passer par le calcul de la fonction de répartition, ce qui est particulièrement avantageux en dimension supérieure.
+
+
+\subsection*{Simulation d'une loi par la méthode de la transformée inverse  \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+\textbf{Énoncé :}
+Soit $X$ une variable aléatoire dont la loi est définie par la fonction de répartition continue et strictement croissante sur son support :
+$$F_X(x) = \begin{cases} 0 \& \text{si } x < 1 \\ 1 - \frac{1}{x^3} \& \text{si } x \geq 1 \end{cases}$$
+Soit $U$ une variable aléatoire suivant la loi uniforme sur l'intervalle $]0, 1[$.
+Montrer que la variable aléatoire définie par $Y = F_X^{-1}(U)$ suit la même loi que $X$, et expliciter la fonction $F_X^{-1}$.
+
+\textbf{Correction Explicative :}
+\begin{enumerate}
+\item La méthode de la transformée inverse est un résultat fondamental permettant de générer n'importe quelle loi de probabilité continue à partir d'une source d'aléa uniforme.
+\item Démontrons d'abord le résultat théorique général. Soit $F_Y$ la fonction de répartition de $Y = F_X^{-1}(U)$. Par définition :
+\end{enumerate}
+   $F_Y(y) = \mathbb{P}(Y \leq y) = \mathbb{P}(F_X^{-1}(U) \leq y)$.
+\begin{enumerate}
+\item Puisque $F_X$ est une fonction de répartition, elle est par nature croissante. Par hypothèse, elle est strictement croissante sur son support, ce qui garantit l'existence de son inverse $F_X^{-1}$, qui est également strictement croissante. Nous pouvons donc appliquer la fonction $F_X$ de part et d'autre de l'inégalité sans en changer le sens :
+\end{enumerate}
+   $\mathbb{P}(F_X^{-1}(U) \leq y) = \mathbb{P}(F_X(F_X^{-1}(U)) \leq F_X(y)) = \mathbb{P}(U \leq F_X(y))$.
+\begin{enumerate}
+\item Or, $U$ suit une loi uniforme $\mathcal{U}(]0, 1[)$. La fonction de répartition d'une variable uniforme standard, notée $F_U(u)$, vaut exactement $u$ pour tout $u \in ]0, 1[$.
+\end{enumerate}
+   Étant donné que $F_X(y)$ est une probabilité, sa valeur est toujours comprise dans $[0, 1]$. On a donc :
+   $\mathbb{P}(U \leq F_X(y)) = F_U(F_X(y)) = F_X(y)$.
+   Ainsi, $F_Y(y) = F_X(y)$ pour tout $y \in \mathbb{R}$. Les variables $Y$ et $X$ ont la même fonction de répartition, elles suivent donc la même loi. Le théorème est démontré.
+\begin{enumerate}
+\item Procédons maintenant au calcul explicite de l'application mesurable $F_X^{-1}$ pour la loi spécifique donnée dans l'énoncé (qui est une loi de Pareto).
+\end{enumerate}
+   Nous devons résoudre l'équation $u = F_X(x)$ pour trouver $x$ en fonction de $u \in ]0, 1[$.
+   $$u = 1 - \frac{1}{x^3}$$
+\begin{enumerate}
+\item Isolons $x$ algébriquement :
+\end{enumerate}
+   $$\frac{1}{x^3} = 1 - u$$
+   $$x^3 = \frac{1}{1 - u}$$
+   Puisque $x \geq 1$ et $u \in ]0, 1[$, on peut extraire la racine cubique :
+   $$x = \left(\frac{1}{1 - u}\right)^{1/3} = (1 - u)^{-1/3}$$
+\begin{enumerate}
+\item Conclusion : L'application mesurable recherchée est $F_X^{-1}(u) = (1 - u)^{-1/3}$. Ainsi, la variable aléatoire $Y = (1 - U)^{-1/3}$ a exactement la même loi que $X$. Notons au passage que puisque $U$ et $1-U$ ont la même loi uniforme sur $]0, 1[$, on pourrait tout aussi bien utiliser la transformation plus simple $Y = U^{-1/3}$ en pratique informatique.
+\end{enumerate}
+
+
+\subsection*{Vecteur aléatoire et loi marginale  \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+\textbf{Énoncé :}
+Un vecteur aléatoire continu $(X, Y)$ admet pour densité conjointe :
+$$f_{X,Y}(x, y) = c \cdot (x^2 + \frac{xy}{2}) \mathbf{1}_{[0, 1]}(x) \mathbf{1}_{[0, 2]}(y)$$
+où $c$ est une constante réelle de normalisation.
+\begin{enumerate}
+\item Déterminer la valeur exacte de la constante $c$.
+\item Déterminer la densité marginale de la variable aléatoire $X$, notée $f_X(x)$.
+\end{enumerate}
+
+\textbf{Correction Explicative :}
+\begin{enumerate}
+\item Pour qu'une fonction soit une densité de probabilité conjointe, elle doit être positive et son intégrale sur l'espace tout entier $\mathbb{R}^2$ doit être égale à $1$. Cette condition axiomatique permet de déterminer la constante de normalisation $c$.
+\end{enumerate}
+   $$1 = \iint_{\mathbb{R}^2} f_{X,Y}(x, y) dx dy = \int_{0}^{1} \int_{0}^{2} c \left(x^2 + \frac{xy}{2}\right) dy dx$$
+\begin{enumerate}
+\item Calculons l'intégrale double en intégrant d'abord par rapport à $y$, en considérant $x$ comme une constante :
+\end{enumerate}
+   $$\int_{0}^{2} \left(x^2 + \frac{xy}{2}\right) dy = \left[ x^2 y + \frac{x y^2}{4} \right]_{y=0}^{y=2}$$
+   $$= \left( x^2(2) + \frac{x(2^2)}{4} \right) - (0 + 0) = 2x^2 + \frac{4x}{4} = 2x^2 + x$$
+\begin{enumerate}
+\item Intégrons ensuite le résultat obtenu par rapport à $x$ sur son domaine d'intégration $[0, 1]$ :
+\end{enumerate}
+   $$\int_{0}^{1} (2x^2 + x) dx = \left[ 2\frac{x^3}{3} + \frac{x^2}{2} \right]_0^1 = \left( \frac{2}{3} + \frac{1}{2} \right) - 0 = \frac{4}{6} + \frac{3}{6} = \frac{7}{6}$$
+\begin{enumerate}
+\item Nous pouvons alors déterminer $c$ :
+\end{enumerate}
+   $$1 = c \times \frac{7}{6} \implies c = \frac{6}{7}$$
+   La densité conjointe est donc $f_{X,Y}(x, y) = \frac{6}{7} (x^2 + \frac{xy}{2}) \mathbf{1}_{[0, 1]}(x) \mathbf{1}_{[0, 2]}(y)$.
+\begin{enumerate}
+\item La densité marginale de $X$ s'obtient en "marginalisant", c'est-à-dire en intégrant la densité conjointe sur toutes les valeurs possibles de la variable $Y$. L'idée géométrique est de projeter la masse de probabilité sur l'axe des $X$.
+\end{enumerate}
+   $$f_X(x) = \int_{-\infty}^{+\infty} f_{X,Y}(x, y) dy$$
+\begin{enumerate}
+\item D'après l'indicatrice $\mathbf{1}_{[0, 1]}(x)$, on voit que $f_X(x) = 0$ si $x \notin [0, 1]$.
+\end{enumerate}
+   Supposons $x \in [0, 1]$. L'intégration porte uniquement sur le support de $Y$, c'est-à-dire l'intervalle $[0, 2]$. Nous avons déjà calculé cette intégrale à l'étape 2, à la constante $c$ près :
+   $$f_X(x) = \int_{0}^{2} \frac{6}{7} \left(x^2 + \frac{xy}{2}\right) dy = \frac{6}{7} \left(2x^2 + x\right)$$
+\begin{enumerate}
+\item Conclusion : La densité marginale de la variable aléatoire $X$ est donnée par :
+\end{enumerate}
+   $$f_X(x) = \frac{6}{7}(2x^2 + x) \mathbf{1}_{[0, 1]}(x)$$
+   On peut aisément vérifier que son intégrale sur $[0, 1]$ vaut bien $1$, confirmant sa validité en tant que densité de probabilité.
+
+
+\subsection*{Mesurabilité du supremum d'une suite de V.A.R.  \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+\textbf{Énoncé :}
+Soit $(X_n)_{n \in \mathbb{N}}$ une suite dénombrable de variables aléatoires réelles définies sur le même espace de probabilité $(\Omega, \mathcal{F}, \mathbb{P})$.
+On définit la fonction $Y : \Omega \to \overline{\mathbb{R}}$ par $Y(\omega) = \sup_{n \in \mathbb{N}} X_n(\omega)$.
+Démontrer que $Y$ est une variable aléatoire mesurable (à valeurs dans la droite achevée $\overline{\mathbb{R}}$).
+
+\textbf{Correction Explicative :}
+\begin{enumerate}
+\item Il s'agit d'un résultat fondamental d'analyse fonctionnelle qui garantit que les opérations limites préservent la mesurabilité, ce qui est crucial pour définir des concepts tels que la convergence presque sûre. L'espace d'arrivée est ici la droite achevée $\overline{\mathbb{R}} = \mathbb{R} \cup \{-\infty, +\infty\}$, munie de sa tribu borélienne engendrée par les intervalles de la forme $[-\infty, a[$.
+\item Pour démontrer que la fonction $Y$ est mesurable, nous devons prouver que pour tout réel $a$, l'ensemble image réciproque $A_a = \{ \omega \in \Omega \mid Y(\omega) \leq a \}$ appartient à la tribu $\mathcal{F}$. L'utilisation de l'inégalité large est pertinente ici pour manipuler le supremum.
+\item Rédigeons l'équivalence logique fondamentale liant le supremum à une borne supérieure. Le supremum d'un ensemble de valeurs réelles $(X_n(\omega))_{n \in \mathbb{N}}$ est inférieur ou égal à un nombre $a$ si et seulement si \textit{toutes} les valeurs individuelles sont inférieures ou égales à $a$.
+\end{enumerate}
+   En termes mathématiques rigoureux :
+   $$\sup_{n \in \mathbb{N}} X_n(\omega) \leq a \iff \forall n \in \mathbb{N}, \quad X_n(\omega) \leq a$$
+\begin{enumerate}
+\item Cette équivalence logique nous permet de traduire la condition sur la variable limite $Y$ en une intersection infinie dénombrable de conditions portant sur les variables individuelles $X_n$.
+\end{enumerate}
+   En termes ensemblistes, l'événement $A_a$ peut s'écrire comme l'intersection des événements individuels :
+   $$A_a = \{ \omega \in \Omega \mid Y(\omega) \leq a \} = \bigcap_{n \in \mathbb{N}} \{ \omega \in \Omega \mid X_n(\omega) \leq a \}$$
+\begin{enumerate}
+\item Vérifions l'appartenance à la tribu $\mathcal{F}$ pas-à-pas :
+\end{enumerate}
+\begin{itemize}
+\item Par hypothèse, pour chaque indice $n \in \mathbb{N}$, la fonction $X_n$ est une variable aléatoire réelle.
+\item Par conséquent, la définition de la mesurabilité implique que pour tout réel $a$, l'ensemble de sous-niveau $E_{n,a} = \{ \omega \in \Omega \mid X_n(\omega) \leq a \}$ appartient à la tribu $\mathcal{F}$.
+\item L'ensemble $A_a$ est l'intersection dénombrable de ces ensembles $E_{n,a}$ pour $n \in \mathbb{N}$.
+\item Par définition axiomatique, une tribu (ou $\sigma$-algèbre) est stable par complémentation et par union dénombrable. Par les lois de De Morgan, il en découle qu'elle est nécessairement stable par intersection dénombrable.
+\item Puisque chaque $E_{n,a} \in \mathcal{F}$, leur intersection dénombrable l'est également : $A_a = \bigcap_{n \in \mathbb{N}} E_{n,a} \in \mathcal{F}$.
+\end{itemize}
+\begin{enumerate}
+\item Conclusion : Pour tout réel $a$, $\{ Y \leq a \} \in \mathcal{F}$. Ceci démontre de manière exhaustive et rigoureuse que le supremum d'une suite de variables aléatoires est une variable aléatoire mesurable (à valeurs dans $\overline{\mathbb{R}}$). Un raisonnement analogue s'applique pour l'infimum (en considérant $\{ \inf X_n \geq a \}$), ainsi que pour les limites supérieure ($\limsup$) et inférieure ($\liminf$).
+\end{enumerate}
+
+
+\subsection*{Loi de la distance minimale au centre  \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+\textbf{Énoncé :}
+Un tireur à l'arc lance une flèche sur une cible circulaire de rayon $R$. On suppose que le point d'impact suit une loi uniforme sur l'aire de la cible.
+Soit $D$ la variable aléatoire représentant la distance entre le point d'impact et le centre de la cible.
+Déterminer la fonction de répartition puis la densité de probabilité de la variable $D$.
+
+\textbf{Correction Explicative :}
+\begin{enumerate}
+\item Modélisation géométrique : Soit $\Omega$ le disque de centre $(0,0)$ et de rayon $R$ dans le plan $\mathbb{R}^2$.
+\end{enumerate}
+   L'aire totale de la cible est $Area(\Omega) = \pi R^2$.
+   Le tir étant uniforme, la probabilité que le point d'impact $(X, Y)$ tombe dans une région mesurable $A \subset \Omega$ est proportionnelle à l'aire de cette région. La mesure de probabilité géométrique est définie par :
+   $$\mathbb{P}((X, Y) \in A) = \frac{Area(A)}{Area(\Omega)} = \frac{Area(A)}{\pi R^2}$$
+\begin{enumerate}
+\item Définition de la variable aléatoire : La distance au centre est donnée par $D = \sqrt{X^2 + Y^2}$. Le support de la variable aléatoire $D$ est l'intervalle $[0, R]$, puisqu'aucune flèche ne frappe en dehors de la cible.
+\item Calculons la fonction de répartition $F_D(x) = \mathbb{P}(D \leq x)$ :
+\end{enumerate}
+\begin{itemize}
+\item Si $x < 0$, la distance ne peut être négative, l'événement est impossible, donc $F_D(x) = 0$.
+\item Si $x > R$, la flèche tombe toujours à une distance inférieure à $R$, l'événement est certain, donc $F_D(x) = 1$.
+\item Considérons le cas intéressant où $0 \leq x \leq R$.
+\end{itemize}
+     L'événement $\{D \leq x\}$ signifie que le point d'impact se trouve dans un disque concentrique de rayon $x$.
+     L'aire de cet événement, noté $Disque(0, x)$, est $\pi x^2$.
+     En appliquant la loi géométrique uniforme :
+     $$F_D(x) = \mathbb{P}(D \leq x) = \frac{Area(Disque(0, x))}{Area(\Omega)} = \frac{\pi x^2}{\pi R^2} = \frac{x^2}{R^2}$$
+\begin{enumerate}
+\item Synthèse de la fonction de répartition :
+\end{enumerate}
+   $$F_D(x) = \begin{cases}
+   0 \& \text{si } x < 0 \\
+   \left(\frac{x}{R}\right)^2 \& \text{si } 0 \leq x \leq R \\
+   1 \& \text{si } x > R
+   \end{cases}$$
+   Nous constatons que la fonction $F_D$ est continue sur tout $\mathbb{R}$ et dérivable sur $\mathbb{R}$ sauf éventuellement en $0$ et en $R$.
+\begin{enumerate}
+\item Calculons la densité de probabilité $f_D(x)$ par dérivation de la fonction de répartition :
+\end{enumerate}
+\begin{itemize}
+\item Pour $x < 0$ et $x > R$, la dérivée est nulle.
+\item Pour $x \in ]0, R[$, nous dérivons $F_D(x) = \frac{x^2}{R^2}$ par rapport à $x$ :
+\end{itemize}
+     $$f_D(x) = \frac{d}{dx} \left( \frac{x^2}{R^2} \right) = \frac{2x}{R^2}$$
+\begin{enumerate}
+\item Conclusion : La densité de probabilité de la distance $D$ est donnée par :
+\end{enumerate}
+   $$f_D(x) = \frac{2x}{R^2} \mathbf{1}_{[0, R]}(x)$$
+   On observe une propriété fascinante : la densité n'est pas constante. Elle est nulle au centre ($x=0$) et maximale sur le bord de la cible ($x=R$). Il est géométriquement beaucoup plus probable de tomber loin du centre car l'aire de la couronne circulaire "extérieure" est infiniment plus grande que l'aire près du centre.
+
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{Simulation d'une variable aléatoire discrète simple}
+\textbf{Objectif :} Implémenter en Python pur un simulateur pour une variable aléatoire discrète à partir d'un générateur de nombres uniformes entre 0 et 1, sans utiliser de bibliothèques statistiques de haut niveau.
+
+\begin{lstlisting}
+import random
+
+def simulate_discrete_rv(support, probabilities):
+    '''
+    Simule une variable aleatoire discrete.
+    support: liste des valeurs possibles
+    probabilities: probabilites associees a chaque valeur
+    '''
+    assert len(support) == len(probabilities), "Tailles discordantes"
+    assert abs(sum(probabilities) - 1.0) < 1e-9, "La somme des probabilites doit valoir 1"
+
+    # Generation d'un nombre uniforme dans [0, 1)
+    u = random.random()
+
+    # Methode de la transformee inverse pour les variables discretes
+    cumulative_prob = 0.0
+    for i in range(len(support)):
+        cumulative_prob += probabilities[i]
+        if u <= cumulative_prob:
+            return support[i]
+    return support[-1] # Securite pour eviter les erreurs d'arrondi
+
+# Test de la fonction
+support_X = [-1, 0, 2]
+probs_X = [0.2, 0.5, 0.3]
+
+# Simulation empirique (Loi des grands nombres)
+n_simulations = 100000
+counts = {-1: 0, 0: 0, 2: 0}
+
+for _ in range(n_simulations):
+    val = simulate_discrete_rv(support_X, probs_X)
+    counts[val] += 1
+
+# Affichage des probabilites empiriques
+print("Probabilites theoriques : ", probs_X)
+print("Probabilites empiriques : ", [counts[v] / n_simulations for v in support_X])
+\end{lstlisting}
+
+
+\subsection*{Transformation d'une loi continue}
+\textbf{Objectif :} Vérifier numériquement la transformation géométrique d'une loi de probabilité continue. Si $X \sim U([-1, 1])$, alors la densité de $Y = X^2$ est proportionnelle à $1 / (2\sqrt{y})$.
+
+\begin{lstlisting}
+import random
+import math
+
+def simulate_Y_from_X(n_samples):
+    '''
+    Simule n echantillons de Y = X**2 ou X est U(-1, 1)
+    '''
+    samples_Y = []
+    for _ in range(n_samples):
+        # Tirage de X uniforme dans [-1, 1)
+        x = random.uniform(-1, 1)
+        # Transformation mesurable Y = X**2
+        y = x * x
+        samples_Y.append(y)
+    return samples_Y
+
+# Parametres
+n = 100000
+samples = simulate_Y_from_X(n)
+
+# Estimation empirique de P(Y <= 0.25)
+# Theoriquement : P(X**2 <= 0.25) = P(-0.5 <= X <= 0.5) = 1/2
+count_condition = sum(1 for y in samples if y <= 0.25)
+empirical_prob = count_condition / n
+
+print("Probabilite empirique P(Y <= 0.25) :", empirical_prob)
+print("Probabilite theorique P(Y <= 0.25) : 0.5")
+assert abs(empirical_prob - 0.5) < 0.01, "Erreur de simulation"
+\end{lstlisting}
+
+
+\subsection*{Méthode de la transformée inverse (Loi Exponentielle)}
+\textbf{Objectif :} Implémenter la méthode de la transformée inverse $F_X^{-1}(U)$ pour générer une variable aléatoire suivant une loi exponentielle de paramètre $\lambda = 2.0$.
+
+\begin{lstlisting}
+import random
+import math
+
+def generate_exponential(lam, n_samples):
+    '''
+    Genere n_samples issus d'une loi exponentielle de parametre lam.
+    Methode: X = - (1 / lam) * ln(1 - U)
+    '''
+    samples = []
+    for _ in range(n_samples):
+        u = random.random()
+        # On utilise 1-u pour eviter ln(0), et 1-U a meme loi que U
+        x = - (1.0 / lam) * math.log(1.0 - u)
+        samples.append(x)
+    return samples
+
+# Generation de 100 000 echantillons
+lam = 2.0
+n = 100000
+samples_exp = generate_exponential(lam, n)
+
+# Calcul de l'esperance empirique
+empirical_mean = sum(samples_exp) / n
+
+# L'esperance theorique d'une loi exponentielle est 1 / lambda
+theoretical_mean = 1.0 / lam
+
+print("Esperance empirique :", empirical_mean)
+print("Esperance theorique :", theoretical_mean)
+assert abs(empirical_mean - theoretical_mean) < 0.01, "Convergence lente ou erreur"
+\end{lstlisting}
+
+
+\subsection*{Somme de variables aléatoires (Convolution discrète)}
+\textbf{Objectif :} Calculer la loi de la somme de deux variables aléatoires discrètes indépendantes (lancer de deux dés) par calcul explicite de l'image réciproque.
+
+\begin{lstlisting}
+def sum_of_two_dice():
+    '''
+    Calcule la loi exacte de S = X1 + X2 ou X1, X2 sont des des equilibrés a 6 faces.
+    '''
+    omega_X1 = [1, 2, 3, 4, 5, 6]
+    omega_X2 = [1, 2, 3, 4, 5, 6]
+
+    # Dictionnaire pour stocker le nombre d'occurrences de chaque somme
+    sum_counts = {}
+    total_outcomes = len(omega_X1) * len(omega_X2)
+
+    # Parcours exhaustif de l'univers conjoint Omega_X1 x Omega_X2
+    for x1 in omega_X1:
+        for x2 in omega_X2:
+            s = x1 + x2
+            if s in sum_counts:
+                sum_counts[s] += 1
+            else:
+                sum_counts[s] = 1
+
+    # Conversion en probabilites
+    prob_dist = {}
+    for s, count in sum_counts.items():
+        prob_dist[s] = count / total_outcomes
+
+    return prob_dist
+
+loi_somme = sum_of_two_dice()
+
+print("Valeurs possibles de S (support) :", sorted(loi_somme.keys()))
+print("Probabilite P(S = 7) :", loi_somme[7])
+print("Probabilite P(S = 2) :", loi_somme[2])
+
+# Verification que c'est une mesure de probabilites valide
+assert abs(sum(loi_somme.values()) - 1.0) < 1e-9, "Erreur de normalisation"
+\end{lstlisting}
+
+
+\subsection*{Vérification empirique de l'indépendance et loi marginale}
+\textbf{Objectif :} Générer des points dans un disque (vecteur aléatoire continu $X, Y$) et estimer empiriquement la loi marginale de la distance au centre, comme étudié dans l'exercice 10.
+
+\begin{lstlisting}
+import random
+import math
+
+def generate_point_in_disk(R):
+    '''
+    Genere uniformement un point (X, Y) dans un disque de rayon R.
+    Methode de rejet.
+    '''
+    while True:
+        # Generer dans le carre [-R, R] x [-R, R]
+        x = random.uniform(-R, R)
+        y = random.uniform(-R, R)
+        # Accepter si dans le disque
+        if x*x + y*y <= R*R:
+            return x, y
+
+def simulate_distance_to_center(R, n_samples):
+    distances = []
+    for _ in range(n_samples):
+        x, y = generate_point_in_disk(R)
+        d = math.sqrt(x*x + y*y)
+        distances.append(d)
+    return distances
+
+# Parametres
+R = 1.0
+n = 100000
+samples_D = simulate_distance_to_center(R, n)
+
+# Nous voulons verifier la fonction de repartition : F_D(d) = (d/R)**2
+# Estimons P(D <= 0.5 * R)
+threshold = 0.5 * R
+count = sum(1 for d in samples_D if d <= threshold)
+empirical_F_05 = count / n
+
+theoretical_F_05 = (threshold / R) ** 2
+
+print("Estimation de F_D(0.5 * R) :", empirical_F_05)
+print("Valeur theorique F_D(0.5 * R) :", theoretical_F_05)
+assert abs(empirical_F_05 - theoretical_F_05) < 0.01, "Ecart trop grand"
+\end{lstlisting}
+
+
+
+
+\end{document}
