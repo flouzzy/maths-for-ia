@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-10-07] : [Upsert/Création] du Jalon 86 - Variables aléatoires vues comme des applications mesurables. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-14] : [Upsert/Création] du Jalon 71 - Théorèmes de Fubini-Tonelli. Status: Terminé.
 - [2026-09-14] : [Upsert/Création] du Jalon 70 - Espaces mesurés produits. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-11] : [Upsert/Création] du Jalon 68 - Lemme de Fatou et définition de l'intégrale pour les fonctions de signe quelconque. Status: Terminé.
