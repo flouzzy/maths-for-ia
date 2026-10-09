@@ -1,38 +1,30 @@
-# Exercice 7
+# Exercice 7 : Loi Log-Normale \quad $\bigstar\bigstar\bigstar\bigstar\star$
 
-## Exercice 7 : Loi d'une transformation affine $\bigstar\bigstar\bigstar\bigstar\star$
+## Énoncé
 
-Soit $X$ une variable aléatoire de densité de probabilité $f_X$ (par rapport à la mesure de Lebesgue sur $\mathbb{R}$).
-Soient $a \neq 0$ et $b$ deux constantes réelles. On définit la nouvelle variable aléatoire $Y = aX + b$.
-Déterminer la fonction de densité $f_Y$ de la variable $Y$ en utilisant la fonction de répartition.
+Soit $X$ une variable aléatoire de loi normale $\mathcal{N}(\mu, \sigma^2)$ avec $\sigma > 0$.
+Soit $Y = e^X$.
+Déterminer la densité de probabilité de $Y$. Cette loi est appelée loi Log-Normale.
 
-### Correction pas à pas
+## Correction
 
-1. **Définition de la fonction de répartition de $Y$**
-   La fonction de répartition $F_Y(y)$ est définie par :
-   $F_Y(y) = \mathbb{P}(Y \leq y) = \mathbb{P}(aX + b \leq y)$.
+La densité de probabilité de la variable normale $X$ est :
+$$ f_X(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}} $$
+La variable $Y = e^X$ ne prend que des valeurs strictement positives.
+Pour $y \leq 0$, l'événement $\{Y \leq y\}$ est impossible (probabilité nulle), donc la fonction de répartition de $Y$ vérifie $F_Y(y) = 0$, ce qui implique que la densité $f_Y(y) = 0$ pour $y \leq 0$.
 
-2. **Séparation des cas selon le signe de $a$**
-   - **Cas 1 : $a > 0$**
-     L'inégalité $aX + b \leq y$ équivaut à $X \leq \frac{y - b}{a}$.
-     Donc, $F_Y(y) = \mathbb{P}\left(X \leq \frac{y - b}{a}\right) = F_X\left(\frac{y - b}{a}\right)$.
+Soit $y > 0$. La fonction de répartition de $Y$ s'écrit :
+$$ F_Y(y) = \mathbb{P}(Y \leq y) = \mathbb{P}(e^X \leq y) $$
+Comme la fonction logarithme népérien est strictement croissante sur $]0, +\infty[$, on peut appliquer le logarithme aux deux membres de l'inégalité en préservant son sens :
+$$ F_Y(y) = \mathbb{P}(X \leq \ln(y)) $$
+Par définition de la fonction de répartition de $X$, cela s'écrit :
+$$ F_Y(y) = F_X(\ln(y)) $$
 
-   - **Cas 2 : $a < 0$**
-     L'inégalité $aX + b \leq y$ équivaut (en divisant par $a < 0$, le sens change) à $X \geq \frac{y - b}{a}$.
-     Donc, $F_Y(y) = \mathbb{P}\left(X \geq \frac{y - b}{a}\right) = 1 - \mathbb{P}\left(X < \frac{y - b}{a}\right)$.
-     Comme $X$ est une variable continue (elle a une densité), $\mathbb{P}(X = c) = 0$, donc $\mathbb{P}(X < c) = \mathbb{P}(X \leq c) = F_X(c)$.
-     Ainsi, $F_Y(y) = 1 - F_X\left(\frac{y - b}{a}\right)$.
+Pour obtenir la densité $f_Y$ de la variable $Y$, il suffit de dériver $F_Y(y)$ par rapport à $y$ sur $]0, +\infty[$. En utilisant la règle de dérivation en chaîne $(g \circ h)' = (g' \circ h) \cdot h'$, et sachant que $F_X'(x) = f_X(x)$, nous obtenons :
+$$ f_Y(y) = \frac{d}{dy} F_X(\ln(y)) = f_X(\ln(y)) \cdot \frac{d}{dy}(\ln(y)) = f_X(\ln(y)) \cdot \frac{1}{y} $$
 
-3. **Calcul de la densité par dérivation**
-   La densité $f_Y$ s'obtient en dérivant la fonction de répartition $F_Y$ par rapport à $y$.
-   Rappel : $F_X'(x) = f_X(x)$.
-   - **Si $a > 0$ :**
-     $$ f_Y(y) = \frac{d}{dy} F_X\left(\frac{y - b}{a}\right) = \frac{1}{a} f_X\left(\frac{y - b}{a}\right) $$
-   - **Si $a < 0$ :**
-     $$ f_Y(y) = \frac{d}{dy} \left[ 1 - F_X\left(\frac{y - b}{a}\right) \right] = -\frac{1}{a} f_X\left(\frac{y - b}{a}\right) $$
+Il ne reste plus qu'à substituer l'expression de la densité normale $f_X$ évaluée au point $\ln(y)$ :
+$$ f_Y(y) = \frac{1}{y} \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(\ln(y) - \mu)^2}{2\sigma^2}} = \frac{1}{y\sigma\sqrt{2\pi}} e^{-\frac{(\ln(y) - \mu)^2}{2\sigma^2}} $$
 
-4. **Synthèse de la formule**
-   Puisque dans le deuxième cas $a < 0$, le terme $-1/a$ est positif et correspond à $1/|a|$.
-   Dans les deux cas, on peut écrire :
-   $$ f_Y(y) = \frac{1}{|a|} f_X\left(\frac{y - b}{a}\right) $$
-   C'est la formule classique du changement de variable affine pour les densités.
+Conclusion, la densité de la loi Log-Normale est :
+$$ f_Y(y) = \begin{cases} \frac{1}{y\sigma\sqrt{2\pi}} e^{-\frac{(\ln(y) - \mu)^2}{2\sigma^2}} & \text{si } y > 0 \\ 0 & \text{si } y \leq 0 \end{cases} $$ $\blacksquare$

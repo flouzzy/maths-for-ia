@@ -1,35 +1,29 @@
-# Exercice 3
+# Exercice 3 : Loi uniforme et transformation affine \quad $\bigstar\bigstar\star\star\star$
 
-## Exercice 3 : Tribu engendrée par une variable aléatoire $\bigstar\bigstar\star\star\star$
+## Énoncé
 
-Soit $X : (\Omega, \mathcal{F}) \to (\mathbb{R}, \mathcal{B}(\mathbb{R}))$ une variable aléatoire.
-On note $\sigma(X) = \{ X^{-1}(B) \mid B \in \mathcal{B}(\mathbb{R}) \}$ la classe des événements engendrés par $X$.
-Démontrer rigoureusement que $\sigma(X)$ est une tribu sur $\Omega$, et que c'est la plus petite tribu qui rende $X$ mesurable.
+Soit $X$ une variable aléatoire de loi uniforme sur le segment $[a, b]$, avec $a < b$.
+Soit $Y = cX + d$, où $c > 0$ et $d \in \mathbb{R}$.
+Démontrer que $Y$ suit une loi uniforme sur un intervalle à déterminer.
 
-### Correction pas à pas
+## Correction
 
-1. **$\sigma(X)$ contient l'ensemble vide**
-   Prenons l'ensemble vide dans l'espace d'arrivée : $\emptyset \in \mathcal{B}(\mathbb{R})$.
-   $X^{-1}(\emptyset) = \{ \omega \in \Omega \mid X(\omega) \in \emptyset \} = \emptyset$.
-   Donc $\emptyset \in \sigma(X)$.
+La variable aléatoire $X$ suit une loi uniforme sur $[a, b]$. Sa densité de probabilité est donnée par :
+$$ f_X(x) = \begin{cases} \frac{1}{b - a} & \text{si } x \in [a, b] \\ 0 & \text{sinon} \end{cases} $$
+La fonction de répartition de $X$ pour $x \in [a,b]$ est $F_X(x) = \int_a^x \frac{1}{b-a} dt = \frac{x-a}{b-a}$.
 
-2. **$\sigma(X)$ est stable par passage au complémentaire**
-   Soit $A \in \sigma(X)$. Par définition, il existe un borélien $B \in \mathcal{B}(\mathbb{R})$ tel que $A = X^{-1}(B)$.
-   Considérons le complémentaire de $A$ :
-   $A^c = (X^{-1}(B))^c = \{ \omega \mid X(\omega) \in B \}^c = \{ \omega \mid X(\omega) \notin B \}$.
-   Ceci s'écrit encore : $A^c = \{ \omega \mid X(\omega) \in B^c \} = X^{-1}(B^c)$.
-   Comme $\mathcal{B}(\mathbb{R})$ est une tribu, $B^c \in \mathcal{B}(\mathbb{R})$. Donc $A^c \in \sigma(X)$.
+Calculons la fonction de répartition de $Y$, notée $F_Y(y)$, pour $y \in \mathbb{R}$.
+Par définition :
+$$ F_Y(y) = \mathbb{P}(Y \leq y) = \mathbb{P}(cX + d \leq y) $$
+Puisque $c > 0$, l'inégalité est préservée lorsqu'on divise par $c$ :
+$$ F_Y(y) = \mathbb{P}\left(X \leq \frac{y - d}{c}\right) = F_X\left(\frac{y - d}{c}\right) $$
+Puisque $X \in [a, b]$ presque sûrement, les valeurs de $Y$ se trouvent dans le domaine où $a \leq \frac{y-d}{c} \leq b$, ce qui équivaut à $ac+d \leq y \leq bc+d$. Posons $\alpha = ac+d$ et $\beta = bc+d$.
 
-3. **$\sigma(X)$ est stable par union dénombrable**
-   Soit $(A_n)_{n \in \mathbb{N}}$ une suite d'éléments de $\sigma(X)$.
-   Pour chaque $n$, il existe $B_n \in \mathcal{B}(\mathbb{R})$ tel que $A_n = X^{-1}(B_n)$.
-   L'union s'écrit : $\bigcup_{n} A_n = \bigcup_{n} X^{-1}(B_n) = X^{-1}\left( \bigcup_{n} B_n \right)$.
-   Puisque $\mathcal{B}(\mathbb{R})$ est une tribu, $\bigcup_{n} B_n \in \mathcal{B}(\mathbb{R})$.
-   Donc $\bigcup_{n} A_n \in \sigma(X)$.
-   Ceci prouve que $\sigma(X)$ est une tribu sur $\Omega$.
+Étudions les cas pour $y$ :
+1. Si $y < \alpha$, alors $\frac{y - d}{c} < a$, donc $F_X\left(\frac{y - d}{c}\right) = 0$.
+2. Si $y > \beta$, alors $\frac{y - d}{c} > b$, donc $F_X\left(\frac{y - d}{c}\right) = 1$.
+3. Si $y \in [\alpha, \beta]$, alors :
+$$ F_Y(y) = \frac{\frac{y - d}{c} - a}{b - a} = \frac{y - d - ac}{c(b - a)} = \frac{y - (ac+d)}{(bc+d) - (ac+d)} = \frac{y - \alpha}{\beta - \alpha} $$
 
-4. **Minimalité**
-   Soit $\mathcal{G}$ une tribu sur $\Omega$ rendant $X$ mesurable.
-   Par définition de la mesurabilité, $\forall B \in \mathcal{B}(\mathbb{R})$, on doit avoir $X^{-1}(B) \in \mathcal{G}$.
-   Or, $\sigma(X)$ est précisément l'ensemble de tous les $X^{-1}(B)$.
-   Donc $\sigma(X) \subset \mathcal{G}$. $\sigma(X)$ est bien la plus petite tribu rendant $X$ mesurable.
+La fonction de répartition $F_Y(y)$ est de la forme $\frac{y-\alpha}{\beta-\alpha}$ sur l'intervalle $[\alpha, \beta]$, $0$ avant et $1$ après. Ceci est exactement la définition de la fonction de répartition d'une variable aléatoire de loi uniforme sur le segment $[\alpha, \beta]$.
+On conclut que $Y$ suit une loi uniforme sur $[ac+d, bc+d]$. $\blacksquare$

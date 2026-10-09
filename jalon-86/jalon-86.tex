@@ -1,0 +1,774 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ç}{{\c{c}}}1 {œ}{{\oe}}1 {ù}{{\`u}}1 {É}{{\'E}}1 {È}{{\`E}}1 {À}{{\`A}}1 {Ç}{{\c{C}}}1 {Œ}{{\OE}}1 {Ê}{{\^E}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1 {â}{{\^a}}1
+}
+
+\title{\Huge VARIABLES ALÉATOIRES ET APPLICATIONS MESURABLES \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+
+\section{Introduction (Genèse historique et physique)}
+Historiquement, la théorie des probabilités s'est développée autour de jeux de hasard (dés, cartes) où l'univers des possibles, noté $\Omega$, est un ensemble fini. Cependant, lorsqu'il s'agit de modéliser des phénomènes continus comme le mouvement brownien en physique, la durée de vie d'un composant électronique, ou les fluctuations d'un marché financier, l'univers $\Omega$ devient infini et complexe.
+Andrey Kolmogorov, en 1933, a posé les fondations axiomatiques modernes des probabilités. L'idée géniale a été de ne pas étudier l'univers $\Omega$ directement, mais de s'y intéresser par l'intermédiaire d'applications qui traduisent chaque événement abstrait $\omega \in \Omega$ en un nombre réel. Ce "traducteur" est appelé une \textbf{variable aléatoire}.
+Cependant, pour que la théorie reste cohérente, on ne peut pas accepter n'importe quelle application. Il est impératif que pour toute question naturelle que l'on se pose sur le résultat (par exemple, "le résultat est-il inférieur à $x$ ?"), la probabilité de cet événement puisse être calculée. C'est ici qu'intervient la notion de \textbf{mesurabilité}. Une variable aléatoire n'est donc rien d'autre qu'une application mesurable d'un espace de probabilité vers un espace mesurable, typiquement $\mathbb{R}$ muni de la tribu de Borel.
+
+\section{Définitions, Théorèmes et Exemples}
+
+Soit $(\Omega, \mathcal{F}, \mathbb{P})$ un espace de probabilité. L'ensemble $\Omega$ est l'univers, $\mathcal{F}$ est une tribu (ou $\sigma$-algèbre) sur $\Omega$ (les événements), et $\mathbb{P}$ est une mesure de probabilité.
+Soit $(E, \mathcal{E})$ un espace mesurable (l'espace d'arrivée). Le plus souvent, $E = \mathbb{R}$ et $\mathcal{E} = \mathcal{B}(\mathbb{R})$, la tribu de Borel.
+
+\textbf{Définition 1 (Variable aléatoire) :}
+Une application $X : \Omega \to E$ est appelée une variable aléatoire (ou application mesurable) à valeurs dans $E$, si pour tout ensemble mesurable $B \in \mathcal{E}$, l'image réciproque $X^{-1}(B)$ appartient à la tribu $\mathcal{F}$.
+Formellement :
+$$ \forall B \in \mathcal{E}, \quad X^{-1}(B) = \{ \omega \in \Omega \mid X(\omega) \in B \} \in \mathcal{F} $$
+Si $E = \mathbb{R}$ et $\mathcal{E} = \mathcal{B}(\mathbb{R})$, $X$ est une variable aléatoire réelle (v.a.r.).
+
+*Exemple 1 : Lancer de dé*
+Considérons le lancer d'un dé à 6 faces.
+- L'univers : $\Omega = \{1, 2, 3, 4, 5, 6\}$.
+- La tribu : $\mathcal{F} = \mathcal{P}(\Omega)$ (l'ensemble des parties de $\Omega$).
+- La variable aléatoire $X$ : Soit $X(\omega) = 1$ si $\omega$ est pair, et $X(\omega) = 0$ si $\omega$ est impair.
+- Espace d'arrivée : $E = \mathbb{R}$ avec la tribu de Borel $\mathcal{B}(\mathbb{R})$.
+Vérifions la mesurabilité : Prenons l'ensemble borélien $B = \{1\}$. Son image réciproque est $X^{-1}(\{1\}) = \{2, 4, 6\}$. Cet ensemble appartient bien à $\mathcal{F}$ puisque $\mathcal{F} = \mathcal{P}(\Omega)$. $X$ est donc bien une variable aléatoire.
+
+\textbf{Définition 2 (Loi d'une variable aléatoire) :}
+Si $X$ est une variable aléatoire de $(\Omega, \mathcal{F}, \mathbb{P})$ dans $(E, \mathcal{E})$, on définit la loi de $X$, notée $\mathbb{P}_X$, comme la mesure de probabilité sur $(E, \mathcal{E})$ donnée par la mesure image :
+$$ \forall B \in \mathcal{E}, \quad \mathbb{P}_X(B) = \mathbb{P}(X^{-1}(B)) = \mathbb{P}(\{\omega \in \Omega \mid X(\omega) \in B\}) $$
+On note souvent cela $\mathbb{P}(X \in B)$.
+
+*Exemple 2 : Calcul de loi*
+Reprenons l'exemple 1 avec un dé équilibré : $\mathbb{P}(\{\omega\}) = 1/6$ pour tout $\omega \in \Omega$.
+Calculons la loi de $X$. $X$ prend ses valeurs dans $\{0, 1\}$.
+- $\mathbb{P}_X(\{1\}) = \mathbb{P}(X = 1) = \mathbb{P}(\{2, 4, 6\}) = \frac{3}{6} = \frac{1}{2}$.
+- $\mathbb{P}_X(\{0\}) = \mathbb{P}(X = 0) = \mathbb{P}(\{1, 3, 5\}) = \frac{3}{6} = \frac{1}{2}$.
+$X$ suit donc une loi de Bernoulli de paramètre $p = 1/2$.
+
+\textbf{Théorème 1 (Caractérisation de la mesurabilité) :}
+Soit $\mathcal{E}$ la tribu engendrée par une famille de parties $\mathcal{C}$ de $E$, c'est-à-dire $\mathcal{E} = \sigma(\mathcal{C})$.
+Pour qu'une application $X : \Omega \to E$ soit mesurable (i.e. soit une variable aléatoire), il suffit que pour tout $C \in \mathcal{C}$, on ait $X^{-1}(C) \in \mathcal{F}$.
+
+*Exemple 3 : Variables aléatoires réelles*
+Pour $E = \mathbb{R}$, la tribu de Borel $\mathcal{B}(\mathbb{R})$ est engendrée par les intervalles de la forme $]-\infty, x]$ pour $x \in \mathbb{R}$.
+D'après le Théorème 1, $X : \Omega \to \mathbb{R}$ est une variable aléatoire réelle si et seulement si pour tout $x \in \mathbb{R}$, l'ensemble $\{ \omega \in \Omega \mid X(\omega) \leq x \}$ appartient à la tribu $\mathcal{F}$.
+
+\textbf{Définition 3 (Fonction de répartition) :}
+La loi d'une variable aléatoire réelle $X$ est entièrement caractérisée par sa fonction de répartition $F_X : \mathbb{R} \to [0, 1]$ définie par :
+$$ F_X(x) = \mathbb{P}_X(]-\infty, x]) = \mathbb{P}(X \leq x) $$
+
+*Exemple 4 : Fonction de répartition de la loi exponentielle*
+Soit $X$ une variable aléatoire suivant une loi exponentielle de paramètre $\lambda > 0$. Sa densité de probabilité est $f_X(t) = \lambda e^{-\lambda t} \mathbf{1}_{\{t \geq 0\}}$.
+Calculons sa fonction de répartition $F_X(x)$ pour $x \geq 0$ :
+$$ F_X(x) = \mathbb{P}(X \leq x) = \int_{-\infty}^{x} f_X(t) dt = \int_{0}^{x} \lambda e^{-\lambda t} dt = \left[ -e^{-\lambda t} \right]_0^x = 1 - e^{-\lambda x} $$
+Pour $x < 0$, $F_X(x) = 0$.
+
+*Exemple 5 : Transformation d'une variable aléatoire*
+Soit $U$ une variable aléatoire suivant une loi uniforme sur $[0, 1]$. Posons $X = -\frac{1}{\lambda} \ln(U)$, avec $\lambda > 0$.
+Montrons que $X$ suit une loi exponentielle de paramètre $\lambda$.
+Calculons la fonction de répartition de $X$. Puisque $U \in ]0, 1]$, $X$ prend ses valeurs dans $[0, +\infty[$.
+Pour $x \geq 0$ :
+$$ F_X(x) = \mathbb{P}(X \leq x) = \mathbb{P}\left(-\frac{1}{\lambda} \ln(U) \leq x\right) = \mathbb{P}(\ln(U) \geq -\lambda x) = \mathbb{P}(U \geq e^{-\lambda x}) $$
+Comme $U$ est uniforme sur $[0, 1]$, $\mathbb{P}(U \geq c) = 1 - c$ pour $c \in [0, 1]$.
+Ainsi, $F_X(x) = 1 - e^{-\lambda x}$. Ceci est exactement la fonction de répartition d'une loi exponentielle $\mathcal{E}(\lambda)$.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  % Espace Omega
+  \draw[fill=blue!10] (0,0) ellipse (1.5 and 1);
+  \node at (0, 0.7) {$\Omega$ (Univers abstrait)};
+
+  \filldraw[black] (-0.5, 0.2) circle (1pt) node[anchor=east] {$\omega_1$};
+  \filldraw[black] (0.5, -0.3) circle (1pt) node[anchor=west] {$\omega_2$};
+
+  % Flèches de X
+  \draw[->, thick, red] (-0.4, 0.2) .. controls (1, 1.5) and (3, 1) .. (4.4, 0.1);
+  \draw[->, thick, red] (0.6, -0.3) .. controls (2, -1) and (3, -0.5) .. (5.4, 0.1);
+  \node[red] at (2.5, 1) {$X$};
+
+  % Espace R (Droite réelle)
+  \draw[->, thick] (4,-0.5) -- (7,-0.5) node[right] {$\mathbb{R}$};
+  \draw (4.5,-0.6) -- (4.5,-0.4) node[above] {$X(\omega_1)$};
+  \draw (5.5,-0.6) -- (5.5,-0.4) node[above] {$X(\omega_2)$};
+
+  % Borélien B
+  \draw[very thick, blue] (4.2, -0.5) -- (5.0, -0.5);
+  \node[blue, below] at (4.6, -0.7) {Borélien $B$};
+
+  % Image réciproque
+  \draw[dashed, blue] (-1.0, 0.3) ellipse (0.7 and 0.4);
+  \node[blue, above] at (-1.0, 0.7) {$X^{-1}(B) \in \mathcal{F}$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Théorème 2 (Composition et opérations sur les variables aléatoires) :}
+1. Si $X : \Omega \to E$ est mesurable et $f : E \to G$ est mesurable (où $G$ est un autre espace mesurable), alors la composition $f \circ X : \Omega \to G$ est une variable aléatoire.
+2. Si $X$ et $Y$ sont deux variables aléatoires réelles, alors $X+Y$, $X \cdot Y$, $\max(X, Y)$ et $\min(X, Y)$ sont aussi des variables aléatoires réelles.
+
+*Exemple 6 : Somme de variables de Poisson*
+Si $X \sim \mathcal{P}(\lambda)$ et $Y \sim \mathcal{P}(\mu)$ sont indépendantes. D'après le théorème 2, $Z = X + Y$ est une variable aléatoire.
+On peut montrer par le calcul des probabilités discrètes que $Z \sim \mathcal{P}(\lambda + \mu)$.
+
+*Exemple 7 : Maximum de deux variables uniformes*
+Soient $X_1, X_2$ deux variables indépendantes, uniformément distribuées sur $[0, 1]$. Soit $Y = \max(X_1, X_2)$.
+$Y$ est une variable aléatoire (Théorème 2). Calculons sa fonction de répartition $F_Y(y)$ pour $y \in [0,1]$.
+$$ F_Y(y) = \mathbb{P}(\max(X_1, X_2) \leq y) = \mathbb{P}(X_1 \leq y \text{ et } X_2 \leq y) $$
+Par indépendance, $F_Y(y) = \mathbb{P}(X_1 \leq y)\mathbb{P}(X_2 \leq y) = y \cdot y = y^2$.
+La densité de $Y$ est donc $f_Y(y) = F_Y'(y) = 2y$ sur $[0, 1]$.
+
+\section{Démonstrations}
+
+\textbf{Démonstration du Théorème 1 (Caractérisation de la mesurabilité) :}
+
+On suppose que pour tout $C \in \mathcal{C}$, on a $X^{-1}(C) \in \mathcal{F}$. On veut montrer que pour tout $B \in \mathcal{E} = \sigma(\mathcal{C})$, $X^{-1}(B) \in \mathcal{F}$.
+Soit $\mathcal{G}$ l'ensemble des parties de $E$ dont l'image réciproque par $X$ appartient à $\mathcal{F}$ :
+$$ \mathcal{G} = \{ B \subset E \mid X^{-1}(B) \in \mathcal{F} \} $$
+Montrons que $\mathcal{G}$ est une tribu sur $E$ :
+1. $\emptyset \in \mathcal{G}$ car $X^{-1}(\emptyset) = \emptyset \in \mathcal{F}$.
+2. Si $B \in \mathcal{G}$, alors $X^{-1}(B) \in \mathcal{F}$. Considérons le complémentaire $B^c = E \setminus B$.
+   $X^{-1}(B^c) = X^{-1}(E \setminus B) = \Omega \setminus X^{-1}(B) = (X^{-1}(B))^c$.
+   Puisque $\mathcal{F}$ est une tribu, le complémentaire de $X^{-1}(B)$ est dans $\mathcal{F}$, donc $X^{-1}(B^c) \in \mathcal{F}$, ce qui implique que $B^c \in \mathcal{G}$.
+3. Si $(B_n)_{n \in \mathbb{N}}$ est une suite d'éléments de $\mathcal{G}$, alors $X^{-1}(B_n) \in \mathcal{F}$ pour tout $n$.
+   $X^{-1}\left(\bigcup_{n \in \mathbb{N}} B_n\right) = \bigcup_{n \in \mathbb{N}} X^{-1}(B_n)$.
+   Comme $\mathcal{F}$ est une tribu, l'union dénombrable appartient à $\mathcal{F}$. Donc $\bigcup_{n} B_n \in \mathcal{G}$.
+L'ensemble $\mathcal{G}$ est donc une tribu. Par hypothèse, $\mathcal{C} \subset \mathcal{G}$. Or, $\sigma(\mathcal{C})$ est la plus petite tribu contenant $\mathcal{C}$.
+Par conséquent, $\sigma(\mathcal{C}) \subset \mathcal{G}$.
+Cela signifie que pour tout $B \in \sigma(\mathcal{C}) = \mathcal{E}$, $B \in \mathcal{G}$, donc $X^{-1}(B) \in \mathcal{F}$. La fonction $X$ est bien mesurable. $\blacksquare$
+
+\textbf{Démonstration du Théorème 2 (point 1 : Composition) :}
+
+Soient $X : \Omega \to E$ mesurable et $f : E \to G$ mesurable. On veut montrer que $f \circ X : \Omega \to G$ est mesurable.
+Soit $\mathcal{G}$ la tribu sur l'espace d'arrivée $G$. Soit $C \in \mathcal{G}$.
+L'image réciproque de $C$ par $f \circ X$ est :
+$$ (f \circ X)^{-1}(C) = X^{-1}(f^{-1}(C)) $$
+Puisque $f$ est mesurable, l'ensemble $B = f^{-1}(C)$ appartient à la tribu $\mathcal{E}$ de $E$.
+Ensuite, puisque $X$ est mesurable, l'ensemble $X^{-1}(B)$ appartient à la tribu $\mathcal{F}$ de $\Omega$.
+Ainsi, $(f \circ X)^{-1}(C) \in \mathcal{F}$ pour tout $C \in \mathcal{G}$. La fonction composée est donc mesurable. $\blacksquare$
+
+
+\section{Applications en Physique, Logique et Intelligence Artificielle}
+
+\subsection{Physique Statistique}
+En mécanique statistique classique, l'état d'un système de particules est décrit par un point dans l'espace des phases (l'univers $\Omega$). Les observables physiques macroscopiques telles que l'énergie interne $E$, la pression $P$, ou la température, sont modélisées mathématiquement comme des variables aléatoires (fonctions mesurables sur l'espace des phases). La loi de ces variables, issue d'une mesure de probabilité (comme la mesure de Gibbs canonique), permet d'obtenir les fluctuations statistiques et d'établir les lois de la thermodynamique.
+
+\subsection{Logique et Informatique Théorique}
+La mesurabilité joue le rôle de pont entre l'information accessible et la décision. En théorie de la décision et du filtrage (comme le filtre de Kalman), une information acquise au cours du temps engendre une suite de tribus emboîtées appelée *filtration*, $(\mathcal{F}_t)_{t \ge 0}$. Une stratégie de décision $u_t$ (par exemple l'achat ou la vente d'une action, ou une instruction de contrôle) doit être une fonction mesurable par rapport à $\mathcal{F}_t$, ce que l'on appelle un processus *adapté*. Cela traduit le fait qu'une décision prise à l'instant $t$ ne peut dépendre que des informations observées jusqu'à $t$, respectant ainsi le principe de causalité.
+
+\subsection{Intelligence Artificielle et Machine Learning}
+L'apprentissage statistique repose entièrement sur la notion de variables aléatoires.
+Un modèle de classification (comme un réseau de neurones) cherche à apprendre une application mesurable $f_\theta : \mathcal{X} \to \mathcal{Y}$ qui lie des caractéristiques observables $X$ (image, texte) à un label $Y$.
+La mesure de probabilité jointe $\mathbb{P}_{(X,Y)}$ est inconnue, et nous ne disposons que d'un ensemble d'observations (variables aléatoires i.i.d.).
+La fonction de perte empirique (par exemple la *Cross-Entropy*) est elle-même une variable aléatoire car elle dépend de l'échantillon. Le fait que les opérations usuelles (somme, produit, fonctions d'activation continues comme ReLU, Sigmoïde, qui sont toutes mesurables) préservent la mesurabilité garantit que la fonction de perte finale et le gradient (via la rétropropagation) sont bien des variables aléatoires rigoureusement définies. Cela légitime l'utilisation des lois des grands nombres pour analyser la convergence de la descente de gradient stochastique (SGD).
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Variable indicatrice \quad $\bigstar\star\star\star\star$}
+
+\subsubsection*{Énoncé}
+
+Soit $(\Omega, \mathcal{F}, \mathbb{P})$ un espace de probabilité. Soit $A$ une partie de $\Omega$. On définit la fonction indicatrice $\mathbf{1}_A : \Omega \to \mathbb{R}$ par :
+$$ \mathbf{1}_A(\omega) = \begin{cases} 1 & \text{si } \omega \in A \\ 0 & \text{si } \omega \notin A \end{cases} $$
+Démontrer que $\mathbf{1}_A$ est une variable aléatoire si et seulement si $A \in \mathcal{F}$.
+
+\subsubsection*{Correction}
+
+Pour vérifier si $\mathbf{1}_A$ est une variable aléatoire, nous devons étudier l'image réciproque des boréliens $B \in \mathcal{B}(\mathbb{R})$ par $\mathbf{1}_A$, soit $\mathbf{1}_A^{-1}(B) = \{\omega \in \Omega \mid \mathbf{1}_A(\omega) \in B\}$.
+La fonction $\mathbf{1}_A$ ne prend que deux valeurs : $0$ et $1$. Ainsi, pour tout borélien $B \subset \mathbb{R}$, il n'y a que 4 cas possibles :
+1. Cas 1 : $0 \in B$ et $1 \in B$. Alors pour tout $\omega \in \Omega$, $\mathbf{1}_A(\omega) \in B$. Donc $\mathbf{1}_A^{-1}(B) = \Omega$.
+2. Cas 2 : $1 \in B$ et $0 \notin B$. Alors $\mathbf{1}_A(\omega) \in B \iff \mathbf{1}_A(\omega) = 1 \iff \omega \in A$. Donc $\mathbf{1}_A^{-1}(B) = A$.
+3. Cas 3 : $0 \in B$ et $1 \notin B$. Alors $\mathbf{1}_A(\omega) \in B \iff \mathbf{1}_A(\omega) = 0 \iff \omega \notin A$. Donc $\mathbf{1}_A^{-1}(B) = A^c$ (le complémentaire de $A$).
+4. Cas 4 : $0 \notin B$ et $1 \notin B$. Alors aucun $\omega \in \Omega$ ne vérifie $\mathbf{1}_A(\omega) \in B$. Donc $\mathbf{1}_A^{-1}(B) = \emptyset$.
+
+\textbf{Sens direct :} Si $\mathbf{1}_A$ est une variable aléatoire, par définition, pour tout borélien $B$, l'image réciproque $\mathbf{1}_A^{-1}(B)$ appartient à la tribu $\mathcal{F}$. Prenons le borélien $B = \{1\}$. D'après le cas 2, $\mathbf{1}_A^{-1}(\{1\}) = A$. Donc $A$ appartient nécessairement à $\mathcal{F}$.
+
+\textbf{Sens réciproque :} Supposons que $A \in \mathcal{F}$. Comme $\mathcal{F}$ est une tribu, elle contient l'espace entier $\Omega$, l'ensemble vide $\emptyset$, et est stable par passage au complémentaire, donc $A^c \in \mathcal{F}$. Ainsi, dans chacun des 4 cas examinés précédemment, l'ensemble $\mathbf{1}_A^{-1}(B)$ (qui vaut $\Omega$, $A$, $A^c$, ou $\emptyset$) appartient bien à la tribu $\mathcal{F}$. La condition de mesurabilité est vérifiée pour tout borélien $B$, donc $\mathbf{1}_A$ est une variable aléatoire. $\blacksquare$
+
+
+\subsection*{Exercice 2 : Fonction de répartition discrète \quad $\bigstar\bigstar\star\star\star$}
+
+\subsubsection*{Énoncé}
+
+Soit une variable aléatoire $X$ suivant une loi de Bernoulli de paramètre $p \in ]0, 1[$.
+Donner l'expression analytique rigoureuse de sa fonction de répartition $F_X(x)$ pour tout réel $x \in \mathbb{R}$ et tracer schématiquement son allure.
+
+\subsubsection*{Correction}
+
+La loi de Bernoulli de paramètre $p$ indique que la variable aléatoire $X$ prend ses valeurs dans l'ensemble $\{0, 1\}$ avec les probabilités :
+$$ \mathbb{P}(X = 1) = p \quad \text{et} \quad \mathbb{P}(X = 0) = 1 - p $$
+La fonction de répartition $F_X$ d'une variable aléatoire réelle est définie, pour tout $x \in \mathbb{R}$, par :
+$$ F_X(x) = \mathbb{P}(X \leq x) $$
+Nous devons examiner les différentes valeurs possibles du réel $x$ par rapport aux points de saut $0$ et $1$.
+
+1. Pour $x < 0$ :
+   Aucune valeur prise par $X$ n'est inférieure à un nombre strictement négatif.
+   $$ F_X(x) = \mathbb{P}(X \leq x) = \mathbb{P}(\emptyset) = 0 $$
+
+2. Pour $0 \leq x < 1$ :
+   La seule valeur possible pour $X$ vérifiant $X \leq x$ est $X = 0$.
+   $$ F_X(x) = \mathbb{P}(X = 0) = 1 - p $$
+
+3. Pour $x \geq 1$ :
+   Les valeurs $X=0$ et $X=1$ vérifient toutes deux la condition $X \leq x$. Comme les événements $\{X=0\}$ et $\{X=1\}$ sont disjoints, on somme leurs probabilités :
+   $$ F_X(x) = \mathbb{P}(X = 0) + \mathbb{P}(X = 1) = (1 - p) + p = 1 $$
+
+L'expression analytique finale est donc :
+$$ F_X(x) = \begin{cases} 0 & \text{si } x < 0 \\ 1 - p & \text{si } 0 \leq x < 1 \\ 1 & \text{si } x \geq 1 \end{cases} $$
+Cette fonction est bien croissante, continue à droite, et présente des sauts en $x=0$ (d'amplitude $1-p$) et en $x=1$ (d'amplitude $p$). Les limites en $-\infty$ et $+\infty$ sont bien 0 et 1. $\blacksquare$
+
+
+\subsection*{Exercice 3 : Loi uniforme et transformation affine \quad $\bigstar\bigstar\star\star\star$}
+
+\subsubsection*{Énoncé}
+
+Soit $X$ une variable aléatoire de loi uniforme sur le segment $[a, b]$, avec $a < b$.
+Soit $Y = cX + d$, où $c > 0$ et $d \in \mathbb{R}$.
+Démontrer que $Y$ suit une loi uniforme sur un intervalle à déterminer.
+
+\subsubsection*{Correction}
+
+La variable aléatoire $X$ suit une loi uniforme sur $[a, b]$. Sa densité de probabilité est donnée par :
+$$ f_X(x) = \begin{cases} \frac{1}{b - a} & \text{si } x \in [a, b] \\ 0 & \text{sinon} \end{cases} $$
+La fonction de répartition de $X$ pour $x \in [a,b]$ est $F_X(x) = \int_a^x \frac{1}{b-a} dt = \frac{x-a}{b-a}$.
+
+Calculons la fonction de répartition de $Y$, notée $F_Y(y)$, pour $y \in \mathbb{R}$.
+Par définition :
+$$ F_Y(y) = \mathbb{P}(Y \leq y) = \mathbb{P}(cX + d \leq y) $$
+Puisque $c > 0$, l'inégalité est préservée lorsqu'on divise par $c$ :
+$$ F_Y(y) = \mathbb{P}\left(X \leq \frac{y - d}{c}\right) = F_X\left(\frac{y - d}{c}\right) $$
+Puisque $X \in [a, b]$ presque sûrement, les valeurs de $Y$ se trouvent dans le domaine où $a \leq \frac{y-d}{c} \leq b$, ce qui équivaut à $ac+d \leq y \leq bc+d$. Posons $\alpha = ac+d$ et $\beta = bc+d$.
+
+Étudions les cas pour $y$ :
+1. Si $y < \alpha$, alors $\frac{y - d}{c} < a$, donc $F_X\left(\frac{y - d}{c}\right) = 0$.
+2. Si $y > \beta$, alors $\frac{y - d}{c} > b$, donc $F_X\left(\frac{y - d}{c}\right) = 1$.
+3. Si $y \in [\alpha, \beta]$, alors :
+$$ F_Y(y) = \frac{\frac{y - d}{c} - a}{b - a} = \frac{y - d - ac}{c(b - a)} = \frac{y - (ac+d)}{(bc+d) - (ac+d)} = \frac{y - \alpha}{\beta - \alpha} $$
+
+La fonction de répartition $F_Y(y)$ est de la forme $\frac{y-\alpha}{\beta-\alpha}$ sur l'intervalle $[\alpha, \beta]$, $0$ avant et $1$ après. Ceci est exactement la définition de la fonction de répartition d'une variable aléatoire de loi uniforme sur le segment $[\alpha, \beta]$.
+On conclut que $Y$ suit une loi uniforme sur $[ac+d, bc+d]$. $\blacksquare$
+
+
+\subsection*{Exercice 4 : Génération de la loi exponentielle \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\subsubsection*{Énoncé}
+
+Soit $U$ une variable aléatoire suivant la loi uniforme continue sur $]0, 1[$.
+On définit $X = -\frac{1}{\lambda} \ln(1-U)$, avec $\lambda > 0$.
+Démontrer pas à pas que $X$ suit la loi exponentielle de paramètre $\lambda$.
+
+\subsubsection*{Correction}
+
+Pour caractériser la loi de la variable aléatoire $X$, nous allons calculer sa fonction de répartition $F_X(x) = \mathbb{P}(X \leq x)$.
+
+La variable $U$ est à valeurs dans $]0, 1[$, donc $1-U$ est à valeurs dans $]0, 1[$. Le logarithme de $1-U$ est strictement négatif, et par conséquent $X = -\frac{1}{\lambda} \ln(1-U)$ est à valeurs strictement positives.
+Ainsi, pour tout $x \leq 0$, $F_X(x) = \mathbb{P}(X \leq x) = 0$.
+
+Soit $x > 0$. Par définition de $X$ :
+$$ F_X(x) = \mathbb{P}\left(-\frac{1}{\lambda} \ln(1-U) \leq x\right) $$
+Multiplions par $-\lambda$ (qui est strictement négatif, le sens de l'inégalité s'inverse) :
+$$ F_X(x) = \mathbb{P}(\ln(1-U) \geq -\lambda x) $$
+Composons par la fonction exponentielle, qui est strictement croissante sur $\mathbb{R}$ :
+$$ F_X(x) = \mathbb{P}(1-U \geq e^{-\lambda x}) $$
+Ce qui équivaut à :
+$$ F_X(x) = \mathbb{P}(U \leq 1 - e^{-\lambda x}) $$
+Puisque $U$ suit la loi uniforme sur $]0, 1[$, la probabilité $\mathbb{P}(U \leq t)$ vaut $t$ pour tout $t \in [0, 1]$.
+Ici, $t = 1 - e^{-\lambda x}$. Comme $x > 0$ et $\lambda > 0$, on a $\lambda x > 0 \implies e^{-\lambda x} \in ]0, 1[$, donc $1 - e^{-\lambda x} \in ]0, 1[$.
+Par conséquent :
+$$ F_X(x) = 1 - e^{-\lambda x} $$
+
+Bilan analytique :
+$$ F_X(x) = \begin{cases} 1 - e^{-\lambda x} & \text{si } x > 0 \\ 0 & \text{si } x \leq 0 \end{cases} $$
+En dérivant cette fonction par rapport à $x$ sur $]0, +\infty[$, on obtient la densité :
+$$ f_X(x) = \lambda e^{-\lambda x} $$
+C'est exactement la densité et la fonction de répartition de la loi exponentielle de paramètre $\lambda$. $\blacksquare$
+
+
+\subsection*{Exercice 5 : Minimum de deux lois exponentielles \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\subsubsection*{Énoncé}
+
+Soient $X_1$ et $X_2$ deux variables aléatoires indépendantes suivant des lois exponentielles de paramètres respectifs $\lambda_1 > 0$ et $\lambda_2 > 0$.
+Soit $Y = \min(X_1, X_2)$.
+Démontrer que $Y$ suit une loi exponentielle dont on précisera le paramètre.
+
+\subsubsection*{Correction}
+
+Pour étudier le minimum de deux variables aléatoires, il est plus pertinent de calculer la probabilité complémentaire $\mathbb{P}(Y > y)$, qui correspond à $1 - F_Y(y)$, où $F_Y$ est la fonction de répartition de $Y$.
+La variable aléatoire $Y$ prend ses valeurs dans $[0, +\infty[$, donc pour tout $y < 0$, $\mathbb{P}(Y > y) = 1$.
+
+Soit $y \geq 0$. L'événement $\{Y > y\}$ signifie que le minimum de $X_1$ et $X_2$ est strictement supérieur à $y$. Cela implique nécessairement que *chacune* des variables est strictement supérieure à $y$.
+$$ \mathbb{P}(Y > y) = \mathbb{P}(\min(X_1, X_2) > y) = \mathbb{P}(X_1 > y \text{ et } X_2 > y) $$
+Puisque les variables aléatoires $X_1$ et $X_2$ sont indépendantes, la probabilité de l'intersection des événements est le produit des probabilités :
+$$ \mathbb{P}(Y > y) = \mathbb{P}(X_1 > y) \times \mathbb{P}(X_2 > y) $$
+
+Pour une variable $X \sim \mathcal{E}(\lambda)$, on sait que sa fonction de répartition est $F_X(x) = 1 - e^{-\lambda x}$ pour $x \geq 0$. Donc la probabilité d'excéder un seuil $y$ est $\mathbb{P}(X > y) = 1 - F_X(y) = e^{-\lambda y}$.
+En appliquant ceci à $X_1$ (paramètre $\lambda_1$) et à $X_2$ (paramètre $\lambda_2$), on obtient :
+$$ \mathbb{P}(X_1 > y) = e^{-\lambda_1 y} \quad \text{et} \quad \mathbb{P}(X_2 > y) = e^{-\lambda_2 y} $$
+D'où :
+$$ \mathbb{P}(Y > y) = e^{-\lambda_1 y} \times e^{-\lambda_2 y} = e^{-(\lambda_1 + \lambda_2)y} $$
+
+La fonction de répartition de $Y$ est donc :
+$$ F_Y(y) = 1 - \mathbb{P}(Y > y) = 1 - e^{-(\lambda_1 + \lambda_2)y} $$
+pour $y \geq 0$. C'est l'expression exacte de la fonction de répartition d'une loi exponentielle de paramètre $\lambda = \lambda_1 + \lambda_2$.
+Conclusion : Le minimum de variables aléatoires exponentielles indépendantes suit une loi exponentielle dont le paramètre est la somme des paramètres. $\blacksquare$
+
+
+\subsection*{Exercice 6 : Densité de Cauchy par quotient de Gaussiennes \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\subsubsection*{Énoncé}
+
+Soient $X$ et $Y$ deux variables aléatoires indépendantes suivant la loi normale standard $\mathcal{N}(0, 1)$.
+On pose $Z = \frac{X}{Y}$.
+Calculer rigoureusement la densité de la variable aléatoire $Z$ et montrer qu'elle suit la loi de Cauchy standard.
+
+\subsubsection*{Correction}
+
+Les variables aléatoires $X$ et $Y$ sont indépendantes et ont pour densité commune $\phi(t) = \frac{1}{\sqrt{2\pi}} e^{-\frac{t^2}{2}}$.
+La densité du vecteur aléatoire $(X, Y)$ est donc donnée par le produit des densités marginales :
+$$ f_{(X,Y)}(x, y) = \frac{1}{2\pi} e^{-\frac{x^2 + y^2}{2}} $$
+Pour trouver la densité $f_Z$ du quotient $Z = \frac{X}{Y}$, nous utilisons la formule de la densité du quotient de deux variables. Pour $z \in \mathbb{R}$ :
+$$ f_Z(z) = \int_{-\infty}^{+\infty} |y| f_{(X,Y)}(zy, y) dy $$
+Remplaçons $f_{(X,Y)}$ par son expression :
+$$ f_Z(z) = \int_{-\infty}^{+\infty} |y| \frac{1}{2\pi} e^{-\frac{(zy)^2 + y^2}{2}} dy $$
+Factorisons $y^2$ dans l'exponentielle :
+$$ f_Z(z) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} |y| e^{-\frac{y^2(z^2 + 1)}{2}} dy $$
+L'intégrant est une fonction paire par rapport à $y$, nous pouvons donc intégrer sur $[0, +\infty[$ et multiplier par 2 :
+$$ f_Z(z) = \frac{2}{2\pi} \int_{0}^{+\infty} y e^{-\frac{y^2(z^2 + 1)}{2}} dy = \frac{1}{\pi} \int_{0}^{+\infty} y e^{-\frac{z^2 + 1}{2} y^2} dy $$
+Pour calculer cette intégrale, nous effectuons le changement de variable $u = y^2$.
+Alors $du = 2y dy$, soit $y dy = \frac{1}{2} du$. Les bornes d'intégration restent de $0$ à $+\infty$.
+$$ f_Z(z) = \frac{1}{\pi} \int_{0}^{+\infty} \frac{1}{2} e^{-\frac{z^2 + 1}{2} u} du $$
+Cette intégrale est celle d'une exponentielle classique de la forme $\int e^{-a u} du = \left[ -\frac{1}{a} e^{-a u} \right]$.
+Ici $a = \frac{z^2 + 1}{2}$, qui est strictement positif pour tout $z \in \mathbb{R}$.
+$$ f_Z(z) = \frac{1}{2\pi} \left[ -\frac{2}{z^2 + 1} e^{-\frac{z^2 + 1}{2} u} \right]_0^{+\infty} $$
+En $+\infty$, l'exponentielle tend vers 0. En 0, l'exponentielle vaut 1.
+$$ f_Z(z) = \frac{1}{2\pi} \left( 0 - \left( -\frac{2}{z^2 + 1} \right) \right) = \frac{1}{2\pi} \frac{2}{z^2 + 1} = \frac{1}{\pi(1 + z^2)} $$
+On reconnaît l'expression analytique de la densité de la loi de Cauchy standard.
+Le quotient de deux lois normales standards indépendantes suit donc une loi de Cauchy, une distribution à queues si épaisses qu'elle ne possède pas d'espérance finie. $\blacksquare$
+
+
+\subsection*{Exercice 7 : Loi Log-Normale \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\subsubsection*{Énoncé}
+
+Soit $X$ une variable aléatoire de loi normale $\mathcal{N}(\mu, \sigma^2)$ avec $\sigma > 0$.
+Soit $Y = e^X$.
+Déterminer la densité de probabilité de $Y$. Cette loi est appelée loi Log-Normale.
+
+\subsubsection*{Correction}
+
+La densité de probabilité de la variable normale $X$ est :
+$$ f_X(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}} $$
+La variable $Y = e^X$ ne prend que des valeurs strictement positives.
+Pour $y \leq 0$, l'événement $\{Y \leq y\}$ est impossible (probabilité nulle), donc la fonction de répartition de $Y$ vérifie $F_Y(y) = 0$, ce qui implique que la densité $f_Y(y) = 0$ pour $y \leq 0$.
+
+Soit $y > 0$. La fonction de répartition de $Y$ s'écrit :
+$$ F_Y(y) = \mathbb{P}(Y \leq y) = \mathbb{P}(e^X \leq y) $$
+Comme la fonction logarithme népérien est strictement croissante sur $]0, +\infty[$, on peut appliquer le logarithme aux deux membres de l'inégalité en préservant son sens :
+$$ F_Y(y) = \mathbb{P}(X \leq \ln(y)) $$
+Par définition de la fonction de répartition de $X$, cela s'écrit :
+$$ F_Y(y) = F_X(\ln(y)) $$
+
+Pour obtenir la densité $f_Y$ de la variable $Y$, il suffit de dériver $F_Y(y)$ par rapport à $y$ sur $]0, +\infty[$. En utilisant la règle de dérivation en chaîne $(g \circ h)' = (g' \circ h) \cdot h'$, et sachant que $F_X'(x) = f_X(x)$, nous obtenons :
+$$ f_Y(y) = \frac{d}{dy} F_X(\ln(y)) = f_X(\ln(y)) \cdot \frac{d}{dy}(\ln(y)) = f_X(\ln(y)) \cdot \frac{1}{y} $$
+
+Il ne reste plus qu'à substituer l'expression de la densité normale $f_X$ évaluée au point $\ln(y)$ :
+$$ f_Y(y) = \frac{1}{y} \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(\ln(y) - \mu)^2}{2\sigma^2}} = \frac{1}{y\sigma\sqrt{2\pi}} e^{-\frac{(\ln(y) - \mu)^2}{2\sigma^2}} $$
+
+Conclusion, la densité de la loi Log-Normale est :
+$$ f_Y(y) = \begin{cases} \frac{1}{y\sigma\sqrt{2\pi}} e^{-\frac{(\ln(y) - \mu)^2}{2\sigma^2}} & \text{si } y > 0 \\ 0 & \text{si } y \leq 0 \end{cases} $$ $\blacksquare$
+
+
+\subsection*{Exercice 8 : Génération de la loi de Rayleigh \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\subsubsection*{Énoncé}
+
+Soient $X$ et $Y$ deux variables aléatoires indépendantes suivant la loi normale standard $\mathcal{N}(0, 1)$.
+On pose $R = \sqrt{X^2 + Y^2}$.
+Déterminer la densité de probabilité de la variable aléatoire $R$ (loi de Rayleigh).
+
+\subsubsection*{Correction}
+
+Les variables $X$ et $Y$ sont normales centrées réduites et indépendantes. Leur densité conjointe est :
+$$ f_{(X,Y)}(x, y) = f_X(x) f_Y(y) = \frac{1}{2\pi} e^{-\frac{x^2 + y^2}{2}} $$
+La variable $R = \sqrt{X^2 + Y^2}$ représente la distance à l'origine d'un point aléatoire de coordonnées $(X,Y)$ dans le plan $\mathbb{R}^2$. $R$ prend donc des valeurs dans $[0, +\infty[$. Pour $r \leq 0$, $f_R(r) = 0$.
+
+Pour $r > 0$, la fonction de répartition de $R$ est la probabilité que le point $(X,Y)$ tombe dans le disque $D_r$ de centre l'origine et de rayon $r$ :
+$$ F_R(r) = \mathbb{P}(R \leq r) = \mathbb{P}(X^2 + Y^2 \leq r^2) = \iint_{x^2 + y^2 \leq r^2} \frac{1}{2\pi} e^{-\frac{x^2 + y^2}{2}} dx dy $$
+Pour calculer cette intégrale double, il est naturel de passer en coordonnées polaires.
+Posons $x = \rho \cos(\theta)$ et $y = \rho \sin(\theta)$, avec $\rho \in [0, r]$ et $\theta \in [0, 2\pi[$. L'élément différentiel d'aire est $dx dy = \rho d\rho d\theta$, et on a $x^2 + y^2 = \rho^2$.
+L'intégrale devient :
+$$ F_R(r) = \int_{0}^{2\pi} \int_{0}^{r} \frac{1}{2\pi} e^{-\frac{\rho^2}{2}} \rho d\rho d\theta $$
+L'intégrale par rapport à $\theta$ donne une constante de longueur $2\pi$, qui s'annule avec le facteur $\frac{1}{2\pi}$ extérieur :
+$$ F_R(r) = \frac{1}{2\pi} [\theta]_0^{2\pi} \int_{0}^{r} \rho e^{-\frac{\rho^2}{2}} d\rho = \int_{0}^{r} \rho e^{-\frac{\rho^2}{2}} d\rho $$
+La fonction sous l'intégrale est exactement la dérivée de $-e^{-\frac{\rho^2}{2}}$. Par conséquent :
+$$ F_R(r) = \left[ -e^{-\frac{\rho^2}{2}} \right]_0^r = -e^{-\frac{r^2}{2}} - (-e^0) = 1 - e^{-\frac{r^2}{2}} $$
+Pour obtenir la densité $f_R(r)$, on dérive la fonction de répartition par rapport à $r$ pour $r > 0$ :
+$$ f_R(r) = \frac{d}{dr} \left( 1 - e^{-\frac{r^2}{2}} \right) = - \left( -r e^{-\frac{r^2}{2}} \right) = r e^{-\frac{r^2}{2}} $$
+La densité de $R$ est donc :
+$$ f_R(r) = \begin{cases} r e^{-\frac{r^2}{2}} & \text{si } r \geq 0 \\ 0 & \text{si } r < 0 \end{cases} $$
+C'est l'expression analytique de la loi de Rayleigh de paramètre $\sigma = 1$. $\blacksquare$
+
+
+\subsection*{Exercice 9 : Théorème de la transformation universelle (Inverse Transform Sampling) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\subsubsection*{Énoncé}
+
+Soit $X$ une variable aléatoire réelle de fonction de répartition $F$ continue et strictement croissante.
+On définit la fonction quantile (ou inverse de la fonction de répartition) par $F^{-1} : ]0, 1[ \to \mathbb{R}$.
+Soit $U$ une variable aléatoire de loi uniforme sur $]0, 1[$.
+Montrer rigoureusement que la variable aléatoire $Y = F^{-1}(U)$ possède exactement $F$ pour fonction de répartition (donc la même loi que $X$).
+
+\subsubsection*{Correction}
+
+L'objectif est de calculer la fonction de répartition de $Y$, notée $F_Y(y)$, pour tout $y \in \mathbb{R}$.
+Par définition :
+$$ F_Y(y) = \mathbb{P}(Y \leq y) = \mathbb{P}(F^{-1}(U) \leq y) $$
+
+Par hypothèse, la fonction de répartition $F$ de $X$ est continue et strictement croissante. Une telle fonction réalise une bijection de l'ensemble des valeurs possibles de $X$ (un intervalle, éventuellement $\mathbb{R}$ entier) vers l'intervalle $]0, 1[$.
+Elle admet donc une fonction réciproque $F^{-1} : ]0, 1[ \to \mathbb{R}$ qui est également strictement croissante.
+
+Puisque $F$ est strictement croissante, elle préserve l'ordre. On peut donc appliquer la fonction $F$ aux deux membres de l'inégalité à l'intérieur de la probabilité sans en changer le sens :
+L'inégalité $F^{-1}(U) \leq y$ est mathématiquement strictement équivalente à l'inégalité $F(F^{-1}(U)) \leq F(y)$.
+
+Puisque $U \in ]0, 1[$, l'expression $F(F^{-1}(U))$ se simplifie exactement en $U$.
+Ainsi, l'égalité des probabilités devient :
+$$ F_Y(y) = \mathbb{P}(U \leq F(y)) $$
+
+La variable aléatoire $U$ suit une loi uniforme sur $]0, 1[$. La fonction de répartition d'une loi uniforme $\mathcal{U}([0,1])$ est donnée par $\mathbb{P}(U \leq t) = t$ pour tout $t \in [0, 1]$.
+Ici, $F$ est une fonction de répartition, ce qui signifie que pour tout réel $y$, la valeur de $F(y)$ appartient nécessairement à l'intervalle $[0, 1]$.
+Par conséquent, on peut remplacer $t$ par $F(y)$ :
+$$ \mathbb{P}(U \leq F(y)) = F(y) $$
+
+Nous venons de prouver que pour tout réel $y$, $F_Y(y) = F(y)$.
+La variable aléatoire $Y = F^{-1}(U)$ a donc la même fonction de répartition que $X$, ce qui signifie qu'elle suit exactement la même loi de probabilité. Ce résultat fondamental est à la base de toutes les méthodes informatiques de génération de nombres pseudo-aléatoires selon des lois continues arbitraires. $\blacksquare$
+
+
+\subsection*{Exercice 10 : Transformation d'un vecteur gaussien par une isométrie \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\subsubsection*{Énoncé}
+
+Soit $\mathbf{X} = (X_1, X_2)^\top$ un vecteur aléatoire composé de variables aléatoires indépendantes $X_1, X_2 \sim \mathcal{N}(0,1)$.
+Soit $R_\theta$ la matrice de rotation plane d'angle $\theta \in \mathbb{R}$ :
+$$ R_\theta = \begin{pmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{pmatrix} $$
+On définit le vecteur aléatoire $\mathbf{Y} = R_\theta \mathbf{X}$.
+Démontrer, en utilisant le théorème du changement de variable pour les densités, que les composantes de $\mathbf{Y}$ sont des variables normales centrées réduites indépendantes.
+
+\subsubsection*{Correction}
+
+La densité conjointe du vecteur aléatoire $\mathbf{X} = (X_1, X_2)^\top$ est donnée par le produit de ses lois marginales puisque les composantes sont indépendantes :
+$$ f_\mathbf{X}(x_1, x_2) = \frac{1}{\sqrt{2\pi}} e^{-\frac{x_1^2}{2}} \frac{1}{\sqrt{2\pi}} e^{-\frac{x_2^2}{2}} = \frac{1}{2\pi} e^{-\frac{x_1^2 + x_2^2}{2}} $$
+En notation vectorielle, l'argument de l'exponentielle s'écrit avec la norme euclidienne $||\mathbf{x}||^2 = x_1^2 + x_2^2 = \mathbf{x}^\top \mathbf{x}$ :
+$$ f_\mathbf{X}(\mathbf{x}) = \frac{1}{2\pi} e^{-\frac{1}{2}||\mathbf{x}||^2} $$
+
+Soit $\phi(\mathbf{x}) = R_\theta \mathbf{x}$. L'application $\phi$ est une application linéaire de $\mathbb{R}^2$ dans $\mathbb{R}^2$. Son jacobien est la matrice $R_\theta$ elle-même.
+Calculons le déterminant de ce jacobien :
+$$ J = \det(R_\theta) = (\cos\theta)(\cos\theta) - (-\sin\theta)(\sin\theta) = \cos^2\theta + \sin^2\theta = 1 $$
+Le jacobien étant non nul (et valant 1), l'application est un difféomorphisme.
+Le théorème du changement de variable pour les densités énonce que la densité du vecteur transformé $\mathbf{Y} = \phi(\mathbf{X})$ s'écrit :
+$$ f_\mathbf{Y}(\mathbf{y}) = f_\mathbf{X}(\phi^{-1}(\mathbf{y})) \cdot \frac{1}{|\det J_{\phi^{-1}}(\mathbf{y})|} $$
+L'inverse de la matrice de rotation $R_\theta$ est la matrice de rotation d'angle $-\theta$, soit $R_{-\theta} = R_\theta^\top$.
+Ainsi, $\phi^{-1}(\mathbf{y}) = R_\theta^\top \mathbf{y}$. Le jacobien de l'inverse est $\det(R_\theta^\top) = 1$. L'expression de la densité devient :
+$$ f_\mathbf{Y}(\mathbf{y}) = f_\mathbf{X}(R_\theta^\top \mathbf{y}) \cdot 1 $$
+Remplaçons dans la formule de la densité de $\mathbf{X}$ :
+$$ f_\mathbf{Y}(\mathbf{y}) = \frac{1}{2\pi} e^{-\frac{1}{2}||R_\theta^\top \mathbf{y}||^2} $$
+Il faut maintenant évaluer la norme au carré du vecteur transformé. Par propriété du produit scalaire et des matrices transposées :
+$$ ||R_\theta^\top \mathbf{y}||^2 = (R_\theta^\top \mathbf{y})^\top (R_\theta^\top \mathbf{y}) = (\mathbf{y}^\top (R_\theta^\top)^\top) (R_\theta^\top \mathbf{y}) = \mathbf{y}^\top R_\theta R_\theta^\top \mathbf{y} $$
+Une matrice de rotation est orthogonale, ce qui signifie que $R_\theta R_\theta^\top = I_2$, la matrice identité de taille 2.
+On a donc la propriété géométrique fondamentale des isométries (elles conservent la norme) :
+$$ ||R_\theta^\top \mathbf{y}||^2 = \mathbf{y}^\top I_2 \mathbf{y} = \mathbf{y}^\top \mathbf{y} = ||\mathbf{y}||^2 = y_1^2 + y_2^2 $$
+En substituant ce résultat dans la densité de $\mathbf{Y}$, on obtient :
+$$ f_\mathbf{Y}(\mathbf{y}) = \frac{1}{2\pi} e^{-\frac{1}{2}(y_1^2 + y_2^2)} = \left(\frac{1}{\sqrt{2\pi}} e^{-\frac{y_1^2}{2}}\right) \left(\frac{1}{\sqrt{2\pi}} e^{-\frac{y_2^2}{2}}\right) $$
+La densité du vecteur aléatoire $\mathbf{Y}$ s'écrit comme le produit de deux densités de la loi normale centrée réduite $\mathcal{N}(0,1)$.
+Ceci démontre simultanément que $Y_1 \sim \mathcal{N}(0,1)$, $Y_2 \sim \mathcal{N}(0,1)$, et que les composantes $Y_1$ et $Y_2$ sont mutuellement indépendantes. Ce résultat illustre l'isotropie de la loi normale multidimensionnelle standard. $\blacksquare$
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Simulation d'une Variable Aleatoire Discrete et Verification de la Mesurabilite}
+
+Implementation d'une variable aleatoire modelisant un lancer de de, calcul des probabilites et validation empirique.
+
+\begin{lstlisting}
+import random
+
+def lancer_de():
+    # Univers Omega : {1, 2, 3, 4, 5, 6}
+    return random.randint(1, 6)
+
+def variable_aleatoire_X(omega):
+    # Application mesurable : 1 si omega est pair, 0 sinon
+    if omega % 2 == 0:
+        return 1
+    return 0
+
+def verifier_loi(n_simulations):
+    frequence_0 = 0
+    frequence_1 = 0
+
+    for _ in range(n_simulations):
+        omega = lancer_de()
+        X_val = variable_aleatoire_X(omega)
+
+        if X_val == 0:
+            frequence_0 += 1
+        elif X_val == 1:
+            frequence_1 += 1
+
+    prob_0 = frequence_0 / n_simulations
+    prob_1 = frequence_1 / n_simulations
+
+    return prob_0, prob_1
+
+if __name__ == '__main__':
+    N = 100000
+    p0, p1 = verifier_loi(N)
+
+    print("Verification empirique sur", N, "lancers :")
+    print("Probabilite empirique de X=0 (Impair) :", p0)
+    print("Probabilite empirique de X=1 (Pair)   :", p1)
+
+    assert abs(p0 - 0.5) < 0.01
+    assert abs(p1 - 0.5) < 0.01
+    print("Test reussi : Les frequences convergent vers la loi theorique.")
+
+\end{lstlisting}
+
+
+\subsection*{TP 2 : Transformation Inverse pour la Loi Exponentielle}
+
+Implementation du theoreme de l'Inverse Transform Sampling pour generer une loi exponentielle a partir d'une loi uniforme.
+
+\begin{lstlisting}
+import random
+import math
+
+def generate_uniform():
+    # Genere une variable aleatoire suivant U(0,1)
+    # On evite 0 pour le calcul du logarithme
+    u = random.random()
+    while u == 0.0:
+        u = random.random()
+    return u
+
+def generate_exponential(lam):
+    # Application de la transformation inverse : X = - (1 / lambda) * ln(U)
+    # L'utilisation de U ou 1-U est equivalente
+    u = generate_uniform()
+    return - (1.0 / lam) * math.log(u)
+
+def test_exponential_mean(lam, n_simulations):
+    somme = 0.0
+    for _ in range(n_simulations):
+        somme += generate_exponential(lam)
+
+    moyenne_empirique = somme / n_simulations
+    moyenne_theorique = 1.0 / lam
+    return moyenne_empirique, moyenne_theorique
+
+if __name__ == '__main__':
+    lam = 2.0
+    N = 50000
+    m_emp, m_theo = test_exponential_mean(lam, N)
+
+    print("Parametre lambda :", lam)
+    print("Moyenne theorique :", m_theo)
+    print("Moyenne empirique (N=", N, ") :", m_emp)
+
+    assert abs(m_emp - m_theo) < 0.05
+    print("Test reussi : La moyenne converge vers la valeur theorique.")
+
+\end{lstlisting}
+
+
+\subsection*{TP 3 : Simulation du Maximum de Variables Aleatoires Uniformes}
+
+Validation empirique de la loi de probabilite du maximum de variables aleatoires i.i.d. uniformes sur [0, 1].
+
+\begin{lstlisting}
+import random
+
+def generer_max_uniformes(k):
+    # Genere k variables uniformes et renvoie la plus grande
+    valeurs = []
+    for _ in range(k):
+        valeurs.append(random.random())
+
+    max_val = valeurs[0]
+    for v in valeurs:
+        if v > max_val:
+            max_val = v
+    return max_val
+
+def estimer_fonction_repartition(k, n_simulations, x):
+    # Estime empiriquement P(Y <= x) ou Y = max(X1, ..., Xk)
+    compteur = 0
+    for _ in range(n_simulations):
+        y = generer_max_uniformes(k)
+        if y <= x:
+            compteur += 1
+
+    prob_empirique = compteur / n_simulations
+    # Theoreme : P(max(X1..Xk) <= x) = x**k
+    prob_theorique = x ** k
+
+    return prob_empirique, prob_theorique
+
+if __name__ == '__main__':
+    K = 3
+    N = 100000
+    seuil = 0.5
+
+    p_emp, p_theo = estimer_fonction_repartition(K, N, seuil)
+
+    print("Estimation de la fonction de repartition du Maximum de", K, "variables uniformes")
+    print("Au point x =", seuil)
+    print("Probabilite theorique (F(x) = x**K) :", p_theo)
+    print("Probabilite empirique (N=", N, ")     :", p_emp)
+
+    assert abs(p_emp - p_theo) < 0.01
+    print("Test reussi : La fonction de repartition empirique est valide.")
+
+\end{lstlisting}
+
+
+\subsection*{TP 4 : Generateur de la Loi Normale par la Methode de Box-Muller}
+
+Implementation rigoureuse de la methode de Box-Muller exploitant la transformation des variables en coordonnees polaires (Loi de Rayleigh et Uniforme).
+
+\begin{lstlisting}
+import random
+import math
+
+def generate_box_muller():
+    # Generation de deux variables uniformes sur (0,1)
+    u1 = random.random()
+    while u1 == 0.0:
+        u1 = random.random()
+    u2 = random.random()
+
+    # Transformation de Box-Muller
+    # R suit une loi de Rayleigh et Theta une loi Uniforme
+    rayon = math.sqrt(-2.0 * math.log(u1))
+    angle = 2.0 * math.pi * u2
+
+    # Conversion en coordonnees cartesiennes donne deux normales independantes
+    z0 = rayon * math.cos(angle)
+    z1 = rayon * math.sin(angle)
+
+    return z0, z1
+
+def test_box_muller_properties(n_simulations):
+    sum_z0 = 0.0
+    sum_z0_sq = 0.0
+
+    for _ in range(n_simulations):
+        z0, _ = generate_box_muller()
+        sum_z0 += z0
+        sum_z0_sq += z0 * z0
+
+    mean = sum_z0 / n_simulations
+    variance = (sum_z0_sq / n_simulations) - (mean * mean)
+
+    return mean, variance
+
+if __name__ == '__main__':
+    N = 100000
+    moyenne, var = test_box_muller_properties(N)
+
+    print("Generation de N=", N, "variables normales standard par Box-Muller")
+    print("Moyenne empirique (attendue: 0.0) :", moyenne)
+    print("Variance empirique (attendue: 1.0) :", var)
+
+    assert abs(moyenne) < 0.05
+    assert abs(var - 1.0) < 0.05
+    print("Test reussi : Les moments de la loi normale simulee sont corrects.")
+
+\end{lstlisting}
+
+
+\subsection*{TP 5 : Simulation du quotient de deux Gaussiennes (Loi de Cauchy)}
+
+Verification numerique qu'une variable aleatoire donnee par le quotient de deux variables normales standard possede des caracteristiques a queues epaisses conformes a la loi de Cauchy (non-convergence de la moyenne empirique).
+
+\begin{lstlisting}
+import random
+import math
+
+def generate_normal():
+    # Simple generateur normal via theoreme central limite approche
+    # (pour eviter de reutiliser Box-Muller)
+    s = 0.0
+    for _ in range(12):
+        s += random.random()
+    return s - 6.0
+
+def generate_cauchy():
+    # Quotient de deux variables normales standard independantes
+    x = generate_normal()
+    y = generate_normal()
+    # On verifie que le denominateur n'est pas trop proche de zero
+    # pour eviter des erreurs de division par zero materielles
+    if abs(y) < 1e-9:
+        return generate_cauchy()
+    return x / y
+
+def observer_instabilite_moyenne(n_steps):
+    # La loi de Cauchy n'a pas d'esperance mathematique finie.
+    # On observe que la moyenne empirique ne converge pas vers zero
+    # malgre la symetrie de la distribution.
+    somme = 0.0
+    moyennes_partielles = []
+
+    for i in range(1, n_steps + 1):
+        somme += generate_cauchy()
+        if i % (n_steps // 5) == 0:
+            moyennes_partielles.append(somme / i)
+
+    return moyennes_partielles
+
+if __name__ == '__main__':
+    N = 50000
+    print("Simulation du quotient de deux variables normales Z = X/Y")
+
+    # On lance la simulation
+    # En raison des valeurs extremes occasionnelles (heavy tails),
+    # la moyenne fait des sauts brusques.
+    moyennes = observer_instabilite_moyenne(N)
+
+    print("Moyennes partielles observees (non convergence) :")
+    for m in moyennes:
+        print(f"-> {m}")
+
+    print("Verification OK : Les variations de la moyenne illustrent l'absence d'esperance (Loi de Cauchy).")
+
+\end{lstlisting}
+
+
+\end{document}

@@ -1,31 +1,29 @@
-# Exercice 8
+# Exercice 8 : Génération de la loi de Rayleigh \quad $\bigstar\bigstar\bigstar\bigstar\star$
 
-## Exercice 8 : Variables aléatoires de même loi $\bigstar\bigstar\bigstar\bigstar\star$
+## Énoncé
 
-Donner un exemple explicite de deux variables aléatoires $X$ et $Y$ définies sur le même espace probabilisé $(\Omega, \mathcal{F}, \mathbb{P})$, ayant la même loi de probabilité ($\mathbb{P}_X = \mathbb{P}_Y$), mais telles que l'événement $\{ X = Y \}$ a une probabilité nulle.
+Soient $X$ et $Y$ deux variables aléatoires indépendantes suivant la loi normale standard $\mathcal{N}(0, 1)$.
+On pose $R = \sqrt{X^2 + Y^2}$.
+Déterminer la densité de probabilité de la variable aléatoire $R$ (loi de Rayleigh).
 
-### Correction pas à pas
+## Correction
 
-1. **Choix de l'espace probabilisé**
-   Prenons l'expérience classique d'un lancer de dé ou d'une pièce. Pour avoir des probabilités nulles sur une égalité exacte, il vaut mieux choisir un espace continu.
-   Soit $\Omega = [0, 1]$ muni de la tribu borélienne $\mathcal{B}([0, 1])$ et de la mesure de Lebesgue $\mathbb{P}$ (probabilité uniforme sur $[0, 1]$).
+Les variables $X$ et $Y$ sont normales centrées réduites et indépendantes. Leur densité conjointe est :
+$$ f_{(X,Y)}(x, y) = f_X(x) f_Y(y) = \frac{1}{2\pi} e^{-\frac{x^2 + y^2}{2}} $$
+La variable $R = \sqrt{X^2 + Y^2}$ représente la distance à l'origine d'un point aléatoire de coordonnées $(X,Y)$ dans le plan $\mathbb{R}^2$. $R$ prend donc des valeurs dans $[0, +\infty[$. Pour $r \leq 0$, $f_R(r) = 0$.
 
-2. **Construction des deux variables**
-   - Soit $X : \Omega \to \mathbb{R}$ définie par $X(\omega) = \omega$.
-     C'est la variable identité. Sa loi est la loi uniforme sur $[0, 1]$, notée $\mathcal{U}([0, 1])$.
-   - Soit $Y : \Omega \to \mathbb{R}$ définie par la symétrie : $Y(\omega) = 1 - \omega$.
-
-3. **Vérification de la loi de $Y$**
-   Calculons la fonction de répartition de $Y$ pour $y \in [0, 1]$ :
-   $F_Y(y) = \mathbb{P}(Y \leq y) = \mathbb{P}(1 - \omega \leq y) = \mathbb{P}(\omega \geq 1 - y)$.
-   Puisque $\omega$ suit une loi uniforme, la probabilité d'être supérieur à $1-y$ est la longueur de l'intervalle $[1-y, 1]$, qui vaut : $1 - (1 - y) = y$.
-   On retrouve $F_Y(y) = y$ sur $[0, 1]$. C'est exactement la fonction de répartition de la loi $\mathcal{U}([0, 1])$.
-   Donc $X$ et $Y$ ont la même loi (Loi Uniforme sur $[0, 1]$).
-
-4. **Calcul de la probabilité de l'égalité**
-   Étudions l'événement $\{ X = Y \}$.
-   $X(\omega) = Y(\omega) \iff \omega = 1 - \omega \iff 2\omega = 1 \iff \omega = \frac{1}{2}$.
-   Ainsi, $\{ \omega \in \Omega \mid X(\omega) = Y(\omega) \} = \left\{ \frac{1}{2} \right\}$.
-   La probabilité d'obtenir exactement un point précis (un singleton) avec la mesure de Lebesgue sur $[0, 1]$ est nulle :
-   $$ \mathbb{P}\left(\left\{ \frac{1}{2} \right\}\right) = 0 $$
-   Nous avons bien construit deux variables de même loi mais presque sûrement distinctes.
+Pour $r > 0$, la fonction de répartition de $R$ est la probabilité que le point $(X,Y)$ tombe dans le disque $D_r$ de centre l'origine et de rayon $r$ :
+$$ F_R(r) = \mathbb{P}(R \leq r) = \mathbb{P}(X^2 + Y^2 \leq r^2) = \iint_{x^2 + y^2 \leq r^2} \frac{1}{2\pi} e^{-\frac{x^2 + y^2}{2}} dx dy $$
+Pour calculer cette intégrale double, il est naturel de passer en coordonnées polaires.
+Posons $x = \rho \cos(\theta)$ et $y = \rho \sin(\theta)$, avec $\rho \in [0, r]$ et $\theta \in [0, 2\pi[$. L'élément différentiel d'aire est $dx dy = \rho d\rho d\theta$, et on a $x^2 + y^2 = \rho^2$.
+L'intégrale devient :
+$$ F_R(r) = \int_{0}^{2\pi} \int_{0}^{r} \frac{1}{2\pi} e^{-\frac{\rho^2}{2}} \rho d\rho d\theta $$
+L'intégrale par rapport à $\theta$ donne une constante de longueur $2\pi$, qui s'annule avec le facteur $\frac{1}{2\pi}$ extérieur :
+$$ F_R(r) = \frac{1}{2\pi} [\theta]_0^{2\pi} \int_{0}^{r} \rho e^{-\frac{\rho^2}{2}} d\rho = \int_{0}^{r} \rho e^{-\frac{\rho^2}{2}} d\rho $$
+La fonction sous l'intégrale est exactement la dérivée de $-e^{-\frac{\rho^2}{2}}$. Par conséquent :
+$$ F_R(r) = \left[ -e^{-\frac{\rho^2}{2}} \right]_0^r = -e^{-\frac{r^2}{2}} - (-e^0) = 1 - e^{-\frac{r^2}{2}} $$
+Pour obtenir la densité $f_R(r)$, on dérive la fonction de répartition par rapport à $r$ pour $r > 0$ :
+$$ f_R(r) = \frac{d}{dr} \left( 1 - e^{-\frac{r^2}{2}} \right) = - \left( -r e^{-\frac{r^2}{2}} \right) = r e^{-\frac{r^2}{2}} $$
+La densité de $R$ est donc :
+$$ f_R(r) = \begin{cases} r e^{-\frac{r^2}{2}} & \text{si } r \geq 0 \\ 0 & \text{si } r < 0 \end{cases} $$
+C'est l'expression analytique de la loi de Rayleigh de paramètre $\sigma = 1$. $\blacksquare$

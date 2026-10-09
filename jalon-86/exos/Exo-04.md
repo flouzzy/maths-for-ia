@@ -1,32 +1,33 @@
-# Exercice 4
+# Exercice 4 : Génération de la loi exponentielle \quad $\bigstar\bigstar\bigstar\star\star$
 
-## Exercice 4 : Somme de deux variables aléatoires $\bigstar\bigstar\star\star\star$
+## Énoncé
 
-Soient $X$ et $Y$ deux variables aléatoires sur l'espace mesurable $(\Omega, \mathcal{F})$.
-Montrer que pour tout réel $a$, l'ensemble $\{ \omega \in \Omega \mid X(\omega) + Y(\omega) < a \}$ appartient à la tribu $\mathcal{F}$.
-*Indication : Utiliser la densité de $\mathbb{Q}$ dans $\mathbb{R}$.*
+Soit $U$ une variable aléatoire suivant la loi uniforme continue sur $]0, 1[$.
+On définit $X = -\frac{1}{\lambda} \ln(1-U)$, avec $\lambda > 0$.
+Démontrer pas à pas que $X$ suit la loi exponentielle de paramètre $\lambda$.
 
-### Correction pas à pas
+## Correction
 
-1. **Réécriture de l'inégalité**
-   L'événement s'écrit $A = \{ \omega \in \Omega \mid X(\omega) + Y(\omega) < a \}$.
-   On peut le réécrire en séparant $X$ et $Y$ :
-   $A = \{ \omega \in \Omega \mid X(\omega) < a - Y(\omega) \}$.
+Pour caractériser la loi de la variable aléatoire $X$, nous allons calculer sa fonction de répartition $F_X(x) = \mathbb{P}(X \leq x)$.
 
-2. **Utilisation de la densité des rationnels**
-   Si deux nombres réels vérifient $x < y$, la densité de $\mathbb{Q}$ dans $\mathbb{R}$ assure qu'il existe un nombre rationnel $q \in \mathbb{Q}$ tel que $x < q < y$.
-   Ici, l'inégalité $X(\omega) < a - Y(\omega)$ implique l'existence d'un $q \in \mathbb{Q}$ tel que :
-   $X(\omega) < q < a - Y(\omega)$.
-   Ce qui se sépare en deux conditions simultanées :
-   $X(\omega) < q$ ET $Y(\omega) < a - q$.
+La variable $U$ est à valeurs dans $]0, 1[$, donc $1-U$ est à valeurs dans $]0, 1[$. Le logarithme de $1-U$ est strictement négatif, et par conséquent $X = -\frac{1}{\lambda} \ln(1-U)$ est à valeurs strictement positives.
+Ainsi, pour tout $x \leq 0$, $F_X(x) = \mathbb{P}(X \leq x) = 0$.
 
-3. **Traduction ensembliste**
-   L'ensemble $A$ peut donc s'écrire comme une union dénombrable (puisque $\mathbb{Q}$ est dénombrable) sur tous les rationnels $q$ :
-   $A = \bigcup_{q \in \mathbb{Q}} \left( \{ \omega \mid X(\omega) < q \} \cap \{ \omega \mid Y(\omega) < a - q \} \right)$.
+Soit $x > 0$. Par définition de $X$ :
+$$ F_X(x) = \mathbb{P}\left(-\frac{1}{\lambda} \ln(1-U) \leq x\right) $$
+Multiplions par $-\lambda$ (qui est strictement négatif, le sens de l'inégalité s'inverse) :
+$$ F_X(x) = \mathbb{P}(\ln(1-U) \geq -\lambda x) $$
+Composons par la fonction exponentielle, qui est strictement croissante sur $\mathbb{R}$ :
+$$ F_X(x) = \mathbb{P}(1-U \geq e^{-\lambda x}) $$
+Ce qui équivaut à :
+$$ F_X(x) = \mathbb{P}(U \leq 1 - e^{-\lambda x}) $$
+Puisque $U$ suit la loi uniforme sur $]0, 1[$, la probabilité $\mathbb{P}(U \leq t)$ vaut $t$ pour tout $t \in [0, 1]$.
+Ici, $t = 1 - e^{-\lambda x}$. Comme $x > 0$ et $\lambda > 0$, on a $\lambda x > 0 \implies e^{-\lambda x} \in ]0, 1[$, donc $1 - e^{-\lambda x} \in ]0, 1[$.
+Par conséquent :
+$$ F_X(x) = 1 - e^{-\lambda x} $$
 
-4. **Mesurabilité**
-   Puisque $X$ est une variable aléatoire, l'ensemble $\{ \omega \mid X(\omega) < q \} = X^{-1}(]-\infty, q[)$ appartient à $\mathcal{F}$.
-   De même, puisque $Y$ est une variable aléatoire, l'ensemble $\{ \omega \mid Y(\omega) < a - q \} = Y^{-1}(]-\infty, a-q[)$ appartient à $\mathcal{F}$.
-   Leur intersection appartient à $\mathcal{F}$ (stabilité par intersection finie).
-   L'union, indexée par l'ensemble dénombrable $\mathbb{Q}$, d'éléments de $\mathcal{F}$ appartient à $\mathcal{F}$ (stabilité par union dénombrable).
-   Donc l'événement $\{ X + Y < a \}$ est bien dans $\mathcal{F}$, ce qui prouve que $X+Y$ est mesurable.
+Bilan analytique :
+$$ F_X(x) = \begin{cases} 1 - e^{-\lambda x} & \text{si } x > 0 \\ 0 & \text{si } x \leq 0 \end{cases} $$
+En dérivant cette fonction par rapport à $x$ sur $]0, +\infty[$, on obtient la densité :
+$$ f_X(x) = \lambda e^{-\lambda x} $$
+C'est exactement la densité et la fonction de répartition de la loi exponentielle de paramètre $\lambda$. $\blacksquare$

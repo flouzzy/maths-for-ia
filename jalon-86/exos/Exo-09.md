@@ -1,37 +1,32 @@
-# Exercice 9
+# Exercice 9 : Théorème de la transformation universelle (Inverse Transform Sampling) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-## Exercice 9 : Propriété de la fonction de répartition $\bigstar\bigstar\bigstar\bigstar\bigstar$
+## Énoncé
 
-Soit $X$ une variable aléatoire réelle et $F(x) = \mathbb{P}(X \leq x)$ sa fonction de répartition.
-Démontrer rigoureusement que $F$ est continue à droite en tout point $x_0 \in \mathbb{R}$, c'est-à-dire : $\lim_{x \to x_0^+} F(x) = F(x_0)$.
-*Indication : Utiliser la continuité décroissante d'une mesure de probabilité.*
+Soit $X$ une variable aléatoire réelle de fonction de répartition $F$ continue et strictement croissante.
+On définit la fonction quantile (ou inverse de la fonction de répartition) par $F^{-1} : ]0, 1[ \to \mathbb{R}$.
+Soit $U$ une variable aléatoire de loi uniforme sur $]0, 1[$.
+Montrer rigoureusement que la variable aléatoire $Y = F^{-1}(U)$ possède exactement $F$ pour fonction de répartition (donc la même loi que $X$).
 
-### Correction pas à pas
+## Correction
 
-1. **Définition de la limite par valeurs supérieures**
-   Pour montrer la limite à droite, on considère une suite $(x_n)_{n \in \mathbb{N}}$ de réels strictement décroissante qui converge vers $x_0$.
-   Par exemple, la suite $x_n = x_0 + \frac{1}{n}$ pour $n \geq 1$.
-   Il faut prouver que $\lim_{n \to \infty} F(x_n) = F(x_0)$.
+L'objectif est de calculer la fonction de répartition de $Y$, notée $F_Y(y)$, pour tout $y \in \mathbb{R}$.
+Par définition :
+$$ F_Y(y) = \mathbb{P}(Y \leq y) = \mathbb{P}(F^{-1}(U) \leq y) $$
 
-2. **Traduction en termes d'événements**
-   Considérons la suite d'événements : $A_n = \{ \omega \in \Omega \mid X(\omega) \leq x_n \}$.
-   Par définition, $\mathbb{P}(A_n) = F(x_n)$.
-   Puisque la suite $(x_n)$ est décroissante ($x_{n+1} \leq x_n$), si $X(\omega) \leq x_{n+1}$, alors automatiquement $X(\omega) \leq x_n$.
-   Donc les événements sont emboîtés de manière décroissante : $A_1 \supset A_2 \supset A_3 \supset \dots$
+Par hypothèse, la fonction de répartition $F$ de $X$ est continue et strictement croissante. Une telle fonction réalise une bijection de l'ensemble des valeurs possibles de $X$ (un intervalle, éventuellement $\mathbb{R}$ entier) vers l'intervalle $]0, 1[$.
+Elle admet donc une fonction réciproque $F^{-1} : ]0, 1[ \to \mathbb{R}$ qui est également strictement croissante.
 
-3. **L'intersection des événements**
-   Quelle est l'intersection de cette suite décroissante d'événements ?
-   $$ A = \bigcap_{n=1}^{\infty} A_n = \bigcap_{n=1}^{\infty} \{ X \leq x_n \} $$
-   Si un réel $X(\omega)$ est inférieur ou égal à $x_n$ pour tout $n$, et sachant que $x_n \to x_0$ en décroissant, cela implique rigoureusement que $X(\omega) \leq x_0$.
-   Réciproquement, si $X(\omega) \leq x_0$, puisque $x_0 < x_n$ pour tout $n$, on a bien $X(\omega) \leq x_n$ pour tout $n$.
-   Donc l'intersection est exactement :
-   $$ A = \{ X \leq x_0 \} $$
+Puisque $F$ est strictement croissante, elle préserve l'ordre. On peut donc appliquer la fonction $F$ aux deux membres de l'inégalité à l'intérieur de la probabilité sans en changer le sens :
+L'inégalité $F^{-1}(U) \leq y$ est mathématiquement strictement équivalente à l'inégalité $F(F^{-1}(U)) \leq F(y)$.
 
-4. **Axiome de continuité décroissante de la probabilité**
-   D'après les axiomes de Kolmogorov (Jalon 85), toute mesure de probabilité $\mathbb{P}$ est continue par rapport aux suites décroissantes d'événements. Cela signifie que :
-   $$ \mathbb{P}\left( \bigcap_{n=1}^{\infty} A_n \right) = \lim_{n \to \infty} \mathbb{P}(A_n) $$
-   En remplaçant par nos expressions :
-   $$ \mathbb{P}(X \leq x_0) = \lim_{n \to \infty} \mathbb{P}(X \leq x_n) $$
-   Soit :
-   $$ F(x_0) = \lim_{n \to \infty} F(x_n) $$
-   Puisque ce résultat est vrai pour toute suite $(x_n)$ décroissant vers $x_0$, la fonction de répartition $F$ est bien continue à droite.
+Puisque $U \in ]0, 1[$, l'expression $F(F^{-1}(U))$ se simplifie exactement en $U$.
+Ainsi, l'égalité des probabilités devient :
+$$ F_Y(y) = \mathbb{P}(U \leq F(y)) $$
+
+La variable aléatoire $U$ suit une loi uniforme sur $]0, 1[$. La fonction de répartition d'une loi uniforme $\mathcal{U}([0,1])$ est donnée par $\mathbb{P}(U \leq t) = t$ pour tout $t \in [0, 1]$.
+Ici, $F$ est une fonction de répartition, ce qui signifie que pour tout réel $y$, la valeur de $F(y)$ appartient nécessairement à l'intervalle $[0, 1]$.
+Par conséquent, on peut remplacer $t$ par $F(y)$ :
+$$ \mathbb{P}(U \leq F(y)) = F(y) $$
+
+Nous venons de prouver que pour tout réel $y$, $F_Y(y) = F(y)$.
+La variable aléatoire $Y = F^{-1}(U)$ a donc la même fonction de répartition que $X$, ce qui signifie qu'elle suit exactement la même loi de probabilité. Ce résultat fondamental est à la base de toutes les méthodes informatiques de génération de nombres pseudo-aléatoires selon des lois continues arbitraires. $\blacksquare$

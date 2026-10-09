@@ -6,156 +6,159 @@ trimester: 8
 tags:
   - math/probabilites
   - ia/abstraction
-prev: "[[jalon-85/Jalon-85.md|Jalon 85 : Axiomes de Kolmogorov]]"
+prev: "[[Jalon 85 (Axiomes de Kolmogorov).md]]"
 next: "[[Jalon 87 (Intégration des variables aléatoires).md]]"
 ---
 
-# Jalon 86 : Variables aléatoires et Applications mesurables
+# Jalon 86 : Variables Aléatoires et Applications Mesurables
 
-## 1. Genèse et Intuition Physique
+## Introduction (Genèse historique et physique)
+Historiquement, la théorie des probabilités s'est développée autour de jeux de hasard (dés, cartes) où l'univers des possibles, noté $\Omega$, est un ensemble fini. Cependant, lorsqu'il s'agit de modéliser des phénomènes continus comme le mouvement brownien en physique, la durée de vie d'un composant électronique, ou les fluctuations d'un marché financier, l'univers $\Omega$ devient infini et complexe.
+Andrey Kolmogorov, en 1933, a posé les fondations axiomatiques modernes des probabilités. L'idée géniale a été de ne pas étudier l'univers $\Omega$ directement, mais de s'y intéresser par l'intermédiaire d'applications qui traduisent chaque événement abstrait $\omega \in \Omega$ en un nombre réel. Ce "traducteur" est appelé une **variable aléatoire**.
+Cependant, pour que la théorie reste cohérente, on ne peut pas accepter n'importe quelle application. Il est impératif que pour toute question naturelle que l'on se pose sur le résultat (par exemple, "le résultat est-il inférieur à $x$ ?"), la probabilité de cet événement puisse être calculée. C'est ici qu'intervient la notion de **mesurabilité**. Une variable aléatoire n'est donc rien d'autre qu'une application mesurable d'un espace de probabilité vers un espace mesurable, typiquement $\mathbb{R}$ muni de la tribu de Borel.
 
-Historiquement, le passage de l'événement abstrait à la variable aléatoire est une révolution conceptuelle. Imaginez l'étude d'un gaz composé de milliards de molécules. L'espace fondamental $\Omega$ représente l'ensemble de tous les états microscopiques possibles du gaz (positions et vitesses de chaque molécule). Cet espace est d'une complexité vertigineuse.
-Toutefois, en tant que physicien, ce ne sont pas les trajectoires individuelles qui nous intéressent, mais des grandeurs macroscopiques : la température, la pression, ou l'énergie cinétique totale.
+## Définitions, Théorèmes et Exemples
 
-Une **variable aléatoire** agit précisément comme un instrument de mesure : c'est une "lunette" mathématique qui projette la complexité de l'espace abstrait $\Omega$ vers l'espace beaucoup plus familier et ordonné des nombres réels $\mathbb{R}$. Elle prend un état du monde $\omega$ (le tirage d'un dé, la position d'une particule, le pixel d'une image) et lui associe un nombre réel $X(\omega)$.
+Soit $(\Omega, \mathcal{F}, \mathbb{P})$ un espace de probabilité. L'ensemble $\Omega$ est l'univers, $\mathcal{F}$ est une tribu (ou $\sigma$-algèbre) sur $\Omega$ (les événements), et $\mathbb{P}$ est une mesure de probabilité.
+Soit $(E, \mathcal{E})$ un espace mesurable (l'espace d'arrivée). Le plus souvent, $E = \mathbb{R}$ et $\mathcal{E} = \mathcal{B}(\mathbb{R})$, la tribu de Borel.
 
-Cependant, pour que cette association soit cohérente avec le calcul des probabilités, il ne suffit pas de lier n'importe quel état à n'importe quel nombre. Andreï Kolmogorov, dans son approche axiomatique de 1933, impose une condition stricte : si l'on se pose la question "Le résultat numérique est-il inférieur à une certaine valeur $x$ ?", l'ensemble des états originaux $\omega$ qui satisfont cette condition doit être mesurable, c'est-à-dire qu'on doit pouvoir lui attribuer une probabilité. C'est la naissance de la notion d'application mesurable, véritable clef de voûte de la théorie moderne des probabilités et fondation indispensable pour toute l'intelligence artificielle.
+**Définition 1 (Variable aléatoire) :**
+Une application $X : \Omega \to E$ est appelée une variable aléatoire (ou application mesurable) à valeurs dans $E$, si pour tout ensemble mesurable $B \in \mathcal{E}$, l'image réciproque $X^{-1}(B)$ appartient à la tribu $\mathcal{F}$.
+Formellement :
+$$ \forall B \in \mathcal{E}, \quad X^{-1}(B) = \{ \omega \in \Omega \mid X(\omega) \in B \} \in \mathcal{F} $$
+Si $E = \mathbb{R}$ et $\mathcal{E} = \mathcal{B}(\mathbb{R})$, $X$ est une variable aléatoire réelle (v.a.r.).
 
-## 2. Définitions et Théorèmes Fondamentaux
+*Exemple 1 : Lancer de dé*
+Considérons le lancer d'un dé à 6 faces.
+- L'univers : $\Omega = \{1, 2, 3, 4, 5, 6\}$.
+- La tribu : $\mathcal{F} = \mathcal{P}(\Omega)$ (l'ensemble des parties de $\Omega$).
+- La variable aléatoire $X$ : Soit $X(\omega) = 1$ si $\omega$ est pair, et $X(\omega) = 0$ si $\omega$ est impair.
+- Espace d'arrivée : $E = \mathbb{R}$ avec la tribu de Borel $\mathcal{B}(\mathbb{R})$.
+Vérifions la mesurabilité : Prenons l'ensemble borélien $B = \{1\}$. Son image réciproque est $X^{-1}(\{1\}) = \{2, 4, 6\}$. Cet ensemble appartient bien à $\mathcal{F}$ puisque $\mathcal{F} = \mathcal{P}(\Omega)$. $X$ est donc bien une variable aléatoire.
 
-### A. La notion de Variable Aléatoire Réelle
+**Définition 2 (Loi d'une variable aléatoire) :**
+Si $X$ est une variable aléatoire de $(\Omega, \mathcal{F}, \mathbb{P})$ dans $(E, \mathcal{E})$, on définit la loi de $X$, notée $\mathbb{P}_X$, comme la mesure de probabilité sur $(E, \mathcal{E})$ donnée par la mesure image :
+$$ \forall B \in \mathcal{E}, \quad \mathbb{P}_X(B) = \mathbb{P}(X^{-1}(B)) = \mathbb{P}(\{\omega \in \Omega \mid X(\omega) \in B\}) $$
+On note souvent cela $\mathbb{P}(X \in B)$.
 
-> **Définition 1 (Variable Aléatoire Réelle) :**
-> Soit $(\Omega, \mathcal{F}, \mathbb{P})$ un espace probabilisé et $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$ l'espace mesurable des réels muni de la tribu borélienne.
-> Une application $X : \Omega \to \mathbb{R}$ est appelée **variable aléatoire réelle** (v.a.r) si elle est $\mathcal{F}/\mathcal{B}(\mathbb{R})$-mesurable.
-> Cela signifie que pour tout ensemble borélien $B \in \mathcal{B}(\mathbb{R})$, l'image réciproque de $B$ par $X$ appartient à la tribu $\mathcal{F}$ :
-> $$ \forall B \in \mathcal{B}(\mathbb{R}), \quad X^{-1}(B) = \{ \omega \in \Omega \mid X(\omega) \in B \} \in \mathcal{F} $$
+*Exemple 2 : Calcul de loi*
+Reprenons l'exemple 1 avec un dé équilibré : $\mathbb{P}(\{\omega\}) = 1/6$ pour tout $\omega \in \Omega$.
+Calculons la loi de $X$. $X$ prend ses valeurs dans $\{0, 1\}$.
+- $\mathbb{P}_X(\{1\}) = \mathbb{P}(X = 1) = \mathbb{P}(\{2, 4, 6\}) = \frac{3}{6} = \frac{1}{2}$.
+- $\mathbb{P}_X(\{0\}) = \mathbb{P}(X = 0) = \mathbb{P}(\{1, 3, 5\}) = \frac{3}{6} = \frac{1}{2}$.
+$X$ suit donc une loi de Bernoulli de paramètre $p = 1/2$.
 
-**Exemple Concret Immédiat : Le double lancer de pile ou face**
-Soit l'expérience de deux lancers de pièce indépendants.
-L'univers est $\Omega = \{(P,P), (P,F), (F,P), (F,F)\}$.
-La tribu $\mathcal{F}$ est l'ensemble des parties de $\Omega$, soit $\mathcal{P}(\Omega)$ (qui contient $2^4 = 16$ événements).
-Définissons la variable aléatoire $X$ comme "le nombre de 'Pile' obtenus".
-- $X((P,P)) = 2$
-- $X((P,F)) = 1$
-- $X((F,P)) = 1$
-- $X((F,F)) = 0$
+**Théorème 1 (Caractérisation de la mesurabilité) :**
+Soit $\mathcal{E}$ la tribu engendrée par une famille de parties $\mathcal{C}$ de $E$, c'est-à-dire $\mathcal{E} = \sigma(\mathcal{C})$.
+Pour qu'une application $X : \Omega \to E$ soit mesurable (i.e. soit une variable aléatoire), il suffit que pour tout $C \in \mathcal{C}$, on ait $X^{-1}(C) \in \mathcal{F}$.
 
-Prenons le borélien $B = [1, 3]$. L'événement associé à $X \in [1,3]$ est l'image réciproque :
-$X^{-1}([1, 3]) = \{ \omega \in \Omega \mid X(\omega) \in [1, 3] \} = \{ (P,P), (P,F), (F,P) \}$.
-Cet ensemble appartient bien à $\mathcal{P}(\Omega)$, donc $X$ est bien une variable aléatoire mesurable.
+*Exemple 3 : Variables aléatoires réelles*
+Pour $E = \mathbb{R}$, la tribu de Borel $\mathcal{B}(\mathbb{R})$ est engendrée par les intervalles de la forme $]-\infty, x]$ pour $x \in \mathbb{R}$.
+D'après le Théorème 1, $X : \Omega \to \mathbb{R}$ est une variable aléatoire réelle si et seulement si pour tout $x \in \mathbb{R}$, l'ensemble $\{ \omega \in \Omega \mid X(\omega) \leq x \}$ appartient à la tribu $\mathcal{F}$.
 
----
+**Définition 3 (Fonction de répartition) :**
+La loi d'une variable aléatoire réelle $X$ est entièrement caractérisée par sa fonction de répartition $F_X : \mathbb{R} \to [0, 1]$ définie par :
+$$ F_X(x) = \mathbb{P}_X(]-\infty, x]) = \mathbb{P}(X \leq x) $$
 
-### B. Caractérisation simplifiée de la mesurabilité
+*Exemple 4 : Fonction de répartition de la loi exponentielle*
+Soit $X$ une variable aléatoire suivant une loi exponentielle de paramètre $\lambda > 0$. Sa densité de probabilité est $f_X(t) = \lambda e^{-\lambda t} \mathbf{1}_{\{t \geq 0\}}$.
+Calculons sa fonction de répartition $F_X(x)$ pour $x \geq 0$ :
+$$ F_X(x) = \mathbb{P}(X \leq x) = \int_{-\infty}^{x} f_X(t) dt = \int_{0}^{x} \lambda e^{-\lambda t} dt = \left[ -e^{-\lambda t} \right]_0^x = 1 - e^{-\lambda x} $$
+Pour $x < 0$, $F_X(x) = 0$.
 
-Vérifier la mesurabilité pour tout borélien $B \in \mathcal{B}(\mathbb{R})$ est en pratique impossible car la tribu borélienne est extrêmement riche. Le théorème suivant offre un critère fondamental et opératoire.
+*Exemple 5 : Transformation d'une variable aléatoire*
+Soit $U$ une variable aléatoire suivant une loi uniforme sur $[0, 1]$. Posons $X = -\frac{1}{\lambda} \ln(U)$, avec $\lambda > 0$.
+Montrons que $X$ suit une loi exponentielle de paramètre $\lambda$.
+Calculons la fonction de répartition de $X$. Puisque $U \in ]0, 1]$, $X$ prend ses valeurs dans $[0, +\infty[$.
+Pour $x \geq 0$ :
+$$ F_X(x) = \mathbb{P}(X \leq x) = \mathbb{P}\left(-\frac{1}{\lambda} \ln(U) \leq x\right) = \mathbb{P}(\ln(U) \geq -\lambda x) = \mathbb{P}(U \geq e^{-\lambda x}) $$
+Comme $U$ est uniforme sur $[0, 1]$, $\mathbb{P}(U \geq c) = 1 - c$ pour $c \in [0, 1]$.
+Ainsi, $F_X(x) = 1 - e^{-\lambda x}$. Ceci est exactement la fonction de répartition d'une loi exponentielle $\mathcal{E}(\lambda)$.
 
-> **Théorème 1 (Caractérisation de la mesurabilité par les générateurs) :**
-> Soit $X : \Omega \to \mathbb{R}$ une application et $\mathcal{C}$ une classe de parties de $\mathbb{R}$ qui engendre la tribu borélienne, c'est-à-dire $\sigma(\mathcal{C}) = \mathcal{B}(\mathbb{R})$.
-> L'application $X$ est mesurable si et seulement si :
-> $$ \forall C \in \mathcal{C}, \quad X^{-1}(C) \in \mathcal{F} $$
-> En particulier, en choisissant $\mathcal{C} = \{ ]-\infty, x] \mid x \in \mathbb{R} \}$, $X$ est une variable aléatoire si et seulement si pour tout réel $x$, l'événement $\{X \leq x\}$ appartient à $\mathcal{F}$.
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  % Espace Omega
+  \draw[fill=blue!10] (0,0) ellipse (1.5 and 1);
+  \node at (0, 0.7) {$\Omega$ (Univers abstrait)};
 
-**Exemple Concret Immédiat : Fonction indicatrice**
-Soit $A \subset \Omega$. On définit la fonction indicatrice $\mathbf{1}_A : \Omega \to \mathbb{R}$ par :
-$$ \mathbf{1}_A(\omega) = \begin{cases} 1 & \text{si } \omega \in A \\ 0 & \text{si } \omega \notin A \end{cases} $$
-Étudions la pré-image des intervalles $]-\infty, x]$ :
-- Si $x < 0$ : $\mathbf{1}_A^{-1}(]-\infty, x]) = \emptyset$ (car $\mathbf{1}_A$ ne prend que les valeurs 0 et 1).
-- Si $0 \leq x < 1$ : $\mathbf{1}_A^{-1}(]-\infty, x]) = A^c$ (car seule la valeur 0 est incluse).
-- Si $x \geq 1$ : $\mathbf{1}_A^{-1}(]-\infty, x]) = \Omega$.
-Pour que $\mathbf{1}_A$ soit une variable aléatoire, il faut et il suffit que $\emptyset, A^c, \Omega \in \mathcal{F}$. Par définition d'une tribu, $\emptyset$ et $\Omega$ y sont toujours. Il reste la condition $A^c \in \mathcal{F}$, ce qui équivaut à $A \in \mathcal{F}$.
-Ainsi, $\mathbf{1}_A$ est une variable aléatoire mesurable si et seulement si l'ensemble $A$ est un événement mesurable de $\mathcal{F}$.
+  \filldraw[black] (-0.5, 0.2) circle (1pt) node[anchor=east] {$\omega_1$};
+  \filldraw[black] (0.5, -0.3) circle (1pt) node[anchor=west] {$\omega_2$};
 
-**Cas limites et contre-exemples : L'ensemble de Vitali**
-Dans l'espace $\Omega = [0, 1]$ muni de la mesure de Lebesgue et de la tribu borélienne, il existe des sous-ensembles non mesurables, comme l'ensemble de Vitali $V$.
-Si l'on définit la fonction $X = \mathbf{1}_V$, alors pour $x \in [0, 1[$, l'ensemble $\{ \omega \in \Omega \mid X(\omega) \leq x \} = V^c$.
-Comme $V$ n'est pas mesurable, $V^c$ ne l'est pas non plus, donc l'image réciproque n'appartient pas à la tribu borélienne. La fonction indicatrice de l'ensemble de Vitali n'est pas une variable aléatoire. Elle est pathologique.
+  % Flèches de X
+  \draw[->, thick, red] (-0.4, 0.2) .. controls (1, 1.5) and (3, 1) .. (4.4, 0.1);
+  \draw[->, thick, red] (0.6, -0.3) .. controls (2, -1) and (3, -0.5) .. (5.4, 0.1);
+  \node[red] at (2.5, 1) {$X$};
 
----
+  % Espace R (Droite réelle)
+  \draw[->, thick] (4,-0.5) -- (7,-0.5) node[right] {$\mathbb{R}$};
+  \draw (4.5,-0.6) -- (4.5,-0.4) node[above] {$X(\omega_1)$};
+  \draw (5.5,-0.6) -- (5.5,-0.4) node[above] {$X(\omega_2)$};
 
-### C. Mesure de Probabilité Image : La Loi d'une Variable Aléatoire
+  % Borélien B
+  \draw[very thick, blue] (4.2, -0.5) -- (5.0, -0.5);
+  \node[blue, below] at (4.6, -0.7) {Borélien $B$};
 
-Une fois la mesurabilité établie, nous pouvons transférer la mesure de probabilité originelle $\mathbb{P}$ de l'espace abstrait vers l'espace réel.
+  % Image réciproque
+  \draw[dashed, blue] (-1.0, 0.3) ellipse (0.7 and 0.4);
+  \node[blue, above] at (-1.0, 0.7) {$X^{-1}(B) \in \mathcal{F}$};
+\end{tikzpicture}
+\end{center}
 
-> **Définition 2 (Loi d'une Variable Aléatoire) :**
-> Soit $X : (\Omega, \mathcal{F}, \mathbb{P}) \to (\mathbb{R}, \mathcal{B}(\mathbb{R}))$ une variable aléatoire.
-> La **loi de probabilité** (ou mesure image) de $X$, notée $\mathbb{P}_X$, est la mesure de probabilité sur l'espace d'arrivée $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$ définie par :
-> $$ \forall B \in \mathcal{B}(\mathbb{R}), \quad \mathbb{P}_X(B) = \mathbb{P}(X^{-1}(B)) = \mathbb{P}(\{\omega \in \Omega \mid X(\omega) \in B\}) = \mathbb{P}(X \in B) $$
+**Théorème 2 (Composition et opérations sur les variables aléatoires) :**
+1. Si $X : \Omega \to E$ est mesurable et $f : E \to G$ est mesurable (où $G$ est un autre espace mesurable), alors la composition $f \circ X : \Omega \to G$ est une variable aléatoire.
+2. Si $X$ et $Y$ sont deux variables aléatoires réelles, alors $X+Y$, $X \cdot Y$, $\max(X, Y)$ et $\min(X, Y)$ sont aussi des variables aléatoires réelles.
 
-**Exemple Concret Immédiat : Poussée vers l'espace Réel**
-Reprenons le double lancer de pile ou face avec une pièce équilibrée. $\mathbb{P}$ attribue la probabilité $1/4$ à chaque élément de $\Omega$.
-$X$ compte le nombre de "Pile". Les valeurs possibles sont $\{0, 1, 2\}$.
-Calculons la loi de $X$, $\mathbb{P}_X$, sur des ensembles de $\mathbb{R}$ :
-- $\mathbb{P}_X(\{2\}) = \mathbb{P}(X^{-1}(\{2\})) = \mathbb{P}(\{(P,P)\}) = 1/4$.
-- $\mathbb{P}_X(\{1\}) = \mathbb{P}(X^{-1}(\{1\})) = \mathbb{P}(\{(P,F), (F,P)\}) = 1/4 + 1/4 = 1/2$.
-- $\mathbb{P}_X(\{0\}) = \mathbb{P}(X^{-1}(\{0\})) = \mathbb{P}(\{(F,F)\}) = 1/4$.
-- $\mathbb{P}_X([1.5, 5]) = \mathbb{P}(X \in [1.5, 5]) = \mathbb{P}_X(\{2\}) = 1/4$.
-La mesure de probabilité a été entièrement transportée (ou poussée, *push-forward measure*) sur $\mathbb{R}$.
+*Exemple 6 : Somme de variables de Poisson*
+Si $X \sim \mathcal{P}(\lambda)$ et $Y \sim \mathcal{P}(\mu)$ sont indépendantes. D'après le théorème 2, $Z = X + Y$ est une variable aléatoire.
+On peut montrer par le calcul des probabilités discrètes que $Z \sim \mathcal{P}(\lambda + \mu)$.
 
-## 3. Démonstrations Rigoureuses
+*Exemple 7 : Maximum de deux variables uniformes*
+Soient $X_1, X_2$ deux variables indépendantes, uniformément distribuées sur $[0, 1]$. Soit $Y = \max(X_1, X_2)$.
+$Y$ est une variable aléatoire (Théorème 2). Calculons sa fonction de répartition $F_Y(y)$ pour $y \in [0,1]$.
+$$ F_Y(y) = \mathbb{P}(\max(X_1, X_2) \leq y) = \mathbb{P}(X_1 \leq y \text{ et } X_2 \leq y) $$
+Par indépendance, $F_Y(y) = \mathbb{P}(X_1 \leq y)\mathbb{P}(X_2 \leq y) = y \cdot y = y^2$.
+La densité de $Y$ est donc $f_Y(y) = F_Y'(y) = 2y$ sur $[0, 1]$.
 
-**Démonstration du Théorème 1 (Caractérisation de la mesurabilité par les générateurs)**
+## Démonstrations
 
-Nous devons montrer l'équivalence entre :
-(i) Pour tout $B \in \mathcal{B}(\mathbb{R})$, $X^{-1}(B) \in \mathcal{F}$
-(ii) Pour tout $C \in \mathcal{C}$ (où $\sigma(\mathcal{C}) = \mathcal{B}(\mathbb{R})$), $X^{-1}(C) \in \mathcal{F}$
+**Démonstration du Théorème 1 (Caractérisation de la mesurabilité) :**
 
-**Étape 1 : (i) implique (ii)**
-L'implication est directe. Par hypothèse, $\mathcal{C}$ est une sous-famille de $\mathcal{B}(\mathbb{R})$.
-Si l'image réciproque de tout ensemble de $\mathcal{B}(\mathbb{R})$ appartient à $\mathcal{F}$, c'est *a fortiori* vrai pour tout ensemble de $\mathcal{C}$.
+On suppose que pour tout $C \in \mathcal{C}$, on a $X^{-1}(C) \in \mathcal{F}$. On veut montrer que pour tout $B \in \mathcal{E} = \sigma(\mathcal{C})$, $X^{-1}(B) \in \mathcal{F}$.
+Soit $\mathcal{G}$ l'ensemble des parties de $E$ dont l'image réciproque par $X$ appartient à $\mathcal{F}$ :
+$$ \mathcal{G} = \{ B \subset E \mid X^{-1}(B) \in \mathcal{F} \} $$
+Montrons que $\mathcal{G}$ est une tribu sur $E$ :
+1. $\emptyset \in \mathcal{G}$ car $X^{-1}(\emptyset) = \emptyset \in \mathcal{F}$.
+2. Si $B \in \mathcal{G}$, alors $X^{-1}(B) \in \mathcal{F}$. Considérons le complémentaire $B^c = E \setminus B$.
+   $X^{-1}(B^c) = X^{-1}(E \setminus B) = \Omega \setminus X^{-1}(B) = (X^{-1}(B))^c$.
+   Puisque $\mathcal{F}$ est une tribu, le complémentaire de $X^{-1}(B)$ est dans $\mathcal{F}$, donc $X^{-1}(B^c) \in \mathcal{F}$, ce qui implique que $B^c \in \mathcal{G}$.
+3. Si $(B_n)_{n \in \mathbb{N}}$ est une suite d'éléments de $\mathcal{G}$, alors $X^{-1}(B_n) \in \mathcal{F}$ pour tout $n$.
+   $X^{-1}\left(\bigcup_{n \in \mathbb{N}} B_n\right) = \bigcup_{n \in \mathbb{N}} X^{-1}(B_n)$.
+   Comme $\mathcal{F}$ est une tribu, l'union dénombrable appartient à $\mathcal{F}$. Donc $\bigcup_{n} B_n \in \mathcal{G}$.
+L'ensemble $\mathcal{G}$ est donc une tribu. Par hypothèse, $\mathcal{C} \subset \mathcal{G}$. Or, $\sigma(\mathcal{C})$ est la plus petite tribu contenant $\mathcal{C}$.
+Par conséquent, $\sigma(\mathcal{C}) \subset \mathcal{G}$.
+Cela signifie que pour tout $B \in \sigma(\mathcal{C}) = \mathcal{E}$, $B \in \mathcal{G}$, donc $X^{-1}(B) \in \mathcal{F}$. La fonction $X$ est bien mesurable. $\blacksquare$
 
-**Étape 2 : (ii) implique (i)**
-Supposons que pour tout $C \in \mathcal{C}$, $X^{-1}(C) \in \mathcal{F}$.
-Nous devons prouver que cette propriété s'étend à toute la tribu borélienne.
-Considérons la classe d'ensembles :
-$$ \mathcal{A} = \{ B \in \mathcal{B}(\mathbb{R}) \mid X^{-1}(B) \in \mathcal{F} \} $$
-Notre but est de montrer que $\mathcal{A} = \mathcal{B}(\mathbb{R})$.
-Pour cela, montrons d'abord que $\mathcal{A}$ est une tribu sur $\mathbb{R}$.
+**Démonstration du Théorème 2 (point 1 : Composition) :**
 
-1. **La classe $\mathcal{A}$ contient l'ensemble vide :**
-   $X^{-1}(\emptyset) = \{ \omega \in \Omega \mid X(\omega) \in \emptyset \} = \emptyset$.
-   Or, par définition d'une tribu, $\emptyset \in \mathcal{F}$. Donc $\emptyset \in \mathcal{A}$.
+Soient $X : \Omega \to E$ mesurable et $f : E \to G$ mesurable. On veut montrer que $f \circ X : \Omega \to G$ est mesurable.
+Soit $\mathcal{G}$ la tribu sur l'espace d'arrivée $G$. Soit $C \in \mathcal{G}$.
+L'image réciproque de $C$ par $f \circ X$ est :
+$$ (f \circ X)^{-1}(C) = X^{-1}(f^{-1}(C)) $$
+Puisque $f$ est mesurable, l'ensemble $B = f^{-1}(C)$ appartient à la tribu $\mathcal{E}$ de $E$.
+Ensuite, puisque $X$ est mesurable, l'ensemble $X^{-1}(B)$ appartient à la tribu $\mathcal{F}$ de $\Omega$.
+Ainsi, $(f \circ X)^{-1}(C) \in \mathcal{F}$ pour tout $C \in \mathcal{G}$. La fonction composée est donc mesurable. $\blacksquare$
 
-2. **La classe $\mathcal{A}$ est stable par passage au complémentaire :**
-   Soit $B \in \mathcal{A}$. Par définition, $X^{-1}(B) \in \mathcal{F}$.
-   Considérons l'image réciproque du complémentaire $B^c = \mathbb{R} \setminus B$ :
-   $$ X^{-1}(B^c) = \{ \omega \in \Omega \mid X(\omega) \notin B \} = \Omega \setminus \{ \omega \in \Omega \mid X(\omega) \in B \} = (X^{-1}(B))^c $$
-   Puisque $\mathcal{F}$ est une tribu, elle est stable par passage au complémentaire. Ainsi, comme $X^{-1}(B) \in \mathcal{F}$, on a $(X^{-1}(B))^c \in \mathcal{F}$.
-   Cela signifie que $X^{-1}(B^c) \in \mathcal{F}$, donc $B^c \in \mathcal{A}$.
 
-3. **La classe $\mathcal{A}$ est stable par union dénombrable :**
-   Soit $(B_n)_{n \in \mathbb{N}}$ une suite d'ensembles appartenant à $\mathcal{A}$.
-   Par définition, pour tout $n \in \mathbb{N}$, $X^{-1}(B_n) \in \mathcal{F}$.
-   Considérons l'image réciproque de l'union :
-   $$ X^{-1}\left( \bigcup_{n=0}^{\infty} B_n \right) = \left\{ \omega \in \Omega \mid X(\omega) \in \bigcup_{n=0}^{\infty} B_n \right\} $$
-   Un élément $\omega$ appartient à cette union si et seulement s'il existe au moins un $n$ tel que $X(\omega) \in B_n$, c'est-à-dire $\omega \in X^{-1}(B_n)$.
-   Donc :
-   $$ X^{-1}\left( \bigcup_{n=0}^{\infty} B_n \right) = \bigcup_{n=0}^{\infty} X^{-1}(B_n) $$
-   Puisque chaque $X^{-1}(B_n) \in \mathcal{F}$ et que $\mathcal{F}$ est une tribu (stable par union dénombrable), l'union $\bigcup_{n=0}^{\infty} X^{-1}(B_n)$ appartient à $\mathcal{F}$.
-   Ainsi, $\bigcup_{n=0}^{\infty} B_n \in \mathcal{A}$.
+## Applications en Physique, Logique et Intelligence Artificielle
 
-Nous avons prouvé que $\mathcal{A}$ est une tribu.
-De plus, par notre hypothèse (ii), $\mathcal{A}$ contient la classe $\mathcal{C}$.
-Or, la plus petite tribu contenant $\mathcal{C}$ est, par définition, la tribu engendrée $\sigma(\mathcal{C})$.
-Puisque $\mathcal{A}$ est une tribu contenant $\mathcal{C}$, on a nécessairement :
-$$ \sigma(\mathcal{C}) \subset \mathcal{A} $$
-Comme on a supposé que $\sigma(\mathcal{C}) = \mathcal{B}(\mathbb{R})$ et que $\mathcal{A} \subset \mathcal{B}(\mathbb{R})$ par définition, nous concluons que :
-$$ \mathcal{A} = \mathcal{B}(\mathbb{R}) $$
-Cela signifie exactement que pour tout $B \in \mathcal{B}(\mathbb{R})$, $X^{-1}(B) \in \mathcal{F}$, ce qui achève la démonstration. $\blacksquare$
+### Physique Statistique
+En mécanique statistique classique, l'état d'un système de particules est décrit par un point dans l'espace des phases (l'univers $\Omega$). Les observables physiques macroscopiques telles que l'énergie interne $E$, la pression $P$, ou la température, sont modélisées mathématiquement comme des variables aléatoires (fonctions mesurables sur l'espace des phases). La loi de ces variables, issue d'une mesure de probabilité (comme la mesure de Gibbs canonique), permet d'obtenir les fluctuations statistiques et d'établir les lois de la thermodynamique.
 
-## 4. Applications en Physique, Logique & Intelligence Artificielle
+### Logique et Informatique Théorique
+La mesurabilité joue le rôle de pont entre l'information accessible et la décision. En théorie de la décision et du filtrage (comme le filtre de Kalman), une information acquise au cours du temps engendre une suite de tribus emboîtées appelée *filtration*, $(\mathcal{F}_t)_{t \ge 0}$. Une stratégie de décision $u_t$ (par exemple l'achat ou la vente d'une action, ou une instruction de contrôle) doit être une fonction mesurable par rapport à $\mathcal{F}_t$, ce que l'on appelle un processus *adapté*. Cela traduit le fait qu'une décision prise à l'instant $t$ ne peut dépendre que des informations observées jusqu'à $t$, respectant ainsi le principe de causalité.
 
-### A. IA : Vecteurs Gaussiens et Espaces Latents (Auto-encodeurs)
-Dans les architectures d'apprentissage profond, notamment les Auto-Encodeurs Variationnels (VAE) ou les modèles de diffusion, les données brutes (les images, de très haute dimension) sont compressées vers un espace latent $Z$ de plus basse dimension.
-Chaque coordonnée du vecteur latent $Z$ est rigoureusement traitée comme une variable aléatoire mesurable. Lorsqu'un réseau de neurones (l'encodeur) prend une image $X$ et applique des couches denses non linéaires (fonctions d'activation ReLU, Sigmoïde), il applique une fonction continue. Le théorème fondamental de la mesurabilité stipule que la composition d'une application continue par une application mesurable reste mesurable. Ainsi, si les "bruits" initiaux en entrée du réseau sont des variables aléatoires bien définies, les activations dans les couches profondes et la sortie du réseau le sont également, garantissant que la fonction de coût peut être optimisée en espérance.
-
-### B. Physique Statistique : Mesurabilité des observables macroscopiques
-En physique statistique, l'espace des phases $\Omega$ d'un système à $N$ particules est doté de la tribu des ensembles mesurables au sens de Liouville. L'énergie totale $H(q,p)$ du système, où $q$ et $p$ sont les positions et les quantités de mouvement, est une variable aléatoire (une observable). L'équivalence entre l'ensemble microcanonique et canonique repose fondamentalement sur la possibilité de mesurer les volumes de l'espace des phases pour lesquels $E \leq H(q,p) \leq E + \Delta E$. La mesurabilité de la fonction hamiltonienne assure que ces volumes sont mathématiquement bien définis, permettant d'établir le lien fondamental entre l'entropie de Boltzmann ($S = k_B \ln \Omega$) et la probabilité des états.
-
-### C. Logique : Transformation des propositions en variables de Boole
-Dans le cadre de la logique formelle modélisée par l'informatique théorique, une proposition abstraite (vraie ou fausse) associée à des événements peut être modélisée par une variable aléatoire indicatrice (prenant des valeurs dans $\{0, 1\}$). Les opérations logiques de base se traduisent par des opérations algébriques sur des variables aléatoires mesurables :
-- La négation $\text{NON}(A)$ devient $1 - \mathbf{1}_A$
-- La conjonction $(A \text{ ET } B)$ devient $\mathbf{1}_A \times \mathbf{1}_B = \min(\mathbf{1}_A, \mathbf{1}_B)$
-- La disjonction $(A \text{ OU } B)$ devient $\mathbf{1}_A + \mathbf{1}_B - \mathbf{1}_A \mathbf{1}_B = \max(\mathbf{1}_A, \mathbf{1}_B)$
-L'espace mesurable fournit ainsi le terreau rigoureux permettant de développer la logique probabiliste, fondation des réseaux bayésiens et de l'inférence par passage de messages en intelligence artificielle.
+### Intelligence Artificielle et Machine Learning
+L'apprentissage statistique repose entièrement sur la notion de variables aléatoires.
+Un modèle de classification (comme un réseau de neurones) cherche à apprendre une application mesurable $f_\theta : \mathcal{X} \to \mathcal{Y}$ qui lie des caractéristiques observables $X$ (image, texte) à un label $Y$.
+La mesure de probabilité jointe $\mathbb{P}_{(X,Y)}$ est inconnue, et nous ne disposons que d'un ensemble d'observations (variables aléatoires i.i.d.).
+La fonction de perte empirique (par exemple la *Cross-Entropy*) est elle-même une variable aléatoire car elle dépend de l'échantillon. Le fait que les opérations usuelles (somme, produit, fonctions d'activation continues comme ReLU, Sigmoïde, qui sont toutes mesurables) préservent la mesurabilité garantit que la fonction de perte finale et le gradient (via la rétropropagation) sont bien des variables aléatoires rigoureusement définies. Cela légitime l'utilisation des lois des grands nombres pour analyser la convergence de la descente de gradient stochastique (SGD).
