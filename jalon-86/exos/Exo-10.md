@@ -1,35 +1,22 @@
-## Loi de la distance minimale au centre \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
+# Exercice 10
 
-**Énoncé :**
-Un tireur à l'arc lance une flèche sur une cible circulaire de rayon $R$. On suppose que le point d'impact suit une loi uniforme sur l'aire de la cible.
-Soit $D$ la variable aléatoire représentant la distance entre le point d'impact et le centre de la cible.
-Déterminer la fonction de répartition puis la densité de probabilité de la variable $D$.
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Correction Explicative :**
-1. Modélisation géométrique : Soit $\Omega$ le disque de centre $(0,0)$ et de rayon $R$ dans le plan $\mathbb{R}^2$.
-   L'aire totale de la cible est $Area(\Omega) = \pi R^2$.
-   Le tir étant uniforme, la probabilité que le point d'impact $(X, Y)$ tombe dans une région mesurable $A \subset \Omega$ est proportionnelle à l'aire de cette région. La mesure de probabilité géométrique est définie par :
-   $$\mathbb{P}((X, Y) \in A) = \frac{Area(A)}{Area(\Omega)} = \frac{Area(A)}{\pi R^2}$$
-2. Définition de la variable aléatoire : La distance au centre est donnée par $D = \sqrt{X^2 + Y^2}$. Le support de la variable aléatoire $D$ est l'intervalle $[0, R]$, puisqu'aucune flèche ne frappe en dehors de la cible.
-3. Calculons la fonction de répartition $F_D(x) = \mathbb{P}(D \leq x)$ :
-   - Si $x < 0$, la distance ne peut être négative, l'événement est impossible, donc $F_D(x) = 0$.
-   - Si $x > R$, la flèche tombe toujours à une distance inférieure à $R$, l'événement est certain, donc $F_D(x) = 1$.
-   - Considérons le cas intéressant où $0 \leq x \leq R$.
-     L'événement $\{D \leq x\}$ signifie que le point d'impact se trouve dans un disque concentrique de rayon $x$.
-     L'aire de cet événement, noté $Disque(0, x)$, est $\pi x^2$.
-     En appliquant la loi géométrique uniforme :
-     $$F_D(x) = \mathbb{P}(D \leq x) = \frac{Area(Disque(0, x))}{Area(\Omega)} = \frac{\pi x^2}{\pi R^2} = \frac{x^2}{R^2}$$
-4. Synthèse de la fonction de répartition :
-   $$F_D(x) = \begin{cases}
-   0 & \text{si } x < 0 \\
-   \left(\frac{x}{R}\right)^2 & \text{si } 0 \leq x \leq R \\
-   1 & \text{si } x > R
-   \end{cases}$$
-   Nous constatons que la fonction $F_D$ est continue sur tout $\mathbb{R}$ et dérivable sur $\mathbb{R}$ sauf éventuellement en $0$ et en $R$.
-5. Calculons la densité de probabilité $f_D(x)$ par dérivation de la fonction de répartition :
-   - Pour $x < 0$ et $x > R$, la dérivée est nulle.
-   - Pour $x \in ]0, R[$, nous dérivons $F_D(x) = \frac{x^2}{R^2}$ par rapport à $x$ :
-     $$f_D(x) = \frac{d}{dx} \left( \frac{x^2}{R^2} \right) = \frac{2x}{R^2}$$
-6. Conclusion : La densité de probabilité de la distance $D$ est donnée par :
-   $$f_D(x) = \frac{2x}{R^2} \mathbf{1}_{[0, R]}(x)$$
-   On observe une propriété fascinante : la densité n'est pas constante. Elle est nulle au centre ($x=0$) et maximale sur le bord de la cible ($x=R$). Il est géométriquement beaucoup plus probable de tomber loin du centre car l'aire de la couronne circulaire "extérieure" est infiniment plus grande que l'aire près du centre.
+## Énoncé
+
+Construction d'une variable aléatoire singulière (L'Escalier du Diable de Cantor) : On considère $\Omega = [0, 1]$ muni de la tribu borélienne et de la mesure de Lebesgue. Décrire brièvement pourquoi la fonction de répartition de Cantor, bien que continue, définit une variable aléatoire (loi de Cantor) dont le support est de mesure de Lebesgue nulle.
+
+## Correction Détaillée
+
+**Correction de l'exercice 10 :**
+
+1. L'ensemble triadique de Cantor $C$ s'obtient en retirant itérativement le tiers central ouvert de chaque intervalle, à partir de $[0,1]$.
+2. La mesure de Lebesgue de l'ensemble de Cantor est $\lambda(C) = 1 - \sum_{n=1}^\infty \frac{2^{n-1}}{3^n} = 1 - \frac{1/3}{1 - 2/3} = 0$.
+3. La fonction de Cantor (escalier du diable) $F_C(x)$ est définie en attribuant des valeurs constantes sur les intervalles retirés (ex: $1/2$ sur $]1/3, 2/3[$). Elle est prolongée de manière continue sur $C$.
+4. $F_C(x)$ est une fonction croissante, continue, avec $F_C(0)=0$ et $F_C(1)=1$. Elle satisfait donc toutes les propriétés d'une fonction de répartition d'une variable aléatoire réelle $X$.
+5. La loi de cette variable aléatoire, $\mathbb{P}_X$, est caractérisée par cette fonction.
+6. La dérivée $F_C'(x)$ est nulle sur les intervalles retirés. Comme $C$ est de mesure nulle, $F_C'(x) = 0$ presque partout.
+7. Cependant, $\int_0^1 F_C'(x) dx = 0 \neq F_C(1) - F_C(0) = 1$. Cette variable n'est donc pas absolument continue.
+8. Tout l'accroissement de la fonction (la probabilité) est concentré sur l'ensemble de Cantor $C$. On a $\mathbb{P}_X(C) = 1$, alors que la mesure de Lebesgue $\lambda(C) = 0$.
+9. C'est le prototype d'une variable aléatoire à loi diffuse mais singulière (étrangère) par rapport à la mesure de Lebesgue.
+$\blacksquare$

@@ -166,6 +166,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
+- [2026-10-07] : [Upsert/Création] du Jalon 86 - Variables aléatoires vues comme des applications mesurables. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-12] : [Upsert/Création] du Jalon 57 - Théorème du point fixe de Banach. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-05] : [Upsert/Création] du Jalon 48 - Livrable IA T4 : Formalisation mathématique de la Rétropropagation. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-04] : [Upsert/Création] du Jalon 46 - Matrice jacobienne. Status: Terminé.
