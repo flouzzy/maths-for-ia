@@ -1,28 +1,23 @@
-# Exercice 5 : Minimum de deux lois exponentielles \quad $\bigstar\bigstar\bigstar\star\star$
+# Exercice 5
+
+**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
 
 ## Énoncé
 
-Soient $X_1$ et $X_2$ deux variables aléatoires indépendantes suivant des lois exponentielles de paramètres respectifs $\lambda_1 > 0$ et $\lambda_2 > 0$.
-Soit $Y = \min(X_1, X_2)$.
-Démontrer que $Y$ suit une loi exponentielle dont on précisera le paramètre.
+Montrer que l'ensemble des points de convergence (c'est-à-dire l'ensemble des $\omega$ tels que $\lim_{n \to \infty} X_n(\omega)$ existe) d'une suite de variables aléatoires $(X_n)$ est un événement mesurable.
 
-## Correction
+## Correction Détaillée
 
-Pour étudier le minimum de deux variables aléatoires, il est plus pertinent de calculer la probabilité complémentaire $\mathbb{P}(Y > y)$, qui correspond à $1 - F_Y(y)$, où $F_Y$ est la fonction de répartition de $Y$.
-La variable aléatoire $Y$ prend ses valeurs dans $[0, +\infty[$, donc pour tout $y < 0$, $\mathbb{P}(Y > y) = 1$.
+**Correction de l'exercice 5 :**
 
-Soit $y \geq 0$. L'événement $\{Y > y\}$ signifie que le minimum de $X_1$ et $X_2$ est strictement supérieur à $y$. Cela implique nécessairement que *chacune* des variables est strictement supérieure à $y$.
-$$ \mathbb{P}(Y > y) = \mathbb{P}(\min(X_1, X_2) > y) = \mathbb{P}(X_1 > y \text{ et } X_2 > y) $$
-Puisque les variables aléatoires $X_1$ et $X_2$ sont indépendantes, la probabilité de l'intersection des événements est le produit des probabilités :
-$$ \mathbb{P}(Y > y) = \mathbb{P}(X_1 > y) \times \mathbb{P}(X_2 > y) $$
-
-Pour une variable $X \sim \mathcal{E}(\lambda)$, on sait que sa fonction de répartition est $F_X(x) = 1 - e^{-\lambda x}$ pour $x \geq 0$. Donc la probabilité d'excéder un seuil $y$ est $\mathbb{P}(X > y) = 1 - F_X(y) = e^{-\lambda y}$.
-En appliquant ceci à $X_1$ (paramètre $\lambda_1$) et à $X_2$ (paramètre $\lambda_2$), on obtient :
-$$ \mathbb{P}(X_1 > y) = e^{-\lambda_1 y} \quad \text{et} \quad \mathbb{P}(X_2 > y) = e^{-\lambda_2 y} $$
-D'où :
-$$ \mathbb{P}(Y > y) = e^{-\lambda_1 y} \times e^{-\lambda_2 y} = e^{-(\lambda_1 + \lambda_2)y} $$
-
-La fonction de répartition de $Y$ est donc :
-$$ F_Y(y) = 1 - \mathbb{P}(Y > y) = 1 - e^{-(\lambda_1 + \lambda_2)y} $$
-pour $y \geq 0$. C'est l'expression exacte de la fonction de répartition d'une loi exponentielle de paramètre $\lambda = \lambda_1 + \lambda_2$.
-Conclusion : Le minimum de variables aléatoires exponentielles indépendantes suit une loi exponentielle dont le paramètre est la somme des paramètres. $\blacksquare$
+1. Une suite réelle $(X_n(\omega))$ converge si et seulement si elle est de Cauchy.
+2. Écrivons la propriété de Cauchy avec des quantificateurs sur des rationnels et des entiers (pour obtenir des unions/intersections dénombrables).
+3. La suite est de Cauchy si : $\forall \epsilon > 0, \exists N \in \mathbb{N}, \forall p, q \geq N, |X_p - X_q| < \epsilon$.
+4. Pour que cela reste dans le domaine du dénombrable, on restreint $\epsilon$ aux rationnels strictement positifs $\mathbb{Q}_+^*$.
+5. L'ensemble de convergence $C$ s'écrit donc en termes d'ensembles :
+   $C = \bigcap_{\epsilon \in \mathbb{Q}_+^*} \bigcup_{N \in \mathbb{N}} \bigcap_{p, q \geq N} \{\omega \mid |X_p(\omega) - X_q(\omega)| < \epsilon\}$
+6. L'application $|X_p - X_q|$ est une variable aléatoire (différence puis valeur absolue de fonctions mesurables).
+7. Donc pour tout $\epsilon$, l'ensemble $E_{p,q,\epsilon} = \{\omega \mid |X_p(\omega) - X_q(\omega)| < \epsilon\}$ est mesurable (dans $\mathcal{F}$).
+8. L'ensemble $C$ est formé par une suite d'intersections dénombrables, d'unions dénombrables, d'intersections dénombrables d'ensembles mesurables.
+9. Comme $\mathcal{F}$ est une tribu, elle est stable par ces opérations dénombrables. Donc $C \in \mathcal{F}$.
+$\blacksquare$
