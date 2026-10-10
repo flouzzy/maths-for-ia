@@ -429,6 +429,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
+- [2026-10-10] : [Upsert/Création] du Jalon 88 - Indépendance d'événements. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-09] : [Upsert/Création] du Jalon 87 - Intégration et Espérance mathématique. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-08] : [Upsert/Création] du Jalon 86 - Variables aléatoires vues comme des applications mesurables. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-06] : [Upsert/Création] du Jalon 85 - Axiomes de Kolmogorov. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
