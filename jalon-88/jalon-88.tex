@@ -1,0 +1,591 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge INDÉPENDANCE D'ÉVÉNEMENTS ET DE VARIABLES ALÉATOIRES \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+
+\section{Introduction (Genèse Physique et Historique)}
+
+Le concept d'indépendance est au cœur de la théorie des probabilités modernes. Historiquement, l'idée intuitive qu'un événement n'a aucune influence sur un autre (comme les lancers successifs d'une pièce de monnaie) a préexisté à sa formalisation mathématique. Andreï Kolmogorov, dans ses fondements axiomatiques de 1933, a traduit cette absence d'influence par une structure purement multiplicative des mesures de probabilité.
+
+Si tout dépendait de tout, le calcul des probabilités de systèmes complexes (comme en physique statistique moléculaire ou en génétique des populations) serait impossible. L'indépendance permet de décomposer l'analyse d'un système gigantesque en l'étude de ses composants individuels, fournissant l'hypothèse de base (Indépendantes et Identiquement Distribuées, i.i.d.) indispensable aux théorèmes limites fondamentaux (Loi des Grands Nombres, Théorème Central Limite).
+
+Géométriquement, dans un espace produit, l'indépendance correspond à l'orthogonalité des projections : la mesure d'un rectangle $A \times B$ devient le produit des mesures de ses côtés.
+
+\section{Définitions, Théorèmes et Exemples}
+
+Soit $(\Omega, \mathcal{F}, \mathbb{P})$ un espace de probabilité.
+
+\subsection{Indépendance de deux événements}
+
+\begin{quote}
+\textbf{Définition (Indépendance de deux événements)}
+\end{quote}
+\begin{quote}
+Deux événements
+\end{quote}$A, B \in \mathcal{F}$ sont dits indépendants par rapport à la probabilité $\mathbb{P}$ si :
+\begin{quote}
+
+\end{quote}$$\mathbb{P}(A \cap B) = \mathbb{P}(A) \mathbb{P}(B)$$
+\begin{quote}
+Si
+\end{quote}$\mathbb{P}(B) > 0$, cette définition est équivalente à $\mathbb{P}(A|B) = \mathbb{P}(A)$.
+
+\textbf{Exemple 1 : Lancer de deux dés.}
+Considérons le lancer de deux dés équilibrés à 6 faces.
+\begin{itemize}
+\item
+\end{itemize}$A$ : "Le premier dé donne un résultat pair" $\implies \mathbb{P}(A) = 3/6 = 1/2$.
+\begin{itemize}
+\item
+\end{itemize}$B$ : "La somme des deux dés vaut 7".
+Les couples donnant 7 sont $(1,6), (2,5), (3,4), (4,3), (5,2), (6,1) \implies \mathbb{P}(B) = 6/36 = 1/6$.
+\begin{itemize}
+\item
+\end{itemize}$A \cap B$ : Le premier est pair et la somme vaut 7, soit les couples $(2,5), (4,3), (6,1) \implies \mathbb{P}(A \cap B) = 3/36 = 1/12$.
+On vérifie bien que $\mathbb{P}(A \cap B) = 1/12 = \mathbb{P}(A) \times \mathbb{P}(B)$. Les événements sont indépendants.
+
+\subsection{Indépendance d'une famille d'événements}
+
+\begin{quote}
+\textbf{Définition (Mutuelle indépendance)}
+\end{quote}
+\begin{quote}
+Une famille d'événements
+\end{quote}$(A_i)_{i \in I}$ (où $I$ est un ensemble quelconque d'indices) est dite mutuellement indépendante si, pour toute sous-famille finie d'indices $J \subset I$ :
+\begin{quote}
+
+\end{quote}$$\mathbb{P}\left(\bigcap_{j \in J} A_j\right) = \prod_{j \in J} \mathbb{P}(A_j)$$
+
+\textbf{Attention :} L'indépendance deux-à-deux n'implique pas l'indépendance mutuelle.
+
+\textbf{Exemple 2 : Indépendance deux-à-deux vs Mutuelle.}
+On lance deux pièces équilibrées.
+$A$ : "La première pièce fait Face", $\mathbb{P}(A) = 1/2$.
+$B$ : "La deuxième pièce fait Face", $\mathbb{P}(B) = 1/2$.
+$C$ : "Les deux pièces donnent le même résultat", $\mathbb{P}(C) = 1/2$.
+On a $\mathbb{P}(A \cap B) = 1/4 = \mathbb{P}(A)\mathbb{P}(B)$ (indépendants). De même pour $(B,C)$ et $(A,C)$.
+Cependant, $\mathbb{P}(A \cap B \cap C) = \mathbb{P}(\text{Les deux font Face}) = 1/4$.
+Or $\mathbb{P}(A)\mathbb{P}(B)\mathbb{P}(C) = 1/8$.
+$A, B$ et $C$ sont indépendants deux-à-deux, mais pas mutuellement indépendants.
+
+\subsection{Indépendance de classes et tribus}
+
+\begin{quote}
+\textbf{Définition (Indépendance de tribus)}
+\end{quote}
+\begin{quote}
+Deux sous-tribus
+\end{quote}$\mathcal{G}_1, \mathcal{G}_2 \subset \mathcal{F}$ sont dites indépendantes si, pour tout $A \in \mathcal{G}_1$ et tout $B \in \mathcal{G}_2$, $A$ et $B$ sont indépendants.
+
+\begin{quote}
+\textbf{Lemme (Lemme de classe monotone pour l'indépendance)}
+\end{quote}
+\begin{quote}
+Si deux classes d'événements
+\end{quote}$\mathcal{C}_1$ et $\mathcal{C}_2$ stables par intersection finie ($\pi$-systèmes) sont indépendantes, alors les tribus qu'elles engendrent $\sigma(\mathcal{C}_1)$ et $\sigma(\mathcal{C}_2)$ sont indépendantes.
+
+\textbf{Exemple 3 : Événements complémentaires.}
+Si $A$ et $B$ sont indépendants, alors $A$ et $B^c$ le sont aussi.
+En effet, $\mathbb{P}(A \cap B^c) = \mathbb{P}(A) - \mathbb{P}(A \cap B) = \mathbb{P}(A) - \mathbb{P}(A)\mathbb{P}(B) = \mathbb{P}(A)(1 - \mathbb{P}(B)) = \mathbb{P}(A)\mathbb{P}(B^c)$.
+
+\subsection{Indépendance de variables aléatoires}
+
+\begin{quote}
+\textbf{Définition (Indépendance de V.A.)}
+\end{quote}
+\begin{quote}
+Une famille de variables aléatoires
+\end{quote}$(X_i)_{i \in I}$ (définies sur $(\Omega, \mathcal{F}, \mathbb{P})$ à valeurs dans des espaces mesurables $(E_i, \mathcal{E}_i)$) est dite indépendante si les tribus qu'elles engendrent $\sigma(X_i) = \{X_i^{-1}(B) : B \in \mathcal{E}_i\}$ sont mutuellement indépendantes.
+
+En pratique pour un nombre fini de V.A. $(X_1, \ldots, X_n)$, cela signifie :
+$$\mathbb{P}(X_1 \in B_1, \ldots, X_n \in B_n) = \prod_{k=1}^n \mathbb{P}(X_k \in B_k)$$
+
+\begin{quote}
+\textbf{Théorème (Caractérisation par la loi conjointe)}
+\end{quote}
+\begin{quote}
+Les variables
+\end{quote}$X_1, \ldots, X_n$ sont indépendantes si et seulement si leur loi conjointe est le produit tensoriel de leurs lois marginales :
+\begin{quote}
+
+\end{quote}$$\mathbb{P}_{(X_1, \ldots, X_n)} = \mathbb{P}_{X_1} \otimes \cdots \otimes \mathbb{P}_{X_n}$$
+
+\textbf{Exemple 4 : Vecteur Gaussien.}
+Soit un vecteur aléatoire $(X,Y)$ suivant une loi normale bidimensionnelle de matrice de covariance $\Sigma$. Si les covariances non diagonales sont nulles (i.e. $\operatorname{Cov}(X,Y) = 0$), la densité conjointe se factorise exactement en produit de densités marginales. Ainsi, pour les vecteurs gaussiens, décorrélation implique indépendance.
+
+\begin{quote}
+\textbf{Théorème (Indépendance et Espérance)}
+\end{quote}
+\begin{quote}
+Si
+\end{quote}$X$ et $Y$ sont deux variables aléatoires réelles indépendantes et intégrables, alors leur produit $XY$ est intégrable et :
+\begin{quote}
+
+\end{quote}$$\mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y]$$
+
+\textbf{Exemple 5 : Variance d'une somme.}
+Soient $X, Y$ indépendantes de carré intégrable.
+$\operatorname{Var}(X+Y) = \mathbb{E}[((X+Y) - \mathbb{E}[X+Y])^2] = \operatorname{Var}(X) + \operatorname{Var}(Y) + 2\operatorname{Cov}(X,Y)$.
+Puisque $X$ et $Y$ sont indépendantes, $\mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y]$, donc $\operatorname{Cov}(X,Y) = 0$.
+Ainsi, la variance de la somme de V.A. indépendantes est la somme de leurs variances.
+
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  % Draw probability space
+  \draw[thick, rounded corners=10pt] (0,0) rectangle (6,4);
+  \node at (0.3,3.7) {$\Omega$};
+
+  % Draw event A
+  \draw[fill=blue!20, opacity=0.8] (2,2) ellipse (1.5cm and 1cm);
+  \node at (1.2, 2.5) {$A$};
+
+  % Draw event B
+  \draw[fill=red!20, opacity=0.8] (4,2) ellipse (1.5cm and 1cm);
+  \node at (4.8, 2.5) {$B$};
+
+  % Highlight intersection
+  \begin{scope}
+    \clip (2,2) ellipse (1.5cm and 1cm);
+    \clip (4,2) ellipse (1.5cm and 1cm);
+    \fill[purple!40, opacity=0.8] (-10,-10) rectangle (10,10);
+  \end{scope}
+
+  \node at (3,2) {$A \cap B$};
+
+  \node[align=center, below] at (3, -0.2) {Si $A$ et $B$ sont indépendants, l'aire (mesure) de l'intersection \\ est exactement proportionnelle au produit de leurs aires.};
+\end{tikzpicture}
+\end{center}
+
+\section{Démonstrations}
+
+\subsection{Démonstration : Stabilité de l'indépendance par passage au complémentaire}
+
+\textbf{Énoncé :} Si $A$ et $B$ sont des événements indépendants, alors $A$ et $B^c$ sont indépendants.
+
+\textbf{Preuve :}
+1. L'ensemble $A$ peut s'écrire comme l'union disjointe de $(A \cap B)$ et $(A \cap B^c)$.
+   $$A = (A \cap B) \cup (A \cap B^c)$$
+2. Par additivité de la mesure de probabilité $\mathbb{P}$ pour des événements disjoints, on obtient :
+   $$\mathbb{P}(A) = \mathbb{P}(A \cap B) + \mathbb{P}(A \cap B^c)$$
+3. Or, par hypothèse, $A$ et $B$ sont indépendants, donc $\mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B)$. En substituant :
+   $$\mathbb{P}(A) = \mathbb{P}(A)\mathbb{P}(B) + \mathbb{P}(A \cap B^c)$$
+4. On isole le terme cherché :
+   $$\mathbb{P}(A \cap B^c) = \mathbb{P}(A) - \mathbb{P}(A)\mathbb{P}(B)$$
+5. En factorisant par $\mathbb{P}(A)$ :
+   $$\mathbb{P}(A \cap B^c) = \mathbb{P}(A) (1 - \mathbb{P}(B))$$
+6. Comme $\mathbb{P}(B^c) = 1 - \mathbb{P}(B)$ :
+   $$\mathbb{P}(A \cap B^c) = \mathbb{P}(A)\mathbb{P}(B^c)$$
+7. Ceci prouve rigoureusement l'indépendance de $A$ et $B^c$. Le même argument s'applique pour $A^c$ et $B$, ainsi que pour $A^c$ et $B^c$. $\blacksquare$
+
+\subsection{Démonstration : Théorème d'indépendance et espérance (Cas Positif)}
+
+\textbf{Énoncé :} Si $X$ et $Y$ sont deux variables aléatoires réelles positives et indépendantes, $\mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y]$.
+
+\textbf{Preuve :}
+1. Supposons d'abord que $X = \mathbf{1}_A$ et $Y = \mathbf{1}_B$ sont des fonctions indicatrices avec $A, B$ indépendants.
+   Le produit $XY$ vaut $1$ si et seulement si $\omega \in A \cap B$, donc $XY = \mathbf{1}_{A \cap B}$.
+   L'espérance donne : $\mathbb{E}[XY] = \mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B) = \mathbb{E}[X]\mathbb{E}[Y]$.
+2. Par linéarité de l'espérance, la propriété s'étend aux variables étagées (combinaisons linéaires finies d'indicatrices) $X = \sum a_i \mathbf{1}_{A_i}$ et $Y = \sum b_j \mathbf{1}_{B_j}$ où les $(A_i)$ et $(B_j)$ sont indépendants.
+3. Soient $X, Y$ deux variables aléatoires positives indépendantes. Il existe des suites croissantes de variables étagées positives $(X_n)$ et $(Y_n)$ telles que $X_n \uparrow X$ et $Y_n \uparrow Y$ (Théorème d'approximation).
+4. La suite de variables étagées $X_n Y_n$ croît vers $XY$.
+5. D'après le Théorème de Convergence Monotone de Beppo Levi,
+   $$\mathbb{E}[XY] = \lim_{n \to \infty} \mathbb{E}[X_n Y_n]$$
+6. Puisque $X_n$ et $Y_n$ sont étagées et indépendantes (construites sur $\sigma(X)$ et $\sigma(Y)$), $\mathbb{E}[X_n Y_n] = \mathbb{E}[X_n]\mathbb{E}[Y_n]$.
+7. Par passage à la limite :
+   $$\lim_{n \to \infty} \mathbb{E}[X_n]\mathbb{E}[Y_n] = \lim_{n \to \infty} \mathbb{E}[X_n] \times \lim_{n \to \infty} \mathbb{E}[Y_n] = \mathbb{E}[X]\mathbb{E}[Y]$$
+8. D'où le résultat pour les variables positives. Pour des variables de signe quelconque, on décompose en parties positives et négatives ($X = X^+ - X^-$). $\blacksquare$
+
+\section{Applications en Physique, Logique, \& AI}
+
+\subsection{Intelligence Artificielle et Machine Learning}
+L'indépendance conditionnelle et inconditionnelle est le socle des modèles graphiques probabilistes (Réseaux Bayésiens). Les algorithmes d'apprentissage (Maximum de Vraisemblance, Descente de Gradient Stochastique) présument que l'ensemble d'entraînement est constitué de variables i.i.d. La vraisemblance conjointe $\mathcal{L}(\theta) = \prod_{i=1}^N \mathbb{P}(x_i | \theta)$ devient une somme de logarithmes, simplifiant radicalement l'optimisation par la log-vraisemblance. Sans l'indépendance, les calculs de gradients s'effondreraient sous la complexité des covariances massives. En Deep Learning, le principe du \textit{Dropout} introduit artificiellement des désactivations aléatoires indépendantes des neurones, forçant le réseau à apprendre des caractéristiques non corrélées.
+
+\subsection{Mécanique Statistique}
+En physique des particules, l'hypothèse d'indépendance (chaos moléculaire) dans la théorie cinétique des gaz de Maxwell-Boltzmann stipule que les vitesses de différentes particules sont indépendantes avant collision. Cela permet d'écrire la fonction de distribution à deux corps comme le produit des fonctions de distribution à un corps, menant directement à l'équation de Boltzmann.
+
+\subsection{Logique Formelle et Théorie de l'Information}
+En théorie de Shannon, deux sources d'information indépendantes ne partagent aucune information mutuelle. Mathématiquement, $I(X;Y) = H(X) + H(Y) - H(X,Y)$. Pour des variables indépendantes, l'entropie conjointe $H(X,Y)$ s'additionne parfaitement ($H(X)+H(Y)$), entraînant $I(X;Y) = 0$, reflétant qu'aucune connaissance sur $X$ ne réduit l'incertitude sur $Y$.
+
+
+\part{Exercices d'Application et de Concours}
+
+\subsection*{Exercice 1 : Indépendance et événements incompatibles \quad $\bigstar\star\star\star\star$}
+
+Soient $A$ et $B$ deux événements de probabilités strictement positives. Montrer que si $A$ et $B$ sont incompatibles, alors ils ne peuvent pas être indépendants.
+
+\textbf{Correction :}
+1. L'incompatibilité de $A$ et $B$ signifie que $A \cap B = \emptyset$.
+2. Par conséquent, $\mathbb{P}(A \cap B) = \mathbb{P}(\emptyset) = 0$.
+3. Supposons par l'absurde que $A$ et $B$ soient indépendants.
+4. Alors $\mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B)$.
+5. Puisque $\mathbb{P}(A) > 0$ et $\mathbb{P}(B) > 0$, le produit $\mathbb{P}(A)\mathbb{P}(B) > 0$.
+6. On aboutit à une contradiction : $0 > 0$.
+7. Donc $A$ et $B$ ne sont pas indépendants.
+
+\subsection*{Exercice 2 : Indépendance conditionnelle \quad $\bigstar\star\star\star\star$}
+
+On lance un dé équilibré à 6 faces. On définit les événements :
+- $A$ : "Le résultat est pair"
+- $B$ : "Le résultat est un multiple de 3"
+- $C$ : "Le résultat est inférieur ou égal à 4"
+Les événements $A$ et $B$ sont-ils indépendants conditionnellement à $C$ ?
+
+\textbf{Correction :}
+1. L'univers est $\Omega = \{1, 2, 3, 4, 5, 6\}$.
+2. $A = \{2, 4, 6\}$, $B = \{3, 6\}$, $C = \{1, 2, 3, 4\}$.
+3. $\mathbb{P}(C) = 4/6 = 2/3$.
+4. On calcule la probabilité conditionnelle : $\mathbb{P}_C(X) = \frac{\mathbb{P}(X \cap C)}{\mathbb{P}(C)}$.
+5. $A \cap C = \{2, 4\} \implies \mathbb{P}_C(A) = \frac{2/6}{4/6} = 1/2$.
+6. $B \cap C = \{3\} \implies \mathbb{P}_C(B) = \frac{1/6}{4/6} = 1/4$.
+7. L'intersection $(A \cap B) \cap C = \{6\} \cap \{1, 2, 3, 4\} = \emptyset \implies \mathbb{P}_C(A \cap B) = 0$.
+8. $\mathbb{P}_C(A)\mathbb{P}_C(B) = (1/2) \times (1/4) = 1/8 \neq 0$.
+9. Les événements ne sont pas indépendants conditionnellement à $C$.
+
+\subsection*{Exercice 3 : Loi de la somme de deux variables de Bernoulli indépendantes \quad $\bigstar\bigstar\star\star\star$}
+
+Soient $X$ et $Y$ deux variables aléatoires indépendantes suivant une loi de Bernoulli de paramètre $p \in ]0, 1[$. Déterminer la loi de la somme $Z = X + Y$.
+
+\textbf{Correction :}
+1. Les valeurs possibles pour $X$ et $Y$ sont $0$ et $1$. Donc $Z$ prend ses valeurs dans $\{0, 1, 2\}$.
+2. Pour $Z = 0$, $X$ et $Y$ doivent valoir $0$. Par indépendance : $\mathbb{P}(Z=0) = \mathbb{P}(X=0, Y=0) = \mathbb{P}(X=0)\mathbb{P}(Y=0) = (1-p)(1-p) = (1-p)^2$.
+3. Pour $Z = 1$, il y a deux cas mutuellement exclusifs : $(X=1, Y=0)$ et $(X=0, Y=1)$. $\mathbb{P}(Z=1) = \mathbb{P}(X=1)\mathbb{P}(Y=0) + \mathbb{P}(X=0)\mathbb{P}(Y=1) = p(1-p) + (1-p)p = 2p(1-p)$.
+4. Pour $Z = 2$, $X$ et $Y$ doivent valoir $1$. $\mathbb{P}(Z=2) = \mathbb{P}(X=1, Y=1) = \mathbb{P}(X=1)\mathbb{P}(Y=1) = p^2$.
+5. On reconnaît les termes du développement de $((1-p) + p)^2$. $Z$ suit une loi binomiale $\mathcal{B}(2, p)$.
+
+\subsection*{Exercice 4 : Produit de variables de Rademacher \quad $\bigstar\bigstar\star\star\star$}
+
+Soient $X$ et $Y$ deux variables aléatoires indépendantes suivant la loi de Rademacher, c'est-à-dire $\mathbb{P}(X = 1) = \mathbb{P}(X = -1) = 1/2$. On pose $Z = XY$.
+1. Déterminer la loi de $Z$.
+2. Les variables $X$ et $Z$ sont-elles indépendantes ?
+
+\textbf{Correction :}
+1. Loi de $Z$ :
+   - $Z = 1$ s'il y a un nombre pair de signes négatifs, soit $(X=1, Y=1)$ ou $(X=-1, Y=-1)$.
+   - $\mathbb{P}(Z = 1) = \mathbb{P}(X=1)\mathbb{P}(Y=1) + \mathbb{P}(X=-1)\mathbb{P}(Y=-1) = (1/2)(1/2) + (1/2)(1/2) = 1/2$.
+   - $Z = -1$ s'il y a un seul signe négatif. $\mathbb{P}(Z = -1) = 1 - \mathbb{P}(Z=1) = 1/2$.
+   - Donc $Z$ suit également une loi de Rademacher.
+2. Indépendance de $X$ et $Z$ :
+   - On doit vérifier si $\mathbb{P}(X=i, Z=j) = \mathbb{P}(X=i)\mathbb{P}(Z=j)$ pour tous $i, j \in \{-1, 1\}$.
+   - Prenons $i = 1$ et $j = 1$. $\mathbb{P}(X=1, Z=1) = \mathbb{P}(X=1, Y=1) = 1/4$.
+   - D'autre part, $\mathbb{P}(X=1)\mathbb{P}(Z=1) = (1/2) \times (1/2) = 1/4$.
+   - En vérifiant pour toutes les combinaisons, on trouve l'égalité partout. $X$ et $Z$ sont indépendantes.
+
+\subsection*{Exercice 5 : Variables de Poisson indépendantes \quad $\bigstar\bigstar\bigstar\star\star$}
+
+Soient $X_1$ et $X_2$ deux variables aléatoires indépendantes suivant respectivement des lois de Poisson de paramètres $\lambda_1$ et $\lambda_2$. Montrer que $Z = X_1 + X_2$ suit une loi de Poisson de paramètre $\lambda_1 + \lambda_2$.
+
+\textbf{Correction :}
+1. Les valeurs de $X_1, X_2$ et $Z$ sont des entiers naturels. Soit $n \in \mathbb{N}$.
+2. L'événement $\{Z = n\}$ s'écrit comme l'union disjointe des événements $\{X_1 = k, X_2 = n-k\}$ pour $k = 0, \ldots, n$.
+3. $\mathbb{P}(Z = n) = \sum_{k=0}^{n} \mathbb{P}(X_1 = k, X_2 = n-k)$.
+4. Par indépendance, $\mathbb{P}(Z = n) = \sum_{k=0}^{n} \mathbb{P}(X_1 = k)\mathbb{P}(X_2 = n-k)$.
+5. On remplace par les expressions de la loi de Poisson :
+   $\mathbb{P}(Z = n) = \sum_{k=0}^{n} \left( e^{-\lambda_1} \frac{\lambda_1^k}{k!} \right) \left( e^{-\lambda_2} \frac{\lambda_2^{n-k}}{(n-k)!} \right)$
+6. On sort les termes constants de la somme :
+   $\mathbb{P}(Z = n) = e^{-(\lambda_1+\lambda_2)} \frac{1}{n!} \sum_{k=0}^{n} \frac{n!}{k!(n-k)!} \lambda_1^k \lambda_2^{n-k}$
+7. On reconnaît le coefficient binomial $\binom{n}{k}$, puis le développement du binôme de Newton :
+   $\mathbb{P}(Z = n) = e^{-(\lambda_1+\lambda_2)} \frac{1}{n!} (\lambda_1 + \lambda_2)^n$
+8. C'est exactement l'expression d'une loi de Poisson de paramètre $\lambda_1 + \lambda_2$.
+
+\subsection*{Exercice 6 : Indépendance de fonctions mesurables \quad $\bigstar\bigstar\bigstar\star\star$}
+
+Soient $X$ et $Y$ deux variables aléatoires indépendantes à valeurs dans $\mathbb{R}$. Soient $f, g : \mathbb{R} \to \mathbb{R}$ deux fonctions boréliennes (mesurables). Montrer que les variables $f(X)$ et $g(Y)$ sont indépendantes.
+
+\textbf{Correction :}
+1. On doit montrer que pour tout boréliens $A, B$ de $\mathbb{R}$, $\mathbb{P}(f(X) \in A, g(Y) \in B) = \mathbb{P}(f(X) \in A)\mathbb{P}(g(Y) \in B)$.
+2. Par définition de l'image réciproque, $f(X) \in A \iff X \in f^{-1}(A)$ et $g(Y) \in B \iff Y \in g^{-1}(B)$.
+3. Puisque $f$ et $g$ sont mesurables, les images réciproques $f^{-1}(A)$ et $g^{-1}(B)$ sont des boréliens de $\mathbb{R}$.
+4. On peut donc utiliser la définition de l'indépendance de $X$ et $Y$ sur ces boréliens :
+   $\mathbb{P}(X \in f^{-1}(A), Y \in g^{-1}(B)) = \mathbb{P}(X \in f^{-1}(A))\mathbb{P}(Y \in g^{-1}(B))$
+5. En réécrivant en termes de $f(X)$ et $g(Y)$, on obtient :
+   $\mathbb{P}(f(X) \in A, g(Y) \in B) = \mathbb{P}(f(X) \in A)\mathbb{P}(g(Y) \in B)$
+6. Ainsi, les variables aléatoires $f(X)$ et $g(Y)$ sont indépendantes.
+
+\subsection*{Exercice 7 : Fonction caractéristique de la somme \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+Montrer que si $X$ et $Y$ sont deux variables aléatoires indépendantes, la fonction caractéristique de leur somme $Z = X + Y$ est le produit de leurs fonctions caractéristiques.
+
+\textbf{Correction :}
+1. La fonction caractéristique d'une variable aléatoire $U$ est définie par $\phi_U(t) = \mathbb{E}[e^{itU}]$ pour tout $t \in \mathbb{R}$.
+2. Soit $t \in \mathbb{R}$. Pour $Z = X+Y$, $\phi_Z(t) = \mathbb{E}[e^{it(X+Y)}]$.
+3. Par les propriétés de l'exponentielle complexe, $e^{it(X+Y)} = e^{itX} e^{itY}$.
+4. Les variables aléatoires $U = e^{itX}$ et $V = e^{itY}$ sont des fonctions mesurables (continues) des variables $X$ et $Y$. Comme $X$ et $Y$ sont indépendantes, $U$ et $V$ sont indépendantes.
+5. De plus, $U$ et $V$ sont bornées (module 1), donc intégrables. Le théorème sur l'espérance du produit s'applique (en le généralisant au cas complexe, par linéarité sur parties réelle et imaginaire) :
+   $\mathbb{E}[UV] = \mathbb{E}[U]\mathbb{E}[V]$
+6. Ce qui donne : $\mathbb{E}[e^{itX} e^{itY}] = \mathbb{E}[e^{itX}]\mathbb{E}[e^{itY}]$.
+7. Ainsi, $\phi_Z(t) = \phi_X(t)\phi_Y(t)$.
+
+\subsection*{Exercice 8 : Vecteurs gaussiens et indépendance \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+Soit $(X, Y)$ un vecteur gaussien de dimension 2 d'espérance $(0, 0)$ et de matrice de covariance $\Sigma = \begin{pmatrix} 1 \& \rho \\ \rho \& 1 \end{pmatrix}$.
+1. Quelle est la condition nécessaire et suffisante sur $\rho$ pour que $X$ et $Y$ soient indépendantes ?
+2. Démontrer ce résultat en utilisant la fonction caractéristique.
+
+\textbf{Correction :}
+1. Condition : $X$ et $Y$ sont indépendantes si et seulement si leur covariance est nulle, c'est-à-dire si et seulement si $\rho = 0$. (Ce résultat est propre aux vecteurs gaussiens).
+2. Démonstration par la fonction caractéristique :
+   - La fonction caractéristique du vecteur gaussien $(X, Y)$ évaluée en $(u, v) \in \mathbb{R}^2$ est :
+     $\phi_{(X, Y)}(u, v) = \exp\left(-\frac{1}{2} (u, v) \Sigma (u, v)^T\right) = \exp\left(-\frac{1}{2} (u^2 + v^2 + 2\rho uv)\right)$
+   - Les marginales $X$ et $Y$ sont des gaussiennes centrées réduites, donc $\phi_X(u) = \exp(-u^2/2)$ et $\phi_Y(v) = \exp(-v^2/2)$.
+   - L'indépendance de $X$ et $Y$ équivaut à la factorisation de la fonction caractéristique conjointe : $\phi_{(X, Y)}(u, v) = \phi_X(u)\phi_Y(v)$ pour tout $(u, v)$.
+   - $\phi_X(u)\phi_Y(v) = \exp(-u^2/2)\exp(-v^2/2) = \exp\left(-\frac{1}{2} (u^2 + v^2)\right)$.
+   - On a donc l'égalité si et seulement si $\exp\left(-\frac{1}{2} (u^2 + v^2 + 2\rho uv)\right) = \exp\left(-\frac{1}{2} (u^2 + v^2)\right)$, soit $2\rho uv = 0$ pour tout $(u, v)$.
+   - Ceci implique obligatoirement $\rho = 0$.
+
+\subsection*{Exercice 9 : Minimum de lois exponentielles \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+Soient $X_1, \ldots, X_n$ des variables aléatoires indépendantes, où $X_i$ suit une loi exponentielle $\mathcal{E}(\lambda_i)$.
+On pose $M = \min(X_1, \ldots, X_n)$.
+1. Exprimer la fonction de répartition de $M$.
+2. En déduire la loi de $M$.
+
+\textbf{Correction :}
+1. Soit $x \ge 0$. La fonction de répartition de $M$ est $F_M(x) = \mathbb{P}(M \le x)$.
+2. Il est plus simple de passer par le complémentaire : $\mathbb{P}(M > x) = 1 - F_M(x)$.
+3. Le minimum de variables est supérieur à $x$ si et seulement si toutes les variables sont supérieures à $x$ :
+   $\{M > x\} = \bigcap_{i=1}^n \{X_i > x\}$.
+4. Par l'indépendance des $X_i$ :
+   $\mathbb{P}(M > x) = \mathbb{P}\left(\bigcap_{i=1}^n \{X_i > x\}\right) = \prod_{i=1}^n \mathbb{P}(X_i > x)$.
+5. Pour une loi exponentielle $\mathcal{E}(\lambda_i)$, $\mathbb{P}(X_i > x) = e^{-\lambda_i x}$.
+6. Donc $\mathbb{P}(M > x) = \prod_{i=1}^n e^{-\lambda_i x} = e^{-(\sum_{i=1}^n \lambda_i) x}$.
+7. On en déduit $F_M(x) = 1 - e^{-(\sum_{i=1}^n \lambda_i) x}$ pour $x \ge 0$, qui est exactement la fonction de répartition d'une loi exponentielle de paramètre $\Lambda = \sum_{i=1}^n \lambda_i$.
+8. Conclusion : le minimum de lois exponentielles indépendantes suit une loi exponentielle dont le paramètre est la somme des paramètres.
+
+\subsection*{Exercice 10 : Convolution et densités de probabilité \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+Soient $X$ et $Y$ deux variables aléatoires réelles indépendantes admettant pour densités respectives $f_X$ et $f_Y$. Démontrer que la variable aléatoire $Z = X + Y$ admet une densité $f_Z$ donnée par le produit de convolution $f_X * f_Y$.
+
+\textbf{Correction :}
+1. La loi conjointe de $(X, Y)$ a pour densité $f_{(X,Y)}(x, y) = f_X(x)f_Y(y)$ grâce à l'indépendance.
+2. Cherchons la fonction de répartition de $Z$, $F_Z(z) = \mathbb{P}(Z \le z) = \mathbb{P}(X + Y \le z)$.
+3. On intègre la densité conjointe sur le domaine $\Delta_z = \{(x, y) \in \mathbb{R}^2 \mid x + y \le z\}$ :
+   $F_Z(z) = \iint_{\Delta_z} f_X(x)f_Y(y) dx dy = \int_{-\infty}^{\infty} \left( \int_{-\infty}^{z - x} f_Y(y) dy \right) f_X(x) dx$
+4. On effectue le changement de variable $u = x + y$ dans l'intégrale interne (à $x$ fixé, $du = dy$) :
+   $F_Z(z) = \int_{-\infty}^{\infty} \left( \int_{-\infty}^{z} f_Y(u - x) du \right) f_X(x) dx$
+5. Toutes les fonctions étant positives, par le théorème de Fubini-Tonelli, on peut intervertir les intégrales :
+   $F_Z(z) = \int_{-\infty}^{z} \left( \int_{-\infty}^{\infty} f_X(x)f_Y(u - x) dx \right) du$
+6. La fonction $z \mapsto F_Z(z)$ s'écrit donc comme l'intégrale d'une fonction $f_Z(u) = \int_{-\infty}^{\infty} f_X(x)f_Y(u - x) dx$.
+7. Par définition, cette fonction est la densité de $Z$, et c'est exactement l'expression du produit de convolution $f_X * f_Y(u)$.
+8. Ce résultat démontre que la densité de la somme de deux V.A. à densité indépendantes est le produit de convolution de leurs densités.
+
+\part{Travaux Pratiques et Simulations Algorithmiques}
+
+\subsection*{Travail Pratique 1 : Vérification empirique de l'indépendance}
+
+\begin{lstlisting}
+import random
+
+def estimer_probabilites(n_simulations):
+    # Experience : lancer de deux des
+    count_A = 0 # Premier de pair
+    count_B = 0 # Somme egale a 7
+    count_A_inter_B = 0
+
+    for _ in range(n_simulations):
+        d1 = random.randint(1, 6)
+        d2 = random.randint(1, 6)
+
+        is_A = (d1 % 2 == 0)
+        is_B = (d1 + d2 == 7)
+
+        if is_A: count_A += 1
+        if is_B: count_B += 1
+        if is_A and is_B: count_A_inter_B += 1
+
+    p_A = count_A / n_simulations
+    p_B = count_B / n_simulations
+    p_inter = count_A_inter_B / n_simulations
+
+    print(f"P(A) = {p_A:.4f}")
+    print(f"P(B) = {p_B:.4f}")
+    print(f"P(A)*P(B) = {p_A * p_B:.4f}")
+    print(f"P(A inter B) = {p_inter:.4f}")
+
+    # Validation mathematique (tolerance due a l'aleatoire)
+    assert abs((p_A * p_B) - p_inter) < 0.05
+
+estimer_probabilites(100000)
+\end{lstlisting}
+
+
+\subsection*{Travail Pratique 2 : Indépendance mutuelle vs deux-à-deux}
+
+\begin{lstlisting}
+import random
+
+def simuler_independance(n_sim):
+    count_A, count_B, count_C = 0, 0, 0
+    count_AB, count_BC, count_AC = 0, 0, 0
+    count_ABC = 0
+
+    for _ in range(n_sim):
+        # 0 pour Pile, 1 pour Face
+        piece1 = random.randint(0, 1)
+        piece2 = random.randint(0, 1)
+
+        is_A = (piece1 == 1)
+        is_B = (piece2 == 1)
+        is_C = (piece1 == piece2)
+
+        if is_A: count_A += 1
+        if is_B: count_B += 1
+        if is_C: count_C += 1
+        if is_A and is_B: count_AB += 1
+        if is_B and is_C: count_BC += 1
+        if is_A and is_C: count_AC += 1
+        if is_A and is_B and is_C: count_ABC += 1
+
+    pA, pB, pC = count_A/n_sim, count_B/n_sim, count_C/n_sim
+
+    print("Independance deux-a-deux :")
+    print(f"P(AB)={count_AB/n_sim:.3f} ~ P(A)P(B)={pA*pB:.3f}")
+
+    print("Independance mutuelle :")
+    pABC = count_ABC/n_sim
+    prod = pA*pB*pC
+    print(f"P(ABC)={pABC:.3f} != P(A)P(B)P(C)={prod:.3f}")
+
+    assert abs(pABC - 0.25) < 0.05
+    assert abs(prod - 0.125) < 0.05
+
+simuler_independance(100000)
+\end{lstlisting}
+
+
+\subsection*{Travail Pratique 3 : Somme de variables de Poisson}
+
+\begin{lstlisting}
+import random
+import math
+
+def poisson(lam):
+    # Generateur de loi de Poisson via la methode de l'inverse
+    L = math.exp(-lam)
+    k = 0
+    p = 1
+    while p > L:
+        k += 1
+        p *= random.random()
+    return k - 1
+
+def verifier_somme_poisson(n_sim):
+    lam1, lam2 = 2.0, 3.0
+    sommes = []
+
+    for _ in range(n_sim):
+        x = poisson(lam1)
+        y = poisson(lam2)
+        sommes.append(x + y)
+
+    moyenne = sum(sommes) / n_sim
+    print(f"Moyenne empirique : {moyenne:.2f}")
+    print(f"Esperance theorique (lam1+lam2) : {lam1+lam2:.2f}")
+
+    # Calcul de la variance empirique
+    var = sum((s - moyenne)**2 for s in sommes) / (n_sim - 1)
+    print(f"Variance empirique : {var:.2f}")
+
+    assert abs(moyenne - (lam1+lam2)) < 0.1
+    assert abs(var - (lam1+lam2)) < 0.1
+
+verifier_somme_poisson(100000)
+\end{lstlisting}
+
+
+\subsection*{Travail Pratique 4 : Variance et Covariance}
+
+\begin{lstlisting}
+import random
+
+def calculer_covariance(n_sim):
+    # X et Y uniformes sur [0, 1] et independantes
+    X = [random.random() for _ in range(n_sim)]
+    Y = [random.random() for _ in range(n_sim)]
+
+    mean_X = sum(X) / n_sim
+    mean_Y = sum(Y) / n_sim
+
+    # Esperance du produit E[XY]
+    mean_XY = sum(x*y for x, y in zip(X, Y)) / n_sim
+
+    # Covariance Cov(X,Y) = E[XY] - E[X]E[Y]
+    cov = mean_XY - (mean_X * mean_Y)
+
+    print(f"E[X] = {mean_X:.4f}")
+    print(f"E[Y] = {mean_Y:.4f}")
+    print(f"E[XY] = {mean_XY:.4f}")
+    print(f"Cov(X,Y) = {cov:.5f}")
+
+    # Theoriquement E[X]=0.5, E[Y]=0.5, E[XY]=0.25, Cov(X,Y)=0
+    assert abs(cov) < 0.01
+
+calculer_covariance(100000)
+\end{lstlisting}
+
+
+\subsection*{Travail Pratique 5 : Loi du minimum d'exponentielles}
+
+\begin{lstlisting}
+import random
+import math
+
+def expo(lam):
+    return -math.log(1.0 - random.random()) / lam
+
+def verifier_minimum(n_sim):
+    lam1, lam2, lam3 = 1.0, 2.0, 3.0
+    lam_somme = lam1 + lam2 + lam3
+
+    min_vals = []
+    for _ in range(n_sim):
+        x1 = expo(lam1)
+        x2 = expo(lam2)
+        x3 = expo(lam3)
+        min_vals.append(min(x1, x2, x3))
+
+    moyenne_empirique = sum(min_vals) / n_sim
+    moyenne_theorique = 1.0 / lam_somme
+
+    print(f"Moyenne empirique du minimum : {moyenne_empirique:.4f}")
+    print(f"Moyenne theorique 1/(somme lambda) : {moyenne_theorique:.4f}")
+
+    assert abs(moyenne_empirique - moyenne_theorique) < 0.05
+
+verifier_minimum(100000)
+\end{lstlisting}
+
+
+\end{document}

@@ -208,7 +208,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 85](jalon-85/Jalon%2085%20%28Axiomes%20de%20Kolmogorov%29.md)** : Axiomes de Kolmogorov, espace de probabilité $(\Omega, \mathcal{F}, \mathbb{P})$ comme un espace mesuré de masse 1.
 - **[Jalon 86](jalon-86/Jalon-86.md)** : Variables aléatoires vues comme des applications mesurables, loi d'une variable et mesure de probabilité image. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 87](jalon-87/Jalon%2087%20%28Int%C3%A9gration%20des%20variables%20al%C3%A9atoires%29.md)** : Intégration des variables aléatoires, espérance, variance et moments d'ordre supérieur.
-- **[Jalon 88](jalon-88/Jalon%2088%20%28Ind%C3%A9pendance%20d%27%C3%A9v%C3%A9nements%29.md)** : Indépendance d'événements, de tribus et de variables aléatoires.
+- **[Jalon 88](jalon-88/Jalon-88.md)** : Indépendance d'événements, de tribus et de variables aléatoires.
 - **[Jalon 89](jalon-89/Jalon%2089%20%28Lemmes%20de%20Borel-Cantelli%29.md)** : Lemmes de Borel-Cantelli (lois du tout ou rien) et applications aux comportements asymptotiques.
 - **[Jalon 90](jalon-90/Jalon%2090%20%28Les%20modes%20de%20convergence%29.md)** : Les modes de convergence : presque sûre, en probabilité, dans $L^p$ et en loi (convergence étroite des mesures).
 - **[Jalon 91](jalon-91/Jalon%2091%20%28In%C3%A9galit%C3%A9s%20de%20concentration%29.md)** : Inégalités de concentration : Markov, Chebyshev, Bienaymé, Chernoff et lemme de Hoeffding.
@@ -429,6 +429,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
+- [2026-10-10] : Upsert du Jalon 88 - Indépendance d'événements et de variables aléatoires. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-09] : [Upsert/Création] du Jalon 87 - Intégration et Espérance mathématique. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-08] : [Upsert/Création] du Jalon 86 - Variables aléatoires vues comme des applications mesurables. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-06] : [Upsert/Création] du Jalon 85 - Axiomes de Kolmogorov. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
