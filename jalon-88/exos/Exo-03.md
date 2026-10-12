@@ -1,26 +1,10 @@
-# Exercice 03 : Indépendance deux à deux n'est pas indépendance mutuelle
-Difficulté : $\bigstar\bigstar\star\star\star$
+\subsection*{Exercice 3 : Loi de la somme de deux variables de Bernoulli indépendantes \quad $\bigstar\bigstar\star\star\star$}
 
-**Énoncé :**
-On lance deux pièces de monnaie équilibrées de manière indépendante. $\Omega = \{PP, PF, FP, FF\}$.
-Soit $A$ : « la première pièce fait Pile ».
-Soit $B$ : « la deuxième pièce fait Pile ».
-Soit $C$ : « les deux pièces donnent le même résultat ».
-Montrer que $A, B, C$ sont indépendants deux à deux, mais pas mutuellement indépendants.
+Soient $X$ et $Y$ deux variables aléatoires indépendantes suivant une loi de Bernoulli de paramètre $p \in ]0, 1[$. Déterminer la loi de la somme $Z = X + Y$.
 
 **Correction :**
-1. **Évaluation des probabilités simples :**
-$A = \{PP, PF\}$, $\mathbb{P}(A) = \frac{2}{4} = \frac{1}{2}$.
-$B = \{PP, FP\}$, $\mathbb{P}(B) = \frac{2}{4} = \frac{1}{2}$.
-$C = \{PP, FF\}$, $\mathbb{P}(C) = \frac{2}{4} = \frac{1}{2}$.
-
-2. **Indépendance deux à deux :**
-- $A \cap B = \{PP\}$, $\mathbb{P}(A \cap B) = \frac{1}{4}$. Et $\mathbb{P}(A)\mathbb{P}(B) = \frac{1}{4}$. ($A$ et $B$ indépendants).
-- $A \cap C = \{PP\}$, $\mathbb{P}(A \cap C) = \frac{1}{4}$. Et $\mathbb{P}(A)\mathbb{P}(C) = \frac{1}{4}$. ($A$ et $C$ indépendants).
-- $B \cap C = \{PP\}$, $\mathbb{P}(B \cap C) = \frac{1}{4}$. Et $\mathbb{P}(B)\mathbb{P}(C) = \frac{1}{4}$. ($B$ et $C$ indépendants).
-La famille est bien indépendante deux à deux.
-
-3. **Indépendance mutuelle :**
-$A \cap B \cap C = \{PP\}$, $\mathbb{P}(A \cap B \cap C) = \frac{1}{4}$.
-Cependant, $\mathbb{P}(A)\mathbb{P}(B)\mathbb{P}(C) = \frac{1}{2} \times \frac{1}{2} \times \frac{1}{2} = \frac{1}{8}$.
-Comme $\frac{1}{4} \neq \frac{1}{8}$, les trois événements ne sont pas mutuellement indépendants. Connaître $A$ et $B$ détermine entièrement $C$.
+1. Les valeurs possibles pour $X$ et $Y$ sont $0$ et $1$. Donc $Z$ prend ses valeurs dans $\{0, 1, 2\}$.
+2. Pour $Z = 0$, $X$ et $Y$ doivent valoir $0$. Par indépendance : $\mathbb{P}(Z=0) = \mathbb{P}(X=0, Y=0) = \mathbb{P}(X=0)\mathbb{P}(Y=0) = (1-p)(1-p) = (1-p)^2$.
+3. Pour $Z = 1$, il y a deux cas mutuellement exclusifs : $(X=1, Y=0)$ et $(X=0, Y=1)$. $\mathbb{P}(Z=1) = \mathbb{P}(X=1)\mathbb{P}(Y=0) + \mathbb{P}(X=0)\mathbb{P}(Y=1) = p(1-p) + (1-p)p = 2p(1-p)$.
+4. Pour $Z = 2$, $X$ et $Y$ doivent valoir $1$. $\mathbb{P}(Z=2) = \mathbb{P}(X=1, Y=1) = \mathbb{P}(X=1)\mathbb{P}(Y=1) = p^2$.
+5. On reconnaît les termes du développement de $((1-p) + p)^2$. $Z$ suit une loi binomiale $\mathcal{B}(2, p)$.

@@ -1,19 +1,13 @@
-# Exercice 06 : Produit de variables exponentielles
-Difficulté : $\bigstar\bigstar\bigstar\star\star$
+\subsection*{Exercice 6 : Indépendance de fonctions mesurables \quad $\bigstar\bigstar\bigstar\star\star$}
 
-**Énoncé :**
-Soient $X$ et $Y$ deux variables aléatoires indépendantes suivant des lois exponentielles de paramètres respectifs $\lambda$ et $\mu$.
-Calculer $\mathbb{E}[e^{-s(X+Y)}]$ pour $s \geq 0$.
+Soient $X$ et $Y$ deux variables aléatoires indépendantes à valeurs dans $\mathbb{R}$. Soient $f, g : \mathbb{R} \to \mathbb{R}$ deux fonctions boréliennes (mesurables). Montrer que les variables $f(X)$ et $g(Y)$ sont indépendantes.
 
 **Correction :**
-1. L'espérance à calculer est $\mathbb{E}[e^{-sX - sY}] = \mathbb{E}[e^{-sX} e^{-sY}]$.
-2. Puisque $X$ et $Y$ sont indépendantes, par le Théorème 1 sur l'espérance du produit pour des fonctions mesurables (ici $x \mapsto e^{-sx}$ et $y \mapsto e^{-sy}$) :
-$\mathbb{E}[e^{-sX} e^{-sY}] = \mathbb{E}[e^{-sX}] \mathbb{E}[e^{-sY}]$.
-3. Calculons $\mathbb{E}[e^{-sX}]$ :
-$\mathbb{E}[e^{-sX}] = \int_0^\infty e^{-sx} \lambda e^{-\lambda x} dx = \lambda \int_0^\infty e^{-(\lambda+s)x} dx$.
-Cette intégrale converge pour $\lambda + s > 0$, ce qui est vrai car $\lambda > 0$ et $s \geq 0$.
-$\mathbb{E}[e^{-sX}] = \lambda \left[ \frac{e^{-(\lambda+s)x}}{-(\lambda+s)} \right]_0^\infty = \lambda \left( 0 - \frac{1}{-(\lambda+s)} \right) = \frac{\lambda}{\lambda+s}$.
-4. De manière analogue, $\mathbb{E}[e^{-sY}] = \frac{\mu}{\mu+s}$.
-5. Finalement :
-$\mathbb{E}[e^{-s(X+Y)}] = \frac{\lambda}{\lambda+s} \frac{\mu}{\mu+s} = \frac{\lambda\mu}{(\lambda+s)(\mu+s)}$.
-*(Note : Ceci représente la transformée de Laplace, ou fonction génératrice des moments, de $X+Y$)*.
+1. On doit montrer que pour tout boréliens $A, B$ de $\mathbb{R}$, $\mathbb{P}(f(X) \in A, g(Y) \in B) = \mathbb{P}(f(X) \in A)\mathbb{P}(g(Y) \in B)$.
+2. Par définition de l'image réciproque, $f(X) \in A \iff X \in f^{-1}(A)$ et $g(Y) \in B \iff Y \in g^{-1}(B)$.
+3. Puisque $f$ et $g$ sont mesurables, les images réciproques $f^{-1}(A)$ et $g^{-1}(B)$ sont des boréliens de $\mathbb{R}$.
+4. On peut donc utiliser la définition de l'indépendance de $X$ et $Y$ sur ces boréliens :
+   $\mathbb{P}(X \in f^{-1}(A), Y \in g^{-1}(B)) = \mathbb{P}(X \in f^{-1}(A))\mathbb{P}(Y \in g^{-1}(B))$
+5. En réécrivant en termes de $f(X)$ et $g(Y)$, on obtient :
+   $\mathbb{P}(f(X) \in A, g(Y) \in B) = \mathbb{P}(f(X) \in A)\mathbb{P}(g(Y) \in B)$
+6. Ainsi, les variables aléatoires $f(X)$ et $g(Y)$ sont indépendantes.

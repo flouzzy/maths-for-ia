@@ -1,20 +1,16 @@
-# Exercice 05 : Indépendance de fonctions mesurables
-Difficulté : $\bigstar\bigstar\bigstar\star\star$
+\subsection*{Exercice 5 : Variables de Poisson indépendantes \quad $\bigstar\bigstar\bigstar\star\star$}
 
-**Énoncé :**
-Soient $X$ et $Y$ deux variables aléatoires réelles indépendantes. Soient $f, g : \mathbb{R} \to \mathbb{R}$ deux fonctions mesurables.
-Montrer rigoureusement que $f(X)$ et $g(Y)$ sont indépendantes.
+Soient $X_1$ et $X_2$ deux variables aléatoires indépendantes suivant respectivement des lois de Poisson de paramètres $\lambda_1$ et $\lambda_2$. Montrer que $Z = X_1 + X_2$ suit une loi de Poisson de paramètre $\lambda_1 + \lambda_2$.
 
 **Correction :**
-1. Soient $B_1, B_2 \in \mathcal{B}(\mathbb{R})$ deux boréliens quelconques.
-Nous devons montrer que $\mathbb{P}(f(X) \in B_1 \cap g(Y) \in B_2) = \mathbb{P}(f(X) \in B_1) \mathbb{P}(g(Y) \in B_2)$.
-2. L'événement $\{f(X) \in B_1\}$ est l'image réciproque par $f$, il s'écrit $\{X \in f^{-1}(B_1)\}$.
-Puisque $f$ est mesurable, $f^{-1}(B_1)$ est un borélien de $\mathbb{R}$. Posons $A_1 = f^{-1}(B_1)$.
-De même, l'événement $\{g(Y) \in B_2\}$ s'écrit $\{Y \in g^{-1}(B_2)\}$.
-Puisque $g$ est mesurable, $g^{-1}(B_2)$ est un borélien. Posons $A_2 = g^{-1}(B_2)$.
-3. Nous cherchons donc à évaluer $\mathbb{P}(X \in A_1 \cap Y \in A_2)$.
-Puisque $X$ et $Y$ sont indépendantes par hypothèse (Définition 4), et que $A_1, A_2$ sont des boréliens, on a :
-$\mathbb{P}(X \in A_1 \cap Y \in A_2) = \mathbb{P}(X \in A_1)\mathbb{P}(Y \in A_2)$.
-4. En remplaçant $A_1$ et $A_2$ par leurs expressions :
-$\mathbb{P}(f(X) \in B_1 \cap g(Y) \in B_2) = \mathbb{P}(f(X) \in B_1) \mathbb{P}(g(Y) \in B_2)$.
-Ceci étant vrai pour tous boréliens, les variables aléatoires $f(X)$ et $g(Y)$ sont indépendantes.
+1. Les valeurs de $X_1, X_2$ et $Z$ sont des entiers naturels. Soit $n \in \mathbb{N}$.
+2. L'événement $\{Z = n\}$ s'écrit comme l'union disjointe des événements $\{X_1 = k, X_2 = n-k\}$ pour $k = 0, \ldots, n$.
+3. $\mathbb{P}(Z = n) = \sum_{k=0}^{n} \mathbb{P}(X_1 = k, X_2 = n-k)$.
+4. Par indépendance, $\mathbb{P}(Z = n) = \sum_{k=0}^{n} \mathbb{P}(X_1 = k)\mathbb{P}(X_2 = n-k)$.
+5. On remplace par les expressions de la loi de Poisson :
+   $\mathbb{P}(Z = n) = \sum_{k=0}^{n} \left( e^{-\lambda_1} \frac{\lambda_1^k}{k!} \right) \left( e^{-\lambda_2} \frac{\lambda_2^{n-k}}{(n-k)!} \right)$
+6. On sort les termes constants de la somme :
+   $\mathbb{P}(Z = n) = e^{-(\lambda_1+\lambda_2)} \frac{1}{n!} \sum_{k=0}^{n} \frac{n!}{k!(n-k)!} \lambda_1^k \lambda_2^{n-k}$
+7. On reconnaît le coefficient binomial $\binom{n}{k}$, puis le développement du binôme de Newton :
+   $\mathbb{P}(Z = n) = e^{-(\lambda_1+\lambda_2)} \frac{1}{n!} (\lambda_1 + \lambda_2)^n$
+8. C'est exactement l'expression d'une loi de Poisson de paramètre $\lambda_1 + \lambda_2$.

@@ -1,26 +1,16 @@
-# Exercice 08 : Minimum de variables uniformes indépendantes
-Difficulté : $\bigstar\bigstar\bigstar\bigstar\star$
+\subsection*{Exercice 8 : Vecteurs gaussiens et indépendance \quad $\bigstar\bigstar\bigstar\bigstar\star$}
 
-**Énoncé :**
-Soient $U_1, U_2, \dots, U_n$ des variables aléatoires indépendantes suivant toutes la loi uniforme $\mathcal{U}([0, 1])$.
-Soit $M_n = \min(U_1, U_2, \dots, U_n)$.
-1. Déterminer la fonction de répartition de $M_n$, notée $F_{M_n}(x)$.
-2. En déduire la densité de $M_n$ et son espérance $\mathbb{E}[M_n]$.
+Soit $(X, Y)$ un vecteur gaussien de dimension 2 d'espérance $(0, 0)$ et de matrice de covariance $\Sigma = \begin{pmatrix} 1 & \rho \\ \rho & 1 \end{pmatrix}$.
+1. Quelle est la condition nécessaire et suffisante sur $\rho$ pour que $X$ et $Y$ soient indépendantes ?
+2. Démontrer ce résultat en utilisant la fonction caractéristique.
 
 **Correction :**
-1. Par définition, $F_{M_n}(x) = \mathbb{P}(M_n \leq x)$.
-Il est plus simple de passer par le complémentaire : $\mathbb{P}(M_n \leq x) = 1 - \mathbb{P}(M_n > x)$.
-Dire que le minimum est strictement plus grand que $x$ équivaut à dire que *toutes* les variables sont strictement plus grandes que $x$ :
-$\mathbb{P}(M_n > x) = \mathbb{P}(U_1 > x, U_2 > x, \dots, U_n > x)$.
-Par indépendance mutuelle, la probabilité de l'intersection est le produit des probabilités :
-$\mathbb{P}(M_n > x) = \prod_{i=1}^n \mathbb{P}(U_i > x)$.
-Pour une loi $\mathcal{U}([0, 1])$, si $x \in [0, 1]$, $\mathbb{P}(U_i > x) = 1 - x$.
-Ainsi, $\mathbb{P}(M_n > x) = (1-x)^n$.
-Donc $F_{M_n}(x) = 1 - (1-x)^n$ pour $x \in [0, 1]$. (Elle vaut $0$ pour $x < 0$ et $1$ pour $x > 1$).
-2. La densité $f_{M_n}(x)$ est la dérivée de $F_{M_n}(x)$ pour $x \in [0, 1]$ :
-$f_{M_n}(x) = \frac{d}{dx} (1 - (1-x)^n) = -n(1-x)^{n-1}(-1) = n(1-x)^{n-1}$.
-Calcul de l'espérance :
-$\mathbb{E}[M_n] = \int_0^1 x \cdot n(1-x)^{n-1} dx$.
-On procède par intégration par parties ou changement de variable $u = 1-x$ ($dx = -du$, $x = 1-u$) :
-$\mathbb{E}[M_n] = \int_1^0 (1-u) \cdot n u^{n-1} (-du) = n \int_0^1 (u^{n-1} - u^n) du$.
-$\mathbb{E}[M_n] = n \left[ \frac{u^n}{n} - \frac{u^{n+1}}{n+1} \right]_0^1 = n \left( \frac{1}{n} - \frac{1}{n+1} \right) = n \left( \frac{n+1-n}{n(n+1)} \right) = \frac{1}{n+1}$.
+1. Condition : $X$ et $Y$ sont indépendantes si et seulement si leur covariance est nulle, c'est-à-dire si et seulement si $\rho = 0$. (Ce résultat est propre aux vecteurs gaussiens).
+2. Démonstration par la fonction caractéristique :
+   - La fonction caractéristique du vecteur gaussien $(X, Y)$ évaluée en $(u, v) \in \mathbb{R}^2$ est :
+     $\phi_{(X, Y)}(u, v) = \exp\left(-\frac{1}{2} (u, v) \Sigma (u, v)^T\right) = \exp\left(-\frac{1}{2} (u^2 + v^2 + 2\rho uv)\right)$
+   - Les marginales $X$ et $Y$ sont des gaussiennes centrées réduites, donc $\phi_X(u) = \exp(-u^2/2)$ et $\phi_Y(v) = \exp(-v^2/2)$.
+   - L'indépendance de $X$ et $Y$ équivaut à la factorisation de la fonction caractéristique conjointe : $\phi_{(X, Y)}(u, v) = \phi_X(u)\phi_Y(v)$ pour tout $(u, v)$.
+   - $\phi_X(u)\phi_Y(v) = \exp(-u^2/2)\exp(-v^2/2) = \exp\left(-\frac{1}{2} (u^2 + v^2)\right)$.
+   - On a donc l'égalité si et seulement si $\exp\left(-\frac{1}{2} (u^2 + v^2 + 2\rho uv)\right) = \exp\left(-\frac{1}{2} (u^2 + v^2)\right)$, soit $2\rho uv = 0$ pour tout $(u, v)$.
+   - Ceci implique obligatoirement $\rho = 0$.

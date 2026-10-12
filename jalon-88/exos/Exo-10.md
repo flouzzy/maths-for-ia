@@ -1,20 +1,16 @@
-# Exercice 10 : Marche aléatoire, indépendance et réflexion
-Difficulté : $\bigstar\bigstar\bigstar\bigstar\bigstar$
+\subsection*{Exercice 10 : Convolution et densités de probabilité \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
 
-**Énoncé :**
-Soient $(X_i)_{i \geq 1}$ une suite de variables aléatoires i.i.d. telles que $\mathbb{P}(X_i = 1) = \mathbb{P}(X_i = -1) = 1/2$.
-On pose $S_0 = 0$ et $S_n = \sum_{i=1}^n X_i$.
-Soit $T = \inf\{n \geq 1 \mid S_n = 1\}$ le temps de premier passage en $1$.
-Les variables aléatoires $S_n$ sont-elles indépendantes ? Qu'en est-il de la probabilité conditionnelle au temps $T$ ?
+Soient $X$ et $Y$ deux variables aléatoires réelles indépendantes admettant pour densités respectives $f_X$ et $f_Y$. Démontrer que la variable aléatoire $Z = X + Y$ admet une densité $f_Z$ donnée par le produit de convolution $f_X * f_Y$.
 
 **Correction :**
-1. **Dépendance des $S_n$ :**
-Par définition, $S_n = S_{n-1} + X_n$. Connaître $S_{n-1}$ donne une information énorme sur $S_n$ (elle ne peut valoir que $S_{n-1}+1$ ou $S_{n-1}-1$).
-Par exemple, $\mathbb{P}(S_2 = 2 | S_1 = 1) = \mathbb{P}(X_2 = 1) = 1/2$.
-Mais $\mathbb{P}(S_2 = 2) = \mathbb{P}(X_1=1, X_2=1) = 1/4$.
-Comme $\mathbb{P}(S_2 = 2 | S_1 = 1) \neq \mathbb{P}(S_2 = 2)$, les variables $S_1$ et $S_2$ ne sont pas indépendantes.
-2. **Principe de réflexion (intuition d'indépendance) :**
-La variable $T$ est un temps d'arrêt. conditionnellement à l'événement $\{T = k\}$, l'évolution de la marche aléatoire pour $n > k$ ne dépend que des pas $(X_{k+1}, X_{k+2}, \dots)$.
-Puisque les pas initiaux et futurs sont indépendants, la trajectoire *après* le temps $T$ est indépendante de la trajectoire *avant* le temps $T$.
-Soit une trajectoire atteignant $1$ au temps $T$. Pour toute trajectoire atteignant une valeur $x > 1$ au temps $n$, il existe une trajectoire équiprobable atteignant $2 - x$ par symétrie des $X_i$ après le temps $T$.
-C'est le principe de la propriété de Markov forte, qui dérive directement de l'indépendance mutuelle stricte de tous les incréments $X_i$.
+1. La loi conjointe de $(X, Y)$ a pour densité $f_{(X,Y)}(x, y) = f_X(x)f_Y(y)$ grâce à l'indépendance.
+2. Cherchons la fonction de répartition de $Z$, $F_Z(z) = \mathbb{P}(Z \le z) = \mathbb{P}(X + Y \le z)$.
+3. On intègre la densité conjointe sur le domaine $\Delta_z = \{(x, y) \in \mathbb{R}^2 \mid x + y \le z\}$ :
+   $F_Z(z) = \iint_{\Delta_z} f_X(x)f_Y(y) dx dy = \int_{-\infty}^{\infty} \left( \int_{-\infty}^{z - x} f_Y(y) dy \right) f_X(x) dx$
+4. On effectue le changement de variable $u = x + y$ dans l'intégrale interne (à $x$ fixé, $du = dy$) :
+   $F_Z(z) = \int_{-\infty}^{\infty} \left( \int_{-\infty}^{z} f_Y(u - x) du \right) f_X(x) dx$
+5. Toutes les fonctions étant positives, par le théorème de Fubini-Tonelli, on peut intervertir les intégrales :
+   $F_Z(z) = \int_{-\infty}^{z} \left( \int_{-\infty}^{\infty} f_X(x)f_Y(u - x) dx \right) du$
+6. La fonction $z \mapsto F_Z(z)$ s'écrit donc comme l'intégrale d'une fonction $f_Z(u) = \int_{-\infty}^{\infty} f_X(x)f_Y(u - x) dx$.
+7. Par définition, cette fonction est la densité de $Z$, et c'est exactement l'expression du produit de convolution $f_X * f_Y(u)$.
+8. Ce résultat démontre que la densité de la somme de deux V.A. à densité indépendantes est le produit de convolution de leurs densités.
