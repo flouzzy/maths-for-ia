@@ -1,36 +1,16 @@
-# Généralisation par les fonctions génératrices des moments
+\subsection*{Exercice 10 : Convolution et densités de probabilité \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
+Soient $X$ et $Y$ deux variables aléatoires réelles indépendantes admettant pour densités respectives $f_X$ et $f_Y$. Démontrer que la variable aléatoire $Z = X + Y$ admet une densité $f_Z$ donnée par le produit de convolution $f_X * f_Y$.
 
-Démontrer le résultat de l'exercice précédent (somme de deux variables de Poisson indépendantes) en utilisant le formalisme analytique des fonctions génératrices des moments (ou fonctions caractéristiques), prouvant l'élégance de ce formalisme sur le calcul convolutif direct.
-
-### Correction
-
-Soient $X \sim \mathcal{P}(\lambda)$ et $Y \sim \mathcal{P}(\mu)$ deux variables aléatoires indépendantes, et $S = X + Y$.
-
-**1. Rappel théorique fondamental :**
-La fonction caractéristique (ou fonction génératrice des moments) de la somme de deux variables aléatoires **indépendantes** est le produit mathématique de leurs fonctions caractéristiques individuelles.
-$\phi_S(t) = \mathbb{E}[e^{itS}] = \mathbb{E}[e^{it(X+Y)}] = \mathbb{E}[e^{itX} e^{itY}]$.
-Par indépendance des variables $e^{itX}$ et $e^{itY}$ (théorème des coalitions), l'espérance du produit est le produit des espérances :
-$\phi_S(t) = \mathbb{E}[e^{itX}] \cdot \mathbb{E}[e^{itY}] = \phi_X(t) \cdot \phi_Y(t)$.
-
-**2. Calcul de la fonction caractéristique d'une loi de Poisson :**
-Soit $V \sim \mathcal{P}(\theta)$. Calculons sa fonction caractéristique $\phi_V(t) = \mathbb{E}[e^{itV}]$.
-Par le théorème de transfert :
-$\phi_V(t) = \sum_{k=0}^\infty e^{itk} \mathbb{P}(V=k) = \sum_{k=0}^\infty (e^{it})^k e^{-\theta} \frac{\theta^k}{k!}$
-On factorise la constante exponentielle et on regroupe les termes à la puissance $k$ :
-$\phi_V(t) = e^{-\theta} \sum_{k=0}^\infty \frac{(\theta e^{it})^k}{k!}$
-On identifie la série de Taylor de la fonction exponentielle mathématique $\sum_{k=0}^\infty \frac{z^k}{k!} = e^z$ pour $z = \theta e^{it}$ :
-$\phi_V(t) = e^{-\theta} e^{\theta e^{it}} = e^{\theta(e^{it} - 1)}$.
-
-**3. Application à la somme $S = X + Y$ :**
-Les fonctions caractéristiques marginales sont donc $\phi_X(t) = e^{\lambda(e^{it} - 1)}$ et $\phi_Y(t) = e^{\mu(e^{it} - 1)}$.
-En appliquant le théorème de produit pour variables indépendantes :
-$\phi_S(t) = \phi_X(t) \cdot \phi_Y(t) = e^{\lambda(e^{it} - 1)} \cdot e^{\mu(e^{it} - 1)}$
-Par les propriétés algébriques de la fonction exponentielle :
-$\phi_S(t) = e^{\lambda(e^{it} - 1) + \mu(e^{it} - 1)} = e^{(\lambda + \mu)(e^{it} - 1)}$
-
-**4. Conclusion et identification :**
-L'expression obtenue, $e^{(\lambda + \mu)(e^{it} - 1)}$, correspond parfaitement à la signature analytique de la fonction caractéristique d'une loi de Poisson de paramètre $(\lambda + \mu)$.
-D'après le théorème de caractérisation univoque de Lévy (l'application qui à une loi associe sa fonction caractéristique est bijective), on conclut que la distribution probabiliste de $S$ est exactement la loi $\mathcal{P}(\lambda + \mu)$.
-Cette démonstration analytique est considérablement plus courte et évite toute sommation combinatoire.
+**Correction :**
+1. La loi conjointe de $(X, Y)$ a pour densité $f_{(X,Y)}(x, y) = f_X(x)f_Y(y)$ grâce à l'indépendance.
+2. Cherchons la fonction de répartition de $Z$, $F_Z(z) = \mathbb{P}(Z \le z) = \mathbb{P}(X + Y \le z)$.
+3. On intègre la densité conjointe sur le domaine $\Delta_z = \{(x, y) \in \mathbb{R}^2 \mid x + y \le z\}$ :
+   $F_Z(z) = \iint_{\Delta_z} f_X(x)f_Y(y) dx dy = \int_{-\infty}^{\infty} \left( \int_{-\infty}^{z - x} f_Y(y) dy \right) f_X(x) dx$
+4. On effectue le changement de variable $u = x + y$ dans l'intégrale interne (à $x$ fixé, $du = dy$) :
+   $F_Z(z) = \int_{-\infty}^{\infty} \left( \int_{-\infty}^{z} f_Y(u - x) du \right) f_X(x) dx$
+5. Toutes les fonctions étant positives, par le théorème de Fubini-Tonelli, on peut intervertir les intégrales :
+   $F_Z(z) = \int_{-\infty}^{z} \left( \int_{-\infty}^{\infty} f_X(x)f_Y(u - x) dx \right) du$
+6. La fonction $z \mapsto F_Z(z)$ s'écrit donc comme l'intégrale d'une fonction $f_Z(u) = \int_{-\infty}^{\infty} f_X(x)f_Y(u - x) dx$.
+7. Par définition, cette fonction est la densité de $Z$, et c'est exactement l'expression du produit de convolution $f_X * f_Y(u)$.
+8. Ce résultat démontre que la densité de la somme de deux V.A. à densité indépendantes est le produit de convolution de leurs densités.

@@ -1,27 +1,10 @@
-# Indépendance des passages au complémentaire
+\subsection*{Exercice 3 : Loi de la somme de deux variables de Bernoulli indépendantes \quad $\bigstar\bigstar\star\star\star$}
 
-**Difficulté :** $\bigstar\bigstar\star\star\star$
+Soient $X$ et $Y$ deux variables aléatoires indépendantes suivant une loi de Bernoulli de paramètre $p \in ]0, 1[$. Déterminer la loi de la somme $Z = X + Y$.
 
-Soient $A$ et $B$ deux événements indépendants.
-Démontrer, en utilisant uniquement les axiomes des probabilités et la définition de l'indépendance, que :
-1. $A$ et $B^c$ sont indépendants.
-2. $A^c$ et $B^c$ sont indépendants.
-
-### Correction
-
-Soient $A$ et $B$ deux événements indépendants, on a $\mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B)$.
-
-**Démonstration 1 : Indépendance de $A$ et $B^c$**
-1. On peut écrire $A$ comme la réunion disjointe de deux sous-ensembles : $A = (A \cap B) \cup (A \cap B^c)$.
-2. Par l'axiome d'additivité des probabilités pour des ensembles disjoints, on a : $\mathbb{P}(A) = \mathbb{P}(A \cap B) + \mathbb{P}(A \cap B^c)$.
-3. On isole le terme qui nous intéresse : $\mathbb{P}(A \cap B^c) = \mathbb{P}(A) - \mathbb{P}(A \cap B)$.
-4. On utilise l'hypothèse d'indépendance de $A$ et $B$ : $\mathbb{P}(A \cap B^c) = \mathbb{P}(A) - \mathbb{P}(A)\mathbb{P}(B)$.
-5. On factorise par $\mathbb{P}(A)$ : $\mathbb{P}(A \cap B^c) = \mathbb{P}(A)(1 - \mathbb{P}(B))$.
-6. On reconnaît la probabilité du complémentaire : $\mathbb{P}(A \cap B^c) = \mathbb{P}(A)\mathbb{P}(B^c)$.
-Ceci démontre que $A$ et $B^c$ sont indépendants.
-
-**Démonstration 2 : Indépendance de $A^c$ et $B^c$**
-1. D'après le point précédent, si deux événements sont indépendants, le premier est indépendant du complémentaire du second.
-2. Appliquons ce résultat à la paire d'événements indépendants $B^c$ et $A$. (Note : si $A$ est indépendant de $B^c$, alors $B^c$ est indépendant de $A$).
-3. Le résultat précédent nous dit que $B^c$ est indépendant du complémentaire de $A$, c'est-à-dire $A^c$.
-4. L'indépendance étant symétrique, on conclut immédiatement que $A^c$ et $B^c$ sont indépendants.
+**Correction :**
+1. Les valeurs possibles pour $X$ et $Y$ sont $0$ et $1$. Donc $Z$ prend ses valeurs dans $\{0, 1, 2\}$.
+2. Pour $Z = 0$, $X$ et $Y$ doivent valoir $0$. Par indépendance : $\mathbb{P}(Z=0) = \mathbb{P}(X=0, Y=0) = \mathbb{P}(X=0)\mathbb{P}(Y=0) = (1-p)(1-p) = (1-p)^2$.
+3. Pour $Z = 1$, il y a deux cas mutuellement exclusifs : $(X=1, Y=0)$ et $(X=0, Y=1)$. $\mathbb{P}(Z=1) = \mathbb{P}(X=1)\mathbb{P}(Y=0) + \mathbb{P}(X=0)\mathbb{P}(Y=1) = p(1-p) + (1-p)p = 2p(1-p)$.
+4. Pour $Z = 2$, $X$ et $Y$ doivent valoir $1$. $\mathbb{P}(Z=2) = \mathbb{P}(X=1, Y=1) = \mathbb{P}(X=1)\mathbb{P}(Y=1) = p^2$.
+5. On reconnaît les termes du développement de $((1-p) + p)^2$. $Z$ suit une loi binomiale $\mathcal{B}(2, p)$.

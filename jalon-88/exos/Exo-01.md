@@ -1,19 +1,12 @@
-# Indépendance et incompatibilité
+\subsection*{Exercice 1 : Indépendance et événements incompatibles \quad $\bigstar\star\star\star\star$}
 
-**Difficulté :** $\bigstar\star\star\star\star$
+Soient $A$ et $B$ deux événements de probabilités strictement positives. Montrer que si $A$ et $B$ sont incompatibles, alors ils ne peuvent pas être indépendants.
 
-Soient $A$ et $B$ deux événements d'un espace probabilisé $(\Omega, \mathcal{F}, \mathbb{P})$, tels que $\mathbb{P}(A) > 0$ et $\mathbb{P}(B) > 0$.
-Montrer que $A$ et $B$ ne peuvent pas être à la fois indépendants et incompatibles (mutuellement exclusifs).
-
-### Correction
-
-Soient $A$ et $B$ deux événements tels que $\mathbb{P}(A) > 0$ et $\mathbb{P}(B) > 0$.
-
-1. Supposons que $A$ et $B$ soient incompatibles. Cela signifie par définition que $A \cap B = \emptyset$.
-2. Par conséquent, la probabilité de leur intersection est nulle : $\mathbb{P}(A \cap B) = \mathbb{P}(\emptyset) = 0$.
-3. Supposons maintenant que $A$ et $B$ soient également indépendants. La définition de l'indépendance donne : $\mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B)$.
-4. En combinant les deux propriétés, nous obtenons : $\mathbb{P}(A)\mathbb{P}(B) = 0$.
-5. Or, nous savons que dans le corps des réels, le produit de deux nombres est nul si et seulement si l'un au moins des deux facteurs est nul. Donc, $\mathbb{P}(A) = 0$ ou $\mathbb{P}(B) = 0$.
-6. Ceci est en contradiction flagrante avec l'hypothèse initiale $\mathbb{P}(A) > 0$ et $\mathbb{P}(B) > 0$.
-
-Nous pouvons donc conclure qu'il est impossible que deux événements de probabilité non nulle soient à la fois indépendants et incompatibles.
+**Correction :**
+1. L'incompatibilité de $A$ et $B$ signifie que $A \cap B = \emptyset$.
+2. Par conséquent, $\mathbb{P}(A \cap B) = \mathbb{P}(\emptyset) = 0$.
+3. Supposons par l'absurde que $A$ et $B$ soient indépendants.
+4. Alors $\mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B)$.
+5. Puisque $\mathbb{P}(A) > 0$ et $\mathbb{P}(B) > 0$, le produit $\mathbb{P}(A)\mathbb{P}(B) > 0$.
+6. On aboutit à une contradiction : $0 > 0$.
+7. Donc $A$ et $B$ ne sont pas indépendants.

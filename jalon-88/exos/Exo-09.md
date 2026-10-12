@@ -1,30 +1,18 @@
-# Somme de Poissons indépendantes
+\subsection*{Exercice 9 : Minimum de lois exponentielles \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
+Soient $X_1, \ldots, X_n$ des variables aléatoires indépendantes, où $X_i$ suit une loi exponentielle $\mathcal{E}(\lambda_i)$.
+On pose $M = \min(X_1, \ldots, X_n)$.
+1. Exprimer la fonction de répartition de $M$.
+2. En déduire la loi de $M$.
 
-Soient $X \sim \mathcal{P}(\lambda)$ et $Y \sim \mathcal{P}(\mu)$ deux variables aléatoires discrètes suivant des lois de Poisson. On suppose que $X$ et $Y$ sont indépendantes.
-Démontrer formellement, par le calcul de convolution discrète, que la variable aléatoire $S = X + Y$ suit une loi de Poisson dont on déterminera le paramètre.
-
-### Correction
-
-Soient $X$ et $Y$ deux variables indépendantes telles que $X \sim \mathcal{P}(\lambda)$ et $Y \sim \mathcal{P}(\mu)$.
-Rappelons la probabilité d'une loi de Poisson : $\mathbb{P}(X=k) = e^{-\lambda} \frac{\lambda^k}{k!}$ pour $k \in \mathbb{N}$.
-La variable somme $S = X + Y$ prend ses valeurs dans $\mathbb{N}$. Soit $n \in \mathbb{N}$.
-L'événement $\{S = n\}$ peut s'écrire comme l'union disjointe de toutes les configurations de $X$ et $Y$ dont la somme vaut $n$ :
-$\{S = n\} = \bigcup_{k=0}^n \left( \{X = k\} \cap \{Y = n - k\} \right)$
-Par axiome d'additivité dénombrable sur les ensembles disjoints :
-$\mathbb{P}(S = n) = \sum_{k=0}^n \mathbb{P}(X = k \cap Y = n - k)$
-On applique l'hypothèse d'indépendance de $X$ et $Y$ :
-$\mathbb{P}(S = n) = \sum_{k=0}^n \mathbb{P}(X = k)\mathbb{P}(Y = n - k)$
-On substitue maintenant les expressions analytiques des lois de Poisson :
-$\mathbb{P}(S = n) = \sum_{k=0}^n \left( e^{-\lambda} \frac{\lambda^k}{k!} \right) \left( e^{-\mu} \frac{\mu^{n-k}}{(n-k)!} \right)$
-On extrait les facteurs exponentiels qui ne dépendent pas de l'indice de sommation $k$ :
-$\mathbb{P}(S = n) = e^{-(\lambda + \mu)} \sum_{k=0}^n \frac{\lambda^k \mu^{n-k}}{k!(n-k)!}$
-Afin de faire apparaître la formule du binôme de Newton, on multiplie et on divise par la factorielle $n!$ :
-$\mathbb{P}(S = n) = e^{-(\lambda + \mu)} \frac{1}{n!} \sum_{k=0}^n \frac{n!}{k!(n-k)!} \lambda^k \mu^{n-k}$
-On identifie la définition formelle du coefficient binomial $\binom{n}{k} = \frac{n!}{k!(n-k)!}$ :
-$\mathbb{P}(S = n) = e^{-(\lambda + \mu)} \frac{1}{n!} \sum_{k=0}^n \binom{n}{k} \lambda^k \mu^{n-k}$
-On applique le théorème du binôme de Newton : $\sum_{k=0}^n \binom{n}{k} x^k y^{n-k} = (x+y)^n$ :
-$\mathbb{P}(S = n) = e^{-(\lambda + \mu)} \frac{(\lambda + \mu)^n}{n!}$
-Cette expression est très exactement la fonction de masse d'une loi de Poisson de paramètre $(\lambda + \mu)$.
-**Conclusion :** La somme de deux variables de Poisson indépendantes suit rigoureusement une loi de Poisson, $\mathcal{P}(\lambda + \mu)$.
+**Correction :**
+1. Soit $x \ge 0$. La fonction de répartition de $M$ est $F_M(x) = \mathbb{P}(M \le x)$.
+2. Il est plus simple de passer par le complémentaire : $\mathbb{P}(M > x) = 1 - F_M(x)$.
+3. Le minimum de variables est supérieur à $x$ si et seulement si toutes les variables sont supérieures à $x$ :
+   $\{M > x\} = \bigcap_{i=1}^n \{X_i > x\}$.
+4. Par l'indépendance des $X_i$ :
+   $\mathbb{P}(M > x) = \mathbb{P}\left(\bigcap_{i=1}^n \{X_i > x\}\right) = \prod_{i=1}^n \mathbb{P}(X_i > x)$.
+5. Pour une loi exponentielle $\mathcal{E}(\lambda_i)$, $\mathbb{P}(X_i > x) = e^{-\lambda_i x}$.
+6. Donc $\mathbb{P}(M > x) = \prod_{i=1}^n e^{-\lambda_i x} = e^{-(\sum_{i=1}^n \lambda_i) x}$.
+7. On en déduit $F_M(x) = 1 - e^{-(\sum_{i=1}^n \lambda_i) x}$ pour $x \ge 0$, qui est exactement la fonction de répartition d'une loi exponentielle de paramètre $\Lambda = \sum_{i=1}^n \lambda_i$.
+8. Conclusion : le minimum de lois exponentielles indépendantes suit une loi exponentielle dont le paramètre est la somme des paramètres.

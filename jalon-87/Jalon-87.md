@@ -7,7 +7,7 @@ tags:
   - math/probabilites
   - ia/abstraction
 prev: "[[Jalon 86 (Variables aléatoires vues comme des applications mesurables).md]]"
-next: "[[Jalon 88 (Indépendance d'événements).md]]"
+next: "[[Jalon-88.md]]"
 ---
 
 # Jalon 87 : Intégration et Espérance Mathématique
