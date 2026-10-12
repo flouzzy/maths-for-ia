@@ -100,7 +100,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-85/Jalon-85.md|Jalon 85 : Axiomes de Kolmogorov]] : Axiomes de Kolmogorov, espace de probabilité $(\\Omega, \\mathcal{F}, \\mathbb{P})$ comme un espace mesuré de masse 1. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-86/Jalon-86.md|Jalon 86 : Variables aléatoires vues comme des applications mesurables]] : Variables aléatoires vues comme des applications mesurables, loi d'une variable et mesure de probabilité image. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-87/Jalon-87.md|Jalon 87 : Intégration et Espérance mathématique]] : Intégration des variables aléatoires, espérance, variance et moments d'ordre supérieur. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [ ] [[jalon-88/Jalon 88 (Indépendance d'événements).md|Jalon 88 : Indépendance d'événements]] : Indépendance d'événements, de tribus et de variables aléatoires.
+- [x] [[jalon-88/Jalon-88.md|Jalon 88 : Indépendance d'événements]] : Indépendance d'événements, de tribus et de variables aléatoires. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-89/Jalon 89 (Lemmes de Borel-Cantelli).md|Jalon 89 : Lemmes de Borel-Cantelli]] : Lemmes de Borel-Cantelli (lois du tout ou rien) et applications aux comportements asymptotiques.
 - [ ] [[jalon-90/Jalon 90 (Les modes de convergence).md|Jalon 90 : Les modes de convergence]] : Les modes de convergence : presque sûre, en probabilité, dans $L^p$ et en loi (convergence étroite des mesures).
 - [ ] [[jalon-91/Jalon 91 (Inégalités de concentration).md|Jalon 91 : Inégalités de concentration]] : Inégalités de concentration : Markov, Chebyshev, Bienaymé, Chernoff et lemme de Hoeffding.
