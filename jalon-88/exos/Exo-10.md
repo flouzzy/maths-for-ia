@@ -1,34 +1,20 @@
-# Exercice 10 : Matrices de covariance et indépendance \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
+# Exercice 10 : Marche aléatoire, indépendance et réflexion
+Difficulté : $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
 **Énoncé :**
+Soient $(X_i)_{i \geq 1}$ une suite de variables aléatoires i.i.d. telles que $\mathbb{P}(X_i = 1) = \mathbb{P}(X_i = -1) = 1/2$.
+On pose $S_0 = 0$ et $S_n = \sum_{i=1}^n X_i$.
+Soit $T = \inf\{n \geq 1 \mid S_n = 1\}$ le temps de premier passage en $1$.
+Les variables aléatoires $S_n$ sont-elles indépendantes ? Qu'en est-il de la probabilité conditionnelle au temps $T$ ?
 
-Soit $V = (X, Y)^T$ un vecteur aléatoire gaussien de dimension 2. Son espérance est le vecteur nul $\mu = (0, 0)^T$ et sa matrice de covariance est $\Sigma$.
-Démontrer rigoureusement que si la covariance $\text{Cov}(X,Y)$ est nulle (matrice $\Sigma$ diagonale), alors les variables aléatoires $X$ et $Y$ sont indépendantes.
-(Rappel : La densité d'un vecteur gaussien centré non dégénéré est $f(v) = \frac{1}{2\pi \sqrt{\det(\Sigma)}} \exp\left(-\frac{1}{2} v^T \Sigma^{-1} v\right)$).
-
-**Correction Détaillée :**
-
-1. Soit $\Sigma$ la matrice de covariance du vecteur gaussien $V = (X, Y)^T$. Par définition :
-   $$ \Sigma = \begin{pmatrix} \text{Var}(X) & \text{Cov}(X,Y) \\ \text{Cov}(X,Y) & \text{Var}(Y) \end{pmatrix} = \begin{pmatrix} \sigma_X^2 & \sigma_{XY} \\ \sigma_{XY} & \sigma_Y^2 \end{pmatrix} $$
-2. L'hypothèse indique que la covariance est nulle, soit $\sigma_{XY} = 0$. La matrice $\Sigma$ est donc diagonale :
-   $$ \Sigma = \begin{pmatrix} \sigma_X^2 & 0 \\ 0 & \sigma_Y^2 \end{pmatrix} $$
-3. Pour utiliser la fonction de densité du vecteur, nous devons calculer le déterminant et l'inverse de la matrice $\Sigma$.
-   - Le déterminant d'une matrice diagonale est le produit de ses éléments diagonaux :
-     $$ \det(\Sigma) = \sigma_X^2 \sigma_Y^2 $$
-   - L'inverse d'une matrice diagonale inversible s'obtient en inversant ses éléments diagonaux :
-     $$ \Sigma^{-1} = \begin{pmatrix} \frac{1}{\sigma_X^2} & 0 \\ 0 & \frac{1}{\sigma_Y^2} \end{pmatrix} $$
-4. Explicitons le terme exponentiel dans la fonction de densité, c'est-à-dire la forme quadratique $v^T \Sigma^{-1} v$ avec $v = (x, y)^T$ :
-   $$ v^T \Sigma^{-1} v = \begin{pmatrix} x & y \end{pmatrix} \begin{pmatrix} \frac{1}{\sigma_X^2} & 0 \\ 0 & \frac{1}{\sigma_Y^2} \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} $$
-5. En effectuant la multiplication matricielle :
-   $$ = \begin{pmatrix} x & y \end{pmatrix} \begin{pmatrix} \frac{x}{\sigma_X^2} \\ \frac{y}{\sigma_Y^2} \end{pmatrix} = \frac{x^2}{\sigma_X^2} + \frac{y^2}{\sigma_Y^2} $$
-6. Remplaçons ces résultats dans l'expression générale de la densité jointe du vecteur gaussien $f_{X,Y}(x,y)$ :
-   $$ f_{X,Y}(x,y) = \frac{1}{2\pi \sqrt{\sigma_X^2 \sigma_Y^2}} \exp\left(-\frac{1}{2} \left( \frac{x^2}{\sigma_X^2} + \frac{y^2}{\sigma_Y^2} \right) \right) $$
-7. Utilisons les propriétés algébriques des racines carrées et de la fonction exponentielle :
-   - Le dénominateur se sépare : $2\pi \sqrt{\sigma_X^2 \sigma_Y^2} = (\sqrt{2\pi} \sigma_X) (\sqrt{2\pi} \sigma_Y)$.
-   - L'exponentielle d'une somme se transforme en produit : $\exp(A + B) = \exp(A)\exp(B)$.
-8. La densité jointe se réécrit donc sous la forme factorisée suivante :
-   $$ f_{X,Y}(x,y) = \left( \frac{1}{\sqrt{2\pi \sigma_X^2}} \exp\left(-\frac{x^2}{2\sigma_X^2}\right) \right) \cdot \left( \frac{1}{\sqrt{2\pi \sigma_Y^2}} \exp\left(-\frac{y^2}{2\sigma_Y^2}\right) \right) $$
-9. On identifie immédiatement dans les deux facteurs les densités marginales $f_X(x)$ d'une loi $\mathcal{N}(0, \sigma_X^2)$ et $f_Y(y)$ d'une loi $\mathcal{N}(0, \sigma_Y^2)$.
-   L'égalité s'écrit donc : $f_{X,Y}(x,y) = f_X(x) \cdot f_Y(y)$ pour tout couple $(x,y) \in \mathbb{R}^2$.
-10. La factorisation parfaite de la densité jointe en le produit des densités marginales est la condition nécessaire et suffisante d'indépendance pour des variables aléatoires continues.
-11. **Conclusion :** Pour des variables aléatoires conjointement gaussiennes, une covariance nulle (décorrélation) implique rigoureusement l'indépendance mathématique totale. C'est une propriété exceptionnelle de la géométrie de la loi normale.
+**Correction :**
+1. **Dépendance des $S_n$ :**
+Par définition, $S_n = S_{n-1} + X_n$. Connaître $S_{n-1}$ donne une information énorme sur $S_n$ (elle ne peut valoir que $S_{n-1}+1$ ou $S_{n-1}-1$).
+Par exemple, $\mathbb{P}(S_2 = 2 | S_1 = 1) = \mathbb{P}(X_2 = 1) = 1/2$.
+Mais $\mathbb{P}(S_2 = 2) = \mathbb{P}(X_1=1, X_2=1) = 1/4$.
+Comme $\mathbb{P}(S_2 = 2 | S_1 = 1) \neq \mathbb{P}(S_2 = 2)$, les variables $S_1$ et $S_2$ ne sont pas indépendantes.
+2. **Principe de réflexion (intuition d'indépendance) :**
+La variable $T$ est un temps d'arrêt. conditionnellement à l'événement $\{T = k\}$, l'évolution de la marche aléatoire pour $n > k$ ne dépend que des pas $(X_{k+1}, X_{k+2}, \dots)$.
+Puisque les pas initiaux et futurs sont indépendants, la trajectoire *après* le temps $T$ est indépendante de la trajectoire *avant* le temps $T$.
+Soit une trajectoire atteignant $1$ au temps $T$. Pour toute trajectoire atteignant une valeur $x > 1$ au temps $n$, il existe une trajectoire équiprobable atteignant $2 - x$ par symétrie des $X_i$ après le temps $T$.
+C'est le principe de la propriété de Markov forte, qui dérive directement de l'indépendance mutuelle stricte de tous les incréments $X_i$.

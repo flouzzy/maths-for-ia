@@ -9,129 +9,152 @@ tags:
 prev: "[[Jalon 87 (Intégration des variables aléatoires).md]]"
 next: "[[Jalon 89 (Lemmes de Borel-Cantelli).md]]"
 ---
+
 # Jalon 88 : Indépendance d'événements et de variables aléatoires
 
-## 1. Introduction : Genèse historique et physique de l'indépendance
+## 1. Introduction historique et conceptuelle
 
-La notion d'indépendance est au cœur de la théorie des probabilités et trouve ses origines dans les jeux de hasard étudiés par Pascal et Fermat au XVIIe siècle. Historiquement, il s'agissait de formaliser l'intuition physique selon laquelle certains phénomènes n'ont aucune influence causale ou d'information les uns sur les autres.
+Historiquement, la notion d'indépendance émerge des premiers travaux sur les jeux de hasard menés par Pascal et Fermat au XVIIe siècle, puis axiomatisée bien plus tard par Kolmogorov en 1933. L'intuition physique est fondamentale : si l'on lance deux dés à des années-lumière de distance, l'état de l'un ne contient aucune information sur l'état de l'autre. L'indépendance traduit l'absence d'influence causale ou, plus rigoureusement, la factorisation des probabilités (et implique l'absence de corrélation uniquement lorsque les moments d'ordre 2 existent, bien que la réciproque soit fausse).
 
-Par exemple, considérons deux lancers successifs d'un dé parfait. Le résultat du premier lancer ne modifie en rien la configuration physique ni les conditions du second lancer. Si l'on obtient un « 6 » au premier lancer, cette information ne confère aucun avantage pour prédire le résultat du second lancer. L'indépendance traduit cette séparation absolue des informations. Mathématiquement, cela se traduit par une factorisation des probabilités, reflétant le fait que les événements se produisent simultanément selon le produit de leurs fréquences respectives d'apparition.
-
-Cette factorisation est fondamentale car elle permet de décomposer l'étude de systèmes complexes en sous-systèmes simples et isolés. Sans cette notion, l'analyse probabiliste des grands systèmes (comme un gaz parfait en physique statistique ou un réseau de neurones en intelligence artificielle) serait incalculable.
+C'est cette notion qui permet la décomposition des grands systèmes complexes. Si les particules d'un gaz idéal ne s'influencent pas à distance, on peut calculer l'entropie du système entier simplement comme la somme des entropies individuelles. En mathématiques, l'indépendance est la clé de voûte qui permet de remplacer les intersections d'événements par de simples multiplications de probabilités, rendant ainsi le calcul analytiquement possible.
 
 ## 2. Définitions, Théorèmes et Exemples
 
-Soit $(\Omega, \mathcal{F}, \mathbb{P})$ un espace de probabilité.
+Nous nous plaçons dans un espace probabilisé ($\Omega, \mathcal{F}, \mathbb{P}$).
 
-### Indépendance de deux événements
+### 2.1 Indépendance de deux événements
 
-**Définition (Indépendance de deux événements).** Deux événements $A, B \in \mathcal{F}$ sont dits indépendants par rapport à la probabilité $\mathbb{P}$ si :
-$$ \mathbb{P}(A \cap B) = \mathbb{P}(A) \cdot \mathbb{P}(B) $$
-Si $\mathbb{P}(B) > 0$, cette définition équivaut à la probabilité conditionnelle : $\mathbb{P}(A|B) = \mathbb{P}(A)$.
+**Définition 1 (Indépendance d'événements).** Deux événements $A, B \in \mathcal{F}$ sont dits indépendants si, et seulement si, on a l'égalité :
+$$ \mathbb{P}(A \cap B) = \mathbb{P}(A) \mathbb{P}(B) $$
 
-**Exemple concret (Jet de deux dés).**
-Lançons deux dés équilibrés à 6 faces. L'univers est $\Omega = \{1, 2, 3, 4, 5, 6\}^2$, de cardinal $36$, muni de la probabilité uniforme $\mathbb{P}$.
-Considérons les événements :
-- $A$ : "Le premier dé donne un nombre pair" = $\{(2,y), (4,y), (6,y) \mid y \in \{1..6\}\}$. On a $|A| = 18$, donc $\mathbb{P}(A) = \frac{18}{36} = \frac{1}{2}$.
-- $B$ : "La somme des deux dés est 7" = $\{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\}$. On a $|B| = 6$, donc $\mathbb{P}(B) = \frac{6}{36} = \frac{1}{6}$.
-L'événement $A \cap B$ est l'ensemble des cas où le premier dé est pair ET la somme est 7 : $\{(2,5), (4,3), (6,1)\}$.
-On a $|A \cap B| = 3$, donc $\mathbb{P}(A \cap B) = \frac{3}{36} = \frac{1}{12}$.
-Calculons le produit : $\mathbb{P}(A) \cdot \mathbb{P}(B) = \frac{1}{2} \cdot \frac{1}{6} = \frac{1}{12}$.
-Puisque $\mathbb{P}(A \cap B) = \mathbb{P}(A) \cdot \mathbb{P}(B)$, les événements $A$ et $B$ sont **indépendants**.
+Si $\mathbb{P}(B) > 0$, cela équivaut à écrire que la probabilité conditionnelle $\mathbb{P}(A|B)$ est égale à $\mathbb{P}(A)$.
 
-### Indépendance d'une famille d'événements
+**Exemple concret 1 : Le jeu de dés**
+Considérons le lancer d'un dé équilibré à 6 faces. $\Omega = \{1, 2, 3, 4, 5, 6\}$.
+Soit $A = \text{« obtenir un nombre pair »} = \{2, 4, 6\}$ et $B = \text{« obtenir un multiple de 3 »} = \{3, 6\}$.
+On calcule $\mathbb{P}(A) = \frac{3}{6} = \frac{1}{2}$ et $\mathbb{P}(B) = \frac{2}{6} = \frac{1}{3}$.
+L'intersection est $A \cap B = \{6\}$, donc $\mathbb{P}(A \cap B) = \frac{1}{6}$.
+On vérifie que $\mathbb{P}(A)\mathbb{P}(B) = \frac{1}{2} \times \frac{1}{3} = \frac{1}{6}$.
+Les événements $A$ et $B$ sont bien indépendants.
 
-**Définition (Indépendance mutuelle).** Une famille d'événements $(A_i)_{i \in I}$ est dite mutuellement indépendante si, pour toute partie finie $J \subset I$, on a :
-$$ \mathbb{P}\left( \bigcap_{j \in J} A_j \right) = \prod_{j \in J} \mathbb{P}(A_j) $$
+**Contre-exemple (Cas de dépendance) :**
+Soit $C = \text{« obtenir un nombre premier »} = \{2, 3, 5\}$. $\mathbb{P}(C) = \frac{1}{2}$.
+$A \cap C = \{2\}$, d'où $\mathbb{P}(A \cap C) = \frac{1}{6}$.
+Cependant, $\mathbb{P}(A)\mathbb{P}(C) = \frac{1}{2} \times \frac{1}{2} = \frac{1}{4} \neq \frac{1}{6}$.
+$A$ et $C$ ne sont pas indépendants. Le fait de savoir que le résultat est pair diminue les chances qu'il soit premier.
 
-*Remarque :* L'indépendance deux à deux n'implique pas l'indépendance mutuelle.
+### 2.2 Mutuelle indépendance
 
-**Exemple concret (Contre-exemple de Bernstein).**
-On lance un tétraèdre régulier dont les 4 faces sont numérotées $1, 2, 3, 4$. Chaque face a une probabilité $1/4$ d'apparaître sur la base.
-Soit $A$ l'événement "le résultat est pair" : $A = \{2, 4\}$, $\mathbb{P}(A) = 2/4 = 1/2$.
-Soit $B$ l'événement "le résultat est premier" : $B = \{2, 3\}$, $\mathbb{P}(B) = 1/2$.
-Soit $C$ l'événement "le résultat est inférieur ou égal à 2" : $C = \{1, 2\}$, $\mathbb{P}(C) = 1/2$.
-Vérifions l'indépendance deux à deux :
-$A \cap B = \{2\} \implies \mathbb{P}(A \cap B) = 1/4 = \mathbb{P}(A)\mathbb{P}(B)$. (indépendants)
-$B \cap C = \{2\} \implies \mathbb{P}(B \cap C) = 1/4 = \mathbb{P}(B)\mathbb{P}(C)$. (indépendants)
-$A \cap C = \{2\} \implies \mathbb{P}(A \cap C) = 1/4 = \mathbb{P}(A)\mathbb{P}(C)$. (indépendants)
-Cependant, l'intersection des trois est $A \cap B \cap C = \{2\}$. Sa probabilité est $\mathbb{P}(\{2\}) = 1/4$.
-Or, $\mathbb{P}(A)\mathbb{P}(B)\mathbb{P}(C) = (1/2)^3 = 1/8$.
-Puisque $1/4 \neq 1/8$, les événements ne sont pas mutuellement indépendants.
+**Définition 2 (Indépendance mutuelle).** Une famille d'événements $(A_i)_{i \in I}$ est mutuellement indépendante si, pour tout sous-ensemble fini $J \subseteq I$, on a :
+$$ \mathbb{P}\left(\bigcap_{j \in J} A_j\right) = \prod_{j \in J} \mathbb{P}(A_j) $$
 
-### Indépendance de Tribus et de Variables Aléatoires
+**Remarque cruciale sur les cas limites :**
+L'indépendance deux à deux n'implique **pas** l'indépendance mutuelle.
+**Exemple 2 : Indépendance deux à deux $\nRightarrow$ mutuelle**
+Soit $\Omega = \{1, 2, 3, 4\}$ muni de la probabilité uniforme.
+Considérons $A = \{1, 2\}$, $B = \{1, 3\}$, et $C = \{1, 4\}$.
+$\mathbb{P}(A) = \mathbb{P}(B) = \mathbb{P}(C) = \frac{1}{2}$.
+$\mathbb{P}(A \cap B) = \mathbb{P}(\{1\}) = \frac{1}{4} = \mathbb{P}(A)\mathbb{P}(B)$. (Même chose pour $A,C$ et $B,C$). Les événements sont indépendants deux à deux.
+Cependant, $\mathbb{P}(A \cap B \cap C) = \mathbb{P}(\{1\}) = \frac{1}{4}$.
+Mais $\mathbb{P}(A)\mathbb{P}(B)\mathbb{P}(C) = \frac{1}{8}$. Donc $\frac{1}{4} \neq \frac{1}{8}$, la famille n'est pas mutuellement indépendante.
 
-**Définition (Indépendance de tribus).** Deux sous-tribus $\mathcal{A}, \mathcal{B} \subset \mathcal{F}$ sont indépendantes si, pour tout $A \in \mathcal{A}$ et tout $B \in \mathcal{B}$, $A$ et $B$ sont indépendants.
+### 2.3 Indépendance des tribus et variables aléatoires
 
-**Définition (Indépendance de variables aléatoires).** Deux variables aléatoires $X$ et $Y$ sont indépendantes si les tribus qu'elles engendrent, $\sigma(X)$ et $\sigma(Y)$, sont indépendantes. Concrètement, pour tous boréliens $B_1, B_2 \in \mathcal{B}(\mathbb{R})$ :
-$$ \mathbb{P}(X \in B_1, Y \in B_2) = \mathbb{P}(X \in B_1) \cdot \mathbb{P}(Y \in B_2) $$
+**Définition 3 (Indépendance de tribus).** Deux sous-tribus $\mathcal{F}_1, \mathcal{F}_2 \subset \mathcal{F}$ sont indépendantes si pour tout $A \in \mathcal{F}_1$ et $B \in \mathcal{F}_2$, les événements $A$ et $B$ sont indépendants.
 
-**Exemple concret (Variables de Bernoulli indépendantes).**
-Soit $X \sim \mathcal{B}(p_1)$ et $Y \sim \mathcal{B}(p_2)$ deux variables aléatoires de Bernoulli indépendantes représentant le résultat de deux lancers de pièces truquées avec probabilités de succès respectives $p_1$ et $p_2$.
-L'indépendance implique par exemple que la probabilité d'obtenir deux succès (1 et 1) est :
-$\mathbb{P}(X = 1, Y = 1) = \mathbb{P}(X = 1)\mathbb{P}(Y = 1) = p_1 p_2$.
-De même, $\mathbb{P}(X = 1, Y = 0) = \mathbb{P}(X = 1)\mathbb{P}(Y = 0) = p_1 (1 - p_2)$.
+**Définition 4 (Indépendance de variables aléatoires).** Deux variables aléatoires réelles $X$ et $Y$ définies sur $(\Omega, \mathcal{F}, \mathbb{P})$ sont indépendantes si les tribus qu'elles engendrent $\sigma(X)$ et $\sigma(Y)$ sont indépendantes. Concrètement, pour tous boréliens $B_1, B_2 \in \mathcal{B}(\mathbb{R})$ :
+$$ \mathbb{P}(X \in B_1 \cap Y \in B_2) = \mathbb{P}(X \in B_1) \mathbb{P}(Y \in B_2) $$
 
+**Exemple concret 3 : Variables de Bernoulli indépendantes**
+Soit $X \sim \mathcal{B}(p_1)$ et $Y \sim \mathcal{B}(p_2)$ représentant le succès de deux expériences distinctes. Si $X$ et $Y$ sont indépendantes, la probabilité d'avoir un double succès est $\mathbb{P}(X=1, Y=1) = \mathbb{P}(X=1)\mathbb{P}(Y=1) = p_1 p_2$.
 
-**Exemple concret (Tirage avec et sans remise).**
-Une urne contient 3 boules rouges et 2 boules noires. On tire deux boules.
-Soit $A$ : "La première boule est rouge" et $B$ : "La deuxième boule est rouge".
-- **Avec remise :** Les tirages sont physiquement séparés. $\mathbb{P}(A) = 3/5$, $\mathbb{P}(B) = 3/5$. $\mathbb{P}(A \cap B) = 9/25 = \mathbb{P}(A)\mathbb{P}(B)$. Les événements sont **indépendants**.
-- **Sans remise :** La première boule est retirée. $\mathbb{P}(A) = 3/5$. Si $A$ se réalise, il reste 2 rouges et 2 noires, donc $\mathbb{P}(B|A) = 2/4 = 1/2$. $\mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B|A) = 3/10 \neq 9/25$. Les événements **ne sont pas indépendants**.
+**Théorème 1 (Espérance du produit).** Soient $X$ et $Y$ deux variables aléatoires réelles intégrables et indépendantes. Alors leur produit $XY$ est intégrable et :
+$$ \mathbb{E}[XY] = \mathbb{E}[X] \mathbb{E}[Y] $$
 
-**Exemple concret (Indépendance de fonctions sur un espace de probabilité géométrique).**
-Soit l'intervalle $\Omega = [0, 1]$ muni de la mesure de Lebesgue $\mathbb{P}$. Considérons les variables aléatoires $X(\omega) = \mathbf{1}_{[0, 1/2]}(\omega)$ et $Y(\omega) = \mathbf{1}_{[1/4, 3/4]}(\omega)$.
-$\mathbb{P}(X = 1) = \mathbb{P}([0, 1/2]) = 1/2$.
-$\mathbb{P}(Y = 1) = \mathbb{P}([1/4, 3/4]) = 1/2$.
-L'événement $\{X=1 \text{ et } Y=1\}$ correspond à l'intersection des intervalles, soit $[1/4, 1/2]$. Sa mesure est $1/4$.
-Puisque $1/4 = (1/2) \cdot (1/2)$, les événements $\{X=1\}$ et $\{Y=1\}$ sont indépendants. Les variables aléatoires $X$ et $Y$ sont **indépendantes**.
+**Exemple concret 4 : Covariance nulle**
+Calculons la covariance : $\text{Cov}(X, Y) = \mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])] = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y]$.
+Grâce au Théorème 1, si $X$ et $Y$ sont indépendantes, $\text{Cov}(X, Y) = 0$.
+Toutefois, la réciproque est **fausse**.
+Soit $X \sim \mathcal{U}(\{-1, 0, 1\})$. $\mathbb{E}[X] = 0$.
+Posons $Y = X^2$. $Y$ prend les valeurs $0, 1$ avec $\mathbb{P}(Y=0)=1/3$ et $\mathbb{P}(Y=1)=2/3$.
+Calculons $\mathbb{E}[XY] = \mathbb{E}[X^3]$. Puisque $X^3 = X$ (car $x \in \{-1,0,1\}$), $\mathbb{E}[XY] = \mathbb{E}[X] = 0$.
+Ainsi, $\text{Cov}(X,Y) = 0 - 0 = 0$.
+Mais $X$ et $Y$ ne sont pas indépendantes : $\mathbb{P}(X=0 \cap Y=1) = 0 \neq \mathbb{P}(X=0)\mathbb{P}(Y=1) = \frac{1}{3} \times \frac{2}{3}$.
 
+**Théorème 2 (Variance de la somme).** Si $X$ et $Y$ sont des variables aléatoires de carré intégrable et indépendantes, alors :
+$$ \text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y) $$
+*Preuve directe :* $\text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y)$. Comme l'indépendance implique une covariance nulle, le terme croisé disparaît.
 
-**Théorème (Espérance du produit).** Si $X$ et $Y$ sont deux variables aléatoires réelles indépendantes et intégrables (admettant une espérance finie), alors leur produit $XY$ est intégrable et on a :
-$$ \mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y] $$
+**Exemple concret 5 : Variables de Poisson**
+Soit $X \sim \mathcal{P}(\lambda)$ et $Y \sim \mathcal{P}(\mu)$ indépendantes.
+$\mathbb{E}[X] = \text{Var}(X) = \lambda$. $\mathbb{E}[Y] = \text{Var}(Y) = \mu$.
+Alors la somme $Z = X+Y$ a pour variance $\text{Var}(Z) = \lambda + \mu$. (Nous verrons dans les démonstrations que $Z \sim \mathcal{P}(\lambda + \mu)$).
 
 ## 3. Démonstrations
 
-### Démonstration du Théorème de l'Espérance du produit
+### 3.1 Démonstration du Théorème 1 (Espérance du produit)
 
-**Énoncé :** Soient $X, Y : (\Omega, \mathcal{F}, \mathbb{P}) \to (\mathbb{R}, \mathcal{B}(\mathbb{R}))$ deux variables aléatoires indépendantes et intégrables. Alors $\mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y]$.
+**Hypothèses :** $X$ et $Y$ sont indépendantes et intégrables.
+**Objectif :** Montrer que $\mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y]$.
 
-**Preuve rigoureuse :**
+1. **Par les fonctions étagées :**
+   Soit $X = \sum_{i=1}^n x_i \mathbf{1}_{A_i}$ et $Y = \sum_{j=1}^m y_j \mathbf{1}_{B_j}$ deux variables aléatoires simples. Les $(A_i)$ forment une partition de $\Omega$, de même que les $(B_j)$.
+   L'indépendance de $X$ et $Y$ signifie que $\mathbb{P}(A_i \cap B_j) = \mathbb{P}(A_i)\mathbb{P}(B_j)$ pour tout $i, j$.
+2. **Calcul de l'espérance du produit :**
+   Le produit s'écrit :
+   $$ XY = \left( \sum_{i=1}^n x_i \mathbf{1}_{A_i} \right) \left( \sum_{j=1}^m y_j \mathbf{1}_{B_j} \right) = \sum_{i=1}^n \sum_{j=1}^m x_i y_j \mathbf{1}_{A_i \cap B_j} $$
+   Par linéarité de l'espérance :
+   $$ \mathbb{E}[XY] = \sum_{i=1}^n \sum_{j=1}^m x_i y_j \mathbb{P}(A_i \cap B_j) $$
+3. **Utilisation de l'indépendance :**
+   $$ \mathbb{E}[XY] = \sum_{i=1}^n \sum_{j=1}^m x_i y_j \mathbb{P}(A_i)\mathbb{P}(B_j) $$
+4. **Factorisation :**
+   $$ \mathbb{E}[XY] = \left( \sum_{i=1}^n x_i \mathbb{P}(A_i) \right) \left( \sum_{j=1}^m y_j \mathbb{P}(B_j) \right) = \mathbb{E}[X] \mathbb{E}[Y] $$
+5. **Passage à la limite :**
+   Pour des variables positives quelconques, on utilise une suite de variables étagées $(X_n)$ croissant vers $X$, et $(Y_n)$ croissant vers $Y$. Par le théorème de convergence monotone de Beppo-Levi, $\mathbb{E}[X_n Y_n]$ converge vers $\mathbb{E}[XY]$. Comme $\mathbb{E}[X_n Y_n] = \mathbb{E}[X_n]\mathbb{E}[Y_n]$, la limite donne bien $\mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y]$.
+   Enfin, on décompose pour $X = X^+ - X^-$ et $Y = Y^+ - Y^-$ pour étendre le résultat à toutes les variables intégrables.
 
-1. L'indépendance de $X$ et $Y$ signifie par définition que la loi du couple $(X,Y)$ sur $\mathbb{R}^2$ est exactement la mesure produit des lois marginales $\mathbb{P}_X$ et $\mathbb{P}_Y$. Ainsi, $\mathbb{P}_{(X,Y)} = \mathbb{P}_X \otimes \mathbb{P}_Y$.
-2. Supposons d'abord que $X \geq 0$ et $Y \geq 0$. La fonction $g(x,y) = xy$ est mesurable et positive de $\mathbb{R}^2$ dans $\mathbb{R}$. Par le théorème de transfert, nous pouvons écrire l'espérance de $X Y$ sous forme d'une intégrale par rapport à la mesure jointe :
-   $$ \mathbb{E}[XY] = \int_{\mathbb{R}^2} xy \, d\mathbb{P}_{(X,Y)}(x,y) $$
-3. Comme $\mathbb{P}_{(X,Y)} = \mathbb{P}_X \otimes \mathbb{P}_Y$ et que l'intégrande $(x,y) \mapsto xy$ est positive, nous pouvons appliquer le théorème de Tonelli. Celui-ci autorise la décomposition de l'intégrale double en deux intégrales simples successives :
-   $$ \int_{\mathbb{R}^2} xy \, d(\mathbb{P}_X \otimes \mathbb{P}_Y)(x,y) = \int_{\mathbb{R}} \left( \int_{\mathbb{R}} xy \, d\mathbb{P}_Y(y) \right) d\mathbb{P}_X(x) $$
-4. Dans l'intégrale interne par rapport à $d\mathbb{P}_Y(y)$, la variable $x$ est constante et peut être factorisée hors de l'intégrale :
-   $$ \int_{\mathbb{R}} x \left( \int_{\mathbb{R}} y \, d\mathbb{P}_Y(y) \right) d\mathbb{P}_X(x) $$
-5. Par définition de l'espérance de $Y$, $\int_{\mathbb{R}} y \, d\mathbb{P}_Y(y) = \mathbb{E}[Y]$. Substituons cette valeur :
-   $$ \int_{\mathbb{R}} x \mathbb{E}[Y] \, d\mathbb{P}_X(x) $$
-6. $\mathbb{E}[Y]$ est une constante déterministe qui peut être factorisée hors de l'intégrale externe :
-   $$ \mathbb{E}[Y] \int_{\mathbb{R}} x \, d\mathbb{P}_X(x) = \mathbb{E}[Y]\mathbb{E}[X] $$
-7. Le résultat est ainsi prouvé pour $X \geq 0$ et $Y \geq 0$.
-8. Pour le cas général de variables aléatoires intégrables de signe quelconque, on décompose $X = X^+ - X^-$ et $Y = Y^+ - Y^-$, où $X^+, X^-, Y^+, Y^-$ sont les parties positives et négatives respectives (qui sont positives et intégrables). L'indépendance de $X$ et $Y$ implique l'indépendance des parties positives et négatives (puisque ces opérations sont mesurables).
-9. On développe le produit : $XY = (X^+ - X^-)(Y^+ - Y^-) = X^+ Y^+ - X^+ Y^- - X^- Y^+ + X^- Y^-$.
-10. Par linéarité de l'espérance et en appliquant le résultat démontré à l'étape 7 à chacun des quatre termes (qui sont tous des produits de variables aléatoires positives, indépendantes et intégrables) :
-    $$ \mathbb{E}[XY] = \mathbb{E}[X^+]\mathbb{E}[Y^+] - \mathbb{E}[X^+]\mathbb{E}[Y^-] - \mathbb{E}[X^-]\mathbb{E}[Y^+] + \mathbb{E}[X^-]\mathbb{E}[Y^-] $$
-11. On factorise cette expression :
-    $$ \mathbb{E}[XY] = (\mathbb{E}[X^+] - \mathbb{E}[X^-])(\mathbb{E}[Y^+] - \mathbb{E}[Y^-]) $$
-12. Par définition de l'espérance d'une variable intégrable de signe quelconque, on retrouve bien :
-    $$ \mathbb{E}[XY] = \mathbb{E}[X] \cdot \mathbb{E}[Y] $$
+### 3.2 Démonstration : Stabilité de la loi de Poisson par addition
 
-La démonstration est complète.
+**Hypothèses :** $X \sim \mathcal{P}(\lambda)$ et $Y \sim \mathcal{P}(\mu)$ sont indépendantes.
+**Objectif :** Montrer que $X+Y \sim \mathcal{P}(\lambda + \mu)$.
+
+1. **Expression de la probabilité :**
+   Soit $n \in \mathbb{N}$. L'événement $\{X+Y = n\}$ peut se décomposer sur toutes les valeurs possibles de $X$, qui vont de $0$ à $n$.
+   $$ \mathbb{P}(X+Y = n) = \sum_{k=0}^n \mathbb{P}(X=k, Y=n-k) $$
+2. **Utilisation de l'indépendance :**
+   $$ \mathbb{P}(X+Y = n) = \sum_{k=0}^n \mathbb{P}(X=k) \mathbb{P}(Y=n-k) $$
+3. **Remplacement par les formules de Poisson :**
+   $$ \mathbb{P}(X+Y = n) = \sum_{k=0}^n \left( e^{-\lambda} \frac{\lambda^k}{k!} \right) \left( e^{-\mu} \frac{\mu^{n-k}}{(n-k)!} \right) $$
+4. **Réarrangement algébrique :**
+   On sort les constantes de la somme :
+   $$ \mathbb{P}(X+Y = n) = e^{-(\lambda + \mu)} \sum_{k=0}^n \frac{\lambda^k \mu^{n-k}}{k! (n-k)!} $$
+5. **Reconnaissance du Binôme de Newton :**
+   On multiplie et on divise par $n!$ pour faire apparaître les coefficients binomiaux :
+   $$ \mathbb{P}(X+Y = n) = \frac{e^{-(\lambda + \mu)}}{n!} \sum_{k=0}^n \frac{n!}{k! (n-k)!} \lambda^k \mu^{n-k} $$
+   $$ \mathbb{P}(X+Y = n) = \frac{e^{-(\lambda + \mu)}}{n!} \sum_{k=0}^n \binom{n}{k} \lambda^k \mu^{n-k} $$
+   D'après la formule du binôme de Newton, la somme vaut $(\lambda + \mu)^n$.
+   $$ \mathbb{P}(X+Y = n) = e^{-(\lambda + \mu)} \frac{(\lambda + \mu)^n}{n!} $$
+6. **Conclusion :** On reconnaît exactement la formule de la loi de Poisson de paramètre $\lambda + \mu$.
 
 ## 4. Applications en Physique, Logique et Intelligence Artificielle
 
-L'hypothèse d'indépendance et d'identique distribution (I.I.D.) est le socle sur lequel repose une très large part de l'apprentissage statistique. Elle stipule que chaque observation d'un jeu de données de taille $N$ est un tirage aléatoire indépendant selon la même loi de probabilité sous-jacente.
+### Mécanique Statistique et Physique Quantique
+En physique statistique de Maxwell-Boltzmann, l'hypothèse d'indépendance des chocs entre particules (le Stosszahlansatz) est nécessaire pour dériver l'équation de Boltzmann. Sans cette hypothèse, le théorème H prouvant l'augmentation de l'entropie s'effondre. En physique quantique, l'intrication représente précisément la violation pure de l'indépendance probabiliste classique, prouvée par la violation des inégalités de Bell.
 
-**Fonction de Vraisemblance (Likelihood) en Apprentissage Supervisé.**
-En intelligence artificielle, lorsqu'on entraîne un modèle paramétrique avec des poids $\theta$ (par exemple un réseau de neurones ou une régression logistique), on cherche à maximiser la probabilité d'observer les données $D = \{x_1, \dots, x_N\}$ sachant les paramètres du modèle.
-Grâce à l'hypothèse d'indépendance (I.I.D.), la vraisemblance conjointe se factorise en un produit de probabilités marginales :
-$$ P(x_1, x_2, \dots, x_N \mid \theta) = \prod_{i=1}^N P(x_i \mid \theta) $$
-Pour des raisons de stabilité numérique (éviter l'underflow lié au produit de probabilités très petites) et de simplification calculatoire (la dérivée d'une somme est plus simple que celle d'un produit), on applique systématiquement la fonction logarithme népérien, strictement croissante, ce qui transforme ce produit en une somme :
-$$ \log P(D \mid \theta) = \sum_{i=1}^N \log P(x_i \mid \theta) $$
-Cette décomposition en somme de variables indépendantes permet par la suite l'application de la Loi Forte des Grands Nombres et du Théorème Central Limite, justifiant l'usage d'algorithmes comme la descente de gradient stochastique (Stochastic Gradient Descent).
+### Intelligence Artificielle : Hypothèse i.i.d. et Vraisemblance
+L'ensemble de l'apprentissage automatique repose sur l'hypothèse que les données d'entraînement $(x_1, y_1), \dots, (x_N, y_N)$ sont i.i.d. (Indépendantes et Identiquement Distribuées).
+Si l'on cherche les paramètres $\theta$ qui maximisent la vraisemblance des données $\mathbb{P}(X | \theta)$, l'indépendance permet d'écrire la probabilité conjointe du dataset comme un simple produit :
+$$ \mathcal{L}(\theta) = \prod_{i=1}^N \mathbb{P}(x_i | \theta) $$
+Le calcul analytique des gradients d'un produit est numériquement instable (underflow). On utilise donc le logarithme, qui transforme le produit en somme (la log-vraisemblance) :
+$$ \log \mathcal{L}(\theta) = \sum_{i=1}^N \log \mathbb{P}(x_i | \theta) $$
+C'est la fondation de la fonction de perte Cross-Entropy.
 
-**Mécanismes de Régularisation (Dropout).**
-Dans les réseaux de neurones profonds, la technique du Dropout consiste à désactiver aléatoirement, à chaque itération d'entraînement, une proportion de neurones avec une probabilité $p$. La désactivation de chaque neurone est traitée comme une variable aléatoire de Bernoulli indépendante des autres. Cette indépendance forcée empêche les neurones de développer des "co-adaptations" complexes, forçant le réseau à répartir la représentation des connaissances de manière robuste sur l'ensemble de ses poids.
+### Intelligence Artificielle : Naive Bayes
+Le classifieur de Bayes Naïf prend un vecteur d'entrée $x = (x_1, x_2, \dots, x_d)$ et veut prédire une classe $C$. Par le théorème de Bayes :
+$$ \mathbb{P}(C | x) \propto \mathbb{P}(C) \mathbb{P}(x_1, \dots, x_d | C) $$
+L'algorithme fait l'hypothèse très forte (naïve) que les composantes $x_j$ sont conditionnellement indépendantes sachant $C$ :
+$$ \mathbb{P}(C | x) \propto \mathbb{P}(C) \prod_{j=1}^d \mathbb{P}(x_j | C) $$
+Cette approximation drastique transforme un problème insoluble en un calcul très rapide, et reste paradoxalement très efficace pour la classification de textes.
+
+### Intelligence Artificielle : Dropout dans les Réseaux de Neurones
+Durant la rétropropagation (Backpropagation), pour éviter le sur-apprentissage (overfitting), le Dropout "éteint" certains neurones avec une probabilité $p$, de manière totalement indépendante les uns des autres. Cette injection d'indépendance artificielle force le réseau à apprendre des caractéristiques redondantes et brise la co-adaptation (dépendance) excessive entre les neurones.

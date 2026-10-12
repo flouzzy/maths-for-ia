@@ -1,17 +1,16 @@
-# Exercice 1 : Indépendance et incompatibilité \quad $\bigstar\star\star\star\star$
+# Exercice 01 : Indépendance simple avec des dés
+Difficulté : $\bigstar\star\star\star\star$
 
 **Énoncé :**
+On lance deux dés équilibrés à 6 faces. On note $X$ le résultat du premier dé et $Y$ le résultat du second.
+Soit $A$ l'événement « $X$ est pair » et $B$ l'événement « $X+Y = 7$ ».
+1. Calculer $\mathbb{P}(A)$, $\mathbb{P}(B)$ et $\mathbb{P}(A \cap B)$.
+2. Les événements $A$ et $B$ sont-ils indépendants ?
 
-Soient $A$ et $B$ deux événements d'un espace probabilisé $(\Omega, \mathcal{F}, \mathbb{P})$ tels que $\mathbb{P}(A) > 0$ et $\mathbb{P}(B) > 0$.
-Montrer que si $A$ et $B$ sont incompatibles (i.e. disjoints, $A \cap B = \emptyset$), alors ils ne peuvent pas être indépendants.
-
-**Correction Détaillée :**
-
-1. Supposons par l'absurde que $A$ et $B$ sont à la fois incompatibles et indépendants.
-2. Puisque $A$ et $B$ sont incompatibles, leur intersection est l'ensemble vide : $A \cap B = \emptyset$.
-3. Par conséquent, la probabilité de leur intersection est nulle : $\mathbb{P}(A \cap B) = \mathbb{P}(\emptyset) = 0$.
-4. D'autre part, puisque $A$ et $B$ sont indépendants, la probabilité de leur intersection est égale au produit de leurs probabilités : $\mathbb{P}(A \cap B) = \mathbb{P}(A) \cdot \mathbb{P}(B)$.
-5. En combinant les étapes 3 et 4, on obtient l'égalité : $\mathbb{P}(A) \cdot \mathbb{P}(B) = 0$.
-6. Or, l'énoncé précise que $\mathbb{P}(A) > 0$ et $\mathbb{P}(B) > 0$. Le produit de deux nombres strictement positifs est strictement positif, donc $\mathbb{P}(A) \cdot \mathbb{P}(B) > 0$.
-7. Nous aboutissons à une contradiction manifeste : $0 > 0$.
-8. L'hypothèse de départ est donc fausse. Des événements de probabilité non nulle ne peuvent pas être simultanément incompatibles et indépendants.
+**Correction :**
+1. L'univers $\Omega = \{(i,j) \in \{1,\dots,6\}^2\}$ contient 36 éventualités équiprobables.
+L'événement $A$ correspond à $X \in \{2, 4, 6\}$, donc $3 \times 6 = 18$ issues. $\mathbb{P}(A) = \frac{18}{36} = \frac{1}{2}$.
+L'événement $B$ est l'ensemble $\{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\}$. Il y a 6 issues, donc $\mathbb{P}(B) = \frac{6}{36} = \frac{1}{6}$.
+L'événement $A \cap B$ est l'intersection, c'est-à-dire que le premier dé est pair et la somme fait 7. Les couples possibles sont $(2,5), (4,3), (6,1)$. Il y en a 3. Ainsi $\mathbb{P}(A \cap B) = \frac{3}{36} = \frac{1}{12}$.
+2. On calcule le produit : $\mathbb{P}(A)\mathbb{P}(B) = \frac{1}{2} \times \frac{1}{6} = \frac{1}{12}$.
+Comme $\mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B)$, les événements $A$ et $B$ sont bien indépendants. Le fait de savoir que le premier dé est pair ne donne aucune information sur la probabilité que la somme fasse 7.

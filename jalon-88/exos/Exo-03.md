@@ -1,24 +1,26 @@
-# Exercice 3 : Indépendance des événements complémentaires \quad $\bigstar\bigstar\star\star\star$
+# Exercice 03 : Indépendance deux à deux n'est pas indépendance mutuelle
+Difficulté : $\bigstar\bigstar\star\star\star$
 
 **Énoncé :**
+On lance deux pièces de monnaie équilibrées de manière indépendante. $\Omega = \{PP, PF, FP, FF\}$.
+Soit $A$ : « la première pièce fait Pile ».
+Soit $B$ : « la deuxième pièce fait Pile ».
+Soit $C$ : « les deux pièces donnent le même résultat ».
+Montrer que $A, B, C$ sont indépendants deux à deux, mais pas mutuellement indépendants.
 
-Soient $A$ et $B$ deux événements indépendants d'un espace probabilisé $(\Omega, \mathcal{F}, \mathbb{P})$.
-Démontrer rigoureusement que $A$ et le complémentaire de $B$ (noté $B^c$) sont également des événements indépendants.
+**Correction :**
+1. **Évaluation des probabilités simples :**
+$A = \{PP, PF\}$, $\mathbb{P}(A) = \frac{2}{4} = \frac{1}{2}$.
+$B = \{PP, FP\}$, $\mathbb{P}(B) = \frac{2}{4} = \frac{1}{2}$.
+$C = \{PP, FF\}$, $\mathbb{P}(C) = \frac{2}{4} = \frac{1}{2}$.
 
-**Correction Détaillée :**
+2. **Indépendance deux à deux :**
+- $A \cap B = \{PP\}$, $\mathbb{P}(A \cap B) = \frac{1}{4}$. Et $\mathbb{P}(A)\mathbb{P}(B) = \frac{1}{4}$. ($A$ et $B$ indépendants).
+- $A \cap C = \{PP\}$, $\mathbb{P}(A \cap C) = \frac{1}{4}$. Et $\mathbb{P}(A)\mathbb{P}(C) = \frac{1}{4}$. ($A$ et $C$ indépendants).
+- $B \cap C = \{PP\}$, $\mathbb{P}(B \cap C) = \frac{1}{4}$. Et $\mathbb{P}(B)\mathbb{P}(C) = \frac{1}{4}$. ($B$ et $C$ indépendants).
+La famille est bien indépendante deux à deux.
 
-1. Nous voulons démontrer que $\mathbb{P}(A \cap B^c) = \mathbb{P}(A) \cdot \mathbb{P}(B^c)$.
-2. Par définition, les ensembles $B$ et $B^c$ forment une partition de l'univers $\Omega$.
-3. Nous pouvons donc écrire l'événement $A$ comme l'union disjointe de ses intersections avec $B$ et $B^c$ : $A = (A \cap B) \cup (A \cap B^c)$.
-4. Par l'axiome d'additivité des probabilités pour des ensembles disjoints, on obtient :
-   $\mathbb{P}(A) = \mathbb{P}(A \cap B) + \mathbb{P}(A \cap B^c)$.
-5. Isolons le terme qui nous intéresse :
-   $\mathbb{P}(A \cap B^c) = \mathbb{P}(A) - \mathbb{P}(A \cap B)$.
-6. Puisque $A$ et $B$ sont supposés indépendants, nous savons que $\mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B)$. Substituons cette expression :
-   $\mathbb{P}(A \cap B^c) = \mathbb{P}(A) - \mathbb{P}(A)\mathbb{P}(B)$.
-7. Factorisons $\mathbb{P}(A)$ dans le membre de droite :
-   $\mathbb{P}(A \cap B^c) = \mathbb{P}(A) \cdot (1 - \mathbb{P}(B))$.
-8. Par la propriété des événements complémentaires, $1 - \mathbb{P}(B) = \mathbb{P}(B^c)$.
-9. En remplaçant, on obtient l'égalité finale :
-   $\mathbb{P}(A \cap B^c) = \mathbb{P}(A) \cdot \mathbb{P}(B^c)$.
-10. La relation définissant l'indépendance est satisfaite, $A$ et $B^c$ sont indépendants.
+3. **Indépendance mutuelle :**
+$A \cap B \cap C = \{PP\}$, $\mathbb{P}(A \cap B \cap C) = \frac{1}{4}$.
+Cependant, $\mathbb{P}(A)\mathbb{P}(B)\mathbb{P}(C) = \frac{1}{2} \times \frac{1}{2} \times \frac{1}{2} = \frac{1}{8}$.
+Comme $\frac{1}{4} \neq \frac{1}{8}$, les trois événements ne sont pas mutuellement indépendants. Connaître $A$ et $B$ détermine entièrement $C$.

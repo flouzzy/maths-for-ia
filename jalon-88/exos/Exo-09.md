@@ -1,33 +1,21 @@
-# Exercice 9 : Théorème de la borne de l'union (Indépendance et Inégalités) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
+# Exercice 09 : Indépendance des vecteurs gaussiens et matrice de covariance diagonale
+Difficulté : $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
 **Énoncé :**
+Soit $(X, Y)$ un vecteur gaussien centré, de matrice de covariance $\Sigma = \begin{pmatrix} \sigma_X^2 & c \\ c & \sigma_Y^2 \end{pmatrix}$.
+Montrer que si $\text{Cov}(X,Y) = c = 0$, alors $X$ et $Y$ sont indépendantes.
 
-Soit une suite d'événements $(A_n)_{n \geq 1}$ mutuellement indépendants dans un espace de probabilité.
-On suppose que pour tout $n \geq 1$, $\mathbb{P}(A_n) = p$ où $p \in ]0, 1[$.
-Soit $B_N = \bigcup_{n=1}^N A_n$ l'événement consistant à ce qu'au moins l'un des événements $A_1, \dots, A_N$ se produise.
-1. Exprimer rigoureusement la probabilité $\mathbb{P}(B_N)$ en fonction de $N$ et $p$.
-2. Déterminer la limite de $\mathbb{P}(B_N)$ lorsque $N$ tend vers l'infini. Conclure géométriquement.
-
-**Correction Détaillée :**
-
-1. **Expression de la probabilité de l'union :**
-   - Calculer directement la probabilité de l'union d'événements non disjoints est complexe (formule du crible de Poincaré : $\mathbb{P}(\bigcup A_i) = \sum \mathbb{P}(A_i) - \sum \mathbb{P}(A_i \cap A_j) + \dots$).
-   - L'astuce fondamentale consiste à passer par le complémentaire.
-   - Par les lois de De Morgan, le complémentaire d'une union est l'intersection des complémentaires :
-     $$ (B_N)^c = \left( \bigcup_{n=1}^N A_n \right)^c = \bigcap_{n=1}^N A_n^c $$
-   - L'événement $(B_N)^c$ signifie qu'"aucun des événements $A_n$ ne se produit".
-   - Puisque les événements $(A_n)$ sont mutuellement indépendants, le théorème démontré dans l'exercice 3 assure que leurs complémentaires $(A_n^c)$ le sont également.
-   - Par définition de l'indépendance mutuelle, la probabilité de l'intersection est égale au produit des probabilités :
-     $$ \mathbb{P}((B_N)^c) = \mathbb{P}\left(\bigcap_{n=1}^N A_n^c\right) = \prod_{n=1}^N \mathbb{P}(A_n^c) $$
-   - La probabilité de chaque complémentaire est $\mathbb{P}(A_n^c) = 1 - \mathbb{P}(A_n) = 1 - p$.
-   - Le produit contient $N$ facteurs identiques :
-     $$ \mathbb{P}((B_N)^c) = \prod_{n=1}^N (1 - p) = (1 - p)^N $$
-   - Enfin, on repasse à l'événement direct par l'axiome des complémentaires ($\mathbb{P}(B_N) = 1 - \mathbb{P}((B_N)^c)$) :
-     $$ \mathbb{P}(B_N) = 1 - (1 - p)^N $$
-2. **Passage à la limite :**
-   - Nous cherchons $\lim_{N \to +\infty} \mathbb{P}(B_N) = \lim_{N \to +\infty} \left( 1 - (1 - p)^N \right)$.
-   - Puisque la probabilité d'occurrence $p$ est strictement comprise entre $0$ et $1$ ($p \in ]0, 1[$), le terme $1 - p$ est également strictement compris entre $0$ et $1$.
-   - La suite géométrique de raison $q = 1 - p$ (avec $|q| < 1$) converge vers $0$ lorsque la puissance $N$ tend vers l'infini : $\lim_{N \to +\infty} (1 - p)^N = 0$.
-   - Par conséquent, la limite cherchée est :
-     $$ \lim_{N \to +\infty} \mathbb{P}(B_N) = 1 - 0 = 1 $$
-   - **Conclusion géométrique et probabiliste :** Peu importe à quel point la probabilité individuelle $p$ d'un événement est infime (tant qu'elle n'est pas strictement nulle), si l'on répète l'expérience un très grand nombre de fois de manière indépendante, la probabilité qu'au moins une de ces tentatives réussisse converge inéluctablement vers la certitude absolue ($1$). C'est un principe fondamental derrière la théorie des miracles statistiques et de l'entropie.
+**Correction :**
+1. La densité conjointe d'un vecteur gaussien non dégénéré de dimension $2$ est :
+$f_{X,Y}(x,y) = \frac{1}{2\pi \sqrt{\det(\Sigma)}} \exp\left( -\frac{1}{2} (x, y) \Sigma^{-1} \begin{pmatrix} x \\ y \end{pmatrix} \right)$.
+2. Si $c = 0$, la matrice est diagonale : $\Sigma = \begin{pmatrix} \sigma_X^2 & 0 \\ 0 & \sigma_Y^2 \end{pmatrix}$.
+Le déterminant est $\det(\Sigma) = \sigma_X^2 \sigma_Y^2$. L'inverse est $\Sigma^{-1} = \begin{pmatrix} \frac{1}{\sigma_X^2} & 0 \\ 0 & \frac{1}{\sigma_Y^2} \end{pmatrix}$.
+3. Évaluons le terme dans l'exponentielle :
+$(x, y) \Sigma^{-1} \begin{pmatrix} x \\ y \end{pmatrix} = (x, y) \begin{pmatrix} \frac{x}{\sigma_X^2} \\ \frac{y}{\sigma_Y^2} \end{pmatrix} = \frac{x^2}{\sigma_X^2} + \frac{y^2}{\sigma_Y^2}$.
+4. On remplace dans la densité conjointe :
+$f_{X,Y}(x,y) = \frac{1}{2\pi \sigma_X \sigma_Y} \exp\left( -\frac{1}{2} \left( \frac{x^2}{\sigma_X^2} + \frac{y^2}{\sigma_Y^2} \right) \right)$.
+5. Grâce à la propriété de l'exponentielle $\exp(a+b) = \exp(a)\exp(b)$, on peut séparer les variables :
+$f_{X,Y}(x,y) = \left( \frac{1}{\sqrt{2\pi}\sigma_X} e^{-\frac{x^2}{2\sigma_X^2}} \right) \times \left( \frac{1}{\sqrt{2\pi}\sigma_Y} e^{-\frac{y^2}{2\sigma_Y^2}} \right)$.
+6. On reconnaît $f_{X,Y}(x,y) = f_X(x) f_Y(y)$ où $f_X$ et $f_Y$ sont les densités marginales de $X$ et $Y$.
+La densité conjointe s'écrivant comme le produit des densités marginales, les variables $X$ et $Y$ sont mutuellement indépendantes.
+*(Note : Ce résultat est très spécifique aux variables gaussiennes. Pour des variables quelconques, l'absence de covariance n'implique pas l'indépendance, voir Exercice 4).*
