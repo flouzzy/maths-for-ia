@@ -14,7 +14,7 @@ next: "[[Jalon 89 (Lemmes de Borel-Cantelli).md]]"
 
 ## 1. Introduction historique et conceptuelle
 
-Historiquement, la notion d'indépendance émerge des premiers travaux sur les jeux de hasard menés par Pascal et Fermat au XVIIe siècle, puis axiomatisée bien plus tard par Kolmogorov en 1933. L'intuition physique est fondamentale : si l'on lance deux dés à des années-lumière de distance, l'état de l'un ne contient aucune information sur l'état de l'autre. L'indépendance traduit l'absence de corrélation, l'absence d'influence causale, ou plus rigoureusement l'orthogonalité probabiliste.
+Historiquement, la notion d'indépendance émerge des premiers travaux sur les jeux de hasard menés par Pascal et Fermat au XVIIe siècle, puis axiomatisée bien plus tard par Kolmogorov en 1933. L'intuition physique est fondamentale : si l'on lance deux dés à des années-lumière de distance, l'état de l'un ne contient aucune information sur l'état de l'autre. L'indépendance traduit l'absence d'influence causale ou, plus rigoureusement, la factorisation des probabilités (et implique l'absence de corrélation uniquement lorsque les moments d'ordre 2 existent, bien que la réciproque soit fausse).
 
 C'est cette notion qui permet la décomposition des grands systèmes complexes. Si les particules d'un gaz idéal ne s'influencent pas à distance, on peut calculer l'entropie du système entier simplement comme la somme des entropies individuelles. En mathématiques, l'indépendance est la clé de voûte qui permet de remplacer les intersections d'événements par de simples multiplications de probabilités, rendant ainsi le calcul analytiquement possible.
 
