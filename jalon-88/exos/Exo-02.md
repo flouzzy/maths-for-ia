@@ -1,18 +1,21 @@
-\subsection*{Exercice 2 : Indépendance conditionnelle \quad $\bigstar\star\star\star\star$}
+# Indépendance d'un événement avec son complémentaire
 
-On lance un dé équilibré à 6 faces. On définit les événements :
-- $A$ : "Le résultat est pair"
-- $B$ : "Le résultat est un multiple de 3"
-- $C$ : "Le résultat est inférieur ou égal à 4"
-Les événements $A$ et $B$ sont-ils indépendants conditionnellement à $C$ ?
+**Difficulté :** $\bigstar\star\star\star\star$
 
-**Correction :**
-1. L'univers est $\Omega = \{1, 2, 3, 4, 5, 6\}$.
-2. $A = \{2, 4, 6\}$, $B = \{3, 6\}$, $C = \{1, 2, 3, 4\}$.
-3. $\mathbb{P}(C) = 4/6 = 2/3$.
-4. On calcule la probabilité conditionnelle : $\mathbb{P}_C(X) = \frac{\mathbb{P}(X \cap C)}{\mathbb{P}(C)}$.
-5. $A \cap C = \{2, 4\} \implies \mathbb{P}_C(A) = \frac{2/6}{4/6} = 1/2$.
-6. $B \cap C = \{3\} \implies \mathbb{P}_C(B) = \frac{1/6}{4/6} = 1/4$.
-7. L'intersection $(A \cap B) \cap C = \{6\} \cap \{1, 2, 3, 4\} = \emptyset \implies \mathbb{P}_C(A \cap B) = 0$.
-8. $\mathbb{P}_C(A)\mathbb{P}_C(B) = (1/2) \times (1/4) = 1/8 \neq 0$.
-9. Les événements ne sont pas indépendants conditionnellement à $C$.
+Soit un événement $A$ de probabilité $p = \mathbb{P}(A)$.
+Déterminer à quelle condition nécessaire et suffisante l'événement $A$ est indépendant de son propre complémentaire $A^c$.
+
+### Correction
+
+Soit $A$ un événement. Notons $p = \mathbb{P}(A)$. La probabilité de son complémentaire est $\mathbb{P}(A^c) = 1 - p$.
+
+1. Traduisons l'hypothèse d'indépendance entre $A$ et $A^c$. Par définition, cela signifie que :
+   $\mathbb{P}(A \cap A^c) = \mathbb{P}(A) \mathbb{P}(A^c)$.
+2. Or, par la définition même du complémentaire, $A$ et $A^c$ sont disjoints, donc $A \cap A^c = \emptyset$.
+3. Ainsi, la probabilité de leur intersection est toujours nulle : $\mathbb{P}(A \cap A^c) = 0$.
+4. L'équation de l'indépendance devient donc :
+   $0 = \mathbb{P}(A) \mathbb{P}(A^c)$
+   $0 = p(1 - p)$
+5. Les solutions de cette équation du second degré sont trivialement $p = 0$ ou $1 - p = 0 \iff p = 1$.
+
+En conclusion, un événement $A$ est indépendant de son complémentaire $A^c$ si et seulement si $\mathbb{P}(A) = 0$ ou $\mathbb{P}(A) = 1$ (événements presque certains ou presque impossibles).

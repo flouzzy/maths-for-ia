@@ -1,13 +1,35 @@
-\subsection*{Exercice 6 : Indépendance de fonctions mesurables \quad $\bigstar\bigstar\bigstar\star\star$}
+# Densités conjointes et factorisation
 
-Soient $X$ et $Y$ deux variables aléatoires indépendantes à valeurs dans $\mathbb{R}$. Soient $f, g : \mathbb{R} \to \mathbb{R}$ deux fonctions boréliennes (mesurables). Montrer que les variables $f(X)$ et $g(Y)$ sont indépendantes.
+**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
 
-**Correction :**
-1. On doit montrer que pour tout boréliens $A, B$ de $\mathbb{R}$, $\mathbb{P}(f(X) \in A, g(Y) \in B) = \mathbb{P}(f(X) \in A)\mathbb{P}(g(Y) \in B)$.
-2. Par définition de l'image réciproque, $f(X) \in A \iff X \in f^{-1}(A)$ et $g(Y) \in B \iff Y \in g^{-1}(B)$.
-3. Puisque $f$ et $g$ sont mesurables, les images réciproques $f^{-1}(A)$ et $g^{-1}(B)$ sont des boréliens de $\mathbb{R}$.
-4. On peut donc utiliser la définition de l'indépendance de $X$ et $Y$ sur ces boréliens :
-   $\mathbb{P}(X \in f^{-1}(A), Y \in g^{-1}(B)) = \mathbb{P}(X \in f^{-1}(A))\mathbb{P}(Y \in g^{-1}(B))$
-5. En réécrivant en termes de $f(X)$ et $g(Y)$, on obtient :
-   $\mathbb{P}(f(X) \in A, g(Y) \in B) = \mathbb{P}(f(X) \in A)\mathbb{P}(g(Y) \in B)$
-6. Ainsi, les variables aléatoires $f(X)$ et $g(Y)$ sont indépendantes.
+On considère un vecteur aléatoire continu $(X,Y)$ de densité conjointe donnée par :
+$f(x,y) = k \cdot x y^2 e^{-x} e^{-2y}$ pour $x > 0, y > 0$, et $0$ sinon.
+1. Trouver la constante $k$ pour que $f$ soit une véritable densité de probabilité.
+2. Montrer que $X$ et $Y$ sont des variables aléatoires indépendantes et identifier leurs lois marginales.
+
+### Correction
+
+Soit la densité $f(x,y) = k \cdot x e^{-x} \cdot y^2 e^{-2y} \cdot \mathbb{1}_{\{x>0, y>0\}}$.
+
+**1. Calcul de la constante $k$**
+Pour que $f$ soit une densité, son intégrale sur $\mathbb{R}^2$ doit être égale à 1.
+$1 = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(x,y) dx dy$
+$1 = \int_{0}^{\infty} \int_{0}^{\infty} k \cdot x e^{-x} \cdot y^2 e^{-2y} dx dy$
+Par le théorème de Fubini-Tonelli, l'intégrale d'une fonction produit sur un domaine produit rectangulaire (ici $\mathbb{R}_+ \times \mathbb{R}_+$) se factorise :
+$1 = k \left( \int_{0}^{\infty} x e^{-x} dx \right) \left( \int_{0}^{\infty} y^2 e^{-2y} dy \right)$
+Calculons les intégrales unidimensionnelles. On reconnait la fonction Gamma : $\Gamma(n) = \int_0^\infty t^{n-1} e^{-t} dt = (n-1)!$.
+- $\int_{0}^{\infty} x e^{-x} dx = \Gamma(2) = 1! = 1$.
+- Pour la seconde intégrale, effectuons le changement de variable $u = 2y \implies dy = du/2$.
+  $\int_{0}^{\infty} y^2 e^{-2y} dy = \int_{0}^{\infty} (u/2)^2 e^{-u} (du/2) = \frac{1}{8} \int_{0}^{\infty} u^2 e^{-u} du = \frac{1}{8} \Gamma(3) = \frac{2!}{8} = \frac{2}{8} = \frac{1}{4}$.
+L'équation devient donc :
+$1 = k \times 1 \times \frac{1}{4} \implies k = 4$.
+La densité conjointe est $f(x,y) = 4 x y^2 e^{-x} e^{-2y} \mathbb{1}_{\{x>0, y>0\}}$.
+
+**2. Indépendance et lois marginales**
+D'après le théorème de factorisation des densités (Jalon 88), deux variables à densité sont indépendantes si et seulement si leur densité jointe peut s'écrire sous la forme du produit de deux densités unidimensionnelles (ou le produit d'une fonction de $x$ et d'une fonction de $y$).
+Ici, on peut écrire $f(x,y) = (x e^{-x} \mathbb{1}_{\{x>0\}}) \times (4 y^2 e^{-2y} \mathbb{1}_{\{y>0\}})$.
+Cette factorisation stricte en produit de fonctions mesurables positives $g(x)h(y)$ démontre immédiatement l'indépendance de $X$ et $Y$.
+De plus, ce produit nous donne, à une constante de normalisation près, l'expression des densités marginales :
+- $f_X(x) = C_1 x e^{-x} \mathbb{1}_{\{x>0\}}$. On reconnaît la densité d'une loi Gamma $\Gamma(k=2, \theta=1)$.
+- $f_Y(y) = C_2 y^2 e^{-2y} \mathbb{1}_{\{y>0\}}$. On reconnaît la densité d'une loi Gamma $\Gamma(k=3, \theta=1/2)$.
+L'exercice illustre de façon canonique comment lire l'indépendance directement sur la formule algébrique de la densité conjointe.
