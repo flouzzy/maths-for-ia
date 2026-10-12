@@ -6,7 +6,7 @@ trimester: 8
 tags:
   - math/probabilites
   - ia/asymptotique
-prev: "[[Jalon 88 (Indépendance d'événements).md]]"
+prev: "[[Jalon-88.md]]"
 next: "[[Jalon 90 (Les modes de convergence).md]]"
 ---
 
