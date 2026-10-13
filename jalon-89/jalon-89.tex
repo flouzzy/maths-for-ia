@@ -1,0 +1,625 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ç}{{\c{c}}}1 {œ}{{\oe}}1 {ù}{{\`u}}1 {É}{{\'E}}1 {È}{{\`E}}1 {À}{{\`A}}1 {Ç}{{\c{C}}}1 {Œ}{{\OE}}1 {Ê}{{\^E}}1 {Ê}{{\^E}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1 {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1 {ÿ}{{\"y}}1 {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1 {ç}{{\c c}}1
+}
+
+\title{\Huge LEMMES DE BOREL-CANTELLI \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+
+
+\section{Introduction à la limite supérieure d'événements}
+
+Le comportement asymptotique d'une suite infinie d'événements probabilistes est au cœur de l'analyse stochastique. L'étude des lemmes de Borel-Cantelli s'intéresse à la réalisation "infiniment souvent" d'événements au sein d'une suite infinie.
+
+\subsection{L'événement "Infiniment Souvent"}
+
+Soit $(\Omega, \mathcal{F}, \mathbb{P})$ un espace de probabilité et $(A_n)_{n \in \mathbb{N}}$ une suite d'événements de la tribu $\mathcal{F}$. On s'intéresse à l'ensemble des résultats (les éléments $\omega \in \Omega$) qui appartiennent à une infinité d'ensembles $A_n$.
+
+\textbf{Définition (Limite supérieure d'événements) :}
+On définit la limite supérieure de la suite $(A_n)_{n \in \mathbb{N}}$, notée $\limsup_{n \to \infty} A_n$ (ou encore $\{A_n \text{ i.s.}\}$ pour "infiniment souvent"), par :
+
+$$ \limsup_{n \to \infty} A_n = \bigcap_{n=0}^\infty \bigcup_{k=n}^\infty A_k $$
+
+Concrètement, $\omega \in \limsup_{n \to \infty} A_n$ si et seulement si, pour tout entier $n \ge 0$, il existe un indice $k \ge n$ tel que $\omega \in A_k$. Cela signifie exactement que l'événement $A_n$ se réalise pour une infinité d'indices $n$.
+
+\textbf{Exemple 1 :}
+Considérons une suite infinie de lancers d'une pièce de monnaie équilibrée. Soit $A_n$ l'événement "Le $n$-ième lancer donne Pile". L'événement $\limsup_{n \to \infty} A_n$ correspond à "On obtient Pile une infinité de fois". Puisque chaque lancer donne "Pile" avec une probabilité $1/2$, la probabilité d'obtenir une infinité de fois "Pile" est de 1.
+Si l'on définit $B_n$ comme "Le $n$-ième lancer donne Pile", on peut calculer :
+Pour un $n$ fixé, la probabilité qu'aucun lancer de l'indice $n$ à l'indice $n+N$ ne soit "Pile" est $(1/2)^{N+1}$.
+Lorsque $N \to \infty$, cette probabilité tend vers 0. Ainsi, la probabilité que "Pile" apparaisse au moins une fois après l'indice $n$ est 1, et ce pour tout $n$. Donc l'intersection de ces événements presque certains est presque certaine : $\mathbb{P}(\limsup B_n) = 1$.
+
+\begin{tikzpicture}[baseline=0]
+\draw[thick,->] (0,0) -- (10,0) node[right] {$n$};
+\foreach \x in {1,2,3,4,5,6,7,8,9} {
+    \draw (\x,0.1) -- (\x,-0.1) node[below] {\small $\x$};
+}
+\filldraw[blue] (2,0) circle (3pt) node[above] {$A_2$};
+\filldraw[blue] (4,0) circle (3pt) node[above] {$A_4$};
+\filldraw[blue] (5,0) circle (3pt) node[above] {$A_5$};
+\filldraw[blue] (7,0) circle (3pt) node[above] {$A_7$};
+\filldraw[blue] (9,0) circle (3pt) node[above] {$A_9$};
+\node at (5, -1) {Réalisations des événements $A_n$};
+\end{tikzpicture}
+
+
+\section{Définitions, Théorèmes et Exemples}
+
+Les lemmes de Borel-Cantelli fournissent des conditions suffisantes pour que la probabilité de $\limsup A_n$ soit 0 ou 1.
+
+\subsection{Premier Lemme de Borel-Cantelli (Cas général)}
+
+\textbf{Théorème (Premier Lemme de Borel-Cantelli) :}
+Soit $(A_n)_{n \in \mathbb{N}}$ une suite d'événements. Si la série des probabilités converge, c'est-à-dire si :
+$$ \sum_{n=0}^\infty \mathbb{P}(A_n) < +\infty $$
+alors la probabilité que les événements se produisent infiniment souvent est nulle :
+$$ \mathbb{P}\left(\limsup_{n \to \infty} A_n\right) = 0 $$
+Presque sûrement, seuls un nombre fini d'événements $A_n$ se réalisent. Ce lemme ne requiert aucune hypothèse d'indépendance entre les événements.
+
+\textbf{Exemple 2 :}
+Soit une variable aléatoire $X$ suivant une loi exponentielle de paramètre $\lambda = 1$. Considérons les événements $A_n = \{X \ge n\}$.
+Calculons la probabilité de $A_n$ :
+$$ \mathbb{P}(A_n) = \int_n^\infty e^{-x} dx = e^{-n} $$
+La série de terme général $e^{-n}$ est une série géométrique de raison $e^{-1} < 1$, donc elle converge :
+$$ \sum_{n=0}^\infty \mathbb{P}(A_n) = \sum_{n=0}^\infty e^{-n} = \frac{1}{1 - e^{-1}} < +\infty $$
+D'après le premier lemme de Borel-Cantelli, $\mathbb{P}(\limsup A_n) = 0$.
+Cela signifie que, presque sûrement, $X$ ne dépasse pas une infinité de fois la valeur de $n$. En effet, une variable aléatoire suivant une loi exponentielle prend presque sûrement une valeur finie.
+
+
+\textbf{Exemple 5 (Erreurs de transmission) :}
+Un signal binaire est transmis à travers un canal bruité. Soit $A_n$ l'événement "Le n-ième bit est altéré".
+Si la probabilité d'altération décroît de telle sorte que $\mathbb{P}(A_n) = \frac{1}{n^2}$,
+la somme des probabilités converge ($\sum \frac{1}{n^2} = \frac{\pi^2}{6}$).
+Par le premier lemme de Borel-Cantelli, $\mathbb{P}(\limsup A_n) = 0$.
+Cela implique qu'il n'y aura presque sûrement qu'un nombre fini d'erreurs au total sur l'infinité de bits transmis. À partir d'un certain temps, la transmission deviendra parfaite.
+
+
+
+\subsection{Second Lemme de Borel-Cantelli (Cas des événements indépendants)}
+
+\textbf{Théorème (Second Lemme de Borel-Cantelli) :}
+Soit $(A_n)_{n \in \mathbb{N}}$ une suite d'événements mutuellement \textbf{indépendants}. Si la série des probabilités diverge, c'est-à-dire si :
+$$ \sum_{n=0}^\infty \mathbb{P}(A_n) = +\infty $$
+alors la probabilité que les événements se produisent infiniment souvent est certaine :
+$$ \mathbb{P}\left(\limsup_{n \to \infty} A_n\right) = 1 $$
+Presque sûrement, une infinité de $A_n$ se réalisent.
+
+\textbf{Exemple 3 (Le Paradoxe du Singe Savant) :}
+Supposons qu'un singe tape au hasard sur un clavier d'ordinateur comportant $M$ touches (les 26 lettres de l'alphabet, l'espace, la ponctuation, disons $M = 50$). La probabilité que le singe tape le mot "HAMLET" (6 lettres) en une tentative de 6 frappes est $p = \frac{1}{50^6} > 0$.
+Divisons le temps infini en blocs de 6 frappes indépendantes.
+Soit $A_n$ l'événement : "Le singe tape exactement HAMLET dans le $n$-ième bloc de 6 frappes".
+Les événements $A_n$ sont mutuellement indépendants car les blocs ne se chevauchent pas et chaque frappe est indépendante.
+La probabilité de chaque événement est $\mathbb{P}(A_n) = p$.
+La série des probabilités est :
+$$ \sum_{n=1}^\infty \mathbb{P}(A_n) = \sum_{n=1}^\infty p = +\infty $$
+D'après le second lemme de Borel-Cantelli, $\mathbb{P}(\limsup A_n) = 1$. Le singe tapera donc le mot "HAMLET" une infinité de fois presque sûrement.
+
+
+\textbf{Exemple 4 (Tirages avec remise) :}
+Imaginons que l'on tire une carte avec remise dans un jeu de 52 cartes. L'événement $A_n$ est "Tirer l'As de Pique au n-ième tirage".
+Ici $\mathbb{P}(A_n) = \frac{1}{52}$.
+Puisque la somme $\sum_{n=1}^\infty \frac{1}{52} = +\infty$ et que les tirages sont indépendants, le second lemme de Borel-Cantelli garantit que l'As de Pique sera tiré une infinité de fois.
+
+
+\section{Démonstrations}
+
+\subsection{Démonstration du Premier Lemme de Borel-Cantelli}
+
+\textbf{Hypothèse :} $\sum_{n=0}^\infty \mathbb{P}(A_n) < +\infty$
+
+1. \textbf{Réécriture de l'événement limite supérieure :}
+   Par définition, $\limsup_{n \to \infty} A_n = \bigcap_{n=0}^\infty B_n$ où $B_n = \bigcup_{k=n}^\infty A_k$.
+
+2. \textbf{Monotonie de la suite d'événements :}
+   La suite $(B_n)_{n \ge 0}$ est décroissante pour l'inclusion. En effet :
+   $$ B_{n+1} = \bigcup_{k=n+1}^\infty A_k \subset A_n \cup \bigcup_{k=n+1}^\infty A_k = \bigcup_{k=n}^\infty A_k = B_n $$
+
+3. \textbf{Continuité décroissante de la mesure de probabilité :}
+   Puisque la mesure de probabilité $\mathbb{P}$ est finie (mesure finie car $\mathbb{P}(\Omega) = 1$), le théorème de continuité décroissante s'applique :
+   $$ \mathbb{P}\left( \limsup_{n \to \infty} A_n \right) = \mathbb{P}\left( \bigcap_{n=0}^\infty B_n \right) = \lim_{n \to \infty} \mathbb{P}(B_n) $$
+
+4. \textbf{Majoration par sous-additivité (Inégalité de Boole) :}
+   Par la propriété de sous-additivité d'une mesure, pour tout entier $n$ :
+   $$ \mathbb{P}(B_n) = \mathbb{P}\left( \bigcup_{k=n}^\infty A_k \right) \le \sum_{k=n}^\infty \mathbb{P}(A_k) $$
+
+5. \textbf{Utilisation de l'hypothèse de convergence :}
+   L'hypothèse $\sum_{n=0}^\infty \mathbb{P}(A_n) < +\infty$ implique que le reste de la série convergente tend vers $0$ lorsque $n \to \infty$. Ainsi :
+   $$ \lim_{n \to \infty} \sum_{k=n}^\infty \mathbb{P}(A_k) = 0 $$
+
+6. \textbf{Conclusion par encadrement :}
+   Puisque $0 \le \mathbb{P}(B_n) \le \sum_{k=n}^\infty \mathbb{P}(A_k)$, par passage à la limite, on obtient :
+   $$ 0 \le \lim_{n \to \infty} \mathbb{P}(B_n) \le 0 $$
+   Ce qui entraîne :
+   $$ \mathbb{P}\left(\limsup_{n \to \infty} A_n\right) = 0 $$
+   Ceci achève la démonstration du premier lemme.
+
+
+\subsection{Démonstration du Second Lemme de Borel-Cantelli}
+
+\textbf{Hypothèse :} $\sum_{n=0}^\infty \mathbb{P}(A_n) = +\infty$ et les événements $A_n$ sont indépendants.
+
+1. \textbf{Passage au complémentaire :}
+   Nous cherchons à montrer que $\mathbb{P}(\limsup A_n) = 1$. Cela équivaut à montrer que la probabilité du complémentaire est nulle.
+   Par les lois de De Morgan :
+   $$ \left( \limsup_{n \to \infty} A_n \right)^c = \left( \bigcap_{n=0}^\infty \bigcup_{k=n}^\infty A_k \right)^c = \bigcup_{n=0}^\infty \bigcap_{k=n}^\infty A_k^c $$
+   Cet événement correspond à $\liminf_{n \to \infty} A_n^c$ (les $A_n^c$ se réalisent pour tous les indices à partir d'un certain rang).
+
+2. \textbf{Propriété de sous-additivité :}
+   $$ \mathbb{P}\left( \bigcup_{n=0}^\infty \bigcap_{k=n}^\infty A_k^c \right) \le \sum_{n=0}^\infty \mathbb{P}\left( \bigcap_{k=n}^\infty A_k^c \right) $$
+   Il suffit donc de montrer que pour tout entier $n$, $\mathbb{P}\left( \bigcap_{k=n}^\infty A_k^c \right) = 0$.
+
+3. \textbf{Utilisation de l'indépendance et passage à la limite finie :}
+   Puisque les $A_k$ sont mutuellement indépendants, leurs complémentaires $A_k^c$ le sont également.
+   Pour tout entier $m > n$ :
+   $$ \mathbb{P}\left( \bigcap_{k=n}^m A_k^c \right) = \prod_{k=n}^m \mathbb{P}(A_k^c) = \prod_{k=n}^m (1 - \mathbb{P}(A_k)) $$
+
+4. \textbf{Inégalité élémentaire et passage à l'exponentielle :}
+   On utilise l'inégalité classique $1 - x \le e^{-x}$ pour $x \ge 0$.
+   En posant $x = \mathbb{P}(A_k)$, on a $1 - \mathbb{P}(A_k) \le \exp(-\mathbb{P}(A_k))$.
+   Ainsi,
+   $$ \prod_{k=n}^m (1 - \mathbb{P}(A_k)) \le \prod_{k=n}^m \exp(-\mathbb{P}(A_k)) = \exp\left( - \sum_{k=n}^m \mathbb{P}(A_k) \right) $$
+
+5. \textbf{Passage à la limite $m \to \infty$ :}
+   Par continuité décroissante de la mesure :
+   $$ \mathbb{P}\left( \bigcap_{k=n}^\infty A_k^c \right) = \lim_{m \to \infty} \mathbb{P}\left( \bigcap_{k=n}^m A_k^c \right) \le \lim_{m \to \infty} \exp\left( - \sum_{k=n}^m \mathbb{P}(A_k) \right) $$
+   D'après l'hypothèse, la série diverge, c'est-à-dire $\lim_{m \to \infty} \sum_{k=n}^m \mathbb{P}(A_k) = +\infty$.
+   Par conséquent,
+   $$ \lim_{m \to \infty} \exp\left( - \sum_{k=n}^m \mathbb{P}(A_k) \right) = \exp(-\infty) = 0 $$
+   D'où pour tout $n$, $\mathbb{P}\left( \bigcap_{k=n}^\infty A_k^c \right) = 0$.
+
+6. \textbf{Conclusion finale :}
+   $$ \mathbb{P}\left( \left( \limsup_{n \to \infty} A_n \right)^c \right) \le \sum_{n=0}^\infty 0 = 0 $$
+   Donc la probabilité de l'événement complémentaire est nulle, ce qui prouve que $\mathbb{P}(\limsup A_n) = 1$. La démonstration est complète.
+
+
+\section{Applications en Physique, Logique et Intelligence Artificielle}
+
+\subsection{La Loi Zéro-Un de Kolmogorov}
+Les lemmes de Borel-Cantelli fournissent le cadre théorique pour la loi zéro-un de Kolmogorov, qui stipule que tout événement de la "tribu de queue" (un événement dont la réalisation ne dépend d'aucun sous-ensemble fini de variables aléatoires indépendantes) a une probabilité de 0 ou 1. C'est l'un des piliers qui permet d'étudier la convergence asymptotique de processus aléatoires en physique statistique.
+
+\subsection{Convergence Presque Sûre des Algorithmes Stochastiques}
+En apprentissage automatique, le premier lemme de Borel-Cantelli est souvent utilisé pour prouver la \textbf{convergence presque sûre} des suites de variables aléatoires. Si l'on dispose d'une suite d'estimateurs $X_n$ de l'algorithme d'optimisation, montrer que la série $\sum_{n} \mathbb{P}(\|X_n - X^*\| > \epsilon)$ converge assure que presque sûrement, à partir d'un certain rang, la distance entre l'estimateur et l'optimum sera inférieure à $\epsilon$. Cela constitue le fondement de la validité de l'algorithme de Descente de Gradient Stochastique (SGD).
+
+\subsection{Exploration et Compromis Exploration/Exploitation}
+Dans le cadre de l'apprentissage par renforcement (Reinforcement Learning), une stratégie d'exploration comme la stratégie $\epsilon$-gloutonne nécessite que l'agent continue d'explorer indéfiniment (la condition de type "infiniment souvent") afin de découvrir l'action optimale, mais la probabilité d'exploration doit tendre vers $0$ de manière à ce que l'agent converge vers une politique d'exploitation. Le deuxième lemme de Borel-Cantelli s'applique ici : la condition pour une exploration complète de l'espace d'états et d'actions est que la série des probabilités d'exploration diverge, $\sum \epsilon_n = +\infty$.
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Application directe du premier lemme}
+
+$\bigstar\star\star\star\star$
+
+\textbf{Énoncé :}
+Soit $(X_n)_{n \in \mathbb{N}^*}$ une suite de variables aléatoires réelles. On suppose que pour tout $n \ge 1$, $\mathbb{P}(X_n > n) = \frac{1}{n^2}$.
+Montrer que presque sûrement, à partir d'un certain rang, on a $X_n \le n$.
+
+\textbf{Correction :}
+Considérons la suite d'événements $A_n = \{X_n > n\}$.
+La probabilité de chaque événement est $\mathbb{P}(A_n) = \frac{1}{n^2}$.
+La série des probabilités s'écrit $\sum_{n=1}^\infty \mathbb{P}(A_n) = \sum_{n=1}^\infty \frac{1}{n^2}$.
+Cette série est une série de Riemann convergente (car l'exposant $2 > 1$).
+Puisque $\sum \mathbb{P}(A_n) < +\infty$, le premier lemme de Borel-Cantelli affirme que :
+$$ \mathbb{P}(\limsup_{n \to \infty} A_n) = 0 $$
+Ainsi, presque sûrement, seul un nombre fini d'événements $A_n$ se réalisent.
+Par définition, dire que $A_n$ ne se réalise qu'un nombre fini de fois signifie qu'il existe un rang $N(\omega)$ (dépendant du résultat $\omega$) tel que pour tout $n \ge N(\omega)$, l'événement $A_n$ ne se réalise pas, c'est-à-dire que son complémentaire $A_n^c$ se réalise.
+Or $A_n^c = \{X_n \le n\}$.
+Donc, presque sûrement, il existe un rang à partir duquel $X_n \le n$.
+
+
+\subsection*{Exercice 2 : Événements indépendants et divergence}
+
+$\bigstar\bigstar\star\star\star$
+
+\textbf{Énoncé :}
+On lance une pièce de monnaie biaisée de telle sorte que la probabilité d'obtenir "Pile" au $n$-ième lancer soit $p_n = \frac{1}{n}$. Les lancers sont indépendants.
+Montrer que l'on obtiendra "Pile" une infinité de fois presque sûrement.
+
+\textbf{Correction :}
+Soit $A_n$ l'événement "Obtenir Pile au $n$-ième lancer".
+Les événements $A_n$ sont mutuellement indépendants d'après l'énoncé.
+La probabilité de l'événement $A_n$ est $\mathbb{P}(A_n) = \frac{1}{n}$.
+Nous étudions la convergence de la série $\sum_{n=1}^\infty \mathbb{P}(A_n) = \sum_{n=1}^\infty \frac{1}{n}$.
+Cette série est la série harmonique. Or, la série harmonique diverge vers $+\infty$.
+$$ \sum_{n=1}^\infty \mathbb{P}(A_n) = +\infty $$
+Étant donné que les événements $A_n$ sont indépendants et que la somme de leurs probabilités diverge, le second lemme de Borel-Cantelli s'applique.
+On en conclut que :
+$$ \mathbb{P}(\limsup_{n \to \infty} A_n) = 1 $$
+Par conséquent, on obtient "Pile" une infinité de fois presque sûrement.
+
+
+\subsection*{Exercice 3 : Convergence presque sûre vers 0}
+
+$\bigstar\bigstar\star\star\star$
+
+\textbf{Énoncé :}
+Soit $(Y_n)_{n \in \mathbb{N}}$ une suite de variables aléatoires telles que $\mathbb{P}(|Y_n| \ge \epsilon) \le e^{-n\epsilon}$ pour tout $\epsilon > 0$.
+Montrer que $Y_n$ converge presque sûrement vers 0.
+
+\textbf{Correction :}
+Rappelons que $Y_n$ converge presque sûrement vers 0 si pour tout $\epsilon > 0$, l'événement $\{|Y_n| \ge \epsilon\}$ ne se produit qu'un nombre fini de fois presque sûrement.
+Fixons $\epsilon > 0$.
+Posons l'événement $A_n = \{|Y_n| \ge \epsilon\}$.
+D'après l'hypothèse de l'énoncé, $\mathbb{P}(A_n) \le e^{-n\epsilon}$.
+Étudions la série de ces probabilités :
+$$ \sum_{n=0}^\infty \mathbb{P}(A_n) \le \sum_{n=0}^\infty e^{-n\epsilon} $$
+La somme à droite est une série géométrique de raison $e^{-\epsilon}$. Comme $\epsilon > 0$, on a $0 < e^{-\epsilon} < 1$, ce qui garantit la convergence de la série.
+Ainsi, $\sum_{n=0}^\infty \mathbb{P}(A_n) < +\infty$.
+Par le premier lemme de Borel-Cantelli, l'événement $\limsup A_n$ a une probabilité nulle.
+C'est-à-dire que, presque sûrement, il n'y a qu'un nombre fini d'indices $n$ pour lesquels $|Y_n| \ge \epsilon$.
+Par conséquent, pour presque tout $\omega \in \Omega$, il existe un rang $N$ tel que pour tout $n \ge N$, $|Y_n(\omega)| < \epsilon$.
+Ceci étant vrai pour tout $\epsilon > 0$ (en prenant une suite dénombrable $\epsilon_k \to 0$), la suite de variables aléatoires $Y_n$ converge presque sûrement vers 0.
+
+
+\subsection*{Exercice 4 : Série de probabilités non monotones}
+
+$\bigstar\bigstar\bigstar\star\star$
+
+\textbf{Énoncé :}
+Soit $(A_n)$ une suite d'événements indépendants. On sait que $\mathbb{P}(A_n) = \frac{1}{n \ln(n)}$ pour $n \ge 2$.
+Déterminer la probabilité que les événements $A_n$ se réalisent une infinité de fois.
+
+\textbf{Correction :}
+Nous devons déterminer la nature de la série $\sum_{n=2}^\infty \mathbb{P}(A_n) = \sum_{n=2}^\infty \frac{1}{n \ln(n)}$.
+La fonction $f(x) = \frac{1}{x \ln(x)}$ est continue, positive et décroissante sur $[2, +\infty[$.
+On peut utiliser le critère intégral de Cauchy.
+L'intégrale généralisée $\int_2^\infty \frac{1}{x \ln(x)} dx$ se calcule aisément avec le changement de variable $u = \ln(x)$, $du = \frac{dx}{x}$ :
+$$ \int_{\ln(2)}^\infty \frac{1}{u} du = \left[ \ln|u| \right]_{\ln(2)}^\infty = +\infty $$
+Puisque l'intégrale diverge, la série $\sum \frac{1}{n \ln(n)}$ diverge également.
+Les événements $A_n$ étant indépendants, et la somme de leurs probabilités divergeant, le second lemme de Borel-Cantelli nous permet de conclure.
+La probabilité que les événements $A_n$ se réalisent une infinité de fois est de 1.
+$$ \mathbb{P}(\limsup A_n) = 1 $$
+
+
+\subsection*{Exercice 5 : Limite d'une suite de maxima}
+
+$\bigstar\bigstar\bigstar\star\star$
+
+\textbf{Énoncé :}
+Soit $(X_n)$ une suite de variables aléatoires indépendantes suivant la loi exponentielle $\mathcal{E}(1)$.
+Posons $M_n = \max(X_1, X_2, \dots, X_n)$.
+Montrer que $\limsup_{n \to \infty} \frac{X_n}{\ln(n)} = 1$ presque sûrement.
+
+\textbf{Correction :}
+Soit $c > 0$. Considérons l'événement $A_n = \left\{ \frac{X_n}{\ln(n)} \ge c \right\} = \{ X_n \ge c \ln(n) \}$.
+Puisque $X_n \sim \mathcal{E}(1)$, sa fonction de survie est $\mathbb{P}(X_n \ge x) = e^{-x}$.
+Ainsi, $\mathbb{P}(A_n) = \mathbb{P}(X_n \ge c \ln(n)) = e^{-c \ln(n)} = \frac{1}{n^c}$.
+Étudions la série $\sum \mathbb{P}(A_n) = \sum \frac{1}{n^c}$.
+Si $c > 1$, la série $\sum \frac{1}{n^c}$ converge (série de Riemann).
+D'après le premier lemme de Borel-Cantelli, $\mathbb{P}(\limsup A_n) = 0$.
+Cela implique que presque sûrement, il n'y a qu'un nombre fini de $n$ tels que $\frac{X_n}{\ln(n)} \ge c$.
+Donc $\limsup \frac{X_n}{\ln(n)} \le c$ p.s.
+Ceci étant vrai pour tout $c > 1$, en faisant tendre $c \to 1^+$, on obtient $\limsup \frac{X_n}{\ln(n)} \le 1$ p.s.
+
+Si $c = 1$, $\mathbb{P}(A_n) = \frac{1}{n}$. La série diverge.
+De plus, les variables $X_n$ sont indépendantes, donc les événements $A_n$ le sont.
+Par le second lemme de Borel-Cantelli, $\mathbb{P}(\limsup A_n) = 1$.
+Cela signifie que presque sûrement, $\frac{X_n}{\ln(n)} \ge 1$ pour une infinité d'indices $n$.
+Donc $\limsup \frac{X_n}{\ln(n)} \ge 1$ p.s.
+En combinant les deux résultats, on conclut rigoureusement que :
+$$ \limsup_{n \to \infty} \frac{X_n}{\ln(n)} = 1 \text{ presque sûrement.} $$
+
+
+\subsection*{Exercice 6 : Application à la loi des grands nombres}
+
+$\bigstar\bigstar\bigstar\bigstar\star$
+
+\textbf{Énoncé :}
+Soit $(Z_n)$ une suite de variables aléatoires indépendantes centrées telles que $\mathbb{E}[Z_n^4] \le K$ pour une constante $K$.
+Soit $S_n = \sum_{i=1}^n Z_i$. Montrer en utilisant le lemme de Borel-Cantelli que $\frac{S_n}{n} \xrightarrow{p.s.} 0$.
+
+\textbf{Correction :}
+L'indépendance et l'espérance nulle impliquent que $\mathbb{E}[Z_i] = 0$.
+On calcule $\mathbb{E}[S_n^4] = \mathbb{E}\left[ \left(\sum_{i=1}^n Z_i\right)^4 \right]$.
+En développant ce polynôme, les termes de la forme $\mathbb{E}[Z_i Z_j^3]$ ou $\mathbb{E}[Z_i Z_j Z_k^2]$ s'annulent par indépendance et car $\mathbb{E}[Z_i]=0$.
+Il reste seulement les termes $\mathbb{E}[Z_i^4]$ (au nombre de $n$) et les termes $\mathbb{E}[Z_i^2 Z_j^2]$ (au nombre de $3n(n-1)$).
+D'après l'inégalité de Cauchy-Schwarz, $\mathbb{E}[Z_i^2 Z_j^2] = \mathbb{E}[Z_i^2]\mathbb{E}[Z_j^2] \le \sqrt{\mathbb{E}[Z_i^4]\mathbb{E}[Z_j^4]} \le K$.
+Donc $\mathbb{E}[S_n^4] \le nK + 3n(n-1)K \le 3n^2K$.
+Appliquons l'inégalité de Markov à $S_n^4$ :
+Pour tout $\epsilon > 0$, posons $A_n = \left\{ \left|\frac{S_n}{n}\right| \ge \epsilon \right\} = \{ |S_n| \ge n\epsilon \}$.
+$$ \mathbb{P}(A_n) = \mathbb{P}(S_n^4 \ge n^4\epsilon^4) \le \frac{\mathbb{E}[S_n^4]}{n^4\epsilon^4} \le \frac{3n^2K}{n^4\epsilon^4} = \frac{3K}{\epsilon^4 n^2} $$
+La série $\sum \mathbb{P}(A_n)$ est donc majorée par $\sum \frac{3K}{\epsilon^4 n^2}$, qui est une série de Riemann convergente.
+Par le premier lemme de Borel-Cantelli, l'événement $\{ |\frac{S_n}{n}| \ge \epsilon \}$ ne se réalise qu'un nombre fini de fois presque sûrement.
+Ainsi, $\frac{S_n}{n}$ converge presque sûrement vers 0.
+
+
+\subsection*{Exercice 7 : Borel-Cantelli sans indépendance : une fausse conclusion}
+
+$\bigstar\bigstar\bigstar\bigstar\star$
+
+\textbf{Énoncé :}
+Montrer par un contre-exemple que si les événements $(A_n)$ ne sont pas indépendants, la divergence de $\sum \mathbb{P}(A_n) = +\infty$ n'implique pas que $\mathbb{P}(\limsup A_n) = 1$.
+
+\textbf{Correction :}
+Soit un espace de probabilité modélisant le tirage uniforme d'un nombre $U$ dans l'intervalle $[0, 1]$. La loi de $U$ est continue uniforme.
+Considérons l'événement $A_n = \{ U \le \frac{1}{n} \}$.
+La probabilité de chaque événement est $\mathbb{P}(A_n) = \frac{1}{n}$.
+La série $\sum \mathbb{P}(A_n) = \sum \frac{1}{n} = +\infty$ est divergente.
+Toutefois, étudions la limite supérieure de ces événements.
+$$ \limsup_{n \to \infty} A_n = \bigcap_{n=1}^\infty \bigcup_{k=n}^\infty A_k $$
+Puisque la suite $(A_n)$ est décroissante (si $U \le 1/(n+1)$, alors $U \le 1/n$, donc $A_{n+1} \subset A_n$), l'union $\bigcup_{k=n}^\infty A_k$ est simplement égale à $A_n$.
+Ainsi, $\limsup_{n \to \infty} A_n = \bigcap_{n=1}^\infty A_n$.
+L'événement $\bigcap_{n=1}^\infty A_n$ est l'ensemble des $\omega$ tels que pour tout $n \ge 1$, $U(\omega) \le \frac{1}{n}$.
+Le seul nombre réel positif ou nul satisfaisant cette condition est $0$.
+Donc $\limsup_{n \to \infty} A_n = \{ U = 0 \}$.
+Or, pour une variable aléatoire continue, la probabilité d'un point est nulle : $\mathbb{P}(U = 0) = 0$.
+Nous avons donc $\mathbb{P}(\limsup A_n) = 0$, et ce malgré la divergence de la série des probabilités.
+Cela illustre de manière flagrante que l'hypothèse d'indépendance dans le second lemme de Borel-Cantelli est absolument incontournable.
+
+
+\subsection*{Exercice 8 : Suite de variables aléatoires de Bernoulli}
+
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
+
+\textbf{Énoncé :}
+Soit $(X_n)$ une suite de variables aléatoires indépendantes suivant la loi de Bernoulli de paramètre $p_n$.
+Montrer que $X_n \xrightarrow{p.s.} 0$ si et seulement si $\sum_{n=1}^\infty p_n < +\infty$.
+
+\textbf{Correction :}
+Rappelons que $X_n \in \{0, 1\}$.
+La convergence vers 0 de la suite $X_n$ signifie que pour tout $\epsilon > 0$, il n'y a qu'un nombre fini de $X_n$ tels que $|X_n| \ge \epsilon$.
+En choisissant $\epsilon = 1/2$, la condition $|X_n| \ge 1/2$ est équivalente à $X_n = 1$.
+Donc $X_n \xrightarrow{p.s.} 0$ si et seulement si l'événement $\{X_n = 1\}$ ne se produit qu'un nombre fini de fois presque sûrement, c'est-à-dire $\mathbb{P}(\limsup \{X_n = 1\}) = 0$.
+Soit $A_n = \{X_n = 1\}$. On a $\mathbb{P}(A_n) = p_n$.
+- Sens direct ($\impliedby$) : Si $\sum p_n < +\infty$, le premier lemme de Borel-Cantelli s'applique immédiatement et assure que $\mathbb{P}(\limsup A_n) = 0$. Donc $X_n \xrightarrow{p.s.} 0$.
+- Sens réciproque ($\implies$) : Supposons que $\sum p_n = +\infty$. Comme les $X_n$ sont indépendantes, les événements $A_n$ le sont aussi. Le second lemme de Borel-Cantelli affirme que $\mathbb{P}(\limsup A_n) = 1$. Ainsi, $X_n = 1$ une infinité de fois avec probabilité 1. La suite $(X_n)$ ne peut donc pas converger vers 0. Par contraposée, si $X_n \xrightarrow{p.s.} 0$, alors on a nécessairement $\sum p_n < +\infty$.
+L'équivalence est ainsi rigoureusement démontrée.
+
+
+\subsection*{Exercice 9 : Indépendance conditionnelle et lancers successifs}
+
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
+
+\textbf{Énoncé :}
+Un joueur lance un dé équilibré à 6 faces. S'il obtient 6, il gagne la partie. S'il ne gagne pas, il relance. Cependant, à l'étape $n$, on lui ajoute une pénalité : il ne gagne que si le résultat est 6, et il doit tirer à nouveau une pièce biaisée qui tombe sur face avec probabilité $\frac{1}{n^2}$. Si la pièce est pile, son 6 est annulé.
+Montrer qu'il finira presque sûrement par gagner définitivement si on ignore la pièce, mais avec la pièce l'analyse asymptotique change. Soit $A_n$ l'événement "Gagner à l'étape $n$". Est-ce qu'il gagne infiniment souvent ?
+
+\textbf{Correction :}
+Modélisons de manière précise : on effectue une suite infinie d'essais pour tester la limite. On suppose qu'on joue une infinité de fois.
+Soit $D_n$ l'événement "Le dé donne 6 à l'étape $n$". On a $\mathbb{P}(D_n) = 1/6$.
+Soit $F_n$ l'événement "La pièce tombe sur Face à l'étape $n$". On a $\mathbb{P}(F_n) = 1/n^2$.
+L'événement "Gagner à l'étape $n$" est $A_n = D_n \cap F_n$.
+Puisque le lancer de dé et de pièce sont indépendants :
+$$ \mathbb{P}(A_n) = \mathbb{P}(D_n) \mathbb{P}(F_n) = \frac{1}{6} \times \frac{1}{n^2} = \frac{1}{6n^2} $$
+La série de ces probabilités est :
+$$ \sum_{n=1}^\infty \mathbb{P}(A_n) = \frac{1}{6} \sum_{n=1}^\infty \frac{1}{n^2} < +\infty $$
+Puisque la série converge, le premier lemme de Borel-Cantelli implique que $\mathbb{P}(\limsup A_n) = 0$.
+Ainsi, il ne gagnera qu'un nombre fini de fois. La pénalité annule ses victoires infinies.
+
+
+\subsection*{Exercice 10 : Distance entre points aléatoires sur un cercle}
+
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
+
+\textbf{Énoncé :}
+Soit $(P_n)$ une suite de points tirés indépendamment et uniformément sur un cercle de périmètre 1.
+Quelle est la probabilité que la distance entre $P_n$ et un point fixe $P_0$ soit inférieure à $1/n$ pour une infinité d'indices $n$ ?
+
+\textbf{Correction :}
+Soit $d(P_n, P_0)$ la distance sur le cercle (qui correspond à la longueur de l'arc le plus court entre les deux points).
+La distance maximale possible sur le cercle de périmètre 1 est $1/2$.
+Soit l'événement $A_n = \{ d(P_n, P_0) \le 1/n \}$.
+Pour un $n \ge 2$, l'ensemble des points à une distance inférieure à $1/n$ de $P_0$ correspond à un arc de cercle centré en $P_0$ de longueur $2/n$.
+Puisque $P_n$ est tiré uniformément, la probabilité que $P_n$ tombe dans cet arc est le rapport de la longueur de l'arc sur le périmètre total :
+$$ \mathbb{P}(A_n) = \frac{2/n}{1} = \frac{2}{n} $$
+Les tirages des $P_n$ étant indépendants, les événements $A_n$ sont mutuellement indépendants.
+Nous étudions la série $\sum_{n=2}^\infty \mathbb{P}(A_n) = \sum_{n=2}^\infty \frac{2}{n} = 2 \sum_{n=2}^\infty \frac{1}{n}$.
+Cette série est la série harmonique, qui diverge :
+$$ \sum_{n=2}^\infty \mathbb{P}(A_n) = +\infty $$
+D'après le second lemme de Borel-Cantelli, l'événement $\limsup A_n$ est presque certain :
+$$ \mathbb{P}(\limsup A_n) = 1 $$
+Ainsi, avec une probabilité de 1, la distance entre $P_n$ et $P_0$ sera inférieure à $1/n$ pour une infinité d'indices $n$.
+
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{Travaux Pratiques 1 : Simulation du Paradoxe du Singe Savant}
+
+Ce TP simule l'apparition d'un mot specifique lors de tirages aleatoires (Borel-Cantelli Lemme 2).
+Nous verifions experimentalement que le mot apparaitra une infinite de fois si nous laissions tourner a l'infini.
+Ici nous simulons un grand nombre de tirages pour observer la frequence d'apparition.
+
+\begin{lstlisting}
+import random
+
+def simulate_monkey(target_word, num_trials):
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    word_length = len(target_word)
+    success_count = 0
+
+    for _ in range(num_trials):
+        # On genere une chaine aleatoire de la taille du mot
+        trial_word = "".join(random.choice(alphabet) for _ in range(word_length))
+        if trial_word == target_word:
+            success_count += 1
+
+    return success_count
+
+if __name__ == "__main__":
+    # Test avec un mot tres court pour que la probabilite soit non nulle en temps de calcul
+    target = "AB"
+    trials = 100000
+    prob_theorique = (1 / 26) ** len(target)
+
+    successes = simulate_monkey(target, trials)
+    print("Probabilite theorique :", prob_theorique)
+    print("Frequence observee :", successes / trials)
+    assert successes > 0, "Avec 100000 essais, on devrait observer au moins un succes pour AB."
+\end{lstlisting}
+
+
+\subsection*{Travaux Pratiques 2 : Verification numerique du Premier Lemme (Serie convergente)}
+
+Nous allons simuler une suite d'evenements dont la somme des probabilites converge.
+Le theoreme dit que presques surement, seul un nombre fini d'evenements se realisent.
+
+\begin{lstlisting}
+import random
+
+def simulate_first_lemma(max_n):
+    events_occurred = []
+    # On simule A_n avec probabilite 1/n^2
+    for n in range(1, max_n + 1):
+        prob = 1.0 / (n ** 2)
+        # Random renvoie un float dans [0.0, 1.0)
+        if random.random() < prob:
+            events_occurred.append(n)
+    return events_occurred
+
+if __name__ == "__main__":
+    max_steps = 10000
+    occurrences = simulate_first_lemma(max_steps)
+
+    print("Indices ou l'evenement s'est produit :", occurrences)
+    print("Nombre total de realisations :", len(occurrences))
+
+    # La somme de la serie est pi^2 / 6 ~ 1.64.
+    # L'esperance du nombre de realisations est d'environ 1.64.
+    # Le nombre d'evenements doit donc etre petit.
+    assert len(occurrences) < 50, "Le nombre d'occurrences devrait etre tres petit grace a la convergence de la serie."
+\end{lstlisting}
+
+
+\subsection*{Travaux Pratiques 3 : Verification numerique du Second Lemme (Serie divergente)}
+
+Nous allons simuler une suite d'evenements dont la somme des probabilites diverge (ex: proba 1/n).
+Le theoreme indique que presque surement, un nombre infini d'evenements se realiseront.
+Nous allons verifier que le nombre d'occurrences grandit avec n (comme ln(n)).
+
+\begin{lstlisting}
+import random
+import math
+
+def simulate_second_lemma(max_n):
+    count = 0
+    # On simule A_n avec probabilite 1/n
+    for n in range(1, max_n + 1):
+        prob = 1.0 / n
+        if random.random() < prob:
+            count += 1
+    return count
+
+if __name__ == "__main__":
+    max_steps = 100000
+    occurrences = simulate_second_lemma(max_steps)
+
+    expected_occurrences = sum(1.0 / n for n in range(1, max_steps + 1))
+
+    print("Nombre total de realisations observees :", occurrences)
+    print("Esperance theorique (Somme de 1/n) :", expected_occurrences)
+
+    # On verifie que le nombre d'occurrences est proche de l'esperance
+    diff = abs(occurrences - expected_occurrences)
+    assert diff < expected_occurrences * 0.5, "La valeur observee s'ecarte trop de la theorie."
+\end{lstlisting}
+
+
+\subsection*{Travaux Pratiques 4 : Application a la decroissance stochastique}
+
+En algorithmique stochastique, si une suite d'erreur $Y_n$ satisfait $P(|Y_n| > \epsilon) \le \exp(-n \epsilon)$,
+alors $Y_n$ converge vers 0. Simulons un processus generant des erreurs avec cette borne et verifions le max.
+
+\begin{lstlisting}
+import random
+import math
+
+def generate_errors(n_max, epsilon):
+    # Generons des erreurs qui respectent la borne
+    # P(E_n > epsilon) = exp(-n * epsilon)
+    # E_n = -ln(U) / n pour avoir une loi exponentielle
+    errors = []
+    for n in range(1, n_max + 1):
+        u = random.random()
+        # Eviter log(0)
+        u = max(u, 1e-10)
+        e_n = -math.log(u) / n
+        errors.append(e_n)
+    return errors
+
+if __name__ == "__main__":
+    epsilon = 0.1
+    n_max = 1000
+    errors = generate_errors(n_max, epsilon)
+
+    # On compte le nombre de fois ou l'erreur depasse epsilon
+    count_exceed = sum(1 for e in errors if e > epsilon)
+
+    print(f"Nombre de depassements du seuil {epsilon} : {count_exceed}")
+
+    # Par Borel-Cantelli, ce nombre doit etre fini (petit ici)
+    assert count_exceed < 100, "Le nombre de depassements est trop grand par rapport a la theorie."
+\end{lstlisting}
+
+
+\subsection*{Travaux Pratiques 5 : Contre-exemple sans independance (Loi Uniforme)}
+
+Borel-Cantelli 2 requiert l'independance.
+Nous simulons ici $$P(A_n) = 1/n$$ mais de maniere dependante : on tire U dans [0, 1] une seule fois.
+$A_n$ est l'evenement {U <= 1/n}. Tous les evenements dependent du meme U.
+La somme diverge, mais on verifie que limsup $A_n$ ne se produit pas infiniment souvent pour U > 0.
+
+\begin{lstlisting}
+import random
+
+def simulate_dependent_events(num_trials, max_n):
+    # Compte combien de fois l'evenement est realise a l'infini (ou max_n)
+    count_infinite = 0
+
+    for _ in range(num_trials):
+        u = random.random()
+        # Si U <= 1/max_n, ca veut dire qu'il est dans tous les A_n jusqu'a max_n
+        if u <= 1.0 / max_n:
+            count_infinite += 1
+
+    return count_infinite
+
+if __name__ == "__main__":
+    trials = 100000
+    max_steps = 10000
+
+    infinite_occurrences = simulate_dependent_events(trials, max_steps)
+
+    print(f"Sur {trials} echantillons de U, le nombre de cas verifiant U <= 1/{max_steps} est : {infinite_occurrences}")
+
+    # La theorie dit P(limsup A_n) = 0. Donc pour U > 0 il n'y en a qu'un nombre fini.
+    # U = 0 a probabilite 0.
+    prob_observee = infinite_occurrences / trials
+    print("Probabilite observee d'appartenir a A_max_steps :", prob_observee)
+
+    assert prob_observee < 0.01, "La probabilite observee devrait etre tres proche de 0."
+\end{lstlisting}
+
+
+
+\end{document}

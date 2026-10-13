@@ -189,5 +189,5 @@ Montrez rigoureusement que si l'on dispose d'un $\frac{\epsilon}{4}$-recouvremen
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 133 (Modele PAC)]], [[Jalon 91 (Inegalites de concentration)]], [[Jalon 89 (Lemmes de Borel-Cantelli)]]
+- **Concepts Précédents requis :** [[Jalon 133 (Modele PAC)]], [[Jalon 91 (Inegalites de concentration)]], [[Jalon-89.md|Jalon 89 (Lemmes de Borel-Cantelli)]]
 - **Concepts Futurs dépendants :** [[Jalon 135 (Complexite de Rademacher)]], [[Jalon 136 (Theorie de Vapnik-Chervonenkis)]]
