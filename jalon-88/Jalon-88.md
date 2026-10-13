@@ -7,7 +7,7 @@ tags:
   - math/probabilites
   - ia/fondations
 prev: "[[Jalon 87 (Intégration des variables aléatoires).md]]"
-next: "[[Jalon 89 (Lemmes de Borel-Cantelli).md]]"
+next: "[[Jalon-89.md]]"
 ---
 # Jalon 88 : Indépendance d'événements et de variables aléatoires
 

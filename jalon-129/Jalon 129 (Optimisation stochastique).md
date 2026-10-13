@@ -200,5 +200,5 @@ Le taux global est donc en $\mathcal{O}\left( \frac{\ln(t)}{t} \right)$.
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 128 (Flots de gradient)]], [[Jalon 121 (Ensembles convexes)]], [[Jalon 89 (Lemmes de Borel-Cantelli)]]
+- **Concepts Précédents requis :** [[Jalon 128 (Flots de gradient)]], [[Jalon 121 (Ensembles convexes)]], [[Jalon-89.md|Jalon 89 (Lemmes de Borel-Cantelli)]]
 - **Concepts Futurs dépendants :** [[Jalon 130 (Régularisation implicite de la descente de gradient dans les modèles sur-paramétrés.)]], [[Jalon 131 (Algorithmes d'optimisation de second ordre en grande dimension)]]

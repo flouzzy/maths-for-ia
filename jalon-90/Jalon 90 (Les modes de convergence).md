@@ -6,7 +6,7 @@ trimester: 8
 tags:
   - math/probabilites
   - ia/asymptotique
-prev: "[[Jalon 89 (Lemmes de Borel-Cantelli).md]]"
+prev: "[[Jalon-89.md]]"
 next: "[[Jalon 91 (Inégalités de concentration).md]]"
 ---
 
@@ -94,5 +94,5 @@ C'est le même argument que pour le théorème de Riesz-Fischer (Jalon 75). On c
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 87 (Intégration et Espérance mathématique).md]], [[Jalon 89 (Lemmes de Borel-Cantelli).md]]
+- **Concepts Précédents requis :** [[Jalon 87 (Intégration et Espérance mathématique).md]], [[Jalon-89.md]]
 - **Concepts Futurs dépendants :** [[Jalon 92 (Démonstration rigoureuse de la loi forte des grands nombres.).md]], [[Jalon 94 (Démonstration du théorème central limite).md]]
