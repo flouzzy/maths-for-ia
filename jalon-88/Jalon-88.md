@@ -7,210 +7,209 @@ tags:
   - math/probabilites
   - ia/fondations
 prev: "[[Jalon 87 (Intégration des variables aléatoires).md]]"
-next: "[[Jalon-89.md]]"
+next: "[[Jalon 89 (Lemmes de Borel-Cantelli).md]]"
 ---
+
 # Jalon 88 : Indépendance d'événements et de variables aléatoires
 
-## 1. Genèse et Intuition Physique
+## 1. Introduction à l'Indépendance Stochastique
 
-L'indépendance est le pilier central sur lequel repose toute la théorie des probabilités et la statistique moderne. Historiquement, les premiers mathématiciens comme Blaise Pascal et Pierre de Fermat (vers 1654), lors de leur correspondance sur le problème des partis, manipulaient déjà de manière implicite l'indépendance des lancers de dés successifs. Plus tard, au début du XXe siècle, Andrey Kolmogorov a formalisé ce concept de manière rigoureuse dans son système axiomatique.
+L'idée d'indépendance trouve ses racines dans les premiers travaux sur les jeux de hasard, formalisés par Pascal, Fermat, et plus tard par Bernoulli, De Moivre, et Laplace. Historiquement, l'indépendance traduit une réalité physique fondamentale : l'absence de causalité ou d'influence mutuelle entre deux expériences distinctes. Si deux dés sont lancés simultanément à des kilomètres de distance, le résultat du premier n'a matériellement aucune influence sur le résultat du second.
 
-Le sens profond de l'indépendance est l'absence d'information mutuelle. Si deux expériences physiques sont indépendantes, observer le résultat de la première ne modifie absolument pas notre prédiction quant au résultat de la seconde.
+La formalisation moderne de l'indépendance s'intègre naturellement dans l'axiomatique de Kolmogorov (1933). Dans ce cadre de théorie de la mesure, l'indépendance n'est plus seulement une intuition physique, mais une propriété purement algébrique sur la mesure de probabilité des intersections d'ensembles. L'indépendance permet de construire des modèles probabilistes complexes par composition d'expériences simples, justifiant des résultats fondamentaux tels que la Loi des Grands Nombres et le Théorème Central Limite. C'est l'outil mathématique par excellence pour lutter contre la "malédiction de la dimensionnalité", en réduisant l'étude de l'espace global à ses composantes marginales.
 
-En physique statistique, l'indépendance microscopique (les particules d'un gaz parfait n'interagissent pas) donne naissance à des lois macroscopiques déterministes (thermodynamique). Géométriquement, l'indépendance se traduit par l'orthogonalité des variables dans des espaces de Hilbert appropriés (pour des variables centrées).
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  % Univers
+  \draw[thick] (0,0) rectangle (8,5);
+  \node at (0.3,4.7) {$\Omega$};
 
-## 2. Définitions, Théorèmes et Exemples
+  % Event B
+  \draw[thick, fill=blue!10] (2,2.5) circle (1.5);
+  \node at (2,2.5) {$B$};
 
-### A. Indépendance de deux événements
+  % Event A
+  \draw[thick, fill=red!10, fill opacity=0.7] (5,2.5) circle (1.5);
+  \node at (5,2.5) {$A$};
 
-**Définition 1 :** Soit $(\Omega, \mathcal{F}, \mathbb{P})$ un espace probabilisé. Deux événements $A, B \in \mathcal{F}$ sont dits **indépendants** par rapport à $\mathbb{P}$ si :
-$$ \mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B) $$
+  % Intersection empty (incompatible) vs Independent visualization
+  % Let's draw an independent visualization
+\end{tikzpicture}
+\end{center}
 
-*Exemple Concret 1 :*
-Considérons le lancer d'un dé équilibré à 6 faces. $\Omega = \{1, 2, 3, 4, 5, 6\}$, $\mathcal{F} = \mathcal{P}(\Omega)$, et $\mathbb{P}$ la probabilité uniforme.
-Soit $A$ = "Obtenir un résultat pair" = $\{2, 4, 6\}$. $\mathbb{P}(A) = 3/6 = 1/2$.
-Soit $B$ = "Obtenir un multiple de 3" = $\{3, 6\}$. $\mathbb{P}(B) = 2/6 = 1/3$.
-L'événement $A \cap B$ = "Obtenir un nombre pair et multiple de 3" = $\{6\}$.
-$\mathbb{P}(A \cap B) = 1/6$.
-Calculons le produit : $\mathbb{P}(A) \times \mathbb{P}(B) = (1/2) \times (1/3) = 1/6$.
-Donc $\mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B)$. Les événements $A$ et $B$ sont indépendants.
+Pour visualiser l'indépendance, on peut représenter l'espace des probabilités comme un carré de côté 1, où l'événement $A$ occupe une bande verticale de largeur $P(A)$ et l'événement $B$ une bande horizontale de hauteur $P(B)$. L'intersection $A \cap B$ forme un rectangle d'aire $P(A)P(B)$.
 
-*Contre-exemple 1 (Cas limite) :*
-Soit $A$ = "Obtenir un résultat pair" = $\{2, 4, 6\}$. $\mathbb{P}(A) = 1/2$.
-Soit $C$ = "Obtenir un multiple de 2" = $\{2, 4, 6\}$. $\mathbb{P}(C) = 1/2$.
-$A \cap C = \{2, 4, 6\}$. $\mathbb{P}(A \cap C) = 1/2$.
-$\mathbb{P}(A) \times \mathbb{P}(C) = 1/4 \neq 1/2$. Les événements ne sont pas indépendants.
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \draw[thick] (0,0) rectangle (4,4);
+  \node at (-0.3, 4.3) {$\Omega$};
 
-### B. Indépendance d'une famille d'événements
+  % A (vertical band)
+  \draw[thick, fill=red!20] (1,0) rectangle (2.5,4);
+  \node at (1.75, 4.3) {$A$};
 
-L'indépendance deux à deux n'implique pas l'indépendance mutuelle d'une collection plus grande.
+  % B (horizontal band)
+  \draw[thick, fill=blue!20, opacity=0.5] (0,1) rectangle (4,3);
+  \node at (-0.3, 2) {$B$};
 
-**Définition 2 :** Une famille d'événements $(A_i)_{i \in I}$ est dite **mutuellement indépendante** si pour toute sous-famille finie $J \subset I$, on a :
-$$ \mathbb{P}\left(\bigcap_{j \in J} A_j\right) = \prod_{j \in J} \mathbb{P}(A_j) $$
+  % Intersection
+  \node at (1.75, 2) {$A \cap B$};
 
-*Exemple Concret 2 : (Indépendance 2 à 2 vs Mutuelle)*
-On lance deux pièces de monnaie équilibrées de manière indépendante. $\Omega = \{PP, PF, FP, FF\}$ avec probabilité $1/4$ pour chaque événement élémentaire.
-Soit $A$ : "La 1ère pièce fait Pile" = $\{PP, PF\}$, $\mathbb{P}(A) = 1/2$.
-Soit $B$ : "La 2ème pièce fait Pile" = $\{PP, FP\}$, $\mathbb{P}(B) = 1/2$.
-Soit $C$ : "Les deux pièces donnent le même résultat" = $\{PP, FF\}$, $\mathbb{P}(C) = 1/2$.
+  % Labels
+  \node at (1.75, -0.3) {$P(A)$};
+  \node at (4.6, 2) {$P(B)$};
+\end{tikzpicture}
+\end{center}
+
+## 2. Définitions, Théorèmes & Exemples
+
+Soit $(\Omega, \mathcal{F}, P)$ un espace probabilisé.
+
+### A. Indépendance d'Événements
+
+> **Définition 1 : Indépendance de deux événements**
+> Deux événements $A, B \in \mathcal{F}$ sont dits indépendants (pour la probabilité $P$) si :
+> $$P(A \cap B) = P(A)P(B)$$
+
+Si $P(B) > 0$, l'indépendance équivaut à affirmer que la probabilité conditionnelle $P(A|B) = \frac{P(A \cap B)}{P(B)}$ est égale à $P(A)$. Le fait que $B$ soit réalisé ne modifie pas la probabilité de réalisation de $A$.
+
+**Exemple Concret 1 (Tirage de cartes) :**
+On tire une carte au hasard dans un jeu de 52 cartes.
+- $A$ : "La carte tirée est un As" $\implies P(A) = \frac{4}{52} = \frac{1}{13}$
+- $B$ : "La carte tirée est un Cœur" $\implies P(B) = \frac{13}{52} = \frac{1}{4}$
+- $A \cap B$ : "La carte tirée est l'As de Cœur" $\implies P(A \cap B) = \frac{1}{52}$
+On vérifie que $P(A)P(B) = \frac{1}{13} \times \frac{1}{4} = \frac{1}{52} = P(A \cap B)$.
+Les événements $A$ et $B$ sont indépendants. La proportion d'As parmi les cœurs est la même que la proportion d'As dans le jeu entier.
+
+**Exemple Concret 2 (Indépendance vs Incompatibilité) :**
+Deux événements $A$ et $B$ incompatibles (disjoints, $A \cap B = \emptyset$) et de probabilités non nulles ne sont *jamais* indépendants. En effet, $P(A \cap B) = 0$, mais $P(A)P(B) > 0$. Si $A$ se réalise, on a la certitude que $B$ ne s'est pas réalisé. Ils sont donc fortement dépendants.
+
+> **Définition 2 : Mutuelle indépendance**
+> Une famille d'événements $(A_i)_{i \in I}$ est mutuellement indépendante si pour toute sous-famille finie $J \subset I$ :
+> $$P\left( \bigcap_{j \in J} A_j \right) = \prod_{j \in J} P(A_j)$$
+
+**Exemple Concret 3 (Indépendance deux à deux $\neq$ mutuelle indépendance) :**
+On lance deux pièces équilibrées indépendantes. $\Omega = \{(P,P), (P,F), (F,P), (F,F)\}$. Chaque issue a une probabilité de $1/4$.
+- $A_1$ : "La première pièce donne Face" $\implies P(A_1) = 1/2$.
+- $A_2$ : "La deuxième pièce donne Face" $\implies P(A_2) = 1/2$.
+- $A_3$ : "Les deux pièces donnent le même résultat" $\implies \{(P,P), (F,F)\}$, $P(A_3) = 2/4 = 1/2$.
 Vérifions l'indépendance deux à deux :
-$\mathbb{P}(A \cap B) = \mathbb{P}(\{PP\}) = 1/4 = \mathbb{P}(A)\mathbb{P}(B)$.
-$\mathbb{P}(A \cap C) = \mathbb{P}(\{PP\}) = 1/4 = \mathbb{P}(A)\mathbb{P}(C)$.
-$\mathbb{P}(B \cap C) = \mathbb{P}(\{PP\}) = 1/4 = \mathbb{P}(B)\mathbb{P}(C)$.
+$P(A_1 \cap A_2) = P(\{(F,F)\}) = 1/4 = P(A_1)P(A_2)$.
+$P(A_1 \cap A_3) = P(\{(F,F)\}) = 1/4 = P(A_1)P(A_3)$.
+$P(A_2 \cap A_3) = P(\{(F,F)\}) = 1/4 = P(A_2)P(A_3)$.
 Les événements sont indépendants deux à deux.
-Cependant, pour les trois événements en même temps :
-$\mathbb{P}(A \cap B \cap C) = \mathbb{P}(\{PP\}) = 1/4$.
-Mais $\mathbb{P}(A)\mathbb{P}(B)\mathbb{P}(C) = (1/2)^3 = 1/8 \neq 1/4$.
-La famille $\{A, B, C\}$ **n'est pas** mutuellement indépendante.
+Cependant, pour l'intersection globale : $A_1 \cap A_2 \cap A_3 = \{(F,F)\}$, donc $P(A_1 \cap A_2 \cap A_3) = 1/4$.
+Mais le produit donne $P(A_1)P(A_2)P(A_3) = 1/8 \neq 1/4$.
+La famille n'est donc *pas* mutuellement indépendante.
 
-### C. Indépendance de tribus
+### B. Indépendance de Tribus et de Variables Aléatoires
 
-**Définition 3 :** Deux tribus (ou $\sigma$-algèbres) $\mathcal{A}$ et $\mathcal{B}$, sous-tribus de $\mathcal{F}$, sont dites **indépendantes** si pour tout $A \in \mathcal{A}$ et pour tout $B \in \mathcal{B}$, les événements $A$ et $B$ sont indépendants, c'est-à-dire :
-$$ \forall A \in \mathcal{A}, \forall B \in \mathcal{B}, \mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B) $$
+> **Définition 3 : Indépendance de tribus**
+> Des tribus $\mathcal{B}_1, \ldots, \mathcal{B}_n$ incluses dans $\mathcal{F}$ sont indépendantes si pour tout choix d'événements $B_i \in \mathcal{B}_i$, la famille d'événements $(B_1, \ldots, B_n)$ est mutuellement indépendante.
 
-### D. Indépendance de variables aléatoires
+> **Définition 4 : Indépendance de variables aléatoires**
+> Des variables aléatoires $X_1, \ldots, X_n$ (à valeurs dans des espaces mesurables $(E_i, \mathcal{E}_i)$) sont indépendantes si les tribus qu'elles engendrent, $\sigma(X_i) = \{X_i^{-1}(B) \mid B \in \mathcal{E}_i\}$, sont indépendantes.
+> De façon équivalente, pour tous boréliens $B_1, \ldots, B_n$ :
+> $$P(X_1 \in B_1, \ldots, X_n \in B_n) = \prod_{i=1}^n P(X_i \in B_i)$$
 
-Rappelons que la tribu engendrée par une variable aléatoire $X$, notée $\sigma(X)$, est la plus petite tribu rendant $X$ mesurable. C'est l'information générée par $X$.
+**Exemple Concret 4 (Variables discrètes) :**
+Soit $X$ et $Y$ deux variables de loi de Bernoulli de paramètre $p$ et $q$. Elles sont indépendantes si et seulement si pour tout $x,y \in \{0,1\}$, $P(X=x, Y=y) = P(X=x)P(Y=y)$.
 
-**Définition 4 :** Deux variables aléatoires réelles $X$ et $Y$ définies sur le même espace probabilisé $(\Omega, \mathcal{F}, \mathbb{P})$ sont **indépendantes** si les tribus qu'elles engendrent, $\sigma(X)$ et $\sigma(Y)$, sont indépendantes.
-De manière équivalente, pour tout choix de boréliens $B_1, B_2 \in \mathcal{B}(\mathbb{R})$ :
-$$ \mathbb{P}(X \in B_1, Y \in B_2) = \mathbb{P}(X \in B_1)\mathbb{P}(Y \in B_2) $$
+**Exemple Concret 5 (Loi conjointe et produit tensoriel) :**
+L'indépendance de $X$ et $Y$ signifie que la loi du couple $(X,Y)$ est la mesure produit des lois marginales : $P_{(X,Y)} = P_X \otimes P_Y$.
+Si $X$ et $Y$ admettent des densités de probabilité respectives $f_X$ et $f_Y$, elles sont indépendantes si et seulement si la densité du couple $(X,Y)$ est donnée par le produit $f_{(X,Y)}(x,y) = f_X(x)f_Y(y)$ presque partout.
 
-*Exemple Concret 3 : (Variables indicatrices)*
-Soit $A$ et $B$ deux événements indépendants de probabilité non nulle ou un.
-Considérons les variables aléatoires $X = \mathbb{1}_A$ et $Y = \mathbb{1}_B$.
-Calculons la loi du couple $(X,Y)$. Les valeurs possibles sont $\{0,1\}^2$.
-- $\mathbb{P}(X=1, Y=1) = \mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B) = \mathbb{P}(X=1)\mathbb{P}(Y=1)$ (car $A$ et $B$ sont indépendants).
-- $\mathbb{P}(X=1, Y=0) = \mathbb{P}(A \cap B^c)$. Or $A = (A \cap B) \cup (A \cap B^c)$, union disjointe. Donc $\mathbb{P}(A) = \mathbb{P}(A \cap B) + \mathbb{P}(A \cap B^c)$. Ainsi, $\mathbb{P}(A \cap B^c) = \mathbb{P}(A) - \mathbb{P}(A)\mathbb{P}(B) = \mathbb{P}(A)(1 - \mathbb{P}(B)) = \mathbb{P}(A)\mathbb{P}(B^c) = \mathbb{P}(X=1)\mathbb{P}(Y=0)$.
-Les calculs sont analogues pour les autres cas. Les variables aléatoires indicatrices sont donc indépendantes.
+> **Théorème (Indépendance et Espérance) :**
+> Soient $X$ et $Y$ deux variables aléatoires réelles indépendantes et intégrables (ou positives). Alors le produit $XY$ est intégrable (ou d'espérance bien définie) et :
+> $$\mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y]$$
 
-**Théorème 1 (Caractérisation par la fonction de répartition) :**
-Deux variables aléatoires réelles $X$ et $Y$ sont indépendantes si et seulement si pour tout $x, y \in \mathbb{R}$ :
-$$ F_{X,Y}(x,y) = F_X(x)F_Y(y) $$
-où $F_{X,Y}(x,y) = \mathbb{P}(X \leq x, Y \leq y)$ est la fonction de répartition conjointe.
+**Exemple Concret 6 (Covariance nulle) :**
+La covariance de $X$ et $Y$ est définie par $\text{Cov}(X,Y) = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y]$. Si $X$ et $Y$ sont indépendantes, leur covariance est strictement nulle. Elles sont dites non corrélées.
 
-*Exemple Concret 4 : (Loi Exponentielle Bivariée de Gumbel)*
-Soit la fonction de répartition conjointe $F_{X,Y}(x,y) = (1-e^{-x})(1-e^{-y})$ pour $x>0, y>0$, et $0$ sinon.
-Les densités marginales s'obtiennent par limite :
-$F_X(x) = \lim_{y \to +\infty} F_{X,Y}(x,y) = 1-e^{-x}$ (pour $x>0$).
-$F_Y(y) = \lim_{x \to +\infty} F_{X,Y}(x,y) = 1-e^{-y}$ (pour $y>0$).
-On constate que $F_{X,Y}(x,y) = F_X(x)F_Y(y)$ pour tout $x,y$. Les variables $X$ et $Y$ sont donc des lois exponentielles standard indépendantes.
+**Exemple Concret 7 (Covariance nulle $\nRightarrow$ Indépendance) :**
+Soit $X$ une variable uniformément distribuée sur $\{-1, 0, 1\}$, de sorte que $P(X=-1) = P(X=0) = P(X=1) = 1/3$. Soit $Y = X^2$. $Y$ prend les valeurs $\{0, 1\}$.
+Évidemment, $X$ et $Y$ sont dépendantes (puisque $Y$ est une fonction déterministe de $X$).
+Calculons la covariance. $XY = X^3 = X$.
+$\mathbb{E}[X] = (-1) \cdot \frac{1}{3} + 0 \cdot \frac{1}{3} + 1 \cdot \frac{1}{3} = 0$.
+Ainsi, $\mathbb{E}[XY] = \mathbb{E}[X] = 0$.
+Par ailleurs, $\mathbb{E}[X]\mathbb{E}[Y] = 0 \cdot \mathbb{E}[Y] = 0$.
+Donc $\text{Cov}(X,Y) = 0$, mais les variables ne sont pas indépendantes. L'absence de corrélation linéaire ne signifie pas l'absence de dépendance.
 
-### E. Lemme des coalitions
-
-**Théorème 2 (Lemme des coalitions) :**
-Si les variables aléatoires $X_1, X_2, \dots, X_n$ sont mutuellement indépendantes, et si on partitionne l'ensemble des indices $\{1, \dots, n\}$ en sous-ensembles disjoints $I_1, I_2, \dots, I_k$, alors toute fonction mesurable $f_j$ de la famille de variables aléatoires associées à $I_j$ crée une nouvelle famille de variables aléatoires $Y_1, \dots, Y_k$ (où $Y_j = f_j((X_i)_{i \in I_j})$) qui sont mutuellement indépendantes.
-
-*Exemple Concret 5 :*
-Si $X_1, X_2, X_3, X_4$ sont 4 variables indépendantes. Alors $Y_1 = X_1 + X_2$ et $Y_2 = X_3 X_4$ sont des variables aléatoires indépendantes. La coalition des blocs disjoints maintient l'indépendance.
-
-### F. Indépendance, Espérance et Variance
-
-**Théorème 3 (Espérance du produit) :**
-Soient $X$ et $Y$ deux variables aléatoires réelles indépendantes et intégrables (c.-à-d. admettant une espérance). Alors le produit $XY$ est intégrable et on a :
-$$ \mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y] $$
-
-*Exemple Concret 6 : (Covariance nulle)*
-Soit $X$ suivant une loi Normale standard $\mathcal{N}(0,1)$, donc $\mathbb{E}[X]=0$.
-Soit $Y$ suivant une loi Normale standard $\mathcal{N}(0,1)$, indépendante de $X$.
-Calculons la covariance : $\text{Cov}(X,Y) = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y]$.
-Par indépendance, $\mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y] = 0 \times 0 = 0$.
-Donc $\text{Cov}(X,Y) = 0$.
-Attention à la réciproque fausse : si $X \sim \mathcal{N}(0,1)$ et $Y = X^2$, alors $Y$ n'est absolument pas indépendante de $X$. Pourtant $\mathbb{E}[XY] = \mathbb{E}[X^3] = 0$ (moment impair d'une gaussienne centrée), et $\mathbb{E}[X]\mathbb{E}[Y] = 0 \times 1 = 0$. Donc $\text{Cov}(X,Y) = 0$, bien que $X$ et $Y$ soient fortement dépendantes. L'indépendance est donc une condition suffisante mais pas nécessaire pour une covariance nulle.
-
-**Théorème 4 (Variance de la somme - Identité de Bienaymé) :**
-Si $X$ et $Y$ sont deux variables aléatoires indépendantes et de carré intégrable, alors :
-$$ \text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y) $$
-
-*Exemple Concret 7 :*
-Soit $X_1 \sim \text{Poisson}(\lambda_1)$ et $X_2 \sim \text{Poisson}(\lambda_2)$ indépendantes.
-$\text{Var}(X_1) = \lambda_1$ et $\text{Var}(X_2) = \lambda_2$.
-$\text{Var}(X_1 + X_2) = \text{Var}(X_1) + \text{Var}(X_2) = \lambda_1 + \lambda_2$.
-(Ceci est cohérent avec le fait que $X_1 + X_2 \sim \text{Poisson}(\lambda_1 + \lambda_2)$).
-
-### G. Densités et Indépendance
-
-**Théorème 5 (Variables à densité) :**
-Soit $(X, Y)$ un couple de variables aléatoires réelles admettant une densité conjointe $f_{X,Y}(x,y)$ par rapport à la mesure de Lebesgue sur $\mathbb{R}^2$.
-Les variables $X$ et $Y$ sont indépendantes si et seulement si, presque partout (pour la mesure de Lebesgue) :
-$$ f_{X,Y}(x,y) = f_X(x) f_Y(y) $$
-où $f_X$ et $f_Y$ sont les densités marginales respectives.
-
-*Exemple Concret 8 :*
-Soit le vecteur aléatoire $(X,Y)$ de densité conjointe $f_{X,Y}(x,y) = \frac{1}{2\pi} e^{-\frac{x^2+y^2}{2}}$ sur $\mathbb{R}^2$.
-On peut écrire $f_{X,Y}(x,y) = \left( \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}} \right) \left( \frac{1}{\sqrt{2\pi}} e^{-\frac{y^2}{2}} \right) = f_X(x) f_Y(y)$.
-Les marginales $f_X(x) = \int_{\mathbb{R}} f_{X,Y}(x,y) dy = \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}}$ sont bien celles de lois Normales standards centrées réduites. Puisque la densité conjointe factorise en produit des densités marginales, $X$ et $Y$ sont indépendantes.
+> **Théorème (Lemme des coalitions) :**
+> Soit $(X_1, \ldots, X_n)$ des variables indépendantes. Soit $1 \le k < n$. Si $f$ et $g$ sont des fonctions mesurables, alors $Y = f(X_1, \ldots, X_k)$ et $Z = g(X_{k+1}, \ldots, X_n)$ sont des variables indépendantes.
 
 ## 3. Démonstrations
 
-### Démonstration du Théorème 3 : $\mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y]$ pour $X, Y$ indépendantes
+### Démonstration 1 : Indépendance et Produit des Espérances
 
-**Étape 1 : Cas des fonctions indicatrices**
-Supposons que $X = \mathbb{1}_A$ et $Y = \mathbb{1}_B$ où $A \in \mathcal{F}$ et $B \in \mathcal{F}$ sont des événements indépendants.
-La variable $XY = \mathbb{1}_A \mathbb{1}_B = \mathbb{1}_{A \cap B}$.
-Par définition de l'espérance pour les fonctions indicatrices :
-$$ \mathbb{E}[XY] = \mathbb{P}(A \cap B) $$
-Par hypothèse d'indépendance de $A$ et $B$ :
-$$ \mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B) = \mathbb{E}[\mathbb{1}_A]\mathbb{E}[\mathbb{1}_B] = \mathbb{E}[X]\mathbb{E}[Y] $$
-La relation est donc vraie pour les indicatrices d'événements indépendants.
+**Théorème :** Si $X, Y$ sont deux variables aléatoires réelles indépendantes et intégrables, alors $XY$ est intégrable et $\mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y]$.
 
-**Étape 2 : Cas des variables étagées positives**
-Soient $X$ et $Y$ deux variables aléatoires étagées positives et indépendantes.
-On peut les écrire sous la forme normale :
-$$ X = \sum_{i=1}^n x_i \mathbb{1}_{A_i} $$
-$$ Y = \sum_{j=1}^m y_j \mathbb{1}_{B_j} $$
-où les ensembles $(A_i)_{1 \leq i \leq n}$ forment une partition de $\Omega$, de même pour $(B_j)_{1 \leq j \leq m}$, et par indépendance de $X$ et $Y$, pour tous $i, j$, les événements $A_i = \{X = x_i\}$ et $B_j = \{Y = y_j\}$ sont indépendants.
-Le produit s'écrit :
-$$ XY = \left(\sum_{i=1}^n x_i \mathbb{1}_{A_i}\right) \left(\sum_{j=1}^m y_j \mathbb{1}_{B_j}\right) = \sum_{i=1}^n \sum_{j=1}^m x_i y_j \mathbb{1}_{A_i} \mathbb{1}_{B_j} = \sum_{i=1}^n \sum_{j=1}^m x_i y_j \mathbb{1}_{A_i \cap B_j} $$
+**Preuve pas à pas :**
+Nous allons démontrer le théorème par étapes, en utilisant la construction standard de l'intégrale de Lebesgue : d'abord pour les indicatrices, puis les fonctions étagées, puis les fonctions mesurables positives, et enfin pour les fonctions intégrables.
+
+**Étape 1 : Cas des indicatrices**
+Supposons que $X = \mathbf{1}_A$ et $Y = \mathbf{1}_B$ avec $A$ et $B$ deux événements indépendants (puisque $X$ et $Y$ sont indépendantes).
+Le produit $XY = \mathbf{1}_A \mathbf{1}_B = \mathbf{1}_{A \cap B}$.
+L'espérance d'une indicatrice est la probabilité de l'événement associé :
+$$\mathbb{E}[XY] = \mathbb{E}[\mathbf{1}_{A \cap B}] = P(A \cap B)$$
+Par indépendance de $A$ et $B$ :
+$$P(A \cap B) = P(A)P(B) = \mathbb{E}[\mathbf{1}_A]\mathbb{E}[\mathbf{1}_B] = \mathbb{E}[X]\mathbb{E}[Y]$$
+Le résultat est établi pour les fonctions indicatrices.
+
+**Étape 2 : Cas des fonctions étagées positives**
+Soient $X$ et $Y$ deux variables étagées positives indépendantes. Elles s'écrivent $X = \sum_{i=1}^n x_i \mathbf{1}_{A_i}$ et $Y = \sum_{j=1}^m y_j \mathbf{1}_{B_j}$, où $(A_i)$ et $(B_j)$ sont des partitions de $\Omega$ formées d'événements respectivement générés par $X$ et $Y$. Comme $X$ et $Y$ sont indépendantes, pour tous $i, j$, les événements $A_i$ et $B_j$ sont indépendants.
+Le produit s'écrit $XY = \sum_{i=1}^n \sum_{j=1}^m x_i y_j \mathbf{1}_{A_i \cap B_j}$.
 Par linéarité de l'espérance :
-$$ \mathbb{E}[XY] = \sum_{i=1}^n \sum_{j=1}^m x_i y_j \mathbb{E}[\mathbb{1}_{A_i \cap B_j}] $$
-En utilisant le résultat de l'étape 1 :
-$$ \mathbb{E}[XY] = \sum_{i=1}^n \sum_{j=1}^m x_i y_j \mathbb{E}[\mathbb{1}_{A_i}] \mathbb{E}[\mathbb{1}_{B_j}] $$
-On factorise :
-$$ \mathbb{E}[XY] = \left( \sum_{i=1}^n x_i \mathbb{E}[\mathbb{1}_{A_i}] \right) \left( \sum_{j=1}^m y_j \mathbb{E}[\mathbb{1}_{B_j}] \right) = \mathbb{E}[X]\mathbb{E}[Y] $$
-La relation est donc vraie pour les variables étagées positives.
+$$\mathbb{E}[XY] = \sum_{i=1}^n \sum_{j=1}^m x_i y_j \mathbb{E}[\mathbf{1}_{A_i \cap B_j}] = \sum_{i=1}^n \sum_{j=1}^m x_i y_j P(A_i \cap B_j)$$
+Par indépendance :
+$$\mathbb{E}[XY] = \sum_{i=1}^n \sum_{j=1}^m x_i y_j P(A_i)P(B_j) = \left( \sum_{i=1}^n x_i P(A_i) \right) \left( \sum_{j=1}^m y_j P(B_j) \right) = \mathbb{E}[X]\mathbb{E}[Y]$$
 
-**Étape 3 : Cas des variables aléatoires positives quelconques (par convergence monotone)**
-Soient $X, Y \geq 0$ deux variables aléatoires indépendantes.
-Il existe deux suites croissantes $(X_n)_{n \in \mathbb{N}}$ et $(Y_n)_{n \in \mathbb{N}}$ de variables étagées positives telles que :
-$X_n \uparrow X$ et $Y_n \uparrow Y$ presque sûrement.
-Pour chaque $n$, $X_n$ est une fonction mesurable de $X$, et $Y_n$ de $Y$. D'après le lemme des coalitions, $X_n$ et $Y_n$ sont indépendantes pour chaque $n$.
-D'après l'étape 2 : $\mathbb{E}[X_n Y_n] = \mathbb{E}[X_n]\mathbb{E}[Y_n]$.
-La suite $(X_n Y_n)_{n \in \mathbb{N}}$ est une suite croissante de variables positives qui converge presque sûrement vers $XY$.
-D'après le théorème de convergence monotone de Beppo-Levi (Jalon 67) :
-$$ \lim_{n \to \infty} \mathbb{E}[X_n Y_n] = \mathbb{E}[XY] $$
-D'autre part, en appliquant à nouveau le TCM aux suites $(X_n)$ et $(Y_n)$ :
-$$ \lim_{n \to \infty} \mathbb{E}[X_n] = \mathbb{E}[X] $$
-$$ \lim_{n \to \infty} \mathbb{E}[Y_n] = \mathbb{E}[Y] $$
-En passant à la limite dans $\mathbb{E}[X_n Y_n] = \mathbb{E}[X_n]\mathbb{E}[Y_n]$, on obtient :
-$$ \mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y] $$
+**Étape 3 : Cas des fonctions mesurables positives**
+Soient $X, Y \ge 0$ indépendantes. D'après le théorème d'approximation, il existe des suites croissantes de variables étagées positives $(X_n)_{n \in \mathbb{N}}$ et $(Y_n)_{n \in \mathbb{N}}$ convergeant respectivement vers $X$ et $Y$ presque sûrement.
+Pour tout $n$, $X_n$ et $Y_n$ sont indépendantes, donc $\mathbb{E}[X_n Y_n] = \mathbb{E}[X_n]\mathbb{E}[Y_n]$.
+Le produit $X_n Y_n$ est une suite croissante de variables positives convergeant vers $XY$.
+D'après le Théorème de Convergence Monotone (Beppo-Levi) appliqué aux trois suites :
+$$\mathbb{E}[XY] = \lim_{n \to \infty} \mathbb{E}[X_n Y_n] = \lim_{n \to \infty} \mathbb{E}[X_n]\mathbb{E}[Y_n]$$
+Les limites des produits étant le produit des limites (lorsque celles-ci existent dans $\mathbb{R} \cup \{+\infty\}$) :
+$$\mathbb{E}[XY] = \left(\lim_{n \to \infty} \mathbb{E}[X_n]\right) \left(\lim_{n \to \infty} \mathbb{E}[Y_n]\right) = \mathbb{E}[X]\mathbb{E}[Y]$$
 
-**Étape 4 : Cas général (décomposition en parties positive et négative)**
-Pour $X$ et $Y$ intégrables et indépendantes de signe quelconque.
-On décompose $X = X^+ - X^-$ et $Y = Y^+ - Y^-$, où $X^+, X^-, Y^+, Y^-$ sont positives et intégrables.
-Par le lemme des coalitions, la famille $\{X^+, X^-\}$ est indépendante de la famille $\{Y^+, Y^-\}$.
-Le produit s'écrit $XY = (X^+ - X^-)(Y^+ - Y^-) = X^+ Y^+ - X^+ Y^- - X^- Y^+ + X^- Y^-$.
-Par linéarité de l'espérance (valable pour des sommes de variables intégrables) :
-$$ \mathbb{E}[XY] = \mathbb{E}[X^+ Y^+] - \mathbb{E}[X^+ Y^-] - \mathbb{E}[X^- Y^+] + \mathbb{E}[X^- Y^-] $$
-Puisque chaque terme est le produit de deux variables positives indépendantes, on applique l'étape 3 :
-$$ \mathbb{E}[XY] = \mathbb{E}[X^+]\mathbb{E}[Y^+] - \mathbb{E}[X^+]\mathbb{E}[Y^-] - \mathbb{E}[X^-]\mathbb{E}[Y^+] + \mathbb{E}[X^-]\mathbb{E}[Y^-] $$
-On factorise :
-$$ \mathbb{E}[XY] = (\mathbb{E}[X^+] - \mathbb{E}[X^-])(\mathbb{E}[Y^+] - \mathbb{E}[Y^-]) = \mathbb{E}[X]\mathbb{E}[Y] $$
-La démonstration est ainsi complète et rigoureuse.
+**Étape 4 : Cas général (variables intégrables)**
+Soient $X$ et $Y$ intégrables et indépendantes. On les décompose en leurs parties positives et négatives : $X = X^+ - X^-$ et $Y = Y^+ - Y^-$.
+L'indépendance de $X$ et $Y$ implique (par le lemme des coalitions) l'indépendance des paires de variables positives $(X^+, Y^+)$, $(X^+, Y^-)$, $(X^-, Y^+)$, $(X^-, Y^-)$.
+De plus :
+$$|XY| = |X||Y| = (X^+ + X^-)(Y^+ + Y^-)$$
+D'après l'étape 3, l'espérance de $|XY|$ est :
+$$\mathbb{E}[|XY|] = \mathbb{E}[|X|]\mathbb{E}[|Y|]$$
+Comme $X$ et $Y$ sont intégrables, $\mathbb{E}[|X|] < \infty$ et $\mathbb{E}[|Y|] < \infty$, ce qui prouve que $XY$ est intégrable (l'espérance de la valeur absolue est finie).
+Enfin, par développement et linéarité de l'espérance :
+$$\mathbb{E}[XY] = \mathbb{E}[(X^+ - X^-)(Y^+ - Y^-)] = \mathbb{E}[X^+Y^+] - \mathbb{E}[X^+Y^-] - \mathbb{E}[X^-Y^+] + \mathbb{E}[X^-Y^-]$$
+Par l'étape 3 sur les parties positives indépendantes :
+$$\mathbb{E}[XY] = \mathbb{E}[X^+]\mathbb{E}[Y^+] - \mathbb{E}[X^+]\mathbb{E}[Y^-] - \mathbb{E}[X^-]\mathbb{E}[Y^+] + \mathbb{E}[X^-]\mathbb{E}[Y^-]$$
+Factorisons :
+$$\mathbb{E}[XY] = (\mathbb{E}[X^+] - \mathbb{E}[X^-])(\mathbb{E}[Y^+] - \mathbb{E}[Y^-]) = \mathbb{E}[X]\mathbb{E}[Y]$$
+La preuve est exhaustive et complète.
 
-## 4. Applications en Physique, Logique et Intelligence Artificielle
+## 4. Applications en Mathématiques, Physique et Intelligence Artificielle
 
-### En Physique : Mécanique Statistique et Gaz Idéal
-L'hypothèse d'indépendance est au cœur de la distribution de Maxwell-Boltzmann décrivant un gaz idéal. Si l'on suppose qu'une particule est dans un état non influencé par les autres, l'entropie globale du système $S = k_B \ln(W)$ repose sur le fait que le nombre de micro-états $W$ d'un système composite constitué de sous-systèmes indépendants est le produit des micro-états des sous-systèmes, transformant ainsi la probabilité jointe (produit) en une grandeur thermodynamique additive (la somme, via le logarithme).
+### A. Modélisation en Mécanique Statistique
 
-### En Logique et Théorie de l'Information
-Dans la théorie de l'information de Claude Shannon, la quantité d'information apportée par l'observation simultanée de deux événements indépendants $A$ et $B$ est strictement la somme des informations individuelles. En posant $I(A) = - \log_2 \mathbb{P}(A)$, l'indépendance $\mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B)$ entraîne immédiatement $I(A \cap B) = I(A) + I(B)$. C'est le socle du codage source, car si les symboles générés par une source sont indépendants, aucun taux de compression n'est possible en exploitant les corrélations entre les symboles.
+En physique statistique, l'indépendance est au cœur de l'hypothèse du chaos moléculaire (Stosszahlansatz) introduite par Boltzmann pour dériver l'équation d'évolution d'un gaz. Elle postule que, avant une collision, les vitesses des deux particules sont des variables aléatoires indépendantes. C'est cette hypothèse d'indépendance microscopique qui permet de justifier l'émergence d'un comportement irréversible macroscopique (le second principe de la thermodynamique et le théorème H de Boltzmann) à partir de dynamiques microscopiques réversibles, en factorisant les fonctions de distribution des paires de particules.
 
-### En Intelligence Artificielle : Le paradigme I.I.D. et le classifieur Naive Bayes
-L'ensemble de l'apprentissage statistique repose sur l'hypothèse que les données d'entraînement composant notre dataset $\mathcal{D} = \{(x_i, y_i)\}_{i=1}^N$ sont tirées de manière **Indépendante et Identiquement Distribuée (i.i.d.)** depuis la loi jointe réelle $\mathcal{P}_{X,Y}$. Cette hypothèse d'indépendance permet à la fonction de risque empirique $\hat{R}(\theta) = \frac{1}{N} \sum_{i=1}^N \mathcal{L}(y_i, f_\theta(x_i))$ d'être un estimateur sans biais du risque véritable, convergent grâce à la loi des grands nombres.
+### B. Hypothèse I.I.D. en Apprentissage Automatique
 
-Un cas d'application explicite est le **Classifieur Naive Bayes**. Pour estimer $\mathbb{P}(Y | X_1, \dots, X_p)$ en grande dimension $p$, on utilise la règle de Bayes : $\mathbb{P}(Y | X) = \frac{\mathbb{P}(X | Y)\mathbb{P}(Y)}{\mathbb{P}(X)}$.
-L'astuce "naïve" consiste à poser l'hypothèse très forte que, *conditionnellement à la classe $Y$*, les caractéristiques $X_1, \dots, X_p$ sont mutuellement indépendantes.
-Ainsi, la vraisemblance conjointe complexe se factorise de manière triviale :
-$$ \mathbb{P}(X_1, \dots, X_p | Y) = \prod_{j=1}^p \mathbb{P}(X_j | Y) $$
-Cette factorisation grâce à l'indépendance transforme un problème d'estimation d'une densité de dimension $p$ (sujet au fléau de la dimension nécessitant des données exponentielles en taille) en $p$ problèmes unidimensionnels distincts, ce qui rend l'algorithme extrêmement robuste et rapide, justifiant son utilisation massive, notamment dans les filtres anti-spam.
+Le paradigme dominant en machine learning repose sur l'hypothèse I.I.D. (Indépendantes et Identiquement Distribuées). Un jeu de données d'apprentissage $\mathcal{D} = \{ (x_1, y_1), \ldots, (x_N, y_N) \}$ est vu comme une suite de réalisations de variables aléatoires indépendantes, toutes issues de la même distribution conjointe inconnue $P(X,Y)$.
+L'indépendance est ce qui permet de définir la fonction de coût empirique et d'appliquer la Loi Forte des Grands Nombres. La fonction de vraisemblance, $L(\theta) = P(x_1, \ldots, x_N \mid \theta)$, se factorise grâce à l'indépendance :
+$$L(\theta) = \prod_{i=1}^N P(x_i \mid \theta)$$
+Le passage au logarithme (log-vraisemblance) transforme ce produit en somme, simplifiant drastiquement les calculs de gradients lors de la descente de gradient, puisque le gradient de la somme est la somme des gradients calculés sur chaque échantillon.
+
+### C. Dropout dans les Réseaux de Neurones
+
+Le Dropout est une technique de régularisation inventée pour réduire le surapprentissage dans les réseaux de neurones profonds. L'algorithme annule de manière aléatoire et *indépendante* l'activation de certains neurones pendant l'entraînement (par exemple avec une probabilité $p=0.5$). Cette indépendance forcée empêche les neurones de co-s'adapter (co-adaptation). Chaque sous-réseau échantillonné étant indépendant des autres itérations, le Dropout agit implicitement comme une méthode d'ensemble massique sur un très grand nombre de modèles exponentiellement différents.
+
+### D. Algorithme de Naïve Bayes
+
+Le classifieur de Bayes Naïf tire son nom de l'hypothèse (souvent "naïve" en pratique) que les différentes caractéristiques d'observation $X_1, \ldots, X_d$ sont *conditionnellement indépendantes* sachant la classe $Y$.
+La règle de Bayes donne $P(Y=k \mid X_1, \ldots, X_d) \propto P(Y=k)P(X_1, \ldots, X_d \mid Y=k)$.
+Par l'hypothèse d'indépendance conditionnelle, le terme complexe factorise :
+$$P(X_1, \ldots, X_d \mid Y=k) = \prod_{j=1}^d P(X_j \mid Y=k)$$
+Cela réduit un problème d'estimation d'une densité de dimension $d$ (souvent intraitable à cause du manque de données) à $d$ problèmes unidimensionnels triviaux à résoudre séparément.

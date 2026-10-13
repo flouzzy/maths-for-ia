@@ -1,30 +1,28 @@
-# Somme de Poissons indépendantes
+# Exercice 9
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
+\subsection*{Exercice 9 : Indépendance conditionnelle \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
 
-Soient $X \sim \mathcal{P}(\lambda)$ et $Y \sim \mathcal{P}(\mu)$ deux variables aléatoires discrètes suivant des lois de Poisson. On suppose que $X$ et $Y$ sont indépendantes.
-Démontrer formellement, par le calcul de convolution discrète, que la variable aléatoire $S = X + Y$ suit une loi de Poisson dont on déterminera le paramètre.
+**Énoncé :**
+Deux événements $A$ et $B$ sont dits conditionnellement indépendants sachant $C$ (avec $P(C)>0$) si $P(A \cap B \mid C) = P(A \mid C) P(B \mid C)$.
+Montrer par un contre-exemple que l'indépendance conditionnelle sachant $C$ n'implique pas l'indépendance (inconditionnelle) de $A$ et $B$.
 
-### Correction
-
-Soient $X$ et $Y$ deux variables indépendantes telles que $X \sim \mathcal{P}(\lambda)$ et $Y \sim \mathcal{P}(\mu)$.
-Rappelons la probabilité d'une loi de Poisson : $\mathbb{P}(X=k) = e^{-\lambda} \frac{\lambda^k}{k!}$ pour $k \in \mathbb{N}$.
-La variable somme $S = X + Y$ prend ses valeurs dans $\mathbb{N}$. Soit $n \in \mathbb{N}$.
-L'événement $\{S = n\}$ peut s'écrire comme l'union disjointe de toutes les configurations de $X$ et $Y$ dont la somme vaut $n$ :
-$\{S = n\} = \bigcup_{k=0}^n \left( \{X = k\} \cap \{Y = n - k\} \right)$
-Par axiome d'additivité dénombrable sur les ensembles disjoints :
-$\mathbb{P}(S = n) = \sum_{k=0}^n \mathbb{P}(X = k \cap Y = n - k)$
-On applique l'hypothèse d'indépendance de $X$ et $Y$ :
-$\mathbb{P}(S = n) = \sum_{k=0}^n \mathbb{P}(X = k)\mathbb{P}(Y = n - k)$
-On substitue maintenant les expressions analytiques des lois de Poisson :
-$\mathbb{P}(S = n) = \sum_{k=0}^n \left( e^{-\lambda} \frac{\lambda^k}{k!} \right) \left( e^{-\mu} \frac{\mu^{n-k}}{(n-k)!} \right)$
-On extrait les facteurs exponentiels qui ne dépendent pas de l'indice de sommation $k$ :
-$\mathbb{P}(S = n) = e^{-(\lambda + \mu)} \sum_{k=0}^n \frac{\lambda^k \mu^{n-k}}{k!(n-k)!}$
-Afin de faire apparaître la formule du binôme de Newton, on multiplie et on divise par la factorielle $n!$ :
-$\mathbb{P}(S = n) = e^{-(\lambda + \mu)} \frac{1}{n!} \sum_{k=0}^n \frac{n!}{k!(n-k)!} \lambda^k \mu^{n-k}$
-On identifie la définition formelle du coefficient binomial $\binom{n}{k} = \frac{n!}{k!(n-k)!}$ :
-$\mathbb{P}(S = n) = e^{-(\lambda + \mu)} \frac{1}{n!} \sum_{k=0}^n \binom{n}{k} \lambda^k \mu^{n-k}$
-On applique le théorème du binôme de Newton : $\sum_{k=0}^n \binom{n}{k} x^k y^{n-k} = (x+y)^n$ :
-$\mathbb{P}(S = n) = e^{-(\lambda + \mu)} \frac{(\lambda + \mu)^n}{n!}$
-Cette expression est très exactement la fonction de masse d'une loi de Poisson de paramètre $(\lambda + \mu)$.
-**Conclusion :** La somme de deux variables de Poisson indépendantes suit rigoureusement une loi de Poisson, $\mathcal{P}(\lambda + \mu)$.
+**Correction :**
+1. Construisons un modèle probabiliste. Considérons deux pièces de monnaie :
+   - Pièce 1 : truquée, donne Pile (P) avec probabilité $p_1 = 0.9$.
+   - Pièce 2 : truquée, donne Pile (P) avec probabilité $p_2 = 0.1$.
+2. L'expérience est la suivante : on choisit une pièce au hasard (probabilité 1/2 pour chaque), puis on lance cette *même* pièce deux fois de suite.
+3. Soit l'événement $C$ = "La pièce 1 est choisie". Donc $P(C) = 1/2$.
+   L'événement $C^c$ = "La pièce 2 est choisie". $P(C^c) = 1/2$.
+4. Soit $A$ = "Le 1er lancer donne Pile" et $B$ = "Le 2e lancer donne Pile".
+5. Sachant $C$, les deux lancers proviennent de la même pièce de probabilité 0.9. Les lancers physiques sont indépendants, donc :
+   $P(A \mid C) = 0.9$, $P(B \mid C) = 0.9$, et $P(A \cap B \mid C) = 0.9 \times 0.9 = 0.81$.
+   Donc $P(A \cap B \mid C) = P(A \mid C)P(B \mid C)$. $A$ et $B$ sont conditionnellement indépendants sachant $C$.
+   (De même sachant $C^c$ : $P(A \mid C^c)=0.1$, $P(B \mid C^c)=0.1$, $P(A \cap B \mid C^c)=0.01$, indépendance conditionnelle vérifiée).
+6. Regardons l'indépendance inconditionnelle. Par la loi des probabilités totales :
+   $P(A) = P(A \mid C)P(C) + P(A \mid C^c)P(C^c) = 0.9(0.5) + 0.1(0.5) = 0.45 + 0.05 = 0.5$.
+   $P(B) = 0.5$ de la même manière.
+   Donc $P(A)P(B) = 0.5 \times 0.5 = 0.25$.
+7. Calculons $P(A \cap B)$ :
+   $P(A \cap B) = P(A \cap B \mid C)P(C) + P(A \cap B \mid C^c)P(C^c) = (0.81)(0.5) + (0.01)(0.5) = 0.405 + 0.005 = 0.41$.
+8. On constate que $P(A \cap B) = 0.41 \neq 0.25 = P(A)P(B)$.
+9. Conclusion : $A$ et $B$ ne sont *pas* indépendants. L'incertitude sur l'origine du modèle (quelle pièce a été choisie) crée une dépendance forte entre les observations. C'est le principe des variables latentes en Machine Learning.

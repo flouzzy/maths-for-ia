@@ -1,36 +1,30 @@
-# Généralisation par les fonctions génératrices des moments
+# Exercice 10
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
+\subsection*{Exercice 10 : Produit scalaire de L2 et Indépendance \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
 
-Démontrer le résultat de l'exercice précédent (somme de deux variables de Poisson indépendantes) en utilisant le formalisme analytique des fonctions génératrices des moments (ou fonctions caractéristiques), prouvant l'élégance de ce formalisme sur le calcul convolutif direct.
+**Énoncé :**
+Dans l'espace de Hilbert $L^2(\Omega, \mathcal{F}, P)$, on définit le produit scalaire $\langle X, Y \rangle = \mathbb{E}[XY]$.
+Deux variables aléatoires $X, Y \in L^2$ sont orthogonales si $\langle X, Y \rangle = 0$.
+Soient $X, Y \in L^2$ deux variables d'espérance nulle ($\mathbb{E}[X] = \mathbb{E}[Y] = 0$).
+Montrer que si $X$ et $Y$ sont indépendantes, alors elles sont orthogonales. La réciproque est-elle vraie ? Justifier.
 
-### Correction
-
-Soient $X \sim \mathcal{P}(\lambda)$ et $Y \sim \mathcal{P}(\mu)$ deux variables aléatoires indépendantes, et $S = X + Y$.
-
-**1. Rappel théorique fondamental :**
-La fonction caractéristique (ou fonction génératrice des moments) de la somme de deux variables aléatoires **indépendantes** est le produit mathématique de leurs fonctions caractéristiques individuelles.
-$\phi_S(t) = \mathbb{E}[e^{itS}] = \mathbb{E}[e^{it(X+Y)}] = \mathbb{E}[e^{itX} e^{itY}]$.
-Par indépendance des variables $e^{itX}$ et $e^{itY}$ (théorème des coalitions), l'espérance du produit est le produit des espérances :
-$\phi_S(t) = \mathbb{E}[e^{itX}] \cdot \mathbb{E}[e^{itY}] = \phi_X(t) \cdot \phi_Y(t)$.
-
-**2. Calcul de la fonction caractéristique d'une loi de Poisson :**
-Soit $V \sim \mathcal{P}(\theta)$. Calculons sa fonction caractéristique $\phi_V(t) = \mathbb{E}[e^{itV}]$.
-Par le théorème de transfert :
-$\phi_V(t) = \sum_{k=0}^\infty e^{itk} \mathbb{P}(V=k) = \sum_{k=0}^\infty (e^{it})^k e^{-\theta} \frac{\theta^k}{k!}$
-On factorise la constante exponentielle et on regroupe les termes à la puissance $k$ :
-$\phi_V(t) = e^{-\theta} \sum_{k=0}^\infty \frac{(\theta e^{it})^k}{k!}$
-On identifie la série de Taylor de la fonction exponentielle mathématique $\sum_{k=0}^\infty \frac{z^k}{k!} = e^z$ pour $z = \theta e^{it}$ :
-$\phi_V(t) = e^{-\theta} e^{\theta e^{it}} = e^{\theta(e^{it} - 1)}$.
-
-**3. Application à la somme $S = X + Y$ :**
-Les fonctions caractéristiques marginales sont donc $\phi_X(t) = e^{\lambda(e^{it} - 1)}$ et $\phi_Y(t) = e^{\mu(e^{it} - 1)}$.
-En appliquant le théorème de produit pour variables indépendantes :
-$\phi_S(t) = \phi_X(t) \cdot \phi_Y(t) = e^{\lambda(e^{it} - 1)} \cdot e^{\mu(e^{it} - 1)}$
-Par les propriétés algébriques de la fonction exponentielle :
-$\phi_S(t) = e^{\lambda(e^{it} - 1) + \mu(e^{it} - 1)} = e^{(\lambda + \mu)(e^{it} - 1)}$
-
-**4. Conclusion et identification :**
-L'expression obtenue, $e^{(\lambda + \mu)(e^{it} - 1)}$, correspond parfaitement à la signature analytique de la fonction caractéristique d'une loi de Poisson de paramètre $(\lambda + \mu)$.
-D'après le théorème de caractérisation univoque de Lévy (l'application qui à une loi associe sa fonction caractéristique est bijective), on conclut que la distribution probabiliste de $S$ est exactement la loi $\mathcal{P}(\lambda + \mu)$.
-Cette démonstration analytique est considérablement plus courte et évite toute sommation combinatoire.
+**Correction :**
+1. Sens direct : Supposons $X, Y$ indépendantes et centrées.
+   Par le théorème d'indépendance (puisqu'elles sont dans $L^2$, elles sont dans $L^1$, donc intégrables) :
+   $\langle X, Y \rangle = \mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y]$.
+   Comme $\mathbb{E}[X] = 0$ et $\mathbb{E}[Y] = 0$, on a $\mathbb{E}[X]\mathbb{E}[Y] = 0 \times 0 = 0$.
+   Donc $\langle X, Y \rangle = 0$. $X$ et $Y$ sont orthogonales.
+2. Étude de la réciproque :
+   L'orthogonalité de variables centrées signifie que leur covariance est nulle ($\text{Cov}(X,Y) = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y] = 0 - 0 = 0$).
+   L'orthogonalité est donc équivalente à l'absence de corrélation linéaire.
+   Nous savons (vu dans un exercice précédent) que la covariance nulle n'implique pas l'indépendance.
+3. Contre-exemple formel dans $L^2$ :
+   Soit $\theta \sim \mathcal{U}([0, 2\pi])$. On pose $X = \cos(\theta)$ et $Y = \sin(\theta)$.
+   Puisque $\theta$ est bornée, $X$ et $Y$ sont bornées par $1$, elles sont donc dans $L^2$.
+   Elles sont centrées : $\mathbb{E}[X] = \frac{1}{2\pi} \int_0^{2\pi} \cos(t) dt = 0$ et $\mathbb{E}[Y] = 0$.
+   Vérifions l'orthogonalité :
+   $\langle X, Y \rangle = \mathbb{E}[\cos(\theta)\sin(\theta)] = \mathbb{E}[\frac{1}{2}\sin(2\theta)] = \frac{1}{4\pi} \int_0^{2\pi} \sin(2t) dt = 0$.
+   $X$ et $Y$ sont donc orthogonales.
+   Cependant, elles ne sont pas indépendantes. Par l'identité trigonométrique fondamentale : $X^2 + Y^2 = 1$.
+   La connaissance de $X$ restreint les valeurs de $Y$ à $\pm\sqrt{1 - X^2}$. Il y a une dépendance fonctionnelle parfaite (bien que non bijective).
+4. Conclusion : L'indépendance implique l'orthogonalité (pour les V.A. centrées), mais l'orthogonalité (indépendance linéaire) n'implique pas l'indépendance stochastique (qui requiert l'indépendance à tous les ordres de moments).

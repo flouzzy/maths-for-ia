@@ -1,33 +1,22 @@
-# Covariance nulle n'implique pas l'indépendance
+# Exercice 7
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
+\subsection*{Exercice 7 : Produit de variables absolument continues \quad $\bigstar\bigstar\bigstar\bigstar\star$}
 
-Soit $X$ une variable aléatoire suivant une loi Normale centrée réduite, c'est-à-dire $X \sim \mathcal{N}(0,1)$.
-On pose une nouvelle variable aléatoire $Y = X^2$.
-1. Calculer la covariance entre $X$ et $Y$.
-2. Montrer que $X$ et $Y$ ne sont pourtant pas indépendantes.
+**Énoncé :**
+Soient $X$ et $Y$ deux variables aléatoires indépendantes de densités respectives $f_X$ et $f_Y$.
+Montrer que la densité de probabilité de leur produit $Z = XY$ (en supposant $X > 0, Y > 0$) est donnée par :
+$f_Z(z) = \int_{0}^{+\infty} f_X(x) f_Y\left(\frac{z}{x}\right) \frac{1}{x} dx \quad \text{pour } z > 0$
 
-### Correction
-
-Soit $X \sim \mathcal{N}(0,1)$ et $Y = X^2$.
-
-**1. Calcul de la covariance**
-Par définition, la covariance de deux variables est $\text{Cov}(X,Y) = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y]$.
-- Calculons $\mathbb{E}[X]$ : Puisque $X$ est une loi normale standard centrée, $\mathbb{E}[X] = 0$.
-- Déduisons-en la covariance : $\text{Cov}(X,Y) = \mathbb{E}[XY] - 0 \times \mathbb{E}[Y] = \mathbb{E}[XY]$.
-- Remplaçons $Y$ par son expression : $\text{Cov}(X,Y) = \mathbb{E}[X \cdot X^2] = \mathbb{E}[X^3]$.
-- La variable $X$ suit une loi $\mathcal{N}(0,1)$, dont la densité $f(x) = \frac{1}{\sqrt{2\pi}}e^{-x^2/2}$ est une fonction paire. La fonction de la variable aléatoire intégrée $g(x) = x^3$ est une fonction impaire. Le produit d'une fonction paire et d'une fonction impaire est une fonction impaire.
-- L'intégrale d'une fonction intégrable impaire sur un domaine symétrique par rapport à l'origine (ici $\mathbb{R}$) est rigoureusement nulle : $\mathbb{E}[X^3] = \int_{-\infty}^{\infty} x^3 \frac{1}{\sqrt{2\pi}}e^{-x^2/2} dx = 0$.
-La covariance entre $X$ et $Y$ est donc nulle : $\text{Cov}(X,Y) = 0$.
-
-**2. Réfutation de l'indépendance**
-La définition de l'indépendance stipule que pour tout choix d'ensembles boréliens $A$ et $B$, $\mathbb{P}(X \in A \cap Y \in B) = \mathbb{P}(X \in A)\mathbb{P}(Y \in B)$.
-Choississons $A = [1, 2]$ et $B = [4, \infty[$.
-- Calculons $\mathbb{P}(X \in A \cap Y \in B)$ :
-  L'événement $(X \in [1, 2])$ s'est réalisé.
-  Puisque $Y = X^2$, si $X \in [1, 2]$, alors $Y = X^2 \in [1^2, 2^2] = [1, 4]$.
-  L'événement $(Y \in [4, \infty[)$ requiert que $Y \geq 4$. L'intersection est donc réduite au point singulier $X=2, Y=4$.
-  Puisque les variables sont absolument continues (à densité), la probabilité d'un point est nulle : $\mathbb{P}(X \in [1, 2] \cap Y \in [4, \infty[) = 0$.
-- Cependant, le produit des probabilités marginales $\mathbb{P}(X \in [1, 2]) \times \mathbb{P}(Y \in [4, \infty[)$ est le produit de deux probabilités strictement positives (car il s'agit d'intégrales de la densité gaussienne et chi-carré strictement positives sur des intervalles de mesure de Lebesgue non nulle).
-Ainsi, $\mathbb{P}(X \in A \cap Y \in B) = 0 \neq \mathbb{P}(X \in A)\mathbb{P}(Y \in B) > 0$.
-**Conclusion :** Bien que non corrélées (covariance nulle), $X$ et $Y$ ne sont absolument pas indépendantes (elles sont même totalement dépendantes de manière déterministe non-linéaire).
+**Correction :**
+1. La fonction de répartition de $Z$ pour $z > 0$ est $F_Z(z) = P(Z \le z) = P(XY \le z)$.
+2. Puisque $X$ et $Y$ sont indépendantes et continues, leur densité conjointe est $f_{X,Y}(x,y) = f_X(x)f_Y(y)$.
+3. On exprime la probabilité comme l'intégrale de la densité conjointe sur le domaine $D = \{(x,y) \in \mathbb{R}_+^2 \mid xy \le z\}$ :
+   $F_Z(z) = \iint_{D} f_X(x)f_Y(y) dx dy = \int_{0}^{+\infty} \left( \int_{0}^{z/x} f_X(x)f_Y(y) dy \right) dx$.
+4. On dérive $F_Z(z)$ par rapport à $z$ pour obtenir la densité $f_Z(z)$.
+5. Par le théorème de dérivation sous le signe intégral (les hypothèses de domination étant supposées vérifiées ici), on dérive l'intégrale interne :
+   $f_Z(z) = \frac{d}{dz} \int_{0}^{+\infty} f_X(x) \left( \int_{0}^{z/x} f_Y(y) dy \right) dx$.
+6. La dérivée par rapport à $z$ de l'intégrale $\int_{0}^{z/x} f_Y(y) dy$ est $f_Y\left(\frac{z}{x}\right) \cdot \frac{\partial}{\partial z}\left(\frac{z}{x}\right)$.
+7. La dérivée de $\frac{z}{x}$ par rapport à $z$ est $\frac{1}{x}$.
+8. Ainsi, on obtient :
+   $f_Z(z) = \int_{0}^{+\infty} f_X(x) f_Y\left(\frac{z}{x}\right) \frac{1}{x} dx$.
+9. Cette formule s'applique pour déterminer la distribution de produits (par exemple pour la loi de Fisher, issue du ratio d'un produit).

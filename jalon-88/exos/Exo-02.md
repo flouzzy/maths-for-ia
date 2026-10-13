@@ -1,21 +1,22 @@
-# Indépendance d'un événement avec son complémentaire
+# Exercice 2
 
-**Difficulté :** $\bigstar\star\star\star\star$
+\subsection*{Exercice 2 : Indépendance et événement contraire \quad $\bigstar\star\star\star\star$}
 
-Soit un événement $A$ de probabilité $p = \mathbb{P}(A)$.
-Déterminer à quelle condition nécessaire et suffisante l'événement $A$ est indépendant de son propre complémentaire $A^c$.
+**Énoncé :**
+Montrer que si $A$ et $B$ sont indépendants, alors $A$ et $B^c$ le sont aussi, où $B^c$ désigne le complémentaire de $B$.
 
-### Correction
-
-Soit $A$ un événement. Notons $p = \mathbb{P}(A)$. La probabilité de son complémentaire est $\mathbb{P}(A^c) = 1 - p$.
-
-1. Traduisons l'hypothèse d'indépendance entre $A$ et $A^c$. Par définition, cela signifie que :
-   $\mathbb{P}(A \cap A^c) = \mathbb{P}(A) \mathbb{P}(A^c)$.
-2. Or, par la définition même du complémentaire, $A$ et $A^c$ sont disjoints, donc $A \cap A^c = \emptyset$.
-3. Ainsi, la probabilité de leur intersection est toujours nulle : $\mathbb{P}(A \cap A^c) = 0$.
-4. L'équation de l'indépendance devient donc :
-   $0 = \mathbb{P}(A) \mathbb{P}(A^c)$
-   $0 = p(1 - p)$
-5. Les solutions de cette équation du second degré sont trivialement $p = 0$ ou $1 - p = 0 \iff p = 1$.
-
-En conclusion, un événement $A$ est indépendant de son complémentaire $A^c$ si et seulement si $\mathbb{P}(A) = 0$ ou $\mathbb{P}(A) = 1$ (événements presque certains ou presque impossibles).
+**Correction :**
+1. On sait que $B$ et $B^c$ forment une partition de $\Omega$. Donc $A = (A \cap B) \cup (A \cap B^c)$.
+2. Les ensembles $(A \cap B)$ et $(A \cap B^c)$ sont disjoints.
+3. Par additivité de la mesure de probabilité $P$ :
+   $P(A) = P(A \cap B) + P(A \cap B^c)$.
+4. Puisque $A$ et $B$ sont indépendants, on a $P(A \cap B) = P(A)P(B)$.
+5. En substituant dans l'équation de l'étape 3 :
+   $P(A) = P(A)P(B) + P(A \cap B^c)$.
+6. On isole $P(A \cap B^c)$ :
+   $P(A \cap B^c) = P(A) - P(A)P(B)$.
+7. On factorise par $P(A)$ :
+   $P(A \cap B^c) = P(A)(1 - P(B))$.
+8. Or, par propriété du complémentaire, $1 - P(B) = P(B^c)$.
+9. Ainsi, $P(A \cap B^c) = P(A)P(B^c)$.
+10. Cela correspond exactement à la définition de l'indépendance de $A$ et $B^c$.

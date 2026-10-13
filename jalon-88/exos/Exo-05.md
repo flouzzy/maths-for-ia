@@ -1,24 +1,26 @@
-# Produit d'événements indépendants (Loi Log-Normale et Normales)
+# Exercice 5
 
-**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
+\subsection*{Exercice 5 : Somme de variables de Poisson indépendantes \quad $\bigstar\bigstar\bigstar\star\star$}
 
-Soient $X$ et $Y$ deux variables aléatoires indépendantes suivant des lois normales centrées réduites : $X, Y \sim \mathcal{N}(0,1)$.
-On pose $Z = e^X e^Y$.
-Déterminer la nature exacte de la loi de $Z$.
+**Énoncé :**
+Soient $X$ et $Y$ deux variables aléatoires indépendantes suivant des lois de Poisson de paramètres respectifs $\lambda$ et $\mu$.
+Montrer que $Z = X + Y$ suit une loi de Poisson de paramètre $\lambda + \mu$.
 
-### Correction
-
-Soient $X, Y \sim \mathcal{N}(0,1)$ deux variables aléatoires normales standard indépendantes, et $Z = e^X e^Y$.
-
-1. Commençons par simplifier l'expression algébrique de la variable $Z$. Par les propriétés de l'exponentielle réelle :
-   $Z = e^X e^Y = e^{X+Y}$.
-2. Posons la variable intermédiaire $S = X + Y$. Nous devons déterminer la loi de $S$.
-3. Les variables $X$ et $Y$ sont gaussiennes et indépendantes. Un résultat fondamental de probabilités indique que la somme de deux variables gaussiennes indépendantes est elle-même une variable gaussienne.
-4. Déterminons les paramètres (espérance et variance) de $S$ :
-   - Par linéarité de l'espérance : $\mathbb{E}[S] = \mathbb{E}[X+Y] = \mathbb{E}[X] + \mathbb{E}[Y] = 0 + 0 = 0$.
-   - Les variables étant indépendantes, l'identité de Bienaymé permet de sommer les variances : $\text{Var}(S) = \text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y) = 1 + 1 = 2$.
-5. On en déduit que $S \sim \mathcal{N}(0, 2)$.
-6. Revenons à $Z$ : $Z = e^S$.
-7. Par définition formelle, la variable aléatoire définie comme l'exponentielle d'une variable aléatoire normale suit une loi **Log-Normale**.
-8. Les paramètres de cette loi log-normale sont directement les paramètres de la loi normale sous-jacente $S$.
-Donc, $Z$ suit une loi Log-Normale de paramètres $\mu = 0$ et $\sigma^2 = 2$, ce que l'on note $Z \sim \mathcal{LN}(0, 2)$.
+**Correction :**
+1. Les variables $X$ et $Y$ prennent leurs valeurs dans $\mathbb{N}$. La somme $Z = X + Y$ prend aussi ses valeurs dans $\mathbb{N}$.
+2. Soit $n \in \mathbb{N}$. Calculons $P(Z = n)$.
+3. L'événement $\{X + Y = n\}$ se décompose selon toutes les valeurs possibles pour $X$. Si $X = k$ (avec $0 \le k \le n$), alors $Y$ doit valoir $n - k$.
+   $P(Z = n) = \sum_{k=0}^{n} P(X = k, Y = n - k)$.
+4. Par indépendance de $X$ et $Y$ :
+   $P(Z = n) = \sum_{k=0}^{n} P(X = k) P(Y = n - k)$.
+5. On utilise la formule de la loi de Poisson : $P(X=k) = e^{-\lambda} \frac{\lambda^k}{k!}$ et $P(Y=n-k) = e^{-\mu} \frac{\mu^{n-k}}{(n-k)!}$.
+   $P(Z = n) = \sum_{k=0}^{n} \left( e^{-\lambda} \frac{\lambda^k}{k!} \right) \left( e^{-\mu} \frac{\mu^{n-k}}{(n-k)!} \right)$.
+6. On réarrange les termes :
+   $P(Z = n) = e^{-(\lambda + \mu)} \sum_{k=0}^{n} \frac{\lambda^k \mu^{n-k}}{k! (n-k)!}$.
+7. Pour faire apparaître le binôme de Newton, on multiplie et divise par $n!$ :
+   $P(Z = n) = e^{-(\lambda + \mu)} \frac{1}{n!} \sum_{k=0}^{n} \frac{n!}{k! (n-k)!} \lambda^k \mu^{n-k}$.
+8. On reconnaît le coefficient binomial $\binom{n}{k} = \frac{n!}{k! (n-k)!}$ :
+   $P(Z = n) = e^{-(\lambda + \mu)} \frac{1}{n!} \sum_{k=0}^{n} \binom{n}{k} \lambda^k \mu^{n-k}$.
+9. D'après la formule du binôme de Newton, $\sum_{k=0}^{n} \binom{n}{k} \lambda^k \mu^{n-k} = (\lambda + \mu)^n$.
+10. Finalement, $P(Z = n) = e^{-(\lambda + \mu)} \frac{(\lambda + \mu)^n}{n!}$.
+11. On reconnaît exactement la fonction de masse d'une loi de Poisson de paramètre $\lambda + \mu$. Donc $Z \sim \mathcal{P}(\lambda + \mu)$.
