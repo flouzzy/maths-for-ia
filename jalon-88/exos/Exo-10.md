@@ -1,48 +1,30 @@
-# Exercice 10 : Construction géométrique de variables indépendantes
+# Exercice 10
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
+\subsection*{Exercice 10 : Produit scalaire de L2 et Indépendance \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
 
 **Énoncé :**
-Soit un carré $\Omega = [0,1] \times [0,1]$ muni de la mesure de Lebesgue plane (l'aire géométrique usuelle) définie comme probabilité $\mathbb{P}$. L'aire totale de $\Omega$ vaut 1.
-Soit un point aléatoire $(X,Y)$ tiré uniformément dans ce carré.
-Considérons les deux événements suivants géométriques définis par :
-- $A$ : "Le point tombe sous la diagonale principale", c'est-à-dire $A = \{{(x,y) \in \Omega \mid y \le x\}}$
-- $B$ : "L'abscisse du point est inférieure à $1/2$", c'est-à-dire $B = \{{(x,y) \in \Omega \mid x \le 1/2\}}$
+Dans l'espace de Hilbert $L^2(\Omega, \mathcal{F}, P)$, on définit le produit scalaire $\langle X, Y \rangle = \mathbb{E}[XY]$.
+Deux variables aléatoires $X, Y \in L^2$ sont orthogonales si $\langle X, Y \rangle = 0$.
+Soient $X, Y \in L^2$ deux variables d'espérance nulle ($\mathbb{E}[X] = \mathbb{E}[Y] = 0$).
+Montrer que si $X$ et $Y$ sont indépendantes, alors elles sont orthogonales. La réciproque est-elle vraie ? Justifier.
 
-Montrer si les événements $A$ et $B$ sont indépendants.
-
----
-**Correction détaillée :**
-
-Puisque le tirage est uniforme sur le carré unitaire d'aire 1, la probabilité d'un événement correspond exactement à l'aire géométrique du sous-ensemble qui le représente.
-
-1. **Calcul de la probabilité de $A$ :**
-L'ensemble $A = \{{(x,y) \in [0,1]^2 \mid y \le x\}}$ forme le triangle inférieur délimité par la diagonale reliant les sommets $(0,0)$ et $(1,1)$.
-C'est un triangle rectangle de base 1 et de hauteur 1.
-Son aire est $ \text{{Aire}}(A) = \frac{{1 \times 1}}{{2}} = \frac{{1}}{{2}} $.
-Ainsi, $\mathbb{P}(A) = \frac{{1}}{{2}}$.
-
-2. **Calcul de la probabilité de $B$ :**
-L'ensemble $B = \{{(x,y) \in [0,1]^2 \mid x \le 1/2\}}$ forme un rectangle occupant la moitié gauche du carré (de $x=0$ à $x=1/2$, pour $y$ allant de $0$ à $1$).
-C'est un rectangle de largeur $1/2$ et de hauteur $1$.
-Son aire est $ \text{{Aire}}(B) = \frac{{1}}{{2}} \times 1 = \frac{{1}}{{2}} $.
-Ainsi, $\mathbb{P}(B) = \frac{{1}}{{2}}$.
-
-3. **Calcul de la probabilité de l'intersection $A \cap B$ :**
-L'événement $A \cap B$ correspond aux points vérifiant à la fois $y \le x$ ET $x \le 1/2$.
-Géométriquement, il s'agit de la région située sous la diagonale et restreinte à la moitié gauche du carré.
-Les bornes de cet ensemble sont : $x$ varie de $0$ à $1/2$. Pour un $x$ donné, $y$ varie de $0$ à $x$.
-C'est un triangle rectangle dont les sommets sont $(0,0)$, $(1/2,0)$, et $(1/2,1/2)$.
-La base de ce triangle est $1/2$, sa hauteur est $1/2$.
-Son aire se calcule ainsi : $ \text{{Aire}}(A \cap B) = \frac{{\text{{base}} \times \text{{hauteur}}}}{{2}} = \frac{{1/2 \times 1/2}}{{2}} = \frac{{1/4}}{{2}} = \frac{{1}}{{8}} $.
-Ainsi, $\mathbb{P}(A \cap B) = \frac{{1}}{{8}}$.
-
-4. **Test de l'indépendance :**
-Nous devons vérifier si $\mathbb{P}(A \cap B) = \mathbb{P}(A) \times \mathbb{P}(B)$.
-D'une part, le produit des marginales est : $\mathbb{P}(A) \times \mathbb{P}(B) = \frac{{1}}{{2}} \times \frac{{1}}{{2}} = \frac{{1}}{{4}}$.
-D'autre part, la probabilité conjointe est $\mathbb{P}(A \cap B) = \frac{{1}}{{8}}$.
-Clairement, $\frac{{1}}{{8}} \neq \frac{{1}}{{4}}$.
-L'égalité n'est pas vérifiée.
-
-**Conclusion :**
-Les événements $A$ et $B$ ne sont **pas** indépendants. Sur un plan intuitif, savoir que le point a été tiré dans la moitié gauche (abscisses petites, événement $B$) restreint l'espace des ordonnées possibles pour rester sous la diagonale (événement $A$), augmentant la difficulté pour que $A$ se réalise par rapport au tirage global. $\blacksquare$
+**Correction :**
+1. Sens direct : Supposons $X, Y$ indépendantes et centrées.
+   Par le théorème d'indépendance (puisqu'elles sont dans $L^2$, elles sont dans $L^1$, donc intégrables) :
+   $\langle X, Y \rangle = \mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y]$.
+   Comme $\mathbb{E}[X] = 0$ et $\mathbb{E}[Y] = 0$, on a $\mathbb{E}[X]\mathbb{E}[Y] = 0 \times 0 = 0$.
+   Donc $\langle X, Y \rangle = 0$. $X$ et $Y$ sont orthogonales.
+2. Étude de la réciproque :
+   L'orthogonalité de variables centrées signifie que leur covariance est nulle ($\text{Cov}(X,Y) = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y] = 0 - 0 = 0$).
+   L'orthogonalité est donc équivalente à l'absence de corrélation linéaire.
+   Nous savons (vu dans un exercice précédent) que la covariance nulle n'implique pas l'indépendance.
+3. Contre-exemple formel dans $L^2$ :
+   Soit $\theta \sim \mathcal{U}([0, 2\pi])$. On pose $X = \cos(\theta)$ et $Y = \sin(\theta)$.
+   Puisque $\theta$ est bornée, $X$ et $Y$ sont bornées par $1$, elles sont donc dans $L^2$.
+   Elles sont centrées : $\mathbb{E}[X] = \frac{1}{2\pi} \int_0^{2\pi} \cos(t) dt = 0$ et $\mathbb{E}[Y] = 0$.
+   Vérifions l'orthogonalité :
+   $\langle X, Y \rangle = \mathbb{E}[\cos(\theta)\sin(\theta)] = \mathbb{E}[\frac{1}{2}\sin(2\theta)] = \frac{1}{4\pi} \int_0^{2\pi} \sin(2t) dt = 0$.
+   $X$ et $Y$ sont donc orthogonales.
+   Cependant, elles ne sont pas indépendantes. Par l'identité trigonométrique fondamentale : $X^2 + Y^2 = 1$.
+   La connaissance de $X$ restreint les valeurs de $Y$ à $\pm\sqrt{1 - X^2}$. Il y a une dépendance fonctionnelle parfaite (bien que non bijective).
+4. Conclusion : L'indépendance implique l'orthogonalité (pour les V.A. centrées), mais l'orthogonalité (indépendance linéaire) n'implique pas l'indépendance stochastique (qui requiert l'indépendance à tous les ordres de moments).

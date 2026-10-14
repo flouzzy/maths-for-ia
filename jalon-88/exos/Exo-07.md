@@ -1,43 +1,22 @@
-# Exercice 7 : Somme de deux variables de Poisson indépendantes
+# Exercice 7
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
+\subsection*{Exercice 7 : Produit de variables absolument continues \quad $\bigstar\bigstar\bigstar\bigstar\star$}
 
 **Énoncé :**
-Soient $X_1$ et $X_2$ deux variables aléatoires indépendantes suivant respectivement des lois de Poisson de paramètres $\lambda_1 > 0$ et $\lambda_2 > 0$.
-Autrement dit, pour $k \in \mathbb{N}$, $\mathbb{P}(X_i = k) = e^{{-\lambda_i}} \frac{{\lambda_i^k}}{{k!}}$ pour $i \in \{{1,2\}}$.
-Soit la variable aléatoire $Y = X_1 + X_2$.
-Démontrer rigoureusement par le calcul que la somme $Y$ suit une loi de Poisson dont vous déterminerez le paramètre.
+Soient $X$ et $Y$ deux variables aléatoires indépendantes de densités respectives $f_X$ et $f_Y$.
+Montrer que la densité de probabilité de leur produit $Z = XY$ (en supposant $X > 0, Y > 0$) est donnée par :
+$f_Z(z) = \int_{0}^{+\infty} f_X(x) f_Y\left(\frac{z}{x}\right) \frac{1}{x} dx \quad \text{pour } z > 0$
 
----
-**Correction détaillée :**
-
-Puisque $X_1$ et $X_2$ prennent des valeurs dans $\mathbb{N}$, leur somme $Y$ prend également ses valeurs dans $\mathbb{N}$. Soit $n \in \mathbb{N}$. Nous cherchons à calculer $\mathbb{P}(Y = n)$.
-
-1. **Utilisation du théorème des probabilités totales (Produit de convolution discret) :**
-L'événement $\{{Y = n\}}$ correspond à $\{{X_1 + X_2 = n\}}$.
-On peut partitionner cet événement selon les valeurs possibles prises par $X_1$. Si $X_1 = k$, alors nécessairement $X_2 = n - k$.
-Comme $X_2 \ge 0$, l'indice $k$ varie de $0$ à $n$.
-$$ \mathbb{P}(Y = n) = \sum_{{k=0}}^n \mathbb{P}(X_1 = k \cap X_2 = n - k) $$
-
-2. **Exploitation de l'indépendance :**
-Par hypothèse, $X_1$ et $X_2$ sont indépendantes. La probabilité de l'intersection est donc le produit des probabilités :
-$$ \mathbb{P}(Y = n) = \sum_{{k=0}}^n \mathbb{P}(X_1 = k) \mathbb{P}(X_2 = n - k) $$
-
-3. **Substitution par les densités discrètes de Poisson :**
-$$ \mathbb{P}(Y = n) = \sum_{{k=0}}^n \left( e^{{-\lambda_1}} \frac{{\lambda_1^k}}{{k!}} \right) \left( e^{{-\lambda_2}} \frac{{\lambda_2^{{n-k}}}}{{(n-k)!}} \right) $$
-
-4. **Réarrangement algébrique :**
-Factorisons les termes qui ne dépendent pas de l'indice de sommation $k$ :
-$$ \mathbb{P}(Y = n) = e^{{-\lambda_1}} e^{{-\lambda_2}} \sum_{{k=0}}^n \frac{{1}}{{k! (n-k)!}} \lambda_1^k \lambda_2^{{n-k}} $$
-$$ \mathbb{P}(Y = n) = e^{{-(\lambda_1 + \lambda_2)}} \sum_{{k=0}}^n \frac{{1}}{{k! (n-k)!}} \lambda_1^k \lambda_2^{{n-k}} $$
-
-5. **Utilisation de la formule du binôme de Newton :**
-Pour faire apparaître les coefficients binomiaux $\binom{{n}}{{k}} = \frac{{n!}}{{k!(n-k)!}}$, nous multiplions et divisons l'expression par $n!$ :
-$$ \mathbb{P}(Y = n) = e^{{-(\lambda_1 + \lambda_2)}} \frac{{1}}{{n!}} \sum_{{k=0}}^n \frac{{n!}}{{k! (n-k)!}} \lambda_1^k \lambda_2^{{n-k}} $$
-$$ \mathbb{P}(Y = n) = e^{{-(\lambda_1 + \lambda_2)}} \frac{{1}}{{n!}} \sum_{{k=0}}^n \binom{{n}}{{k}} \lambda_1^k \lambda_2^{{n-k}} $$
-D'après la formule du binôme de Newton, $\sum_{{k=0}}^n \binom{{n}}{{k}} a^k b^{{n-k}} = (a + b)^n$. L'expression de la somme devient alors $(\lambda_1 + \lambda_2)^n$.
-$$ \mathbb{P}(Y = n) = e^{{-(\lambda_1 + \lambda_2)}} \frac{{(\lambda_1 + \lambda_2)^n}}{{n!}} $$
-
-6. **Conclusion :**
-Nous reconnaissons exactement l'expression de la fonction de masse d'une loi de Poisson de paramètre $\lambda = \lambda_1 + \lambda_2$.
-La somme de deux variables de Poisson indépendantes est donc une variable de Poisson dont le paramètre est la somme des paramètres. $\blacksquare$
+**Correction :**
+1. La fonction de répartition de $Z$ pour $z > 0$ est $F_Z(z) = P(Z \le z) = P(XY \le z)$.
+2. Puisque $X$ et $Y$ sont indépendantes et continues, leur densité conjointe est $f_{X,Y}(x,y) = f_X(x)f_Y(y)$.
+3. On exprime la probabilité comme l'intégrale de la densité conjointe sur le domaine $D = \{(x,y) \in \mathbb{R}_+^2 \mid xy \le z\}$ :
+   $F_Z(z) = \iint_{D} f_X(x)f_Y(y) dx dy = \int_{0}^{+\infty} \left( \int_{0}^{z/x} f_X(x)f_Y(y) dy \right) dx$.
+4. On dérive $F_Z(z)$ par rapport à $z$ pour obtenir la densité $f_Z(z)$.
+5. Par le théorème de dérivation sous le signe intégral (les hypothèses de domination étant supposées vérifiées ici), on dérive l'intégrale interne :
+   $f_Z(z) = \frac{d}{dz} \int_{0}^{+\infty} f_X(x) \left( \int_{0}^{z/x} f_Y(y) dy \right) dx$.
+6. La dérivée par rapport à $z$ de l'intégrale $\int_{0}^{z/x} f_Y(y) dy$ est $f_Y\left(\frac{z}{x}\right) \cdot \frac{\partial}{\partial z}\left(\frac{z}{x}\right)$.
+7. La dérivée de $\frac{z}{x}$ par rapport à $z$ est $\frac{1}{x}$.
+8. Ainsi, on obtient :
+   $f_Z(z) = \int_{0}^{+\infty} f_X(x) f_Y\left(\frac{z}{x}\right) \frac{1}{x} dx$.
+9. Cette formule s'applique pour déterminer la distribution de produits (par exemple pour la loi de Fisher, issue du ratio d'un produit).

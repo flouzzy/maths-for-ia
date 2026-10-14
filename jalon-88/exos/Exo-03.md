@@ -1,38 +1,28 @@
-# Exercice 3 : Indépendance et complémentaire
+# Exercice 3
 
-**Difficulté :** $\bigstar\bigstar\star\star\star$
+\subsection*{Exercice 3 : Indépendance deux à deux et mutuelle \quad $\bigstar\bigstar\star\star\star$}
 
 **Énoncé :**
-Soient $A$ et $B$ deux événements indépendants dans un espace de probabilité $(\Omega, \mathcal{F}, \mathbb{P})$.
-Démontrer rigoureusement que les événements $A$ et $B^c$ (le complémentaire de $B$) sont également indépendants.
+On lance deux dés parfaits indépendants à $6$ faces.
+Soit $A$ l'événement "Le résultat du 1er dé est pair".
+Soit $B$ l'événement "Le résultat du 2e dé est impair".
+Soit $C$ l'événement "La somme des deux dés est impaire".
+Montrer que $A, B, C$ sont indépendants deux à deux, mais ne sont pas mutuellement indépendants.
 
----
-**Correction détaillée :**
-
-Pour prouver que $A$ et $B^c$ sont indépendants, nous devons montrer, par définition, que :
-$$ \mathbb{P}(A \cap B^c) = \mathbb{P}(A) \times \mathbb{P}(B^c) $$
-
-1. **Partition de l'événement $A$ :**
-Les événements $B$ et $B^c$ forment une partition de l'univers $\Omega$, car $B \cup B^c = \Omega$ et $B \cap B^c = \emptyset$.
-Par conséquent, on peut décomposer l'événement $A$ de la manière suivante :
-$$ A = A \cap \Omega = A \cap (B \cup B^c) = (A \cap B) \cup (A \cap B^c) $$
-
-2. **Additivité de la probabilité :**
-Puisque $(A \cap B)$ et $(A \cap B^c)$ sont des sous-ensembles respectivement de $B$ et de $B^c$, et que $B$ et $B^c$ sont disjoints, les ensembles $(A \cap B)$ et $(A \cap B^c)$ sont également disjoints (leur intersection est vide).
-D'après le troisième axiome de Kolmogorov (additivité dénombrable pour des événements disjoints), nous avons :
-$$ \mathbb{P}(A) = \mathbb{P}((A \cap B) \cup (A \cap B^c)) = \mathbb{P}(A \cap B) + \mathbb{P}(A \cap B^c) $$
-
-3. **Isolement du terme d'intérêt :**
-Réarrangeons cette équation pour isoler $\mathbb{P}(A \cap B^c)$ :
-$$ \mathbb{P}(A \cap B^c) = \mathbb{P}(A) - \mathbb{P}(A \cap B) $$
-
-4. **Utilisation de l'hypothèse d'indépendance de $A$ et $B$ :**
-Par hypothèse, $A$ et $B$ sont indépendants, ce qui se traduit par $\mathbb{P}(A \cap B) = \mathbb{P}(A) \times \mathbb{P}(B)$. Substituons cette expression dans l'équation de l'étape 3 :
-$$ \mathbb{P}(A \cap B^c) = \mathbb{P}(A) - \mathbb{P}(A)\mathbb{P}(B) $$
-
-5. **Factorisation et conclusion :**
-En factorisant par $\mathbb{P}(A)$, on obtient :
-$$ \mathbb{P}(A \cap B^c) = \mathbb{P}(A) \times (1 - \mathbb{P}(B)) $$
-Or, par la loi du complémentaire, nous savons que $\mathbb{P}(B^c) = 1 - \mathbb{P}(B)$. En substituant ceci :
-$$ \mathbb{P}(A \cap B^c) = \mathbb{P}(A) \times \mathbb{P}(B^c) $$
-L'égalité est bien vérifiée. Les événements $A$ et $B^c$ sont donc indépendants. $\blacksquare$
+**Correction :**
+1. Modélisation : $\Omega = \{1, 2, 3, 4, 5, 6\}^2$, de cardinal $36$. La probabilité est uniforme.
+2. Calculons les probabilités marginales :
+   - $P(A) = \frac{3 \times 6}{36} = \frac{1}{2}$.
+   - $P(B) = \frac{6 \times 3}{36} = \frac{1}{2}$.
+   - Pour $C$, la somme est impaire si on a (Pair, Impair) ou (Impair, Pair). $P(C) = \frac{3 \times 3 + 3 \times 3}{36} = \frac{18}{36} = \frac{1}{2}$.
+3. Calculons les probabilités des intersections deux à deux :
+   - $A \cap B$ : "1er pair ET 2e impair". Il y a $3 \times 3 = 9$ cas favorables. $P(A \cap B) = \frac{9}{36} = \frac{1}{4} = P(A)P(B)$. (Indépendance).
+   - $A \cap C$ : "1er pair ET somme impaire". Cela implique que le 2e dé doit être impair. C'est exactement $A \cap B$. $P(A \cap C) = P(A \cap B) = \frac{1}{4} = P(A)P(C)$. (Indépendance).
+   - $B \cap C$ : "2e impair ET somme impaire". Cela implique que le 1er dé doit être pair. C'est encore $A \cap B$. $P(B \cap C) = P(A \cap B) = \frac{1}{4} = P(B)P(C)$. (Indépendance).
+4. Les événements $A, B$ et $C$ sont donc indépendants deux à deux.
+5. Regardons l'intersection totale $A \cap B \cap C$ : "1er pair ET 2e impair ET somme impaire".
+   Puisque "1er pair ET 2e impair" implique nécessairement que la somme est impaire, l'événement $A \cap B$ est inclus dans $C$.
+   Donc $A \cap B \cap C = A \cap B$.
+   Sa probabilité est $P(A \cap B \cap C) = \frac{1}{4}$.
+6. Cependant, $P(A)P(B)P(C) = \frac{1}{2} \times \frac{1}{2} \times \frac{1}{2} = \frac{1}{8}$.
+7. Comme $P(A \cap B \cap C) \neq P(A)P(B)P(C)$, la famille $\{A, B, C\}$ n'est pas mutuellement indépendante.

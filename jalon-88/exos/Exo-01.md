@@ -1,32 +1,17 @@
-# Exercice 1 : Indépendance et incompatibilité
+# Exercice 1
 
-**Difficulté :** $\bigstar\star\star\star\star$
+\subsection*{Exercice 1 : Indépendance et incompatibilité \quad $\bigstar\star\star\star\star$}
 
 **Énoncé :**
-Soit $(\Omega, \mathcal{F}, \mathbb{P})$ un espace de probabilité. Soient $A$ et $B$ deux événements tels que $\mathbb{P}(A) > 0$ et $\mathbb{P}(B) > 0$.
-Montrer que si $A$ et $B$ sont incompatibles (ou mutuellement exclusifs, c'est-à-dire $A \cap B = \emptyset$), alors ils ne peuvent pas être indépendants.
+Soit $(\Omega, \mathcal{F}, P)$ un espace probabilisé. Soient $A$ et $B$ deux événements tels que $P(A) > 0$ et $P(B) > 0$.
+Montrer que $A$ et $B$ ne peuvent pas être à la fois indépendants et incompatibles (disjoints).
 
----
-**Correction détaillée :**
-
-1. **Définition de l'incompatibilité :**
-Puisque $A$ et $B$ sont incompatibles, on a par définition $A \cap B = \emptyset$.
-La probabilité de l'événement impossible étant nulle, on en déduit que :
-$$ \mathbb{P}(A \cap B) = \mathbb{P}(\emptyset) = 0 $$
-
-2. **Hypothèse par l'absurde (supposons l'indépendance) :**
-Supposons, par l'absurde, que $A$ et $B$ soient des événements indépendants.
-Par définition de l'indépendance, on devrait avoir :
-$$ \mathbb{P}(A \cap B) = \mathbb{P}(A) \times \mathbb{P}(B) $$
-
-3. **Évaluation de l'équation :**
-En substituant l'égalité trouvée à l'étape 1, on obtient :
-$$ 0 = \mathbb{P}(A) \times \mathbb{P}(B) $$
-Puisque nous sommes dans l'ensemble des nombres réels, le produit de deux nombres est nul si et seulement si l'un des deux nombres est nul.
-Cela implique que $\mathbb{P}(A) = 0$ ou $\mathbb{P}(B) = 0$.
-
-4. **Conclusion :**
-Cependant, l'énoncé stipule explicitement que $\mathbb{P}(A) > 0$ et $\mathbb{P}(B) > 0$.
-Nous aboutissons donc à une contradiction manifeste.
-L'hypothèse initiale d'indépendance est donc fausse.
-Par conséquent, deux événements de probabilités non nulles et incompatibles **ne peuvent jamais** être indépendants. $\blacksquare$
+**Correction :**
+1. Supposons par l'absurde que $A$ et $B$ sont à la fois indépendants et incompatibles.
+2. Puisque $A$ et $B$ sont incompatibles, leur intersection est vide : $A \cap B = \emptyset$.
+3. La probabilité de l'ensemble vide est nulle, donc $P(A \cap B) = 0$.
+4. Puisque $A$ et $B$ sont indépendants, par définition, $P(A \cap B) = P(A)P(B)$.
+5. En combinant (3) et (4), on obtient $P(A)P(B) = 0$.
+6. Or, par hypothèse, $P(A) > 0$ et $P(B) > 0$, donc leur produit est strictement positif : $P(A)P(B) > 0$.
+7. On aboutit à une contradiction manifeste : $0 > 0$.
+8. L'hypothèse de départ est fausse. $A$ et $B$ ne peuvent donc pas être à la fois indépendants et incompatibles.

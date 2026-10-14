@@ -1,47 +1,30 @@
-# Exercice 6 : Indépendance et espérance (Covariance nulle)
+# Exercice 6
 
-**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
+\subsection*{Exercice 6 : Covariance nulle sans indépendance \quad $\bigstar\bigstar\bigstar\star\star$}
 
 **Énoncé :**
-Soient $X$ et $Y$ deux variables aléatoires discrètes admettant des moments d'ordre 2.
-L'énoncé stipule que $X$ prend les valeurs $\{-1, 0, 1\}$ avec les probabilités respectives $1/4, 1/2, 1/4$.
-Soit la variable aléatoire $Y = X^2$.
-1. Déterminer la loi de la variable aléatoire $Y$.
-2. Calculer l'espérance de $X$, $\mathbb{E}[X]$, et l'espérance de $Y$, $\mathbb{E}[Y]$.
-3. Calculer l'espérance du produit, $\mathbb{E}[XY]$.
-4. Démontrer que la covariance entre $X$ et $Y$ est nulle.
-5. $X$ et $Y$ sont-elles indépendantes ? Expliquez pourquoi.
+Soit $X$ une variable aléatoire suivant une loi normale standard $\mathcal{N}(0, 1)$.
+Soit $Y = X^2$.
+1. Déterminer si $X$ et $Y$ sont indépendantes.
+2. Calculer la covariance entre $X$ et $Y$. Que conclut-on ?
 
----
-**Correction détaillée :**
-
-**Question 1 : Loi de $Y$**
-Puisque $Y = X^2$, les valeurs possibles de $Y$ sont $0^2 = 0$ et $(\pm 1)^2 = 1$.
-- $\mathbb{P}(Y = 0) = \mathbb{P}(X^2 = 0) = \mathbb{P}(X = 0) = \frac{1}{2}$.
-- $\mathbb{P}(Y = 1) = \mathbb{P}(X^2 = 1) = \mathbb{P}(X = 1) + \mathbb{P}(X = -1) = \frac{1}{4} + \frac{1}{4} = \frac{1}{2}$.
-La loi de $Y$ est donc une loi de Bernoulli de paramètre $p = \frac{1}{2}$.
-
-**Question 2 : Calcul des espérances simples**
-- $\mathbb{E}[X] = (-1) \times \frac{1}{4} + 0 \times \frac{1}{2} + 1 \times \frac{1}{4} = -\frac{1}{4} + \frac{1}{4} = 0$.
-- $\mathbb{E}[Y] = 0 \times \frac{1}{2} + 1 \times \frac{1}{2} = \frac{1}{2}$.
-
-**Question 3 : Espérance du produit**
-On a le produit $XY = X \times X^2 = X^3$.
-Les valeurs possibles de $X^3$ sont $(-1)^3 = -1$, $0^3 = 0$, et $1^3 = 1$, avec les mêmes probabilités que $X$.
-- $\mathbb{E}[XY] = \mathbb{E}[X^3] = (-1) \times \frac{1}{4} + 0 \times \frac{1}{2} + 1 \times \frac{1}{4} = 0$.
-
-**Question 4 : Calcul de la covariance**
-Par définition, la covariance est donnée par :
-$$ \text{Cov}(X, Y) = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y] $$
-En remplaçant par les valeurs calculées :
-$$ \text{Cov}(X, Y) = 0 - (0 \times \frac{1}{2}) = 0 $$
-La covariance entre $X$ et $Y$ est donc strictement nulle. Les variables sont non-corrélées.
-
-**Question 5 : Étude de l'indépendance**
-Pour vérifier l'indépendance, il faut que pour toutes les valeurs, $\mathbb{P}(X=x, Y=y) = \mathbb{P}(X=x)\mathbb{P}(Y=y)$.
-Prenons un point de test, par exemple $x=0$ et $y=1$.
-- D'un côté, le produit des probabilités marginales est : $\mathbb{P}(X=0) \times \mathbb{P}(Y=1) = \frac{1}{2} \times \frac{1}{2} = \frac{1}{4}$.
-- De l'autre côté, la probabilité conjointe : $\mathbb{P}(X=0 \text{ et } Y=1)$. Puisque $Y = X^2$, si $X=0$, on a obligatoirement $Y=0$. Il est donc absolument impossible d'avoir simultanément $X=0$ et $Y=1$.
-Donc $\mathbb{P}(X=0, Y=1) = 0$.
-Puisque $0 \neq \frac{1}{4}$, l'égalité fondamentale de l'indépendance est rompue.
-**Conclusion :** Les variables $X$ et $Y$ **ne sont pas indépendantes**, bien que leur covariance soit nulle. Cela démontre que si l'indépendance implique la non-corrélation, la réciproque est globalement fausse. $\blacksquare$
+**Correction :**
+1. Étude de l'indépendance :
+   $Y$ est une fonction déterministe de $X$. Connaissant $X$, la valeur de $Y$ est parfaitement déterminée. Elles ne peuvent pas être indépendantes.
+   Montrons-le formellement. Considérons les événements $A = \{X \in [1, 2]\}$ et $B = \{Y \in [0, 0.5]\}$.
+   Si $Y = X^2 \le 0.5$, alors $X \in [-\sqrt{0.5}, \sqrt{0.5}]$.
+   Donc l'intersection $A \cap B = \{X \in [1, 2]\} \cap \{X \in [-\sqrt{0.5}, \sqrt{0.5}]\} = \emptyset$.
+   Ainsi, $P(A \cap B) = 0$.
+   Or, $P(A) > 0$ et $P(B) > 0$ (car la densité de la loi normale est strictement positive partout).
+   Donc $P(A \cap B) \neq P(A)P(B)$. Les variables ne sont pas indépendantes.
+2. Calcul de la covariance :
+   Par définition, $\text{Cov}(X,Y) = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y]$.
+   Comme $X \sim \mathcal{N}(0, 1)$, on sait que $\mathbb{E}[X] = 0$.
+   Par conséquent, $\mathbb{E}[X]\mathbb{E}[Y] = 0 \times \mathbb{E}[X^2] = 0$.
+   Calculons $\mathbb{E}[XY]$. On a $XY = X(X^2) = X^3$.
+   L'espérance de $X^3$ est le moment d'ordre 3 d'une loi normale centrée.
+   $\mathbb{E}[X^3] = \int_{-\infty}^{+\infty} x^3 \frac{1}{\sqrt{2\pi}} e^{-x^2/2} dx$.
+   La fonction à intégrer est impaire ($f(-x) = -f(x)$) et intégrable, donc son intégrale sur $\mathbb{R}$ est nulle.
+   Ainsi, $\mathbb{E}[XY] = \mathbb{E}[X^3] = 0$.
+   On en déduit que $\text{Cov}(X,Y) = 0 - 0 = 0$.
+3. Conclusion : Bien que $X$ et $Y$ soient dépendantes, leur covariance est nulle (elles sont non corrélées). La covariance mesure la dépendance linéaire, mais ne capture pas les dépendances non linéaires (ici quadratique).

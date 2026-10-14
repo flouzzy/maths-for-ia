@@ -103,4 +103,4 @@ Si l'une des mesures est la mesure de comptage sur un ensemble non dénombrable,
 ## 6. Liens Sémantiques
 
 - **Concepts Précédents requis :** [[Jalon 63 (Définition axiomatique d'une mesure).md]], [[Jalon 62 (Algèbres).md]]
-- **Concepts Futurs dépendants :** [[Jalon 71 (Théorèmes de Fubini-Tonelli).md]], [[Jalon 88 (Indépendance d'événements).md]]
+- **Concepts Futurs dépendants :** [[Jalon 71 (Théorèmes de Fubini-Tonelli).md]], [[Jalon-88.md]]
