@@ -1,10 +1,28 @@
-\subsection*{Exercice 3 : Loi de la somme de deux variables de Bernoulli indépendantes \quad $\bigstar\bigstar\star\star\star$}
+# Exercice 3
 
-Soient $X$ et $Y$ deux variables aléatoires indépendantes suivant une loi de Bernoulli de paramètre $p \in ]0, 1[$. Déterminer la loi de la somme $Z = X + Y$.
+\subsection*{Exercice 3 : Indépendance deux à deux et mutuelle \quad $\bigstar\bigstar\star\star\star$}
+
+**Énoncé :**
+On lance deux dés parfaits indépendants à $6$ faces.
+Soit $A$ l'événement "Le résultat du 1er dé est pair".
+Soit $B$ l'événement "Le résultat du 2e dé est impair".
+Soit $C$ l'événement "La somme des deux dés est impaire".
+Montrer que $A, B, C$ sont indépendants deux à deux, mais ne sont pas mutuellement indépendants.
 
 **Correction :**
-1. Les valeurs possibles pour $X$ et $Y$ sont $0$ et $1$. Donc $Z$ prend ses valeurs dans $\{0, 1, 2\}$.
-2. Pour $Z = 0$, $X$ et $Y$ doivent valoir $0$. Par indépendance : $\mathbb{P}(Z=0) = \mathbb{P}(X=0, Y=0) = \mathbb{P}(X=0)\mathbb{P}(Y=0) = (1-p)(1-p) = (1-p)^2$.
-3. Pour $Z = 1$, il y a deux cas mutuellement exclusifs : $(X=1, Y=0)$ et $(X=0, Y=1)$. $\mathbb{P}(Z=1) = \mathbb{P}(X=1)\mathbb{P}(Y=0) + \mathbb{P}(X=0)\mathbb{P}(Y=1) = p(1-p) + (1-p)p = 2p(1-p)$.
-4. Pour $Z = 2$, $X$ et $Y$ doivent valoir $1$. $\mathbb{P}(Z=2) = \mathbb{P}(X=1, Y=1) = \mathbb{P}(X=1)\mathbb{P}(Y=1) = p^2$.
-5. On reconnaît les termes du développement de $((1-p) + p)^2$. $Z$ suit une loi binomiale $\mathcal{B}(2, p)$.
+1. Modélisation : $\Omega = \{1, 2, 3, 4, 5, 6\}^2$, de cardinal $36$. La probabilité est uniforme.
+2. Calculons les probabilités marginales :
+   - $P(A) = \frac{3 \times 6}{36} = \frac{1}{2}$.
+   - $P(B) = \frac{6 \times 3}{36} = \frac{1}{2}$.
+   - Pour $C$, la somme est impaire si on a (Pair, Impair) ou (Impair, Pair). $P(C) = \frac{3 \times 3 + 3 \times 3}{36} = \frac{18}{36} = \frac{1}{2}$.
+3. Calculons les probabilités des intersections deux à deux :
+   - $A \cap B$ : "1er pair ET 2e impair". Il y a $3 \times 3 = 9$ cas favorables. $P(A \cap B) = \frac{9}{36} = \frac{1}{4} = P(A)P(B)$. (Indépendance).
+   - $A \cap C$ : "1er pair ET somme impaire". Cela implique que le 2e dé doit être impair. C'est exactement $A \cap B$. $P(A \cap C) = P(A \cap B) = \frac{1}{4} = P(A)P(C)$. (Indépendance).
+   - $B \cap C$ : "2e impair ET somme impaire". Cela implique que le 1er dé doit être pair. C'est encore $A \cap B$. $P(B \cap C) = P(A \cap B) = \frac{1}{4} = P(B)P(C)$. (Indépendance).
+4. Les événements $A, B$ et $C$ sont donc indépendants deux à deux.
+5. Regardons l'intersection totale $A \cap B \cap C$ : "1er pair ET 2e impair ET somme impaire".
+   Puisque "1er pair ET 2e impair" implique nécessairement que la somme est impaire, l'événement $A \cap B$ est inclus dans $C$.
+   Donc $A \cap B \cap C = A \cap B$.
+   Sa probabilité est $P(A \cap B \cap C) = \frac{1}{4}$.
+6. Cependant, $P(A)P(B)P(C) = \frac{1}{2} \times \frac{1}{2} \times \frac{1}{2} = \frac{1}{8}$.
+7. Comme $P(A \cap B \cap C) \neq P(A)P(B)P(C)$, la famille $\{A, B, C\}$ n'est pas mutuellement indépendante.

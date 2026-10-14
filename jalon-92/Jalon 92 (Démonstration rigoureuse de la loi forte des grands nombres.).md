@@ -80,5 +80,5 @@ Non. L'intégrale $\int |x| \frac{1}{1+x^2} dx$ diverge (en $\ln|x|$). La loi de
 
 ## 6. Liens Sémantiques
 
-- **Concepts Précédents requis :** [[Jalon 91 (Inégalités de concentration).md]], [[Jalon 89 (Lemmes de Borel-Cantelli).md]]
+- **Concepts Précédents requis :** [[Jalon 91 (Inégalités de concentration).md]], [[Jalon-89.md]]
 - **Concepts Futurs dépendants :** [[Jalon 94 (Démonstration du théorème central limite).md]], [[Jalon 133 (Modèle PAC).md]]

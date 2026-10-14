@@ -1,19 +1,17 @@
-# Exercice 8
+# Exercice 8 : Suite de variables aléatoires de Bernoulli
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-## Enregistrement de records
+**Énoncé :**
+Soit $(X_n)$ une suite de variables aléatoires indépendantes suivant la loi de Bernoulli de paramètre $p_n$.
+Montrer que $X_n \xrightarrow{p.s.} 0$ si et seulement si $\sum_{n=1}^\infty p_n < +\infty$.
 
-Soit $(X_n)_{n \in \mathbb{N}^*}$ une suite de variables indépendantes et de même loi uniforme sur $[0, 1]$.
-On dit que le terme $X_n$ est un "record" s'il est strictement supérieur à tous les précédents : $X_n > \max(X_1, \dots, X_{n-1})$.
-1. Calculer la probabilité que $X_n$ soit un record.
-2. Déduire le nombre de records enregistrés asymptotiquement.
-
-**Correction détaillée :**
-1. Les variables $X_1, \dots, X_n$ sont continues, indépendantes et identiquement distribuées. La probabilité qu'il existe deux valeurs égales parmi elles est nulle.
-2. Par symétrie stricte de l'espace probabilisé, chaque variable $X_i$ pour $1 \le i \le n$ a exactement la même chance d'être la valeur maximale de l'échantillon fini $\{X_1, \dots, X_n\}$.
-3. Il y a $n$ variables dans cet échantillon, donc la probabilité que la dernière, $X_n$, soit le maximum, est $\mathbb{P}(A_n) = \frac{1}{n}$.
-4. Étudions l'événement $A_n$ : "$X_n$ est un record". La série associée est $\sum_{n=1}^{\infty} \mathbb{P}(A_n) = \sum_{n=1}^{\infty} \frac{1}{n}$.
-5. Cette série harmonique diverge.
-6. On peut démontrer (via un calcul d'intégrale) que les événements $A_n$ sont mutuellement indépendants, car l'ordre relatif des nouvelles variables par rapport aux anciennes dépend de permutations aléatoires uniformes.
-7. Par le second lemme de Borel-Cantelli, l'indépendance et la divergence impliquent que la probabilité d'avoir une infinité de records est de 1.
+**Correction :**
+Rappelons que $X_n \in \{0, 1\}$.
+La convergence vers 0 de la suite $X_n$ signifie que pour tout $\epsilon > 0$, il n'y a qu'un nombre fini de $X_n$ tels que $|X_n| \ge \epsilon$.
+En choisissant $\epsilon = 1/2$, la condition $|X_n| \ge 1/2$ est équivalente à $X_n = 1$.
+Donc $X_n \xrightarrow{p.s.} 0$ si et seulement si l'événement $\{X_n = 1\}$ ne se produit qu'un nombre fini de fois presque sûrement, c'est-à-dire $\mathbb{P}(\limsup \{X_n = 1\}) = 0$.
+Soit $A_n = \{X_n = 1\}$. On a $\mathbb{P}(A_n) = p_n$.
+- Sens direct ($\impliedby$) : Si $\sum p_n < +\infty$, le premier lemme de Borel-Cantelli s'applique immédiatement et assure que $\mathbb{P}(\limsup A_n) = 0$. Donc $X_n \xrightarrow{p.s.} 0$.
+- Sens réciproque ($\implies$) : Supposons que $\sum p_n = +\infty$. Comme les $X_n$ sont indépendantes, les événements $A_n$ le sont aussi. Le second lemme de Borel-Cantelli affirme que $\mathbb{P}(\limsup A_n) = 1$. Ainsi, $X_n = 1$ une infinité de fois avec probabilité 1. La suite $(X_n)$ ne peut donc pas converger vers 0. Par contraposée, si $X_n \xrightarrow{p.s.} 0$, alors on a nécessairement $\sum p_n < +\infty$.
+L'équivalence est ainsi rigoureusement démontrée.

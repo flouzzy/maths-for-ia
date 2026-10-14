@@ -1,17 +1,21 @@
-# Exercice 3
+# Exercice 3 : Convergence presque sûre vers 0
 
-**Difficulté :** $\bigstar\bigstar\star\star\star$
+$\bigstar\bigstar\star\star\star$
 
-## Le paradoxe du singe savant revisité
+**Énoncé :**
+Soit $(Y_n)_{n \in \mathbb{N}}$ une suite de variables aléatoires telles que $\mathbb{P}(|Y_n| \ge \epsilon) \le e^{-n\epsilon}$ pour tout $\epsilon > 0$.
+Montrer que $Y_n$ converge presque sûrement vers 0.
 
-Considérons un alphabet de $L$ lettres. Un singe frappe aléatoirement sur un clavier, les frappes étant indépendantes et chaque lettre ayant la probabilité $\frac{1}{L}$.
-Soit un mot $M$ fixé de longueur $k$. On note $A_n$ l'événement : "le mot $M$ est tapé entre la frappe $n \cdot k$ et $(n+1) \cdot k - 1$".
-Montrer que presque sûrement, le singe tapera le mot $M$ une infinité de fois.
-
-**Correction détaillée :**
-1. Un bloc de frappe allant de $n \cdot k$ à $(n+1) \cdot k - 1$ comprend exactement $k$ caractères consécutifs. La probabilité que ces $k$ caractères correspondent exactement aux $k$ caractères du mot $M$ est $p = \left(\frac{1}{L}\right)^k > 0$.
-2. Puisque les événements $A_n$ concernent des blocs de caractères disjoints et que les frappes sont indépendantes, les événements $A_n$ sont mutuellement indépendants.
-3. On calcule la somme de leurs probabilités : $\sum_{n=1}^{\infty} \mathbb{P}(A_n) = \sum_{n=1}^{\infty} p$.
-4. Puisque $p$ est une constante strictement positive, cette série géométrique dont le terme général ne tend pas vers zéro diverge nécessairement vers $+\infty$.
-5. D'après le second lemme de Borel-Cantelli, l'indépendance des $A_n$ et la divergence de la série impliquent que $\mathbb{P}(\limsup_{n \to \infty} A_n) = 1$.
-6. Le mot $M$ sera donc tapé une infinité de fois avec une probabilité égale à 1.
+**Correction :**
+Rappelons que $Y_n$ converge presque sûrement vers 0 si pour tout $\epsilon > 0$, l'événement $\{|Y_n| \ge \epsilon\}$ ne se produit qu'un nombre fini de fois presque sûrement.
+Fixons $\epsilon > 0$.
+Posons l'événement $A_n = \{|Y_n| \ge \epsilon\}$.
+D'après l'hypothèse de l'énoncé, $\mathbb{P}(A_n) \le e^{-n\epsilon}$.
+Étudions la série de ces probabilités :
+$$ \sum_{n=0}^\infty \mathbb{P}(A_n) \le \sum_{n=0}^\infty e^{-n\epsilon} $$
+La somme à droite est une série géométrique de raison $e^{-\epsilon}$. Comme $\epsilon > 0$, on a $0 < e^{-\epsilon} < 1$, ce qui garantit la convergence de la série.
+Ainsi, $\sum_{n=0}^\infty \mathbb{P}(A_n) < +\infty$.
+Par le premier lemme de Borel-Cantelli, l'événement $\limsup A_n$ a une probabilité nulle.
+C'est-à-dire que, presque sûrement, il n'y a qu'un nombre fini d'indices $n$ pour lesquels $|Y_n| \ge \epsilon$.
+Par conséquent, pour presque tout $\omega \in \Omega$, il existe un rang $N$ tel que pour tout $n \ge N$, $|Y_n(\omega)| < \epsilon$.
+Ceci étant vrai pour tout $\epsilon > 0$ (en prenant une suite dénombrable $\epsilon_k \to 0$), la suite de variables aléatoires $Y_n$ converge presque sûrement vers 0.

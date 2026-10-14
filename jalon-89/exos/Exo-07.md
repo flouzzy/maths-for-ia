@@ -1,21 +1,22 @@
-# Exercice 7
+# Exercice 7 : Borel-Cantelli sans indépendance : une fausse conclusion
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
+$\bigstar\bigstar\bigstar\bigstar\star$
 
-## Limite supérieure d'une loi exponentielle
+**Énoncé :**
+Montrer par un contre-exemple que si les événements $(A_n)$ ne sont pas indépendants, la divergence de $\sum \mathbb{P}(A_n) = +\infty$ n'implique pas que $\mathbb{P}(\limsup A_n) = 1$.
 
-Soit $(X_n)_{n \in \mathbb{N}^*}$ une suite de variables aléatoires indépendantes suivant la loi exponentielle de paramètre $\lambda = 1$.
-Montrer que $\limsup_{n \to \infty} \frac{X_n}{\ln n} = 1$ presque sûrement.
-
-**Correction détaillée :**
-1. Étape 1 : Majoration. Soit $c > 1$. Étudions l'événement $A_n = \{X_n > c \ln n\}$.
-2. On a $\mathbb{P}(A_n) = e^{-c \ln n} = \frac{1}{n^c}$.
-3. Comme $c > 1$, la série $\sum \mathbb{P}(A_n)$ converge (série de Riemann).
-4. Par le premier lemme, $\mathbb{P}(\limsup A_n) = 0$. Ainsi, pour tout $c > 1$, il n'existe presque sûrement qu'un nombre fini de $n$ tels que $\frac{X_n}{\ln n} > c$. Par suite, $\limsup \frac{X_n}{\ln n} \le c$ p.s.
-5. En prenant l'intersection dénombrable de ces événements pour une suite $c_k \to 1^+$, on obtient $\limsup \frac{X_n}{\ln n} \le 1$ p.s.
-6. Étape 2 : Minoration. Soit $c \le 1$. Étudions l'événement $B_n = \{X_n > c \ln n\}$.
-7. $\mathbb{P}(B_n) = \frac{1}{n^c}$. Puisque $c \le 1$, la série diverge.
-8. Les variables $(X_n)$ sont indépendantes, donc les événements $(B_n)$ le sont. Par le second lemme, $\mathbb{P}(\limsup B_n) = 1$.
-9. Presque sûrement, il y a une infinité de $n$ pour lesquels $\frac{X_n}{\ln n} > c$, d'où $\limsup \frac{X_n}{\ln n} \ge c$ p.s.
-10. En prenant $c \to 1^-$, $\limsup \frac{X_n}{\ln n} \ge 1$ p.s.
-11. Conclusion : Les deux inégalités imposent $\limsup_{n \to \infty} \frac{X_n}{\ln n} = 1$ presque sûrement.
+**Correction :**
+Soit un espace de probabilité modélisant le tirage uniforme d'un nombre $U$ dans l'intervalle $[0, 1]$. La loi de $U$ est continue uniforme.
+Considérons l'événement $A_n = \{ U \le \frac{1}{n} \}$.
+La probabilité de chaque événement est $\mathbb{P}(A_n) = \frac{1}{n}$.
+La série $\sum \mathbb{P}(A_n) = \sum \frac{1}{n} = +\infty$ est divergente.
+Toutefois, étudions la limite supérieure de ces événements.
+$$ \limsup_{n \to \infty} A_n = \bigcap_{n=1}^\infty \bigcup_{k=n}^\infty A_k $$
+Puisque la suite $(A_n)$ est décroissante (si $U \le 1/(n+1)$, alors $U \le 1/n$, donc $A_{n+1} \subset A_n$), l'union $\bigcup_{k=n}^\infty A_k$ est simplement égale à $A_n$.
+Ainsi, $\limsup_{n \to \infty} A_n = \bigcap_{n=1}^\infty A_n$.
+L'événement $\bigcap_{n=1}^\infty A_n$ est l'ensemble des $\omega$ tels que pour tout $n \ge 1$, $U(\omega) \le \frac{1}{n}$.
+Le seul nombre réel positif ou nul satisfaisant cette condition est $0$.
+Donc $\limsup_{n \to \infty} A_n = \{ U = 0 \}$.
+Or, pour une variable aléatoire continue, la probabilité d'un point est nulle : $\mathbb{P}(U = 0) = 0$.
+Nous avons donc $\mathbb{P}(\limsup A_n) = 0$, et ce malgré la divergence de la série des probabilités.
+Cela illustre de manière flagrante que l'hypothèse d'indépendance dans le second lemme de Borel-Cantelli est absolument incontournable.
