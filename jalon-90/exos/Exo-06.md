@@ -1,18 +1,19 @@
-\subsection*{Exercice 6 : Convergence en loi d'un maximum \quad $\bigstar\bigstar\bigstar\star\star$}
+# Exercice 06
 
-Soit $(X_i)_{1 \le i \le n}$ des variables aléatoires indépendantes et identiquement distribuées selon la loi uniforme sur $[0, \theta]$.
-Soit $M_n = \max(X_1, X_2, \dots, X_n)$.
-Montrer que $n(\theta - M_n)$ converge en loi vers une variable exponentielle que l'on précisera.
+**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
+
+**Énoncé :**
+Soit $Z_n$ une suite de variables aléatoires telles que $\mathbb{P}(Z_n = \sqrt{n}) = \frac{1}{n}$ et $\mathbb{P}(Z_n = 0) = 1 - \frac{1}{n}$.
+Montrez que $Z_n$ converge en probabilité vers $0$, mais qu'elle ne converge pas dans $L^2$.
 
 **Correction :**
-Exprimons la fonction de répartition de $M_n$. Pour tout $x \in [0, \theta]$ :
-$F_{M_n}(x) = \mathbb{P}(M_n \le x) = \mathbb{P}(X_1 \le x, \dots, X_n \le x) = \mathbb{P}(X_1 \le x)^n = \left(\frac{x}{\theta}\right)^n$.
-Soit $Y_n = n(\theta - M_n)$. Calculons sa fonction de répartition $F_{Y_n}(y)$ pour un $y \ge 0$.
-$F_{Y_n}(y) = \mathbb{P}(Y_n \le y) = \mathbb{P}(n(\theta - M_n) \le y) = \mathbb{P}\left(M_n \ge \theta - \frac{y}{n}\right) = 1 - \mathbb{P}\left(M_n < \theta - \frac{y}{n}\right)$.
-Pour $n$ suffisamment grand (dès que $\frac{y}{n} < \theta$), nous avons :
-$F_{Y_n}(y) = 1 - \left(\frac{\theta - y/n}{\theta}\right)^n = 1 - \left(1 - \frac{y/\theta}{n}\right)^n$.
-Un résultat classique d'analyse garantit que la suite numérique $(1 - \frac{z}{n})^n$ converge vers $e^{-z}$.
-En l'appliquant avec $z = \frac{y}{\theta}$, nous obtenons :
-$\lim_{n \to \infty} F_{Y_n}(y) = 1 - e^{-y/\theta}$.
-Cette limite est la fonction de répartition de la loi exponentielle de paramètre $\lambda = \frac{1}{\theta}$.
-Puisque la fonction de répartition limite est continue partout, la convergence en loi est établie vers la distribution $\mathcal{E}(1/\theta)$.
+**Convergence en Probabilité :**
+Soit $\epsilon \in ]0, 1[$. Puisque $Z_n$ vaut $0$ ou $\sqrt{n}$ (avec $n \ge 1$), on a :
+$$ \mathbb{P}(|Z_n - 0| > \epsilon) = \mathbb{P}(Z_n = \sqrt{n}) = \frac{1}{n} $$
+Par passage à la limite, $\lim_{n \to \infty} \mathbb{P}(|Z_n| > \epsilon) = 0$. Donc $Z_n \xrightarrow{\mathbb{P}} 0$.
+
+**Convergence $L^2$ :**
+Calculons l'espérance du carré :
+$$ \mathbb{E}[|Z_n - 0|^2] = (\sqrt{n})^2 \cdot \mathbb{P}(Z_n = \sqrt{n}) + 0^2 \cdot \mathbb{P}(Z_n = 0) $$
+$$ \mathbb{E}[Z_n^2] = n \cdot \frac{1}{n} = 1 $$
+La limite de $\mathbb{E}[|Z_n - 0|^2]$ est $1$, qui n'est pas égale à $0$. Par conséquent, $Z_n$ ne converge pas vers $0$ dans l'espace de Hilbert $L^2$.

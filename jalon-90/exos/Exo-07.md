@@ -1,22 +1,20 @@
-\subsection*{Exercice 7 : Convergence du produit par Slutsky \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+# Exercice 07
 
-Soit $X_n$ une suite convergeant en loi vers $X$, et $Y_n$ une suite convergeant en probabilité vers une constante $c$.
-Montrer rigoureusement le théorème de Slutsky pour le produit : $X_n Y_n \xrightarrow{\mathcal{L}} cX$.
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
+
+**Énoncé :**
+Soit $W_n$ distribuée uniformément sur $[-n, n]$. Considérons la suite normée $V_n = \frac{W_n}{n}$.
+Vers quelle loi la suite $V_n$ converge-t-elle ? Démontrez-le formellement à l'aide des fonctions de répartition.
 
 **Correction :**
-La preuve générale est technique. Il est possible de l'établir à l'aide des fonctions caractéristiques, mais nous procéderons par une méthode directe avec les fonctions bornées continues uniformément.
-Soit $f : \mathbb{R} \to \mathbb{R}$ bornée par $M$ et Lipschitzienne de constante $K$ (la convergence sur ces fonctions suffit pour la convergence en loi, lemme de Portmanteau).
-$\mathbb{E}[f(X_n Y_n)] - \mathbb{E}[f(cX)] = (\mathbb{E}[f(X_n Y_n)] - \mathbb{E}[f(c X_n)]) + (\mathbb{E}[f(c X_n)] - \mathbb{E}[f(cX)])$.
-Le second terme tend vers 0. En effet, $X_n \xrightarrow{\mathcal{L}} X \implies cX_n \xrightarrow{\mathcal{L}} cX$. Soit $h(x) = f(cx)$, $h$ est continue bornée, donc $\mathbb{E}[h(X_n)] \to \mathbb{E}[h(X)]$.
-Il reste le premier terme, noté $E_n$. Soit $\varepsilon > 0$.
-$|f(X_n Y_n) - f(c X_n)| \le \min(2M, K |X_n| |Y_n - c|)$.
-Fixons un compact $A = [-R, R]$ tel que $\mathbb{P}(|X| > R) < \varepsilon / (8M)$. Par la convergence en loi (Portmanteau sur les ouverts), pour $n$ grand, $\mathbb{P}(|X_n| > R) < \varepsilon / (4M)$.
-Découpons l'espace $\Omega$ :
-- Sur $\{|X_n| \le R\} \cap \{|Y_n - c| \le \delta\}$, l'écart est $\le K \cdot R \cdot \delta$. En choisissant $\delta = \frac{\varepsilon}{2 K R}$, l'écart est $\le \varepsilon / 2$.
-- Sur l'événement contraire, on le majore brutalement par $2M$.
-L'espérance du premier terme se majore par :
-$\varepsilon/2 + 2M \cdot \left[ \mathbb{P}(|X_n| > R) + \mathbb{P}(|Y_n - c| > \delta) \right]$.
-Par hypothèse $Y_n \xrightarrow{\mathbb{P}} c$, donc $\mathbb{P}(|Y_n - c| > \delta) \to 0$.
-Pour $n$ grand, cette somme est $\le \varepsilon/2 + 2M (\varepsilon/(4M) + \varepsilon/(4M)) = \varepsilon/2 + \varepsilon = \frac{3\varepsilon}{2}$.
-Ainsi, $\lim_{n \to \infty} |\mathbb{E}[f(X_n Y_n)] - \mathbb{E}[f(c X_n)]| = 0$.
-D'où $X_n Y_n \xrightarrow{\mathcal{L}} cX$.
+Déterminons d'abord la loi de $V_n$. Pour tout $x \in [-1, 1]$, on a :
+$$ F_{V_n}(x) = \mathbb{P}(V_n \le x) = \mathbb{P}\left(\frac{W_n}{n} \le x\right) = \mathbb{P}(W_n \le nx) $$
+Puisque $W_n$ suit $\mathcal{U}([-n, n])$, sa densité est $\frac{1}{2n}$ sur cet intervalle.
+$$ \mathbb{P}(W_n \le nx) = \int_{-n}^{nx} \frac{1}{2n} dt = \frac{nx - (-n)}{2n} = \frac{n(x+1)}{2n} = \frac{x+1}{2} $$
+Ainsi, pour tout $x \in [-1, 1]$, $F_{V_n}(x) = \frac{x+1}{2}$, indépendamment de $n$.
+Pour $x < -1$, $F_{V_n}(x) = 0$, et pour $x > 1$, $F_{V_n}(x) = 1$.
+
+Puisque $F_{V_n}(x)$ est constante par rapport à $n$, la limite est exactement cette même fonction :
+$$ \lim_{n \to \infty} F_{V_n}(x) = \begin{cases} 0 & \text{si } x < -1 \\ \frac{x+1}{2} & \text{si } -1 \le x \le 1 \\ 1 & \text{si } x > 1 \end{cases} $$
+On reconnaît la fonction de répartition d'une variable aléatoire uniforme sur $[-1, 1]$.
+Ainsi, $V_n$ converge en loi vers $V \sim \mathcal{U}([-1, 1])$. En fait, toutes les $V_n$ ont exactement cette loi.

@@ -1,15 +1,20 @@
-\subsection*{Exercice 4 : Stabilité par composition continue \quad $\bigstar\bigstar\star\star\star$}
+# Exercice 04
 
-Soit $X_n$ une suite de variables aléatoires et $X$ une variable aléatoire telles que $X_n \xrightarrow{\mathbb{P}} X$.
-Soit $g : \mathbb{R} \to \mathbb{R}$ une fonction uniformément continue. Montrer que $g(X_n) \xrightarrow{\mathbb{P}} g(X)$.
+**Difficulté :** $\bigstar\bigstar\star\star\star$
+
+**Énoncé :**
+Soit $U \sim \mathcal{U}([0,1])$. Définissons $Y_n = U^n$.
+Étudiez la convergence en probabilité et presque sûre de la suite $Y_n$.
 
 **Correction :**
-Soit $\varepsilon > 0$. Puisque $g$ est uniformément continue sur $\mathbb{R}$, il existe $\delta > 0$ tel que pour tout $x, y \in \mathbb{R}$,
-$|x - y| < \delta \implies |g(x) - g(y)| < \varepsilon$.
-Par contraposée, $|g(x) - g(y)| \ge \varepsilon \implies |x - y| \ge \delta$.
-Si on applique cela aux variables aléatoires, l'événement $\{|g(X_n) - g(X)| \ge \varepsilon\}$ est inclus dans l'événement $\{|X_n - X| \ge \delta\}$.
-Par conséquent, en termes de probabilités :
-$\mathbb{P}(|g(X_n) - g(X)| \ge \varepsilon) \le \mathbb{P}(|X_n - X| \ge \delta)$.
-Par hypothèse, $X_n \xrightarrow{\mathbb{P}} X$, donc pour tout $\delta > 0$, on a $\lim_{n \to \infty} \mathbb{P}(|X_n - X| \ge \delta) = 0$.
-Il en découle immédiatement par le théorème des gendarmes que $\lim_{n \to \infty} \mathbb{P}(|g(X_n) - g(X)| \ge \varepsilon) = 0$.
-La suite $g(X_n)$ converge donc en probabilité vers $g(X)$.
+**Convergence Presque Sûre :**
+L'espace des réalisations est $\Omega = [0, 1]$. La variable aléatoire est $Y_n(\omega) = \omega^n$.
+Pour tout $\omega \in [0, 1[$, on a $\lim_{n \to \infty} \omega^n = 0$.
+Pour $\omega = 1$, $\lim_{n \to \infty} 1^n = 1$.
+L'ensemble de convergence vers $0$ est $[0, 1[$. Puisque $U$ suit une loi uniforme, $\mathbb{P}(U = 1) = 0$.
+Donc $\mathbb{P}\left(\lim_{n \to \infty} Y_n = 0\right) = 1$.
+Ainsi, $Y_n \xrightarrow{p.s.} 0$.
+
+**Convergence en probabilité :**
+Puisque la convergence presque sûre implique la convergence en probabilité (Théorème du cours), nous pouvons conclure immédiatement que $Y_n \xrightarrow{\mathbb{P}} 0$.
+(On peut aussi le vérifier à la main : $\mathbb{P}(U^n > \epsilon) = \mathbb{P}(U > \epsilon^{1/n}) = 1 - \epsilon^{1/n} \to 1 - 1 = 0$.)

@@ -1,21 +1,22 @@
-\subsection*{Exercice 8 : La méthode Delta \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+# Exercice 08
 
-Soit $(X_n)$ une suite de variables aléatoires telle que $\sqrt{n}(X_n - \mu) \xrightarrow{\mathcal{L}} \mathcal{N}(0, \sigma^2)$.
-Soit $g : \mathbb{R} \to \mathbb{R}$ une fonction dérivable en $\mu$ avec $g'(\mu) \neq 0$.
-Montrer que $\sqrt{n}(g(X_n) - g(\mu)) \xrightarrow{\mathcal{L}} \mathcal{N}(0, (g'(\mu)\sigma)^2)$.
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
+
+**Énoncé :**
+Prouvez que la convergence en probabilité vers une constante implique la convergence en loi vers cette même constante. (Cas particulier du théorème du cours).
 
 **Correction :**
-La dérivabilité de $g$ en $\mu$ permet d'écrire le développement limité d'ordre 1 :
-$g(x) = g(\mu) + (x - \mu)g'(\mu) + (x - \mu)\varepsilon(x - \mu)$, où $\lim_{x \to \mu} \varepsilon(x - \mu) = 0$.
-En substituant la variable aléatoire $X_n$ à $x$, on obtient :
-$g(X_n) - g(\mu) = (X_n - \mu) g'(\mu) + (X_n - \mu) \varepsilon(X_n - \mu)$.
-Multiplions l'équation par $\sqrt{n}$ :
-$\sqrt{n}(g(X_n) - g(\mu)) = \sqrt{n}(X_n - \mu) g'(\mu) + \sqrt{n}(X_n - \mu) \varepsilon(X_n - \mu)$.
-Par hypothèse, le terme $\sqrt{n}(X_n - \mu)$ converge en loi vers $Z \sim \mathcal{N}(0, \sigma^2)$.
-La constante $g'(\mu)$ multipliant $Z$ donne une convergence en loi du premier terme vers $g'(\mu)Z \sim \mathcal{N}(0, (g'(\mu)\sigma)^2)$.
-Il reste à montrer que le second terme tend vers 0 en probabilité.
-Puisque $\sqrt{n}(X_n - \mu) \xrightarrow{\mathcal{L}} Z$, la suite est tendue (uniformément bornée en probabilité, $O_P(1)$).
-De plus, la convergence en loi vers une limite fixe finie implique que $X_n \xrightarrow{\mathbb{P}} \mu$.
-Par continuité de $\varepsilon$, $\varepsilon(X_n - \mu) \xrightarrow{\mathbb{P}} 0$ ($o_P(1)$).
-Le produit d'un terme $O_P(1)$ par un terme $o_P(1)$ converge en probabilité vers 0 (Slutsky).
-Ainsi, le second terme disparaît à la limite, et la convergence finale est assurée.
+Soit $X_n \xrightarrow{\mathbb{P}} c$ où $c \in \mathbb{R}$ est une constante déterministe. On veut montrer que $\lim F_{X_n}(x) = F_c(x)$ pour tout point de continuité de $F_c$.
+La fonction de répartition de $c$ est la fonction indicatrice (Dirac en $c$) :
+$$ F_c(x) = \begin{cases} 0 & \text{si } x < c \\ 1 & \text{si } x \ge c \end{cases} $$
+Le seul point de discontinuité est $x = c$. Il suffit donc de vérifier la convergence pour $x < c$ et pour $x > c$.
+
+**Cas 1 : $x < c$.** Posons $\epsilon = c - x > 0$.
+$$ \mathbb{P}(X_n \le x) = \mathbb{P}(X_n - c \le x - c) = \mathbb{P}(X_n - c \le -\epsilon) \le \mathbb{P}(|X_n - c| \ge \epsilon) $$
+Par hypothèse, $\mathbb{P}(|X_n - c| \ge \epsilon) \to 0$, donc $\mathbb{P}(X_n \le x) \to 0 = F_c(x)$.
+
+**Cas 2 : $x > c$.** Posons $\epsilon = x - c > 0$.
+$$ \mathbb{P}(X_n \le x) = 1 - \mathbb{P}(X_n > x) = 1 - \mathbb{P}(X_n - c > x - c) = 1 - \mathbb{P}(X_n - c > \epsilon) $$
+Puisque $\mathbb{P}(X_n - c > \epsilon) \le \mathbb{P}(|X_n - c| > \epsilon) \to 0$, on a :
+$$ \mathbb{P}(X_n \le x) \to 1 = F_c(x) $$
+Ceci prouve la convergence en loi vers $c$.

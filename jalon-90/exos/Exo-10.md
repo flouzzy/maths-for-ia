@@ -1,17 +1,28 @@
-\subsection*{Exercice 10 : Convergence L^p et intégrabilité uniforme \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+# Exercice 10
 
-Soit $X_n \xrightarrow{\mathbb{P}} X$. Montrer que $X_n \xrightarrow{L^p} X$ si et seulement si la suite $(|X_n|^p)$ est uniformément intégrable.
-Définition: Une famille $(Y_n)$ est uniformément intégrable si $\lim_{K \to \infty} \sup_n \mathbb{E}[|Y_n| \mathbf{1}_{|Y_n| > K}] = 0$.
+**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
+
+**Énoncé :**
+Théorème de Slutsky (Cas Particulier).
+Soient $X_n \xrightarrow{\mathcal{L}} X$ (convergence en loi) et $Y_n \xrightarrow{\mathbb{P}} c$ (convergence en probabilité vers une constante $c$).
+Montrez que la somme $X_n + Y_n \xrightarrow{\mathcal{L}} X + c$.
 
 **Correction :**
-Ce résultat, connu sous le nom de théorème de convergence de Vitali, généralise le théorème de convergence dominée de Lebesgue.
-($\Rightarrow$) Supposons que $X_n \xrightarrow{L^p} X$. Posons $Z_n = |X_n|^p$. On a $\lim_n \mathbb{E}[|X_n - X|^p] = 0$. L'inégalité de Minkowski montre que $\mathbb{E}[Z_n] \to \mathbb{E}[|X|^p]$. La convergence dans $L^p$ pour $L^1$ des $|X_n|^p$ implique leur intégrabilité uniforme selon un résultat fondamental d'analyse.
-($\Leftarrow$) Supposons $X_n \xrightarrow{\mathbb{P}} X$ et que $|X_n|^p$ est uniformément intégrable.
-Pour $R > 0$, considérons la fonction de troncature $T_R(x) = \max(-R, \min(x, R))$. La fonction est bornée et continue.
-On a $|X_n - X|^p \le 2^{p-1}(|X_n|^p + |X|^p)$. L'intégrabilité uniforme de la somme de séquences uniformément intégrables garantit que $|X_n - X|^p$ est uniformément intégrable.
-On décompose l'espérance:
-$\mathbb{E}[|X_n - X|^p] = \mathbb{E}[|X_n - X|^p \mathbf{1}_{|X_n - X| \le \delta}] + \mathbb{E}[|X_n - X|^p \mathbf{1}_{|X_n - X| > \delta, |X_n - X| \le M}] + \mathbb{E}[|X_n - X|^p \mathbf{1}_{|X_n - X| > M}]$.
-- Le premier terme est majoré par $\delta^p$.
-- Le deuxième terme est majoré par $M^p \mathbb{P}(|X_n - X| > \delta)$, qui tend vers 0 par convergence en probabilité.
-- Le troisième terme est contrôlé indépendamment de $n$ et de $\delta$ en choisissant $M$ grand, grâce à l'intégrabilité uniforme, il peut être rendu $<\varepsilon$.
-On a donc $\limsup \mathbb{E}[|X_n - X|^p] \le \delta^p + \varepsilon$. En faisant tendre $\delta \to 0$ puis $\varepsilon \to 0$, on obtient bien la convergence $L^p$.
+Nous voulons montrer que pour toute fonction $f$ continue et bornée (et supposons-la uniformément continue, ce qui suffit par densité), $\mathbb{E}[f(X_n + Y_n)] \to \mathbb{E}[f(X + c)]$.
+Décomposons la différence :
+$$ |\mathbb{E}[f(X_n + Y_n)] - \mathbb{E}[f(X + c)]| \le \mathbb{E}[|f(X_n + Y_n) - f(X_n + c)|] + |\mathbb{E}[f(X_n + c)] - \mathbb{E}[f(X + c)]| $$
+
+1. **Deuxième terme :** Puisque $X_n \xrightarrow{\mathcal{L}} X$, et que la fonction $g(x) = f(x + c)$ est continue et bornée, on a par définition de la convergence en loi :
+$$ \lim_{n \to \infty} \mathbb{E}[f(X_n + c)] = \mathbb{E}[f(X + c)] $$
+Donc le deuxième terme tend vers zéro.
+
+2. **Premier terme :** Soit $M$ un majorant de $f$. Pour un $\epsilon > 0$ donné, par uniforme continuité de $f$, il existe $\delta > 0$ tel que si $|a - b| < \delta$, alors $|f(a) - f(b)| < \epsilon$.
+Ici $| (X_n + Y_n) - (X_n + c) | = |Y_n - c|$.
+On sépare l'espérance en conditionnant par $|Y_n - c| < \delta$ et $|Y_n - c| \ge \delta$ :
+$$ \mathbb{E}[|f(X_n + Y_n) - f(X_n + c)|] \le \epsilon \cdot \mathbb{P}(|Y_n - c| < \delta) + 2M \cdot \mathbb{P}(|Y_n - c| \ge \delta) $$
+Or, puisque $Y_n \xrightarrow{\mathbb{P}} c$, on sait que $\lim_{n \to \infty} \mathbb{P}(|Y_n - c| \ge \delta) = 0$.
+Ainsi, en prenant la limite sup :
+$$ \limsup_{n \to \infty} \mathbb{E}[|f(X_n + Y_n) - f(X_n + c)|] \le \epsilon \cdot 1 + 2M \cdot 0 = \epsilon $$
+Puisque $\epsilon$ est arbitraire, ce terme tend vers $0$.
+
+En additionnant les deux résultats, on trouve que $\lim_{n \to \infty} \mathbb{E}[f(X_n + Y_n)] = \mathbb{E}[f(X + c)]$, ce qui démontre la convergence en loi de la somme.
