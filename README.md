@@ -429,7 +429,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
-- [2026-10-15] : [Upsert/Création] du Jalon 89 - Lemmes de Borel-Cantelli. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-10-16] : [Upsert/Création] du Jalon 91 - Inégalités de concentration. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-14] : [Upsert/Création] du Jalon 90 - Les modes de convergence en probabilités. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-11] : [Upsert/Création] du Jalon 88 - Indépendance d'événements et de variables aléatoires. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-09] : [Upsert/Création] du Jalon 87 - Intégration et Espérance mathématique. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
