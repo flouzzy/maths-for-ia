@@ -7,7 +7,7 @@ tags:
   - math/probabilites
   - ia/theorie
 prev: "[[Jalon 90 (Les modes de convergence).md]]"
-next: "[[Jalon 92 (Démonstration rigoureuse de la loi forte des grands nombres.).md]]"
+next: "[[Jalon-92.md]]"
 ---
 
 # Jalon 91 : Inégalités de concentration
