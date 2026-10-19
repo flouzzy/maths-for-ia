@@ -105,7 +105,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-90/Jalon-90.md|Jalon 90 : Les modes de convergence]] : Les modes de convergence : presque sûre, en probabilité, dans $L^p$ et en loi (convergence étroite des mesures). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-91/Jalon-91.md|Jalon 91 : Inégalités de concentration]] : Inégalités de concentration : Markov, Chebyshev, Bienaymé, Chernoff et lemme de Hoeffding. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-92/Jalon-92.md|Jalon 92 : Démonstration rigoureuse de la loi forte des grands nombres.]] : Démonstration rigoureuse de la loi forte des grands nombres. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [ ] [[jalon-93/Jalon 93 (Fonctions caractéristiques).md|Jalon 93 : Fonctions caractéristiques]] : Fonctions caractéristiques (transformée de Fourier de la loi) et théorème de continuité de Lévy.
+- [x] [[jalon-93/Jalon-93.md|Jalon 93 : Fonctions caractéristiques]] : Fonctions caractéristiques (transformée de Fourier de la loi) et théorème de continuité de Lévy. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-94/Jalon 94 (Démonstration du théorème central limite).md|Jalon 94 : Démonstration du théorème central limite]] : Démonstration du théorème central limite (TCL) via les développements limités des fonctions caractéristiques.
 - [ ] [[jalon-95/Jalon 95 (Vecteurs gaussiens).md|Jalon 95 : Vecteurs gaussiens]] : Vecteurs gaussiens, loi normale multidimensionnelle, matrice de covariance et conditionnement gaussien.
 - [ ] [[jalon-96/Jalon 96 (Livrable IA).md|Jalon 96 : Livrable IA]] : Livrable IA T8 : Démonstration rigoureuse de la convergence de la fonction de perte Cross-Entropy vers l'information théorique de Shannon lors de l'entraînement des modèles de langage.
