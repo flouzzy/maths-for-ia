@@ -1,27 +1,27 @@
-# Exercice 09
+# Exercice 9 : Convergence des fonctions empiriques de répartition (Théorème de Glivenko-Cantelli)
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :**
-Soit $(T_n)_{n \ge 1}$ une suite de variables I.I.D. strictement positives, d'espérance $\mu = \mathbb{E}[T_1] > 0$.
-Posons $S_0 = 0$ et $S_n = \sum_{i=1}^n T_i$. $S_n$ représente l'instant du $n$-ième événement (processus de renouvellement).
-Soit $N(t) = \max \{ n \in \mathbb{N} \mid S_n \le t \}$ le nombre d'événements jusqu'à l'instant $t$.
-Montrer rigoureusement que $\lim_{t \to +\infty} \frac{N(t)}{t} = \frac{1}{\mu}$ presque sûrement.
+Soit $(X_n)_{n \geq 1}$ une suite de variables aléatoires I.I.D. dont la fonction de répartition commune est notée $F(x) = \mathbb{P}(X_1 \leq x)$.
+Pour tout réel $x$, on définit la fonction de répartition empirique :
+$$ F_n(x) = \frac{1}{n} \sum_{i=1}^n \mathbf{1}_{X_i \leq x} $$
+où l'indicatrice $\mathbf{1}_{A}$ vaut 1 si l'événement $A$ est réalisé, et 0 sinon.
 
-**Correction :**
-1. Par définition de $N(t)$, l'événement $N(t)$ est encadré par les instants d'arrivées :
-$S_{N(t)} \le t < S_{N(t)+1}$.
-2. Divisons cette double inégalité par $N(t)$ (valable pour $t$ assez grand de sorte que $N(t) \ge 1$) :
-$\frac{S_{N(t)}}{N(t)} \le \frac{t}{N(t)} < \frac{S_{N(t)+1}}{N(t)+1} \frac{N(t)+1}{N(t)}$.
-3. Par hypothèse, $T_1 > 0$ p.s. implique $\lim_{n \to \infty} S_n = +\infty$ p.s.
-Par suite, quand $t \to +\infty$, le nombre d'événements $N(t)$ tend vers $+\infty$ p.s.
-4. La LFGN s'applique à la suite $(T_i)$ :
-$\lim_{n \to \infty} \frac{S_n}{n} = \mu$ p.s.
-Puisque $N(t) \to \infty$ quand $t \to \infty$, par composition des limites des suites, on a :
-$\lim_{t \to \infty} \frac{S_{N(t)}}{N(t)} = \mu$ p.s.
-De même, $\lim_{t \to \infty} \frac{S_{N(t)+1}}{N(t)+1} = \mu$ p.s., et $\lim_{t \to \infty} \frac{N(t)+1}{N(t)} = 1$.
-5. En passant à la limite dans les encadrements (théorème des gendarmes) :
-$\mu \le \liminf_{t \to \infty} \frac{t}{N(t)} \le \limsup_{t \to \infty} \frac{t}{N(t)} \le \mu \times 1$.
-Donc $\lim_{t \to \infty} \frac{t}{N(t)} = \mu$ p.s.
-6. En prenant l'inverse, on obtient le résultat :
-$\lim_{t \to \infty} \frac{N(t)}{t} = \frac{1}{\mu}$ p.s.
+1. Fixons un $x \in \mathbb{R}$. Montrer rigoureusement que $F_n(x) \xrightarrow{p.s.} F(x)$.
+2. (Discussion) Le théorème de Glivenko-Cantelli affirme que cette convergence est uniforme sur $\mathbb{R}$ presque sûrement. Pourquoi la LFGN classique ne suffit-elle pas à prouver directement le théorème de Glivenko-Cantelli ?
+
+**Correction détaillée :**
+
+1. Fixons un $x \in \mathbb{R}$.
+   Définissons la suite de variables aléatoires $Y_i = \mathbf{1}_{X_i \leq x}$.
+   Puisque les $X_i$ sont I.I.D., les variables $Y_i$ sont également I.I.D.
+   Les $Y_i$ suivent une loi de Bernoulli. Calculons leur espérance :
+   $$ \mathbb{E}[Y_1] = \mathbb{E}[\mathbf{1}_{X_1 \leq x}] = \mathbb{P}(X_1 \leq x) = F(x) $$
+   Cette espérance est finie (elle appartient à $[0,1]$).
+   Par définition, $F_n(x) = \frac{1}{n} \sum_{i=1}^n Y_i$ est la moyenne empirique des $Y_i$.
+   D'après la loi forte des grands nombres appliquée à la suite $(Y_i)$, on a :
+   $$ F_n(x) \xrightarrow{p.s.} \mathbb{E}[Y_1] = F(x) $$
+2. L'argument précédent montre que pour **chaque** $x$ fixé, l'ensemble exceptionnel (de probabilité nulle) $\mathcal{N}_x$ sur lequel on n'a pas convergence dépend de $x$.
+   Puisqu'il y a une indénombrabilité de points $x \in \mathbb{R}$, l'union des ensembles exceptionnels $\bigcup_{x \in \mathbb{R}} \mathcal{N}_x$ pourrait ne plus être de probabilité nulle !
+   La LFGN classique nous donne une convergence ponctuelle presque sûre, mais pas la convergence de la borne supérieure (supremum).
+   Le théorème de Glivenko-Cantelli requiert un argument supplémentaire de compacité ou de monotonie des fonctions de répartition pour "densifier" l'espace réel (par exemple via les rationnels $\mathbb{Q}$) afin de contourner le problème de l'union indénombrable.

@@ -1,26 +1,24 @@
-# Exercice 10
+# Exercice 10 : Échec de la LFGN pour la loi de Cauchy
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :**
-Soit $(X_i)_{i \ge 1}$ I.I.D. centrées avec $\mathbb{E}[X_1^4] = K < +\infty$.
-On note $S_n = \sum_{i=1}^n X_i$.
-On admet que $\mathbb{E}[S_n^4] \le 3 K n^2$.
-Soit $\epsilon > 0$. Démontrer, en utilisant l'inégalité de Markov sur $\left(\frac{S_n}{n}\right)^4$ et le lemme de Borel-Cantelli, que $\frac{S_n}{n}$ converge vers 0 presque sûrement.
+Soit $(X_n)_{n \geq 1}$ une suite de variables I.I.D. suivant une loi de Cauchy de densité $f(x) = \frac{1}{\pi(1+x^2)}$.
+Soit $\overline{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$.
+On admet que la somme de $n$ variables de Cauchy indépendantes de paramètre 1 donne une loi de Cauchy de paramètre $n$.
+1. Déterminer la loi exacte de la moyenne empirique $\overline{X}_n$.
+2. En déduire que la LFGN ne s'applique pas. Expliquer mathématiquement pourquoi.
 
-**Correction :**
-1. L'inégalité de Markov pour une variable aléatoire positive s'écrit $\mathbb{P}(Y \ge a) \le \frac{\mathbb{E}[Y]}{a}$.
-Prenons $Y = \left(\frac{S_n}{n}\right)^4$ et $a = \epsilon^4$.
-$\mathbb{P}\left( \left|\frac{S_n}{n}\right| \ge \epsilon \right) = \mathbb{P}\left( \left(\frac{S_n}{n}\right)^4 \ge \epsilon^4 \right) \le \frac{\mathbb{E}\left[\left(\frac{S_n}{n}\right)^4\right]}{\epsilon^4}$.
-2. Injectons l'hypothèse de la borne supérieure :
-$\mathbb{E}\left[\left(\frac{S_n}{n}\right)^4\right] = \frac{1}{n^4}\mathbb{E}[S_n^4] \le \frac{3 K n^2}{n^4} = \frac{3 K}{n^2}$.
-Par conséquent, $\mathbb{P}\left( \left|\frac{S_n}{n}\right| \ge \epsilon \right) \le \frac{3 K}{\epsilon^4 n^2}$.
-3. Formons la série des probabilités de ces événements $A_n = \{ |\frac{S_n}{n}| \ge \epsilon \}$ :
-$\sum_{n=1}^\infty \mathbb{P}(A_n) \le \sum_{n=1}^\infty \frac{3 K}{\epsilon^4 n^2} = \frac{3 K}{\epsilon^4} \sum_{n=1}^\infty \frac{1}{n^2}$.
-La série de Riemann $\sum_{n \ge 1} \frac{1}{n^2}$ converge. Donc la série $\sum \mathbb{P}(A_n)$ converge.
-4. Appliquons le 1er lemme de Borel-Cantelli.
-Si $\sum \mathbb{P}(A_n) < \infty$, alors la probabilité que les événements $A_n$ se réalisent une infinité de fois est nulle.
-Donc $\mathbb{P}(\limsup A_n) = 0$.
-Cela équivaut à dire que presqu'sûrement, on est dans $\liminf A_n^c$.
-Donc, avec probabilité 1, à partir d'un certain rang $N$, $|\frac{S_n}{n}| < \epsilon$.
-5. Comme cela est vrai pour tout $\epsilon > 0$ pris arbitrairement petit, $\frac{S_n}{n}$ converge presque sûrement vers 0.
+**Correction détaillée :**
+
+1. Notons $S_n = \sum_{i=1}^n X_i$. Par la propriété admise de stabilité de la loi de Cauchy, $S_n$ suit une loi de Cauchy de paramètre $n$. La densité de $S_n$ est $f_{S_n}(x) = \frac{n}{\pi(n^2 + x^2)}$.
+   La moyenne empirique est $\overline{X}_n = \frac{S_n}{n}$.
+   Cherchons la densité de $\overline{X}_n$. Soit une fonction de test bornée continue $g$ :
+   $$ \mathbb{E}[g(\overline{X}_n)] = \mathbb{E}[g(S_n / n)] = \int_{-\infty}^{+\infty} g\left(\frac{x}{n}\right) \frac{n}{\pi(n^2 + x^2)} dx $$
+   Procédons au changement de variable $y = x/n$, $dx = n dy$ :
+   $$ \mathbb{E}[g(\overline{X}_n)] = \int_{-\infty}^{+\infty} g(y) \frac{n}{\pi(n^2 + (ny)^2)} n dy = \int_{-\infty}^{+\infty} g(y) \frac{n^2}{\pi n^2(1 + y^2)} dy = \int_{-\infty}^{+\infty} g(y) \frac{1}{\pi(1+y^2)} dy $$
+   Cela prouve que $\overline{X}_n$ possède la même densité $f(y) = \frac{1}{\pi(1+y^2)}$.
+   Autrement dit, $\overline{X}_n$ suit exactement la même loi de Cauchy que $X_1$, pour tout $n$.
+2. Puisque la loi de $\overline{X}_n$ est statique et identique à celle de $X_1$, elle ne se "concentre" jamais autour d'une valeur (sa variance reste infinie, elle "zigzague" perpétuellement de la même façon). La suite $(\overline{X}_n)$ ne converge donc pas presque sûrement vers une constante.
+   L'explication fondamentale provient du non-respect de l'hypothèse cruciale de la LFGN : la loi de Cauchy n'admet pas d'espérance finie.
+   En effet, $\int_{-\infty}^{+\infty} |x| \frac{1}{\pi(1+x^2)} dx = \frac{2}{\pi} \int_0^{+\infty} \frac{x}{1+x^2} dx = \frac{1}{\pi} [\ln(1+x^2)]_0^{+\infty} = +\infty$.
+   Comme $\mathbb{E}[|X_1|] = +\infty$, le théorème de Kolmogorov ne s'applique pas.

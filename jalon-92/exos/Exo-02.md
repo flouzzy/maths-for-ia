@@ -1,18 +1,24 @@
-# Exercice 02
+# Exercice 2 : Convergence des fréquences empiriques
 
-**Difficulté :** $\bigstar\star\star\star\star$
+$\bigstar\star\star\star\star$
 
-**Énoncé :**
-On lance un dé équilibré à 6 faces une infinité de fois. Soit $X_i$ le résultat du $i$-ème lancer.
-Soit $Y_n = \frac{1}{n} \sum_{i=1}^n X_i^2$.
-1. Exprimer $Y_n$ en fonction des résultats des lancers.
-2. Montrer que $Y_n$ converge presque sûrement et calculer sa limite.
+On lance une pièce de monnaie équilibrée un grand nombre de fois.
+Soit $X_i$ la variable aléatoire qui vaut $1$ si le $i$-ème lancer donne "Pile", et $0$ s'il donne "Face".
+Soit $F_n$ la fréquence d'apparition de "Pile" au cours des $n$ premiers lancers.
 
-**Correction :**
-1. $Y_n$ représente la moyenne empirique des carrés des résultats obtenus lors des $n$ premiers lancers.
-2. Posons $Z_i = X_i^2$. Puisque les $X_i$ sont indépendants et de même loi, il en est de même pour les variables $(Z_i)$.
-Calculons l'espérance de $Z_1$ :
-$\mathbb{E}[Z_1] = \mathbb{E}[X_1^2] = \sum_{k=1}^6 k^2 \mathbb{P}(X_1 = k) = \frac{1}{6}(1^2 + 2^2 + 3^2 + 4^2 + 5^2 + 6^2) = \frac{1+4+9+16+25+36}{6} = \frac{91}{6}$.
-La variable $Z_1$ prend des valeurs finies donc $\mathbb{E}[|Z_1|] = \frac{91}{6} < +\infty$.
-D'après la Loi Forte des Grands Nombres appliquée à la suite $(Z_i)$, la moyenne empirique $\frac{1}{n}\sum_{i=1}^n Z_i$ converge presque sûrement vers $\mathbb{E}[Z_1]$.
-Donc, $\lim_{n \to \infty} Y_n = \frac{91}{6}$ presque sûrement.
+1. Déterminer la loi de $X_i$, son espérance et sa variance.
+2. Exprimer $F_n$ en fonction des $X_i$.
+3. Montrer rigoureusement que $F_n$ converge presque sûrement vers $1/2$.
+
+**Correction détaillée :**
+
+1. Puisque la pièce est équilibrée, on a $\mathbb{P}(X_i = 1) = \frac{1}{2}$ et $\mathbb{P}(X_i = 0) = \frac{1}{2}$.
+   $X_i$ suit donc une loi de Bernoulli de paramètre $p = 1/2$, soit $X_i \sim \mathcal{B}(1/2)$.
+   Son espérance est $\mathbb{E}[X_i] = p = \frac{1}{2}$.
+   Sa variance est $\text{Var}(X_i) = p(1-p) = \frac{1}{4}$.
+2. La fréquence d'apparition de "Pile" sur $n$ lancers est le nombre total de "Pile" divisé par $n$.
+   Le nombre total de "Pile" est la somme des indicatrices $X_i$.
+   Donc, $F_n = \frac{1}{n} \sum_{i=1}^n X_i$.
+3. La suite $(X_n)_{n \geq 1}$ est une suite de variables I.I.D. d'espérance finie ($\mu = 1/2$).
+   D'après la loi forte des grands nombres, la moyenne empirique $F_n = \overline{X}_n$ converge presque sûrement vers $\mathbb{E}[X_1]$.
+   Ainsi, $\lim_{n \to +\infty} F_n = \frac{1}{2}$ avec une probabilité de $1$.

@@ -1,20 +1,19 @@
-# Exercice 08
+# Exercice 8 : Application aux probabilités de grands écarts
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
+$\bigstar\bigstar\bigstar\bigstar\star$
 
-**Énoncé :**
-Soit à calculer $I = \int_{0}^{+\infty} g(x) e^{-x} dx$ avec $g$ telle que $\int_0^{+\infty} |g(x)| e^{-x} dx < \infty$.
-Proposer un estimateur $\hat{I}_n$ construit à partir d'une suite de variables I.I.D. judicieusement choisie et démontrer qu'il converge presque sûrement vers $I$.
+Soit $(X_n)_{n \geq 1}$ une suite de variables I.I.D. d'espérance $\mu = 0$ et de moment d'ordre 4 fini ($\mathbb{E}[X_1^4] = K$).
+On pose $S_n = \sum_{i=1}^n X_i$.
+Dans la preuve de la LFGN, on a montré que $\mathbb{E}[S_n^4] \leq 3K n^2$.
+Utiliser cette majoration pour borner la probabilité $P_n = \mathbb{P}\left(\max_{1 \le k \le n} \left|\frac{S_k}{k}\right| \ge \epsilon\right)$.
+*Indice : On pourra se contenter de borner $\mathbb{P}\left(\left|\frac{S_n}{n}\right| \ge \epsilon\right)$ et discuter de l'union.*
 
-**Correction :**
-1. L'intégrale à estimer a la forme d'une espérance :
-$I = \int_{0}^{+\infty} g(x) e^{-x} dx$.
-Remarquons que $f(x) = e^{-x} \mathbf{1}_{[0,+\infty[}(x)$ est la densité de probabilité d'une loi exponentielle de paramètre $\lambda = 1$.
-2. Par conséquent, si on prend $X$ une variable aléatoire suivant la loi $\mathcal{E}(1)$, on a par le théorème de transfert :
-$\mathbb{E}[g(X)] = \int_{-\infty}^{+\infty} g(x) f(x) dx = \int_{0}^{+\infty} g(x) e^{-x} dx = I$.
-3. La condition $\int_0^{+\infty} |g(x)| e^{-x} dx < \infty$ s'écrit $\mathbb{E}[|g(X)|] < +\infty$.
-4. On définit l'estimateur empirique suivant : on tire une suite $(X_1, ..., X_n)$ I.I.D. de loi $\mathcal{E}(1)$ et on pose $\hat{I}_n = \frac{1}{n} \sum_{i=1}^n g(X_i)$.
-5. Les variables $Y_i = g(X_i)$ sont I.I.D. car composées mesurables de variables I.I.D.
-Elles vérifient la condition d'intégrabilité $\mathbb{E}[|Y_1|] < +\infty$.
-Par la Loi Forte des Grands Nombres de Kolmogorov, on conclut que :
-$\hat{I}_n = \frac{1}{n} \sum_{i=1}^n g(X_i) \xrightarrow{p.s.} \mathbb{E}[g(X_1)] = I$.
+**Correction détaillée :**
+
+1. Fixons $\epsilon > 0$. Par l'inégalité de Markov appliquée à la puissance 4 :
+   $$ \mathbb{P}\left(\left|\frac{S_n}{n}\right| \geq \epsilon\right) = \mathbb{P}\left(\frac{S_n^4}{n^4} \geq \epsilon^4\right) \leq \frac{\mathbb{E}[S_n^4]}{n^4 \epsilon^4} $$
+2. En injectant la borne supérieure $\mathbb{E}[S_n^4] \leq 3K n^2$ :
+   $$ \mathbb{P}\left(\left|\frac{S_n}{n}\right| \geq \epsilon\right) \leq \frac{3K n^2}{n^4 \epsilon^4} = \frac{3K}{\epsilon^4 n^2} $$
+3. Cette inégalité nous donne une borne de décroissance polynomiale en $O(1/n^2)$ pour l'écart de la moyenne empirique à sa cible, pour un $n$ fixé.
+   C'est la sommabilité de cette borne ($\sum \frac{1}{n^2} < \infty$) qui permet d'utiliser le lemme de Borel-Cantelli.
+   C'est une borne typique de probabilité de grands écarts (large deviations), bien que des outils plus puissants comme le lemme de Chernoff fourniraient une borne exponentielle en $e^{-cn}$ si on supposait l'existence d'une fonction génératrice des moments.
