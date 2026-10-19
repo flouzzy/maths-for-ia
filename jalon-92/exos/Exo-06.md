@@ -1,27 +1,25 @@
-# Exercice 6 : Lemme de Borel-Cantelli : Preuve élémentaire \quad $\bigstar\bigstar\bigstar\bigstar\star$
+# Exercice 6 : Moyenne géométrique empirique
 
-## Énoncé
-Soit $(\Omega, \mathcal{F}, \mathbb{P})$ un espace probabilisé. Soit $(A_n)_{n \in \mathbb{N}}$ une suite d'événements.
-On définit la limite supérieure des ensembles : $\limsup A_n = \bigcap_{n=1}^\infty \bigcup_{k=n}^\infty A_k$.
-Montrer rigoureusement (premier lemme de Borel-Cantelli) que si $\sum_{n=1}^\infty \mathbb{P}(A_n) < +\infty$, alors $\mathbb{P}(\limsup A_n) = 0$.
+$\bigstar\bigstar\bigstar\star\star$
 
-## Correction Détaillée
-### Étape 1 : Comprendre l'événement limite supérieure
-L'événement $A^* = \limsup A_n$ est l'ensemble des $\omega \in \Omega$ qui appartiennent à une infinité d'événements $A_n$. Formellement :
-$$ A^* = \bigcap_{n=1}^\infty B_n \quad \text{avec} \quad B_n = \bigcup_{k=n}^\infty A_k $$
-La suite d'ensembles $(B_n)$ est décroissante car $B_{n+1} \subset B_n$ (l'union porte sur moins d'ensembles).
+Soit $(X_n)_{n \geq 1}$ une suite de variables aléatoires I.I.D. strictements positives, telles que $\mathbb{E}[\ln(X_1)]$ soit bien définie et finie.
+On définit la moyenne géométrique $G_n = \left( \prod_{i=1}^n X_i \right)^{1/n}$.
 
-### Étape 2 : Continuité décroissante de la probabilité
-Par la propriété de continuité décroissante de la mesure de probabilité sur des ensembles emboîtés ($B_1 \supset B_2 \supset B_3 \dots$) :
-$$ \mathbb{P}(A^*) = \mathbb{P}\left( \bigcap_{n=1}^\infty B_n \right) = \lim_{n \to \infty} \mathbb{P}(B_n) $$
+1. Montrer que $\ln(G_n)$ s'exprime comme une moyenne empirique.
+2. En déduire la limite presque sûre de $G_n$ lorsque $n \to +\infty$.
 
-### Étape 3 : Majoration par la somme (Sous-additivité)
-Pour tout entier $n$, par l'axiome de sous-additivité de la probabilité ($\sigma$-sous-additivité) :
-$$ \mathbb{P}(B_n) = \mathbb{P}\left( \bigcup_{k=n}^\infty A_k \right) \le \sum_{k=n}^\infty \mathbb{P}(A_k) $$
+**Correction détaillée :**
 
-### Étape 4 : Conclusion par la convergence de la série
-Par hypothèse, la série $\sum_{k=1}^\infty \mathbb{P}(A_k)$ est convergente (sa somme est finie).
-Le reste d'une série convergente tend nécessairement vers zéro. Donc :
-$$ \lim_{n \to \infty} \sum_{k=n}^\infty \mathbb{P}(A_k) = 0 $$
-Comme $0 \le \mathbb{P}(B_n) \le \sum_{k=n}^\infty \mathbb{P}(A_k)$, par le théorème des gendarmes, $\lim_{n \to \infty} \mathbb{P}(B_n) = 0$.
-Finalement, par l'Étape 2, on conclut que $\mathbb{P}(A^*) = \mathbb{P}(\limsup A_n) = 0$. $\blacksquare$
+1. En appliquant la fonction logarithme naturel (qui est bijective et transforme les produits en sommes) à $G_n$, on obtient :
+   $$ \ln(G_n) = \ln\left( \left( \prod_{i=1}^n X_i \right)^{1/n} \right) = \frac{1}{n} \ln\left( \prod_{i=1}^n X_i \right) = \frac{1}{n} \sum_{i=1}^n \ln(X_i) $$
+   Ainsi, $\ln(G_n)$ est la moyenne empirique de la suite de variables aléatoires $Y_i = \ln(X_i)$.
+2. Les variables $Y_i = \ln(X_i)$ sont I.I.D. (car les $X_i$ le sont).
+   Par hypothèse, $\mathbb{E}[|Y_1|] = \mathbb{E}[|\ln(X_1)|] < +\infty$, donc la loi forte des grands nombres s'applique à la suite $(Y_n)$.
+   Par la LFGN, on a :
+   $$ \frac{1}{n} \sum_{i=1}^n Y_i \xrightarrow{p.s.} \mathbb{E}[Y_1] $$
+   Donc :
+   $$ \ln(G_n) \xrightarrow{p.s.} \mathbb{E}[\ln(X_1)] $$
+   Puisque la fonction exponentielle est continue sur $\mathbb{R}$, on peut la composer avec la limite presque sûre :
+   $$ G_n = \exp(\ln(G_n)) \xrightarrow{p.s.} \exp(\mathbb{E}[\ln(X_1)]) $$
+   La limite presque sûre de la moyenne géométrique est donc $e^{\mathbb{E}[\ln(X_1)]}$.
+   (Note : Par l'inégalité de Jensen, comme $-\ln$ est convexe, on a toujours $e^{\mathbb{E}[\ln(X_1)]} \leq \mathbb{E}[X_1]$).

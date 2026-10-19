@@ -1,37 +1,19 @@
-# Exercice 8 : Théorème de Weierstrass probabiliste via les polynômes de Bernstein \quad $\bigstar\bigstar\bigstar\bigstar\star$
+# Exercice 8 : Application aux probabilités de grands écarts
 
-## Énoncé
-Soit $f$ une fonction continue sur $[0,1]$. Soit $S_n \sim \mathcal{B}(n, x)$ pour $x \in [0,1]$.
-On pose $B_n(f)(x) = \mathbb{E}\left[f\left(\frac{S_n}{n}\right)\right]$.
-Montrer en utilisant la loi faible/forte que $B_n(f)(x)$ converge uniformément vers $f(x)$ sur $[0,1]$. (Esquisse de la preuve rigoureuse demandée).
+$\bigstar\bigstar\bigstar\bigstar\star$
 
-## Correction Détaillée
-### Étape 1 : Expression du polynôme de Bernstein
-La loi de $S_n$ est binomiale. Donc $\mathbb{P}(S_n = k) = \binom{n}{k} x^k (1-x)^{n-k}$. L'espérance devient :
-$$ B_n(f)(x) = \sum_{k=0}^n f\left(\frac{k}{n}\right) \binom{n}{k} x^k (1-x)^{n-k} $$
-C'est bien un polynôme en $x$.
+Soit $(X_n)_{n \geq 1}$ une suite de variables I.I.D. d'espérance $\mu = 0$ et de moment d'ordre 4 fini ($\mathbb{E}[X_1^4] = K$).
+On pose $S_n = \sum_{i=1}^n X_i$.
+Dans la preuve de la LFGN, on a montré que $\mathbb{E}[S_n^4] \leq 3K n^2$.
+Utiliser cette majoration pour borner la probabilité $P_n = \mathbb{P}\left(\max_{1 \le k \le n} \left|\frac{S_k}{k}\right| \ge \epsilon\right)$.
+*Indice : On pourra se contenter de borner $\mathbb{P}\left(\left|\frac{S_n}{n}\right| \ge \epsilon\right)$ et discuter de l'union.*
 
-### Étape 2 : Continuité uniforme et borne
-Puisque $f$ est continue sur le segment compact $[0,1]$, elle est bornée : il existe $M > 0$ tel que $|f(y)| \le M$ pour tout $y$.
-De plus, par le théorème de Heine, $f$ est uniformément continue : pour tout $\epsilon > 0$, il existe $\delta > 0$ tel que $|y - x| < \delta \implies |f(y) - f(x)| < \epsilon/2$.
+**Correction détaillée :**
 
-### Étape 3 : Séparation de l'espérance
-On veut majorer $|B_n(f)(x) - f(x)|$. Comme $\sum \mathbb{P}(S_n=k) = 1$, on a $f(x) = \mathbb{E}[f(x)]$.
-$$ |B_n(f)(x) - f(x)| \le \mathbb{E}\left[ \left| f\left(\frac{S_n}{n}\right) - f(x) \right| \right] $$
-On décompose cette espérance sur deux événements : $A = \left\{ \left| \frac{S_n}{n} - x \right| < \delta \right\}$ et son complémentaire $A^c$.
-
-### Étape 4 : Majoration des deux termes
-Sur $A$, par continuité uniforme, l'écart est majoré par $\epsilon/2$. Donc l'espérance sur $A$ est $\le \epsilon/2 \cdot \mathbb{P}(A) \le \epsilon/2$.
-Sur $A^c$, l'écart maximal entre deux valeurs de $f$ est $2M$. L'espérance est donc majorée par $2M \mathbb{P}(A^c)$.
-Il faut donc évaluer $\mathbb{P}(A^c) = \mathbb{P}\left( \left| \frac{S_n}{n} - x \right| \ge \delta \right)$.
-Par l'inégalité de Bienaymé-Tchebychev (puisque $S_n$ a pour variance $nx(1-x)$) :
-$$ \mathbb{P}(A^c) \le \frac{\text{Var}(S_n/n)}{\delta^2} = \frac{x(1-x)}{n \delta^2} $$
-Le numérateur $x(1-x)$ atteint son maximum sur $[0,1]$ en $1/2$, où il vaut $1/4$.
-Donc $\mathbb{P}(A^c) \le \frac{1}{4n\delta^2}$.
-
-### Étape 5 : Conclusion sur la convergence uniforme
-On regroupe les majorations :
-$$ \sup_{x \in [0,1]} |B_n(f)(x) - f(x)| \le \frac{\epsilon}{2} + 2M \frac{1}{4n\delta^2} $$
-Pour $\epsilon$ fixé, $\delta$ est fixé. Si l'on prend $n > \frac{M}{\epsilon \delta^2}$, le second terme devient strictement inférieur à $\epsilon/2$.
-Ainsi, pour un tel $n$, l'erreur uniforme est strictement inférieure à $\epsilon$.
-Ceci démontre la convergence uniforme de $B_n(f)$ vers $f$ (Théorème de Weierstrass probabiliste approché par la loi des grands nombres). $\blacksquare$
+1. Fixons $\epsilon > 0$. Par l'inégalité de Markov appliquée à la puissance 4 :
+   $$ \mathbb{P}\left(\left|\frac{S_n}{n}\right| \geq \epsilon\right) = \mathbb{P}\left(\frac{S_n^4}{n^4} \geq \epsilon^4\right) \leq \frac{\mathbb{E}[S_n^4]}{n^4 \epsilon^4} $$
+2. En injectant la borne supérieure $\mathbb{E}[S_n^4] \leq 3K n^2$ :
+   $$ \mathbb{P}\left(\left|\frac{S_n}{n}\right| \geq \epsilon\right) \leq \frac{3K n^2}{n^4 \epsilon^4} = \frac{3K}{\epsilon^4 n^2} $$
+3. Cette inégalité nous donne une borne de décroissance polynomiale en $O(1/n^2)$ pour l'écart de la moyenne empirique à sa cible, pour un $n$ fixé.
+   C'est la sommabilité de cette borne ($\sum \frac{1}{n^2} < \infty$) qui permet d'utiliser le lemme de Borel-Cantelli.
+   C'est une borne typique de probabilité de grands écarts (large deviations), bien que des outils plus puissants comme le lemme de Chernoff fourniraient une borne exponentielle en $e^{-cn}$ si on supposait l'existence d'une fonction génératrice des moments.

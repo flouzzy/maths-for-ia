@@ -1,24 +1,25 @@
-# Exercice 7 : Convergence des fonctions continues de la moyenne \quad $\bigstar\bigstar\bigstar\bigstar\star$
+# Exercice 7 : Limite d'une somme de variables bornées par Borel-Cantelli
 
-## Énoncé
-Soit $(X_n)$ une suite de variables i.i.d. telles que $\mathbb{E}[|X_1|] < \infty$ et $\mathbb{E}[X_1] = \mu$.
-Soit $f : \mathbb{R} \to \mathbb{R}$ une fonction continue.
-Montrer que $f\left(\frac{1}{n} \sum_{i=1}^n X_i\right) \xrightarrow{p.s.} f(\mu)$.
+$\bigstar\bigstar\bigstar\bigstar\star$
 
-## Correction Détaillée
-### Étape 1 : Application de la LFGN classique
-Soit $\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$.
-Puisque la suite $(X_n)$ est i.i.d. et dans $L^1$, le théorème de la Loi Forte des Grands Nombres nous assure que $\bar{X}_n$ converge presque sûrement vers $\mu$ :
-$$ \mathbb{P}\left(\left\{\omega \in \Omega \mid \lim_{n \to \infty} \bar{X}_n(\omega) = \mu \right\}\right) = 1 $$
-Soit $N \subset \Omega$ l'ensemble de mesure de probabilité nulle tel que pour tout $\omega \in \Omega \setminus N$, on ait $\lim_{n \to \infty} \bar{X}_n(\omega) = \mu$.
+Soit $(X_n)_{n \geq 1}$ une suite de variables aléatoires indépendantes telles que pour tout $n$, $\mathbb{P}(X_n = 1) = p$ et $\mathbb{P}(X_n = -1) = 1-p$, avec $p \in ]0, 1[$.
+Soit $S_n = \sum_{i=1}^n X_i$.
 
-### Étape 2 : Composition par une fonction continue
-Fixons un $\omega \in \Omega \setminus N$. Nous avons une suite de nombres réels $x_n = \bar{X}_n(\omega)$ qui converge vers la limite réelle $l = \mu$.
-Puisque la fonction $f$ est continue sur $\mathbb{R}$, elle satisfait la caractérisation séquentielle de la continuité : pour toute suite réelle $(x_n)$ convergeant vers $l$, la suite $f(x_n)$ converge vers $f(l)$.
-Ainsi, pour ce choix de $\omega$, on a :
-$$ \lim_{n \to \infty} f(\bar{X}_n(\omega)) = f(\mu) $$
+Montrer en utilisant la LFGN que si $p > 1/2$, alors $S_n \xrightarrow{p.s.} +\infty$.
 
-### Étape 3 : Conclusion probatoire
-L'ensemble des $\omega$ pour lesquels la convergence $f(\bar{X}_n(\omega)) \to f(\mu)$ a lieu contient $\Omega \setminus N$. Or $\mathbb{P}(\Omega \setminus N) = 1$.
-Donc l'événement $\left\{ \omega \in \Omega \mid \lim_{n \to \infty} f(\bar{X}_n(\omega)) = f(\mu) \right\}$ a une probabilité de 1.
-Cela prouve exactement que $f(\bar{X}_n) \xrightarrow{p.s.} f(\mu)$. C'est le théorème de composition ou \Continuous Mapping Theorem" appliqué à la convergence presque sûre. $\blacksquare$
+**Correction détaillée :**
+
+1. Les variables $X_n$ sont I.I.D.
+   Calculons leur espérance :
+   $$ \mathbb{E}[X_1] = 1 \cdot p + (-1) \cdot (1-p) = p - 1 + p = 2p - 1 $$
+2. Puisque $X_n \in \{-1, 1\}$, $\mathbb{E}[|X_1|] = 1 < +\infty$.
+   La loi forte des grands nombres s'applique à la suite $(X_n)$, donc :
+   $$ \frac{S_n}{n} = \frac{1}{n} \sum_{i=1}^n X_i \xrightarrow{p.s.} \mathbb{E}[X_1] = 2p - 1 $$
+3. Par hypothèse, $p > 1/2$, ce qui implique que $2p - 1 > 0$. Notons $\mu = 2p - 1 > 0$.
+   La convergence presque sûre $\frac{S_n}{n} \xrightarrow{p.s.} \mu$ signifie que, pour presque tout $\omega \in \Omega$, il existe un rang $N(\omega)$ tel que pour tout $n \geq N(\omega)$, $\frac{S_n(\omega)}{n} \geq \frac{\mu}{2}$.
+   Par conséquent, pour $n \geq N(\omega)$ :
+   $$ S_n(\omega) \geq n \frac{\mu}{2} $$
+   Puisque $\mu/2 > 0$, la limite du terme de droite est $+\infty$ lorsque $n \to +\infty$.
+   Par minoration, on en déduit que pour presque tout $\omega$, $\lim_{n \to +\infty} S_n(\omega) = +\infty$.
+   Ce qui démontre que $S_n \xrightarrow{p.s.} +\infty$.
+   (Interprétation : dans une marche aléatoire où la probabilité d'aller à droite est strictement supérieure à celle d'aller à gauche, la particule part inéluctablement vers $+\infty$).

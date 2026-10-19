@@ -1,22 +1,18 @@
-# Exercice 1 : Calcul direct de variance et application de Bienaymé-Tchebychev \quad $\bigstar\star\star\star\star$
+# Exercice 1 : Moyenne empirique d'une loi de Poisson
 
-## Énoncé
-Soit $(X_n)_{n \ge 1}$ une suite de variables aléatoires indépendantes suivant une loi de Bernoulli de paramètre $p = 0.5$. On note $S_n = \sum_{i=1}^n X_i$.
-1. Calculer $\mathbb{E}[S_n/n]$ et $\text{Var}(S_n/n)$.
-2. En utilisant l'inégalité de Bienaymé-Tchebychev, donner une majoration de $\mathbb{P}(|S_n/n - 0.5| \ge 0.1)$ pour $n=100$.
+$\bigstar\star\star\star\star$
 
-## Correction Détaillée
-### 1. Espérance et Variance
-On sait que pour $X_i \sim \mathcal{B}(p)$, $\mathbb{E}[X_i] = p = 0.5$ et $\text{Var}(X_i) = p(1-p) = 0.25$.
-Par linéarité de l'espérance :
-$$ \mathbb{E}\left[\frac{S_n}{n}\right] = \frac{1}{n} \sum_{i=1}^n \mathbb{E}[X_i] = \frac{n \cdot 0.5}{n} = 0.5 $$
-Par indépendance des $X_i$, la variance d'une somme est la somme des variances :
-$$ \text{Var}\left(\frac{S_n}{n}\right) = \frac{1}{n^2} \sum_{i=1}^n \text{Var}(X_i) = \frac{n \cdot 0.25}{n^2} = \frac{0.25}{n} $$
+Soit $(X_n)_{n \geq 1}$ une suite de variables aléatoires indépendantes et identiquement distribuées, suivant toutes la loi de Poisson de paramètre $\lambda > 0$, c'est-à-dire $X_n \sim \mathcal{P}(\lambda)$.
+On rappelle que $\mathbb{E}[X_1] = \lambda$.
+On pose $\overline{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$.
 
-### 2. Inégalité de Bienaymé-Tchebychev
-L'inégalité s'écrit :
-$$ \mathbb{P}\left( \left| \frac{S_n}{n} - \mathbb{E}\left[\frac{S_n}{n}\right] \right| \ge \epsilon \right) \le \frac{\text{Var}(S_n/n)}{\epsilon^2} $$
-Ici, $\epsilon = 0.1$ et $n = 100$. Donc $\text{Var}(S_{100}/100) = 0.25/100 = 0.0025$.
-On applique l'inégalité :
-$$ \mathbb{P}\left( \left| \frac{S_{100}}{100} - 0.5 \right| \ge 0.1 \right) \le \frac{0.0025}{0.1^2} = \frac{0.0025}{0.01} = 0.25 $$
-Ainsi, la probabilité de s'écarter de plus de $0.1$ de la moyenne est majorée par $25\%$. $\blacksquare$
+1. Que représente $\overline{X}_n$ en termes statistiques ?
+2. Énoncer le théorème de la loi forte des grands nombres et l'appliquer à cette suite. Que peut-on conclure sur le comportement asymptotique de $\overline{X}_n$ ?
+
+**Correction détaillée :**
+
+1. La variable $\overline{X}_n$ représente la moyenne empirique de l'échantillon de taille $n$. C'est un estimateur naturel de l'espérance de la loi sous-jacente.
+2. Le théorème de la loi forte des grands nombres (LFGN) stipule que si $(X_n)_{n \geq 1}$ est une suite de variables aléatoires I.I.D. admettant une espérance finie $\mathbb{E}[X_1] = \mu$, alors la moyenne empirique $\overline{X}_n$ converge presque sûrement vers $\mu$ lorsque $n$ tend vers l'infini : $\mathbb{P}\left(\lim_{n \to \infty} \overline{X}_n = \mu\right) = 1$.
+   Ici, les $X_n$ sont I.I.D. suivant $\mathcal{P}(\lambda)$. Puisque $\mathbb{E}[X_1] = \lambda < +\infty$, les hypothèses de la LFGN sont satisfaites.
+   Par conséquent, on conclut que $\overline{X}_n$ converge presque sûrement vers $\lambda$ :
+   $$ \overline{X}_n \xrightarrow{p.s.} \lambda $$

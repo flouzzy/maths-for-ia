@@ -1,22 +1,24 @@
-# Exercice 2 : Convergence presque sûre vers une constante \quad $\bigstar\bigstar\star\star\star$
+# Exercice 2 : Convergence des fréquences empiriques
 
-## Énoncé
-Soit $(X_n)_{n \ge 1}$ une suite de variables aléatoires i.i.d. de loi uniforme sur $[0, a]$ avec $a>0$. Soit $M_n = \max(X_1, \dots, X_n)$.
-Montrer que $M_n$ converge presque sûrement vers $a$ lorsque $n \to \infty$.
+$\bigstar\star\star\star\star$
 
-## Correction Détaillée
-### Étape 1 : Propriété de monotonie
-On remarque que $M_n$ est une suite croissante de variables aléatoires, puisque $M_{n+1} = \max(M_n, X_{n+1}) \ge M_n$. De plus, $M_n \le a$ pour tout $n$. Ainsi, pour tout $\omega \in \Omega$, la suite réelle $(M_n(\omega))$ est croissante et majorée. Elle converge donc vers une limite $M(\omega) \le a$.
+On lance une pièce de monnaie équilibrée un grand nombre de fois.
+Soit $X_i$ la variable aléatoire qui vaut $1$ si le $i$-ème lancer donne "Pile", et $0$ s'il donne "Face".
+Soit $F_n$ la fréquence d'apparition de "Pile" au cours des $n$ premiers lancers.
 
-### Étape 2 : Évaluation des probabilités d'écart
-Soit $\epsilon > 0$ tel que $\epsilon < a$. Calculons la probabilité que $M_n$ s'écarte de $a$ par plus de $\epsilon$.
-$$ \mathbb{P}(M_n \le a - \epsilon) = \mathbb{P}(X_1 \le a - \epsilon, \dots, X_n \le a - \epsilon) $$
-Par indépendance des $X_i$, cette probabilité est le produit des probabilités :
-$$ \mathbb{P}(M_n \le a - \epsilon) = (\mathbb{P}(X_1 \le a - \epsilon))^n = \left( \frac{a - \epsilon}{a} \right)^n $$
+1. Déterminer la loi de $X_i$, son espérance et sa variance.
+2. Exprimer $F_n$ en fonction des $X_i$.
+3. Montrer rigoureusement que $F_n$ converge presque sûrement vers $1/2$.
 
-### Étape 3 : Application de Borel-Cantelli
-Soit l'événement $A_n = \{ M_n \le a - \epsilon \}$.
-La série $\sum_{n=1}^\infty \mathbb{P}(A_n) = \sum_{n=1}^\infty \left( 1 - \frac{\epsilon}{a} \right)^n$ est une série géométrique de raison $q = 1 - \frac{\epsilon}{a} \in ]0, 1[$.
-Donc, $\sum_{n=1}^\infty \mathbb{P}(A_n) < +\infty$.
-Par le lemme de Borel-Cantelli, $\mathbb{P}(\limsup A_n) = 0$. Cela signifie que presque sûrement, à partir d'un certain rang, $M_n > a - \epsilon$.
-Puisque cela est vrai pour tout $\epsilon > 0$ (en considérant une suite $\epsilon_k = 1/k \to 0$), on conclut que $M_n \xrightarrow{p.s.} a$. $\blacksquare$
+**Correction détaillée :**
+
+1. Puisque la pièce est équilibrée, on a $\mathbb{P}(X_i = 1) = \frac{1}{2}$ et $\mathbb{P}(X_i = 0) = \frac{1}{2}$.
+   $X_i$ suit donc une loi de Bernoulli de paramètre $p = 1/2$, soit $X_i \sim \mathcal{B}(1/2)$.
+   Son espérance est $\mathbb{E}[X_i] = p = \frac{1}{2}$.
+   Sa variance est $\text{Var}(X_i) = p(1-p) = \frac{1}{4}$.
+2. La fréquence d'apparition de "Pile" sur $n$ lancers est le nombre total de "Pile" divisé par $n$.
+   Le nombre total de "Pile" est la somme des indicatrices $X_i$.
+   Donc, $F_n = \frac{1}{n} \sum_{i=1}^n X_i$.
+3. La suite $(X_n)_{n \geq 1}$ est une suite de variables I.I.D. d'espérance finie ($\mu = 1/2$).
+   D'après la loi forte des grands nombres, la moyenne empirique $F_n = \overline{X}_n$ converge presque sûrement vers $\mathbb{E}[X_1]$.
+   Ainsi, $\lim_{n \to +\infty} F_n = \frac{1}{2}$ avec une probabilité de $1$.

@@ -1,24 +1,23 @@
-# Exercice 4 : Estimation d'une intégrale par méthode de Monte-Carlo \quad $\bigstar\bigstar\bigstar\star\star$
+# Exercice 4 : Intégration de Monte-Carlo (1D)
 
-## Énoncé
-On souhaite estimer l'intégrale $I = \int_0^{\pi/2} \sin(x) dx$.
-1. Exprimer $I$ sous la forme d'une espérance mathématique $\mathbb{E}[f(U)]$ où $U$ suit une loi uniforme sur $[0, \pi/2]$.
-2. Proposer un estimateur $\hat{I}_n$ basé sur $n$ tirages i.i.d. et justifier sa convergence presque sûre vers $I$.
+$\bigstar\bigstar\star\star\star$
 
-## Correction Détaillée
-### 1. Expression sous forme d'espérance
-La densité d'une variable $U$ suivant une loi uniforme sur $[0, \pi/2]$ est $p(x) = \frac{1}{\pi/2 - 0} = \frac{2}{\pi}$ pour $x \in [0, \pi/2]$ et $0$ sinon.
-On peut écrire $I$ en introduisant cette densité :
-$$ I = \int_0^{\pi/2} \sin(x) dx = \int_0^{\pi/2} \left( \sin(x) \frac{\pi}{2} \right) \frac{2}{\pi} dx $$
-Ainsi, si $f(x) = \frac{\pi}{2} \sin(x)$, alors :
-$$ I = \int_0^{\pi/2} f(x) p(x) dx = \mathbb{E}[f(U)] = \mathbb{E}\left[ \frac{\pi}{2} \sin(U) \right] $$
+On souhaite évaluer numériquement l'intégrale $I = \int_0^1 e^{-x^2} dx$.
+Soit $(U_n)_{n \geq 1}$ une suite de variables aléatoires I.I.D. suivant la loi uniforme sur $[0, 1]$.
+On pose $Y_i = e^{-U_i^2}$ et $I_n = \frac{1}{n} \sum_{i=1}^n Y_i$.
 
-### 2. Estimateur et convergence
-On génère une suite $(U_n)_{n \ge 1}$ de variables aléatoires i.i.d. de loi uniforme sur $[0, \pi/2]$.
-On pose $X_i = \frac{\pi}{2} \sin(U_i)$. Les $X_i$ sont i.i.d.
-L'intégrabilité de $X_1$ est immédiate car $X_1$ est bornée (comprise entre $0$ et $\pi/2$). Donc $\mathbb{E}[|X_1|] < +\infty$.
-L'estimateur naturel est la moyenne empirique :
-$$ \hat{I}_n = \frac{1}{n} \sum_{i=1}^n X_i = \frac{1}{n} \sum_{i=1}^n \frac{\pi}{2} \sin(U_i) $$
-Par la Loi Forte des Grands Nombres de Kolmogorov, puisque $\mathbb{E}[|X_1|] < \infty$, la moyenne empirique converge presque sûrement vers son espérance théorique :
-$$ \hat{I}_n \xrightarrow{p.s.} \mathbb{E}[X_1] = I $$
-Ainsi, $\hat{I}_n$ est un estimateur fortement convergent de l'intégrale $I$. $\blacksquare$
+1. Déterminer l'espérance $\mathbb{E}[Y_1]$.
+2. En appliquant la loi forte des grands nombres, montrer que $I_n$ converge presque sûrement vers $I$.
+
+**Correction détaillée :**
+
+1. La variable $U_1$ suit la loi uniforme continue sur $[0, 1]$, dont la densité est $f(x) = 1$ pour $x \in [0, 1]$ et $0$ ailleurs.
+   D'après le théorème de transfert, l'espérance de $Y_1 = e^{-U_1^2}$ est :
+   $$ \mathbb{E}[Y_1] = \mathbb{E}[e^{-U_1^2}] = \int_{-\infty}^{+\infty} e^{-x^2} f(x) dx = \int_0^1 e^{-x^2} \times 1 dx = \int_0^1 e^{-x^2} dx = I $$
+2. Les variables $Y_i = e^{-U_i^2}$ sont I.I.D. car elles sont des transformations déterministes identiques des variables I.I.D. $U_i$.
+   De plus, pour tout $x \in [0, 1]$, $e^{-x^2} \in [1/e, 1]$, donc les $Y_i$ sont bornées et leur espérance est bien finie.
+   On peut donc appliquer la loi forte des grands nombres à la suite $(Y_n)$ :
+   $$ \frac{1}{n} \sum_{i=1}^n Y_i \xrightarrow{p.s.} \mathbb{E}[Y_1] $$
+   Ce qui s'écrit exactement :
+   $$ I_n \xrightarrow{p.s.} I $$
+   C'est le principe fondamental de la méthode d'intégration de Monte-Carlo.

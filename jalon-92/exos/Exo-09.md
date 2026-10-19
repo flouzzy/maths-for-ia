@@ -1,34 +1,27 @@
-# Exercice 9 : Convergence de la variance empirique (estimateur sans biais) \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
+# Exercice 9 : Convergence des fonctions empiriques de répartition (Théorème de Glivenko-Cantelli)
 
-## Énoncé
-Soit $(X_n)$ une suite i.i.d. de variables de carré intégrable, d'espérance $\mu$ et de variance $\sigma^2$.
-On pose l'estimateur de la variance empirique (sans biais) : $S_n^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X}_n)^2$.
-Montrer en utilisant la LFGN que $S_n^2 \xrightarrow{p.s.} \sigma^2$.
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-## Correction Détaillée
-### Étape 1 : Développement algébrique de la somme des carrés
-Développons le terme $(X_i - \bar{X}_n)^2$ :
-$$ (X_i - \bar{X}_n)^2 = X_i^2 - 2X_i \bar{X}_n + \bar{X}_n^2 $$
-En sommant sur $i=1$ à $n$ :
-$$ \sum_{i=1}^n (X_i - \bar{X}_n)^2 = \sum_{i=1}^n X_i^2 - 2\bar{X}_n \sum_{i=1}^n X_i + \sum_{i=1}^n \bar{X}_n^2 $$
-Or $\sum_{i=1}^n X_i = n \bar{X}_n$. Remplaçons :
-$$ \sum_{i=1}^n (X_i - \bar{X}_n)^2 = \sum_{i=1}^n X_i^2 - 2n \bar{X}_n^2 + n \bar{X}_n^2 = \sum_{i=1}^n X_i^2 - n \bar{X}_n^2 $$
+Soit $(X_n)_{n \geq 1}$ une suite de variables aléatoires I.I.D. dont la fonction de répartition commune est notée $F(x) = \mathbb{P}(X_1 \leq x)$.
+Pour tout réel $x$, on définit la fonction de répartition empirique :
+$$ F_n(x) = \frac{1}{n} \sum_{i=1}^n \mathbf{1}_{X_i \leq x} $$
+où l'indicatrice $\mathbf{1}_{A}$ vaut 1 si l'événement $A$ est réalisé, et 0 sinon.
 
-### Étape 2 : Réécriture de l'estimateur
-L'estimateur $S_n^2$ s'écrit donc :
-$$ S_n^2 = \frac{1}{n-1} \left( \sum_{i=1}^n X_i^2 - n \bar{X}_n^2 \right) = \frac{n}{n-1} \left( \frac{1}{n}\sum_{i=1}^n X_i^2 - \bar{X}_n^2 \right) $$
+1. Fixons un $x \in \mathbb{R}$. Montrer rigoureusement que $F_n(x) \xrightarrow{p.s.} F(x)$.
+2. (Discussion) Le théorème de Glivenko-Cantelli affirme que cette convergence est uniforme sur $\mathbb{R}$ presque sûrement. Pourquoi la LFGN classique ne suffit-elle pas à prouver directement le théorème de Glivenko-Cantelli ?
 
-### Étape 3 : Application de la LFGN aux deux termes
-- Par la LFGN classique, puisque $X_i \in L^1$, on a $\bar{X}_n \xrightarrow{p.s.} \mu$. Par continuité du carré, $\bar{X}_n^2 \xrightarrow{p.s.} \mu^2$.
-- Les variables aléatoires $Y_i = X_i^2$ sont i.i.d. et $\mathbb{E}[|Y_i|] = \mathbb{E}[X_i^2] = \text{Var}(X_i) + \mu^2 = \sigma^2 + \mu^2 < +\infty$ (car $X_i \in L^2$).
-Par la LFGN appliquée aux $Y_i$, la moyenne empirique des carrés converge :
-$$ \frac{1}{n} \sum_{i=1}^n X_i^2 \xrightarrow{p.s.} \sigma^2 + \mu^2 $$
+**Correction détaillée :**
 
-### Étape 4 : Conclusion par algèbre des limites presque sûres
-Les limites presque sûres se comportent comme les limites classiques pour les opérations algébriques d'addition et de multiplication.
-Ainsi :
-$$ \frac{1}{n}\sum_{i=1}^n X_i^2 - \bar{X}_n^2 \xrightarrow{p.s.} (\sigma^2 + \mu^2) - \mu^2 = \sigma^2 $$
-De plus, la constante de normalisation $\frac{n}{n-1}$ tend trivialement vers $1$ quand $n \to \infty$.
-Le produit des limites nous donne :
-$$ S_n^2 \xrightarrow{p.s.} 1 \times \sigma^2 = \sigma^2 $$
-L'estimateur de la variance empirique est donc fortement convergent (ou fortement consistant). $\blacksquare$
+1. Fixons un $x \in \mathbb{R}$.
+   Définissons la suite de variables aléatoires $Y_i = \mathbf{1}_{X_i \leq x}$.
+   Puisque les $X_i$ sont I.I.D., les variables $Y_i$ sont également I.I.D.
+   Les $Y_i$ suivent une loi de Bernoulli. Calculons leur espérance :
+   $$ \mathbb{E}[Y_1] = \mathbb{E}[\mathbf{1}_{X_1 \leq x}] = \mathbb{P}(X_1 \leq x) = F(x) $$
+   Cette espérance est finie (elle appartient à $[0,1]$).
+   Par définition, $F_n(x) = \frac{1}{n} \sum_{i=1}^n Y_i$ est la moyenne empirique des $Y_i$.
+   D'après la loi forte des grands nombres appliquée à la suite $(Y_i)$, on a :
+   $$ F_n(x) \xrightarrow{p.s.} \mathbb{E}[Y_1] = F(x) $$
+2. L'argument précédent montre que pour **chaque** $x$ fixé, l'ensemble exceptionnel (de probabilité nulle) $\mathcal{N}_x$ sur lequel on n'a pas convergence dépend de $x$.
+   Puisqu'il y a une indénombrabilité de points $x \in \mathbb{R}$, l'union des ensembles exceptionnels $\bigcup_{x \in \mathbb{R}} \mathcal{N}_x$ pourrait ne plus être de probabilité nulle !
+   La LFGN classique nous donne une convergence ponctuelle presque sûre, mais pas la convergence de la borne supérieure (supremum).
+   Le théorème de Glivenko-Cantelli requiert un argument supplémentaire de compacité ou de monotonie des fonctions de répartition pour "densifier" l'espace réel (par exemple via les rationnels $\mathbb{Q}$) afin de contourner le problème de l'union indénombrable.

@@ -1,33 +1,24 @@
-# Exercice 10 : LFGN pour l'entropie empirique et loi de Shannon-McMillan-Breiman \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
+# Exercice 10 : Échec de la LFGN pour la loi de Cauchy
 
-## Énoncé
-Soit $(X_n)$ une suite i.i.d. à valeurs dans un alphabet fini $\mathcal{A}$, de loi de probabilité $P(X_1 = a) = p(a) > 0$.
-On définit la probabilité empirique d'un mot $X_1\dots X_n$ par $p_n(X_1, \dots, X_n) = \prod_{i=1}^n p(X_i)$.
-Montrer que $-\frac{1}{n} \log p_n(X_1, \dots, X_n) \xrightarrow{p.s.} H(X)$, où $H(X) = -\sum_{a \in \mathcal{A}} p(a) \log p(a)$ est l'entropie de Shannon.
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-## Correction Détaillée
-### Étape 1 : Transformation logarithmique
-Le produit $p_n(X_1, \dots, X_n) = \prod_{i=1}^n p(X_i)$ est la probabilité théorique de réaliser exactement la séquence qui a été tirée.
-Prenons le logarithme de cette quantité. Le log transforme un produit en somme :
-$$ \log p_n(X_1, \dots, X_n) = \sum_{i=1}^n \log p(X_i) $$
-Divisons par $-n$ :
-$$ -\frac{1}{n} \log p_n(X_1, \dots, X_n) = -\frac{1}{n} \sum_{i=1}^n \log p(X_i) $$
+Soit $(X_n)_{n \geq 1}$ une suite de variables I.I.D. suivant une loi de Cauchy de densité $f(x) = \frac{1}{\pi(1+x^2)}$.
+Soit $\overline{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$.
+On admet que la somme de $n$ variables de Cauchy indépendantes de paramètre 1 donne une loi de Cauchy de paramètre $n$.
+1. Déterminer la loi exacte de la moyenne empirique $\overline{X}_n$.
+2. En déduire que la LFGN ne s'applique pas. Expliquer mathématiquement pourquoi.
 
-### Étape 2 : Définition des variables i.i.d.
-Posons $Y_i = -\log p(X_i)$. Puisque les $X_i$ sont i.i.d., les variables $Y_i$ obtenues par la fonction déterministe $f(x) = -\log p(x)$ sont également i.i.d.
-L'espace d'état $\mathcal{A}$ est fini, et pour tout $a \in \mathcal{A}$, $p(a) > 0$. Ainsi, la variable $Y_1$ ne prend qu'un nombre fini de valeurs finies. Elle est donc évidemment intégrable ($\mathbb{E}[|Y_1|] < \infty$).
+**Correction détaillée :**
 
-### Étape 3 : Calcul de l'espérance théorique
-L'espérance de la variable $Y_1$ se calcule directement par le théorème de transfert :
-$$ \mathbb{E}[Y_1] = \mathbb{E}[-\log p(X_1)] = \sum_{a \in \mathcal{A}} P(X_1 = a) (-\log p(a)) = -\sum_{a \in \mathcal{A}} p(a) \log p(a) $$
-On reconnaît exactement l'expression mathématique de l'entropie de Shannon $H(X)$.
-
-### Étape 4 : Application de la LFGN
-Nous avons une moyenne empirique de variables i.i.d. intégrables :
-$$ \frac{1}{n} \sum_{i=1}^n Y_i $$
-Par le théorème de la loi forte des grands nombres de Kolmogorov, cette moyenne empirique converge presque sûrement vers son espérance théorique $\mathbb{E}[Y_1]$.
-Ainsi :
-$$ -\frac{1}{n} \log p_n(X_1, \dots, X_n) \xrightarrow{p.s.} H(X) $$
-
-### Remarque d'information théorique
-Ce résultat, connu sous le nom de théorème de la propriété d'équipartition asymptotique (AEP) ou forme simple du théorème de Shannon-McMillan-Breiman, est fondamental en théorie de l'information. Il démontre que, presque sûrement, la probabilité d'une séquence typique de longueur $n$ se concentre autour de $2^{-n H(X)}$, ce qui permet de définir le taux limite de compression de données sans perte. $\blacksquare$
+1. Notons $S_n = \sum_{i=1}^n X_i$. Par la propriété admise de stabilité de la loi de Cauchy, $S_n$ suit une loi de Cauchy de paramètre $n$. La densité de $S_n$ est $f_{S_n}(x) = \frac{n}{\pi(n^2 + x^2)}$.
+   La moyenne empirique est $\overline{X}_n = \frac{S_n}{n}$.
+   Cherchons la densité de $\overline{X}_n$. Soit une fonction de test bornée continue $g$ :
+   $$ \mathbb{E}[g(\overline{X}_n)] = \mathbb{E}[g(S_n / n)] = \int_{-\infty}^{+\infty} g\left(\frac{x}{n}\right) \frac{n}{\pi(n^2 + x^2)} dx $$
+   Procédons au changement de variable $y = x/n$, $dx = n dy$ :
+   $$ \mathbb{E}[g(\overline{X}_n)] = \int_{-\infty}^{+\infty} g(y) \frac{n}{\pi(n^2 + (ny)^2)} n dy = \int_{-\infty}^{+\infty} g(y) \frac{n^2}{\pi n^2(1 + y^2)} dy = \int_{-\infty}^{+\infty} g(y) \frac{1}{\pi(1+y^2)} dy $$
+   Cela prouve que $\overline{X}_n$ possède la même densité $f(y) = \frac{1}{\pi(1+y^2)}$.
+   Autrement dit, $\overline{X}_n$ suit exactement la même loi de Cauchy que $X_1$, pour tout $n$.
+2. Puisque la loi de $\overline{X}_n$ est statique et identique à celle de $X_1$, elle ne se "concentre" jamais autour d'une valeur (sa variance reste infinie, elle "zigzague" perpétuellement de la même façon). La suite $(\overline{X}_n)$ ne converge donc pas presque sûrement vers une constante.
+   L'explication fondamentale provient du non-respect de l'hypothèse cruciale de la LFGN : la loi de Cauchy n'admet pas d'espérance finie.
+   En effet, $\int_{-\infty}^{+\infty} |x| \frac{1}{\pi(1+x^2)} dx = \frac{2}{\pi} \int_0^{+\infty} \frac{x}{1+x^2} dx = \frac{1}{\pi} [\ln(1+x^2)]_0^{+\infty} = +\infty$.
+   Comme $\mathbb{E}[|X_1|] = +\infty$, le théorème de Kolmogorov ne s'applique pas.
