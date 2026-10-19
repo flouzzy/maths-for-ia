@@ -1,11 +1,18 @@
-# Exercice 1 : Convergence presque sûre d'une suite de Bernoulli \quad $\bigstar\star\star\star\star$
+# Exercice 1 : Moyenne empirique d'une loi de Poisson
 
-Soit $(X_n)_{n \in \mathbb{N}^*}$ une suite de variables aléatoires indépendantes et identiquement distribuées suivant une loi de Bernoulli de paramètre $p \in ]0,1[$. On note $S_n = \sum_{i=1}^n X_i$.
-1. Rappeler l'espérance et la variance de $X_1$.
-2. Énoncer la loi forte des grands nombres pour cette suite.
-3. Déterminer la limite presque sûre de la suite de variables aléatoires $Y_n = \frac{1}{n} S_n (1 - \frac{1}{n} S_n)$.
+$\bigstar\star\star\star\star$
 
-**Correction :**
-1. Comme $X_1 \sim \mathcal{B}(p)$, par définition, $\mathbb{E}[X_1] = p \times 1 + (1-p) \times 0 = p$. La variance est $\text{Var}(X_1) = \mathbb{E}[X_1^2] - (\mathbb{E}[X_1])^2$. Or $X_1^2 = X_1$ car $X_1 \in \{0,1\}$, donc $\mathbb{E}[X_1^2] = p$. Ainsi, $\text{Var}(X_1) = p - p^2 = p(1-p)$.
-2. La suite $(X_n)$ est constituée de variables I.I.D. admettant une espérance finie $\mathbb{E}[X_1] = p$. D'après la loi forte des grands nombres (Théorème de Kolmogorov), la moyenne empirique $\frac{S_n}{n} = \frac{1}{n} \sum_{i=1}^n X_i$ converge presque sûrement vers $\mathbb{E}[X_1] = p$. C'est-à-dire : $\mathbb{P}(\lim_{n \to \infty} \frac{S_n}{n} = p) = 1$.
-3. Posons $g(x) = x(1-x)$. La fonction $g$ est continue sur $\mathbb{R}$. Par composition de limites presque sûres (la continuité préservant la convergence presque sûre), puisque $\frac{S_n}{n} \xrightarrow{p.s.} p$, on a $g(\frac{S_n}{n}) \xrightarrow{p.s.} g(p)$. Ainsi, la suite $Y_n = \frac{S_n}{n} (1 - \frac{S_n}{n})$ converge presque sûrement vers $p(1-p)$, qui est la variance de la loi de Bernoulli.
+Soit $(X_n)_{n \geq 1}$ une suite de variables aléatoires indépendantes et identiquement distribuées, suivant toutes la loi de Poisson de paramètre $\lambda > 0$, c'est-à-dire $X_n \sim \mathcal{P}(\lambda)$.
+On rappelle que $\mathbb{E}[X_1] = \lambda$.
+On pose $\overline{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$.
+
+1. Que représente $\overline{X}_n$ en termes statistiques ?
+2. Énoncer le théorème de la loi forte des grands nombres et l'appliquer à cette suite. Que peut-on conclure sur le comportement asymptotique de $\overline{X}_n$ ?
+
+**Correction détaillée :**
+
+1. La variable $\overline{X}_n$ représente la moyenne empirique de l'échantillon de taille $n$. C'est un estimateur naturel de l'espérance de la loi sous-jacente.
+2. Le théorème de la loi forte des grands nombres (LFGN) stipule que si $(X_n)_{n \geq 1}$ est une suite de variables aléatoires I.I.D. admettant une espérance finie $\mathbb{E}[X_1] = \mu$, alors la moyenne empirique $\overline{X}_n$ converge presque sûrement vers $\mu$ lorsque $n$ tend vers l'infini : $\mathbb{P}\left(\lim_{n \to \infty} \overline{X}_n = \mu\right) = 1$.
+   Ici, les $X_n$ sont I.I.D. suivant $\mathcal{P}(\lambda)$. Puisque $\mathbb{E}[X_1] = \lambda < +\infty$, les hypothèses de la LFGN sont satisfaites.
+   Par conséquent, on conclut que $\overline{X}_n$ converge presque sûrement vers $\lambda$ :
+   $$ \overline{X}_n \xrightarrow{p.s.} \lambda $$

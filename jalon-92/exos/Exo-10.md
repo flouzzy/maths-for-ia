@@ -1,16 +1,24 @@
-# Exercice 10 : Méthode de Monte-Carlo pour l'intégration de fonctions non bornées \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
+# Exercice 10 : Échec de la LFGN pour la loi de Cauchy
 
-On souhaite calculer $I = \int_0^1 \frac{1}{\sqrt{x}} dx$ par la méthode de Monte-Carlo.
-1. Calculer la valeur exacte de l'intégrale $I$.
-2. On tire une suite $(U_n)$ I.I.D. de loi uniforme sur $[0,1]$. On pose $X_n = \frac{1}{\sqrt{U_n}}$. La LFGN s'applique-t-elle à la suite $(X_n)$ ?
-3. Quelle est la variance de $X_n$ ? Que cela implique-t-il sur la vitesse de convergence si l'on voulait appliquer le Théorème Central Limite (TCL) ultérieurement ?
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Correction :**
-1. La valeur exacte est :
-$$I = \int_0^1 x^{-1/2} dx = \left[ 2x^{1/2} \right]_0^1 = 2$$
-2. Les variables $U_n$ sont I.I.D. $\mathcal{U}([0,1])$. Soit $X_n = \frac{1}{\sqrt{U_n}}$. L'espérance de $X_n$ par le théorème de transfert est :
-$$\mathbb{E}[X_n] = \mathbb{E}\left[\frac{1}{\sqrt{U_1}}\right] = \int_0^1 \frac{1}{\sqrt{x}} \times 1 dx = 2$$
-L'espérance est finie, et les $X_n$ sont I.I.D. Donc la Loi Forte des Grands Nombres de Kolmogorov s'applique bien : la moyenne empirique $\frac{1}{n}\sum_{i=1}^n X_i$ converge presque sûrement vers $\mathbb{E}[X_1] = 2$.
-3. Calculons le moment d'ordre 2 :
-$$\mathbb{E}[X_n^2] = \mathbb{E}\left[\frac{1}{U_1}\right] = \int_0^1 \frac{1}{x} dx = [\ln(x)]_0^1 = +\infty$$
-La variance est donc infinie. Bien que l'estimateur converge presque sûrement (LFGN), son erreur ne peut pas être encadrée par les outils classiques utilisant la variance (inégalité de Tchebychev) ou le Théorème Central Limite standard, car la normalisation en $\sqrt{n}$ donnera un comportement non gaussien (elle relève de la théorie des lois stables). La convergence existe, mais elle est très lente et erratique.
+Soit $(X_n)_{n \geq 1}$ une suite de variables I.I.D. suivant une loi de Cauchy de densité $f(x) = \frac{1}{\pi(1+x^2)}$.
+Soit $\overline{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$.
+On admet que la somme de $n$ variables de Cauchy indépendantes de paramètre 1 donne une loi de Cauchy de paramètre $n$.
+1. Déterminer la loi exacte de la moyenne empirique $\overline{X}_n$.
+2. En déduire que la LFGN ne s'applique pas. Expliquer mathématiquement pourquoi.
+
+**Correction détaillée :**
+
+1. Notons $S_n = \sum_{i=1}^n X_i$. Par la propriété admise de stabilité de la loi de Cauchy, $S_n$ suit une loi de Cauchy de paramètre $n$. La densité de $S_n$ est $f_{S_n}(x) = \frac{n}{\pi(n^2 + x^2)}$.
+   La moyenne empirique est $\overline{X}_n = \frac{S_n}{n}$.
+   Cherchons la densité de $\overline{X}_n$. Soit une fonction de test bornée continue $g$ :
+   $$ \mathbb{E}[g(\overline{X}_n)] = \mathbb{E}[g(S_n / n)] = \int_{-\infty}^{+\infty} g\left(\frac{x}{n}\right) \frac{n}{\pi(n^2 + x^2)} dx $$
+   Procédons au changement de variable $y = x/n$, $dx = n dy$ :
+   $$ \mathbb{E}[g(\overline{X}_n)] = \int_{-\infty}^{+\infty} g(y) \frac{n}{\pi(n^2 + (ny)^2)} n dy = \int_{-\infty}^{+\infty} g(y) \frac{n^2}{\pi n^2(1 + y^2)} dy = \int_{-\infty}^{+\infty} g(y) \frac{1}{\pi(1+y^2)} dy $$
+   Cela prouve que $\overline{X}_n$ possède la même densité $f(y) = \frac{1}{\pi(1+y^2)}$.
+   Autrement dit, $\overline{X}_n$ suit exactement la même loi de Cauchy que $X_1$, pour tout $n$.
+2. Puisque la loi de $\overline{X}_n$ est statique et identique à celle de $X_1$, elle ne se "concentre" jamais autour d'une valeur (sa variance reste infinie, elle "zigzague" perpétuellement de la même façon). La suite $(\overline{X}_n)$ ne converge donc pas presque sûrement vers une constante.
+   L'explication fondamentale provient du non-respect de l'hypothèse cruciale de la LFGN : la loi de Cauchy n'admet pas d'espérance finie.
+   En effet, $\int_{-\infty}^{+\infty} |x| \frac{1}{\pi(1+x^2)} dx = \frac{2}{\pi} \int_0^{+\infty} \frac{x}{1+x^2} dx = \frac{1}{\pi} [\ln(1+x^2)]_0^{+\infty} = +\infty$.
+   Comme $\mathbb{E}[|X_1|] = +\infty$, le théorème de Kolmogorov ne s'applique pas.

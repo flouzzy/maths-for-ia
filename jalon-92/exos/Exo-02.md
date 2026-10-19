@@ -1,11 +1,24 @@
-# Exercice 2 : Moyenne empirique des lois de Poisson \quad $\bigstar\bigstar\star\star\star$
+# Exercice 2 : Convergence des fréquences empiriques
 
-Soit $(X_n)_{n \geq 1}$ une suite de variables aléatoires I.I.D. suivant une loi de Poisson de paramètre $\lambda > 0$. On pose $\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$.
-1. Quelle est la loi de la somme $S_n = \sum_{i=1}^n X_i$ ?
-2. Montrer que $\bar{X}_n \xrightarrow{p.s.} \lambda$.
-3. Montrer que $\frac{1}{n} \sum_{i=1}^n X_i^2$ converge presque sûrement vers une limite à préciser.
+$\bigstar\star\star\star\star$
 
-**Correction :**
-1. La somme de variables aléatoires indépendantes de lois de Poisson de paramètres respectifs $\lambda_i$ suit une loi de Poisson de paramètre $\sum \lambda_i$. Ici, les $X_i$ sont I.I.D. de loi $\mathcal{P}(\lambda)$. Par conséquent, $S_n = \sum_{i=1}^n X_i$ suit une loi de Poisson de paramètre $n\lambda$.
-2. La suite $(X_n)$ est I.I.D. et admet une espérance $\mathbb{E}[X_1] = \lambda < \infty$. La loi forte des grands nombres stipule que la moyenne empirique converge presque sûrement vers l'espérance de la loi. Donc, $\bar{X}_n = \frac{1}{n} S_n \xrightarrow{p.s.} \mathbb{E}[X_1] = \lambda$.
-3. Considérons la suite de variables aléatoires $Y_i = X_i^2$. Puisque les $X_i$ sont I.I.D., les variables $Y_i$ le sont également par le lemme des coalitions. Calculons l'espérance de $Y_1$ : $\mathbb{E}[Y_1] = \mathbb{E}[X_1^2]$. On sait que la variance d'une loi de Poisson de paramètre $\lambda$ est $\lambda$. Or $\text{Var}(X_1) = \mathbb{E}[X_1^2] - (\mathbb{E}[X_1])^2$, d'où $\lambda = \mathbb{E}[X_1^2] - \lambda^2$. Ainsi, $\mathbb{E}[Y_1] = \mathbb{E}[X_1^2] = \lambda + \lambda^2$. Cette espérance est finie. D'après la loi forte des grands nombres appliquée à la suite I.I.D. $(Y_n)$, on a $\frac{1}{n} \sum_{i=1}^n Y_i \xrightarrow{p.s.} \mathbb{E}[Y_1]$. Par conséquent, $\frac{1}{n} \sum_{i=1}^n X_i^2 \xrightarrow{p.s.} \lambda + \lambda^2$.
+On lance une pièce de monnaie équilibrée un grand nombre de fois.
+Soit $X_i$ la variable aléatoire qui vaut $1$ si le $i$-ème lancer donne "Pile", et $0$ s'il donne "Face".
+Soit $F_n$ la fréquence d'apparition de "Pile" au cours des $n$ premiers lancers.
+
+1. Déterminer la loi de $X_i$, son espérance et sa variance.
+2. Exprimer $F_n$ en fonction des $X_i$.
+3. Montrer rigoureusement que $F_n$ converge presque sûrement vers $1/2$.
+
+**Correction détaillée :**
+
+1. Puisque la pièce est équilibrée, on a $\mathbb{P}(X_i = 1) = \frac{1}{2}$ et $\mathbb{P}(X_i = 0) = \frac{1}{2}$.
+   $X_i$ suit donc une loi de Bernoulli de paramètre $p = 1/2$, soit $X_i \sim \mathcal{B}(1/2)$.
+   Son espérance est $\mathbb{E}[X_i] = p = \frac{1}{2}$.
+   Sa variance est $\text{Var}(X_i) = p(1-p) = \frac{1}{4}$.
+2. La fréquence d'apparition de "Pile" sur $n$ lancers est le nombre total de "Pile" divisé par $n$.
+   Le nombre total de "Pile" est la somme des indicatrices $X_i$.
+   Donc, $F_n = \frac{1}{n} \sum_{i=1}^n X_i$.
+3. La suite $(X_n)_{n \geq 1}$ est une suite de variables I.I.D. d'espérance finie ($\mu = 1/2$).
+   D'après la loi forte des grands nombres, la moyenne empirique $F_n = \overline{X}_n$ converge presque sûrement vers $\mathbb{E}[X_1]$.
+   Ainsi, $\lim_{n \to +\infty} F_n = \frac{1}{2}$ avec une probabilité de $1$.

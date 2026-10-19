@@ -1,13 +1,25 @@
-# Exercice 3 : Estimation d'un moment d'ordre supérieur \quad $\bigstar\bigstar\star\star\star$
+# Exercice 3 : Estimateur de la variance
 
-Soit $(X_n)_{n \geq 1}$ une suite de variables I.I.D. suivant la loi uniforme sur l'intervalle $[0, 1]$.
-1. Calculer $\mathbb{E}[X_1^k]$ pour tout entier $k \geq 1$.
-2. Soit $M_n^{(k)} = \frac{1}{n} \sum_{i=1}^n X_i^k$. Étudier la convergence de la suite $(M_n^{(k)})_{n \geq 1}$.
-3. En déduire une méthode d'estimation presque sûre du paramètre $k$ si celui-ci est inconnu mais que l'on observe la suite $X_i$.
+$\bigstar\bigstar\star\star\star$
 
-**Correction :**
-1. La variable $X_1$ suit une loi uniforme $\mathcal{U}([0,1])$, dont la densité est $f(x) = 1$ si $x \in [0,1]$ et $0$ sinon. Par le théorème de transfert, pour tout $k \geq 1$, on a :
-$$\mathbb{E}[X_1^k] = \int_{\mathbb{R}} x^k f(x) dx = \int_0^1 x^k \cdot 1 dx = \left[ \frac{x^{k+1}}{k+1} \right]_0^1 = \frac{1}{k+1}$$
-2. Fixons l'entier $k \geq 1$. Considérons la suite de variables aléatoires $Z_i = X_i^k$. Les variables $X_i$ étant I.I.D., les variables $Z_i$ sont également I.I.D. Leur espérance est $\mathbb{E}[Z_1] = \mathbb{E}[X_1^k] = \frac{1}{k+1}$. Comme $X_i$ prend ses valeurs dans $[0,1]$, $Z_i$ est bornée entre 0 et 1, donc son espérance est bien finie. D'après la loi forte des grands nombres de Kolmogorov appliquée à la suite $(Z_n)$, la moyenne empirique converge presque sûrement vers l'espérance :
-$$M_n^{(k)} = \frac{1}{n} \sum_{i=1}^n Z_i \xrightarrow{p.s.} \mathbb{E}[Z_1] = \frac{1}{k+1}$$
-3. Puisque $M_n^{(k)}$ converge presque sûrement vers $\frac{1}{k+1}$, la quantité $\frac{1}{M_n^{(k)}} - 1$ converge presque sûrement vers $\frac{1}{\frac{1}{k+1}} - 1 = (k+1) - 1 = k$. La fonction $x \mapsto \frac{1}{x} - 1$ étant continue pour $x > 0$ (et $M_n^{(k)} > 0$ presque sûrement car les $X_i$ sont à valeurs dans $[0,1]$ de loi diffuse), cette composition de limites conserve la convergence presque sûre. Ainsi, on peut estimer $k$ par l'estimateur convergent $\hat{k}_n = \frac{1}{M_n^{(k)}} - 1$.
+Soit $(X_n)_{n \geq 1}$ une suite de variables aléatoires I.I.D. d'espérance $\mu$ et de variance $\sigma^2$ finies.
+On définit le moment empirique d'ordre 2 par $M_{2,n} = \frac{1}{n} \sum_{i=1}^n X_i^2$.
+
+1. Vers quoi $M_{2,n}$ converge-t-il presque sûrement ? Justifier.
+2. En déduire que l'estimateur de la variance défini par $V_n = \frac{1}{n} \sum_{i=1}^n X_i^2 - (\overline{X}_n)^2$ converge presque sûrement vers $\sigma^2$.
+
+**Correction détaillée :**
+
+1. Considérons la suite de variables aléatoires $Y_i = X_i^2$.
+   Puisque les $X_i$ sont I.I.D., les variables $Y_i$ sont également I.I.D.
+   De plus, puisque $X_1$ admet une variance finie $\sigma^2$ et une espérance finie $\mu$, on sait que $\mathbb{E}[X_1^2] = \sigma^2 + \mu^2 < +\infty$.
+   Les $Y_i$ vérifient les hypothèses de la loi forte des grands nombres.
+   Par conséquent, la moyenne empirique des $Y_i$, qui est exactement $M_{2,n}$, converge presque sûrement vers $\mathbb{E}[Y_1]$.
+   $$ M_{2,n} \xrightarrow{p.s.} \mathbb{E}[X_1^2] $$
+2. L'estimateur $V_n$ s'écrit $V_n = M_{2,n} - (\overline{X}_n)^2$.
+   D'après la LFGN appliquée à $X_i$, on sait que $\overline{X}_n \xrightarrow{p.s.} \mu$.
+   Puisque la fonction $x \mapsto x^2$ est continue, la convergence presque sûre est préservée par composition : $(\overline{X}_n)^2 \xrightarrow{p.s.} \mu^2$.
+   Par linéarité des limites presque sûres :
+   $$ V_n = M_{2,n} - (\overline{X}_n)^2 \xrightarrow{p.s.} \mathbb{E}[X_1^2] - \mu^2 $$
+   Or, par définition de la variance, $\mathbb{E}[X_1^2] - \mu^2 = \sigma^2$.
+   Donc $V_n \xrightarrow{p.s.} \sigma^2$.

@@ -1,19 +1,19 @@
-# Exercice 8 : Convergence du maximum empirique \quad $\bigstar\bigstar\bigstar\bigstar\star$
+# Exercice 8 : Application aux probabilités de grands écarts
 
-Soit $(X_n)_{n \geq 1}$ une suite de variables I.I.D. de loi uniforme sur $[0, \theta]$ avec $\theta > 0$. Soit $M_n = \max(X_1, \dots, X_n)$.
-1. Déterminer la fonction de répartition de $M_n$.
-2. Montrer que $M_n \xrightarrow{p.s.} \theta$.
-3. Est-ce que la loi forte des grands nombres a été utilisée dans la question précédente ?
+$\bigstar\bigstar\bigstar\bigstar\star$
 
-**Correction :**
-1. Pour tout $t \in [0, \theta]$, on a :
-$$F_{M_n}(t) = \mathbb{P}(M_n \leq t) = \mathbb{P}(X_1 \leq t, \dots, X_n \leq t)$$
-Par indépendance des $X_i$, cela donne :
-$$F_{M_n}(t) = \prod_{i=1}^n \mathbb{P}(X_i \leq t) = \left( \frac{t}{\theta} \right)^n$$
-Pour $t < 0$, $F_{M_n}(t) = 0$ et pour $t > \theta$, $F_{M_n}(t) = 1$.
-2. Soit $\epsilon > 0$. On s'intéresse à l'événement $\{|M_n - \theta| \geq \epsilon\}$. Puisque $M_n \leq \theta$ p.s., cela équivaut à $\{M_n \leq \theta - \epsilon\}$.
-La probabilité est $P(M_n \leq \theta - \epsilon) = \left(\frac{\theta-\epsilon}{\theta}\right)^n = \left(1 - \frac{\epsilon}{\theta}\right)^n$.
-Comme $1 - \frac{\epsilon}{\theta} \in ]0, 1[$, cette probabilité est le terme général d'une série géométrique convergente.
-$$\sum_{n=1}^\infty \mathbb{P}(|M_n - \theta| \geq \epsilon) = \sum_{n=1}^\infty \left(1 - \frac{\epsilon}{\theta}\right)^n < +\infty$$
-D'après le lemme de Borel-Cantelli, l'événement $\{|M_n - \theta| \geq \epsilon\}$ ne se réalise qu'un nombre fini de fois presque sûrement. Donc $M_n \xrightarrow{p.s.} \theta$.
-3. Non, nous n'avons pas utilisé la loi forte des grands nombres (Théorème de Kolmogorov). La LFGN concerne les sommes (ou moyennes empiriques) de variables aléatoires. Ici, nous avons étudié un maximum empirique et utilisé directement le lemme de Borel-Cantelli pour établir la convergence presque sûre.
+Soit $(X_n)_{n \geq 1}$ une suite de variables I.I.D. d'espérance $\mu = 0$ et de moment d'ordre 4 fini ($\mathbb{E}[X_1^4] = K$).
+On pose $S_n = \sum_{i=1}^n X_i$.
+Dans la preuve de la LFGN, on a montré que $\mathbb{E}[S_n^4] \leq 3K n^2$.
+Utiliser cette majoration pour borner la probabilité $P_n = \mathbb{P}\left(\max_{1 \le k \le n} \left|\frac{S_k}{k}\right| \ge \epsilon\right)$.
+*Indice : On pourra se contenter de borner $\mathbb{P}\left(\left|\frac{S_n}{n}\right| \ge \epsilon\right)$ et discuter de l'union.*
+
+**Correction détaillée :**
+
+1. Fixons $\epsilon > 0$. Par l'inégalité de Markov appliquée à la puissance 4 :
+   $$ \mathbb{P}\left(\left|\frac{S_n}{n}\right| \geq \epsilon\right) = \mathbb{P}\left(\frac{S_n^4}{n^4} \geq \epsilon^4\right) \leq \frac{\mathbb{E}[S_n^4]}{n^4 \epsilon^4} $$
+2. En injectant la borne supérieure $\mathbb{E}[S_n^4] \leq 3K n^2$ :
+   $$ \mathbb{P}\left(\left|\frac{S_n}{n}\right| \geq \epsilon\right) \leq \frac{3K n^2}{n^4 \epsilon^4} = \frac{3K}{\epsilon^4 n^2} $$
+3. Cette inégalité nous donne une borne de décroissance polynomiale en $O(1/n^2)$ pour l'écart de la moyenne empirique à sa cible, pour un $n$ fixé.
+   C'est la sommabilité de cette borne ($\sum \frac{1}{n^2} < \infty$) qui permet d'utiliser le lemme de Borel-Cantelli.
+   C'est une borne typique de probabilité de grands écarts (large deviations), bien que des outils plus puissants comme le lemme de Chernoff fourniraient une borne exponentielle en $e^{-cn}$ si on supposait l'existence d'une fonction génératrice des moments.

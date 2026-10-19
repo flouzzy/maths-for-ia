@@ -1,14 +1,25 @@
-# Exercice 7 : Le paradoxe de Saint-Pétersbourg et la LFGN \quad $\bigstar\bigstar\bigstar\bigstar\star$
+# Exercice 7 : Limite d'une somme de variables bornées par Borel-Cantelli
 
-Soit $(X_n)_{n \geq 1}$ le gain d'un joueur lors du $n$-ième jeu de Saint-Pétersbourg : $X_n$ prend la valeur $2^k$ avec probabilité $1/2^k$ pour tout $k \geq 1$.
-1. Montrer que l'espérance $\mathbb{E}[X_1]$ est infinie.
-2. Que peut-on dire du comportement de $\frac{X_n}{n \log_2(n)}$ ? (Admis)
-3. La loi forte des grands nombres s'applique-t-elle ici sous sa forme standard ? Justifier.
-4. On tronque la variable en posant $Y_n = X_n \mathbf{1}_{\{X_n \leq n\}}$. La LFGN s'applique-t-elle à $Y_n$ ?
+$\bigstar\bigstar\bigstar\bigstar\star$
 
-**Correction :**
-1. Calculons l'espérance :
-$$\mathbb{E}[X_1] = \sum_{k=1}^{\infty} 2^k \mathbb{P}(X_1 = 2^k) = \sum_{k=1}^{\infty} 2^k \frac{1}{2^k} = \sum_{k=1}^{\infty} 1 = +\infty$$
-2. On admet que pour cette loi très particulière à queue lourde, Feller a montré que la somme $\sum_{i=1}^n X_i$ normalisée par $n \log_2(n)$ converge en probabilité vers 1. Ainsi, la moyenne croît comme $\log_2(n)$ et non vers une constante.
-3. La LFGN standard (théorème de Kolmogorov) exige que la variable aléatoire admette une espérance finie, c'est-à-dire $\mathbb{E}[|X_1|] < \infty$. Ici, $\mathbb{E}[X_1] = +\infty$, donc la LFGN ne s'applique pas. La moyenne empirique $\bar{X}_n$ diverge presque sûrement vers l'infini.
-4. Les variables $(Y_n)$ ne sont pas identiquement distribuées car le seuil de troncature dépend de $n$. Cependant, pour chaque $n$ fixé, $\mathbb{E}[Y_n] < \infty$. La théorie des sommes de variables aléatoires indépendantes non identiquement distribuées (avec des conditions de type Lyapounov ou un développement spécifique) est nécessaire pour étudier le comportement de $\frac{1}{n} \sum Y_i$. La LFGN usuelle pour les suites I.I.D. ne s'applique donc pas directement non plus.
+Soit $(X_n)_{n \geq 1}$ une suite de variables aléatoires indépendantes telles que pour tout $n$, $\mathbb{P}(X_n = 1) = p$ et $\mathbb{P}(X_n = -1) = 1-p$, avec $p \in ]0, 1[$.
+Soit $S_n = \sum_{i=1}^n X_i$.
+
+Montrer en utilisant la LFGN que si $p > 1/2$, alors $S_n \xrightarrow{p.s.} +\infty$.
+
+**Correction détaillée :**
+
+1. Les variables $X_n$ sont I.I.D.
+   Calculons leur espérance :
+   $$ \mathbb{E}[X_1] = 1 \cdot p + (-1) \cdot (1-p) = p - 1 + p = 2p - 1 $$
+2. Puisque $X_n \in \{-1, 1\}$, $\mathbb{E}[|X_1|] = 1 < +\infty$.
+   La loi forte des grands nombres s'applique à la suite $(X_n)$, donc :
+   $$ \frac{S_n}{n} = \frac{1}{n} \sum_{i=1}^n X_i \xrightarrow{p.s.} \mathbb{E}[X_1] = 2p - 1 $$
+3. Par hypothèse, $p > 1/2$, ce qui implique que $2p - 1 > 0$. Notons $\mu = 2p - 1 > 0$.
+   La convergence presque sûre $\frac{S_n}{n} \xrightarrow{p.s.} \mu$ signifie que, pour presque tout $\omega \in \Omega$, il existe un rang $N(\omega)$ tel que pour tout $n \geq N(\omega)$, $\frac{S_n(\omega)}{n} \geq \frac{\mu}{2}$.
+   Par conséquent, pour $n \geq N(\omega)$ :
+   $$ S_n(\omega) \geq n \frac{\mu}{2} $$
+   Puisque $\mu/2 > 0$, la limite du terme de droite est $+\infty$ lorsque $n \to +\infty$.
+   Par minoration, on en déduit que pour presque tout $\omega$, $\lim_{n \to +\infty} S_n(\omega) = +\infty$.
+   Ce qui démontre que $S_n \xrightarrow{p.s.} +\infty$.
+   (Interprétation : dans une marche aléatoire où la probabilité d'aller à droite est strictement supérieure à celle d'aller à gauche, la particule part inéluctablement vers $+\infty$).

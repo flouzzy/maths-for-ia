@@ -1,0 +1,618 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge DÉMONSTRATION RIGOUREUSE DE LA LOI FORTE DES GRANDS NOMBRES \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+\section*{Démonstration rigoureuse de la loi forte des grands nombres}
+
+\section{Introduction historique et physique}
+
+La Loi Forte des Grands Nombres (LFGN) constitue l'un des piliers fondamentaux de la théorie des probabilités modernes. Son histoire remonte à Jacob Bernoulli, qui a publié la première version (la loi faible) en 1713, mais c'est Émile Borel (1909) puis Andrey Kolmogorov (1930) qui lui ont donné sa forme forte et rigoureuse.
+
+D'un point de vue physique, elle formalise une intuition fondamentale de la nature : les fluctuations chaotiques individuelles s'annulent à l'échelle macroscopique. Lorsqu'on observe le mouvement brownien des particules dans un fluide, bien que la trajectoire d'une seule particule soit imprévisible, le comportement global de milliards de particules obéit à des lois déterministes strictes (comme l'équation de la chaleur). La LFGN est le pont mathématique qui permet de justifier le passage du microscopique aléatoire (l'observation d'un lancer de dé ou d'une collision moléculaire) au macroscopique prévisible.
+
+Concrètement, la LFGN affirme que la moyenne empirique d'une suite de variables aléatoires indépendantes et identiquement distribuées converge vers leur espérance mathématique, non seulement en probabilité, mais presque sûrement.
+
+\section{Définitions, Théorèmes \& Exemples}
+
+\subsection{Définition : Variables Aléatoires I.I.D.}
+On dit qu'une suite de variables aléatoires $(X_n)_{n \in \mathbb{N}^*}$ définies sur un espace de probabilité $(\Omega, \mathcal{F}, \mathbb{P})$ est indépendante et identiquement distribuée (I.I.D.) si :
+1. Pour tout ensemble fini d'indices $I \subset \mathbb{N}^*$, les variables $(X_i)_{i \in I}$ sont mutuellement indépendantes.
+2. Toutes les variables $X_n$ suivent la même loi de probabilité (elles ont la même fonction de répartition).
+
+\textbf{Exemple :} Lancer de pièce. Soit $(X_n)$ la suite définie par $X_n = 1$ si le $n$-ième lancer donne Pile, et $X_n = 0$ s'il donne Face. Si les lancers sont effectués dans des conditions identiques et sans interaction, les $X_n$ sont I.I.D. suivant une loi de Bernoulli $\mathcal{B}(p)$ où $p$ est la probabilité d'obtenir Pile. L'espérance est $\mathbb{E}[X_1] = p$. Si $p = 1/2$, $\mathbb{E}[X_1] = 0.5$.
+
+\subsection{Définition : Moyenne Empirique}
+Soit $(X_n)_{n \in \mathbb{N}^*}$ une suite de variables aléatoires. On appelle moyenne empirique d'ordre $n$ la variable aléatoire $\overline{X}_n$ définie par :
+$$ \overline{X}_n = \frac{1}{n} \sum_{i=1}^n X_i $$
+
+\textbf{Exemple :} Si l'on obtient les résultats successifs $1, 0, 1, 1, 0$, alors $\overline{X}_5 = \frac{1+0+1+1+0}{5} = \frac{3}{5} = 0.6$.
+
+\subsection{Théorème : Loi Forte des Grands Nombres (Théorème de Kolmogorov)}
+Soit $(X_n)_{n \in \mathbb{N}^*}$ une suite de variables aléatoires I.I.D.
+Si $\mathbb{E}[|X_1|] < +\infty$ (i.e. les variables sont intégrables, avec $\mathbb{E}[X_1] = \mu$), alors la suite des moyennes empiriques $(\overline{X}_n)$ converge presque sûrement vers $\mu$ lorsque $n$ tend vers l'infini.
+Autrement dit :
+$$ \mathbb{P} \left( \left\{ \omega \in \Omega \, \middle| \, \lim_{n \to +\infty} \frac{1}{n} \sum_{i=1}^n X_i(\omega) = \mu \right\} \right) = 1 $$
+Réciproquement, si la suite $(\overline{X}_n)$ converge presque sûrement vers une constante $C$, alors $\mathbb{E}[|X_1|] < +\infty$ et $\mathbb{E}[X_1] = C$.
+
+\textbf{Exemple :} Si on lance un dé équilibré à 6 faces à l'infini, l'espérance du résultat est $\mu = \frac{1+2+3+4+5+6}{6} = 3.5$. Le théorème garantit que, avec une probabilité de $1$, la moyenne de vos lancers s'approchera infiniment de $3.5$.
+
+\textbf{Exemple 4 (Le contre-exemple de Cauchy) :} Si $(X_n)$ est une suite I.I.D. suivant une loi de Cauchy (densité $f(x) = \frac{1}{\pi(1+x^2)}$), alors $\mathbb{E}[|X_1|] = +\infty$. Dans ce cas, la moyenne empirique $\overline{X}_n$ suit exactement la même loi de Cauchy que $X_1$, pour tout $n$. Elle ne converge pas, elle continue de fluctuer violemment à l'infini, brisant ainsi l'intuition naive de la stabilisation statistique.
+
+\subsection{Théorème : Loi Forte sous condition de moment d'ordre 4}
+Il est souvent plus aisé de démontrer une version légèrement plus faible de la LFGN en supposant l'existence d'un moment d'ordre 4.
+Soit $(X_n)_{n \in \mathbb{N}^*}$ une suite de variables aléatoires I.I.D. telles que $\mathbb{E}[X_1^4] < +\infty$. Soit $\mu = \mathbb{E}[X_1]$.
+Alors $\overline{X}_n \xrightarrow{p.s.} \mu$.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1]
+    % Axes
+    \draw[->] (0,0) -- (10,0) node[right] {$n$};
+    \draw[->] (0,0) -- (0,5) node[above] {$\overline{X}_n$};
+
+    % Asymptote / Mean
+    \draw[dashed, red, thick] (0, 3) -- (10, 3) node[right] {$\mu = \mathbb{E}[X]$};
+
+    % Random walk / empirical mean
+    \draw[blue, thick] (0, 1) -- (1, 4.5) -- (2, 2.1) -- (3, 3.8) -- (4, 2.5) -- (5, 3.3) -- (6, 2.8) -- (7, 3.1) -- (8, 2.95) -- (9, 3.05) -- (9.8, 3);
+
+    % Tolerance band
+    \draw[gray, dotted] (0, 3.5) -- (10, 3.5);
+    \draw[gray, dotted] (0, 2.5) -- (10, 2.5);
+
+    % Labels
+    \node[left] at (0, 3.5) {$\mu + \epsilon$};
+    \node[left] at (0, 2.5) {$\mu - \epsilon$};
+\end{tikzpicture}
+\caption{Illustration de la Loi Forte des Grands Nombres : la trajectoire de la moyenne empirique (en bleu) est absorbée presque sûrement dans le corridor $[\mu-\epsilon, \mu+\epsilon]$ et y reste définitivement pour $n$ assez grand.}
+\end{figure}
+
+\textbf{Exemple :} Supposons une loi de Rademacher $X \in \{-1, 1\}$ avec $\mathbb{P}(X=1) = \mathbb{P}(X=-1) = \frac{1}{2}$. $\mathbb{E}[X] = 0$. $\mathbb{E}[X^4] = 1 < +\infty$. La condition d'ordre 4 est vérifiée, on sait que la LFGN s'applique et $\overline{X}_n \to 0$ p.s.
+
+\section{Démonstrations}
+
+\subsection{Démonstration : Loi Forte sous condition d'un moment d'ordre 4 fini}
+
+Cette preuve utilise l'inégalité de Markov, le développement algébrique de puissances, et le lemme de Borel-Cantelli.
+
+\textbf{Hypothèses :}
+Soit $(X_n)_{n \in \mathbb{N}^*}$ une suite de variables aléatoires I.I.D.
+Supposons que $\mathbb{E}[X_1^4] = K < +\infty$.
+Pour simplifier l'écriture sans perte de généralité, considérons des variables centrées, c'est-à-dire $\mathbb{E}[X_1] = \mu = 0$. Si ce n'est pas le cas, on applique la démonstration à la suite $Y_n = X_n - \mu$.
+Posons $S_n = \sum_{i=1}^n X_i$. L'objectif est de montrer que $\frac{S_n}{n} \xrightarrow{p.s.} 0$.
+
+**Étape 1 : Calcul de $\mathbb{E}[S_n^4]$**
+Développons $(S_n)^4 = \left(\sum_{i=1}^n X_i\right)^4$.
+Le développement donne une somme de monômes de la forme $X_i X_j X_k X_l$ pour les indices $i, j, k, l \in \{1, \dots, n\}$.
+$$ (S_n)^4 = \sum_{i,j,k,l=1}^n X_i X_j X_k X_l $$
+Par linéarité de l'espérance, on a :
+$$ \mathbb{E}[S_n^4] = \sum_{i,j,k,l=1}^n \mathbb{E}[X_i X_j X_k X_l] $$
+Comme les variables sont indépendantes et de moyenne nulle ($\mathbb{E}[X_i] = 0$), dès qu'un indice apparaît une seule fois dans le produit, l'espérance du monôme s'annule.
+Par exemple, si $i \neq j, k, l$, alors $\mathbb{E}[X_i X_j X_k X_l] = \mathbb{E}[X_i] \mathbb{E}[X_j X_k X_l] = 0$.
+Les seuls termes non nuls dans la somme sont ceux où chaque indice apparaît au moins deux fois. Il y a exactement deux configurations possibles pour ces termes :
+1. \textbf{Un seul indice apparaît quatre fois :} Les termes de la forme $X_i^4$. Il y en a exactement $n$.
+   Pour ces termes, l'espérance est $\mathbb{E}[X_i^4] = \mathbb{E}[X_1^4]$.
+2. \textbf{Deux indices distincts apparaissent deux fois chacun :} Les termes de la forme $X_i^2 X_j^2$ avec $i \neq j$.
+   Pour un couple $(i,j)$ donné ($i \neq j$), le nombre de façons d'arranger les indices dans le produit $X_i X_j X_k X_l$ correspond au nombre de combinaisons de 2 éléments parmi 4, soit $\binom{4}{2} = 6$.
+   Le nombre de couples $(i,j)$ avec $i < j$ est $\binom{n}{2} = \frac{n(n-1)}{2}$.
+   Il y a donc $6 \times \frac{n(n-1)}{2} = 3n(n-1)$ termes de cette forme.
+   Par indépendance, $\mathbb{E}[X_i^2 X_j^2] = \mathbb{E}[X_i^2] \mathbb{E}[X_j^2] = (\mathbb{E}[X_1^2])^2$.
+
+En sommant ces termes, on obtient :
+$$ \mathbb{E}[S_n^4] = n \mathbb{E}[X_1^4] + 3n(n-1) (\mathbb{E}[X_1^2])^2 $$
+Puisque $\mathbb{E}[X_1^4] = K < +\infty$, par l'inégalité de Cauchy-Schwarz (ou Jensen), $(\mathbb{E}[X_1^2])^2 \leq \mathbb{E}[X_1^4] = K$.
+On peut donc majorer par un polynôme de degré 2 en $n$ :
+$$ \mathbb{E}[S_n^4] \leq n K + 3n(n-1) K = K(n + 3n^2 - 3n) = K(3n^2 - 2n) \leq 3K n^2 $$
+Ainsi, il existe une constante $C = 3K > 0$ telle que $\mathbb{E}[S_n^4] \leq C n^2$.
+
+\textbf{Étape 2 : Inégalité de Markov et concentration}
+Nous voulons montrer que $\frac{S_n}{n}$ s'écarte de $0$. Fixons $\epsilon > 0$.
+Appliquons l'inégalité de Markov à la variable aléatoire positive $\left|\frac{S_n}{n}\right|^4$ :
+$$ \mathbb{P}\left( \left| \frac{S_n}{n} \right| \geq \epsilon \right) = \mathbb{P}\left( \left| \frac{S_n}{n} \right|^4 \geq \epsilon^4 \right) \leq \frac{\mathbb{E}\left[ \left| \frac{S_n}{n} \right|^4 \right]}{\epsilon^4} $$
+Or, $\mathbb{E}\left[ \left| \frac{S_n}{n} \right|^4 \right] = \frac{1}{n^4} \mathbb{E}[S_n^4]$.
+En utilisant la majoration de l'Étape 1 :
+$$ \mathbb{P}\left( \left| \frac{S_n}{n} \right| \geq \epsilon \right) \leq \frac{C n^2}{n^4 \epsilon^4} = \frac{C}{\epsilon^4 n^2} $$
+
+\textbf{Étape 3 : Application du Lemme de Borel-Cantelli}
+Considérons la série des probabilités que l'écart soit supérieur à $\epsilon$ :
+$$ \sum_{n=1}^{+\infty} \mathbb{P}\left( \left| \frac{S_n}{n} \right| \geq \epsilon \right) \leq \sum_{n=1}^{+\infty} \frac{C}{\epsilon^4 n^2} = \frac{C}{\epsilon^4} \sum_{n=1}^{+\infty} \frac{1}{n^2} $$
+La série de Riemann $\sum \frac{1}{n^2}$ converge. Donc la série $\sum \mathbb{P}\left( \left| \frac{S_n}{n} \right| \geq \epsilon \right)$ est convergente.
+D'après le premier Lemme de Borel-Cantelli, si la série des probabilités des événements $A_n = \left\{ \left| \frac{S_n}{n} \right| \geq \epsilon \right\}$ converge, alors la probabilité que ces événements se réalisent une infinité de fois est nulle :
+$$ \mathbb{P}\left( \limsup_{n \to +\infty} \left\{ \left| \frac{S_n}{n} \right| \geq \epsilon \right\} \right) = 0 $$
+Autrement dit, presque sûrement, il n'existe qu'un nombre fini de $n$ pour lesquels $\left| \frac{S_n}{n} \right| \geq \epsilon$.
+Par conséquent, pour presque tout $\omega \in \Omega$, il existe un entier $N(\omega)$ tel que pour tout $n \geq N(\omega)$, $\left| \frac{S_n(\omega)}{n} \right| < \epsilon$.
+Puisque cela est vrai pour tout $\epsilon > 0$ (en considérant une suite $\epsilon_k = 1/k$), on en déduit que :
+$$ \frac{S_n}{n} \xrightarrow{p.s.} 0 $$
+Ce qui achève la démonstration rigoureuse de la loi forte des grands nombres sous hypothèse d'un moment d'ordre 4. \qedsymbol
+
+
+\section{Applications en Physique, Logique \& IA}
+
+\subsection{L'Apprentissage Machine et le Risque Empirique}
+En Intelligence Artificielle, et plus particulièrement en Apprentissage Statistique, la LFGN est le théorème qui légitime l'entraînement des modèles.
+Un modèle d'apprentissage cherche à minimiser un risque théorique (espérance de la fonction de perte sur toute la distribution des données réelles) :
+$$ R(f) = \mathbb{E}_{(X,Y)\sim \mathcal{D}} [ L(f(X), Y) ] $$
+Cependant, la distribution $\mathcal{D}$ est inconnue. On ne possède qu'un échantillon fini de données $(X_i, Y_i)_{i=1}^n$ (le dataset d'entraînement).
+On remplace alors le risque théorique par le \textbf{risque empirique} :
+$$ \widehat{R}_n(f) = \frac{1}{n} \sum_{i=1}^n L(f(X_i), Y_i) $$
+Si les données de l'échantillon sont tirées de manière I.I.D., la LFGN assure que pour un modèle $f$ fixé :
+$$ \widehat{R}_n(f) \xrightarrow{p.s.} R(f) $$
+Cela garantit que l'évaluation d'un modèle sur un vaste ensemble de test converge vers sa véritable performance en production.
+
+\subsection{Méthode de Monte-Carlo}
+La LFGN justifie l'intégration numérique par la méthode de Monte-Carlo.
+Pour calculer une intégrale complexe $I = \int_D g(x) dx$, on peut interpréter cette intégrale comme l'espérance $\mathbb{E}[g(U)]$ où $U$ est une variable aléatoire de loi uniforme sur le domaine $D$.
+En générant $n$ échantillons I.I.D. $U_1, \dots, U_n$ dans $D$, on approche l'intégrale par :
+$$ I_n = \frac{\text{Vol}(D)}{n} \sum_{i=1}^n g(U_i) $$
+La LFGN garantit que $I_n \xrightarrow{p.s.} I$. C'est très utilisé en IA pour approximer des espérances dans les Variational Autoencoders (VAE) ou dans le Reinforcement Learning.
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\section*{Exercice 1 : Moyenne empirique d'une loi de Poisson}
+
+$\bigstar\star\star\star\star$
+
+Soit $(X_n)_{n \geq 1}$ une suite de variables aléatoires indépendantes et identiquement distribuées, suivant toutes la loi de Poisson de paramètre $\lambda > 0$, c'est-à-dire $X_n \sim \mathcal{P}(\lambda)$.
+On rappelle que $\mathbb{E}[X_1] = \lambda$.
+On pose $\overline{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$.
+
+1. Que représente $\overline{X}_n$ en termes statistiques ?
+2. Énoncer le théorème de la loi forte des grands nombres et l'appliquer à cette suite. Que peut-on conclure sur le comportement asymptotique de $\overline{X}_n$ ?
+
+\textbf{Correction détaillée :}
+
+1. La variable $\overline{X}_n$ représente la moyenne empirique de l'échantillon de taille $n$. C'est un estimateur naturel de l'espérance de la loi sous-jacente.
+2. Le théorème de la loi forte des grands nombres (LFGN) stipule que si $(X_n)_{n \geq 1}$ est une suite de variables aléatoires I.I.D. admettant une espérance finie $\mathbb{E}[X_1] = \mu$, alors la moyenne empirique $\overline{X}_n$ converge presque sûrement vers $\mu$ lorsque $n$ tend vers l'infini : $\mathbb{P}\left(\lim_{n \to \infty} \overline{X}_n = \mu\right) = 1$.
+   Ici, les $X_n$ sont I.I.D. suivant $\mathcal{P}(\lambda)$. Puisque $\mathbb{E}[X_1] = \lambda < +\infty$, les hypothèses de la LFGN sont satisfaites.
+   Par conséquent, on conclut que $\overline{X}_n$ converge presque sûrement vers $\lambda$ :
+   $$ \overline{X}_n \xrightarrow{p.s.} \lambda $$
+
+
+\section*{Exercice 2 : Convergence des fréquences empiriques}
+
+$\bigstar\star\star\star\star$
+
+On lance une pièce de monnaie équilibrée un grand nombre de fois.
+Soit $X_i$ la variable aléatoire qui vaut $1$ si le $i$-ème lancer donne "Pile", et $0$ s'il donne "Face".
+Soit $F_n$ la fréquence d'apparition de "Pile" au cours des $n$ premiers lancers.
+
+1. Déterminer la loi de $X_i$, son espérance et sa variance.
+2. Exprimer $F_n$ en fonction des $X_i$.
+3. Montrer rigoureusement que $F_n$ converge presque sûrement vers $1/2$.
+
+\textbf{Correction détaillée :}
+
+1. Puisque la pièce est équilibrée, on a $\mathbb{P}(X_i = 1) = \frac{1}{2}$ et $\mathbb{P}(X_i = 0) = \frac{1}{2}$.
+   $X_i$ suit donc une loi de Bernoulli de paramètre $p = 1/2$, soit $X_i \sim \mathcal{B}(1/2)$.
+   Son espérance est $\mathbb{E}[X_i] = p = \frac{1}{2}$.
+   Sa variance est $\text{Var}(X_i) = p(1-p) = \frac{1}{4}$.
+2. La fréquence d'apparition de "Pile" sur $n$ lancers est le nombre total de "Pile" divisé par $n$.
+   Le nombre total de "Pile" est la somme des indicatrices $X_i$.
+   Donc, $F_n = \frac{1}{n} \sum_{i=1}^n X_i$.
+3. La suite $(X_n)_{n \geq 1}$ est une suite de variables I.I.D. d'espérance finie ($\mu = 1/2$).
+   D'après la loi forte des grands nombres, la moyenne empirique $F_n = \overline{X}_n$ converge presque sûrement vers $\mathbb{E}[X_1]$.
+   Ainsi, $\lim_{n \to +\infty} F_n = \frac{1}{2}$ avec une probabilité de $1$.
+
+
+\section*{Exercice 3 : Estimateur de la variance}
+
+$\bigstar\bigstar\star\star\star$
+
+Soit $(X_n)_{n \geq 1}$ une suite de variables aléatoires I.I.D. d'espérance $\mu$ et de variance $\sigma^2$ finies.
+On définit le moment empirique d'ordre 2 par $M_{2,n} = \frac{1}{n} \sum_{i=1}^n X_i^2$.
+
+1. Vers quoi $M_{2,n}$ converge-t-il presque sûrement ? Justifier.
+2. En déduire que l'estimateur de la variance défini par $V_n = \frac{1}{n} \sum_{i=1}^n X_i^2 - (\overline{X}_n)^2$ converge presque sûrement vers $\sigma^2$.
+
+\textbf{Correction détaillée :}
+
+1. Considérons la suite de variables aléatoires $Y_i = X_i^2$.
+   Puisque les $X_i$ sont I.I.D., les variables $Y_i$ sont également I.I.D.
+   De plus, puisque $X_1$ admet une variance finie $\sigma^2$ et une espérance finie $\mu$, on sait que $\mathbb{E}[X_1^2] = \sigma^2 + \mu^2 < +\infty$.
+   Les $Y_i$ vérifient les hypothèses de la loi forte des grands nombres.
+   Par conséquent, la moyenne empirique des $Y_i$, qui est exactement $M_{2,n}$, converge presque sûrement vers $\mathbb{E}[Y_1]$.
+   $$ M_{2,n} \xrightarrow{p.s.} \mathbb{E}[X_1^2] $$
+2. L'estimateur $V_n$ s'écrit $V_n = M_{2,n} - (\overline{X}_n)^2$.
+   D'après la LFGN appliquée à $X_i$, on sait que $\overline{X}_n \xrightarrow{p.s.} \mu$.
+   Puisque la fonction $x \mapsto x^2$ est continue, la convergence presque sûre est préservée par composition : $(\overline{X}_n)^2 \xrightarrow{p.s.} \mu^2$.
+   Par linéarité des limites presque sûres :
+   $$ V_n = M_{2,n} - (\overline{X}_n)^2 \xrightarrow{p.s.} \mathbb{E}[X_1^2] - \mu^2 $$
+   Or, par définition de la variance, $\mathbb{E}[X_1^2] - \mu^2 = \sigma^2$.
+   Donc $V_n \xrightarrow{p.s.} \sigma^2$.
+
+
+\section*{Exercice 4 : Intégration de Monte-Carlo (1D)}
+
+$\bigstar\bigstar\star\star\star$
+
+On souhaite évaluer numériquement l'intégrale $I = \int_0^1 e^{-x^2} dx$.
+Soit $(U_n)_{n \geq 1}$ une suite de variables aléatoires I.I.D. suivant la loi uniforme sur $[0, 1]$.
+On pose $Y_i = e^{-U_i^2}$ et $I_n = \frac{1}{n} \sum_{i=1}^n Y_i$.
+
+1. Déterminer l'espérance $\mathbb{E}[Y_1]$.
+2. En appliquant la loi forte des grands nombres, montrer que $I_n$ converge presque sûrement vers $I$.
+
+\textbf{Correction détaillée :}
+
+1. La variable $U_1$ suit la loi uniforme continue sur $[0, 1]$, dont la densité est $f(x) = 1$ pour $x \in [0, 1]$ et $0$ ailleurs.
+   D'après le théorème de transfert, l'espérance de $Y_1 = e^{-U_1^2}$ est :
+   $$ \mathbb{E}[Y_1] = \mathbb{E}[e^{-U_1^2}] = \int_{-\infty}^{+\infty} e^{-x^2} f(x) dx = \int_0^1 e^{-x^2} \times 1 dx = \int_0^1 e^{-x^2} dx = I $$
+2. Les variables $Y_i = e^{-U_i^2}$ sont I.I.D. car elles sont des transformations déterministes identiques des variables I.I.D. $U_i$.
+   De plus, pour tout $x \in [0, 1]$, $e^{-x^2} \in [1/e, 1]$, donc les $Y_i$ sont bornées et leur espérance est bien finie.
+   On peut donc appliquer la loi forte des grands nombres à la suite $(Y_n)$ :
+   $$ \frac{1}{n} \sum_{i=1}^n Y_i \xrightarrow{p.s.} \mathbb{E}[Y_1] $$
+   Ce qui s'écrit exactement :
+   $$ I_n \xrightarrow{p.s.} I $$
+   C'est le principe fondamental de la méthode d'intégration de Monte-Carlo.
+
+
+\section*{Exercice 5 : LFGN pour une loi exponentielle}
+
+$\bigstar\bigstar\bigstar\star\star$
+
+Soit $(X_n)_{n \geq 1}$ une suite de variables aléatoires I.I.D. de loi exponentielle $\mathcal{E}(\lambda)$ avec $\lambda > 0$.
+Soit $S_n = \sum_{i=1}^n X_i$.
+1. Quelle est l'espérance de $X_1$ ?
+2. Vers quelle limite la suite $\frac{n}{S_n}$ converge-t-il presque sûrement ? Justifier soigneusement.
+
+\textbf{Correction détaillée :}
+
+1. Pour une loi exponentielle de paramètre $\lambda$, la densité est $f(x) = \lambda e^{-\lambda x}$ sur $\mathbb{R}^+$. L'espérance est connue par intégration par parties : $\mathbb{E}[X_1] = \frac{1}{\lambda}$.
+2. Par définition, $S_n = \sum_{i=1}^n X_i$, donc $\frac{S_n}{n} = \overline{X}_n$ est la moyenne empirique.
+   Puisque les $X_i$ sont I.I.D. et admettent une espérance finie $\mathbb{E}[X_1] = \frac{1}{\lambda}$, la loi forte des grands nombres garantit que :
+   $$ \frac{S_n}{n} \xrightarrow{p.s.} \mathbb{E}[X_1] = \frac{1}{\lambda} $$
+   Considérons la fonction $g(x) = \frac{1}{x}$. Cette fonction est continue sur $]0, +\infty[$.
+   Puisque $X_i > 0$ presque sûrement, $\frac{S_n}{n} > 0$ presque sûrement.
+   Par le théorème de composition des limites presque sûres (la continuité de $g$), on a :
+   $$ g\left(\frac{S_n}{n}\right) \xrightarrow{p.s.} g\left(\frac{1}{\lambda}\right) $$
+   Soit :
+   $$ \frac{n}{S_n} \xrightarrow{p.s.} \lambda $$
+   Ainsi, l'inverse de la moyenne empirique est un estimateur fortement consistant du paramètre $\lambda$ de la loi exponentielle.
+
+
+\section*{Exercice 6 : Moyenne géométrique empirique}
+
+$\bigstar\bigstar\bigstar\star\star$
+
+Soit $(X_n)_{n \geq 1}$ une suite de variables aléatoires I.I.D. strictements positives, telles que $\mathbb{E}[\ln(X_1)]$ soit bien définie et finie.
+On définit la moyenne géométrique $G_n = \left( \prod_{i=1}^n X_i \right)^{1/n}$.
+
+1. Montrer que $\ln(G_n)$ s'exprime comme une moyenne empirique.
+2. En déduire la limite presque sûre de $G_n$ lorsque $n \to +\infty$.
+
+\textbf{Correction détaillée :}
+
+1. En appliquant la fonction logarithme naturel (qui est bijective et transforme les produits en sommes) à $G_n$, on obtient :
+   $$ \ln(G_n) = \ln\left( \left( \prod_{i=1}^n X_i \right)^{1/n} \right) = \frac{1}{n} \ln\left( \prod_{i=1}^n X_i \right) = \frac{1}{n} \sum_{i=1}^n \ln(X_i) $$
+   Ainsi, $\ln(G_n)$ est la moyenne empirique de la suite de variables aléatoires $Y_i = \ln(X_i)$.
+2. Les variables $Y_i = \ln(X_i)$ sont I.I.D. (car les $X_i$ le sont).
+   Par hypothèse, $\mathbb{E}[|Y_1|] = \mathbb{E}[|\ln(X_1)|] < +\infty$, donc la loi forte des grands nombres s'applique à la suite $(Y_n)$.
+   Par la LFGN, on a :
+   $$ \frac{1}{n} \sum_{i=1}^n Y_i \xrightarrow{p.s.} \mathbb{E}[Y_1] $$
+   Donc :
+   $$ \ln(G_n) \xrightarrow{p.s.} \mathbb{E}[\ln(X_1)] $$
+   Puisque la fonction exponentielle est continue sur $\mathbb{R}$, on peut la composer avec la limite presque sûre :
+   $$ G_n = \exp(\ln(G_n)) \xrightarrow{p.s.} \exp(\mathbb{E}[\ln(X_1)]) $$
+   La limite presque sûre de la moyenne géométrique est donc $e^{\mathbb{E}[\ln(X_1)]}$.
+   (Note : Par l'inégalité de Jensen, comme $-\ln$ est convexe, on a toujours $e^{\mathbb{E}[\ln(X_1)]} \leq \mathbb{E}[X_1]$).
+
+
+\section*{Exercice 7 : Limite d'une somme de variables bornées par Borel-Cantelli}
+
+$\bigstar\bigstar\bigstar\bigstar\star$
+
+Soit $(X_n)_{n \geq 1}$ une suite de variables aléatoires indépendantes telles que pour tout $n$, $\mathbb{P}(X_n = 1) = p$ et $\mathbb{P}(X_n = -1) = 1-p$, avec $p \in ]0, 1[$.
+Soit $S_n = \sum_{i=1}^n X_i$.
+
+Montrer en utilisant la LFGN que si $p > 1/2$, alors $S_n \xrightarrow{p.s.} +\infty$.
+
+\textbf{Correction détaillée :}
+
+1. Les variables $X_n$ sont I.I.D.
+   Calculons leur espérance :
+   $$ \mathbb{E}[X_1] = 1 \cdot p + (-1) \cdot (1-p) = p - 1 + p = 2p - 1 $$
+2. Puisque $X_n \in \{-1, 1\}$, $\mathbb{E}[|X_1|] = 1 < +\infty$.
+   La loi forte des grands nombres s'applique à la suite $(X_n)$, donc :
+   $$ \frac{S_n}{n} = \frac{1}{n} \sum_{i=1}^n X_i \xrightarrow{p.s.} \mathbb{E}[X_1] = 2p - 1 $$
+3. Par hypothèse, $p > 1/2$, ce qui implique que $2p - 1 > 0$. Notons $\mu = 2p - 1 > 0$.
+   La convergence presque sûre $\frac{S_n}{n} \xrightarrow{p.s.} \mu$ signifie que, pour presque tout $\omega \in \Omega$, il existe un rang $N(\omega)$ tel que pour tout $n \geq N(\omega)$, $\frac{S_n(\omega)}{n} \geq \frac{\mu}{2}$.
+   Par conséquent, pour $n \geq N(\omega)$ :
+   $$ S_n(\omega) \geq n \frac{\mu}{2} $$
+   Puisque $\mu/2 > 0$, la limite du terme de droite est $+\infty$ lorsque $n \to +\infty$.
+   Par minoration, on en déduit que pour presque tout $\omega$, $\lim_{n \to +\infty} S_n(\omega) = +\infty$.
+   Ce qui démontre que $S_n \xrightarrow{p.s.} +\infty$.
+   (Interprétation : dans une marche aléatoire où la probabilité d'aller à droite est strictement supérieure à celle d'aller à gauche, la particule part inéluctablement vers $+\infty$).
+
+
+\section*{Exercice 8 : Application aux probabilités de grands écarts}
+
+$\bigstar\bigstar\bigstar\bigstar\star$
+
+Soit $(X_n)_{n \geq 1}$ une suite de variables I.I.D. d'espérance $\mu = 0$ et de moment d'ordre 4 fini ($\mathbb{E}[X_1^4] = K$).
+On pose $S_n = \sum_{i=1}^n X_i$.
+Dans la preuve de la LFGN, on a montré que $\mathbb{E}[S_n^4] \leq 3K n^2$.
+Utiliser cette majoration pour borner la probabilité $P_n = \mathbb{P}\left(\max_{1 \le k \le n} \left|\frac{S_k}{k}\right| \ge \epsilon\right)$.
+*Indice : On pourra se contenter de borner $\mathbb{P}\left(\left|\frac{S_n}{n}\right| \ge \epsilon\right)$ et discuter de l'union.*
+
+\textbf{Correction détaillée :}
+
+1. Fixons $\epsilon > 0$. Par l'inégalité de Markov appliquée à la puissance 4 :
+   $$ \mathbb{P}\left(\left|\frac{S_n}{n}\right| \geq \epsilon\right) = \mathbb{P}\left(\frac{S_n^4}{n^4} \geq \epsilon^4\right) \leq \frac{\mathbb{E}[S_n^4]}{n^4 \epsilon^4} $$
+2. En injectant la borne supérieure $\mathbb{E}[S_n^4] \leq 3K n^2$ :
+   $$ \mathbb{P}\left(\left|\frac{S_n}{n}\right| \geq \epsilon\right) \leq \frac{3K n^2}{n^4 \epsilon^4} = \frac{3K}{\epsilon^4 n^2} $$
+3. Cette inégalité nous donne une borne de décroissance polynomiale en $O(1/n^2)$ pour l'écart de la moyenne empirique à sa cible, pour un $n$ fixé.
+   C'est la sommabilité de cette borne ($\sum \frac{1}{n^2} < \infty$) qui permet d'utiliser le lemme de Borel-Cantelli.
+   C'est une borne typique de probabilité de grands écarts (large deviations), bien que des outils plus puissants comme le lemme de Chernoff fourniraient une borne exponentielle en $e^{-cn}$ si on supposait l'existence d'une fonction génératrice des moments.
+
+
+\section*{Exercice 9 : Convergence des fonctions empiriques de répartition (Théorème de Glivenko-Cantelli)}
+
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
+
+Soit $(X_n)_{n \geq 1}$ une suite de variables aléatoires I.I.D. dont la fonction de répartition commune est notée $F(x) = \mathbb{P}(X_1 \leq x)$.
+Pour tout réel $x$, on définit la fonction de répartition empirique :
+$$ F_n(x) = \frac{1}{n} \sum_{i=1}^n \mathbf{1}_{X_i \leq x} $$
+où l'indicatrice $\mathbf{1}_{A}$ vaut 1 si l'événement $A$ est réalisé, et 0 sinon.
+
+1. Fixons un $x \in \mathbb{R}$. Montrer rigoureusement que $F_n(x) \xrightarrow{p.s.} F(x)$.
+2. (Discussion) Le théorème de Glivenko-Cantelli affirme que cette convergence est uniforme sur $\mathbb{R}$ presque sûrement. Pourquoi la LFGN classique ne suffit-elle pas à prouver directement le théorème de Glivenko-Cantelli ?
+
+\textbf{Correction détaillée :}
+
+1. Fixons un $x \in \mathbb{R}$.
+   Définissons la suite de variables aléatoires $Y_i = \mathbf{1}_{X_i \leq x}$.
+   Puisque les $X_i$ sont I.I.D., les variables $Y_i$ sont également I.I.D.
+   Les $Y_i$ suivent une loi de Bernoulli. Calculons leur espérance :
+   $$ \mathbb{E}[Y_1] = \mathbb{E}[\mathbf{1}_{X_1 \leq x}] = \mathbb{P}(X_1 \leq x) = F(x) $$
+   Cette espérance est finie (elle appartient à $[0,1]$).
+   Par définition, $F_n(x) = \frac{1}{n} \sum_{i=1}^n Y_i$ est la moyenne empirique des $Y_i$.
+   D'après la loi forte des grands nombres appliquée à la suite $(Y_i)$, on a :
+   $$ F_n(x) \xrightarrow{p.s.} \mathbb{E}[Y_1] = F(x) $$
+2. L'argument précédent montre que pour \textbf{chaque} $x$ fixé, l'ensemble exceptionnel (de probabilité nulle) $\mathcal{N}_x$ sur lequel on n'a pas convergence dépend de $x$.
+   Puisqu'il y a une indénombrabilité de points $x \in \mathbb{R}$, l'union des ensembles exceptionnels $\bigcup_{x \in \mathbb{R}} \mathcal{N}_x$ pourrait ne plus être de probabilité nulle !
+   La LFGN classique nous donne une convergence ponctuelle presque sûre, mais pas la convergence de la borne supérieure (supremum).
+   Le théorème de Glivenko-Cantelli requiert un argument supplémentaire de compacité ou de monotonie des fonctions de répartition pour "densifier" l'espace réel (par exemple via les rationnels $\mathbb{Q}$) afin de contourner le problème de l'union indénombrable.
+
+
+\section*{Exercice 10 : Échec de la LFGN pour la loi de Cauchy}
+
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
+
+Soit $(X_n)_{n \geq 1}$ une suite de variables I.I.D. suivant une loi de Cauchy de densité $f(x) = \frac{1}{\pi(1+x^2)}$.
+Soit $\overline{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$.
+On admet que la somme de $n$ variables de Cauchy indépendantes de paramètre 1 donne une loi de Cauchy de paramètre $n$.
+1. Déterminer la loi exacte de la moyenne empirique $\overline{X}_n$.
+2. En déduire que la LFGN ne s'applique pas. Expliquer mathématiquement pourquoi.
+
+\textbf{Correction détaillée :}
+
+1. Notons $S_n = \sum_{i=1}^n X_i$. Par la propriété admise de stabilité de la loi de Cauchy, $S_n$ suit une loi de Cauchy de paramètre $n$. La densité de $S_n$ est $f_{S_n}(x) = \frac{n}{\pi(n^2 + x^2)}$.
+   La moyenne empirique est $\overline{X}_n = \frac{S_n}{n}$.
+   Cherchons la densité de $\overline{X}_n$. Soit une fonction de test bornée continue $g$ :
+   $$ \mathbb{E}[g(\overline{X}_n)] = \mathbb{E}[g(S_n / n)] = \int_{-\infty}^{+\infty} g\left(\frac{x}{n}\right) \frac{n}{\pi(n^2 + x^2)} dx $$
+   Procédons au changement de variable $y = x/n$, $dx = n dy$ :
+   $$ \mathbb{E}[g(\overline{X}_n)] = \int_{-\infty}^{+\infty} g(y) \frac{n}{\pi(n^2 + (ny)^2)} n dy = \int_{-\infty}^{+\infty} g(y) \frac{n^2}{\pi n^2(1 + y^2)} dy = \int_{-\infty}^{+\infty} g(y) \frac{1}{\pi(1+y^2)} dy $$
+   Cela prouve que $\overline{X}_n$ possède la même densité $f(y) = \frac{1}{\pi(1+y^2)}$.
+   Autrement dit, $\overline{X}_n$ suit exactement la même loi de Cauchy que $X_1$, pour tout $n$.
+2. Puisque la loi de $\overline{X}_n$ est statique et identique à celle de $X_1$, elle ne se "concentre" jamais autour d'une valeur (sa variance reste infinie, elle "zigzague" perpétuellement de la même façon). La suite $(\overline{X}_n)$ ne converge donc pas presque sûrement vers une constante.
+   L'explication fondamentale provient du non-respect de l'hypothèse cruciale de la LFGN : la loi de Cauchy n'admet pas d'espérance finie.
+   En effet, $\int_{-\infty}^{+\infty} |x| \frac{1}{\pi(1+x^2)} dx = \frac{2}{\pi} \int_0^{+\infty} \frac{x}{1+x^2} dx = \frac{1}{\pi} [\ln(1+x^2)]_0^{+\infty} = +\infty$.
+   Comme $\mathbb{E}[|X_1|] = +\infty$, le théorème de Kolmogorov ne s'applique pas.
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\section*{TP 1 : Simulation du Lancer de Pièce et Visualisation de la LFGN}
+
+Dans ce premier travail pratique, nous allons simuler un lancer de pièce et vérifier empiriquement que la moyenne empirique converge vers l'espérance théorique.
+Nous coderons en Python pur, sans bibliothèques externes lourdes, en utilisant uniquement le module `random` pour générer des nombres aléatoires.
+
+\begin{lstlisting}
+import random
+
+def simuler_lancers(n):
+    # n : nombre de lancers
+    somme = 0
+    moyennes = []
+
+    for i in range(1, n + 1):
+        # random.random() donne un float dans [0, 1[
+        # On dit Pile (1) si < 0.5, Face (0) sinon
+        if random.random() < 0.5:
+            lancer = 1
+        else:
+            lancer = 0
+
+        somme = somme + lancer
+        moyenne_empirique = somme / i
+        moyennes.append(moyenne_empirique)
+
+    return moyennes
+
+# Test de la simulation pour 10 lancers
+print("Moyennes sur 10 lancers :", simuler_lancers(10))
+
+# Test pour un grand nombre pour observer la convergence (10000)
+resultats = simuler_lancers(10000)
+print("Derniere moyenne sur 10000 lancers :", resultats[-1])
+assert abs(resultats[-1] - 0.5) < 0.05, "La LFGN semble ne pas s'appliquer !"
+\end{lstlisting}
+
+On remarque que plus $n$ grandit, plus la dernière valeur du tableau de moyennes s'approche de $0.5$, illustrant la LFGN.
+
+
+\section*{TP 2 : Vérification Empirique : Loi Uniforme et Moment d'Ordre 4}
+
+Nous allons maintenant vérifier que l'écart entre la moyenne empirique et l'espérance se réduit de manière compatible avec nos démonstrations théoriques basées sur le moment d'ordre 4.
+La variable choisie est uniforme sur $[0, 1]$. Son espérance théorique est $0.5$.
+
+\begin{lstlisting}
+import random
+
+def calculer_ecart(n, epsilon):
+    # On va simuler plusieurs trajectoires pour voir la proba de depasser epsilon
+    # Mais ici on va juste faire un grand test
+    somme = 0
+    for _ in range(n):
+        somme = somme + random.random()
+
+    moyenne_empirique = somme / n
+    ecart = abs(moyenne_empirique - 0.5)
+    return ecart
+
+def simuler_plusieurs_trajectoires(n, nb_simulations, epsilon):
+    depassements = 0
+    for _ in range(nb_simulations):
+        ecart = calculer_ecart(n, epsilon)
+        if ecart >= epsilon:
+            depassements = depassements + 1
+
+    frequence_depassement = depassements / nb_simulations
+    return frequence_depassement
+
+# Pour n=1000, epsilon=0.1
+freq = simuler_plusieurs_trajectoires(1000, 500, 0.1)
+print("Frequence empirique de depassement (|X_bar - mu| > epsilon) :", freq)
+
+# Verifions que la frequence est tres faible, comme prevu par Borel-Cantelli/Markov
+assert freq < 0.05, "La concentration est plus faible que prevu."
+\end{lstlisting}
+
+
+\section*{TP 3 : Le piège de la Loi de Cauchy}
+
+Pour illustrer l'importance absolue de l'hypothèse d'intégrabilité (espérance finie) dans le théorème de Kolmogorov, nous allons simuler des variables suivant une loi de Cauchy.
+On peut générer une loi de Cauchy standard en prenant la tangente d'une loi uniforme sur $[-\pi/2, \pi/2]$.
+On s'attend à ce que la moyenne empirique ne se stabilise jamais.
+
+\begin{lstlisting}
+import random
+import math
+
+def cauchy_generator():
+    # generer uniforme sur ]-pi/2, pi/2[
+    # random.random() -> [0,1[
+    u = random.random() * math.pi - (math.pi / 2)
+    return math.tan(u)
+
+def simuler_cauchy(n):
+    somme = 0
+    for i in range(1, n + 1):
+        somme = somme + cauchy_generator()
+
+    return somme / n
+
+# Regardons quelques moyennes pour des n tres grands
+for n_test in [10, 100, 1000, 10000, 100000]:
+    res = simuler_cauchy(n_test)
+    print("n =", n_test, "| Moyenne =", res)
+
+# On ne met pas d'assert sur la limite car elle n'existe pas !
+# La valeur "saute" a cause de valeurs extremes produites par la tangente.
+\end{lstlisting}
+
+
+\section*{TP 4 : Intégration de Monte-Carlo pour l'aire d'un disque}
+
+Le calcul d'intégrales par la méthode de Monte-Carlo est une application directe de la LFGN.
+Nous allons approcher la valeur de $\pi$ en mesurant l'aire du disque unité inscrit dans le carré de rayon 1.
+Si on tire un point aléatoirement dans $[0, 1] \times [0, 1]$, la probabilité qu'il tombe dans le quart de cercle de rayon 1 est $\pi / 4$.
+
+\begin{lstlisting}
+import random
+
+def estimer_pi(n):
+    dans_le_cercle = 0
+
+    for _ in range(n):
+        x = random.random()
+        y = random.random()
+
+        # L'equation du cercle est x*x + y*y <= 1
+        if x*x + y*y <= 1.0:
+            dans_le_cercle = dans_le_cercle + 1
+
+    # LFGN : moyenne_empirique converge vers pi / 4
+    moyenne_empirique = dans_le_cercle / n
+    pi_estime = moyenne_empirique * 4.0
+    return pi_estime
+
+pi_app = estimer_pi(500000)
+print("Estimation de pi avec n=500000 :", pi_app)
+
+# Validation mathematique a une certaine tolerance
+assert abs(pi_app - 3.14159) < 0.02, "L'estimation de Monte-Carlo est trop eloignee."
+\end{lstlisting}
+
+
+\section*{TP 5 : Simulation d'une Marche Aléatoire à dérive positive}
+
+Nous voulons vérifier que si la probabilité d'aller à droite ($p$) est strictement supérieure à $1/2$, la somme $S_n$ part presque sûrement vers $+\infty$, conformément au théorème dérivé de la LFGN.
+Nous prendrons $p = 0.55$.
+
+\begin{lstlisting}
+import random
+
+def marche_aleatoire(n, p):
+    position = 0
+    for _ in range(n):
+        if random.random() < p:
+            position = position + 1  # droite
+        else:
+            position = position - 1  # gauche
+    return position
+
+def tester_derives(n, nb_simulations, p):
+    # On va simuler nb_simulations marches et regarder combien terminent au-dessus de 0
+    # On s'attend a ce que presque toutes finissent tres haut.
+    reussites = 0
+    for _ in range(nb_simulations):
+        pos_finale = marche_aleatoire(n, p)
+        if pos_finale > 0:
+            reussites = reussites + 1
+
+    frequence = reussites / nb_simulations
+    return frequence
+
+freq_pos = tester_derives(1000, 100, 0.55)
+print("Proportion des marches terminant dans les positifs :", freq_pos)
+
+# La loi forte dicte que S_n -> +oo, donc pour n=1000, on est quasiment certain d'etre > 0
+assert freq_pos > 0.95, "La marche aleatoire n'a pas derive correctement vers l'infini positif."
+\end{lstlisting}
+
+
+\end{document}
