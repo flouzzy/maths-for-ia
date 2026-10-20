@@ -106,7 +106,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-91/Jalon-91.md|Jalon 91 : Inégalités de concentration]] : Inégalités de concentration : Markov, Chebyshev, Bienaymé, Chernoff et lemme de Hoeffding. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-92/Jalon-92.md|Jalon 92 : Démonstration rigoureuse de la loi forte des grands nombres.]] : Démonstration rigoureuse de la loi forte des grands nombres. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-93/Jalon-93.md|Jalon 93 : Fonctions caractéristiques]] : Fonctions caractéristiques (transformée de Fourier de la loi) et théorème de continuité de Lévy. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [ ] [[jalon-94/Jalon 94 (Démonstration du théorème central limite).md|Jalon 94 : Démonstration du théorème central limite]] : Démonstration du théorème central limite (TCL) via les développements limités des fonctions caractéristiques.
+- [x] [[jalon-94/Jalon-94.md|Jalon 94 : Démonstration du théorème central limite]] : Démonstration du théorème central limite (TCL) via les développements limités des fonctions caractéristiques. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-95/Jalon 95 (Vecteurs gaussiens).md|Jalon 95 : Vecteurs gaussiens]] : Vecteurs gaussiens, loi normale multidimensionnelle, matrice de covariance et conditionnement gaussien.
 - [ ] [[jalon-96/Jalon 96 (Livrable IA).md|Jalon 96 : Livrable IA]] : Livrable IA T8 : Démonstration rigoureuse de la convergence de la fonction de perte Cross-Entropy vers l'information théorique de Shannon lors de l'entraînement des modèles de langage.
 ## Année 3 : le niveau master (analyse fonctionnelle, géométrie et apprentissage)
@@ -166,6 +166,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
+- [2026-10-19] : [Upsert/Création] du Jalon 94 - Théorème central limite (TCL). Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-07] : [Upsert/Création] du Jalon 86 - Variables aléatoires vues comme des applications mesurables. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-12] : [Upsert/Création] du Jalon 57 - Théorème du point fixe de Banach. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-05] : [Upsert/Création] du Jalon 48 - Livrable IA T4 : Formalisation mathématique de la Rétropropagation. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
