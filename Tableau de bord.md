@@ -107,7 +107,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-92/Jalon-92.md|Jalon 92 : Démonstration rigoureuse de la loi forte des grands nombres.]] : Démonstration rigoureuse de la loi forte des grands nombres. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-93/Jalon-93.md|Jalon 93 : Fonctions caractéristiques]] : Fonctions caractéristiques (transformée de Fourier de la loi) et théorème de continuité de Lévy. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-94/Jalon-94.md|Jalon 94 : Démonstration du théorème central limite]] : Démonstration du théorème central limite (TCL) via les développements limités des fonctions caractéristiques. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [ ] [[jalon-95/Jalon 95 (Vecteurs gaussiens).md|Jalon 95 : Vecteurs gaussiens]] : Vecteurs gaussiens, loi normale multidimensionnelle, matrice de covariance et conditionnement gaussien.
+- [x] [[jalon-95/Jalon-95.md|Jalon 95 : Vecteurs gaussiens]] : Vecteurs gaussiens, loi normale multidimensionnelle, matrice de covariance et conditionnement gaussien. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-96/Jalon 96 (Livrable IA).md|Jalon 96 : Livrable IA]] : Livrable IA T8 : Démonstration rigoureuse de la convergence de la fonction de perte Cross-Entropy vers l'information théorique de Shannon lors de l'entraînement des modèles de langage.
 ## Année 3 : le niveau master (analyse fonctionnelle, géométrie et apprentissage)
 ### Trimestre 9 : analyse fonctionnelle et théorie spectrale

@@ -215,7 +215,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 92](jalon-92/Jalon-92.md)** : Démonstration rigoureuse de la loi forte des grands nombres.
 - **[Jalon 93](jalon-93/Jalon%2093%20%28Fonctions%20caract%C3%A9ristiques%29.md)** : Fonctions caractéristiques (transformée de Fourier de la loi) et théorème de continuité de Lévy.
 - **[Jalon 94](jalon-94/Jalon-94.md)** : Démonstration du théorème central limite (TCL) via les développements limités des fonctions caractéristiques. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 95](jalon-95/Jalon%2095%20%28Vecteurs%20gaussiens%29.md)** : Vecteurs gaussiens, loi normale multidimensionnelle, matrice de covariance et conditionnement gaussien.
+- **[Jalon 95](jalon-95/Jalon-95.md)** : Vecteurs gaussiens, loi normale multidimensionnelle, matrice de covariance et conditionnement gaussien.
 - **[Jalon 96](jalon-96/Jalon%2096%20%28Livrable%20IA%29.md)** : Livrable IA T8 : Démonstration rigoureuse de la convergence de la fonction de perte Cross-Entropy vers l'information théorique de Shannon lors de l'entraînement des modèles de langage.
 
 </details>
@@ -429,6 +429,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
+- [2026-10-20] : [Upsert/Création] du Jalon 95 - Vecteurs gaussiens. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-19] : [Upsert/Création] du Jalon 94 - Théorème central limite (TCL). Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-19] : [Upsert/Création] du Jalon 93 - Fonctions caractéristiques. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-16] : [Upsert/Création] du Jalon 92 - Démonstration rigoureuse de la loi forte des grands nombres. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
