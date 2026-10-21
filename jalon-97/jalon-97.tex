@@ -1,0 +1,347 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge ESPACES DE BANACH ET OPÉRATEURS LINÉAIRES \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+\section{Jalon 97 : Espaces de Banach et Opérateurs Linéaires}
+
+\section{Présentation du concept clé}
+
+- **Le Pont Théorique :** Un réseau de neurones est une suite d'opérateurs (matrices de poids) et de non-linéarités. L'analyse des espaces de Banach permet d'étudier la **Stabilité Lipshitzienne** du réseau global.
+- **Example Concret :**
+    - **Spectral Normalization :** En IA, pour stabiliser les GANs, on divise chaque matrice de poids $W$ par sa norme d'opérateur $\|W\|_2$ (aussi appelée valeur singulière maximale, Jalon 36). Cela force le réseau à être une **Contraction** (Jalon 57) ou du moins à ne pas amplifier le bruit.
+    - **Optimisation de dimension infinie :** Dans les modèles comme les "Neural Operators" (utilisés pour prédire la météo ou la mécanique des fluides), le réseau n'apprend pas à transformer des vecteurs, mais à transformer des fonctions (éléments d'un espace de Banach).
+    - **Gradients de fonctions :** Le calcul du gradient d'une perte par rapport à une fonction (ex: dans l'apprentissage de noyaux) nécessite de travailler dans le dual $E^*$.
+
+\section{Liens Sémantiques}
+
+- **Concepts Précédents requis :** [[Jalon 56 (Espaces métriques complets).md]], [[Jalon-8.md]]
+- **Concepts Futurs dépendants :** [[Jalon 98 (Théorème de Hahn-Banach).md]], [[Jalon 105 (Opérateurs adjoints).md]]
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Continuité de l'opérateur identité}
+$\bigstar\star\star\star\star$
+
+**Énoncé :**
+Soit $E$ un espace de Banach. Montrer que l'opérateur identité $I: E \to E$ est continu et calculer sa norme.
+
+**Correction Détaillée :**
+1. Soit $x \in E$. Par définition de l'opérateur identité, $I(x) = x$.
+2. Ainsi, $\|I(x)\|_E = \|x\|_E$.
+3. On en déduit directement que $\forall x \in E, \|I(x)\|_E \le 1 \cdot \|x\|_E$.
+4. L'opérateur $I$ est donc borné (et continu). Sa norme est $\|I\| = \sup_{\|x\|=1} \|I(x)\| = \sup_{\|x\|=1} \|x\| = 1$.
+
+
+\subsection*{Exercice 2 : Opérateur de multiplication par un scalaire}
+$\bigstar\star\star\star\star$
+
+**Énoncé :**
+Soit $\lambda \in \mathbb{K}$ et $T: E \to E$ défini par $T(x) = \lambda x$. Calculer la norme de $T$.
+
+**Correction Détaillée :**
+1. Pour tout $x \in E$, $\|T(x)\| = \|\lambda x\| = |\lambda| \|x\|$.
+2. Cela montre que $T$ est borné et $\|T\| \le |\lambda|$.
+3. Si $E \neq \{0\}$, il existe $x \neq 0$ avec $\|x\|=1$. Alors $\|T(x)\| = |\lambda|$, d'où $\|T\| \ge |\lambda|$.
+4. Conclusion : $\|T\| = |\lambda|$.
+
+
+\subsection*{Exercice 3 : Somme de deux opérateurs continus}
+$\bigstar\bigstar\star\star\star$
+
+**Énoncé :**
+Soient $S, T \in \mathcal{L}(E,F)$ deux opérateurs continus. Montrer que $S+T$ est continu et que $\|S+T\| \le \|S\| + \|T\|$.
+
+**Correction Détaillée :**
+1. Par inégalité triangulaire, pour tout $x \in E$, $\|(S+T)(x)\| = \|S(x) + T(x)\| \le \|S(x)\| + \|T(x)\|$.
+2. Par définition de la norme d'opérateur, $\|S(x)\| \le \|S\| \|x\|$ et $\|T(x)\| \le \|T\| \|x\|$.
+3. Donc $\|(S+T)(x)\| \le (\|S\| + \|T\|)\|x\|$.
+4. L'opérateur est donc borné, avec $\|S+T\| \le \|S\| + \|T\|$.
+
+
+\subsection*{Exercice 4 : Composition d'opérateurs continus}
+$\bigstar\bigstar\star\star\star$
+
+**Énoncé :**
+Soient $T \in \mathcal{L}(E,F)$ et $S \in \mathcal{L}(F,G)$. Montrer que $S \circ T \in \mathcal{L}(E,G)$ et que $\|S \circ T\| \le \|S\| \|T\|$.
+
+**Correction Détaillée :**
+1. Pour tout $x \in E$, $(S \circ T)(x) = S(T(x))$.
+2. Puisque $S$ est continu, $\|S(T(x))\|_G \le \|S\| \|T(x)\|_F$.
+3. Puisque $T$ est continu, $\|T(x)\|_F \le \|T\| \|x\|_E$.
+4. En combinant, $\|(S \circ T)(x)\|_G \le \|S\| \|T\| \|x\|_E$. Donc $S \circ T$ est continu et sa norme est majorée par $\|S\| \|T\|$.
+
+
+\subsection*{Exercice 5 : Équivalence des normes en dimension finie}
+$\bigstar\bigstar\bigstar\star\star$
+
+**Énoncé :**
+Rappeler la preuve que sur $\mathbb{R}^n$, la norme $\| \cdot \|_1$ et la norme $\| \cdot \|_2$ sont équivalentes. L'identité entre ces deux espaces normés est-elle continue ?
+
+**Correction Détaillée :**
+1. Soit $x \in \mathbb{R}^n$. $\|x\|_2 = (\sum x_i^2)^{1/2} \le (\sum x_i^2 + \sum_{i \neq j} |x_i||x_j|)^{1/2} = \sum |x_i| = \|x\|_1$.
+2. Par Cauchy-Schwarz, $\|x\|_1 = \sum 1 \cdot |x_i| \le (\sum 1^2)^{1/2} (\sum x_i^2)^{1/2} = \sqrt{n} \|x\|_2$.
+3. Donc $\|x\|_2 \le \|x\|_1 \le \sqrt{n} \|x\|_2$. Les normes sont équivalentes.
+4. L'application identité de $(\mathbb{R}^n, \|\cdot\|_1)$ vers $(\mathbb{R}^n, \|\cdot\|_2)$ est donc continue, de norme au plus 1.
+
+
+\subsection*{Exercice 6 : Opérateur de décalage (Shift)}
+$\bigstar\bigstar\bigstar\star\star$
+
+**Énoncé :**
+Soit $E = \ell^2(\mathbb{N})$ et l'opérateur de décalage à droite $S(x_0, x_1, \dots) = (0, x_0, x_1, \dots)$. Calculer $\|S\|$, est-il surjectif ?
+
+**Correction Détaillée :**
+1. Pour tout $x \in \ell^2$, $\|S(x)\|^2 = 0^2 + x_0^2 + x_1^2 + \dots = \|x\|^2$.
+2. Ainsi, $S$ est une isométrie, et sa norme est exactement $\|S\| = 1$.
+3. L'opérateur n'est pas surjectif : la suite $(1, 0, 0, \dots)$ n'est pas dans l'image de $S$ car toute suite image a 0 en première coordonnée.
+
+
+\subsection*{Exercice 7 : L'inverse d'un opérateur proche de l'identité}
+$\bigstar\bigstar\bigstar\bigstar\star$
+
+**Énoncé :**
+Soit $E$ un espace de Banach et $T \in \mathcal{L}(E)$ tel que $\|T\| < 1$. Montrer que l'opérateur $I - T$ est inversible (série de Neumann).
+
+**Correction Détaillée :**
+1. Considérons la série $S_n = \sum_{k=0}^n T^k$. Montrons qu'elle converge dans $\mathcal{L}(E)$.
+2. $\|T^k\| \le \|T\|^k$. Comme $\|T\| < 1$, la série numérique $\sum \|T\|^k$ converge (série géométrique).
+3. L'espace $\mathcal{L}(E)$ étant complet (car $E$ est un Banach), la série $\sum T^k$ converge absolument, donc converge vers un opérateur $S$.
+4. On vérifie que $(I-T)S = S(I-T) = \sum_{k=0}^\infty T^k - \sum_{k=1}^\infty T^k = T^0 = I$. Ainsi $I-T$ est inversible.
+
+
+\subsection*{Exercice 8 : Fonctionnelle linéaire sur l'espace des fonctions continues}
+$\bigstar\bigstar\bigstar\bigstar\star$
+
+**Énoncé :**
+Soit $E = \mathcal{C}([0,1])$ avec la norme uniforme. Soit $L: E \to \mathbb{R}$ définie par $L(f) = f(1/2)$. Montrer que $L$ est continue et calculer sa norme.
+
+**Correction Détaillée :**
+1. $L$ est clairement linéaire.
+2. Pour toute $f \in E$, $|L(f)| = |f(1/2)| \le \sup_{x} |f(x)| = \|f\|_\infty$.
+3. Donc $L$ est bornée et $\|L\| \le 1$.
+4. En considérant la fonction constante $f(x) = 1$, on a $\|f\|_\infty = 1$ et $L(f) = 1$, donc $\|L\| = 1$.
+
+
+\subsection*{Exercice 9 : Opérateur intégral de Volterra}
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
+
+**Énoncé :**
+Soit $E = \mathcal{C}([0,1])$ et $V(f)(x) = \int_0^x f(t)dt$. Montrer que $\|V^n\| \le \frac{1}{n!}$ et en déduire que $I-V$ est inversible.
+
+**Correction Détaillée :**
+1. Par récurrence, on montre que $|V^n(f)(x)| \le \|f\|_\infty \frac{x^n}{n!}$.
+2. Pour $n=1$, c'est l'exercice classique. Si c'est vrai pour $n$, $|V^{n+1}(f)(x)| \le \int_0^x \|f\|_\infty \frac{t^n}{n!} dt = \|f\|_\infty \frac{x^{n+1}}{(n+1)!}$.
+3. Donc $\|V^n\| \le \frac{1}{n!}$.
+4. La série $\sum \|V^n\| \le \sum \frac{1}{n!} = e < \infty$. Elle converge dans $\mathcal{L}(E)$. Son inverse est $(I-V)^{-1} = \sum_{n=0}^\infty V^n$.
+
+
+\subsection*{Exercice 10 : Théorème de Riesz (compacité de la boule)}
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
+
+**Énoncé :**
+Soit $E$ un espace vectoriel normé dont la boule unité fermée $B$ est compacte. En utilisant le fait qu'il existe un $\epsilon$-réseau fini, prouver que la dimension de $E$ est finie.
+
+**Correction Détaillée :**
+1. Supposons la dimension infinie. On construit une suite $(x_n)$ dans $B$ telle que $\|x_n - x_m\| \ge 1/2$ pour tout $n \neq m$ (lemme de Riesz).
+2. On choisit $x_1$ de norme 1. Soit $F_1 = \text{Vect}(x_1)$. Il existe $x_2$ de norme 1 tel que $d(x_2, F_1) \ge 1/2$.
+3. On itère pour obtenir la suite. Cette suite n'admet aucune sous-suite de Cauchy car les distances mutuelles sont $\ge 1/2$.
+4. Cela contredit la compacité séquentielle de $B$. Donc la dimension doit être finie.
+
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Calcul de la norme de Frobenius vs Norme d'opérateur}
+
+**Objectif :**
+Comparer numériquement la norme d'opérateur (induite par L2) et la norme de Frobenius pour des matrices aléatoires.
+
+\begin{lstlisting}
+import numpy as np
+import matplotlib.pyplot as plt
+
+def compare_norms(n_matrices=100, dim=50):
+    op_norms = []
+    frob_norms = []
+    for _ in range(n_matrices):
+        A = np.random.randn(dim, dim)
+        op_norm = np.linalg.norm(A, ord=2)
+        frob_norm = np.linalg.norm(A, ord='fro')
+        op_norms.append(op_norm)
+        frob_norms.append(frob_norm)
+
+        \# On verifie mathematiquement que la norme d'operateur est <= a la norme de Frobenius
+        assert op_norm <= frob_norm + 1e-10
+
+    print(f"Moyenne norme operateur: {np.mean(op_norms):.2f}")
+    print(f"Moyenne norme Frobenius: {np.mean(frob_norms):.2f}")
+
+compare_norms()
+
+\end{lstlisting}
+
+
+\subsection*{TP 2 : Série de Neumann pour l'inversion d'opérateur}
+
+**Objectif :**
+Implémenter l'inversion d'une matrice via la série de Neumann et vérifier la convergence si $\|T\| < 1$.
+
+\begin{lstlisting}
+import numpy as np
+
+def neumann_inverse(T, max_iter=50):
+    \# T doit avoir une norme < 1 pour que I - T soit inversible par la serie
+    assert np.linalg.norm(T, ord=2) < 1.0, "La norme doit etre strictement inferieure a 1"
+
+    n = T.shape[0]
+    I = np.eye(n)
+    S = np.zeros((n,n))
+    T_k = I.copy()
+
+    for _ in range(max_iter):
+        S = S + T_k
+        T_k = T_k @ T
+
+    return S
+
+\# Test
+T = np.random.randn(10, 10)
+T = T / (np.linalg.norm(T, ord=2) * 2) \# Norme de 0.5
+inv_I_minus_T = neumann_inverse(T)
+
+\# Verification avec numpy
+expected = np.linalg.inv(np.eye(10) - T)
+diff = np.linalg.norm(inv_I_minus_T - expected)
+print("Difference avec l'inverse exact:", diff)
+assert diff < 1e-5
+
+\end{lstlisting}
+
+
+\subsection*{TP 3 : Opérateur de Shift (décalage) et isométrie}
+
+**Objectif :**
+Modéliser l'opérateur de décalage dans un espace de dimension finie et observer la perte d'informations (non-surjectivité).
+
+\begin{lstlisting}
+import numpy as np
+
+def right_shift_operator(x):
+    \# x est un vecteur de taille N. Le shift deplace tout vers la droite et met 0 au debut.
+    \# Le dernier element est perdu en dimension finie
+    n = len(x)
+    shifted = np.zeros(n)
+    shifted[1:] = x[:-1]
+    return shifted
+
+x = np.random.randn(10)
+norm_x = np.linalg.norm(x)
+
+shifted_x = right_shift_operator(x)
+norm_shifted = np.linalg.norm(shifted_x)
+
+print(f"Norme initiale : {norm_x:.4f}")
+print(f"Norme apres shift (dim finie) : {norm_shifted:.4f}")
+print(f"Perte due au dernier element : {np.abs(x[-1]):.4f}")
+
+\end{lstlisting}
+
+
+\subsection*{TP 4 : Approximation de l'opérateur intégral de Volterra}
+
+**Objectif :**
+Discrétiser l'opérateur de Volterra $V(f)(x) = \int_0^x f(t)dt$ et estimer sa norme d'opérateur matricielle.
+
+\begin{lstlisting}
+import numpy as np
+
+def volterra_matrix(n, dx):
+    \# V f(x_i) approxime par la somme des f(x_j)*dx pour j <= i
+    V = np.zeros((n, n))
+    for i in range(n):
+        for j in range(i + 1):
+            V[i, j] = dx
+    return V
+
+n_points = 500
+dx = 1.0 / n_points
+V = volterra_matrix(n_points, dx)
+
+norm_V = np.linalg.norm(V, ord=2)
+print(f"Norme d'operateur du Volterra discretise : {norm_V:.4f}")
+\# Analytiquement, on sait que la norme de l'operateur continu sur L2 est 2/pi ~ 0.6366
+print(f"Valeur theorique L2 attendue : {2/np.pi:.4f}")
+
+\end{lstlisting}
+
+
+\subsection*{TP 5 : Contraction et Point Fixe (Théorème de Banach)}
+
+**Objectif :**
+Utiliser le théorème du point fixe sur un opérateur non linéaire contractant dans un espace de Banach (ici $\mathbb{R}^n$).
+
+\begin{lstlisting}
+import numpy as np
+
+def contractive_operator(x):
+    \# F(x) = 0.5 * sin(x) + vector_constant
+    \# La derivee est bornee par 0.5 < 1, c'est une contraction
+    c = np.ones_like(x) * 0.1
+    return 0.5 * np.sin(x) + c
+
+def banach_fixed_point(operator, dim=5, max_iter=100, tol=1e-8):
+    x = np.random.randn(dim)
+    for i in range(max_iter):
+        x_next = operator(x)
+        if np.linalg.norm(x_next - x) < tol:
+            print(f"Convergence en {i} iterations")
+            return x_next
+        x = x_next
+    return x
+
+fixed_point = banach_fixed_point(contractive_operator)
+print("Point fixe trouve :")
+print(fixed_point)
+print("Verification F(x) - x =")
+print(np.linalg.norm(contractive_operator(fixed_point) - fixed_point))
+
+\end{lstlisting}
+
+
+
+
+\end{document}
