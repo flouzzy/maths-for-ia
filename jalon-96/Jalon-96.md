@@ -9,237 +9,141 @@ tags:
 prev: "[[Jalon 95 (Vecteurs gaussiens).md]]"
 next: "[[Jalon 97 (Espaces de Banach).md]]"
 ---
-# Jalon 96 : Convergence de la Cross-Entropy vers l'Entropie de Shannon
+# Jalon 96 : Livrable IA T8 : Convergence de la Cross-Entropy vers l'Entropie de Shannon
 
-### Introduction aux fondements théoriques
+## Contexte Historique et Physique de l'Information
 
-L'étude de l'information constitue une pierre angulaire des mathématiques contemporaines et de leurs applications technologiques. Le concept d'information, quantifié pour la première fois avec une rigueur mathématique par Claude Shannon en 1948, a transformé notre compréhension de la communication, du codage et de la transmission de données. Initialement développée pour résoudre des problèmes d'ingénierie des télécommunications, la théorie de l'information a rapidement démontré sa pertinence dans des domaines aussi divers que la physique statistique, la logique et, plus récemment, l'intelligence artificielle.
+L'étude de l'information trouve ses racines dans la physique statistique, notamment via les travaux de Ludwig Boltzmann. C'est Claude Shannon, en 1948, qui formalise mathématiquement la notion d'incertitude dans un processus aléatoire. En intelligence artificielle moderne, l'entraînement des modèles de langage massifs (LLM) repose sur la minimisation d'une fonction de perte appelée entropie croisée (ou Cross-Entropy).
 
-Dans le contexte des modèles de langage, notamment les grands modèles de langage (LLM), l'objectif fondamental de l'entraînement consiste à permettre au modèle d'apprendre la distribution de probabilité sous-jacente des séquences de texte. Pour ce faire, une fonction de perte est employée, la plus courante étant l'entropie croisée. La convergence de cette fonction de perte empirique vers l'entropie théorique de Shannon, ou plus précisément vers l'entropie de la source de données, représente un jalon crucial dans la compréhension des performances et des limites de ces systèmes. Cet exposé détaillera les définitions fondamentales, les preuves rigoureuses de cette convergence et ses implications profondes dans les applications modernes.
+Ce processus d'optimisation vise à rapprocher la distribution de probabilité prédite par le modèle de la distribution réelle du langage humain. Nous démontrerons que cette perte est bornée inférieurement par l'entropie intrinsèque du langage : l'incertitude irréductible inhérente à la communication humaine.
 
-### Définitions et Théorèmes fondamentaux
+## Structures Mathématiques Fondamentales
 
-Nous établissons ici les définitions formelles des concepts d'entropie de Shannon, d'entropie croisée et de divergence de Kullback-Leibler, outils indispensables à notre analyse. Chaque définition sera suivie d'un exemple numérique concret pour en illustrer l'application.
+Soit $(\mathcal{X}, \mathcal{B}(\mathcal{X}), \lambda)$ un espace mesuré, où $\mathcal{X}$ représente l'espace de nos données (par exemple, le vocabulaire d'une langue). Soit $P$ la distribution réelle et inconnue des données, absolument continue par rapport à $\lambda$, de densité $p$. Soit $Q_\theta$ la distribution de probabilité paramétrée par $\theta \in \Theta$, prédite par notre modèle, de densité $q_\theta$.
 
-#### Entropie de Shannon
+### Définitions, Théorèmes et Exemples Concrets Immédiats
 
-Soit $X$ une variable aléatoire discrète prenant ses valeurs dans un ensemble fini $\mathcal{X} = \{x_1, x_2, \ldots, x_k\}$, et soit $P$ la distribution de probabilité associée, telle que $P(X=x_i) = p_i$ pour $i=1, \ldots, k$, avec $\sum_{i=1}^k p_i = 1$.
+> **Définition 1 (Entropie de Shannon) :**
+> L'entropie de la source de données $P$ est définie par :
+> $$H(P) = - \int_{\mathcal{X}} p(x) \ln p(x) d\lambda(x) = \mathbb{E}_{X \sim P}[-\ln p(X)]$$
+> Cette grandeur mesure la quantité moyenne d'information (ou d'incertitude) intrinsèque aux données.
 
-L'entropie de Shannon de la variable aléatoire $X$, notée $H(X)$, mesure l'incertitude intrinsèque ou la quantité moyenne d'information contenue dans la variable $X$. Elle est définie par:
+**Exemple 1 : Lancer de pièce biaisée**
+Considérons une variable aléatoire binaire $X \in \{0, 1\}$ suivant une loi de Bernoulli de paramètre $p=0,2$.
+La distribution est $P(X=1) = 0,2$ et $P(X=0) = 0,8$.
+L'entropie de Shannon de cette source est :
+$$H(P) = - (0,2 \ln(0,2) + 0,8 \ln(0,8))$$
+Calculons pas-à-pas :
+$$0,2 \ln(0,2) \approx 0,2 \times (-1,609) \approx -0,3218$$
+$$0,8 \ln(0,8) \approx 0,8 \times (-0,223) \approx -0,1784$$
+$$H(P) \approx 0,3218 + 0,1784 = 0,5002 \text{ nats}.$$
 
-\begin{equation}
-H(X) = -\sum_{i=1}^k p_i \log_2(p_i)
-\end{equation}
+> **Définition 2 (Entropie Croisée ou Cross-Entropy) :**
+> La cross-entropy entre la vraie distribution $P$ et la distribution approchée $Q_\theta$ est définie par :
+> $$H(P, Q_\theta) = - \int_{\mathcal{X}} p(x) \ln q_\theta(x) d\lambda(x) = \mathbb{E}_{X \sim P}[-\ln q_\theta(X)]$$
 
-où le logarithme est généralement pris en base 2, exprimant l'entropie en bits. Par convention, si $p_i=0$, alors $p_i \log_2(p_i) = 0$.
+**Exemple 2 : Entropie croisée pour un modèle imparfait**
+Reprenons la pièce biaisée $P$ (Bernoulli $p=0,2$).
+Supposons qu'un modèle naïf $Q_\theta$ estime que la pièce est équilibrée : $q(0)=0,5$ et $q(1)=0,5$.
+La cross-entropy est :
+$$H(P, Q_\theta) = - (P(X=1) \ln q(1) + P(X=0) \ln q(0))$$
+$$H(P, Q_\theta) = - (0,2 \ln(0,5) + 0,8 \ln(0,5)) = - \ln(0,5) = \ln(2) \approx 0,693 \text{ nats}.$$
+On remarque que $H(P, Q_\theta) > H(P)$. Le modèle équilibré est "surpris" par les résultats réels plus souvent qu'un modèle parfait ne le serait.
 
-**Exemple numérique :**
-Considérons une variable aléatoire $X$ représentant le résultat d'un lancer de dé à six faces.
-1.  **Dé équilibré :** La probabilité de chaque face est $p_i = 1/6$ pour $i=1, \ldots, 6$.
-    L'entropie est :
-    \begin{align*}
-    H(X) &= -\sum_{i=1}^6 \frac{1}{6} \log_2\left(\frac{1}{6}\right) \\
-    &= -6 \cdot \frac{1}{6} \log_2\left(\frac{1}{6}\right) \\
-    &= -\log_2\left(\frac{1}{6}\right) \\
-    &= \log_2(6) \approx 2.585 \text{ bits}
-    \end{align*}
-    Cette valeur indique le nombre moyen de bits nécessaires pour coder le résultat d'un lancer de dé équilibré.
-2.  **Dé truqué :** Supposons que le dé soit truqué et ne puisse jamais tomber sur "1". Les probabilités sont alors $P(X=1) = 0$, et $P(X=i) = 1/5$ pour $i=2, \ldots, 6$.
-    L'entropie est :
-    \begin{align*}
-    H(X) &= -0 \cdot \log_2(0) - \sum_{i=2}^6 \frac{1}{5} \log_2\left(\frac{1}{5}\right) \\
-    &= -0 + (-5) \cdot \frac{1}{5} \log_2\left(\frac{1}{5}\right) \\
-    &= -\log_2\left(\frac{1}{5}\right) \\
-    &= \log_2(5) \approx 2.322 \text{ bits}
-    \end{align*}
-    L'incertitude est réduite car une des possibilités est éliminée, ce qui est reflété par une entropie plus faible.
 
-#### Entropie Croisée
 
-Soient $P$ et $Q$ deux distributions de probabilité discrètes sur le même ensemble fini $\mathcal{X}$. $P$ représente la distribution "vraie" ou observée, tandis que $Q$ représente une distribution "prédite" ou modélisée.
+**Exemple 3 : Entropie d'un système déterministe**
+Considérons une source $P$ qui émet toujours le même symbole $X=A$ avec certitude : $P(X=A) = 1$ et $P(X \neq A) = 0$.
+L'entropie de cette source est :
+$$H(P) = - (1 \ln(1)) = 0$$
+L'incertitude est nulle. On ne peut extraire aucune information d'un tel système.
 
-L'entropie croisée de $P$ par rapport à $Q$, notée $H(P, Q)$, est une mesure de la quantité moyenne de bits nécessaires pour identifier un événement tiré de $P$ en utilisant un code optimisé pour la distribution $Q$. Elle est définie par:
+**Exemple 4 : Cross-Entropy infinie**
+Soit un modèle $Q_\theta$ qui affirme avec certitude qu'une pièce tombera sur "Pile" : $q(Pile)=1, q(Face)=0$.
+Si la vraie distribution $P$ est une pièce équilibrée $P(Pile)=0,5, P(Face)=0,5$.
+La cross-entropy est :
+$$H(P, Q_\theta) = - (0,5 \ln(1) + 0,5 \ln(0))$$
+Or $\ln(0) \to -\infty$. La fonction de perte devient infinie. Le modèle est infiniment surpris et donc infiniment pénalisé pour avoir attribué une probabilité nulle à un événement réel.
 
-\begin{equation}
-H(P, Q) = -\sum_{i=1}^k p_i \log_2(q_i)
-\end{equation}
+**Exemple 5 : Divergence KL et compression**
+Pour compresser des données issues d'une source $P$ (Entropie $H(P) = 2$ bits), on utilise un encodeur optimisé pour une loi $Q$.
+La cross-entropy est mesurée à $H(P, Q) = 2,5$ bits.
+La perte d'efficacité par symbole est exactement la divergence KL :
+$$D_{KL}(P \| Q) = 2,5 - 2 = 0,5 \text{ bits/symbole}.$$
+C'est le coût direct de modéliser $P$ par $Q$.
 
-où $p_i = P(X=x_i)$ et $q_i = Q(X=x_i)$. Il est essentiel que $q_i > 0$ pour tout $x_i$ tel que $p_i > 0$. Si $q_i=0$ et $p_i > 0$, l'entropie croisée est infinie.
+**Exemple 6 : Optimisation d'un modèle de langage**
+Un LLM naïf prédit chaque lettre de l'alphabet latin (26 lettres) de manière uniforme : $q=1/26$.
+La cross-entropy avec un texte français $P$ est :
+$$H(P, Q) = - \sum_{x} p(x) \ln(1/26) = \ln(26) \approx 3,25 \text{ nats}.$$
+Après entraînement sur un corpus, le modèle $Q^*$ apprend la vraie distribution $P$.
+L'entropie de Shannon du français est estimée à environ $H(P) \approx 2,1 \text{ nats}$.
+La perte du modèle va chuter de 3,25 à 2,1, atteignant le plancher théorique d'incertitude.
 
-**Exemple numérique :**
-Considérons une classification binaire où la vraie distribution des classes pour un échantillon donné est $P = [1, 0]$ (la classe 1 est la vraie, la classe 0 est fausse).
-1.  **Prédiction parfaite :** Le modèle prédit $Q = [1, 0]$.
-    L'entropie croisée est :
-    \begin{align*}
-    H(P, Q) &= - (1 \cdot \log_2(1) + 0 \cdot \log_2(0)) \\
-    &= - (1 \cdot 0 + 0) \\
-    &= 0 \text{ bits}
-    \end{align*}
-    Une entropie croisée de 0 indique une prédiction parfaite.
-2.  **Prédiction imparfaite :** Le modèle prédit $Q = [0.8, 0.2]$.
-    L'entropie croisée est :
-    \begin{align*}
-    H(P, Q) &= - (1 \cdot \log_2(0.8) + 0 \cdot \log_2(0.2)) \\
-    &= - \log_2(0.8) \\
-    &\approx - (-0.322) \\
-    &\approx 0.322 \text{ bits}
-    \end{align*}
-    Une valeur positive indique une certaine divergence entre la vraie distribution et la prédiction.
-3.  **Prédiction erronée :** Le modèle prédit $Q = [0.2, 0.8]$.
-    L'entropie croisée est :
-    \begin{align*}
-    H(P, Q) &= - (1 \cdot \log_2(0.2) + 0 \cdot \log_2(0.8)) \\
-    &= - \log_2(0.2) \\
-    &\approx - (-2.322) \\
-    &\approx 2.322 \text{ bits}
-    \end{align*}
-    Une erreur de prédiction conduit à une entropie croisée plus élevée.
+**Exemple 7 : Calcul sur une distribution continue (Entropie différentielle)**
+Soit une variable aléatoire $X$ suivant une loi uniforme sur $[0, 2]$. La densité est $p(x) = 0,5$ sur ce segment.
+Son entropie différentielle est :
+$$H(X) = - \int_0^2 0,5 \ln(0,5) dx = - \ln(0,5) \int_0^2 0,5 dx = - \ln(0,5) \times 1 = \ln(2) \approx 0,69 \text{ nats}.$$
 
-#### Divergence de Kullback-Leibler (KL)
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \draw[->,thick] (-0.5,0) -- (5,0) node[right] {Espace des modèles $\Theta$};
+  \draw[->,thick] (0,-0.5) -- (0,4) node[above] {Perte / Information};
 
-La divergence de Kullback-Leibler, ou divergence KL, notée $D_{KL}(P || Q)$, est une mesure de la différence entre deux distributions de probabilité $P$ et $Q$. Elle quantifie la perte d'information lorsque $Q$ est utilisée pour approximer $P$.
+  % H(P)
+  \draw[dashed, blue, thick] (0, 1.5) -- (4.5, 1.5) node[right] {$H(P)$ (Entropie)};
 
-La divergence KL est définie par:
+  % H(P, Q)
+  \draw[red, thick] (0.5, 3.8) .. controls (1.5, 1.8) and (3, 1.5) .. (4.5, 1.6) node[above] {$H(P, Q_\theta)$};
 
-\begin{equation}
-D_{KL}(P || Q) = \sum_{i=1}^k p_i \log_2\left(\frac{p_i}{q_i}\right)
-\end{equation}
+  % D_KL
+  \draw[<->, purple, thick] (3.5, 1.5) -- (3.5, 1.7) node[midway, right] {$D_{KL}$};
+\end{tikzpicture}
+\end{center}
 
-La divergence KL n'est pas symétrique ($D_{KL}(P || Q) \neq D_{KL}(Q || P)$ en général) et n'est pas une métrique au sens strict. Cependant, elle est toujours non-négative : $D_{KL}(P || Q) \ge 0$, et $D_{KL}(P || Q) = 0$ si et seulement si $P=Q$.
+> **Théorème 1 (Borne inférieure de l'entropie croisée) :**
+> Pour toute distribution $Q_\theta$, l'entropie croisée est majorée inférieurement par l'entropie de Shannon :
+> $$H(P, Q_\theta) \ge H(P)$$
+> De plus, $H(P, Q_\theta) = H(P)$ si et seulement si $Q_\theta = P$ presque partout.
 
-Un lien fondamental entre l'entropie de Shannon, l'entropie croisée et la divergence KL est donné par la relation suivante :
+*Démonstration :*
+On introduit la divergence de Kullback-Leibler $D_{KL}(P \| Q_\theta)$ :
+$$D_{KL}(P \| Q_\theta) = \int_{\mathcal{X}} p(x) \ln \left( \frac{p(x)}{q_\theta(x)} \right) d\lambda(x)$$
+Par l'inégalité de Jensen appliquée à la fonction convexe $-\ln(t)$ :
+$$D_{KL}(P \| Q_\theta) = - \int_{\mathcal{X}} p(x) \ln \left( \frac{q_\theta(x)}{p(x)} \right) d\lambda(x) \ge - \ln \left( \int_{\mathcal{X}} p(x) \frac{q_\theta(x)}{p(x)} d\lambda(x) \right) = - \ln \left( \int_{\mathcal{X}} q_\theta(x) d\lambda(x) \right) = - \ln(1) = 0$$
+En développant $D_{KL}(P \| Q_\theta)$ :
+$$D_{KL}(P \| Q_\theta) = \int_{\mathcal{X}} p(x) \ln p(x) d\lambda(x) - \int_{\mathcal{X}} p(x) \ln q_\theta(x) d\lambda(x) = -H(P) + H(P, Q_\theta)$$
+Par conséquent :
+$$H(P, Q_\theta) = H(P) + D_{KL}(P \| Q_\theta)$$
+Comme $D_{KL}(P \| Q_\theta) \ge 0$, nous obtenons $H(P, Q_\theta) \ge H(P)$. La stricte convexité de $-\ln$ assure l'égalité ssi $P=Q_\theta$ p.p.
 
-\begin{equation}
-D_{KL}(P || Q) = H(P, Q) - H(P)
-\end{equation}
+## Démonstration Exhaustive de la Convergence Empirique
 
-Cette relation montre que minimiser l'entropie croisée $H(P, Q)$ revient à minimiser la divergence KL $D_{KL}(P || Q)$ si l'entropie $H(P)$ de la vraie distribution $P$ est constante et indépendante du modèle $Q$.
+Dans un cadre d'apprentissage automatique, nous ne connaissons pas $P$, nous ne disposons que d'un ensemble de données d'entraînement $\{x_1, \dots, x_n\}$ tiré de manière indépendante et identiquement distribuée (i.i.d.) selon $P$. L'entraînement du modèle consiste à minimiser la **perte empirique** (Negative Log-Likelihood) :
+$$\hat{H}_n(\theta) = - \frac{1}{n} \sum_{i=1}^n \ln q_\theta(x_i)$$
 
-**Exemple numérique :**
-Reprenons l'exemple de classification binaire avec la vraie distribution $P = [1, 0]$.
-1.  **Modèle $Q = [0.8, 0.2]$ :**
-    Nous avons $H(P) = -(1 \log_2 1 + 0 \log_2 0) = 0$.
-    Nous avons $H(P, Q) \approx 0.322$.
-    La divergence KL est :
-    \begin{align*}
-    D_{KL}(P || Q) &= \sum_{i=1}^2 p_i \log_2\left(\frac{p_i}{q_i}\right) \\
-    &= 1 \cdot \log_2\left(\frac{1}{0.8}\right) + 0 \cdot \log_2\left(\frac{0}{0.2}\right) \\
-    &= \log_2(1.25) \\
-    &\approx 0.322 \text{ bits}
-    \end{align*}
-    On vérifie bien que $D_{KL}(P || Q) = H(P, Q) - H(P) \approx 0.322 - 0 = 0.322$.
+> **Théorème 2 (Convergence presque sûre de la perte empirique) :**
+> Soit $\theta$ fixé. Sous la condition d'intégrabilité $\mathbb{E}_{X \sim P}[|\ln q_\theta(X)|] < \infty$, nous avons la convergence presque sûre :
+> $$\hat{H}_n(\theta) \xrightarrow{p.s.} H(P, Q_\theta)$$
+> lorsque $n \to \infty$.
 
-2.  **Modèle $Q = [0.2, 0.8]$ :**
-    Nous avons $H(P) = 0$.
-    Nous avons $H(P, Q) \approx 2.322$.
-    La divergence KL est :
-    \begin{align*}
-    D_{KL}(P || Q) &= 1 \cdot \log_2\left(\frac{1}{0.2}\right) + 0 \cdot \log_2\left(\frac{0}{0.8}\right) \\
-    &= \log_2(5) \\
-    &\approx 2.322 \text{ bits}
-    \end{align*}
-    On vérifie à nouveau que $D_{KL}(P || Q) = H(P, Q) - H(P) \approx 2.322 - 0 = 2.322$.
+*Démonstration pas-à-pas :*
+1. Considérons les variables aléatoires $Y_i = - \ln q_\theta(x_i)$ pour $i \in \{1, \dots, n\}$.
+2. Puisque les variables $x_i$ sont i.i.d. selon la loi $P$, les compositions $Y_i = -\ln q_\theta(x_i)$ sont également des variables aléatoires indépendantes et identiquement distribuées.
+3. Calculons l'espérance mathématique de la variable $Y_1$ :
+   $$\mathbb{E}[Y_1] = \mathbb{E}_{X \sim P}[-\ln q_\theta(X)]$$
+4. Par définition de l'entropie croisée, nous avons exactement :
+   $$\mathbb{E}[Y_1] = H(P, Q_\theta)$$
+5. L'hypothèse $\mathbb{E}_{X \sim P}[|\ln q_\theta(X)|] < \infty$ implique que $\mathbb{E}[|Y_1|] < \infty$.
+6. Nous pouvons alors invoquer la Loi Forte des Grands Nombres de Kolmogorov (LFGN, Jalon 92) sur la suite $(Y_i)_{i \ge 1}$ :
+   $$\frac{1}{n} \sum_{i=1}^n Y_i \xrightarrow{p.s.} \mathbb{E}[Y_1]$$
+7. En remplaçant par les définitions :
+   $$- \frac{1}{n} \sum_{i=1}^n \ln q_\theta(x_i) \xrightarrow{p.s.} H(P, Q_\theta)$$
+   Soit $\hat{H}_n(\theta) \xrightarrow{p.s.} H(P, Q_\theta)$.
 
-Ces exemples illustrent la quantification de l'information et de la divergence par ces fonctions fondamentales.
+Cette démonstration rigoureuse montre que, sur de grands jeux de données, la minimisation de la perte empirique équivaut à minimiser l'entropie croisée théorique, rapprochant ainsi le modèle de l'entropie asymptotique de Shannon.
 
-### Démonstrations de la convergence
+## Applications à l'Intelligence Artificielle et à la Physique
 
-Nous allons démontrer la convergence de l'entropie croisée empirique, utilisée comme fonction de perte lors de l'entraînement, vers son espérance théorique, qui se réduit à l'entropie de Shannon lorsque le modèle apprend parfaitement la distribution de la source. La démonstration s'appuie sur la Loi Forte des Grands Nombres.
-
-#### Cadre de la démonstration
-
-Soit $\mathcal{D} = \{(x_1, y_1), (x_2, y_2), \ldots, (x_N, y_N)\}$ un ensemble d'observations (un "dataset") où chaque $(x_i, y_i)$ est un couple d'entrée-sortie tiré indépendamment et identiquement distribué (i.i.d.) selon une distribution de probabilité jointe vraie $P(X, Y)$. Pour les modèles de langage, $x_i$ peut être le contexte précédent et $y_i$ le mot suivant à prédire.
-
-Soit $Q_{\theta}(Y | X)$ la distribution de probabilité conditionnelle prédite par notre modèle, paramétrée par $\theta$. L'objectif de l'entraînement est de trouver un $\theta$ qui minimise la fonction de perte. La fonction de perte pour une unique observation $(x_i, y_i)$ est donnée par l'entropie croisée du label réel $y_i$ et de la distribution prédite $Q_{\theta}(Y | x_i)$. Puisqu'il s'agit d'un seul point, cela se simplifie en $-\log Q_{\theta}(y_i | x_i)$.
-
-La fonction de perte d'entropie croisée empirique, $L_N(\theta)$, sur l'ensemble de données $\mathcal{D}$ est la moyenne de ces pertes individuelles :
-
-\begin{equation}
-L_N(\theta) = -\frac{1}{N} \sum_{i=1}^N \log Q_{\theta}(y_i | x_i)
-\end{equation}
-
-L'entropie croisée théorique (ou vraie) de la distribution $P(Y|X)$ par rapport à la distribution $Q_{\theta}(Y|X)$ est définie comme l'espérance de la perte d'un échantillon unique sous la vraie distribution $P(X,Y)$ :
-
-\begin{equation}
-H(P, Q_{\theta}) = \mathbb{E}_{(X,Y) \sim P}[-\log Q_{\theta}(Y | X)]
-\end{equation}
-
-#### Première étape : Convergence de l'entropie croisée empirique vers l'entropie croisée théorique
-
-Considérons la séquence de variables aléatoires $Z_i = -\log Q_{\theta}(Y_i | X_i)$ pour $i=1, \ldots, N$.
-Chaque $Z_i$ est une variable aléatoire car $(X_i, Y_i)$ est un échantillon aléatoire.
-Par construction, les échantillons $(X_i, Y_i)$ sont i.i.d., ce qui implique que les variables $Z_i$ sont également i.i.d.
-L'espérance de $Z_i$ est donnée par :
-\begin{equation}
-\mathbb{E}[Z_i] = \mathbb{E}_{(X,Y) \sim P}[-\log Q_{\theta}(Y | X)] = H(P, Q_{\theta})
-\end{equation}
-Nous supposons que cette espérance existe et est finie, ce qui est généralement le cas pour des modèles bien définis où $Q_{\theta}(y|x) > 0$ pour tous les $y$ ayant une probabilité non nulle sous $P(y|x)$.
-La fonction de perte empirique peut être réécrite comme la moyenne arithmétique de ces variables aléatoires $Z_i$:
-\begin{equation}
-L_N(\theta) = \frac{1}{N} \sum_{i=1}^N Z_i
-\end{equation}
-Nous pouvons maintenant appliquer la Loi Forte des Grands Nombres (LFGN). Une formulation de la LFGN (par Kolmogorov) stipule que si $Z_1, Z_2, \ldots$ sont des variables aléatoires indépendantes et identiquement distribuées avec une espérance finie $\mathbb{E}[Z_1] = \mu$, alors la moyenne empirique converge presque sûrement vers cette espérance :
-\begin{equation}
-\lim_{N \to \infty} \frac{1}{N} \sum_{i=1}^N Z_i = \mu \quad \text{presque sûrement}
-\end{equation}
-En appliquant la LFGN à notre cas, avec $\mu = H(P, Q_{\theta})$, nous obtenons :
-\begin{equation}
-\lim_{N \to \infty} L_N(\theta) = H(P, Q_{\theta}) \quad \text{presque sûrement}
-\end{equation}
-Cette démonstration établit rigoureusement que l'entropie croisée empirique calculée sur un ensemble de données d'entraînement suffisamment grand converge presque sûrement vers l'entropie croisée théorique, c'est-à-dire l'espérance de la perte sous la vraie distribution des données.
-
-#### Deuxième étape : Convergence de l'entropie croisée théorique vers l'entropie de Shannon
-
-La première étape a montré que l'entraînement minimise $H(P, Q_{\theta})$. L'objectif ultime d'un modèle est d'apprendre la vraie distribution des données, c'est-à-dire de faire en sorte que $Q_{\theta}(Y | X)$ soit aussi proche que possible de $P(Y | X)$.
-
-Considérons le scénario idéal où le modèle a atteint une performance optimale et que la distribution qu'il a apprise, $Q_{\theta^*}$, est identique à la vraie distribution conditionnelle $P(Y | X)$ de la source. C'est-à-dire, pour tout $(x, y)$:
-\begin{equation}
-Q_{\theta^*}(y | x) = P(y | x)
-\end{equation}
-Dans ce cas de correspondance parfaite, l'entropie croisée théorique devient :
-\begin{align*}
-H(P, Q_{\theta^*}) &= \mathbb{E}_{(X,Y) \sim P}[-\log Q_{\theta^*}(Y | X)] \\
-&= \mathbb{E}_{(X,Y) \sim P}[-\log P(Y | X)]
-\end{align*}
-Par la définition de l'espérance sur une distribution jointe $P(X,Y)$:
-\begin{align*}
-\mathbb{E}_{(X,Y) \sim P}[-\log P(Y | X)] &= \sum_x \sum_y P(x, y) (-\log P(y | x)) \\
-&= \sum_x \sum_y P(x)P(y | x) (-\log P(y | x)) \\
-&= \sum_x P(x) \left( -\sum_y P(y | x) \log P(y | x) \right)
-\end{align*}
-L'expression entre parenthèses, $-\sum_y P(y | x) \log P(y | x)$, est précisément l'entropie conditionnelle $H(Y | X=x)$ pour une valeur donnée de $X=x$. Par conséquent, l'expression entière est l'espérance de l'entropie conditionnelle, qui est par définition l'entropie conditionnelle moyenne $H(Y | X)$:
-\begin{equation}
-H(Y | X) = \sum_x P(x) H(Y | X=x) = \mathbb{E}_X[H(Y | X)]
-\end{equation}
-Donc, lorsque $Q_{\theta^*}(Y | X) = P(Y | X)$, l'entropie croisée théorique converge vers l'entropie conditionnelle de la source :
-\begin{equation}
-H(P, Q_{\theta^*}) = H(Y | X)
-\end{equation}
-L'entropie $H(Y | X)$ représente l'incertitude résiduelle sur $Y$ une fois que $X$ est connu, qui est la quantité minimale d'information nécessaire pour spécifier $Y$ étant donné $X$. C'est l'entropie de Shannon de la variable cible $Y$ conditionnée par la variable d'entrée $X$.
-
-**Conclusion de la convergence :**
-En combinant les deux étapes, nous constatons que l'entraînement d'un modèle de langage à l'aide de la fonction de perte d'entropie croisée vise à minimiser une quantité empirique qui converge vers l'entropie conditionnelle de Shannon de la source de données $H(Y | X)$. Plus précisément, si un modèle est capable d'apprendre la distribution de probabilité vraie $P(Y|X)$, sa perte d'entropie croisée sur un ensemble de données infini convergera vers $H(Y|X)$. Cette convergence démontre le lien intrinsèque entre l'entraînement des modèles probabilistes et les fondements de la théorie de l'information.
-
-### Applications en Physique, Logique & Intelligence Artificielle
-
-Les concepts d'entropie et d'information ont transcendé les frontières de la théorie de la communication, s'implantant profondément dans diverses disciplines scientifiques et technologiques.
-
-#### Physique
-
-En physique statistique, l'entropie est une mesure fondamentale du désordre ou de l'incertitude d'un système. L'entropie de Boltzmann ($S = k \log W$) et l'entropie de Gibbs ($\sum_i p_i \log p_i$) sont des concepts qui prédatent les travaux de Shannon mais partagent une forme mathématique similaire et une interprétation conceptuelle liée à l'incertitude sur l'état microscopique d'un système. La maximisation de l'entropie, par exemple, est un principe clé pour dériver les distributions de probabilité d'équilibre en physique statistique, en supposant que le système se trouve dans l'état le plus désordonné compatible avec les contraintes connues. Ce principe est directement lié à la théorie de l'information, où maximiser l'entropie signifie choisir la distribution la moins informative (la plus incertaine) qui respecte les données observées. Le lien entre l'information et l'énergie, comme dans le démon de Maxwell, ou entre l'information et la thermodynamique des trous noirs (entropie de Bekenstein-Hawking), souligne la portée universelle de ces principes.
-
-#### Logique
-
-En logique et en théorie de la décision, l'entropie de Shannon offre un moyen de quantifier l'information contenue dans des propositions ou des ensembles de faits. Dans un arbre de décision, par exemple, l'information gagnée (réduction de l'entropie) est utilisée pour sélectionner le meilleur attribut de division. Le principe du minimum de description de longueur (MDL) est également ancré dans la théorie de l'information, stipulant que la meilleure théorie pour expliquer des données est celle qui permet la description la plus courte des données et de la théorie elle-même. Cela revient à minimiser la somme du coût de codage du modèle et du coût de codage des données à l'aide du modèle, ce qui est directement lié à la divergence KL et à l'entropie croisée. La logique inductive et la modélisation statistique s'appuient sur ces notions pour inférer des structures à partir de données en quantifiant la complexité et l'information.
-
-#### Intelligence Artificielle (Spécifiquement l'entraînement des LLM)
-
-Dans le domaine de l'intelligence artificielle, et plus particulièrement pour l'entraînement des grands modèles de langage (LLM), la fonction de perte d'entropie croisée est prépondérante. Son rôle est multiple et fondamental :
-
-1.  **Fonction d'objectif :** La minimisation de l'entropie croisée est équivalente à la maximisation de la vraisemblance des données d'entraînement. Pour un LLM qui prédit le prochain jeton $y_t$ étant donné les jetons précédents $y_{<t}$, la vraisemblance d'une séquence $Y = (y_1, \ldots, y_T)$ est $P(Y) = \prod_{t=1}^T P(y_t | y_{<t})$. La perte d'entropie croisée moyenne sur la séquence est $-\frac{1}{T} \sum_{t=1}^T \log P(y_t | y_{<t})$, qui est la moyenne du logarithme négatif des probabilités. Minimiser cette quantité revient à maximiser $\sum_{t=1}^T \log P(y_t | y_{<t})$, et donc à maximiser $\log \prod_{t=1}^T P(y_t | y_{<t})$, ce qui maximise la vraisemblance des données sous le modèle.
-
-2.  **Mesure de performance :** La valeur de l'entropie croisée, en particulier l'entropie croisée empirique moyenne sur un ensemble de validation ou de test, est directement liée à la **perplexité**. La perplexité est définie comme $2^{H(P,Q)}$ et constitue une mesure intuitive de la qualité d'un modèle de langage. Une perplexité plus faible indique qu'un modèle assigne une probabilité plus élevée aux séquences observées dans les données, signifiant qu'il est "moins perplexe" quant à la suite des mots. Lors de l'entraînement d'un LLM, l'objectif est de réduire cette perplexité, ce qui correspond à minimiser l'entropie croisée.
-
-3.  **Convergence vers l'entropie de Shannon :** Comme démontré précédemment, au fur et à mesure que l'entraînement progresse sur un ensemble de données suffisamment vaste, l'entropie croisée empirique de la fonction de perte converge vers l'entropie conditionnelle $H(Y | X)$ de la source de données réelle. Cette valeur $H(Y | X)$ représente la limite inférieure théorique de la perplexité que tout modèle pourrait atteindre. Aucun modèle ne peut prédire avec une meilleure perplexité que l'entropie de la source elle-même, car cela impliquerait qu'il connaît la source mieux que la source ne se connaît elle-même. Cette convergence fournit un cadre théorique solide pour évaluer les performances ultimes d'un LLM et comprendre jusqu'où il peut apprendre la structure intrinsèque d'une langue.
-
-4.  **Implications pratiques :** Le fait que l'entropie croisée converge vers l'entropie de Shannon a des implications directes pour l'évaluation et la conception des LLM. Les chercheurs peuvent comparer la perplexité de leurs modèles avec des estimations de l'entropie de diverses langues pour comprendre l'écart entre la performance actuelle et la limite théorique. Cela guide également le développement de techniques d'optimisation, de stratégies d'augmentation de données et d'architectures de modèles, car le but est de permettre au modèle d'approcher cette borne inférieure d'information avec la plus grande fidélité possible, malgré les contraintes de ressources computatielles et de taille finie des données d'entraînement. La capacité du modèle à "compresser" l'information présente dans le texte est directement mesurée par cette valeur d'entropie croisée.
+- **Limite Fondamentale de l'Apprentissage :** Si la vraie distribution des données $P$ contient du bruit stochastique, $H(P) > 0$. Un modèle de langage massif ne pourra jamais atteindre une perte nulle. L'entraînement atteindra un plateau dicté par l'incertitude irréductible du langage.
+- **Théorie du Codage :** D'après le théorème de codage source de Shannon, $H(P, Q_\theta)$ représente la longueur moyenne du code (en nats ou bits) pour compresser les données en utilisant le modèle $Q_\theta$, tandis que $H(P)$ est la limite théorique de compression. Optimiser un modèle de langage revient strictement à optimiser un compresseur de données.

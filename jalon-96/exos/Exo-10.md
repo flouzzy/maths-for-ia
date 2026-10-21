@@ -1,19 +1,30 @@
-Niveau de difficulté : $\bigstar\bigstar\bigstar\bigstar\bigstar$
+# Exercice 10 : Inégalité de Gibbs et Borne de l'Entropie Croisée
 
-**Énoncé :**
-Considérons une modélisation paramétrique où $Q_\theta$ est une famille exponentielle. Déduisez les conditions d'optimalité pour la minimisation de la Cross-Entropy et faites le lien avec le Maximum de Vraisemblance (MLE).
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Corrigé :**
-Soit un modèle de famille exponentielle de la forme $q_\theta(x) = h(x) \exp(\langle \theta, T(x) \rangle - A(\theta))$, où $\theta$ est le paramètre naturel, $T(x)$ la statistique exhaustive, et $A(\theta)$ la fonction de partition log-normale.
-La fonction objectif à minimiser (entropie croisée empirique sur un échantillon de taille $n$) est :
-$$\hat{L}(\theta) = - \frac{1}{n} \sum_{i=1}^n \ln q_\theta(x_i)$$
-En substituant la forme de la famille exponentielle :
-$$\hat{L}(\theta) = - \frac{1}{n} \sum_{i=1}^n \left( \ln h(x_i) + \langle \theta, T(x_i) \rangle - A(\theta) \right)$$
-$$\hat{L}(\theta) = - \frac{1}{n} \sum_{i=1}^n \ln h(x_i) - \langle \theta, \frac{1}{n} \sum_{i=1}^n T(x_i) \rangle + A(\theta)$$
-Pour trouver le minimum, on annule le gradient par rapport à $\theta$ :
-$$\nabla_\theta \hat{L}(\theta) = - \frac{1}{n} \sum_{i=1}^n T(x_i) + \nabla_\theta A(\theta) = 0$$
-Une propriété fondamentale des familles exponentielles est que $\nabla_\theta A(\theta) = \mathbb{E}_{X \sim Q_\theta}[T(X)]$.
-Ainsi, la condition d'optimalité est :
-$$\mathbb{E}_{X \sim Q_\theta}[T(X)] = \frac{1}{n} \sum_{i=1}^n T(x_i)$$
-Cette équation signifie que le paramètre optimal $\theta^*$ est celui pour lequel l'espérance de la statistique exhaustive sous le modèle $Q_{\theta^*}$ correspond à la moyenne empirique de cette même statistique calculée sur l'échantillon d'entraînement.
-Cette méthode d'estimation correspond très exactement à la méthode du Maximum de Vraisemblance, car minimiser l'entropie croisée empirique est mathématiquement identique à la maximisation de la log-vraisemblance des données sous le modèle $Q_\theta$.
+
+Soit deux distributions de probabilité discrètes $P = (p_1, \dots, p_N)$ et $Q = (q_1, \dots, q_N)$ avec $p_i, q_i > 0$.
+L'inégalité de Gibbs stipule que $-\sum_{i=1}^N p_i \ln p_i \le -\sum_{i=1}^N p_i \ln q_i$.
+
+**1.** Démontrer cette inégalité de manière élémentaire, en utilisant l'inégalité fondamentale $\ln x \le x - 1$ pour tout $x > 0$.
+**2.** Déterminer le cas précis où l'égalité est vérifiée.
+
+**Correction :**
+
+**1.** Soit l'expression de la différence entre l'entropie et l'entropie croisée (qui n'est autre que l'opposé de la divergence KL) :
+$$-\sum_{i=1}^N p_i \ln q_i - \left( - \sum_{i=1}^N p_i \ln p_i \right) = - \sum_{i=1}^N p_i (\ln q_i - \ln p_i) = - \sum_{i=1}^N p_i \ln\left(\frac{q_i}{p_i}\right)$$
+Nous utilisons l'inégalité fondamentale pour le logarithme népérien : $\ln(x) \le x - 1$ (c'est une propriété de la concavité du logarithme : la tangente en $x=1$ est $y=x-1$).
+Ainsi, $\ln\left(\frac{q_i}{p_i}\right) \le \frac{q_i}{p_i} - 1$.
+En introduisant cela dans la somme :
+$$- \sum_{i=1}^N p_i \ln\left(\frac{q_i}{p_i}\right) \ge - \sum_{i=1}^N p_i \left( \frac{q_i}{p_i} - 1 \right)$$
+Développons le terme de droite :
+$$- \sum_{i=1}^N p_i \left( \frac{q_i}{p_i} - 1 \right) = - \sum_{i=1}^N (q_i - p_i) = - \left( \sum_{i=1}^N q_i - \sum_{i=1}^N p_i \right)$$
+Puisque $P$ et $Q$ sont des distributions de probabilité valides, la somme de leurs composantes vaut 1 : $\sum p_i = 1$ et $\sum q_i = 1$.
+Par conséquent, la différence vaut :
+$$- (1 - 1) = 0$$
+Nous avons donc démontré que la différence entre l'entropie croisée et l'entropie est toujours positive ou nulle, soit :
+$$H(P, Q) \ge H(P)$$
+
+**2.** L'égalité $\ln x = x - 1$ n'est vérifiée que si et seulement si $x = 1$.
+Dans notre cas, cela signifie que pour chaque $i \in \{1, \dots, N\}$, nous devons avoir $\frac{q_i}{p_i} = 1$, ce qui équivaut à $q_i = p_i$.
+L'égalité est donc vérifiée si et seulement si les deux distributions sont strictement identiques p.p.

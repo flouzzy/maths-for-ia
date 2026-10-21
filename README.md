@@ -429,7 +429,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
-- [2026-10-21] : [Upsert/Création] du Jalon 96 - Livrable IA T8 : Convergence de la Cross-Entropy vers l'Entropie de Shannon. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-10-20] : [Upsert/Création] du Jalon 96 - Livrable IA T8 : Convergence de la Cross-Entropy vers l'Entropie de Shannon. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-20] : [Upsert/Création] du Jalon 95 - Vecteurs gaussiens. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-19] : [Upsert/Création] du Jalon 94 - Théorème central limite (TCL). Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-19] : [Upsert/Création] du Jalon 93 - Fonctions caractéristiques. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
