@@ -111,7 +111,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-96/Jalon-96.md|Jalon 96 : Livrable IA]] : Livrable IA T8 : Démonstration rigoureuse de la convergence de la fonction de perte Cross-Entropy vers l'information théorique de Shannon lors de l'entraînement des modèles de langage. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 ## Année 3 : le niveau master (analyse fonctionnelle, géométrie et apprentissage)
 ### Trimestre 9 : analyse fonctionnelle et théorie spectrale
-- [ ] [[jalon-97/Jalon 97 (Espaces de Banach).md|Jalon 97 : Espaces de Banach]] : Espaces de Banach, opérateurs linéaires continus entre Banach et topologie induite par la norme d'opérateur.
+- [x] [[jalon-97/Jalon-97.md|Jalon 97 : Espaces de Banach]] : Espaces de Banach, opérateurs linéaires continus entre Banach et topologie induite par la norme d'opérateur. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-98/Jalon 98 (Théorème de Hahn-Banach).md|Jalon 98 : Théorème de Hahn-Banach]] : Théorème de Hahn-Banach (forme analytique), prolongement des formes linéaires sous-linéaires.
 - [ ] [[jalon-99/Jalon 99 (Théorème de Hahn-Banach).md|Jalon 99 : Théorème de Hahn-Banach]] : Théorème de Hahn-Banach (formes géométriques), séparation des ensembles convexes par des hyperplans.
 - [ ] [[jalon-100/Jalon 100 (Démonstration du théorème de Banach-Steinhaus).md|Jalon 100 : Démonstration du théorème de Banach-Steinhaus]] : Démonstration du théorème de Banach-Steinhaus (principe de la borne uniforme).
