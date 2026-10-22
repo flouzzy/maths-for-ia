@@ -1,14 +1,10 @@
-# Exercice 6
-
-**Difficulté :** $\star\star\star\☆☆$
+# Exercice 6 : Opérateur de décalage (Shift)
+$\bigstar$\bigstar$\bigstar\star\star$
 
 **Énoncé :**
-Soit $E$ un espace normé et $a \in E$ un vecteur non nul. On définit la forme linéaire $f : \mathbb{K} \to E$ par $f(\lambda) = \lambda a$. Montrer que $f$ est continue et calculer sa norme d'opérateur $\|f\|_{\mathcal{L}(\mathbb{K}, E)}$.
+Soit $E = \ell^2(\mathbb{N})$ et l'opérateur de décalage à droite $S(x_0, x_1, \dots) = (0, x_0, x_1, \dots)$. Calculer $\|S\|$, est-il surjectif ?
 
 **Correction Détaillée :**
-1. **Continuité :** Pour tout scalaire $\lambda \in \mathbb{K}$ muni de la valeur absolue usuelle $|\lambda|$ (qui est sa norme) :
-   $$ \|f(\lambda)\|_E = \|\lambda a\|_E = |\lambda| \|a\|_E. $$
-2. On a donc $\|f(\lambda)\|_E \le C |\lambda|$ avec la constante $C = \|a\|_E$. L'opérateur est donc continu.
-3. **Calcul de la norme :** Par définition de la norme d'opérateur :
-   $$ \|f\| = \sup_{\lambda \neq 0} \frac{\|f(\lambda)\|_E}{|\lambda|} = \sup_{\lambda \neq 0} \frac{|\lambda| \|a\|_E}{|\lambda|} = \sup_{\lambda \neq 0} \|a\|_E = \|a\|_E. $$
-4. La norme de l'opérateur est exactement la norme du vecteur $a$.
+1. Pour tout $x \in \ell^2$, $\|S(x)\|^2 = 0^2 + x_0^2 + x_1^2 + \dots = \|x\|^2$.
+2. Ainsi, $S$ est une isométrie, et sa norme est exactement $\|S\| = 1$.
+3. L'opérateur n'est pas surjectif : la suite $(1, 0, 0, \dots)$ n'est pas dans l'image de $S$ car toute suite image a 0 en première coordonnée.
