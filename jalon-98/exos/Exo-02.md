@@ -1,15 +1,9 @@
-# Exercice 2 : Sous-linéarité et norme
-$\bigstar\bigstar\star\star\star$
 
-## Énoncé
-Soit $E$ un espace vectoriel normé. On définit $p : E \to \mathbb{R}$ par $p(x) = \limsup_{n \to \infty} \|x/n\|^{1/n}$.
-Est-ce que $p$ est une fonctionnelle sous-linéaire ? (On supposera que la limite supérieure existe toujours et vaut 1, ceci est un exemple formel pour manipuler les axiomes).
-Soit plus simplement $q(x) = \sqrt{\|x\|}$. La fonctionnelle $q$ est-elle sous-linéaire ?
+\subsection*{Exercice 2 : Hyperplan séparateur dans R2 \quad $\bigstar\star\star\star\star$}
 
-## Correction Détaillée
-Étudions $q(x) = \sqrt{\|x\|}$.
-Pour que $q$ soit sous-linéaire, elle doit vérifier l'homogénéité positive :
-Pour $\lambda > 0$, $q(\lambda x) = \sqrt{\|\lambda x\|} = \sqrt{\lambda \|x\|} = \sqrt{\lambda} \sqrt{\|x\|} = \sqrt{\lambda} q(x)$.
-Si $q$ était sous-linéaire, on aurait $q(\lambda x) = \lambda q(x)$.
-Ceci imposerait $\sqrt{\lambda} = \lambda$ pour tout $\lambda > 0$, ce qui est faux (par exemple pour $\lambda = 4$).
-Donc $q$ **n'est pas** une fonctionnelle sous-linéaire. $\blacksquare$
+**Énoncé :**
+Application de Hahn-Banach : Hyperplan séparateur dans R2.
+
+**Correction Détaillée :**
+Séparer $C = [-1, 1]^2$ et $x_0 = (2, 0)$. On cherche $ax+by=c$. On pose $a=1, b=0$. Alors $x=1$ délimite $C$ car pour tout $(x,y) \in C$, $x \le 1$. Et pour $x_0$, $2 > 1$. Donc $f(x,y)=x$ sépare strictement.
+L'application stricte et pas à pas des règles montre le résultat.

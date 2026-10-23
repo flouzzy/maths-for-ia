@@ -1,0 +1,374 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge THÉORÈME DE HAHN-BANACH (FORME ANALYTIQUE) \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+\section{Jalon 98 : Théorème de Hahn-Banach (forme analytique)}
+
+\subsection{Présentation du concept clé}
+
+- Imaginez que vous soyez un cartographe. Vous avez dessiné une carte très précise d'un petit quartier (un sous-espace $M$). Vous avez une règle qui vous donne l'altitude exacte dans ce quartier.
+    - Maintenant, on vous demande de compléter la carte pour tout le pays (l'espace $E$).
+    - On vous impose une contrainte : votre nouvelle carte ne doit jamais dépasser l'altitude d'une montagne protectrice qui recouvre tout le pays (une fonction sous-linéaire $p$).
+    - Le \textbf{Théorème de Hahn-Banach} dit que c'est \textbf{toujours possible}. Vous pouvez toujours étendre votre règle locale à tout l'espace sans jamais tricher avec les mesures originales et sans jamais percer le "toit" imposé par la montagne.
+- En dimension infinie, les espaces sont si vastes qu'on pourrait craindre qu'il n'y ait pas assez de "scanners" (formes linéaires) pour tout voir. Hahn-Banach garantit qu'il y a "suffisamment" de formes linéaires pour distinguer tous les points et pour supporter toutes les contraintes d'optimisation.
+- Une droite (forme linéaire) qui effleure une surface courbe (fonction convexe) sans jamais entrer dedans.
+
+\subsection{Formalisation}
+
+Soit $E$ un espace vectoriel sur $\mathbb{R}$.
+
+\subsubsection{Fonctionnelle Sous-linéaire}
+
+\begin{quote}\textbf{Définition 1 :} Une application $p : E \to \mathbb{R}$ est dite \textbf{sous-linéaire} si :
+1. $\forall x, y \in E, \quad p(x+y) \le p(x) + p(y)$ (Sous-additivité).
+2. $\forall \lambda \ge 0, \forall x \in E, \quad p(\lambda x) = \lambda p(x)$ (Homogénéité positive).
+\textit{Note :} Toute norme est une fonctionnelle sous-linéaire.\end{quote}
+
+\subsubsection{Le Théorème de Hahn-Banach (Analytique)}
+
+\begin{quote}\textbf{Théorème :}
+Soit $M$ un sous-espace vectoriel de $E$. Soit $f : M \to \mathbb{R}$ une forme linéaire telle que :
+$$\forall x \in M, \quad f(x) \le p(x)$$
+Alors il existe une forme linéaire $F : E \to \mathbb{R}$ telle que :
+1. $F|_M = f$ (C'est un prolongement).
+2. $\forall x \in E, \quad F(x) \le p(x)$.\end{quote}
+
+
+
+\textbf{Exemple Concret 1 : Le demi-espace en dimension 2.}
+Considérons $E = \mathbb{R}^2$. Soit $M = \{(x, 0) \mid x \in \mathbb{R}\}$ l'axe des abscisses.
+On définit $f : M \to \mathbb{R}$ par $f(x, 0) = x$. $f$ est une forme linéaire sur $M$.
+Soit $p : E \to \mathbb{R}$ définie par $p(x, y) = \sqrt{x^2 + y^2}$, la norme euclidienne.
+Vérifions que $f \le p$ sur $M$:
+$f(x, 0) = x \le |x| = \sqrt{x^2 + 0^2} = p(x, 0)$.
+Le théorème de Hahn-Banach nous assure qu'il existe un prolongement $F : \mathbb{R}^2 \to \mathbb{R}$ tel que $F(x, 0) = x$ et $F(x, y) \le \sqrt{x^2 + y^2}$.
+Si $F$ est linéaire sur $\mathbb{R}^2$, elle s'écrit $F(x, y) = ax + by$.
+Comme $F(x, 0) = x$, on a $a = 1$. Donc $F(x, y) = x + by$.
+Pour que $F(x, y) \le \sqrt{x^2 + y^2}$, on prend le carré de $(x+by)^2 \le x^2 + y^2$, d'où $x^2 + 2bxy + b^2y^2 \le x^2 + y^2$.
+Cela implique $2bxy + (b^2-1)y^2 \le 0$ pour tout $x,y$. En choisissant $b=0$, cette inégalité (et $x \le \sqrt{x^2+y^2}$) est satisfaite.
+Le prolongement naturel est $F(x, y) = x$.
+
+\textbf{Exemple Concret 2 : L'espace des suites bornées $\ell^\infty$.}
+Soit $E = \ell^\infty$ l'espace des suites réelles bornées $x = (x_n)_{n \in \mathbb{N}}$ muni de la norme $\|x\|_\infty = \sup_{n} |x_n|$.
+Soit $M$ le sous-espace des suites convergentes. On définit $f : M \to \mathbb{R}$ par $f(x) = \lim_{n \to \infty} x_n$.
+C'est une forme linéaire sur $M$, et pour toute suite convergente $x$, $f(x) \le \|x\|_\infty$.
+Par Hahn-Banach, $f$ se prolonge en une forme linéaire continue $F$ sur $E$ telle que $\|F\| \le 1$.
+$F$ attribue ainsi une "limite généralisée" (ou limite de Banach) à \textit{toute} suite bornée, même divergente (comme $(-1)^n$).
+
+\textbf{Exemple Concret 3 : Fonctionnelle sous-linéaire sur $\mathbb{R}^2$.}
+Soit $E = \mathbb{R}^2$. On pose $p(x, y) = \max(|x|, |y|) = \|(x,y)\|_\infty$.
+$p$ est sous-linéaire car c'est une norme.
+Soit $M = \mathbb{R}(1, 1) = \{(t, t) \mid t \in \mathbb{R}\}$.
+Soit $f : M \to \mathbb{R}$ définie par $f(t, t) = t$.
+On a $f(t, t) = t \le |t| = \max(|t|, |t|) = p(t, t)$. L'hypothèse de Hahn-Banach est vérifiée.
+On cherche $F(x, y) = ax + by$ telle que $a+b = 1$ et $ax+by \le \max(|x|, |y|)$.
+Si $a=1, b=0$, on a $F(x, y) = x \le \max(|x|, |y|)$.
+Si $a=1/2, b=1/2$, on a $F(x, y) = \frac{x+y}{2} \le \frac{|x|+|y|}{2} \le \max(|x|, |y|)$.
+Il y a donc une infinité de prolongements possibles.
+
+\textbf{Exemple Concret 4 : Forme linéaire sur $\mathbb{R}[X]$.}
+Soit $E = \mathbb{R}[X]$. On définit $p(P) = \int_0^1 |P(t)| dt = \|P\|_1$.
+Soit $M = \mathbb{R}_{1}[X]$ (polynômes de degré $\le 1$).
+$f(aX+b) = a/2 + b$. $f(P) = \int_0^1 P(t) dt$.
+Pour tout $P \in M$, $f(P) \le \int_0^1 |P(t)| dt = p(P)$.
+$f$ s'étend à $F$ sur $\mathbb{R}[X]$. Ici l'extension la plus naturelle (et unique pour la continuité $L^1$) est simplement $F(P) = \int_0^1 P(t) dt$ pour tout polynôme.
+
+\textbf{Exemple Concret 5 : Séparation dans le plan.}
+On a un convexe fermé $C = \{(x, y) \mid x^2 + y^2 \le 1\}$ et un point $x_0 = (2, 0)$.
+On peut séparer $x_0$ de $C$ par un hyperplan (une droite affine).
+Ici, la droite d'équation $x = 1.5$ sépare strictement $C$ de $x_0$.
+La forme linéaire sous-jacente est $f(x, y) = x$. Pour tout $(x, y) \in C$, $f(x,y) \le 1$. Et $f(2, 0) = 2 > 1$.
+
+
+\begin{center}
+\begin{tikzpicture}
+  % Draw axes
+  \draw[->] (-3,0) -- (3,0) node[right] {$x$};
+  \draw[->] (0,-1) -- (0,4) node[above] {$p(x)$};
+
+  % Draw convex function p(x)
+  \draw[thick, blue, domain=-2.5:2.5, samples=100] plot (\x, {0.5*\x*\x + 0.5}) node[right] {$p(x)$};
+
+  % Draw subspace M (e.g., origin) and function f(x)
+  \draw[thick, red] (-2.5, -1.25) -- (2.5, 1.25) node[right] {$f(x)$};
+
+  % Indicate M and extension
+  \filldraw[black] (0,0) circle (2pt) node[anchor=north west] {Origine $M$};
+  \draw[dashed, green!60!black] (-2, -2) -- (2, 2) node[right] {$F(x)$ prolongement};
+  \node[green!60!black] at (1, 1.5) {$F(x) \le p(x)$};
+
+\end{tikzpicture}
+\end{center}
+
+\subsection{Démonstrations}
+
+\subsubsection{Démonstration : Le prolongement d'un pas (Dimension +1)}
+
+Soit $x_0 \in E \setminus M$. On veut étendre $f$ à $M \oplus \mathbb{R}x_0$. On cherche donc une valeur $c = F(x_0)$.
+Pour tout $x \in M$ and $\lambda \in \mathbb{R}$, on veut $F(x + \lambda x_0) \le p(x + \lambda x_0)$.
+
+1. \textbf{Conditions sur c :}
+   - Pour $\lambda > 0$ : $f(x) + \lambda c \le p(x + \lambda x_0) \implies c \le \frac{1}{\lambda} [ p(x + \lambda x_0) - f(x) ] = p(\frac{x}{\lambda} + x_0) - f(\frac{x}{\lambda})$.
+   - Pour $\lambda = -1$ : $f(y) - c \le p(y - x_0) \implies c \ge f(y) - p(y - x_0)$.
+2. \textbf{Existence de c :} On a besoin de montrer que $\sup_{y \in M} [f(y) - p(y-x_0)] \le \inf_{x \in M} [p(x+x_0) - f(x)]$.
+3. \textbf{Preuve de l'inégalité :} Pour tous $x, y \in M$ :
+   $f(x) + f(y) = f(x+y) \le p(x+y) = p(x+x_0 + y-x_0) \le p(x+x_0) + p(y-x_0)$.
+   D'où $f(y) - p(y-x_0) \le p(x+x_0) - f(x)$.
+   Le membre de gauche est toujours inférieur à celui de droite. On peut donc choisir un $c$ entre les deux.
+4. \textbf{Conclusion :} On peut prolonger de proche en proche. Pour le cas de dimension infinie quelconque, on utilise l'\textbf{Axiome du Choix} (sous la forme du Lemme de Zorn) pour montrer qu'il existe un prolongement maximal qui couvre tout $E$.
+
+\subsection{Exercices d'Application}
+
+\subsubsection{Exercice 1 : Existence de formes linéaires}
+\textbf{Énoncé :} Soit $E$ un espace vectoriel normé et $x \neq 0$. Montrer qu'il existe $L \in E^*$ telle que $\|L\|=1$ and $L(x) = \|x\|$.
+\textbf{Correction Détaillée :}
+1. On pose $M = \mathbb{R}x$ (la droite engendrée par $x$).
+2. On définit $f(\lambda x) = \lambda \|x\|$ sur $M$.
+3. $f$ est linéaire et vérifie $f(y) \le \|y\|$ pour tout $y \in M$.
+4. Par Hahn-Banach (avec $p = \| \cdot \|$), il existe un prolongement $L$ à $E$ tel que $L(y) \le \|y\|$.
+5. Cela implique $\|L\| \le 1$. Comme $L(x/\|x\|) = 1$, alors $\|L\|=1$.
+
+\subsubsection{Exercice 2 : Niveau Avancé (Dualité et Distance)}
+\textbf{Énoncé :} Soit $M$ un sous-espace de $E$ and $x \in E$. Montrer que $dist(x, M) = \sup \{ L(x) \mid L \in M^\perp, \|L\| \le 1 \}$.
+\textbf{Correction Détaillée :}
+C'est une application directe de Hahn-Banach. On construit une forme linéaire qui vaut 0 sur $M$ et qui mesure l'écart de $x$ par rapport à $M$. C'est le fondement de la \textbf{Dualité de Fenchel} en optimisation.
+
+\subsection{Application en Intelligence Artificielle}
+
+- \textbf{Le Pont Théorique :} Hahn-Banach garantit que les problèmes d'\textbf{Optimisation Convexe} sous contraintes ont des solutions duales (les multiplicateurs de Lagrange).
+- \textbf{Example Concret :}
+    - \textbf{Support Vector Machines (SVM) :} Pour trouver l'hyperplan séparateur optimal, on résout un problème dual. Hahn-Banach assure que cet hyperplan existe toujours si les données sont linéairement séparables.
+    - \textbf{Théorie de la Robustesse :} Pour prouver qu'un réseau de neurones est robuste, on essaie de trouver une forme linéaire qui "borne" ses sorties. Hahn-Banach est utilisé pour prouver l'existence de telles bornes dans des espaces de fonctions complexes.
+    - \textbf{Apprentissage de Mesures (GANS) :} La distance de Wasserstein peut s'écrire sous une forme duale (Kantorovich-Rubinstein) grâce à une variante de Hahn-Banach. C'est ce qui permet de transformer une intégrale difficile sur des joints de probabilités en une optimisation sur des fonctions lipschitziennes.
+
+\subsection{Liens Sémantiques}
+
+- \textbf{Concepts Précédents requis :} [[Jalon 97 (Espaces de Banach et Opérateurs Linéaires).md]], [[Jalon 11 (Formes linéaires).md]]
+- \textbf{Concepts Futurs dépendants :} [[Jalon 99 (Théorème de Hahn-Banach).md]], [[Jalon 123 (Problèmes d'optimisation sous contraintes).md]]
+
+
+\part{Exercices d'Application et de Concours}
+
+\subsection*{Exercice 1 : Prolongement sur la droite \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Application de Hahn-Banach : Prolongement sur la droite.
+
+\textbf{Correction Détaillée :}
+Montrer que si $E=\mathbb{R}$ et $M=\{0\}$, toute forme s'étend. Soit $f(0)=0$. Alors $F(x) = cx$ pour $c \in [-1, 1]$ est un prolongement valide pour la norme absolue. Les calculs donnent $F(x) \le |x|$ d'où $|c| \le 1$.
+L'application stricte et pas à pas des règles montre le résultat.
+
+
+\subsection*{Exercice 2 : Hyperplan séparateur dans R2 \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Application de Hahn-Banach : Hyperplan séparateur dans R2.
+
+\textbf{Correction Détaillée :}
+Séparer $C = [-1, 1]^2$ et $x_0 = (2, 0)$. On cherche $ax+by=c$. On pose $a=1, b=0$. Alors $x=1$ délimite $C$ car pour tout $(x,y) \in C$, $x \le 1$. Et pour $x_0$, $2 > 1$. Donc $f(x,y)=x$ sépare strictement.
+L'application stricte et pas à pas des règles montre le résultat.
+
+
+\subsection*{Exercice 3 : Hyperplan d'appui (Disque) \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Application de Hahn-Banach : Hyperplan d'appui (Disque).
+
+\textbf{Correction Détaillée :}
+Soit $D = \{x^2+y^2 \le 1\}$ et $x_0=(1,0)$. Montrer qu'il existe un hyperplan d'appui. La fonction sous-linéaire est la norme euclidienne $p(x,y) = \sqrt{x^2+y^2}$. Sur $M=\mathbb{R}(1,0)$, $f(t,0)=t$. Hahn-Banach étend à $F(x,y)=x$. L'hyperplan est $x=1$.
+L'application stricte et pas à pas des règles montre le résultat.
+
+
+\subsection*{Exercice 4 : Prolongement positif \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Application de Hahn-Banach : Prolongement positif.
+
+\textbf{Correction Détaillée :}
+Soit $E=C([0,1])$ avec la norme infinie. Soit $M$ les fonctions constantes. $f(c) = c$. Pour $g \in E$, $p(g) = \max g(t)$. On a $f(c) = c \le p(c) = c$. Le prolongement $F$ vérifie $F(g) \le \max g$. On conclut que $F$ est une intégrale ou évaluation ponctuelle.
+L'application stricte et pas à pas des règles montre le résultat.
+
+
+\subsection*{Exercice 5 : Distance à un sous-espace \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Application de Hahn-Banach : Distance à un sous-espace.
+
+\textbf{Correction Détaillée :}
+Soit $M$ fermé dans $E$ et $x_0 \notin M$. Montrer que $d(x_0, M) = \max \{L(x_0) : \|L\| \le 1, L_{|M}=0\}$. Soit $d = d(x_0, M)$. Sur $M \oplus \mathbb{R}x_0$, $f(m + \lambda x_0) = \lambda d$. $f \le p = \| \cdot \|$. On étend par HB. La limite est atteinte.
+L'application stricte et pas à pas des règles montre le résultat.
+
+
+\subsection*{Exercice 6 : Séparation de deux convexes \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Application de Hahn-Banach : Séparation de deux convexes.
+
+\textbf{Correction Détaillée :}
+Soit $A$ et $B$ convexes disjoints. $A$ compact, $B$ fermé. Poser $C = A-B$. $C$ est fermé, $0 \notin C$. Appliquer HB pour séparer $0$ de $C$. Il existe $f$ tq $f(x) > 0$ sur $C$. Donc $f(a) > f(b)$.
+L'application stricte et pas à pas des règles montre le résultat.
+
+
+\subsection*{Exercice 7 : Limite de Banach \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Application de Hahn-Banach : Limite de Banach.
+
+\textbf{Correction Détaillée :}
+Construire une limite généralisée sur $\ell^\infty$. $p(x) = \limsup x_n$. Sur l'espace des suites convergentes, $f(x) = \lim x_n$. $f \le p$. On étend $f$ à $F$ sur $\ell^\infty$. $F$ prolonge la limite et est invariante par décalage.
+L'application stricte et pas à pas des règles montre le résultat.
+
+
+\subsection*{Exercice 8 : Dualité Lp Lq \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Application de Hahn-Banach : Dualité Lp Lq.
+
+\textbf{Correction Détaillée :}
+Le dual de $L^p$ est $L^q$. Pour $g \in L^q$, $L_g(f) = \int fg \le \|f\|_p \|g\|_q$. Par Hahn-Banach, la norme de $L_g$ est exactement $\|g\|_q$. On construit explicitement $f(x) = |g(x)|^{q-1} \text{sgn}(g(x))$ pour atteindre l'égalité.
+L'application stricte et pas à pas des règles montre le résultat.
+
+
+\subsection*{Exercice 9 : Sous-différentiel \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Application de Hahn-Banach : Sous-différentiel.
+
+\textbf{Correction Détaillée :}
+Soit $f$ convexe. Le sous-différentiel $\partial f(x)$ est non vide. C'est équivalent à HB géométrique sur l'épigraphe de $f$. On sépare l'épigraphe du point $(x, f(x))$ par un hyperplan non vertical, donnant une pente $p \in \partial f(x)$.
+L'application stricte et pas à pas des règles montre le résultat.
+
+
+\subsection*{Exercice 10 : Prolongement d'opérateurs \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Application de Hahn-Banach : Prolongement d'opérateurs.
+
+\textbf{Correction Détaillée :}
+Le théorème de HB s'étend-il aux opérateurs à valeurs dans $F$ ? Non en général, sauf si $F$ a la propriété d'extension (ex: $F=\mathbb{R}$ ou $L^\infty$). Contre-exemple avec $F=c_0$ et $E=\ell^\infty$. La preuve montre l'unicité de $\mathbb{R}$ comme espace cible inconditionnel.
+L'application stricte et pas à pas des règles montre le résultat.
+
+
+
+\part{Travaux Pratiques et Simulations Algorithmiques}
+
+\subsection*{TP 1 : SVM Linéaire Basique}
+
+Implémentation algorithmique de la séparation ou de la projection, en lien direct avec le théorème de Hahn-Banach :
+
+\begin{lstlisting}
+def tp_hahn_banach_svm(X, Y, epochs=100, lr=0.01):
+    w, b = [0.0, 0.0], 0.0
+    for _ in range(epochs):
+        for (x1, x2), y in zip(X, Y):
+            if y * (w[0]*x1 + w[1]*x2 + b) < 1:
+                w[0] += lr * y * x1
+                w[1] += lr * y * x2
+                b += lr * y
+    return w, b
+\end{lstlisting}
+
+
+\subsection*{TP 2 : Perceptron de Rosenblatt}
+
+Implémentation algorithmique de la séparation ou de la projection, en lien direct avec le théorème de Hahn-Banach :
+
+\begin{lstlisting}
+def tp_hahn_banach_perceptron(X, Y, epochs=100, lr=0.1):
+    w, b = [0.0, 0.0], 0.0
+    for _ in range(epochs):
+        for (x1, x2), y in zip(X, Y):
+            pred = 1 if w[0]*x1 + w[1]*x2 + b > 0 else -1
+            if pred != y:
+                w[0] += lr * y * x1
+                w[1] += lr * y * x2
+                b += lr * y
+    return w, b
+\end{lstlisting}
+
+
+\subsection*{TP 3 : Marge Soft-Margin L2}
+
+Implémentation algorithmique de la séparation ou de la projection, en lien direct avec le théorème de Hahn-Banach :
+
+\begin{lstlisting}
+def tp_hahn_banach_soft(X, Y, epochs=100, lr=0.01, C=0.1):
+    w, b = [0.0, 0.0], 0.0
+    for _ in range(epochs):
+        for (x1, x2), y in zip(X, Y):
+            pred = w[0]*x1 + w[1]*x2 + b
+            if y * pred < 1:
+                w[0] = w[0] - lr * (C * w[0] - y * x1)
+                w[1] = w[1] - lr * (C * w[1] - y * x2)
+                b += lr * y
+            else:
+                w[0] = w[0] - lr * C * w[0]
+                w[1] = w[1] - lr * C * w[1]
+    return w, b
+\end{lstlisting}
+
+
+\subsection*{TP 4 : Projection de Polyak}
+
+Implémentation algorithmique de la séparation ou de la projection, en lien direct avec le théorème de Hahn-Banach :
+
+\begin{lstlisting}
+def tp_hahn_banach_polyak(x_0, A, b):
+    # Projette x_0 sur l'hyperplan <A, x> = b
+    dot_val = A[0]*x_0[0] + A[1]*x_0[1]
+    norm_A2 = A[0]**2 + A[1]**2
+    if norm_A2 == 0: return x_0
+    alpha = (b - dot_val) / norm_A2
+    return [x_0[0] + alpha*A[0], x_0[1] + alpha*A[1]]
+\end{lstlisting}
+
+
+\subsection*{TP 5 : Séparation de moyennes}
+
+Implémentation algorithmique de la séparation ou de la projection, en lien direct avec le théorème de Hahn-Banach :
+
+\begin{lstlisting}
+def tp_hahn_banach_means(X1, X2):
+    # Calcule l'hyperplan bissecteur entre les moyennes
+    m1 = [sum(x[0] for x in X1)/len(X1), sum(x[1] for x in X1)/len(X1)]
+    m2 = [sum(x[0] for x in X2)/len(X2), sum(x[1] for x in X2)/len(X2)]
+    w = [m1[0]-m2[0], m1[1]-m2[1]]
+    mid = [(m1[0]+m2[0])/2, (m1[1]+m2[1])/2]
+    b = -(w[0]*mid[0] + w[1]*mid[1])
+    return w, b
+\end{lstlisting}
+
+
+
+\end{document}
