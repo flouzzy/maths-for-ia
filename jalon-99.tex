@@ -1,0 +1,541 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge THÉORÈME DE HAHN-BANACH (FORME GÉOMÉTRIQUE) \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+
+
+\part{Théorème de Hahn-Banach (forme géométrique)}
+
+\section{Introduction et Contexte Géométrique}
+
+Le théorème de Hahn-Banach est l'un des piliers fondamentaux de l'analyse fonctionnelle. Si sa forme analytique permet de prolonger des formes linéaires, sa forme géométrique offre une interprétation puissante : la séparation d'ensembles convexes par des hyperplans fermés. Historiquement, ce résultat a émergé de la volonté de comprendre la structure géométrique des espaces vectoriels de dimension infinie, en particulier comment on peut "isoler" ou "découper" des régions de l'espace à l'aide d'applications linéaires continues.
+
+L'intuition physique est immédiate : dans l'espace euclidien usuel $\mathbb{R}^3$, si l'on dispose de deux objets solides (sans creux) qui ne se touchent pas, il est toujours possible de glisser une feuille de papier plane (un plan affine) entre les deux sans toucher aucun des objets. Le théorème de Hahn-Banach généralise cette idée à des espaces vectoriels topologiques, même en dimension infinie.
+
+\begin{center}
+\begin{tikzpicture}
+    % Convex set A (Open)
+    \draw[blue, thick, fill=blue!10] (-2, 0) ellipse (1.5cm and 1cm);
+    \node[blue] at (-2, 0) {$A$ (ouvert)};
+
+    % Convex set B (Closed/Compact)
+    \draw[red, thick, fill=red!10] (3, 1) circle (1.2cm);
+    \node[red] at (3, 1) {$B$};
+
+    % Separating Hyperplane
+    \draw[black, thick, dashed] (0, -2) -- (1, 3) node[above right] {Hyperplan séparateur $H$};
+
+    % Normal vector
+    \draw[->, thick] (0.5, 0.5) -- (1.5, 0.3) node[right] {$L \in E^*$};
+\end{tikzpicture}
+\end{center}
+
+Cette capacité de séparation est le fondement de la linéarisation de nombreux problèmes, justifiant que la linéarité est suffisante pour séparer des concepts distincts à condition que la convexité soit respectée.
+
+\section{Structures Mathématiques et Théorèmes de Séparation}
+
+Soit $E$ un espace vectoriel normé sur $\mathbb{R}$ (le résultat s'étend aux espaces localement convexes). On note $E^*$ son dual topologique, c'est-à-dire l'espace des formes linéaires continues sur $E$.
+
+Un \textbf{hyperplan affine} fermé dans $E$ est un sous-ensemble de la forme $H = \{ x \in E \mid L(x) = \alpha \}$, où $L \in E^*$ est non nulle et $\alpha \in \mathbb{R}$.
+
+ Séparation au sens large (Première forme géométrique)
+
+\textbf{Théorème (Hahn-Banach géométrique - 1ère forme).}
+Soient $A$ et $B$ deux parties convexes non vides et disjointes de $E$.
+On suppose que $A$ est ouvert.
+Alors, il existe un hyperplan fermé séparant $A$ et $B$ au sens large. Autrement dit, il existe une forme linéaire continue $L \in E^*$ non nulle et une constante $\alpha \in \mathbb{R}$ telles que :
+$$ \forall a \in A,\ \forall b \in B, \quad L(a) < \alpha \le L(b) $$
+
+\textbf{Exemple concret immédiat :}
+Plaçons-nous dans $E = \mathbb{R}^2$. Soit $A = \{ (x,y) \in \mathbb{R}^2 \mid x^2 + (y-1)^2 < 1 \}$ (le disque ouvert centré en $(0,1)$ de rayon 1) et $B = \{ (x,y) \in \mathbb{R}^2 \mid y \le 0 \}$ (le demi-plan inférieur fermé).
+Ces deux ensembles sont convexes et disjoints, et $A$ est ouvert.
+La forme linéaire $L(x,y) = y$ est continue.
+Pour tout $a = (x_a, y_a) \in A$, on a $y_a > 0$ et $y_a < 2$. En fait, le disque $A$ a ses ordonnées strictement positives.
+Cependant, pour séparer $A$ et $B$, on peut prendre $L(x,y) = -y$.
+Ainsi pour $a = (x,y) \in A$, $L(a) = -y < 0$.
+Et pour $b = (x,y) \in B$, $L(b) = -y \ge 0$.
+En choisissant $\alpha = 0$, on a $L(a) < 0 \le L(b)$. L'hyperplan est la droite d'équation $y = 0$.
+
+ Séparation stricte (Deuxième forme géométrique)
+
+\textbf{Théorème (Hahn-Banach géométrique - 2ème forme).}
+Soient $A$ et $B$ deux parties convexes non vides et disjointes de $E$.
+On suppose que $A$ est fermée et $B$ est compacte.
+Alors, il existe un hyperplan fermé séparant strictement $A$ et $B$. C'est-à-dire qu'il existe $L \in E^*$ non nulle et des réels $\alpha, \epsilon > 0$ tels que :
+$$ \forall a \in A,\ \forall b \in B, \quad L(a) \le \alpha - \epsilon < \alpha < \alpha + \epsilon \le L(b) $$
+
+\textbf{Exemple concret immédiat :}
+Toujours dans $E = \mathbb{R}^2$. Considérons la branche d'hyperbole $A = \{ (x,y) \in \mathbb{R}^2 \mid x > 0,\ y \ge 1/x \}$ (ensemble convexe fermé) et le point $B = \{ (0,0) \}$ (ensemble compact).
+Les deux ensembles sont disjoints.
+Choisissons la forme linéaire $L(x,y) = x + y$.
+Pour $b \in B$, $L(b) = 0$.
+Pour $a = (x,y) \in A$, $L(a) = x + y \ge x + 1/x$. La fonction $x \mapsto x + 1/x$ pour $x>0$ atteint son minimum en $x=1$, qui vaut 2. Donc $L(a) \ge 2$.
+Ainsi, en prenant $\alpha = 1$ et $\epsilon = 0.5$, on a :
+$L(b) = 0 \le 0.5 = \alpha - \epsilon < \alpha = 1 < 1.5 = \alpha + \epsilon \le L(a)$.
+On a une séparation stricte avec une marge d'au moins 0.5 de chaque côté de l'hyperplan d'équation $x+y = 1$.
+
+ Conséquences immédiates
+
+Un corollaire fondamental est que tout ensemble convexe fermé $C$ de $E$ est l'intersection de tous les demi-espaces fermés qui le contiennent. Si $x_0 \notin C$, on peut toujours séparer strictement $x_0$ de $C$.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+    % Convex set C (Closed)
+    \filldraw[fill=green!20, draw=green!60!black, thick] (-1, -1) -- (2, -1) -- (3, 1) -- (0, 2) -- cycle;
+    \node[green!40!black] at (1, 0) {$C$ (fermé)};
+
+    % Point x_0
+    \filldraw[black] (4, -0.5) circle (2pt) node[right] {$x_0 \notin C$};
+
+    % Separating lines
+    \draw[blue, thick] (2.5, -2) -- (2.5, 2) node[above] {$H_1$};
+    \draw[red, thick, dashed] (3.5, 1.5) -- (3, -2) node[below] {$H_2$};
+\end{tikzpicture}
+\end{center}
+
+\section{Démonstrations Exhaustives}
+
+ Preuve de la première forme géométrique
+
+Nous nous appuyons sur la jauge de Minkowski et le théorème de Hahn-Banach analytique.
+
+1. \textbf{Translation :} On choisit $a_0 \in A$ et $b_0 \in B$. On pose $x_0 = b_0 - a_0$. On définit l'ensemble $C = A - B + x_0$.
+   Alors $C$ est l'ensemble des éléments de la forme $a - b + x_0$ pour $a \in A, b \in B$.
+   $C$ est un ouvert car il s'écrit $C = \bigcup_{b \in B} (A - b + x_0)$, qui est une union d'ouverts (translatés de l'ouvert $A$).
+   De plus, $C$ est convexe comme somme d'ensembles convexes.
+   Par construction, $a_0 - b_0 + x_0 = 0 \in C$.
+
+2. \textbf{Utilisation de la jauge :} Puisque $C$ est un voisinage convexe de $0$, sa jauge de Minkowski $p(x) = \inf\{ \lambda > 0 \mid \frac{x}{\lambda} \in C \}$ est bien définie, partout finie, et sous-linéaire (sous-additive et positivement homogène).
+   De plus, comme $C$ est ouvert, on a l'équivalence exacte : $x \in C \iff p(x) < 1$.
+
+3. \textbf{Disjonction et point $x_0$ :} On sait que $x_0 \notin C$. En effet, si $x_0 \in C$, alors $x_0 = a - b + x_0$ pour certains $a \in A, b \in B$, ce qui impliquerait $a = b$, contredisant l'hypothèse de disjonction $A \cap B = \emptyset$.
+   Puisque $x_0 \notin C$, la propriété de la jauge donne $p(x_0) \ge 1$.
+
+4. \textbf{Forme linéaire sur une droite :} Considérons le sous-espace $G = \mathbb{R}x_0$. On définit sur $G$ la forme linéaire $f(t x_0) = t p(x_0)$.
+   Pour $t \ge 0$, $f(t x_0) = t p(x_0) = p(t x_0)$.
+   Pour $t < 0$, $f(t x_0) = t p(x_0) \le 0 \le p(t x_0)$ (car $p \ge 0$).
+   Ainsi, pour tout $x \in G$, $f(x) \le p(x)$.
+
+5. \textbf{Prolongement par Hahn-Banach analytique :} D'après le théorème de Hahn-Banach analytique, il existe une forme linéaire $L$ sur $E$ qui prolonge $f$ et telle que $\forall x \in E, L(x) \le p(x)$.
+
+6. \textbf{Continuité de $L$ :} L'ouvert $C$ contient une boule ouverte $B(0, r)$. Pour $x \in B(0, r)$, $x \in C$ donc $p(x) < 1$. Par conséquent, $L(x) \le p(x) < 1$. Puisque $L(-x) \le p(-x) < 1$, on a $|L(x)| < 1$ sur la boule $B(0,r)$, ce qui prouve que $L$ est continue sur un voisinage de 0, donc continue partout ($L \in E^*$).
+
+7. \textbf{Séparation :} Pour tout $a \in A$ et $b \in B$, regardons l'élément $x = a - b + x_0 \in C$.
+   On a $p(x) < 1$, donc $L(x) < 1$.
+   Par linéarité, $L(a) - L(b) + L(x_0) < 1$.
+   Or, $L(x_0) = f(x_0) = p(x_0) \ge 1$.
+   Donc $L(a) - L(b) + 1 \le L(a) - L(b) + L(x_0) < 1$, ce qui implique $L(a) - L(b) < 0$, soit $L(a) < L(b)$.
+
+8. \textbf{Fixation de la constante :} L'ensemble $L(A)$ est un intervalle de $\mathbb{R}$ (image d'un connexe par une application continue). Comme $L(A) < L(B)$, la borne supérieure de $L(A)$ existe et est majorée par tout élément de $L(B)$.
+   De plus, $A$ est ouvert et $L$ est linéaire continue non nulle, donc $L(A)$ est un ouvert de $\mathbb{R}$. Par conséquent, sa borne supérieure n'est pas atteinte.
+   Soit $\alpha = \sup L(A)$. Pour tout $a \in A$, on a $L(a) < \alpha$. Pour tout $b \in B$, on a $\alpha \le L(b)$. La preuve est complète.
+
+ Preuve de la deuxième forme géométrique
+
+Supposons $A$ fermé et $B$ compact disjoints.
+
+1. \textbf{Élargissement :} Puisque $A$ est fermé et $B$ est compact et $A \cap B = \emptyset$, la distance entre $A$ et $B$ est strictement positive (dans un espace normé). Plus généralement dans un espace localement convexe, il existe un voisinage ouvert convexe de l'origine $V$ tel que $(A + V) \cap B = \emptyset$.
+   L'ensemble $A' = A + V$ est ouvert (union d'ouverts $a+V$), convexe (somme de convexes), et disjoint de $B$.
+
+2. \textbf{Application de la 1ère forme :} Par le théorème de séparation au sens large, il existe $L \in E^*$ et un réel $\alpha'$ tels que :
+   $\forall x \in A', \forall b \in B, \quad L(x) < \alpha' \le L(b)$.
+   En particulier, pour tout $a \in A$ et $v \in V$, $L(a) + L(v) < \alpha'$.
+
+3. \textbf{Marge stricte :} L'ensemble $L(V)$ est un voisinage ouvert de $0$ dans $\mathbb{R}$, donc il contient un intervalle $[-\epsilon, \epsilon]$ pour un $\epsilon > 0$.
+   On peut donc trouver $v \in V$ tel que $L(v) = \epsilon$.
+   Ainsi, $\forall a \in A, \quad L(a) + \epsilon < \alpha'$.
+   En posant $\alpha = \alpha' - \epsilon$, on obtient $L(a) \le \alpha < \alpha + \epsilon = \alpha' \le L(b)$.
+   L'inégalité stricte est démontrée.
+
+
+
+\textbf{Exemple concret supplémentaire 1 (Orthogonalité dans Hilbert) :}
+Soit $E = \ell^2(\mathbb{R})$ l'espace des suites de carré sommable. Considérons le sous-espace fermé $C = \{ x \in \ell^2 \mid x_1 = x_2 \}$. C'est un convexe fermé. Le point $x_0 = (1, 0, 0, \dots) \notin C$.
+Le point de $C$ le plus proche de $x_0$ est sa projection orthogonale $p = (\frac{1}{2}, \frac{1}{2}, 0, \dots)$.
+L'hyperplan séparateur strict garanti par Hahn-Banach a pour vecteur normal $x_0 - p = (\frac{1}{2}, -\frac{1}{2}, 0, \dots)$.
+La forme linéaire est $L(x) = \frac{1}{2}x_1 - \frac{1}{2}x_2$. Pour $c \in C$, $L(c) = 0$. Pour $x_0$, $L(x_0) = \frac{1}{2} > 0$. L'hyperplan affine $H = \{ x \mid L(x) = \frac{1}{4} \}$ sépare strictement $x_0$ de $C$.
+
+\textbf{Exemple concret supplémentaire 2 (Séparation de boules) :}
+Dans $E = \mathbb{R}^n$, soient $B_1$ la boule fermée de centre $c_1$ et de rayon $r_1$, et $B_2$ la boule fermée de centre $c_2$ et de rayon $r_2$. Supposons $\|c_1 - c_2\| > r_1 + r_2$, c'est-à-dire que les boules sont disjointes.
+La forme linéaire $L(x) = \langle c_2 - c_1, x \rangle$ sépare strictement $B_1$ et $B_2$.
+Le supremum de $L$ sur $B_1$ est atteint au point $x_1 = c_1 + r_1 \frac{c_2 - c_1}{\|c_2 - c_1\|}$.
+L'infimum de $L$ sur $B_2$ est atteint au point $x_2 = c_2 - r_2 \frac{c_2 - c_1}{\|c_2 - c_1\|}$.
+La séparation stricte est géométriquement l'hyperplan médiateur du segment $[x_1, x_2]$.
+
+\textbf{Exemple concret supplémentaire 3 (Non-séparabilité de non-convexes) :}
+Prenons dans $\mathbb{R}^2$ l'ensemble $A = \{ (x,y) \mid x^2 + y^2 = 1 \}$ (le cercle) et l'ensemble $B = \{ (0,0) \}$ (le centre). $A$ et $B$ sont fermés et disjoints, mais $A$ n'est pas convexe.
+Il n'existe aucune droite séparant $A$ et $B$, illustrant que la convexité est une condition nécessaire absolue de Hahn-Banach géométrique.
+
+
+\section{Applications}
+
+ 1. Théorie de l'Optimisation et Conditions KKT
+En optimisation sous contraintes, le théorème de Hahn-Banach géométrique est la pierre angulaire pour l'existence des multiplicateurs de Lagrange (et les conditions de Karush-Kuhn-Tucker). On sépare l'ensemble des directions de descente admissibles de l'ensemble des directions où la fonction objectif décroît, garantissant l'existence d'un hyperplan (défini par les multiplicateurs) qui équilibre les gradients.
+
+\textbf{Exemple Numérique de projection sur un convexe :}
+Soit $C = \{ (x,y) \in \mathbb{R}^2 \mid x^2 + y^2 \le 1 \}$ (disque unité fermé) et $x_0 = (2,2)$.
+Le point de $C$ le plus proche de $x_0$ est $p_0 = (\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}})$.
+Le théorème garantit qu'il existe un hyperplan séparant strictement $C$ de $x_0$. En prenant la tangente à $C$ en $p_0$, d'équation $x + y = \sqrt{2}$, on a pour tout $(x,y) \in C$, $x+y \le \sqrt{2}$ (car $(x+y)/\sqrt{2} = \langle (x,y), p_0 \rangle \le \|(x,y)\|\|p_0\| \le 1$).
+Pour le point $x_0$, on a $2+2 = 4 > \sqrt{2}$. La séparation est donc stricte avec le plan affine orthogonal au segment $[p_0, x_0]$.
+
+ 2. Intelligence Artificielle : Les Support Vector Machines (SVM)
+En apprentissage supervisé, le problème de la classification binaire linéaire consiste exactement à trouver un hyperplan séparateur entre deux nuages de points.
+Si les deux nuages d'entraînement (de classes $+1$ et $-1$) ont des enveloppes convexes disjointes, le théorème de séparation stricte assure qu'il existe un hyperplan $H = \{ x \mid \langle w, x \rangle + b = 0 \}$ qui sépare ces deux ensembles avec une marge positive stricte.
+Le SVM à marge maximale trouve parmi tous ces hyperplans séparateurs garantis par Hahn-Banach celui qui maximise $\epsilon$.
+
+ 3. Logique et dualité forte
+En théorie des jeux (par exemple le théorème du minimax de von Neumann) et en économie (équilibres de Walras), on utilise la séparation de convexes pour montrer l'existence de systèmes de prix ou de stratégies mixtes. Le fait que deux ensembles d'opportunités ne s'intersectent pas garantit l'existence d'un système de prix (la forme linéaire) tel qu'un acteur préfère toujours un ensemble à l'autre.
+
+
+\newpage
+\part*{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Séparation dans $\mathbb{R}^2$ \quad $\bigstar\star\star\star\star$}
+
+Soient $A = \{ (x,y) \in \mathbb{R}^2 \mid x < 0 \}$ et $B = \{ (x,y) \in \mathbb{R}^2 \mid y \ge 1/x, x > 0 \}$. Montrer que $A$ et $B$ peuvent être séparés, mais pas strictement.
+
+\textbf{Correction :}
+
+1. Les ensembles $A$ et $B$ sont convexes et disjoints. $A$ est ouvert et $B$ est fermé.
+2. D'après la première forme géométrique de Hahn-Banach, il existe un hyperplan séparateur au sens large.
+3. Considérons la forme linéaire $L(x,y) = x$.
+   Pour tout $a = (x,y) \in A$, on a $L(a) = x < 0$.
+   Pour tout $b = (x,y) \in B$, on a $L(b) = x > 0$.
+   L'hyperplan d'équation $x=0$ sépare $A$ et $B$.
+4. Séparation stricte : Supposons qu'il existe $L(x,y) = \alpha x + \beta y$ et $\epsilon > 0$ tels que $\forall a \in A, L(a) \le c - \epsilon < c + \epsilon \le L(b)$.
+   En prenant $a_n = (-1/n, 0) \in A$, on a $-\alpha/n \le c - \epsilon$, donc en passant à la limite $0 \le c - \epsilon$.
+   En prenant $b_n = (n, 1/n) \in B$, on a $\alpha n + \beta/n \ge c + \epsilon$.
+   Si $\beta \neq 0$, cela empêche l'inégalité d'être vraie pour $n$ grand (les points de $B$ s'approchent asymptotiquement de l'axe des abscisses). Ainsi, aucune marge stricte ne peut exister.
+
+\subsection*{Exercice 2 : Projection sur un convexe \quad $\bigstar\star\star\star\star$}
+
+Soit $H$ un espace de Hilbert, $C$ un sous-ensemble convexe fermé non vide de $H$, et $x \notin C$. Soit $p$ la projection de $x$ sur $C$. Montrer que l'hyperplan orthogonal au segment $[x, p]$ passant par $p$ sépare $x$ et $C$.
+
+\textbf{Correction :}
+
+1. Par définition de la projection sur un convexe fermé dans un Hilbert, on a pour tout $y \in C$, $\langle x - p, y - p \rangle \le 0$.
+2. Considérons la forme linéaire $L(z) = \langle x - p, z \rangle$.
+3. Pour $y \in C$, on a $L(y) - L(p) = \langle x - p, y - p \rangle \le 0$, donc $L(y) \le L(p)$.
+4. Pour $x$, on a $L(x) - L(p) = \langle x - p, x - p \rangle = \|x - p\|^2 > 0$ car $x \notin C$.
+5. Ainsi $L(y) \le L(p) < L(x)$.
+6. L'hyperplan défini par $H = \{ z \in H \mid L(z) = L(p) \}$ est exactement l'hyperplan affine passant par $p$ et de vecteur normal $x - p$. Il sépare strictement $x$ et $C$, ce qui illustre le théorème de Hahn-Banach géométrique pour un point et un fermé.
+
+\subsection*{Exercice 3 : Séparation de cônes \quad $\bigstar\bigstar\star\star\star$}
+
+Soit $C$ un cône convexe de sommet $0$ dans un espace normé $E$, tel que l'adhérence de $C$ ne soit pas l'espace entier. Montrer qu'il existe une forme linéaire continue non nulle $f$ sur $E$ telle que $\forall x \in C, f(x) \ge 0$.
+
+\textbf{Correction :}
+
+1. Soit $\overline{C}$ l'adhérence de $C$. C'est un cône convexe fermé.
+2. Par hypothèse, il existe un point $x_0 \notin \overline{C}$.
+3. Par le théorème de Hahn-Banach (forme géométrique de séparation stricte entre le fermé $\overline{C}$ et le compact $\{x_0\}$), il existe une forme linéaire $f \in E^*$ et un réel $\alpha$ tels que pour tout $y \in \overline{C}$, $f(y) < \alpha < f(x_0)$.
+4. Puisque $0 \in \overline{C}$, on a $f(0) = 0 < \alpha$. Donc $\alpha > 0$.
+5. Si pour un certain $y \in C$, on avait $f(y) > 0$, alors comme $C$ est un cône, pour tout $\lambda > 0$, $\lambda y \in C \subset \overline{C}$.
+   On aurait $f(\lambda y) = \lambda f(y) < \alpha$ pour tout $\lambda > 0$, ce qui est impossible en faisant tendre $\lambda \to +\infty$.
+6. Ainsi, pour tout $y \in C$, on a nécessairement $f(y) \le 0$.
+7. En prenant $g = -f$, on a $g(x) \ge 0$ pour tout $x \in C$. $g$ est continue et non nulle.
+
+\subsection*{Exercice 4 : Séparation de deux convexes compacts \quad $\bigstar\bigstar\star\star\star$}
+
+Soient $K_1$ et $K_2$ deux parties convexes compactes non vides et disjointes d'un espace vectoriel normé $E$. Montrer qu'il existe une forme linéaire continue $L \in E^*$ telle que $\sup_{x \in K_1} L(x) < \inf_{y \in K_2} L(y)$.
+
+\textbf{Correction :}
+
+1. Les ensembles $K_1$ et $K_2$ sont convexes, non vides et disjoints.
+2. $K_1$ est fermé (car compact dans un espace séparé) et $K_2$ est compact.
+3. D'après le théorème de séparation stricte, il existe $L \in E^*$ et des réels $\alpha, \epsilon > 0$ tels que :
+   $\forall x \in K_1, \forall y \in K_2, \quad L(x) \le \alpha - \epsilon < \alpha + \epsilon \le L(y)$.
+4. L'application $L$ est continue sur les compacts $K_1$ et $K_2$. Elle y atteint donc ses bornes.
+5. On a ainsi $\sup_{x \in K_1} L(x) \le \alpha - \epsilon$.
+6. Et $\inf_{y \in K_2} L(y) \ge \alpha + \epsilon$.
+7. Par conséquent, $\sup_{x \in K_1} L(x) \le \alpha - \epsilon < \alpha + \epsilon \le \inf_{y \in K_2} L(y)$, ce qui conclut la preuve.
+
+\subsection*{Exercice 5 : Cône polaire \quad $\bigstar\bigstar\bigstar\star\star$}
+
+Soit $C$ un cône convexe fermé non vide de $E$ et $C^* = \{ f \in E^* \mid \forall x \in C, f(x) \ge 0 \}$. Montrer que si $x_0 \in E$ vérifie $f(x_0) \ge 0$ pour tout $f \in C^*$, alors $x_0 \in C$.
+
+\textbf{Correction :}
+
+1. Raisonnons par l'absurde. Supposons que $x_0 \notin C$.
+2. Puisque $C$ est fermé, on peut appliquer le théorème de Hahn-Banach géométrique (séparation stricte) à $C$ et au compact $\{x_0\}$.
+3. Il existe $L \in E^*$ et $\alpha \in \mathbb{R}$ tels que $\forall x \in C, L(x) < \alpha < L(x_0)$.
+4. Puisque $0 \in C$, on a $L(0) = 0 < \alpha$, donc $\alpha > 0$.
+5. Comme $C$ est un cône, si $L(x) > 0$ pour un $x \in C$, alors $L(\lambda x) = \lambda L(x) < \alpha$ pour tout $\lambda > 0$, ce qui est absurde.
+6. Donc, $\forall x \in C, L(x) \le 0$.
+7. Considérons la forme $f = -L$. On a $f(x) \ge 0$ pour tout $x \in C$, donc $f \in C^*$.
+8. D'après l'inégalité de séparation, $L(x_0) > \alpha > 0$, donc $f(x_0) = -L(x_0) < 0$.
+9. Ceci contredit l'hypothèse selon laquelle $\forall f \in C^*, f(x_0) \ge 0$.
+10. Ainsi, $x_0 \in C$.
+
+\subsection*{Exercice 6 : Lemme de Farkas-Minkowski \quad $\bigstar\bigstar\bigstar\star\star$}
+
+Soient $a_1, \dots, a_m, b \in \mathbb{R}^n$. Montrer que l'une et seulement l'une des deux affirmations suivantes est vraie :
+(i) $\exists x \ge 0$ tel que $\sum_{i=1}^m x_i a_i = b$.
+(ii) $\exists y \in \mathbb{R}^n$ tel que $\forall i, \langle y, a_i \rangle \ge 0$ et $\langle y, b \rangle < 0$.
+
+\textbf{Correction :}
+
+1. Ce lemme est une conséquence directe de Hahn-Banach en dimension finie.
+2. Soit $C = \{ \sum_{i=1}^m x_i a_i \mid x_i \ge 0 \}$. $C$ est un cône convexe engendré par un nombre fini de vecteurs, il est donc fermé.
+3. L'affirmation (i) équivaut à dire que $b \in C$.
+4. Si $b \in C$, alors pour tout $y$ tel que $\langle y, a_i \rangle \ge 0$, on a $\langle y, b \rangle = \sum x_i \langle y, a_i \rangle \ge 0$, donc (ii) est fausse.
+5. Si $b \notin C$, alors comme $C$ est fermé, on peut séparer strictement $b$ et $C$.
+6. Il existe $y \in \mathbb{R}^n$ et $\alpha \in \mathbb{R}$ tels que $\forall z \in C, \langle y, z \rangle > \alpha > \langle y, b \rangle$.
+7. Comme $0 \in C$, $\alpha < 0$, donc $\langle y, b \rangle < 0$.
+8. Si pour un $a_i$ on a $\langle y, a_i \rangle < 0$, alors en prenant $z = \lambda a_i \in C$, on aurait $\langle y, \lambda a_i \rangle > \alpha$ pour tout $\lambda > 0$, absurde.
+9. Ainsi $\langle y, a_i \rangle \ge 0$ pour tout $i$, ce qui vérifie l'affirmation (ii).
+
+\subsection*{Exercice 7 : Théorème de Mazur \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+Soit $(x_n)_{n \in \mathbb{N}}$ une suite qui converge faiblement vers $x$ dans un espace de Banach $E$. Montrer qu'il existe une suite $(y_n)$ de combinaisons convexes des $(x_k)_{k \ge n}$ qui converge fortement vers $x$.
+
+\textbf{Correction :}
+
+1. Soit $C = \text{Conv}(\{ x_k \mid k \in \mathbb{N} \})$ l'enveloppe convexe de la suite.
+2. Supposons par l'absurde que $x$ n'appartient pas à l'adhérence forte $\overline{C}$.
+3. Par Hahn-Banach (séparation stricte), il existe $f \in E^*$ et $\alpha \in \mathbb{R}$ tels que $\forall y \in \overline{C}, f(y) \le \alpha < f(x)$.
+4. En particulier, pour tout $k$, $f(x_k) \le \alpha$.
+5. Comme $(x_n)$ converge faiblement vers $x$, la définition de la convergence faible implique que $f(x_n) \to f(x)$.
+6. Ainsi, par passage à la limite, $f(x) \le \alpha$, ce qui contredit $\alpha < f(x)$.
+7. Par conséquent, $x \in \overline{C}$.
+8. Ainsi, il existe une suite d'éléments de $C$ (donc des combinaisons convexes des $x_k$) qui converge fortement vers $x$. Par une construction par blocs itérative, on assure la condition $k \ge n$.
+
+\subsection*{Exercice 8 : Séparabilité des polyèdres \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+Dans $\mathbb{R}^n$, soient $P_1 = \{ x \mid A_1 x \le b_1 \}$ et $P_2 = \{ x \mid A_2 x \le b_2 \}$ deux polyèdres disjoints. Montrer qu'ils peuvent être strictement séparés par un hyperplan.
+
+\textbf{Correction :}
+
+1. Les polyèdres sont des intersections finies de demi-espaces fermés, ce sont donc des ensembles convexes fermés.
+2. En dimension finie, deux ensembles convexes disjoints peuvent être séparés (Théorème de séparation).
+3. Si $P_1$ ou $P_2$ est compact (donc borné), la séparation stricte est immédiate par la 2ème forme de Hahn-Banach.
+4. Si les deux sont non bornés, on utilise un argument spécifique à la dimension finie. Les polyèdres disjoints admettent une distance strictement positive ou sont séparés asymptotiquement, mais comme leurs directions de récession doivent être disjointes pour ne pas s'intersecter, on peut trouver un plan.
+5. On démontre que la différence de Minkowski $P_1 - P_2$ est fermée en dimension finie pour des polyèdres.
+6. Puisque $P_1 \cap P_2 = \emptyset$, $0 \notin P_1 - P_2$.
+7. Comme $P_1 - P_2$ est fermé et convexe, on peut séparer strictement $0$ de $P_1 - P_2$.
+8. Il existe un vecteur $y$ tel que $\langle y, z \rangle > 0$ pour tout $z \in P_1 - P_2$.
+9. Soit $\langle y, x_1 - x_2 \rangle > 0 \implies \langle y, x_1 \rangle > \langle y, x_2 \rangle$. En prenant l'infimum sur $P_1$ et le supremum sur $P_2$, on trouve l'hyperplan séparateur.
+
+\subsection*{Exercice 9 : Point extrémal et Hahn-Banach \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+Soit $C$ un convexe compact dans $E$. On admet le théorème de Krein-Milman. Montrer en utilisant Hahn-Banach que si $f \in E^*$, alors $f$ atteint son maximum sur $C$ en un point extrémal.
+
+\textbf{Correction :}
+
+1. Puisque $C$ est compact et $f$ est continue (pour la topologie faible ou forte), $f$ atteint son maximum $M$ sur $C$.
+2. L'ensemble $K = \{ x \in C \mid f(x) = M \}$ est une "face" de $C$. Il est convexe, compact (fermé dans un compact), et non vide.
+3. D'après le théorème de Krein-Milman, $K$ possède au moins un point extrémal $e$.
+4. Montrons que $e$ est un point extrémal de $C$.
+5. Supposons que $e = \lambda x + (1-\lambda) y$ avec $x, y \in C$ et $0 < \lambda < 1$.
+6. On a $f(e) = \lambda f(x) + (1-\lambda) f(y)$.
+7. Comme $f(x) \le M$ et $f(y) \le M$, et $f(e) = M$, il faut nécessairement que $f(x) = M$ et $f(y) = M$.
+8. Ainsi $x \in K$ et $y \in K$.
+9. Mais $e$ est un point extrémal de $K$, donc $x = y = e$.
+10. Par conséquent, $e$ est un point extrémal de $C$.
+
+\subsection*{Exercice 10 : Non-existence d'hyperplan séparateur \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+Donner un exemple dans un espace vectoriel normé de deux ensembles convexes denses disjoints. (Ainsi ils ne peuvent pas être séparés par un hyperplan fermé).
+
+\textbf{Correction :}
+
+1. Soit $E = \ell^2(\mathbb{N})$ l'espace des suites de carré sommable.
+2. Soit $F$ le sous-espace dense des suites nulles à partir d'un certain rang.
+3. Soit $e = (1, 1/2, 1/3, \dots) \in \ell^2$. On pose $c = e \notin F$.
+4. Soit $A = \{ x \in F \mid \sum_{i=1}^n x_i e_i = 0 \text{ pour tout } n \}$ mais prenons plutôt un vrai hyperplan dense.
+5. Plus simplement, soit $f$ une forme linéaire discontinue sur $E$. Le noyau $H = \ker f$ est un hyperplan dense de $E$.
+6. Soit $x_0 \notin H$. L'ensemble $H' = H + x_0$ est aussi dense dans $E$.
+7. $H$ et $H'$ sont des convexes disjoints.
+8. Si un hyperplan fermé séparait $H$ et $H'$, il contiendrait $H$ (car $H$ est un espace vectoriel dense) ou en serait disjoint. Mais $H$ étant dense, son adhérence est $E$ tout entier, de même pour $H'$.
+9. Toute forme linéaire continue qui serait de signe constant sur $H$ serait de signe constant sur $E$, donc nulle, ce qui est absurde pour un hyperplan séparateur.
+
+
+
+\newpage
+\part*{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Algorithme du Perceptron et Séparabilité}
+
+Ce TP illustre la séparation au sens large en dimension 2 (pour classer deux ensembles de points). L'algorithme du Perceptron converge si les données sont linéairement séparables (Hahn-Banach garantit qu'un hyperplan existe si les enveloppes convexes ne s'intersectent pas).
+
+\begin{lstlisting}[language=Python]
+def perceptron(points, labels, max_iter=1000):
+    # points : liste de (x, y), labels : liste de 1 ou -1
+    w = [0.0, 0.0]
+    b = 0.0
+    for _ in range(max_iter):
+        errors = 0
+        for i in range(len(points)):
+            x, y = points[i]
+            activation = w[0] * x + w[1] * y + b
+            if labels[i] * activation <= 0:
+                w[0] += labels[i] * x
+                w[1] += labels[i] * y
+                b += labels[i]
+                errors += 1
+        if errors == 0:
+            break
+    return w, b
+
+points_train = [(1, 1), (2, 2), (-1, -1), (-2, -2)]
+labels_train = [1, 1, -1, -1]
+
+w, b = perceptron(points_train, labels_train)
+assert w[0] > 0 or w[1] > 0
+assert b == 0
+\end{lstlisting}
+
+
+\subsection*{TP 2 : Projection sur un Convexe Fermé}
+
+On simule la projection d'un point sur le disque unité fermé en dimension 2. Cela illustre la séparation d'un point et d'un convexe fermé.
+
+\begin{lstlisting}[language=Python]
+def projection_disque(px, py):
+    norm = (px**2 + py**2)**0.5
+    if norm <= 1.0:
+        return px, py
+    return px / norm, py / norm
+
+def check_separation(px, py, cx, cy):
+    # Le plan separateur H = {x | <x-c, p-c> = 0} au point c
+    # Verification : <p-c, p-c> > 0 (pour le point p)
+    val_p = (px - cx)*(px - cx) + (py - cy)*(py - cy)
+    assert val_p > 0
+    # Pour un point dans le convexe (ex: origine)
+    val_origine = (0 - cx)*(px - cx) + (0 - cy)*(py - cy)
+    assert val_origine <= 0
+
+px, py = 2.0, 2.0
+cx, cy = projection_disque(px, py)
+check_separation(px, py, cx, cy)
+\end{lstlisting}
+
+
+\subsection*{TP 3 : La Jauge de Minkowski}
+
+Calcul de la Jauge de Minkowski pour un rectangle ouvert R = ]-2, 2[ x ]-1, 1[. L'ouvert est convexe.
+
+\begin{lstlisting}[language=Python]
+def jauge_rectangle(x, y):
+    # R est l'ensemble des (x,y) tq max(|x|/2, |y|) < 1
+    # La jauge est l'inf des t > 0 tq (x/t, y/t) in R
+    return max(abs(x) / 2.0, abs(y))
+
+assert jauge_rectangle(0, 0) == 0
+assert jauge_rectangle(2, 1) == 1
+assert jauge_rectangle(4, 2) == 2
+assert jauge_rectangle(1, 0.5) == 0.5
+
+# Un point appartient au rectangle ssi sa jauge est < 1
+assert jauge_rectangle(1.9, 0.9) < 1.0
+assert jauge_rectangle(2.1, 1.1) > 1.0
+\end{lstlisting}
+
+
+\subsection*{TP 4 : Enveloppe Convexe (Algorithme de Jarvis)}
+
+Calcul de l'enveloppe convexe d'un nuage de points. Deux ensembles sont séparables ssi leurs enveloppes convexes sont disjointes.
+
+\begin{lstlisting}[language=Python]
+def cross_product(o, a, b):
+    return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
+def jarvis_march(points):
+    n = len(points)
+    if n < 3: return points
+    hull = []
+    # Point le plus a gauche
+    l = 0
+    for i in range(1, n):
+        if points[i][0] < points[l][0]:
+            l = i
+    p = l
+    while True:
+        hull.append(points[p])
+        q = (p + 1) % n
+        for i in range(n):
+            if cross_product(points[p], points[i], points[q]) > 0:
+                q = i
+        p = q
+        if p == l:
+            break
+    return hull
+
+nuage = [(0, 0), (1, 0), (0, 1), (0.1, 0.1)]
+env = jarvis_march(nuage)
+assert len(env) == 3
+assert (0.1, 0.1) not in env
+\end{lstlisting}
+
+
+\subsection*{TP 5 : Marge de Sécurité Maximale (SVM Minimal)}
+
+Trouver l'hyperplan optimal (marge maximale) pour séparer 4 points spécifiques en dimension 1, illustrant la 2ème forme géométrique (séparation stricte de compacts).
+
+\begin{lstlisting}[language=Python]
+# C1 : x = -2, x = -1
+# C2 : x = 1, x = 2
+# Le separateur optimal est a x = 0.
+
+def find_margin(points_c1, points_c2):
+    max_c1 = points_c1[0]
+    for p in points_c1:
+        if p > max_c1: max_c1 = p
+
+    min_c2 = points_c2[0]
+    for p in points_c2:
+        if p < min_c2: min_c2 = p
+
+    assert min_c2 > max_c1 # Separation possible
+
+    alpha = (max_c1 + min_c2) / 2.0
+    epsilon = (min_c2 - max_c1) / 2.0
+
+    return alpha, epsilon
+
+c1 = [-2, -1]
+c2 = [1, 2]
+alpha, eps = find_margin(c1, c2)
+
+assert alpha == 0
+assert eps == 1
+
+# Verification inegalite : L(x) = x
+for x in c1:
+    assert x <= alpha - eps
+for y in c2:
+    assert y >= alpha + eps
+\end{lstlisting}
+
+
+
+
+\end{document}
