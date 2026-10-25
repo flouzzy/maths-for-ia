@@ -14,11 +14,6 @@ next: "[[Jalon 100 (Démonstration du théorème de Banach-Steinhaus).md]]"
 
 ## 1. Présentation du concept clé
 
-- **La Métaphore :** Imaginez deux nuages de fumée (des ensembles convexes) qui flottent dans une pièce. Tant que les deux nuages ne s'imbriquent pas, vous pouvez toujours glisser une immense plaque de verre plate (un **hyperplan**) entre eux sans toucher aucun des deux nuages.
-    - La plaque de verre sépare l'espace en deux : le "côté A" et le "côté B".
-    - Le **Théorème de Hahn-Banach** garantit que cette plaque existe toujours, même si la pièce a une infinité de dimensions. C'est l'outil qui permet de tracer des frontières nettes entre deux mondes qui ne se mélangent pas.
-- **Le "Pourquoi on a inventé ça" :** Pour formaliser la notion de "séparation". En économie ou en IA, on veut souvent séparer les "bons choix" des "mauvais choix". Les formes géométriques de Hahn-Banach prouvent que l'on peut toujours utiliser des fonctions simples (linéaires) pour faire ce découpage, à condition que les ensembles soient "bombés" (convexes).
-- **Visualisation :** Deux patates disjointes dans le plan. On trace une droite qui passe entre les deux. En dimension 3, c'est un plan. En dimension $n$, c'est un hyperplan.
 
 ## 2. Formalisation
 
@@ -32,6 +27,30 @@ Soit $E$ un espace vectoriel normé (ou un espace topologique localement convexe
 > $$\forall a \in A, \forall b \in B, \quad L(a) < \alpha \le L(b)$$
 > On dit que l'hyperplan $\{ x \mid L(x) = \alpha \}$ sépare $A$ et $B$ au sens large.
 
+
+**Exemple Concret :**
+Considérons dans $\mathbb{R}^2$, l'ensemble $A = \{(x, y) \mid x^2 + y^2 < 1\}$ (le disque unité ouvert) et l'ensemble $B = \{(x, y) \mid x = 2\}$ (une droite verticale).
+Ces deux ensembles sont convexes, non vides et disjoints. $A$ est ouvert.
+Le théorème garantit l'existence d'un hyperplan (ici une droite) qui les sépare.
+Par exemple, la droite d'équation $x = 1$ sépare $A$ et $B$ au sens large.
+On peut définir la forme linéaire $L(x, y) = x$.
+Pour tout $(x, y) \in A$, on a $x < 1$. Donc $L(x,y) < 1$.
+Pour tout $(x, y) \in B$, on a $x = 2 \ge 1$. Donc $1 \le L(x, y)$.
+L'hyperplan séparateur est $H = \{(x, y) \mid L(x, y) = 1\} = \{(x, y) \mid x = 1\}$.
+
+\begin{tikzpicture}
+\draw[->] (-2,0) -- (3,0) node[right] {$x$};
+\draw[->] (0,-2) -- (0,2) node[above] {$y$};
+\fill[blue!20] (0,0) circle (1);
+\draw[blue, thick] (0,0) circle (1);
+\node[blue] at (0,0) {$A$};
+\draw[red, thick] (2,-2) -- (2,2);
+\node[red, right] at (2,1) {$B$};
+\draw[dashed, thick] (1,-2) -- (1,2);
+\node[above right] at (1,1) {$H : x=1$};
+\end{tikzpicture}
+
+
 ### B. Séparation stricte
 
 > **Théorème (Hahn-Banach - 2ème forme géométrique) :**
@@ -39,6 +58,32 @@ Soit $E$ un espace vectoriel normé (ou un espace topologique localement convexe
 > Si $A$ est **fermé** et $B$ est **compact**, alors il existe $L \in E^*$ et deux réels $\alpha, \epsilon > 0$ tels que :
 > $$\forall a \in A, \forall b \in B, \quad L(a) \le \alpha - \epsilon < \alpha + \epsilon \le L(b)$$
 > Ici, il existe une "marge de sécurité" entre les deux ensembles et l'hyperplan.
+
+
+**Exemple Concret :**
+Considérons dans $\mathbb{R}^2$, l'ensemble $A = \{(x, y) \mid x^2 + y^2 \le 1\}$ (le disque unité fermé) et l'ensemble $B = \{(2, 0)\}$ (un point unique).
+$A$ est fermé et $B$ est compact. Ils sont convexes, non vides et disjoints.
+La forme linéaire $L(x, y) = x$ les sépare strictement.
+Pour tout $(x, y) \in A$, on a $x \le 1$.
+Pour tout $(x, y) \in B$, on a $x = 2$.
+On peut choisir $\alpha = 1.5$ et $\epsilon = 0.4$.
+Alors, pour tout $a \in A$, $L(a) \le 1 < 1.5 - 0.4 = 1.1$.
+Et pour $b \in B$, $L(b) = 2 \ge 1.5 + 0.4 = 1.9$.
+L'hyperplan séparateur est $H = \{(x, y) \mid x = 1.5\}$, et il y a une marge de sécurité autour.
+
+\begin{tikzpicture}
+\draw[->] (-2,0) -- (3,0) node[right] {$x$};
+\draw[->] (0,-2) -- (0,2) node[above] {$y$};
+\fill[blue!20] (0,0) circle (1);
+\draw[blue, thick] (0,0) circle (1);
+\node[blue] at (0,0) {$A$};
+\fill[red] (2,0) circle (0.1);
+\node[red, above] at (2,0) {$B$};
+\draw[dashed, thick] (1.5,-2) -- (1.5,2);
+\node[above right] at (1.5,1) {$H : x=1.5$};
+\draw[<->, gray] (1,0.5) -- (1.5,0.5) node[midway, above] {$\epsilon$};
+\end{tikzpicture}
+
 
 ## 3. Démonstrations
 
