@@ -10,16 +10,7 @@ prev: "[[Jalon 99 (Théorème de Hahn-Banach (forme géométrique)).md]]"
 next: "[[Jalon 101 (Théorème de l'application ouverte et théorème du graphe fermé.).md]]"
 ---
 
-# Jalon 100 : Théorème de Banach-Steinhaus
 
-## 1. Présentation du concept clé
-
-- **La Métaphore :** Imaginez une bibliothèque infinie remplie de traducteurs (des opérateurs linéaires).
-    - Pour chaque livre (un vecteur $x$), vous demandez à tous les traducteurs de faire leur travail.
-    - Vous remarquez que pour n'importe quel livre donné, aucun traducteur ne produit un texte infiniment long (bornitude ponctuelle).
-    - Le **Théorème de Banach-Steinhaus** (ou Principe de la Borne Uniforme) dit que si la bibliothèque est "solide" (un espace de Banach), alors il y a forcément une limite globale à la puissance de tous ces traducteurs. Il n'existe pas de livre qui ferait "exploser" la bibliothèque si on essayait de le traduire avec tous les outils disponibles. La modération individuelle de chaque traducteur sur chaque livre entraîne une modération collective sur tous les livres à la fois.
-- **Le "Pourquoi on a inventé ça" :** En dimension infinie, on peut avoir des suites de fonctions qui se comportent bien point par point, mais qui deviennent "folles" globalement. Banach-Steinhaus est le garde-fou qui dit : "si c'est raisonnable partout, alors c'est raisonnable globalement". C'est l'un des trois piliers de l'analyse fonctionnelle avec Hahn-Banach et l'Application Ouverte.
-- **Visualisation :** Une famille de fonctions $f_n(x)$. Même si elles peuvent avoir des formes différentes, si pour chaque $x$ elles ne dépassent pas une certaine hauteur, alors elles sont toutes emprisonnées dans un tube horizontal de largeur finie.
 
 ## 2. Formalisation
 
@@ -33,6 +24,65 @@ Soit $(T_i)_{i \in I}$ une famille d'opérateurs linéaires **continus** de $E$ 
 > $$\forall x \in E, \quad \sup_{i \in I} \|T_i(x)\|_F < +\infty$$
 > Alors, la famille des normes d'opérateurs est bornée :
 > $$\sup_{i \in I} \|T_i\|_{\mathcal{L}(E,F)} < +\infty$$
+
+
+**Exemple Concret 1 : Matrice et Normes en dimension finie**
+Considérons l'espace $E = \mathbb{R}^2$ muni de la norme $\| (x, y) \|_\infty = \max(|x|, |y|)$, et $F = \mathbb{R}$.
+Soit la famille d'opérateurs linéaires $T_n : \mathbb{R}^2 \to \mathbb{R}$ définie par $T_n(x, y) = n x + y$.
+Fixons un vecteur $u = (1, 0)$. Alors $\| T_n(u) \| = n$.
+Pour que la famille $T_n(u)$ soit bornée pour tout vecteur $u$, il faudrait que $n$ soit borné.
+Ici, si on prend la famille $(T_n)_{n \in \mathbb{N}}$, on voit bien que $\sup_{n} \| T_n(1,0) \| = +\infty$.
+La condition du théorème n'est pas remplie, donc la norme d'opérateur n'est pas bornée (ici $\|T_n\| = n+1$).
+
+**Exemple Concret 2 : Intégrales sur $C([0, 1])$**
+Soit $E = C([0, 1])$ muni de la norme $\|f\|_\infty = \sup_{t \in [0, 1]} |f(t)|$.
+Définissons $T_n : E \to \mathbb{R}$ par $T_n(f) = n \int_0^{1/n} f(t) dt$.
+Pour une fonction $f$ donnée, $T_n(f)$ est la moyenne de $f$ sur $[0, 1/n]$.
+Puisque $f$ est continue, $T_n(f) \to f(0)$ quand $n \to \infty$.
+La suite $(T_n(f))$ est convergente, donc elle est bornée : $\forall f \in E, \sup_n |T_n(f)| < \infty$.
+D'après le Théorème de Banach-Steinhaus, la suite des normes $\|T_n\|$ doit être bornée.
+Calculons cette norme pas-à-pas :
+1) Pour tout $f \in C([0, 1])$, on a $|T_n(f)| \le n \int_0^{1/n} |f(t)| dt \le n \int_0^{1/n} \|f\|_\infty dt = n \cdot \frac{1}{n} \|f\|_\infty = \|f\|_\infty$.
+2) On en déduit que $\|T_n\| \le 1$.
+3) En prenant la fonction constante $f(t) = 1$ pour tout $t$, $\|f\|_\infty = 1$, et $T_n(f) = n \int_0^{1/n} 1 dt = 1$.
+4) Donc $\|T_n\| = 1$.
+La borne est bien uniforme, illustrant parfaitement le théorème.
+
+
+**Exemple Concret 3 : Suite de fonctionnelles sur $L^2$**
+Prenons l'espace $E = L^2([0, 1])$ muni de la norme $\|f\|_2 = (\int_0^1 |f(x)|^2 dx)^{1/2}$.
+On définit une suite de formes linéaires $T_n(f) = n \int_0^{1/n} f(x) dx$.
+Pour toute fonction $f \in L^2$, l'inégalité de Cauchy-Schwarz donne :
+$|T_n(f)| \le n (\int_0^{1/n} 1^2 dx)^{1/2} (\int_0^{1/n} |f(x)|^2 dx)^{1/2} = n \frac{1}{\sqrt{n}} \|f\|_{L^2(0, 1/n)} = \sqrt{n} \|f\|_{L^2}$.
+Si $f$ est une fonction continue, $T_n(f) \to f(0)$ donc la limite est finie pour ces fonctions. Cependant, il existe des fonctions dans $L^2$ (comme $f(x) = x^{-1/3}$) pour lesquelles $T_n(f)$ diverge.
+Ici, $\|T_n\| = \sqrt{n}$, qui n'est pas bornée. Par Banach-Steinhaus, la famille ne peut pas être ponctuellement bornée sur tout $L^2$.
+
+**Exemple Concret 4 : Famille de matrices diagonales**
+Prenons $E = \ell^2(\mathbb{N})$ muni de sa norme classique.
+Considérons les matrices $T_n$ telles que $T_n x = (x_0, 2x_1, 3x_2, \dots, n x_{n-1}, 0, \dots)$.
+La norme de chaque $T_n$ est $n$. La famille de ces opérateurs a des normes non bornées.
+Par le théorème de Banach-Steinhaus, on peut affirmer qu'il existe un vecteur $x \in \ell^2$ pour lequel la suite $\|T_n x\|$ n'est pas bornée (par exemple $x_k = \frac{1}{k+1}$ donne $\|T_n x\| \sim \ln n$).
+
+**Exemple Concret 5 : Opérateurs de dérivations discrétisées**
+Soit $E = C^1([0, 1])$ muni de la norme $\|f\| = \|f\|_\infty + \|f'\|_\infty$ (qui en fait un espace de Banach) et $F = C([0, 1])$ avec la norme uniforme.
+Soit $T_n(f)(t) = \frac{f(t+1/n) - f(t)}{1/n}$ (avec prolongement adapté ou pris sur un intervalle légèrement plus petit).
+Pour $f$ donnée, $T_n(f) \to f'$ uniformément, donc la famille est ponctuellement bornée dans $F$.
+Banach-Steinhaus affirme alors que les opérateurs $T_n$ sont uniformément bornés en norme, ce qui est cohérent car $\|T_n f\|_\infty \le \|f'\|_\infty \le \|f\|$.
+
+\begin{tikzpicture}[scale=1.5]
+\draw[->,thick] (0,0) -- (4,0) node[right] {$E$};
+\draw[->,thick] (0,0) -- (0,3) node[above] {$F$};
+\draw[domain=0:3.5, smooth, variable=\x, blue, thick] plot ({\x}, {0.5*\x});
+\draw[domain=0:3.5, smooth, variable=\x, red, thick] plot ({\x}, {0.7*\x});
+\draw[domain=0:3.5, smooth, variable=\x, green!60!black, thick] plot ({\x}, {0.3*\x});
+\node at (2, 1.8) {$T_i(x)$};
+\draw[dashed] (3,0) node[below] {$x_0$} -- (3,2.5);
+\fill (3,1.5) circle (1.5pt) node[right] {$T_1(x_0)$};
+\fill (3,2.1) circle (1.5pt) node[right] {$T_2(x_0)$};
+\fill (3,0.9) circle (1.5pt) node[right] {$T_3(x_0)$};
+\node[align=center] at (2,-0.8) {\textit{Figure 1 : Pour chaque point $x_0$,} \\ \textit{les images $T_i(x_0)$ sont confinées.}};
+\draw [decorate,decoration={brace,amplitude=5pt,mirror}] (3.2,0.9) -- (3.2,2.1) node [midway,right=4pt] {Borné};
+\end{tikzpicture}
 
 ### B. Conséquence : Convergence des opérateurs
 
