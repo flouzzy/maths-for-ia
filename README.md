@@ -229,7 +229,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 
 - **[Jalon 97](jalon-97/Jalon-97.md)** : Espaces de Banach, opérateurs linéaires continus entre Banach et topologie induite par la norme d'opérateur.
 - **[Jalon 98](jalon-98/Jalon-98.md)** : Théorème de Hahn-Banach (forme analytique), prolongement des formes linéaires sous-linéaires.
-- **[Jalon 99](jalon-99/Jalon%2099%20%28Th%C3%A9or%C3%A8me%20de%20Hahn-Banach%29.md)** : Théorème de Hahn-Banach (formes géométriques), séparation des ensembles convexes par des hyperplans.
+- **[Jalon 99](jalon-99/Jalon-99.md)** : Théorème de Hahn-Banach (formes géométriques), séparation des ensembles convexes par des hyperplans. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 100](jalon-100/Jalon%20100%20%28D%C3%A9monstration%20du%20th%C3%A9or%C3%A8me%20de%20Banach-Steinhaus%29.md)** : Démonstration du théorème de Banach-Steinhaus (principe de la borne uniforme).
 - **[Jalon 101](jalon-101/Jalon%20101%20%28Th%C3%A9or%C3%A8me%20de%20l%27application%20ouverte%20et%20th%C3%A9or%C3%A8me%20du%20graphe%20ferm%C3%A9.%29.md)** : Théorème de l'application ouverte et théorème du graphe fermé.
 - **[Jalon 102](jalon-102/Jalon%20102%20%28Topologies%20faibles%20et%20faibles-%29.md)** : Topologies faibles et faibles-*, compacité de la boule unité duale (Théorème de Banach-Alaoglu).
