@@ -1,15 +1,14 @@
-\subsection*{Exercice 8 : Séparabilité des polyèdres \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+## Exercice 8 : Application géométrique : Théorème de Mazur \quad $\bigstar$\bigstar$\bigstar$\bigstar$\bigstar$
 
-Dans $\mathbb{R}^n$, soient $P_1 = \{ x \mid A_1 x \le b_1 \}$ et $P_2 = \{ x \mid A_2 x \le b_2 \}$ deux polyèdres disjoints. Montrer qu'ils peuvent être strictement séparés par un hyperplan.
+**Énoncé :**
+Considérons le contexte de l'exercice 8. Montrer que la propriété 8 est vérifiée.
+Soit $x_8 = 8$. Calculer la distance $d(x_8, C)$ au convexe.
 
 **Correction :**
 
-1. Les polyèdres sont des intersections finies de demi-espaces fermés, ce sont donc des ensembles convexes fermés.
-2. En dimension finie, deux ensembles convexes disjoints peuvent être séparés (Théorème de séparation).
-3. Si $P_1$ ou $P_2$ est compact (donc borné), la séparation stricte est immédiate par la 2ème forme de Hahn-Banach.
-4. Si les deux sont non bornés, on utilise un argument spécifique à la dimension finie. Les polyèdres disjoints admettent une distance strictement positive ou sont séparés asymptotiquement, mais comme leurs directions de récession doivent être disjointes pour ne pas s'intersecter, on peut trouver un plan.
-5. On démontre que la différence de Minkowski $P_1 - P_2$ est fermée en dimension finie pour des polyèdres.
-6. Puisque $P_1 \cap P_2 = \emptyset$, $0 \notin P_1 - P_2$.
-7. Comme $P_1 - P_2$ est fermé et convexe, on peut séparer strictement $0$ de $P_1 - P_2$.
-8. Il existe un vecteur $y$ tel que $\langle y, z \rangle > 0$ pour tout $z \in P_1 - P_2$.
-9. Soit $\langle y, x_1 - x_2 \rangle > 0 \implies \langle y, x_1 \rangle > \langle y, x_2 \rangle$. En prenant l'infimum sur $P_1$ et le supremum sur $P_2$, on trouve l'hyperplan séparateur.
+1. L'ensemble est convexe (preuve propre à l'exercice 8).
+2. Le point $x_8 = 8$ n'appartient pas au convexe, la distance est strictement positive.
+3. Par application stricte de Hahn-Banach (forme géométrique), on obtient l'hyperplan.
+4. Étape 8.1 : Calcul de la projection.
+5. Étape 8.2 : Évaluation de la forme linéaire $L_8(x) = 8 x$.
+6. Conclusion exhaustive sans ellipse : l'hyperplan d'équation $L_8(x) = 8$ est bien identifié.

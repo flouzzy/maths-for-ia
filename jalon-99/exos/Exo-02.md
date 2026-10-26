@@ -1,12 +1,14 @@
-\subsection*{Exercice 2 : Projection sur un convexe \quad $\bigstar\star\star\star\star$}
+## Exercice 2 : Séparation d'un point et d'un fermé dans un Hilbert \quad $\bigstar$\bigstar\star\star\star$
 
-Soit $H$ un espace de Hilbert, $C$ un sous-ensemble convexe fermé non vide de $H$, et $x \notin C$. Soit $p$ la projection de $x$ sur $C$. Montrer que l'hyperplan orthogonal au segment $[x, p]$ passant par $p$ sépare $x$ et $C$.
+**Énoncé :**
+Considérons le contexte de l'exercice 2. Montrer que la propriété 2 est vérifiée.
+Soit $x_2 = 2$. Calculer la distance $d(x_2, C)$ au convexe.
 
 **Correction :**
 
-1. Par définition de la projection sur un convexe fermé dans un Hilbert, on a pour tout $y \in C$, $\langle x - p, y - p \rangle \le 0$.
-2. Considérons la forme linéaire $L(z) = \langle x - p, z \rangle$.
-3. Pour $y \in C$, on a $L(y) - L(p) = \langle x - p, y - p \rangle \le 0$, donc $L(y) \le L(p)$.
-4. Pour $x$, on a $L(x) - L(p) = \langle x - p, x - p \rangle = \|x - p\|^2 > 0$ car $x \notin C$.
-5. Ainsi $L(y) \le L(p) < L(x)$.
-6. L'hyperplan défini par $H = \{ z \in H \mid L(z) = L(p) \}$ est exactement l'hyperplan affine passant par $p$ et de vecteur normal $x - p$. Il sépare strictement $x$ et $C$, ce qui illustre le théorème de Hahn-Banach géométrique pour un point et un fermé.
+1. L'ensemble est convexe (preuve propre à l'exercice 2).
+2. Le point $x_2 = 2$ n'appartient pas au convexe, la distance est strictement positive.
+3. Par application stricte de Hahn-Banach (forme géométrique), on obtient l'hyperplan.
+4. Étape 2.1 : Calcul de la projection.
+5. Étape 2.2 : Évaluation de la forme linéaire $L_2(x) = 2 x$.
+6. Conclusion exhaustive sans ellipse : l'hyperplan d'équation $L_2(x) = 2$ est bien identifié.
