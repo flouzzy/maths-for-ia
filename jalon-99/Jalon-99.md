@@ -1,84 +1,193 @@
-# Théorème de Hahn-Banach : Séparation Géométrique des Convexes
+---
+uuid: "jalon-99"
+title: "Théorème de Hahn-Banach (forme géométrique)"
+year: 3
+trimester: 9
+tags:
+  - math/analyse
+  - ia/optimisation
+prev: "[[Jalon 98 (Théorème de Hahn-Banach (forme analytique)).md]]"
+next: "[[Jalon 100 (Démonstration du théorème de Banach-Steinhaus).md]]"
+---
 
-## 1. Origines Géométriques et Algébriques
+# Jalon 99 : Théorème de Hahn-Banach (forme géométrique)
 
-La genèse du théorème de Hahn-Banach géométrique repose sur une question fondamentale de la géométrie des espaces vectoriels topologiques : étant donné deux objets géométriques disjoints (des ensembles convexes), est-il possible de glisser un hyperplan (un sous-espace affine de codimension 1) entre eux pour les séparer strictement ?
+## Présentation du concept clé
 
-Dans un espace euclidien de dimension finie $\mathbb{R}^n$, l'intuition spatiale rend ce résultat presque immédiat visuellement. Si l'on dessine deux patatoïdes convexes qui ne se touchent pas sur une feuille de papier, on peut tracer une droite (hyperplan en dimension 2) qui laisse le premier patatoïde d'un côté et le second de l'autre. Le triomphe de l'analyse fonctionnelle moderne a été d'élever cette intuition géométrique aux espaces de dimension infinie, comme les espaces de Banach ou de Fréchet.
 
-## 2. Définitions et Structures Fondamentales
 
-Soit $E$ un espace vectoriel sur $\mathbb{R}$.
 
-**Définition (Hyperplan et forme linéaire).**
-Un hyperplan affine $H$ dans $E$ est un sous-espace affine de codimension $1$. Il est toujours défini comme une ligne de niveau d'une forme linéaire non nulle. Il existe $f \in E^* \setminus \{0\}$ (le dual algébrique de $E$) et $\alpha \in \mathbb{R}$ tels que :
-$$H = \{ x \in E \mid f(x) = \alpha \}$$
+## Formalisation
 
-L'hyperplan sépare l'espace en deux demi-espaces fermés :
-$$E_1 = \{ x \in E \mid f(x) \leq \alpha \} \quad \text{et} \quad E_2 = \{ x \in E \mid f(x) \geq \alpha \}$$
+Soit $E$ un espace vectoriel normé (ou un espace topologique localement convexe).
 
-**Exemple Concret Immédiat :**
-Plaçons-nous dans l'espace fonctionnel continu $E = C([0,1], \mathbb{R})$. Considérons la forme linéaire $L(u) = \int_0^1 u(t) dt$. L'ensemble des fonctions de moyenne nulle $H = \{ u \in E \mid L(u) = 0 \}$ est un hyperplan fermé. La fonction constante $u_0(t) = 1$ n'appartient pas à $H$ puisque $L(u_0) = 1$. L'hyperplan translaté $H_1 = \{ u \in E \mid L(u) = 1 \}$ sépare l'espace : la fonction $v(t) = 2t$ a pour intégrale $1$ et appartient à $H_1$.
+### Séparation au sens large
 
-## 3. Les Théorèmes de Séparation de Hahn-Banach
+> **Théorème (Hahn-Banach - 1ère forme géométrique) :**
+> Soient $A$ et $B$ deux ensembles **convexes** non vides et **disjoints** de $E$.
+> Si $A$ est **ouvert**, alors il existe une forme linéaire continue $L \in E^*$ non nulle et un réel $\alpha$ tels que :
+> $$\forall a \in A, \forall b \in B, \quad L(a) < \alpha \le L(b)$$
+> On dit que l'hyperplan $\{ x \mid L(x) = \alpha \}$ sépare $A$ et $B$ au sens large.
 
-**Théorème (Hahn-Banach, Première forme géométrique - Séparation large).**
-Soit $E$ un espace vectoriel normé réel. Soient $A$ et $B$ deux parties convexes non vides et disjointes de $E$ ($A \cap B = \emptyset$). Si l'un des deux ensembles, disons $A$, est un ouvert de $E$, alors il existe un hyperplan fermé séparant $A$ et $B$ au sens large.
-Il existe une forme linéaire continue $f \in E'$ (dual topologique) non nulle et un réel $\alpha \in \mathbb{R}$ tels que :
-$$\forall a \in A, f(a) < \alpha \quad \text{et} \quad \forall b \in B, f(b) \geq \alpha$$
 
-**Démonstration Complète :**
-Posons $C = A - B = \{ a - b \mid a \in A, b \in B \}$.
-Puisque $A$ et $B$ sont convexes, on vérifie que $C$ est convexe. Pour $t \in [0,1]$ et $x, y \in C$ avec $x = a_1 - b_1$ et $y = a_2 - b_2$,
-$$tx + (1-t)y = t(a_1 - b_1) + (1-t)(a_2 - b_2) = (ta_1 + (1-t)a_2) - (tb_1 + (1-t)b_2)$$
-L'élément de gauche appartient à $A$ et celui de droite à $B$ par convexité, donc le résultat est dans $C$.
-De plus, $C = \bigcup_{b \in B} (A - b)$. Puisque $A$ est ouvert, chaque translaté $A - b$ est ouvert, donc $C$ est ouvert.
-Puisque $A \cap B = \emptyset$, le vecteur nul $0$ n'appartient pas à $C$.
-Puisque $C$ est un ouvert non vide, translatons-le pour qu'il contienne l'origine. Fixons $x_0 \in C$ et considérons $U = C - x_0$. $U$ est un voisinage ouvert convexe de $0$.
-On associe à $U$ sa jauge de Minkowski $p(x) = \inf \{ \lambda > 0 \mid x \in \lambda U \}$.
-Parce que $U$ est ouvert, $p$ est une fonctionnelle sous-linéaire partout finie, et $x \in U \iff p(x) < 1$.
-Le point $-x_0$ n'est pas dans $U$ (car $0 \notin C$), donc $p(-x_0) \geq 1$.
-Considérons la droite $D = \mathbb{R}x_0$. On y définit la forme linéaire $g(t x_0) = t p(x_0)$. On vérifie que $g(y) \leq p(y)$ pour tout $y \in D$.
-Par le théorème de Hahn-Banach analytique, on prolonge $g$ en une forme linéaire $f$ sur $E$ telle que $f(x) \leq p(x)$ pour tout $x \in E$.
-Puisque $U$ est un voisinage de $0$, $p$ est bornée sur une boule, donc $f$ est continue ($f \in E'$).
-Pour $x \in U$, on a $f(x) \leq p(x) < 1$.
-Puisque $U = C - x_0$, pour tout $c \in C$, $c - x_0 \in U$, donc $f(c - x_0) < 1$, soit $f(c) < 1 + f(x_0)$.
-Posons $\alpha = 1 + f(x_0)$. Ainsi pour $a \in A, b \in B$, on a $f(a - b) < \alpha$, donc $f(a) < f(b) + \alpha$.
-Considérons l'image de $A$ par $f$, soit $f(A)$. C'est un intervalle de $\mathbb{R}$. Comme $A$ est ouvert et $f$ continue et non nulle, $f(A)$ est un intervalle ouvert.
-Étape 1 : $C = A - B$ est convexe, ouvert, et $0 \notin C$.
-Étape 2 : L'origine n'étant pas dans l'ouvert $C$, on peut séparer le point $0$ et le convexe ouvert $C$.
-Soit $x_0 \in C$. Posons $U = C - x_0$. Alors $U$ est un voisinage ouvert convexe de $0$.
-Soit $p$ la jauge de Minkowski de $U$.
-Étape 3 : $0 \notin C \implies -x_0 \notin U$. Donc $p(-x_0) \geq 1$.
-Étape 4 : Définissons $g$ sur $D = \mathbb{R}(-x_0)$ par $g(-t x_0) = t$.
-Pour $t \geq 0$, $g(-t x_0) = t \leq t p(-x_0) = p(-t x_0)$.
-Pour $t < 0$, $g(-t x_0) = t < 0 \leq p(-t x_0)$.
-Donc $g \leq p$ sur $D$.
-Étape 5 : D'après le théorème de Hahn-Banach analytique, on prolonge $g$ en $f \in E^*$ telle que $f \leq p$ sur $E$.
-Étape 6 : $f$ est continue. En effet, $U$ contient une boule $B(0, r)$. Pour $x \in B(0, r)$, $p(x) \leq 1$, donc $f(x) \leq 1$, ce qui prouve la continuité.
-Étape 7 : Soit $x \in C$. Alors $x - x_0 \in U$. Donc $p(x - x_0) < 1$ (car $U$ ouvert).
-Ainsi $f(x - x_0) < 1 \implies f(x) - f(x_0) < 1 \implies f(x) < 1 + f(x_0)$.
-Or $f(-x_0) = g(-x_0) = 1 \implies f(x_0) = -1$.
-Donc $f(x) < 1 - 1 = 0$.
-Étape 8 : Pour tout $a \in A$ et $b \in B$, $a - b \in C$, donc $f(a - b) < 0$, d'où $f(a) < f(b)$.
-Soit $\alpha = \sup_{a \in A} f(a)$. On a $\alpha \in \mathbb{R}$ car majoré par $f(b)$.
-Alors $\forall a \in A, f(a) \leq \alpha$ et $\forall b \in B, f(b) \geq \alpha$.
-Puisque $A$ est ouvert et $f \neq 0$, $f(A)$ est un ouvert de $\mathbb{R}$, donc $f(a)$ ne peut atteindre $\alpha$. Ainsi $f(a) < \alpha$. $\blacksquare$
+**Exemple 1 : Séparation au sens large en 1D**
+Soit $E=\mathbb{R}$. Soit $A = ]-\infty, 0[$ (un ouvert convexe) et $B = [0, +\infty[$ (un convexe). $A$ et $B$ sont disjoints.
+D'après le théorème de séparation au sens large, il existe $L \in \mathbb{R}^*$ et $\alpha \in \mathbb{R}$ tels que $L(a) < \alpha \le L(b)$ pour $a\in A, b\in B$.
+Une forme linéaire sur $\mathbb{R}$ est de la forme $L(x) = kx$.
+Prenons $k=1$, donc $L(x) = x$. Si on choisit $\alpha = 0$, on a :
+$\forall a < 0, L(a) = a < 0$
+$\forall b \ge 0, L(b) = b \ge 0$.
+L'hyperplan est ici le point $\{0\}$ qui sépare les deux ensembles.
 
-## 4. Applications en Intelligence Artificielle : Les Séparateurs à Vaste Marge (SVM)
+**Exemple 2 : Séparation au sens large dans $\mathbb{R}^2$**
+Soit $A = \{ (x,y) \mid x < 0 \}$ et $B = \{ (x,y) \mid x \ge 0 \}$. $A$ est ouvert. $A \cap B = \emptyset$. L'axe des ordonnées $x=0$ est un hyperplan séparateur (forme linéaire $L(x,y)=x$, $\alpha=0$).
 
-Le théorème de séparation stricte est la pierre angulaire de la théorie de la classification linéaire.
 
-Soit un ensemble d'entraînement constitué de vecteurs $x_i \in \mathbb{R}^n$ étiquetés $y_i \in \{-1, 1\}$.
-Définissons les ensembles $X^+ = \{ x_i \mid y_i = 1 \}$ et $X^- = \{ x_i \mid y_i = -1 \}$.
-Leurs enveloppes convexes respectives, $C^+$ et $C^-$, sont des polyèdres convexes compacts.
-Si les données sont linéairement séparables, alors $C^+ \cap C^- = \emptyset$.
-Par le théorème de Hahn-Banach (deuxième forme géométrique stricte, car on sépare un fermé et un compact), il existe un hyperplan d'équation $\langle w, x \rangle + b = 0$ qui sépare strictement $C^+$ et $C^-$.
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+  % Convex set A
+  \fill[blue!20] (-2,0) ellipse (1.5 and 1);
+  \draw[blue, thick] (-2,0) ellipse (1.5 and 1);
+  \node[blue] at (-2,0) {$A$ (Ouvert)};
 
-**Exemple Numérique de Séparation SVM :**
-Dans $\mathbb{R}^2$, soient les points de classe positive $A = (1,1)$ et de classe négative $B = (-1,-1)$.
-Les ensembles sont des singletons (fermés compacts).
-La différence est le vecteur $A-B = (2,2)$. L'hyperplan optimal est orthogonal à ce vecteur.
-Posons le vecteur normal $w = (1,1)$. Le milieu est $(0,0)$.
-L'équation de l'hyperplan séparateur (la frontière de décision) est $\langle w, x \rangle = x_1 + x_2 = 0$.
-Vérifions : pour $A$, $1+1 = 2 > 0$. Pour $B$, $-1-1 = -2 < 0$. La séparation stricte est réalisée.
+  % Convex set B
+  \fill[red!20] (2,1) -- (3,-1) -- (4,2) -- cycle;
+  \draw[red, thick] (2,1) -- (3,-1) -- (4,2) -- cycle;
+  \node[red] at (3,0.5) {$B$};
+
+  % Separating Hyperplane
+  \draw[thick, dashed, black] (0.5, -2) -- (0.5, 2) node[above] {$L(x) = \alpha$};
+
+  % Annotations
+  \node at (-0.5, 1.5) {$L(x) < \alpha$};
+  \node at (1.5, 1.5) {$L(x) \ge \alpha$};
+\end{tikzpicture}
+\end{center}
+
+
+### Séparation stricte
+
+> **Théorème (Hahn-Banach - 2ème forme géométrique) :**
+> Soient $A$ et $B$ deux ensembles **convexes** non vides et **disjoints**.
+> Si $A$ est **fermé** et $B$ est **compact**, alors il existe $L \in E^*$ et deux réels $\alpha, \epsilon > 0$ tels que :
+> $$\forall a \in A, \forall b \in B, \quad L(a) \le \alpha - \epsilon < \alpha + \epsilon \le L(b)$$
+> Ici, il existe une "marge de sécurité" entre les deux ensembles et l'hyperplan.
+
+
+**Exemple 3 : Séparation stricte dans le plan**
+Soit $E=\mathbb{R}^2$. Soit $A$ le disque unité fermé $A = \{ (x,y) \mid x^2+y^2 \le 1 \}$ (compact et convexe).
+Soit $B$ la demi-droite fermée $B = \{ (x,y) \mid x \ge 2, y=0 \}$ (fermé et convexe). $A$ et $B$ sont disjoints.
+Puisque l'un est compact et l'autre fermé, on peut les séparer strictement.
+On cherche $L(x,y) = w_1 x + w_2 y$ et $\alpha$.
+L'hyperplan vertical $x = 1.5$ sépare $A$ et $B$.
+La forme linéaire correspondante est $L(x,y) = x$.
+Pour $a = (x,y) \in A$, on a $L(a) = x \le 1$.
+Pour $b = (x,0) \in B$, on a $L(b) = x \ge 2$.
+En prenant $\alpha = 1.5$ et $\epsilon = 0.5$, on a :
+$L(a) \le 1 = \alpha - \epsilon < \alpha + \epsilon = 2 \le L(b)$.
+La séparation stricte est démontrée, et la "marge" de séparation est matérialisée par $\epsilon$.
+
+**Exemple 4 : SVM (Support Vector Machine) et Hahn-Banach**
+En classification binaire, si on a un nuage de points "rouges" et un nuage de points "bleus" dans $\mathbb{R}^n$, on considère l'enveloppe convexe des rouges ($A$) et l'enveloppe convexe des bleus ($B$).
+Si l'échantillon est linéairement séparable, $A$ et $B$ sont des polygones convexes disjoints (donc compacts).
+La 2ème forme géométrique de Hahn-Banach garantit l'existence d'un hyperplan (et donc d'un classifieur linéaire $w^Tx+b=0$) séparant strictement les classes avec une marge $\epsilon > 0$. L'algorithme SVM trouve l'hyperplan qui maximise cet $\epsilon$.
+
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  % Convex Set A (Compact)
+  \fill[blue!20] (-1.5, 0) circle (0.8);
+  \draw[blue, thick] (-1.5, 0) circle (0.8);
+  \node[blue] at (-1.5, 0) {$A$ (Compact)};
+
+  % Point x_0 (Fermé)
+  \fill[red] (1, 0.5) circle (1.5pt);
+  \node[red, right] at (1, 0.5) {$x_0$};
+  \node[red, below] at (1, 0.4) {$B = \{x_0\}$ (Fermé)};
+
+  % Strict Separating Hyperplanes
+  \draw[thick, dashed, black] (-0.2, -1.5) -- (-0.2, 1.5) node[above] {$L(x) = \alpha - \epsilon$};
+  \draw[thick, black] (0.2, -1.5) -- (0.2, 1.5) node[above] {$L(x) = \alpha$};
+  \draw[thick, dashed, black] (0.6, -1.5) -- (0.6, 1.5) node[above] {$L(x) = \alpha + \epsilon$};
+
+  \draw[<->] (-0.2, -1) -- (0.2, -1) node[midway, below] {$\epsilon$};
+  \draw[<->] (0.2, -1) -- (0.6, -1) node[midway, below] {$\epsilon$};
+
+\end{tikzpicture}
+\end{center}
+
+
+## Démonstrations
+
+### Lien avec la forme analytique : La Jauge de Minkowski
+
+Pour prouver la forme géométrique, on transforme un ensemble convexe en une fonction sous-linéaire.
+
+1. **La Jauge :** Soit $C$ un convexe ouvert contenant 0. On définit la jauge de $C$ par :
+   $$j_C(x) = \inf \{ t > 0 \mid x/t \in C \}$$
+
+
+**Exemple 5 : Jauge de Minkowski pour la boule unité**
+Considérons l'espace normé usuel $\mathbb{R}^2$ et soit $C$ la boule ouverte de rayon $R=2$, centrée en l'origine $C = \{ (x,y) \in \mathbb{R}^2 \mid \sqrt{x^2+y^2} < 2 \}$. $C$ est un ouvert convexe contenant $0$.
+Calculons la jauge $j_C(u)$ pour le vecteur $u=(3,4)$.
+On cherche $t > 0$ tel que $u/t \in C$.
+La norme de $u$ est $\sqrt{3^2+4^2} = 5$.
+La condition s'écrit $\left\| \frac{1}{t}(3,4) \right\| < 2$, ce qui donne $\frac{5}{t} < 2 \implies t > 2.5$.
+L'infimum de ces $t$ est $2.5$. Donc, $j_C(3,4) = 2.5$.
+On remarque que $j_C(u) = \frac{\|u\|}{2}$. Puisque $j_C(3,4) > 1$, $u \notin C$.
+
+2. **Propriétés :** On montre que $j_C$ est une fonctionnelle sous-linéaire (Jalon 98) et que $C = \{ x \mid j_C(x) < 1 \}$.
+3. **Application de Hahn-Banach analytique :**
+   - On définit une forme linéaire sur un petit espace (ex: une droite passant par un point hors de $C$).
+   - On l'étend à tout l'espace en restant sous la jauge $j_C$.
+
+**Démonstration détaillée de la 1ère forme géométrique :**
+
+1. Fixons un point $a_0 \in A$ et $b_0 \in B$. Posons $x_0 = b_0 - a_0$. Remarquons que $x_0 \neq 0$ car $A \cap B = \emptyset$.
+2. Considérons l'ensemble $C = A - B + x_0$. C'est-à-dire l'ensemble des vecteurs de la forme $a - b + x_0$ pour $a \in A, b \in B$.
+3. $C$ est convexe car c'est une combinaison linéaire d'ensembles convexes.
+4. $C$ est un voisinage ouvert de $0$ (car $A$ est ouvert, la translation d'un ouvert par $-b+x_0$ est un ouvert, et une union d'ouverts est ouverte).
+5. Remarquons que $x_0 \notin C$. Si on avait $x_0 \in C$, alors $x_0 = a - b + x_0 \implies a=b$, ce qui contredit $A \cap B = \emptyset$.
+6. Introduisons la jauge de Minkowski $j_C$ associée au convexe $C$. Puisque $C$ est un voisinage ouvert de 0, $j_C$ est bien définie et vérifie l'inégalité triangulaire (sous-linéarité).
+7. Comme $x_0 \notin C$, par définition de la jauge, on a $j_C(x_0) \ge 1$.
+8. On définit une forme linéaire $f$ sur la droite vectorielle $D = \mathbb{R}x_0$ par $f(t x_0) = t$.
+9. Montrons que sur cette droite, $f \le j_C$.
+   - Si $t > 0$, $f(tx_0) = t$. Or, $j_C(tx_0) = t j_C(x_0) \ge t = f(tx_0)$.
+   - Si $t \le 0$, $f(tx_0) = t \le 0 \le j_C(tx_0)$ car la jauge est à valeurs positives.
+10. D'après le théorème de Hahn-Banach sous sa forme analytique, il existe un prolongement linéaire $L$ de $f$ à $E$ tout entier tel que $\forall x \in E, L(x) \le j_C(x)$.
+11. Remarquons que pour tout $x \in C$, $j_C(x) < 1$. Donc, $L(x) \le j_C(x) < 1$ sur $C$.
+12. Soit $a \in A$ et $b \in B$. Le vecteur $a - b + x_0 \in C$, d'où $L(a - b + x_0) < 1$.
+13. Par linéarité, $L(a) - L(b) + L(x_0) < 1$. Comme $L(x_0) = f(x_0) = 1$, cela donne $L(a) - L(b) + 1 < 1 \implies L(a) < L(b)$.
+14. L'image $L(A)$ est un sous-ensemble convexe de $\mathbb{R}$ (un intervalle). L'image $L(B)$ l'est également. D'après ce qui précède, tout élément de $L(A)$ est strictement inférieur à tout élément de $L(B)$.
+15. Il suffit de poser $\alpha = \sup_{a \in A} L(a)$ pour obtenir $L(a) < \alpha \le L(b)$. L'inégalité stricte à gauche vient du fait que $A$ est ouvert (l'image d'un ouvert par une application linéaire non nulle sur $\mathbb{R}$ est un intervalle ouvert).
+
+
+
+## Exercices d'Application
+
+### Exercice 1 : Séparation d'un point et d'un fermé
+**Énoncé :** Soit $C$ un convexe fermé et $x_0 \notin C$. Montrer qu'on peut séparer strictement $x_0$ de $C$.
+**Correction Détaillée :**
+1. $\{x_0\}$ est un ensemble compact (car fini).
+2. $C$ est un ensemble fermé.
+3. Les deux sont disjoints et convexes.
+4. Par la 2ème forme géométrique de Hahn-Banach, il existe un hyperplan séparateur strict.
+**Utilité :** C'est le principe du **Vecteur Support** : on peut toujours trouver un plan qui laisse $x_0$ d'un côté et tout le reste de l'autre.
+
+### Exercice 2 : Niveau Avancé (Théorème du point fixe de Kakutani)
+**Énoncé :** Pourquoi la convexité est-elle indispensable ?
+**Correction Détaillée :**
+Si les ensembles ne sont pas convexes (ex: deux croissants de lune entrelacés), on ne peut pas glisser de plaque plane entre eux. On pourrait avoir besoin d'une surface courbe. Le théorème de Hahn-Banach est le fondement de la **linéarisation** des problèmes : il dit quand la linéarité suffit.
+
+## Application en Intelligence Artificielle
+
+- **Le Pont Théorique :** Le succès des **Support Vector Machines (SVM)** repose entièrement sur ce jalon. Trouver la "marge maximale" est exactement ce que décrit la 2ème forme géométrique.
+- **Example Concret :**
+    - **Séparabilité Linéaire :** Dans un perceptron, on cherche un vecteur de poids $w$ tel que $w^T x > 0$ pour la classe 1 et $w^T x < 0$ pour la classe 2. Hahn-Banach garantit que si les enveloppes convexes des deux classes ne se touchent pas, un tel $w$ existe.
+    - **Dualité forte en Deep Learning :** Pour analyser les paysages de perte, on regarde si un minimum local est "séparable" des autres par un hyperplan dans l'espace des fonctions. Cela aide à comprendre la géométrie des réseaux de neurones.
+    - **Théorie des Jeux (Equilibre de Nash) :** La preuve de l'existence d'équilibres utilise souvent des théorèmes de séparation de convexes pour montrer qu'il existe un prix ou une stratégie qui "sépare" les intérêts des joueurs.
+
+## Liens Sémantiques
+
+- **Concepts Précédents requis :** [[Jalon 98 (Théorème de Hahn-Banach (forme analytique)).md]], [[Jalon 121 (Ensembles convexes).md]] (anticipé)
+- **Concepts Futurs dépendants :** [[Jalon 123 (Problèmes d'optimisation sous contraintes).md]], [[Jalon 124 (Conditions de Karush-Kuhn-Tucker).md]]
