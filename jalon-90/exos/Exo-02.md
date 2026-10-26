@@ -1,13 +1,16 @@
-# Exercice 2 : La fuite de masse vers l'infini
-$\bigstar\star\star\star\star$
+# Exercice 02
 
+**Difficulté :** $\bigstar\star\star\star\star$
 
-Soit $(\Omega, \mathcal{F}, \mathbb{P})$ l'espace de probabilité mesuré avec $\Omega = \mathbb{R}$ et une loi telle que la densité d'une variable soit étudiée de la manière suivante. On considère la suite de variables $X_n$ telle que $\mathbb{P}(X_n = n) = \frac{1}{n}$ et $\mathbb{P}(X_n = 0) = 1 - \frac{1}{n}$.
-1. Étudiez la convergence en probabilité de la suite $(X_n)$.
-2. Étudiez la convergence dans $L^1$ de la suite $(X_n)$. La limite est-elle identique ? Pourquoi ?
+**Énoncé :**
+Soit $X_n$ une suite de variables aléatoires suivant une loi uniforme discrète sur $\{1, 2, \dots, n\}$.
+Montrez que $X_n/n$ ne converge pas en probabilité vers $0$.
 
 **Correction :**
-1. Fixons un $\epsilon > 0$. On a $\mathbb{P}(|X_n - 0| > \epsilon) = \mathbb{P}(X_n = n) = \frac{1}{n}$ car, pour $n$ assez grand, $n > \epsilon$. Comme $\lim_{n\to\infty}\frac{1}{n} = 0$, alors la suite $X_n$ converge en probabilité vers la constante $0$.
-2. Pour la convergence $L^1$, on calcule l'espérance de l'écart :
-$$ \mathbb{E}[|X_n - 0|] = n \cdot \mathbb{P}(X_n = n) + 0 \cdot \mathbb{P}(X_n = 0) = n \cdot \frac{1}{n} + 0 = 1 $$
-La suite de ces espérances vaut constamment $1$, sa limite est donc $1 \neq 0$. La suite ne converge donc pas vers $0$ dans l'espace $L^1$. Cela montre qu'il y a une fuite de masse : les valeurs extrêmes deviennent si importantes qu'elles empêchent la convergence en moyenne.
+Soit $\epsilon = \frac{1}{2}$. On cherche la probabilité que $|X_n/n - 0| > \frac{1}{2}$.
+$$ \mathbb{P}\left(\frac{X_n}{n} > \frac{1}{2}\right) = \mathbb{P}\left(X_n > \frac{n}{2}\right) $$
+Puisque $X_n$ est uniforme sur $\{1, \dots, n\}$, il y a $\lfloor n/2 \rfloor$ entiers strictement supérieurs à $n/2$ dans cet ensemble (ou $\lceil n/2 \rceil$ selon la parité, dans tous les cas, environ la moitié).
+$$ \mathbb{P}\left(X_n > \frac{n}{2}\right) \approx \frac{1}{2} $$
+En passant à la limite :
+$$ \lim_{n \to \infty} \mathbb{P}\left(\left| \frac{X_n}{n} \right| > \frac{1}{2}\right) = \frac{1}{2} \neq 0 $$
+Par conséquent, $X_n/n$ ne converge pas en probabilité vers $0$.

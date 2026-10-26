@@ -79,6 +79,15 @@ Cela implique qu'il n'y aura presque sûrement qu'un nombre fini d'erreurs au to
 
 
 
+
+
+**Exemple 6 (Séries aléatoires) :**
+Soit $(X_n)_{n \in \mathbb{N}}$ une suite de variables aléatoires indépendantes telles que $\mathbb{P}(X_n = 1) = p_n$ et $\mathbb{P}(X_n = 0) = 1 - p_n$.
+On s'intéresse à l'événement $A_n = \{X_n = 1\}$.
+Supposons que $p_n = \frac{1}{n \ln(n)^2}$ pour $n \ge 2$. La série de Bertrand $\sum_{n=2}^\infty \frac{1}{n \ln(n)^2}$ est convergente.
+D'après le premier lemme de Borel-Cantelli, la probabilité que les événements $A_n$ se produisent une infinité de fois est nulle : $\mathbb{P}(\limsup A_n) = 0$.
+Cela signifie que, presque sûrement, la série $\sum_{n=1}^\infty X_n$ ne comporte qu'un nombre fini de termes non nuls, et par conséquent, la série converge presque sûrement vers une somme finie.
+
 ### B. Second Lemme de Borel-Cantelli (Cas des événements indépendants)
 
 **Théorème (Second Lemme de Borel-Cantelli) :**
@@ -97,6 +106,19 @@ La probabilité de chaque événement est $\mathbb{P}(A_n) = p$.
 La série des probabilités est :
 $$ \sum_{n=1}^\infty \mathbb{P}(A_n) = \sum_{n=1}^\infty p = +\infty $$
 D'après le second lemme de Borel-Cantelli, $\mathbb{P}(\limsup A_n) = 1$. Le singe tapera donc le mot "HAMLET" une infinité de fois presque sûrement.
+
+\vspace{0.5cm}
+\begin{center}
+\begin{tikzpicture}
+\draw[thick,->] (0,0) -- (10,0) node[right] {Temps $n$};
+\filldraw[red!20] (2,-0.5) rectangle (10,0.5);
+\node at (6,0) {Une infinité de frappes "HAMLET"};
+\node[below] at (2,-0.5) {$N(\omega)$};
+\draw[dashed] (2,-0.5) -- (2,0.5);
+\end{tikzpicture}
+\end{center}
+\vspace{0.5cm}
+
 
 
 **Exemple 4 (Tirages avec remise) :**

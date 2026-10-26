@@ -1,18 +1,20 @@
-# Exercice 4 : Convergence en probabilité vers une constante et convergence en loi
-$\bigstar\bigstar\star\star\star$
+# Exercice 04
 
+**Difficulté :** $\bigstar\bigstar\star\star\star$
 
-Soit $(X_n)$ une suite de variables aléatoires et $c$ une constante réelle. Montrez que si $X_n \xrightarrow{\mathcal{L}} c$, alors $X_n \xrightarrow{\mathbb{P}} c$.
-*Remarque :* C'est une situation où la convergence en loi implique la convergence en probabilité.
+**Énoncé :**
+Soit $U \sim \mathcal{U}([0,1])$. Définissons $Y_n = U^n$.
+Étudiez la convergence en probabilité et presque sûre de la suite $Y_n$.
 
 **Correction :**
-1. Par définition de la convergence en loi, $F_n(x) \to F(x)$ en tout point de continuity de $F$.
-2. Ici $X = c$ est une constante. La fonction de répartition $F$ de la constante $c$ est une marche : $F(x) = 0$ pour $x < c$ et $F(x) = 1$ pour $x \geq c$. Le seul point de discontinuité de $F$ est $c$.
-3. Soit $\epsilon > 0$. Les points $c - \epsilon$ et $c + \epsilon$ sont des points de continuité de $F$.
-4. Évaluons la probabilité de l'écart :
-$$ \mathbb{P}(|X_n - c| > \epsilon) = \mathbb{P}(X_n < c - \epsilon) + \mathbb{P}(X_n > c + \epsilon) $$
-$$ \mathbb{P}(|X_n - c| > \epsilon) \leq F_n(c-\epsilon) + (1 - F_n(c+\epsilon)) $$
-5. Passons à la limite quand $n \to \infty$ :
-- $F_n(c-\epsilon) \to F(c-\epsilon) = 0$ car $c-\epsilon < c$.
-- $F_n(c+\epsilon) \to F(c+\epsilon) = 1$ car $c+\epsilon > c$.
-6. Ainsi $\lim_{n\to\infty} \mathbb{P}(|X_n - c| > \epsilon) \leq 0 + 1 - 1 = 0$. La limite étant positive, elle est strictement égale à $0$, prouvant la convergence en probabilité.
+**Convergence Presque Sûre :**
+L'espace des réalisations est $\Omega = [0, 1]$. La variable aléatoire est $Y_n(\omega) = \omega^n$.
+Pour tout $\omega \in [0, 1[$, on a $\lim_{n \to \infty} \omega^n = 0$.
+Pour $\omega = 1$, $\lim_{n \to \infty} 1^n = 1$.
+L'ensemble de convergence vers $0$ est $[0, 1[$. Puisque $U$ suit une loi uniforme, $\mathbb{P}(U = 1) = 0$.
+Donc $\mathbb{P}\left(\lim_{n \to \infty} Y_n = 0\right) = 1$.
+Ainsi, $Y_n \xrightarrow{p.s.} 0$.
+
+**Convergence en probabilité :**
+Puisque la convergence presque sûre implique la convergence en probabilité (Théorème du cours), nous pouvons conclure immédiatement que $Y_n \xrightarrow{\mathbb{P}} 0$.
+(On peut aussi le vérifier à la main : $\mathbb{P}(U^n > \epsilon) = \mathbb{P}(U > \epsilon^{1/n}) = 1 - \epsilon^{1/n} \to 1 - 1 = 0$.)

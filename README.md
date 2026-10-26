@@ -209,13 +209,13 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 86](jalon-86/Jalon-86.md)** : Variables aléatoires vues comme des applications mesurables, loi d'une variable et mesure de probabilité image. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 87](jalon-87/Jalon%2087%20%28Int%C3%A9gration%20des%20variables%20al%C3%A9atoires%29.md)** : Intégration des variables aléatoires, espérance, variance et moments d'ordre supérieur.
 - **[Jalon 88](jalon-88/Jalon-88.md)** : Indépendance d'événements, de tribus et de variables aléatoires.
-- **[Jalon 89](jalon-89/Jalon%2089%20%28Lemmes%20de%20Borel-Cantelli%29.md)** : Lemmes de Borel-Cantelli (lois du tout ou rien) et applications aux comportements asymptotiques.
+- **[Jalon 89](jalon-89/Jalon-89.md)** : Lemmes de Borel-Cantelli (lois du tout ou rien) et applications aux comportements asymptotiques.
 - **[Jalon 90](jalon-90/Jalon%2090%20%28Les%20modes%20de%20convergence%29.md)** : Les modes de convergence : presque sûre, en probabilité, dans $L^p$ et en loi (convergence étroite des mesures).
 - **[Jalon 91](jalon-91/Jalon%2091%20%28In%C3%A9galit%C3%A9s%20de%20concentration%29.md)** : Inégalités de concentration : Markov, Chebyshev, Bienaymé, Chernoff et lemme de Hoeffding.
-- **[Jalon 92](jalon-92/Jalon%2092%20%28D%C3%A9monstration%20rigoureuse%20de%20la%20loi%20forte%20des%20grands%20nombres.%29.md)** : Démonstration rigoureuse de la loi forte des grands nombres.
+- **[Jalon 92](jalon-92/Jalon-92.md)** : Démonstration rigoureuse de la loi forte des grands nombres.
 - **[Jalon 93](jalon-93/Jalon%2093%20%28Fonctions%20caract%C3%A9ristiques%29.md)** : Fonctions caractéristiques (transformée de Fourier de la loi) et théorème de continuité de Lévy.
-- **[Jalon 94](jalon-94/Jalon%2094%20%28D%C3%A9monstration%20du%20th%C3%A9or%C3%A8me%20central%20limite%29.md)** : Démonstration du théorème central limite (TCL) via les développements limités des fonctions caractéristiques.
-- **[Jalon 95](jalon-95/Jalon%2095%20%28Vecteurs%20gaussiens%29.md)** : Vecteurs gaussiens, loi normale multidimensionnelle, matrice de covariance et conditionnement gaussien.
+- **[Jalon 94](jalon-94/Jalon-94.md)** : Démonstration du théorème central limite (TCL) via les développements limités des fonctions caractéristiques. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- **[Jalon 95](jalon-95/Jalon-95.md)** : Vecteurs gaussiens, loi normale multidimensionnelle, matrice de covariance et conditionnement gaussien.
 - **[Jalon 96](jalon-96/Jalon%2096%20%28Livrable%20IA%29.md)** : Livrable IA T8 : Démonstration rigoureuse de la convergence de la fonction de perte Cross-Entropy vers l'information théorique de Shannon lors de l'entraînement des modèles de langage.
 
 </details>
@@ -227,9 +227,9 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 <summary><b>Trimestre 9 : analyse fonctionnelle et théorie spectrale</b></summary>
 <br>
 
-- **[Jalon 97](jalon-97/Jalon%2097%20%28Espaces%20de%20Banach%29.md)** : Espaces de Banach, opérateurs linéaires continus entre Banach et topologie induite par la norme d'opérateur.
-- **[Jalon 98](jalon-98/Jalon%2098%20%28Th%C3%A9or%C3%A8me%20de%20Hahn-Banach%29.md)** : Théorème de Hahn-Banach (forme analytique), prolongement des formes linéaires sous-linéaires.
-- **[Jalon 99](jalon-99/Jalon%2099%20%28Th%C3%A9or%C3%A8me%20de%20Hahn-Banach%29.md)** : Théorème de Hahn-Banach (formes géométriques), séparation des ensembles convexes par des hyperplans.
+- **[Jalon 97](jalon-97/Jalon-97.md)** : Espaces de Banach, opérateurs linéaires continus entre Banach et topologie induite par la norme d'opérateur.
+- **[Jalon 98](jalon-98/Jalon-98.md)** : Théorème de Hahn-Banach (forme analytique), prolongement des formes linéaires sous-linéaires.
+- **[Jalon 99](jalon-99/Jalon-99.md)** : Théorème de Hahn-Banach (formes géométriques), séparation des ensembles convexes par des hyperplans. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 100](jalon-100/Jalon%20100%20%28D%C3%A9monstration%20du%20th%C3%A9or%C3%A8me%20de%20Banach-Steinhaus%29.md)** : Démonstration du théorème de Banach-Steinhaus (principe de la borne uniforme).
 - **[Jalon 101](jalon-101/Jalon%20101%20%28Th%C3%A9or%C3%A8me%20de%20l%27application%20ouverte%20et%20th%C3%A9or%C3%A8me%20du%20graphe%20ferm%C3%A9.%29.md)** : Théorème de l'application ouverte et théorème du graphe fermé.
 - **[Jalon 102](jalon-102/Jalon%20102%20%28Topologies%20faibles%20et%20faibles-%29.md)** : Topologies faibles et faibles-*, compacité de la boule unité duale (Théorème de Banach-Alaoglu).
@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-10-26] : [Upsert/Création] du Jalon 99 - Théorème de Hahn-Banach. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-07] : [Upsert/Création] du Jalon 86 - Variables aléatoires vues comme des applications mesurables. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-09-14] : [Upsert/Création] du Jalon 71 - Théorèmes de Fubini-Tonelli. Status: Terminé.
 - [2026-09-14] : [Upsert/Création] du Jalon 70 - Espaces mesurés produits. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
@@ -429,6 +430,16 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
+- [2026-10-23] : [Upsert/Création] du Jalon 99 - Théorème de Hahn-Banach. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-10-22] : [Upsert/Création] du Jalon 98 - Théorème de Hahn-Banach (forme analytique). Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-10-21] : [Upsert/Création] du Jalon 97 - Espaces de Banach. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-10-20] : [Upsert/Création] du Jalon 96 - Livrable IA T8 : Convergence de la Cross-Entropy vers l'Entropie de Shannon. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-10-20] : [Upsert/Création] du Jalon 95 - Vecteurs gaussiens. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-10-19] : [Upsert/Création] du Jalon 94 - Théorème central limite (TCL). Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-10-19] : [Upsert/Création] du Jalon 93 - Fonctions caractéristiques. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-10-16] : [Upsert/Création] du Jalon 92 - Démonstration rigoureuse de la loi forte des grands nombres. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-10-16] : [Upsert/Création] du Jalon 91 - Inégalités de concentration. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [2026-10-14] : [Upsert/Création] du Jalon 90 - Les modes de convergence en probabilités. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-11] : [Upsert/Création] du Jalon 88 - Indépendance d'événements et de variables aléatoires. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-09] : [Upsert/Création] du Jalon 87 - Intégration et Espérance mathématique. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-08] : [Upsert/Création] du Jalon 86 - Variables aléatoires vues comme des applications mesurables. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
