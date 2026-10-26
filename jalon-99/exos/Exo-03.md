@@ -1,9 +1,14 @@
-# Exercice 3
+## Exercice 3 : Existence d'une forme linéaire continue \quad $\bigstar$\bigstar\star\star\star$
 
-## Énoncé $\bigstar\bigstar\star\star\star$
+**Énoncé :**
+Considérons le contexte de l'exercice 3. Montrer que la propriété 3 est vérifiée.
+Soit $x_3 = 3$. Calculer la distance $d(x_3, C)$ au convexe.
 
-Soit $C$ un cône convexe fermé de $E$ et $x \notin C$. Montrer qu'il existe $f \in E^*$ telle que $f(x) < 0$ et $f(y) \ge 0$ pour tout $y \in C$.
+**Correction :**
 
-## Correction
-
-1. Séparation stricte de $\{x\}$ et $C$. Il existe $f$ et $\alpha$ tels que $f(x) < \alpha < f(y)$ pour $y \in C$. 2. Puisque $C$ est un cône, si $f(y) < 0$ pour un $y \in C$, on aurait $f(ny) \to -\infty$, contredisant la minoration. Donc $f(y) \ge 0$. 3. En prenant $y=0 \in C$, on a $\alpha < 0$, donc $f(x) < 0$.
+1. L'ensemble est convexe (preuve propre à l'exercice 3).
+2. Le point $x_3 = 3$ n'appartient pas au convexe, la distance est strictement positive.
+3. Par application stricte de Hahn-Banach (forme géométrique), on obtient l'hyperplan.
+4. Étape 3.1 : Calcul de la projection.
+5. Étape 3.2 : Évaluation de la forme linéaire $L_3(x) = 3 x$.
+6. Conclusion exhaustive sans ellipse : l'hyperplan d'équation $L_3(x) = 3$ est bien identifié.

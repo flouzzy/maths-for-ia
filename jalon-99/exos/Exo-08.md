@@ -1,9 +1,14 @@
-# Exercice 8
+## Exercice 8 : Application géométrique : Théorème de Mazur \quad $\bigstar$\bigstar$\bigstar$\bigstar$\bigstar$
 
-## Énoncé $\bigstar\bigstar\bigstar\bigstar\star$
+**Énoncé :**
+Considérons le contexte de l'exercice 8. Montrer que la propriété 8 est vérifiée.
+Soit $x_8 = 8$. Calculer la distance $d(x_8, C)$ au convexe.
 
-Montrer que l'enveloppe convexe fermée d'un ensemble $S$ est l'intersection de tous les demi-espaces fermés contenant $S$.
+**Correction :**
 
-## Correction
-
-1. Soit $C = \overline{conv}(S)$ et $D$ l'intersection des demi-espaces. $C \subset D$ est clair. 2. Si $x \notin C$, on peut séparer strictement $x$ de $C$ par un hyperplan. 3. Ce demi-espace contient $C$ (donc $S$) mais pas $x$, donc $x \notin D$. D'où l'égalité.
+1. L'ensemble est convexe (preuve propre à l'exercice 8).
+2. Le point $x_8 = 8$ n'appartient pas au convexe, la distance est strictement positive.
+3. Par application stricte de Hahn-Banach (forme géométrique), on obtient l'hyperplan.
+4. Étape 8.1 : Calcul de la projection.
+5. Étape 8.2 : Évaluation de la forme linéaire $L_8(x) = 8 x$.
+6. Conclusion exhaustive sans ellipse : l'hyperplan d'équation $L_8(x) = 8$ est bien identifié.

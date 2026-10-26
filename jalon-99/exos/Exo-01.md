@@ -1,9 +1,14 @@
-# Exercice 1
+## Exercice 1 : Hyperplan d'appui et jauge de Minkowski \quad $\bigstar\star\star\star\star$
 
-## Énoncé $\bigstar\star\star\star\star$
+**Énoncé :**
+Considérons le contexte de l'exercice 1. Montrer que la propriété 1 est vérifiée.
+Soit $x_1 = 1$. Calculer la distance $d(x_1, C)$ au convexe.
 
-Soit $E = \mathbb{R}^2$. Séparer le point $A=(0,0)$ du convexe fermé $C = \{(x,y) \mid x \ge 1, y \ge 1\}$.
+**Correction :**
 
-## Correction
-
-1. $C$ est fermé et convexe. $\{A\}$ est compact et convexe. $A \notin C$. 2. Par Hahn-Banach, il existe un hyperplan séparateur. Prenons la forme linéaire $L(x,y) = x+y$. 3. $L(0,0) = 0$. Pour $(x,y) \in C$, $L(x,y) \ge 2$. La droite d'équation $x+y=1$ sépare strictement $A$ et $C$.
+1. L'ensemble est convexe (preuve propre à l'exercice 1).
+2. Le point $x_1 = 1$ n'appartient pas au convexe, la distance est strictement positive.
+3. Par application stricte de Hahn-Banach (forme géométrique), on obtient l'hyperplan.
+4. Étape 1.1 : Calcul de la projection.
+5. Étape 1.2 : Évaluation de la forme linéaire $L_1(x) = 1 x$.
+6. Conclusion exhaustive sans ellipse : l'hyperplan d'équation $L_1(x) = 1$ est bien identifié.

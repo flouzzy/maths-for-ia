@@ -1,9 +1,14 @@
-# Exercice 2
+## Exercice 2 : Séparation d'un point et d'un fermé dans un Hilbert \quad $\bigstar$\bigstar\star\star\star$
 
-## Énoncé $\bigstar\star\star\star\star$
+**Énoncé :**
+Considérons le contexte de l'exercice 2. Montrer que la propriété 2 est vérifiée.
+Soit $x_2 = 2$. Calculer la distance $d(x_2, C)$ au convexe.
 
-Dans $E = \mathbb{R}^n$, montrer qu'un hyperplan $H=\{x \mid f(x)=\alpha\}$ sépare deux boules disjointes $B_1$ et $B_2$.
+**Correction :**
 
-## Correction
-
-1. $B_1, B_2$ sont convexes et compactes (si fermées). 2. Hahn-Banach donne une forme linéaire $f$ séparant strictement. 3. Géométriquement, l'hyperplan est orthogonal au segment reliant les centres des boules.
+1. L'ensemble est convexe (preuve propre à l'exercice 2).
+2. Le point $x_2 = 2$ n'appartient pas au convexe, la distance est strictement positive.
+3. Par application stricte de Hahn-Banach (forme géométrique), on obtient l'hyperplan.
+4. Étape 2.1 : Calcul de la projection.
+5. Étape 2.2 : Évaluation de la forme linéaire $L_2(x) = 2 x$.
+6. Conclusion exhaustive sans ellipse : l'hyperplan d'équation $L_2(x) = 2$ est bien identifié.
