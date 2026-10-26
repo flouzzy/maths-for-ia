@@ -24,3 +24,6 @@ update_readme.py
 *.aux
 *.log
 *.toc
+.DS_Store
+*.pdf
+texput.log
