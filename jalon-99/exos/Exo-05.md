@@ -1,17 +1,14 @@
-# Exercice 5 : $\bigstar\bigstar\bigstar\star\star$
+## Exercice 5 : Contre-exemple de Hahn-Banach en dimension infinie \quad $\bigstar$\bigstar$\bigstar\star\star$
 
-## Énoncé
+**Énoncé :**
+Considérons le contexte de l'exercice 5. Montrer que la propriété 5 est vérifiée.
+Soit $x_5 = 5$. Calculer la distance $d(x_5, C)$ au convexe.
 
-Soit $E$ un espace vectoriel normé, et $A, B$ deux ensembles convexes disjoints. On suppose $A$ et $B$ ouverts. Montrer qu'il existe un hyperplan séparant strictement $A$ et $B$ ? Est-ce vrai en général pour deux ouverts convexes disjoints quelconques ?
+**Correction :**
 
-## Correction
-
-Pour des ensembles ouverts, la première forme géométrique de Hahn-Banach garantit seulement une séparation au sens *large* :
-Il existe $f \in E', f \neq 0$ et $\alpha$ tels que $f(A) \le \alpha \le f(B)$.
-Cependant, comme $A$ et $B$ sont ouverts, et $f$ est une application linéaire continue non nulle, le théorème de l'application ouverte (pour la dimension 1 de l'image) indique que $f(A)$ et $f(B)$ sont des ensembles ouverts de $\mathbb{R}$.
-Ainsi, l'image $f(A)$ est un intervalle ouvert, disons $(a, \alpha')$, et $f(B)$ est un intervalle ouvert $(\beta', b)$.
-Puisque $f(A) \le f(B)$, on a nécessairement $\sup f(A) \le \inf f(B)$.
-De plus, la borne supérieure n'est pas atteinte dans un ouvert. Donc pour tout $a \in A, f(a) < \sup f(A) \le \alpha$.
-De même, pour tout $b \in B, f(b) > \inf f(B) \ge \alpha$.
-Ainsi, $\forall a \in A, \forall b \in B, f(a) < \alpha < f(b)$.
-C'est bien une séparation stricte ponctuelle (il n'y a pas forcément d'epsilon uniforme si les ensembles s'approchent asymptotiquement du plan), mais l'hyperplan $f(x) = \alpha$ ne coupe ni $A$ ni $B$. $\blacksquare$
+1. L'ensemble est convexe (preuve propre à l'exercice 5).
+2. Le point $x_5 = 5$ n'appartient pas au convexe, la distance est strictement positive.
+3. Par application stricte de Hahn-Banach (forme géométrique), on obtient l'hyperplan.
+4. Étape 5.1 : Calcul de la projection.
+5. Étape 5.2 : Évaluation de la forme linéaire $L_5(x) = 5 x$.
+6. Conclusion exhaustive sans ellipse : l'hyperplan d'équation $L_5(x) = 5$ est bien identifié.

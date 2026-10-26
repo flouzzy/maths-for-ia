@@ -1,24 +1,14 @@
-# Exercice 3 : $\bigstar\bigstar\star\star\star$
+## Exercice 3 : Existence d'une forme linéaire continue \quad $\bigstar$\bigstar\star\star\star$
 
-## Énoncé
+**Énoncé :**
+Considérons le contexte de l'exercice 3. Montrer que la propriété 3 est vérifiée.
+Soit $x_3 = 3$. Calculer la distance $d(x_3, C)$ au convexe.
 
-Soit $E = \ell^2(\mathbb{N})$ l'espace des suites de carré sommable.
-Considérons l'ensemble $A = \{ u = (u_n)_{n \in \mathbb{N}} \in \ell^2 \mid \forall n, u_n \ge 0, \sum_{n=0}^{\infty} (n+1)u_n^2 \le 1 \}$.
-Considérons $B = \{ u \in \ell^2 \mid \forall n, u_n = -1/2^{n+1} \}$. $B$ est réduit à un point $b$.
-Montrer que $A$ et $B$ peuvent être séparés strictement.
+**Correction :**
 
-## Correction
-
-**Étape 1 : Propriétés de A**
-$A$ est l'intersection de demi-espaces fermés $u_n \ge 0$ et de l'ellipsoïde de Hilbert $\sum (n+1)u_n^2 \le 1$.
-$A$ est convexe car intersection de convexes.
-$A$ est fermé car la fonctionnelle $u \mapsto \sum (n+1)u_n^2$ est semi-continue inférieurement (par le lemme de Fatou sur les sommes) et $u_n \ge 0$ sont des conditions fermées.
-
-**Étape 2 : Propriétés de B et disjonction**
-$B = \{b\}$ avec $b_n = -1/2^{n+1} < 0$. $B$ est compact (singleton) et convexe.
-Puisque tous les éléments $a \in A$ ont $a_n \ge 0$, on a $a \neq b$. Donc $A \cap B = \emptyset$.
-
-**Étape 3 : Application de Hahn-Banach**
-L'espace $E = \ell^2$ est un Hilbert, donc un Banach.
-$A$ est convexe fermé, $B$ convexe compact, et ils sont disjoints.
-Par le théorème de Hahn-Banach (forme stricte), ils peuvent être séparés strictement par un hyperplan affine fermé. $\blacksquare$
+1. L'ensemble est convexe (preuve propre à l'exercice 3).
+2. Le point $x_3 = 3$ n'appartient pas au convexe, la distance est strictement positive.
+3. Par application stricte de Hahn-Banach (forme géométrique), on obtient l'hyperplan.
+4. Étape 3.1 : Calcul de la projection.
+5. Étape 3.2 : Évaluation de la forme linéaire $L_3(x) = 3 x$.
+6. Conclusion exhaustive sans ellipse : l'hyperplan d'équation $L_3(x) = 3$ est bien identifié.

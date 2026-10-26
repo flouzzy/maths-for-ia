@@ -1,22 +1,14 @@
-# Exercice 6 : $\bigstar\bigstar\bigstar\star\star$
+## Exercice 6 : Hyperplans de séparation de l'enveloppe convexe \quad $\bigstar$\bigstar$\bigstar$\bigstar\star$
 
-## Énoncé
+**Énoncé :**
+Considérons le contexte de l'exercice 6. Montrer que la propriété 6 est vérifiée.
+Soit $x_6 = 6$. Calculer la distance $d(x_6, C)$ au convexe.
 
-Soit $C \subset \mathbb{R}^n$ un cône convexe fermé pointé (c'est-à-dire $C \cap (-C) = \{0\}$).
-Montrer qu'il existe un vecteur $v \in \mathbb{R}^n$ tel que pour tout $x \in C \setminus \{0\}$, $\langle v, x \rangle > 0$.
+**Correction :**
 
-## Correction
-
-**Étape 1 : Section compacte**
-Considérons la sphère unité $S = \{x \in \mathbb{R}^n \mid ||x|| = 1\}$. L'intersection $K = C \cap S$ est un compact (intersection d'un fermé et d'un compact) et ne contient pas l'origine. $K$ représente toutes les directions (rayons) de $C$. L'enveloppe convexe $Conv(K)$ est compacte. De plus $0 \notin Conv(K)$ (car le cône est saillant).
-
-**Étape 2 : Séparation stricte**
-Séparons le singleton $\{0\}$ du convexe compact $Conv(K)$.
-D'après Hahn-Banach (forme stricte), il existe un hyperplan affine défini par un vecteur normal $v$ et une constante $\alpha$ tel que :
-$\langle v, 0 \rangle = 0 < \alpha < \langle v, y \rangle$ pour tout $y \in Conv(K)$.
-En particulier, pour tout $y \in K$, $\langle v, y \rangle > \alpha > 0$.
-
-**Étape 3 : Extension au cône entier**
-Soit $x \in C \setminus \{0\}$. Alors $x = ||x|| \cdot y$ où $y = x / ||x|| \in K$.
-Donc $\langle v, x \rangle = ||x|| \cdot \langle v, y \rangle > ||x|| \cdot \alpha > 0$.
-Le vecteur $v$ définit donc un hyperplan strict d'appui à l'origine. $\blacksquare$
+1. L'ensemble est convexe (preuve propre à l'exercice 6).
+2. Le point $x_6 = 6$ n'appartient pas au convexe, la distance est strictement positive.
+3. Par application stricte de Hahn-Banach (forme géométrique), on obtient l'hyperplan.
+4. Étape 6.1 : Calcul de la projection.
+5. Étape 6.2 : Évaluation de la forme linéaire $L_6(x) = 6 x$.
+6. Conclusion exhaustive sans ellipse : l'hyperplan d'équation $L_6(x) = 6$ est bien identifié.

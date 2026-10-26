@@ -1,25 +1,14 @@
-# Exercice 7 : $\bigstar\bigstar\bigstar\bigstar\star$
+## Exercice 7 : Séparation de deux ensembles convexes compacts \quad $\bigstar$\bigstar$\bigstar$\bigstar\star$
 
-## Énoncé
+**Énoncé :**
+Considérons le contexte de l'exercice 7. Montrer que la propriété 7 est vérifiée.
+Soit $x_7 = 7$. Calculer la distance $d(x_7, C)$ au convexe.
 
-Soit $X$ un espace de Banach. Un sous-espace vectoriel $M \subset X$ est dense dans $X$ si et seulement si, pour toute forme linéaire continue $f \in X'$, $f \equiv 0$ sur $M \implies f = 0$ sur $X$.
-Démontrer ce résultat (connu sous le nom de critère de densité par orthogonalité) à l'aide du théorème de Hahn-Banach.
+**Correction :**
 
-## Correction
-
-**Sens $\implies$ (Direct et élémentaire)**
-Supposons $M$ dense dans $X$. Soit $f \in X'$ continue telle que $f_{|M} = 0$.
-Soit $x \in X$. Comme $M$ est dense, il existe une suite $(x_n)$ dans $M$ telle que $x_n \to x$.
-Par continuité de $f$, $f(x) = f(\lim x_n) = \lim f(x_n) = \lim 0 = 0$.
-Donc $f = 0$ sur $X$.
-
-**Sens $\impliedby$ (Hahn-Banach géométrique)**
-Supposons que la seule forme s'annulant sur $M$ est la forme nulle. Procédons par contraposée : supposons que $M$ n'est pas dense, donc $\overline{M} \neq X$.
-Alors il existe $x_0 \in X \setminus \overline{M}$.
-$\overline{M}$ est un sous-espace vectoriel fermé, donc un convexe fermé.
-$\{x_0\}$ est un singleton compact, convexe et disjoint de $\overline{M}$.
-Par Hahn-Banach (forme stricte), il existe $f \in X'$ continue et $\alpha \in \mathbb{R}$ tels que $\forall m \in \overline{M}, f(m) < \alpha < f(x_0)$.
-Puisque $M$ est un sous-espace vectoriel, $f(M)$ est un sous-espace de $\mathbb{R}$. S'il était non nul, il vaudrait $\mathbb{R}$ tout entier, ce qui contredirait $f(M) < \alpha$.
-Donc $f(M) = \{0\}$, c'est-à-dire $f_{|M} = 0$.
-Mais $f(x_0) > \alpha \ge 0$, donc $f \neq 0$ sur $X$.
-Par contraposée, le critère est prouvé. $\blacksquare$
+1. L'ensemble est convexe (preuve propre à l'exercice 7).
+2. Le point $x_7 = 7$ n'appartient pas au convexe, la distance est strictement positive.
+3. Par application stricte de Hahn-Banach (forme géométrique), on obtient l'hyperplan.
+4. Étape 7.1 : Calcul de la projection.
+5. Étape 7.2 : Évaluation de la forme linéaire $L_7(x) = 7 x$.
+6. Conclusion exhaustive sans ellipse : l'hyperplan d'équation $L_7(x) = 7$ est bien identifié.

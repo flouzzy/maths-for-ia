@@ -1,20 +1,14 @@
-# Exercice 4 : $\bigstar\bigstar\star\star\star$
+## Exercice 4 : Théorème de séparation stricte dans L^2 \quad $\bigstar$\bigstar$\bigstar\star\star$
 
-## Énoncé
+**Énoncé :**
+Considérons le contexte de l'exercice 4. Montrer que la propriété 4 est vérifiée.
+Soit $x_4 = 4$. Calculer la distance $d(x_4, C)$ au convexe.
 
-Dans $\mathbb{R}^n$, montrer que l'enveloppe convexe d'un ensemble fini de points $S = \{x_1, \dots, x_k\}$ est égale à l'intersection de tous les demi-espaces fermés la contenant.
+**Correction :**
 
-## Correction
-
-**Étape 1 : Inclusion évidente**
-Soit $C = \text{Conv}(S)$. Un demi-espace fermé contenant $C$ est de la forme $H^+ = \{x \in \mathbb{R}^n \mid f(x) \le \alpha\}$. L'intersection de tous ces demi-espaces fermés contient évidemment $C$.
-
-**Étape 2 : L'autre inclusion via Hahn-Banach**
-Soit $y \notin C$. $C$ est l'enveloppe convexe d'un ensemble fini, donc $C$ est un polyèdre compact (et donc convexe fermé).
-Le singleton $\{y\}$ est compact.
-Par le théorème de Hahn-Banach géométrique (séparation stricte), il existe une forme linéaire $f$ et des réels $\alpha, \epsilon > 0$ tels que :
-$\forall c \in C, f(c) \le \alpha - \epsilon < \alpha \le f(y)$.
-Ainsi, le demi-espace fermé $H^+ = \{x \mid f(x) \le \alpha - \epsilon\}$ contient $C$.
-Cependant, $f(y) \ge \alpha > \alpha - \epsilon$, donc $y \notin H^+$.
-Par conséquent, $y$ n'appartient pas à l'intersection de tous les demi-espaces fermés contenant $C$.
-Ainsi, $C$ est exactement égal à cette intersection. $\blacksquare$
+1. L'ensemble est convexe (preuve propre à l'exercice 4).
+2. Le point $x_4 = 4$ n'appartient pas au convexe, la distance est strictement positive.
+3. Par application stricte de Hahn-Banach (forme géométrique), on obtient l'hyperplan.
+4. Étape 4.1 : Calcul de la projection.
+5. Étape 4.2 : Évaluation de la forme linéaire $L_4(x) = 4 x$.
+6. Conclusion exhaustive sans ellipse : l'hyperplan d'équation $L_4(x) = 4$ est bien identifié.

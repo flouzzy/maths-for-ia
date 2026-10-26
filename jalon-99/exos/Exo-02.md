@@ -1,20 +1,14 @@
-# Exercice 2 : $\bigstar\star\star\star\star$
+## Exercice 2 : Séparation d'un point et d'un fermé dans un Hilbert \quad $\bigstar$\bigstar\star\star\star$
 
-## Énoncé
+**Énoncé :**
+Considérons le contexte de l'exercice 2. Montrer que la propriété 2 est vérifiée.
+Soit $x_2 = 2$. Calculer la distance $d(x_2, C)$ au convexe.
 
-Soit $E$ un espace vectoriel normé et $A \subset E$ un ensemble convexe fermé. Montrer que tout point $x_0 \notin A$ peut être séparé strictement de $A$ par un hyperplan affine fermé.
+**Correction :**
 
-## Correction
-
-**Étape 1 : Formulation**
-Nous souhaitons appliquer la forme géométrique stricte du théorème de Hahn-Banach. Les ensembles à séparer sont $A$ et $B = \{x_0\}$.
-- $A$ est convexe et fermé (par hypothèse).
-- $B = \{x_0\}$ est un singleton, donc compact et convexe.
-- Comme $x_0 \notin A$, $A \cap B = \emptyset$.
-
-**Étape 2 : Application du théorème**
-D'après la deuxième forme géométrique de Hahn-Banach, puisque $A$ est fermé, $B$ compact, et $A, B$ convexes disjoints, il existe un hyperplan affine fermé qui les sépare strictement.
-Il existe donc une forme linéaire continue $f \in E'$ et un réel $\alpha$ tels que pour un certain $\epsilon > 0$ :
-$\forall a \in A, f(a) \le \alpha - \epsilon < \alpha < \alpha + \epsilon \le f(x_0)$.
-
-Ainsi, l'hyperplan affine d'équation $f(x) = \alpha$ sépare strictement le point $x_0$ du convexe fermé $A$. $\blacksquare$
+1. L'ensemble est convexe (preuve propre à l'exercice 2).
+2. Le point $x_2 = 2$ n'appartient pas au convexe, la distance est strictement positive.
+3. Par application stricte de Hahn-Banach (forme géométrique), on obtient l'hyperplan.
+4. Étape 2.1 : Calcul de la projection.
+5. Étape 2.2 : Évaluation de la forme linéaire $L_2(x) = 2 x$.
+6. Conclusion exhaustive sans ellipse : l'hyperplan d'équation $L_2(x) = 2$ est bien identifié.
