@@ -114,7 +114,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-97/Jalon-97.md|Jalon 97 : Espaces de Banach]] : Espaces de Banach, opérateurs linéaires continus entre Banach et topologie induite par la norme d'opérateur. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-98/Jalon-98.md|Jalon 98 : Théorème de Hahn-Banach]] : Théorème de Hahn-Banach (forme analytique), prolongement des formes linéaires sous-linéaires. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-99/Jalon-99.md|Jalon 99 : Théorème de Hahn-Banach]] : Théorème de Hahn-Banach (formes géométriques), séparation des ensembles convexes par des hyperplans. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [ ] [[jalon-100/Jalon 100 (Démonstration du théorème de Banach-Steinhaus).md|Jalon 100 : Démonstration du théorème de Banach-Steinhaus]] : Démonstration du théorème de Banach-Steinhaus (principe de la borne uniforme).
+- [x] [[jalon-100/Jalon-100.md|Jalon 100 : Démonstration du théorème de Banach-Steinhaus]] : Démonstration du théorème de Banach-Steinhaus (principe de la borne uniforme). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-101/Jalon 101 (Théorème de l'application ouverte et théorème du graphe fermé.).md|Jalon 101 : Théorème de l'application ouverte et théorème du graphe fermé.]] : Théorème de l'application ouverte et théorème du graphe fermé.
 - [ ] [[jalon-102/Jalon 102 (Topologies faibles et faibles-).md|Jalon 102 : Topologies faibles et faibles-*]] : Topologies faibles et faibles-*, compacité de la boule unité duale (Théorème de Banach-Alaoglu).
 - [ ] [[jalon-103/Jalon 103 (Espaces de Hilbert généraux).md|Jalon 103 : Espaces de Hilbert généraux]] : Espaces de Hilbert généraux, théorème de projection sur un convexe fermé et dualité de Riesz.
