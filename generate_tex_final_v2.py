@@ -12,8 +12,8 @@ def process_markdown_to_latex(content):
         code_blocks.append(f"\\begin{{lstlisting}}[language=Python]\n{code}\n\\end{{lstlisting}}")
         return f"__CODE_BLOCK_{len(code_blocks)-1}__"
 
-    content = re.sub(r'```python\n(.*?)\n```', mask_code_block, content, flags=re.DOTALL)
-    content = re.sub(r'```\n(.*?)\n```', mask_code_block, content, flags=re.DOTALL)
+    content = re.sub(r'```[pP]ython\s*\n(.*?)\n```', mask_code_block, content, flags=re.DOTALL)
+    content = re.sub(r'```\s*\n(.*?)\n```', mask_code_block, content, flags=re.DOTALL)
 
     # We will also temporarily mask inline code `...`
     inline_codes = []
