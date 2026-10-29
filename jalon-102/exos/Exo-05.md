@@ -1,21 +1,15 @@
-# Exercice 5
+$\bigstar\bigstar\bigstar\star\star$
+**Énoncé :** Exemple de convergence faible non forte dans $\ell^2$.
+Soit $\ell^2$ l'espace des suites de carré sommable. On note $(e_n)$ la base hilbertienne canonique.
+Montrer que $e_n \rightharpoonup 0$ faiblement, mais que $(e_n)$ ne converge pas fortement.
 
-## Exercice 5 : Théorème de Mazur \quad $\bigstar\bigstar\bigstar\star\star$
-
-**Énoncé :**
-Soit $E$ un espace de Banach. Montrer que si une suite $(x_n)_{n \ge 1}$ converge faiblement vers $x$, alors il existe une suite de combinaisons linéaires convexes des $(x_n)$ qui converge fortement vers $x$.
-
-**Correction :**
-*Analyse de l'énoncé :* On relie la convergence faible et la convergence forte à l'aide des enveloppes convexes et du lemme sur les sous-espaces fermés et convexes.
-*Résolution pas-à-pas :*
-1. **Étape 1 : L'enveloppe convexe fermée.**
-   Soit $K_n = \text{Conv}(\{ x_k \mid k \ge n \})$ l'enveloppe convexe des termes de la suite à partir du rang $n$.
-   Soit $\overline{K_n}$ l'adhérence (forte) de $K_n$.
-   Comme $\overline{K_n}$ est fortement fermé et convexe, d'après le résultat classique (démontré via Hahn-Banach), il est aussi faiblement fermé.
-2. **Étape 2 : Appartenance de la limite faible.**
-   La suite $(x_k)_{k \ge n}$ converge faiblement vers $x$.
-   Comme tous les termes de la suite appartiennent à $K_n \subset \overline{K_n}$, et que $\overline{K_n}$ est faiblement fermé, sa limite faible $x$ appartient nécessairement à $\overline{K_n}$.
-3. **Étape 3 : Construction de la suite fortement convergente.**
-   Puisque $x \in \overline{K_n}$ pour tout $n$, il existe par définition de l'adhérence un élément $y_n \in K_n$ tel que $\|y_n - x\| < 1/n$.
-   Mais $y_n \in K_n$ signifie que $y_n$ est une combinaison linéaire convexe finie d'éléments de la forme $x_k$ avec $k \ge n$.
-   La suite $(y_n)_{n \ge 1}$ converge fortement vers $x$ (puisque $\|y_n - x\| < 1/n \to 0$) et est constituée de combinaisons linéaires convexes des $(x_n)$.
+**Correction Détaillée :**
+Considérons l'espace de Hilbert $H = \ell^2$. Le théorème de représentation de Riesz assure que toute forme linéaire continue $L \in H^*$ s'écrit $L(x) = \langle x, y \rangle$ pour un unique $y \in H$.
+Soit $y = (y_k) \in \ell^2$. Évaluons la forme linéaire sur la suite $e_n$ :
+$L(e_n) = \langle e_n, y \rangle = y_n$.
+Comme $y \in \ell^2$, la série $\sum y_k^2$ est convergente. La condition nécessaire de convergence d'une série impose que son terme général tende vers $0$.
+Ainsi, $\lim_{n \to \infty} y_n = 0$.
+On a donc pour toute $L \in H^*$, $\lim_{n \to \infty} L(e_n) = 0 = L(0)$. La suite $(e_n)$ converge donc faiblement vers $0$.
+Cependant, évaluons la distance forte entre deux termes distincts $e_n$ et $e_m$ ($n \neq m$) :
+$\|e_n - e_m\|^2 = \langle e_n - e_m, e_n - e_m \rangle = \|e_n\|^2 + \|e_m\|^2 - 2\langle e_n, e_m \rangle = 1 + 1 - 0 = 2$.
+Ainsi $\|e_n - e_m\| = \sqrt{2} \neq 0$. La suite $(e_n)$ n'est pas de Cauchy en norme forte, elle ne peut donc pas converger fortement.

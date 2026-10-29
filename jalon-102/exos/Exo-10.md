@@ -1,29 +1,18 @@
-# Exercice 10
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
+**Énoncé :** Convergence faible et condition de Cauchy.
+Montrer que dans l'espace $\ell^1$, toute suite faiblement convergente est fortement convergente (propriété de Schur). On admettra que si une suite converge faiblement vers 0 dans $\ell^1$, mais pas fortement, on peut construire par extraction une "suite basique" équivalente à la base canonique, conduisant à une contradiction.
 
-## Exercice 10 : Compacité faible-* des mesures de probabilité \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
-
-**Énoncé :**
-Soit $X$ un espace métrique compact. Considérons l'espace des mesures de Radon signées $\mathcal{M}(X)$, dual de l'espace des fonctions continues $C(X)$. Soit $P(X)$ l'ensemble des mesures de probabilité sur $X$. Montrer que $P(X)$ est compact pour la topologie faible-*.
-
-**Correction :**
-*Analyse de l'énoncé :* On utilise le théorème de Banach-Alaoglu et on montre que $P(X)$ est un fermé pour la topologie faible-*.
-*Résolution pas-à-pas :*
-1. **Étape 1 : Le cadre de Banach-Alaoglu.**
-   L'espace $C(X)$ muni de la norme $\| \cdot \|_\infty$ est un espace de Banach.
-   Son dual topologique est l'espace des mesures de Radon $\mathcal{M}(X)$, avec pour norme la variation totale.
-   Par le théorème de Banach-Alaoglu, la boule unité fermée $B = \{ \mu \in \mathcal{M}(X) \mid \|\mu\| \le 1 \}$ est compacte pour la topologie faible-*.
-2. **Étape 2 : Inclusion de $P(X)$ dans la boule unité.**
-   Une mesure de probabilité est une mesure positive de masse totale égale à 1.
-   Donc si $\mu \in P(X)$, sa norme en variation totale est $\|\mu\| = \mu(X) = 1 \le 1$.
-   Ainsi, $P(X) \subset B$.
-3. **Étape 3 : Fermeture faible-* de $P(X)$.**
-   Il suffit de montrer que $P(X)$ est fermé pour la topologie faible-*. Puisqu'il est inclus dans un compact, un fermé est un compact.
-   La topologie faible-* est définie par la convergence : $\mu_\alpha \rightharpoonup^* \mu \iff \int_X f d\mu_\alpha \to \int_X f d\mu$ pour tout $f \in C(X)$.
-   Soit une suite (ou un filtre) de mesures $\mu_n \in P(X)$ qui converge faiblement-* vers $\mu \in \mathcal{M}(X)$.
-   Vérifions que $\mu \in P(X)$.
-   a) Positivité : Si $f \ge 0$, alors $\int_X f d\mu_n \ge 0$. Par passage à la limite, $\int_X f d\mu \ge 0$. Par le théorème de représentation de Riesz, ceci assure que la mesure $\mu$ est positive.
-   b) Masse totale : Prenons la fonction constante $\mathbf{1} \in C(X)$ (qui est bien continue puisque $X$ est compact).
-   $\mu(X) = \int_X \mathbf{1} d\mu = \lim_{n \to \infty} \int_X \mathbf{1} d\mu_n = \lim_{n \to \infty} \mu_n(X) = \lim_{n \to \infty} 1 = 1$.
-   Donc $\mu$ est bien une mesure de probabilité.
-4. **Étape 4 : Conclusion.**
-   $P(X)$ est un sous-ensemble fermé (pour la topologie faible-*) du compact faible-* $B$. Donc $P(X)$ est compact pour la topologie faible-*.
+**Correction Détaillée :**
+Cet exercice demande de prouver un cas remarquable où la topologie faible se comporte comme la forte pour les suites.
+Soit $(x_n)$ une suite de $\ell^1$ convergeant faiblement vers 0. Supposons par l'absurde qu'elle ne converge pas fortement vers 0.
+Il existe alors $\epsilon > 0$ et une sous-suite (toujours notée $x_n$) telle que $\|x_n\|_1 \ge \epsilon$ pour tout $n$.
+En utilisant une technique de "glissement de bosse" (sliding hump argument), on peut extraire une sous-suite $(y_k) = (x_{n_k})$ telle que les supports de $y_k$ (les indices où les coefficients sont non nuls) soient presque disjoints.
+Plus précisément, on peut approcher chaque $y_k$ par un vecteur $z_k$ à support fini $S_k$, tel que les $S_k$ soient deux à deux disjoints, et $\|y_k - z_k\|_1 \le \epsilon/4$.
+Soit $L \in (\ell^1)^* \cong \ell^\infty$ défini par $L_j = \text{sign}(z_{k, j})$ pour $j \in S_k$, et $0$ ailleurs. $L$ est bien bornée par 1.
+Évaluons $L(y_k)$ :
+$L(y_k) = L(z_k) + L(y_k - z_k) = \sum_{j \in S_k} |z_{k, j}| + L(y_k - z_k) = \|z_k\|_1 + L(y_k - z_k)$.
+On a $\|z_k\|_1 \ge \|y_k\|_1 - \|y_k - z_k\|_1 \ge \epsilon - \epsilon/4 = 3\epsilon/4$.
+Et $|L(y_k - z_k)| \le \|L\|_\infty \|y_k - z_k\|_1 \le 1 \cdot \epsilon/4$.
+Donc $L(y_k) \ge 3\epsilon/4 - \epsilon/4 = \epsilon/2$.
+Mais comme $y_k \rightharpoonup 0$ faiblement, on doit avoir $L(y_k) \to 0$. Contradiction !
+La prémisse était fausse, la suite doit donc converger fortement. C'est la propriété de Schur de l'espace $\ell^1$.

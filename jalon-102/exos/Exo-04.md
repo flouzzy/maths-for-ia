@@ -1,23 +1,17 @@
-# Exercice 4
+$\bigstar\bigstar\bigstar\star\star$
+**Énoncé :** Semi-continuité inférieure faible de la norme.
+Soit $E$ un espace de Banach et $(x_n)$ une suite convergeant faiblement vers $x \in E$.
+Démontrer rigoureusement que $\|x\| \le \liminf_{n \to \infty} \|x_n\|$.
 
-## Exercice 4 : Sous-espaces fermés et topologie faible \quad $\bigstar\bigstar\bigstar\star\star$
-
-**Énoncé :**
-Soit $E$ un espace de Banach et $F$ un sous-espace vectoriel de $E$. Montrer que $F$ est fortement fermé si et seulement si $F$ est faiblement fermé.
-
-**Correction :**
-*Analyse de l'énoncé :* La topologie faible est moins fine que la topologie forte, donc tout fermé faible est fortement fermé. L'implication inverse utilise le théorème d'Hahn-Banach (forme géométrique).
-*Résolution pas-à-pas :*
-1. **Étape 1 : Faiblement fermé implique fortement fermé.**
-   Puisque la topologie forte a plus d'ouverts (et donc plus de fermés) que la topologie faible, tout ensemble fermé pour la topologie faible l'est aussi pour la topologie forte.
-2. **Étape 2 : Fortement fermé implique faiblement fermé.**
-   Supposons $F$ fortement fermé et convexe (un sous-espace vectoriel est toujours convexe).
-   Soit $x_0 \notin F$. Nous voulons montrer que le complémentaire de $F$ est faiblement ouvert, ou de manière équivalente, qu'il existe un voisinage faible de $x_0$ disjoint de $F$.
-   Par le théorème de Hahn-Banach géométrique (seconde forme), séparant le compact $\{x_0\}$ du fermé convexe $F$, il existe une forme linéaire $f \in E^*$ et un réel $\alpha$ tels que :
-   $$f(x_0) < \alpha < \inf_{x \in F} f(x)$$
-   Comme $F$ est un sous-espace vectoriel, $f(F)$ est un sous-espace vectoriel de $\mathbb{K}$.
-   La seule façon pour $f(F)$ d'être minoré par $\alpha$ est que $f(F) = \{0\}$.
-   Ainsi, $\inf_{x \in F} f(x) = 0$. Donc $f(x_0) < 0$ et $f_{|F} = 0$.
-   Considérons l'ouvert faible $V = \{ y \in E \mid f(y) < 0 \}$.
-   On a $x_0 \in V$, et pour tout $x \in F$, $f(x) = 0$, donc $x \notin V$.
-   Ainsi, $V \cap F = \emptyset$. Ceci prouve que le complémentaire de $F$ est un voisinage faible pour chacun de ses points, donc il est faiblement ouvert, et $F$ est faiblement fermé.
+**Correction Détaillée :**
+Si $x = 0$, l'inégalité est immédiate car $\|x_n\| \ge 0$, d'où $\liminf \|x_n\| \ge 0 = \|0\|$.
+Supposons $x \neq 0$. D'après un corollaire du théorème de Hahn-Banach, il existe $f \in E^*$ telle que $\|f\|_{E^*} = 1$ et $f(x) = \|x\|$.
+Par définition de la convergence faible, la suite de scalaires $(f(x_n))$ converge vers $f(x) = \|x\|$.
+Ainsi, $\|x\| = \lim_{n \to \infty} |f(x_n)|$.
+D'autre part, pour tout $n$, l'inégalité fondamentale de la norme subordonnée donne :
+$|f(x_n)| \le \|f\|_{E^*} \|x_n\| = 1 \cdot \|x_n\| = \|x_n\|$.
+En passant à la limite inférieure des deux côtés, on obtient :
+$\liminf_{n \to \infty} |f(x_n)| \le \liminf_{n \to \infty} \|x_n\|$.
+Puisque la suite $(|f(x_n)|)$ est convergente, sa limite inférieure coïncide avec sa limite. D'où :
+$\|x\| \le \liminf_{n \to \infty} \|x_n\|$.
+Ce résultat fondamental montre que la norme ne peut "qu'augmenter" ou rester constante à la limite faible, mais jamais diminuer strictement de manière abrupte.

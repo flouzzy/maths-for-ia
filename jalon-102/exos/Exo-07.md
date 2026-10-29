@@ -1,27 +1,16 @@
-# Exercice 7
+$\bigstar\bigstar\bigstar\bigstar\star$
+**Énoncé :** Convergence faible et produit scalaire.
+Dans un espace de Hilbert $H$, soit $(x_n)$ une suite convergeant faiblement vers $x$, et $(y_n)$ une suite convergeant fortement vers $y$.
+Montrer que $\langle x_n, y_n \rangle \to \langle x, y \rangle$.
 
-## Exercice 7 : Théorème de Banach-Saks dans $L^2$ \quad $\bigstar\bigstar\bigstar\bigstar\star$
-
-**Énoncé :**
-Soit $(x_n)_{n \ge 1}$ une suite faiblement convergente vers $0$ dans un espace de Hilbert $H$. Montrer qu'il existe une sous-suite $(x_{\phi(n)})$ dont les moyennes de Cesàro convergent fortement vers $0$.
-
-**Correction :**
-*Analyse de l'énoncé :* On construit une sous-suite presque orthogonale pour s'assurer que la norme de la somme croît au plus linéairement.
-*Résolution pas-à-pas :*
-1. **Étape 1 : Construction de la sous-suite.**
-   Puisque $x_n \rightharpoonup 0$, la suite est bornée : $\|x_n\| \le M$.
-   Posons $y_1 = x_1$.
-   Supposons construits $y_1, \dots, y_k$.
-   Comme $x_n \rightharpoonup 0$, on a $\langle x_n, y_i \rangle \to 0$ pour chaque $i \in \{1, \dots, k\}$.
-   Il existe donc un rang $N$ tel que pour tout $n \ge N$ et pour $i \in \{1, \dots, k\}$, $|\langle x_n, y_i \rangle| \le \frac{1}{k}$.
-   On choisit $y_{k+1} = x_{N}$. On a ainsi extrait une sous-suite telle que $|\langle y_n, y_m \rangle| \le \frac{1}{\max(n, m)-1}$ pour $n \neq m$.
-2. **Étape 2 : Norme de la somme.**
-   Soit $S_n = \sum_{i=1}^n y_i$. Calculons sa norme au carré :
-   $$\|S_n\|^2 = \sum_{i=1}^n \|y_i\|^2 + 2 \sum_{1 \le i < j \le n} \text{Re}(\langle y_i, y_j \rangle)$$
-   On sait que $\|y_i\|^2 \le M^2$. Pour les termes croisés, par construction $|\langle y_i, y_j \rangle| \le \frac{1}{j-1}$.
-   $$\|S_n\|^2 \le n M^2 + 2 \sum_{j=2}^n \sum_{i=1}^{j-1} \frac{1}{j-1} = n M^2 + 2 \sum_{j=2}^n (j-1) \frac{1}{j-1} = n M^2 + 2(n-1)$$
-3. **Étape 3 : Convergence des moyennes de Cesàro.**
-   La moyenne de Cesàro est $M_n = \frac{1}{n} S_n$.
-   On a $\|M_n\|^2 = \frac{1}{n^2} \|S_n\|^2 \le \frac{n M^2 + 2n}{n^2} = \frac{M^2 + 2}{n}$.
-   Lorsque $n \to \infty$, cette norme tend vers 0.
-   Donc la moyenne de Cesàro de la sous-suite converge fortement vers $0$.
+**Correction Détaillée :**
+On écrit la décomposition suivante de la différence :
+$\langle x_n, y_n \rangle - \langle x, y \rangle = \langle x_n, y_n - y \rangle + \langle x_n, y \rangle - \langle x, y \rangle = \langle x_n, y_n - y \rangle + \langle x_n - x, y \rangle$.
+Évaluons la limite de chacun des deux termes.
+Pour le second terme : par le théorème de Riesz, l'application $z \mapsto \langle z, y \rangle$ est une forme linéaire continue sur $H$. Par définition de la convergence faible de $(x_n)$ vers $x$, ce terme tend vers $0$.
+Pour le premier terme : par l'inégalité de Cauchy-Schwarz,
+$|\langle x_n, y_n - y \rangle| \le \|x_n\| \|y_n - y\|$.
+Puisque $(x_n)$ converge faiblement, elle est bornée (cf. exercice précédent) : il existe $M > 0$ tel que $\|x_n\| \le M$ pour tout $n$.
+Ainsi, $|\langle x_n, y_n - y \rangle| \le M \|y_n - y\|$.
+Comme $(y_n)$ converge fortement vers $y$, $\|y_n - y\| \to 0$, d'où ce terme tend également vers $0$.
+La somme de deux suites tendant vers zéro tend vers zéro, on a donc bien $\lim_{n \to \infty} \langle x_n, y_n \rangle = \langle x, y \rangle$.
