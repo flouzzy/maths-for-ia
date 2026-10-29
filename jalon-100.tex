@@ -1,0 +1,619 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes,decorations.pathreplacing}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    inputencoding=utf8,
+    extendedchars=true,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ç}{{\c{c}}}1 {œ}{{\oe}}1 {ù}{{\`u}}1
+}
+
+\title{\Huge Théorème de Banach-Steinhaus \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+
+\section{Formalisation}
+
+\subsection{Énoncé du Théorème}
+
+Soit $E$ un espace de \textbf{Banach} (complet) et $F$ un espace vectoriel normé quelconque.
+Soit $(T_i)_{i \in I}$ une famille d'opérateurs linéaires \textbf{continus} de $E$ vers $F$.
+\begin{quote} \textbf{Théorème de Banach-Steinhaus (Principe de la Borne Uniforme) :}
+ On suppose que pour tout $x \in E$, la famille des images est bornée dans $F$ :
+ $$\forall x \in E, \quad \sup_{i \in I} \|T_i(x)\|_F < +\infty$$
+ Alors, la famille des normes d'opérateurs est bornée :
+ $$\sup_{i \in I} \|T_i\|_{\mathcal{L}(E,F)} < +\infty$$ \end{quote}
+
+
+\textbf{Exemple Concret 1 : Matrice et Normes en dimension finie}
+Considérons l'espace $E = \mathbb{R}^2$ muni de la norme $\| (x, y) \|_\infty = \max(|x|, |y|)$, et $F = \mathbb{R}$.
+Soit la famille d'opérateurs linéaires $T_n : \mathbb{R}^2 \to \mathbb{R}$ définie par $T_n(x, y) = n x + y$.
+Fixons un vecteur $u = (1, 0)$. Alors $\| T_n(u) \| = n$.
+Pour que la famille $T_n(u)$ soit bornée pour tout vecteur $u$, il faudrait que $n$ soit borné.
+Ici, si on prend la famille $(T_n)_{n \in \mathbb{N}}$, on voit bien que $\sup_{n} \| T_n(1,0) \| = +\infty$.
+La condition du théorème n'est pas remplie, donc la norme d'opérateur n'est pas bornée (ici $\|T_n\| = n+1$).
+
+\textbf{Exemple Concret 2 : Intégrales sur $C([0, 1])$}
+Soit $E = C([0, 1])$ muni de la norme $\|f\|_\infty = \sup_{t \in [0, 1]} |f(t)|$.
+Définissons $T_n : E \to \mathbb{R}$ par $T_n(f) = n \int_0^{1/n} f(t) dt$.
+Pour une fonction $f$ donnée, $T_n(f)$ est la moyenne de $f$ sur $[0, 1/n]$.
+Puisque $f$ est continue, $T_n(f) \to f(0)$ quand $n \to \infty$.
+La suite $(T_n(f))$ est convergente, donc elle est bornée : $\forall f \in E, \sup_n |T_n(f)| < \infty$.
+D'après le Théorème de Banach-Steinhaus, la suite des normes $\|T_n\|$ doit être bornée.
+Calculons cette norme pas-à-pas :
+1) Pour tout $f \in C([0, 1])$, on a $|T_n(f)| \le n \int_0^{1/n} |f(t)| dt \le n \int_0^{1/n} \|f\|_\infty dt = n \cdot \frac{1}{n} \|f\|_\infty = \|f\|_\infty$.
+2) On en déduit que $\|T_n\| \le 1$.
+3) En prenant la fonction constante $f(t) = 1$ pour tout $t$, $\|f\|_\infty = 1$, et $T_n(f) = n \int_0^{1/n} 1 dt = 1$.
+4) Donc $\|T_n\| = 1$.
+La borne est bien uniforme, illustrant parfaitement le théorème.
+
+
+\textbf{Exemple Concret 3 : Suite de fonctionnelles sur $L^2$}
+Prenons l'espace $E = L^2([0, 1])$ muni de la norme $\|f\|_2 = (\int_0^1 |f(x)|^2 dx)^{1/2}$.
+On définit une suite de formes linéaires $T_n(f) = n \int_0^{1/n} f(x) dx$.
+Pour toute fonction $f \in L^2$, l'inégalité de Cauchy-Schwarz donne :
+$|T_n(f)| \le n (\int_0^{1/n} 1^2 dx)^{1/2} (\int_0^{1/n} |f(x)|^2 dx)^{1/2} = n \frac{1}{\sqrt{n}} \|f\|_{L^2(0, 1/n)} = \sqrt{n} \|f\|_{L^2}$.
+Si $f$ est une fonction continue, $T_n(f) \to f(0)$ donc la limite est finie pour ces fonctions. Cependant, il existe des fonctions dans $L^2$ (comme $f(x) = x^{-1/3}$) pour lesquelles $T_n(f)$ diverge.
+Ici, $\|T_n\| = \sqrt{n}$, qui n'est pas bornée. Par Banach-Steinhaus, la famille ne peut pas être ponctuellement bornée sur tout $L^2$.
+
+\textbf{Exemple Concret 4 : Famille de matrices diagonales}
+Prenons $E = \ell^2(\mathbb{N})$ muni de sa norme classique.
+Considérons les matrices $T_n$ telles que $T_n x = (x_0, 2x_1, 3x_2, \dots, n x_{n-1}, 0, \dots)$.
+La norme de chaque $T_n$ est $n$. La famille de ces opérateurs a des normes non bornées.
+Par le théorème de Banach-Steinhaus, on peut affirmer qu'il existe un vecteur $x \in \ell^2$ pour lequel la suite $\|T_n x\|$ n'est pas bornée (par exemple $x_k = \frac{1}{k+1}$ donne $\|T_n x\| \sim \ln n$).
+
+\textbf{Exemple Concret 5 : Opérateurs de dérivations discrétisées}
+Soit $E = C^1([0, 1])$ muni de la norme $\|f\| = \|f\|_\infty + \|f'\|_\infty$ (qui en fait un espace de Banach) et $F = C([0, 1])$ avec la norme uniforme.
+Soit $T_n(f)(t) = \frac{f(t+1/n) - f(t)}{1/n}$ (avec prolongement adapté ou pris sur un intervalle légèrement plus petit).
+Pour $f$ donnée, $T_n(f) \to f'$ uniformément, donc la famille est ponctuellement bornée dans $F$.
+Banach-Steinhaus affirme alors que les opérateurs $T_n$ sont uniformément bornés en norme, ce qui est cohérent car $\|T_n f\|_\infty \le \|f'\|_\infty \le \|f\|$.
+
+\begin{tikzpicture}[scale=1.5]
+\draw[->,thick] (0,0) -- (4,0) node[right] {$E$};
+\draw[->,thick] (0,0) -- (0,3) node[above] {$F$};
+\draw[domain=0:3.5, smooth, variable=\x, blue, thick] plot ({\x}, {0.5*\x});
+\draw[domain=0:3.5, smooth, variable=\x, red, thick] plot ({\x}, {0.7*\x});
+\draw[domain=0:3.5, smooth, variable=\x, green!60!black, thick] plot ({\x}, {0.3*\x});
+\node at (2, 1.8) {$T_i(x)$};
+\draw[dashed] (3,0) node[below] {$x_0$} -- (3,2.5);
+\fill (3,1.5) circle (1.5pt) node[right] {$T_1(x_0)$};
+\fill (3,2.1) circle (1.5pt) node[right] {$T_2(x_0)$};
+\fill (3,0.9) circle (1.5pt) node[right] {$T_3(x_0)$};
+\node[align=center] at (2,-0.8) {\textit{Figure 1 : Pour chaque point $x_0$,} \\ \textit{les images $T_i(x_0)$ sont confinées.}};
+\draw [decorate,decoration={brace,amplitude=5pt,mirror}] (3.2,0.9) -- (3.2,2.1) node [midway,right=4pt] {Borné};
+\end{tikzpicture}
+
+\subsection{Conséquence : Convergence des opérateurs}
+
+Si une suite d'opérateurs continus $(T_n)$ converge ponctuellement vers un opérateur $T$ (i.e. $T_n(x) \to T(x)$ pour tout $x$), alors l'opérateur limite $T$ est lui aussi continu.
+
+\section{Démonstrations}
+
+\subsection{Démonstration utilisant le Théorème de Baire}
+
+\begin{enumerate}
+\item \textbf{Définition d'ensembles fermés :} Pour chaque $n \in \mathbb{N}$, posons :
+   $$X_n = \{ x \in E \mid \forall i \in I, \|T_i(x)\|_F \le n \}$$
+\item \textbf{Fermeture :} Comme chaque $T_i$ est continu et que la norme l'est aussi, $x \mapsto \|T_i(x)\|$ est continue. $X_n$ est une intersection de fermés, c'est donc un \textbf{fermé}.
+\item \textbf{Recouvrement :} Par hypothèse de bornitude ponctuelle, pour tout $x$, il existe un $n$ tel que $x \in X_n$.
+   Donc $E = \bigcup_{n \in \mathbb{N}} X_n$.
+\item \textbf{Utilisation du Théorème de Baire (Jalon 58) :} Comme $E$ est un espace de Banach (complet), il n'est pas "maigre". L'un des fermés $X_N$ doit donc être d'\textbf{intérieur non vide}.
+\item \textbf{Existence d'une boule :} Il existe $x_0 \in E$ et $r > 0$ tels que la boule $B(x_0, r) \subset X_N$.
+   Cela signifie que pour tout $h$ tel que $\|h\| \le r$ and tout $i \in I$ :
+   $\|T_i(x_0 + h)\| \le N$.
+\item \textbf{Majoration de la norme :} Par linéarité et inégalité triangulaire :
+   $\|T_i(h)\| = \|T_i(x_0+h) - T_i(x_0)\| \le \|T_i(x_0+h)\| + \|T_i(x_0)\| \le N + N = 2N$.
+\item \textbf{Conclusion :} Pour tout vecteur unitaire $u$ ($\|u\|=1$), en posant $h = r u$, on a :
+   $\|T_i(u)\| = \frac{1}{r} \|T_i(h)\| \le \frac{2N}{r}$.
+   La borne $\frac{2N}{r}$ est indépendante de $x$ et de $i$. Donc $\sup_I \|T_i\| < \infty$.
+
+\section{Exercices d'Application}
+
+\subsection{Exercice 1 : Divergence des séries de Fourier}
+\textbf{Énoncé :} Utiliser Banach-Steinhaus pour montrer qu'il existe des fonctions continues dont la série de Fourier diverge en 0.
+\textbf{Correction Détaillée :}
+\item On considère l'espace $E = \mathcal{C}_{2\pi}$ muni de la norme uniforme.
+\item On définit $L_n(f) = S_n(f)(0) = \frac{1}{2\pi} \int f(t) D_n(t) dt$ (noyau de Dirichlet).
+\item On montre que $\|L_n\| = \|D_n\|_1 \to \infty$ (en $\ln n$).
+\item Par Banach-Steinhaus, s'il n'y avait pas de divergence, les normes seraient bornées.
+\item \textbf{Conclusion :} Comme les normes explosent, il existe forcément une fonction $f$ pour laquelle la suite $L_n(f)$ n'est pas bornée.
+
+\subsection{Exercice 2 : Niveau Avancé (Convergence simple vs uniforme)}
+\textbf{Énoncé :} Soit $T_n \to T$ ponctuellement. La convergence est-elle uniforme sur tout compact ?
+\textbf{Correction Détaillée :}
+\end{enumerate}
+Oui. On utilise Banach-Steinhaus pour dire que $\sup \|T_n\| < \infty$, puis on utilise un argument d'équicontinuïté (Jalon 59) pour passer de la convergence ponctuelle à la convergence uniforme sur les parties compactes.
+
+\section{Application en Intelligence Artificielle}
+
+\begin{itemize}
+\item \textbf{Le Pont Théorique :} Ce jalon garantit la \textbf{Stabilité Numérique} des processus d'apprentissage infinis. Il assure que si un système réagit de manière finie à chaque donnée, il ne possède pas de "faille" cachée qui le ferait exploser.
+\item \textbf{Example Concret :}
+\item \textbf{Apprentissage par transfert (Transfer Learning) :} On a une famille de modèles $f_\theta$. On veut s'assurer que si chaque modèle est performant sur une tâche donnée, la famille entière reste "sous contrôle" lorsqu'on l'applique à de nouvelles données. Banach-Steinhaus donne les conditions de cette stabilité collective.
+\item \textbf{Réseaux de neurones de largeur infinie (NTK) :} Dans l'analyse théorique, on regarde la limite d'opérateurs quand le nombre de neurones tend vers l'infini. Le principe de la borne uniforme garantit que l'opérateur limite (le noyau tangentiel) reste continu et bien défini.
+\item \textbf{Stabilité des ODE Solvers :} En Neural ODEs, on utilise des solveurs itératifs. Ce théorème justifie que si le solveur converge pour chaque condition initiale, alors l'erreur globale du solveur est bornée uniformément.
+
+\section{Liens Sémantiques}
+
+\item \textbf{Concepts Précédents requis :} [[Jalon 97 (Espaces de Banach et Opérateurs Linéaires).md]], [[Jalon 58 (Théorème de Baire).md]]
+\item \textbf{Concepts Futurs dépendants :} [[Jalon 101 (Théorème de l'application ouverte et théorème du graphe fermé.).md]], [[Jalon 102 (Topologies faibles et faibles-).md]]
+
+\end{itemize}
+
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Opérateurs Multiplication (Bornitude)}
+$\star\star\star\star\star$
+\textbf{Énoncé :}
+Soit $E = \ell^1(\mathbb{N})$ l'espace des suites absolument sommables muni de la norme $\| x \|_1 = \sum |x_n|$.
+Soit $a = (a_n)$ une suite de nombres réels. Pour tout $n \in \mathbb{N}$, on définit $T_n(x) = a_n x_n$.
+On suppose que pour tout $x \in E$, la suite $(T_n(x))_{n \in \mathbb{N}}$ est bornée dans $\mathbb{R}$.
+Montrer que la suite $(a_n)$ est bornée en utilisant le théorème de Banach-Steinhaus.
+
+\textbf{Correction :}
+\begin{enumerate}
+\item Pour chaque $n \in \mathbb{N}$, l'application $T_n : E \to \mathbb{R}$ définie par $T_n(x) = a_n x_n$ est linéaire.
+\item Continuité de $T_n$ :
+   $|T_n(x)| = |a_n x_n| \le |a_n| |x_n| \le |a_n| \sum_{k=0}^{\infty} |x_k| = |a_n| \|x\|_1$.
+   Donc $T_n$ est continu sur $E$, et $\|T_n\|_{\mathcal{L}(E, \mathbb{R})} = |a_n|$. En effet, si $e_n$ est la suite valant $1$ à l'indice $n$ et $0$ ailleurs, on a $\|e_n\|_1 = 1$ et $|T_n(e_n)| = |a_n|$.
+\item Hypothèse de bornitude ponctuelle :
+   Par hypothèse, pour tout $x \in E$, il existe $M_x > 0$ tel que $\forall n \in \mathbb{N}, |T_n(x)| \le M_x$.
+   La famille $(T_n)$ est donc ponctuellement bornée.
+\item Application du théorème de Banach-Steinhaus :
+   L'espace $E = \ell^1(\mathbb{N})$ est un espace de Banach (complet). Les opérateurs $T_n$ sont linéaires, continus de $E$ vers $\mathbb{R}$ (espace vectoriel normé).
+   D'après le théorème de Banach-Steinhaus, la famille des normes $(\|T_n\|)_{n \in \mathbb{N}}$ est bornée.
+\item Conclusion :
+   Il existe $M > 0$ tel que $\forall n \in \mathbb{N}, \|T_n\| \le M$.
+   Or on a vu que $\|T_n\| = |a_n|$.
+   Donc $\forall n \in \mathbb{N}, |a_n| \le M$. La suite $(a_n)$ est bien bornée.
+\end{enumerate}
+\vspace{1cm}
+\subsection*{Exercice 2 : Famille d'Opérateurs Intégraux}
+$\bigstar\star\star\star\star$
+\textbf{Énoncé :}
+Soit $E = \mathcal{C}([0,1], \mathbb{R})$ muni de la norme $\|f\|_{\infty} = \sup_{t \in [0,1]} |f(t)|$.
+Soit $(k_n)_{n \in \mathbb{N}}$ une suite de fonctions continues de $[0,1]$ dans $\mathbb{R}$.
+Pour tout $n$, on définit $T_n : E \to \mathbb{R}$ par $T_n(f) = \int_0^1 k_n(t) f(t) dt$.
+Montrer que si $\forall f \in E, \sup_n |T_n(f)| < \infty$, alors $\sup_n \int_0^1 |k_n(t)| dt < \infty$.
+
+\textbf{Correction :}
+\begin{enumerate}
+\item Chaque $T_n$ est une forme linéaire sur $E$.
+\item Montrons la continuité de $T_n$ :
+   $|T_n(f)| = \left| \int_0^1 k_n(t) f(t) dt \right| \le \int_0^1 |k_n(t)| |f(t)| dt \le \|f\|_{\infty} \int_0^1 |k_n(t)| dt$.
+   Donc $T_n$ est continue, et $\|T_n\| \le \int_0^1 |k_n(t)| dt$.
+\item Montrons l'égalité $\|T_n\| = \int_0^1 |k_n(t)| dt$ :
+   Pour un $\epsilon > 0$, il existe une fonction continue $g_\epsilon$ approchant la fonction signe de $k_n(t)$, c'est-à-dire telle que $g_\epsilon(t) k_n(t) \approx |k_n(t)|$, avec $\|g_\epsilon\|_{\infty} \le 1$.
+   En prenant le sup sur ces fonctions de norme $\le 1$, on obtient exactement $\|T_n\| = \int_0^1 |k_n(t)| dt$.
+\item Application du principe de la borne uniforme :
+   $E = \mathcal{C}([0,1], \mathbb{R})$ est complet. La famille $(T_n)$ est constituée d'opérateurs linéaires continus ponctuellement bornés.
+   Donc par le théorème de Banach-Steinhaus, $\sup_n \|T_n\| < \infty$.
+\item Conclusion :
+   Puisque $\|T_n\| = \int_0^1 |k_n(t)| dt$, il en résulte que $\sup_n \int_0^1 |k_n(t)| dt < \infty$.
+\end{enumerate}
+\vspace{1cm}
+\subsection*{Exercice 3 : Limite Simple de Formes Linéaires Continues}
+$\bigstar\bigstar\star\star\star$
+\textbf{Énoncé :}
+Soit $E$ un espace de Banach et $(f_n)_{n \in \mathbb{N}}$ une suite de formes linéaires continues sur $E$.
+On suppose que pour tout $x \in E$, la suite $(f_n(x))_{n \in \mathbb{N}}$ converge dans $\mathbb{K}$ vers une limite notée $f(x)$.
+Démontrer que la forme linéaire limite $f$ est continue.
+
+\textbf{Correction :}
+\begin{enumerate}
+\item Linéarité de $f$ :
+   Pour tous $x, y \in E$ et $\lambda \in \mathbb{K}$,
+   $f(\lambda x + y) = \lim_{n \to \infty} f_n(\lambda x + y) = \lim_{n \to \infty} (\lambda f_n(x) + f_n(y)) = \lambda f(x) + f(y)$.
+   Donc $f$ est bien une forme linéaire.
+\item Bornitude ponctuelle :
+   Pour tout $x \in E$, la suite $(f_n(x))$ est convergente, donc elle est bornée.
+   Il existe $M_x > 0$ tel que $\forall n, |f_n(x)| \le M_x$.
+\item Application de Banach-Steinhaus :
+   $E$ est de Banach. Les $f_n$ sont continues et ponctuellement bornées.
+   Donc il existe $M > 0$ tel que $\forall n, \|f_n\| \le M$.
+\item Continuité de $f$ :
+   Soit $x \in E$ tel que $\|x\| \le 1$.
+   Pour tout $n$, $|f_n(x)| \le \|f_n\| \|x\| \le M \|x\|$.
+   En passant à la limite quand $n \to \infty$, $|f(x)| \le M \|x\|$.
+   Ceci prouve que $f$ est bornée sur la boule unité fermée, donc continue, et $\|f\| \le M$.
+\end{enumerate}
+\vspace{1cm}
+\subsection*{Exercice 4 : Opérateurs Adjoints}
+$\bigstar\bigstar\star\star\star$
+\textbf{Énoncé :}
+Soient $E$ et $F$ des espaces de Banach. Soit $(T_n)$ une suite d'opérateurs dans $\mathcal{L}(E, F)$.
+Soit $(T_n^*)$ la suite des opérateurs adjoints dans $\mathcal{L}(F^*, E^*)$.
+On suppose que pour tout $y^* \in F^*$, la suite $(T_n^*(y^*))$ est bornée dans $E^*$.
+Montrer que la suite des opérateurs originaux $(T_n)$ est uniformément bornée, c'est-à-dire $\sup_n \|T_n\| < \infty$.
+
+\textbf{Correction :}
+\begin{enumerate}
+\item L'opérateur adjoint $T_n^* : F^* \to E^*$ est défini par $T_n^*(y^*)(x) = y^*(T_n(x))$.
+\item Par hypothèse, pour tout $y^* \in F^*$, la famille $(T_n^*(y^*))_{n \in \mathbb{N}}$ est bornée dans $E^*$.
+   Or $F^*$ est un espace de Banach (dual d'un espace normé).
+   Par le théorème de Banach-Steinhaus appliqué aux opérateurs $(T_n^*)$ sur l'espace de Banach $F^*$, on a $\sup_n \|T_n^*\|_{\mathcal{L}(F^*, E^*)} < \infty$.
+\item Lien entre la norme de l'opérateur et celle de son adjoint :
+   On sait (conséquence du théorème de Hahn-Banach) que $\|T_n\| = \|T_n^*\|$.
+\item Conclusion :
+   Puisque $\sup_n \|T_n^*\| < \infty$, on a immédiatement $\sup_n \|T_n\| < \infty$.
+\end{enumerate}
+\vspace{1cm}
+\subsection*{Exercice 5 : Bilinéarité et Continuité Séparée}
+$\bigstar\bigstar\bigstar\star\star$
+\textbf{Énoncé :}
+Soient $E, F$ des espaces de Banach, et $G$ un espace vectoriel normé.
+Soit $B : E \times F \to G$ une application bilinéaire.
+On suppose que $B$ est séparément continue :
+\begin{itemize}
+\item Pour tout $x_0 \in E$, l'application $y \mapsto B(x_0, y)$ est continue sur $F$.
+\item Pour tout $y_0 \in F$, l'application $x \mapsto B(x, y_0)$ est continue sur $E$.
+\end{itemize}
+Montrer que $B$ est globalement continue (continue sur $E \times F$).
+
+\textbf{Correction :}
+\begin{enumerate}
+\item Soit la boule unité fermée de $E$, notée $B_E = \{x \in E : \|x\|_E \le 1\}$.
+   Considérons la famille d'opérateurs linéaires $(T_x)_{x \in B_E}$ de $F$ dans $G$ définie par $T_x(y) = B(x, y)$.
+   Par hypothèse de continuité séparée, chaque $T_x$ est un opérateur linéaire continu sur $F$.
+\item Vérifions la condition de bornitude ponctuelle :
+   Soit $y \in F$ fixé. On s'intéresse à la famille d'images $(T_x(y))_{x \in B_E} = (B(x, y))_{x \in B_E}$.
+   Considérons l'application $S_y : E \to G$ définie par $S_y(x) = B(x, y)$.
+   Par hypothèse, $S_y$ est linéaire et continue sur $E$.
+   Donc pour tout $x \in B_E$, $\|S_y(x)\|_G \le \|S_y\|_{\mathcal{L}(E,G)} \|x\|_E \le \|S_y\|$.
+   Ceci montre que l'ensemble $\{T_x(y) : x \in B_E\}$ est borné (par $\|S_y\|$).
+\item Application de Banach-Steinhaus :
+   $F$ est un espace de Banach. La famille $(T_x)_{x \in B_E}$ est ponctuellement bornée.
+   D'après le théorème de Banach-Steinhaus, cette famille est uniformément bornée :
+   $\exists M > 0, \forall x \in B_E, \|T_x\|_{\mathcal{L}(F,G)} \le M$.
+\item Conclusion sur la continuité globale :
+   Pour tout $x \in E$ et $y \in F$ non nuls, $\frac{x}{\|x\|} \in B_E$.
+   Donc $\|T_{x/\|x\|}(y)\| \le M \|y\|$.
+   Par linéarité, $\|B(x, y)\| = \|T_x(y)\| = \|x\| \left\| T_{x/\|x\|}(y) \right\| \le M \|x\|_E \|y\|_F$.
+   Cette majoration prouve que l'application bilinéaire $B$ est globalement continue.
+\end{enumerate}
+\vspace{1cm}
+\subsection*{Exercice 6 : Convergence Faible des Suites}
+$\bigstar\bigstar\bigstar\star\star$
+\textbf{Énoncé :}
+Soit $E$ un espace de Banach et $(x_n)$ une suite d'éléments de $E$.
+On dit que la suite $(x_n)$ converge faiblement vers $x \in E$ si, pour toute forme linéaire continue $f \in E^*$, on a $\lim_{n \to \infty} f(x_n) = f(x)$.
+Démontrer que toute suite faiblement convergente est bornée.
+
+\textbf{Correction :}
+\begin{enumerate}
+\item Nous allons utiliser l'injection canonique $J : E \to E^{**}$ définie par $J(x)(f) = f(x)$ pour tout $f \in E^*$.
+   On sait que $J(x)$ est une forme linéaire continue sur l'espace de Banach $E^*$, et que $\|J(x)\|_{E^{**}} = \|x\|_E$.
+\item Considérons la famille d'opérateurs $(J(x_n))_{n \in \mathbb{N}}$ de $E^*$ vers $\mathbb{K}$.
+   Par hypothèse de convergence faible, pour tout $f \in E^*$, la suite $(f(x_n))_{n}$ est convergente, donc elle est bornée.
+   Ainsi, pour tout $f \in E^*$, $\sup_n |J(x_n)(f)| = \sup_n |f(x_n)| < \infty$.
+   La famille $(J(x_n))$ est donc ponctuellement bornée sur $E^*$.
+\item L'espace $E^*$ est un espace de Banach. Par le théorème de Banach-Steinhaus, la famille $(J(x_n))$ est uniformément bornée :
+   $\sup_n \|J(x_n)\|_{E^{**}} < \infty$.
+\item Puisque $\|J(x_n)\|_{E^{**}} = \|x_n\|_E$, on conclut que $\sup_n \|x_n\|_E < \infty$.
+   La suite $(x_n)$ est donc bien bornée.
+\end{enumerate}
+\vspace{1cm}
+\subsection*{Exercice 7 : Opérateurs sur l'espace des fonctions holomorphes}
+$\bigstar\bigstar\bigstar\bigstar\star$
+\textbf{Énoncé :}
+Soit $H(\mathbb{D})$ l'espace des fonctions holomorphes sur le disque unité ouvert $\mathbb{D}$, muni de la topologie de la convergence uniforme sur les compacts (c'est un espace de Fréchet).
+Soit $T_n : H(\mathbb{D}) \to \mathbb{C}$ des formes linéaires continues telles que, pour tout $f \in H(\mathbb{D})$, $\sup_n |T_n(f)| < \infty$.
+Démontrer qu'il existe un compact $K \subset \mathbb{D}$ et une constante $C > 0$ tels que pour tout $n$ et tout $f$, $|T_n(f)| \le C \sup_{z \in K} |f(z)|$.
+
+\textbf{Correction :}
+\begin{enumerate}
+\item Le théorème de Banach-Steinhaus s'étend aux espaces de Fréchet. En effet, la démonstration via le théorème de Baire ne requiert que la complétude et la structure d'espace métrique. $H(\mathbb{D})$ étant complet, Baire s'applique.
+\item Posons $X_k = \{ f \in H(\mathbb{D}) \mid \forall n, |T_n(f)| \le k \}$.
+   Comme dans la preuve classique, $X_k$ est fermé et l'union des $X_k$ recouvre $H(\mathbb{D})$.
+   Par Baire, l'un des $X_N$ contient une boule ouverte.
+\item Une base de voisinages de $0$ dans $H(\mathbb{D})$ est donnée par $V(K, \epsilon) = \{f \in H(\mathbb{D}) \mid \sup_K |f| < \epsilon\}$ pour $K$ compact de $\mathbb{D}$.
+   L'existence d'une boule implique l'existence d'un compact $K$, de $r > 0$ et de $f_0 \in H(\mathbb{D})$ tels que
+   $f_0 + V(K, r) \subset X_N$.
+\item Par symétrie et linéarité (cf. cours), on obtient que pour tout $g \in V(K, r)$, on a $|T_n(g)| \le 2N$ pour tout $n$.
+\item Pour toute fonction $f \in H(\mathbb{D})$ non nulle, posons $M = \sup_{z \in K} |f(z)|$.
+   Alors $g = \frac{r}{2M} f \in V(K, r)$.
+   Donc $|T_n(g)| \le 2N$, soit $\frac{r}{2M} |T_n(f)| \le 2N$.
+   En posant $C = \frac{4N}{r}$, on a bien $|T_n(f)| \le C \sup_{z \in K} |f(z)|$.
+\end{enumerate}
+\vspace{1cm}
+\subsection*{Exercice 8 : Divergence des séries de Fourier (Construction)}
+$\bigstar\bigstar\bigstar\bigstar\star$
+\textbf{Énoncé :}
+Soit $E = \mathcal{C}_{2\pi}$ muni de la norme $\|f\|_{\infty}$.
+Considérons l'opérateur de somme partielle de Fourier en $0$ : $S_n(f)(0) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) D_n(t) dt$ où $D_n(t) = \frac{\sin((n+1/2)t)}{\sin(t/2)}$.
+On sait que $\|S_n\|_{\mathcal{L}(E, \mathbb{C})} = \frac{1}{2\pi} \int_{-\pi}^{\pi} |D_n(t)| dt$.
+Montrer que si on sait que $\int_{-\pi}^{\pi} |D_n(t)| dt \to \infty$, il existe $f \in E$ dont la série de Fourier diverge en $0$.
+
+\textbf{Correction :}
+\begin{enumerate}
+\item Posons $T_n : E \to \mathbb{C}$ défini par $T_n(f) = S_n(f)(0)$.
+   $T_n$ est une forme linéaire continue, et sa norme $\|T_n\|$ est précisément égale à $\frac{1}{2\pi} \|D_n\|_1$.
+\item L'hypothèse indique que $\lim_{n \to \infty} \|T_n\| = +\infty$.
+   La suite des normes n'est donc pas bornée : $\sup_n \|T_n\| = +\infty$.
+\item L'espace $E$ muni de la norme uniforme est un espace de Banach.
+   Si, par l'absurde, la série de Fourier de toute fonction continue convergeait en $0$, alors pour tout $f \in E$, la suite numérique $(S_n(f)(0))_{n}$ serait convergente, et donc bornée.
+\item Par le théorème de Banach-Steinhaus, si on avait $\sup_n |T_n(f)| < \infty$ pour tout $f$, alors on aurait $\sup_n \|T_n\| < \infty$.
+\item Contradiction avec le point 2.
+   Donc il existe nécessairement une fonction $f \in E$ telle que la suite $(T_n(f))_{n}$ n'est pas bornée.
+   En particulier, cette suite diverge. La série de Fourier de $f$ diverge en $0$.
+\end{enumerate}
+\vspace{1cm}
+\subsection*{Exercice 9 : Surjectivité et Application Ouverte (Préliminaire)}
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
+\textbf{Énoncé :}
+Soient $E$ et $F$ deux espaces de Banach.
+Soit $T \in \mathcal{L}(E, F)$ tel que l'image $T(B_E)$ de la boule unité de $E$ a un intérieur non vide dans $F$.
+Montrer par un argument de type Baire que $T$ est surjectif (c'est le cœur de la preuve du théorème de l'application ouverte, Jalon 101).
+
+\textbf{Correction :}
+\begin{enumerate}
+\item L'hypothèse est que l'intérieur de $\overline{T(B_E)}$ n'est pas vide.
+   Or, $T$ est linéaire. L'adhérence $\overline{T(B_E)}$ est convexe et symétrique.
+   Par convexité et symétrie, si un tel intérieur est non vide, alors $0$ appartient à l'intérieur de $\overline{T(B_E)}$.
+   Il existe donc $r > 0$ tel que la boule $B_F(0, r) \subset \overline{T(B_E)}$.
+\item Cela signifie que pour tout $y \in F$ avec $\|y\| < r$, et pour tout $\epsilon > 0$, il existe $x \in B_E$ tel que $\|y - T(x)\| < \epsilon$.
+\item Fixons $y \in F$.
+   Par homothétie, il existe $x_0 \in E$ avec $\|x_0\| \le \frac{1}{r} \|y\|$ tel que $\|y - T(x_0)\| \le \frac{1}{2} \|y\|$.
+   Posons $y_1 = y - T(x_0)$.
+   En appliquant itérativement le même raisonnement : il existe $x_n \in E$ tel que $\|x_n\| \le \frac{1}{r} \|y_n\|$ et $\|y_n - T(x_n)\| \le \frac{1}{2} \|y_n\|$, avec $y_{n+1} = y_n - T(x_n)$.
+\item La norme des $y_n$ décroît géométriquement ($\|y_n\| \le 2^{-n} \|y\|$).
+   Par conséquent, la série de terme général $x_n$ est absolument convergente car $\|x_n\| \le \frac{1}{r} 2^{-n} \|y\|$.
+\item $E$ étant un espace de Banach, la série $\sum x_n$ converge vers un élément $X \in E$.
+   Par continuité de $T$, $T(X) = \sum T(x_n) = \sum (y_n - y_{n+1}) = y_0 = y$.
+\item On a ainsi montré que pour tout $y \in F$, il existe $X \in E$ tel que $T(X) = y$.
+   L'application $T$ est donc surjective.
+\end{enumerate}
+\vspace{1cm}
+\subsection*{Exercice 10 : Condensation des singularités}
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
+\textbf{Énoncé :}
+Soit $E$ un espace de Banach. Soient $F_n$ des espaces vectoriels normés et $T_{n,m} \in \mathcal{L}(E, F_n)$ pour $n, m \ge 1$.
+Supposons que pour tout $n$, $\sup_m \|T_{n,m}\| = \infty$.
+Montrer que l'ensemble $\{x \in E : \forall n, \sup_m \|T_{n,m}(x)\| = \infty \}$ est un $G_\delta$ dense dans $E$ (intersection dénombrable d'ouverts denses).
+C'est le théorème de condensation des singularités.
+
+\textbf{Correction :}
+\begin{enumerate}
+\item Fixons $n$. Posons $E_n = \{x \in E : \sup_m \|T_{n,m}(x)\| = \infty\}$.
+   On sait par la contraposée du théorème de Banach-Steinhaus, et puisque $\sup_m \|T_{n,m}\| = \infty$, que $E_n$ n'est pas vide.
+   Plus précisément, par la preuve de Baire, le complémentaire $E \setminus E_n = \{x \in E : \sup_m \|T_{n,m}(x)\| < \infty\}$ est une réunion dénombrable de fermés d'intérieurs vides (car sinon la norme serait bornée).
+   Donc $E \setminus E_n$ est maigre (première catégorie de Baire).
+\item Par le théorème de Baire sur l'espace complet $E$, le complémentaire d'un ensemble maigre est un $G_\delta$ dense.
+   Ainsi, $E_n$, qui est l'intersection des ouverts denses $O_{n,k} = \{x : \exists m, \|T_{n,m}(x)\| > k\}$, est dense dans $E$.
+\item Considérons l'ensemble total de singularités $S = \bigcap_{n \in \mathbb{N}} E_n$.
+   L'ensemble $S$ est une intersection dénombrable d'ensembles $E_n$, où chaque $E_n$ est lui-même une intersection dénombrable d'ouverts denses.
+\item $S$ est donc une intersection dénombrable d'ouverts denses dans un espace de Banach.
+   Par le théorème de Baire, $S$ est dense dans $E$ (et non vide).
+\item Conclusion : Il existe des vecteurs $x \in E$ (et ils sont denses dans $E$) pour lesquels toutes les familles $(T_{n,m}(x))_m$ "explosent" simultanément pour chaque $n$.
+\end{enumerate}
+\vspace{1cm}
+
+
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Illustration Numérique de la Borne Uniforme}
+\textbf{Introduction :}
+Ce TP vise à illustrer numériquement le théorème de Banach-Steinhaus en dimension finie, bien que le théorème prenne tout son sens en dimension infinie. Nous allons simuler une famille d'opérateurs linéaires $T_n(x)$ et observer la croissance de leur norme.
+
+\textbf{But mathématique :}
+Construire une suite de matrices $(T_n)$ et vérifier empiriquement si la condition de bornitude ponctuelle $\sup_n \|T_n(x)\| < \infty$ est satisfaite pour tout vecteur aléatoire $x$.
+
+\begin{lstlisting}
+import random
+
+def generate_vector(dim):
+    return [random.uniform(-1, 1) for _ in range(dim)]
+
+def vector_norm(v):
+    return sum(abs(x) for x in v)
+
+def apply_operator(n, x):
+    # Tn = diag(1, 2, ..., n) for a simple growing operator effect
+    dim = len(x)
+    return [(i + 1) * x[i] if i < n else x[i] for i in range(dim)]
+
+def matrix_norm(n, dim):
+    # The max absolute column sum for diagonal matrix is just the max diagonal entry
+    return n if n <= dim else dim
+
+dim = 10
+N_max = 5
+print("Testing pointwise boundedness:")
+for _ in range(3):
+    x = generate_vector(dim)
+    sup_Tx = 0
+    for n in range(1, N_max + 1):
+        Tx = apply_operator(n, x)
+        norm_Tx = vector_norm(Tx)
+        if norm_Tx > sup_Tx:
+            sup_Tx = norm_Tx
+    print(f"Vector norm {vector_norm(x):.2f}, Sup over n of ||T_n(x)||: {sup_Tx:.2f}")
+
+print("\nOperator norms:")
+for n in range(1, N_max + 1):
+    print(f"n={n}, ||T_n|| = {matrix_norm(n, dim)}")
+\end{lstlisting}
+\vspace{1cm}
+\subsection*{TP 2 : Divergence des Séries de Fourier (Noyau de Dirichlet)}
+\textbf{Introduction :}
+L'une des applications historiques de Banach-Steinhaus est de montrer qu'il existe des fonctions continues dont la série de Fourier diverge en un point.
+
+\textbf{But mathématique :}
+Calculer numériquement l'intégrale de la valeur absolue du noyau de Dirichlet $D_n(t)$, qui correspond à la norme de l'opérateur "somme partielle de Fourier". Nous vérifierons que cette norme croît logarithmiquement vers l'infini.
+
+\begin{lstlisting}
+import math
+
+def dirichlet_kernel(n, t):
+    if abs(t) < 1e-9:
+        return 2 * n + 1
+    return math.sin((n + 0.5) * t) / math.sin(0.5 * t)
+
+def integrate_abs_dirichlet(n, num_points=1000):
+    # Integrate from -pi to pi
+    a = -math.pi
+    b = math.pi
+    step = (b - a) / num_points
+    integral = 0
+    for i in range(num_points):
+        t = a + i * step + step / 2
+        integral += abs(dirichlet_kernel(n, t)) * step
+    return integral / (2 * math.pi)
+
+print("Norm of Fourier partial sum operators ||S_n||:")
+for n in [10, 50, 100, 200]:
+    norm_Sn = integrate_abs_dirichlet(n, num_points=10000)
+    print(f"n = {n}: ||S_n|| approx {norm_Sn:.4f}")
+\end{lstlisting}
+\vspace{1cm}
+\subsection*{TP 3 : Opérateurs d'Intégration}
+\textbf{Introduction :}
+Considérons l'opérateur d'intégration $T_n(f) = n \int_0^{1/n} f(t) dt$. Le théorème de Banach-Steinhaus stipule que si cet opérateur converge ponctuellement pour toute fonction $f \in C([0,1])$, sa norme doit être bornée.
+
+\textbf{But mathématique :}
+Simuler cet opérateur sur des fonctions discrétisées (polynômes) et estimer sa norme d'opérateur en testant la fonction constante $f(t) = 1$.
+
+\begin{lstlisting}
+def f_test(t):
+    return t * t + 1
+
+def integrate(f, a, b, num_steps=100):
+    step = (b - a) / num_steps
+    integral = 0
+    for i in range(num_steps):
+        t = a + i * step + step / 2
+        integral += f(t) * step
+    return integral
+
+def T_n(n, f):
+    if n == 0: return f(0)
+    return n * integrate(f, 0, 1.0 / n)
+
+print("Testing pointwise convergence T_n(f) -> f(0):")
+print(f"Expected f(0) = {f_test(0)}")
+for n in [1, 10, 100, 1000]:
+    val = T_n(n, f_test)
+    print(f"n={n}, T_n(f) = {val:.4f}")
+
+def constant_function(t):
+    return 1.0
+
+print("\nEstimating operator norm using f(t)=1:")
+for n in [1, 10, 100]:
+    val = T_n(n, constant_function)
+    print(f"n={n}, ||T_n|| approx {val:.4f} (Expected: 1.0)")
+\end{lstlisting}
+\vspace{1cm}
+\subsection*{TP 4 : Résolution Itérative et Stabilité}
+\textbf{Introduction :}
+En intelligence artificielle et en analyse numérique, on utilise des schémas itératifs pour résoudre $Ax = b$. La stabilité de ces schémas repose sur la borne uniforme des opérateurs de transition.
+
+\textbf{But mathématique :}
+Simuler un schéma itératif linéaire $x_{k+1} = T(x_k)$ et vérifier que la suite des normes de l'opérateur itéré $\|T^k\|$ reste bornée si le schéma est stable.
+
+\begin{lstlisting}
+def vector_add(v1, v2):
+    return [x + y for x, y in zip(v1, v2)]
+
+def mat_vec_mult(A, x):
+    return [sum(A[i][j] * x[j] for j in range(len(x))) for i in range(len(A))]
+
+def infinity_norm(x):
+    return max(abs(val) for val in x)
+
+# A stable transition matrix (eigenvalues strictly inside unit circle)
+T = [
+    [0.5, 0.1],
+    [0.2, 0.4]
+]
+
+x0 = [1.0, 1.0]
+xk = x0
+
+print("Iterating x_{k+1} = T x_k:")
+for k in range(1, 11):
+    xk = mat_vec_mult(T, xk)
+    norm_xk = infinity_norm(xk)
+    print(f"k={k}, ||x_k|| = {norm_xk:.5f}")
+
+# Estimating ||T^k||
+def estimate_norm(T_matrix, iters, trials=100):
+    max_norm = 0
+    import random
+    for _ in range(trials):
+        x = [random.uniform(-1, 1), random.uniform(-1, 1)]
+        norm_x = infinity_norm(x)
+        if norm_x == 0: continue
+
+        xk = x
+        for _ in range(iters):
+            xk = mat_vec_mult(T_matrix, xk)
+
+        ratio = infinity_norm(xk) / norm_x
+        if ratio > max_norm:
+            max_norm = ratio
+    return max_norm
+
+for k in [1, 5, 10]:
+    print(f"Estimated ||T^{k}||: {estimate_norm(T, k):.5f}")
+\end{lstlisting}
+\vspace{1cm}
+\subsection*{TP 5 : Quadrature Numérique et Bornes}
+\textbf{Introduction :}
+Les formules de quadrature approchent $\int_0^1 f(t) dt$ par des sommes finies $\sum_{i=1}^n w_{i,n} f(x_{i,n})$. Par Banach-Steinhaus, la convergence pour toute fonction continue $f$ exige que la somme des poids $\sum |w_{i,n}|$ soit bornée.
+
+\textbf{But mathématique :}
+Implémenter la méthode des trapèzes et vérifier numériquement que la somme des valeurs absolues des poids est constante (donc bornée).
+
+\begin{lstlisting}
+def trapezoidal_rule(f, n):
+    # Weights for trapezoidal rule on [0, 1] with n intervals
+    h = 1.0 / n
+    weights = [h] * (n + 1)
+    weights[0] = h / 2.0
+    weights[n] = h / 2.0
+
+    nodes = [i * h for i in range(n + 1)]
+
+    integral = sum(w * f(x) for w, x in zip(weights, nodes))
+    return integral, weights
+
+def f_test(x):
+    return x * x
+
+print("Trapezoidal rule integration of x^2 on [0,1]:")
+for n in [2, 5, 10, 50]:
+    val, weights = trapezoidal_rule(f_test, n)
+    sum_abs_weights = sum(abs(w) for w in weights)
+    print(f"n={n}, Integral={val:.4f}, Sum of |weights|={sum_abs_weights:.2f}")
+
+print("\nThe uniform boundedness of sum |weights| is a required condition for convergence by Banach-Steinhaus.")
+\end{lstlisting}
+\vspace{1cm}
+
+
+\end{document}

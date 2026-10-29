@@ -111,13 +111,13 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-96/Jalon 96 (Livrable IA).md|Jalon 96 : Livrable IA]] : Livrable IA T8 : Démonstration rigoureuse de la convergence de la fonction de perte Cross-Entropy vers l'information théorique de Shannon lors de l'entraînement des modèles de langage.
 ## Année 3 : le niveau master (analyse fonctionnelle, géométrie et apprentissage)
 ### Trimestre 9 : analyse fonctionnelle et théorie spectrale
-- [ ] [[jalon-97/Jalon 97 (Espaces de Banach).md|Jalon 97 : Espaces de Banach]] : Espaces de Banach, opérateurs linéaires continus entre Banach et topologie induite par la norme d'opérateur.
-- [ ] [[jalon-98/Jalon 98 (Théorème de Hahn-Banach).md|Jalon 98 : Théorème de Hahn-Banach]] : Théorème de Hahn-Banach (forme analytique), prolongement des formes linéaires sous-linéaires.
-- [ ] [[jalon-99/Jalon 99 (Théorème de Hahn-Banach).md|Jalon 99 : Théorème de Hahn-Banach]] : Théorème de Hahn-Banach (formes géométriques), séparation des ensembles convexes par des hyperplans.
-- [ ] [[jalon-100/Jalon 100 (Démonstration du théorème de Banach-Steinhaus).md|Jalon 100 : Démonstration du théorème de Banach-Steinhaus]] : Démonstration du théorème de Banach-Steinhaus (principe de la borne uniforme).
-- [ ] [[jalon-101/Jalon 101 (Théorème de l'application ouverte et théorème du graphe fermé.).md|Jalon 101 : Théorème de l'application ouverte et théorème du graphe fermé.]] : Théorème de l'application ouverte et théorème du graphe fermé.
-- [ ] [[jalon-102/Jalon 102 (Topologies faibles et faibles-).md|Jalon 102 : Topologies faibles et faibles-*]] : Topologies faibles et faibles-*, compacité de la boule unité duale (Théorème de Banach-Alaoglu).
-- [ ] [[jalon-103/Jalon 103 (Espaces de Hilbert généraux).md|Jalon 103 : Espaces de Hilbert généraux]] : Espaces de Hilbert généraux, théorème de projection sur un convexe fermé et dualité de Riesz.
+- [x] [[jalon-97/Jalon-97.md|Jalon 97 : Espaces de Banach]] : Espaces de Banach, opérateurs linéaires continus entre Banach et topologie induite par la norme d'opérateur. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [x] [[jalon-98/Jalon-98.md|Jalon 98 : Théorème de Hahn-Banach]] : Théorème de Hahn-Banach (forme analytique), prolongement des formes linéaires sous-linéaires. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [x] [[jalon-99/Jalon-99.md|Jalon 99 : Théorème de Hahn-Banach]] : Théorème de Hahn-Banach (formes géométriques), séparation des ensembles convexes par des hyperplans. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [x] [[jalon-100/Jalon-100.md|Jalon 100 : Démonstration du théorème de Banach-Steinhaus]] : Démonstration du théorème de Banach-Steinhaus (principe de la borne uniforme). 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [x] [[jalon-101/Jalon-101.md|Jalon 101 : Théorème de l'application ouverte et théorème du graphe fermé.]] : Théorème de l'application ouverte et théorème du graphe fermé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [x] [[jalon-102/Jalon-102.md|Jalon 102 : Topologies faibles et faibles-*]] : Topologies faibles et faibles-*, compacité de la boule unité duale (Théorème de Banach-Alaoglu). 🔥 **Enrichi** *(10 Exos + 5 TP)*
+- [x] [[jalon-103/Jalon-103.md|Jalon 103 : Espaces de Hilbert généraux]] : Espaces de Hilbert généraux, théorème de projection sur un convexe fermé et dualité de Riesz. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-104/Jalon 104 (Bases hilbertiennes).md|Jalon 104 : Bases hilbertiennes]] : Bases hilbertiennes (systèmes orthonormés complets) et séparabilité des espaces de Hilbert.
 - [ ] [[jalon-105/Jalon 105 (Opérateurs adjoints).md|Jalon 105 : Opérateurs adjoints]] : Opérateurs adjoints, opérateurs compacts et propriétés de régularisation.
 - [ ] [[jalon-106/Jalon 106 (Théorème spectral pour les opérateurs compacts autoadjoints).md|Jalon 106 : Théorème spectral pour les opérateurs compacts autoadjoints]] : Théorème spectral pour les opérateurs compacts autoadjoints (décomposition en base hilbertienne d'éléments propres).
@@ -166,6 +166,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [ ] [[jalon-153-156/Jalons 153 à 156 (Synthèse finale).md|Jalons 153 à 156 : Synthèse finale]] : Synthèse finale, structuration de vos notes Obsidian en un graphe de connaissances unifié, et tournage de la série de vidéos YouTube clôturant le cycle d'études.
 
 ## Historique d'Audit
+- [2026-10-19] : [Upsert/Création] du Jalon 94 - Théorème central limite (TCL). Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-07] : [Upsert/Création] du Jalon 86 - Variables aléatoires vues comme des applications mesurables. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-12] : [Upsert/Création] du Jalon 57 - Théorème du point fixe de Banach. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-08-05] : [Upsert/Création] du Jalon 48 - Livrable IA T4 : Formalisation mathématique de la Rétropropagation. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*

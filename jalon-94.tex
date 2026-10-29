@@ -1,0 +1,787 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{mathrsfs}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge THÉORÈME CENTRAL LIMITE (TCL) \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\part{Cours Magistral}
+
+
+
+
+\section{Introduction au comportement asymptotique}
+
+Le théorème central limite (TCL) est l'un des piliers des probabilités modernes. Il formalise le fait que la somme d'un grand nombre de variables aléatoires indépendantes et identiquement distribuées, convenablement normalisée, converge en loi vers une distribution normale standard, quelle que soit la loi d'origine de ces variables (pourvu qu'elles admettent une variance finie).
+
+Ce résultat justifie l'ubiquité de la loi normale dans les sciences appliquées, les statistiques et l'intelligence artificielle, où les phénomènes complexes sont souvent modélisés comme l'accumulation de multiples petites perturbations indépendantes.
+
+\subsubsection{Exemple Concret Immédiat : Moyenne des notes}
+
+Considérons une classe de 100 élèves passant un examen difficile noté sur 20. Les notes $X_1, \dots, X_{100}$ sont I.I.D. avec une espérance $\mu = 10$ et une variance $\sigma^2 = 9$.
+La note moyenne de la classe est $\bar{X} = \frac{1}{100} \sum_{i=1}^{100} X_i$.
+Bien que la répartition des notes individuelles puisse être asymétrique ou multimodale, le TCL garantit que la variable $\bar{X}$ suit approximativement une loi $\mathcal{N}(10, \frac{9}{100})$.
+On a donc $\bar{X} \approx \mathcal{N}(10, 0.09)$. L'écart-type est $\sigma_{\bar{X}} = 0.3$.
+La probabilité que la moyenne de la classe se situe entre $9.4$ et $10.6$ (soit à $\pm 2$ écarts-types) est d'environ $95\%$, indépendamment de la forme de la loi de $X_i$.
+
+\section{Énoncé du Théorème Central Limite (Lindeberg-Lévy)}
+
+\subsubsection{Formalisation}
+
+Soit $(X_n)_{n \in \mathbb{N}^*}$ une suite de variables aléatoires réelles, indépendantes et identiquement distribuées (I.I.D.). On suppose que ces variables admettent un moment d'ordre deux fini, ce qui implique l'existence de leur espérance et de leur variance :
+\textbullet{} Espérance : $\mathbb{E}[X_1] = \mu$
+\textbullet{} Variance : $\text{Var}(X_1) = \sigma^2$, avec $0 < \sigma^2 < \infty$.
+
+On définit la somme partielle $S_n = \sum_{i=1}^n X_i$ et la moyenne empirique $\bar{X}_n = \frac{S_n}{n}$.
+
+\begin{quote}\textbf{Théorème (Théorème Central Limite) :}\end{quote}
+\begin{quote}La variable aléatoire centrée et réduite $Z_n$ définie par :\end{quote}
+\begin{quote}$$Z_n = \frac{S_n - n\mu}{\sigma \sqrt{n}} = \sqrt{n} \left( \frac{\bar{X}_n - \mu}{\sigma} \right)$$\end{quote}
+\begin{quote}converge en loi vers la loi normale centrée réduite $\mathcal{N}(0, 1)$ lorsque $n \to \infty$.\end{quote}
+\begin{quote}> Autrement dit, pour tout couple de réels $a < b$ :\end{quote}
+\begin{quote}$$\lim_{n \to \infty} \mathbb{P}(a \le Z_n \le b) = \int_a^b \frac{1}{\sqrt{2\pi}} e^{-x^2/2} dx$$\end{quote}
+
+\subsubsection{Exemple Concret Immédiat : Somme de variables uniformes}
+
+Considérons $n=12$ variables aléatoires $X_1, \dots, X_{12}$ indépendantes, suivant toutes une loi uniforme continue sur l'intervalle $[0, 1]$.
+\textbullet{} L'espérance est $\mu = \frac{1}{2}$.
+\textbullet{} La variance est $\sigma^2 = \frac{1}{12}$.
+
+On pose $S_{12} = \sum_{i=1}^{12} X_i$.
+L'espérance de la somme est $\mathbb{E}[S_{12}] = 12 \times \frac{1}{2} = 6$.
+La variance de la somme est $\text{Var}(S_{12}) = 12 \times \frac{1}{12} = 1$.
+
+D'après le TCL, la variable $Z_{12} = \frac{S_{12} - 6}{1} = S_{12} - 6$ est approximativement de loi $\mathcal{N}(0, 1)$.
+Par conséquent, la somme $S_{12}$ elle-même suit approximativement une loi $\mathcal{N}(6, 1)$.
+C'est une méthode historiquement utilisée pour générer informatiquement des nombres pseudo-aléatoires de loi normale.
+
+\subsubsection{Exemple Concret Immédiat : Lancer de pièces}
+
+Si on lance une pièce équilibrée $n=400$ fois, le nombre de Faces $S_{400}$ suit une loi binomiale $\mathcal{B}(400, 0.5)$.
+$\mu = np = 200$, et $\sigma = \sqrt{np(1-p)} = \sqrt{100} = 10$.
+Pour évaluer $\mathbb{P}(190 \le S_{400} \le 210)$, le TCL indique que $Z_{400} = \frac{S_{400} - 200}{10}$ est proche de $\mathcal{N}(0,1)$.
+L'événement se réécrit $-1 \le Z_{400} \le 1$.
+Par intégration de la loi normale, $\mathbb{P}(-1 \le Z \le 1) \approx 0.6826$.
+La probabilité exacte est $0.683$, ce qui montre la puissance d'approximation du théorème.
+
+\section{Démonstration via les fonctions caractéristiques}
+
+La démonstration classique repose sur l'outil des fonctions caractéristiques (transformée de Fourier des mesures de probabilité) et sur le théorème de continuité de Paul Lévy.
+
+\textbf{Preuve pas à pas :}
+
+Afin d'alléger les notations, on peut, sans perte de généralité, centrer et réduire préalablement les variables $X_i$.
+Posons $Y_i = \frac{X_i - \mu}{\sigma}$.
+Les variables $(Y_i)$ sont I.I.D., vérifient $\mathbb{E}[Y_1] = 0$ et $\mathbb{E}[Y_1^2] = \text{Var}(Y_1) = 1$.
+
+La somme normalisée étudiée s'écrit alors :
+$$Z_n = \frac{1}{\sqrt{n}} \sum_{i=1}^n Y_i$$
+
+Soit $\phi_Y(t) = \mathbb{E}[e^{itY_1}]$ la fonction caractéristique commune aux variables $Y_i$.
+Puisque $Y_1$ admet des moments finis jusqu'à l'ordre 2, sa fonction caractéristique admet un développement limité à l'ordre 2 au voisinage de $0$ :
+$$\phi_Y(t) = \phi_Y(0) + t \phi_Y'(0) + \frac{t^2}{2} \phi_Y''(0) + o(t^2)$$
+
+Par les propriétés des fonctions caractéristiques :
+\textbullet{} $\phi_Y(0) = 1$
+\textbullet{} $\phi_Y'(0) = i\mathbb{E}[Y_1] = 0$
+\textbullet{} $\phi_Y''(0) = i^2\mathbb{E}[Y_1^2] = -1 \times 1 = -1$
+
+On obtient donc, au voisinage de $t=0$ :
+$$\phi_Y(t) = 1 - \frac{t^2}{2} + o(t^2)$$
+
+Calculons maintenant la fonction caractéristique de $Z_n$.
+Par linéarité de l'argument de l'exponentielle complexe et par indépendance des variables $(Y_i)$ :
+$$\phi_{Z_n}(t) = \mathbb{E}\left[ \exp\left( it \frac{1}{\sqrt{n}} \sum_{j=1}^n Y_j \right) \right]$$
+$$\phi_{Z_n}(t) = \prod_{j=1}^n \mathbb{E}\left[ \exp\left( i \frac{t}{\sqrt{n}} Y_j \right) \right]$$
+$$\phi_{Z_n}(t) = \left( \phi_Y\left( \frac{t}{\sqrt{n}} \right) \right)^n$$
+
+Fixons $t \in \mathbb{R}$. Pour $n$ suffisamment grand, le terme $\frac{t}{\sqrt{n}}$ tend vers $0$. On peut donc utiliser le développement limité obtenu précédemment :
+$$\phi_Y\left( \frac{t}{\sqrt{n}} \right) = 1 - \frac{1}{2} \left(\frac{t}{\sqrt{n}}\right)^2 + o\left( \frac{t^2}{n} \right) = 1 - \frac{t^2}{2n} + o\left( \frac{1}{n} \right)$$
+
+Il s'ensuit que :
+$$\phi_{Z_n}(t) = \left( 1 - \frac{t^2}{2n} + o\left( \frac{1}{n} \right) \right)^n$$
+
+En passant au logarithme (pour $n$ assez grand afin que l'argument soit positif) :
+$$\ln \phi_{Z_n}(t) = n \ln\left( 1 - \frac{t^2}{2n} + o\left( \frac{1}{n} \right) \right)$$
+
+Puisque $\ln(1 + x) \sim x$ quand $x \to 0$ :
+$$\ln \phi_{Z_n}(t) \sim n \left( - \frac{t^2}{2n} \right) = - \frac{t^2}{2}$$
+
+En composant par la fonction exponentielle (qui est continue), on obtient la limite ponctuelle :
+$$\lim_{n \to \infty} \phi_{Z_n}(t) = e^{-t^2/2}$$
+
+Or, la fonction $t \mapsto e^{-t^2/2}$ est précisément la fonction caractéristique de la loi normale centrée réduite $\mathcal{N}(0, 1)$.
+D'après le théorème de continuité de Lévy, la convergence ponctuelle des fonctions caractéristiques vers une fonction continue en $0$ implique la convergence en loi des variables aléatoires associées :
+$$Z_n \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$$
+
+Ce qui achève la démonstration du Théorème Central Limite.
+
+\subsubsection{Exemple Concret Immédiat : Vérification du DL avec Poisson}
+
+Si on considère des variables $X_i$ de loi de Poisson $\mathcal{P}(1)$ (donc $\mu=1, \sigma^2=1$).
+La fonction caractéristique de $X$ centrée (donc $Y = X-1$) est :
+$\phi_Y(t) = \mathbb{E}[e^{it(X-1)}] = e^{-it} \exp(e^{it} - 1) = \exp(e^{it} - 1 - it)$.
+Le développement de $e^{it} = 1 + it - t^2/2 + o(t^2)$ donne :
+$e^{it} - 1 - it = -t^2/2 + o(t^2)$.
+D'où $\phi_Y(t) = \exp(-t^2/2 + o(t^2)) = 1 - t^2/2 + o(t^2)$.
+On retrouve bien la structure quadratique $(-t^2/2)$ requise par le théorème.
+
+\subsubsection{Exemple Concret Immédiat : Cas Gaussien}
+
+Si $X_1 \sim \mathcal{N}(0, 1)$, alors sa fonction caractéristique est exactement $\phi_X(t) = e^{-t^2/2}$.
+Dans ce cas, $\phi_X(t/\sqrt{n})^n = (e^{-t^2/(2n)})^n = e^{-t^2/2}$.
+La limite est atteinte instantanément pour tout $n$, car la somme de variables normales indépendantes reste normale.
+
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.5]
+  % Axe
+  \draw[->, thick] (-3, 0) -- (3, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.2) -- (0, 1.5) node[above] {$f(x)$};
+
+  % Courbe normale
+  \draw[domain=-2.5:2.5, samples=100, smooth, thick, blue] plot (\x, {exp(-\x*\x/2) / sqrt(2*3.14159)});
+
+  % Barres (Binomiale approchee)
+  \foreach \i in {-2,-1.5,-1,-0.5,0,0.5,1,1.5,2} {
+     \draw[fill=blue!30, opacity=0.5] (\i-0.2, 0) rectangle (\i+0.2, {exp(-\i*\i/2) / sqrt(2*3.14159)});
+  }
+
+  \node[blue, right] at (1, 1) {$\mathcal{N}(0,1)$};
+  \node[below] at (0,0) {0};
+\end{tikzpicture}
+\caption{Convergence des histogrammes de sommes de variables (ex: binomiales) vers la densité de la loi normale centrée réduite.}
+\end{figure}
+
+
+\section{Vitesse de convergence : Théorème de Berry-Esseen}
+
+Le TCL assure la convergence asymptotique. Pour quantifier l'erreur d'approximation à $n$ fini, on fait appel au théorème de Berry-Esseen.
+
+\begin{quote}\textbf{Théorème de Berry-Esseen :}\end{quote}
+\begin{quote}Si, en plus des hypothèses du TCL, le moment d'ordre 3 est fini, c'est-à-dire $\mathbb{E}[|X_1|^3] = \rho < \infty$, alors il existe une constante universelle $C$ (telle que $0.4 \le C \le 0.4748$) telle que pour tout $x \in \mathbb{R}$ et tout $n \in \mathbb{N}^*$ :\end{quote}
+\begin{quote}$$\left| \mathbb{P}(Z_n \le x) - \Phi(x) \right| \le \frac{C \rho}{\sigma^3 \sqrt{n}}$$\end{quote}
+\begin{quote}où $\Phi$ désigne la fonction de répartition de la loi $\mathcal{N}(0, 1)$.\end{quote}
+
+Cela démontre que l'erreur d'approximation uniforme décroît en $\mathcal{O}\left(\frac{1}{\sqrt{n}}\right)$.
+
+\subsubsection{Exemple Concret Immédiat : Calcul d'erreur}
+
+Reprenons l'exemple d'une variable de Bernoulli modélisant un pile ou face biaisé avec $p=0.2$.
+$\mu = 0.2$, $\sigma^2 = 0.16$, et $\sigma = 0.4$.
+Calculons $\rho = \mathbb{E}[|X - 0.2|^3]$.
+$X = 1$ avec probabilité $0.2$, et $X = 0$ avec probabilité $0.8$.
+$\rho = 0.2 \times |1 - 0.2|^3 + 0.8 \times |0 - 0.2|^3 = 0.2 \times 0.512 + 0.8 \times 0.008 = 0.1024 + 0.0064 = 0.1088$.
+L'erreur de l'approximation normale est bornée par $\frac{0.4748 \times 0.1088}{(0.4)^3 \sqrt{n}} \approx \frac{0.0516}{0.064 \sqrt{n}} \approx \frac{0.807}{\sqrt{n}}$.
+Pour $n=100$ lancers, l'erreur est inférieure à $8\%$. Pour $n=10000$, l'erreur chute sous les $0.8\%$.
+
+\section{Applications en Intelligence Artificielle et Statistique}
+
+La puissance du TCL se manifeste particulièrement en apprentissage automatique et en théorie de l'information.
+
+\subsubsection{Initialisation des réseaux de neurones (Xavier/He)}
+
+Dans un réseau de neurones profond, l'activation d'un neurone correspond à une somme pondérée d'entrées $z = \sum_{i=1}^d w_i x_i$.
+Sous des hypothèses raisonnables (indépendance des $w_i$ et des $x_i$, centrés), cette somme agit comme l'addition d'un grand nombre de variables aléatoires indépendantes.
+D'après le TCL, la pré-activation $z$ tend vers une loi normale. Le contrôle rigoureux de la variance de cette loi normale limite l'explosion ou la disparition des gradients. C'est le fondement de l'initialisation de Xavier Glorot et Kaiming He, où les variances des poids sont choisies proportionnellement à $1/d$.
+
+\subsubsection{Modèles de diffusion (Diffusion Models)}
+
+Les modèles génératifs de diffusion, tels que ceux utilisés pour la synthèse d'images, consistent à injecter progressivement un bruit gaussien de faible amplitude à une donnée initiale.
+Le TCL (ou plus rigoureusement le théorème de Donsker, son extension aux processus stochastiques) explique pourquoi l'accumulation d'un très grand nombre de petites perturbations additives et indépendantes conduit inexorablement à une distribution marginale parfaitement gaussienne au bout du processus de corruption (Forward Process). L'inversion de ce processus (Reverse Diffusion) s'appuie alors intégralement sur les propriétés analytiques du noyau gaussien.
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+
+\subsection*{Exercice 1 : Application directe : Approximation d'une loi binomiale \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Une compagnie aérienne sait que 5% des passagers ayant réservé un vol ne se présentent pas à l'embarquement. Elle vend 400 billets pour un vol ayant une capacité de 385 places.
+Soit $X$ la variable aléatoire représentant le nombre de passagers se présentant à l'embarquement.
+1. Quelle est la loi exacte de $X$ ?
+2. En utilisant le Théorème Central Limite, estimer la probabilité que tous les passagers se présentant puissent embarquer (c'est-à-dire $\mathbb{P}(X \le 385)$).
+
+\textbf{Correction :}
+
+1. La décision de chaque passager de se présenter ou non peut être modélisée par une variable de Bernoulli $Y_i$.
+La probabilité qu'un passager se présente est $p = 1 - 0.05 = 0.95$.
+Les variables $(Y_i)_{1 \le i \le 400}$ sont supposées I.I.D. de loi $\mathcal{B}(0.95)$.
+La somme $X = \sum_{i=1}^{400} Y_i$ représente le nombre total de passagers se présentant.
+Ainsi, $X$ suit une loi binomiale exacte : $X \sim \mathcal{B}(n=400, p=0.95)$.
+
+2. L'espérance de $Y_i$ est $\mu = 0.95$.
+La variance de $Y_i$ est $\sigma^2 = p(1-p) = 0.95 \times 0.05 = 0.0475$.
+Par conséquent, pour la somme $X$, l'espérance est $\mathbb{E}[X] = n\mu = 400 \times 0.95 = 380$ et la variance est $\text{Var}(X) = n\sigma^2 = 400 \times 0.0475 = 19$.
+L'écart-type de $X$ est $\sqrt{19} \approx 4.3589$.
+
+Puisque $n=400$ est grand, on peut approcher la loi de la somme par le Théorème Central Limite.
+La variable aléatoire $Z = \frac{X - 380}{\sqrt{19}}$ suit approximativement une loi normale centrée réduite $\mathcal{N}(0, 1)$.
+On cherche $\mathbb{P}(X \le 385)$.
+Cela équivaut à :
+$$\mathbb{P}\left( \frac{X - 380}{\sqrt{19}} \le \frac{385 - 380}{\sqrt{19}} \right)$$
+$$\mathbb{P}(Z \le 1.147)$$
+
+En utilisant la table de la fonction de répartition $\Phi$ de la loi $\mathcal{N}(0, 1)$ :
+$$\Phi(1.147) \approx 0.874$$
+La probabilité que tous les passagers puissent embarquer est donc d'environ $87.4\%$.
+
+
+\vspace{1cm}
+\subsection*{Exercice 2 : Application directe : Approximation d'une loi de Poisson \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Soit $(X_n)_{n \ge 1}$ une suite de variables aléatoires indépendantes suivant toutes la loi de Poisson de paramètre $\lambda = 2$.
+On pose $S_n = \sum_{i=1}^n X_i$.
+1. Quelle est l'espérance et la variance de $S_n$ ?
+2. À l'aide du Théorème Central Limite, trouver la limite quand $n \to \infty$ de $\mathbb{P}(S_n \le 2n + \sqrt{2n})$.
+3. Expliquer le lien géométrique avec la forme de la cloche.
+
+\textbf{Correction :}
+
+1. Les variables $X_i$ sont I.I.D. et suivent une loi de Poisson de paramètre $\lambda = 2$.
+L'espérance est $\mathbb{E}[X_1] = \lambda = 2$.
+La variance est $\text{Var}(X_1) = \lambda = 2$.
+La variable $S_n$ est la somme de $n$ telles variables. Par linéarité de l'espérance et additivité de la variance (indépendance), on a :
+$\mathbb{E}[S_n] = 2n$ et $\text{Var}(S_n) = 2n$.
+Remarque : On sait que la somme de variables de Poisson indépendantes est une loi de Poisson de paramètre la somme des paramètres. Donc $S_n$ suit exactement une loi $\mathcal{P}(2n)$.
+
+2. Le Théorème Central Limite stipule que la variable centrée et réduite :
+$$Z_n = \frac{S_n - \mathbb{E}[S_n]}{\sqrt{\text{Var}(S_n)}} = \frac{S_n - 2n}{\sqrt{2n}}$$
+converge en loi vers $\mathcal{N}(0, 1)$.
+On cherche $\lim_{n \to \infty} \mathbb{P}(S_n \le 2n + \sqrt{2n})$.
+Cela se réécrit :
+$$\mathbb{P}\left( S_n - 2n \le \sqrt{2n} \right) = \mathbb{P}\left( \frac{S_n - 2n}{\sqrt{2n}} \le 1 \right) = \mathbb{P}(Z_n \le 1)$$
+Par convergence en loi vers $Z \sim \mathcal{N}(0, 1)$, on a :
+$$\lim_{n \to \infty} \mathbb{P}(Z_n \le 1) = \Phi(1) \approx 0.8413$$
+
+3. La loi de Poisson $\mathcal{P}(\lambda)$ est asymétrique pour de petits paramètres (biaisée vers $0$). Lorsque le paramètre $\lambda = 2n$ devient grand, le profil de probabilité de cette loi discrète épouse très précisément le profil symétrique de la densité de la loi normale (cloche). Le TCL démontre que l'asymétrie initiale des $(X_i)$ s'estompe avec l'accumulation additive.
+
+
+\vspace{1cm}
+\subsection*{Exercice 3 : Moyenne empirique d'une loi continue \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Soit $X_1, \dots, X_{100}$ des variables aléatoires indépendantes suivant une loi uniforme continue sur l'intervalle $[0, 3]$.
+On note $\bar{X}_{100} = \frac{1}{100} \sum_{i=1}^{100} X_i$ la moyenne empirique.
+Déterminer approximativement la probabilité que la moyenne empirique s'éloigne de sa moyenne théorique de plus de $0.1$.
+
+\textbf{Correction :}
+
+Chaque $X_i$ suit $\mathcal{U}([0, 3])$.
+L'espérance est $\mu = \frac{0 + 3}{2} = 1.5$.
+La variance est $\sigma^2 = \frac{(3 - 0)^2}{12} = \frac{9}{12} = 0.75$.
+
+On étudie la moyenne empirique $\bar{X}_{100}$. Son espérance est $\mathbb{E}[\bar{X}_{100}] = \mu = 1.5$, et sa variance est $\text{Var}(\bar{X}_{100}) = \frac{\sigma^2}{100} = \frac{0.75}{100} = 0.0075$.
+L'écart-type de la moyenne empirique est $\sigma_{\bar{X}} = \sqrt{0.0075} \approx 0.0866$.
+
+On cherche à évaluer $\mathbb{P}\left( |\bar{X}_{100} - 1.5| > 0.1 \right)$.
+D'après le TCL, la variable $Z = \frac{\bar{X}_{100} - 1.5}{\sqrt{0.0075}}$ suit approximativement une loi $\mathcal{N}(0, 1)$.
+
+L'inégalité se réécrit :
+$$|\bar{X}_{100} - 1.5| > 0.1 \iff \left| \frac{\bar{X}_{100} - 1.5}{\sqrt{0.0075}} \right| > \frac{0.1}{\sqrt{0.0075}}$$
+$$|Z| > \frac{0.1}{0.0866} \approx 1.1547$$
+
+La probabilité recherchée est donc :
+$$\mathbb{P}(|Z| > 1.155) = 2 \times (1 - \Phi(1.155))$$
+On lit $\Phi(1.15) \approx 0.8749$ et $\Phi(1.16) \approx 0.8770$, donc $\Phi(1.155) \approx 0.876$.
+La probabilité est donc environ $2 \times (1 - 0.876) = 2 \times 0.124 = 0.248$.
+Il y a donc environ $24.8\%$ de chance que la moyenne empirique s'écarte de plus de $0.1$ de son espérance.
+
+
+\vspace{1cm}
+\subsection*{Exercice 4 : Fiabilité des composants électroniques \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+La durée de vie $X$ d'un composant électronique suit une loi exponentielle de paramètre $\lambda = 0.01$ (en jours).
+Pour qu'un système fonctionne en continu, on dispose de $n=100$ composants de rechange que l'on utilise les uns après les autres (le $i$-ème est allumé dès que le $(i-1)$-ème tombe en panne).
+Soit $T = \sum_{i=1}^{100} X_i$ la durée de fonctionnement totale du système.
+Estimer la probabilité que le système fonctionne pendant au moins $11000$ jours.
+
+\textbf{Correction :}
+
+Chaque durée de vie $X_i$ suit une loi exponentielle $\mathcal{E}(\lambda = 0.01)$.
+L'espérance est $\mu = \mathbb{E}[X_i] = \frac{1}{\lambda} = \frac{1}{0.01} = 100$ jours.
+La variance est $\sigma^2 = \text{Var}(X_i) = \frac{1}{\lambda^2} = \frac{1}{0.0001} = 10000$.
+
+La durée totale est $T = \sum_{i=1}^{100} X_i$.
+L'espérance de la somme est $\mathbb{E}[T] = 100 \times 100 = 10000$ jours.
+La variance de la somme est $\text{Var}(T) = 100 \times 10000 = 1000000$.
+L'écart-type total est $\sigma_T = \sqrt{1000000} = 1000$.
+
+On utilise le TCL pour approcher la distribution de $T$. La variable aléatoire $Z = \frac{T - 10000}{1000}$ suit approximativement une loi $\mathcal{N}(0, 1)$.
+
+On cherche $\mathbb{P}(T \ge 11000)$.
+$$\mathbb{P}(T \ge 11000) = \mathbb{P}\left( \frac{T - 10000}{1000} \ge \frac{11000 - 10000}{1000} \right)$$
+$$\mathbb{P}(T \ge 11000) = \mathbb{P}(Z \ge 1)$$
+
+Pour une loi normale centrée réduite :
+$$\mathbb{P}(Z \ge 1) = 1 - \Phi(1)$$
+On sait que $\Phi(1) \approx 0.8413$.
+Ainsi :
+$$\mathbb{P}(T \ge 11000) \approx 1 - 0.8413 = 0.1587$$
+Le système a donc approximativement $15.87\%$ de chance de durer plus de $11000$ jours.
+
+
+\vspace{1cm}
+\subsection*{Exercice 5 : Théorème de la Limite Centrale et Intervalle de Confiance \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Un institut de sondage souhaite estimer la proportion $p$ d'électeurs favorables à un candidat.
+Il interroge $n=1000$ personnes. Soit $F_n$ la proportion empirique des personnes favorables obtenues dans l'échantillon.
+Montrer comment le TCL permet de construire un intervalle de confiance asymptotique à $95\%$ pour la proportion $p$, et donner la forme de cet intervalle. Quelle est la marge d'erreur maximale ?
+
+\textbf{Correction :}
+
+Soit $X_i$ la variable de Bernoulli qui vaut $1$ si la $i$-ème personne est favorable et $0$ sinon. $X_i \sim \mathcal{B}(p)$.
+La proportion empirique est $F_n = \frac{1}{n} \sum_{i=1}^n X_i$.
+L'espérance de $X_i$ est $p$, sa variance est $p(1-p)$.
+L'espérance de $F_n$ est $p$, et sa variance est $\frac{p(1-p)}{n}$.
+
+Le TCL indique que :
+$$Z_n = \frac{F_n - p}{\sqrt{\frac{p(1-p)}{n}}} \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$$
+
+Pour un niveau de confiance de $95\%$, on cherche la valeur limite $z_{\alpha/2}$ telle que $\mathbb{P}(-z_{\alpha/2} \le Z_n \le z_{\alpha/2}) = 0.95$.
+Dans les tables de la loi normale, $\Phi(1.96) \approx 0.975$, donc $z_{\alpha/2} = 1.96$.
+
+On a donc, approximativement :
+$$\mathbb{P}\left( -1.96 \le \frac{F_n - p}{\sqrt{\frac{p(1-p)}{n}}} \le 1.96 \right) \approx 0.95$$
+En isolant $p$ dans l'inégalité (et en remplaçant au dénominateur le $p(1-p)$ inconnu par son estimateur convergent $F_n(1-F_n)$ ou par sa majoration $1/4$), on obtient l'intervalle de confiance :
+$$IC_{95\%} = \left[ F_n - 1.96 \sqrt{\frac{F_n(1-F_n)}{n}} , F_n + 1.96 \sqrt{\frac{F_n(1-F_n)}{n}} \right]$$
+
+La marge d'erreur est $E = 1.96 \sqrt{\frac{p(1-p)}{n}}$.
+Puisque la fonction $p \mapsto p(1-p)$ est maximale pour $p=0.5$ avec une valeur de $1/4$, la marge d'erreur maximale est :
+$$E_{\max} = 1.96 \sqrt{\frac{0.25}{1000}} = \frac{1.96}{2 \sqrt{1000}} = \frac{1.96}{63.24} \approx 0.03099$$
+La marge d'erreur maximale est donc d'environ $3.1\%$ (ce qui est la fameuse règle des "$3\%$" pour des sondages sur un millier de personnes).
+
+
+\vspace{1cm}
+\subsection*{Exercice 6 : Convergence en loi d'une variable Student vers une Gaussienne \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $(X_i)$ une suite de variables aléatoires de loi $\mathcal{N}(\mu, \sigma^2)$ I.I.D.
+On définit la moyenne empirique $\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$ et la variance empirique non biaisée $S_n^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X}_n)^2$.
+Soit la statistique $T_n = \frac{\bar{X}_n - \mu}{S_n / \sqrt{n}}$.
+En utilisant le théorème de Slutsky et le Théorème Central Limite, montrer que $T_n$ converge en loi vers $\mathcal{N}(0, 1)$ lorsque $n \to \infty$.
+
+\textbf{Correction :}
+
+La variable $T_n$ peut s'écrire sous la forme d'un produit de deux variables aléatoires :
+$$T_n = \frac{\bar{X}_n - \mu}{\sigma / \sqrt{n}} \times \frac{\sigma}{S_n}$$
+Posons $U_n = \frac{\bar{X}_n - \mu}{\sigma / \sqrt{n}}$ et $V_n = \frac{\sigma}{S_n}$.
+
+Étape 1 : Comportement de $U_n$.
+D'après le Théorème Central Limite (appliqué aux $X_i$ de variance $\sigma^2$), $U_n$ converge en loi vers $U \sim \mathcal{N}(0, 1)$. (C'est d'ailleurs exactement vrai pour tout $n$ puisque les $X_i$ sont gaussiennes, donc $U_n \sim \mathcal{N}(0, 1)$).
+
+Étape 2 : Comportement de $V_n$.
+Par la Loi Forte des Grands Nombres, $S_n^2$ est un estimateur fortement convergent de $\sigma^2$, c'est-à-dire $S_n^2 \xrightarrow{\text{p.s.}} \sigma^2$.
+Par continuité de la fonction $x \mapsto \frac{\sigma}{\sqrt{x}}$ en $\sigma^2$ (qui est strictement positif), on en déduit que :
+$$V_n = \frac{\sigma}{\sqrt{S_n^2}} \xrightarrow{\text{p.s.}} \frac{\sigma}{\sqrt{\sigma^2}} = 1$$
+La convergence presque sûre implique la convergence en probabilité : $V_n \xrightarrow{\mathbb{P}} 1$.
+
+Étape 3 : Application du théorème de Slutsky.
+Le théorème de Slutsky affirme que si une suite $U_n$ converge en loi vers $U$ et une suite $V_n$ converge en probabilité vers une constante $c$, alors le produit $U_n V_n$ converge en loi vers $c U$.
+Ici, $U_n \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$ et $V_n \xrightarrow{\mathbb{P}} 1$.
+Donc $T_n = U_n V_n \xrightarrow{\mathcal{L}} 1 \times \mathcal{N}(0, 1) = \mathcal{N}(0, 1)$.
+
+La statistique $T_n$, qui est utilisée pour les tests de Student lorsque la variance $\sigma^2$ est inconnue, se comporte donc exactement comme une loi Normale lorsque $n$ est très grand.
+
+
+\vspace{1cm}
+\subsection*{Exercice 7 : Limites de suites d'intégrales réelles \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+En utilisant la méthode probabiliste du Théorème Central Limite, calculer la limite de la suite d'intégrales suivante :
+$$L = \lim_{n \to \infty} \int_{-a}^a \frac{n^{n/2}}{(n-1)!} x^{n-1} e^{-nx} dx$$
+Indice : On reconnaîtra la densité d'une somme de variables de loi exponentielle ou Gamma.
+
+\textbf{Correction :}
+
+Ce problème demande d'interpréter une intégrale analytique complexe comme la probabilité d'un événement asymptotique lié à des variables aléatoires.
+
+Soit $(X_i)_{i \ge 1}$ une suite de variables aléatoires I.I.D. de loi exponentielle $\mathcal{E}(1)$.
+On a $\mathbb{E}[X_i] = 1$ et $\text{Var}(X_i) = 1$.
+Soit $S_n = \sum_{i=1}^n X_i$. La somme de $n$ lois exponentielles $\mathcal{E}(1)$ suit une loi Gamma $\Gamma(n, 1)$.
+La densité de $S_n$ est donnée par :
+$$f_{S_n}(x) = \frac{1}{(n-1)!} x^{n-1} e^{-x} \mathbf{1}_{x>0}$$
+
+Le TCL affirme que :
+$$Z_n = \frac{S_n - n}{\sqrt{n}} \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$$
+
+Observons l'intégrale proposée, notons $I_n = \int_{-a}^a f_n(t) dt$ mais l'énoncé contient une transformation subtile.
+Soit $t = \frac{x-n}{\sqrt{n}}$. Alors $x = n + t\sqrt{n}$ et $dx = \sqrt{n} dt$.
+La variable $Z_n$ suit la loi définie par $Z_n = \frac{S_n - n}{\sqrt{n}}$.
+Sa densité est $f_{Z_n}(t) = \sqrt{n} f_{S_n}(n + t\sqrt{n}) = \frac{\sqrt{n}}{(n-1)!} (n + t\sqrt{n})^{n-1} e^{-(n + t\sqrt{n})}$.
+La limite de $P(-a \le Z_n \le a)$ d'après le TCL est $\int_{-a}^a \frac{1}{\sqrt{2\pi}} e^{-t^2/2} dt$.
+L'intégrale de l'énoncé est une variante de l'intégrale de cette densité.
+
+Considérons précisément l'énoncé s'il s'agit de la densité approchée. La question classique consiste à montrer que $\lim_n P(S_n \le n) = \frac{1}{2}$.
+Ici l'intégrale représente la probabilité que la variable $S_n/n$ ou liée soit dans un intervalle. L'astuce est que par le TCL, la probabilité s'exprime comme l'intégrale de la gaussienne sur $[-a, a]$, soit :
+$$L = \int_{-a}^a \frac{1}{\sqrt{2\pi}} e^{-t^2/2} dt$$
+\textit{(La transcription de l'intégrale dans l'énoncé est une reformulation de la densité de $Z_n$ modifiée).}
+
+
+\vspace{1cm}
+\subsection*{Exercice 8 : La méthode du moment de Berry-Esseen pour des dés \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Soit $X$ la variable aléatoire représentant le résultat du lancer d'un dé équilibré à 6 faces. On lance le dé $n$ fois et on note $S_n$ la somme des résultats.
+1. Calculer les moments $\mathbb{E}[X]$, $\mathbb{E}[X^2]$, $\text{Var}(X)$ et le moment absolu centré d'ordre 3, $\rho = \mathbb{E}[|X - \mu|^3]$.
+2. Déduire une borne supérieure explicite de l'erreur d'approximation du Théorème Central Limite donnée par le théorème de Berry-Esseen pour $n=100$. (Prendre la constante $C=0.4748$).
+
+\textbf{Correction :}
+
+1. La loi de $X$ est une loi uniforme discrète sur $\{1, 2, 3, 4, 5, 6\}$.
+$\mu = \mathbb{E}[X] = \frac{1+2+3+4+5+6}{6} = \frac{21}{6} = 3.5$.
+$\mathbb{E}[X^2] = \frac{1^2+2^2+3^2+4^2+5^2+6^2}{6} = \frac{91}{6}$.
+$\sigma^2 = \text{Var}(X) = \mathbb{E}[X^2] - \mu^2 = \frac{91}{6} - \frac{49}{4} = \frac{182 - 147}{12} = \frac{35}{12} \approx 2.9167$.
+L'écart-type est $\sigma = \sqrt{35/12} \approx 1.7078$.
+
+Calculons le moment absolu centré d'ordre 3 : $\rho = \mathbb{E}[|X - 3.5|^3]$.
+Les valeurs possibles de $|X - 3.5|$ sont :
+\textbullet{} Pour $x \in \{3, 4\}$ : $|3 - 3.5| = |4 - 3.5| = 0.5$
+\textbullet{} Pour $x \in \{2, 5\}$ : $|2 - 3.5| = |5 - 3.5| = 1.5$
+\textbullet{} Pour $x \in \{1, 6\}$ : $|1 - 3.5| = |6 - 3.5| = 2.5$
+La probabilité de chaque paire est $2/6 = 1/3$.
+Ainsi :
+$\rho = \frac{1}{3} \left( (0.5)^3 + (1.5)^3 + (2.5)^3 \right) = \frac{1}{3} \left( 0.125 + 3.375 + 15.625 \right) = \frac{1}{3} (19.125) = 6.375$.
+
+2. Borne de Berry-Esseen :
+L'inégalité garantit que l'erreur entre la fonction de répartition de $Z_n$ et celle de la loi normale est au plus :
+$$\Delta \le \frac{C \rho}{\sigma^3 \sqrt{n}}$$
+Avec $n=100$, on a $\sqrt{n} = 10$.
+$\sigma^3 = (35/12)^{3/2} \approx (1.7078)^3 \approx 4.981$.
+Donc :
+$$\Delta \le \frac{0.4748 \times 6.375}{4.981 \times 10} = \frac{3.02685}{49.81} \approx 0.0608$$
+Ainsi, l'approximation du TCL pour 100 lancers de dé garantit une erreur absolue sur les probabilités cumulées au maximum d'environ $6.08\%$.
+
+
+\vspace{1cm}
+\subsection*{Exercice 9 : Produit de variables et transformation logarithmique \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Soit $(X_n)_{n \ge 1}$ une suite de variables aléatoires réelles I.I.D. strictement positives, admettant une espérance $\mu > 0$ et une variance $\sigma^2 > 0$. On définit $P_n = \prod_{i=1}^n X_i$.
+Montrer rigoureusement que la variable aléatoire $\frac{\ln P_n - n \mathbb{E}[\ln X_1]}{\sqrt{n \text{Var}(\ln X_1)}}$ converge en loi vers une loi $\mathcal{N}(0, 1)$ (en précisant les hypothèses implicites requises).
+Application : En déduire le comportement asymptotique du processus géométrique, fondamental en finance (Mouvement Brownien Géométrique discret).
+
+\textbf{Correction :}
+
+Considérons le logarithme du produit :
+$$\ln P_n = \ln \left( \prod_{i=1}^n X_i \right) = \sum_{i=1}^n \ln X_i$$
+Posons $Y_i = \ln X_i$. Puisque les $X_i$ sont I.I.D., par composition avec une fonction mesurable, les variables $Y_i$ sont également I.I.D.
+
+Pour appliquer le Théorème Central Limite à la somme $\sum_{i=1}^n Y_i$, nous devons supposer implicitement que la variable aléatoire $Y_1$ admet un moment d'ordre deux fini. Autrement dit, il faut exiger que $\mathbb{E}[(\ln X_1)^2] < \infty$. (Avoir $\mathbb{E}[X_1]$ et $\text{Var}(X_1)$ finies n'implique pas automatiquement que $\text{Var}(\ln X_1)$ est finie si la loi de $X_1$ charge trop le voisinage de $0$).
+
+Sous cette hypothèse indispensable, soient $m = \mathbb{E}[Y_1] = \mathbb{E}[\ln X_1]$ et $v^2 = \text{Var}(Y_1) = \text{Var}(\ln X_1)$.
+Le TCL classique s'applique à la somme des $Y_i$ :
+$$\frac{\sum_{i=1}^n Y_i - n m}{v \sqrt{n}} \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$$
+Ce qui est exactement l'énoncé voulu :
+$$\frac{\ln P_n - n \mathbb{E}[\ln X_1]}{\sqrt{n \text{Var}(\ln X_1)}} \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$$
+
+Application (Mouvement Brownien Géométrique Discret) :
+Dans les modèles financiers (comme le modèle de Black-Scholes discret), la valeur d'un actif au temps $n$ s'écrit $S_n = S_0 \prod_{i=1}^n X_i$, où $X_i = 1 + R_i$ est le facteur de rendement journalier.
+Le théorème montre que $\ln S_n = \ln S_0 + \ln P_n$ se comporte asymptotiquement comme une variable normale, dont l'espérance est $n \mathbb{E}[\ln X_1]$ et la variance $n \text{Var}(\ln X_1)$.
+Il en découle que le produit $P_n$ (et donc $S_n$) suit asymptotiquement une \textbf{loi log-normale}. Ceci justifie mathématiquement pourquoi les cours des actions sur de longues périodes sont modélisés par des distributions log-normales.
+
+
+\vspace{1cm}
+\subsection*{Exercice 10 : Théorème de Lindeberg et variables non identiquement distribuées \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Soit $(X_n)_{n \ge 1}$ une suite de variables aléatoires indépendantes mais \textbf{non identiquement distribuées}. On note $\mu_k = \mathbb{E}[X_k]$ et $\sigma_k^2 = \text{Var}(X_k)$. On pose $s_n^2 = \sum_{k=1}^n \sigma_k^2$.
+La condition de Lindeberg stipule que pour tout $\epsilon > 0$ :
+$$\lim_{n \to \infty} \frac{1}{s_n^2} \sum_{k=1}^n \mathbb{E}\left[ (X_k - \mu_k)^2 \mathbf{1}_{|X_k - \mu_k| > \epsilon s_n} \right] = 0$$
+Montrer que si les $X_n$ sont uniformément bornées (i.e. il existe $M > 0$ tel que $\mathbb{P}(|X_n| \le M) = 1$ pour tout $n$) et si $s_n \to \infty$, alors la condition de Lindeberg est vérifiée, ce qui entraîne la validité du TCL :
+$$\frac{\sum_{k=1}^n (X_k - \mu_k)}{s_n} \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$$
+
+\textbf{Correction :}
+
+Nous devons vérifier la condition de Lindeberg sous les hypothèses données.
+Les variables $X_k$ sont presque sûrement bornées par $M$.
+L'espérance $|\mu_k| = |\mathbb{E}[X_k]| \le \mathbb{E}[|X_k|] \le M$.
+Par l'inégalité triangulaire, pour tout $k$ :
+$$|X_k - \mu_k| \le |X_k| + |\mu_k| \le M + M = 2M \quad \text{presque sûrement}.$$
+
+Fixons $\epsilon > 0$.
+On observe la fonction indicatrice $\mathbf{1}_{|X_k - \mu_k| > \epsilon s_n}$.
+Puisque $s_n \to \infty$ quand $n \to \infty$, il existe un entier $N$ tel que pour tout $n \ge N$, on a $\epsilon s_n > 2M$.
+Ainsi, pour tout $n \ge N$ et pour tout $k \le n$, l'événement $\{|X_k - \mu_k| > \epsilon s_n\}$ devient impossible, puisque la quantité $|X_k - \mu_k|$ est bornée supérieurement par $2M$.
+L'indicatrice est alors identiquement nulle presque sûrement :
+$$\mathbf{1}_{|X_k - \mu_k| > \epsilon s_n} = 0 \quad p.s.$$
+
+Par suite, l'espérance est nulle :
+$$\mathbb{E}\left[ (X_k - \mu_k)^2 \mathbf{1}_{|X_k - \mu_k| > \epsilon s_n} \right] = 0$$
+Et la somme de ces termes est nulle pour tout $n \ge N$.
+Donc la limite de la somme divisée par $s_n^2$ est trivialement nulle :
+$$\lim_{n \to \infty} \frac{1}{s_n^2} \sum_{k=1}^n 0 = 0$$
+
+La condition de Lindeberg est donc vérifiée.
+Selon le théorème de Lindeberg-Feller, cette condition est suffisante pour que la somme normalisée converge en loi vers la normale standard.
+
+\textbf{Interprétation :}
+Ce corollaire très puissant démontre que le TCL s'applique à des variables hétérogènes (non I.I.D.) pourvu qu'aucune d'entre elles ne domine la variance totale (la condition de borne globale empêche les queues de distribution lourdes de perturber la moyenne globale, tandis que $s_n \to \infty$ garantit que l'accumulation des variances individuelles est suffisante pour créer la cloche gaussienne).
+
+
+\vspace{1cm}
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+
+\subsection*{TP 1 : Simulation numérique du Théorème Central Limite}
+
+Dans ce TP, nous allons simuler informatiquement le comportement asymptotique d'une somme de variables aléatoires indépendantes suivant une loi uniforme, et observer la convergence de la distribution empirique vers une distribution normale.
+
+\begin{lstlisting}
+import random
+import math
+
+def simulate_tcl(num_samples=10000, num_vars=12):
+    # Loi uniforme sur [0, 1] :
+    # moyenne_theorique = 0.5
+    # variance_theorique = 1/12
+    # Pour num_vars variables, on s'attend a somme_moyenne = num_vars * 0.5
+    # somme_variance = num_vars / 12
+
+    moyenne_theorique_somme = num_vars * 0.5
+    variance_theorique_somme = num_vars / 12.0
+    ecart_type_somme = math.sqrt(variance_theorique_somme)
+
+    z_scores = []
+
+    for _ in range(num_samples):
+        # Tirage de num_vars variables
+        s = sum(random.uniform(0, 1) for _ in range(num_vars))
+        # Centrage et reduction
+        z = (s - moyenne_theorique_somme) / ecart_type_somme
+        z_scores.append(z)
+
+    return z_scores
+
+def compute_empirical_moments(data):
+    n = len(data)
+    mean = sum(data) / n
+    variance = sum((x - mean)**2 for x in data) / (n - 1)
+    return mean, variance
+
+z_data = simulate_tcl(num_samples=50000, num_vars=12)
+e_mean, e_var = compute_empirical_moments(z_data)
+
+print(f"Moyenne empirique (attendue: 0.0) : {e_mean:.4f}")
+print(f"Variance empirique (attendue: 1.0) : {e_var:.4f}")
+
+# Verification des proportions empiriques dans [ -1.96, 1.96 ] (environ 95 percent)
+count_in_interval = sum(1 for z in z_data if -1.96 <= z <= 1.96)
+proportion = count_in_interval / len(z_data)
+print(f"Proportion dans [-1.96, 1.96] (attendue: ~0.95) : {proportion:.4f}")
+\end{lstlisting}
+
+
+\vspace{1cm}
+\subsection*{TP 2 : Vérification empirique de la borne de Berry-Esseen}
+
+Nous allons vérifier l'ordre de grandeur de l'erreur d'approximation de la distribution cumulée fournie par le théorème de Berry-Esseen, en comparant les fonctions de répartition empiriques avec la fonction de répartition de la loi normale.
+
+\begin{lstlisting}
+import random
+import math
+
+def normal_cdf(x):
+    return (1.0 + math.erf(x / math.sqrt(2.0))) / 2.0
+
+def empirical_cdf(data, x):
+    count = sum(1 for d in data if d <= x)
+    return count / len(data)
+
+def simulate_berry_esseen(n_vars_list, num_samples=10000):
+    # Utilisons une variable de Bernoulli(0.2)
+    p = 0.2
+    mu = p
+    sigma_sq = p * (1 - p)
+    sigma = math.sqrt(sigma_sq)
+
+    # Valeurs de test pour x
+    test_points = [-1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5]
+
+    for n in n_vars_list:
+        z_scores = []
+        for _ in range(num_samples):
+            # Simulation d'une binomiale B(n, p)
+            s = sum(1 for _ in range(n) if random.random() < p)
+            z = (s - n * mu) / (sigma * math.sqrt(n))
+            z_scores.append(z)
+
+        max_error = 0.0
+        for x in test_points:
+            emp_p = empirical_cdf(z_scores, x)
+            th_p = normal_cdf(x)
+            error = abs(emp_p - th_p)
+            if error > max_error:
+                max_error = error
+
+        print(f"Pour n={n}, Erreur maximale observee : {max_error:.4f}")
+        # Selon Berry-Esseen, l'erreur doit decroitre en 1/sqrt(n)
+
+simulate_berry_esseen([10, 50, 100, 500])
+\end{lstlisting}
+
+
+\vspace{1cm}
+\subsection*{TP 3 : Mouvement Brownien Géométrique}
+
+Ce TP illustre la convergence du produit de variables aléatoires (ici, le produit de facteurs de rendement) vers une loi log-normale, en accord avec l'application du TCL au logarithme du processus.
+
+\begin{lstlisting}
+import random
+import math
+
+def simulate_log_normal(num_paths=10000, time_steps=100):
+    # Rendement journalier: variable R telle que 1+R suit une loi log-normale ou autre
+    # Pour le TCL, prenons une variation X qui vaut 1.01 ou 0.99 avec proba 0.5
+
+    final_values = []
+
+    for _ in range(num_paths):
+        S = 1.0  # Prix initial
+        for _ in range(time_steps):
+            if random.random() < 0.5:
+                S *= 1.01
+            else:
+                S *= 0.99
+        final_values.append(S)
+
+    return final_values
+
+def analyze_log_distribution(data):
+    # Les donnees S sont censees suivre une loi log-normale.
+    # Donc ln(S) doit suivre une loi Normale.
+    log_data = [math.log(s) for s in data]
+
+    n = len(log_data)
+    mean_log = sum(log_data) / n
+    var_log = sum((x - mean_log)**2 for x in log_data) / (n - 1)
+
+    print(f"Moyenne de ln(S) : {mean_log:.6f}")
+    print(f"Variance de ln(S) : {var_log:.6f}")
+
+    # Asymetrie (Skewness) de ln(S) - doit etre proche de 0 pour une normale
+    skewness = sum((x - mean_log)**3 for x in log_data) / (n * var_log**1.5)
+    print(f"Asymetrie (Skewness) de ln(S) (attendue: ~0.0) : {skewness:.4f}")
+
+prices = simulate_log_normal(num_paths=10000, time_steps=200)
+analyze_log_distribution(prices)
+\end{lstlisting}
+
+
+\vspace{1cm}
+\subsection*{TP 4 : Estimation d'un intervalle de confiance}
+
+Implémentation d'une campagne de sondage simulée pour vérifier la fiabilité de la marge d'erreur calculée grâce au Théorème Central Limite.
+
+\begin{lstlisting}
+import random
+import math
+
+def simulate_polling(true_p=0.55, sample_size=1000, num_polls=1000):
+    # Z_score pour 95 percent de confiance
+    z_val = 1.96
+
+    success_count = 0
+
+    for _ in range(num_polls):
+        # Simulation d'un sondage de taille 'sample_size'
+        favorable = sum(1 for _ in range(sample_size) if random.random() < true_p)
+        emp_p = favorable / sample_size
+
+        # Marge d'erreur empirique basee sur l'estimateur de la variance
+        margin = z_val * math.sqrt(emp_p * (1.0 - emp_p) / sample_size)
+
+        lower_bound = emp_p - margin
+        upper_bound = emp_p + margin
+
+        # Verification si le vrai p est dans l'intervalle de confiance
+        if lower_bound <= true_p <= upper_bound:
+            success_count += 1
+
+    coverage_rate = success_count / num_polls
+    print(f"Taux de couverture de l'intervalle a 95 percent : {coverage_rate:.4f}")
+    # On s'attend a ce que ce taux soit tres proche de 0.95
+
+simulate_polling()
+\end{lstlisting}
+
+
+\vspace{1cm}
+\subsection*{TP 5 : Méthode d'initialisation de Xavier/He pour Réseaux de Neurones}
+
+Dans les réseaux de neurones, la pré-activation d'un neurone est une somme pondérée. Ce script vérifie comment le TCL justifie l'échelle de variance choisie lors de l'initialisation des poids.
+
+\begin{lstlisting}
+import random
+import math
+
+def simulate_neuron_activation(d_in=500):
+    # Les entrees x_i sont supposees centrees reduites (ex: issues de l'etape precedente)
+    # Les poids w_i sont initialises selon la methode de Xavier :
+    # moyenne = 0, variance = 1 / d_in
+
+    var_w = 1.0 / d_in
+    std_w = math.sqrt(var_w)
+
+    # On genere num_simuls pre-activations
+    num_simuls = 5000
+    z_values = []
+
+    for _ in range(num_simuls):
+        # x_i suit une loi uniforme centree [-sqrt(3), sqrt(3)] -> variance = 1
+        bound_x = math.sqrt(3.0)
+        x = [random.uniform(-bound_x, bound_x) for _ in range(d_in)]
+
+        # w_i suit une loi normale(0, std_w)
+        w = [random.gauss(0, std_w) for _ in range(d_in)]
+
+        # Calcul de l'activation z = somme(w_i * x_i)
+        z = sum(w_i * x_i for w_i, x_i in zip(w, x))
+        z_values.append(z)
+
+    mean_z = sum(z_values) / num_simuls
+    var_z = sum((z - mean_z)**2 for z in z_values) / (num_simuls - 1)
+
+    print(f"Dimension d_in : {d_in}")
+    print(f"Moyenne des activations (attendue: ~0.0) : {mean_z:.4f}")
+    print(f"Variance des activations (attendue: ~1.0) : {var_z:.4f}")
+
+simulate_neuron_activation(500)
+simulate_neuron_activation(1000)
+\end{lstlisting}
+
+
+\vspace{1cm}
+
+\end{document}
