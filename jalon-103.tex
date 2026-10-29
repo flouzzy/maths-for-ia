@@ -1,0 +1,511 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge Espaces de Hilbert généraux \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+\# Jalon 103 : Espaces de Hilbert généraux
+
+\section{Présentation du concept clé}
+
+ Imaginez que vous soyez dans une pièce avec un miroir magique.
+    - Pour chaque point de la pièce (un vecteur), le miroir vous montre une manière de regarder la pièce (une forme linéaire).
+    - L'\textbf{Espace de Hilbert}, c'est une pièce où la géométrie est parfaite : on peut mesurer des distances, des angles, et faire des projections (trouver l'ombre d'un objet sur le sol).
+    - Le \textbf{Théorème de Représentation de Riesz}, c'est le miroir lui-même : il dit que n'importe quel "regard" ou "mesure" que vous portez sur l'espace peut en fait être résumé par un seul vecteur caché dans la pièce. Si vous voulez multiplier un nombre par 2, c'est comme faire un produit scalaire avec un vecteur de longueur 2. Tout ce qui est abstrait (les formes linéaires) devient concret (des vecteurs).
+ Pour unifier l'algèbre et l'analyse. En dimension finie, on sait tout projeter. En dimension infinie, c'est beaucoup plus dur. Les espaces de Hilbert sont les seuls espaces de dimension infinie où l'on garde toutes nos intuitions géométriques (perpendicularité, plus court chemin).
+ Une lampe qui projette l'ombre d'un objet sur un mur. Dans un Hilbert, l'ombre (la projection) est unique et c'est le point du mur le plus proche de l'objet.
+
+\section{Formalisation}
+
+Soit $H$ un espace vectoriel complexe.
+
+\subsection{Produit Scalaire et Hilbert}
+
+\begin{quote}
+\textbf{Définition 1 (Produit Scalaire) :}
+On appelle produit scalaire une forme hermitienne définie positive $\langle \cdot, \cdot \rangle : H \times H \to \mathbb{C}$. Elle induit une norme $\|x\| = \sqrt{\langle x, x \rangle}$.
+\end{quote}
+
+\begin{quote}
+\textbf{Définition 2 (Espace de Hilbert) :}
+Un espace de Hilbert est un espace muni d'un produit scalaire qui est \textbf{complet} pour la norme associée.
+\end{quote}
+
+\subsection{Théorème de Projection}
+
+\begin{quote}
+\textbf{Théorème (Projection sur un convexe fermé) :}
+Soit $C$ un ensemble convexe fermé non vide de $H$. Pour tout $x \in H$, il existe un unique $p \in C$ tel que :
+$$\|x - p\| = \inf_{y \in C} \|x - y\|$$
+Ce point $p$ est appelé la \textbf{projection de $x$ sur $C$}.
+\end{quote}
+
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    \draw[fill=blue!10, draw=blue, thick] (0,0) ellipse (2cm and 1cm);
+    \node[blue] at (-1, 0) {$C$};
+    \filldraw[red] (1, 2) circle (1.5pt) node[above right] {$x$};
+    \filldraw[black] (0.8, 0.92) circle (1.5pt) node[below right] {$p = P_C(x)$};
+    \draw[dashed, thick] (1, 2) -- (0.8, 0.92);
+    \draw[thick] (-0.5, 1.4) -- (2, 0.4);
+    \draw (0.9, 1.15) -- (1.0, 1.05) -- (0.85, 0.95);
+\end{tikzpicture}
+\end{center}
+
+
+\subsection{Théorème de Représentation de Riesz}
+
+C'est l'un des résultats les plus profonds de l'analyse fonctionnelle.
+
+\begin{quote}
+\textbf{Théorème de Riesz :}
+Pour toute forme linéaire continue $L \in H^*$, il existe un \textbf{unique} vecteur $a \in H$ tel que :
+$$\forall x \in H, \quad L(x) = \langle x, a \rangle$$
+De plus, on a l'égalité des normes : $\|L\|_{H^*} = \|a\|_H$.
+\end{quote}
+
+
+\textbf{Exemple 1 : L'espace $L^2([0, 1])$}
+Considérons l'espace vectoriel des fonctions de carré intégrable sur $[0, 1]$, noté $L^2([0, 1])$. Le produit scalaire est défini par $\langle f, g \rangle = \int_0^1 f(t) \overline{g(t)} dt$.
+Si l'on prend $f(t) = t$ et $g(t) = t^2$, on calcule leur produit scalaire pas-à-pas :
+$\langle f, g \rangle = \int_0^1 t \cdot t^2 dt = \int_0^1 t^3 dt = \left[ \frac{t^4}{4} \right]_0^1 = \frac{1}{4}$.
+La norme induite pour $f$ est $\|f\| = \sqrt{\int_0^1 t^2 dt} = \frac{1}{\sqrt{3}}$. Cet espace est complet pour cette norme, ce qui en fait un espace de Hilbert fondamental pour l'analyse harmonique et l'IA (analyse de signaux continus).
+
+\textbf{Exemple 2 : L'espace des suites $\ell^2$}
+Considérons $\ell^2(\mathbb{N}) = \left\{ x = (x_n)_{n \in \mathbb{N}} \mid \sum_{n=0}^\infty |x_n|^2 < \infty \right\}$.
+Le produit scalaire est défini par $\langle x, y \rangle = \sum_{n=0}^\infty x_n \overline{y_n}$.
+Prenons deux éléments de $\ell^2$ : $x = (1, \frac{1}{2}, \frac{1}{4}, \dots, \frac{1}{2^n}, \dots)$ et $y = (1, 0, 0, \dots)$.
+Leur produit scalaire vaut : $\langle x, y \rangle = 1 \cdot 1 + \sum_{n=1}^\infty \frac{1}{2^n} \cdot 0 = 1$.
+Calculons la norme de $x$ : $\|x\|^2 = \sum_{n=0}^\infty \left(\frac{1}{2^n}\right)^2 = \sum_{n=0}^\infty \frac{1}{4^n} = \frac{1}{1 - 1/4} = \frac{4}{3}$. Donc $\|x\| = \frac{2}{\sqrt{3}}$.
+Cet espace est isomorphe à tout espace de Hilbert séparable de dimension infinie.
+
+\textbf{Exemple 3 : Matrices à trace (Espace de Frobenius)}
+L'espace $\mathcal{M}_n(\mathbb{C})$ muni du produit scalaire de Frobenius $\langle A, B \rangle_F = \text{Tr}(B^* A)$ est un espace de Hilbert (dimension finie).
+Prenons $A = \begin{pmatrix} 1 & 2 \\ 0 & i \end{pmatrix}$ et $B = \begin{pmatrix} 1 & 0 \\ -i & 1 \end{pmatrix}$.
+Alors $B^* = \begin{pmatrix} 1 & i \\ 0 & 1 \end{pmatrix}$.
+On calcule $B^* A = \begin{pmatrix} 1 & i \\ 0 & 1 \end{pmatrix} \begin{pmatrix} 1 & 2 \\ 0 & i \end{pmatrix} = \begin{pmatrix} 1 & 2 + i^2 \\ 0 & i \end{pmatrix} = \begin{pmatrix} 1 & 1 \\ 0 & i \end{pmatrix}$.
+Ainsi, $\langle A, B \rangle_F = \text{Tr}(B^* A) = 1 + i$.
+
+\textbf{Exemple 4 : Polynômes orthogonaux de Legendre}
+Sur $L^2([-1, 1])$, les polynômes $P_0(t) = 1$ et $P_1(t) = t$ sont orthogonaux :
+$\langle P_0, P_1 \rangle = \int_{-1}^1 1 \cdot t dt = \left[ \frac{t^2}{2} \right]_{-1}^1 = \frac{1}{2} - \frac{1}{2} = 0$.
+Par contre, $P_2(t) = t^2$ n'est pas orthogonal à $P_0$ : $\langle P_0, P_2 \rangle = \int_{-1}^1 t^2 dt = \frac{2}{3} \neq 0$.
+On peut utiliser le procédé de Gram-Schmidt pour trouver une base orthogonale, ce qui mène aux polynômes de Legendre, très utiles en régression polynomiale (IA).
+
+\textbf{Exemple 5 : Projection sur un hyperplan fermé}
+Soit $H = \ell^2(\mathbb{N})$ et le sous-espace fermé $F = \{ x \in \ell^2 \mid x_0 = 0 \}$.
+Pour un vecteur quelconque $y = (y_0, y_1, y_2, \dots)$, la projection orthogonale $P_F(y)$ sur $F$ est le point de $F$ qui minimise la distance à $y$.
+Il est immédiat géométriquement et analytiquement que $P_F(y) = (0, y_1, y_2, \dots)$.
+En effet, pour tout $x \in F$, $\|y - x\|^2 = |y_0|^2 + \sum_{n=1}^\infty |y_n - x_n|^2$. Cette somme est minimisée lorsque $x_n = y_n$ pour tout $n \ge 1$.
+
+
+\section{Démonstrations}
+
+\subsection{Démonstration du Théorème de Riesz}
+
+\begin{enumerate}
+\item \textbf{Existence :} Si $L = 0$, alors $a = 0$ convient. Supposons $L \neq 0$.
+\item \textbf{Noyau de L :} Soit $M = \ker(L)$. Comme $L$ est continue, $M$ est un sous-espace vectoriel fermé de $H$.
+\item \textbf{Orthogonal de M :} Comme $L \neq 0$, $M \neq H$. Il existe donc un vecteur $z \in M^\perp$ non nul (d'après le théorème de projection sur un sous-espace).
+\item \textbf{Candidat pour a :} On cherche $a = \alpha z$. On veut $L(x) = \langle x, \alpha z \rangle = \bar{\alpha} \langle x, z \rangle$.
+\item \textbf{Calcul de $\alpha$ :} On remarque que pour tout $x$, le vecteur $v = L(x)z - L(z)x$ appartient au noyau $M$ car $L(v) = L(x)L(z) - L(z)L(x) = 0$.
+\item \textbf{Utilisation de l'orthogonalité :} Comme $z \perp M$, on a $\langle v, z \rangle = 0$.
+   $\langle L(x)z - L(z)x, z \rangle = 0 \implies L(x) \|z\|^2 - L(z) \langle x, z \rangle = 0$.
+   $L(x) = \langle x, \frac{\overline{L(z)}}{\|z\|^2} z \rangle$.
+\item \textbf{Conclusion :} Le vecteur $a = \frac{\overline{L(z)}}{\|z\|^2} z$ convient.
+\item \textbf{Unicité :} Si $\langle x, a \rangle = \langle x, b \rangle$ pour tout $x$, alors $\langle x, a-b \rangle = 0$, donc $a-b=0$.
+\end{enumerate}
+
+\section{Exercices d'Application}
+
+\subsection{Exercice 1 : Évaluation ponctuelle}
+\textbf{Énoncé :} Soit $H = L^2([0, 1])$. Existe-t-il un vecteur $a \in H$ tel que $\int_0^1 f(x) a(x) dx = f(0)$ pour tout $f$ continue ?
+\textbf{Correction Détaillée :}
+Non. L'application $L(f) = f(0)$ n'est pas continue sur $L^2$. On peut trouver des fonctions dont l'intégrale du carré est minuscule mais qui valent 1 en 0 (ex: pics très fins). Comme $L$ n'est pas continue, le théorème de Riesz ne s'applique pas. Cela montre qu'il n'existe pas de "fonction" de Dirac dans $L^2$.
+
+\subsection{Exercice 2 : Niveau Avancé (RKHS)}
+\textbf{Énoncé :} Dans un espace de Hilbert de fonctions, si l'évaluation $f \mapsto f(x)$ est continue pour tout $x$, on dit que c'est un \textbf{RKHS}. Montrer qu'il existe une fonction $k_x$ telle que $f(x) = \langle f, k_x \rangle$.
+\textbf{Correction Détaillée :}
+C'est une application immédiate du théorème de Riesz. La fonction $k(x, y) = \langle k_y, k_x \rangle$ est appelée le \textbf{Noyau Reproduisant}. Toute la théorie des SVM et des processus gaussiens découle de l'existence de ces vecteurs $k_x$.
+
+\section{Application en Intelligence Artificielle}
+
+\begin{itemize}
+\item \textbf{Le Pont Théorique :} Les espaces de Hilbert sont le terrain de jeu du \textbf{Machine Learning à noyaux} (Kernel Methods). Le théorème de Riesz est ce qui permet de transformer une opération de comparaison (le noyau) en un simple produit scalaire.
+\item \textbf{Example Concret :}
+    - \textbf{Support Vector Machines (SVM) :} L'hyperplan séparateur optimal est un vecteur dans un espace de Hilbert. Le théorème de Riesz garantit que ce vecteur existe et qu'il peut être exprimé comme une combinaison linéaire des données d'entraînement (Théorème du Représentant, Jalon 127).
+    - \textbf{Calcul du Gradient :} En optimisation, le gradient $\nabla f$ est défini comme le vecteur qui représente la différentielle $df$ via le théorème de Riesz. Sans Hilbert, la notion de gradient n'existerait pas de manière géométrique.
+    - \textbf{Quantum Machine Learning :} Les états d'un ordinateur quantique sont des vecteurs dans un espace de Hilbert complexe. Les algorithmes d'IA quantique utilisent les propriétés de projection et de Riesz pour manipuler l'information.
+\end{itemize}
+
+\section{Liens Sémantiques}
+
+\begin{itemize}
+\item \textbf{Concepts Précédents requis :} [[Jalon 76 (Propriétés géométriques de l'espace de Hilbert L2).md]], [[Jalon 101 (Application ouverte et Graphe fermé).md]]
+\item \textbf{Concepts Futurs dépendants :} [[Jalon 105 (Opérateurs adjoints).md]], [[Jalon 126 (Noyaux définis positifs).md]]
+\end{itemize}
+
+
+\newpage
+\part{Exercices d'Application et de Concours}
+
+\subsection*{Exercice 1 : Projection sur un hyperplan de $L^2$}
+
+\section{Énoncé}
+
+Soit $H = L^2([-1, 1])$ muni de son produit scalaire usuel. Soit $F = \{f \in H \mid \int_{-1}^1 f(t) dt = 0\}$. Montrer que $F$ est fermé, puis calculer la projection orthogonale de la fonction $g(t) = t^2$ sur $F$.
+
+\textit{Niveau de difficulté :} $\bigstar\star\star\star\star$
+
+\section{Correction}
+
+\begin{enumerate}
+\item \textbf{Fermeture de F :} L'application $L(f) = \int_{-1}^1 f(t) dt$ est une forme linéaire. Par l'inégalité de Cauchy-Schwarz, $|L(f)| \le \sqrt{\int_{-1}^1 1^2 dt} \sqrt{\int_{-1}^1 |f(t)|^2 dt} = \sqrt{2} \|f\|_2$. Donc $L$ est continue. $F = \ker L$ est donc un hyperplan fermé.
+\item \textbf{Vecteur normal :} Par le théorème de représentation de Riesz, $L(f) = \langle f, u \rangle$ avec $u(t) = 1$. L'orthogonal de $F$ est engendré par $u$.
+\item \textbf{Calcul de la projection :} La projection de $g$ sur $F$ est $P_F(g) = g - \frac{\langle g, u \rangle}{\|u\|^2} u$.
+\item \textbf{Évaluation :} $\langle g, u \rangle = \int_{-1}^1 t^2 \cdot 1 dt = \frac{2}{3}$. Et $\|u\|^2 = \int_{-1}^1 1 dt = 2$.
+\item \textbf{Conclusion :} $P_F(g)(t) = t^2 - \frac{2/3}{2} \cdot 1 = t^2 - \frac{1}{3}$.
+\end{enumerate}
+
+
+\subsection*{Exercice 2 : Minimisation de distance}
+
+\section{Énoncé}
+
+Soit $H = \ell^2(\mathbb{N})$. Trouver le minimum de $\sum_{n=0}^\infty |x_n - \frac{1}{2^n}|^2$ sous la contrainte $\sum_{n=0}^\infty x_n = 0$.
+
+\textit{Niveau de difficulté :} $\bigstar\star\star\star\star$
+
+\section{Correction}
+
+\begin{enumerate}
+\item \textbf{Reformulation géométrique :} Le problème revient à minimiser $\|x - y\|_{\ell^2}^2$ où $y = (\frac{1}{2^n})_{n \in \mathbb{N}} \in \ell^2$ et $x \in F$, avec $F = \{ x \in \ell^2 \mid \sum x_n = 0\}$. Cependant, la forme $L(x) = \sum x_n$ n'est pas continue sur $\ell^2$ car la suite $(1, 1, 1, \dots)$ n'est pas dans $\ell^2$. L'énoncé nécessite donc de restreindre $x$ aux suites dont la série converge, mais $F$ est dense.
+\item \textbf{Correction de l'énoncé (rigueur) :} Posons plutôt $F_N = \{ x \in \ell^2 \mid \sum_{n=0}^N x_n = 0\}$. C'est un hyperplan fermé de $\ell^2$.
+\item \textbf{Projection sur $F_N$ :} L'hyperplan est défini par $u_N = (1, \dots, 1, 0, \dots)$. $P_{F_N}(y) = y - \frac{\langle y, u_N \rangle}{N+1} u_N$.
+\item \textbf{Calcul :} $\langle y, u_N \rangle = \sum_{n=0}^N \frac{1}{2^n} = \frac{1 - 1/2^{N+1}}{1/2} = 2 - \frac{1}{2^N}$.
+\item \textbf{Conclusion :} Le minimum est atteint pour $P_{F_N}(y)$. La distance minimale au carré est $\frac{|\langle y, u_N \rangle|^2}{\|u_N\|^2} = \frac{(2 - 2^{-N})^2}{N+1}$.
+\end{enumerate}
+
+
+\subsection*{Exercice 3 : Théorème de Riesz et dérivation}
+
+\section{Énoncé}
+
+Soit $H_0^1([0, 1])$ l'espace de Sobolev des fonctions $f \in C^1$ avec $f(0)=f(1)=0$, muni du produit scalaire $\langle f, g \rangle = \int_0^1 f'(t) g'(t) dt$. Soit $L(f) = \int_0^1 f(t) dt$. Trouver $u \in H_0^1$ tel que $L(f) = \langle f, u \rangle$.
+
+\textit{Niveau de difficulté :} $\bigstar\bigstar\star\star\star$
+
+\section{Correction}
+
+\begin{enumerate}
+\item \textbf{Continuité de L :} Par l'inégalité de Poincaré, $\|f\|_{L^2} \le C \|f'\|_{L^2}$, donc $L$ est continue sur cet espace de Hilbert. Le théorème de Riesz s'applique.
+\item \textbf{Équation de Riesz :} On cherche $u$ tel que $\int_0^1 f(t) dt = \int_0^1 f'(t) u'(t) dt$.
+\item \textbf{Intégration par parties :} En intégrant par parties le second membre : $\int_0^1 f'(t) u'(t) dt = [f(t)u'(t)]_0^1 - \int_0^1 f(t) u''(t) dt$. Comme $f(0)=f(1)=0$, cela vaut $-\int_0^1 f(t) u''(t) dt$.
+\item \textbf{Identification :} Pour que l'égalité soit vraie pour tout $f$, on doit avoir $-u''(t) = 1$ presque partout.
+\item \textbf{Résolution de l'EDO :} $u'(t) = -t + A$, puis $u(t) = -t^2/2 + At + B$.
+\item \textbf{Conditions aux limites :} $u \in H_0^1 \implies u(0)=u(1)=0$. $u(0)=0 \implies B=0$. $u(1) = -1/2 + A = 0 \implies A=1/2$.
+\item \textbf{Conclusion :} Le représentant de Riesz est $u(t) = \frac{1}{2} t (1-t)$.
+\end{enumerate}
+
+
+\subsection*{Exercice 4 : Orthogonalisation de Gram-Schmidt (Polynômes)}
+
+\section{Énoncé}
+
+Dans $L^2([-1, 1])$, orthogonaliser la base $(1, t, t^2)$.
+
+\textit{Niveau de difficulté :} $\bigstar\bigstar\star\star\star$
+
+\section{Correction}
+
+\begin{enumerate}
+\item \textbf{Vecteur 1 :} $e_1(t) = 1$.
+\item \textbf{Vecteur 2 :} On pose $v_2(t) = t - \frac{\langle t, 1 \rangle}{\|1\|^2} 1$. On sait que $\langle t, 1 \rangle = \int_{-1}^1 t dt = 0$. Donc $e_2(t) = t$.
+\item \textbf{Vecteur 3 :} On pose $v_3(t) = t^2 - \frac{\langle t^2, 1 \rangle}{\|1\|^2} 1 - \frac{\langle t^2, t \rangle}{\|t\|^2} t$.
+\item \textbf{Calculs :} $\langle t^2, 1 \rangle = \frac{2}{3}$. $\|1\|^2 = 2$. $\langle t^2, t \rangle = 0$.
+\item \textbf{Résultat :} $e_3(t) = t^2 - \frac{2/3}{2} \cdot 1 = t^2 - \frac{1}{3}$.
+\item \textbf{Conclusion :} La famille orthogonale est $(1, t, t^2 - 1/3)$. Ce sont les trois premiers polynômes de Legendre à un facteur multiplicatif près.
+\end{enumerate}
+
+
+\subsection*{Exercice 5 : Espace de Hardy}
+
+\section{Énoncé}
+
+Soit $H^2(\mathbb{D})$ l'espace de Hardy des fonctions analytiques sur le disque unité dont la série de Taylor $\sum a_n z^n$ vérifie $\sum |a_n|^2 < \infty$. Le produit scalaire est $\langle f, g \rangle = \sum a_n \overline{b_n}$. Évaluer $L_w(f) = f(w)$ pour $|w| < 1$.
+
+\textit{Niveau de difficulté :} $\bigstar\bigstar\bigstar\star\star$
+
+\section{Correction}
+
+\begin{enumerate}
+\item \textbf{Expression de l'évaluation :} $f(w) = \sum_{n=0}^\infty a_n w^n$.
+\item \textbf{Continuité :} Par Cauchy-Schwarz, $|f(w)| \le (\sum |a_n|^2)^{1/2} (\sum |w|^{2n})^{1/2} = \|f\| \frac{1}{\sqrt{1-|w|^2}}$. Donc $L_w$ est continue.
+\item \textbf{Théorème de Riesz :} Il existe $k_w \in H^2$ tel que $f(w) = \langle f, k_w \rangle$.
+\item \textbf{Identification du noyau :} On a $\langle f, k_w \rangle = \sum a_n \overline{(k_w)_n}$. Or $f(w) = \sum a_n w^n$.
+\item \textbf{Conclusion :} En identifiant terme à terme, on obtient $\overline{(k_w)_n} = w^n$, soit $(k_w)_n = \overline{w}^n$. La fonction représentant est $k_w(z) = \sum_{n=0}^\infty \overline{w}^n z^n = \frac{1}{1 - \overline{w}z}$, le fameux noyau de Szegő.
+\end{enumerate}
+
+
+\subsection*{Exercice 6 : Projection et Convexes}
+
+\section{Énoncé}
+
+Soit $H = \mathbb{R}^2$ muni de la norme euclidienne. Trouver la projection de $x = (2, 2)$ sur le convexe fermé $C = \{ (u, v) \in \mathbb{R}^2 \mid u^2 + v^2 \le 1 \}$.
+
+\textit{Niveau de difficulté :} $\bigstar\bigstar\bigstar\star\star$
+
+\section{Correction}
+
+\begin{enumerate}
+\item \textbf{Caractérisation :} $C$ est la boule unité fermée $B(0, 1)$.
+\item \textbf{Vecteur cible :} $x = (2, 2)$, dont la norme est $\|x\| = \sqrt{2^2+2^2} = \sqrt{8} > 1$. Donc $x \notin C$.
+\item \textbf{Principe de projection :} La projection sur une boule fermée centrée en l'origine d'un point à l'extérieur s'obtient en le ramenant sur le bord via une homothétie. Le point de projection est colinéaire à $x$ et de norme 1.
+\item \textbf{Calcul :} $P_C(x) = \frac{x}{\|x\|} = \frac{(2, 2)}{\sqrt{8}} = (\frac{2}{2\sqrt{2}}, \frac{2}{2\sqrt{2}}) = (\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2})$.
+\item \textbf{Vérification (Inégalité variationnelle) :} On vérifie que pour tout $y \in C$, $\langle x - P_C(x), y - P_C(x) \rangle \le 0$. C'est vrai car $x - P_C(x)$ est le vecteur normal sortant de la sphère en $P_C(x)$.
+\end{enumerate}
+
+
+\subsection*{Exercice 7 : Espace de suites à poids}
+
+\section{Énoncé}
+
+Soit l'espace $\ell^2_w$ des suites telles que $\sum n |x_n|^2 < \infty$. Quel est son dual ?
+
+\textit{Niveau de difficulté :} $\bigstar\bigstar\bigstar\bigstar\star$
+
+\section{Correction}
+
+\begin{enumerate}
+\item \textbf{Isométrie :} Considérons l'application $T : \ell^2_w \to \ell^2$ définie par $T(x_n) = (\sqrt{n} x_n)$. Elle est bijective et préserve la norme. C'est une isométrie.
+\item \textbf{Théorème de Riesz :} Tout espace de Hilbert s'identifie isométriquement à son dual via $x \mapsto \langle \cdot, x \rangle$.
+\item \textbf{Forme explicite :} Une forme linéaire sur $\ell^2_w$ s'écrit $L(x) = \sum x_n y_n$. Pour que $L$ soit continue, il faut utiliser Cauchy-Schwarz : $|L(x)| \le \sum |\sqrt{n} x_n| |\frac{y_n}{\sqrt{n}}| \le (\sum n |x_n|^2)^{1/2} (\sum \frac{|y_n|^2}{n})^{1/2}$.
+\item \textbf{Conclusion :} L'espace dual de $\ell^2_w$ peut s'identifier à l'espace des suites $(y_n)$ telles que $\sum \frac{|y_n|^2}{n} < \infty$. C'est un espace de suites avec un poids inverse.
+\end{enumerate}
+
+
+\subsection*{Exercice 8 : Continuité d'une forme linéaire par Riesz}
+
+\section{Énoncé}
+
+Dans $L^2(0, 1)$, l'application $L(f) = \int_0^{1/2} f(t) dt$ est-elle continue ? Trouver son représentant de Riesz.
+
+\textit{Niveau de difficulté :} $\bigstar\bigstar\bigstar\bigstar\star$
+
+\section{Correction}
+
+\begin{enumerate}
+\item \textbf{Reformulation :} On peut réécrire $L(f) = \int_0^1 f(t) \mathbf{1}_{[0, 1/2]}(t) dt$.
+\item \textbf{Identification :} Ceci a exactement la forme d'un produit scalaire $\langle f, u \rangle$ dans $L^2(0, 1)$ avec $u(t) = \mathbf{1}_{[0, 1/2]}(t)$.
+\item \textbf{Continuité :} Par l'inégalité de Cauchy-Schwarz, $|L(f)| = |\langle f, u \rangle| \le \|f\|_2 \|u\|_2$.
+\item \textbf{Calcul de la norme :} $\|u\|_2 = \sqrt{\int_0^{1/2} 1^2 dt} = \sqrt{1/2}$. Donc $L$ est continue de norme $1/\sqrt{2}$.
+\item \textbf{Conclusion :} Le représentant de Riesz est la fonction indicatrice $u = \mathbf{1}_{[0, 1/2]}$, c'est un vecteur de $L^2$ qui encode l'opération de moyenne sur la première moitié de l'intervalle.
+\end{enumerate}
+
+
+\subsection*{Exercice 9 : Bases de Haar}
+
+\section{Énoncé}
+
+Montrer que les fonctions de Haar forment un système orthogonal dans $L^2([0, 1])$.
+
+\textit{Niveau de difficulté :} $\bigstar\bigstar\bigstar\bigstar\bigstar$
+
+\section{Correction}
+
+\begin{enumerate}
+\item \textbf{Définition :} La fonction de Haar mère est $\psi(t) = 1$ sur $[0, 1/2[$, $-1$ sur $[1/2, 1[$ et 0 ailleurs. On considère $\phi(t) = 1$.
+\item \textbf{Orthogonalité 1 :} $\langle \psi, \phi \rangle = \int_0^1 \psi(t) \cdot 1 dt = \int_0^{1/2} 1 dt - \int_{1/2}^1 1 dt = \frac{1}{2} - \frac{1}{2} = 0$.
+\item \textbf{Translations et dilatations :} Soit $\psi_{j,k}(t) = 2^{j/2} \psi(2^j t - k)$. Si on prend deux fonctions avec des supports disjoints, leur produit scalaire est nul car l'intégrale du produit l'est.
+\item \textbf{Même support :} Si l'une est contenue dans le support de l'autre (niveaux d'échelle différents), disons $\psi_{j,k}$ sur un demi-intervalle de $\psi_{J,K}$ avec $j > J$. La fonction $\psi_{J,K}$ est constante sur le support de $\psi_{j,k}$. Donc le produit scalaire est proportionnel à l'intégrale de $\psi_{j,k}$ qui est nulle.
+\item \textbf{Conclusion :} Le système de Haar est un système orthogonal de l'espace de Hilbert $L^2([0, 1])$. Il est d'ailleurs complet (base hilbertienne).
+\end{enumerate}
+
+
+\subsection*{Exercice 10 : Opérateur de Shift}
+
+\section{Énoncé}
+
+Soit $S$ l'opérateur de shift à droite sur $\ell^2(\mathbb{Z})$ défini par $S((x_n)) = (x_{n-1})$. Montrer que c'est un opérateur unitaire.
+
+\textit{Niveau de difficulté :} $\bigstar\bigstar\bigstar\bigstar\bigstar$
+
+\section{Correction}
+
+\begin{enumerate}
+\item \textbf{Définition unitaire :} Un opérateur $S$ sur un Hilbert est unitaire s'il est surjectif et préserve le produit scalaire (isométrie).
+\item \textbf{Isométrie :} Calculons $\langle Sx, Sy \rangle$. Par définition, $(Sx)_n = x_{n-1}$. Donc $\langle Sx, Sy \rangle = \sum_{n=-\infty}^\infty x_{n-1} \overline{y_{n-1}}$.
+\item \textbf{Changement d'indice :} Posons $k = n-1$. La somme devient $\sum_{k=-\infty}^\infty x_k \overline{y_k} = \langle x, y \rangle$. L'opérateur préserve donc le produit scalaire et la norme.
+\item \textbf{Surjectivité :} Pour tout $y \in \ell^2$, il existe $x \in \ell^2$ tel que $Sx = y$. Il suffit de poser $x_n = y_{n+1}$.
+\item \textbf{Conclusion :} L'opérateur $S$ est isométrique et bijectif, c'est donc un automorphisme isométrique de l'espace de Hilbert $\ell^2(\mathbb{Z})$, c'est-à-dire un opérateur unitaire.
+\end{enumerate}
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+
+\subsection*{TP 1 : Algorithme de Gram-Schmidt}
+
+Voici une implémentation Python pure illustrant le concept de ce TP :
+
+
+\begin{lstlisting}
+import numpy as np
+
+def gram_schmidt(vectors):
+    basis = []
+    for v in vectors:
+        w = v - sum(np.dot(v, b)*b for b in basis)
+        if (norm := np.linalg.norm(w)) > 1e-10:
+            basis.append(w / norm)
+    return np.array(basis)
+
+# Test de l'algorithme
+v1 = np.array([1.0, 1.0, 0.0])
+v2 = np.array([1.0, 2.0, 1.0])
+v3 = np.array([0.0, 1.0, 2.0])
+
+ortho_basis = gram_schmidt([v1, v2, v3])
+# Verification de l'orthogonalite
+assert abs(np.dot(ortho_basis[0], ortho_basis[1])) < 1e-9
+\end{lstlisting}
+
+
+
+\subsection*{TP 2 : Projection sur un hyperplan}
+
+Voici une implémentation Python pure illustrant le concept de ce TP :
+
+
+\begin{lstlisting}
+import numpy as np
+
+def projection_hyperplan(x, normal_vector):
+    n = normal_vector / np.linalg.norm(normal_vector)
+    # P_H(x) = x - <x, n>n
+    return x - np.dot(x, n) * n
+
+x = np.array([3.0, 4.0, 5.0])
+normal = np.array([1.0, 1.0, 1.0])
+
+proj = projection_hyperplan(x, normal)
+# Verification que la projection est dans l'hyperplan
+assert abs(np.dot(proj, normal)) < 1e-9
+\end{lstlisting}
+
+
+
+\subsection*{TP 3 : Moindres carrés (Application de la projection)}
+
+Voici une implémentation Python pure illustrant le concept de ce TP :
+
+
+\begin{lstlisting}
+import numpy as np
+
+# Resolution de Ax = b par projection (pseudo-inverse)
+A = np.array([[1.0, 1.0], [1.0, 2.0], [1.0, 3.0]])
+b = np.array([1.0, 2.0, 2.0])
+
+# L'equation normale est A^T A x = A^T b
+AtA = np.dot(A.T, A)
+Atb = np.dot(A.T, b)
+
+x_hat = np.linalg.solve(AtA, Atb)
+projection_b = np.dot(A, x_hat)
+
+# Verification de l'orthogonalite du residu
+residu = b - projection_b
+assert abs(np.dot(residu, A[:, 0])) < 1e-9
+assert abs(np.dot(residu, A[:, 1])) < 1e-9
+\end{lstlisting}
+
+
+
+\subsection*{TP 4 : Simulation d'un Kernel Hilbert Space (RKHS)}
+
+Voici une implémentation Python pure illustrant le concept de ce TP :
+
+
+\begin{lstlisting}
+import numpy as np
+
+# Kernel gaussien (RBF)
+def rbf_kernel(x, y, gamma=1.0):
+    return np.exp(-gamma * np.linalg.norm(x - y)**2)
+
+# Calcul d'une matrice de Gram pour des donnees
+X = np.array([[0.0], [1.0], [2.0]])
+n_samples = X.shape[0]
+
+K = np.zeros((n_samples, n_samples))
+for i in range(n_samples):
+    for j in range(n_samples):
+        K[i, j] = rbf_kernel(X[i], X[j])
+
+# La matrice de Gram doit etre definie positive
+eigenvalues = np.linalg.eigvalsh(K)
+assert np.all(eigenvalues > 0)
+\end{lstlisting}
+
+
+
+\subsection*{TP 5 : Représentant de Riesz discret}
+
+Voici une implémentation Python pure illustrant le concept de ce TP :
+
+
+\begin{lstlisting}
+import numpy as np
+
+# Soit une forme lineaire L(x) = 2*x_0 + 3*x_1 - x_2
+# On cherche a dans R^3 tel que L(x) = <x, a>
+
+def L(x):
+    return 2*x[0] + 3*x[1] - x[2]
+
+# Extraction du representant a via la base canonique
+e0 = np.array([1.0, 0.0, 0.0])
+e1 = np.array([0.0, 1.0, 0.0])
+e2 = np.array([0.0, 0.0, 1.0])
+
+a = np.array([L(e0), L(e1), L(e2)])
+
+# Verification du theoreme de Riesz empiriquement
+x_test = np.array([10.0, -5.0, 4.0])
+assert abs(L(x_test) - np.dot(x_test, a)) < 1e-9
+\end{lstlisting}
+
+
+
+\end{document}
