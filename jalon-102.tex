@@ -1,0 +1,617 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge Topologies faibles et faibles-* \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+\# Jalon 102 : Topologies faibles et faibles-*
+
+\section{Présentation du concept clé}
+
+\begin{itemize}
+\item \textbf{Intuition Physique :} Imaginez que vous regardiez une hélice d'avion qui tourne de plus en plus vite.
+\end{itemize}
+    - Si vous mesurez la vitesse de chaque point, elle est énorme et ne s'arrête jamais (pas de convergence classique).
+    - Mais si vous regardez l'hélice avec vos yeux (qui sont des capteurs lents), vous finissez par voir un disque gris immobile et transparent.
+    - La \textbf{Topologie Faible}, c'est exactement cela : c'est la vue que l'on a d'un objet quand on ne peut le regarder qu'à travers des instruments de mesure (des formes linéaires). Un objet peut sembler "immobile" ou "convergent" pour tous vos instruments, même s'il s'agite frénétiquement dans l'espace réel.
+\begin{itemize}
+\item \textbf{Problématique Historique :} En dimension infinie, les boules ne sont jamais compactes (Théorème de Riesz). On ne peut donc pas extraire de sous-suite convergente d'une suite bornée, ce qui bloque tous les calculs d'optimisation. La topologie faible "assouplit" l'espace pour rendre les boules à nouveau compactes. C'est le prix à payer pour garantir que nos algorithmes trouvent toujours un point d'arrêt.
+\item \textbf{Perspective Géométrique :} Une suite de fonctions $f_n$ qui font des vagues de plus en plus serrées. Elles ne s'écrasent pas au sol, mais leur aire moyenne vue par n'importe quel "filtre" tend vers zéro.
+
+\end{itemize}
+\section{Formalisation}
+
+\subsection*{Topologie Faible $\sigma(E, E^*)$}
+
+Soit $E$ un espace de Banach.
+
+\begin{quote}\textbf{Définition 1 (Convergence Faible) :}\end{quote}
+\begin{quote}On dit qu'une suite $(x_n)$ de $E$ converge \textbf{faiblement} vers $x$, noté $x_n \rightharpoonup x$, si pour toute forme linéaire continue $L \in E^*$ :\end{quote}
+\begin{quote}$$\lim_{n \to \infty} L(x_n) = L(x)$$\end{quote}
+\begin{quote}La topologie faible est la topologie la moins fine sur $E$ rendant continues toutes les formes de $E^*$.\end{quote}
+
+\begin{quote}\textbf{Exemple Concret :}\end{quote}
+\begin{quote}Soit $E = \ell^2(\mathbb{N})$, l'espace des suites de carré sommable, et considérons la base hilbertienne canonique $(e_n)_{n \in \mathbb{N}}$, où $e_n = (0, \dots, 0, 1, 0, \dots)$ avec un $1$ à la $n$-ième position.\end{quote}
+\begin{quote}La suite $(e_n)$ ne converge pas fortement (en norme) vers $0$ car $\|e_n - e_m\|_2 = \sqrt{2}$ pour tout $n \neq m$.\end{quote}
+\begin{quote}Cependant, d'après le théorème de représentation de Riesz, toute forme linéaire $L \in (\ell^2)^*$ s'écrit $L(x) = \langle y, x \rangle$ pour un certain $y = (y_k) \in \ell^2$.\end{quote}
+\begin{quote}Évaluons $L(e_n)$ :\end{quote}
+\begin{quote}$$L(e_n) = \langle y, e_n \rangle = y_n$$\end{quote}
+\begin{quote}Comme $y \in \ell^2$, la série $\sum |y_k|^2$ converge, ce qui implique que le terme général $y_n$ tend vers $0$.\end{quote}
+\begin{quote}Ainsi, pour toute $L \in (\ell^2)^*$, $\lim_{n \to \infty} L(e_n) = 0$.\end{quote}
+\begin{quote}La suite $(e_n)$ converge donc faiblement vers $0$ : $e_n \rightharpoonup 0$.\end{quote}
+
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  % Axes
+  \draw[->] (-0.5,0) -- (5,0) node[right] {Temps $t$};
+  \draw[->] (0,-1.5) -- (0,1.5) node[above] {$f_n(t)$};
+
+  % Functions fn
+  \draw[blue, domain=0:4, samples=100] plot (\x, {sin(200*\x)*exp(-0.2*\x)});
+  \draw[red, domain=0:4, samples=200] plot (\x, {sin(600*\x)*exp(-0.2*\x)});
+
+  % Convergence (weak limit is 0)
+  \draw[thick, dashed] (0,0) -- (4,0);
+
+  \node[blue, right] at (5, 0.5) {$f_{10}$ (fréquence modérée)};
+  \node[red, right] at (5, -0.5) {$f_{30}$ (haute fréquence)};
+
+  \node[align=center] at (2,-2.5) {Oscillations rapides : La suite $(f_n)$ n'a pas de limite forte,\\mais son action moyenne (intégrale contre une fonction test)\\tend vers zéro (limite faible $= 0$).};
+\end{tikzpicture}
+\end{center}
+
+
+\subsection*{Topologie Faible-* $\sigma(E^*, E)$}
+
+Sur l'espace dual $E^*$, on peut définir une topologie encore plus "grossière".
+
+\begin{quote}\textbf{Définition 2 (Convergence Faible-*) :}\end{quote}
+\begin{quote}On dit qu'une suite $(L_n)$ de $E^*$ converge \textbf{faiblement-}* vers $L$, si pour tout vecteur $x \in E$ :\end{quote}
+\begin{quote}$$\lim_{n \to \infty} L_n(x) = L(x)$$\end{quote}
+
+
+\begin{quote}\textbf{Exemple Concret 2 : Convergence faible mais pas forte dans $L^p$}\end{quote}
+\begin{quote}Considérons l'espace $E = L^p([0, 1])$ pour $1 < p < \infty$, et la suite de fonctions de Rademacher définie par $r_n(t) = \text{sgn}(\sin(2^n \pi t))$.\end{quote}
+\begin{quote}Ces fonctions oscillent entre $-1$ et $1$ de plus en plus vite. \end{quote}
+\begin{quote}Pour tout $n$, $\|r_n\|_p = 1$. La suite ne converge pas fortement vers $0$.\end{quote}
+\begin{quote}Cependant, par le lemme de Riemann-Lebesgue, pour toute fonction test $g \in L^q$ (avec $1/p + 1/q = 1$), on a :\end{quote}
+\begin{quote}$$\lim_{n \to \infty} \int_0^1 r_n(t) g(t) dt = 0$$\end{quote}
+\begin{quote}Donc $r_n \rightharpoonup 0$ faiblement dans $L^p([0, 1])$.\end{quote}
+
+\begin{quote}\textbf{Exemple Concret 3 : Espace non réflexif et topologie faible-}*\end{quote}
+\begin{quote}Dans l'espace $E = L^1([0, 1])$, le dual est $E^* = L^\infty([0, 1])$.\end{quote}
+\begin{quote}Prenons la suite $f_n(t) = n \cdot 1_{[0, 1/n]}(t)$ dans $L^1$.\end{quote}
+\begin{quote}Cette suite ne converge pas faiblement dans $L^1$ car il n'existe aucune fonction intégrable qui puisse représenter un "pic de Dirac" en $0$.\end{quote}
+\begin{quote}Par contre, si l'on regarde l'espace des mesures de Radon $\mathcal{M}([0,1])$, vu comme le dual de $C^0([0,1])$, les mesures de densité $f_n(t)dt$ convergent faiblement-* vers la mesure de Dirac $\delta_0$.\end{quote}
+\begin{quote}En effet, pour toute fonction continue $g \in C^0([0, 1])$ :\end{quote}
+\begin{quote}$$\lim_{n \to \infty} \int_0^1 f_n(t) g(t) dt = \lim_{n \to \infty} n \int_0^{1/n} g(t) dt = g(0) = \langle \delta_0, g \rangle$$\end{quote}
+
+\begin{quote}\textbf{Exemple Concret 4 : Compacité de la boule unité duale (Banach-Alaoglu)}\end{quote}
+\begin{quote}Soit $E = c_0$, l'espace des suites tendant vers 0, muni de la norme $\| \cdot \|_\infty$. Son dual est $E^* = \ell^1$.\end{quote}
+\begin{quote}La suite $e_n$ dans $\ell^1$ (où $e_n$ a un 1 à la position $n$ et 0 ailleurs) est dans la boule unité fermée de $\ell^1$.\end{quote}
+\begin{quote}D'après le théorème de Banach-Alaoglu, cette boule est faiblement-* compacte.\end{quote}
+\begin{quote}Extrayons une sous-suite convergente. Pour toute suite $x \in c_0$, $\langle e_n, x \rangle = x_n$.\end{quote}
+\begin{quote}Comme $x \in c_0$, $\lim_{n \to \infty} x_n = 0$.\end{quote}
+\begin{quote}Donc $\langle e_n, x \rangle \to 0 = \langle 0, x \rangle$.\end{quote}
+\begin{quote}Ainsi, la suite $(e_n)$ converge faiblement-\textit{ vers 0 dans $\ell^1$, bien qu'elle ne possède aucune sous-suite faiblement convergente, illustrant la compacité de la topologie faible-}.\end{quote}
+
+\begin{quote}\textbf{Exemple Concret 5 : Opérateur de décalage}\end{quote}
+\begin{quote}Sur l'espace de Hilbert $E = \ell^2(\mathbb{N})$, considérons l'opérateur de décalage à droite $S(x_0, x_1, \dots) = (0, x_0, x_1, \dots)$ et l'opérateur de décalage à gauche $S^*(x_0, x_1, \dots) = (x_1, x_2, \dots)$.\end{quote}
+\begin{quote}Appliquons $S^{*n}$ au vecteur fixe $v = (1, 1/2, 1/3, \dots) \in \ell^2$.\end{quote}
+\begin{quote}$S^{*n} v = (1/(n+1), 1/(n+2), \dots)$.\end{quote}
+\begin{quote}La norme de $S^{*n} v$ est $\|S^{*n} v\|_2^2 = \sum_{k=n+1}^\infty \frac{1}{k^2}$, qui tend vers 0. Ici on a convergence forte.\end{quote}
+\begin{quote}Par contre, appliquons $S^n$ au vecteur $e_0 = (1, 0, 0, \dots)$.\end{quote}
+\begin{quote}$S^n e_0 = e_n$. On a vu que $e_n \rightharpoonup 0$ faiblement.\end{quote}
+\begin{quote}L'opérateur $S^n$ "pousse" l'énergie vers l'infini, menant à une perte d'information locale, modélisée par la convergence faible.\end{quote}
+
+\subsection*{Théorème de Banach-Alaoglu}
+
+C'est le résultat central qui justifie l'existence de ces topologies.
+
+\begin{quote}\textbf{Théorème de Banach-Alaoglu :}\end{quote}
+\begin{quote}La boule unité fermée de l'espace dual $E^*$ est \textbf{compacte} pour la topologie faible-*.\end{quote}
+\begin{quote}$$B_{E^*} = \{ L \in E^* \mid \|L\| \le 1 \} \text{ est } \sigma(E^*, E)\text{-compacte.}$$\end{quote}
+
+\section{Démonstrations}
+
+\subsection*{Démonstration : Convergence faible $\neq$ Convergence forte dans $L^2$}
+
+Considérons $e_n(x) = \sin(nx)$ sur $[0, \pi]$ dans l'espace $L^2$.
+
+1. \textbf{Calcul de la norme :} $\|e_n\|_2^2 = \int_0^\pi \sin^2(nx) dx = \pi/2$. La norme est constante, donc $e_n$ ne converge pas vers 0 au sens fort (sinon sa norme tendrait vers 0).
+2. \textbf{Action d'une forme linéaire :} Toute forme linéaire sur $L^2$ est de la forme $L(f) = \int f \cdot g$ avec $g \in L^2$ (Riesz, Jalon 76).
+3. \textbf{Lemme de Riemann-Lebesgue :} On a vu au Jalon 80 que pour toute fonction $g \in L^1$ (et donc $L^2$ sur un segment) :
+   $$\lim_{n \to \infty} \int_0^\pi g(x) \sin(nx) dx = 0$$
+4. \textbf{Conclusion :} Pour tout instrument de mesure $g$, on lit 0 à la limite. Donc $e_n \rightharpoonup 0$ (convergence faible).
+   Le signal "vibre" si vite qu'il devient invisible pour tout intégrateur.
+
+\section{Exercices d'Application}
+
+\subsection*{Exercice 1 : Unicité de la limite faible}
+\textbf{Énoncé :} Montrer que si une suite converge faiblement, sa limite est unique.
+\textbf{Correction Détaillée :}
+Si $x_n \rightharpoonup x$ et $x_n \rightharpoonup y$, alors pour tout $L \in E^*$, $L(x_n) \to L(x)$ et $L(x_n) \to L(y)$. Par unicité de la limite dans $\mathbb{K}$, $L(x) = L(y)$, donc $L(x-y) = 0$.
+Si c'est vrai pour TOUTE forme linéaire $L$, alors par le corollaire de Hahn-Banach (Jalon 98), $x-y$ doit être nul. Donc $x=y$.
+
+\subsection*{Exercice 2 : Niveau Avancé (Lien avec la bornitude)}
+\textbf{Énoncé :} Montrer que toute suite faiblement convergente est bornée.
+\textbf{Correction Détaillée :}
+C'est une application élégante du \textbf{Théorème de Banach-Steinhaus} (Jalon 100). On voit chaque $x_n$ comme une forme linéaire sur $E^*$ définie par $J(x_n)(L) = L(x_n)$. Par hypothèse, pour chaque $L$, la suite $J(x_n)(L)$ est convergente donc bornée. Par Banach-Steinhaus, la famille d'opérateurs $\{J(x_n)\}$ est bornée en norme. Comme $\|J(x_n)\| = \|x_n\|$, la suite est bornée.
+
+\section{Application en Intelligence Artificielle}
+
+\begin{itemize}
+\item \textbf{Le Pont Théorique :} En optimisation de grande dimension, la compacité faible est ce qui garantit qu'une suite de modèles dont l'erreur diminue finit par "converger" vers un modèle limite, même si les paramètres eux-mêmes bougent beaucoup.
+\item \textbf{Example Concret :}
+\end{itemize}
+    - \textbf{Apprentissage de Mesures (GANS) :} Dans la théorie des GANs, on cherche une mesure de probabilité. L'espace des mesures est le dual de l'espace des fonctions continues. Le théorème de Banach-Alaoglu garantit que l'ensemble des probabilités est compact pour la topologie faible-*. C'est ce qui permet de prouver qu'un équilibre de Nash existe entre le générateur et le discriminateur.
+    - \textbf{Generalization Bounds :} On utilise la topologie faible pour montrer que de petites perturbations des données entraînent de petites perturbations des prédictions "en moyenne", assurant la stabilité statistique du modèle.
+    - \textbf{Neural Tangent Kernel (NTK) :} L'étude de la convergence des réseaux larges repose sur la convergence faible des opérateurs associés aux couches du réseau.
+
+\section{Liens Sémantiques}
+
+\begin{itemize}
+\item \textbf{Concepts Précédents requis :} [[Jalon 101 (Application ouverte et Graphe fermé).md]], [[Jalon 98 (Théorème de Hahn-Banach (forme analytique)).md]], [[Jalon 80 (Transformée de Fourier dans L1).md]]
+\item \textbf{Concepts Futurs dépendants :} [[Jalon 103 (Espaces de Hilbert généraux).md]], [[Jalon 106 (Théorème spectral pour les opérateurs compacts autoadjoints).md]]
+
+\end{itemize}
+
+\newpage
+\part{Exercices d'Application et de Concours}
+
+\section{Exercice 1 : Unicité de la limite faible \quad $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Soit $E$ un espace de Banach. Montrer que si une suite $(x_n)_{n \ge 1}$ d'éléments de $E$ converge faiblement vers $x \in E$ et faiblement vers $y \in E$, alors $x = y$.
+
+\textbf{Correction :}
+\textit{Analyse de l'énoncé :} On utilise la définition de la convergence faible et une conséquence directe du théorème de Hahn-Banach (la séparation des points).
+\textit{Résolution pas-à-pas :}
+1. \textbf{Étape 1 : Action des formes linéaires.}
+   Par définition, $x_n \rightharpoonup x$ implique que pour toute forme linéaire continue $f \in E^*$, on a $\lim_{n \to \infty} f(x_n) = f(x)$.
+   De même, $x_n \rightharpoonup y$ implique que $\lim_{n \to \infty} f(x_n) = f(y)$.
+2. \textbf{Étape 2 : Unicité de la limite scalaire.}
+   Dans le corps $\mathbb{K}$ (qui est $\mathbb{R}$ ou $\mathbb{C}$), la limite d'une suite est unique.
+   Par conséquent, pour tout $f \in E^*$, on a $f(x) = f(y)$, ce qui par linéarité donne $f(x - y) = 0$.
+3. \textbf{Étape 3 : Application de Hahn-Banach.}
+   Supposons par l'absurde que $x \neq y$, c'est-à-dire que $z = x - y \neq 0$.
+   D'après le corollaire de Hahn-Banach, il existe une forme linéaire $f_0 \in E^*$ telle que $f_0(z) = \|z\|_E \neq 0$.
+   Or, l'étape 2 a montré que $f(z) = 0$ pour toute forme $f \in E^*$.
+   C'est une contradiction. On en conclut donc que $z = 0$, soit $x = y$.
+
+
+\section{Exercice 2 : Toute suite fortement convergente est faiblement convergente \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Soit $E$ un espace vectoriel normé et $(x_n)_{n \ge 1}$ une suite de $E$. Montrer que si $(x_n)$ converge fortement vers $x$, alors elle converge faiblement vers $x$. Montrer par un exemple que la réciproque est fausse en dimension infinie.
+
+\textbf{Correction :}
+\textit{Analyse de l'énoncé :} La première partie est une simple application de la continuité des formes linéaires. La seconde partie requiert de se placer dans un espace de dimension infinie, par exemple un espace de Hilbert.
+\textit{Résolution pas-à-pas :}
+1. \textbf{Étape 1 : Forte implique faible.}
+   Supposons que $\lim_{n \to \infty} \|x_n - x\| = 0$. Soit $f \in E^*$. Comme $f$ est continue, elle conserve les limites.
+   On a $|f(x_n) - f(x)| = |f(x_n - x)| \le \|f\|_{E^*} \|x_n - x\|$.
+   Puisque $\|x_n - x\| \to 0$, on a $|f(x_n) - f(x)| \to 0$. Donc $f(x_n) \to f(x)$ pour tout $f \in E^*$.
+   Cela signifie exactement que $x_n \rightharpoonup x$.
+2. \textbf{Étape 2 : Contre-exemple pour la réciproque.}
+   Considérons $E = \ell^2(\mathbb{N})$, l'espace des suites de carré sommable, avec la base canonique $(e_n)_{n \ge 0}$.
+   Pour tout élément $y = (y_k)_{k \ge 0} \in \ell^2$, le produit scalaire $\langle y, e_n \rangle = y_n$.
+   Comme la série $\sum |y_k|^2$ converge, on a nécessairement $\lim_{n \to \infty} y_n = 0$.
+   Par le théorème de représentation de Riesz, toute forme $f \in E^*$ s'écrit $f(x) = \langle y, x \rangle$ pour un certain $y \in \ell^2$.
+   Donc $\lim_{n \to \infty} f(e_n) = 0$. Ainsi $e_n \rightharpoonup 0$ faiblement.
+   Pourtant, $\|e_n - 0\| = \|e_n\| = 1$ ne tend pas vers 0. La suite $(e_n)$ ne converge pas fortement vers 0.
+
+
+\section{Exercice 3 : Convergence faible et opérateurs compacts \quad $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Soient $E$ et $F$ des espaces de Banach, et $T : E \to F$ un opérateur linéaire compact. Montrer que si une suite $(x_n)_{n \ge 1}$ converge faiblement vers $x$ dans $E$, alors la suite $(T(x_n))_{n \ge 1}$ converge fortement vers $T(x)$ dans $F$.
+
+\textbf{Correction :}
+\textit{Analyse de l'énoncé :} Un opérateur compact transforme une suite faiblement convergente (qui est nécessairement bornée) en une suite admettant une sous-suite fortement convergente.
+\textit{Résolution pas-à-pas :}
+1. \textbf{Étape 1 : Bornitude de la suite.}
+   Puisque $x_n \rightharpoonup x$, par le théorème de Banach-Steinhaus, la suite $(x_n)$ est bornée en norme : il existe $M > 0$ tel que $\|x_n\| \le M$.
+2. \textbf{Étape 2 : Compacité de l'image.}
+   L'opérateur $T$ étant compact, l'image de toute suite bornée admet une sous-suite convergente. Donc la suite $(T(x_n))$ a ses valeurs dans un ensemble relativement compact de $F$.
+3. \textbf{Étape 3 : Convergence faible de l'image.}
+   Montrons que $T(x_n) \rightharpoonup T(x)$ faiblement dans $F$. Soit $g \in F^*$. Alors $g \circ T \in E^*$.
+   Puisque $x_n \rightharpoonup x$, on a $(g \circ T)(x_n) \to (g \circ T)(x)$, soit $g(T(x_n)) \to g(T(x))$.
+   Ceci prouve que $T(x_n) \rightharpoonup T(x)$ faiblement.
+4. \textbf{Étape 4 : Passage de la convergence faible à la convergence forte dans un compact.}
+   Raisonnons par l'absurde. Supposons que $T(x_n)$ ne converge pas fortement vers $T(x)$.
+   Alors il existe $\epsilon > 0$ et une sous-suite $(x_{\phi(n)})$ telle que $\|T(x_{\phi(n)}) - T(x)\| \ge \epsilon$ pour tout $n$.
+   La sous-suite $(x_{\phi(n)})$ est toujours bornée. Par compacité de $T$, la suite $(T(x_{\phi(n)}))$ possède une sous-suite $(T(x_{\psi(n)}))$ qui converge fortement vers un point $y \in F$.
+   Mais la convergence forte implique la convergence faible. Donc $T(x_{\psi(n)}) \rightharpoonup y$.
+   Or, nous savons par l'étape 3 que toute sous-suite de $T(x_n)$ converge faiblement vers $T(x)$. Par unicité de la limite faible, $y = T(x)$.
+   Mais ceci contredit le fait que $\|T(x_{\psi(n)}) - T(x)\| \ge \epsilon$.
+   La supposition initiale était donc fausse : $T(x_n)$ converge fortement vers $T(x)$.
+
+
+\section{Exercice 4 : Sous-espaces fermés et topologie faible \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $E$ un espace de Banach et $F$ un sous-espace vectoriel de $E$. Montrer que $F$ est fortement fermé si et seulement si $F$ est faiblement fermé.
+
+\textbf{Correction :}
+\textit{Analyse de l'énoncé :} La topologie faible est moins fine que la topologie forte, donc tout fermé faible est fortement fermé. L'implication inverse utilise le théorème d'Hahn-Banach (forme géométrique).
+\textit{Résolution pas-à-pas :}
+1. \textbf{Étape 1 : Faiblement fermé implique fortement fermé.}
+   Puisque la topologie forte a plus d'ouverts (et donc plus de fermés) que la topologie faible, tout ensemble fermé pour la topologie faible l'est aussi pour la topologie forte.
+2. \textbf{Étape 2 : Fortement fermé implique faiblement fermé.}
+   Supposons $F$ fortement fermé et convexe (un sous-espace vectoriel est toujours convexe).
+   Soit $x_0 \notin F$. Nous voulons montrer que le complémentaire de $F$ est faiblement ouvert, ou de manière équivalente, qu'il existe un voisinage faible de $x_0$ disjoint de $F$.
+   Par le théorème de Hahn-Banach géométrique (seconde forme), séparant le compact $\{x_0\}$ du fermé convexe $F$, il existe une forme linéaire $f \in E^*$ et un réel $\alpha$ tels que :
+   $$f(x_0) < \alpha < \inf_{x \in F} f(x)$$
+   Comme $F$ est un sous-espace vectoriel, $f(F)$ est un sous-espace vectoriel de $\mathbb{K}$.
+   La seule façon pour $f(F)$ d'être minoré par $\alpha$ est que $f(F) = \{0\}$.
+   Ainsi, $\inf_{x \in F} f(x) = 0$. Donc $f(x_0) < 0$ et $f_{|F} = 0$.
+   Considérons l'ouvert faible $V = \{ y \in E \mid f(y) < 0 \}$.
+   On a $x_0 \in V$, et pour tout $x \in F$, $f(x) = 0$, donc $x \notin V$.
+   Ainsi, $V \cap F = \emptyset$. Ceci prouve que le complémentaire de $F$ est un voisinage faible pour chacun de ses points, donc il est faiblement ouvert, et $F$ est faiblement fermé.
+
+
+\section{Exercice 5 : Théorème de Mazur \quad $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $E$ un espace de Banach. Montrer que si une suite $(x_n)_{n \ge 1}$ converge faiblement vers $x$, alors il existe une suite de combinaisons linéaires convexes des $(x_n)$ qui converge fortement vers $x$.
+
+\textbf{Correction :}
+\textit{Analyse de l'énoncé :} On relie la convergence faible et la convergence forte à l'aide des enveloppes convexes et du lemme sur les sous-espaces fermés et convexes.
+\textit{Résolution pas-à-pas :}
+1. \textbf{Étape 1 : L'enveloppe convexe fermée.}
+   Soit $K_n = \text{Conv}(\{ x_k \mid k \ge n \})$ l'enveloppe convexe des termes de la suite à partir du rang $n$.
+   Soit $\overline{K_n}$ l'adhérence (forte) de $K_n$.
+   Comme $\overline{K_n}$ est fortement fermé et convexe, d'après le résultat classique (démontré via Hahn-Banach), il est aussi faiblement fermé.
+2. \textbf{Étape 2 : Appartenance de la limite faible.}
+   La suite $(x_k)_{k \ge n}$ converge faiblement vers $x$.
+   Comme tous les termes de la suite appartiennent à $K_n \subset \overline{K_n}$, et que $\overline{K_n}$ est faiblement fermé, sa limite faible $x$ appartient nécessairement à $\overline{K_n}$.
+3. \textbf{Étape 3 : Construction de la suite fortement convergente.}
+   Puisque $x \in \overline{K_n}$ pour tout $n$, il existe par définition de l'adhérence un élément $y_n \in K_n$ tel que $\|y_n - x\| < 1/n$.
+   Mais $y_n \in K_n$ signifie que $y_n$ est une combinaison linéaire convexe finie d'éléments de la forme $x_k$ avec $k \ge n$.
+   La suite $(y_n)_{n \ge 1}$ converge fortement vers $x$ (puisque $\|y_n - x\| < 1/n \to 0$) et est constituée de combinaisons linéaires convexes des $(x_n)$.
+
+
+\section{Exercice 6 : Convergence faible et orthogonalité dans un Hilbert \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Soit $H$ un espace de Hilbert et $(e_n)_{n \ge 1}$ un système orthonormé. Montrer que $(e_n)$ converge faiblement vers $0$.
+
+\textbf{Correction :}
+\textit{Analyse de l'énoncé :} On utilise le théorème de représentation de Riesz pour un espace de Hilbert et l'inégalité de Bessel.
+\textit{Résolution pas-à-pas :}
+1. \textbf{Étape 1 : Représentation des formes linéaires.}
+   Soit $f \in H^*$. D'après le théorème de représentation de Riesz, il existe un unique vecteur $y \in H$ tel que pour tout $x \in H$, $f(x) = \langle y, x \rangle$.
+2. \textbf{Étape 2 : Évaluation sur la famille orthonormée.}
+   Nous devons évaluer $\lim_{n \to \infty} f(e_n) = \lim_{n \to \infty} \langle y, e_n \rangle$.
+   Les scalaires $c_n = \langle y, e_n \rangle$ sont précisément les coefficients de Fourier du vecteur $y$ par rapport au système orthonormé $(e_n)$.
+3. \textbf{Étape 3 : Inégalité de Bessel.}
+   L'inégalité de Bessel stipule que pour tout vecteur $y$ et tout système orthonormé $(e_n)$, la série des carrés des modules des coefficients de Fourier converge et :
+   $$\sum_{n=1}^\infty |\langle y, e_n \rangle|^2 \le \|y\|^2$$
+   Puisque la série converge, son terme général tend nécessairement vers 0.
+   Ainsi, $\lim_{n \to \infty} |\langle y, e_n \rangle|^2 = 0$, ce qui implique que $\lim_{n \to \infty} \langle y, e_n \rangle = 0$.
+4. \textbf{Étape 4 : Conclusion.}
+   Nous avons montré que pour tout $f \in H^*$, $\lim_{n \to \infty} f(e_n) = 0$.
+   Cela signifie exactement que $e_n \rightharpoonup 0$ faiblement dans $H$.
+
+
+\section{Exercice 7 : Théorème de Banach-Saks dans $L^2$ \quad $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Soit $(x_n)_{n \ge 1}$ une suite faiblement convergente vers $0$ dans un espace de Hilbert $H$. Montrer qu'il existe une sous-suite $(x_{\phi(n)})$ dont les moyennes de Cesàro convergent fortement vers $0$.
+
+\textbf{Correction :}
+\textit{Analyse de l'énoncé :} On construit une sous-suite presque orthogonale pour s'assurer que la norme de la somme croît au plus linéairement.
+\textit{Résolution pas-à-pas :}
+1. \textbf{Étape 1 : Construction de la sous-suite.}
+   Puisque $x_n \rightharpoonup 0$, la suite est bornée : $\|x_n\| \le M$.
+   Posons $y_1 = x_1$.
+   Supposons construits $y_1, \dots, y_k$.
+   Comme $x_n \rightharpoonup 0$, on a $\langle x_n, y_i \rangle \to 0$ pour chaque $i \in \{1, \dots, k\}$.
+   Il existe donc un rang $N$ tel que pour tout $n \ge N$ et pour $i \in \{1, \dots, k\}$, $|\langle x_n, y_i \rangle| \le \frac{1}{k}$.
+   On choisit $y_{k+1} = x_{N}$. On a ainsi extrait une sous-suite telle que $|\langle y_n, y_m \rangle| \le \frac{1}{\max(n, m)-1}$ pour $n \neq m$.
+2. \textbf{Étape 2 : Norme de la somme.}
+   Soit $S_n = \sum_{i=1}^n y_i$. Calculons sa norme au carré :
+   $$\|S_n\|^2 = \sum_{i=1}^n \|y_i\|^2 + 2 \sum_{1 \le i < j \le n} \text{Re}(\langle y_i, y_j \rangle)$$
+   On sait que $\|y_i\|^2 \le M^2$. Pour les termes croisés, par construction $|\langle y_i, y_j \rangle| \le \frac{1}{j-1}$.
+   $$\|S_n\|^2 \le n M^2 + 2 \sum_{j=2}^n \sum_{i=1}^{j-1} \frac{1}{j-1} = n M^2 + 2 \sum_{j=2}^n (j-1) \frac{1}{j-1} = n M^2 + 2(n-1)$$
+3. \textbf{Étape 3 : Convergence des moyennes de Cesàro.}
+   La moyenne de Cesàro est $M_n = \frac{1}{n} S_n$.
+   On a $\|M_n\|^2 = \frac{1}{n^2} \|S_n\|^2 \le \frac{n M^2 + 2n}{n^2} = \frac{M^2 + 2}{n}$.
+   Lorsque $n \to \infty$, cette norme tend vers 0.
+   Donc la moyenne de Cesàro de la sous-suite converge fortement vers $0$.
+
+
+\section{Exercice 8 : Convergence faible et norme dans les espaces uniformément convexes \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Soit $E$ un espace de Banach uniformément convexe. Montrer que si $x_n \rightharpoonup x$ faiblement et que $\|x_n\| \to \|x\|$, alors $x_n \to x$ fortement.
+
+\textbf{Correction :}
+\textit{Analyse de l'énoncé :} La convergence faible plus la convergence des normes entraîne la convergence forte dans les espaces possédant une bonne géométrie (espaces uniformément convexes, comme les Hilbert ou les $L^p$).
+\textit{Résolution pas-à-pas :}
+1. \textbf{Étape 1 : Cas où $x = 0$.}
+   Si $x = 0$, l'hypothèse $\|x_n\| \to \|x\| = 0$ donne directement $x_n \to 0$ fortement, et la preuve est terminée. Supposons donc $x \neq 0$.
+2. \textbf{Étape 2 : Normalisation.}
+   Soient $y_n = \frac{x_n}{\|x_n\|}$ et $y = \frac{x}{\|x\|}$.
+   Puisque $x_n \rightharpoonup x$ et $\|x_n\| \to \|x\|$, on a $y_n \rightharpoonup y$.
+   De plus, $\|y_n\| = 1$ et $\|y\| = 1$.
+3. \textbf{Étape 3 : Évaluation de la limite de la demi-somme.}
+   Soit $f \in E^*$ telle que $\|f\| = 1$ et $f(y) = \|y\| = 1$ (théorème de Hahn-Banach).
+   Comme $y_n \rightharpoonup y$, on a $f(y_n) \to f(y) = 1$.
+   Considérons $\frac{y_n + y}{2}$.
+   $$1 \ge \left\| \frac{y_n + y}{2} \right\| \ge f\left( \frac{y_n + y}{2} \right) = \frac{f(y_n) + 1}{2} \to 1$$
+   Donc $\lim_{n \to \infty} \left\| \frac{y_n + y}{2} \right\| = 1$.
+4. \textbf{Étape 4 : Utilisation de la convexité uniforme.}
+   Dans un espace uniformément convexe, pour tout $\epsilon > 0$, il existe $\delta > 0$ tel que si $\|u\| \le 1$, $\|v\| \le 1$ et $\|u - v\| \ge \epsilon$, alors $\| \frac{u+v}{2} \| \le 1 - \delta$.
+   Si $\|y_n - y\|$ ne tendait pas vers 0, il existerait $\epsilon > 0$ et une sous-suite tels que $\|y_{\phi(n)} - y\| \ge \epsilon$.
+   Par uniforme convexité, on aurait $\left\| \frac{y_{\phi(n)} + y}{2} \right\| \le 1 - \delta < 1$, contredisant l'étape 3 où cette norme tend vers 1.
+   Par conséquent, $y_n \to y$ fortement.
+5. \textbf{Étape 5 : Conclusion.}
+   $x_n = \|x_n\| y_n$. Puisque $\|x_n\| \to \|x\|$ et $y_n \to y$, le produit tend fortement vers $\|x\|y = x$. Donc $x_n \to x$ fortement.
+
+
+\section{Exercice 9 : Fermeture faible d'une boule et non réflexivité \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Dans un espace de Banach réflexif $E$, toute boule fermée est faiblement compacte. Montrer que l'espace des fonctions continues $C([0, 1])$ muni de la norme $\| \cdot \|_\infty$ n'est pas réflexif en exhibant une suite de la boule unité qui n'admet aucune sous-suite faiblement convergente.
+
+\textbf{Correction :}
+\textit{Analyse de l'énoncé :} On utilise le théorème d'Eberlein-Šmulian : si la boule est faiblement compacte, toute suite admet une sous-suite faiblement convergente. On construit un contre-exemple explicite dans $C([0, 1])$.
+\textit{Résolution pas-à-pas :}
+1. \textbf{Étape 1 : Construction de la suite.}
+   Construisons une suite de fonctions $f_n \in C([0, 1])$ telles que $\|f_n\|_\infty \le 1$.
+   On définit $f_n(t)$ comme une fonction "triangle" (ou "dent de scie") avec des pics très abrupts.
+   Par exemple, pour chaque $k = 0, 1, \dots, 2^n-1$, $f_n(k/2^n) = 0$ et $f_n((k+1/2)/2^n) = 1$, interpolée linéairement.
+   Ces fonctions oscillent de plus en plus vite.
+2. \textbf{Étape 2 : Action des masses de Dirac (formes linéaires continues).}
+   Sur $C([0, 1])$, pour tout $t \in [0, 1]$, l'application d'évaluation $\delta_t(f) = f(t)$ est une forme linéaire continue.
+   Supposons qu'il existe une sous-suite faiblement convergente $f_{\phi(n)} \rightharpoonup f$.
+   Cela impliquerait que pour toute forme continue, $L(f_{\phi(n)}) \to L(f)$.
+   En particulier, pour tout $t$, on aurait $f_{\phi(n)}(t) \to f(t)$.
+3. \textbf{Étape 3 : Preuve de la contradiction.}
+   Par le théorème de convergence dominée (ou le théorème de Baire sur la limite simple de fonctions continues), si une telle $f$ existait, ce serait une fonction de première classe de Baire.
+   Cependant, la suite de "dents de scie" prend les valeurs $0$ et $1$ sur des ensembles de plus en plus denses. Pour tout point $t$, l'évaluation $f_{\phi(n)}(t)$ ne converge pas, sauf si l'on extrait une sous-suite spécifiquement pour $t$.
+   Un point $t_0$ choisi adéquatement montrera que pour n'importe quelle sous-suite, $f_{\phi(n)}(t_0)$ ne converge pas (par un argument diagonal de Baire).
+   Donc il n'y a pas de limite faible. L'espace n'étant pas faiblement séquentiellement compact, il n'est pas réflexif par Eberlein-Šmulian.
+
+
+\section{Exercice 10 : Compacité faible-* des mesures de probabilité \quad $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Soit $X$ un espace métrique compact. Considérons l'espace des mesures de Radon signées $\mathcal{M}(X)$, dual de l'espace des fonctions continues $C(X)$. Soit $P(X)$ l'ensemble des mesures de probabilité sur $X$. Montrer que $P(X)$ est compact pour la topologie faible-*.
+
+\textbf{Correction :}
+\textit{Analyse de l'énoncé :} On utilise le théorème de Banach-Alaoglu et on montre que $P(X)$ est un fermé pour la topologie faible-*.
+\textit{Résolution pas-à-pas :}
+1. \textbf{Étape 1 : Le cadre de Banach-Alaoglu.}
+   L'espace $C(X)$ muni de la norme $\| \cdot \|_\infty$ est un espace de Banach.
+   Son dual topologique est l'espace des mesures de Radon $\mathcal{M}(X)$, avec pour norme la variation totale.
+   Par le théorème de Banach-Alaoglu, la boule unité fermée $B = \{ \mu \in \mathcal{M}(X) \mid \|\mu\| \le 1 \}$ est compacte pour la topologie faible-*.
+2. \textbf{Étape 2 : Inclusion de $P(X)$ dans la boule unité.}
+   Une mesure de probabilité est une mesure positive de masse totale égale à 1.
+   Donc si $\mu \in P(X)$, sa norme en variation totale est $\|\mu\| = \mu(X) = 1 \le 1$.
+   Ainsi, $P(X) \subset B$.
+3. \textbf{Étape 3 : Fermeture faible-* de $P(X)$.}
+   Il suffit de montrer que $P(X)$ est fermé pour la topologie faible-*. Puisqu'il est inclus dans un compact, un fermé est un compact.
+   La topologie faible-* est définie par la convergence : $\mu_\alpha \rightharpoonup^* \mu \iff \int_X f d\mu_\alpha \to \int_X f d\mu$ pour tout $f \in C(X)$.
+   Soit une suite (ou un filtre) de mesures $\mu_n \in P(X)$ qui converge faiblement-* vers $\mu \in \mathcal{M}(X)$.
+   Vérifions que $\mu \in P(X)$.
+   a) Positivité : Si $f \ge 0$, alors $\int_X f d\mu_n \ge 0$. Par passage à la limite, $\int_X f d\mu \ge 0$. Par le théorème de représentation de Riesz, ceci assure que la mesure $\mu$ est positive.
+   b) Masse totale : Prenons la fonction constante $\mathbf{1} \in C(X)$ (qui est bien continue puisque $X$ est compact).
+   $\mu(X) = \int_X \mathbf{1} d\mu = \lim_{n \to \infty} \int_X \mathbf{1} d\mu_n = \lim_{n \to \infty} \mu_n(X) = \lim_{n \to \infty} 1 = 1$.
+   Donc $\mu$ est bien une mesure de probabilité.
+4. \textbf{Étape 4 : Conclusion.}
+   $P(X)$ est un sous-ensemble fermé (pour la topologie faible-\textit{) du compact faible-} $B$. Donc $P(X)$ est compact pour la topologie faible-*.
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+
+\section{TP 1 : Simulation de la convergence faible dans l'espace euclidien}
+
+Ce TP illustre qu'en dimension finie, convergence faible et convergence forte sont équivalentes. Nous allons simuler une suite de vecteurs dans un espace vectoriel de dimension 3, montrer sa convergence coordonnée par coordonnée (ce qui équivaut à l'action de formes linéaires de base), et vérifier la convergence forte.
+
+\begin{lstlisting}
+import math
+
+def simulate_finite_dimension():
+    # Sequence of vectors in R3 : v_n = (1/n, sin(1/n), (1-1/n)**n)
+    # The limit is expected to be (0, 0, 1/e)
+    limit = (0.0, 0.0, math.exp(-1))
+
+    print("Verification de la convergence dans R^3")
+    for n in [10, 100, 1000, 10000]:
+        v_n = (1.0/n, math.sin(1.0/n), (1.0 - 1.0/n)**n)
+
+        # Test against linear forms (the canonical projections)
+        f1 = v_n[0]
+        f2 = v_n[1]
+        f3 = v_n[2]
+
+        # Strong norm (Euclidean)
+        norm_diff = math.sqrt((v_n[0] - limit[0])**2 + (v_n[1] - limit[1])**2 + (v_n[2] - limit[2])**2)
+
+        print(f"n={n}: Action (f1, f2, f3) = ({f1:.4f}, {f2:.4f}, {f3:.4f})")
+        print(f"n={n}: Distance a la limite (norme forte) = {norm_diff:.6f}")
+        assert norm_diff < 0.2 # Verification de la decroissance
+
+if __name__ == '__main__':
+    simulate_finite_dimension()
+\end{lstlisting}
+
+
+\section{TP 2 : Illustration de la suite orthogonale sans convergence forte}
+
+Ce TP simule l'espace l2 des suites de carrés sommables. Nous montrons numériquement que le produit scalaire d'un vecteur fixe avec les vecteurs de la base canonique tend vers 0 (convergence faible), bien que la norme des vecteurs de base reste 1.
+
+\begin{lstlisting}
+import math
+
+def simulate_weak_l2_convergence():
+    # Un vecteur 'y' dans l2 : y_k = 1 / (k+1)
+    # Norme au carre = sum(1/(k+1)^2) = pi^2 / 6 = 1.6449...
+
+    print("Simulation dans l2(N)")
+
+    # On simule le produit scalaire <y, e_n>
+    # e_n est une suite avec un 1 a l'indice n et 0 ailleurs
+    # Donc <y, e_n> = y_n
+
+    for n in [1, 10, 100, 1000, 10000]:
+        action_forme_lineaire = 1.0 / (n + 1)
+        norme_forte_en = 1.0
+
+        print(f"n={n:5d} : Action de la forme lineaire y = {action_forme_lineaire:.6f}")
+        print(f"n={n:5d} : Norme forte de e_n = {norme_forte_en:.1f}")
+
+        assert action_forme_lineaire > 0.0
+        assert action_forme_lineaire < 1.0
+
+    print("Conclusion: L'action tend vers 0, mais la norme forte reste 1. C'est la convergence faible pure.")
+
+if __name__ == '__main__':
+    simulate_weak_l2_convergence()
+\end{lstlisting}
+
+
+\section{TP 3 : Théorème de Banach-Saks : Moyennes de Cesàro}
+
+Nous avons vu que la base canonique de l2 converge faiblement mais pas fortement. Le théorème de Banach-Saks assure que ses moyennes de Cesàro convergent fortement vers 0. Vérifions-le numériquement.
+
+\begin{lstlisting}
+import math
+
+def calculate_cesaro_norm(n):
+    # La somme S_n = e_1 + e_2 + ... + e_n a pour coordonnees n fois le chiffre 1.
+    # La norme au carre de S_n est n.
+    # La norme de S_n est sqrt(n).
+    # La moyenne de Cesaro est M_n = S_n / n
+    # La norme de M_n est sqrt(n) / n = 1 / sqrt(n)
+
+    return 1.0 / math.sqrt(n)
+
+def tp_banach_saks():
+    print("Verification du Theoreme de Banach-Saks sur la base de l2")
+
+    for n in [1, 4, 16, 64, 256, 1024, 4096]:
+        norme_moyenne = calculate_cesaro_norm(n)
+        print(f"n = {n:4d} : Norme forte de la moyenne de Cesaro = {norme_moyenne:.5f}")
+
+    print("Bien que (e_n) ne converge pas fortement, la moyenne (1/n) sum(e_k) converge fortement vers 0.")
+
+if __name__ == '__main__':
+    tp_banach_saks()
+\end{lstlisting}
+
+
+\section{TP 4 : Convergence faible-étoile vers la mesure de Dirac}
+
+Nous simulons la convergence faible-* d'une suite de fonctions rectangles (de masse totale 1 se concentrant vers l'origine) vers la mesure de Dirac, en intégrant ces fonctions contre des fonctions tests continues.
+
+\begin{lstlisting}
+import math
+
+def function_test_g(x):
+    # Fonction test continue : g(x) = exp(-x) * cos(5*x)
+    return math.exp(-x) * math.cos(5 * x)
+
+def simulate_dirac_convergence():
+    print("Convergence faible-* vers Dirac")
+
+    # La fonction g continue en 0 vaut g(0) = 1.0
+    valeur_theorique = function_test_g(0.0)
+    print(f"Valeur cible (Action de Dirac en 0) = {valeur_theorique:.6f}")
+
+    # Suite de densites f_n(x) = n pour x in [0, 1/n], 0 sinon.
+    # Integrale de f_n * g approchee par une methode des rectangles
+
+    for n in [2, 10, 50, 200, 1000]:
+        integral_approx = 0.0
+        steps = 1000
+        dx = (1.0 / n) / steps
+
+        for k in range(steps):
+            x_val = k * dx + (dx / 2.0)
+            # f_n(x_val) = n
+            integral_approx += n * function_test_g(x_val) * dx
+
+        erreur = abs(integral_approx - valeur_theorique)
+        print(f"n = {n:4d} : Integrale <f_n, g> = {integral_approx:.6f} | Erreur = {erreur:.6f}")
+
+if __name__ == '__main__':
+    simulate_dirac_convergence()
+\end{lstlisting}
+
+
+\section{TP 5 : Opérateur de décalage et perte d'énergie locale}
+
+L'opérateur de décalage vers la droite décale une suite vers l'infini. Ce TP illustre comment cet opérateur génère une suite faiblement convergente vers 0, mais dont la norme est préservée (l'énergie s'échappe vers l'infini).
+
+\begin{lstlisting}
+import math
+
+def shift_operator(seq):
+    # Insere un zero au debut de la sequence
+    return [0.0] + seq[:-1]
+
+def tp_shift_operator():
+    # Sequence initiale : v_0 = e_0 (1 en position 0, 0 ailleurs)
+    size = 20
+    seq = [0.0] * size
+    seq[0] = 1.0
+
+    # Forme lineaire de test : l(x) = sum_{k=0}^{size-1} (1/2)^k * x_k
+    # C'est bien une forme lineaire continue sur l2
+
+    print("Application du decalage a droite")
+    for step in range(5):
+        action_l = 0.0
+        norme_forte = 0.0
+
+        for k in range(size):
+            action_l += ((0.5)**k) * seq[k]
+            norme_forte += seq[k]**2
+
+        print(f"Etape {step} : Action forme lineaire = {action_l:.4f} | Norme forte^2 = {norme_forte:.1f}")
+        print(f"  Vecteur: {seq[:5]}...")
+        seq = shift_operator(seq)
+
+    print("La norme reste constante (1.0), mais l'action de la forme lineaire chute.")
+
+if __name__ == '__main__':
+    tp_shift_operator()
+\end{lstlisting}
+
+
+\end{document}

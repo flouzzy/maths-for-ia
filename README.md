@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [28/10/2026] : Upsert du Jalon 102 - Topologies faibles et faibles-*. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-27] : [Upsert/Création] du Jalon 101 - Théorème de l'application ouverte et théorème du graphe fermé. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-26] : [Upsert/Création] du Jalon 100 - Démonstration du théorème de Banach-Steinhaus. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-26] : [Upsert/Création] du Jalon 99 - Théorème de Hahn-Banach. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*

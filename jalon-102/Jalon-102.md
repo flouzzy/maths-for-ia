@@ -14,12 +14,12 @@ next: "[[Jalon 103 (Espaces de Hilbert généraux).md]]"
 
 ## 1. Présentation du concept clé
 
-- **La Métaphore :** Imaginez que vous regardiez une hélice d'avion qui tourne de plus en plus vite.
+- **Intuition Physique :** Imaginez que vous regardiez une hélice d'avion qui tourne de plus en plus vite.
     - Si vous mesurez la vitesse de chaque point, elle est énorme et ne s'arrête jamais (pas de convergence classique).
     - Mais si vous regardez l'hélice avec vos yeux (qui sont des capteurs lents), vous finissez par voir un disque gris immobile et transparent.
     - La **Topologie Faible**, c'est exactement cela : c'est la vue que l'on a d'un objet quand on ne peut le regarder qu'à travers des instruments de mesure (des formes linéaires). Un objet peut sembler "immobile" ou "convergent" pour tous vos instruments, même s'il s'agite frénétiquement dans l'espace réel.
-- **Le "Pourquoi on a inventé ça" :** En dimension infinie, les boules ne sont jamais compactes (Théorème de Riesz). On ne peut donc pas extraire de sous-suite convergente d'une suite bornée, ce qui bloque tous les calculs d'optimisation. La topologie faible "assouplit" l'espace pour rendre les boules à nouveau compactes. C'est le prix à payer pour garantir que nos algorithmes trouvent toujours un point d'arrêt.
-- **Visualisation :** Une suite de fonctions $f_n$ qui font des vagues de plus en plus serrées. Elles ne s'écrasent pas au sol, mais leur aire moyenne vue par n'importe quel "filtre" tend vers zéro.
+- **Problématique Historique :** En dimension infinie, les boules ne sont jamais compactes (Théorème de Riesz). On ne peut donc pas extraire de sous-suite convergente d'une suite bornée, ce qui bloque tous les calculs d'optimisation. La topologie faible "assouplit" l'espace pour rendre les boules à nouveau compactes. C'est le prix à payer pour garantir que nos algorithmes trouvent toujours un point d'arrêt.
+- **Perspective Géométrique :** Une suite de fonctions $f_n$ qui font des vagues de plus en plus serrées. Elles ne s'écrasent pas au sol, mais leur aire moyenne vue par n'importe quel "filtre" tend vers zéro.
 
 ## 2. Formalisation
 
@@ -32,6 +32,38 @@ Soit $E$ un espace de Banach.
 > $$\lim_{n \to \infty} L(x_n) = L(x)$$
 > La topologie faible est la topologie la moins fine sur $E$ rendant continues toutes les formes de $E^*$.
 
+> **Exemple Concret :**
+> Soit $E = \ell^2(\mathbb{N})$, l'espace des suites de carré sommable, et considérons la base hilbertienne canonique $(e_n)_{n \in \mathbb{N}}$, où $e_n = (0, \dots, 0, 1, 0, \dots)$ avec un $1$ à la $n$-ième position.
+> La suite $(e_n)$ ne converge pas fortement (en norme) vers $0$ car $\|e_n - e_m\|_2 = \sqrt{2}$ pour tout $n \neq m$.
+> Cependant, d'après le théorème de représentation de Riesz, toute forme linéaire $L \in (\ell^2)^*$ s'écrit $L(x) = \langle y, x \rangle$ pour un certain $y = (y_k) \in \ell^2$.
+> Évaluons $L(e_n)$ :
+> $$L(e_n) = \langle y, e_n \rangle = y_n$$
+> Comme $y \in \ell^2$, la série $\sum |y_k|^2$ converge, ce qui implique que le terme général $y_n$ tend vers $0$.
+> Ainsi, pour toute $L \in (\ell^2)^*$, $\lim_{n \to \infty} L(e_n) = 0$.
+> La suite $(e_n)$ converge donc faiblement vers $0$ : $e_n \rightharpoonup 0$.
+
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  % Axes
+  \draw[->] (-0.5,0) -- (5,0) node[right] {Temps $t$};
+  \draw[->] (0,-1.5) -- (0,1.5) node[above] {$f_n(t)$};
+
+  % Functions fn
+  \draw[blue, domain=0:4, samples=100] plot (\x, {sin(200*\x)*exp(-0.2*\x)});
+  \draw[red, domain=0:4, samples=200] plot (\x, {sin(600*\x)*exp(-0.2*\x)});
+
+  % Convergence (weak limit is 0)
+  \draw[thick, dashed] (0,0) -- (4,0);
+
+  \node[blue, right] at (5, 0.5) {$f_{10}$ (fréquence modérée)};
+  \node[red, right] at (5, -0.5) {$f_{30}$ (haute fréquence)};
+
+  \node[align=center] at (2,-2.5) {Oscillations rapides : La suite $(f_n)$ n'a pas de limite forte,\\mais son action moyenne (intégrale contre une fonction test)\\tend vers zéro (limite faible $= 0$).};
+\end{tikzpicture}
+\end{center}
+
+
 ### B. Topologie Faible-* $\sigma(E^*, E)$
 
 Sur l'espace dual $E^*$, on peut définir une topologie encore plus "grossière".
@@ -39,6 +71,41 @@ Sur l'espace dual $E^*$, on peut définir une topologie encore plus "grossière"
 > **Définition 2 (Convergence Faible-*) :**
 > On dit qu'une suite $(L_n)$ de $E^*$ converge **faiblement-*** vers $L$, si pour tout vecteur $x \in E$ :
 > $$\lim_{n \to \infty} L_n(x) = L(x)$$
+
+
+> **Exemple Concret 2 : Convergence faible mais pas forte dans $L^p$**
+> Considérons l'espace $E = L^p([0, 1])$ pour $1 < p < \infty$, et la suite de fonctions de Rademacher définie par $r_n(t) = \text{sgn}(\sin(2^n \pi t))$.
+> Ces fonctions oscillent entre $-1$ et $1$ de plus en plus vite.
+> Pour tout $n$, $\|r_n\|_p = 1$. La suite ne converge pas fortement vers $0$.
+> Cependant, par le lemme de Riemann-Lebesgue, pour toute fonction test $g \in L^q$ (avec $1/p + 1/q = 1$), on a :
+> $$\lim_{n \to \infty} \int_0^1 r_n(t) g(t) dt = 0$$
+> Donc $r_n \rightharpoonup 0$ faiblement dans $L^p([0, 1])$.
+
+> **Exemple Concret 3 : Espace non réflexif et topologie faible-***
+> Dans l'espace $E = L^1([0, 1])$, le dual est $E^* = L^\infty([0, 1])$.
+> Prenons la suite $f_n(t) = n \cdot 1_{[0, 1/n]}(t)$ dans $L^1$.
+> Cette suite ne converge pas faiblement dans $L^1$ car il n'existe aucune fonction intégrable qui puisse représenter un "pic de Dirac" en $0$.
+> Par contre, si l'on regarde l'espace des mesures de Radon $\mathcal{M}([0,1])$, vu comme le dual de $C^0([0,1])$, les mesures de densité $f_n(t)dt$ convergent faiblement-* vers la mesure de Dirac $\delta_0$.
+> En effet, pour toute fonction continue $g \in C^0([0, 1])$ :
+> $$\lim_{n \to \infty} \int_0^1 f_n(t) g(t) dt = \lim_{n \to \infty} n \int_0^{1/n} g(t) dt = g(0) = \langle \delta_0, g \rangle$$
+
+> **Exemple Concret 4 : Compacité de la boule unité duale (Banach-Alaoglu)**
+> Soit $E = c_0$, l'espace des suites tendant vers 0, muni de la norme $\| \cdot \|_\infty$. Son dual est $E^* = \ell^1$.
+> La suite $e_n$ dans $\ell^1$ (où $e_n$ a un 1 à la position $n$ et 0 ailleurs) est dans la boule unité fermée de $\ell^1$.
+> D'après le théorème de Banach-Alaoglu, cette boule est faiblement-* compacte.
+> Extrayons une sous-suite convergente. Pour toute suite $x \in c_0$, $\langle e_n, x \rangle = x_n$.
+> Comme $x \in c_0$, $\lim_{n \to \infty} x_n = 0$.
+> Donc $\langle e_n, x \rangle \to 0 = \langle 0, x \rangle$.
+> Ainsi, la suite $(e_n)$ converge faiblement-* vers 0 dans $\ell^1$, bien qu'elle ne possède aucune sous-suite faiblement convergente, illustrant la compacité de la topologie faible-*.
+
+> **Exemple Concret 5 : Opérateur de décalage**
+> Sur l'espace de Hilbert $E = \ell^2(\mathbb{N})$, considérons l'opérateur de décalage à droite $S(x_0, x_1, \dots) = (0, x_0, x_1, \dots)$ et l'opérateur de décalage à gauche $S^*(x_0, x_1, \dots) = (x_1, x_2, \dots)$.
+> Appliquons $S^{*n}$ au vecteur fixe $v = (1, 1/2, 1/3, \dots) \in \ell^2$.
+> $S^{*n} v = (1/(n+1), 1/(n+2), \dots)$.
+> La norme de $S^{*n} v$ est $\|S^{*n} v\|_2^2 = \sum_{k=n+1}^\infty \frac{1}{k^2}$, qui tend vers 0. Ici on a convergence forte.
+> Par contre, appliquons $S^n$ au vecteur $e_0 = (1, 0, 0, \dots)$.
+> $S^n e_0 = e_n$. On a vu que $e_n \rightharpoonup 0$ faiblement.
+> L'opérateur $S^n$ "pousse" l'énergie vers l'infini, menant à une perte d'information locale, modélisée par la convergence faible.
 
 ### C. Théorème de Banach-Alaoglu
 
