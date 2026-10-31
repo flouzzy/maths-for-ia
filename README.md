@@ -234,7 +234,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 101](jalon-101/Jalon%20101%20%28Th%C3%A9or%C3%A8me%20de%20l%27application%20ouverte%20et%20th%C3%A9or%C3%A8me%20du%20graphe%20ferm%C3%A9.%29.md)** : Théorème de l'application ouverte et théorème du graphe fermé.
 - **[Jalon 102](jalon-102/Jalon%20102%20%28Topologies%20faibles%20et%20faibles-%29.md)** : Topologies faibles et faibles-*, compacité de la boule unité duale (Théorème de Banach-Alaoglu).
 - **[Jalon 103](jalon-103/Jalon-103.md)** : Espaces de Hilbert généraux, théorème de projection sur un convexe fermé et dualité de Riesz. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 104](jalon-104/Jalon%20104%20%28Bases%20hilbertiennes%29.md)** : Bases hilbertiennes (systèmes orthonormés complets) et séparabilité des espaces de Hilbert.
+- **[Jalon 104](jalon-104/Jalon-104.md)** : Bases hilbertiennes (systèmes orthonormés complets) et séparabilité des espaces de Hilbert. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 105](jalon-105/Jalon%20105%20%28Op%C3%A9rateurs%20adjoints%29.md)** : Opérateurs adjoints, opérateurs compacts et propriétés de régularisation.
 - **[Jalon 106](jalon-106/Jalon%20106%20%28Th%C3%A9or%C3%A8me%20spectral%20pour%20les%20op%C3%A9rateurs%20compacts%20autoadjoints%29.md)** : Théorème spectral pour les opérateurs compacts autoadjoints (décomposition en base hilbertienne d'éléments propres).
 - **[Jalon 107](jalon-107/Jalon%20107%20%28Introduction%20%C3%A0%20la%20th%C3%A9orie%20des%20op%C3%A9rateurs%20non%20born%C3%A9s%20et%20r%C3%A9solvante.%29.md)** : Introduction à la théorie des opérateurs non bornés et résolvante.
@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-10-31] : [Upsert/Création] du Jalon 104 - Bases hilbertiennes. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-29] : [Upsert/Création] du Jalon 103 - Espaces de Hilbert généraux. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-28] : [Upsert/Création] du Jalon 102 - Topologies faibles et faibles-*. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-27] : [Upsert/Création] du Jalon 101 - Théorème de l'application ouverte et théorème du graphe fermé. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
