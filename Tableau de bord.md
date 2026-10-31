@@ -118,7 +118,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-101/Jalon-101.md|Jalon 101 : Théorème de l'application ouverte et théorème du graphe fermé.]] : Théorème de l'application ouverte et théorème du graphe fermé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-102/Jalon-102.md|Jalon 102 : Topologies faibles et faibles-*]] : Topologies faibles et faibles-*, compacité de la boule unité duale (Théorème de Banach-Alaoglu). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-103/Jalon-103.md|Jalon 103 : Espaces de Hilbert généraux]] : Espaces de Hilbert généraux, théorème de projection sur un convexe fermé et dualité de Riesz. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [ ] [[jalon-104/Jalon 104 (Bases hilbertiennes).md|Jalon 104 : Bases hilbertiennes]] : Bases hilbertiennes (systèmes orthonormés complets) et séparabilité des espaces de Hilbert.
+- [x] [[jalon-104/Jalon-104.md|Jalon 104 : Bases hilbertiennes]] : Bases hilbertiennes (systèmes orthonormés complets) et séparabilité des espaces de Hilbert. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-105/Jalon 105 (Opérateurs adjoints).md|Jalon 105 : Opérateurs adjoints]] : Opérateurs adjoints, opérateurs compacts et propriétés de régularisation.
 - [ ] [[jalon-106/Jalon 106 (Théorème spectral pour les opérateurs compacts autoadjoints).md|Jalon 106 : Théorème spectral pour les opérateurs compacts autoadjoints]] : Théorème spectral pour les opérateurs compacts autoadjoints (décomposition en base hilbertienne d'éléments propres).
 - [ ] [[jalon-107/Jalon 107 (Introduction à la théorie des opérateurs non bornés et résolvante.).md|Jalon 107 : Introduction à la théorie des opérateurs non bornés et résolvante.]] : Introduction à la théorie des opérateurs non bornés et résolvante.
