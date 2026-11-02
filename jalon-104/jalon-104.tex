@@ -1,0 +1,797 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{\Huge Bases Hilbertiennes \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+
+\section{Présentation du concept clé}
+
+Travailler avec des fonctions est souvent complexe. Cependant, travailler avec des listes de nombres (des suites) est beaucoup plus simple sur le plan computationnel. Les bases hilbertiennes permettent de transformer de manière isométrique n'importe quel espace de Hilbert complexe (comme $L^2$) en un espace de suites simple (comme $\ell^2$). C'est la numérisation universelle de l'analyse, un concept d'une grande puissance géométrique.
+
+Une base hilbertienne peut être pensée comme une collection minimale de vecteurs (orthogonaux entre eux) nécessaires pour reconstruire, à l'infini, n'importe quel élément de l'espace. La reconstruction d'un élément ne demande que de connaître sa composante exacte sur chacun de ces vecteurs de base (ce sont les coefficients de Fourier).
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % Axes
+    \draw[->, thick, gray] (-1.5,0) -- (2.5,0) node[right] {$e_1$};
+    \draw[->, thick, gray] (0,-1) -- (0,2.5) node[above] {$e_2$};
+
+    % Vector x
+    \coordinate (x) at (1.8, 1.4);
+    \draw[->, thick, blue] (0,0) -- (x) node[above right] {$x \in H$};
+
+    % Projections
+    \draw[dashed, blue] (x) -- (1.8,0);
+    \draw[dashed, blue] (x) -- (0,1.4);
+
+    % Projection vectors
+    \draw[->, thick, red] (0,0) -- (1.8,0) node[midway, below] {$\langle x, e_1 \rangle e_1$};
+    \draw[->, thick, red] (0,0) -- (0,1.4) node[midway, left] {$\langle x, e_2 \rangle e_2$};
+
+    % Point at origin
+    \filldraw (0,0) circle (1pt) node[below left] {$0$};
+\end{tikzpicture}
+\end{center}
+
+L'idée fondamentale de la base hilbertienne généralise exactement ce processus de projection orthogonale à une infinité dénombrable de dimensions.
+
+\section{Formalisation}
+
+Soit $H$ un espace de Hilbert, muni d'un produit scalaire $\langle \cdot, \cdot \rangle$ et de la norme induite $\| \cdot \|$.
+
+\subsection{Familles Orthonormées}
+
+\begin{quote}\textbf{Définition (Famille orthonormée) :} Une famille $(e_i)_{i \in I}$ d'éléments de $H$ est dite \textbf{orthonormée} si :\end{quote}
+\begin{quote}$$\forall i, j \in I, \quad \langle e_i, e_j \rangle = \delta_{ij} = \begin{cases} 1 & \text{si } i=j \\ 0 & \text{si } i \neq j \end{cases}$$\end{quote}
+
+\textbf{Exemple concret 1 : Calcul sur une famille orthonormée finie}
+Considérons $H = \mathbb{R}^3$ avec le produit scalaire usuel.
+Soient $e_1 = (1, 0, 0)$, $e_2 = (0, 1, 0)$ et $e_3 = (0, 0, 1)$.
+On vérifie l'orthonormalité :
+$\|e_1\|^2 = \langle e_1, e_1 \rangle = 1 \times 1 + 0 \times 0 + 0 \times 0 = 1$.
+$\langle e_1, e_2 \rangle = 1 \times 0 + 0 \times 1 + 0 \times 0 = 0$.
+Cette famille est trivialement orthonormée, ce qui correspond géométriquement à trois axes perpendiculaires de longueur 1.
+
+\textit{}Exemple concret 2 : La base de Fourier exponentielle dans $L^2(0, 2\pi)$\textit{}
+Considérons l'espace des fonctions de carré intégrable $H = L^2([0, 2\pi], \mathbb{C})$ muni du produit scalaire :
+$$ \langle f, g \rangle = \frac{1}{2\pi} \int_{0}^{2\pi} f(t) \overline{g(t)} dt $$
+On pose $e_n(t) = e^{int}$ pour $n \in \mathbb{Z}$.
+Calculons la norme :
+$$ \|e_n\|^2 = \langle e_n, e_n \rangle = \frac{1}{2\pi} \int_{0}^{2\pi} e^{int} e^{-int} dt = \frac{1}{2\pi} \int_{0}^{2\pi} 1 dt = 1 $$
+Calculons le produit scalaire pour $n \neq m$ :
+$$ \langle e_n, e_m \rangle = \frac{1}{2\pi} \int_{0}^{2\pi} e^{int} e^{-imt} dt = \frac{1}{2\pi} \int_{0}^{2\pi} e^{i(n-m)t} dt $$
+$$ = \frac{1}{2\pi} \left[ \frac{e^{i(n-m)t}}{i(n-m)} \right]_0^{2\pi} = \frac{1}{2\pi i (n-m)} (e^{i(n-m)2\pi} - e^0) $$
+Puisque $n-m$ est un entier non nul, $e^{i(n-m)2\pi} = 1$. Donc :
+$$ \langle e_n, e_m \rangle = \frac{1}{2\pi i (n-m)} (1 - 1) = 0 $$
+La famille $(e_n)_{n \in \mathbb{Z}}$ est bien orthonormée dans $H$.
+
+\subsection{Bases Hilbertiennes}
+
+\begin{quote}\textbf{Définition (Base Hilbertienne) :}\end{quote}
+\begin{quote}Une famille orthonormée $(e_n)_{n \in \mathbb{N}}$ est une \textbf{base hilbertienne} de $H$ si elle est \textbf{totale}, c'est-à-dire que le sous-espace vectoriel qu'elle engendre algébriquement est dense dans $H$ ($\overline{\text{vect}(\{e_n \mid n \in \mathbb{N}\})} = H$).\end{quote}
+>
+\begin{quote}Dans ce cas, tout vecteur $x \in H$ s'écrit de manière unique comme somme d'une série convergente dans $H$ :\end{quote}
+\begin{quote}$$x = \sum_{n=0}^\infty \langle x, e_n \rangle e_n$$\end{quote}
+\begin{quote}Les scalaires $\langle x, e_n \rangle$ sont appelés les \textbf{coefficients de Fourier} de $x$ par rapport à la base $(e_n)$.\end{quote}
+
+\textbf{Exemple concret 3 : Reconstruction d'un vecteur avec une base hilbertienne}
+Prenons l'espace $\ell^2(\mathbb{N})$ des suites de carrés sommables. La base canonique est donnée par les suites $e_n$ où le $n$-ième terme est $1$ et les autres $0$.
+Soit $x = (1, \frac{1}{2}, \frac{1}{4}, \frac{1}{8}, \dots) \in \ell^2(\mathbb{N})$.
+Calculons les coefficients de Fourier $\langle x, e_n \rangle$.
+$\langle x, e_0 \rangle = 1 \times 1 + 0 = 1$.
+$\langle x, e_1 \rangle = \frac{1}{2} \times 1 = \frac{1}{2}$.
+De manière générale, $\langle x, e_n \rangle = \frac{1}{2^n}$.
+La série $\sum_{n=0}^N \langle x, e_n \rangle e_n$ est le vecteur $(1, \frac{1}{2}, \dots, \frac{1}{2^N}, 0, 0, \dots)$.
+La distance au carré entre $x$ et cette somme partielle est :
+$$ \| x - \sum_{n=0}^N \langle x, e_n \rangle e_n \|^2 = \sum_{k=N+1}^\infty \left(\frac{1}{2^k}\right)^2 = \sum_{k=N+1}^\infty \frac{1}{4^k} $$
+C'est le reste d'une série géométrique convergente de raison $1/4$, qui tend vers $0$ lorsque $N \to \infty$. La série converge bien vers $x$ dans l'espace $\ell^2$.
+
+\subsection{Théorèmes de Caractérisation}
+
+\begin{quote}\textbf{Théorème (Équivalences fondamentales) :} Soit $(e_n)_{n \in \mathbb{N}}$ une famille orthonormée de l'espace de Hilbert $H$. Les propositions suivantes sont strictement équivalentes :\end{quote}
+\begin{quote}1. $(e_n)$ est une base hilbertienne.\end{quote}
+\begin{quote}2. Pour tout $x \in H$, si $\forall n \in \mathbb{N}, \langle x, e_n \rangle = 0$, alors $x=0$ (l'orthogonal de la famille est réduit au vecteur nul).\end{quote}
+\begin{quote}3. \textbf{Identité de Parseval :} $\forall x \in H, \|x\|^2 = \sum_{n=0}^\infty |\langle x, e_n \rangle|^2$.\end{quote}
+
+\textbf{Exemple concret 4 : Application de l'identité de Parseval}
+Considérons à nouveau $H = L^2([0, 2\pi])$ et la base hilbertienne $e_n(t) = e^{int}$.
+Soit la fonction $f(t) = t$. Calculons ses coefficients de Fourier (pour $n \neq 0$) :
+$$ c_n = \langle f, e_n \rangle = \frac{1}{2\pi} \int_0^{2\pi} t e^{-int} dt $$
+Par intégration par parties :
+$$ u(t) = t \implies u'(t) = 1 $$
+$$ v'(t) = e^{-int} \implies v(t) = \frac{e^{-int}}{-in} $$
+$$ c_n = \frac{1}{2\pi} \left[ t \frac{e^{-int}}{-in} \right]_0^{2\pi} - \frac{1}{2\pi} \int_0^{2\pi} \frac{e^{-int}}{-in} dt $$
+$$ c_n = \frac{1}{2\pi} \left( \frac{2\pi}{-in} - 0 \right) - 0 = \frac{i}{n} $$
+Pour $n = 0$ :
+$$ c_0 = \frac{1}{2\pi} \int_0^{2\pi} t dt = \frac{1}{2\pi} \left[ \frac{t^2}{2} \right]_0^{2\pi} = \pi $$
+L'identité de Parseval affirme que $\|f\|^2 = \sum_{n=-\infty}^\infty |c_n|^2$.
+Calculons d'abord $\|f\|^2$ directement :
+$$ \|f\|^2 = \frac{1}{2\pi} \int_0^{2\pi} t^2 dt = \frac{1}{2\pi} \left[ \frac{t^3}{3} \right]_0^{2\pi} = \frac{4\pi^2}{3} $$
+La somme des modules au carré des coefficients de Fourier est :
+$$ |c_0|^2 + \sum_{n \neq 0} |c_n|^2 = \pi^2 + \sum_{n \neq 0} \frac{1}{n^2} = \pi^2 + 2 \sum_{n=1}^\infty \frac{1}{n^2} $$
+En égalant les deux expressions selon Parseval :
+$$ \frac{4\pi^2}{3} = \pi^2 + 2 \sum_{n=1}^\infty \frac{1}{n^2} \implies \frac{\pi^2}{3} = 2 \sum_{n=1}^\infty \frac{1}{n^2} \implies \sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6} $$
+C'est une méthode magistrale pour retrouver la solution au problème de Bâle.
+
+\section{Démonstrations}
+
+\subsection{Démonstration : Existence d'une base dans un espace séparable}
+
+Un espace de Hilbert $H$ est dit \textbf{séparable} s'il contient une partie dénombrable dense. Nous allons démontrer par construction (constructivisme) qu'un tel espace admet toujours une base hilbertienne.
+
+1. \textbf{Choix d'une famille génératrice dénombrable :}
+   Puisque $H$ est séparable, il existe une suite de vecteurs $(x_n)_{n \in \mathbb{N}}$ dense dans $H$. L'adhérence de cette suite est donc $H$.
+2. \textbf{Élimination des dépendances linéaires (Extraction d'une base algébrique) :}
+   On retire séquentiellement les $x_n$ qui sont combinaisons linéaires des vecteurs précédents. Formellement, on construit une sous-suite $(v_k)$ telle que pour tout $N$, la famille $(v_0, v_1, \dots, v_N)$ soit libre, et $\text{vect}(\{v_k \mid k \in \mathbb{N}\}) = \text{vect}(\{x_n \mid n \in \mathbb{N}\})$.
+3. \textbf{Algorithme d'orthonormalisation de Gram-Schmidt :}
+   On construit la famille $(e_n)$ par récurrence sur $n$ :
+   - Pour l'initialisation : $e_0 = \frac{v_0}{\|v_0\|}$.
+   - Hérédité : Supposons $e_0, \dots, e_n$ construits, formant une famille orthonormée telle que $\text{vect}(e_0, \dots, e_n) = \text{vect}(v_0, \dots, v_n)$.
+   On pose d'abord le vecteur résiduel (la projection orthogonale) :
+   $$ u_{n+1} = v_{n+1} - \sum_{k=0}^n \langle v_{n+1}, e_k \rangle e_k $$
+   Puisque $(v_k)$ est libre, $v_{n+1} \notin \text{vect}(v_0, \dots, v_n) = \text{vect}(e_0, \dots, e_n)$, donc $u_{n+1} \neq 0$.
+   On normalise ensuite ce vecteur :
+   $$ e_{n+1} = \frac{u_{n+1}}{\|u_{n+1}\|} $$
+4. \textbf{Propriétés de la construction :}
+   - Par l'hypothèse de récurrence et la définition de $u_{n+1}$, pour tout $j \leq n$ :
+     $$ \langle u_{n+1}, e_j \rangle = \langle v_{n+1}, e_j \rangle - \sum_{k=0}^n \langle v_{n+1}, e_k \rangle \langle e_k, e_j \rangle = \langle v_{n+1}, e_j \rangle - \langle v_{n+1}, e_j \rangle = 0 $$
+   - Chaque $e_n$ est donc orthogonal à tous les précédents et est de norme unitaire par construction.
+   - De plus, à chaque étape, l'espace vectoriel engendré reste inchangé : $\text{vect}(e_0, \dots, e_n) = \text{vect}(v_0, \dots, v_n)$.
+5. \textbf{Conclusion sur la densité :}
+   L'espace vectoriel engendré par la famille orthonormée $(e_n)_{n \in \mathbb{N}}$ est exactement $\text{vect}(\{v_k\}) = \text{vect}(\{x_n\})$.
+   Comme l'ensemble $\{x_n \mid n \in \mathbb{N}\}$ est dense dans $H$ par hypothèse de séparabilité, son espace engendré l'est aussi.
+   L'adhérence de $\text{vect}(\{e_n \mid n \in \mathbb{N}\})$ est donc bien $H$.
+   La famille $(e_n)_{n \in \mathbb{N}}$ est totale et orthonormée, c'est formellement une base hilbertienne de $H$.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % Initial vectors
+    \draw[->, thick, gray, dashed] (0,0) -- (1.5, 0.5) node[right] {$v_0$};
+    \draw[->, thick, gray, dashed] (0,0) -- (1, 1.5) node[above] {$v_1$};
+
+    % Gram-Schmidt step 1
+    \draw[->, thick, red] (0,0) -- (0.948, 0.316) node[below right] {$e_0 = \frac{v_0}{\|v_0\|}$};
+
+    % Projection of v_1 on e_0
+    \draw[dashed, blue] (1, 1.5) -- (1.34, 0.45);
+    \draw[->, thick, blue] (0,0) -- (1.34, 0.45) node[below, midway] {$\langle v_1, e_0 \rangle e_0$};
+
+    % Residual u_1
+    \draw[->, thick, orange] (1.34, 0.45) -- (1, 1.5) node[midway, right] {$u_1$};
+    \draw[->, thick, orange] (0,0) -- (-0.34, 1.05) node[left] {$u_1$};
+
+    % Final orthonormal basis
+    \draw[->, thick, red] (0,0) -- (-0.306, 0.945) node[left] {$e_1 = \frac{u_1}{\|u_1\|}$};
+
+    % Right angle
+    \draw (0.1, 0.033) -- (0.067, 0.133) -- (-0.033, 0.1);
+\end{tikzpicture}
+\end{center}
+
+\textit{}Exemple concret 5 : Gram-Schmidt explicite sur $\mathbb{R}^3$\textit{}
+Soit $v_0 = (1, 1, 0)$, $v_1 = (1, 0, 1)$, $v_2 = (0, 1, 1)$.
+Étape 1 : $e_0 = \frac{v_0}{\|v_0\|} = \frac{1}{\sqrt{2}}(1, 1, 0)$.
+Étape 2 : Projection de $v_1$ sur $e_0$ : $\langle v_1, e_0 \rangle e_0 = (\frac{1}{\sqrt{2}} \times 1) \frac{1}{\sqrt{2}}(1, 1, 0) = (\frac{1}{2}, \frac{1}{2}, 0)$.
+$u_1 = v_1 - \langle v_1, e_0 \rangle e_0 = (1, 0, 1) - (\frac{1}{2}, \frac{1}{2}, 0) = (\frac{1}{2}, -\frac{1}{2}, 1)$.
+$\|u_1\| = \sqrt{\frac{1}{4} + \frac{1}{4} + 1} = \sqrt{\frac{3}{2}}$.
+$e_1 = \sqrt{\frac{2}{3}}(\frac{1}{2}, -\frac{1}{2}, 1) = \frac{1}{\sqrt{6}}(1, -1, 2)$.
+Étape 3 : Projection de $v_2$ sur $e_0$ et $e_1$.
+$\langle v_2, e_0 \rangle = \frac{1}{\sqrt{2}} \times 1 = \frac{1}{\sqrt{2}}$.
+$\langle v_2, e_1 \rangle = \frac{1}{\sqrt{6}} (-1 + 2) = \frac{1}{\sqrt{6}}$.
+$u_2 = v_2 - \langle v_2, e_0 \rangle e_0 - \langle v_2, e_1 \rangle e_1 = (0, 1, 1) - (\frac{1}{2}, \frac{1}{2}, 0) - (\frac{1}{6}, -\frac{1}{6}, \frac{2}{6}) = (-\frac{2}{3}, \frac{2}{3}, \frac{2}{3})$.
+$\|u_2\| = \sqrt{\frac{4}{9} + \frac{4}{9} + \frac{4}{9}} = \frac{2}{\sqrt{3}}$.
+$e_2 = \frac{\sqrt{3}}{2}(-\frac{2}{3}, \frac{2}{3}, \frac{2}{3}) = \frac{1}{\sqrt{3}}(-1, 1, 1)$.
+La famille $(e_0, e_1, e_2)$ est la base hilbertienne orthonormée issue de $(v_0, v_1, v_2)$.
+
+\section{Isomorphisme Fondamental avec $\ell^2$}
+
+\begin{quote}\textbf{Théorème de Riesz-Fischer généralisé :} \end{quote}
+\begin{quote}Tout espace de Hilbert $H$ séparable de dimension infinie est isométrique et isomorphe à l'espace $\ell^2(\mathbb{N})$ des suites de carré sommable.\end{quote}
+
+\textbf{Démonstration :}
+Soit $(e_n)_{n \in \mathbb{N}}$ une base hilbertienne de $H$.
+On définit l'opérateur linéaire $\Phi : H \to \ell^2(\mathbb{N})$ par la relation $\Phi(x) = (\langle x, e_n \rangle)_{n \in \mathbb{N}}$.
+Par l'identité de Parseval, pour tout $x \in H$, la suite $\Phi(x)$ est de carré sommable et :
+$$ \|\Phi(x)\|_{\ell^2}^2 = \sum_{n=0}^\infty |\langle x, e_n \rangle|^2 = \|x\|_H^2 $$
+$\Phi$ est donc une isométrie linéaire, ce qui garantit son injectivité.
+Pour démontrer la surjectivité, soit $c = (c_n)_{n \in \mathbb{N}} \in \ell^2(\mathbb{N})$.
+La série $\sum c_n e_n$ satisfait le critère de Cauchy dans $H$ car pour $M > N$ :
+$$ \left\| \sum_{n=N}^M c_n e_n \right\|_H^2 = \sum_{n=N}^M |c_n|^2 $$
+qui tend vers 0 puisque la série $\sum |c_n|^2$ converge. L'espace $H$ étant complet, la série converge vers une limite $x \in H$.
+Par la continuité du produit scalaire, $\langle x, e_k \rangle = c_k$ pour tout $k$. Donc $\Phi(x) = c$, et l'opérateur est bien surjectif.
+Il s'agit donc d'un isomorphisme isométrique de Hilbert.
+
+\textbf{Exemple concret 6 : Mapping isométrique explicite}
+Dans $H = L^2([-1, 1])$, la fonction polynôme $P(x) = x$ se développe dans la base des polynômes de Legendre normalisés.
+Nous avons $e_0(x) = \frac{1}{\sqrt{2}}$ et $e_1(x) = \sqrt{\frac{3}{2}} x$.
+$\langle P, e_0 \rangle = \int_{-1}^1 x \frac{1}{\sqrt{2}} dx = 0$.
+$\langle P, e_1 \rangle = \int_{-1}^1 x \sqrt{\frac{3}{2}} x dx = \sqrt{\frac{3}{2}} \frac{2}{3} = \sqrt{\frac{2}{3}}$.
+Pour $n \geq 2$, $\langle P, e_n \rangle = 0$ par orthogonalité des polynômes de Legendre de degré distincts.
+L'image de $P$ dans $\ell^2(\mathbb{N})$ par l'isomorphisme de Riesz-Fischer est la suite $c = (0, \sqrt{\frac{2}{3}}, 0, 0, \dots)$.
+On vérifie la conservation de la norme :
+$\|P\|^2 = \int_{-1}^1 x^2 dx = \frac{2}{3}$.
+$\|c\|_{\ell^2}^2 = 0^2 + (\sqrt{\frac{2}{3}})^2 + 0^2 + \dots = \frac{2}{3}$.
+L'isométrie est parfaitement vérifiée numériquement.
+
+\section{Application en Intelligence Artificielle et Science des Données}
+
+L'application de la théorie des bases hilbertiennes est omniprésente dans les algorithmes de représentation mathématique avancés.
+
+- \textbf{Analyse en Composantes Principales (PCA) de dimension infinie :} Pour des données continues comme des séries temporelles (Functional Data Analysis), on cherche une base hilbertienne propre de l'opérateur de covariance. C'est la \textbf{Décomposition de Karhunen-Loève}, qui exprime chaque signal comme une somme pondérée d'une base orthogonale adaptative optimale pour compresser l'information.
+- \textbf{Transformations en Ondelettes (Wavelets) :} Contrairement aux bases de Fourier (sinus et cosinus) qui ont un support global (elles "vivent" de $-\infty$ à $+\infty$), les ondelettes forment des bases hilbertiennes de $L^2(\mathbb{R})$ avec un support compact (elles sont localisées spatialement). Cela permet de représenter finement les discontinuités des images dans les réseaux convolutifs et les algorithmes de compression (JPEG 2000).
+- \textbf{Geometric Deep Learning :} Sur les graphes complexes, il n'existe pas de translation naturelle. On utilise alors la base hilbertienne formée par les vecteurs propres de la matrice Laplacienne normalisée du graphe. Exprimer les données du graphe dans cette base permet de définir des convolutions spectrales pour les \textit{Graph Neural Networks} (GNN).
+
+
+\part{Exercices d'Application et de Concours}
+\subsection*{Exercice 1 : Calcul de coefficients dans une base orthonormée $\bigstar\star\star\star\star$}
+
+\textbf{Énoncé :}
+Dans $\mathbb{R}^3$ muni du produit scalaire canonique, on considère la famille de vecteurs $e_1 = \left(\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}, 0\right)$, $e_2 = \left(\frac{1}{\sqrt{2}}, -\frac{1}{\sqrt{2}}, 0\right)$ et $e_3 = (0, 0, 1)$.
+1. Montrer que $\mathcal{B} = (e_1, e_2, e_3)$ est une base orthonormée de $\mathbb{R}^3$.
+2. Calculer les coefficients de Fourier du vecteur $x = (2, 4, 3)$ dans cette base.
+3. Vérifier l'identité de Parseval pour le vecteur $x$.
+
+\textbf{Correction détaillée :}
+1. On calcule les normes :
+   $\|e_1\|^2 = \left(\frac{1}{\sqrt{2}}\right)^2 + \left(\frac{1}{\sqrt{2}}\right)^2 + 0 = \frac{1}{2} + \frac{1}{2} = 1$.
+   $\|e_2\|^2 = \left(\frac{1}{\sqrt{2}}\right)^2 + \left(-\frac{1}{\sqrt{2}}\right)^2 + 0 = 1$.
+   $\|e_3\|^2 = 0 + 0 + 1 = 1$.
+   On calcule les produits scalaires croisés :
+   $\langle e_1, e_2 \rangle = \frac{1}{2} - \frac{1}{2} + 0 = 0$.
+   $\langle e_1, e_3 \rangle = 0 + 0 + 0 = 0$.
+   $\langle e_2, e_3 \rangle = 0 + 0 + 0 = 0$.
+   La famille $(e_1, e_2, e_3)$ est donc orthonormée. Étant composée de 3 vecteurs dans $\mathbb{R}^3$ dimension 3, c'est une base orthonormée.
+
+2. Les coefficients de Fourier sont donnés par $c_i = \langle x, e_i \rangle$ :
+   $c_1 = \langle (2, 4, 3), \left(\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}, 0\right) \rangle = \frac{2}{\sqrt{2}} + \frac{4}{\sqrt{2}} + 0 = \frac{6}{\sqrt{2}} = 3\sqrt{2}$.
+   $c_2 = \langle (2, 4, 3), \left(\frac{1}{\sqrt{2}}, -\frac{1}{\sqrt{2}}, 0\right) \rangle = \frac{2}{\sqrt{2}} - \frac{4}{\sqrt{2}} + 0 = -\frac{2}{\sqrt{2}} = -\sqrt{2}$.
+   $c_3 = \langle (2, 4, 3), (0, 0, 1) \rangle = 0 + 0 + 3 = 3$.
+   Ainsi, $x = 3\sqrt{2} e_1 - \sqrt{2} e_2 + 3 e_3$.
+
+3. La norme au carré de $x$ dans la base canonique est :
+   $\|x\|^2 = 2^2 + 4^2 + 3^2 = 4 + 16 + 9 = 29$.
+   D'après l'identité de Parseval, on doit avoir $\|x\|^2 = c_1^2 + c_2^2 + c_3^2$.
+   Calculons la somme des carrés des coefficients :
+   $c_1^2 + c_2^2 + c_3^2 = (3\sqrt{2})^2 + (-\sqrt{2})^2 + 3^2 = 18 + 2 + 9 = 29$.
+   L'identité de Parseval est bien vérifiée.
+
+
+\subsection*{Exercice 2 : Base hilbertienne de l'espace des fonctions complexes de carré intégrable $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+Dans $H = L^2([-\pi, \pi], \mathbb{C})$ muni du produit scalaire $\langle f, g \rangle = \frac{1}{2\pi} \int_{-\pi}^\pi f(t) \overline{g(t)} dt$, on considère la famille $e_n(t) = e^{int}$ pour $n \in \mathbb{Z}$.
+Soit la fonction $f(t) = e^t$.
+1. Calculer les coefficients de Fourier complexes $c_n$ de la fonction $f$.
+2. En appliquant l'identité de Parseval, en déduire la valeur de la somme de la série $\sum_{n=-\infty}^{+\infty} \frac{1}{n^2 + 1}$.
+
+\textbf{Correction détaillée :}
+1. Le coefficient de Fourier d'indice $n$ est :
+   $c_n = \langle f, e_n \rangle = \frac{1}{2\pi} \int_{-\pi}^\pi e^t e^{-int} dt = \frac{1}{2\pi} \int_{-\pi}^\pi e^{(1-in)t} dt$
+   $c_n = \frac{1}{2\pi} \left[ \frac{e^{(1-in)t}}{1-in} \right]_{-\pi}^\pi$
+   Puisque $e^{-in\pi} = (-1)^n = (-1)^{-n} = e^{in\pi}$, nous avons :
+   $c_n = \frac{1}{2\pi(1-in)} (e^\pi (-1)^n - e^{-\pi} (-1)^n) = \frac{(-1)^n}{2\pi(1-in)} (e^\pi - e^{-\pi}) = \frac{(-1)^n \sinh(\pi)}{\pi(1-in)}$
+   Pour séparer la partie réelle et imaginaire au dénominateur, multiplions par le conjugué :
+   $c_n = \frac{(-1)^n \sinh(\pi) (1+in)}{\pi(1+n^2)}$
+
+2. Calculons la norme au carré de la fonction $f$ :
+   $\|f\|^2 = \langle f, f \rangle = \frac{1}{2\pi} \int_{-\pi}^\pi e^t e^t dt = \frac{1}{2\pi} \int_{-\pi}^\pi e^{2t} dt = \frac{1}{2\pi} \left[ \frac{e^{2t}}{2} \right]_{-\pi}^\pi = \frac{e^{2\pi} - e^{-2\pi}}{4\pi} = \frac{\sinh(2\pi)}{2\pi}$
+   L'identité de Parseval stipule que $\|f\|^2 = \sum_{n=-\infty}^{+\infty} |c_n|^2$.
+   Calculons $|c_n|^2$ :
+   $|c_n|^2 = c_n \overline{c_n} = \left| \frac{(-1)^n \sinh(\pi)}{\pi(1-in)} \right|^2 = \frac{\sinh^2(\pi)}{\pi^2 (1^2 + (-n)^2)} = \frac{\sinh^2(\pi)}{\pi^2 (1+n^2)}$
+   Ainsi, par l'identité de Parseval :
+   $\frac{\sinh(2\pi)}{2\pi} = \sum_{n=-\infty}^{+\infty} \frac{\sinh^2(\pi)}{\pi^2 (1+n^2)}$
+   $\sum_{n=-\infty}^{+\infty} \frac{1}{n^2 + 1} = \frac{\pi^2 \sinh(2\pi)}{2\pi \sinh^2(\pi)}$
+   On sait que $\sinh(2\pi) = 2\sinh(\pi)\cosh(\pi)$, donc :
+   $\sum_{n=-\infty}^{+\infty} \frac{1}{n^2 + 1} = \frac{\pi \times 2\sinh(\pi)\cosh(\pi)}{2 \sinh^2(\pi)} = \frac{\pi \cosh(\pi)}{\sinh(\pi)} = \pi \coth(\pi)$.
+
+
+\subsection*{Exercice 3 : Polynômes de Laguerre $\bigstar\bigstar\star\star\star$}
+
+\textbf{Énoncé :}
+On considère l'espace de Hilbert $H = L^2([0, +\infty[, e^{-x}dx)$ avec le produit scalaire $\langle f, g \rangle = \int_0^{+\infty} f(x)g(x)e^{-x} dx$.
+Soient les monômes $P_0(x) = 1$, $P_1(x) = x$, $P_2(x) = x^2$.
+Appliquer le procédé de Gram-Schmidt pour obtenir une famille orthonormée $(L_0, L_1, L_2)$ à partir de $(P_0, P_1, P_2)$.
+On rappelle que $\int_0^{+\infty} x^n e^{-x} dx = n!$.
+
+\textbf{Correction détaillée :}
+1. Pour $L_0$ :
+   $\|P_0\|^2 = \int_0^{+\infty} 1 \cdot e^{-x} dx = 0! = 1$.
+   Donc $L_0(x) = \frac{P_0(x)}{\|P_0\|} = 1$.
+
+2. Pour $L_1$ :
+   Calculons la projection de $P_1$ sur $L_0$ :
+   $\langle P_1, L_0 \rangle = \int_0^{+\infty} x \cdot 1 \cdot e^{-x} dx = 1! = 1$.
+   $u_1(x) = P_1(x) - \langle P_1, L_0 \rangle L_0(x) = x - 1$.
+   Calculons sa norme :
+   $\|u_1\|^2 = \int_0^{+\infty} (x-1)^2 e^{-x} dx = \int_0^{+\infty} (x^2 - 2x + 1) e^{-x} dx = 2! - 2(1!) + 0! = 2 - 2 + 1 = 1$.
+   Donc $L_1(x) = u_1(x) = x - 1$.
+   \textit{(Note : les polynômes de Laguerre standard sont souvent définis avec une normalisation différente, ici nous construisons la base orthonormée exacte).}
+
+3. Pour $L_2$ :
+   Calculons les projections de $P_2$ sur $L_0$ et $L_1$ :
+   $\langle P_2, L_0 \rangle = \int_0^{+\infty} x^2 \cdot 1 \cdot e^{-x} dx = 2! = 2$.
+   $\langle P_2, L_1 \rangle = \int_0^{+\infty} x^2(x-1) e^{-x} dx = \int_0^{+\infty} (x^3 - x^2) e^{-x} dx = 3! - 2! = 6 - 2 = 4$.
+   On forme le polynôme résiduel :
+   $u_2(x) = P_2(x) - \langle P_2, L_0 \rangle L_0(x) - \langle P_2, L_1 \rangle L_1(x)$
+   $u_2(x) = x^2 - 2(1) - 4(x-1) = x^2 - 4x + 2$.
+   Calculons la norme de $u_2$ :
+   $\|u_2\|^2 = \int_0^{+\infty} (x^2 - 4x + 2)^2 e^{-x} dx = \int_0^{+\infty} (x^4 + 16x^2 + 4 - 8x^3 + 4x^2 - 16x) e^{-x} dx$
+   $\|u_2\|^2 = \int_0^{+\infty} (x^4 - 8x^3 + 20x^2 - 16x + 4) e^{-x} dx$
+   $\|u_2\|^2 = 4! - 8(3!) + 20(2!) - 16(1!) + 4(0!) = 24 - 48 + 40 - 16 + 4 = 4$.
+   Donc $L_2(x) = \frac{u_2(x)}{\|u_2\|} = \frac{x^2 - 4x + 2}{2} = \frac{1}{2}x^2 - 2x + 1$.
+
+Les trois premiers polynômes de la base hilbertienne sont $L_0(x) = 1$, $L_1(x) = x - 1$ et $L_2(x) = \frac{1}{2}x^2 - 2x + 1$.
+
+
+\subsection*{Exercice 4 : Densité et Complétude $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $H$ un espace de Hilbert et $(e_n)_{n \in \mathbb{N}}$ une famille orthonormée. On définit le sous-espace $F = \text{vect}(e_n)_{n \in \mathbb{N}}$.
+Montrer que si $x \in H$ est tel que $x \in F^\perp$, alors $x = 0$ si et seulement si $(e_n)_{n \in \mathbb{N}}$ est une base hilbertienne.
+
+\textbf{Correction détaillée :}
+1. \textit{}Sens $\Leftarrow$ (Si c'est une base hilbertienne, alors $x=0$) :\textit{}
+   Supposons que $(e_n)_{n \in \mathbb{N}}$ soit une base hilbertienne de $H$. Par définition, cela signifie que $\overline{F} = H$.
+   Soit $x \in F^\perp$. Alors pour tout $n \in \mathbb{N}$, $\langle x, e_n \rangle = 0$.
+   Par linéarité du produit scalaire, pour tout $y \in F$, $\langle x, y \rangle = 0$.
+   Soit maintenant $z \in H$. Puisque $F$ est dense dans $H$, il existe une suite $(y_k)_{k \in \mathbb{N}}$ d'éléments de $F$ telle que $y_k \to z$ lorsque $k \to \infty$.
+   Par continuité du produit scalaire par rapport à la deuxième variable :
+   $\langle x, z \rangle = \langle x, \lim_{k \to \infty} y_k \rangle = \lim_{k \to \infty} \langle x, y_k \rangle = \lim_{k \to \infty} 0 = 0$.
+   Cette relation étant vraie pour tout $z \in H$, prenons $z = x$. On obtient $\langle x, x \rangle = \|x\|^2 = 0$.
+   Donc $x = 0$. L'orthogonal de $F$ est réduit au vecteur nul.
+
+2. \textit{}Sens $\Rightarrow$ (Si $F^\perp = \{0\}$, alors c'est une base hilbertienne) :\textit{}
+   Supposons que $F^\perp = \{0\}$.
+   Soit $M = \overline{F}$. Puisque $H$ est un espace de Hilbert et $M$ est un sous-espace vectoriel fermé de $H$, le théorème de projection orthogonale s'applique.
+   On a la décomposition en somme directe orthogonale : $H = M \oplus M^\perp$.
+   Or, $M^\perp = (\overline{F})^\perp$. Par continuité du produit scalaire, l'orthogonal d'un ensemble est égal à l'orthogonal de son adhérence, donc $M^\perp = F^\perp$.
+   Par hypothèse, $F^\perp = \{0\}$. Donc $M^\perp = \{0\}$.
+   Ainsi, $H = M \oplus \{0\} = M = \overline{F}$.
+   L'espace engendré par la famille orthonormée $(e_n)$ est dense dans $H$, ce qui est exactement la définition d'une base hilbertienne.
+
+
+\subsection*{Exercice 5 : Inégalité de Bessel $\bigstar\bigstar\bigstar\star\star$}
+
+\textbf{Énoncé :}
+Soit $H$ un espace de Hilbert et $(e_n)_{n \in \mathbb{N}}$ une famille orthonormée (pas nécessairement une base hilbertienne).
+Soit $x \in H$. On pose $s_N = \sum_{n=0}^N \langle x, e_n \rangle e_n$ la projection orthogonale de $x$ sur $F_N = \text{vect}(e_0, \dots, e_N)$.
+1. Montrer que $\|s_N\|^2 = \sum_{n=0}^N |\langle x, e_n \rangle|^2$.
+2. Montrer que $x - s_N$ est orthogonal à $s_N$.
+3. En déduire l'inégalité de Bessel : $\sum_{n=0}^\infty |\langle x, e_n \rangle|^2 \leq \|x\|^2$.
+
+\textbf{Correction détaillée :}
+1. Calculons la norme au carré de $s_N$ :
+   $\|s_N\|^2 = \langle s_N, s_N \rangle = \langle \sum_{n=0}^N \langle x, e_n \rangle e_n, \sum_{m=0}^N \langle x, e_m \rangle e_m \rangle$
+   Par bilinéarité du produit scalaire :
+   $\|s_N\|^2 = \sum_{n=0}^N \sum_{m=0}^N \langle x, e_n \rangle \overline{\langle x, e_m \rangle} \langle e_n, e_m \rangle$
+   Puisque la famille est orthonormée, $\langle e_n, e_m \rangle = \delta_{nm}$. La double somme se réduit à une somme simple :
+   $\|s_N\|^2 = \sum_{n=0}^N \langle x, e_n \rangle \overline{\langle x, e_n \rangle} = \sum_{n=0}^N |\langle x, e_n \rangle|^2$.
+
+2. Calculons le produit scalaire entre $x - s_N$ et un vecteur de base $e_k$ (pour $0 \leq k \leq N$) :
+   $\langle x - s_N, e_k \rangle = \langle x, e_k \rangle - \langle \sum_{n=0}^N \langle x, e_n \rangle e_n, e_k \rangle$
+   $\langle x - s_N, e_k \rangle = \langle x, e_k \rangle - \sum_{n=0}^N \langle x, e_n \rangle \langle e_n, e_k \rangle$
+   $\langle x - s_N, e_k \rangle = \langle x, e_k \rangle - \langle x, e_k \rangle \cdot 1 = 0$
+   Le vecteur $x - s_N$ est orthogonal à chaque $e_k$ de $F_N$.
+   Par combinaison linéaire, $x - s_N$ est orthogonal à tout élément de $F_N$.
+   Puisque $s_N \in F_N$, on a $\langle x - s_N, s_N \rangle = 0$.
+
+3. Appliquons le théorème de Pythagore à la décomposition $x = (x - s_N) + s_N$ :
+   Puisque $x - s_N \perp s_N$, on a $\|x\|^2 = \|x - s_N\|^2 + \|s_N\|^2$.
+   Donc $\|s_N\|^2 = \|x\|^2 - \|x - s_N\|^2$.
+   Puisque $\|x - s_N\|^2 \geq 0$, on obtient $\|s_N\|^2 \leq \|x\|^2$.
+   En remplaçant $\|s_N\|^2$ par l'expression trouvée à la question 1 :
+   $\sum_{n=0}^N |\langle x, e_n \rangle|^2 \leq \|x\|^2$.
+   Cette inégalité étant vraie pour tout entier $N \geq 0$, et la suite des sommes partielles étant croissante (termes positifs) et majorée par $\|x\|^2$, la série converge et sa limite vérifie l'inégalité de Bessel :
+   $\sum_{n=0}^\infty |\langle x, e_n \rangle|^2 \leq \|x\|^2$.
+
+
+\subsection*{Exercice 6 : Convergence de la série de Fourier dans H $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Dans un espace de Hilbert $H$, soit $(e_n)_{n \in \mathbb{N}}$ une famille orthonormée infinie.
+1. Soit $(c_n)_{n \in \mathbb{N}}$ une suite de nombres complexes. Montrer que la série $\sum c_n e_n$ converge dans $H$ si et seulement si la suite $(c_n)$ appartient à $\ell^2(\mathbb{N})$ (c'est-à-dire $\sum |c_n|^2 < \infty$).
+2. Si $(e_n)$ est une base hilbertienne et $x \in H$, montrer que la série $\sum \langle x, e_n \rangle e_n$ converge vers $x$ dans $H$.
+
+\textbf{Correction détaillée :}
+1. Soit $S_N = \sum_{n=0}^N c_n e_n$ la suite des sommes partielles. L'espace $H$ étant complet, la suite $(S_N)$ converge dans $H$ si et seulement si c'est une suite de Cauchy.
+   Pour $M > N$, la norme de la différence est :
+   $\|S_M - S_N\|^2 = \left\| \sum_{n=N+1}^M c_n e_n \right\|^2$
+   Par le théorème de Pythagore (les vecteurs $e_n$ étant deux à deux orthogonaux) :
+   $\|S_M - S_N\|^2 = \sum_{n=N+1}^M \|c_n e_n\|^2 = \sum_{n=N+1}^M |c_n|^2 \|e_n\|^2 = \sum_{n=N+1}^M |c_n|^2$
+   La condition pour que $(S_N)$ soit de Cauchy dans $H$ (le membre de gauche tend vers 0 quand $N, M \to \infty$) est donc exactement que la suite des sommes partielles $\sum_{n=0}^N |c_n|^2$ soit de Cauchy dans $\mathbb{R}$, ce qui équivaut à la convergence de la série $\sum |c_n|^2$, i.e., $(c_n) \in \ell^2(\mathbb{N})$.
+
+2. Soit $x \in H$. D'après l'inégalité de Bessel (Exercice 5), $\sum_{n=0}^\infty |\langle x, e_n \rangle|^2 \leq \|x\|^2 < \infty$.
+   Donc la suite des coefficients de Fourier $c_n = \langle x, e_n \rangle$ est dans $\ell^2(\mathbb{N})$.
+   D'après la question 1, la série $y = \sum_{n=0}^\infty \langle x, e_n \rangle e_n$ converge dans $H$.
+   Montrons que $y = x$.
+   Pour un indice $k$ fixé, considérons le produit scalaire $\langle x - y, e_k \rangle$ :
+   Par continuité du produit scalaire par rapport à la deuxième variable :
+   $\langle y, e_k \rangle = \langle \lim_{N \to \infty} \sum_{n=0}^N \langle x, e_n \rangle e_n, e_k \rangle = \lim_{N \to \infty} \sum_{n=0}^N \langle x, e_n \rangle \langle e_n, e_k \rangle$
+   Pour $N \geq k$, le terme $\langle e_n, e_k \rangle$ est nul sauf si $n=k$, auquel cas il vaut 1. Donc :
+   $\langle y, e_k \rangle = \langle x, e_k \rangle$.
+   Ainsi, $\langle x - y, e_k \rangle = 0$ pour tout $k \in \mathbb{N}$.
+   Le vecteur $x - y$ est orthogonal à tous les éléments de la base $(e_n)$. Or, puisque c'est une base hilbertienne, son orthogonal est réduit à $\{0\}$ (cf. Exercice 4).
+   Par conséquent, $x - y = 0$, soit $x = y$. La série converge bien vers $x$.
+
+
+\subsection*{Exercice 7 : Série de Fourier et opérateur intégral $\bigstar\bigstar\bigstar\bigstar\star$}
+
+\textbf{Énoncé :}
+Soit $H = L^2([0, 1])$. On définit l'opérateur intégral $K: H \to H$ par :
+$Kf(x) = \int_0^1 K(x,y) f(y) dy$ où $K(x,y) = xy$.
+1. Soit $(e_n)$ une base hilbertienne de $H$. Exprimer la trace de $K$ (la somme des éléments diagonaux $\langle K e_n, e_n \rangle$) en utilisant la base.
+2. Démontrer que pour cet opérateur spécifique, la valeur de cette somme ne dépend pas du choix de la base hilbertienne.
+
+\textbf{Correction détaillée :}
+1. La quantité demandée, si elle converge absolument, s'écrit $\sum_{n=0}^\infty \langle K e_n, e_n \rangle$.
+   Calculons explicitement $\langle K e_n, e_n \rangle$ :
+   $\langle K e_n, e_n \rangle = \int_0^1 (K e_n)(x) \overline{e_n(x)} dx = \int_0^1 \left( \int_0^1 (xy) e_n(y) dy \right) \overline{e_n(x)} dx$
+   $\langle K e_n, e_n \rangle = \int_0^1 \int_0^1 x y e_n(y) \overline{e_n(x)} dy dx = \left( \int_0^1 x \overline{e_n(x)} dx \right) \left( \int_0^1 y e_n(y) dy \right)$
+   Soit la fonction $g(x) = x$. Alors $\int_0^1 x \overline{e_n(x)} dx = \langle g, e_n \rangle$.
+   Et $\int_0^1 y e_n(y) dy = \overline{\langle g, e_n \rangle}$.
+   Donc $\langle K e_n, e_n \rangle = \langle g, e_n \rangle \overline{\langle g, e_n \rangle} = |\langle g, e_n \rangle|^2$.
+
+2. En sommant ces termes sur toute la base, nous obtenons :
+   $\sum_{n=0}^\infty \langle K e_n, e_n \rangle = \sum_{n=0}^\infty |\langle g, e_n \rangle|^2$.
+   D'après l'identité de Parseval, puisque $(e_n)$ est une base hilbertienne, la somme des carrés des modules des coefficients de Fourier d'une fonction $g$ est égale au carré de la norme de $g$ :
+   $\sum_{n=0}^\infty |\langle g, e_n \rangle|^2 = \|g\|^2$.
+   Or, $g(x) = x$, donc $\|g\|^2 = \int_0^1 x^2 dx = \left[ \frac{x^3}{3} \right]_0^1 = \frac{1}{3}$.
+   Cette somme est toujours égale à $1/3$, indépendamment du choix spécifique de la base hilbertienne $(e_n)$. C'est une propriété générale des opérateurs à trace.
+
+
+\subsection*{Exercice 8 : Produit tensoriel et base de L\textsuperscript{2}(R\textsuperscript{2}) $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Soit $(e_n(x))_{n \in \mathbb{N}}$ une base hilbertienne de $L^2(\mathbb{R})$.
+Pour tout $(n, m) \in \mathbb{N}^2$, on définit la fonction de deux variables $\phi_{n,m}(x,y) = e_n(x) e_m(y)$.
+Démontrer que la famille $(\phi_{n,m})_{(n,m) \in \mathbb{N}^2}$ forme une famille orthonormée dans $H = L^2(\mathbb{R}^2)$. (On admettra qu'elle forme une base hilbertienne).
+
+\textbf{Correction détaillée :}
+Pour montrer que la famille est orthonormée, il faut calculer le produit scalaire dans $L^2(\mathbb{R}^2)$ pour deux paires d'indices $(n, m)$ et $(k, l)$ :
+$$ \langle \phi_{n,m}, \phi_{k,l} \rangle_{L^2(\mathbb{R}^2)} = \iint_{\mathbb{R}^2} \phi_{n,m}(x,y) \overline{\phi_{k,l}(x,y)} dx dy $$
+En remplaçant par les définitions :
+$$ \langle \phi_{n,m}, \phi_{k,l} \rangle = \iint_{\mathbb{R}^2} e_n(x) e_m(y) \overline{e_k(x) e_l(y)} dx dy $$
+Par le théorème de Fubini, puisque les fonctions sont séparables et les intégrales sont dans $L^2$, on peut séparer l'intégrale double en le produit de deux intégrales simples :
+$$ \langle \phi_{n,m}, \phi_{k,l} \rangle = \left( \int_{\mathbb{R}} e_n(x) \overline{e_k(x)} dx \right) \times \left( \int_{\mathbb{R}} e_m(y) \overline{e_l(y)} dy \right) $$
+On reconnaît les produits scalaires dans $L^2(\mathbb{R})$ :
+$$ \langle \phi_{n,m}, \phi_{k,l} \rangle = \langle e_n, e_k \rangle_{L^2(\mathbb{R})} \times \langle e_m, e_l \rangle_{L^2(\mathbb{R})} $$
+Or, la famille $(e_n)$ est une base hilbertienne de $L^2(\mathbb{R})$, elle est donc en particulier orthonormée.
+Ainsi, $\langle e_n, e_k \rangle = \delta_{nk}$ et $\langle e_m, e_l \rangle = \delta_{ml}$.
+Par conséquent :
+$$ \langle \phi_{n,m}, \phi_{k,l} \rangle = \delta_{nk} \delta_{ml} $$
+Cette quantité vaut 1 si et seulement si $n = k$ et $m = l$ simultanément. Dans tous les autres cas, elle vaut 0.
+La famille $(\phi_{n,m})$ est donc bien une famille orthonormée de l'espace de Hilbert $L^2(\mathbb{R}^2)$.
+
+
+\subsection*{Exercice 9 : Construction de la base de Haar $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+La fonction ondelette mère de Haar est définie sur $\mathbb{R}$ par :
+$$ \psi(t) = \begin{cases} 1 & \text{si } 0 \leq t < 1/2 \\ -1 & \text{si } 1/2 \leq t < 1 \\ 0 & \text{sinon} \end{cases} $$
+Pour tout entier $j \in \mathbb{Z}$ et $k \in \mathbb{Z}$, on définit $\psi_{j,k}(t) = 2^{j/2} \psi(2^j t - k)$.
+Démontrer que la famille $(\psi_{j,k})_{j,k \in \mathbb{Z}}$ est une famille orthonormée de $L^2(\mathbb{R})$.
+
+\textbf{Correction détaillée :}
+1. \textbf{Norme unitaire :} Calculons $\|\psi_{j,k}\|^2$.
+   $\|\psi_{j,k}\|^2 = \int_{-\infty}^{+\infty} |2^{j/2} \psi(2^j t - k)|^2 dt = 2^j \int_{-\infty}^{+\infty} |\psi(2^j t - k)|^2 dt$
+   Effectuons le changement de variable $u = 2^j t - k \implies du = 2^j dt \implies dt = 2^{-j} du$.
+   $\|\psi_{j,k}\|^2 = 2^j \int_{-\infty}^{+\infty} |\psi(u)|^2 2^{-j} du = \int_{-\infty}^{+\infty} |\psi(u)|^2 du$
+   Or, $|\psi(u)| = 1$ sur $[0, 1]$ et $0$ ailleurs. Donc $\|\psi_{j,k}\|^2 = \int_0^1 1^2 du = 1$.
+
+2. \textit{}Orthogonalité pour des translations de même échelle ($j = j'$ et $k \neq k'$) :\textit{}
+   $\langle \psi_{j,k}, \psi_{j,k'} \rangle = \int_{-\infty}^{+\infty} 2^j \psi(2^j t - k) \psi(2^j t - k') dt$
+   Avec le même changement de variable $u = 2^j t - k$ :
+   $\langle \psi_{j,k}, \psi_{j,k'} \rangle = \int_{-\infty}^{+\infty} \psi(u) \psi(u + k - k') du$
+   Le support de $\psi(u)$ est $[0, 1]$. Le support de $\psi(u + k - k')$ est $[-k+k', -k+k'+1]$.
+   Puisque $k \neq k'$ sont des entiers, $|k - k'| \geq 1$. L'intersection des supports est de mesure nulle. Le produit des fonctions est presque partout nul.
+   Donc $\langle \psi_{j,k}, \psi_{j,k'} \rangle = 0$.
+
+3. \textit{}Orthogonalité pour des échelles différentes ($j \neq j'$) :\textit{}
+   Supposons sans perte de généralité que $j > j'$. L'ondelette $\psi_{j,k}$ oscille beaucoup plus vite (échelle "fine") que $\psi_{j',k'}$ (échelle "grossière").
+   Le support de $\psi_{j,k}$ est l'intervalle $I = [k 2^{-j}, (k+1) 2^{-j}]$, qui est de longueur $2^{-j}$.
+   Le support de $\psi_{j',k'}$ est un intervalle de longueur $2^{-j'}$, qui est strictement plus grand car $j > j'$.
+   Sur l'intervalle $I$, la fonction $\psi_{j',k'}$ est constante. En effet, elle ne change de valeur qu'à ses bornes ou en son milieu. Or, les bornes de $\psi_{j,k}$ sont contenues dans les intervalles où $\psi_{j',k'}$ est constante.
+   Soit $c$ cette valeur constante sur $I$. Alors :
+   $\langle \psi_{j,k}, \psi_{j',k'} \rangle = \int_I \psi_{j,k}(t) c dt = c 2^{j/2} \int_{k 2^{-j}}^{(k+1) 2^{-j}} \psi(2^j t - k) dt$
+   Avec $u = 2^j t - k$, $du = 2^j dt$ :
+   $\langle \psi_{j,k}, \psi_{j',k'} \rangle = c 2^{-j/2} \int_0^1 \psi(u) du$
+   Or, par définition de $\psi$, son intégrale sur $[0, 1]$ est nulle :
+   $\int_0^1 \psi(u) du = \int_0^{1/2} 1 du + \int_{1/2}^1 (-1) du = \frac{1}{2} - \frac{1}{2} = 0$.
+   Donc $\langle \psi_{j,k}, \psi_{j',k'} \rangle = 0$.
+   La famille est bien orthonormée.
+
+
+\subsection*{Exercice 10 : Convergence faible vs Convergence forte $\bigstar\bigstar\bigstar\bigstar\bigstar$}
+
+\textbf{Énoncé :}
+Soit $H$ un espace de Hilbert de dimension infinie et $(e_n)_{n \in \mathbb{N}}$ une base hilbertienne de $H$.
+1. Montrer que la suite $(e_n)$ converge faiblement vers $0$, c'est-à-dire que pour tout $x \in H$, $\lim_{n \to \infty} \langle e_n, x \rangle = 0$.
+2. Montrer que la suite $(e_n)$ ne converge pas fortement dans $H$ (i.e., elle ne converge pas pour la norme $\| \cdot \|$).
+
+\textbf{Correction détaillée :}
+1. Soit $x \in H$. Puisque $(e_n)_{n \in \mathbb{N}}$ est une base hilbertienne, l'identité de Parseval s'applique à $x$ :
+   $\|x\|^2 = \sum_{n=0}^\infty |\langle x, e_n \rangle|^2 < \infty$.
+   La série numérique à termes positifs $\sum |\langle x, e_n \rangle|^2$ est convergente.
+   Une condition nécessaire de convergence d'une série numérique est que le terme général tende vers zéro.
+   Par conséquent, $\lim_{n \to \infty} |\langle x, e_n \rangle|^2 = 0$.
+   Cela implique que $\lim_{n \to \infty} \langle x, e_n \rangle = 0$.
+   Par symétrie hermitienne du produit scalaire, $\langle e_n, x \rangle = \overline{\langle x, e_n \rangle}$, donc :
+   $\lim_{n \to \infty} \langle e_n, x \rangle = 0$.
+   La définition de la convergence faible de $e_n$ vers $0$ est satisfaite.
+
+2. Montrons que la suite $(e_n)$ n'est pas de Cauchy pour la norme forte.
+   Pour tout $n, m \in \mathbb{N}$ avec $n \neq m$, calculons la norme de la différence :
+   $\|e_n - e_m\|^2 = \langle e_n - e_m, e_n - e_m \rangle = \|e_n\|^2 - 2 \text{Re}(\langle e_n, e_m \rangle) + \|e_m\|^2$
+   Puisque la famille est orthonormée, $\|e_n\| = \|e_m\| = 1$ et $\langle e_n, e_m \rangle = 0$.
+   Donc $\|e_n - e_m\|^2 = 1 - 0 + 1 = 2$.
+   On en déduit que $\|e_n - e_m\| = \sqrt{2}$ pour tout $n \neq m$.
+   La distance entre deux termes distincts quelconques de la suite est constante et vaut $\sqrt{2}$. La suite ne peut donc pas vérifier le critère de Cauchy (pour lequel les termes doivent se rapprocher arbitrairement près les uns des autres à partir d'un certain rang).
+   Puisque l'espace $H$ est complet, une suite converge fortement si et seulement si elle est de Cauchy. La suite $(e_n)$ ne converge donc pas fortement.
+   \textit{(Note géométrique : la suite correspond aux points d'une sphère unité de dimension infinie, chaque point étant situé sur un axe orthogonal différent, la distance entre eux est toujours la diagonale d'un carré unité).}
+
+
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 1 : Implémentation du procédé de Gram-Schmidt}
+
+\textbf{Objectif :} Écrire un script Python sans aucune librairie externe pour orthonormaliser une liste de vecteurs dans $\mathbb{R}^n$.
+
+\begin{lstlisting}
+def dot_product(v1, v2):
+    return sum(x * y for x, y in zip(v1, v2))
+
+def norm(v):
+    return dot_product(v, v)**0.5
+
+def scalar_mult(scalar, v):
+    return [scalar * x for x in v]
+
+def vector_sub(v1, v2):
+    return [x - y for x, y in zip(v1, v2)]
+
+def gram_schmidt(vectors):
+    basis = []
+    for v in vectors:
+        u = list(v)
+        # Projection and subtraction
+        for e in basis:
+            proj_coef = dot_product(v, e)
+            proj_vector = scalar_mult(proj_coef, e)
+            u = vector_sub(u, proj_vector)
+        # Normalization
+        length = norm(u)
+        if length > 1e-10: # Avoid division by zero for dependent vectors
+            e = scalar_mult(1.0/length, u)
+            basis.append(e)
+    return basis
+
+# Test
+vectors = [[1, 1, 0], [1, 0, 1], [0, 1, 1]]
+ortho_basis = gram_schmidt(vectors)
+for i, e in enumerate(ortho_basis):
+    print(f"e_{i} = {[round(x, 4) for x in e]}")
+
+# Verification of orthogonality
+print("Dot product e0.e1:", round(dot_product(ortho_basis[0], ortho_basis[1]), 4))
+\end{lstlisting}
+
+
+\subsection*{TP 2 : Calcul des coefficients de Fourier dans $l^2$}
+
+\textbf{Objectif :} Implémenter le calcul de la projection orthogonale d'un signal discret sur une base hilbertienne synthétique de dimension infinie tronquée.
+
+\begin{lstlisting}
+import math
+
+def generate_signal(N):
+    # Create a simple signal: decaying exponential
+    return [math.exp(-0.1 * i) for i in range(N)]
+
+def generate_fourier_basis(N, num_basis):
+    # Create a simplified Fourier basis (DCT-like)
+    basis = []
+    for k in range(num_basis):
+        vector = []
+        for n in range(N):
+            val = math.cos(math.pi * k * (2 * n + 1) / (2 * N))
+            vector.append(val)
+
+        # Normalize the basis vector
+        norm = sum(x**2 for x in vector)**0.5
+        normalized_vector = [x / norm for x in vector]
+        basis.append(normalized_vector)
+    return basis
+
+N = 100
+signal = generate_signal(N)
+basis = generate_fourier_basis(N, 10)
+
+coefficients = []
+for k in range(10):
+    coef = sum(signal[i] * basis[k][i] for i in range(N))
+    coefficients.append(coef)
+
+print("Premiers coefficients de projection :")
+for k, c in enumerate(coefficients):
+    print(f"c_{k} = {c:.4f}")
+
+# Parseval check
+signal_energy = sum(x**2 for x in signal)
+reconstructed_energy = sum(c**2 for c in coefficients)
+print(f"Energie du signal original : {signal_energy:.4f}")
+print(f"Energie de la projection (Parseval) : {reconstructed_energy:.4f}")
+print(f"Ratio d'energie capturee : {reconstructed_energy / signal_energy * 100:.2f}%")
+\end{lstlisting}
+
+
+\subsection*{TP 3 : Les Polynômes de Legendre en Python}
+
+\textbf{Objectif :} Utiliser Gram-Schmidt sur l'espace fonctionnel $L^2([-1, 1])$ discrétisé pour reconstruire numériquement les polynômes de Legendre.
+
+\begin{lstlisting}
+# Discretization of the interval [-1, 1]
+N_points = 1000
+x_values = [-1.0 + 2.0 * i / (N_points - 1) for i in range(N_points)]
+dx = 2.0 / (N_points - 1)
+
+def inner_product_L2(f1, f2):
+    # Riemann sum approximation of the integral
+    return sum(y1 * y2 * dx for y1, y2 in zip(f1, f2))
+
+def create_monomial(degree):
+    return [x**degree for x in x_values]
+
+monomials = [create_monomial(d) for d in range(4)]
+legendre_basis = []
+
+for k in range(4):
+    u = list(monomials[k])
+    for e in legendre_basis:
+        proj_coef = inner_product_L2(monomials[k], e)
+        u = [u_val - proj_coef * e_val for u_val, e_val in zip(u, e)]
+
+    norm = inner_product_L2(u, u)**0.5
+    e_new = [u_val / norm for u_val in u]
+    legendre_basis.append(e_new)
+
+# Verification at x=1 (the last point).
+# Exact Legendre polynomials P_n(1) = 1, but we have orthonormal ones e_n(x) = sqrt((2n+1)/2) * P_n(x)
+print("Valeurs evaluees en x=1 (Normalisees) :")
+expected_norms = [( (2*n+1)/2 )**0.5 for n in range(4)]
+for n in range(4):
+    approx_val = legendre_basis[n][-1]
+    exact_val = expected_norms[n]
+    print(f"Degre {n} : approx={approx_val:.4f}, exact={exact_val:.4f}")
+\end{lstlisting}
+
+
+\subsection*{TP 4 : Isomorphisme de Riesz-Fischer et Compression}
+
+\textbf{Objectif :} Simuler la numérisation complète d'une fonction (mapping de l'espace de Hilbert vers $l^2$) et reconstruire la fonction en tronquant la série.
+
+\begin{lstlisting}
+import math
+
+def target_function(t):
+    # A step function on [0, 2*pi]
+    if t < math.pi:
+        return 1.0
+    return -1.0
+
+# Numerical setup
+N = 500
+t_vals = [2 * math.pi * i / N for i in range(N)]
+f_vals = [target_function(t) for t in t_vals]
+dt = 2 * math.pi / N
+
+def inner_product(u, v):
+    return (1.0 / (2 * math.pi)) * sum(u[i] * v[i] * dt for i in range(N))
+
+# We use the real Fourier basis on [0, 2pi]: 1, sqrt(2)cos(nt), sqrt(2)sin(nt)
+basis_funcs = []
+basis_funcs.append([1.0 for _ in t_vals]) # n=0
+for n in range(1, 10):
+    basis_funcs.append([(2**0.5) * math.cos(n * t) for t in t_vals])
+    basis_funcs.append([(2**0.5) * math.sin(n * t) for t in t_vals])
+
+# Riesz-Fischer Mapping: project function to sequence space
+l2_sequence = []
+for basis_vector in basis_funcs:
+    coef = inner_product(f_vals, basis_vector)
+    l2_sequence.append(coef)
+
+print("Sequence dans l2 (premiers termes) :")
+print([round(c, 3) for c in l2_sequence[:5]])
+
+# Reconstruction with truncation
+reconstructed = [0.0] * N
+for k in range(len(l2_sequence)):
+    coef = l2_sequence[k]
+    basis_vec = basis_funcs[k]
+    for i in range(N):
+        reconstructed[i] += coef * basis_vec[i]
+
+# Compute MSE of the reconstruction
+mse = sum((f_vals[i] - reconstructed[i])**2 for i in range(N)) / N
+print(f"Erreur quadratique moyenne apres reconstruction (N={len(l2_sequence)}) : {mse:.4f}")
+\end{lstlisting}
+
+
+\subsection*{TP 5 : L'ondelette de Haar sur R}
+
+\textbf{Objectif :} Construire le premier niveau de la base hilbertienne de Haar et projeter un signal simple.
+
+\begin{lstlisting}
+# Definition of the mother Haar wavelet
+def haar_psi(t):
+    if 0 <= t < 0.5:
+        return 1.0
+    elif 0.5 <= t < 1.0:
+        return -1.0
+    else:
+        return 0.0
+
+# Definition of the family functions
+def haar_basis(j, k, t):
+    return (2.0**(j / 2.0)) * haar_psi((2**j) * t - k)
+
+# Discretization for integral
+t_min, t_max = -2.0, 3.0
+N_pts = 1000
+t_grid = [t_min + (t_max - t_min) * i / N_pts for i in range(N_pts)]
+dt = (t_max - t_min) / N_pts
+
+def integrate(f_vals, g_vals):
+    return sum(f * g * dt for f, g in zip(f_vals, g_vals))
+
+# Test orthogonality of psi_{0,0} and psi_{0,1}
+psi_0_0 = [haar_basis(0, 0, t) for t in t_grid]
+psi_0_1 = [haar_basis(0, 1, t) for t in t_grid]
+dot_prod_1 = integrate(psi_0_0, psi_0_1)
+
+# Test orthogonality of psi_{0,0} and psi_{1,0}
+psi_1_0 = [haar_basis(1, 0, t) for t in t_grid]
+dot_prod_2 = integrate(psi_0_0, psi_1_0)
+
+print(f"Produit scalaire (j=0, k=0) et (j=0, k=1) : {abs(dot_prod_1):.4e}")
+print(f"Produit scalaire (j=0, k=0) et (j=1, k=0) : {abs(dot_prod_2):.4e}")
+
+# Project signal f(t) = t on [0, 1] onto psi_0_0
+f_signal = [t if 0 <= t <= 1 else 0 for t in t_grid]
+coef = integrate(f_signal, psi_0_0)
+print(f"Coefficient d'ondelette pour f(t)=t avec psi_{{0,0}} : {coef:.4f}")
+# The exact integral is int_0^0.5 t dt - int_0.5^1 t dt = [t^2/2]_0^0.5 - [t^2/2]_0.5^1
+# = 1/8 - (1/2 - 1/8) = 1/8 - 3/8 = -2/8 = -0.25
+\end{lstlisting}
+
+
+\end{document}
