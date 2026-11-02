@@ -1,27 +1,99 @@
-# Exercice 2 : Base hilbertienne de l'espace des fonctions complexes de carré intégrable $\bigstar\bigstar\star\star\star$
+# Exercice 2 (Jalon 104)
 
-**Énoncé :**
-Dans $H = L^2([-\pi, \pi], \mathbb{C})$ muni du produit scalaire $\langle f, g \rangle = \frac{1}{2\pi} \int_{-\pi}^\pi f(t) \overline{g(t)} dt$, on considère la famille $e_n(t) = e^{int}$ pour $n \in \mathbb{Z}$.
-Soit la fonction $f(t) = e^t$.
-1. Calculer les coefficients de Fourier complexes $c_n$ de la fonction $f$.
-2. En appliquant l'identité de Parseval, en déduire la valeur de la somme de la série $\sum_{n=-\infty}^{+\infty} \frac{1}{n^2 + 1}$.
+**Difficulté :** $\star\star\star\star\star$
 
-**Correction détaillée :**
-1. Le coefficient de Fourier d'indice $n$ est :
-   $c_n = \langle f, e_n \rangle = \frac{1}{2\pi} \int_{-\pi}^\pi e^t e^{-int} dt = \frac{1}{2\pi} \int_{-\pi}^\pi e^{(1-in)t} dt$
-   $c_n = \frac{1}{2\pi} \left[ \frac{e^{(1-in)t}}{1-in} \right]_{-\pi}^\pi$
-   Puisque $e^{-in\pi} = (-1)^n = (-1)^{-n} = e^{in\pi}$, nous avons :
-   $c_n = \frac{1}{2\pi(1-in)} (e^\pi (-1)^n - e^{-\pi} (-1)^n) = \frac{(-1)^n}{2\pi(1-in)} (e^\pi - e^{-\pi}) = \frac{(-1)^n \sinh(\pi)}{\pi(1-in)}$
-   Pour séparer la partie réelle et imaginaire au dénominateur, multiplions par le conjugué :
-   $c_n = \frac{(-1)^n \sinh(\pi) (1+in)}{\pi(1+n^2)}$
+Considérons l'espace vectoriel réel $\mathbb{R}^3$ muni du produit scalaire euclidien standard. Ce produit scalaire est défini, pour tout $x = (x_1, x_2, x_3) \in \mathbb{R}^3$ et $y = (y_1, y_2, y_3) \in \mathbb{R}^3$, par la relation :
+$$ \langle x, y \rangle = x_1 y_1 + x_2 y_2 + x_3 y_3 $$
+La norme associée est donnée par $\|x\| = \sqrt{\langle x, x \rangle}$.
 
-2. Calculons la norme au carré de la fonction $f$ :
-   $\|f\|^2 = \langle f, f \rangle = \frac{1}{2\pi} \int_{-\pi}^\pi e^t e^t dt = \frac{1}{2\pi} \int_{-\pi}^\pi e^{2t} dt = \frac{1}{2\pi} \left[ \frac{e^{2t}}{2} \right]_{-\pi}^\pi = \frac{e^{2\pi} - e^{-2\pi}}{4\pi} = \frac{\sinh(2\pi)}{2\pi}$
-   L'identité de Parseval stipule que $\|f\|^2 = \sum_{n=-\infty}^{+\infty} |c_n|^2$.
-   Calculons $|c_n|^2$ :
-   $|c_n|^2 = c_n \overline{c_n} = \left| \frac{(-1)^n \sinh(\pi)}{\pi(1-in)} \right|^2 = \frac{\sinh^2(\pi)}{\pi^2 (1^2 + (-n)^2)} = \frac{\sinh^2(\pi)}{\pi^2 (1+n^2)}$
-   Ainsi, par l'identité de Parseval :
-   $\frac{\sinh(2\pi)}{2\pi} = \sum_{n=-\infty}^{+\infty} \frac{\sinh^2(\pi)}{\pi^2 (1+n^2)}$
-   $\sum_{n=-\infty}^{+\infty} \frac{1}{n^2 + 1} = \frac{\pi^2 \sinh(2\pi)}{2\pi \sinh^2(\pi)}$
-   On sait que $\sinh(2\pi) = 2\sinh(\pi)\cosh(\pi)$, donc :
-   $\sum_{n=-\infty}^{+\infty} \frac{1}{n^2 + 1} = \frac{\pi \times 2\sinh(\pi)\cosh(\pi)}{2 \sinh^2(\pi)} = \frac{\pi \cosh(\pi)}{\sinh(\pi)} = \pi \coth(\pi)$.
+Soit $B$ l'ensemble de vecteurs suivant :
+$$ B = \left\{ e_1, e_2, e_3 \right\} $$
+où les vecteurs sont définis par :
+$$ e_1 = \left( \frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}, 0 \right) $$
+$$ e_2 = \left( -\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}, 0 \right) $$
+$$ e_3 = \left( 0, 0, 1 \right) $$
+
+**Question :** Déterminez si l'ensemble $B$ constitue une base hilbertienne de l'espace $\mathbb{R}^3$.
+
+---
+
+## Correction détaillée de l'Exercice 2
+
+Pour déterminer si l'ensemble $B = \{e_1, e_2, e_3\}$ constitue une base hilbertienne de l'espace $\mathbb{R}^3$, nous devons vérifier deux propriétés fondamentales. Dans un espace de Hilbert de dimension finie $n$, une base hilbertienne est équivalente à un ensemble de $n$ vecteurs formant un système orthonormal et engendrant l'espace.
+
+Plus précisément, un ensemble de vecteurs $\{e_i\}_{i=1}^n$ forme une base orthonormée (et donc une base hilbertienne) d'un espace vectoriel euclidien de dimension $n$ si et seulement si :
+1.  **Orthogonalité :** Les vecteurs sont mutuellement orthogonaux. Pour tout $i, j \in \{1, \dots, n\}$ avec $i \neq j$, $\langle e_i, e_j \rangle = 0$.
+2.  **Normalisation :** Chaque vecteur est de norme unitaire. Pour tout $i \in \{1, \dots, n\}$, $\|e_i\| = 1$.
+3.  **Complétude (propriété de base) :** Dans un espace de dimension $n$, un ensemble de $n$ vecteurs qui est orthonormal est automatiquement une base de cet espace. L'espace $\mathbb{R}^3$ est de dimension $3$, et l'ensemble $B$ contient $3$ vecteurs.
+
+Nous allons procéder à la vérification rigoureuse de ces conditions pour l'ensemble $B = \{e_1, e_2, e_3\}$.
+
+### Étape 1 : Vérification de la normalisation des vecteurs
+
+Nous calculons la norme au carré de chaque vecteur $e_i$, puis sa norme. Rappelons que $\|e_i\|^2 = \langle e_i, e_i \rangle$.
+
+#### Calcul de la norme de $e_1$ :
+Le vecteur $e_1$ est donné par $e_1 = \left( \frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}, 0 \right)$.
+Nous calculons son produit scalaire avec lui-même en utilisant la définition du produit scalaire euclidien standard :
+$$ \langle e_1, e_1 \rangle = \left( \frac{1}{\sqrt{2}} \right) \cdot \left( \frac{1}{\sqrt{2}} \right) + \left( \frac{1}{\sqrt{2}} \right) \cdot \left( \frac{1}{\sqrt{2}} \right) + (0) \cdot (0) $$
+$$ \langle e_1, e_1 \rangle = \frac{1}{2} + \frac{1}{2} + 0 $$
+$$ \langle e_1, e_1 \rangle = 1 $$
+Par conséquent, la norme de $e_1$ est $\|e_1\| = \sqrt{1} = 1$.
+Le vecteur $e_1$ est bien unitaire.
+
+#### Calcul de la norme de $e_2$ :
+Le vecteur $e_2$ est donné par $e_2 = \left( -\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}, 0 \right)$.
+Nous calculons son produit scalaire avec lui-même :
+$$ \langle e_2, e_2 \rangle = \left( -\frac{1}{\sqrt{2}} \right) \cdot \left( -\frac{1}{\sqrt{2}} \right) + \left( \frac{1}{\sqrt{2}} \right) \cdot \left( \frac{1}{\sqrt{2}} \right) + (0) \cdot (0) $$
+$$ \langle e_2, e_2 \rangle = \frac{1}{2} + \frac{1}{2} + 0 $$
+$$ \langle e_2, e_2 \rangle = 1 $$
+Par conséquent, la norme de $e_2$ est $\|e_2\| = \sqrt{1} = 1$.
+Le vecteur $e_2$ est bien unitaire.
+
+#### Calcul de la norme de $e_3$ :
+Le vecteur $e_3$ est donné par $e_3 = \left( 0, 0, 1 \right)$.
+Nous calculons son produit scalaire avec lui-même :
+$$ \langle e_3, e_3 \rangle = (0) \cdot (0) + (0) \cdot (0) + (1) \cdot (1) $$
+$$ \langle e_3, e_3 \rangle = 0 + 0 + 1 $$
+$$ \langle e_3, e_3 \rangle = 1 $$
+Par conséquent, la norme de $e_3$ est $\|e_3\| = \sqrt{1} = 1$.
+Le vecteur $e_3$ est bien unitaire.
+
+Conclusion de l'Étape 1 : Tous les vecteurs de l'ensemble $B$ sont de norme unitaire. La condition de normalisation est satisfaite.
+
+### Étape 2 : Vérification de l'orthogonalité mutuelle des vecteurs
+
+Nous calculons le produit scalaire entre chaque paire distincte de vecteurs. Le résultat doit être zéro pour qu'ils soient orthogonaux.
+
+#### Calcul de $\langle e_1, e_2 \rangle$ :
+$$ \langle e_1, e_2 \rangle = \left( \frac{1}{\sqrt{2}} \right) \cdot \left( -\frac{1}{\sqrt{2}} \right) + \left( \frac{1}{\sqrt{2}} \right) \cdot \left( \frac{1}{\sqrt{2}} \right) + (0) \cdot (0) $$
+$$ \langle e_1, e_2 \rangle = -\frac{1}{2} + \frac{1}{2} + 0 $$
+$$ \langle e_1, e_2 \rangle = 0 $$
+Les vecteurs $e_1$ et $e_2$ sont orthogonaux.
+
+#### Calcul de $\langle e_1, e_3 \rangle$ :
+$$ \langle e_1, e_3 \rangle = \left( \frac{1}{\sqrt{2}} \right) \cdot (0) + \left( \frac{1}{\sqrt{2}} \right) \cdot (0) + (0) \cdot (1) $$
+$$ \langle e_1, e_3 \rangle = 0 + 0 + 0 $$
+$$ \langle e_1, e_3 \rangle = 0 $$
+Les vecteurs $e_1$ et $e_3$ sont orthogonaux.
+
+#### Calcul de $\langle e_2, e_3 \rangle$ :
+$$ \langle e_2, e_3 \rangle = \left( -\frac{1}{\sqrt{2}} \right) \cdot (0) + \left( \frac{1}{\sqrt{2}} \right) \cdot (0) + (0) \cdot (1) $$
+$$ \langle e_2, e_3 \rangle = 0 + 0 + 0 $$
+$$ \langle e_2, e_3 \rangle = 0 $$
+Les vecteurs $e_2$ et $e_3$ sont orthogonaux.
+
+Conclusion de l'Étape 2 : Toutes les paires distinctes de vecteurs de l'ensemble $B$ sont orthogonales. La condition d'orthogonalité est satisfaite.
+
+### Étape 3 : Conclusion sur la nature de l'ensemble $B$
+
+À partir des étapes précédentes, nous avons démontré que l'ensemble $B = \{e_1, e_2, e_3\}$ est un système orthonormal de vecteurs dans $\mathbb{R}^3$. C'est-à-dire, pour tout $i, j \in \{1, 2, 3\}$, nous avons $\langle e_i, e_j \rangle = \delta_{ij}$, où $\delta_{ij}$ est le symbole de Kronecker (égal à 1 si $i=j$ et 0 si $i \neq j$).
+
+L'espace $\mathbb{R}^3$ est un espace de Hilbert de dimension finie égale à $3$.
+L'ensemble $B$ contient exactement $3$ vecteurs.
+Dans un espace vectoriel de dimension $n$, tout ensemble de $n$ vecteurs qui est orthonormal constitue automatiquement une base de cet espace. Cet ensemble est linéairement indépendant et engendre l'espace.
+
+Par conséquent, l'ensemble $B$ est une base orthonormée de $\mathbb{R}^3$.
+Puisqu'une base hilbertienne dans un espace de Hilbert de dimension finie est, par définition, une base orthonormée, nous pouvons conclure.
+
+**Conclusion finale :** L'ensemble $B = \left\{ \left( \frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}, 0 \right), \left( -\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}, 0 \right), \left( 0, 0, 1 \right) \right\}$ constitue bien une base hilbertienne de l'espace $\mathbb{R}^3$ muni du produit scalaire euclidien standard.
