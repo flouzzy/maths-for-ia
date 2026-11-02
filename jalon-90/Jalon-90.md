@@ -39,6 +39,14 @@ Posons $Y = 0$ (variable aléatoire constante et égale à 0). On remarque que :
 $$ \{ \omega \in [0, 1] \mid \lim_{n \to \infty} X_n(\omega) = Y(\omega) \} = [0, 1[ $$
 Or, $\mathbb{P}([0, 1[) = 1$. Par conséquent, $X_n \xrightarrow{p.s.} 0$. Le singleton $\{1\}$ où la convergence fait défaut est de mesure nulle.
 
+
+**Exemple Concret (Loi forte des grands nombres) :**
+Considérons une suite infinie de lancers de dés équilibrés à 6 faces, où $X_i$ est le résultat du $i$-ème lancer. Les variables $X_i$ sont indépendantes et identiquement distribuées, d'espérance $\mu = 3.5$.
+Définissons la moyenne empirique $S_n = \frac{1}{n} \sum_{i=1}^n X_i$.
+La convergence presque sûre $S_n \xrightarrow{p.s.} 3.5$ signifie qu'en lançant les dés une infinité de fois, l'ensemble des scénarios (suites de lancers) pour lesquels la moyenne asymptotique n'est pas exactement $3.5$ est de probabilité strictement nulle. Sur le papier, une suite qui ne donnerait que des $6$ est possible (probabilité nulle mais ensemble non vide), mais elle n'apparaît "presque jamais".
+
+
+
 ### 2.2 Convergence en Probabilité
 
 La convergence en probabilité est plus faible. Elle exige que pour tout seuil d'erreur fixé, la probabilité que l'écart entre $X_n$ et $X$ dépasse ce seuil tende vers zéro lorsque $n$ croît.
@@ -58,6 +66,24 @@ Soit $X_n = \mathbf{1}_{I_n}$ (la fonction indicatrice de cet intervalle).
 - Calculons la probabilité : $\mathbb{P}(|X_n - 0| > \epsilon) = \mathbb{P}(X_n = 1) = \text{longueur}(I_n) = \frac{1}{2^k}$.
 Puisque $k \to \infty$ lorsque $n \to \infty$, la probabilité tend vers $0$. Donc $X_n \xrightarrow{\mathbb{P}} 0$.
 - Cependant, pour tout $\omega \in [0, 1]$, la valeur $X_n(\omega)$ alternera entre $0$ et $1$ une infinité de fois, car pour chaque $k$, $\omega$ appartient à l'un des intervalles de la subdivision. Ainsi, $\limsup X_n(\omega) = 1$ et $\liminf X_n(\omega) = 0$. La suite ne converge ponctuellement pour **aucun** $\omega$. Donc $X_n$ ne converge pas presque sûrement.
+
+
+**Illustration (Machine à écrire) :**
+```latex
+\begin{tikzpicture}[scale=1]
+\draw[->] (-0.2,0) -- (4.5,0) node[right] {$x$};
+\draw[->] (0,-0.2) -- (0,1.5) node[above] {$X_n(x)$};
+
+\draw[thick, blue] (0,0) -- (1,0) -- (1,1) -- (2,1) -- (2,0) -- (4,0);
+\node[below] at (1,0) {$m/2^k$};
+\node[below] at (2,0) {$(m+1)/2^k$};
+\node[left] at (0,1) {$1$};
+
+\node[above] at (2, 1.2) {La bosse se déplace vers la droite et rétrécit};
+\end{tikzpicture}
+```
+
+
 
 ### 2.3 Convergence dans $L^p$ (en moyenne d'ordre $p$)
 
@@ -94,6 +120,26 @@ Le théorème suivant structure les relations d'implication entre les différent
 1. La convergence dans $L^p$ implique la convergence en probabilité.
 2. La convergence en probabilité implique la convergence en loi.
 
+
+**Diagramme de la Hiérarchie des Convergences :**
+```latex
+\begin{tikzpicture}[
+    box/.style={draw, rectangle, rounded corners, minimum width=3.5cm, minimum height=1cm, text centered, font=\bfseries, fill=blue!10},
+    arrow/.style={-stealth, thick}
+]
+
+\node[box] (ps) at (0, 0) {Convergence Presque Sûre (p.s.)};
+\node[box] (lp) at (5, 0) {Convergence dans $L^p$};
+\node[box] (prob) at (2.5, -2) {Convergence en Probabilité ($\mathbb{P}$)};
+\node[box] (loi) at (2.5, -4) {Convergence en Loi ($\mathcal{L}$)};
+
+\draw[arrow] (ps) -- (prob);
+\draw[arrow] (lp) -- (prob);
+\draw[arrow] (prob) -- (loi);
+\end{tikzpicture}
+```
+
+
 ### 3.1 Démonstration : $L^p \implies \text{Probabilité}$
 
 Nous voulons prouver que si $\lim_{n \to \infty} \mathbb{E}[|X_n - X|^p] = 0$, alors pour tout $\epsilon > 0$, $\lim_{n \to \infty} \mathbb{P}(|X_n - X| > \epsilon) = 0$.
@@ -106,6 +152,16 @@ Par hypothèse de convergence dans $L^p$, on a $\lim_{n \to \infty} \mathbb{E}[|
 Puisque le terme de droite tend vers $0$ (avec $\epsilon$ fixé), par encadrement, la probabilité du membre de gauche tend également vers $0$.
 $$ \lim_{n \to \infty} \mathbb{P}(|X_n - X| > \epsilon) = 0 $$
 La convergence en probabilité est démontrée.
+
+
+**Exemple Concret (L'utilisation de Markov) :**
+Soit une variable aléatoire $X_n$ telle que $X_n \sim \mathcal{U}(0, 1/n)$.
+Calculons la norme $L^2$ : $\mathbb{E}[|X_n - 0|^2] = \int_0^{1/n} n x^2 dx = n [\frac{x^3}{3}]_0^{1/n} = \frac{1}{3n^2} \to 0$.
+Donc $X_n \xrightarrow{L^2} 0$.
+Vérifions la convergence en probabilité pour $\epsilon = 0.01$ :
+$\mathbb{P}(|X_n| > 0.01) = 0$ dès que $1/n \le 0.01$ (soit $n \ge 100$).
+La probabilité tend bien vers $0$, confirmant l'implication.
+
 
 ### 3.2 Démonstration : $\text{Probabilité} \implies \text{Loi}$
 
