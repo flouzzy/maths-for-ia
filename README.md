@@ -235,7 +235,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 102](jalon-102/Jalon%20102%20%28Topologies%20faibles%20et%20faibles-%29.md)** : Topologies faibles et faibles-*, compacité de la boule unité duale (Théorème de Banach-Alaoglu).
 - **[Jalon 103](jalon-103/Jalon-103.md)** : Espaces de Hilbert généraux, théorème de projection sur un convexe fermé et dualité de Riesz. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - **[Jalon 104](jalon-104/Jalon-104.md)** : Bases hilbertiennes (systèmes orthonormés complets) et séparabilité des espaces de Hilbert. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- **[Jalon 105](jalon-105/Jalon%20105%20%28Op%C3%A9rateurs%20adjoints%29.md)** : Opérateurs adjoints, opérateurs compacts et propriétés de régularisation.
+- **[Jalon 105](jalon-105/Jalon-105.md)** : Opérateurs adjoints, opérateurs compacts et propriétés de régularisation.
 - **[Jalon 106](jalon-106/Jalon%20106%20%28Th%C3%A9or%C3%A8me%20spectral%20pour%20les%20op%C3%A9rateurs%20compacts%20autoadjoints%29.md)** : Théorème spectral pour les opérateurs compacts autoadjoints (décomposition en base hilbertienne d'éléments propres).
 - **[Jalon 107](jalon-107/Jalon%20107%20%28Introduction%20%C3%A0%20la%20th%C3%A9orie%20des%20op%C3%A9rateurs%20non%20born%C3%A9s%20et%20r%C3%A9solvante.%29.md)** : Introduction à la théorie des opérateurs non bornés et résolvante.
 - **[Jalon 108](jalon-108/Jalon%20108%20%28Livrable%20IA%29.md)** : Livrable IA T9 : Modélisation de l'opérateur d'Attention de la structure Transformer sous forme d'opérateur intégral borné sur un espace hilbertien.
@@ -435,6 +435,7 @@ Le cursus est enrichi jalon par jalon de manière progressive :
 - [2026-07-20] : [Upsert/Création] du Jalon 31 - Introduction à la réduction de Jordan et structure des nilpotents. Status: Terminé.
 - [2026-07-30] : [Upsert/Création] du Jalon 40 - Intégrales dépendant d'un paramètre. Status: Terminé.
 ## Historique d'Audit
+- [2026-11-03] : [Upsert/Création] du Jalon 105 - Opérateurs adjoints. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-13] : Upsert du Jalon 89 - Lemmes de Borel-Cantelli. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-11] : [Upsert/Création] du Jalon 88 - Indépendance d'événements et de variables aléatoires. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-09] : [Upsert/Création] du Jalon 87 - Intégration et Espérance mathématique. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
