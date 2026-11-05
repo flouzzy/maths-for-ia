@@ -1,20 +1,28 @@
-# Exercice 07
+# Exercice 7 : Théorème de Slutsky
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
+Niveau : $\bigstar\bigstar\bigstar\bigstar\star$
 
-**Énoncé :**
-Soit $W_n$ distribuée uniformément sur $[-n, n]$. Considérons la suite normée $V_n = \frac{W_n}{n}$.
-Vers quelle loi la suite $V_n$ converge-t-elle ? Démontrez-le formellement à l'aide des fonctions de répartition.
+Soit $(X_n)$ une suite de v.a. convergeant en loi vers une v.a. $X$ de loi continue, et $(Y_n)$ une suite convergeant en probabilité vers une constante $c$.
+Le théorème de Slutsky affirme que $X_n + Y_n \xrightarrow{\mathcal{L}} X + c$ et $X_n Y_n \xrightarrow{\mathcal{L}} cX$.
+Appliquer ce théorème : soit $Z_1, \dots, Z_n$ i.i.d. de moyenne $\mu$ et variance $\sigma^2 > 0$. Notons $\bar{Z}_n = \frac{1}{n} \sum Z_i$ et $S_n^2$ l'estimateur sans biais de la variance (qui converge p.s. vers $\sigma^2$).
+Montrer que $U_n = \frac{\sqrt{n}(\bar{Z}_n - \mu)}{S_n} \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$.
 
-**Correction :**
-Déterminons d'abord la loi de $V_n$. Pour tout $x \in [-1, 1]$, on a :
-$$ F_{V_n}(x) = \mathbb{P}(V_n \le x) = \mathbb{P}\left(\frac{W_n}{n} \le x\right) = \mathbb{P}(W_n \le nx) $$
-Puisque $W_n$ suit $\mathcal{U}([-n, n])$, sa densité est $\frac{1}{2n}$ sur cet intervalle.
-$$ \mathbb{P}(W_n \le nx) = \int_{-n}^{nx} \frac{1}{2n} dt = \frac{nx - (-n)}{2n} = \frac{n(x+1)}{2n} = \frac{x+1}{2} $$
-Ainsi, pour tout $x \in [-1, 1]$, $F_{V_n}(x) = \frac{x+1}{2}$, indépendamment de $n$.
-Pour $x < -1$, $F_{V_n}(x) = 0$, et pour $x > 1$, $F_{V_n}(x) = 1$.
+## Correction
 
-Puisque $F_{V_n}(x)$ est constante par rapport à $n$, la limite est exactement cette même fonction :
-$$ \lim_{n \to \infty} F_{V_n}(x) = \begin{cases} 0 & \text{si } x < -1 \\ \frac{x+1}{2} & \text{si } -1 \le x \le 1 \\ 1 & \text{si } x > 1 \end{cases} $$
-On reconnaît la fonction de répartition d'une variable aléatoire uniforme sur $[-1, 1]$.
-Ainsi, $V_n$ converge en loi vers $V \sim \mathcal{U}([-1, 1])$. En fait, toutes les $V_n$ ont exactement cette loi.
+**1. Convergence au numérateur (TCL) :**
+D'après le Théorème Central Limite (TCL), puisque les $Z_i$ sont i.i.d. avec une variance finie $\sigma^2$, on a :
+$$V_n = \frac{\sqrt{n}(\bar{Z}_n - \mu)}{\sigma} \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$$
+
+**2. Convergence au dénominateur :**
+On sait par la loi forte des grands nombres (et le fait que $S_n^2$ est consistant) que $S_n^2 \xrightarrow{\text{p.s.}} \sigma^2$.
+Puisque la convergence presque sûre implique la convergence en probabilité, $S_n^2 \xrightarrow{\mathbb{P}} \sigma^2$.
+La fonction racine carrée $x \mapsto \sqrt{x}$ étant continue sur $]0, +\infty[$, par le théorème de continuité (Continuous Mapping Theorem), on a $S_n \xrightarrow{\mathbb{P}} \sigma$.
+Et, comme $\sigma \neq 0$, par continuité de l'inverse, $\frac{\sigma}{S_n} \xrightarrow{\mathbb{P}} 1$.
+
+**3. Application de Slutsky :**
+On peut réécrire $U_n$ comme :
+$$U_n = \frac{\sqrt{n}(\bar{Z}_n - \mu)}{S_n} = \frac{\sqrt{n}(\bar{Z}_n - \mu)}{\sigma} \times \frac{\sigma}{S_n} = V_n \times W_n$$
+où $V_n \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$ et $W_n \xrightarrow{\mathbb{P}} 1$ (une constante).
+D'après le lemme de Slutsky concernant le produit, on a :
+$$V_n W_n \xrightarrow{\mathcal{L}} 1 \times \mathcal{N}(0, 1) = \mathcal{N}(0, 1)$$
+Ainsi, on a démontré rigoureusement que $U_n \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$. Ceci justifie l'utilisation des tests de Student asymptotiques avec écart-type empirique.
