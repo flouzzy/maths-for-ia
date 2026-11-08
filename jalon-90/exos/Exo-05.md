@@ -3,17 +3,33 @@
 **Difficulté :** $\bigstar\bigstar\bigstar\star\star$
 
 **Énoncé :**
-Soit $X_n$ distribuée selon une loi Normale $\mathcal{N}\left(0, \frac{1}{n}\right)$.
-Démontrez que $X_n$ converge en probabilité vers $0$ en utilisant l'inégalité de Bienaymé-Tchebychev.
+Montrez de manière explicite que si une suite $(X_n)$ converge dans $L^1(\Omega)$ vers une variable $X$, alors elle converge en probabilité vers $X$.
+*Indication : Utilisez l'inégalité de Markov.*
 
 **Correction :**
-L'espérance de $X_n$ est $\mathbb{E}[X_n] = 0$ et sa variance est $\text{Var}(X_n) = \frac{1}{n}$.
-Nous cherchons à évaluer $\mathbb{P}(|X_n - 0| > \epsilon)$ pour un $\epsilon > 0$ fixé.
-D'après l'inégalité de Bienaymé-Tchebychev, pour toute variable aléatoire $Y$ d'espérance $\mu$ et de variance $\sigma^2$ :
-$$ \mathbb{P}(|Y - \mu| \ge \epsilon) \le \frac{\sigma^2}{\epsilon^2} $$
-Appliquée à $X_n$ :
-$$ \mathbb{P}(|X_n| \ge \epsilon) \le \frac{1/n}{\epsilon^2} = \frac{1}{n\epsilon^2} $$
-En passant à la limite quand $n \to \infty$, pour tout $\epsilon > 0$ fixe :
-$$ \lim_{n \to \infty} \frac{1}{n\epsilon^2} = 0 $$
-Ainsi, $\lim_{n \to \infty} \mathbb{P}(|X_n| \ge \epsilon) = 0$.
-La suite converge bien en probabilité vers $0$.
+
+L'objectif est d'établir l'implication fondamentale : Convergence $L^1 \implies$ Convergence en probabilité.
+Traduisons les hypothèses. La convergence dans $L^1$ se formule ainsi :
+$$ \lim_{n \to \infty} \mathbb{E}[|X_n - X|] = 0 $$
+Nous devons aboutir à la définition de la convergence en probabilité : pour tout $\varepsilon > 0$, $\lim_{n \to \infty} \mathbb{P}(|X_n - X| \ge \varepsilon) = 0$.
+
+**Démonstration pas à pas :**
+
+1. Fixons un seuil d'écartement $\varepsilon > 0$ arbitraire. L'événement dont nous devons contrôler la probabilité est $\{ \omega \in \Omega \mid |X_n(\omega) - X(\omega)| \ge \varepsilon \}$.
+2. Considérons la nouvelle variable aléatoire $Y_n = |X_n - X|$. Cette variable est positive presque sûrement ($Y_n \ge 0$).
+De plus, par hypothèse de convergence $L^1$, l'espérance de $Y_n$ existe, est finie, et tend vers $0$.
+3. Appliquons l'inégalité de Markov à la variable positive $Y_n$. Pour tout $a > 0$, l'inégalité s'écrit :
+$$ \mathbb{P}(Y_n \ge a) \le \frac{\mathbb{E}[Y_n]}{a} $$
+4. Instancions cette inégalité avec le seuil $a = \varepsilon$. Nous obtenons la majoration cruciale :
+$$ \mathbb{P}(|X_n - X| \ge \varepsilon) \le \frac{\mathbb{E}[|X_n - X|]}{\varepsilon} $$
+5. Tout comme dans l'inégalité de Bienaymé-Chebyshev, cette probabilité est trivialement minorée par $0$. Nous posons donc l'encadrement :
+$$ 0 \le \mathbb{P}(|X_n - X| \ge \varepsilon) \le \frac{\mathbb{E}[|X_n - X|]}{\varepsilon} $$
+6. Analysons le comportement asymptotique de cet encadrement lorsque $n \to \infty$.
+Le paramètre $\varepsilon$ est constant et strictement positif.
+Le numérateur $\mathbb{E}[|X_n - X|]$ tend vers zéro par hypothèse stricte de convergence dans $L^1$.
+Ainsi, la limite du majorant est :
+$$ \lim_{n \to \infty} \frac{\mathbb{E}[|X_n - X|]}{\varepsilon} = \frac{0}{\varepsilon} = 0 $$
+7. Par le théorème d'encadrement des limites de suites, il en résulte inévitablement que :
+$$ \lim_{n \to \infty} \mathbb{P}(|X_n - X| \ge \varepsilon) = 0 $$
+Cette égalité étant vérifiée pour tout $\varepsilon > 0$ arbitrairement choisi, la preuve est achevée.
+La suite $(X_n)$ converge bien en probabilité vers $X$.
