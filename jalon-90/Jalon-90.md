@@ -41,6 +41,50 @@ Or, $\mathbb{P}([0, 1[) = 1$. Par conséquent, $X_n \xrightarrow{p.s.} 0$. Le si
 
 ### 2.2 Convergence en Probabilité
 
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1]
+% Axes
+\draw[->,thick] (0,0) -- (6,0) node[right] {$\omega \in [0, 1]$};
+\draw[->,thick] (0,0) -- (0,2.5) node[above] {$X_n(\omega)$};
+
+% Iteration 1
+\draw[blue, thick] (0, 0.2) -- (2, 0.2) node[above right] {$n=2$};
+\draw[blue, thick, dashed] (2, 0.2) -- (5, 0.2);
+\fill[blue] (0,0.2) circle (2pt);
+\fill[blue] (2,0.2) circle (2pt);
+
+% Iteration 2
+\draw[red, thick] (2, 0.7) -- (4, 0.7) node[above right] {$n=3$};
+\draw[red, thick, dashed] (0, 0.7) -- (2, 0.7);
+\draw[red, thick, dashed] (4, 0.7) -- (5, 0.7);
+\fill[red] (2,0.7) circle (2pt);
+\fill[red] (4,0.7) circle (2pt);
+
+% Iteration 3
+\draw[green!60!black, thick] (0, 1.2) -- (1, 1.2) node[above right] {$n=4$};
+\draw[green!60!black, thick, dashed] (1, 1.2) -- (5, 1.2);
+\fill[green!60!black] (0,1.2) circle (2pt);
+\fill[green!60!black] (1,1.2) circle (2pt);
+
+\draw[green!60!black, thick] (1, 1.7) -- (2, 1.7) node[above right] {$n=5$};
+\draw[green!60!black, thick, dashed] (0, 1.7) -- (1, 1.7);
+\draw[green!60!black, thick, dashed] (2, 1.7) -- (5, 1.7);
+\fill[green!60!black] (1,1.7) circle (2pt);
+\fill[green!60!black] (2,1.7) circle (2pt);
+
+
+% Labels
+\node[below] at (0,0) {$0$};
+\node[below] at (1,0) {$1/4$};
+\node[below] at (2,0) {$1/2$};
+\node[below] at (4,0) {$1$};
+
+\end{tikzpicture}
+\caption{La \og machine à écrire \fg{} : la bosse se déplace et rétrécit. Pour tout $\omega$, la suite $(X_n(\omega))$ oscille entre 0 et 1.}
+\end{figure}
+
+
 La convergence en probabilité est plus faible. Elle exige que pour tout seuil d'erreur fixé, la probabilité que l'écart entre $X_n$ et $X$ dépasse ce seuil tende vers zéro lorsque $n$ croît.
 
 **Définition (Convergence en Probabilité) :**
@@ -60,6 +104,30 @@ Puisque $k \to \infty$ lorsque $n \to \infty$, la probabilité tend vers $0$. Do
 - Cependant, pour tout $\omega \in [0, 1]$, la valeur $X_n(\omega)$ alternera entre $0$ et $1$ une infinité de fois, car pour chaque $k$, $\omega$ appartient à l'un des intervalles de la subdivision. Ainsi, $\limsup X_n(\omega) = 1$ et $\liminf X_n(\omega) = 0$. La suite ne converge ponctuellement pour **aucun** $\omega$. Donc $X_n$ ne converge pas presque sûrement.
 
 ### 2.3 Convergence dans $L^p$ (en moyenne d'ordre $p$)
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1]
+% Axes
+\draw[->,thick] (0,0) -- (6,0) node[right] {$\omega$};
+\draw[->,thick] (0,0) -- (0,4) node[above] {$X_n(\omega)$};
+
+% Iteration 1
+\draw[blue, thick] (0.5, 0) -- (1, 1) -- (1.5, 0);
+\node[blue, above] at (1, 1) {$n=1, X_1=1$};
+
+% Iteration 2
+\draw[red, thick] (0.2, 0) -- (0.5, 2) -- (0.8, 0);
+\node[red, above] at (0.5, 2) {$n=2, X_2=2$};
+
+% Iteration 3
+\draw[green!60!black, thick] (0.05, 0) -- (0.2, 3.5) -- (0.35, 0);
+\node[green!60!black, above] at (0.2, 3.5) {$n=3, X_3=3$};
+
+\end{tikzpicture}
+\caption{La bosse qui s'échappe : la largeur de la base (probabilité) tend vers $0$ en $1/n^2$, mais la hauteur tend vers l'infini en $n$, empêchant la convergence $L^2$.}
+\end{figure}
+
 
 Ce mode quantifie la "distance" fonctionnelle entre les variables.
 

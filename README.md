@@ -210,7 +210,7 @@ Pour exploiter au mieux ce vault, nous vous suggérons d'installer et activer :
 - **[Jalon 87](jalon-87/Jalon%2087%20%28Int%C3%A9gration%20des%20variables%20al%C3%A9atoires%29.md)** : Intégration des variables aléatoires, espérance, variance et moments d'ordre supérieur.
 - **[Jalon 88](jalon-88/Jalon-88.md)** : Indépendance d'événements, de tribus et de variables aléatoires.
 - **[Jalon 89](jalon-89/Jalon-89.md)** : Lemmes de Borel-Cantelli (lois du tout ou rien) et applications aux comportements asymptotiques.
-- **[Jalon 90](jalon-90/Jalon%2090%20%28Les%20modes%20de%20convergence%29.md)** : Les modes de convergence : presque sûre, en probabilité, dans $L^p$ et en loi (convergence étroite des mesures).
+- **[Jalon 90](jalon-90/Jalon-90.md)** : Les modes de convergence : presque sûre, en probabilité, dans $L^p$ et en loi (convergence étroite des mesures).
 - **[Jalon 91](jalon-91/Jalon%2091%20%28In%C3%A9galit%C3%A9s%20de%20concentration%29.md)** : Inégalités de concentration : Markov, Chebyshev, Bienaymé, Chernoff et lemme de Hoeffding.
 - **[Jalon 92](jalon-92/Jalon-92.md)** : Démonstration rigoureuse de la loi forte des grands nombres.
 - **[Jalon 93](jalon-93/Jalon%2093%20%28Fonctions%20caract%C3%A9ristiques%29.md)** : Fonctions caractéristiques (transformée de Fourier de la loi) et théorème de continuité de Lévy.
@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-11-08] : [Upsert/Création] du Jalon 90 - Les modes de convergence. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-31] : [Upsert/Création] du Jalon 104 - Bases hilbertiennes. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-29] : [Upsert/Création] du Jalon 103 - Espaces de Hilbert généraux. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-28] : [Upsert/Création] du Jalon 102 - Topologies faibles et faibles-*. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
