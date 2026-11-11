@@ -3,20 +3,25 @@
 **Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
 
 **Énoncé :**
-Prouvez que la convergence en probabilité vers une constante implique la convergence en loi vers cette même constante. (Cas particulier du théorème du cours).
+Convergence $L^p$ et intégrabilité de la limite
 
-**Correction :**
-Soit $X_n \xrightarrow{\mathbb{P}} c$ où $c \in \mathbb{R}$ est une constante déterministe. On veut montrer que $\lim F_{X_n}(x) = F_c(x)$ pour tout point de continuité de $F_c$.
-La fonction de répartition de $c$ est la fonction indicatrice (Dirac en $c$) :
-$$ F_c(x) = \begin{cases} 0 & \text{si } x < c \\ 1 & \text{si } x \ge c \end{cases} $$
-Le seul point de discontinuité est $x = c$. Il suffit donc de vérifier la convergence pour $x < c$ et pour $x > c$.
+Supposons que $X_n \xrightarrow{L^p} X$ pour $p \ge 1$.
+Démontrez de façon complète que la fonction limite $X$ appartient nécessairement à $L^p$, en utilisant la stricte inégalité de Minkowski.
 
-**Cas 1 : $x < c$.** Posons $\epsilon = c - x > 0$.
-$$ \mathbb{P}(X_n \le x) = \mathbb{P}(X_n - c \le x - c) = \mathbb{P}(X_n - c \le -\epsilon) \le \mathbb{P}(|X_n - c| \ge \epsilon) $$
-Par hypothèse, $\mathbb{P}(|X_n - c| \ge \epsilon) \to 0$, donc $\mathbb{P}(X_n \le x) \to 0 = F_c(x)$.
-
-**Cas 2 : $x > c$.** Posons $\epsilon = x - c > 0$.
-$$ \mathbb{P}(X_n \le x) = 1 - \mathbb{P}(X_n > x) = 1 - \mathbb{P}(X_n - c > x - c) = 1 - \mathbb{P}(X_n - c > \epsilon) $$
-Puisque $\mathbb{P}(X_n - c > \epsilon) \le \mathbb{P}(|X_n - c| > \epsilon) \to 0$, on a :
-$$ \mathbb{P}(X_n \le x) \to 1 = F_c(x) $$
-Ceci prouve la convergence en loi vers $c$.
+**Correction exhaustive :**
+Par hypothèse, pour tout $n$, $X_n \in L^p$, c'est-à-dire $\mathbb{E}[|X_n|^p] < \infty$.
+La condition $X_n \xrightarrow{L^p} X$ signifie que la quantité $\mathbb{E}[|X_n - X|^p]$ (la puissance $p$-ème de la norme $\|X_n - X\|_p$) tend vers $0$ lorsque $n \to \infty$.
+Ceci implique en particulier qu'il existe un rang $N$ à partir duquel cette quantité est finie. Ainsi, $\|X_n - X\|_p < \infty$ pour $n \ge N$.
+Considérons la norme dans l'espace $L^p$ définie par $\|Z\|_p = (\mathbb{E}[|Z|^p])^{1/p}$.
+La variable aléatoire $X$ peut s'écrire artificiellement comme une somme télescopique :
+$$ X = (X - X_N) + X_N $$
+Prenons la norme $L^p$ de cette somme. L'inégalité de Minkowski, qui exprime la sous-additivité de la norme, affirme que :
+$$ \|X\|_p = \|(X - X_N) + X_N\|_p \le \|X - X_N\|_p + \|X_N\|_p $$
+Puisque la norme est symétrique (absolue), $\|X - X_N\|_p = \|X_N - X\|_p$.
+Par hypothèse, nous savons que $\|X_N - X\|_p < \infty$ puisque la limite tend vers 0.
+De plus, $X_N \in L^p$ garantit que $\|X_N\|_p < \infty$.
+La somme de deux nombres réels finis étant finie, nous en déduisons :
+$$ \|X\|_p < \infty $$
+L'élévation à la puissance $p$ conserve la finitude (puisque $p \ge 1$) :
+$$ \mathbb{E}[|X|^p] = (\|X\|_p)^p < \infty $$
+Nous avons ainsi démontré que l'espace vectoriel d'arrivée n'a pas été fracturé : la limite de la convergence en norme $L^p$ reste strictement emprisonnée dans la classe des fonctions $L^p$ intégrables.

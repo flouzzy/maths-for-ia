@@ -3,18 +3,22 @@
 **Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
 
 **Énoncé :**
-Soit $W_n$ distribuée uniformément sur $[-n, n]$. Considérons la suite normée $V_n = \frac{W_n}{n}$.
-Vers quelle loi la suite $V_n$ converge-t-elle ? Démontrez-le formellement à l'aide des fonctions de répartition.
+Convergence et transformée fonctionnelle continue
 
-**Correction :**
-Déterminons d'abord la loi de $V_n$. Pour tout $x \in [-1, 1]$, on a :
-$$ F_{V_n}(x) = \mathbb{P}(V_n \le x) = \mathbb{P}\left(\frac{W_n}{n} \le x\right) = \mathbb{P}(W_n \le nx) $$
-Puisque $W_n$ suit $\mathcal{U}([-n, n])$, sa densité est $\frac{1}{2n}$ sur cet intervalle.
-$$ \mathbb{P}(W_n \le nx) = \int_{-n}^{nx} \frac{1}{2n} dt = \frac{nx - (-n)}{2n} = \frac{n(x+1)}{2n} = \frac{x+1}{2} $$
-Ainsi, pour tout $x \in [-1, 1]$, $F_{V_n}(x) = \frac{x+1}{2}$, indépendamment de $n$.
-Pour $x < -1$, $F_{V_n}(x) = 0$, et pour $x > 1$, $F_{V_n}(x) = 1$.
+Soit $(X_n)$ convergeant en probabilité vers $X$. Soit $g : \mathbb{R} \to \mathbb{R}$ une fonction uniformément continue.
+Démontrez que $g(X_n)$ converge en probabilité vers $g(X)$. (Ce résultat s'étend aux fonctions continues par le théorème d'approximation sur les compacts).
 
-Puisque $F_{V_n}(x)$ est constante par rapport à $n$, la limite est exactement cette même fonction :
-$$ \lim_{n \to \infty} F_{V_n}(x) = \begin{cases} 0 & \text{si } x < -1 \\ \frac{x+1}{2} & \text{si } -1 \le x \le 1 \\ 1 & \text{si } x > 1 \end{cases} $$
-On reconnaît la fonction de répartition d'une variable aléatoire uniforme sur $[-1, 1]$.
-Ainsi, $V_n$ converge en loi vers $V \sim \mathcal{U}([-1, 1])$. En fait, toutes les $V_n$ ont exactement cette loi.
+**Correction exhaustive :**
+Puisque $g$ est uniformément continue, par définition, pour tout $\epsilon > 0$, il existe un $\delta > 0$ tel que pour tous $x, y \in \mathbb{R}$,
+$$ |x - y| < \delta \implies |g(x) - g(y)| < \epsilon $$
+Par contraposée de cette implication purement déterministe (logique propositionnelle), on obtient :
+$$ |g(x) - g(y)| \ge \epsilon \implies |x - y| \ge \delta $$
+En remplaçant $x$ par la variable aléatoire $X_n(\omega)$ et $y$ par $X(\omega)$, on obtient l'inclusion d'événements aléatoires suivante :
+$$ \{\omega \in \Omega \mid |g(X_n(\omega)) - g(X(\omega))| \ge \epsilon\} \subseteq \{\omega \in \Omega \mid |X_n(\omega) - X(\omega)| \ge \delta\} $$
+Puisque le premier événement est inclus dans le second, la croissance de la mesure de probabilité nous indique que :
+$$ \mathbb{P}(|g(X_n) - g(X)| \ge \epsilon) \le \mathbb{P}(|X_n - X| \ge \delta) $$
+Par hypothèse, $X_n$ converge en probabilité vers $X$. Donc, pour le réel fixé $\delta > 0$, nous avons :
+$$ \lim_{n \to \infty} \mathbb{P}(|X_n - X| \ge \delta) = 0 $$
+Le terme majorant tendant vers zéro, et les probabilités étant minorées par zéro, le théorème d'encadrement conclut formellement :
+$$ \lim_{n \to \infty} \mathbb{P}(|g(X_n) - g(X)| \ge \epsilon) = 0 $$
+Ceci constitue l'exacte définition de la convergence en probabilité de la suite $(g(X_n))$ vers la variable $g(X)$.
