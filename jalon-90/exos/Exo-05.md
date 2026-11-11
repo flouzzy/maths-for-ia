@@ -3,17 +3,29 @@
 **Difficulté :** $\bigstar\bigstar\bigstar\star\star$
 
 **Énoncé :**
-Soit $X_n$ distribuée selon une loi Normale $\mathcal{N}\left(0, \frac{1}{n}\right)$.
-Démontrez que $X_n$ converge en probabilité vers $0$ en utilisant l'inégalité de Bienaymé-Tchebychev.
+Convergence en loi (théorème de Slutsky partiel)
 
-**Correction :**
-L'espérance de $X_n$ est $\mathbb{E}[X_n] = 0$ et sa variance est $\text{Var}(X_n) = \frac{1}{n}$.
-Nous cherchons à évaluer $\mathbb{P}(|X_n - 0| > \epsilon)$ pour un $\epsilon > 0$ fixé.
-D'après l'inégalité de Bienaymé-Tchebychev, pour toute variable aléatoire $Y$ d'espérance $\mu$ et de variance $\sigma^2$ :
-$$ \mathbb{P}(|Y - \mu| \ge \epsilon) \le \frac{\sigma^2}{\epsilon^2} $$
-Appliquée à $X_n$ :
-$$ \mathbb{P}(|X_n| \ge \epsilon) \le \frac{1/n}{\epsilon^2} = \frac{1}{n\epsilon^2} $$
-En passant à la limite quand $n \to \infty$, pour tout $\epsilon > 0$ fixe :
-$$ \lim_{n \to \infty} \frac{1}{n\epsilon^2} = 0 $$
-Ainsi, $\lim_{n \to \infty} \mathbb{P}(|X_n| \ge \epsilon) = 0$.
-La suite converge bien en probabilité vers $0$.
+Soient $(X_n)$ et $(Y_n)$ deux suites de variables aléatoires.
+On suppose que $X_n$ converge en loi vers $X$, et que $Y_n$ converge en probabilité vers la variable certaine $c$ ($c \in \mathbb{R}$).
+Montrez que la suite $X_n + Y_n$ converge en loi vers $X + c$.
+
+**Correction exhaustive :**
+Pour prouver que $X_n + Y_n \xrightarrow{\mathcal{L}} X + c$, nous allons utiliser la caractérisation par l'espérance des fonctions continues bornées. Soit $f : \mathbb{R} \to \mathbb{R}$ uniformément continue et bornée. Soit $M > 0$ la borne telle que $|f(x)| \le M$ pour tout $x$.
+Puisque $f$ est uniformément continue, pour tout $\eta > 0$, il existe $\delta > 0$ tel que pour tous $x, y \in \mathbb{R}$, $|x - y| < \delta \implies |f(x) - f(y)| < \eta$.
+Nous voulons montrer que $\lim_{n \to \infty} \mathbb{E}[f(X_n + Y_n)] = \mathbb{E}[f(X + c)]$.
+Décomposons la différence :
+$$ |\mathbb{E}[f(X_n + Y_n)] - \mathbb{E}[f(X + c)]| \le |\mathbb{E}[f(X_n + Y_n)] - \mathbb{E}[f(X_n + c)]| + |\mathbb{E}[f(X_n + c)] - \mathbb{E}[f(X + c)]| $$
+Traitons le second terme : soit $g(x) = f(x + c)$. La fonction $g$ est également continue et bornée. Puisque $X_n \xrightarrow{\mathcal{L}} X$, par définition de la convergence en loi, on a :
+$$ \lim_{n \to \infty} \mathbb{E}[g(X_n)] = \mathbb{E}[g(X)] \implies \lim_{n \to \infty} |\mathbb{E}[f(X_n + c)] - \mathbb{E}[f(X + c)]| = 0 $$
+Traitons le premier terme : nous majorons $|f(X_n + Y_n) - f(X_n + c)|$.
+L'écart dans l'argument est $|(X_n + Y_n) - (X_n + c)| = |Y_n - c|$.
+Introduisons l'événement $A_n = \{|Y_n - c| \ge \delta\}$.
+$$ \mathbb{E}[|f(X_n + Y_n) - f(X_n + c)|] = \mathbb{E}[|f(X_n + Y_n) - f(X_n + c)| \mathbf{1}_{A_n}] + \mathbb{E}[|f(X_n + Y_n) - f(X_n + c)| \mathbf{1}_{A_n^c}] $$
+Sur l'événement $A_n$, on majore l'écart par $2M$. Donc l'espérance est majorée par $2M \cdot \mathbb{P}(A_n)$.
+Sur l'événement complémentaire $A_n^c$, on a $|Y_n - c| < \delta$. Par uniforme continuité de $f$, $|f(X_n + Y_n) - f(X_n + c)| < \eta$. L'espérance est donc majorée par $\eta$.
+Ainsi :
+$$ \mathbb{E}[|f(X_n + Y_n) - f(X_n + c)|] \le 2M \cdot \mathbb{P}(|Y_n - c| \ge \delta) + \eta $$
+Puisque $Y_n \xrightarrow{\mathbb{P}} c$, pour ce $\delta > 0$ fixé, la probabilité $\mathbb{P}(|Y_n - c| \ge \delta)$ tend vers 0 lorsque $n \to \infty$.
+La limite de l'écart est donc inférieure ou égale à $\eta$.
+Comme $\eta$ a été choisi arbitrairement petit, la limite de ce terme est nulle.
+En sommant les deux limites nulles, on obtient la convergence désirée. (Le résultat se généralise pour $f$ continue bornée grâce au théorème de Portmanteau partiel).

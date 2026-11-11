@@ -102,7 +102,7 @@ Bienvenue dans votre plan de formation global. Cochez les jalons au fur et à me
 - [x] [[jalon-87/Jalon-87.md|Jalon 87 : Intégration et Espérance mathématique]] : Intégration des variables aléatoires, espérance, variance et moments d'ordre supérieur. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-88/Jalon-88.md|Jalon 88 : Indépendance d'événements]] : Indépendance d'événements, de tribus et de variables aléatoires. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [x] [[jalon-89/Jalon-89.md|Jalon 89 : Lemmes de Borel-Cantelli]] : Lemmes de Borel-Cantelli (lois du tout ou rien) et applications aux comportements asymptotiques. 🔥 **Enrichi** *(10 Exos + 5 TP)*
-- [ ] [[jalon-90/Jalon 90 (Les modes de convergence).md|Jalon 90 : Les modes de convergence]] : Les modes de convergence : presque sûre, en probabilité, dans $L^p$ et en loi (convergence étroite des mesures).
+- [x] [[jalon-90/Jalon-90.md|Jalon 90 : Les modes de convergence]] : Les modes de convergence : presque sûre, en probabilité, dans $L^p$ et en loi (convergence étroite des mesures). 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [ ] [[jalon-91/Jalon 91 (Inégalités de concentration).md|Jalon 91 : Inégalités de concentration]] : Inégalités de concentration : Markov, Chebyshev, Bienaymé, Chernoff et lemme de Hoeffding.
 - [ ] [[jalon-92/Jalon 92 (Démonstration rigoureuse de la loi forte des grands nombres.).md|Jalon 92 : Démonstration rigoureuse de la loi forte des grands nombres.]] : Démonstration rigoureuse de la loi forte des grands nombres.
 - [ ] [[jalon-93/Jalon 93 (Fonctions caractéristiques).md|Jalon 93 : Fonctions caractéristiques]] : Fonctions caractéristiques (transformée de Fourier de la loi) et théorème de continuité de Lévy.

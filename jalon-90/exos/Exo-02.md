@@ -3,14 +3,22 @@
 **Difficulté :** $\bigstar\star\star\star\star$
 
 **Énoncé :**
-Soit $X_n$ une suite de variables aléatoires suivant une loi uniforme discrète sur $\{1, 2, \dots, n\}$.
-Montrez que $X_n/n$ ne converge pas en probabilité vers $0$.
+Non-convergence dans L1 avec convergence p.s.
 
-**Correction :**
-Soit $\epsilon = \frac{1}{2}$. On cherche la probabilité que $|X_n/n - 0| > \frac{1}{2}$.
-$$ \mathbb{P}\left(\frac{X_n}{n} > \frac{1}{2}\right) = \mathbb{P}\left(X_n > \frac{n}{2}\right) $$
-Puisque $X_n$ est uniforme sur $\{1, \dots, n\}$, il y a $\lfloor n/2 \rfloor$ entiers strictement supérieurs à $n/2$ dans cet ensemble (ou $\lceil n/2 \rceil$ selon la parité, dans tous les cas, environ la moitié).
-$$ \mathbb{P}\left(X_n > \frac{n}{2}\right) \approx \frac{1}{2} $$
-En passant à la limite :
-$$ \lim_{n \to \infty} \mathbb{P}\left(\left| \frac{X_n}{n} \right| > \frac{1}{2}\right) = \frac{1}{2} \neq 0 $$
-Par conséquent, $X_n/n$ ne converge pas en probabilité vers $0$.
+Construisez explicitement une suite de variables aléatoires $(X_n)_{n \in \mathbb{N}^*}$ qui converge presque sûrement vers $0$, mais qui diverge vers $+\infty$ dans $L^1$.
+
+**Correction exhaustive :**
+Considérons l'espace probabilisé usuel $(\Omega, \mathcal{F}, \mathbb{P}) = ([0, 1], \mathcal{B}([0, 1]), \lambda)$ où $\lambda$ est la mesure de Lebesgue.
+Définissons la variable aléatoire $X_n : \Omega \to \mathbb{R}$ par :
+$$ X_n(\omega) = n^2 \mathbf{1}_{\left[0, \frac{1}{n}\right]}(\omega) $$
+Étudions la convergence presque sûre :
+Fixons $\omega \in ]0, 1]$. Par la propriété d'Archimède, il existe un entier $N \ge 1$ tel que $\frac{1}{N} < \omega$.
+Pour tout $n \ge N$, $\omega \notin \left[0, \frac{1}{n}\right]$, ce qui implique $X_n(\omega) = 0$.
+Par conséquent, $\lim_{n \to \infty} X_n(\omega) = 0$ pour tout $\omega \in ]0, 1]$.
+L'événement sur lequel la convergence n'a pas lieu est contenu dans $\{0\}$, qui est de mesure de Lebesgue nulle ($\lambda(\{0\}) = 0$).
+Ainsi, $X_n \xrightarrow{p.s.} 0$.
+
+Calculons l'espérance de $X_n$ (norme $L^1$) :
+$$ \mathbb{E}[|X_n|] = \int_0^1 n^2 \mathbf{1}_{\left[0, \frac{1}{n}\right]}(\omega) \, d\lambda(\omega) = n^2 \cdot \lambda\left(\left[0, \frac{1}{n}\right]\right) = n^2 \cdot \frac{1}{n} = n $$
+Lorsque $n \to \infty$, $\mathbb{E}[|X_n|] = n \to +\infty$.
+La suite diverge donc grossièrement dans $L^1$, bien qu'elle s'écrase presque partout. Ceci illustre la rupture de l'uniforme intégrabilité.
