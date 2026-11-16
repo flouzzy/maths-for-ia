@@ -1,34 +1,24 @@
-# Exercice 04
+# Exercice 4 : Convergence en probabilité sans convergence p.s.
 
-**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
+Niveau : $\bigstar\bigstar\bigstar\star\star$
 
-**Énoncé :**
-Soit $(X_n)_{n \ge 1}$ une suite de variables aléatoires telles que $\mathbb{E}[X_n] = \mu$ et $\text{Var}(X_n) = \sigma_n^2$.
-Démontrez que si $\lim_{n \to \infty} \sigma_n^2 = 0$, alors la suite $X_n$ converge en probabilité vers la constante $\mu$.
+Sur $\Omega = [0, 1]$ muni de la mesure de Lebesgue et de la tribu borélienne, on définit une suite $(X_n)$ d'indicatrices d'intervalles $A_n$ de longueurs $\frac{1}{n}$. On pose $X_n = \mathbb{1}_{A_n}$ où la suite $(A_n)$ ne tend pas vers l'ensemble vide mais passe indéfiniment sur tout $[0, 1]$.
+Concrètement, soit $A_1 = [0, 1]$, $A_2 = [0, \frac{1}{2}]$, $A_3 = [\frac{1}{2}, 1]$, $A_4 = [0, \frac{1}{3}], \dots$
+Montrer que $X_n \xrightarrow{\mathbb{P}} 0$ mais que $X_n$ ne converge presque sûrement pour aucun point de $[0, 1]$.
 
-**Correction :**
+## Correction
 
-Nous devons démontrer que pour tout réel $\varepsilon > 0$, la limite de la probabilité que $X_n$ dévie de $\mu$ de plus de $\varepsilon$ est nulle.
-Le lien fondamental entre l'écart à la moyenne (ici le paramètre de notre convergence) et la variance est fourni par l'inégalité de Bienaymé-Chebyshev.
+**1. Convergence en probabilité :**
+Soit $\varepsilon \in ]0, 1[$. On a $\mathbb{P}(|X_n - 0| > \varepsilon) = \mathbb{P}(X_n = 1) = \mathbb{P}(A_n)$.
+Par construction, pour un entier $n$ appartenant au "bloc" de division en $k$ parties, la longueur de l'intervalle $A_n$ est $\frac{1}{k}$.
+Plus précisément, si $n$ est grand, $k$ est grand, donc $\mathbb{P}(A_n) \to 0$ lorsque $n \to +\infty$.
+Ainsi, $\lim_{n \to +\infty} \mathbb{P}(|X_n - 0| > \varepsilon) = 0$, d'où $X_n \xrightarrow{\mathbb{P}} 0$.
 
-**Démonstration étape par étape :**
-
-1. Fixons un écart $\varepsilon > 0$ arbitraire.
-2. La variable aléatoire $X_n$ admet une variance finie $\sigma_n^2$, ce qui implique qu'elle est de carré intégrable. Nous pouvons donc appliquer l'inégalité de Bienaymé-Chebyshev directement à $X_n$.
-Cette inégalité stipule que pour toute variable aléatoire $X$ d'espérance finie et de variance finie, et pour tout $a > 0$ :
-$$ \mathbb{P}(|X - \mathbb{E}[X]| \ge a) \le \frac{\text{Var}(X)}{a^2} $$
-3. En instanciant cette inégalité avec notre variable $X_n$, son espérance $\mu$ et notre seuil $\varepsilon$, nous obtenons la majoration fondamentale :
-$$ \mathbb{P}(|X_n - \mu| \ge \varepsilon) \le \frac{\text{Var}(X_n)}{\varepsilon^2} $$
-Substituons l'expression de la variance donnée dans l'énoncé :
-$$ \mathbb{P}(|X_n - \mu| \ge \varepsilon) \le \frac{\sigma_n^2}{\varepsilon^2} $$
-4. Les probabilités étant des quantités positives ou nulles, nous avons l'encadrement complet :
-$$ 0 \le \mathbb{P}(|X_n - \mu| \ge \varepsilon) \le \frac{\sigma_n^2}{\varepsilon^2} $$
-5. Passons maintenant à la limite lorsque $n \to \infty$. Par hypothèse de l'énoncé, la suite des variances tend vers zéro : $\lim_{n \to \infty} \sigma_n^2 = 0$.
-Puisque $\varepsilon$ est une constante fixée (indépendante de $n$), le terme de droite tend vers zéro :
-$$ \lim_{n \to \infty} \frac{\sigma_n^2}{\varepsilon^2} = \frac{0}{\varepsilon^2} = 0 $$
-6. Par application rigoureuse du théorème d'encadrement (ou théorème des gendarmes) sur les suites réelles, le terme central est forcé de converger vers zéro :
-$$ \lim_{n \to \infty} \mathbb{P}(|X_n - \mu| \ge \varepsilon) = 0 $$
-
-Ceci constitue très exactement la définition de la convergence en probabilité. Nous concluons donc formellement que :
-$$ X_n \xrightarrow{\mathbb{P}} \mu $$
-Cet exercice constitue une brique essentielle pour la démonstration classique de la loi faible des grands nombres.
+**2. Non-convergence presque sûre :**
+Soit $\omega \in [0, 1]$. Par construction, la suite $(A_n)$ balaie indéfiniment l'intervalle $[0, 1]$.
+Par conséquent, $\omega$ appartient à une infinité d'intervalles $A_n$. Pour cette sous-suite d'indices, $X_n(\omega) = 1$.
+D'autre part, $\omega$ n'appartient pas à une infinité d'autres intervalles $A_n$ (car la longueur tend vers 0). Pour cette autre sous-suite, $X_n(\omega) = 0$.
+La suite $(X_n(\omega))$ alterne donc une infinité de fois entre 0 et 1.
+Elle ne converge donc vers aucune limite pour *aucun* $\omega \in [0, 1]$.
+Ainsi, l'ensemble des $\omega$ où $X_n(\omega)$ converge est l'ensemble vide, dont la probabilité est 0, et non 1.
+Ceci démontre que la convergence en probabilité n'implique pas la convergence presque sûre en général.

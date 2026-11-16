@@ -1,30 +1,26 @@
-# Exercice 02
+# Exercice 2 : Inégalité de Markov et $L^p$
 
-**Difficulté :** $\bigstar\bigstar\star\star\star$
+Niveau : $\bigstar\bigstar\star\star\star$
 
-**Énoncé :**
-On considère une suite de variables aléatoires $(X_n)_{n \ge 1}$ telles que pour chaque $n \ge 1$, $X_n$ suit une loi uniforme sur l'intervalle $[0, \frac{1}{n}]$.
-Démontrez de manière exhaustive que $X_n$ converge presque sûrement (p.s.) vers $0$.
+Soit $X \sim \mathcal{N}(0, 1)$ et définissons $X_n = \frac{X}{n}$.
+Montrer que $X_n \xrightarrow{L^2} 0$ puis en déduire sans calcul direct que $X_n \xrightarrow{\mathbb{P}} 0$.
 
-**Correction :**
+## Correction
 
-Nous devons démontrer que $X_n \xrightarrow{p.s.} 0$, ce qui signifie que l'événement $\{\omega \in \Omega \mid \lim_{n \to \infty} X_n(\omega) = 0\}$ possède une probabilité égale à $1$.
-Pour ce faire, nous allons utiliser le fait que la convergence presque sûre est assurée si pour tout $\varepsilon > 0$, la série des probabilités des écarts est convergente (corollaire du lemme de Borel-Cantelli). Cependant, vu la nature très simple de la loi, une approche directe par encadrement est plus élégante et fondamentale.
+**1. Convergence dans $L^2$ :**
+On calcule $\mathbb{E}[|X_n - 0|^2] = \mathbb{E}\left[\left(\frac{X}{n}\right)^2\right] = \frac{1}{n^2} \mathbb{E}[X^2]$.
+Puisque $X$ suit une loi normale centrée réduite, sa variance est $\text{Var}(X) = 1$, et comme $\mathbb{E}[X] = 0$, on a $\mathbb{E}[X^2] = \text{Var}(X) + \mathbb{E}[X]^2 = 1$.
+Donc $\mathbb{E}[|X_n - 0|^2] = \frac{1}{n^2}$.
+En passant à la limite : $\lim_{n \to +\infty} \mathbb{E}[|X_n - 0|^2] = \lim_{n \to +\infty} \frac{1}{n^2} = 0$.
+Par définition, on a bien $X_n \xrightarrow{L^2} 0$.
 
-Rappelons la définition de la loi uniforme : la variable $X_n$ prend ses valeurs exclusivement dans l'intervalle $[0, \frac{1}{n}]$.
-Ceci signifie que l'événement $\{ 0 \le X_n \le \frac{1}{n} \}$ est l'événement certain (probabilité $1$).
-Formellement, il existe un ensemble $A_n \in \mathcal{F}$ avec $\mathbb{P}(A_n) = 1$ tel que pour tout $\omega \in A_n$, $0 \le X_n(\omega) \le \frac{1}{n}$.
-
-Considérons l'intersection dénombrable de ces ensembles de mesure pleine : $A = \bigcap_{n=1}^\infty A_n$.
-D'après les propriétés fondamentales des mesures de probabilité (continuité par intersection décroissante ou simple calcul sur les complémentaires), l'intersection dénombrable d'ensembles de probabilité $1$ est un ensemble de probabilité $1$.
-En effet, $\mathbb{P}(A^c) = \mathbb{P}(\bigcup A_n^c) \le \sum \mathbb{P}(A_n^c) = \sum 0 = 0$, d'où $\mathbb{P}(A) = 1$.
-
-Soit $\omega$ une réalisation arbitraire appartenant à cet ensemble $A$ de mesure pleine.
-Par définition de $A$, pour tout entier $n \ge 1$, la réalisation $X_n(\omega)$ vérifie l'inégalité stricte :
-$$ 0 \le X_n(\omega) \le \frac{1}{n} $$
-Nous sommes maintenant face à une simple suite déterministe de nombres réels. Appliquons le théorème des gendarmes (ou théorème d'encadrement) de l'analyse réelle classique :
-Puisque $\lim_{n \to \infty} 0 = 0$ et $\lim_{n \to \infty} \frac{1}{n} = 0$, il s'ensuit nécessairement que la suite $(X_n(\omega))_{n \ge 1}$ converge vers $0$.
-
-Ceci étant vrai pour tout $\omega \in A$, et sachant que $\mathbb{P}(A) = 1$, nous avons rigoureusement prouvé que :
-$$ \mathbb{P}\left(\left\{ \omega \in \Omega \mathrel{\Big|} \lim_{n \to \infty} X_n(\omega) = 0 \right\}\right) = 1 $$
-La suite $(X_n)$ converge bien presque sûrement vers la constante $0$.
+**2. Déduction pour la convergence en probabilité :**
+Soit $\varepsilon > 0$. D'après l'inégalité de Markov appliquée à la variable aléatoire positive $|X_n - 0|^2$, on a :
+$$\mathbb{P}(|X_n - 0| > \varepsilon) = \mathbb{P}(|X_n - 0|^2 > \varepsilon^2) \le \frac{\mathbb{E}[|X_n - 0|^2]}{\varepsilon^2}$$
+D'après la question 1, on sait que $\mathbb{E}[|X_n - 0|^2] = \frac{1}{n^2}$.
+On obtient donc :
+$$\mathbb{P}(|X_n - 0| > \varepsilon) \le \frac{1}{n^2 \varepsilon^2}$$
+Comme $\varepsilon$ est fixé, $\lim_{n \to +\infty} \frac{1}{n^2 \varepsilon^2} = 0$.
+Par le théorème des gendarmes (puisque la probabilité est minorée par 0), on a :
+$$\lim_{n \to +\infty} \mathbb{P}(|X_n - 0| > \varepsilon) = 0$$
+Donc $X_n \xrightarrow{\mathbb{P}} 0$.

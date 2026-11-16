@@ -1,39 +1,24 @@
-# Exercice 06
+# Exercice 6 : Convergence p.s. et lemme de Borel-Cantelli
 
-**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
+Niveau : $\bigstar\bigstar\bigstar\bigstar\star$
 
-**Énoncé :**
-Montrez rigoureusement que si une suite $(X_n)$ converge en probabilité vers une variable $X$, et qu'une fonction $g : \mathbb{R} \to \mathbb{R}$ est uniformément continue, alors la suite des variables transformées $g(X_n)$ converge en probabilité vers $g(X)$.
+Soit $(X_n)_{n \in \mathbb{N}}$ une suite de variables aléatoires indépendantes suivant la loi de Bernoulli de paramètre $p_n = \frac{1}{n^2}$ pour $n \ge 1$.
+Montrer en utilisant le lemme de Borel-Cantelli que $X_n \xrightarrow{\text{p.s.}} 0$.
 
-**Correction :**
+## Correction
 
-Nous devons démontrer que pour tout $\varepsilon > 0$, la limite lorsque $n \to \infty$ de $\mathbb{P}(|g(X_n) - g(X)| \ge \varepsilon)$ est nulle.
-Exploitons la continuité uniforme de $g$.
-Par définition de l'uniforme continuité sur $\mathbb{R}$ : pour tout $\varepsilon > 0$, il existe un $\delta > 0$ tel que pour tout $(x, y) \in \mathbb{R}^2$, la condition $|x - y| < \delta$ implique l'inégalité stricte $|g(x) - g(y)| < \varepsilon$.
-
-Prenons la contraposée logique de cette implication fondamentale.
-Si l'écart sur les images est supérieur ou égal au seuil, c'est que l'écart sur les antécédents l'était initialement. Formellement :
-$$ |g(x) - g(y)| \ge \varepsilon \implies |x - y| \ge \delta $$
-
-Substituons nos variables aléatoires dans cette relation déterministe.
-Pour chaque issue $\omega \in \Omega$, l'implication reste vraie ponctuellement :
-$$ |g(X_n(\omega)) - g(X(\omega))| \ge \varepsilon \implies |X_n(\omega) - X(\omega)| \ge \delta $$
-En termes de théorie des ensembles, cette implication logique se traduit par une inclusion d'événements probabilistes :
-$$ \left\{ \omega \in \Omega \mid |g(X_n(\omega)) - g(X(\omega))| \ge \varepsilon \right\} \subseteq \left\{ \omega \in \Omega \mid |X_n(\omega) - X(\omega)| \ge \delta \right\} $$
-
-Par la propriété de monotonie (croissance) des mesures de probabilité, l'inclusion des événements implique l'inégalité des probabilités associées :
-$$ \mathbb{P}\left( |g(X_n) - g(X)| \ge \varepsilon \right) \le \mathbb{P}\left( |X_n - X| \ge \delta \right) $$
-
-Puisque $\mathbb{P}$ est une mesure positive, nous encadrons :
-$$ 0 \le \mathbb{P}\left( |g(X_n) - g(X)| \ge \varepsilon \right) \le \mathbb{P}\left( |X_n - X| \ge \delta \right) $$
-
-Maintenant, appliquons l'hypothèse de convergence en probabilité de la suite $(X_n)$.
-Par définition, pour notre $\delta > 0$ fraîchement construit (qui est une constante strictement positive), nous savons que :
-$$ \lim_{n \to \infty} \mathbb{P}\left( |X_n - X| \ge \delta \right) = 0 $$
-
-Le majorant de notre inégalité tendant vers zéro, le théorème d'encadrement force la limite du minorant à s'annuler également :
-$$ \lim_{n \to \infty} \mathbb{P}\left( |g(X_n) - g(X)| \ge \varepsilon \right) = 0 $$
-
-Ceci prouve formellement la convergence en probabilité :
-$$ g(X_n) \xrightarrow{\mathbb{P}} g(X) $$
-Ce résultat (Théorème de l'application continue, cas uniformément continu) est d'une grande puissance calculatoire en statistique asymptotique.
+Pour montrer que $X_n \xrightarrow{\text{p.s.}} 0$, on fixe un $\varepsilon > 0$.
+Il s'agit de prouver que la probabilité que l'événement $A_n = \{ |X_n - 0| > \varepsilon \}$ se réalise une infinité de fois est nulle.
+Comme $X_n \in \{0, 1\}$, si l'on prend $\varepsilon \in ]0, 1[$, l'événement $A_n$ équivaut à $\{X_n = 1\}$.
+Évaluons la probabilité de $A_n$ :
+$$\mathbb{P}(A_n) = \mathbb{P}(X_n = 1) = p_n = \frac{1}{n^2}$$
+Considérons la série de terme général $\mathbb{P}(A_n)$ :
+$$\sum_{n=1}^{+\infty} \mathbb{P}(A_n) = \sum_{n=1}^{+\infty} \frac{1}{n^2}$$
+Il s'agit d'une série de Riemann convergente (exposant $2 > 1$).
+Donc $\sum \mathbb{P}(A_n) < +\infty$.
+D'après le premier lemme de Borel-Cantelli, si la série des probabilités converge, alors la probabilité que la limite supérieure des $A_n$ (le fait qu'une infinité de $A_n$ se réalisent) est nulle :
+$$\mathbb{P}(\limsup_{n \to \infty} A_n) = 0$$
+Cela signifie que presque sûrement, l'événement $\{X_n = 1\}$ ne se produit qu'un nombre fini de fois.
+Donc, presque sûrement, il existe un rang $N$ à partir duquel $X_n = 0$.
+Ainsi, la suite $(X_n(\omega))$ est stationnaire en $0$ à partir d'un certain rang, presque sûrement.
+On en conclut que $X_n \xrightarrow{\text{p.s.}} 0$.

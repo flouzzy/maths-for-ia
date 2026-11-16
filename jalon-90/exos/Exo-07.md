@@ -1,45 +1,28 @@
-# Exercice 07
+# Exercice 7 : Théorème de Slutsky
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
+Niveau : $\bigstar\bigstar\bigstar\bigstar\star$
 
-**Énoncé :**
-Soit la suite $(X_n)$ définie par la "machine à écrire". On partitionne l'intervalle $\Omega = [0, 1]$ muni de la mesure de Lebesgue en dyadiques.
-Pour $n \ge 1$, écrivons $n = 2^k + m$ où $k \ge 0$ et $0 \le m < 2^k$.
-On définit $X_n$ comme la fonction indicatrice de l'intervalle $I_{k, m} = [\frac{m}{2^k}, \frac{m+1}{2^k}]$.
-Prouvez de manière exhaustive que cette suite converge en probabilité, dans tous les espaces $L^p$ pour $p \ge 1$, mais **ne converge presque sûrement en aucun point**.
+Soit $(X_n)$ une suite de v.a. convergeant en loi vers une v.a. $X$ de loi continue, et $(Y_n)$ une suite convergeant en probabilité vers une constante $c$.
+Le théorème de Slutsky affirme que $X_n + Y_n \xrightarrow{\mathcal{L}} X + c$ et $X_n Y_n \xrightarrow{\mathcal{L}} cX$.
+Appliquer ce théorème : soit $Z_1, \dots, Z_n$ i.i.d. de moyenne $\mu$ et variance $\sigma^2 > 0$. Notons $\bar{Z}_n = \frac{1}{n} \sum Z_i$ et $S_n^2$ l'estimateur sans biais de la variance (qui converge p.s. vers $\sigma^2$).
+Montrer que $U_n = \frac{\sqrt{n}(\bar{Z}_n - \mu)}{S_n} \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$.
 
-**Correction :**
+## Correction
 
-**1. Convergence en probabilité :**
-Soit un seuil $\varepsilon \in ]0, 1[$. (Si $\varepsilon \ge 1$, l'événement est vide car $X_n \in \{0, 1\}$).
-Évaluons la probabilité de l'événement déviant : $\mathbb{P}(|X_n - 0| > \varepsilon) = \mathbb{P}(X_n = 1)$.
-La variable $X_n$ vaut $1$ exclusivement sur l'intervalle $I_{k, m}$. Sa probabilité correspond donc à la longueur de cet intervalle.
-$$ \mathbb{P}(X_n = 1) = \lambda\left( \left[\frac{m}{2^k}, \frac{m+1}{2^k}\right] \right) = \frac{1}{2^k} $$
-Lorsque $n$ tend vers l'infini, la puissance de 2 qui l'encadre inférieurement, $2^k$, tend inévitablement vers l'infini. Donc $k \to \infty$.
-Ainsi, $\lim_{n \to \infty} \mathbb{P}(|X_n| > \varepsilon) = \lim_{k \to \infty} \frac{1}{2^k} = 0$.
-La suite converge bien en probabilité vers $0$.
+**1. Convergence au numérateur (TCL) :**
+D'après le Théorème Central Limite (TCL), puisque les $Z_i$ sont i.i.d. avec une variance finie $\sigma^2$, on a :
+$$V_n = \frac{\sqrt{n}(\bar{Z}_n - \mu)}{\sigma} \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$$
 
-**2. Convergence dans $L^p$ :**
-Soit $p \ge 1$. Calculons la norme $L^p$ de la différence :
-$$ \mathbb{E}[|X_n - 0|^p] = \int_{\Omega} |X_n(\omega)|^p \, d\mathbb{P}(\omega) $$
-Puisque $X_n$ prend ses valeurs dans $\{0, 1\}$, l'opération d'élévation à la puissance $p$ laisse ses valeurs invariantes : $|X_n|^p = X_n$.
-L'espérance se réduit à nouveau à la probabilité de l'événement support :
-$$ \mathbb{E}[|X_n|^p] = \mathbb{E}[X_n] = \mathbb{P}(X_n = 1) = \frac{1}{2^k} $$
-La limite de cette quantité est $0$. Donc la suite converge vers $0$ dans tous les espaces $L^p$.
+**2. Convergence au dénominateur :**
+On sait par la loi forte des grands nombres (et le fait que $S_n^2$ est consistant) que $S_n^2 \xrightarrow{\text{p.s.}} \sigma^2$.
+Puisque la convergence presque sûre implique la convergence en probabilité, $S_n^2 \xrightarrow{\mathbb{P}} \sigma^2$.
+La fonction racine carrée $x \mapsto \sqrt{x}$ étant continue sur $]0, +\infty[$, par le théorème de continuité (Continuous Mapping Theorem), on a $S_n \xrightarrow{\mathbb{P}} \sigma$.
+Et, comme $\sigma \neq 0$, par continuité de l'inverse, $\frac{\sigma}{S_n} \xrightarrow{\mathbb{P}} 1$.
 
-**3. Absence absolue de convergence presque sûre :**
-Pour démontrer l'absence de convergence ponctuelle, fixons un $\omega \in [0, 1]$ arbitraire.
-Pour tout niveau de subdivision dyadique $k \ge 0$, les intervalles $(I_{k, m})_{m=0}^{2^k-1}$ forment une partition complète (aux bornes près, de mesure nulle) du segment $[0, 1]$.
-Par conséquent, pour chaque entier $k$, il existe un unique indice $m_k$ tel que $\omega \in I_{k, m_k}$.
-Soit la sous-suite d'indices définie par $n_k = 2^k + m_k$. Pour ces indices spécifiques, la fonction valant 1 sur cet intervalle est "activée" au point $\omega$.
-Ainsi, pour tout $k$, $X_{n_k}(\omega) = 1$.
-Il en découle trivialement que la limite supérieure de la suite évaluée en $\omega$ vaut :
-$$ \limsup_{n \to \infty} X_n(\omega) = 1 $$
-
-À l'inverse, considérons la sous-suite d'indices obtenue en sélectionnant l'intervalle *opposé* au point $\omega$ dans la partition. Il existe d'autres indices $m'_k \neq m_k$ tels que $\omega \notin I_{k, m'_k}$.
-Pour ces indices $n'_k = 2^k + m'_k$, nous aurons inévitablement $X_{n'_k}(\omega) = 0$.
-La limite inférieure vaut donc :
-$$ \liminf_{n \to \infty} X_n(\omega) = 0 $$
-
-Puisque la limite supérieure ($1$) diffère strictement de la limite inférieure ($0$), la suite ponctuelle $(X_n(\omega))$ oscille indéfiniment et ne converge pas.
-Ceci étant vrai pour tout $\omega \in [0, 1]$, l'ensemble des points de convergence est vide. L'événement de convergence a une probabilité de $0$. La suite ne converge donc pas presque sûrement.
+**3. Application de Slutsky :**
+On peut réécrire $U_n$ comme :
+$$U_n = \frac{\sqrt{n}(\bar{Z}_n - \mu)}{S_n} = \frac{\sqrt{n}(\bar{Z}_n - \mu)}{\sigma} \times \frac{\sigma}{S_n} = V_n \times W_n$$
+où $V_n \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$ et $W_n \xrightarrow{\mathbb{P}} 1$ (une constante).
+D'après le lemme de Slutsky concernant le produit, on a :
+$$V_n W_n \xrightarrow{\mathcal{L}} 1 \times \mathcal{N}(0, 1) = \mathcal{N}(0, 1)$$
+Ainsi, on a démontré rigoureusement que $U_n \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$. Ceci justifie l'utilisation des tests de Student asymptotiques avec écart-type empirique.

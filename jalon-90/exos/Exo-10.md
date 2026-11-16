@@ -1,61 +1,39 @@
-# Exercice 10
+# Exercice 10 : Convergence en loi d'un maximum (Loi de Gumbel)
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
+Niveau : $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :**
-Théorème de Slutsky (Cas Particulier par l'analyse).
-Soient deux suites de variables aléatoires $(X_n)$ et $(Y_n)$ définies sur le même espace probabilisé.
-On suppose que $X_n \xrightarrow{\mathcal{L}} X$ (convergence en loi) et $Y_n \xrightarrow{\mathbb{P}} c$ (convergence en probabilité vers une constante stricte $c$).
-Démontrez de manière totalement rigoureuse, en utilisant l'espérance des fonctions continues et bornées, que la somme $(X_n + Y_n)$ converge en loi vers $(X + c)$.
+Soient $U_1, \dots, U_n$ des variables aléatoires i.i.d. de loi exponentielle $\mathcal{E}(1)$.
+Posons $M_n = \max(U_1, \dots, U_n)$.
+On sait que la loi exponentielle est non bornée, donc $M_n \to +\infty$ p.s.
+Cherchons une normalisation. Posons $Y_n = M_n - \ln(n)$.
+Montrer que $(Y_n)$ converge en loi vers une variable aléatoire dont on donnera la fonction de répartition. (C'est la distribution de Gumbel, fondamentale en théorie des valeurs extrêmes).
 
-**Correction :**
+## Correction
 
-La définition analytique de la convergence en loi (Portmanteau) stipule que pour toute fonction $f : \mathbb{R} \to \mathbb{R}$ continue et bornée, l'espérance de l'image de la suite converge vers l'espérance de l'image de la limite.
-Nous devons donc montrer l'objectif suivant :
-$$ \lim_{n \to \infty} \mathbb{E}[f(X_n + Y_n)] = \mathbb{E}[f(X + c)] $$
-Soit $f$ une fonction continue et bornée. Notons $M = \sup_{x \in \mathbb{R}} |f(x)|$.
-Pour des raisons techniques de contrôle, supposer $f$ uniformément continue simplifie drastiquement la preuve. L'extension à toute fonction continue bornée se fait ensuite par densité ou par restriction aux compacts (tension des mesures). Adoptons l'hypothèse d'uniforme continuité.
+**1. Fonction de répartition de $M_n$ :**
+Pour un réel $x$, $M_n \le x$ si et seulement si pour tout $i \in \{1, \dots, n\}$, $U_i \le x$.
+Comme les $U_i$ sont indépendantes, la probabilité de l'intersection est le produit des probabilités :
+$$\mathbb{P}(M_n \le x) = \mathbb{P}(U_1 \le x, \dots, U_n \le x) = \prod_{i=1}^n \mathbb{P}(U_i \le x) = (\mathbb{P}(U_1 \le x))^n$$
+La loi exponentielle de paramètre 1 a pour fonction de répartition :
+$F_U(x) = 1 - e^{-x}$ si $x \ge 0$, et $0$ sinon.
+Ainsi, pour $x \ge 0$, $F_{M_n}(x) = (1 - e^{-x})^n$.
 
-**1. Stratégie de décomposition par inégalité triangulaire :**
-Évaluons l'écart absolu entre les espérances. Nous introduisons le terme relais croisé $\mathbb{E}[f(X_n + c)]$ via l'inégalité triangulaire :
-$$ \left| \mathbb{E}[f(X_n + Y_n)] - \mathbb{E}[f(X + c)] \right| = \left| \mathbb{E}[f(X_n + Y_n)] - \mathbb{E}[f(X_n + c)] + \mathbb{E}[f(X_n + c)] - \mathbb{E}[f(X + c)] \right| $$
-$$ \le \left| \mathbb{E}[f(X_n + Y_n) - f(X_n + c)] \right| + \left| \mathbb{E}[f(X_n + c)] - \mathbb{E}[f(X + c)] \right| $$
-Par l'inégalité fondamentale $\left| \mathbb{E}[Z] \right| \le \mathbb{E}[|Z|]$, nous majorons le premier terme :
-$$ \Delta_n \le \underbrace{\mathbb{E}\left[ \left| f(X_n + Y_n) - f(X_n + c) \right| \right]}_{\text{Terme 1}} + \underbrace{\left| \mathbb{E}[f(X_n + c)] - \mathbb{E}[f(X + c)] \right|}_{\text{Terme 2}} $$
+**2. Fonction de répartition de $Y_n$ :**
+On cherche $F_{Y_n}(y) = \mathbb{P}(Y_n \le y) = \mathbb{P}(M_n - \ln(n) \le y) = \mathbb{P}(M_n \le y + \ln(n))$.
+On applique la formule trouvée à la question 1 pour $x = y + \ln(n)$.
+Il faut $y + \ln(n) \ge 0$, ce qui est vrai pour $n$ assez grand ($n \ge e^{-y}$).
+$$F_{Y_n}(y) = \left(1 - e^{-(y + \ln(n))}\right)^n = \left(1 - e^{-y} \cdot e^{-\ln(n)}\right)^n = \left(1 - \frac{e^{-y}}{n}\right)^n$$
 
-**2. Annihilation du Terme 2 (Convergence en loi pure) :**
-Définissons la fonction auxiliaire $g(x) = f(x + c)$. Puisque $f$ est continue et bornée, sa translatée $g$ hérite instantanément de ces deux propriétés sur $\mathbb{R}$.
-Par l'hypothèse stricte que $X_n \xrightarrow{\mathcal{L}} X$, la caractérisation analytique nous assure que :
-$$ \lim_{n \to \infty} \mathbb{E}[g(X_n)] = \mathbb{E}[g(X)] $$
-Ce qui se traduit littéralement par :
-$$ \lim_{n \to \infty} \left| \mathbb{E}[f(X_n + c)] - \mathbb{E}[f(X + c)] \right| = 0 $$
-Le Terme 2 s'évanouit asymptotiquement.
-
-**3. Annihilation du Terme 1 (Convergence en probabilité) :**
-Analysons le Terme 1. Fixons un seuil de tolérance $\varepsilon > 0$ arbitraire.
-Par l'hypothèse d'uniforme continuité de la fonction $f$, il existe un rayon protecteur $\delta > 0$ tel que pour tout couple $(a, b) \in \mathbb{R}^2$, la contrainte de proximité $|a - b| < \delta$ force la proximité des images $|f(a) - f(b)| < \varepsilon$.
-
-Posons $a = X_n(\omega) + Y_n(\omega)$ et $b = X_n(\omega) + c$. La distance entre les antécédents est exactement l'écart résiduel : $|a - b| = |Y_n(\omega) - c|$.
-Nous partitionnons l'espace fondamental $\Omega$ selon la réalisation de l'événement de proximité $\{|Y_n - c| < \delta\}$ et son événement complémentaire.
-Décomposons l'espérance par la loi des probabilités totales généralisées (indicateurs) :
-$$ \mathbb{E}\left[ \left| f(X_n + Y_n) - f(X_n + c) \right| \right] = \mathbb{E}\left[ |f(\dots)| \cdot \mathbf{1}_{\{|Y_n - c| < \delta\}} \right] + \mathbb{E}\left[ |f(\dots)| \cdot \mathbf{1}_{\{|Y_n - c| \ge \delta\}} \right] $$
-
-Sur le premier domaine (où la proximité est acquise), l'uniforme continuité garantit brutalement que la différence des images est majorée par $\varepsilon$.
-Sur le second domaine, nous ne contrôlons pas les antécédents, mais nous utilisons la borne absolue de la fonction : $|f(X_n+Y_n) - f(X_n+c)| \le |f(X_n+Y_n)| + |f(X_n+c)| \le 2M$.
-Injectons ces majorations uniformes dans l'espérance :
-$$ \mathbb{E}\left[ \left| f(X_n + Y_n) - f(X_n + c) \right| \right] \le \varepsilon \cdot \mathbb{P}(|Y_n - c| < \delta) + 2M \cdot \mathbb{P}(|Y_n - c| \ge \delta) $$
-
-Il est temps de tirer parti de la convergence en probabilité. Par hypothèse $Y_n \xrightarrow{\mathbb{P}} c$, ce qui signifie précisément que pour notre $\delta > 0$ constant :
-$$ \lim_{n \to \infty} \mathbb{P}(|Y_n - c| \ge \delta) = 0 $$
-Le terme minoritaire $\mathbb{P}(|Y_n - c| < \delta)$ est, bien sûr, majoré par 1.
-En passant à la limite supérieure (limsup) sur l'ensemble de la majoration, le terme en $2M$ disparaît :
-$$ \limsup_{n \to \infty} \mathbb{E}\left[ \left| f(X_n + Y_n) - f(X_n + c) \right| \right] \le \varepsilon \cdot 1 + 2M \cdot 0 = \varepsilon $$
-Cette majoration finale étant valable pour tout $\varepsilon > 0$ aussi infime soit-il, la limite supérieure est nécessairement nulle :
-$$ \lim_{n \to \infty} \mathbb{E}\left[ \left| f(X_n + Y_n) - f(X_n + c) \right| \right] = 0 $$
-
-**Conclusion finale :**
-Le Terme 1 et le Terme 2 tendant séparément vers 0, la somme (par l'inégalité triangulaire) assure que la différence globale d'espérance s'annule :
-$$ \lim_{n \to \infty} \mathbb{E}[f(X_n + Y_n)] = \mathbb{E}[f(X + c)] $$
-Cette équation prouve, avec une absolue rigueur analytique, la convergence en loi du couple combiné :
-$$ X_n + Y_n \xrightarrow{\mathcal{L}} X + c $$
-Ce théorème, cœur réacteur de l'inférence statistique asymptotique, permet de manipuler les limites stochastiques presque comme de l'algèbre classique, tant que l'un des termes converge vers un pôle déterministe.
+**3. Limite pour la convergence en loi :**
+Pour un $y \in \mathbb{R}$ fixé, passons à la limite quand $n \to +\infty$.
+On utilise le développement limité du logarithme naturel :
+$$\ln\left(F_{Y_n}(y)\right) = n \ln\left(1 - \frac{e^{-y}}{n}\right)$$
+Comme $\frac{e^{-y}}{n} \to 0$, l'équivalent en zéro $\ln(1 - u) \sim -u$ donne :
+$$n \ln\left(1 - \frac{e^{-y}}{n}\right) \sim n \left( - \frac{e^{-y}}{n} \right) = -e^{-y}$$
+Ainsi, $\lim_{n \to +\infty} \ln(F_{Y_n}(y)) = -e^{-y}$.
+Par continuité de l'exponentielle, on déduit :
+$$\lim_{n \to +\infty} F_{Y_n}(y) = \exp(-e^{-y})$$
+Notons $F(y) = \exp(-e^{-y})$.
+Cette fonction $F$ est une fonction de répartition valide (elle est croissante, tend vers 0 en $-\infty$ et vers 1 en $+\infty$, et est continue sur $\mathbb{R}$).
+C'est la fonction de répartition de la loi de Gumbel standard.
+Puisque $F_{Y_n}(y)$ converge vers $F(y)$ en tout point de continuité de $F$ (ici partout sur $\mathbb{R}$), $Y_n converge en loi vers une variable de Gumbel.

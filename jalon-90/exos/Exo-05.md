@@ -1,35 +1,36 @@
-# Exercice 05
+# Exercice 5 : Convergence en loi via la fonction de répartition
 
-**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
+Niveau : $\bigstar\bigstar\bigstar\star\star$
 
-**Énoncé :**
-Montrez de manière explicite que si une suite $(X_n)$ converge dans $L^1(\Omega)$ vers une variable $X$, alors elle converge en probabilité vers $X$.
-*Indication : Utilisez l'inégalité de Markov.*
+Soit $X_n \sim \mathcal{U}([0, \frac{1}{n}])$.
+1. Déterminer la fonction de répartition $F_{X_n}(x)$ de $X_n$.
+2. En déduire la limite simple de $F_{X_n}(x)$.
+3. Conclure sur la convergence en loi de la suite $(X_n)$.
 
-**Correction :**
+## Correction
 
-L'objectif est d'établir l'implication fondamentale : Convergence $L^1 \implies$ Convergence en probabilité.
-Traduisons les hypothèses. La convergence dans $L^1$ se formule ainsi :
-$$ \lim_{n \to \infty} \mathbb{E}[|X_n - X|] = 0 $$
-Nous devons aboutir à la définition de la convergence en probabilité : pour tout $\varepsilon > 0$, $\lim_{n \to \infty} \mathbb{P}(|X_n - X| \ge \varepsilon) = 0$.
+**1. Fonction de répartition :**
+La densité de $X_n$ est $f_n(t) = n \mathbb{1}_{[0, \frac{1}{n}]}(t)$.
+La fonction de répartition est $F_{X_n}(x) = \int_{-\infty}^x f_n(t) dt$.
+- Si $x < 0$, $F_{X_n}(x) = 0$.
+- Si $0 \le x \le \frac{1}{n}$, $F_{X_n}(x) = \int_0^x n dt = nx$.
+- Si $x > \frac{1}{n}$, $F_{X_n}(x) = 1$.
 
-**Démonstration pas à pas :**
+**2. Limite simple de la fonction de répartition :**
+Soit $x \in \mathbb{R}$.
+- Si $x < 0$, pour tout $n$, $F_{X_n}(x) = 0 \xrightarrow{n \to +\infty} 0$.
+- Si $x > 0$, il existe un rang $N$ tel que pour tout $n \ge N$, on a $\frac{1}{n} < x$.
+Alors pour tout $n \ge N$, $F_{X_n}(x) = 1$. Donc $\lim_{n \to +\infty} F_{X_n}(x) = 1$.
+- Si $x = 0$, $F_{X_n}(0) = 0 \xrightarrow{n \to +\infty} 0$.
+Ainsi, la limite simple notée $F(x)$ est la fonction définie par $F(x) = 0$ si $x \le 0$, et $F(x) = 1$ si $x > 0$.
 
-1. Fixons un seuil d'écartement $\varepsilon > 0$ arbitraire. L'événement dont nous devons contrôler la probabilité est $\{ \omega \in \Omega \mid |X_n(\omega) - X(\omega)| \ge \varepsilon \}$.
-2. Considérons la nouvelle variable aléatoire $Y_n = |X_n - X|$. Cette variable est positive presque sûrement ($Y_n \ge 0$).
-De plus, par hypothèse de convergence $L^1$, l'espérance de $Y_n$ existe, est finie, et tend vers $0$.
-3. Appliquons l'inégalité de Markov à la variable positive $Y_n$. Pour tout $a > 0$, l'inégalité s'écrit :
-$$ \mathbb{P}(Y_n \ge a) \le \frac{\mathbb{E}[Y_n]}{a} $$
-4. Instancions cette inégalité avec le seuil $a = \varepsilon$. Nous obtenons la majoration cruciale :
-$$ \mathbb{P}(|X_n - X| \ge \varepsilon) \le \frac{\mathbb{E}[|X_n - X|]}{\varepsilon} $$
-5. Tout comme dans l'inégalité de Bienaymé-Chebyshev, cette probabilité est trivialement minorée par $0$. Nous posons donc l'encadrement :
-$$ 0 \le \mathbb{P}(|X_n - X| \ge \varepsilon) \le \frac{\mathbb{E}[|X_n - X|]}{\varepsilon} $$
-6. Analysons le comportement asymptotique de cet encadrement lorsque $n \to \infty$.
-Le paramètre $\varepsilon$ est constant et strictement positif.
-Le numérateur $\mathbb{E}[|X_n - X|]$ tend vers zéro par hypothèse stricte de convergence dans $L^1$.
-Ainsi, la limite du majorant est :
-$$ \lim_{n \to \infty} \frac{\mathbb{E}[|X_n - X|]}{\varepsilon} = \frac{0}{\varepsilon} = 0 $$
-7. Par le théorème d'encadrement des limites de suites, il en résulte inévitablement que :
-$$ \lim_{n \to \infty} \mathbb{P}(|X_n - X| \ge \varepsilon) = 0 $$
-Cette égalité étant vérifiée pour tout $\varepsilon > 0$ arbitrairement choisi, la preuve est achevée.
-La suite $(X_n)$ converge bien en probabilité vers $X$.
+**3. Conclusion sur la convergence en loi :**
+On observe que $F(x)$ correspond (presque) à la fonction de répartition d'une variable aléatoire constante égale à 0 (une masse de Dirac en 0), notons la $X = 0$.
+La fonction de répartition de $X=0$ est $F_X(x) = 0$ si $x < 0$, et $F_X(x) = 1$ si $x \ge 0$.
+Remarquons que $\lim F_{X_n}(0) = 0 \neq F_X(0) = 1$. La limite simple des fonctions de répartition diffère de $F_X$ au point $x=0$.
+Cependant, le point $x=0$ est un point de discontinuité de la fonction de répartition limite $F_X$.
+Le théorème de Portmanteau stipule que la convergence en loi $X_n \xrightarrow{\mathcal{L}} X$ équivaut à la convergence $\lim_{n \to \infty} F_{X_n}(x) = F_X(x)$ pour tout point $x$ **où $F_X$ est continue**.
+Ici, $F_X$ est continue sur $\mathbb{R} \setminus \{0\}$.
+Or, on a bien montré que pour $x < 0$, $F_{X_n}(x) \to 0 = F_X(x)$ et pour $x > 0$, $F_{X_n}(x) \to 1 = F_X(x)$.
+L'égalité est donc vérifiée en tout point de continuité de $F_X$.
+On conclut que $X_n \xrightarrow{\mathcal{L}} 0$.
