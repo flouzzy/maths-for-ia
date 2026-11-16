@@ -1,15 +1,22 @@
-# Exercice 01
+# Exercice 1 : Convergence presque sûre vs en probabilité (Cas déterministe)
 
-**Difficulté :** $\bigstar\star\star\star\star$
+Niveau : $\bigstar\star\star\star\star$
 
-**Énoncé :**
-Soit une suite de variables aléatoires $X_n$ telles que $\mathbb{P}(X_n = 1) = \frac{1}{n}$ et $\mathbb{P}(X_n = 0) = 1 - \frac{1}{n}$.
-Montrez que $X_n$ converge en probabilité vers la variable certaine $X = 0$.
+Soit $(\Omega, \mathcal{F}, \mathbb{P})$ un espace probabilisé. Considérons une suite de variables aléatoires $(X_n)_{n \in \mathbb{N}}$ constantes, telles que pour tout $n \in \mathbb{N}$ et tout $\omega \in \Omega$, $X_n(\omega) = \frac{1}{n+1}$.
+Montrer que $X_n \xrightarrow{\text{p.s.}} 0$ et $X_n \xrightarrow{\mathbb{P}} 0$.
 
-**Correction :**
-Nous devons montrer que pour tout $\epsilon > 0$, $\lim_{n \to \infty} \mathbb{P}(|X_n - 0| > \epsilon) = 0$.
-Soit $\epsilon \in ]0, 1[$. Puisque $X_n$ ne prend que les valeurs $0$ et $1$, on a :
-$$ \mathbb{P}(|X_n| > \epsilon) = \mathbb{P}(X_n = 1) = \frac{1}{n} $$
-En passant à la limite lorsque $n \to \infty$ :
-$$ \lim_{n \to \infty} \mathbb{P}(|X_n| > \epsilon) = \lim_{n \to \infty} \frac{1}{n} = 0 $$
-Ainsi, $X_n \xrightarrow{\mathbb{P}} 0$.
+## Correction
+
+**1. Convergence presque sûre :**
+Soit $\omega \in \Omega$. On a $X_n(\omega) = \frac{1}{n+1}$.
+Puisque $\lim_{n \to +\infty} \frac{1}{n+1} = 0$, la suite $(X_n(\omega))$ converge vers $0$ pour tout $\omega \in \Omega$.
+Ainsi, l'ensemble de convergence $\{ \omega \in \Omega \mid \lim_{n \to +\infty} X_n(\omega) = 0 \}$ est exactement $\Omega$.
+Or $\mathbb{P}(\Omega) = 1$, donc $X_n \xrightarrow{\text{p.s.}} 0$.
+
+**2. Convergence en probabilité :**
+Soit $\varepsilon > 0$. On cherche à évaluer $\mathbb{P}(|X_n - 0| > \varepsilon) = \mathbb{P}\left(\frac{1}{n+1} > \varepsilon\right)$.
+Puisque $\varepsilon > 0$ est fixé, il existe un rang $N \in \mathbb{N}$ tel que pour tout $n \ge N$, on a $\frac{1}{n+1} \le \varepsilon$.
+Par conséquent, pour tout $n \ge N$, l'événement $\left\{ \frac{1}{n+1} > \varepsilon \right\}$ est l'ensemble vide $\emptyset$.
+Donc pour tout $n \ge N$, $\mathbb{P}(|X_n - 0| > \varepsilon) = \mathbb{P}(\emptyset) = 0$.
+Ainsi, $\lim_{n \to +\infty} \mathbb{P}(|X_n - 0| > \varepsilon) = 0$, ce qui prouve que $X_n \xrightarrow{\mathbb{P}} 0$.
+(On retrouve d'ailleurs le théorème général : la convergence presque sûre implique la convergence en probabilité).
