@@ -1,31 +1,24 @@
-# Exercice 06
+# Exercice 6 : Convergence p.s. et lemme de Borel-Cantelli
 
-**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
+Niveau : $\bigstar\bigstar\bigstar\bigstar\star$
 
-**Énoncé :**
-Convergence d'une variable exponentielle rescalée
+Soit $(X_n)_{n \in \mathbb{N}}$ une suite de variables aléatoires indépendantes suivant la loi de Bernoulli de paramètre $p_n = \frac{1}{n^2}$ pour $n \ge 1$.
+Montrer en utilisant le lemme de Borel-Cantelli que $X_n \xrightarrow{\text{p.s.}} 0$.
 
-Soit $(X_n)$ une suite de variables aléatoires indépendantes suivant la loi exponentielle de paramètre $\lambda = n$.
-Étudiez les modes de convergence (presque sûre, probabilité, loi) de la suite $(X_n)$.
+## Correction
 
-**Correction exhaustive :**
-Déterminons d'abord la fonction de répartition de $X_n$.
-Pour tout $t > 0$, $F_n(t) = \mathbb{P}(X_n \le t) = 1 - e^{-nt}$.
-Pour $t \le 0$, $F_n(t) = 0$.
-Fixons $t > 0$. Lorsque $n \to \infty$, $e^{-nt} \to 0$, donc $F_n(t) \to 1$.
-Pour $t < 0$, $F_n(t) = 0 \to 0$.
-La limite simple des fonctions de répartition est la fonction $\mathbf{1}_{[0, +\infty[}(t)$, qui correspond à la fonction de répartition de la variable certaine $X = 0$.
-Puisque la convergence a lieu en tout point de continuité de la fonction de répartition de la variable constante $0$ (seul le point $t=0$ pose question, mais on ne regarde que les points de continuité), on déduit que :
-$$ X_n \xrightarrow{\mathcal{L}} 0 $$
-Puisque la limite est une variable certaine (constante), le théorème de convergence affirme que la convergence en loi vers une constante est équivalente à la convergence en probabilité.
-Vérifions-le analytiquement : pour tout $\epsilon > 0$,
-$$ \mathbb{P}(|X_n - 0| > \epsilon) = \mathbb{P}(X_n > \epsilon) = 1 - F_n(\epsilon) = e^{-n\epsilon} $$
-Puisque $\epsilon > 0$, $\lim_{n \to \infty} e^{-n\epsilon} = 0$. Ainsi, $X_n \xrightarrow{\mathbb{P}} 0$.
-Étudions la convergence presque sûre via Borel-Cantelli.
-Fixons $\epsilon > 0$. Formons la somme des probabilités :
-$$ \sum_{n=1}^\infty \mathbb{P}(|X_n| > \epsilon) = \sum_{n=1}^\infty e^{-n\epsilon} $$
-Il s'agit d'une série géométrique de raison $q = e^{-\epsilon} \in ]0, 1[$, qui est convergente.
-Par le premier lemme de Borel-Cantelli, l'événement $\{|X_n| > \epsilon\}$ ne se réalise qu'un nombre fini de fois avec probabilité 1.
-Puisque cela est vrai pour une suite de $\epsilon$ tendant vers $0$, on en déduit que :
-$$ X_n \xrightarrow{p.s.} 0 $$
-La suite converge donc selon les trois modes principaux vers la variable $0$.
+Pour montrer que $X_n \xrightarrow{\text{p.s.}} 0$, on fixe un $\varepsilon > 0$.
+Il s'agit de prouver que la probabilité que l'événement $A_n = \{ |X_n - 0| > \varepsilon \}$ se réalise une infinité de fois est nulle.
+Comme $X_n \in \{0, 1\}$, si l'on prend $\varepsilon \in ]0, 1[$, l'événement $A_n$ équivaut à $\{X_n = 1\}$.
+Évaluons la probabilité de $A_n$ :
+$$\mathbb{P}(A_n) = \mathbb{P}(X_n = 1) = p_n = \frac{1}{n^2}$$
+Considérons la série de terme général $\mathbb{P}(A_n)$ :
+$$\sum_{n=1}^{+\infty} \mathbb{P}(A_n) = \sum_{n=1}^{+\infty} \frac{1}{n^2}$$
+Il s'agit d'une série de Riemann convergente (exposant $2 > 1$).
+Donc $\sum \mathbb{P}(A_n) < +\infty$.
+D'après le premier lemme de Borel-Cantelli, si la série des probabilités converge, alors la probabilité que la limite supérieure des $A_n$ (le fait qu'une infinité de $A_n$ se réalisent) est nulle :
+$$\mathbb{P}(\limsup_{n \to \infty} A_n) = 0$$
+Cela signifie que presque sûrement, l'événement $\{X_n = 1\}$ ne se produit qu'un nombre fini de fois.
+Donc, presque sûrement, il existe un rang $N$ à partir duquel $X_n = 0$.
+Ainsi, la suite $(X_n(\omega))$ est stationnaire en $0$ à partir d'un certain rang, presque sûrement.
+On en conclut que $X_n \xrightarrow{\text{p.s.}} 0$.

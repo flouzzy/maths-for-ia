@@ -14,25 +14,9 @@
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
-\lstdefinestyle{mystyle}{
-    backgroundcolor=\color{backcolour},
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\ttfamily\footnotesize,
-    breakatwhitespace=false,
-    breaklines=true,
-    captionpos=b,
-    keepspaces=true,
-    numbers=left,
-    numbersep=5pt,
-    showspaces=false,
-    showstringspaces=false,
-    showtabs=false,
-    tabsize=2
-}
-\lstset{style=mystyle}
+\title{\Huge Les Modes de Convergence en Probabilités \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
 
 \begin{document}
 
@@ -42,188 +26,187 @@
 
 \section{1. Origines et intuitions asymptotiques}
 
+
+
+\section{Origines et intuitions asymptotiques}
+
 L'étude des phénomènes aléatoires, initialement circonscrite aux jeux de hasard, a pris une dimension analytique rigoureuse au tournant des XIXe et XXe siècles grâce aux travaux de mathématiciens russes tels que Pafnuty Chebyshev, Andrey Markov et Andrey Kolmogorov, ainsi que l'économiste et statisticien Eugen Slutsky. La question centrale qui animait ces chercheurs était de comprendre le comportement asymptotique des suites de variables aléatoires : lorsqu'une expérience est répétée une infinité de fois, de quelle manière la moyenne empirique converge-t-elle vers son espérance théorique ?
 
 En mathématiques classiques, la convergence d'une suite de nombres réels est univoque et absolue. En probabilités, du fait de l'existence d'événements de mesure nulle (les fameux ensembles $\omega \in \Omega$ pour lesquels la propriété peut faire défaut sans affecter la probabilité globale), le concept de "proximité" entre variables aléatoires se décline sous plusieurs topologies distinctes. Il a fallu forger un arsenal d'outils analytiques pour mesurer si une suite de variables aléatoires $(X_n)$ s'approche d'une limite $X$ presque partout, en mesure, en moyenne ou seulement au niveau de ses répartitions (loi). Cette hiérarchie des modes de convergence permet d'isoler la nature exacte de la stabilité asymptotique d'un système.
 
-\begin{center}
-\begin{tikzpicture}[scale=1.2, >=stealth, thick]
-  % Espace L^p
-  \draw[fill=blue!10, draw=blue!50!black, rounded corners=3mm] (-1.5,-2.5) rectangle (1.5,0.5);
-  \node[blue!50!black] at (0, 0.2) {$L^p$ ($p \ge 1$)};
+\section{Définitions et Théorèmes Fondamentaux}
 
-  % Convergence presque sûre
-  \draw[fill=green!10, draw=green!50!black, rounded corners=3mm] (-3.5,-2.5) rectangle (-1.8, 0.5);
-  \node[green!50!black] at (-2.65, 0.2) {Presque sûre};
-
-  % Convergence en probabilité
-  \draw[fill=orange!10, draw=orange!50!black, rounded corners=3mm] (-4,-3) rectangle (2,-5);
-  \node[orange!50!black] at (-1, -3.4) {En probabilité};
+Dans ce qui suit, on considère un espace probabilisé $(\Omega, \mathcal{F}, \mathbb{P})$. Toutes les variables aléatoires considérées sont à valeurs réelles et définies sur cet espace. On s'intéresse à la convergence d'une suite $(X_n)_{n \in \mathbb{N}}$ vers une variable aléatoire $X$.
 
   % Convergence en loi
   \draw[fill=purple!10, draw=purple!50!black, rounded corners=3mm] (-4.5,-5.5) rectangle (2.5,-7.5);
   \node[purple!50!black] at (-1, -5.9) {En loi (distribution)};
 
-  % Flèches d'implication
-  \draw[->, blue!80!black, ultra thick] (0, -2.5) -- (0, -3) node[midway, right] {Implication};
-  \draw[->, green!80!black, ultra thick] (-2.65, -2.5) -- (-2.65, -3);
-  \draw[->, orange!80!black, ultra thick] (-1, -5) -- (-1, -5.5);
+La convergence presque sûre est le mode de convergence le plus fort. Il stipule que la suite de fonctions $X_n(\omega)$ converge ponctuellement vers $X(\omega)$ pour presque toutes les réalisations $\omega$.
 
-\end{tikzpicture}
-\end{center}
+\textbf{Définition (Convergence Presque Sûre) :}
+La suite $(X_n)$ converge presque sûrement vers $X$, noté $X_n \xrightarrow{p.s.} X$, si l'événement sur lequel la convergence ponctuelle a lieu possède une probabilité égale à $1$.
+$$ \mathbb{P}\left( \left\{ \omega \in \Omega \mid \lim_{n \to \infty} X_n(\omega) = X(\omega) \right\} \right) = 1 $$
 
-\section{2. Définitions formelles et exemples fondamentaux}
+\textbf{Exemple Concret :}
+Soit un espace $\Omega = [0, 1]$ muni de la mesure de Lebesgue $\mathbb{P}$. Définissons la variable aléatoire $X_n(\omega) = \omega^n$.
+Pour tout $\omega \in [0, 1[$, on a $\lim_{n \to \infty} \omega^n = 0$.
+Pour $\omega = 1$, on a $X_n(1) = 1$ pour tout $n$, donc $\lim_{n \to \infty} X_n(1) = 1$.
+La limite simple est donc $X(\omega) = 0$ sur $[0, 1[$ et $X(1) = 1$.
+Posons $Y = 0$ (variable aléatoire constante et égale à 0). On remarque que :
+$$ \{ \omega \in [0, 1] \mid \lim_{n \to \infty} X_n(\omega) = Y(\omega) \} = [0, 1[ $$
+Or, $\mathbb{P}([0, 1[) = 1$. Par conséquent, $X_n \xrightarrow{p.s.} 0$. Le singleton $\{1\}$ où la convergence fait défaut est de mesure nulle.
 
-Dans ce qui suit, on considère un espace probabilisé $(\Omega, \mathcal{F}, \mathbb{P})$. Toutes les variables aléatoires considérées sont à valeurs réelles et définies sur cet espace. On s'intéresse à la convergence d'une suite $(X_n)_{n \in \mathbb{N}}$ vers une variable aléatoire $X$.
 
-\subsection{2.1 Convergence Presque Sûre (p.s.)}
+\textbf{Exemple Concret (Loi forte des grands nombres) :}
+Considérons une suite infinie de lancers de dés équilibrés à 6 faces, où $X_i$ est le résultat du $i$-ème lancer. Les variables $X_i$ sont indépendantes et identiquement distribuées, d'espérance $\mu = 3.5$.
+Définissons la moyenne empirique $S_n = \frac{1}{n} \sum_{i=1}^n X_i$.
+La convergence presque sûre $S_n \xrightarrow{p.s.} 3.5$ signifie qu'en lançant les dés une infinité de fois, l'ensemble des scénarios (suites de lancers) pour lesquels la moyenne asymptotique n'est pas exactement $3.5$ est de probabilité strictement nulle. Sur le papier, une suite qui ne donnerait que des $6$ est possible (probabilité nulle mais ensemble non vide), mais elle n'apparaît "presque jamais".
 
-La convergence presque sûre est le mode de convergence le plus fort au sens des trajectoires. Il stipule que la suite de fonctions $X_n(\omega)$ converge ponctuellement vers $X(\omega)$ pour presque toutes les réalisations $\omega \in \Omega$.
 
-\textbf{Définition :}
-La suite $(X_n)$ converge presque sûrement vers $X$, noté $X_n \xrightarrow{p.s.} X$, si :
-$$ \mathbb{P}\left(\left\{\omega \in \Omega \mid \lim_{n \to \infty} X_n(\omega) = X(\omega)\right\}\right) = 1 $$
-Ceci est équivalent à affirmer que l'événement sur lequel la convergence ponctuelle fait défaut est de probabilité nulle.
 
-\textbf{Exemple concret immédiat (Variable aléatoire sur le segment unité) :}
-Soit $\Omega = [0, 1]$ muni de sa tribu borélienne $\mathcal{B}([0, 1])$ et de la mesure de Lebesgue $\mathbb{P}$.
-Considérons la suite de variables aléatoires $X_n : \Omega \to \mathbb{R}$ définie par $X_n(\omega) = \omega^n$.
-Fixons $\omega \in \Omega$.
-\begin{itemize}
-\item Si $\omega \in [0, 1[$, alors $\lim_{n \to \infty} \omega^n = 0$.
-\item Si $\omega = 1$, alors $\lim_{n \to \infty} 1^n = 1$.
-\end{itemize}
-Ainsi, la suite $(X_n)$ converge ponctuellement vers la variable aléatoire $X$ définie par $X(\omega) = 0$ sur $[0, 1[$ et $X(1) = 1$.
-Puisque $\mathbb{P}(\{1\}) = 0$, nous avons $X_n \xrightarrow{p.s.} 0$.
+\subsection{Convergence en Probabilité}
 
-\subsection{2.2 Convergence en Probabilité}
+La convergence en probabilité est plus faible. Elle exige que pour tout seuil d'erreur fixé, la probabilité que l'écart entre $X_n$ et $X$ dépasse ce seuil tende vers zéro lorsque $n$ croît.
 
-La convergence en probabilité est plus faible que la convergence presque sûre. Elle garantit que, pour un $n$ assez grand, la probabilité que $X_n$ s'éloigne de $X$ d'une distance macroscopique devient arbitrairement faible.
-
-\textbf{Définition :}
+\textbf{Définition (Convergence en Probabilité) :}
 La suite $(X_n)$ converge en probabilité vers $X$, noté $X_n \xrightarrow{\mathbb{P}} X$, si pour tout réel $\epsilon > 0$ :
 $$ \lim_{n \to \infty} \mathbb{P}(|X_n - X| > \epsilon) = 0 $$
 
-\textbf{Théorème d'implication (Presque sûre $\implies$ En probabilité) :}
-Si $X_n \xrightarrow{p.s.} X$, alors $X_n \xrightarrow{\mathbb{P}} X$.
+\textbf{Théorème (Implication p.s. $\implies$ en probabilité) :}
+Si $X_n \xrightarrow{p.s.} X$, alors $X_n \xrightarrow{\mathbb{P}} X$. La réciproque est fausse en général.
 
-\textbf{Exemple concret immédiat (La machine à écrire glissante) :}
-Considérons à nouveau $\Omega = [0, 1]$ muni de la mesure de Lebesgue.
-Pour chaque $n \ge 1$, il existe un unique entier $k \ge 0$ et un entier $j \in \{0, \dots, 2^k - 1\}$ tels que $n = 2^k + j$.
-Définissons $X_n(\omega) = \mathbf{1}_{\left[\frac{j}{2^k}, \frac{j+1}{2^k}\right]}(\omega)$.
-Pour tout $\epsilon \in ]0, 1[$, $\mathbb{P}(|X_n - 0| > \epsilon) = \mathbb{P}(X_n = 1) = \frac{1}{2^k}$.
-Comme $k \to \infty$ lorsque $n \to \infty$, on a $\lim_{n \to \infty} \mathbb{P}(|X_n| > \epsilon) = 0$. Donc $X_n \xrightarrow{\mathbb{P}} 0$.
-Cependant, pour tout $\omega \in [0, 1]$, $X_n(\omega)$ alternera entre $0$ et $1$ une infinité de fois. Donc $(X_n)$ ne converge ponctuellement pour aucun $\omega$. Cela prouve que la convergence en probabilité n'implique pas la convergence presque sûre.
+\textbf{Contre-exemple (Convergence en probabilité n'implique pas presque sûre) :}
+Définissons une suite d'événements sur $\Omega = [0, 1]$ muni de la mesure de Lebesgue. Considérons les intervalles mouvants ("machine à écrire") :
+Pour $n \ge 1$, soit $k$ tel que $2^k \le n < 2^{k+1}$. Posons $m = n - 2^k$.
+On définit l'intervalle $I_n = \left[ \frac{m}{2^k}, \frac{m+1}{2^k} \right]$.
+Soit $X_n = \mathbf{1}_{I_n}$ (la fonction indicatrice de cet intervalle).
+- Calculons la probabilité : $\mathbb{P}(|X_n - 0| > \epsilon) = \mathbb{P}(X_n = 1) = \text{longueur}(I_n) = \frac{1}{2^k}$.
+Puisque $k \to \infty$ lorsque $n \to \infty$, la probabilité tend vers $0$. Donc $X_n \xrightarrow{\mathbb{P}} 0$.
+- Cependant, pour tout $\omega \in [0, 1]$, la valeur $X_n(\omega)$ alternera entre $0$ et $1$ une infinité de fois, car pour chaque $k$, $\omega$ appartient à l'un des intervalles de la subdivision. Ainsi, $\limsup X_n(\omega) = 1$ et $\liminf X_n(\omega) = 0$. La suite ne converge ponctuellement pour \textbf{aucun} $\omega$. Donc $X_n$ ne converge pas presque sûrement.
 
-\subsection{2.3 Convergence dans $L^p$ (en moyenne d'ordre $p$)}
 
-Ce mode mesure la convergence fonctionnelle globale au sens des espaces normés $L^p$.
+\textbf{Illustration (Machine à écrire) :}
+\begin{tikzpicture}[scale=1]
+\draw[->] (-0.2,0) -- (4.5,0) node[right] {$x$};
+\draw[->] (0,-0.2) -- (0,1.5) node[above] {$X_n(x)$};
 
-\textbf{Définition :}
-Soit $p \ge 1$. On suppose que $X_n \in L^p$ pour tout $n$ (c'est-à-dire $\mathbb{E}[|X_n|^p] < \infty$).
-La suite $(X_n)$ converge vers $X$ dans $L^p$, noté $X_n \xrightarrow{L^p} X$, si $X \in L^p$ et :
-$$ \lim_{n \to \infty} \mathbb{E}[|X_n - X|^p] = 0 $$
+\draw[thick, blue] (0,0) -- (1,0) -- (1,1) -- (2,1) -- (2,0) -- (4,0);
+\node[below] at (1,0) {$m/2^k$};
+\node[below] at (2,0) {$(m+1)/2^k$};
+\node[left] at (0,1) {$1$};
 
-\textbf{Exemple concret immédiat (La bosse fuyante) :}
-Soit $\Omega = [0, 1]$ et $X_n(\omega) = n \cdot \mathbf{1}_{[0, 1/n]}(\omega)$.
-\begin{itemize}
-\item Convergence en probabilité : $\mathbb{P}(|X_n - 0| > \epsilon) \le \mathbb{P}(X_n \neq 0) = \frac{1}{n} \to 0$. Donc $X_n \xrightarrow{\mathbb{P}} 0$.
-\item Convergence $L^1$ : $\mathbb{E}[|X_n|] = n \cdot \frac{1}{n} = 1$. L'espérance ne tend pas vers $0$. Ainsi $X_n$ ne converge pas vers $0$ dans $L^1$.
-\end{itemize}
-Cet exemple montre qu'une suite peut converger en probabilité vers une limite sans pour autant converger en moyenne d'ordre $p$.
-
-\subsection{2.4 Convergence en Loi (ou en Distribution)}
-
-La convergence en loi est de nature fondamentalement différente. Elle exprime que la répartition probabiliste globale de $X_n$ tend vers la répartition de $X$, indépendamment de toute corrélation trajectorielle.
-
-\textbf{Définition (par les fonctions de répartition) :}
-Soient $F_n(t) = \mathbb{P}(X_n \le t)$ et $F_X(t) = \mathbb{P}(X \le t)$ les fonctions de répartition respectives.
-On dit que $X_n \xrightarrow{\mathcal{L}} X$ si, en tout point de continuité $t$ de $F_X$ :
-$$ \lim_{n \to \infty} F_n(t) = F_X(t) $$
-
-\textbf{Théorème de Portmanteau (caractérisation par l'espérance) :}
-$X_n \xrightarrow{\mathcal{L}} X$ si et seulement si pour toute fonction $f : \mathbb{R} \to \mathbb{R}$ continue et bornée :
-$$ \lim_{n \to \infty} \mathbb{E}[f(X_n)] = \mathbb{E}[f(X)] $$
-
-\textbf{Exemple concret immédiat (Symétrie et loi normale) :}
-Soit $X \sim \mathcal{N}(0, 1)$. Définissons $X_n = -X$ pour tout $n$.
-Puisque la loi normale standard est symétrique, $-X \sim \mathcal{N}(0, 1)$.
-Les variables $X_n$ et $X$ ont rigoureusement la même loi. Ainsi, de façon triviale, $X_n \xrightarrow{\mathcal{L}} X$.
-En revanche, $|X_n - X| = |-2X| = 2|X|$. La distance est strictement positive, donc $X_n$ ne converge vers $X$ ni en probabilité, ni presque sûrement.
-
-\begin{center}
-\begin{tikzpicture}[scale=1.2, >=stealth, thick]
-  % Axe des x
-  \draw[->] (-3, 0) -- (3, 0) node[right] {$x$};
-  % Axe des y (Densité)
-  \draw[->] (0, 0) -- (0, 2.5) node[above] {$f(x)$};
-
-  % Courbe Loi Normale (Approximation)
-  \draw[blue, thick, domain=-2.5:2.5, samples=100] plot (\x, {2*exp(-\x*\x)});
-  \node[blue] at (1.5, 1.8) {$X \sim \mathcal{N}(0, 1)$};
-
-  % Visualisation de -X
-  \draw[dashed, red, thick] (1, 0) -- (1, {2*exp(-1)});
-  \fill[red] (1, {2*exp(-1)}) circle (2pt) node[right] {$x$};
-
-  \draw[dashed, red, thick] (-1, 0) -- (-1, {2*exp(-1)});
-  \fill[red] (-1, {2*exp(-1)}) circle (2pt) node[left] {$-x$};
-
-  \node[red] at (-1.5, 1) {Symétrie : loi de $-X$};
-
+\node[above] at (2, 1.2) {La bosse se déplace vers la droite et rétrécit};
 \end{tikzpicture}
 \end{center}
 
-\section{3. Démonstrations exhaustives}
 
-Le théorème fondamental de hiérarchie s'énonce comme suit :
-$X_n \xrightarrow{L^p} X \implies X_n \xrightarrow{\mathbb{P}} X \implies X_n \xrightarrow{\mathcal{L}} X$
 
-\subsection{3.1 Démonstration : $L^p \implies$ Convergence en probabilité}
+\subsection{Convergence dans $L^p$ (en moyenne d'ordre $p$)}
 
-Nous devons prouver que si $\lim_{n \to \infty} \mathbb{E}[|X_n - X|^p] = 0$, alors pour tout $\epsilon > 0$, $\lim_{n \to \infty} \mathbb{P}(|X_n - X| > \epsilon) = 0$.
+Ce mode quantifie la "distance" fonctionnelle entre les variables.
 
-\textbf{Preuve pas à pas :}
-Soit $\epsilon > 0$ fixé. L'événement $E_n = \{\omega \in \Omega \mid |X_n(\omega) - X(\omega)| > \epsilon\}$ est équivalent à l'événement $\{\omega \in \Omega \mid |X_n(\omega) - X(\omega)|^p > \epsilon^p\}$, puisque la fonction $x \mapsto x^p$ est strictement croissante sur $\mathbb{R}^+$.
-Considérons la variable aléatoire positive $Y_n = |X_n - X|^p$.
-Appliquons l'inégalité de Markov à $Y_n$ avec la constante $a = \epsilon^p > 0$ :
-$$ \mathbb{P}(Y_n \ge a) \le \frac{\mathbb{E}[Y_n]}{a} $$
-En remplaçant par nos variables :
+\textbf{Définition (Convergence $L^p$) :}
+Soit $p \ge 1$. On suppose que pour tout $n$, $\mathbb{E}[|X_n|^p] < \infty$ et $\mathbb{E}[|X|^p] < \infty$. La suite $(X_n)$ converge dans $L^p$ vers $X$, noté $X_n \xrightarrow{L^p} X$, si :
+$$ \lim_{n \to \infty} \mathbb{E}[|X_n - X|^p] = 0 $$
+
+\textbf{Exemple Concret (La "bosse" qui s'échappe) :}
+Soit $X_n$ telle que $\mathbb{P}(X_n = n) = \frac{1}{n^2}$ et $\mathbb{P}(X_n = 0) = 1 - \frac{1}{n^2}$.
+- Convergence en probabilité : Pour $\epsilon \in ]0, 1[$, $\mathbb{P}(|X_n - 0| > \epsilon) = \mathbb{P}(X_n = n) = \frac{1}{n^2} \to 0$. Donc $X_n \xrightarrow{\mathbb{P}} 0$.
+- Convergence $L^1$ : $\mathbb{E}[|X_n - 0|] = n \cdot \frac{1}{n^2} = \frac{1}{n} \to 0$. Donc $X_n \xrightarrow{L^1} 0$.
+- Convergence $L^2$ : $\mathbb{E}[|X_n - 0|^2] = n^2 \cdot \frac{1}{n^2} = 1$. Cette valeur ne tend pas vers $0$, donc $X_n$ ne converge pas vers $0$ dans $L^2$.
+
+\subsection{Convergence en Loi (ou en Distribution)}
+
+La convergence en loi est de nature fondamentalement différente. Elle ne compare pas les variables $X_n$ et $X$ sur le même espace d'états ponctuellement, mais se contente d'indiquer que la distribution statistique des valeurs de $X_n$ s'approche de celle de $X$.
+
+\textbf{Définition (Convergence en Loi) :}
+La suite $(X_n)$ converge en loi vers $X$, noté $X_n \xrightarrow{\mathcal{L}} X$, si pour toute fonction $f : \mathbb{R} \to \mathbb{R}$ continue et bornée :
+$$ \lim_{n \to \infty} \mathbb{E}[f(X_n)] = \mathbb{E}[f(X)] $$
+Ceci est équivalent à dire que la suite des fonctions de répartition $F_{X_n}(t) = \mathbb{P}(X_n \le t)$ converge vers $F_X(t) = \mathbb{P}(X \le t)$ en tout point $t$ où $F_X$ est continue.
+
+\textbf{Exemple Concret :}
+Soit $X \sim \mathcal{N}(0, 1)$ et $X_n = -X$. Évidemment, les variables sont identiques en loi pour tout $n$, donc $X_n$ converge en loi vers $X$ de manière triviale (la loi est $\mathcal{N}(0, 1)$ pour toutes).
+Toutefois, $|X_n - X| = |-2X| = 2|X|$. La distance est constante et strictement positive avec probabilité 1, donc $X_n$ ne converge vers $X$ ni en probabilité, ni p.s.
+
+\section{Démonstrations et Hiérarchie Strictes}
+
+Le théorème suivant structure les relations d'implication entre les différents modes.
+
+\textbf{Théorème (Hiérarchie de la Convergence) :}
+1. La convergence dans $L^p$ implique la convergence en probabilité.
+2. La convergence en probabilité implique la convergence en loi.
+
+
+\textbf{Diagramme de la Hiérarchie des Convergences :}
+\begin{tikzpicture}[
+    box/.style={draw, rectangle, rounded corners, minimum width=3.5cm, minimum height=1cm, text centered, font=\bfseries, fill=blue!10},
+    arrow/.style={-stealth, thick}
+]
+
+\node[box] (ps) at (0, 0) {Convergence Presque Sûre (p.s.)};
+\node[box] (lp) at (5, 0) {Convergence dans $L^p$};
+\node[box] (prob) at (2.5, -2) {Convergence en Probabilité ($\mathbb{P}$)};
+\node[box] (loi) at (2.5, -4) {Convergence en Loi ($\mathcal{L}$)};
+
+\draw[arrow] (ps) -- (prob);
+\draw[arrow] (lp) -- (prob);
+\draw[arrow] (prob) -- (loi);
+\end{tikzpicture}
+
+
+\subsection{Démonstration : $L^p \implies \text{Probabilité}$}
+
+Nous voulons prouver que si $\lim_{n \to \infty} \mathbb{E}[|X_n - X|^p] = 0$, alors pour tout $\epsilon > 0$, $\lim_{n \to \infty} \mathbb{P}(|X_n - X| > \epsilon) = 0$.
+
+\textbf{Preuve :}
+Fixons $\epsilon > 0$. L'événement $\{|X_n - X| > \epsilon\}$ est strictement équivalent à $\{|X_n - X|^p > \epsilon^p\}$ car $x \mapsto x^p$ est strictement croissante pour $x \ge 0$ et $p \ge 1$.
+Appliquons l'inégalité de Markov sur la variable aléatoire positive $Y_n = |X_n - X|^p$ et le seuil $a = \epsilon^p$ :
 $$ \mathbb{P}(|X_n - X|^p > \epsilon^p) \le \frac{\mathbb{E}[|X_n - X|^p]}{\epsilon^p} $$
-Par hypothèse, $X_n \xrightarrow{L^p} X$, donc $\lim_{n \to \infty} \mathbb{E}[|X_n - X|^p] = 0$.
-Puisque $\epsilon$ est fixé (et donc $\epsilon^p > 0$ est constant), le membre de droite tend vers $0$ :
-$$ \lim_{n \to \infty} \frac{\mathbb{E}[|X_n - X|^p]}{\epsilon^p} = 0 $$
-Puisque les probabilités sont toujours minorées par $0$, le théorème des gendarmes nous assure que :
+Par hypothèse de convergence dans $L^p$, on a $\lim_{n \to \infty} \mathbb{E}[|X_n - X|^p] = 0$.
+Puisque le terme de droite tend vers $0$ (avec $\epsilon$ fixé), par encadrement, la probabilité du membre de gauche tend également vers $0$.
 $$ \lim_{n \to \infty} \mathbb{P}(|X_n - X| > \epsilon) = 0 $$
-Ceci achève la démonstration. $\blacksquare$
+La convergence en probabilité est démontrée.
 
-\subsection{3.2 Démonstration : Convergence en probabilité $\implies$ Convergence en loi}
 
-Nous voulons prouver que si $X_n \xrightarrow{\mathbb{P}} X$, alors pour toute fonction continue et bornée $f$, $\lim_{n \to \infty} \mathbb{E}[f(X_n)] = \mathbb{E}[f(X)]$.
+\textbf{Exemple Concret (L'utilisation de Markov) :}
+Soit une variable aléatoire $X_n$ telle que $X_n \sim \mathcal{U}(0, 1/n)$.
+Calculons la norme $L^2$ : $\mathbb{E}[|X_n - 0|^2] = \int_0^{1/n} n x^2 dx = n [\frac{x^3}{3}]_0^{1/n} = \frac{1}{3n^2} \to 0$.
+Donc $X_n \xrightarrow{L^2} 0$.
+Vérifions la convergence en probabilité pour $\epsilon = 0.01$ :
+$\mathbb{P}(|X_n| > 0.01) = 0$ dès que $1/n \le 0.01$ (soit $n \ge 100$).
+La probabilité tend bien vers $0$, confirmant l'implication.
 
-\textbf{Preuve pas à pas :}
-Soit $f : \mathbb{R} \to \mathbb{R}$ continue et bornée. Soit $M > 0$ tel que $|f(x)| \le M$ pour tout $x \in \mathbb{R}$.
-Soit $\eta > 0$ un seuil de tolérance.
-Puisque $X$ est une variable aléatoire réelle, ses valeurs se concentrent. Il existe un intervalle compact $K = [-A, A]$ tel que $\mathbb{P}(X \notin K) < \eta$.
-La fonction $f$ étant continue sur le segment compact $K$, elle y est uniformément continue d'après le théorème de Heine-Cantor.
-Il existe donc $\delta > 0$ tel que pour tout $x \in K$ et $y \in \mathbb{R}$, si $|x - y| < \delta$, alors $|f(x) - f(y)| < \eta$.
 
-Majorons la différence d'espérance :
+\subsection{Démonstration : $\text{Probabilité} \implies \text{Loi}$}
+
+Nous voulons prouver que si $X_n \xrightarrow{\mathbb{P}} X$, alors pour toute fonction continue et bornée $f$, $\mathbb{E}[f(X_n)] \to \mathbb{E}[f(X)]$.
+
+\textbf{Preuve :}
+Soit $f$ une fonction continue et bornée, disons bornée par $M > 0$ (soit $|f(x)| \le M$ pour tout $x$).
+Fixons un réel $\eta > 0$. Bien que $f$ soit continue, elle n'est pas uniformément continue sur tout $\mathbb{R}$. Mais en restreignant $X$ à un segment borné, nous pourrons contrôler les écarts.
+Puisque $X$ est une variable aléatoire réelle, il existe un intervalle fini $K = [-A, A]$ tel que $\mathbb{P}(X \notin K) < \eta$.
+Sur ce segment compact $K$, $f$ est uniformément continue (Théorème de Heine). Il existe donc $\delta > 0$ tel que pour tout $x \in K$ et $y \in \mathbb{R}$ vérifiant $|x - y| < \delta$, on ait $|f(x) - f(y)| < \eta$.
+
+Décomposons l'espérance de la différence :
 $$ |\mathbb{E}[f(X_n)] - \mathbb{E}[f(X)]| \le \mathbb{E}[|f(X_n) - f(X)|] $$
-Partitionnons l'espace d'intégration $\Omega$ selon deux critères : l'éloignement de $X_n$ et $X$, et l'appartenance de $X$ au compact $K$.
-Soient les événements :
-$E_1 = \{\omega \in \Omega \mid |X_n(\omega) - X(\omega)| \ge \delta\}$
-$E_2 = \{\omega \in \Omega \mid |X_n(\omega) - X(\omega)| < \delta \text{ et } X(\omega) \notin K\}$
-$E_3 = \{\omega \in \Omega \mid |X_n(\omega) - X(\omega)| < \delta \text{ et } X(\omega) \in K\}$
+Introduisons les événements suivants pour partitionner $\Omega$ :
+$E_1 = \{ |X_n - X| \ge \delta \}$
+$E_2 = \{ |X_n - X| < \delta \} \cap \{ X \notin K \}$
+$E_3 = \{ |X_n - X| < \delta \} \cap \{ X \in K \}$
 
-Décomposons l'intégrale (espérance) selon cette partition :
-$$ \mathbb{E}[|f(X_n) - f(X)|] = \mathbb{E}[|f(X_n) - f(X)| \cdot \mathbf{1}_{E_1}] + \mathbb{E}[|f(X_n) - f(X)| \cdot \mathbf{1}_{E_2}] + \mathbb{E}[|f(X_n) - f(X)| \cdot \mathbf{1}_{E_3}] $$
-1. Sur $E_1$, on majore brutalement avec la borne de $f$ : $|f(X_n) - f(X)| \le |f(X_n)| + |f(X)| \le 2M$.
-   Donc $\mathbb{E}[|f(X_n) - f(X)| \cdot \mathbf{1}_{E_1}] \le 2M \cdot \mathbb{P}(E_1) \le 2M \cdot \mathbb{P}(|X_n - X| \ge \delta)$.
-2. Sur $E_2$, on majore aussi brutalement : $|f(X_n) - f(X)| \le 2M$.
-   Donc $\mathbb{E}[|f(X_n) - f(X)| \cdot \mathbf{1}_{E_2}] \le 2M \cdot \mathbb{P}(E_2) \le 2M \cdot \mathbb{P}(X \notin K) \le 2M\eta$.
-3. Sur $E_3$, on exploite la continuité uniforme : $|f(X_n) - f(X)| < \eta$.
-   Donc $\mathbb{E}[|f(X_n) - f(X)| \cdot \mathbf{1}_{E_3}] \le \eta \cdot \mathbb{P}(E_3) \le \eta \cdot 1 = \eta$.
+Sur $E_1$, on majore brutalement par la borne : $|f(X_n) - f(X)| \le 2M$.
+Sur $E_2$, on majore brutalement par $2M$.
+Sur $E_3$, par uniforme continuité, $|f(X_n) - f(X)| \le \eta$.
+
+En séparant l'espérance, on obtient :
+$$ \mathbb{E}[|f(X_n) - f(X)|] \le 2M \cdot \mathbb{P}(E_1) + 2M \cdot \mathbb{P}(E_2) + \eta \cdot \mathbb{P}(E_3) $$
+$$ \mathbb{E}[|f(X_n) - f(X)|] \le 2M \cdot \mathbb{P}(|X_n - X| \ge \delta) + 2M \cdot \mathbb{P}(X \notin K) + \eta \cdot 1 $$
+Par hypothèse de convergence en probabilité, $\lim_{n \to \infty} \mathbb{P}(|X_n - X| \ge \delta) = 0$.
+Par choix de $K$, $\mathbb{P}(X \notin K) < \eta$.
+Donc, pour $n$ suffisamment grand :
+$$ \mathbb{E}[|f(X_n) - f(X)|] \le 2M \cdot \eta + 2M \cdot \eta + \eta = (4M + 1)\eta $$
+Puisque $\eta$ est arbitrairement petit, la limite supérieure de l'écart est nulle, ce qui prouve la convergence en loi.
 
 En sommant, nous obtenons :
 $$ \mathbb{E}[|f(X_n) - f(X)|] \le 2M \cdot \mathbb{P}(|X_n - X| \ge \delta) + 2M\eta + \eta = 2M \cdot \mathbb{P}(|X_n - X| \ge \delta) + (2M+1)\eta $$
@@ -234,305 +217,239 @@ Or, $\eta > 0$ a été choisi de manière arbitraire. Cette inégalité étant v
 $$ \lim_{n \to \infty} \mathbb{E}[|f(X_n) - f(X)|] = 0 $$
 Ainsi, la convergence en loi est démontrée. $\blacksquare$
 
-\section{4. Applications en Physique, Logique et Intelligence Artificielle}
+L'architecture conceptuelle des modes de convergence est la pierre angulaire de l'analyse asymptotique des algorithmes en IA et en physique statistique.
 
-\subsection{A. Consistance asymptotique (Machine Learning)}
-En théorie de l'apprentissage statistique, on dit qu'un algorithme fournissant un estimateur paramétrique $\hat{\theta}_n$ (calculé sur $n$ observations) est convergent si cet estimateur approche la "vraie" valeur $\theta^*$ du modèle génératif sous-jacent. Cette convergence est quantifiée mathématiquement par la convergence en probabilité ($\hat{\theta}_n \xrightarrow{\mathbb{P}} \theta^*$), justifiant ainsi théoriquement que l'accumulation massive de données permet l'extraction de signaux constants sans ambiguïté.
+\subsection{Consistance des Estimateurs (Machine Learning)}
+En théorie de l'apprentissage (PAC Learning), on construit des estimateurs $\hat{\theta}_n$ à partir d'un jeu de données de taille $n$. Un algorithme est dit \textbf{consistant} si l'estimateur converge en probabilité vers la vraie valeur des paramètres de la population, c'est-à-dire $\hat{\theta}_n \xrightarrow{\mathbb{P}} \theta^*$. Si la convergence a lieu presque sûrement ($\hat{\theta}_n \xrightarrow{p.s.} \theta^*$), on parle de \textbf{consistance forte}. La consistance garantit que l'accumulation de données est structurellement capable de débusquer la vérité.
 
-\subsection{B. Dynamique de la rétropropagation du gradient (SGD)}
-La descente de gradient stochastique, clé de voûte de l'entraînement des modèles d'IA génératifs (Transformers, CNNs), repose sur une suite de poids synaptiques $\theta_n$. Bien que chaque mise à jour $\nabla L(\theta_n, x_i)$ soit bruitée car évaluée sur un mini-batch aléatoire, la théorie des martingales garantit (sous les conditions de pas de Robbins-Monro) que l'algorithme converge \textbf{presque sûrement} vers un point critique (gradient nul) de l'espace de perte.
+\subsection{Descente de Gradient Stochastique (SGD)}
+L'optimisation des réseaux de neurones profonds repose sur la minimisation d'une fonction de perte empirique via la descente de gradient stochastique. Sous des hypothèses strictes d'atténuation du pas d'apprentissage (condition de Robbins-Monro : $\sum \eta_n = \infty$ et $\sum \eta_n^2 < \infty$), on utilise des martingales pour démontrer que la suite des poids synaptiques $\theta_n$ converge \textbf{presque sûrement} vers un minimum local de la fonction d'erreur, assurant la stabilité finale du modèle d'IA malgré le bruit intrinsèque des mini-batchs.
+
+\subsection{Théorèmes de Convergence en Loi en Physique Statistique}
+En physique des particules, l'évolution macroscopique d'un gaz parfait résulte de l'agrégation de millions de variables aléatoires microscopiques. Le Théorème Central Limite (qui stipule que la moyenne de variables indépendantes et identiquement distribuées converge \textbf{en loi} vers une distribution normale) justifie mathématiquement pourquoi la distribution des vitesses des particules obéit universellement à la loi normale de Maxwell-Boltzmann, indépendamment des spécificités dynamiques sous-jacentes.
 
 \subsection{C. Théorème Central Limite (Physique statistique)}
 En mécanique statistique, les variables macroscopiques (comme la pression d'un gaz sur une paroi) résultent de l'accumulation de millions de petites fluctuations (les impacts des molécules microscopiques, que l'on peut modéliser par des variables aléatoires $(X_i)$ i.i.d). Bien qu'il soit impossible de connaître la répartition microscopique individuelle, le Théorème Central Limite garantit que la somme normalisée $\frac{1}{\sqrt{n}} \sum (X_i - \mu)$ converge universellement \textbf{en loi} vers une distribution Gaussienne $\mathcal{N}(0, \sigma^2)$, expliquant la prévalence quasi-universelle de la cloche de Gauss dans les phénomènes thermiques et browniens.
 
-\newpage
-\part*{Travaux Dirigés}
+\part{Exercices d'Application et de Concours}
 \subsection*{Exercice 01}
 
-\textbf{Difficulté :} $\bigstar\star\star\star\star$
+\quad $\bigstar\star\star\star\star$
 
 \textbf{Énoncé :}
-Convergence p.s. d'une suite géométrique
+Soit une suite de variables aléatoires $X_n$ telles que $\mathbb{P}(X_n = 1) = \frac{1}{n}$ et $\mathbb{P}(X_n = 0) = 1 - \frac{1}{n}$.
+Montrez que $X_n$ converge en probabilité vers la variable certaine $X = 0$.
 
-Soit $(X_n)$ une suite de variables aléatoires indépendantes et identiquement distribuées selon la loi uniforme sur $[0, 1]$.
-Posons $Y_n = \max(X_1, X_2, \dots, X_n)$.
-Montrez que $Y_n$ converge presque sûrement vers la variable certaine $Y = 1$.
-
-\textbf{Correction exhaustive :}
-Puisque $Y_n$ est le maximum de variables à valeurs dans $[0, 1]$, on a pour tout $n$, $0 \le Y_n \le 1$.
-De plus, la suite $(Y_n)_{n \ge 1}$ est par définition croissante. En effet, $Y_{n+1} = \max(Y_n, X_{n+1}) \ge Y_n$.
-Une suite de variables aléatoires presque sûrement croissante et presque sûrement majorée converge presque sûrement vers une limite.
-Appelons cette limite $Y$. Montrons que $Y = 1$ presque sûrement.
-Pour tout $\epsilon \in ]0, 1[$, évaluons la probabilité que $Y_n \le 1 - \epsilon$ :
-$$ \mathbb{P}(Y_n \le 1 - \epsilon) = \mathbb{P}(\max(X_1, \dots, X_n) \le 1 - \epsilon) $$
-Par indépendance des variables $X_i$ :
-$$ \mathbb{P}(Y_n \le 1 - \epsilon) = \prod_{i=1}^n \mathbb{P}(X_i \le 1 - \epsilon) = (1 - \epsilon)^n $$
-La probabilité de l'événement $\{Y \le 1 - \epsilon\}$ est bornée par $\mathbb{P}(Y_n \le 1 - \epsilon)$ pour tout $n$.
-En faisant tendre $n \to \infty$, comme $(1 - \epsilon) \in ]0, 1[$, on a $(1 - \epsilon)^n \to 0$.
-Ainsi, $\mathbb{P}(Y \le 1 - \epsilon) = 0$ pour tout $\epsilon > 0$.
-Comme $Y_n \le 1$ p.s., on a $Y \le 1$ p.s.
-La seule possibilité restante est que $\mathbb{P}(Y = 1) = 1$.
-La convergence presque sûre vers 1 est donc établie.
+\textbf{Correction :}
+Nous devons montrer que pour tout $\epsilon > 0$, $\lim_{n \to \infty} \mathbb{P}(|X_n - 0| > \epsilon) = 0$.
+Soit $\epsilon \in ]0, 1[$. Puisque $X_n$ ne prend que les valeurs $0$ et $1$, on a :
+$$ \mathbb{P}(|X_n| > \epsilon) = \mathbb{P}(X_n = 1) = \frac{1}{n} $$
+En passant à la limite lorsque $n \to \infty$ :
+$$ \lim_{n \to \infty} \mathbb{P}(|X_n| > \epsilon) = \lim_{n \to \infty} \frac{1}{n} = 0 $$
+Ainsi, $X_n \xrightarrow{\mathbb{P}} 0$.
 
 
 \subsection*{Exercice 02}
 
-\textbf{Difficulté :} $\bigstar\star\star\star\star$
+\quad $\bigstar\star\star\star\star$
 
 \textbf{Énoncé :}
-Non-convergence dans L1 avec convergence p.s.
+Soit $X_n$ une suite de variables aléatoires suivant une loi uniforme discrète sur $\{1, 2, \dots, n\}$.
+Montrez que $X_n/n$ ne converge pas en probabilité vers $0$.
 
-Construisez explicitement une suite de variables aléatoires $(X_n)_{n \in \mathbb{N}^*}$ qui converge presque sûrement vers $0$, mais qui diverge vers $+\infty$ dans $L^1$.
-
-\textbf{Correction exhaustive :}
-Considérons l'espace probabilisé usuel $(\Omega, \mathcal{F}, \mathbb{P}) = ([0, 1], \mathcal{B}([0, 1]), \lambda)$ où $\lambda$ est la mesure de Lebesgue.
-Définissons la variable aléatoire $X_n : \Omega \to \mathbb{R}$ par :
-$$ X_n(\omega) = n^2 \mathbf{1}_{\left[0, \frac{1}{n}\right]}(\omega) $$
-Étudions la convergence presque sûre :
-Fixons $\omega \in ]0, 1]$. Par la propriété d'Archimède, il existe un entier $N \ge 1$ tel que $\frac{1}{N} < \omega$.
-Pour tout $n \ge N$, $\omega \notin \left[0, \frac{1}{n}\right]$, ce qui implique $X_n(\omega) = 0$.
-Par conséquent, $\lim_{n \to \infty} X_n(\omega) = 0$ pour tout $\omega \in ]0, 1]$.
-L'événement sur lequel la convergence n'a pas lieu est contenu dans $\{0\}$, qui est de mesure de Lebesgue nulle ($\lambda(\{0\}) = 0$).
-Ainsi, $X_n \xrightarrow{p.s.} 0$.
-
-Calculons l'espérance de $X_n$ (norme $L^1$) :
-$$ \mathbb{E}[|X_n|] = \int_0^1 n^2 \mathbf{1}_{\left[0, \frac{1}{n}\right]}(\omega) \, d\lambda(\omega) = n^2 \cdot \lambda\left(\left[0, \frac{1}{n}\right]\right) = n^2 \cdot \frac{1}{n} = n $$
-Lorsque $n \to \infty$, $\mathbb{E}[|X_n|] = n \to +\infty$.
-La suite diverge donc grossièrement dans $L^1$, bien qu'elle s'écrase presque partout. Ceci illustre la rupture de l'uniforme intégrabilité.
+\textbf{Correction :}
+Soit $\epsilon = \frac{1}{2}$. On cherche la probabilité que $|X_n/n - 0| > \frac{1}{2}$.
+$$ \mathbb{P}\left(\frac{X_n}{n} > \frac{1}{2}\right) = \mathbb{P}\left(X_n > \frac{n}{2}\right) $$
+Puisque $X_n$ est uniforme sur $\{1, \dots, n\}$, il y a $\lfloor n/2 \rfloor$ entiers strictement supérieurs à $n/2$ dans cet ensemble (ou $\lceil n/2 \rceil$ selon la parité, dans tous les cas, environ la moitié).
+$$ \mathbb{P}\left(X_n > \frac{n}{2}\right) \approx \frac{1}{2} $$
+En passant à la limite :
+$$ \lim_{n \to \infty} \mathbb{P}\left(\left| \frac{X_n}{n} \right| > \frac{1}{2}\right) = \frac{1}{2} \neq 0 $$
+Par conséquent, $X_n/n$ ne converge pas en probabilité vers $0$.
 
 
 \subsection*{Exercice 03}
 
-\textbf{Difficulté :} $\bigstar\bigstar\star\star\star$
+\quad $\bigstar\bigstar\star\star\star$
 
 \textbf{Énoncé :}
-Lemme de Borel-Cantelli
+Pour l'exercice 1, étudiez la convergence de $X_n$ dans $L^1$ et dans $L^2$.
 
-Soit $(X_n)_{n \ge 1}$ une suite de variables aléatoires. On suppose que pour tout $\epsilon > 0$, la série $\sum_{n=1}^\infty \mathbb{P}(|X_n| > \epsilon)$ est convergente.
-Démontrez que $X_n$ converge presque sûrement vers $0$.
+\textbf{Correction :}
+Rappelons que $\mathbb{P}(X_n = 1) = \frac{1}{n}$ et $\mathbb{P}(X_n = 0) = 1 - \frac{1}{n}$.
+\textbf{Convergence $L^1$ :}
+On calcule l'espérance de l'écart :
+$$ \mathbb{E}[|X_n - 0|] = 1 \cdot \mathbb{P}(X_n = 1) + 0 \cdot \mathbb{P}(X_n = 0) = \frac{1}{n} $$
+Puisque $\lim_{n \to \infty} \frac{1}{n} = 0$, la suite converge dans $L^1$ vers $0$.
 
-\textbf{Correction exhaustive :}
-Fixons $\epsilon > 0$. Considérons la suite d'événements $A_n^\epsilon = \{|X_n| > \epsilon\}$.
-Par hypothèse, la série $\sum_{n=1}^\infty \mathbb{P}(A_n^\epsilon) < \infty$.
-D'après le premier lemme de Borel-Cantelli, la probabilité que l'événement $A_n^\epsilon$ se réalise une infinité de fois est nulle :
-$$ \mathbb{P}(\limsup_{n \to \infty} A_n^\epsilon) = 0 $$
-L'événement $\limsup A_n^\epsilon$ s'écrit $\bigcap_{N=1}^\infty \bigcup_{n \ge N} A_n^\epsilon$.
-Prenons une suite de réels strictement positifs décroissant vers zéro, par exemple $\epsilon_k = \frac{1}{k}$ pour $k \in \mathbb{N}^*$.
-Soit $E_k = \limsup_{n \to \infty} A_n^{\epsilon_k}$. Nous avons montré que $\mathbb{P}(E_k) = 0$.
-Par sous-additivité de la mesure de probabilité, l'union dénombrable de ces événements de probabilité nulle est également de probabilité nulle :
-$$ \mathbb{P}\left(\bigcup_{k=1}^\infty E_k\right) \le \sum_{k=1}^\infty \mathbb{P}(E_k) = 0 $$
-Considérons l'événement complémentaire de cette union, notons-le $\Omega^* = \left(\bigcup_{k=1}^\infty E_k\right)^c = \bigcap_{k=1}^\infty E_k^c$. Sa probabilité vaut 1.
-Pour tout $\omega \in \Omega^*$, et pour tout $k \ge 1$, $\omega \in E_k^c$, ce qui signifie qu'il n'appartient pas à $\limsup A_n^{\epsilon_k}$.
-Donc pour tout $k \ge 1$, l'événement $\{|X_n(\omega)| > \frac{1}{k}\}$ ne se réalise qu'un nombre fini de fois.
-Autrement dit, il existe un entier $N(\omega, k)$ tel que pour tout $n \ge N(\omega, k)$, $|X_n(\omega)| \le \frac{1}{k}$.
-Ceci est exactement la définition de la convergence $\lim_{n \to \infty} X_n(\omega) = 0$.
-Puisque ce résultat est vrai pour tout $\omega \in \Omega^*$, et que $\mathbb{P}(\Omega^*) = 1$, nous avons prouvé que $X_n \xrightarrow{p.s.} 0$.
+\textbf{Convergence $L^2$ :}
+$$ \mathbb{E}[|X_n - 0|^2] = 1^2 \cdot \mathbb{P}(X_n = 1) + 0^2 \cdot \mathbb{P}(X_n = 0) = \frac{1}{n} $$
+Puisque $\lim_{n \to \infty} \frac{1}{n} = 0$, la suite converge également dans $L^2$ vers $0$.
 
 
 \subsection*{Exercice 04}
 
-\textbf{Difficulté :} $\bigstar\bigstar\star\star\star$
+\quad $\bigstar\bigstar\star\star\star$
 
 \textbf{Énoncé :}
-Convergence de la moyenne empirique (Loi Faible)
+Soit $U \sim \mathcal{U}([0,1])$. Définissons $Y_n = U^n$.
+Étudiez la convergence en probabilité et presque sûre de la suite $Y_n$.
 
-Soit $(X_n)_{n \ge 1}$ une suite de variables aléatoires indépendantes et identiquement distribuées, d'espérance $\mu = \mathbb{E}[X_1]$ et de variance $\sigma^2 = \text{Var}(X_1) < \infty$.
-Posons la moyenne empirique $S_n = \frac{1}{n} \sum_{i=1}^n X_i$.
-Montrez en utilisant l'inégalité de Bienaymé-Chebyshev que $S_n$ converge en probabilité vers $\mu$.
+\textbf{Correction :}
+\textbf{Convergence Presque Sûre :}
+L'espace des réalisations est $\Omega = [0, 1]$. La variable aléatoire est $Y_n(\omega) = \omega^n$.
+Pour tout $\omega \in [0, 1[$, on a $\lim_{n \to \infty} \omega^n = 0$.
+Pour $\omega = 1$, $\lim_{n \to \infty} 1^n = 1$.
+L'ensemble de convergence vers $0$ est $[0, 1[$. Puisque $U$ suit une loi uniforme, $\mathbb{P}(U = 1) = 0$.
+Donc $\mathbb{P}\left(\lim_{n \to \infty} Y_n = 0\right) = 1$.
+Ainsi, $Y_n \xrightarrow{p.s.} 0$.
 
-\textbf{Correction exhaustive :}
-La moyenne empirique $S_n$ est une combinaison linéaire de variables aléatoires.
-Par linéarité de l'espérance, nous calculons l'espérance de $S_n$ :
-$$ \mathbb{E}[S_n] = \mathbb{E}\left[\frac{1}{n} \sum_{i=1}^n X_i\right] = \frac{1}{n} \sum_{i=1}^n \mathbb{E}[X_i] = \frac{1}{n} \cdot (n\mu) = \mu $$
-Par indépendance des variables aléatoires $X_i$, la variance de la somme est la somme des variances :
-$$ \text{Var}(S_n) = \text{Var}\left(\frac{1}{n} \sum_{i=1}^n X_i\right) = \frac{1}{n^2} \sum_{i=1}^n \text{Var}(X_i) = \frac{1}{n^2} \cdot (n\sigma^2) = \frac{\sigma^2}{n} $$
-Nous voulons montrer la convergence en probabilité vers $\mu$, c'est-à-dire que pour tout $\epsilon > 0$, $\lim_{n \to \infty} \mathbb{P}(|S_n - \mu| > \epsilon) = 0$.
-Fixons un réel $\epsilon > 0$. Appliquons l'inégalité de Bienaymé-Chebyshev à la variable aléatoire $S_n$ :
-$$ \mathbb{P}(|S_n - \mathbb{E}[S_n]| \ge \epsilon) \le \frac{\text{Var}(S_n)}{\epsilon^2} $$
-En remplaçant l'espérance et la variance par les valeurs calculées :
-$$ \mathbb{P}(|S_n - \mu| \ge \epsilon) \le \frac{\sigma^2}{n\epsilon^2} $$
-Puisque $\sigma^2$ et $\epsilon$ sont des constantes indépendantes de $n$, lorsque nous passons à la limite $n \to \infty$ :
-$$ \lim_{n \to \infty} \frac{\sigma^2}{n\epsilon^2} = 0 $$
-Étant donné qu'une probabilité est positive ou nulle, le théorème d'encadrement donne :
-$$ \lim_{n \to \infty} \mathbb{P}(|S_n - \mu| \ge \epsilon) = 0 $$
-Ainsi, $S_n \xrightarrow{\mathbb{P}} \mu$. C'est la démonstration de la Loi Faible des Grands Nombres dans le cas fini-variant.
+\textbf{Convergence en probabilité :}
+Puisque la convergence presque sûre implique la convergence en probabilité (Théorème du cours), nous pouvons conclure immédiatement que $Y_n \xrightarrow{\mathbb{P}} 0$.
+(On peut aussi le vérifier à la main : $\mathbb{P}(U^n > \epsilon) = \mathbb{P}(U > \epsilon^{1/n}) = 1 - \epsilon^{1/n} \to 1 - 1 = 0$.)
 
 
 \subsection*{Exercice 05}
 
-\textbf{Difficulté :} $\bigstar\bigstar\bigstar\star\star$
+\quad $\bigstar\bigstar\bigstar\star\star$
 
 \textbf{Énoncé :}
-Convergence en loi (théorème de Slutsky partiel)
+Soit $X_n$ distribuée selon une loi Normale $\mathcal{N}\left(0, \frac{1}{n}\right)$.
+Démontrez que $X_n$ converge en probabilité vers $0$ en utilisant l'inégalité de Bienaymé-Tchebychev.
 
-Soient $(X_n)$ et $(Y_n)$ deux suites de variables aléatoires.
-On suppose que $X_n$ converge en loi vers $X$, et que $Y_n$ converge en probabilité vers la variable certaine $c$ ($c \in \mathbb{R}$).
-Montrez que la suite $X_n + Y_n$ converge en loi vers $X + c$.
-
-\textbf{Correction exhaustive :}
-Pour prouver que $X_n + Y_n \xrightarrow{\mathcal{L}} X + c$, nous allons utiliser la caractérisation par l'espérance des fonctions continues bornées. Soit $f : \mathbb{R} \to \mathbb{R}$ uniformément continue et bornée. Soit $M > 0$ la borne telle que $|f(x)| \le M$ pour tout $x$.
-Puisque $f$ est uniformément continue, pour tout $\eta > 0$, il existe $\delta > 0$ tel que pour tous $x, y \in \mathbb{R}$, $|x - y| < \delta \implies |f(x) - f(y)| < \eta$.
-Nous voulons montrer que $\lim_{n \to \infty} \mathbb{E}[f(X_n + Y_n)] = \mathbb{E}[f(X + c)]$.
-Décomposons la différence :
-$$ |\mathbb{E}[f(X_n + Y_n)] - \mathbb{E}[f(X + c)]| \le |\mathbb{E}[f(X_n + Y_n)] - \mathbb{E}[f(X_n + c)]| + |\mathbb{E}[f(X_n + c)] - \mathbb{E}[f(X + c)]| $$
-Traitons le second terme : soit $g(x) = f(x + c)$. La fonction $g$ est également continue et bornée. Puisque $X_n \xrightarrow{\mathcal{L}} X$, par définition de la convergence en loi, on a :
-$$ \lim_{n \to \infty} \mathbb{E}[g(X_n)] = \mathbb{E}[g(X)] \implies \lim_{n \to \infty} |\mathbb{E}[f(X_n + c)] - \mathbb{E}[f(X + c)]| = 0 $$
-Traitons le premier terme : nous majorons $|f(X_n + Y_n) - f(X_n + c)|$.
-L'écart dans l'argument est $|(X_n + Y_n) - (X_n + c)| = |Y_n - c|$.
-Introduisons l'événement $A_n = \{|Y_n - c| \ge \delta\}$.
-$$ \mathbb{E}[|f(X_n + Y_n) - f(X_n + c)|] = \mathbb{E}[|f(X_n + Y_n) - f(X_n + c)| \mathbf{1}_{A_n}] + \mathbb{E}[|f(X_n + Y_n) - f(X_n + c)| \mathbf{1}_{A_n^c}] $$
-Sur l'événement $A_n$, on majore l'écart par $2M$. Donc l'espérance est majorée par $2M \cdot \mathbb{P}(A_n)$.
-Sur l'événement complémentaire $A_n^c$, on a $|Y_n - c| < \delta$. Par uniforme continuité de $f$, $|f(X_n + Y_n) - f(X_n + c)| < \eta$. L'espérance est donc majorée par $\eta$.
-Ainsi :
-$$ \mathbb{E}[|f(X_n + Y_n) - f(X_n + c)|] \le 2M \cdot \mathbb{P}(|Y_n - c| \ge \delta) + \eta $$
-Puisque $Y_n \xrightarrow{\mathbb{P}} c$, pour ce $\delta > 0$ fixé, la probabilité $\mathbb{P}(|Y_n - c| \ge \delta)$ tend vers 0 lorsque $n \to \infty$.
-La limite de l'écart est donc inférieure ou égale à $\eta$.
-Comme $\eta$ a été choisi arbitrairement petit, la limite de ce terme est nulle.
-En sommant les deux limites nulles, on obtient la convergence désirée. (Le résultat se généralise pour $f$ continue bornée grâce au théorème de Portmanteau partiel).
+\textbf{Correction :}
+L'espérance de $X_n$ est $\mathbb{E}[X_n] = 0$ et sa variance est $\text{Var}(X_n) = \frac{1}{n}$.
+Nous cherchons à évaluer $\mathbb{P}(|X_n - 0| > \epsilon)$ pour un $\epsilon > 0$ fixé.
+D'après l'inégalité de Bienaymé-Tchebychev, pour toute variable aléatoire $Y$ d'espérance $\mu$ et de variance $\sigma^2$ :
+$$ \mathbb{P}(|Y - \mu| \ge \epsilon) \le \frac{\sigma^2}{\epsilon^2} $$
+Appliquée à $X_n$ :
+$$ \mathbb{P}(|X_n| \ge \epsilon) \le \frac{1/n}{\epsilon^2} = \frac{1}{n\epsilon^2} $$
+En passant à la limite quand $n \to \infty$, pour tout $\epsilon > 0$ fixe :
+$$ \lim_{n \to \infty} \frac{1}{n\epsilon^2} = 0 $$
+Ainsi, $\lim_{n \to \infty} \mathbb{P}(|X_n| \ge \epsilon) = 0$.
+La suite converge bien en probabilité vers $0$.
 
 
 \subsection*{Exercice 06}
 
-\textbf{Difficulté :} $\bigstar\bigstar\bigstar\star\star$
+\quad $\bigstar\bigstar\bigstar\star\star$
 
 \textbf{Énoncé :}
-Convergence d'une variable exponentielle rescalée
+Soit $Z_n$ une suite de variables aléatoires telles que $\mathbb{P}(Z_n = \sqrt{n}) = \frac{1}{n}$ et $\mathbb{P}(Z_n = 0) = 1 - \frac{1}{n}$.
+Montrez que $Z_n$ converge en probabilité vers $0$, mais qu'elle ne converge pas dans $L^2$.
 
-Soit $(X_n)$ une suite de variables aléatoires indépendantes suivant la loi exponentielle de paramètre $\lambda = n$.
-Étudiez les modes de convergence (presque sûre, probabilité, loi) de la suite $(X_n)$.
+\textbf{Correction :}
+\textbf{Convergence en Probabilité :}
+Soit $\epsilon \in ]0, 1[$. Puisque $Z_n$ vaut $0$ ou $\sqrt{n}$ (avec $n \ge 1$), on a :
+$$ \mathbb{P}(|Z_n - 0| > \epsilon) = \mathbb{P}(Z_n = \sqrt{n}) = \frac{1}{n} $$
+Par passage à la limite, $\lim_{n \to \infty} \mathbb{P}(|Z_n| > \epsilon) = 0$. Donc $Z_n \xrightarrow{\mathbb{P}} 0$.
 
-\textbf{Correction exhaustive :}
-Déterminons d'abord la fonction de répartition de $X_n$.
-Pour tout $t > 0$, $F_n(t) = \mathbb{P}(X_n \le t) = 1 - e^{-nt}$.
-Pour $t \le 0$, $F_n(t) = 0$.
-Fixons $t > 0$. Lorsque $n \to \infty$, $e^{-nt} \to 0$, donc $F_n(t) \to 1$.
-Pour $t < 0$, $F_n(t) = 0 \to 0$.
-La limite simple des fonctions de répartition est la fonction $\mathbf{1}_{[0, +\infty[}(t)$, qui correspond à la fonction de répartition de la variable certaine $X = 0$.
-Puisque la convergence a lieu en tout point de continuité de la fonction de répartition de la variable constante $0$ (seul le point $t=0$ pose question, mais on ne regarde que les points de continuité), on déduit que :
-$$ X_n \xrightarrow{\mathcal{L}} 0 $$
-Puisque la limite est une variable certaine (constante), le théorème de convergence affirme que la convergence en loi vers une constante est équivalente à la convergence en probabilité.
-Vérifions-le analytiquement : pour tout $\epsilon > 0$,
-$$ \mathbb{P}(|X_n - 0| > \epsilon) = \mathbb{P}(X_n > \epsilon) = 1 - F_n(\epsilon) = e^{-n\epsilon} $$
-Puisque $\epsilon > 0$, $\lim_{n \to \infty} e^{-n\epsilon} = 0$. Ainsi, $X_n \xrightarrow{\mathbb{P}} 0$.
-Étudions la convergence presque sûre via Borel-Cantelli.
-Fixons $\epsilon > 0$. Formons la somme des probabilités :
-$$ \sum_{n=1}^\infty \mathbb{P}(|X_n| > \epsilon) = \sum_{n=1}^\infty e^{-n\epsilon} $$
-Il s'agit d'une série géométrique de raison $q = e^{-\epsilon} \in ]0, 1[$, qui est convergente.
-Par le premier lemme de Borel-Cantelli, l'événement $\{|X_n| > \epsilon\}$ ne se réalise qu'un nombre fini de fois avec probabilité 1.
-Puisque cela est vrai pour une suite de $\epsilon$ tendant vers $0$, on en déduit que :
-$$ X_n \xrightarrow{p.s.} 0 $$
-La suite converge donc selon les trois modes principaux vers la variable $0$.
+\textbf{Convergence $L^2$ :}
+Calculons l'espérance du carré :
+$$ \mathbb{E}[|Z_n - 0|^2] = (\sqrt{n})^2 \cdot \mathbb{P}(Z_n = \sqrt{n}) + 0^2 \cdot \mathbb{P}(Z_n = 0) $$
+$$ \mathbb{E}[Z_n^2] = n \cdot \frac{1}{n} = 1 $$
+La limite de $\mathbb{E}[|Z_n - 0|^2]$ est $1$, qui n'est pas égale à $0$. Par conséquent, $Z_n$ ne converge pas vers $0$ dans l'espace de Hilbert $L^2$.
 
 
 \subsection*{Exercice 07}
 
-\textbf{Difficulté :} $\bigstar\bigstar\bigstar\bigstar\star$
+\quad $\bigstar\bigstar\bigstar\bigstar\star$
 
 \textbf{Énoncé :}
-Convergence et transformée fonctionnelle continue
+Soit $W_n$ distribuée uniformément sur $[-n, n]$. Considérons la suite normée $V_n = \frac{W_n}{n}$.
+Vers quelle loi la suite $V_n$ converge-t-elle ? Démontrez-le formellement à l'aide des fonctions de répartition.
 
-Soit $(X_n)$ convergeant en probabilité vers $X$. Soit $g : \mathbb{R} \to \mathbb{R}$ une fonction uniformément continue.
-Démontrez que $g(X_n)$ converge en probabilité vers $g(X)$. (Ce résultat s'étend aux fonctions continues par le théorème d'approximation sur les compacts).
+\textbf{Correction :}
+Déterminons d'abord la loi de $V_n$. Pour tout $x \in [-1, 1]$, on a :
+$$ F_{V_n}(x) = \mathbb{P}(V_n \le x) = \mathbb{P}\left(\frac{W_n}{n} \le x\right) = \mathbb{P}(W_n \le nx) $$
+Puisque $W_n$ suit $\mathcal{U}([-n, n])$, sa densité est $\frac{1}{2n}$ sur cet intervalle.
+$$ \mathbb{P}(W_n \le nx) = \int_{-n}^{nx} \frac{1}{2n} dt = \frac{nx - (-n)}{2n} = \frac{n(x+1)}{2n} = \frac{x+1}{2} $$
+Ainsi, pour tout $x \in [-1, 1]$, $F_{V_n}(x) = \frac{x+1}{2}$, indépendamment de $n$.
+Pour $x < -1$, $F_{V_n}(x) = 0$, et pour $x > 1$, $F_{V_n}(x) = 1$.
 
-\textbf{Correction exhaustive :}
-Puisque $g$ est uniformément continue, par définition, pour tout $\epsilon > 0$, il existe un $\delta > 0$ tel que pour tous $x, y \in \mathbb{R}$,
-$$ |x - y| < \delta \implies |g(x) - g(y)| < \epsilon $$
-Par contraposée de cette implication purement déterministe (logique propositionnelle), on obtient :
-$$ |g(x) - g(y)| \ge \epsilon \implies |x - y| \ge \delta $$
-En remplaçant $x$ par la variable aléatoire $X_n(\omega)$ et $y$ par $X(\omega)$, on obtient l'inclusion d'événements aléatoires suivante :
-$$ \{\omega \in \Omega \mid |g(X_n(\omega)) - g(X(\omega))| \ge \epsilon\} \subseteq \{\omega \in \Omega \mid |X_n(\omega) - X(\omega)| \ge \delta\} $$
-Puisque le premier événement est inclus dans le second, la croissance de la mesure de probabilité nous indique que :
-$$ \mathbb{P}(|g(X_n) - g(X)| \ge \epsilon) \le \mathbb{P}(|X_n - X| \ge \delta) $$
-Par hypothèse, $X_n$ converge en probabilité vers $X$. Donc, pour le réel fixé $\delta > 0$, nous avons :
-$$ \lim_{n \to \infty} \mathbb{P}(|X_n - X| \ge \delta) = 0 $$
-Le terme majorant tendant vers zéro, et les probabilités étant minorées par zéro, le théorème d'encadrement conclut formellement :
-$$ \lim_{n \to \infty} \mathbb{P}(|g(X_n) - g(X)| \ge \epsilon) = 0 $$
-Ceci constitue l'exacte définition de la convergence en probabilité de la suite $(g(X_n))$ vers la variable $g(X)$.
+Puisque $F_{V_n}(x)$ est constante par rapport à $n$, la limite est exactement cette même fonction :
+$$ \lim_{n \to \infty} F_{V_n}(x) = \begin{cases} 0 \& \text{si } x < -1 \\ \frac{x+1}{2} \& \text{si } -1 \le x \le 1 \\ 1 \& \text{si } x > 1 \end{cases} $$
+On reconnaît la fonction de répartition d'une variable aléatoire uniforme sur $[-1, 1]$.
+Ainsi, $V_n$ converge en loi vers $V \sim \mathcal{U}([-1, 1])$. En fait, toutes les $V_n$ ont exactement cette loi.
 
 
 \subsection*{Exercice 08}
 
-\textbf{Difficulté :} $\bigstar\bigstar\bigstar\bigstar\star$
+\quad $\bigstar\bigstar\bigstar\bigstar\star$
 
 \textbf{Énoncé :}
-Convergence $L^p$ et intégrabilité de la limite
+Prouvez que la convergence en probabilité vers une constante implique la convergence en loi vers cette même constante. (Cas particulier du théorème du cours).
 
-Supposons que $X_n \xrightarrow{L^p} X$ pour $p \ge 1$.
-Démontrez de façon complète que la fonction limite $X$ appartient nécessairement à $L^p$, en utilisant la stricte inégalité de Minkowski.
+\textbf{Correction :}
+Soit $X_n \xrightarrow{\mathbb{P}} c$ où $c \in \mathbb{R}$ est une constante déterministe. On veut montrer que $\lim F_{X_n}(x) = F_c(x)$ pour tout point de continuité de $F_c$.
+La fonction de répartition de $c$ est la fonction indicatrice (Dirac en $c$) :
+$$ F_c(x) = \begin{cases} 0 \& \text{si } x < c \\ 1 \& \text{si } x \ge c \end{cases} $$
+Le seul point de discontinuité est $x = c$. Il suffit donc de vérifier la convergence pour $x < c$ et pour $x > c$.
 
-\textbf{Correction exhaustive :}
-Par hypothèse, pour tout $n$, $X_n \in L^p$, c'est-à-dire $\mathbb{E}[|X_n|^p] < \infty$.
-La condition $X_n \xrightarrow{L^p} X$ signifie que la quantité $\mathbb{E}[|X_n - X|^p]$ (la puissance $p$-ème de la norme $\|X_n - X\|_p$) tend vers $0$ lorsque $n \to \infty$.
-Ceci implique en particulier qu'il existe un rang $N$ à partir duquel cette quantité est finie. Ainsi, $\|X_n - X\|_p < \infty$ pour $n \ge N$.
-Considérons la norme dans l'espace $L^p$ définie par $\|Z\|_p = (\mathbb{E}[|Z|^p])^{1/p}$.
-La variable aléatoire $X$ peut s'écrire artificiellement comme une somme télescopique :
-$$ X = (X - X_N) + X_N $$
-Prenons la norme $L^p$ de cette somme. L'inégalité de Minkowski, qui exprime la sous-additivité de la norme, affirme que :
-$$ \|X\|_p = \|(X - X_N) + X_N\|_p \le \|X - X_N\|_p + \|X_N\|_p $$
-Puisque la norme est symétrique (absolue), $\|X - X_N\|_p = \|X_N - X\|_p$.
-Par hypothèse, nous savons que $\|X_N - X\|_p < \infty$ puisque la limite tend vers 0.
-De plus, $X_N \in L^p$ garantit que $\|X_N\|_p < \infty$.
-La somme de deux nombres réels finis étant finie, nous en déduisons :
-$$ \|X\|_p < \infty $$
-L'élévation à la puissance $p$ conserve la finitude (puisque $p \ge 1$) :
-$$ \mathbb{E}[|X|^p] = (\|X\|_p)^p < \infty $$
-Nous avons ainsi démontré que l'espace vectoriel d'arrivée n'a pas été fracturé : la limite de la convergence en norme $L^p$ reste strictement emprisonnée dans la classe des fonctions $L^p$ intégrables.
+\textbf{Cas 1 : $x < c$.} Posons $\epsilon = c - x > 0$.
+$$ \mathbb{P}(X_n \le x) = \mathbb{P}(X_n - c \le x - c) = \mathbb{P}(X_n - c \le -\epsilon) \le \mathbb{P}(|X_n - c| \ge \epsilon) $$
+Par hypothèse, $\mathbb{P}(|X_n - c| \ge \epsilon) \to 0$, donc $\mathbb{P}(X_n \le x) \to 0 = F_c(x)$.
+
+\textbf{Cas 2 : $x > c$.} Posons $\epsilon = x - c > 0$.
+$$ \mathbb{P}(X_n \le x) = 1 - \mathbb{P}(X_n > x) = 1 - \mathbb{P}(X_n - c > x - c) = 1 - \mathbb{P}(X_n - c > \epsilon) $$
+Puisque $\mathbb{P}(X_n - c > \epsilon) \le \mathbb{P}(|X_n - c| > \epsilon) \to 0$, on a :
+$$ \mathbb{P}(X_n \le x) \to 1 = F_c(x) $$
+Ceci prouve la convergence en loi vers $c$.
 
 
 \subsection*{Exercice 09}
 
-\textbf{Difficulté :} $\bigstar\bigstar\bigstar\bigstar\bigstar$
+\quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
 \textbf{Énoncé :}
-Absence de convergence $L^p$ pour la loi de Cauchy
+Montrez que si une suite de variables aléatoires converge en probabilité, alors on peut en extraire une sous-suite qui converge presque sûrement.
 
-Considérons une suite $(X_n)$ de variables indépendantes suivant la loi de Cauchy standard.
-La densité de $X_i$ est $f(x) = \frac{1}{\pi(1+x^2)}$.
-Posons la moyenne empirique $S_n = \frac{1}{n} \sum_{i=1}^n X_i$.
-Montrez rigoureusement que $S_n$ ne converge ni en probabilité, ni presque sûrement vers la constante 0, ruinant l'intuition de la loi des grands nombres.
-
-\textbf{Correction exhaustive :}
-La loi des grands nombres s'applique aux variables aléatoires admettant une espérance (une norme $L^1$ finie). Or, l'intégrale pour l'espérance de la loi de Cauchy vaut :
-$$ \int_{-\infty}^{\infty} |x| \frac{1}{\pi(1+x^2)} dx $$
-L'intégrande se comporte comme $\frac{1}{|x|}$ à l'infini. L'intégrale de Riemann d'une fonction de la forme $\frac{1}{x^a}$ avec $a \le 1$ est divergente. La loi de Cauchy ne possède donc pas de moment d'ordre 1.
-Pour étudier la somme, utilisons l'outil fondamental des probabilités additives : la fonction caractéristique.
-La fonction caractéristique de la loi de Cauchy standard est connue et vaut :
-$$ \phi_{X_1}(t) = \mathbb{E}[e^{itX_1}] = e^{-|t|} $$
-Par indépendance des $X_i$, la fonction caractéristique de la somme s'obtient par multiplication :
-$$ \phi_{\sum_{i=1}^n X_i}(t) = \prod_{i=1}^n \phi_{X_i}(t) = (e^{-|t|})^n = e^{-n|t|} $$
-Appliquons la transformation linéaire due au coefficient $1/n$ : pour toute variable aléatoire $Y$ et scalaire $c$, $\phi_{cY}(t) = \phi_Y(ct)$.
-$$ \phi_{S_n}(t) = \phi_{\frac{1}{n}\sum X_i}(t) = \phi_{\sum X_i}\left(\frac{t}{n}\right) = e^{-n\left|\frac{t}{n}\right|} = e^{-|t|} $$
-Incroyablement, la fonction caractéristique de $S_n$ reste rigoureusement identique à celle de $X_1$ !
-Puisque la fonction caractéristique détermine univoquement la loi d'une variable aléatoire (Théorème d'inversion de Fourier-Lévy), la variable empirique $S_n$ suit elle-même une loi de Cauchy standard pour tout $n$.
-$$ S_n \sim \text{Cauchy}(0, 1) $$
-Par conséquent, la suite des distributions de $S_n$ ne s'écrase pas vers un dirac en 0. Elle converge en loi vers une variable $X \sim \text{Cauchy}(0, 1)$ non-dégénérée.
-Puisque la limite en loi n'est pas constante, et que la convergence en probabilité vers une variable impliquerait la convergence en loi vers cette même variable dégénérée, on conclut de manière absolue que $S_n$ ne converge \textbf{pas} en probabilité vers 0 (ni vers aucune constante).
-A fortiori, puisqu'elle ne converge pas en probabilité, elle ne peut pas converger presque sûrement vers 0, pulvérisant ainsi l'idée naïve d'une stabilisation algorithmique de ces données.
+\textbf{Correction :}
+Soit $X_n \xrightarrow{\mathbb{P}} X$. Par définition, pour tout $\epsilon > 0$, $\mathbb{P}(|X_n - X| > \epsilon) \to 0$.
+Construisons la sous-suite par extraction. Pour chaque entier $k \ge 1$, fixons $\epsilon_k = \frac{1}{2^k}$.
+Puisque la probabilité tend vers zéro, il existe un rang $n_k$ (que l'on peut choisir strictement croissant : $n_1 < n_2 < \dots$) tel que :
+$$ \mathbb{P}\left(|X_{n_k} - X| > \frac{1}{2^k}\right) < \frac{1}{2^k} $$
+Considérons les événements $A_k = \left\{|X_{n_k} - X| > \frac{1}{2^k}\right\}$.
+La somme des probabilités est une série géométrique convergente :
+$$ \sum_{k=1}^\infty \mathbb{P}(A_k) < \sum_{k=1}^\infty \frac{1}{2^k} = 1 < \infty $$
+D'après le premier Lemme de Borel-Cantelli, la probabilité que les $A_k$ se réalisent infiniment souvent est nulle :
+$$ \mathbb{P}(\limsup A_k) = 0 $$
+Ainsi, presque sûrement, seuls un nombre fini de $A_k$ se réalisent. Cela implique que pour presque tout $\omega \in \Omega$, il existe un entier $K(\omega)$ tel que pour tout $k \ge K(\omega)$ :
+$$ |X_{n_k}(\omega) - X(\omega)| \le \frac{1}{2^k} $$
+En passant à la limite lorsque $k \to \infty$, l'écart tend vers $0$ presque sûrement.
+Donc $X_{n_k} \xrightarrow{p.s.} X$.
 
 
 \subsection*{Exercice 10}
 
-\textbf{Difficulté :} $\bigstar\bigstar\bigstar\bigstar\bigstar$
+\quad $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
 \textbf{Énoncé :}
-Preuve du contre-exemple p.s n'implique pas $L^p$
+Théorème de Slutsky (Cas Particulier).
+Soient $X_n \xrightarrow{\mathcal{L}} X$ (convergence en loi) et $Y_n \xrightarrow{\mathbb{P}} c$ (convergence en probabilité vers une constante $c$).
+Montrez que la somme $X_n + Y_n \xrightarrow{\mathcal{L}} X + c$.
+
+\textbf{Correction :}
+Nous voulons montrer que pour toute fonction $f$ continue et bornée (et supposons-la uniformément continue, ce qui suffit par densité), $\mathbb{E}[f(X_n + Y_n)] \to \mathbb{E}[f(X + c)]$.
+Décomposons la différence :
+$$ |\mathbb{E}[f(X_n + Y_n)] - \mathbb{E}[f(X + c)]| \le \mathbb{E}[|f(X_n + Y_n) - f(X_n + c)|] + |\mathbb{E}[f(X_n + c)] - \mathbb{E}[f(X + c)]| $$
+
+1. \textbf{Deuxième terme :} Puisque $X_n \xrightarrow{\mathcal{L}} X$, et que la fonction $g(x) = f(x + c)$ est continue et bornée, on a par définition de la convergence en loi :
+$$ \lim_{n \to \infty} \mathbb{E}[f(X_n + c)] = \mathbb{E}[f(X + c)] $$
+Donc le deuxième terme tend vers zéro.
+
+2. \textbf{Premier terme :} Soit $M$ un majorant de $f$. Pour un $\epsilon > 0$ donné, par uniforme continuité de $f$, il existe $\delta > 0$ tel que si $|a - b| < \delta$, alors $|f(a) - f(b)| < \epsilon$.
+Ici $| (X_n + Y_n) - (X_n + c) | = |Y_n - c|$.
+On sépare l'espérance en conditionnant par $|Y_n - c| < \delta$ et $|Y_n - c| \ge \delta$ :
+$$ \mathbb{E}[|f(X_n + Y_n) - f(X_n + c)|] \le \epsilon \cdot \mathbb{P}(|Y_n - c| < \delta) + 2M \cdot \mathbb{P}(|Y_n - c| \ge \delta) $$
+Or, puisque $Y_n \xrightarrow{\mathbb{P}} c$, on sait que $\lim_{n \to \infty} \mathbb{P}(|Y_n - c| \ge \delta) = 0$.
+Ainsi, en prenant la limite sup :
+$$ \limsup_{n \to \infty} \mathbb{E}[|f(X_n + Y_n) - f(X_n + c)|] \le \epsilon \cdot 1 + 2M \cdot 0 = \epsilon $$
+Puisque $\epsilon$ est arbitraire, ce terme tend vers $0$.
+
+En additionnant les deux résultats, on trouve que $\lim_{n \to \infty} \mathbb{E}[f(X_n + Y_n)] = \mathbb{E}[f(X + c)]$, ce qui démontre la convergence en loi de la somme.
 
 Rédigez la démonstration formelle du fait que la convergence presque sûre n'implique pas la convergence dans $L^p$ (ni même $L^1$). On exhibera un contre-exemple explicite et on calculera toutes les normes.
 
-\textbf{Correction exhaustive :}
-Nous devons fournir un exemple canonique illustrant la fuite de masse vers l'infini (concentration d'énergie sur un volume évanescent).
-Considérons l'espace de probabilité $\Omega = ]0, 1]$ muni de la mesure de Borel-Lebesgue usuelle $\mathbb{P}$.
-Définissons la suite de fonctions $X_n : \Omega \to \mathbb{R}$ par :
-$$ X_n(\omega) = n \cdot \mathbf{1}_{]0, 1/n]}(\omega) $$
-\textbf{1. Convergence presque sûre :}
-Soit un événement élémentaire $\omega \in ]0, 1]$.
-Parce que $\omega > 0$, et par la propriété archimédienne des réels, il existe un entier $N \ge 1$ tel que $\frac{1}{N} < \omega$.
-Pour tout $n \ge N$, nous aurons $\frac{1}{n} \le \frac{1}{N} < \omega$.
-Cela signifie que pour $n \ge N$, $\omega \notin ]0, 1/n]$, et donc par définition de la fonction indicatrice, $X_n(\omega) = 0$.
-La suite numérique déterministe $X_n(\omega)$ devient stationnaire et égale à 0 pour tout indice $n \ge N$. Elle converge donc trivialement vers 0.
-Puisque ceci est vrai pour \textbf{tout} $\omega \in ]0, 1]$, la convergence a lieu ponctuellement sur tout $\Omega$.
-L'événement exceptionnel est l'ensemble vide, dont la probabilité est bien $0$.
-Ainsi, $X_n \xrightarrow{p.s.} 0$.
 
 \textbf{2. Non-convergence dans $L^1$ :}
 Pour prouver la convergence $L^1$ vers 0, il faudrait que $\lim_{n \to \infty} \mathbb{E}[|X_n|] = 0$.
@@ -544,216 +461,204 @@ Par passage à la limite :
 $$ \lim_{n \to \infty} \mathbb{E}[|X_n - 0|] = 1 \neq 0 $$
 La suite ne converge donc absolument pas vers 0 dans la topologie des espaces $L^1$, établissant la démonstration définitive qu'une singularité géométrique empêche l'inversion limite/intégrale.
 
-\newpage
-\part*{Travaux Pratiques}
-\subsection*{TP 01 :} Loi Faible des Grands Nombres empirique
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\subsection*{TP 01 : Simulation de la Convergence en Probabilité}
 
-Dans ce TP, nous implémentons de zéro la simulation d'une moyenne empirique de variables de Bernoulli pour illustrer la convergence en probabilité (Loi Faible des Grands Nombres).
+Ce TP illustre la convergence en probabilité de la moyenne empirique (Loi Faible des Grands Nombres) avec des variables de Bernoulli.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}
+import math
 import random
 import math
 
-def simuler_bernoulli(p):
-    return 1 if random.random() < p else 0
+def moyenne_empirique_bernoulli(n, p=0.5):
+    # Genere n tirages et retourne la moyenne
+    succes = sum(1 for _ in range(n) if random.random() < p)
+    return succes / n
 
-def moyenne_empirique_bernoulli(n, p):
-    somme = sum(simuler_bernoulli(p) for _ in range(n))
-    return somme / n
-
-def estimer_probabilite_ecart(n, p, epsilon, n_simulations):
+def simuler_convergence_probabilite(n_tirages, n_simulations, epsilon, p=0.5):
+    # Estime empiriquement P(|X_n - p| > epsilon)
     depassements = 0
     for _ in range(n_simulations):
-        moyenne = moyenne_empirique_bernoulli(n, p)
+        moyenne = moyenne_empirique_bernoulli(n_tirages, p)
         if abs(moyenne - p) > epsilon:
             depassements += 1
     return depassements / n_simulations
 
-# Parametres
-p = 0.5
+# Test de validation (N doit etre assez grand)
+N = 1000
+simulations = 500
 epsilon = 0.05
-n_simulations = 1000
 
-# Validation mathématique de la convergence en probabilité
-n_petit = 10
-proba_petit = estimer_probabilite_ecart(n_petit, p, epsilon, n_simulations)
-
-n_grand = 1000
-proba_grand = estimer_probabilite_ecart(n_grand, p, epsilon, n_simulations)
-
-print("Proba ecart pour n=10 :", proba_petit)
-print("Proba ecart pour n=1000 :", proba_grand)
-
-assert proba_grand < proba_petit, "La probabilité de l'écart doit diminuer avec n"
-assert proba_grand < 0.05, "Pour n grand, la probabilité d'un écart > epsilon doit être proche de 0"
+prob_depassement = simuler_convergence_probabilite(N, simulations, epsilon)
+# Selon l inegalite de Tchebychev, la proba doit etre faible
+print("Probabilite empirique de depassement :", prob_depassement)
+assert prob_depassement < 0.2, "La probabilite devrait converger vers 0"
 \end{lstlisting}
 
 
-\subsection*{TP 02 :} Divergence L1 de la bosse fuyante
+\subsection*{TP 02 : La variable fuyante (Pas de convergence L2)}
 
-Nous allons simuler l'exemple de la "bosse fuyante" : $X_n$ vaut $n^2$ avec probabilité $1/n$ et $0$ sinon.
-Nous vérifierons numériquement que $X_n$ converge en probabilité vers $0$, mais que son espérance diverge.
+Nous codons la suite X_n qui vaut sqrt(n) avec probabilité 1/n, et 0 sinon.
+On vérifie qu'elle converge en probabilité vers 0, mais que son espérance L2 reste à 1.
 
 \begin{lstlisting}[language=Python]
 import random
+import math
 
-def simuler_Xn(n):
+def echantillonner_Xn(n):
     if random.random() < (1.0 / n):
-        return n * n
-    return 0
+        return math.sqrt(n)
+    return 0.0
 
-def estimer_esperance(n, n_simulations):
-    somme = sum(simuler_Xn(n) for _ in range(n_simulations))
-    return somme / n_simulations
+def estimer_L2(n, n_simulations):
+    somme_carres = 0.0
+    for _ in range(n_simulations):
+        val = echantillonner_Xn(n)
+        somme_carres += val * val
+    return somme_carres / n_simulations
 
-def estimer_proba_ecart(n, epsilon, n_simulations):
-    depassements = sum(1 for _ in range(n_simulations) if simuler_Xn(n) > epsilon)
+def estimer_proba_depassement(n, epsilon, n_simulations):
+    depassements = 0
+    for _ in range(n_simulations):
+        val = echantillonner_Xn(n)
+        if abs(val) > epsilon:
+            depassements += 1
     return depassements / n_simulations
 
-n_simulations = 5000
-epsilon = 0.1
+# Validation
+n_grand = 1000
+simulations = 5000
 
-n_valeurs = [10, 50, 200]
+# Convergence en probabilite
+proba = estimer_proba_depassement(n_grand, 0.1, simulations)
+assert proba < 0.05, "La probabilite devrait etre proche de 1/n"
 
-esperances = []
-probas = []
-
-for n in n_valeurs:
-    esperances.append(estimer_esperance(n, n_simulations))
-    probas.append(estimer_proba_ecart(n, epsilon, n_simulations))
-
-print("Esperances (L1) :", esperances)
-print("Probabilites ecart :", probas)
-
-# Assertions : l'esperance doit croitre (divergence L1), la proba doit decroitre (convergence Proba)
-assert esperances[2] > esperances[0], "L'espérance doit diverger vers l'infini"
-assert probas[2] < probas[0], "La probabilité d'écart doit tendre vers 0"
+# Non convergence en L2
+l2_empirique = estimer_L2(n_grand, simulations)
+# L2 doit tourner autour de 1.0 (et non 0)
+print("Esperance L2 empirique :", l2_empirique)
+assert 0.5 < l2_empirique < 1.5, "L esperance du carre doit etre proche de 1"
 \end{lstlisting}
 
 
-\subsection*{TP 03 :} Théorème Central Limite (Convergence en Loi)
+\subsection*{TP 03 : Convergence en Loi vers l'Uniforme}
 
-Ce TP illustre la convergence en loi. Nous sommons des variables uniformes et vérifions que les moments empiriques de la variable standardisée s'approchent de ceux d'une loi normale $\mathcal{N}(0, 1)$ (Espérance 0, Variance 1, Kurtosis 3).
+Nous allons simuler X\underline{n = W}n / n où W_n suit un uniforme discret (ou continu) sur [-n, n], et vérifier que la fonction de répartition empirique approche celle de U([-1, 1]).
 
 \begin{lstlisting}[language=Python]
 import random
 
-def somme_uniforme(n):
-    # Somme de n variables uniformes sur [0, 1]
-    return sum(random.random() for _ in range(n))
+def echantillonner_Vn(n):
+    W_n = random.uniform(-n, n)
+    return W_n / n
 
-def generer_Z_n(n):
-    # E[U] = 0.5, Var(U) = 1/12
-    Sn = somme_uniforme(n)
-    esperance_Sn = n * 0.5
-    variance_Sn = n * (1.0 / 12.0)
-    ecart_type_Sn = variance_Sn ** 0.5
-
-    Zn = (Sn - esperance_Sn) / ecart_type_Sn
-    return Zn
-
-def estimer_moments(n, n_simulations):
-    somme = 0
-    somme_carr = 0
-    somme_puiss4 = 0
-
+def fonction_repartition_empirique(n, point_evaluation, n_simulations):
+    # Estime F_{V_n}(x)
+    inferieurs = 0
     for _ in range(n_simulations):
-        z = generer_Z_n(n)
-        somme += z
-        somme_carr += z * z
-        somme_puiss4 += z ** 4
+        if echantillonner_Vn(n) <= point_evaluation:
+            inferieurs += 1
+    return inferieurs / n_simulations
 
-    esperance = somme / n_simulations
-    variance = somme_carr / n_simulations - esperance**2
-    # Kurtosis = E[Z^4] / Var^2
-    kurtosis = (somme_puiss4 / n_simulations) / (variance ** 2)
-    return esperance, variance, kurtosis
-
+# Pour x = 0, F(0) d'une uniforme sur [-1, 1] vaut 0.5
+valeur_x = 0.0
 n = 50
-n_simulations = 10000
-esp, var, kurt = estimer_moments(n, n_simulations)
+simulations = 2000
 
-print("Esperance empirique :", esp)
-print("Variance empirique :", var)
-print("Kurtosis empirique :", kurt)
+f_emp = fonction_repartition_empirique(n, valeur_x, simulations)
+print("F_Vn(0) empirique :", f_emp)
+assert 0.45 < f_emp < 0.55, "La repartition en 0 doit etre d'environ 0.5"
 
-# Validation de la convergence en loi (Moments d'une normale N(0,1))
-assert abs(esp) < 0.1, "L'espérance doit être proche de 0"
-assert abs(var - 1.0) < 0.1, "La variance doit être proche de 1"
-assert abs(kurt - 3.0) < 0.2, "Le kurtosis doit converger vers 3 (loi normale)"
+# Pour x = -0.5, F(-0.5) = (-0.5 + 1)/2 = 0.25
+f_emp_2 = fonction_repartition_empirique(n, -0.5, simulations)
+assert 0.20 < f_emp_2 < 0.30, "La repartition en -0.5 doit etre d'environ 0.25"
 \end{lstlisting}
 
 
-\subsection*{TP 04 :} Rupture du TCL pour la loi de Cauchy
+\subsection*{TP 04 : L'échec de la réciproque (Probabilité n'implique pas presque sûre)}
 
-Nous implémentons une simulation démontrant que la moyenne empirique de variables de Cauchy ne converge pas en probabilité vers une constante, et ne réduit pas sa variance (car elle est infinie).
+On code le contre-exemple de la "machine à écrire" avec les intervalles tournants.
+On montre que la probabilité d'erreur à un temps n est faible, mais que chaque chemin fini toujours par faire des erreurs à l'infini (pas de convergence p.s.).
 
-\begin{lstlisting}[language=Python]
-import random
+\begin{lstlisting}
 import math
 
-def simuler_cauchy():
-    # Methode d'inversion pour Cauchy standard
-    u = random.random()
-    return math.tan(math.pi * (u - 0.5))
+def intervalle_machine_a_ecrire(n):
+    # Pour n>=1, trouve k tel que 2^k <= n < 2^{k+1}
+    k = int(math.floor(math.log(n, 2)))
+    m = n - (2**k)
+    borne_inf = m / (2**k)
+    borne_sup = (m + 1) / (2**k)
+    return borne_inf, borne_sup
 
-def generer_moyenne_cauchy(n):
-    somme = sum(simuler_cauchy() for _ in range(n))
-    return somme / n
+def est_dans_intervalle(omega, n):
+    borne_inf, borne_sup = intervalle_machine_a_ecrire(n)
+    return borne_inf <= omega < borne_sup
 
-def evaluer_dispersion_cauchy(n_valeurs, n_simulations):
-    # La médiane absolue donne une idee de l'étalement (variance = infini)
-    dispersions = {}
-    for n in n_valeurs:
-        valeurs = sorted(abs(generer_moyenne_cauchy(n)) for _ in range(n_simulations))
-        mediane_abs = valeurs[n_simulations // 2]
-        dispersions[n] = mediane_abs
-    return dispersions
+# On fixe un omega = 0.3
+omega_fixe = 0.3
+nb_erreurs = 0
+# Sur 100 etapes, cet omega devrait "tomber" dans la bosse plusieurs fois.
+for n in range(1, 101):
+    if est_dans_intervalle(omega_fixe, n):
+        nb_erreurs += 1
 
-n_valeurs = [10, 100, 1000]
-n_simulations = 2000
-dispersions = evaluer_dispersion_cauchy(n_valeurs, n_simulations)
+print("Nombre de sauts a 1 pour omega=0.3 sur 100 etapes :", nb_erreurs)
+assert nb_erreurs > 3, "Il doit y avoir plusieurs pics pour un omega fixe (pas de conv p.s.)"
 
-print("Dispersions médianes absolues pour Cauchy :", dispersions)
-
-# La moyenne d'une Cauchy est encore une Cauchy(0,1), la dispersion ne diminue PAS avec n.
-assert dispersions[1000] > 0.5, "La dispersion ne tend pas vers 0, la loi des grands nombres échoue."
+# En probabilite : a l'etape 64 (k=6), l'intervalle est de taille 1/64
+inf, sup = intervalle_machine_a_ecrire(64)
+taille = sup - inf
+assert abs(taille - 1/64) < 1e-9, "L'intervalle doit etre de proba petite"
 \end{lstlisting}
 
 
-\subsection*{TP 05 :} Convergence en Probabilité via Fonction de Répartition
+\subsection*{TP 05 : Convergence en L1 vs L2 pour un estimateur perturbé}
 
-Ce TP vérifie numériquement la caractérisation de la convergence en loi : on simule le maximum de n variables uniformes sur [0,1], puis on étudie le comportement asymptotique de $n(1 - Y_n)$, qui doit converger en loi vers une Exponentielle de paramètre 1.
+On construit une variable Y_n définie ainsi : elle vaut 0 avec proba 1 - 1/n,
+et n^(2/3) avec proba 1/n.
+Dans ce script on valide mathématiquement qu'elle converge dans L1 mais diverge dans L2.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}
 import random
-import math
 
-def simuler_Yn(n):
-    return max(random.random() for _ in range(n))
+def generer_Yn(n):
+    if random.random() < 1/n:
+        return n**(2/3)
+    return 0.0
 
-def simuler_Zn(n):
-    Yn = simuler_Yn(n)
-    return n * (1.0 - Yn)
+def estimer_L1_L2(n, n_simulations):
+    somme_l1 = 0
+    somme_l2 = 0
+    for _ in range(n_simulations):
+        val = generer_Yn(n)
+        somme_l1 += abs(val)
+        somme_l2 += val * val
+    return somme_l1 / n_simulations, somme_l2 / n_simulations
 
-def estimer_cdf(n, x, n_simulations):
-    # Estime P(Z_n <= x)
-    succes = sum(1 for _ in range(n_simulations) if simuler_Zn(n) <= x)
-    return succes / n_simulations
+# Validation
+n = 1000
+simul = 2000
 
-# On teste pour x = 1.
-# La limite theorique est la CDF d'une Exp(1) evaluee en 1 : 1 - exp(-1)
-x_test = 1.0
-theorique = 1.0 - math.exp(-1.0)
+# E[L1] theorique = (1/n) * n^(2/3) = n^(-1/3)
+# E[L2] theorique = (1/n) * n^(4/3) = n^(1/3)
 
-n = 500
-n_simulations = 5000
-empirique = estimer_cdf(n, x_test, n_simulations)
+theorique_L1 = n**(-1/3)
+theorique_L2 = n**(1/3)
 
-print("Valeur theorique de P(Z <= 1) :", theorique)
-print("Valeur empirique P(Z_n <= 1) :", empirique)
+empirique_L1, empirique_L2 = estimer_L1_L2(n, simul)
 
-assert abs(empirique - theorique) < 0.05, "La distribution empirique doit correspondre à la loi Exponentielle asympotique"
+# L1 doit etre petit (tend vers 0)
+print("L1 empirique :", empirique_L1)
+assert empirique_L1 < 0.5, "L1 doit etre decroissant vers 0"
+
+# L2 doit etre grand (tend vers l infini)
+print("L2 empirique :", empirique_L2)
+assert empirique_L2 > 5.0, "L2 diverge"
 \end{lstlisting}
+
+
+
 
 \end{document}

@@ -1,33 +1,39 @@
-# Exercice 10
+# Exercice 10 : Convergence en loi d'un maximum (Loi de Gumbel)
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
+Niveau : $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :**
-Preuve du contre-exemple p.s n'implique pas $L^p$
+Soient $U_1, \dots, U_n$ des variables aléatoires i.i.d. de loi exponentielle $\mathcal{E}(1)$.
+Posons $M_n = \max(U_1, \dots, U_n)$.
+On sait que la loi exponentielle est non bornée, donc $M_n \to +\infty$ p.s.
+Cherchons une normalisation. Posons $Y_n = M_n - \ln(n)$.
+Montrer que $(Y_n)$ converge en loi vers une variable aléatoire dont on donnera la fonction de répartition. (C'est la distribution de Gumbel, fondamentale en théorie des valeurs extrêmes).
 
-Rédigez la démonstration formelle du fait que la convergence presque sûre n'implique pas la convergence dans $L^p$ (ni même $L^1$). On exhibera un contre-exemple explicite et on calculera toutes les normes.
+## Correction
 
-**Correction exhaustive :**
-Nous devons fournir un exemple canonique illustrant la fuite de masse vers l'infini (concentration d'énergie sur un volume évanescent).
-Considérons l'espace de probabilité $\Omega = ]0, 1]$ muni de la mesure de Borel-Lebesgue usuelle $\mathbb{P}$.
-Définissons la suite de fonctions $X_n : \Omega \to \mathbb{R}$ par :
-$$ X_n(\omega) = n \cdot \mathbf{1}_{]0, 1/n]}(\omega) $$
-**1. Convergence presque sûre :**
-Soit un événement élémentaire $\omega \in ]0, 1]$.
-Parce que $\omega > 0$, et par la propriété archimédienne des réels, il existe un entier $N \ge 1$ tel que $\frac{1}{N} < \omega$.
-Pour tout $n \ge N$, nous aurons $\frac{1}{n} \le \frac{1}{N} < \omega$.
-Cela signifie que pour $n \ge N$, $\omega \notin ]0, 1/n]$, et donc par définition de la fonction indicatrice, $X_n(\omega) = 0$.
-La suite numérique déterministe $X_n(\omega)$ devient stationnaire et égale à 0 pour tout indice $n \ge N$. Elle converge donc trivialement vers 0.
-Puisque ceci est vrai pour **tout** $\omega \in ]0, 1]$, la convergence a lieu ponctuellement sur tout $\Omega$.
-L'événement exceptionnel est l'ensemble vide, dont la probabilité est bien $0$.
-Ainsi, $X_n \xrightarrow{p.s.} 0$.
+**1. Fonction de répartition de $M_n$ :**
+Pour un réel $x$, $M_n \le x$ si et seulement si pour tout $i \in \{1, \dots, n\}$, $U_i \le x$.
+Comme les $U_i$ sont indépendantes, la probabilité de l'intersection est le produit des probabilités :
+$$\mathbb{P}(M_n \le x) = \mathbb{P}(U_1 \le x, \dots, U_n \le x) = \prod_{i=1}^n \mathbb{P}(U_i \le x) = (\mathbb{P}(U_1 \le x))^n$$
+La loi exponentielle de paramètre 1 a pour fonction de répartition :
+$F_U(x) = 1 - e^{-x}$ si $x \ge 0$, et $0$ sinon.
+Ainsi, pour $x \ge 0$, $F_{M_n}(x) = (1 - e^{-x})^n$.
 
-**2. Non-convergence dans $L^1$ :**
-Pour prouver la convergence $L^1$ vers 0, il faudrait que $\lim_{n \to \infty} \mathbb{E}[|X_n|] = 0$.
-Procédons au calcul rigoureux de l'espérance pour un $n$ fixé, en utilisant l'intégrale de Lebesgue :
-$$ \mathbb{E}[|X_n|] = \int_{\Omega} |X_n(\omega)| d\mathbb{P}(\omega) = \int_0^1 n \cdot \mathbf{1}_{]0, 1/n]}(\omega) d\omega $$
-$$ \mathbb{E}[|X_n|] = n \int_0^{1/n} 1 d\omega = n \cdot \left[ \omega \right]_0^{1/n} = n \cdot \left( \frac{1}{n} - 0 \right) = n \cdot \frac{1}{n} = 1 $$
-Pour tout indice $n \ge 1$, la masse fonctionnelle (l'aire sous la courbe) est constante et strictement égale à 1.
-Par passage à la limite :
-$$ \lim_{n \to \infty} \mathbb{E}[|X_n - 0|] = 1 \neq 0 $$
-La suite ne converge donc absolument pas vers 0 dans la topologie des espaces $L^1$, établissant la démonstration définitive qu'une singularité géométrique empêche l'inversion limite/intégrale.
+**2. Fonction de répartition de $Y_n$ :**
+On cherche $F_{Y_n}(y) = \mathbb{P}(Y_n \le y) = \mathbb{P}(M_n - \ln(n) \le y) = \mathbb{P}(M_n \le y + \ln(n))$.
+On applique la formule trouvée à la question 1 pour $x = y + \ln(n)$.
+Il faut $y + \ln(n) \ge 0$, ce qui est vrai pour $n$ assez grand ($n \ge e^{-y}$).
+$$F_{Y_n}(y) = \left(1 - e^{-(y + \ln(n))}\right)^n = \left(1 - e^{-y} \cdot e^{-\ln(n)}\right)^n = \left(1 - \frac{e^{-y}}{n}\right)^n$$
+
+**3. Limite pour la convergence en loi :**
+Pour un $y \in \mathbb{R}$ fixé, passons à la limite quand $n \to +\infty$.
+On utilise le développement limité du logarithme naturel :
+$$\ln\left(F_{Y_n}(y)\right) = n \ln\left(1 - \frac{e^{-y}}{n}\right)$$
+Comme $\frac{e^{-y}}{n} \to 0$, l'équivalent en zéro $\ln(1 - u) \sim -u$ donne :
+$$n \ln\left(1 - \frac{e^{-y}}{n}\right) \sim n \left( - \frac{e^{-y}}{n} \right) = -e^{-y}$$
+Ainsi, $\lim_{n \to +\infty} \ln(F_{Y_n}(y)) = -e^{-y}$.
+Par continuité de l'exponentielle, on déduit :
+$$\lim_{n \to +\infty} F_{Y_n}(y) = \exp(-e^{-y})$$
+Notons $F(y) = \exp(-e^{-y})$.
+Cette fonction $F$ est une fonction de répartition valide (elle est croissante, tend vers 0 en $-\infty$ et vers 1 en $+\infty$, et est continue sur $\mathbb{R}$).
+C'est la fonction de répartition de la loi de Gumbel standard.
+Puisque $F_{Y_n}(y)$ converge vers $F(y)$ en tout point de continuité de $F$ (ici partout sur $\mathbb{R}$), $Y_n converge en loi vers une variable de Gumbel.

@@ -1,29 +1,26 @@
-# Exercice 09
+# Exercice 9 : La méthode de sous-suite de Riesz
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\bigstar$
+Niveau : $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :**
-Absence de convergence $L^p$ pour la loi de Cauchy
+Montrer que si $X_n \xrightarrow{\mathbb{P}} X$, alors il existe une sous-suite $(X_{\varphi(k)})_{k \in \mathbb{N}}$ strictement croissante telle que $X_{\varphi(k)} \xrightarrow{\text{p.s.}} X$ quand $k \to +\infty$.
 
-Considérons une suite $(X_n)$ de variables indépendantes suivant la loi de Cauchy standard.
-La densité de $X_i$ est $f(x) = \frac{1}{\pi(1+x^2)}$.
-Posons la moyenne empirique $S_n = \frac{1}{n} \sum_{i=1}^n X_i$.
-Montrez rigoureusement que $S_n$ ne converge ni en probabilité, ni presque sûrement vers la constante 0, ruinant l'intuition de la loi des grands nombres.
+## Correction
 
-**Correction exhaustive :**
-La loi des grands nombres s'applique aux variables aléatoires admettant une espérance (une norme $L^1$ finie). Or, l'intégrale pour l'espérance de la loi de Cauchy vaut :
-$$ \int_{-\infty}^{\infty} |x| \frac{1}{\pi(1+x^2)} dx $$
-L'intégrande se comporte comme $\frac{1}{|x|}$ à l'infini. L'intégrale de Riemann d'une fonction de la forme $\frac{1}{x^a}$ avec $a \le 1$ est divergente. La loi de Cauchy ne possède donc pas de moment d'ordre 1.
-Pour étudier la somme, utilisons l'outil fondamental des probabilités additives : la fonction caractéristique.
-La fonction caractéristique de la loi de Cauchy standard est connue et vaut :
-$$ \phi_{X_1}(t) = \mathbb{E}[e^{itX_1}] = e^{-|t|} $$
-Par indépendance des $X_i$, la fonction caractéristique de la somme s'obtient par multiplication :
-$$ \phi_{\sum_{i=1}^n X_i}(t) = \prod_{i=1}^n \phi_{X_i}(t) = (e^{-|t|})^n = e^{-n|t|} $$
-Appliquons la transformation linéaire due au coefficient $1/n$ : pour toute variable aléatoire $Y$ et scalaire $c$, $\phi_{cY}(t) = \phi_Y(ct)$.
-$$ \phi_{S_n}(t) = \phi_{\frac{1}{n}\sum X_i}(t) = \phi_{\sum X_i}\left(\frac{t}{n}\right) = e^{-n\left|\frac{t}{n}\right|} = e^{-|t|} $$
-Incroyablement, la fonction caractéristique de $S_n$ reste rigoureusement identique à celle de $X_1$ !
-Puisque la fonction caractéristique détermine univoquement la loi d'une variable aléatoire (Théorème d'inversion de Fourier-Lévy), la variable empirique $S_n$ suit elle-même une loi de Cauchy standard pour tout $n$.
-$$ S_n \sim \text{Cauchy}(0, 1) $$
-Par conséquent, la suite des distributions de $S_n$ ne s'écrase pas vers un dirac en 0. Elle converge en loi vers une variable $X \sim \text{Cauchy}(0, 1)$ non-dégénérée.
-Puisque la limite en loi n'est pas constante, et que la convergence en probabilité vers une variable impliquerait la convergence en loi vers cette même variable dégénérée, on conclut de manière absolue que $S_n$ ne converge **pas** en probabilité vers 0 (ni vers aucune constante).
-A fortiori, puisqu'elle ne converge pas en probabilité, elle ne peut pas converger presque sûrement vers 0, pulvérisant ainsi l'idée naïve d'une stabilisation algorithmique de ces données.
+L'idée (due à F. Riesz) est de sélectionner une sous-suite qui converge "très vite" en probabilité pour pouvoir appliquer le lemme de Borel-Cantelli.
+Par définition de la convergence en probabilité, pour tout $\varepsilon > 0$, $\lim_{n \to \infty} \mathbb{P}(|X_n - X| > \varepsilon) = 0$.
+Pour chaque entier $k \ge 1$, appliquons cette définition avec $\varepsilon_k = \frac{1}{k}$. La probabilité tend vers 0, donc il existe un rang (notons-le $\varphi(k)$) tel que pour tout $n \ge \varphi(k)$, on a :
+$$\mathbb{P}\left(|X_n - X| > \frac{1}{k}\right) \le \frac{1}{2^k}$$
+Pour s'assurer que $\varphi$ est strictement croissante, on construit la suite par récurrence en choisissant $\varphi(k+1) > \varphi(k)$.
+Définissons les événements $A_k = \left\{ |X_{\varphi(k)} - X| > \frac{1}{k} \right\}$.
+Par construction, on a $\mathbb{P}(A_k) \le \frac{1}{2^k}$.
+La série géométrique $\sum \frac{1}{2^k}$ est convergente. Ainsi, la série des probabilités $\sum \mathbb{P}(A_k)$ converge.
+D'après le lemme de Borel-Cantelli, la probabilité que l'événement $A_k$ se réalise pour une infinité d'indices $k$ est nulle :
+$$\mathbb{P}(\limsup A_k) = 0$$
+Donc, presque sûrement, les événements $A_k$ ne se produisent qu'un nombre fini de fois.
+Cela signifie que pour presqu'aucun $\omega \in \Omega$, il existe un rang $K_\omega$ tel que pour tout $k \ge K_\omega$, $\omega \notin A_k$.
+Si $\omega \notin A_k$, cela veut dire que :
+$$|X_{\varphi(k)}(\omega) - X(\omega)| \le \frac{1}{k}$$
+Cette inégalité garantit que, pour presque tout $\omega \in \Omega$, la limite simple de la sous-suite numérique $(X_{\varphi(k)}(\omega))_{k \in \mathbb{N}}$ est $X(\omega)$.
+En effet, pour tout $\varepsilon > 0$, en choisissant $k \ge \max(K_\omega, \lceil \frac{1}{\varepsilon} \rceil)$, on a $|X_{\varphi(k)}(\omega) - X(\omega)| \le \varepsilon$.
+La sous-suite $(X_{\varphi(k)})$ converge donc presque sûrement vers $X$.
+Ce résultat puissant explique en grande partie pourquoi la convergence en probabilité partage tant de propriétés avec la convergence presque sûre.

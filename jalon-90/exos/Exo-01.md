@@ -1,26 +1,22 @@
-# Exercice 01
+# Exercice 1 : Convergence presque sûre vs en probabilité (Cas déterministe)
 
-**Difficulté :** $\bigstar\star\star\star\star$
+Niveau : $\bigstar\star\star\star\star$
 
-**Énoncé :**
-Convergence p.s. d'une suite géométrique
+Soit $(\Omega, \mathcal{F}, \mathbb{P})$ un espace probabilisé. Considérons une suite de variables aléatoires $(X_n)_{n \in \mathbb{N}}$ constantes, telles que pour tout $n \in \mathbb{N}$ et tout $\omega \in \Omega$, $X_n(\omega) = \frac{1}{n+1}$.
+Montrer que $X_n \xrightarrow{\text{p.s.}} 0$ et $X_n \xrightarrow{\mathbb{P}} 0$.
 
-Soit $(X_n)$ une suite de variables aléatoires indépendantes et identiquement distribuées selon la loi uniforme sur $[0, 1]$.
-Posons $Y_n = \max(X_1, X_2, \dots, X_n)$.
-Montrez que $Y_n$ converge presque sûrement vers la variable certaine $Y = 1$.
+## Correction
 
-**Correction exhaustive :**
-Puisque $Y_n$ est le maximum de variables à valeurs dans $[0, 1]$, on a pour tout $n$, $0 \le Y_n \le 1$.
-De plus, la suite $(Y_n)_{n \ge 1}$ est par définition croissante. En effet, $Y_{n+1} = \max(Y_n, X_{n+1}) \ge Y_n$.
-Une suite de variables aléatoires presque sûrement croissante et presque sûrement majorée converge presque sûrement vers une limite.
-Appelons cette limite $Y$. Montrons que $Y = 1$ presque sûrement.
-Pour tout $\epsilon \in ]0, 1[$, évaluons la probabilité que $Y_n \le 1 - \epsilon$ :
-$$ \mathbb{P}(Y_n \le 1 - \epsilon) = \mathbb{P}(\max(X_1, \dots, X_n) \le 1 - \epsilon) $$
-Par indépendance des variables $X_i$ :
-$$ \mathbb{P}(Y_n \le 1 - \epsilon) = \prod_{i=1}^n \mathbb{P}(X_i \le 1 - \epsilon) = (1 - \epsilon)^n $$
-La probabilité de l'événement $\{Y \le 1 - \epsilon\}$ est bornée par $\mathbb{P}(Y_n \le 1 - \epsilon)$ pour tout $n$.
-En faisant tendre $n \to \infty$, comme $(1 - \epsilon) \in ]0, 1[$, on a $(1 - \epsilon)^n \to 0$.
-Ainsi, $\mathbb{P}(Y \le 1 - \epsilon) = 0$ pour tout $\epsilon > 0$.
-Comme $Y_n \le 1$ p.s., on a $Y \le 1$ p.s.
-La seule possibilité restante est que $\mathbb{P}(Y = 1) = 1$.
-La convergence presque sûre vers 1 est donc établie.
+**1. Convergence presque sûre :**
+Soit $\omega \in \Omega$. On a $X_n(\omega) = \frac{1}{n+1}$.
+Puisque $\lim_{n \to +\infty} \frac{1}{n+1} = 0$, la suite $(X_n(\omega))$ converge vers $0$ pour tout $\omega \in \Omega$.
+Ainsi, l'ensemble de convergence $\{ \omega \in \Omega \mid \lim_{n \to +\infty} X_n(\omega) = 0 \}$ est exactement $\Omega$.
+Or $\mathbb{P}(\Omega) = 1$, donc $X_n \xrightarrow{\text{p.s.}} 0$.
+
+**2. Convergence en probabilité :**
+Soit $\varepsilon > 0$. On cherche à évaluer $\mathbb{P}(|X_n - 0| > \varepsilon) = \mathbb{P}\left(\frac{1}{n+1} > \varepsilon\right)$.
+Puisque $\varepsilon > 0$ est fixé, il existe un rang $N \in \mathbb{N}$ tel que pour tout $n \ge N$, on a $\frac{1}{n+1} \le \varepsilon$.
+Par conséquent, pour tout $n \ge N$, l'événement $\left\{ \frac{1}{n+1} > \varepsilon \right\}$ est l'ensemble vide $\emptyset$.
+Donc pour tout $n \ge N$, $\mathbb{P}(|X_n - 0| > \varepsilon) = \mathbb{P}(\emptyset) = 0$.
+Ainsi, $\lim_{n \to +\infty} \mathbb{P}(|X_n - 0| > \varepsilon) = 0$, ce qui prouve que $X_n \xrightarrow{\mathbb{P}} 0$.
+(On retrouve d'ailleurs le théorème général : la convergence presque sûre implique la convergence en probabilité).

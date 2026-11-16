@@ -1,26 +1,24 @@
-# Exercice 03
+# Exercice 3 : L'exemple de la masse glissante
 
-**Difficulté :** $\bigstar\bigstar\star\star\star$
+Niveau : $\bigstar\bigstar\star\star\star$
 
-**Énoncé :**
-Lemme de Borel-Cantelli
+Sur l'espace mesuré $(\Omega, \mathcal{F}, \mathbb{P}) = (]0, 1], \mathcal{B}(]0, 1]), \lambda)$, on pose $X_n(\omega) = n \mathbb{1}_{\left]0, \frac{1}{n}\right]}(\omega)$.
+1. Montrer que $X_n \xrightarrow{\text{p.s.}} 0$.
+2. Étudier la convergence dans $L^1$ de la suite $(X_n)$. Que remarque-t-on ?
 
-Soit $(X_n)_{n \ge 1}$ une suite de variables aléatoires. On suppose que pour tout $\epsilon > 0$, la série $\sum_{n=1}^\infty \mathbb{P}(|X_n| > \epsilon)$ est convergente.
-Démontrez que $X_n$ converge presque sûrement vers $0$.
+## Correction
 
-**Correction exhaustive :**
-Fixons $\epsilon > 0$. Considérons la suite d'événements $A_n^\epsilon = \{|X_n| > \epsilon\}$.
-Par hypothèse, la série $\sum_{n=1}^\infty \mathbb{P}(A_n^\epsilon) < \infty$.
-D'après le premier lemme de Borel-Cantelli, la probabilité que l'événement $A_n^\epsilon$ se réalise une infinité de fois est nulle :
-$$ \mathbb{P}(\limsup_{n \to \infty} A_n^\epsilon) = 0 $$
-L'événement $\limsup A_n^\epsilon$ s'écrit $\bigcap_{N=1}^\infty \bigcup_{n \ge N} A_n^\epsilon$.
-Prenons une suite de réels strictement positifs décroissant vers zéro, par exemple $\epsilon_k = \frac{1}{k}$ pour $k \in \mathbb{N}^*$.
-Soit $E_k = \limsup_{n \to \infty} A_n^{\epsilon_k}$. Nous avons montré que $\mathbb{P}(E_k) = 0$.
-Par sous-additivité de la mesure de probabilité, l'union dénombrable de ces événements de probabilité nulle est également de probabilité nulle :
-$$ \mathbb{P}\left(\bigcup_{k=1}^\infty E_k\right) \le \sum_{k=1}^\infty \mathbb{P}(E_k) = 0 $$
-Considérons l'événement complémentaire de cette union, notons-le $\Omega^* = \left(\bigcup_{k=1}^\infty E_k\right)^c = \bigcap_{k=1}^\infty E_k^c$. Sa probabilité vaut 1.
-Pour tout $\omega \in \Omega^*$, et pour tout $k \ge 1$, $\omega \in E_k^c$, ce qui signifie qu'il n'appartient pas à $\limsup A_n^{\epsilon_k}$.
-Donc pour tout $k \ge 1$, l'événement $\{|X_n(\omega)| > \frac{1}{k}\}$ ne se réalise qu'un nombre fini de fois.
-Autrement dit, il existe un entier $N(\omega, k)$ tel que pour tout $n \ge N(\omega, k)$, $|X_n(\omega)| \le \frac{1}{k}$.
-Ceci est exactement la définition de la convergence $\lim_{n \to \infty} X_n(\omega) = 0$.
-Puisque ce résultat est vrai pour tout $\omega \in \Omega^*$, et que $\mathbb{P}(\Omega^*) = 1$, nous avons prouvé que $X_n \xrightarrow{p.s.} 0$.
+**1. Convergence presque sûre vers 0 :**
+Soit $\omega \in ]0, 1]$. Il existe un rang $N_\omega \in \mathbb{N}^*$ tel que pour tout $n \ge N_\omega$, on a $\frac{1}{n} < \omega$.
+Pour tout $n \ge N_\omega$, on a donc $\omega \notin \left]0, \frac{1}{n}\right]$.
+Par définition de la fonction indicatrice, cela signifie que pour tout $n \ge N_\omega$, $\mathbb{1}_{\left]0, \frac{1}{n}\right]}(\omega) = 0$.
+D'où, pour tout $n \ge N_\omega$, $X_n(\omega) = n \times 0 = 0$.
+La suite numérique $(X_n(\omega))$ est donc stationnaire à 0 à partir d'un certain rang, elle converge donc vers $0$.
+Ceci étant vrai pour tout $\omega \in ]0, 1]$, on a $X_n \xrightarrow{\text{p.s.}} 0$ (ici, l'ensemble de convergence est tout l'univers, de mesure 1).
+
+**2. Étude de la convergence dans $L^1$ :**
+Évaluons $\mathbb{E}[|X_n - 0|] = \mathbb{E}[X_n]$ puisque $X_n \ge 0$.
+$$\mathbb{E}[X_n] = \int_0^1 n \mathbb{1}_{\left]0, \frac{1}{n}\right]}(\omega) d\lambda(\omega) = n \lambda\left(\left]0, \frac{1}{n}\right]\right) = n \times \frac{1}{n} = 1$$
+La suite $\mathbb{E}[|X_n - 0|]$ est constante et égale à 1. Elle ne tend donc pas vers 0.
+Ainsi, $(X_n)$ ne converge pas vers $0$ dans $L^1$.
+**Remarque :** Cet exercice illustre le fait que la convergence presque sûre n'implique pas la convergence dans $L^p$. La masse se concentre vers 0 en devenant infinie, ce qui empêche l'espérance de l'erreur de tendre vers 0. On ne peut pas appliquer le théorème de convergence dominée de Lebesgue car il n'existe pas de variable aléatoire intégrable $Y$ telle que $|X_n| \le Y$ pour tout $n$.

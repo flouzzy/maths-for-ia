@@ -1,24 +1,28 @@
-# Exercice 07
+# Exercice 7 : Théorème de Slutsky
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
+Niveau : $\bigstar\bigstar\bigstar\bigstar\star$
 
-**Énoncé :**
-Convergence et transformée fonctionnelle continue
+Soit $(X_n)$ une suite de v.a. convergeant en loi vers une v.a. $X$ de loi continue, et $(Y_n)$ une suite convergeant en probabilité vers une constante $c$.
+Le théorème de Slutsky affirme que $X_n + Y_n \xrightarrow{\mathcal{L}} X + c$ et $X_n Y_n \xrightarrow{\mathcal{L}} cX$.
+Appliquer ce théorème : soit $Z_1, \dots, Z_n$ i.i.d. de moyenne $\mu$ et variance $\sigma^2 > 0$. Notons $\bar{Z}_n = \frac{1}{n} \sum Z_i$ et $S_n^2$ l'estimateur sans biais de la variance (qui converge p.s. vers $\sigma^2$).
+Montrer que $U_n = \frac{\sqrt{n}(\bar{Z}_n - \mu)}{S_n} \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$.
 
-Soit $(X_n)$ convergeant en probabilité vers $X$. Soit $g : \mathbb{R} \to \mathbb{R}$ une fonction uniformément continue.
-Démontrez que $g(X_n)$ converge en probabilité vers $g(X)$. (Ce résultat s'étend aux fonctions continues par le théorème d'approximation sur les compacts).
+## Correction
 
-**Correction exhaustive :**
-Puisque $g$ est uniformément continue, par définition, pour tout $\epsilon > 0$, il existe un $\delta > 0$ tel que pour tous $x, y \in \mathbb{R}$,
-$$ |x - y| < \delta \implies |g(x) - g(y)| < \epsilon $$
-Par contraposée de cette implication purement déterministe (logique propositionnelle), on obtient :
-$$ |g(x) - g(y)| \ge \epsilon \implies |x - y| \ge \delta $$
-En remplaçant $x$ par la variable aléatoire $X_n(\omega)$ et $y$ par $X(\omega)$, on obtient l'inclusion d'événements aléatoires suivante :
-$$ \{\omega \in \Omega \mid |g(X_n(\omega)) - g(X(\omega))| \ge \epsilon\} \subseteq \{\omega \in \Omega \mid |X_n(\omega) - X(\omega)| \ge \delta\} $$
-Puisque le premier événement est inclus dans le second, la croissance de la mesure de probabilité nous indique que :
-$$ \mathbb{P}(|g(X_n) - g(X)| \ge \epsilon) \le \mathbb{P}(|X_n - X| \ge \delta) $$
-Par hypothèse, $X_n$ converge en probabilité vers $X$. Donc, pour le réel fixé $\delta > 0$, nous avons :
-$$ \lim_{n \to \infty} \mathbb{P}(|X_n - X| \ge \delta) = 0 $$
-Le terme majorant tendant vers zéro, et les probabilités étant minorées par zéro, le théorème d'encadrement conclut formellement :
-$$ \lim_{n \to \infty} \mathbb{P}(|g(X_n) - g(X)| \ge \epsilon) = 0 $$
-Ceci constitue l'exacte définition de la convergence en probabilité de la suite $(g(X_n))$ vers la variable $g(X)$.
+**1. Convergence au numérateur (TCL) :**
+D'après le Théorème Central Limite (TCL), puisque les $Z_i$ sont i.i.d. avec une variance finie $\sigma^2$, on a :
+$$V_n = \frac{\sqrt{n}(\bar{Z}_n - \mu)}{\sigma} \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$$
+
+**2. Convergence au dénominateur :**
+On sait par la loi forte des grands nombres (et le fait que $S_n^2$ est consistant) que $S_n^2 \xrightarrow{\text{p.s.}} \sigma^2$.
+Puisque la convergence presque sûre implique la convergence en probabilité, $S_n^2 \xrightarrow{\mathbb{P}} \sigma^2$.
+La fonction racine carrée $x \mapsto \sqrt{x}$ étant continue sur $]0, +\infty[$, par le théorème de continuité (Continuous Mapping Theorem), on a $S_n \xrightarrow{\mathbb{P}} \sigma$.
+Et, comme $\sigma \neq 0$, par continuité de l'inverse, $\frac{\sigma}{S_n} \xrightarrow{\mathbb{P}} 1$.
+
+**3. Application de Slutsky :**
+On peut réécrire $U_n$ comme :
+$$U_n = \frac{\sqrt{n}(\bar{Z}_n - \mu)}{S_n} = \frac{\sqrt{n}(\bar{Z}_n - \mu)}{\sigma} \times \frac{\sigma}{S_n} = V_n \times W_n$$
+où $V_n \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$ et $W_n \xrightarrow{\mathbb{P}} 1$ (une constante).
+D'après le lemme de Slutsky concernant le produit, on a :
+$$V_n W_n \xrightarrow{\mathcal{L}} 1 \times \mathcal{N}(0, 1) = \mathcal{N}(0, 1)$$
+Ainsi, on a démontré rigoureusement que $U_n \xrightarrow{\mathcal{L}} \mathcal{N}(0, 1)$. Ceci justifie l'utilisation des tests de Student asymptotiques avec écart-type empirique.

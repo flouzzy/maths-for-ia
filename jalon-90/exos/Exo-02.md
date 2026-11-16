@@ -1,24 +1,26 @@
-# Exercice 02
+# Exercice 2 : Inégalité de Markov et $L^p$
 
-**Difficulté :** $\bigstar\star\star\star\star$
+Niveau : $\bigstar\bigstar\star\star\star$
 
-**Énoncé :**
-Non-convergence dans L1 avec convergence p.s.
+Soit $X \sim \mathcal{N}(0, 1)$ et définissons $X_n = \frac{X}{n}$.
+Montrer que $X_n \xrightarrow{L^2} 0$ puis en déduire sans calcul direct que $X_n \xrightarrow{\mathbb{P}} 0$.
 
-Construisez explicitement une suite de variables aléatoires $(X_n)_{n \in \mathbb{N}^*}$ qui converge presque sûrement vers $0$, mais qui diverge vers $+\infty$ dans $L^1$.
+## Correction
 
-**Correction exhaustive :**
-Considérons l'espace probabilisé usuel $(\Omega, \mathcal{F}, \mathbb{P}) = ([0, 1], \mathcal{B}([0, 1]), \lambda)$ où $\lambda$ est la mesure de Lebesgue.
-Définissons la variable aléatoire $X_n : \Omega \to \mathbb{R}$ par :
-$$ X_n(\omega) = n^2 \mathbf{1}_{\left[0, \frac{1}{n}\right]}(\omega) $$
-Étudions la convergence presque sûre :
-Fixons $\omega \in ]0, 1]$. Par la propriété d'Archimède, il existe un entier $N \ge 1$ tel que $\frac{1}{N} < \omega$.
-Pour tout $n \ge N$, $\omega \notin \left[0, \frac{1}{n}\right]$, ce qui implique $X_n(\omega) = 0$.
-Par conséquent, $\lim_{n \to \infty} X_n(\omega) = 0$ pour tout $\omega \in ]0, 1]$.
-L'événement sur lequel la convergence n'a pas lieu est contenu dans $\{0\}$, qui est de mesure de Lebesgue nulle ($\lambda(\{0\}) = 0$).
-Ainsi, $X_n \xrightarrow{p.s.} 0$.
+**1. Convergence dans $L^2$ :**
+On calcule $\mathbb{E}[|X_n - 0|^2] = \mathbb{E}\left[\left(\frac{X}{n}\right)^2\right] = \frac{1}{n^2} \mathbb{E}[X^2]$.
+Puisque $X$ suit une loi normale centrée réduite, sa variance est $\text{Var}(X) = 1$, et comme $\mathbb{E}[X] = 0$, on a $\mathbb{E}[X^2] = \text{Var}(X) + \mathbb{E}[X]^2 = 1$.
+Donc $\mathbb{E}[|X_n - 0|^2] = \frac{1}{n^2}$.
+En passant à la limite : $\lim_{n \to +\infty} \mathbb{E}[|X_n - 0|^2] = \lim_{n \to +\infty} \frac{1}{n^2} = 0$.
+Par définition, on a bien $X_n \xrightarrow{L^2} 0$.
 
-Calculons l'espérance de $X_n$ (norme $L^1$) :
-$$ \mathbb{E}[|X_n|] = \int_0^1 n^2 \mathbf{1}_{\left[0, \frac{1}{n}\right]}(\omega) \, d\lambda(\omega) = n^2 \cdot \lambda\left(\left[0, \frac{1}{n}\right]\right) = n^2 \cdot \frac{1}{n} = n $$
-Lorsque $n \to \infty$, $\mathbb{E}[|X_n|] = n \to +\infty$.
-La suite diverge donc grossièrement dans $L^1$, bien qu'elle s'écrase presque partout. Ceci illustre la rupture de l'uniforme intégrabilité.
+**2. Déduction pour la convergence en probabilité :**
+Soit $\varepsilon > 0$. D'après l'inégalité de Markov appliquée à la variable aléatoire positive $|X_n - 0|^2$, on a :
+$$\mathbb{P}(|X_n - 0| > \varepsilon) = \mathbb{P}(|X_n - 0|^2 > \varepsilon^2) \le \frac{\mathbb{E}[|X_n - 0|^2]}{\varepsilon^2}$$
+D'après la question 1, on sait que $\mathbb{E}[|X_n - 0|^2] = \frac{1}{n^2}$.
+On obtient donc :
+$$\mathbb{P}(|X_n - 0| > \varepsilon) \le \frac{1}{n^2 \varepsilon^2}$$
+Comme $\varepsilon$ est fixé, $\lim_{n \to +\infty} \frac{1}{n^2 \varepsilon^2} = 0$.
+Par le théorème des gendarmes (puisque la probabilité est minorée par 0), on a :
+$$\lim_{n \to +\infty} \mathbb{P}(|X_n - 0| > \varepsilon) = 0$$
+Donc $X_n \xrightarrow{\mathbb{P}} 0$.

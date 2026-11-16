@@ -1,27 +1,32 @@
-# Exercice 08
+# Exercice 8 : Cas où la convergence en probabilité vers une constante implique la convergence dans $L^p$
 
-**Difficulté :** $\bigstar\bigstar\bigstar\bigstar\star$
+Niveau : $\bigstar\bigstar\bigstar\bigstar\bigstar$
 
-**Énoncé :**
-Convergence $L^p$ et intégrabilité de la limite
+Soit $(X_n)$ une suite de variables aléatoires vérifiant :
+1. $X_n \xrightarrow{\mathbb{P}} c$ (où $c$ est une constante réelle).
+2. Il existe une constante $M > 0$ telle que pour tout $n$, $|X_n| \le M$ presque sûrement. (On dit que la suite est uniformément bornée).
+Montrer que pour tout $p \ge 1$, $X_n \xrightarrow{L^p} c$.
 
-Supposons que $X_n \xrightarrow{L^p} X$ pour $p \ge 1$.
-Démontrez de façon complète que la fonction limite $X$ appartient nécessairement à $L^p$, en utilisant la stricte inégalité de Minkowski.
+## Correction
 
-**Correction exhaustive :**
-Par hypothèse, pour tout $n$, $X_n \in L^p$, c'est-à-dire $\mathbb{E}[|X_n|^p] < \infty$.
-La condition $X_n \xrightarrow{L^p} X$ signifie que la quantité $\mathbb{E}[|X_n - X|^p]$ (la puissance $p$-ème de la norme $\|X_n - X\|_p$) tend vers $0$ lorsque $n \to \infty$.
-Ceci implique en particulier qu'il existe un rang $N$ à partir duquel cette quantité est finie. Ainsi, $\|X_n - X\|_p < \infty$ pour $n \ge N$.
-Considérons la norme dans l'espace $L^p$ définie par $\|Z\|_p = (\mathbb{E}[|Z|^p])^{1/p}$.
-La variable aléatoire $X$ peut s'écrire artificiellement comme une somme télescopique :
-$$ X = (X - X_N) + X_N $$
-Prenons la norme $L^p$ de cette somme. L'inégalité de Minkowski, qui exprime la sous-additivité de la norme, affirme que :
-$$ \|X\|_p = \|(X - X_N) + X_N\|_p \le \|X - X_N\|_p + \|X_N\|_p $$
-Puisque la norme est symétrique (absolue), $\|X - X_N\|_p = \|X_N - X\|_p$.
-Par hypothèse, nous savons que $\|X_N - X\|_p < \infty$ puisque la limite tend vers 0.
-De plus, $X_N \in L^p$ garantit que $\|X_N\|_p < \infty$.
-La somme de deux nombres réels finis étant finie, nous en déduisons :
-$$ \|X\|_p < \infty $$
-L'élévation à la puissance $p$ conserve la finitude (puisque $p \ge 1$) :
-$$ \mathbb{E}[|X|^p] = (\|X\|_p)^p < \infty $$
-Nous avons ainsi démontré que l'espace vectoriel d'arrivée n'a pas été fracturé : la limite de la convergence en norme $L^p$ reste strictement emprisonnée dans la classe des fonctions $L^p$ intégrables.
+Soit $p \ge 1$ et soit $\varepsilon > 0$. On veut montrer que $\lim_{n \to \infty} \mathbb{E}[|X_n - c|^p] = 0$.
+Séparons l'espérance selon que $|X_n - c|$ est grand ou petit, en utilisant l'événement $A_n = \{|X_n - c| \le \varepsilon\}$ et son complémentaire $A_n^c = \{|X_n - c| > \varepsilon\}$.
+On utilise la linéarité de l'espérance en l'écrivant comme l'intégrale (l'espérance) sur les indicatrices :
+$$\mathbb{E}[|X_n - c|^p] = \mathbb{E}[|X_n - c|^p \mathbb{1}_{A_n}] + \mathbb{E}[|X_n - c|^p \mathbb{1}_{A_n^c}]$$
+Majorons chaque terme :
+- Sur l'événement $A_n$, on a par définition $|X_n - c| \le \varepsilon$, donc $|X_n - c|^p \le \varepsilon^p$. Ainsi :
+$$\mathbb{E}[|X_n - c|^p \mathbb{1}_{A_n}] \le \varepsilon^p \mathbb{E}[\mathbb{1}_{A_n}] \le \varepsilon^p \cdot 1 = \varepsilon^p$$
+- Sur l'événement $A_n^c$, on utilise la borne uniforme. Presque sûrement, $|X_n| \le M$. De plus, $|c| \le M$ (sinon $X_n$ ne pourrait pas converger en probabilité vers $c$).
+Ainsi, par l'inégalité triangulaire, presque sûrement, $|X_n - c| \le |X_n| + |c| \le 2M$.
+Donc $|X_n - c|^p \le (2M)^p$.
+On majore alors le second terme :
+$$\mathbb{E}[|X_n - c|^p \mathbb{1}_{A_n^c}] \le (2M)^p \mathbb{E}[\mathbb{1}_{A_n^c}] = (2M)^p \mathbb{P}(|X_n - c| > \varepsilon)$$
+En combinant les deux majorations, on obtient pour tout $n$ :
+$$\mathbb{E}[|X_n - c|^p] \le \varepsilon^p + (2M)^p \mathbb{P}(|X_n - c| > \varepsilon)$$
+Maintenant, prenons la limite quand $n \to +\infty$. Comme $X_n \xrightarrow{\mathbb{P}} c$, on sait que $\lim_{n \to \infty} \mathbb{P}(|X_n - c| > \varepsilon) = 0$.
+Donc :
+$$\limsup_{n \to \infty} \mathbb{E}[|X_n - c|^p] \le \varepsilon^p + 0 = \varepsilon^p$$
+Cette inégalité est vraie pour tout $\varepsilon > 0$. En faisant tendre $\varepsilon \to 0$, on obtient :
+$$\limsup_{n \to \infty} \mathbb{E}[|X_n - c|^p] \le 0$$
+Puisque l'espérance est toujours positive, on conclut que $\lim_{n \to \infty} \mathbb{E}[|X_n - c|^p] = 0$.
+La suite converge donc vers $c$ dans $L^p$. C'est un cas particulier du théorème de convergence dominée généralisé (uniforme intégrabilité).

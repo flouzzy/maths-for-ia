@@ -1,27 +1,24 @@
-# Exercice 04
+# Exercice 4 : Convergence en probabilité sans convergence p.s.
 
-**Difficulté :** $\bigstar\bigstar\star\star\star$
+Niveau : $\bigstar\bigstar\bigstar\star\star$
 
-**Énoncé :**
-Convergence de la moyenne empirique (Loi Faible)
+Sur $\Omega = [0, 1]$ muni de la mesure de Lebesgue et de la tribu borélienne, on définit une suite $(X_n)$ d'indicatrices d'intervalles $A_n$ de longueurs $\frac{1}{n}$. On pose $X_n = \mathbb{1}_{A_n}$ où la suite $(A_n)$ ne tend pas vers l'ensemble vide mais passe indéfiniment sur tout $[0, 1]$.
+Concrètement, soit $A_1 = [0, 1]$, $A_2 = [0, \frac{1}{2}]$, $A_3 = [\frac{1}{2}, 1]$, $A_4 = [0, \frac{1}{3}], \dots$
+Montrer que $X_n \xrightarrow{\mathbb{P}} 0$ mais que $X_n$ ne converge presque sûrement pour aucun point de $[0, 1]$.
 
-Soit $(X_n)_{n \ge 1}$ une suite de variables aléatoires indépendantes et identiquement distribuées, d'espérance $\mu = \mathbb{E}[X_1]$ et de variance $\sigma^2 = \text{Var}(X_1) < \infty$.
-Posons la moyenne empirique $S_n = \frac{1}{n} \sum_{i=1}^n X_i$.
-Montrez en utilisant l'inégalité de Bienaymé-Chebyshev que $S_n$ converge en probabilité vers $\mu$.
+## Correction
 
-**Correction exhaustive :**
-La moyenne empirique $S_n$ est une combinaison linéaire de variables aléatoires.
-Par linéarité de l'espérance, nous calculons l'espérance de $S_n$ :
-$$ \mathbb{E}[S_n] = \mathbb{E}\left[\frac{1}{n} \sum_{i=1}^n X_i\right] = \frac{1}{n} \sum_{i=1}^n \mathbb{E}[X_i] = \frac{1}{n} \cdot (n\mu) = \mu $$
-Par indépendance des variables aléatoires $X_i$, la variance de la somme est la somme des variances :
-$$ \text{Var}(S_n) = \text{Var}\left(\frac{1}{n} \sum_{i=1}^n X_i\right) = \frac{1}{n^2} \sum_{i=1}^n \text{Var}(X_i) = \frac{1}{n^2} \cdot (n\sigma^2) = \frac{\sigma^2}{n} $$
-Nous voulons montrer la convergence en probabilité vers $\mu$, c'est-à-dire que pour tout $\epsilon > 0$, $\lim_{n \to \infty} \mathbb{P}(|S_n - \mu| > \epsilon) = 0$.
-Fixons un réel $\epsilon > 0$. Appliquons l'inégalité de Bienaymé-Chebyshev à la variable aléatoire $S_n$ :
-$$ \mathbb{P}(|S_n - \mathbb{E}[S_n]| \ge \epsilon) \le \frac{\text{Var}(S_n)}{\epsilon^2} $$
-En remplaçant l'espérance et la variance par les valeurs calculées :
-$$ \mathbb{P}(|S_n - \mu| \ge \epsilon) \le \frac{\sigma^2}{n\epsilon^2} $$
-Puisque $\sigma^2$ et $\epsilon$ sont des constantes indépendantes de $n$, lorsque nous passons à la limite $n \to \infty$ :
-$$ \lim_{n \to \infty} \frac{\sigma^2}{n\epsilon^2} = 0 $$
-Étant donné qu'une probabilité est positive ou nulle, le théorème d'encadrement donne :
-$$ \lim_{n \to \infty} \mathbb{P}(|S_n - \mu| \ge \epsilon) = 0 $$
-Ainsi, $S_n \xrightarrow{\mathbb{P}} \mu$. C'est la démonstration de la Loi Faible des Grands Nombres dans le cas fini-variant.
+**1. Convergence en probabilité :**
+Soit $\varepsilon \in ]0, 1[$. On a $\mathbb{P}(|X_n - 0| > \varepsilon) = \mathbb{P}(X_n = 1) = \mathbb{P}(A_n)$.
+Par construction, pour un entier $n$ appartenant au "bloc" de division en $k$ parties, la longueur de l'intervalle $A_n$ est $\frac{1}{k}$.
+Plus précisément, si $n$ est grand, $k$ est grand, donc $\mathbb{P}(A_n) \to 0$ lorsque $n \to +\infty$.
+Ainsi, $\lim_{n \to +\infty} \mathbb{P}(|X_n - 0| > \varepsilon) = 0$, d'où $X_n \xrightarrow{\mathbb{P}} 0$.
+
+**2. Non-convergence presque sûre :**
+Soit $\omega \in [0, 1]$. Par construction, la suite $(A_n)$ balaie indéfiniment l'intervalle $[0, 1]$.
+Par conséquent, $\omega$ appartient à une infinité d'intervalles $A_n$. Pour cette sous-suite d'indices, $X_n(\omega) = 1$.
+D'autre part, $\omega$ n'appartient pas à une infinité d'autres intervalles $A_n$ (car la longueur tend vers 0). Pour cette autre sous-suite, $X_n(\omega) = 0$.
+La suite $(X_n(\omega))$ alterne donc une infinité de fois entre 0 et 1.
+Elle ne converge donc vers aucune limite pour *aucun* $\omega \in [0, 1]$.
+Ainsi, l'ensemble des $\omega$ où $X_n(\omega)$ converge est l'ensemble vide, dont la probabilité est 0, et non 1.
+Ceci démontre que la convergence en probabilité n'implique pas la convergence presque sûre en général.
