@@ -1,0 +1,687 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\usepackage{tikz}
+\usetikzlibrary{cd,positioning,shapes}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ç}{{\c{c}}}1 {ï}{{\"i}}1 {É}{{\'E}}1
+}
+
+\title{\Huge INÉGALITÉS DE CONCENTRATION \\ \large Cours magistral, exercices corrigés et travaux pratiques}
+\author{\Large Charles EDOU NZE}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Cours Magistral}
+
+\section*{Jalon 91 : Inégalités de concentration}
+
+\section{Introduction aux inégalités de concentration}
+
+Dans de nombreux domaines allant de la physique statistique à l'informatique théorique, il est fréquent de manipuler des systèmes complexes composés d'un très grand nombre de variables aléatoires (comme les particules d'un gaz, ou les échantillons de données en apprentissage automatique). La connaissance exacte de la distribution de probabilité globale de tels systèmes est généralement inaccessible. Néanmoins, on dispose souvent d'informations globales simples telles que l'espérance mathématique ou la variance.
+
+C'est dans ce contexte que naissent les inégalités de concentration, dont les premiers jalons ont été posés par Andrey Markov et Pafnuty Chebyshev au XIXe siècle, avant d'être profondément développées par Herman Chernoff et Wassily Hoeffding au milieu du XXe siècle. Leur objet fondamental est de fournir des garanties mathématiques quantitatives sur la probabilité qu'une variable aléatoire s'écarte significativement de son espérance. En d'autres termes, ces inégalités expliquent comment, et à quelle vitesse, la mesure de probabilité "se concentre" autour de la moyenne.
+
+L'intuition physique sous-jacente est simple : plus l'écart à la moyenne exigé est grand, plus la configuration du système qui produirait cet écart devient rare et contrainte, faisant s'effondrer sa probabilité de réalisation. La force de ces outils est d'être totalement agnostiques quant à la loi exacte sous-jacente, reposant uniquement sur quelques moments ou bornes de la variable aléatoire.
+
+\section{L'Inégalité de Markov}
+
+L'inégalité de Markov est la fondation sur laquelle reposent presque toutes les autres inégalités de concentration. Elle donne une majoration de la queue de distribution d'une variable positive en ne connaissant que son espérance.
+
+\textbf{Théorème (Inégalité de Markov) :}
+Soit $X$ une variable aléatoire réelle définie sur un espace de probabilité $(\Omega, \mathcal{F}, \mathbb{P})$, telle que $X \ge 0$ presque sûrement. On suppose que son espérance $\mathbb{E}[X]$ est finie. Alors, pour tout réel $a > 0$ :
+
+$$ \mathbb{P}(X \ge a) \le \frac{\mathbb{E}[X]}{a} $$
+
+\textbf{Démonstration exhaustive :}
+La preuve repose sur l'intégration de la variable $X$ en restreignant l'espace sur l'événement d'intérêt $\{X \ge a\}$.
+On peut décomposer l'espérance de $X$ sur les deux ensembles disjoints $\{X \ge a\}$ et $\{X < a\}$ :
+$$ \mathbb{E}[X] = \int_{\Omega} X(\omega) d\mathbb{P}(\omega) $$
+$$ \mathbb{E}[X] = \int_{\{X \ge a\}} X(\omega) d\mathbb{P}(\omega) + \int_{\{X < a\}} X(\omega) d\mathbb{P}(\omega) $$
+Puisque $X \ge 0$ presque sûrement, la seconde intégrale est positive ou nulle :
+$$ \int_{\{X < a\}} X(\omega) d\mathbb{P}(\omega) \ge 0 $$
+Ce qui implique :
+$$ \mathbb{E}[X] \ge \int_{\{X \ge a\}} X(\omega) d\mathbb{P}(\omega) $$
+Or, sur l'ensemble $\{X \ge a\}$, on a par définition $X(\omega) \ge a$. On peut donc minorer l'intégrale :
+$$ \int_{\{X \ge a\}} X(\omega) d\mathbb{P}(\omega) \ge \int_{\{X \ge a\}} a \, d\mathbb{P}(\omega) = a \int_{\{X \ge a\}} d\mathbb{P}(\omega) $$
+L'intégrale de l'indicatrice correspond à la probabilité de l'événement :
+$$ a \int_{\{X \ge a\}} d\mathbb{P}(\omega) = a \, \mathbb{P}(X \ge a) $$
+On obtient ainsi :
+$$ \mathbb{E}[X] \ge a \, \mathbb{P}(X \ge a) $$
+En divisant par $a > 0$, la conclusion s'impose :
+$$ \mathbb{P}(X \ge a) \le \frac{\mathbb{E}[X]}{a} $$
+$\blacksquare$
+
+\textbf{Exemple concret (Markov) :}
+Considérons une usine où le salaire moyen des employés est de $2000$ euros par mois. On s'intéresse à la proportion d'employés gagnant plus de $6000$ euros par mois. Soit $X$ la variable aléatoire représentant le salaire d'un employé tiré au hasard. On a $X \ge 0$ et $\mathbb{E}[X] = 2000$.
+On applique l'inégalité de Markov avec $a = 6000$ :
+$$ \mathbb{P}(X \ge 6000) \le \frac{\mathbb{E}[X]}{6000} = \frac{2000}{6000} = \frac{1}{3} $$
+Ainsi, au maximum un tiers des employés peut gagner $6000$ euros ou plus.
+
+\section{L'Inégalité de Bienaymé-Chebyshev}
+
+Si l'on dispose d'une information supplémentaire sur la dispersion de la variable, à savoir sa variance, on peut obtenir une borne beaucoup plus fine sur la probabilité que la variable s'éloigne de sa moyenne.
+
+\textbf{Théorème (Inégalité de Bienaymé-Chebyshev) :}
+Soit $Y$ une variable aléatoire réelle de variance $\text{Var}(Y) = \sigma^2 < \infty$ et d'espérance $\mathbb{E}[Y] = \mu$. Alors pour tout réel $\epsilon > 0$ :
+
+$$ \mathbb{P}(|Y - \mu| \ge \epsilon) \le \frac{\text{Var}(Y)}{\epsilon^2} $$
+
+\textbf{Démonstration exhaustive :}
+Nous allons utiliser l'inégalité de Markov sur une transformation astucieuse de $Y$.
+Posons la variable aléatoire $X = (Y - \mu)^2$.
+Par définition, $X \ge 0$ presque sûrement.
+L'espérance de $X$ correspond exactement à la définition de la variance de $Y$ :
+$$ \mathbb{E}[X] = \mathbb{E}[(Y - \mu)^2] = \text{Var}(Y) $$
+Soit $\epsilon > 0$. Les événements $\{|Y - \mu| \ge \epsilon\}$ et $\{(Y - \mu)^2 \ge \epsilon^2\}$ sont rigoureusement équivalents, car la fonction carrée est strictement croissante sur $\mathbb{R}^+$.
+Ainsi :
+$$ \mathbb{P}(|Y - \mu| \ge \epsilon) = \mathbb{P}((Y - \mu)^2 \ge \epsilon^2) $$
+Ce qui équivaut à :
+$$ \mathbb{P}(X \ge \epsilon^2) $$
+On applique l'inégalité de Markov sur $X$ avec la constante $a = \epsilon^2$ (qui est strictement positive) :
+$$ \mathbb{P}(X \ge \epsilon^2) \le \frac{\mathbb{E}[X]}{\epsilon^2} $$
+En remplaçant $X$ et $\mathbb{E}[X]$ par leurs expressions initiales :
+$$ \mathbb{P}(|Y - \mu| \ge \epsilon) \le \frac{\text{Var}(Y)}{\epsilon^2} $$
+$\blacksquare$
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1]
+  \draw[->] (-4,0) -- (4,0) node[right] {$y$};
+  \draw[->] (0,-0.5) -- (0,4) node[above] {Densité $f(y)$};
+
+  \draw[thick, blue, domain=-3:3, samples=100] plot (\x, {3.5*exp(-\x*\x/2)});
+
+  \draw[dashed, red, thick] (1.5, 0) -- (1.5, {3.5*exp(-1.5*1.5/2)});
+  \draw[dashed, red, thick] (-1.5, 0) -- (-1.5, {3.5*exp(-1.5*1.5/2)});
+
+  \node[below] at (0,0) {$\mu$};
+  \node[below] at (1.5,0) {$\mu + \epsilon$};
+  \node[below] at (-1.5,0) {$\mu - \epsilon$};
+
+  \fill[red, opacity=0.3, domain=1.5:3, samples=50] (1.5,0) -- plot (\x, {3.5*exp(-\x*\x/2)}) -- (3,0) -- cycle;
+  \fill[red, opacity=0.3, domain=-3:-1.5, samples=50] (-3,0) -- plot (\x, {3.5*exp(-\x*\x/2)}) -- (-1.5,0) -- cycle;
+
+  \node[red, align=center] at (2.5, 1) {Surface totale \\ $\le \frac{\text{Var}(Y)}{\epsilon^2}$};
+\end{tikzpicture}
+\caption{Inégalité de Bienaymé-Chebyshev : contrôle des queues de distribution}
+\end{figure}
+
+\textbf{Exemple concret (Chebyshev) :}
+Supposons que la durée de vie d'une machine a une espérance de $\mu = 1000$ heures et une variance de $\text{Var}(Y) = 400$ heures$^2$ (soit un écart-type $\sigma = 20$ heures).
+On veut majorer la probabilité que la machine tombe en panne avant $900$ heures ou dépasse les $1100$ heures, soit $|Y - 1000| \ge 100$.
+On applique Bienaymé-Chebyshev avec $\epsilon = 100$ :
+$$ \mathbb{P}(|Y - 1000| \ge 100) \le \frac{400}{100^2} = \frac{400}{10000} = 0.04 $$
+La probabilité de s'écarter de la moyenne de plus de $100$ heures est donc garantie d'être inférieure à $4\%$.
+
+\section{Bornes de Chernoff et Fonction Génératrice des Moments}
+
+L'inégalité de Chebyshev exploite le deuxième moment (la variance). L'idée des bornes de Chernoff est d'utiliser la fonction génératrice des moments (lorsqu'elle existe) pour exploiter simultanément tous les moments de la variable aléatoire, conduisant à des décroissances exponentielles des probabilités d'écart.
+
+\textbf{Définition (Fonction génératrice des moments) :}
+La fonction génératrice des moments d'une variable aléatoire $X$ est définie par $M_X(t) = \mathbb{E}[e^{tX}]$, pour $t \in \mathbb{R}$.
+
+\textbf{Théorème (Méthode de Chernoff) :}
+Soit $X$ une variable aléatoire et $a \in \mathbb{R}$. Alors pour tout $t > 0$ tel que $\mathbb{E}[e^{tX}] < \infty$ :
+$$ \mathbb{P}(X \ge a) \le e^{-ta} \mathbb{E}[e^{tX}] $$
+
+\textbf{Démonstration exhaustive :}
+L'événement $\{X \ge a\}$ est équivalent à $\{tX \ge ta\}$ car $t > 0$.
+Par croissance stricte de la fonction exponentielle, cet événement est aussi équivalent à $\{e^{tX} \ge e^{ta}\}$.
+Ainsi :
+$$ \mathbb{P}(X \ge a) = \mathbb{P}(e^{tX} \ge e^{ta}) $$
+Considérons la variable aléatoire positive $Y = e^{tX}$.
+On peut appliquer l'inégalité de Markov à $Y$, pour la constante positive $c = e^{ta}$ :
+$$ \mathbb{P}(Y \ge c) \le \frac{\mathbb{E}[Y]}{c} $$
+Ce qui se réécrit :
+$$ \mathbb{P}(e^{tX} \ge e^{ta}) \le \frac{\mathbb{E}[e^{tX}]}{e^{ta}} $$
+Soit finalement :
+$$ \mathbb{P}(X \ge a) \le e^{-ta} \mathbb{E}[e^{tX}] $$
+$\blacksquare$
+
+L'intérêt majeur de cette méthode est que le paramètre $t > 0$ est libre. On obtiendra la borne la plus fine possible en minimisant l'expression de droite par rapport à $t$, c'est-à-dire en étudiant la transformée de Cramér.
+
+\textbf{Exemple concret (Chernoff sur la loi de Poisson) :}
+Soit $X \sim \mathcal{P}(\lambda)$. On rappelle que $\mathbb{E}[e^{tX}] = \exp(\lambda(e^t - 1))$.
+On cherche à borner $\mathbb{P}(X \ge a)$ pour $a > \lambda$.
+D'après la méthode de Chernoff, pour tout $t > 0$ :
+$$ \mathbb{P}(X \ge a) \le e^{-ta} \exp(\lambda(e^t - 1)) = \exp(\lambda(e^t - 1) - ta) $$
+Pour trouver la meilleure borne, on minimise l'exposant $g(t) = \lambda(e^t - 1) - ta$.
+On dérive par rapport à $t$ : $g'(t) = \lambda e^t - a$.
+Le minimum est atteint lorsque $g'(t) = 0 \iff e^t = \frac{a}{\lambda} \iff t = \ln(\frac{a}{\lambda})$.
+Puisque $a > \lambda$, on a bien $t > 0$.
+En remplaçant ce $t$ optimal dans l'inégalité :
+$$ \mathbb{P}(X \ge a) \le \exp\left(\lambda\left(\frac{a}{\lambda} - 1\right) - a\ln\left(\frac{a}{\lambda}\right)\right) = e^{a-\lambda} \left(\frac{\lambda}{a}\right)^a $$
+
+\section{Le Lemme de Hoeffding}
+
+Le lemme de Hoeffding est un outil fondamental pour contrôler la fonction génératrice des moments d'une variable aléatoire bornée. Il mène directement à l'inégalité de Hoeffding, reine de l'apprentissage statistique.
+
+\textbf{Théorème (Lemme de Hoeffding) :}
+Soit $X$ une variable aléatoire d'espérance nulle ($\mathbb{E}[X] = 0$) prenant ses valeurs presque sûrement dans l'intervalle $[a, b]$.
+Alors, pour tout $s \in \mathbb{R}$ :
+$$ \mathbb{E}[e^{sX}] \le \exp\left(\frac{s^2 (b-a)^2}{8}\right) $$
+
+\textbf{Théorème (Inégalité de Hoeffding) :}
+Soient $X_1, X_2, \dots, X_n$ des variables aléatoires indépendantes telles que pour tout $i$, $X_i \in [a_i, b_i]$ presque sûrement.
+Posons $S_n = \sum_{i=1}^n X_i$. Alors, pour tout $t > 0$ :
+$$ \mathbb{P}(S_n - \mathbb{E}[S_n] \ge t) \le \exp\left( - \frac{2t^2}{\sum_{i=1}^n (b_i - a_i)^2} \right) $$
+
+\textbf{Exemple concret (Hoeffding pour des variables de Bernoulli) :}
+Considérons une urne contenant une proportion $p$ de boules rouges. On effectue $n = 100$ tirages avec remise. Soit $X_i$ la variable valant $1$ si la $i$-ème boule est rouge, $0$ sinon. Les $X_i$ sont indépendantes et bornées dans $[0, 1]$ (donc $b_i - a_i = 1$).
+Posons la moyenne empirique $\bar{X}_n = \frac{S_n}{n}$. On a $\mathbb{E}[\bar{X}_n] = p$.
+L'inégalité de Hoeffding donne pour l'écart de la moyenne :
+$$ \mathbb{P}(\bar{X}_n - p \ge \epsilon) = \mathbb{P}(S_n - np \ge n\epsilon) \le \exp\left( - \frac{2(n\epsilon)^2}{n \times 1^2} \right) = \exp(-2n\epsilon^2) $$
+Si on veut garantir que l'écart entre notre estimation empirique et la vraie valeur $p$ dépasse $\epsilon = 0.1$ avec une probabilité, disons pour $n=100$ :
+$$ \mathbb{P}(\bar{X}_n - p \ge 0.1) \le \exp(-2 \times 100 \times 0.01) = \exp(-2) \approx 0.135 $$
+Ainsi, il y a moins de $13.5\%$ de chances de surestimer $p$ de plus de $0.1$.
+
+\newpage
+\part{Exercices d'Application et de Concours}
+\section*{Exercice 1 : Application directe de Markov}
+
+$\bigstar\star\star\star\star$
+
+\textbf{Énoncé :}
+Un serveur informatique reçoit en moyenne $500$ requêtes par minute. On suppose que le nombre de requêtes $X$ est une variable aléatoire à valeurs dans $\mathbb{N}$.
+Montrer que la probabilité de recevoir plus de $2000$ requêtes en une minute est au plus de $25\%$.
+
+\textbf{Correction :}
+La variable $X$ représentant un nombre de requêtes est positive ou nulle ($X \ge 0$).
+On nous donne l'espérance de $X$ : $\mathbb{E}[X] = 500$.
+On cherche à majorer la probabilité de l'événement $\{X \ge 2000\}$.
+Puisque $X \ge 0$ et admet une espérance finie, on peut appliquer l'inégalité de Markov pour $a = 2000 > 0$.
+L'inégalité stipule que :
+$$ \mathbb{P}(X \ge a) \le \frac{\mathbb{E}[X]}{a} $$
+En remplaçant par les valeurs numériques :
+$$ \mathbb{P}(X \ge 2000) \le \frac{500}{2000} $$
+En simplifiant la fraction :
+$$ \frac{500}{2000} = \frac{1}{4} = 0.25 $$
+Ainsi, $\mathbb{P}(X \ge 2000) \le 25\%$.
+La démonstration est terminée, sans supposer aucune loi de probabilité spécifique pour $X$ (comme une loi de Poisson par exemple).
+
+
+\section*{Exercice 2 : Inégalité de Bienaymé-Tchebychev}
+
+$\bigstar\star\star\star\star$
+
+\textbf{Énoncé :}
+La tension délivrée par un générateur électrique est une variable aléatoire $U$. On sait que l'espérance de la tension est $\mathbb{E}[U] = 220$ Volts, et son écart-type est $\sigma = 5$ Volts.
+Quelle est la garantie de trouver la tension entre $205$ Volts et $235$ Volts ?
+
+\textbf{Correction :}
+Nous cherchons à minorer la probabilité de l'événement $\{205 \le U \le 235\}$.
+On peut réécrire cet événement sous la forme d'un écart à la moyenne. Puisque $\mu = 220$, on remarque que :
+$$ 205 \le U \le 235 \iff -15 \le U - 220 \le 15 \iff |U - \mu| \le 15 $$
+Nous cherchons donc à minorer $\mathbb{P}(|U - \mu| \le 15)$.
+L'événement contraire est $\{|U - \mu| > 15\}$.
+Puisque $U$ a une variance finie $\sigma^2 = 5^2 = 25$, on applique l'inégalité de Bienaymé-Tchebychev :
+$$ \mathbb{P}(|U - \mu| \ge a) \le \frac{\sigma^2}{a^2} $$
+Ici, $a = 15$.
+$$ \mathbb{P}(|U - 220| \ge 15) \le \frac{25}{15^2} = \frac{25}{225} $$
+En simplifiant :
+$$ \frac{25}{225} = \frac{1}{9} $$
+Par passage à l'événement complémentaire :
+$$ \mathbb{P}(|U - 220| \le 15) = 1 - \mathbb{P}(|U - 220| > 15) \ge 1 - \frac{1}{9} $$
+$$ \mathbb{P}(205 \le U \le 235) \ge \frac{8}{9} $$
+La probabilité est donc d'au moins $\frac{8}{9}$ (soit environ $88.89\%$).
+
+
+\section*{Exercice 3 : Borne de Markov unilatérale (Inégalité de Cantelli)}
+
+$\bigstar\bigstar\star\star\star$
+
+\textbf{Énoncé :}
+Soit $X$ une variable aléatoire réelle de carré intégrable, d'espérance $\mu = 0$ et de variance $\sigma^2 > 0$.
+Montrer que pour tout $a > 0$ :
+$$ \mathbb{P}(X \ge a) \le \frac{\sigma^2}{\sigma^2 + a^2} $$
+*Indice : Appliquer l'inégalité de Markov à la variable $(X + t)^2$ pour un réel $t > 0$ judicieusement choisi.*
+
+\textbf{Correction :}
+Soit $t > 0$ un réel paramétrique.
+L'événement $\{X \ge a\}$ implique que $X + t \ge a + t$. Puisque $a + t > 0$, la fonction carré préserve l'inégalité :
+$$ X \ge a \implies (X + t)^2 \ge (a + t)^2 $$
+Donc $\{X \ge a\} \subset \{(X + t)^2 \ge (a + t)^2\}$.
+Ainsi, la probabilité du premier événement est majorée par celle du second :
+$$ \mathbb{P}(X \ge a) \le \mathbb{P}((X + t)^2 \ge (a + t)^2) $$
+La variable $(X + t)^2$ est positive. Par l'inégalité de Markov :
+$$ \mathbb{P}((X + t)^2 \ge (a + t)^2) \le \frac{\mathbb{E}[(X + t)^2]}{(a + t)^2} $$
+Développons l'espérance au numérateur :
+$$ \mathbb{E}[(X + t)^2] = \mathbb{E}[X^2 + 2tX + t^2] = \mathbb{E}[X^2] + 2t\mathbb{E}[X] + t^2 $$
+Puisque $\mathbb{E}[X] = 0$, on a $\mathbb{E}[X^2] = \text{Var}(X) = \sigma^2$. Donc :
+$$ \mathbb{E}[(X + t)^2] = \sigma^2 + t^2 $$
+On obtient donc pour tout $t > 0$ :
+$$ \mathbb{P}(X \ge a) \le \frac{\sigma^2 + t^2}{(a + t)^2} $$
+Pour obtenir la borne la plus fine, nous devons minimiser la fonction $f(t) = \frac{\sigma^2 + t^2}{(a + t)^2}$ par rapport à $t > 0$.
+Calculons la dérivée de $f$ :
+$$ f'(t) = \frac{2t(a + t)^2 - 2(a + t)(\sigma^2 + t^2)}{(a + t)^4} = \frac{2(a + t) [ t(a + t) - (\sigma^2 + t^2) ]}{(a + t)^4} $$
+En simplifiant le crochet :
+$$ t(a + t) - (\sigma^2 + t^2) = at + t^2 - \sigma^2 - t^2 = at - \sigma^2 $$
+La dérivée s'annule lorsque $at - \sigma^2 = 0$, soit pour $t^* = \frac{\sigma^2}{a}$.
+Puisque $\sigma^2 > 0$ et $a > 0$, on a bien $t^* > 0$.
+Injectons $t^*$ dans $f(t)$ :
+$$ f(t^*) = \frac{\sigma^2 + \left(\frac{\sigma^2}{a}\right)^2}{\left(a + \frac{\sigma^2}{a}\right)^2} = \frac{\sigma^2 \left(1 + \frac{\sigma^2}{a^2}\right)}{\left( \frac{a^2 + \sigma^2}{a} \right)^2} = \frac{\sigma^2 \left(\frac{a^2 + \sigma^2}{a^2}\right)}{\frac{(a^2 + \sigma^2)^2}{a^2}} $$
+Les termes $a^2$ se simplifient :
+$$ f(t^*) = \frac{\sigma^2 (a^2 + \sigma^2)}{(a^2 + \sigma^2)^2} = \frac{\sigma^2}{a^2 + \sigma^2} $$
+D'où le résultat final de l'inégalité de Cantelli :
+$$ \mathbb{P}(X \ge a) \le \frac{\sigma^2}{\sigma^2 + a^2} $$
+Cette borne unilatérale est souvent meilleure que la borne de Tchebychev symétrique pour les événements à une seule queue.
+
+
+\section*{Exercice 4 : Concentration empirique par Hoeffding}
+
+$\bigstar\bigstar\star\star\star$
+
+\textbf{Énoncé :}
+Un sondage politique interroge $n = 1000$ personnes choisies indépendamment et uniformément. La proportion réelle d'intentions de vote pour le candidat A est $p$. Soit $\overline{X}_n$ la proportion estimée par le sondage.
+Utiliser l'inégalité de Hoeffding pour trouver la probabilité que le sondage se trompe de plus de $3$ points de pourcentage (soit un écart $\epsilon = 0.03$).
+
+\textbf{Correction :}
+La proportion empirique est $\overline{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$, où chaque $X_i$ est une variable aléatoire de Bernoulli de paramètre $p$. Les variables $X_i$ sont indépendantes et à valeurs dans l'intervalle $[0, 1]$.
+Ainsi, $a_i = 0$ et $b_i = 1$ pour tout $i \in \{1, \dots, n\}$.
+L'espérance de la moyenne empirique est $\mathbb{E}[\overline{X}_n] = p$.
+L'inégalité de Hoeffding pour la moyenne s'écrit :
+$$ \mathbb{P}(|\overline{X}_n - \mathbb{E}[\overline{X}_n]| \ge \epsilon) \le 2 \exp\left( - \frac{2 n^2 \epsilon^2}{\sum_{i=1}^n (b_i - a_i)^2} \right) $$
+Puisque $b_i - a_i = 1$, le dénominateur est $\sum_{i=1}^n 1 = n$.
+La formule se simplifie pour la moyenne :
+$$ \mathbb{P}(|\overline{X}_n - p| \ge \epsilon) \le 2 \exp(-2 n \epsilon^2) $$
+Dans notre cas, $n = 1000$ et $\epsilon = 0.03$.
+Calculons l'exposant :
+$$ 2 n \epsilon^2 = 2 \times 1000 \times (0.03)^2 = 2000 \times 0.0009 = 1.8 $$
+Ainsi :
+$$ \mathbb{P}(|\overline{X}_n - p| \ge 0.03) \le 2 e^{-1.8} $$
+La valeur de $e^{-1.8}$ est approximativement $0.1653$.
+La probabilité est donc bornée par :
+$$ 2 \times 0.1653 \approx 0.3306 $$
+La probabilité que le sondage se trompe de plus de $3\%$ est donc garantie inférieure à environ $33\%$.
+
+
+\section*{Exercice 5 : Écart de Tchebychev sur la moyenne empirique}
+
+$\bigstar\bigstar\bigstar\star\star$
+
+\textbf{Énoncé :}
+On dispose de $n$ variables aléatoires indépendantes $X_1, \dots, X_n$ ayant toutes la même espérance $\mu$ et la même variance $\sigma^2$. Soit $\overline{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$.
+Déterminer la valeur minimale de $n$ garantissant par l'inégalité de Tchebychev que $\mathbb{P}(|\overline{X}_n - \mu| \ge 0.1\sigma) \le 0.05$.
+
+\textbf{Correction :}
+Calculons d'abord l'espérance et la variance de la moyenne empirique $\overline{X}_n$.
+Par linéarité de l'espérance :
+$$ \mathbb{E}[\overline{X}_n] = \frac{1}{n} \sum_{i=1}^n \mathbb{E}[X_i] = \frac{n\mu}{n} = \mu $$
+Par indépendance des variables, la variance d'une somme est la somme des variances :
+$$ \text{Var}(\overline{X}_n) = \text{Var}\left( \frac{1}{n} \sum_{i=1}^n X_i \right) = \frac{1}{n^2} \sum_{i=1}^n \text{Var}(X_i) = \frac{1}{n^2} (n \sigma^2) = \frac{\sigma^2}{n} $$
+Appliquons l'inégalité de Bienaymé-Tchebychev à la variable $\overline{X}_n$ avec l'écart $a = 0.1\sigma$ :
+$$ \mathbb{P}(|\overline{X}_n - \mu| \ge a) \le \frac{\text{Var}(\overline{X}_n)}{a^2} $$
+En remplaçant :
+$$ \mathbb{P}(|\overline{X}_n - \mu| \ge 0.1\sigma) \le \frac{\frac{\sigma^2}{n}}{(0.1\sigma)^2} $$
+Le dénominateur est $(0.1\sigma)^2 = 0.01 \sigma^2$.
+Donc la borne est :
+$$ \frac{\sigma^2}{n \times 0.01 \sigma^2} = \frac{1}{0.01 n} = \frac{100}{n} $$
+Nous voulons que cette borne soit inférieure ou égale à la tolérance de $0.05$ :
+$$ \frac{100}{n} \le 0.05 $$
+En isolant $n$ :
+$$ n \ge \frac{100}{0.05} = \frac{100}{1/20} = 2000 $$
+Il faut donc au minimum $n = 2000$ échantillons pour garantir ce niveau de précision par Tchebychev, quelle que soit la loi sous-jacente des $X_i$ (pourvu qu'elle admette une variance $\sigma^2$).
+
+
+\section*{Exercice 6 : Comparaison Tchebychev vs Hoeffding}
+
+$\bigstar\bigstar\bigstar\star\star$
+
+\textbf{Énoncé :}
+Soit $n = 100$ variables de Bernoulli indépendantes $X_i \sim \mathcal{B}(1/2)$. On étudie l'écart de la moyenne $\overline{X}_n$ par rapport à $1/2$ d'au moins $0.1$.
+1. Calculer la borne donnée par Tchebychev.
+2. Calculer la borne donnée par Hoeffding.
+3. Conclure.
+
+\textbf{Correction :}
+Ici, $X_i \in [0, 1]$ avec $\mathbb{E}[X_i] = p = 1/2$ et $\text{Var}(X_i) = p(1-p) = 1/4$.
+La moyenne empirique a pour variance $\text{Var}(\overline{X}_n) = \frac{1/4}{100} = \frac{1}{400}$.
+On cherche à borner $\mathbb{P}(|\overline{X}_n - 1/2| \ge 0.1)$.
+
+\textbf{1. Borne de Tchebychev :}
+$$ \mathbb{P}(|\overline{X}_n - 1/2| \ge 0.1) \le \frac{\text{Var}(\overline{X}_n)}{(0.1)^2} = \frac{1/400}{0.01} = \frac{1/400}{1/100} = \frac{100}{400} = \frac{1}{4} = 0.25 $$
+Tchebychev garantit une probabilité inférieure ou égale à $25\%$.
+
+\textbf{2. Borne de Hoeffding :}
+Les variables sont dans $[0, 1]$ donc $b_i - a_i = 1$. L'inégalité s'écrit :
+$$ \mathbb{P}(|\overline{X}_n - 1/2| \ge 0.1) \le 2 \exp(-2 n \epsilon^2) $$
+Avec $n = 100$ et $\epsilon = 0.1$ :
+$$ 2 n \epsilon^2 = 2 \times 100 \times 0.01 = 2 $$
+La borne de Hoeffding est :
+$$ 2 e^{-2} \approx 2 \times 0.1353 = 0.2706 $$
+Ici, Hoeffding donne une borne de $27.06\%$.
+
+\textbf{3. Conclusion :}
+Étonnamment, pour de petites déviations ou un $n$ modéré, Tchebychev peut être légèrement plus serré ($0.25$ vs $0.27$). L'avantage de Hoeffding réside dans sa décroissance exponentielle, qui devient massivement supérieure pour un $n$ grand (ex: $n=1000$, Hoeffding donne $2e^{-20} \approx 4 \times 10^{-9}$ alors que Tchebychev donne $1/40 = 2.5\%$).
+
+
+\section*{Exercice 7 : Chernoff pour la loi de Poisson}
+
+$\bigstar\bigstar\bigstar\bigstar\star$
+
+\textbf{Énoncé :}
+Soit $X$ une variable aléatoire suivant une loi de Poisson de paramètre $\lambda > 0$.
+Montrer par la méthode de Chernoff que pour tout $x > \lambda$ :
+$$ \mathbb{P}(X \ge x) \le \exp(-\lambda + x - x \ln(x/\lambda)) $$
+
+\textbf{Correction :}
+La fonction génératrice des moments de $X \sim \mathcal{P}(\lambda)$ est :
+$$ \mathbb{E}[e^{tX}] = \sum_{k=0}^\infty e^{tk} e^{-\lambda} \frac{\lambda^k}{k!} = e^{-\lambda} \sum_{k=0}^\infty \frac{(\lambda e^t)^k}{k!} = e^{-\lambda} \exp(\lambda e^t) = \exp(\lambda(e^t - 1)) $$
+On cherche à borner $\mathbb{P}(X \ge x)$ pour $x > \lambda$.
+Pour tout $t > 0$, l'inégalité de Markov sur $e^{tX}$ donne :
+$$ \mathbb{P}(X \ge x) = \mathbb{P}(e^{tX} \ge e^{tx}) \le \frac{\mathbb{E}[e^{tX}]}{e^{tx}} = \exp(\lambda(e^t - 1) - tx) $$
+Pour optimiser cette borne, il faut minimiser la fonction en exposant $f(t) = \lambda(e^t - 1) - tx$ pour $t > 0$.
+La dérivée est $f'(t) = \lambda e^t - x$.
+Elle s'annule pour $t^* = \ln(x/\lambda)$. Comme $x > \lambda$, on a bien $t^* > 0$.
+Calculons $f(t^*)$ :
+$$ f(t^*) = \lambda\left(e^{\ln(x/\lambda)} - 1\right) - x \ln(x/\lambda) = \lambda\left(\frac{x}{\lambda} - 1\right) - x \ln(x/\lambda) $$
+$$ f(t^*) = x - \lambda - x \ln(x/\lambda) $$
+En injectant cette valeur minimale dans l'exponentielle, on obtient la borne de Chernoff :
+$$ \mathbb{P}(X \ge x) \le \exp(-\lambda + x - x \ln(x/\lambda)) $$
+La démonstration est terminée.
+
+
+\section*{Exercice 8 : Borne de concentration exponentielle sub-Gaussienne}
+
+$\bigstar\bigstar\bigstar\bigstar\star$
+
+\textbf{Énoncé :}
+Une variable aléatoire $X$ d'espérance nulle est dite sub-Gaussienne de paramètre $\sigma^2$ si, pour tout $t \in \mathbb{R}$, on a $\mathbb{E}[e^{tX}] \le e^{\frac{\sigma^2 t^2}{2}}$.
+Soit $X$ sub-Gaussienne de paramètre $\sigma^2$. Montrer que pour tout $a > 0$ :
+$$ \mathbb{P}(X \ge a) \le \exp\left(-\frac{a^2}{2\sigma^2}\right) $$
+
+\textbf{Correction :}
+La preuve repose sur l'optimisation standard de la méthode de Chernoff.
+Pour un $t > 0$, l'inégalité de Markov appliquée à la variable positive $e^{tX}$ donne :
+$$ \mathbb{P}(X \ge a) = \mathbb{P}(e^{tX} \ge e^{ta}) \le \frac{\mathbb{E}[e^{tX}]}{e^{ta}} $$
+En utilisant l'hypothèse de la propriété sub-Gaussienne pour le numérateur :
+$$ \mathbb{P}(X \ge a) \le \frac{e^{\frac{\sigma^2 t^2}{2}}}{e^{ta}} = \exp\left( \frac{\sigma^2 t^2}{2} - ta \right) $$
+Posons $g(t) = \frac{\sigma^2 t^2}{2} - ta$. On veut trouver le $t > 0$ qui minimise $g(t)$.
+Dérivons $g$ par rapport à $t$ :
+$$ g'(t) = \sigma^2 t - a $$
+La dérivée s'annule lorsque $t^* = \frac{a}{\sigma^2}$. Puisque $a > 0$ et $\sigma^2 > 0$, $t^*$ est strictement positif.
+Injectons $t^*$ dans $g(t)$ :
+$$ g(t^*) = \frac{\sigma^2}{2} \left( \frac{a}{\sigma^2} \right)^2 - a \left( \frac{a}{\sigma^2} \right) = \frac{\sigma^2 a^2}{2 \sigma^4} - \frac{a^2}{\sigma^2} $$
+$$ g(t^*) = \frac{a^2}{2 \sigma^2} - \frac{a^2}{\sigma^2} = - \frac{a^2}{2\sigma^2} $$
+Ainsi, la borne devient :
+$$ \mathbb{P}(X \ge a) \le \exp\left( -\frac{a^2}{2\sigma^2} \right) $$
+Cette décroissance exponentielle en $a^2$ caractérise le comportement des queues sub-Gaussiennes, imitant les queues d'une vraie loi normale.
+
+
+\section*{Exercice 9 : Dimension VC et Bornes PAC de Hoeffding}
+
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
+
+\textbf{Énoncé :}
+En apprentissage statistique, on évalue un classifieur binaire $h$ sur $n$ données. L'erreur empirique est $\hat{R}(h) = \frac{1}{n} \sum_{i=1}^n \mathbf{1}_{h(X_i) \neq Y_i}$, et l'erreur de généralisation (vraie) est $R(h) = \mathbb{P}(h(X) \neq Y)$.
+On sait par Hoeffding que pour un classifieur fixé, $\mathbb{P}(|\hat{R}(h) - R(h)| \ge \epsilon) \le 2\exp(-2n\epsilon^2)$.
+Soit $\mathcal{H}$ un espace d'hypothèses de taille finie $|\mathcal{H}|$.
+En utilisant la borne de l'union (Boole), montrer que pour garantir que l'erreur entre $\hat{R}(h)$ et $R(h)$ pour \textbf{tous} les classifieurs de $\mathcal{H}$ soit strictement inférieure à $\epsilon$ avec une probabilité au moins $1 - \delta$, il suffit d'avoir :
+$$ n \ge \frac{1}{2\epsilon^2} \ln\left(\frac{2|\mathcal{H}|}{\delta}\right) $$
+
+\textbf{Correction :}
+Nous voulons borner la probabilité de l'événement indésirable ("bad event") : au moins un classifieur $h \in \mathcal{H}$ s'écarte de plus de $\epsilon$ entre son erreur empirique et son erreur réelle.
+Soit cet événement $A = \bigcup_{h \in \mathcal{H}} \{ |\hat{R}(h) - R(h)| \ge \epsilon \}$.
+Par l'inégalité de Boole (sous-additivité) :
+$$ \mathbb{P}(A) = \mathbb{P}\left( \bigcup_{h \in \mathcal{H}} \{ |\hat{R}(h) - R(h)| \ge \epsilon \} \right) \le \sum_{h \in \mathcal{H}} \mathbb{P}(|\hat{R}(h) - R(h)| \ge \epsilon) $$
+Chaque terme de la somme se majore par l'inégalité de Hoeffding :
+$$ \mathbb{P}(|\hat{R}(h) - R(h)| \ge \epsilon) \le 2\exp(-2n\epsilon^2) $$
+Puisque la somme comporte $|\mathcal{H}|$ termes identiques :
+$$ \mathbb{P}(A) \le |\mathcal{H}| \times 2\exp(-2n\epsilon^2) $$
+Nous voulons que la probabilité de réussite soit au moins $1 - \delta$, ce qui revient à exiger que la probabilité de l'événement indésirable $\mathbb{P}(A)$ soit au plus $\delta$ :
+$$ 2 |\mathcal{H}| \exp(-2n\epsilon^2) \le \delta $$
+Isolons $n$ :
+$$ \exp(-2n\epsilon^2) \le \frac{\delta}{2|\mathcal{H}|} $$
+En prenant le logarithme népérien des deux côtés :
+$$ -2n\epsilon^2 \le \ln\left( \frac{\delta}{2|\mathcal{H}|} \right) $$
+Puisque $\ln(1/x) = -\ln(x)$, on obtient :
+$$ -2n\epsilon^2 \le -\ln\left( \frac{2|\mathcal{H}|}{\delta} \right) $$
+En divisant par $-2\epsilon^2$ (ce qui inverse le sens de l'inégalité) :
+$$ n \ge \frac{1}{2\epsilon^2} \ln\left(\frac{2|\mathcal{H}|}{\delta}\right) $$
+La démonstration est terminée. Cela illustre comment la taille de l'espace des modèles impacte logarithmiquement la quantité de données $n$ requise pour apprendre.
+
+
+\section*{Exercice 10 : Inégalité de Bennett et comparaison avec Chernoff}
+
+$\bigstar\bigstar\bigstar\bigstar\bigstar$
+
+\textbf{Énoncé :}
+L'inégalité de Bennett affine la borne de Hoeffding en intégrant la connaissance de la variance réelle, très utile si celle-ci est petite.
+Soit $X_1, \dots, X_n$ indépendantes centrées, $X_i \le 1$ p.s., et posons $\sigma^2 = \frac{1}{n} \sum_{i=1}^n \text{Var}(X_i)$.
+La borne de Bennett affirme pour $S_n = \sum X_i$ et $t > 0$ :
+$$ \mathbb{P}(S_n \ge nt) \le \exp\left( -n \sigma^2 h\left(\frac{t}{\sigma^2}\right) \right) \quad \text{où } h(u) = (1+u)\ln(1+u) - u $$
+Montrer par une étude analytique locale que pour des petites déviations $u = \frac{t}{\sigma^2} \approx 0$, l'exposant correspond à la décroissance gaussienne de Tchebychev/Chernoff $-nt^2/(2\sigma^2)$.
+
+\textbf{Correction :}
+Étudions le développement limité de la fonction $h(u) = (1+u)\ln(1+u) - u$ au voisinage de $u = 0$.
+Rappelons le développement limité du logarithme népérien au voisinage de 1 :
+$$ \ln(1+u) = u - \frac{u^2}{2} + o(u^2) $$
+Remplaçons dans l'expression de $h(u)$ :
+$$ h(u) = (1+u)\left(u - \frac{u^2}{2} + o(u^2)\right) - u $$
+Développons le produit :
+$$ h(u) = u - \frac{u^2}{2} + u^2 + o(u^2) - u $$
+Les termes en $u$ s'annulent ($u - u = 0$) :
+$$ h(u) = \frac{u^2}{2} + o(u^2) $$
+L'exposant de l'inégalité de Bennett s'écrit $-n \sigma^2 h(u)$ avec $u = \frac{t}{\sigma^2}$.
+Pour $t$ petit devant $\sigma^2$ (i.e. $u \to 0$), on a $h(t/\sigma^2) \approx \frac{1}{2} \left(\frac{t}{\sigma^2}\right)^2 = \frac{t^2}{2\sigma^4}$.
+L'exposant de Bennett est alors approximativement :
+$$ -n \sigma^2 h\left(\frac{t}{\sigma^2}\right) \approx -n \sigma^2 \frac{t^2}{2\sigma^4} = - \frac{nt^2}{2\sigma^2} $$
+Ainsi, la borne de Bennett asymptotique s'écrit :
+$$ \mathbb{P}\left(\frac{S_n}{n} \ge t\right) = \mathbb{P}(S_n \ge nt) \le \exp\left( - \frac{n t^2}{2\sigma^2} \right) $$
+C'est exactement la décroissance exponentielle sub-gaussienne que l'on attendrait par le Théorème Central Limite, validant la puissance de la borne de Bennett pour les petites déviations où elle capture fidèlement la variance de l'échantillon, contrairement à Hoeffding qui borne paresseusement par la plage $(b-a)^2$.
+
+
+
+\newpage
+\part{Travaux Pratiques et Simulations Algorithmiques}
+\section*{Travaux Pratiques 1 : Simulation de l'inégalité de Markov}
+
+Ce TP vise à illustrer empiriquement l'inégalité de Markov.
+Nous générons une variable positive (loi exponentielle) et vérifions que la proportion des valeurs dépassant un seuil `a` reste bien inférieure à la borne `E[X]/a`.
+
+\begin{lstlisting}
+import random
+
+def simulate_markov(lambd, threshold, num_trials):
+    # E[X] pour une loi exponentielle est 1/lambda
+    expected_value = 1.0 / lambd
+
+    count_exceed = 0
+    for _ in range(num_trials):
+        # random.expovariate génère une variable aléatoire exponentielle
+        val = random.expovariate(lambd)
+        if val >= threshold:
+            count_exceed += 1
+
+    empirical_prob = count_exceed / num_trials
+    theoretical_bound = expected_value / threshold
+
+    return empirical_prob, theoretical_bound
+
+if __name__ == "__main__":
+    lambd = 0.5  # E[X] = 2.0
+    threshold = 10.0
+    trials = 100000
+
+    emp_prob, bound = simulate_markov(lambd, threshold, trials)
+    print("Probabilite empirique observee :", emp_prob)
+    print("Borne superieure de Markov :", bound)
+
+    # La probabilité empirique doit être inférieure ou égale à la borne théorique
+    assert emp_prob <= bound, "L'inégalité de Markov est violée !"
+\end{lstlisting}
+
+
+\section*{Travaux Pratiques 2 : Inégalité de Bienaymé-Tchebychev sur des dés}
+
+Nous illustrons l'inégalité de Tchebychev sur le lancer d'un dé à 6 faces.
+Nous calculons la variance et l'espérance théoriques, puis nous simulons la fréquence de dépassement d'un certain écart à la moyenne.
+
+\begin{lstlisting}
+import random
+
+def simulate_chebyshev(k_std, num_trials):
+    # Lancer d'un dé à 6 faces
+    faces = [1, 2, 3, 4, 5, 6]
+    mu = sum(faces) / 6.0  # Espérance = 3.5
+    # Variance
+    var = sum((x - mu)**2 for x in faces) / 6.0
+    std = var ** 0.5
+
+    threshold = k_std * std
+    count_exceed = 0
+
+    for _ in range(num_trials):
+        val = random.choice(faces)
+        if abs(val - mu) >= threshold:
+            count_exceed += 1
+
+    emp_prob = count_exceed / num_trials
+    # Borne de Tchebychev: P(|X - mu| >= k * std) <= 1 / k^2
+    theoretical_bound = 1.0 / (k_std ** 2)
+
+    return emp_prob, theoretical_bound
+
+if __name__ == "__main__":
+    k = 1.5
+    trials = 100000
+
+    emp_prob, bound = simulate_chebyshev(k, trials)
+    print(f"Probabilite empirique s'ecartant de {k} ecart-types :", emp_prob)
+    print("Borne superieure de Tchebychev :", bound)
+
+    assert emp_prob <= bound, "L'inégalité de Tchebychev est violée !"
+\end{lstlisting}
+
+
+\section*{Travaux Pratiques 3 : Concentration de la moyenne (Hoeffding)}
+
+L'inégalité de Hoeffding montre comment la moyenne d'un échantillon se concentre très vite autour de sa véritable espérance. Nous le simulons avec des lancers de pièces truquées.
+
+\begin{lstlisting}
+import random
+import math
+
+def simulate_hoeffding(n_flips, p_heads, epsilon, num_simulations):
+    count_exceed = 0
+
+    for _ in range(num_simulations):
+        # Simulation de n lancers
+        heads = sum(1 for _ in range(n_flips) if random.random() < p_heads)
+        mean_emp = heads / n_flips
+
+        # Est-ce que l'écart dépasse epsilon ?
+        if abs(mean_emp - p_heads) >= epsilon:
+            count_exceed += 1
+
+    emp_prob = count_exceed / num_simulations
+    # Borne de Hoeffding pour Bernoulli
+    bound = 2.0 * math.exp(-2.0 * n_flips * (epsilon ** 2))
+
+    return emp_prob, bound
+
+if __name__ == "__main__":
+    n = 100        # Taille de l'échantillon
+    p = 0.7        # Probabilité de Pile
+    eps = 0.1      # Marge d'erreur (10%)
+    sims = 10000   # Nombre de moyennes empiriques générées
+
+    emp_prob, bound = simulate_hoeffding(n, p, eps, sims)
+    print(f"Frequence empirique d'erreur > {eps} :", emp_prob)
+    print("Borne superieure de Hoeffding :", bound)
+
+    assert emp_prob <= bound, "La borne de Hoeffding n'est pas respectée !"
+\end{lstlisting}
+
+
+\section*{Travaux Pratiques 4 : Comparaison graphique en console (Tchebychev vs Hoeffding)}
+
+Pour de très petites valeurs, Hoeffding donne souvent une borne "pire" (parfois supérieure à 1) que Tchebychev. Mais asymptotiquement, son exponentielle l'emporte haut la main.
+Dans ce TP, nous calculons purement les bornes mathématiques pour comparer le croisement des deux inégalités sur des sommes de variables de Bernoulli.
+
+\begin{lstlisting}
+import math
+
+def compare_bounds(n, eps):
+    # Variance pour p=0.5 est 0.25.
+    # Pour la moyenne de n lancers, var = 0.25 / n
+    var_mean = 0.25 / n
+
+    # Borne de Tchebychev P(|Xn - mu| >= eps) <= Var / eps^2
+    chebyshev = min(1.0, var_mean / (eps ** 2))
+
+    # Borne de Hoeffding P(|Xn - mu| >= eps) <= 2 * exp(-2 * n * eps^2)
+    hoeffding = min(1.0, 2.0 * math.exp(-2.0 * n * (eps ** 2)))
+
+    return chebyshev, hoeffding
+
+if __name__ == "__main__":
+    epsilon = 0.05
+    print(f"Comparaison pour epsilon = {epsilon}\n")
+    print("N\tTchebychev\tHoeffding")
+    print("-" * 40)
+
+    for n in [10, 50, 100, 500, 1000, 2000]:
+        t_bound, h_bound = compare_bounds(n, epsilon)
+        print(f"{n}\t{t_bound:.4f}\t\t{h_bound:.4f}")
+
+    # Vérification asymptotique (pour grand N, Hoeffding doit écraser Tchebychev)
+    t_large, h_large = compare_bounds(5000, epsilon)
+    assert h_large < t_large, "Hoeffding devrait être bien plus strict que Tchebychev pour un grand N !"
+\end{lstlisting}
+
+
+\section*{Travaux Pratiques 5 : Application PAC : Dimensionner un Dataset}
+
+Un cas typique de l'IA (Probably Approximately Correct learning) : "Combien de données me faut-il pour garantir que mon erreur empirique est proche de l'erreur réelle à `epsilon` près, avec une certitude `1 - delta` ?"
+Nous implémentons la fonction calculant la taille minimale `N` via la borne de Hoeffding.
+
+\begin{lstlisting}
+import math
+
+def calculate_min_samples(epsilon, delta, hypothesis_space_size):
+    # La formule issue de Hoeffding + Borne de l'Union est :
+    # N >= (1 / 2*epsilon^2) * ln(2 * |H| / delta)
+    n = (1.0 / (2.0 * epsilon ** 2)) * math.log((2.0 * hypothesis_space_size) / delta)
+    return math.ceil(n)
+
+if __name__ == "__main__":
+    epsilon = 0.05  # Tolérance d'erreur de 5%
+    delta = 0.01    # Probabilité d'échec de 1% (garantie de 99%)
+
+    # Cas 1 : Un seul modèle évalué
+    n_single = calculate_min_samples(epsilon, delta, 1)
+
+    # Cas 2 : On sélectionne le meilleur modèle parmi 1000 hypothèses
+    n_multi = calculate_min_samples(epsilon, delta, 1000)
+
+    print(f"Echantillons requis (1 modèle) : {n_single}")
+    print(f"Echantillons requis (1000 modèles) : {n_multi}")
+
+    assert n_multi > n_single, "L'exploration d'un espace de modèles plus vaste nécessite plus de données !"
+    assert n_single == math.ceil(math.log(2 / 0.01) / (2 * 0.05**2)), "Calcul mathématique erroné."
+\end{lstlisting}
+
+
+\end{document}
