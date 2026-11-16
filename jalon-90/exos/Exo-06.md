@@ -1,19 +1,24 @@
-# Exercice 06
+# Exercice 6 : Convergence p.s. et lemme de Borel-Cantelli
 
-**Difficulté :** $\bigstar\bigstar\bigstar\star\star$
+Niveau : $\bigstar\bigstar\bigstar\bigstar\star$
 
-**Énoncé :**
-Soit $Z_n$ une suite de variables aléatoires telles que $\mathbb{P}(Z_n = \sqrt{n}) = \frac{1}{n}$ et $\mathbb{P}(Z_n = 0) = 1 - \frac{1}{n}$.
-Montrez que $Z_n$ converge en probabilité vers $0$, mais qu'elle ne converge pas dans $L^2$.
+Soit $(X_n)_{n \in \mathbb{N}}$ une suite de variables aléatoires indépendantes suivant la loi de Bernoulli de paramètre $p_n = \frac{1}{n^2}$ pour $n \ge 1$.
+Montrer en utilisant le lemme de Borel-Cantelli que $X_n \xrightarrow{\text{p.s.}} 0$.
 
-**Correction :**
-**Convergence en Probabilité :**
-Soit $\epsilon \in ]0, 1[$. Puisque $Z_n$ vaut $0$ ou $\sqrt{n}$ (avec $n \ge 1$), on a :
-$$ \mathbb{P}(|Z_n - 0| > \epsilon) = \mathbb{P}(Z_n = \sqrt{n}) = \frac{1}{n} $$
-Par passage à la limite, $\lim_{n \to \infty} \mathbb{P}(|Z_n| > \epsilon) = 0$. Donc $Z_n \xrightarrow{\mathbb{P}} 0$.
+## Correction
 
-**Convergence $L^2$ :**
-Calculons l'espérance du carré :
-$$ \mathbb{E}[|Z_n - 0|^2] = (\sqrt{n})^2 \cdot \mathbb{P}(Z_n = \sqrt{n}) + 0^2 \cdot \mathbb{P}(Z_n = 0) $$
-$$ \mathbb{E}[Z_n^2] = n \cdot \frac{1}{n} = 1 $$
-La limite de $\mathbb{E}[|Z_n - 0|^2]$ est $1$, qui n'est pas égale à $0$. Par conséquent, $Z_n$ ne converge pas vers $0$ dans l'espace de Hilbert $L^2$.
+Pour montrer que $X_n \xrightarrow{\text{p.s.}} 0$, on fixe un $\varepsilon > 0$.
+Il s'agit de prouver que la probabilité que l'événement $A_n = \{ |X_n - 0| > \varepsilon \}$ se réalise une infinité de fois est nulle.
+Comme $X_n \in \{0, 1\}$, si l'on prend $\varepsilon \in ]0, 1[$, l'événement $A_n$ équivaut à $\{X_n = 1\}$.
+Évaluons la probabilité de $A_n$ :
+$$\mathbb{P}(A_n) = \mathbb{P}(X_n = 1) = p_n = \frac{1}{n^2}$$
+Considérons la série de terme général $\mathbb{P}(A_n)$ :
+$$\sum_{n=1}^{+\infty} \mathbb{P}(A_n) = \sum_{n=1}^{+\infty} \frac{1}{n^2}$$
+Il s'agit d'une série de Riemann convergente (exposant $2 > 1$).
+Donc $\sum \mathbb{P}(A_n) < +\infty$.
+D'après le premier lemme de Borel-Cantelli, si la série des probabilités converge, alors la probabilité que la limite supérieure des $A_n$ (le fait qu'une infinité de $A_n$ se réalisent) est nulle :
+$$\mathbb{P}(\limsup_{n \to \infty} A_n) = 0$$
+Cela signifie que presque sûrement, l'événement $\{X_n = 1\}$ ne se produit qu'un nombre fini de fois.
+Donc, presque sûrement, il existe un rang $N$ à partir duquel $X_n = 0$.
+Ainsi, la suite $(X_n(\omega))$ est stationnaire en $0$ à partir d'un certain rang, presque sûrement.
+On en conclut que $X_n \xrightarrow{\text{p.s.}} 0$.

@@ -320,6 +320,7 @@ python3 -m unittest test_generate_jalons.py
 ---
 
 ## 📝 Historique & Avancement
+- [2026-11-05] : [Upsert/Création] du Jalon 90 - Les modes de convergence. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-31] : [Upsert/Création] du Jalon 104 - Bases hilbertiennes. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-29] : [Upsert/Création] du Jalon 103 - Espaces de Hilbert généraux. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
 - [2026-10-28] : [Upsert/Création] du Jalon 102 - Topologies faibles et faibles-*. Status: Terminé. 🔥 **Enrichi** *(10 Exos + 5 TP)*
