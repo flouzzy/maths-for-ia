@@ -1,37 +1,30 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,amsthm}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
 \usepackage{geometry}
-\geometry{hmargin=2.5cm,vmargin=3cm}
+\geometry{margin=2.5cm}
 \usepackage{tikz}
-\usetikzlibrary{cd,positioning,shapes}
 \usepackage{listings}
 \usepackage{xcolor}
 
-\lstset{
-    language=Python,
-    basicstyle=\ttfamily\small,
-    keywordstyle=\color{blue}\bfseries,
-    stringstyle=\color{red},
-    commentstyle=\color{gray}\itshape,
-    numbers=left,
-    numberstyle=\tiny\color{gray},
-    breaklines=true,
-    frame=single,
-    showstringspaces=false
-}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
 \title{\Huge Les Modes de Convergence en Probabilités \\ \large Cours magistral, exercices corrigés et travaux pratiques}
 \author{\Large Charles EDOU NZE}
 \date{\today}
 
 \begin{document}
-\maketitle
-\tableofcontents
-\newpage
 
-\part{Cours Magistral}
+
+\title{\Huge Les modes de convergence en probabilités}
+\maketitle
+
+\section{1. Origines et intuitions asymptotiques}
 
 
 
@@ -45,7 +38,9 @@ En mathématiques classiques, la convergence d'une suite de nombres réels est u
 
 Dans ce qui suit, on considère un espace probabilisé $(\Omega, \mathcal{F}, \mathbb{P})$. Toutes les variables aléatoires considérées sont à valeurs réelles et définies sur cet espace. On s'intéresse à la convergence d'une suite $(X_n)_{n \in \mathbb{N}}$ vers une variable aléatoire $X$.
 
-\subsection{Convergence Presque Sûre}
+  % Convergence en loi
+  \draw[fill=purple!10, draw=purple!50!black, rounded corners=3mm] (-4.5,-5.5) rectangle (2.5,-7.5);
+  \node[purple!50!black] at (-1, -5.9) {En loi (distribution)};
 
 La convergence presque sûre est le mode de convergence le plus fort. Il stipule que la suite de fonctions $X_n(\omega)$ converge ponctuellement vers $X(\omega)$ pour presque toutes les réalisations $\omega$.
 
@@ -103,6 +98,7 @@ Puisque $k \to \infty$ lorsque $n \to \infty$, la probabilité tend vers $0$. Do
 
 \node[above] at (2, 1.2) {La bosse se déplace vers la droite et rétrécit};
 \end{tikzpicture}
+\end{center}
 
 
 
@@ -212,7 +208,14 @@ Donc, pour $n$ suffisamment grand :
 $$ \mathbb{E}[|f(X_n) - f(X)|] \le 2M \cdot \eta + 2M \cdot \eta + \eta = (4M + 1)\eta $$
 Puisque $\eta$ est arbitrairement petit, la limite supérieure de l'écart est nulle, ce qui prouve la convergence en loi.
 
-\section{Applications en Physique, Logique et Intelligence Artificielle}
+En sommant, nous obtenons :
+$$ \mathbb{E}[|f(X_n) - f(X)|] \le 2M \cdot \mathbb{P}(|X_n - X| \ge \delta) + 2M\eta + \eta = 2M \cdot \mathbb{P}(|X_n - X| \ge \delta) + (2M+1)\eta $$
+Puisque $X_n \xrightarrow{\mathbb{P}} X$, nous savons que pour ce $\delta > 0$ fixé, $\lim_{n \to \infty} \mathbb{P}(|X_n - X| \ge \delta) = 0$.
+En passant à la limite supérieure lorsque $n \to \infty$ :
+$$ \limsup_{n \to \infty} \mathbb{E}[|f(X_n) - f(X)|] \le (2M+1)\eta $$
+Or, $\eta > 0$ a été choisi de manière arbitraire. Cette inégalité étant valide pour tout $\eta > 0$, cela force la limite à être nulle :
+$$ \lim_{n \to \infty} \mathbb{E}[|f(X_n) - f(X)|] = 0 $$
+Ainsi, la convergence en loi est démontrée. $\blacksquare$
 
 L'architecture conceptuelle des modes de convergence est la pierre angulaire de l'analyse asymptotique des algorithmes en IA et en physique statistique.
 
@@ -225,6 +228,8 @@ L'optimisation des réseaux de neurones profonds repose sur la minimisation d'un
 \subsection{Théorèmes de Convergence en Loi en Physique Statistique}
 En physique des particules, l'évolution macroscopique d'un gaz parfait résulte de l'agrégation de millions de variables aléatoires microscopiques. Le Théorème Central Limite (qui stipule que la moyenne de variables indépendantes et identiquement distribuées converge \textbf{en loi} vers une distribution normale) justifie mathématiquement pourquoi la distribution des vitesses des particules obéit universellement à la loi normale de Maxwell-Boltzmann, indépendamment des spécificités dynamiques sous-jacentes.
 
+\subsection{C. Théorème Central Limite (Physique statistique)}
+En mécanique statistique, les variables macroscopiques (comme la pression d'un gaz sur une paroi) résultent de l'accumulation de millions de petites fluctuations (les impacts des molécules microscopiques, que l'on peut modéliser par des variables aléatoires $(X_i)$ i.i.d). Bien qu'il soit impossible de connaître la répartition microscopique individuelle, le Théorème Central Limite garantit que la somme normalisée $\frac{1}{\sqrt{n}} \sum (X_i - \mu)$ converge universellement \textbf{en loi} vers une distribution Gaussienne $\mathcal{N}(0, \sigma^2)$, expliquant la prévalence quasi-universelle de la cloche de Gauss dans les phénomènes thermiques et browniens.
 
 \part{Exercices d'Application et de Concours}
 \subsection*{Exercice 01}
@@ -443,8 +448,18 @@ Puisque $\epsilon$ est arbitraire, ce terme tend vers $0$.
 
 En additionnant les deux résultats, on trouve que $\lim_{n \to \infty} \mathbb{E}[f(X_n + Y_n)] = \mathbb{E}[f(X + c)]$, ce qui démontre la convergence en loi de la somme.
 
+Rédigez la démonstration formelle du fait que la convergence presque sûre n'implique pas la convergence dans $L^p$ (ni même $L^1$). On exhibera un contre-exemple explicite et on calculera toutes les normes.
 
 
+\textbf{2. Non-convergence dans $L^1$ :}
+Pour prouver la convergence $L^1$ vers 0, il faudrait que $\lim_{n \to \infty} \mathbb{E}[|X_n|] = 0$.
+Procédons au calcul rigoureux de l'espérance pour un $n$ fixé, en utilisant l'intégrale de Lebesgue :
+$$ \mathbb{E}[|X_n|] = \int_{\Omega} |X_n(\omega)| d\mathbb{P}(\omega) = \int_0^1 n \cdot \mathbf{1}_{]0, 1/n]}(\omega) d\omega $$
+$$ \mathbb{E}[|X_n|] = n \int_0^{1/n} 1 d\omega = n \cdot \left[ \omega \right]_0^{1/n} = n \cdot \left( \frac{1}{n} - 0 \right) = n \cdot \frac{1}{n} = 1 $$
+Pour tout indice $n \ge 1$, la masse fonctionnelle (l'aire sous la courbe) est constante et strictement égale à 1.
+Par passage à la limite :
+$$ \lim_{n \to \infty} \mathbb{E}[|X_n - 0|] = 1 \neq 0 $$
+La suite ne converge donc absolument pas vers 0 dans la topologie des espaces $L^1$, établissant la démonstration définitive qu'une singularité géométrique empêche l'inversion limite/intégrale.
 
 \part{Travaux Pratiques et Simulations Algorithmiques}
 \subsection*{TP 01 : Simulation de la Convergence en Probabilité}
@@ -454,6 +469,7 @@ Ce TP illustre la convergence en probabilité de la moyenne empirique (Loi Faibl
 \begin{lstlisting}
 import math
 import random
+import math
 
 def moyenne_empirique_bernoulli(n, p=0.5):
     # Genere n tirages et retourne la moyenne
@@ -486,7 +502,7 @@ assert prob_depassement < 0.2, "La probabilite devrait converger vers 0"
 Nous codons la suite X_n qui vaut sqrt(n) avec probabilité 1/n, et 0 sinon.
 On vérifie qu'elle converge en probabilité vers 0, mais que son espérance L2 reste à 1.
 
-\begin{lstlisting}
+\begin{lstlisting}[language=Python]
 import random
 import math
 
@@ -530,7 +546,7 @@ assert 0.5 < l2_empirique < 1.5, "L esperance du carre doit etre proche de 1"
 
 Nous allons simuler X\underline{n = W}n / n où W_n suit un uniforme discret (ou continu) sur [-n, n], et vérifier que la fonction de répartition empirique approche celle de U([-1, 1]).
 
-\begin{lstlisting}
+\begin{lstlisting}[language=Python]
 import random
 
 def echantillonner_Vn(n):
