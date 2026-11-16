@@ -1,210 +1,136 @@
----
-uuid: "jalon-90"
-title: "Les modes de convergence en probabilités"
-year: 2
-trimester: 8
-tags:
-  - math/probabilites
-  - ia/asymptotique
-prev: "[[Jalon-89.md]]"
-next: "[[Jalon-91.md]]"
----
+# Les modes de convergence : presque sûre, en probabilité, dans $L^p$ et en loi
 
-# Jalon 90 : Les modes de convergence en probabilités
+## 1. Introduction
 
-## 1. Origines et intuitions asymptotiques
+La théorie des probabilités s'articule autour de la notion de limite. Contrairement à l'analyse classique où une suite de réels converge vers une valeur unique de manière déterministe, les variables aléatoires évoluent dans un espace probabilisé $(\Omega, \mathcal{F}, \mathbb{P})$. Il n'y a donc pas une seule façon de converger, mais plusieurs, selon la "force" avec laquelle on exige que la suite de variables aléatoires s'approche de sa limite. Historiquement, Andrey Kolmogorov (1933) a fondé la théorie moderne des probabilités en axiomatisant ces concepts à travers la théorie de la mesure. Des mathématiciens comme Pafnuty Chebyshev, son élève Andrey Markov, et plus tard Paul Lévy ont introduit et formalisé les différentes hiérarchies de convergence. Le besoin physique est évident : en mécanique statistique, on observe des macro-systèmes (comme un gaz) composés de milliards de micro-états aléatoires. Comment garantir que la moyenne de ces états se stabilise vers une valeur constante, malgré les fluctuations locales ? Les modes de convergence offrent les outils rigoureux pour répondre à cette question.
 
-L'étude des phénomènes aléatoires, initialement circonscrite aux jeux de hasard, a pris une dimension analytique rigoureuse au tournant des XIXe et XXe siècles grâce aux travaux de mathématiciens russes tels que Pafnuty Chebyshev, Andrey Markov et Andrey Kolmogorov, ainsi que l'économiste et statisticien Eugen Slutsky. La question centrale qui animait ces chercheurs était de comprendre le comportement asymptotique des suites de variables aléatoires : lorsqu'une expérience est répétée une infinité de fois, de quelle manière la moyenne empirique converge-t-elle vers son espérance théorique ?
+## 2. Formalisation : Les Hiérarchies de la Convergence
 
-En mathématiques classiques, la convergence d'une suite de nombres réels est univoque et absolue. En probabilités, du fait de l'existence d'événements de mesure nulle (les fameux ensembles $\omega \in \Omega$ pour lesquels la propriété peut faire défaut sans affecter la probabilité globale), le concept de proximité entre variables aléatoires se décline sous plusieurs topologies distinctes. Il a fallu forger un arsenal d'outils analytiques pour mesurer si une suite de variables aléatoires $(X_n)$ s'approche d'une limite $X$ presque partout, en mesure, en moyenne ou seulement au niveau de ses répartitions (loi). Cette hiérarchie des modes de convergence permet d'isoler la nature exacte de la stabilité asymptotique d'un système.
+Nous nous plaçons sur un espace probabilisé $(\Omega, \mathcal{F}, \mathbb{P})$. Soit $(X_n)_{n \in \mathbb{N}}$ une suite de variables aléatoires réelles et $X$ une variable aléatoire réelle définies sur cet espace.
 
-Visuellement, on peut imaginer la convergence d'une suite de fonctions aléatoires. La convergence la plus forte exige que les trajectoires se superposent à la limite (sauf sur des cas rares invisibles). La convergence en probabilité accepte que les fonctions s'éloignent considérablement de la limite, pourvu que ces écarts deviennent de moins en moins fréquents. Enfin, la convergence en loi ne regarde même plus les trajectoires individuelles : elle compare uniquement la forme des histogrammes de répartition des valeurs, s'assurant que la cloche finale a la même allure, indépendamment de la trajectoire de chaque particule isolée.
+### Convergence Presque Sûre (p.s.)
 
-## 2. Formalisation des modes de convergence et exemples
+La convergence presque sûre est le mode de convergence le plus fort (avec la convergence dans $L^\infty$). Elle exige que, pour presque tout événement de l'univers, la suite numérique des réalisations converge.
 
-Soit $(\Omega, \mathcal{F}, \mathbb{P})$ un espace de probabilité. Soit $(X_n)_{n \in \mathbb{N}}$ une suite de variables aléatoires réelles et $X$ une variable aléatoire réelle, toutes définies sur ce même espace.
+**Définition (Convergence presque sûre) :**
+On dit que la suite $(X_n)_{n \in \mathbb{N}}$ converge presque sûrement vers $X$, noté $X_n \xrightarrow{\text{p.s.}} X$, si :
+$$\mathbb{P}\left(\left\{ \omega \in \Omega \mid \lim_{n \to +\infty} X_n(\omega) = X(\omega) \right\}\right) = 1$$
+De manière équivalente, l'ensemble des $\omega$ pour lesquels $X_n(\omega)$ ne converge pas vers $X(\omega)$ est de mesure nulle.
 
-### A. Convergence Presque Sûre (p.s.)
+**Exemple concret immédiat :**
+Considérons l'espace de Lebesgue $(]0, 1], \mathcal{B}(]0, 1]), \lambda)$ où $\lambda$ est la mesure de Lebesgue.
+Définissons $X_n(\omega) = \omega^n$.
+Pour tout $\omega \in ]0, 1[$, on a $\lim_{n \to +\infty} \omega^n = 0$.
+Pour $\omega = 1$, on a $\lim_{n \to +\infty} 1^n = 1$.
+Donc, la limite simple $X(\omega)$ est $0$ si $\omega \in ]0, 1[$ et $1$ si $\omega = 1$.
+L'ensemble de convergence vers $0$ est $]0, 1[$, dont la mesure de Lebesgue est $\lambda(]0, 1[) = 1$.
+Ainsi, $\lambda(\{ \omega \in ]0, 1] \mid \lim_{n \to \infty} X_n(\omega) = 0 \}) = 1$.
+On conclut que $X_n \xrightarrow{\text{p.s.}} 0$.
 
-La convergence presque sûre est l'analogue de la convergence ponctuelle presque partout en analyse fonctionnelle.
+### Convergence en Probabilité
 
-**Définition (Convergence Presque Sûre) :**
-La suite $(X_n)$ converge presque sûrement vers $X$, ce que l'on note $X_n \xrightarrow{p.s.} X$, si l'événement sur lequel la convergence ponctuelle a lieu possède une probabilité égale à $1$ :
-$$ \mathbb{P}\left(\left\{ \omega \in \Omega \mid \lim_{n \to \infty} X_n(\omega) = X(\omega) \right\}\right) = 1 $$
+La convergence en probabilité est plus faible. Elle exige que la probabilité que $X_n$ s'éloigne de $X$ d'une distance donnée tende vers $0$.
 
-**Exemple Numérique Immédiat :**
-Soit $\Omega = [0, 1]$ muni de la tribu borélienne et de la mesure de Lebesgue $\mathbb{P}$. Considérons $X_n(\omega) = \omega^n$.
-Pour tout $\omega \in [0, 1[$, on calcule :
-$$ \lim_{n \to \infty} \omega^n = 0 $$
-Pour $\omega = 1$, $X_n(1) = 1^n = 1$.
-Posons $X(\omega) = 0$ pour tout $\omega \in \Omega$. L'ensemble des $\omega$ où $X_n(\omega)$ ne converge pas vers $X(\omega)$ est exactement $\{1\}$.
-La probabilité de ce singleton pour la mesure de Lebesgue est :
-$$ \mathbb{P}(\{1\}) = 0 $$
-Ainsi, l'événement de convergence a pour probabilité $1 - 0 = 1$. On conclut que $X_n \xrightarrow{p.s.} 0$.
+**Définition (Convergence en probabilité) :**
+On dit que la suite $(X_n)_{n \in \mathbb{N}}$ converge en probabilité vers $X$, noté $X_n \xrightarrow{\mathbb{P}} X$, si pour tout $\varepsilon > 0$ :
+$$\lim_{n \to +\infty} \mathbb{P}(|X_n - X| > \varepsilon) = 0$$
 
-### B. Convergence en Probabilité
+**Théorème (Lien entre p.s. et probabilité) :**
+Si $X_n \xrightarrow{\text{p.s.}} X$, alors $X_n \xrightarrow{\mathbb{P}} X$. La réciproque est fausse en général.
 
-La convergence en probabilité requiert que la probabilité d'un écart significatif entre $X_n$ et $X$ tende vers zéro.
+**Exemple concret immédiat (Contre-exemple de la réciproque) :**
+Le "typewriter sequence" (suite de la machine à écrire). Sur $(]0, 1], \mathcal{B}(]0, 1]), \lambda)$, on définit les intervalles $A_n$ de longueur décroissante qui "balayent" $]0, 1]$.
+Pour tout entier $k \ge 1$ et $1 \le j \le 2^k$, posons $n = 2^k + j - 1$.
+Définissons $A_n = \left] \frac{j-1}{2^k}, \frac{j}{2^k} \right]$.
+Soit $X_n = \mathbb{1}_{A_n}$.
+Pour tout $\varepsilon \in ]0, 1[$, $\mathbb{P}(|X_n - 0| > \varepsilon) = \mathbb{P}(A_n) = \frac{1}{2^k}$.
+Comme $n \to +\infty \implies k \to +\infty$, $\lim_{n \to +\infty} \mathbb{P}(|X_n| > \varepsilon) = 0$, donc $X_n \xrightarrow{\mathbb{P}} 0$.
+Cependant, pour tout $\omega \in ]0, 1]$, $\omega$ appartient à une infinité de $A_n$. Ainsi, la suite $(X_n(\omega))$ prend la valeur $1$ une infinité de fois et la valeur $0$ une infinité de fois.
+Elle ne converge donc pour *aucun* $\omega$. Donc $X_n$ ne converge pas presque sûrement vers $0$.
 
-**Définition (Convergence en Probabilité) :**
-La suite $(X_n)$ converge en probabilité vers $X$, noté $X_n \xrightarrow{\mathbb{P}} X$, si pour tout seuil $\epsilon > 0$ :
-$$ \lim_{n \to \infty} \mathbb{P}(|X_n - X| > \epsilon) = 0 $$
+### Convergence dans $L^p$
 
-**Exemple Numérique Immédiat :**
-Considérons $\Omega = [0, 1]$ muni de la mesure de Lebesgue.
-Soit l'intervalle $I_n = \left[ 0, \frac{1}{n} \right]$.
-Définissons $X_n(\omega) = n \mathbf{1}_{I_n}(\omega)$.
-Soit $\epsilon > 0$. Évaluons $\mathbb{P}(|X_n - 0| > \epsilon)$.
-Dès que $n > \epsilon$, $X_n$ prend la valeur $n$ (qui est $> \epsilon$) sur l'intervalle $I_n$, et $0$ ailleurs.
-$$ \mathbb{P}(|X_n| > \epsilon) = \mathbb{P}(\omega \in I_n) = \frac{1}{n} $$
-Calculons la limite :
-$$ \lim_{n \to \infty} \frac{1}{n} = 0 $$
-Par conséquent, $X_n \xrightarrow{\mathbb{P}} 0$.
+On exige ici que l'espérance de l'erreur à la puissance $p$ tende vers $0$.
 
-### C. Convergence dans $L^p$
+**Définition (Convergence dans $L^p$) :**
+Soit $p \ge 1$. Supposons que $\mathbb{E}[|X_n|^p] < +\infty$ et $\mathbb{E}[|X|^p] < +\infty$. On dit que $(X_n)_{n \in \mathbb{N}}$ converge vers $X$ dans $L^p$, noté $X_n \xrightarrow{L^p} X$, si :
+$$\lim_{n \to +\infty} \mathbb{E}[|X_n - X|^p] = 0$$
 
-La convergence dans $L^p$ traduit la convergence en moyenne, pondérée par la puissance $p$.
+**Théorème (Lien entre $L^p$ et probabilité) :**
+Si $X_n \xrightarrow{L^p} X$, alors $X_n \xrightarrow{\mathbb{P}} X$.
 
-**Définition (Convergence $L^p$) :**
-Pour $p \geq 1$, on suppose que $\mathbb{E}[|X_n|^p] < \infty$ et $\mathbb{E}[|X|^p] < \infty$. La suite $(X_n)$ converge dans $L^p$ vers $X$, noté $X_n \xrightarrow{L^p} X$, si :
-$$ \lim_{n \to \infty} \mathbb{E}\left[|X_n - X|^p\right] = 0 $$
+**Exemple concret immédiat (Application de Markov) :**
+Soit $p \ge 1$. Par l'inégalité de Markov, pour tout $\varepsilon > 0$ :
+$$\mathbb{P}(|X_n - X| > \varepsilon) = \mathbb{P}(|X_n - X|^p > \varepsilon^p) \le \frac{\mathbb{E}[|X_n - X|^p]}{\varepsilon^p}$$
+Si $X_n \xrightarrow{L^p} X$, alors le membre de droite tend vers $0$ quand $n \to +\infty$.
+Ainsi, $\lim_{n \to \infty} \mathbb{P}(|X_n - X| > \varepsilon) = 0$, soit $X_n \xrightarrow{\mathbb{P}} X$.
 
-**Exemple Numérique Immédiat (Contre-exemple de la bosse glissante) :**
-Reprenons $X_n(\omega) = n \mathbf{1}_{[0, 1/n]}(\omega)$ sur $[0, 1]$.
-Nous avons vu que $X_n \xrightarrow{\mathbb{P}} 0$. Étudions la convergence dans $L^1$ ($p=1$).
-Calculons l'espérance de la valeur absolue :
-$$ \mathbb{E}\left[|X_n - 0|\right] = \int_{0}^{1} |n \mathbf{1}_{[0, 1/n]}(\omega)| \, d\omega = n \times \frac{1}{n} = 1 $$
-La limite est :
-$$ \lim_{n \to \infty} 1 = 1 \neq 0 $$
-Ainsi, la suite $(X_n)$ ne converge pas vers $0$ dans $L^1$. L'aire de la fonction reste constante à $1$, bien que son support se réduise à un point de mesure nulle.
+### Convergence en Loi (ou étroite)
 
-\begin{tikzpicture}
-\draw[->] (-0.5,0) -- (5,0) node[right] {$\omega$};
-\draw[->] (0,-0.5) -- (0,4) node[above] {$X_n(\omega)$};
-\draw[blue, thick] (0, 0) -- (0, 2) -- (2, 2) -- (2, 0) -- (4, 0);
-\draw[red, thick] (0, 0) -- (0, 3) -- (1.33, 3) -- (1.33, 0) -- (4, 0);
-\node[below] at (2,0) {$1/n_1$};
-\node[below] at (1.33,0) {$1/n_2$};
-\node[left] at (0,2) {$n_1$};
-\node[left] at (0,3) {$n_2$};
-\node[above] at (2.5, 3) {L'aire (espérance) reste constante (1)};
-\end{tikzpicture}
+C'est le mode le plus faible, concernant uniquement la répartition (la mesure) et non la variable aléatoire elle-même en tant que fonction.
 
-### D. Convergence en Loi (ou Convergence Étroite)
+**Définition (Convergence en loi) :**
+On dit que la suite $(X_n)_{n \in \mathbb{N}}$ converge en loi vers $X$, noté $X_n \xrightarrow{\mathcal{L}} X$, si pour toute fonction continue et bornée $f : \mathbb{R} \to \mathbb{R}$ :
+$$\lim_{n \to +\infty} \mathbb{E}[f(X_n)] = \mathbb{E}[f(X)]$$
+De manière équivalente (Théorème de Portmanteau), en notant $F_{X_n}$ et $F_X$ les fonctions de répartition respectives, $X_n \xrightarrow{\mathcal{L}} X$ ssi $\lim_{n \to +\infty} F_{X_n}(x) = F_X(x)$ pour tout point de continuité $x$ de $F_X$.
 
-Ce mode de convergence ne requiert pas que les variables soient définies sur le même espace de probabilité. Il traduit la proximité des répartitions.
+**Théorème (Lien entre probabilité et loi) :**
+Si $X_n \xrightarrow{\mathbb{P}} X$, alors $X_n \xrightarrow{\mathcal{L}} X$.
 
-**Définition (Convergence en Loi) :**
-La suite $(X_n)$ converge en loi vers $X$, noté $X_n \xrightarrow{\mathcal{L}} X$, si pour toute fonction $f : \mathbb{R} \to \mathbb{R}$ continue et bornée :
-$$ \lim_{n \to \infty} \mathbb{E}[f(X_n)] = \mathbb{E}[f(X)] $$
-Ceci équivaut à $\lim_{n \to \infty} F_{X_n}(x) = F_X(x)$ en tout point de continuité de la fonction de répartition $F_X$.
-
-**Exemple Numérique Immédiat :**
+**Exemple concret immédiat :**
 Soit $X \sim \mathcal{N}(0, 1)$. Définissons $X_n = -X$ pour tout $n$.
-La densité de $X$ est paire, donc $-X$ suit exactement la même loi que $X$, c'est-à-dire $\mathcal{N}(0, 1)$.
-Pour toute fonction $f$ continue et bornée :
-$$ \mathbb{E}[f(X_n)] = \mathbb{E}[f(-X)] = \int_{-\infty}^{\infty} f(-x) \frac{1}{\sqrt{2\pi}} e^{-x^2/2} dx $$
-Posons $y = -x$, $dy = -dx$ :
-$$ \int_{+\infty}^{-\infty} f(y) \frac{1}{\sqrt{2\pi}} e^{-y^2/2} (-dy) = \int_{-\infty}^{\infty} f(y) \frac{1}{\sqrt{2\pi}} e^{-y^2/2} dy = \mathbb{E}[f(X)] $$
-Ainsi $X_n \xrightarrow{\mathcal{L}} X$.
-Cependant, l'écart $|X_n - X| = |-X - X| = 2|X|$ ne tend pas vers $0$. Il n'y a donc pas de convergence en probabilité.
+Les variables $X_n$ ont la même loi que $X$ (car la gaussienne centrée réduite est symétrique).
+Donc $X_n \xrightarrow{\mathcal{L}} X$ (la suite des lois est constante).
+Pourtant, $\mathbb{P}(|X_n - X| > 1) = \mathbb{P}(|-2X| > 1) = \mathbb{P}(|X| > 0.5) > 0$.
+Cette probabilité ne tend pas vers $0$, donc $X_n$ ne converge pas en probabilité vers $X$.
 
-## 3. Hiérarchie des Modes de Convergence : Démonstrations Pas-à-Pas
+## 3. Démonstrations
 
-Le théorème suivant structure rigoureusement les relations d'implication entre les différents modes.
+**Démonstration du théorème : $X_n \xrightarrow{\text{p.s.}} X \implies X_n \xrightarrow{\mathbb{P}} X$**
 
-> **Théorème de Hiérarchie des Convergences :**
-> Soit $(X_n)$ une suite de variables aléatoires et $X$ une variable aléatoire.
-> 1. Si $X_n \xrightarrow{p.s.} X$, alors $X_n \xrightarrow{\mathbb{P}} X$.
-> 2. Si $X_n \xrightarrow{L^p} X$ (pour $p \geq 1$), alors $X_n \xrightarrow{\mathbb{P}} X$.
-> 3. Si $X_n \xrightarrow{\mathbb{P}} X$, alors $X_n \xrightarrow{\mathcal{L}} X$.
+Soit $\varepsilon > 0$. Considérons les événements $A_n(\varepsilon) = \{ |X_n - X| > \varepsilon \}$.
+Nous voulons montrer que $\lim_{n \to +\infty} \mathbb{P}(A_n(\varepsilon)) = 0$.
+Posons $B_n(\varepsilon) = \bigcup_{k=n}^{+\infty} A_k(\varepsilon) = \bigcup_{k=n}^{+\infty} \{ |X_k - X| > \varepsilon \}$.
+La suite d'ensembles $(B_n(\varepsilon))_{n \in \mathbb{N}}$ est décroissante : $B_{n+1}(\varepsilon) \subset B_n(\varepsilon)$.
+Soit $B(\varepsilon) = \bigcap_{n=1}^{+\infty} B_n(\varepsilon) = \limsup_{n \to +\infty} A_n(\varepsilon)$.
+$B(\varepsilon)$ est l'ensemble des $\omega$ pour lesquels $|X_k(\omega) - X(\omega)| > \varepsilon$ pour une infinité d'indices $k$.
+Si $\omega \in B(\varepsilon)$, alors la suite $X_n(\omega)$ ne peut pas converger vers $X(\omega)$.
+Ainsi, $B(\varepsilon) \subset \{ \omega \in \Omega \mid X_n(\omega) \text{ ne converge pas vers } X(\omega) \}$.
+Par hypothèse de convergence presque sûre, ce dernier ensemble est de probabilité nulle.
+Donc $\mathbb{P}(B(\varepsilon)) = 0$.
+Puisque $(B_n(\varepsilon))$ est une suite décroissante d'événements, par le théorème de continuité décroissante pour les probabilités :
+$$\lim_{n \to +\infty} \mathbb{P}(B_n(\varepsilon)) = \mathbb{P}\left( \bigcap_{n=1}^{+\infty} B_n(\varepsilon) \right) = \mathbb{P}(B(\varepsilon)) = 0$$
+Or, pour tout $n$, $A_n(\varepsilon) \subset B_n(\varepsilon)$, donc $0 \le \mathbb{P}(A_n(\varepsilon)) \le \mathbb{P}(B_n(\varepsilon))$.
+Par le théorème des gendarmes, $\lim_{n \to +\infty} \mathbb{P}(A_n(\varepsilon)) = 0$.
+Ce qui conclut la preuve : $X_n \xrightarrow{\mathbb{P}} X$.
 
-### Démonstration : $L^p \implies$ Convergence en Probabilité
+**Démonstration du théorème (partiel) : $X_n \xrightarrow{\mathbb{P}} X \implies X_n \xrightarrow{\mathcal{L}} X$**
 
-1. **Initialisation / Cadre :**
-   Nous supposons que $\lim_{n \to \infty} \mathbb{E}\left[|X_n - X|^p\right] = 0$. Nous voulons montrer que pour tout $\epsilon > 0$, $\lim_{n \to \infty} \mathbb{P}(|X_n - X| > \epsilon) = 0$.
+Soit $f : \mathbb{R} \to \mathbb{R}$ uniformément continue et bornée (le théorème de Portmanteau permet de se restreindre à ce sous-ensemble). Soit $M = \sup_{x \in \mathbb{R}} |f(x)|$.
+Soit $\varepsilon > 0$. Comme $f$ est uniformément continue, il existe $\delta > 0$ tel que pour tout $x, y \in \mathbb{R}$, $|x - y| < \delta \implies |f(x) - f(y)| < \varepsilon$.
+Évaluons la différence des espérances :
+$$|\mathbb{E}[f(X_n)] - \mathbb{E}[f(X)]| \le \mathbb{E}[|f(X_n) - f(X)|]$$
+Séparons l'espérance sur deux événements complémentaires, $\{ |X_n - X| \le \delta \}$ et $\{ |X_n - X| > \delta \}$ :
+$$\mathbb{E}[|f(X_n) - f(X)|] = \mathbb{E}[|f(X_n) - f(X)| \mathbb{1}_{\{|X_n - X| \le \delta\}}] + \mathbb{E}[|f(X_n) - f(X)| \mathbb{1}_{\{|X_n - X| > \delta\}}]$$
+Sur le premier événement, par définition de $\delta$, $|f(X_n) - f(X)| < \varepsilon$.
+Sur le second événement, on majore grossièrement : $|f(X_n) - f(X)| \le |f(X_n)| + |f(X)| \le 2M$.
+Ainsi :
+$$\mathbb{E}[|f(X_n) - f(X)|] \le \mathbb{E}[\varepsilon \cdot \mathbb{1}_{\{|X_n - X| \le \delta\}}] + \mathbb{E}[2M \cdot \mathbb{1}_{\{|X_n - X| > \delta\}}]$$
+$$\mathbb{E}[|f(X_n) - f(X)|] \le \varepsilon \mathbb{P}(|X_n - X| \le \delta) + 2M \mathbb{P}(|X_n - X| > \delta)$$
+$$\mathbb{E}[|f(X_n) - f(X)|] \le \varepsilon \cdot 1 + 2M \mathbb{P}(|X_n - X| > \delta)$$
+Puisque $X_n \xrightarrow{\mathbb{P}} X$, pour ce $\delta > 0$, on a $\lim_{n \to +\infty} \mathbb{P}(|X_n - X| > \delta) = 0$.
+Donc $\limsup_{n \to +\infty} |\mathbb{E}[f(X_n)] - \mathbb{E}[f(X)]| \le \varepsilon$.
+Ceci étant vrai pour tout $\varepsilon > 0$, la limite est nulle : $\lim_{n \to +\infty} \mathbb{E}[f(X_n)] = \mathbb{E}[f(X)]$.
 
-2. **Étape 1 : Transformation de l'événement**
-   Soit $\epsilon > 0$. Puisque $x \mapsto x^p$ est une fonction strictement croissante sur $\mathbb{R}^+$, les deux événements suivants sont strictement identiques :
-   $$ \{ \omega \in \Omega \mid |X_n(\omega) - X(\omega)| > \epsilon \} = \{ \omega \in \Omega \mid |X_n(\omega) - X(\omega)|^p > \epsilon^p \} $$
-   D'où :
-   $$ \mathbb{P}(|X_n - X| > \epsilon) = \mathbb{P}\left(|X_n - X|^p > \epsilon^p\right) $$
+## 4. Applications en Physique, Logique & Intelligence Artificielle
 
-3. **Étape 2 : Application de l'inégalité de Markov**
-   Considérons la variable aléatoire positive $Y_n = |X_n - X|^p$.
-   L'inégalité de Markov stipule que pour toute variable aléatoire $Z \geq 0$ et $a > 0$, $\mathbb{P}(Z \geq a) \leq \frac{\mathbb{E}[Z]}{a}$.
-   Appliquons cette inégalité avec $Z = Y_n$ et $a = \epsilon^p$ :
-   $$ \mathbb{P}\left(|X_n - X|^p > \epsilon^p\right) \leq \frac{\mathbb{E}\left[|X_n - X|^p\right]}{\epsilon^p} $$
+En Intelligence Artificielle, et plus particulièrement en Machine Learning, la théorie de l'apprentissage statistique (Vapnik-Chervonenkis, PAC learning) repose fondamentalement sur ces modes de convergence.
 
-4. **Conclusion : Passage à la limite**
-   Par hypothèse de convergence dans $L^p$, on a :
-   $$ \lim_{n \to \infty} \mathbb{E}\left[|X_n - X|^p\right] = 0 $$
-   Puisque $\epsilon^p > 0$ est une constante fixée, le quotient tend vers $0$ :
-   $$ \lim_{n \to \infty} \frac{\mathbb{E}\left[|X_n - X|^p\right]}{\epsilon^p} = 0 $$
-   Puisque les probabilités sont toujours minorées par $0$, le théorème des gendarmes (encadrement) garantit que :
-   $$ \lim_{n \to \infty} \mathbb{P}(|X_n - X| > \epsilon) = 0 $$
-   La convergence en probabilité est rigoureusement établie.
+1. **Convergence des risques empiriques (Loi des Grands Nombres) :**
+   Lors de l'entraînement d'un modèle, on minimise le risque empirique $\hat{R}_n(\theta) = \frac{1}{n} \sum_{i=1}^n \ell(f_\theta(x_i), y_i)$ au lieu du risque vrai $R(\theta) = \mathbb{E}_{(X,Y)}[\ell(f_\theta(X), Y)]$. La convergence en probabilité (ou p.s. par la loi forte) de $\hat{R}_n(\theta)$ vers $R(\theta)$ garantit que l'apprentissage est possible (consistance du risque empirique).
 
-### Démonstration : Convergence en Probabilité $\implies$ Convergence en Loi
+2. **Descente de Gradient Stochastique (SGD) :**
+   Dans l'optimisation des réseaux de neurones, on met à jour les poids $\theta_{t+1} = \theta_t - \eta_t \nabla \ell(\theta_t, z_t)$. Le théorème de Robbins-Monro prouve, sous certaines conditions sur les pas d'apprentissage $\eta_t$ ($\sum \eta_t = \infty, \sum \eta_t^2 < \infty$), la convergence presque sûre et dans $L^2$ de la suite des estimateurs $\theta_t$ vers l'optimum global (dans le cas convexe).
 
-1. **Initialisation / Cadre :**
-   Nous supposons que pour tout $\epsilon > 0$, $\mathbb{P}(|X_n - X| > \epsilon) \to 0$. Nous voulons montrer que pour toute fonction $f : \mathbb{R} \to \mathbb{R}$ continue et bornée, $\lim_{n \to \infty} \mathbb{E}[f(X_n)] = \mathbb{E}[f(X)]$.
-
-2. **Étape 1 : Hypothèses sur la fonction $f$**
-   Soit $f$ une fonction continue et bornée. Il existe un réel $M > 0$ tel que pour tout $x \in \mathbb{R}$, $|f(x)| \leq M$.
-   Soit $\eta > 0$ un seuil de précision.
-   Puisque $X$ est une variable aléatoire réelle, il existe un segment compact $K = [-A, A]$ suffisamment large tel que la masse de probabilité en dehors de $K$ soit petite :
-   $$ \mathbb{P}(X \notin K) \leq \eta $$
-   Sur le compact $K$, la fonction continue $f$ est uniformément continue (Théorème de Heine). Ainsi, il existe $\delta > 0$ tel que pour tout $x \in K$ et $y \in \mathbb{R}$ vérifiant $|x - y| \leq \delta$, on ait :
-   $$ |f(x) - f(y)| \leq \eta $$
-
-3. **Étape 2 : Partition de l'espace de probabilité**
-   Nous voulons majorer l'écart des espérances :
-   $$ |\mathbb{E}[f(X_n)] - \mathbb{E}[f(X)]| \leq \mathbb{E}\left[|f(X_n) - f(X)|\right] $$
-   Partitionnons l'espace $\Omega$ en trois événements disjoints :
-   - $E_1 = \{ \omega \in \Omega \mid |X_n(\omega) - X(\omega)| > \delta \}$
-   - $E_2 = \{ \omega \in \Omega \mid |X_n(\omega) - X(\omega)| \leq \delta \} \cap \{ \omega \in \Omega \mid X(\omega) \notin K \}$
-   - $E_3 = \{ \omega \in \Omega \mid |X_n(\omega) - X(\omega)| \leq \delta \} \cap \{ \omega \in \Omega \mid X(\omega) \in K \}$
-
-   L'espérance se décompose en la somme des intégrales sur ces trois sous-ensembles :
-   $$ \mathbb{E}\left[|f(X_n) - f(X)|\right] = \mathbb{E}\left[|f(X_n) - f(X)| \mathbf{1}_{E_1}\right] + \mathbb{E}\left[|f(X_n) - f(X)| \mathbf{1}_{E_2}\right] + \mathbb{E}\left[|f(X_n) - f(X)| \mathbf{1}_{E_3}\right] $$
-
-4. **Étape 3 : Majoration terme à terme**
-   - Sur l'événement $E_1$, on utilise la majoration globale induite par le fait que $f$ est bornée : $|f(X_n) - f(X)| \leq |f(X_n)| + |f(X)| \leq 2M$.
-     $$ \mathbb{E}\left[|f(X_n) - f(X)| \mathbf{1}_{E_1}\right] \leq 2M \cdot \mathbb{P}(E_1) = 2M \cdot \mathbb{P}(|X_n - X| > \delta) $$
-   - Sur l'événement $E_2$, on utilise encore la borne globale :
-     $$ \mathbb{E}\left[|f(X_n) - f(X)| \mathbf{1}_{E_2}\right] \leq 2M \cdot \mathbb{P}(E_2) \leq 2M \cdot \mathbb{P}(X \notin K) \leq 2M \eta $$
-   - Sur l'événement $E_3$, par définition de $\delta$ et de l'uniforme continuité sur $K$, on a $|f(X_n) - f(X)| \leq \eta$.
-     $$ \mathbb{E}\left[|f(X_n) - f(X)| \mathbf{1}_{E_3}\right] \leq \eta \cdot \mathbb{P}(E_3) \leq \eta \cdot 1 = \eta $$
-
-   L'inégalité totale devient :
-   $$ \mathbb{E}\left[|f(X_n) - f(X)|\right] \leq 2M \cdot \mathbb{P}(|X_n - X| > \delta) + 2M \eta + \eta $$
-
-5. **Conclusion : Passage à la limite**
-   Par l'hypothèse de convergence en probabilité, nous savons que :
-   $$ \lim_{n \to \infty} \mathbb{P}(|X_n - X| > \delta) = 0 $$
-   En prenant la limite supérieure lorsque $n \to \infty$, le premier terme s'annule :
-   $$ \limsup_{n \to \infty} \mathbb{E}\left[|f(X_n) - f(X)|\right] \leq 0 + 2M \eta + \eta = (2M + 1)\eta $$
-   Puisque ce résultat est vrai pour tout $\eta > 0$ arbitrairement choisi, on peut faire tendre $\eta$ vers $0$ :
-   $$ \limsup_{n \to \infty} \mathbb{E}\left[|f(X_n) - f(X)|\right] \leq 0 $$
-   Comme la valeur absolue est positive, la limite est nécessairement $0$, achevant la preuve.
-
-## 4. Applications en Physique Statistique, Logique et Apprentissage Automatique
-
-La rigueur des modes de convergence offre une architecture sémantique essentielle pour qualifier le comportement asymptotique des algorithmes d'IA.
-
-### A. Consistance des Estimateurs (Machine Learning PAC)
-En théorie de l'apprentissage statistique (Probably Approximately Correct Learning), un modèle cherche à inférer les paramètres d'une loi génératrice à partir de $n$ échantillons. Un estimateur $\hat{\theta}_n$ est dit **consistant** s'il converge en probabilité vers la vraie valeur des paramètres $\theta^*$, soit $\hat{\theta}_n \xrightarrow{\mathbb{P}} \theta^*$. Cela signifie que la probabilité que l'algorithme se trompe de plus de $\epsilon$ tend vers $0$ avec l'accumulation des données.
-
-**Exemple Calculatoire (Estimateur de la moyenne) :**
-Soit un jeu de données de variables indépendantes et identiquement distribuées $Y_1, \dots, Y_n$ d'espérance $\mu$ et de variance $\sigma^2$. L'estimateur moyenne empirique est $\hat{\mu}_n = \frac{1}{n} \sum_{i=1}^n Y_i$.
-L'espérance est $\mathbb{E}[\hat{\mu}_n] = \mu$ et la variance $\text{Var}(\hat{\mu}_n) = \frac{\sigma^2}{n}$.
-Par l'inégalité de Bienaymé-Chebyshev :
-$$ \mathbb{P}(|\hat{\mu}_n - \mu| \geq \epsilon) \leq \frac{\text{Var}(\hat{\mu}_n)}{\epsilon^2} = \frac{\sigma^2}{n \epsilon^2} $$
-En prenant la limite, $\frac{\sigma^2}{n \epsilon^2} \to 0$, démontrant la consistance en probabilité de l'estimateur.
-
-### B. Dynamique de la Descente de Gradient Stochastique (SGD)
-Dans l'entraînement des réseaux de neurones profonds, la fonction de perte n'est pas calculée sur l'ensemble du jeu de données, mais estimée stochastiquement sur des mini-lots. Cette estimation introduit un bruit. Les travaux d'approximation stochastique (Robbins-Monro) s'appuient sur la théorie des martingales pour démontrer que, si le taux d'apprentissage $\alpha_n$ satisfait $\sum \alpha_n = \infty$ et $\sum \alpha_n^2 < \infty$, alors la suite des poids paramétriques $\theta_n$ converge **presque sûrement** vers un optimum local.
-
-### C. Théorème Central Limite et Théorie de l'Information
-Le passage des lois microscopiques déterministes aux lois macroscopiques continues repose sur la convergence en loi. Le Théorème Central Limite stipule que la somme normalisée de variables indépendantes converge **en loi** vers une distribution Gaussienne $\mathcal{N}(0, 1)$. En IA générative, notamment dans les modèles de diffusion, cette convergence justifie la modélisation du bruit asymptotique comme un processus d'Ornstein-Uhlenbeck convergeant vers une loi normale isotrope.
+3. **Inférence Variationnelle et Modèles Génératifs (GAN, VAE) :**
+   La convergence en loi est le fondement de la modélisation générative. On cherche à ce que la suite de mesures empiriques générées par le modèle converge faiblement vers la mesure des données réelles. L'utilisation de distances de probabilité (comme la distance de Wasserstein) permet de métriser cette convergence en loi.

@@ -1,42 +1,36 @@
----
-uuid: "jalon-90-exo-05"
-title: "Convergence $L^p$ et dommage collatéral"
----
+# Exercice 5 : Convergence en loi via la fonction de répartition
 
-# Exercice 5 : Convergence $L^p$ et dommage collatéral (Difficulté $\bigstar\bigstar\bigstar\star\star$)
+Niveau : $\bigstar\bigstar\bigstar\star\star$
 
-Soit $p > q \geq 1$. Montrer que si une suite $(X_n)$ converge vers $X$ dans l'espace $L^p$, alors elle converge également dans $L^q$. L'inverse est-il vrai ?
+Soit $X_n \sim \mathcal{U}([0, \frac{1}{n}])$.
+1. Déterminer la fonction de répartition $F_{X_n}(x)$ de $X_n$.
+2. En déduire la limite simple de $F_{X_n}(x)$.
+3. Conclure sur la convergence en loi de la suite $(X_n)$.
 
-## Correction Pas-à-Pas
+## Correction
 
-1. **Convergence $L^p \implies L^q$ :**
-   Supposons $X_n \xrightarrow{L^p} X$. Cela signifie que $\mathbb{E}\left[|X_n - X|^p\right] \to 0$.
-   Nous voulons montrer que $\mathbb{E}\left[|X_n - X|^q\right] \to 0$.
-   Puisque l'espace de probabilité $\Omega$ est de mesure totale $\mathbb{P}(\Omega) = 1 < \infty$, nous pouvons utiliser l'inégalité de Jensen ou l'inégalité de Hölder pour les moments.
-   La fonction $\phi(x) = x^{p/q}$ est convexe sur $\mathbb{R}^+$ car $p/q > 1$.
-   Considérons la variable aléatoire positive $Y_n = |X_n - X|^q$.
-   D'après l'inégalité de Jensen :
-   $$ \phi(\mathbb{E}[Y_n]) \leq \mathbb{E}[\phi(Y_n)] $$
-   En substituant :
-   $$ \left( \mathbb{E}\left[|X_n - X|^q\right] \right)^{p/q} \leq \mathbb{E}\left[ \left(|X_n - X|^q\right)^{p/q} \right] $$
-   $$ \left( \mathbb{E}\left[|X_n - X|^q\right] \right)^{p/q} \leq \mathbb{E}\left[ |X_n - X|^p \right] $$
-   En élevant à la puissance $q/p$ :
-   $$ \mathbb{E}\left[|X_n - X|^q\right] \leq \left( \mathbb{E}\left[ |X_n - X|^p \right] \right)^{q/p} $$
-   Puisque $\mathbb{E}\left[ |X_n - X|^p \right] \to 0$, le membre de droite tend vers $0^{q/p} = 0$.
-   Ainsi, $\lim_{n \to \infty} \mathbb{E}\left[|X_n - X|^q\right] = 0$.
-   $X_n \xrightarrow{L^q} X$.
+**1. Fonction de répartition :**
+La densité de $X_n$ est $f_n(t) = n \mathbb{1}_{[0, \frac{1}{n}]}(t)$.
+La fonction de répartition est $F_{X_n}(x) = \int_{-\infty}^x f_n(t) dt$.
+- Si $x < 0$, $F_{X_n}(x) = 0$.
+- Si $0 \le x \le \frac{1}{n}$, $F_{X_n}(x) = \int_0^x n dt = nx$.
+- Si $x > \frac{1}{n}$, $F_{X_n}(x) = 1$.
 
-2. **Réciproque : $L^q \implies L^p$ (Faux) :**
-   Construisons un contre-exemple. Soit $p = 2$ et $q = 1$.
-   Considérons $X = 0$ et $X_n$ définie par :
-   $$ \mathbb{P}(X_n = n) = \frac{1}{n \sqrt{n}}, \quad \mathbb{P}(X_n = 0) = 1 - \frac{1}{n \sqrt{n}} $$
-   Calcul de la norme $L^1$ :
-   $$ \mathbb{E}[|X_n|] = n \cdot \frac{1}{n \sqrt{n}} = \frac{1}{\sqrt{n}} $$
-   La limite est $0$, donc $X_n \xrightarrow{L^1} 0$.
+**2. Limite simple de la fonction de répartition :**
+Soit $x \in \mathbb{R}$.
+- Si $x < 0$, pour tout $n$, $F_{X_n}(x) = 0 \xrightarrow{n \to +\infty} 0$.
+- Si $x > 0$, il existe un rang $N$ tel que pour tout $n \ge N$, on a $\frac{1}{n} < x$.
+Alors pour tout $n \ge N$, $F_{X_n}(x) = 1$. Donc $\lim_{n \to +\infty} F_{X_n}(x) = 1$.
+- Si $x = 0$, $F_{X_n}(0) = 0 \xrightarrow{n \to +\infty} 0$.
+Ainsi, la limite simple notée $F(x)$ est la fonction définie par $F(x) = 0$ si $x \le 0$, et $F(x) = 1$ si $x > 0$.
 
-   Calcul de la norme $L^2$ (carrée) :
-   $$ \mathbb{E}[|X_n|^2] = n^2 \cdot \frac{1}{n \sqrt{n}} = \frac{n^2}{n^{1.5}} = n^{0.5} = \sqrt{n} $$
-   La limite est $+\infty$. La suite ne converge pas dans $L^2$.
-   L'implication inverse est donc fausse.
-   $\blacksquare$
-
+**3. Conclusion sur la convergence en loi :**
+On observe que $F(x)$ correspond (presque) à la fonction de répartition d'une variable aléatoire constante égale à 0 (une masse de Dirac en 0), notons la $X = 0$.
+La fonction de répartition de $X=0$ est $F_X(x) = 0$ si $x < 0$, et $F_X(x) = 1$ si $x \ge 0$.
+Remarquons que $\lim F_{X_n}(0) = 0 \neq F_X(0) = 1$. La limite simple des fonctions de répartition diffère de $F_X$ au point $x=0$.
+Cependant, le point $x=0$ est un point de discontinuité de la fonction de répartition limite $F_X$.
+Le théorème de Portmanteau stipule que la convergence en loi $X_n \xrightarrow{\mathcal{L}} X$ équivaut à la convergence $\lim_{n \to \infty} F_{X_n}(x) = F_X(x)$ pour tout point $x$ **où $F_X$ est continue**.
+Ici, $F_X$ est continue sur $\mathbb{R} \setminus \{0\}$.
+Or, on a bien montré que pour $x < 0$, $F_{X_n}(x) \to 0 = F_X(x)$ et pour $x > 0$, $F_{X_n}(x) \to 1 = F_X(x)$.
+L'égalité est donc vérifiée en tout point de continuité de $F_X$.
+On conclut que $X_n \xrightarrow{\mathcal{L}} 0$.

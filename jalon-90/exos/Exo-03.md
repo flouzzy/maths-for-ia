@@ -1,46 +1,24 @@
----
-uuid: "jalon-90-exo-03"
-title: "Stabilité par composition continue"
----
+# Exercice 3 : L'exemple de la masse glissante
 
-# Exercice 3 : Stabilité par composition continue (Difficulté $\bigstar\bigstar\star\star\star$)
+Niveau : $\bigstar\bigstar\star\star\star$
 
-Soit $(X_n)_{n \ge 1}$ une suite convergeant en probabilité vers $X$. Soit $f : \mathbb{R} \to \mathbb{R}$ une fonction continue, non nécessairement bornée.
-Démontrer que $f(X_n)$ converge en probabilité vers $f(X)$.
+Sur l'espace mesuré $(\Omega, \mathcal{F}, \mathbb{P}) = (]0, 1], \mathcal{B}(]0, 1]), \lambda)$, on pose $X_n(\omega) = n \mathbb{1}_{\left]0, \frac{1}{n}\right]}(\omega)$.
+1. Montrer que $X_n \xrightarrow{\text{p.s.}} 0$.
+2. Étudier la convergence dans $L^1$ de la suite $(X_n)$. Que remarque-t-on ?
 
-## Correction Pas-à-Pas
+## Correction
 
-1. **Définition du cadre et des objectifs :**
-   Nous voulons prouver que pour tout $\epsilon > 0$, $\lim_{n \to \infty} \mathbb{P}(|f(X_n) - f(X)| > \epsilon) = 0$.
-   Fixons $\epsilon > 0$ et $\eta > 0$.
+**1. Convergence presque sûre vers 0 :**
+Soit $\omega \in ]0, 1]$. Il existe un rang $N_\omega \in \mathbb{N}^*$ tel que pour tout $n \ge N_\omega$, on a $\frac{1}{n} < \omega$.
+Pour tout $n \ge N_\omega$, on a donc $\omega \notin \left]0, \frac{1}{n}\right]$.
+Par définition de la fonction indicatrice, cela signifie que pour tout $n \ge N_\omega$, $\mathbb{1}_{\left]0, \frac{1}{n}\right]}(\omega) = 0$.
+D'où, pour tout $n \ge N_\omega$, $X_n(\omega) = n \times 0 = 0$.
+La suite numérique $(X_n(\omega))$ est donc stationnaire à 0 à partir d'un certain rang, elle converge donc vers $0$.
+Ceci étant vrai pour tout $\omega \in ]0, 1]$, on a $X_n \xrightarrow{\text{p.s.}} 0$ (ici, l'ensemble de convergence est tout l'univers, de mesure 1).
 
-2. **Borner la variable limite :**
-   La variable aléatoire limite $X$ prend ses valeurs dans $\mathbb{R}$. Il existe un compact $K = [-M, M]$ tel que :
-   $$ \mathbb{P}(X \notin K) \leq \frac{\eta}{2} $$
-
-3. **Utilisation de l'uniforme continuité :**
-   La fonction $f$ est continue. Sur le segment fermé et borné $K$, par le théorème de Heine, $f$ est uniformément continue.
-   Il existe donc $\delta > 0$ tel que pour tout $x \in K$ et $y \in \mathbb{R}$ vérifiant $|x - y| \leq \delta$, on a :
-   $$ |f(x) - f(y)| \leq \epsilon $$
-
-4. **Décomposition des événements :**
-   L'événement indésirable est $A_n = \{ |f(X_n) - f(X)| > \epsilon \}$.
-   Si $\omega \in A_n$, l'une des deux conditions suivantes doit être vraie (par contraposée de la continuité uniforme) :
-   - Soit $X(\omega) \notin K$.
-   - Soit $|X_n(\omega) - X(\omega)| > \delta$.
-
-   Donc l'événement est inclus dans l'union :
-   $$ \{ |f(X_n) - f(X)| > \epsilon \} \subset \{ X \notin K \} \cup \{ |X_n - X| > \delta \} $$
-
-5. **Majoration et passage à la limite :**
-   Par sous-additivité des probabilités :
-   $$ \mathbb{P}(|f(X_n) - f(X)| > \epsilon) \leq \mathbb{P}(X \notin K) + \mathbb{P}(|X_n - X| > \delta) $$
-   $$ \mathbb{P}(|f(X_n) - f(X)| > \epsilon) \leq \frac{\eta}{2} + \mathbb{P}(|X_n - X| > \delta) $$
-   Par hypothèse, $X_n \xrightarrow{\mathbb{P}} X$, donc pour ce $\delta > 0$ fixé, il existe un entier $N$ tel que pour tout $n \geq N$ :
-   $$ \mathbb{P}(|X_n - X| > \delta) \leq \frac{\eta}{2} $$
-   Pour tout $n \geq N$, nous avons donc :
-   $$ \mathbb{P}(|f(X_n) - f(X)| > \epsilon) \leq \frac{\eta}{2} + \frac{\eta}{2} = \eta $$
-   Puisque $\eta$ est arbitraire, la limite est bien $0$.
-   $$ f(X_n) \xrightarrow{\mathbb{P}} f(X) $$
-   $\blacksquare$
-
+**2. Étude de la convergence dans $L^1$ :**
+Évaluons $\mathbb{E}[|X_n - 0|] = \mathbb{E}[X_n]$ puisque $X_n \ge 0$.
+$$\mathbb{E}[X_n] = \int_0^1 n \mathbb{1}_{\left]0, \frac{1}{n}\right]}(\omega) d\lambda(\omega) = n \lambda\left(\left]0, \frac{1}{n}\right]\right) = n \times \frac{1}{n} = 1$$
+La suite $\mathbb{E}[|X_n - 0|]$ est constante et égale à 1. Elle ne tend donc pas vers 0.
+Ainsi, $(X_n)$ ne converge pas vers $0$ dans $L^1$.
+**Remarque :** Cet exercice illustre le fait que la convergence presque sûre n'implique pas la convergence dans $L^p$. La masse se concentre vers 0 en devenant infinie, ce qui empêche l'espérance de l'erreur de tendre vers 0. On ne peut pas appliquer le théorème de convergence dominée de Lebesgue car il n'existe pas de variable aléatoire intégrable $Y$ telle que $|X_n| \le Y$ pour tout $n$.
